@@ -96,13 +96,13 @@ public:
   /**
    * Call <open> on various strategies.  This is not performed in
    * <init> so that the other portions of the ORB have a chance to
-   * "settle" in their initialization since the streategies herein
+   * "settle" in their initialization since the strategies herein
    * might need some of that information.
    */
-  virtual int open (TAO_ORB_Core* orb_core);
+  virtual int open (TAO_ORB_Core* orb_core) = 0;
 
   /// Are server connections active (i.e. run in their own thread)
-  virtual int activate_server_connections (void);
+  virtual int activate_server_connections (void) = 0;
 
   /**
    * Obtain the timeout value used by the thread-per-connection server
@@ -111,11 +111,11 @@ public:
    * If the return value is zero then the threads block without
    * timeouts.
    */
-  virtual int thread_per_connection_timeout (ACE_Time_Value &timeout);
+  virtual int thread_per_connection_timeout (ACE_Time_Value &timeout) = 0;
 
   /// The thread activation parameters
-  virtual int server_connection_thread_flags (void);
-  virtual int server_connection_thread_count (void);
+  virtual int server_connection_thread_flags (void) = 0;
+  virtual int server_connection_thread_count (void) = 0;
 
   /// Return the active object map creation parameters.
   virtual

@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   IdAssignment.h
-//
-// = DESCRIPTION
-//   Test to check if ec, admin  are assigned id's correctly.
-//
-// = AUTHORS
-//   Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   IdAssignment.h
+ *
+ *  $Id$
+ *
+ * Test to check if ec, admin  are assigned id's correctly.
+ *
+ *
+ *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef IDASSIGNMENT_H
 #define IDASSIGNMENT_H
@@ -53,17 +53,17 @@ private:
   // = Data members.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 
+  /// Number of iterations for the test.
   int iter_;
-  // Number of iterations for the test.
 
+  /// Numbers of EC's to create.
   int ec_count_;
-  // Numbers of EC's to create.
 
+  /// Number of consumer admins to create per ec.
   int consumer_admin_count_;
-  // Number of consumer admins to create per ec.
 
+  /// Number of consumer admins to create per ec.
   int supplier_admin_count_;
-  // Number of consumer admins to create per ec.
 };
 
 #endif /* IDASSIGNMENT_H */

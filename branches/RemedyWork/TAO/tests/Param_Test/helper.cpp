@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    helper.cpp
-//
-// = DESCRIPTION
-//    Defines a helper class that can generate values for the parameters used
-//    for the Param_Test example
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    helper.cpp
+ *
+ *  $Id$
+ *
+ *  Defines a helper class that can generate values for the parameters used
+ *  for the Param_Test example
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ace/OS_NS_ctype.h"

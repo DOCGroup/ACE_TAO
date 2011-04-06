@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/examples/POA/Loader
-//
-// = FILENAME
-//     Servant_Locator.cpp
-//
-// = DESCRIPTION
-//     Implementation of ServantLocator class, used with a POA
-//     having a NON_RETAIN policy.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Locator.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of ServantLocator class, used with a POA
+ *   having a NON_RETAIN policy.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Servant_Locator.h"
 #include "ace/OS_NS_string.h"

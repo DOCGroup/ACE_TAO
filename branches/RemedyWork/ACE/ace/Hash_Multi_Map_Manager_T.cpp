@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_Hash_Multi_Map_Manager_T_CPP
 #define ACE_Hash_Multi_Map_Manager_T_CPP
 
@@ -26,7 +25,6 @@
 #include "ace/Malloc_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Multi_Map_Entry (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next,

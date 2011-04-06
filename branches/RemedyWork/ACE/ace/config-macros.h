@@ -65,9 +65,6 @@
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_MT(X) X
-#   if !defined (_REENTRANT)
-#     define _REENTRANT
-#   endif /* _REENTRANT */
 # else
 #   define ACE_MT(X)
 # endif /* ACE_MT_SAFE */
@@ -494,6 +491,10 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 
 #ifndef ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_HAS_TEMPLATE_TYPEDEFS
+#endif
+
+#ifndef ACE_GCC_FORMAT_ATTRIBUTE
+# define ACE_GCC_FORMAT_ATTRIBUTE(TYPE, STR_INDEX, FIRST_INDEX)
 #endif
 
 #ifndef ACE_DEPRECATED

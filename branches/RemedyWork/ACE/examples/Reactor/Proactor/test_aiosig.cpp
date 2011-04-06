@@ -1,24 +1,18 @@
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//     test_aiosig.cpp
-//
-// = DESCRITPTION
-//     Check out test_aiosig_ace.cpp, the ACE'ified version of this
-//     program. This program may not be uptodate.
-//
-// = COMPILATION
-//     CC -g -o test_aiosig -lrt test_aiosig.cpp
-//
-// = RUN
-//     ./test_aiosig
-//
-// = AUTHOR
-//     Programming for the Real World. Bill O. GallMeister.
-//     Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file     test_aiosig.cpp
+ *
+ *  $Id$
+ *
+ *  Check out test_aiosig_ace.cpp, the ACE'ified version of this
+ *  program. This program may not be uptodate.
+ *  CC -g -o test_aiosig -lrt test_aiosig.cpp
+ *  ./test_aiosig
+ *
+ *  @author  Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration

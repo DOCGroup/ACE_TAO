@@ -102,4 +102,4 @@ endif
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS		+= $(CFLAGS) -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
+CCFLAGS		+= -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)

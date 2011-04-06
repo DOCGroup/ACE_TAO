@@ -35,11 +35,12 @@ namespace DAnCE
 
     try
       {
-        DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_impl::finishLaunch - ")
-                  ACE_TEXT("Plan %C DomainApplication[%@] : %u applications to finish launching\n"),
-                  this->planUUID_.c_str (),
-                  this,
-                  this->node_applications_.current_size ()));
+        DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                     (LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_impl::finishLaunch - ")
+                      ACE_TEXT("Plan %C DomainApplication[%@] : %u applications to finish launching\n"),
+                      this->planUUID_.c_str (),
+                      this,
+                      this->node_applications_.current_size ()));
 
         // create completion counter
         DA_NA_ReplyHandlerImpl::Counter* _cp = 0;
@@ -73,23 +74,26 @@ namespace DAnCE
                 ::Deployment::AMI_ApplicationHandler_var da_na_handler =
                     ::Deployment::AMI_ApplicationHandler::_narrow (ref.in ());
 
-                DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
-                                ACE_TEXT("Plan %C DomainApplication[%@] node %C : ")
-                                ACE_TEXT("calling finishLaunch on a node application\n"),
-                                this->planUUID_.c_str (),
-                                this,
-                                node_id.c_str ()));
+                DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                             (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
+                              ACE_TEXT("Plan %C DomainApplication[%@] node %C : ")
+                              ACE_TEXT("calling finishLaunch on a node application\n"),
+                              this->planUUID_.c_str (),
+                              this,
+                              node_id.c_str ()));
 
                 (*iter).ext_id_->sendc_finishLaunch (da_na_handler.in (),
                                                     connections,
                                                     start);
 
-                DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
+                DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                             (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
                               ACE_TEXT("finishLaunch has been called on a node application\n")));
               }
             catch (CORBA::Exception& ex)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
                               ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
                               ACE_TEXT("DomainApplication[%@] caught a CORBA exception handling node %C : %C\n"),
                               this,
@@ -107,7 +111,8 @@ namespace DAnCE
               }
             catch (...)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
                               ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
                               ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                               this,
@@ -131,9 +136,10 @@ namespace DAnCE
       }
     catch (...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                    ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
-                    ACE_TEXT("Propagating StartError for unknown exception caught here\n")));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
+                      ACE_TEXT("Propagating StartError for unknown exception caught here\n")));
         CORBA::Exception* start_ex =
             new Deployment::StartError(this->planUUID_.c_str (),
                                        "unknown exception in finishLaunch");
@@ -148,11 +154,12 @@ namespace DAnCE
     DANCE_TRACE ("DomainApplication_Impl::start");
     try
       {
-        DANCE_DEBUG (9, (LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_impl::start - ")
-                  ACE_TEXT("Plan %C DomainApplication[%@] : %u applications to start\n"),
-                  this->planUUID_.c_str (),
-                  this,
-                  this->node_applications_.current_size ()));
+        DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                     (LM_DEBUG, DLINFO ACE_TEXT("DomainApplication_impl::start - ")
+                      ACE_TEXT("Plan %C DomainApplication[%@] : %u applications to start\n"),
+                      this->planUUID_.c_str (),
+                      this,
+                      this->node_applications_.current_size ()));
 
         // create completion counter
         DA_NA_ReplyHandlerImpl::Counter* _cp = 0;
@@ -187,21 +194,24 @@ namespace DAnCE
                 ::Deployment::AMI_ApplicationHandler_var da_na_handler =
                     ::Deployment::AMI_ApplicationHandler::_narrow (ref.in ());
 
-                DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::start - ")
-                                ACE_TEXT("Plan %C DomainApplication[%@] node %C : ")
-                                ACE_TEXT("calling start on a node application\n"),
-                                this->planUUID_.c_str (),
-                                this,
-                                node_id.c_str ()));
+                DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                             (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::start - ")
+                              ACE_TEXT("Plan %C DomainApplication[%@] node %C : ")
+                              ACE_TEXT("calling start on a node application\n"),
+                              this->planUUID_.c_str (),
+                              this,
+                              node_id.c_str ()));
 
                 (*iter).ext_id_->sendc_start (da_na_handler.in ());
 
-                DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::start - ")
+                DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                             (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::start - ")
                               ACE_TEXT("start has been called on an application\n")));
               }
             catch (CORBA::Exception& ex)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
                               ACE_TEXT("DomainApplication_Impl::start - ")
                               ACE_TEXT("DomainApplication[%@] caught a CORBA exception handling node %C : %C\n"),
                               this,
@@ -219,7 +229,8 @@ namespace DAnCE
               }
             catch (...)
               {
-                DANCE_ERROR (1, (LM_ERROR, DLINFO
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
                               ACE_TEXT("DomainApplication_Impl::start - ")
                               ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                               this,
@@ -243,11 +254,12 @@ namespace DAnCE
       }
     catch (...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                    ACE_TEXT("DomainApplication_Impl::start - ")
-                    ACE_TEXT("Propagating StartError for unknown exception caught here\n")));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT("DomainApplication_Impl::start - ")
+                      ACE_TEXT("Propagating StartError for unknown exception caught here\n")));
         CORBA::Exception* start_ex =
-            new Deployment::StartError(this->planUUID_.c_str (),
+          new Deployment::StartError(this->planUUID_.c_str (),
                                        "unknown exception in start");
         ::Deployment::AMH_ApplicationExceptionHolder amh_exholder (start_ex);
         _tao_rh->start_excep (&amh_exholder);
@@ -263,11 +275,12 @@ namespace DAnCE
 
     DA_CompletionHandler_AutoPtr _ch_ptr (completion_handler); // manage handler
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
-                     ACE_TEXT("Plan %C DomainApplication[%@] : %u nodes to launch\n"),
-                     this->planUUID_.c_str (),
-                     this,
-                     nams_.current_size ()));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
+                  ACE_TEXT("Plan %C DomainApplication[%@] : %u nodes to launch\n"),
+                  this->planUUID_.c_str (),
+                  this,
+                  nams_.current_size ()));
 
     // create completion counter
     DA_NAM_ReplyHandlerImpl::Counter* _cp = 0;
@@ -303,22 +316,25 @@ namespace DAnCE
             ::Deployment::AMI_NodeApplicationManagerHandler_var da_nam_handler =
                 ::Deployment::AMI_NodeApplicationManagerHandler::_narrow (ref.in ());
 
-            DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
-                            ACE_TEXT("Plan %C DomainApplication[%@] : ")
-                            ACE_TEXT("calling startLaunch on node application manager for node %C\n"),
-                            this->planUUID_.c_str (),
-                            this,
-                            node_id.c_str ()));
+            DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                         (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
+                          ACE_TEXT("Plan %C DomainApplication[%@] : ")
+                          ACE_TEXT("calling startLaunch on node application manager for node %C\n"),
+                          this->planUUID_.c_str (),
+                          this,
+                          node_id.c_str ()));
 
             (*iter).ext_id_->sendc_startLaunch (da_nam_handler.in (),
                                                 configProperty);
 
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
+            DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                         (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                           ACE_TEXT("startLaunch has been called on an application\n")));
           }
         catch (CORBA::Exception& ex)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO
                           ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                           ACE_TEXT("DomainApplication[%@] caught a CORBA exception handling node %C : %C\n"),
                           this,
@@ -336,7 +352,8 @@ namespace DAnCE
           }
         catch (...)
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
+            DANCE_ERROR (DANCE_LOG_ERROR,
+                         (LM_ERROR, DLINFO
                           ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                           ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                           this,
@@ -359,11 +376,12 @@ namespace DAnCE
   {
     DANCE_TRACE ("DomainApplication_Impl::destroyApplication");
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
-                     ACE_TEXT("Plan %C DomainApplication[%@] : %u node applications to destroy\n"),
-                     this->planUUID_.c_str (),
-                     this,
-                     this->node_applications_.current_size ()));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+                  ACE_TEXT("Plan %C DomainApplication[%@] : %u node applications to destroy\n"),
+                  this->planUUID_.c_str (),
+                  this,
+                  this->node_applications_.current_size ()));
 
     if (this->node_applications_.current_size () > 0)
       {
@@ -401,22 +419,25 @@ namespace DAnCE
               ::Deployment::AMI_NodeApplicationManagerHandler_var da_nam_handler =
                   ::Deployment::AMI_NodeApplicationManagerHandler::_narrow (ref.in ());
 
-              DANCE_DEBUG (6, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
-                              ACE_TEXT("Plan %C DomainApplication[%@] : ")
-                              ACE_TEXT("calling destroyApplication on node application manager for node %C\n"),
-                              this->planUUID_.c_str (),
-                              this,
-                              node_id.c_str ()));
+              DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                           (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+                            ACE_TEXT("Plan %C DomainApplication[%@] : ")
+                            ACE_TEXT("calling destroyApplication on node application manager for node %C\n"),
+                            this->planUUID_.c_str (),
+                            this,
+                            node_id.c_str ()));
 
               (*iter).int_id_->sendc_destroyApplication (da_nam_handler.in (),
                                                         (*iter).ext_id_.in());
 
-              DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                           (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
                             ACE_TEXT("destroyApplication has been called on node application manager\n")));
             }
           catch (CORBA::Exception& ex)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
                             ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
                             ACE_TEXT("DomainApplication[%@] caught a CORBA exception handling node %C : %C\n"),
                             this,
@@ -434,7 +455,8 @@ namespace DAnCE
             }
           catch (...)
             {
-              DANCE_ERROR (1, (LM_ERROR, DLINFO
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
                             ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
                             ACE_TEXT("DomainApplication[%@] caught a unknown exception handling node %C\n"),
                             this,
@@ -457,7 +479,9 @@ namespace DAnCE
         _ch_ptr->handle_completion (this);
       }
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - finished\n")));
+    DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT("DomainApplication_Impl::destroyApplication - finished\n")));
   }
 
   void
@@ -485,11 +509,12 @@ namespace DAnCE
   void
   DA_NAM_ReplyHandlerImpl::Counter::on_all_completed ()
     {
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                  ACE_TEXT("DA_NAM_ReplyHandlerImpl::Counter::on_all_completed - ")
-                  ACE_TEXT("Plan %C DomainApplication[%@] successfully finished all nodes\n"),
-                  this->da_servant_->getPlanUUID (),
-                  this->da_servant_.in ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT("DA_NAM_ReplyHandlerImpl::Counter::on_all_completed - ")
+                    ACE_TEXT("Plan %C DomainApplication[%@] successfully finished all nodes\n"),
+                    this->da_servant_->getPlanUUID (),
+                    this->da_servant_.in ()));
 
       this->dam_ch_ptr_->handle_completion (da_servant_.in ());
     }
@@ -497,12 +522,13 @@ namespace DAnCE
   void
   DA_NAM_ReplyHandlerImpl::Counter::on_all_completed_with_failure ()
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                  ACE_TEXT("DA_NAM_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
-                  ACE_TEXT("Plan %C DomainApplication[%@] : %u errors from nodemanagers\n"),
-                  this->da_servant_->getPlanUUID (),
-                  this->da_servant_.in (),
-                  this->fail_count ()));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("DA_NAM_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
+                    ACE_TEXT("Plan %C DomainApplication[%@] : %u errors from nodemanagers\n"),
+                    this->da_servant_->getPlanUUID (),
+                    this->da_servant_.in (),
+                    this->fail_count ()));
 
       std::ostringstream err;
       err << this->fail_count () << " errors from nodemanagers:\n";
@@ -534,11 +560,14 @@ namespace DAnCE
     ::Deployment::Application_ptr na,
     const ::Deployment::Connections & conn)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch called.\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch called.\n")));
 
       if (CORBA::is_nil (na))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch -")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C startLaunch returned nil object reference.\n"),
                         this->da_servant_->getPlanUUID (),
@@ -551,7 +580,8 @@ namespace DAnCE
         }
       else
         {
-          DANCE_DEBUG (6, (LM_TRACE, DLINFO
+          DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                       (LM_TRACE, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C startLaunch succeeded, ")
                         ACE_TEXT("received %u connections\n"),
@@ -586,7 +616,9 @@ namespace DAnCE
   DA_NAM_ReplyHandlerImpl::startLaunch_excep (
     ::Messaging::ExceptionHolder * excep_holder)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep called\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep called\n")));
 
       std::ostringstream err;
       err << this->node_id_.c_str () << " - startLaunch raised ";
@@ -596,7 +628,7 @@ namespace DAnCE
         }
       catch (Deployment::StartError &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C : StartError exception caught.\n"),
                         this->da_servant_->getPlanUUID (),
@@ -606,7 +638,8 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught a CORBA exception: %C\n"),
                         this->da_servant_->getPlanUUID (),
@@ -617,7 +650,8 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::startLaunch_excep - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught unknown exception.\n"),
                         this->da_servant_->getPlanUUID (),
@@ -640,9 +674,12 @@ namespace DAnCE
   void
   DA_NAM_ReplyHandlerImpl::destroyApplication (void)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication called.\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication called.\n")));
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO
                     ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication - ")
                     ACE_TEXT("Plan %C DomainApplication[%@] node %C : Node application destroy succeeded\n"),
                     this->da_servant_->getPlanUUID (),
@@ -660,7 +697,9 @@ namespace DAnCE
   DA_NAM_ReplyHandlerImpl::destroyApplication_excep (
     ::Messaging::ExceptionHolder * excep_holder)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep called\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep called\n")));
 
       std::ostringstream err;
       err << this->node_id_.c_str () << " - destroyApplication raised ";
@@ -670,7 +709,8 @@ namespace DAnCE
         }
       catch (Deployment::StopError &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C : StopError exception caught.\n"),
                         this->da_servant_->planUUID_.c_str (),
@@ -680,7 +720,8 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught a CORBA exception: %C\n"),
                         this->da_servant_->planUUID_.c_str (),
@@ -691,7 +732,8 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
                         ACE_TEXT("DA_NAM_ReplyHandlerImpl::destroyApplication_excep - ")
                         ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught unknown exception.\n"),
                         this->da_servant_->planUUID_.c_str (),
@@ -724,11 +766,12 @@ namespace DAnCE
   void
   DA_NA_ReplyHandlerImpl::Counter::on_all_completed ()
     {
-      DANCE_DEBUG (6, (LM_DEBUG, DLINFO
-                  ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch - ")
-                  ACE_TEXT("Plan %C DomainApplication[%@] : Successfully finished all nodes\n"),
-                  this->da_servant_->getPlanUUID (),
-                  this->da_servant_.in ()));
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO
+                    ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch - ")
+                    ACE_TEXT("Plan %C DomainApplication[%@] : Successfully finished all nodes\n"),
+                    this->da_servant_->getPlanUUID (),
+                    this->da_servant_.in ()));
 
       this->da_rh_->finishLaunch ();
     }
@@ -736,12 +779,13 @@ namespace DAnCE
   void
   DA_NA_ReplyHandlerImpl::Counter::on_all_completed_with_failure ()
     {
-      DANCE_ERROR (1, (LM_ERROR, DLINFO
-                  ACE_TEXT("DA_NA_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
-                  ACE_TEXT("Plan %C DomainApplication[%@] : %u errors from node applications\n"),
-                  this->da_servant_->getPlanUUID (),
-                  this->da_servant_.in (),
-                  this->fail_count ()));
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("DA_NA_ReplyHandlerImpl::Counter::on_all_completed_with_failure - ")
+                    ACE_TEXT("Plan %C DomainApplication[%@] : %u errors from node applications\n"),
+                    this->da_servant_->getPlanUUID (),
+                    this->da_servant_.in (),
+                    this->fail_count ()));
 
       std::ostringstream err;
       err << this->fail_count () << " errors from node applications:\n";
@@ -770,11 +814,12 @@ namespace DAnCE
 
   void DA_NA_ReplyHandlerImpl::finishLaunch ()
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch - ")
-                       ACE_TEXT("Plan %C DomainApplication[%@] node %C.\n"),
-                       this->da_servant_->planUUID_.c_str (),
-                       this->da_servant_.in (),
-                       this->node_id_.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch - ")
+                    ACE_TEXT("Plan %C DomainApplication[%@] node %C.\n"),
+                    this->da_servant_->planUUID_.c_str (),
+                    this->da_servant_.in (),
+                    this->node_id_.c_str ()));
 
       // mark off one node
       this->counter_->decrement_exec_count ();
@@ -787,7 +832,9 @@ namespace DAnCE
   void DA_NA_ReplyHandlerImpl::finishLaunch_excep (
     ::Messaging::ExceptionHolder * excep_holder)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep called\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep called\n")));
 
       std::ostringstream err;
       err << this->node_id_.c_str () << " - finishLaunch raised ";
@@ -797,33 +844,36 @@ namespace DAnCE
         }
       catch (Deployment::StartError &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
-                          ACE_TEXT("Plan %C DomainApplication[%@] node %C : StartError exception caught.\n"),
-                          this->da_servant_->planUUID_.c_str (),
-                          this->da_servant_.in (),
-                          this->node_id_.c_str ()));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : StartError exception caught.\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str ()));
           err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
-                          ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught a CORBA exception: %C\n"),
-                          this->da_servant_->planUUID_.c_str (),
-                          this->da_servant_.in (),
-                          this->node_id_.c_str (),
-                          ex._info ().c_str ()));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught a CORBA exception: %C\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str (),
+                        ex._info ().c_str ()));
           err << "CORBA exception : " << ex._info ().c_str ();
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
-                          ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught unknown exception.\n"),
-                          this->da_servant_->planUUID_.c_str (),
-                          this->da_servant_.in (),
-                          this->node_id_.c_str ()));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught unknown exception.\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str ()));
           err << "unknown exception";
         }
 
@@ -840,11 +890,12 @@ namespace DAnCE
 
   void DA_NA_ReplyHandlerImpl::start (void)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::start - ")
-                       ACE_TEXT("Plan %C DomainApplication[%@] node %C.\n"),
-                       this->da_servant_->planUUID_.c_str (),
-                       this->da_servant_.in (),
-                       this->node_id_.c_str ()));
+      DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                   (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::start - ")
+                    ACE_TEXT("Plan %C DomainApplication[%@] node %C.\n"),
+                    this->da_servant_->planUUID_.c_str (),
+                    this->da_servant_.in (),
+                    this->node_id_.c_str ()));
 
       // mark off one node
       this->counter_->decrement_exec_count ();
@@ -857,7 +908,9 @@ namespace DAnCE
   void DA_NA_ReplyHandlerImpl::start_excep (
     ::Messaging::ExceptionHolder * excep_holder)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep called\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep called\n")));
 
       std::ostringstream err;
       err << this->node_id_.c_str () << " - start raised ";
@@ -867,33 +920,36 @@ namespace DAnCE
         }
       catch (Deployment::StartError &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
-                          ACE_TEXT("Plan %C DomainApplication[%@] node %C : StartError exception caught.\n"),
-                          this->da_servant_->planUUID_.c_str (),
-                          this->da_servant_.in (),
-                          this->node_id_.c_str ()));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : StartError exception caught.\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str ()));
           err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
-                          ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught a CORBA exception: %C\n"),
-                          this->da_servant_->planUUID_.c_str (),
-                          this->da_servant_.in (),
-                          this->node_id_.c_str (),
-                          ex._info ().c_str ()));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught a CORBA exception: %C\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str (),
+                        ex._info ().c_str ()));
           err << "CORBA exception : " << ex._info ().c_str ();
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO
-                          ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
-                          ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught unknown exception.\n"),
-                          this->da_servant_->planUUID_.c_str (),
-                          this->da_servant_.in (),
-                          this->node_id_.c_str ()));
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::start_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : Caught unknown exception.\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str ()));
           err << "unknown exception";
         }
 

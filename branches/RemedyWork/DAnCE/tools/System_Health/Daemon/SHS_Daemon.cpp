@@ -28,23 +28,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dlf->init (argc, argv);
         }
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, DLINFO
                     ACE_TEXT("SHS_Deamon - initializing ORB\n")));
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
-                       ACE_TEXT("SHS_Deamon - initializing module instance\n")));
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, DLINFO
+            ACE_TEXT("SHS_Deamon - initializing module instance\n")));
 
 
       TAO::Utils::ORB_Destroyer safe_orb (orb);
 
       CORBA::Object_var tmp = orb->resolve_initial_references ("NameService");
-      CosNaming::NamingContext_var domain_nc = CosNaming::NamingContext::_narrow (tmp);
+      CosNaming::NamingContext_var domain_nc =
+        CosNaming::NamingContext::_narrow (tmp);
 
       if (CORBA::is_nil (domain_nc.in ()))
         {
-          ACE_ERROR ((LM_EMERGENCY, "SHS_Daemon - Unable to register with the CORBA Naming Service\n"));
+          ACE_ERROR ((LM_EMERGENCY,
+            "SHS_Daemon - Unable to register with the"\
+            " CORBA Naming Service\n"));
           return -1;
         }
 
@@ -60,11 +63,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       policies.length (2);
       try
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("SHS_Deamon - ")
-                           ACE_TEXT("before creating the \"SHS\" POA.\n")));
+          DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE,
+            DLINFO ACE_TEXT("SHS_Deamon - ")
+            ACE_TEXT("before creating the \"SHS\" POA.\n")));
 
-          policies[0] = poa->create_id_assignment_policy (PortableServer::USER_ID);
-          policies[1] = poa->create_lifespan_policy (PortableServer::PERSISTENT);
+          policies[0] = poa->create_id_assignment_policy (
+            PortableServer::USER_ID);
+          policies[1] = poa->create_lifespan_policy (
+            PortableServer::PERSISTENT);
           persistent_poa = poa->create_POA ("SHS",
                                             mgr.in(),
                                             policies);
@@ -101,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       mgr->activate ();
       orb->run ();
 
-      DANCE_DEBUG (6, (LM_TRACE, DLINFO
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE, DLINFO
                        ACE_TEXT("SHS_Daemon - destroying ORB\n")));
 
       orb->destroy ();
@@ -113,7 +119,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (...)
     {
-      DANCE_ERROR (1, (LM_ERROR, "SHS_Daemon - Error: Unknown exception.\n"));
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+        (LM_ERROR, "SHS_Daemon - Error: Unknown exception.\n"));
       retval = -1;
     }
 

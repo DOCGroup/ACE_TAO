@@ -1,21 +1,18 @@
-// $Id$
 
-// ========================================================================
-// = LIBRARY
-//    TAO/examples/POA/Forwarding
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Server that receives requests.  The server can be asked to
-//    forward new requests to another server.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//    Michael Kircher
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  Server that receives requests.  The server can be asked to
+ *  forward new requests to another server.
+ *
+ *
+ *  @author Irfan Pyarali Michael Kircher
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"

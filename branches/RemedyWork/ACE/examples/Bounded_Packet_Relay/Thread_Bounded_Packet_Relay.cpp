@@ -1,27 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Thread_Bounded_Packet_Relay.cpp
-//
-// = DESCRIPTION
-//    Method definitions for the threaded-bounded packet relay class.
-//
-// = AUTHORS
-//    Chris Gill           <cdgill@cs.wustl.edu>  and
-//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
-//
-//    Based on the Timer Queue Test example written by
-//
-//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
-//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Bounded_Packet_Relay.cpp
+ *
+ *  $Id$
+ *
+ *  Method definitions for the threaded-bounded packet relay class.
+ *
+ *
+ *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"

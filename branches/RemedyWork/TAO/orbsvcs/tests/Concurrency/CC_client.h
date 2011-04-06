@@ -1,22 +1,18 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Concurrency
-//
-// = FILENAME
-//    CC_client.h
-//
-// = DESCRIPTION
-//      This class implements a client used to test the CosConcurrency
-//      service.
-//
-// = AUTHORS
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_client.h
+ *
+ *  $Id$
+ *
+ *    This class implements a client used to test the CosConcurrency
+ *    service.
+ *
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 
@@ -43,100 +39,102 @@ extern FILE *ace_cc_yyin;
 // end of parser stuff
 
 
+/**
+ * @class CC_Client
+ *
+ * @brief Defines a class that encapsulates the behaviour of a clien of
+ * the concurrency service.
+ *
+ * This class declares an interface to run the test client for
+ * the concurrency service.
+ */
 class CC_Client
 {
-  // = TITLE
-  //    Defines a class that encapsulates the behaviour of a clien of
-  //    the concurrency service.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to run the test client for
-  //    the concurrency service.
 public:
   // = Initialization and termination methods.
+  /// Default constructor.
   CC_Client (void);
-  // Default constructor.
 
+  /// Destructor.
   ~CC_Client (void);
-  // Destructor.
 
+  /// Run the test.
   int run (void);
-  // Run the test.
 
+  /// Initialize the test with the parameters from the command line.
   int init (int argc, ACE_TCHAR **argv);
-  // Initialize the test with the parameters from the command line.
 
 private:
+  /// Function to initialize the naming service.
   int init_naming_service (void);
-  // Function to initialize the naming service.
 
+  /// Function to parse the command line arguments.
   int parse_args (void);
-  // Function to parse the command line arguments.
 
+  /// Function to read the ior from the given file.
   int read_ior (ACE_TCHAR *filename);
-  // Function to read the ior from the given file.
 
+  /// Runs the basic tests (on a single lock set). Returns CC_SUCCESS
+  /// upon success CC_FAIL otherwise.
   int run_basic_tests (void);
-  // Runs the basic tests (on a single lock set). Returns CC_SUCCESS
-  // upon success CC_FAIL otherwise.
 
+  /// Runs the extended tests (on more lock sets). Returns CC_SUCCESS
+  /// upon success CC_FAIL otherwise.
   int run_extended_tests (ACE_TCHAR *params);
-  // Runs the extended tests (on more lock sets). Returns CC_SUCCESS
-  // upon success CC_FAIL otherwise.
 
+  /// Checks the parameters given to the run_extended_tests() function.
+  /// returns -1 if an error is found.
   int check_extended_test_params(ACE_TCHAR *params);
-  // Checks the parameters given to the run_extended_tests() function.
-  // returns -1 if an error is found.
 
+  /// A pointer to the naming service used for this test.
   CC_naming_service *naming_service_;
-  // A pointer to the naming service used for this test.
 
+  /// File from which to obtain the IOR.
   FILE *cc_factory_ior_file_;
-  // File from which to obtain the IOR.
 
+  /// The factory key for the lock set factory.
   char *cc_factory_key_;
-  // The factory key for the lock set factory.
 
+  /// File handle to read the IOR.
   ACE_HANDLE f_handle_;
-  // File handle to read the IOR.
 
+  /// Flag to tell server to shutdown.
   int shutdown_;
-  // Flag to tell server to shutdown.
 
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
   //  CosConcurrencyControl::LockSetFactory_var factory_;
   // factory pointer for the lock set. @@TAO maybe to be used when naming
   // service is not used (for simple testing)
 
+  /// The number of arguments passed on the command line.
   int argc_;
-  // The number of arguments passed on the command line.
 
+  /// The arguments from the command line.
   ACE_TCHAR **argv_;
-  // The arguments from the command line.
 
+  /// Flag to tell the client whether to use the naming service or not
+  /// to find the concurrency control factory.
   int use_naming_service_;
-  // Flag to tell the client whether to use the naming service or not
-  // to find the concurrency control factory.
 
+  /// flag to tell which test should be run.
   int run_basic_tests_;
-  // flag to tell which test should be run.
 
+  /// flag to tell which test should be run.
   int run_extended_tests_;
-  // flag to tell which test should be run.
 
+  /// Parameters to the extended tests. The parameters are of the
+  /// following format: <test>:<parm1>:<parm2>...
   ACE_TCHAR *extended_tests_params_;
-  // Parameters to the extended tests. The parameters are of the
-  // following format: <test>:<parm1>:<parm2>...
 
+  /// Flag to tell whethter to use a script file to run the tests.
   int use_script_file_;
-  // Flag to tell whethter to use a script file to run the tests.
 
+  /// The script file to run
   ACE_TCHAR *script_file_;
-  // The script file to run
 
+  /// Prints out the options to the program.
   void print_usage (void);
-  // Prints out the options to the program.
 };
 #endif /* !defined (_CC_CLIENT_H_) */

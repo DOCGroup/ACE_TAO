@@ -17,18 +17,13 @@
 #ifndef BE_VISITOR_ATTRIBUTE_SET_FROM_EXTRACTED_H
 #define BE_VISITOR_ATTRIBUTE_SET_FROM_EXTRACTED_H
 
+/**
+ * Contains overloaded methods that emit arg values to be
+ * passed to an attribute mutator
+ */
 class be_visitor_attribute_set_from_extracted
   : public be_visitor_any_extracted_type_decl
 {
-  //
-  // = TITLE
-  //   be_visitor_attribute_set_from_extracted
-  //
-  // = DESCRIPTION
-  //   Contains overloaded methods that emit arg values to be
-  //   passed to an attribute mutator
-  //
-  //
 public:
   be_visitor_attribute_set_from_extracted (be_visitor_context *ctx);
   virtual ~be_visitor_attribute_set_from_extracted (void);

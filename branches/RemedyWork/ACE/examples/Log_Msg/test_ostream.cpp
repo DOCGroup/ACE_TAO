@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Log_Msg
-//
-// = FILENAME
-//    test_ostream.cpp
-//
-// = DESCRIPTION
-//     This program tests the Log_Msg abstraction wrt writing to
-//     stderr and to a file.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cse.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_ostream.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the Log_Msg abstraction wrt writing to
+ *   stderr and to a file.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cse.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 

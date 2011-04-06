@@ -1,28 +1,22 @@
-// $Id$
-// ============================================================================
-//
-// = FILENAME
-//     test_end_event_loop.cpp
-//
-// = DESCRITPTION
-//     This program tests the event loop mechanism of the
-//     Proactor. To end the event loop, threads that are blocked in
-//     waiting for completions are  woken up and the event loop comes
-//     to the end. This is tested in this program.
-//
-//     Threads are doing <run_event_loop> with/without time_out
-//     values and the main thread calls <end_event_loop>.
-//
-// = COMPILATION
-//     make
-//
-// = RUN
-//     ./test_end_event_loop
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file     test_end_event_loop.cpp
+ *
+ *  $Id$
+ *
+ *  This program tests the event loop mechanism of the
+ *  Proactor. To end the event loop, threads that are blocked in
+ *  waiting for completions are  woken up and the event loop comes
+ *  to the end. This is tested in this program.
+ *  Threads are doing <run_event_loop> with/without time_out
+ *  values and the main thread calls <end_event_loop>.
+ *  make
+ *  ./test_end_event_loop
+ *
+ *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Proactor.h"
@@ -35,21 +29,22 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
+/**
+ * @class My_Task:
+ *
+ * @brief Contains thread functions which execute event loops. Each
+ * thread waits for a different signal.
+ */
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //
-  //     Contains thread functions which execute event loops. Each
-  //     thread waits for a different signal.
-  //
 public:
   // Constructor.
   My_Task (void)
     : time_flag_ (0)
     {}
 
+  /// Destructor.
   virtual ~My_Task (void) {}
-  // Destructor.
 
   //FUZZ: disable check_for_lack_ACE_OS
   // If time_flag is zero do the eventloop indefinitely, otherwise do
@@ -106,8 +101,8 @@ public:
     };
 
 private:
+  /// If zero, indefinite event loop, otherwise timed event loop.
   int time_flag_;
-  // If zero, indefinite event loop, otherwise timed event loop.
 };
 
 int

@@ -1,20 +1,19 @@
-// $Id$
 
-//==========================================================================
-//
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//
-//     This is a simple test client implementation.  Also looks out
-//     for forwarding exceptions
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//==========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *
+ *   This is a simple test client implementation.  Also looks out
+ *   for forwarding exceptions
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"

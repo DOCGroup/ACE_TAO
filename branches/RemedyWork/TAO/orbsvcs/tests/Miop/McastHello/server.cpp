@@ -80,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
                            1);
-      ACE_OS::fprintf (output_file, "%s", group_ior);
+      ACE_OS::fprintf (output_file, "%s", ACE_TEXT_ALWAYS_CHAR (group_ior));
       ACE_OS::fclose (output_file);
 
       PortableServer::ObjectId_var id =

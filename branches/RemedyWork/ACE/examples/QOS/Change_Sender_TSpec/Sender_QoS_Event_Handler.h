@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE_wrappers/examples/QOS
-//
-// = FILENAME
-//    Sender_QoS_Event_Handler.h
-//
-// = AUTHOR
-//    Vishal Kachroo <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sender_QoS_Event_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Vishal Kachroo <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef SENDER_QOS_EVENT_HANDLER_H
 #define SENDER_QOS_EVENT_HANDLER_H
@@ -30,23 +27,23 @@ class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
   // = Initialization and Termination methods.
+  /// Constructor.
   Sender_QoS_Event_Handler (void);
-  // Constructor.
 
+  /// Constructor.
   Sender_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                             ACE_QoS_Session *qos_session);
-  // Constructor.
 
+  /// Destructor.
   ~Sender_QoS_Event_Handler (void);
-  // Destructor.
 
+  /// Override this to return the handle of the Dgram_Mcast
+  /// that we are using.
   virtual ACE_HANDLE get_handle (void) const;
-  // Override this to return the handle of the Dgram_Mcast
-  // that we are using.
 
+  /// Handles a QoS event. Right now, just
+  /// prints a message.
   virtual int handle_qos (ACE_HANDLE fd);
-  // Handles a QoS event. Right now, just
-  // prints a message.
 
 private:
 

@@ -1,26 +1,22 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Multithreading.cpp
-//
-// = DESCRIPTION
-//
-//    This application tests multiple threads simultaneously calling
-//    Reactor::handle_events(). It also shows how different threads
-//    can update the state of Reactor by registering and removing
-//    Event_Handlers.
-//
-//    Note that this test will only work with WFMO_Reactor
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Multithreading.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This application tests multiple threads simultaneously calling
+ *  Reactor::handle_events(). It also shows how different threads
+ *  can update the state of Reactor by registering and removing
+ *  Event_Handlers.
+ *
+ *  Note that this test will only work with WFMO_Reactor
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -88,31 +84,31 @@ parse_args (int argc, ACE_TCHAR **argv)
 class Task_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
+  /// Constructor.
   Task_Handler (size_t number_of_handles,
                 size_t concurrent_threads);
-  // Constructor.
 
+  /// Destructor.
   ~Task_Handler (void);
-  // Destructor.
 
+  /// Called when object is removed from the ACE_Reactor
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  // Called when object is removed from the ACE_Reactor
 
+  /// Handle events being signaled by the main thread.
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Handle events being signaled by the main thread.
 
+  /// Called when timer expires.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
-  // Called when timer expires.
 
+  /// Task event loop.
   int svc (void);
-  // Task event loop.
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Signal an event.
+  ///FUZZ: enable check_for_lack_ACE_OS
   int signal (size_t index);
-  // Signal an event.
-  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   ACE_Auto_Event *events_;

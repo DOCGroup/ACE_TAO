@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/CosPropertyService
-//
-// = FILENAME
-//    server.h
-//
-// = DESCRIPTION
-//    Test server for the CosPropertyService.
-//
-// = AUTHORS
-//    Alexander Babu Arulanthu <alex.cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.h
+ *
+ *  $Id$
+ *
+ *  Test server for the CosPropertyService.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex.cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef COSPROPERTYSERVICE_SERVER_H
 #define COSPROPERTYSERVICE_SERVER_H

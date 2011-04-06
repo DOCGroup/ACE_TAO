@@ -10,6 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
+
 namespace TAO
 {
   /**
@@ -65,7 +66,6 @@ namespace TAO
     /// Pointer to the transport that we plan to use.
     TAO_Transport *t_;
   };
-
 
   //=================================================================
 

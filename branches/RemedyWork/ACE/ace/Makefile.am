@@ -342,8 +342,7 @@ libACE_la_SOURCES = \
   WIN32_Proactor.cpp \
   XML_Svc_Conf.cpp \
   XTI_ATM_Mcast.cpp \
-  ace_wchar.cpp \
-  gethrtime.cpp
+  ace_wchar.cpp
 
 libACE_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
@@ -1135,7 +1134,6 @@ nobase_include_HEADERS += \
   config-all.h \
   config-lite.h \
   config-macros.h \
-  config-minimal.h \
   config-win32-borland.h \
   config-win32-common.h \
   config-win32-msvc-7.h \

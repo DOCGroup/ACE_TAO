@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_proactor.cpp
-//
-// = DESCRIPTION
-//    This program illustrates how the <ACE_Proactor> can be used to
-//    implement an application that does various asynchronous
-//    operations.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_proactor.cpp
+ *
+ *  $Id$
+ *
+ *  This program illustrates how the <ACE_Proactor> can be used to
+ *  implement an application that does various asynchronous
+ *  operations.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
@@ -272,20 +269,23 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_ASSERT (result.bytes_to_write () == result.bytes_transferred ());
 }
 
+/**
+ * @class Sender
+ *
+ * @brief The class will be created by <main>.  After connecting to the
+ * host, this class will then read data from a file and send it
+ * to the network connection.
+ */
 class Sender : public ACE_Handler
 {
-  // = TITLE
-  //     The class will be created by <main>.  After connecting to the
-  //     host, this class will then read data from a file and send it
-  //     to the network connection.
 public:
   Sender (void);
   ~Sender (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host,
             u_short port);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle (void) const;
   void handle (ACE_HANDLE);
@@ -293,50 +293,52 @@ public:
 protected:
   // These methods are called by the freamwork
 
+  /**
+   * This is called when asynchronous transmit files complete
+   * This is called when asynchronous writes from the socket complete
+   * This is called when asynchronous reads from the socket complete
+   */
   virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
-  // This is called when asynchronous transmit files complete
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when asynchronous writes from the socket complete
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
-  // This is called when asynchronous reads from the socket complete
 
 private:
+  /// Transmit the entire file in one fell swoop.
   int transmit_file (void);
-  // Transmit the entire file in one fell swoop.
 
+  /// Initiate an asynchronous file read.
   int initiate_read_file (void);
-  // Initiate an asynchronous file read.
 
+  /// Network I/O handle
   ACE_SOCK_Stream stream_;
-  // Network I/O handle
 
+  /// ws (write stream): for writing to the socket
   ACE_Asynch_Write_Stream ws_;
-  // ws (write stream): for writing to the socket
 
+  /// rf (read file): for writing from the file
   ACE_Asynch_Read_File rf_;
-  // rf (read file): for writing from the file
 
+  /// Transmit file.
   ACE_Asynch_Transmit_File tf_;
-  // Transmit file.
 
+  /// File to read from
   ACE_HANDLE input_file_;
-  // File to read from
 
+  /// Current file offset
   u_long file_offset_;
-  // Current file offset
 
+  /// File size
   u_long file_size_;
-  // File size
 
+  /// Welcome message
   ACE_Message_Block welcome_message_;
-  // Welcome message
 
+  /// Header and trailer which goes with transmit_file
   ACE_Asynch_Transmit_File::Header_And_Trailer header_and_trailer_;
-  // Header and trailer which goes with transmit_file
 
+  /// These flags help to determine when to close down the event loop
   int stream_write_done_;
   int transmit_file_done_;
-  // These flags help to determine when to close down the event loop
 };
 
 Sender::Sender (void)

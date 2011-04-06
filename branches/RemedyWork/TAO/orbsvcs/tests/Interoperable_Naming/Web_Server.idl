@@ -1,21 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/Interoperable_Naming/
-//
-// = FILENAME
-//    Web_Server.idl
-//
-// = DESCRIPTION
-//     IDL schema definition for Web server interface.
-//
-// = AUTHORS
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Web_Server.idl
+ *
+ *  $Id$
+ *
+ *   IDL schema definition for Web server interface.
+ *
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 module Web_Server
 {

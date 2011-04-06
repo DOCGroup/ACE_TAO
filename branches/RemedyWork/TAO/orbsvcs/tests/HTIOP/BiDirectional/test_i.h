@@ -1,59 +1,58 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/BiDirectional
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
 
 #include "testS.h"
 
+/**
+ * @class Callback_i
+ *
+ * @brief A callback object to the "client"
+ *
+ * To test that the server can call the client on the same
+ * connection that was established by the client
+ */
 class Callback_i : public POA_Callback
 {
-  // = TITLE
-  //   A callback object to the "client"
-  //
-  // = DESCRIPTION
-  //   To test that the server can call the client on the same
-  //   connection that was established by the client
-  //
 public:
+  /// ctor
   Callback_i (CORBA::ORB_ptr orb);
-  // ctor
 
+  /// Safe way to shutdown
   void shutdown (void);
-  // Safe way to shutdown
 
+  /// The callback method
   void callback_method (void);
-  // The callback method
 
 private:
+  /// The orb
   CORBA::ORB_var orb_;
-  // The orb
 
 };
 
+/**
+ * @class Simple_Server_i
+ *
+ * @brief Simpler Server implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
+  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
-  // ctor
 
   // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback);
@@ -65,17 +64,17 @@ public:
   int call_client (void);
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
+  /// Flag to indicate, whether we are ready for a remote call.
   int flag_;
-  // Flag to indicate, whether we are ready for a remote call.
 
+  /// Callback Object
   Callback_var callback_;
-  // Callback Object
 
+  /// Number of times the callback needs to be called
   int no_iterations_;
-  // Number of times the callback needs to be called
 };
 
 #if defined(__ACE_INLINE__)

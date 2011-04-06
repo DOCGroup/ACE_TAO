@@ -1,38 +1,35 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Pool_Reactor_Resume_Test.cpp
-//
-// = DESCRIPTION
-//      This program is an additional torture test of thread pool
-//      reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
-//      in $ACE_ROOT/tests. This test differs from the other one
-//      slightly. The TP reactor is instantiated with the
-//      with a value of 1 for the <resume_flag> argument. The server
-//      threads during the  handle_input call resumes the handle that
-//      would have been suspended by the reactor.
-//
-//      Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]
-//                [-s <server thr#>] [-c <client thr#>] [-d <delay>]
-//                [-i <client conn attempt#>] [-n <client request# per conn>]
-//
-//      Default value:
-//          <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
-//          <server thr#>:          ACE_MAX_THREADS
-//          <client thr#>:          ACE_MAX_ITERATIONS
-//          <client conn attempt#>: ACE_MAX_ITERATIONS
-//          <client req# per conn>: ACE_MAX_THREADS
-//          <delay>:                50 usec
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Pool_Reactor_Resume_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program is an additional torture test of thread pool
+ *    reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
+ *    in $ACE_ROOT/tests. This test differs from the other one
+ *    slightly. The TP reactor is instantiated with the
+ *    with a value of 1 for the <resume_flag> argument. The server
+ *    threads during the  handle_input call resumes the handle that
+ *    would have been suspended by the reactor.
+ *
+ *    Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]
+ *              [-s <server thr#>] [-c <client thr#>] [-d <delay>]
+ *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *
+ *    Default value:
+ *        <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
+ *        <server thr#>:          ACE_MAX_THREADS
+ *        <client thr#>:          ACE_MAX_ITERATIONS
+ *        <client conn attempt#>: ACE_MAX_ITERATIONS
+ *        <client req# per conn>: ACE_MAX_THREADS
+ *        <delay>:                50 usec
+ *
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

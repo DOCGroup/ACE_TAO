@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Framework_Component_DLL.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@ieee.org>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Framework_Component_DLL.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author Don Hinton <dhinton@ieee.org>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 #define ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H

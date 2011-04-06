@@ -1,6 +1,12 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.0.1 and ACE-6.0.2
 ====================================================
 
+. The ACE_wrappers/ace/OS.h file has been restored in order to ensure
+  build-time compatibility with older ACE versions. Its use will still
+  cause your build to incur more processing time than using the needed
+  ace/OS_NS_*.h files; however, you should be able to build OS.h-including
+  code without needing to replace it with OS_NS_* includes.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.0 and ACE-6.0.1
 ====================================================
 

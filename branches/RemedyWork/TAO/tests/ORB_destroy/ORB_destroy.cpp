@@ -1,20 +1,17 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/ORB_destroy
-//
-// = FILENAME
-//     ORB_destroy.cpp
-//
-// = DESCRIPTION
-//     Simple ORB destruction test.
-//
-// = AUTHOR
-//     Irfan Pyarali <irfan@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     ORB_destroy.cpp
+ *
+ *  $Id$
+ *
+ *   Simple ORB destruction test.
+ *
+ *
+ *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"

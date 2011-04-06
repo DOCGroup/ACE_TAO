@@ -1,18 +1,18 @@
-// $Id$
 
-// ================================================================
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client that uses oneways with buffering constraints
-//     and roundtrip timeout constraints.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client that uses oneways with buffering constraints
+ *   and roundtrip timeout constraints.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testC.h"
 

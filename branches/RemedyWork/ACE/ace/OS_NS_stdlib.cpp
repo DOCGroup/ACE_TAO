@@ -1108,7 +1108,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
   // we need to use a C-style cast as a catch-all in order to use a
   // static_cast<> to an integral type.
-  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
+  unsigned int seed = static_cast<unsigned int> (msec);
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -1148,7 +1148,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
           // selection to work for EBCDIC, as well.
           do
             {
-              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (&seed));
             }
           while (!ACE_OS::ace_isalnum (r));
 

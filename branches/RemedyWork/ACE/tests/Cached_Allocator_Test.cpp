@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Cached_Allocator_Test.cpp
-//
-// = DESCRIPTION
-//    Simple test of ACE_Dynamic_Cached_Allocator and ACE_Cached_Allocator.
-//
-// = AUTHOR
-//    Jaroslaw Nozderko <jareknz@polbox.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cached_Allocator_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Simple test of ACE_Dynamic_Cached_Allocator and ACE_Cached_Allocator.
+ *
+ *
+ *  @author Jaroslaw Nozderko <jareknz@polbox.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

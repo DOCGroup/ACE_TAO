@@ -1,27 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Future_Test.cpp
-//
-// = DESCRIPTION
-//    This example tests the ACE Future and illustrates an
-//    implementation of the Active Object pattern, which is described
-//    in the POSA2 book <www.cs.wustl.edu/~schmidt/POSA/> and in a
-//    paper at <www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.  The
-//    Active Object example here is very simple -- it determines if numbers
-//    are prime.
-//
-// = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
-//    and Per Andersson <pera@ipso.se>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Future_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This example tests the ACE Future and illustrates an
+ *  implementation of the Active Object pattern, which is described
+ *  in the POSA2 book <www.cs.wustl.edu/~schmidt/POSA/> and in a
+ *  paper at <www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.  The
+ *  Active Object example here is very simple -- it determines if numbers
+ *  are prime.
+ *
+ *
+ *  @author Andres Kruse <Andres.Kruse@cern.ch>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and Per Andersson <pera@ipso.se>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -54,35 +51,37 @@ static ATOMIC_INT capsule_count (0);
 // A counter for the method requests...
 static ATOMIC_INT method_request_count (0);
 
+/**
+ * @class Prime_Scheduler
+ *
+ * @brief Prime number scheduler for the Active Object.
+ *
+ * This class also plays the role of the Proxy and the Servant
+ * in the Active Object pattern.  Naturally, these roles could
+ * be split apart from the Prime_Scheduler.
+ */
 class Prime_Scheduler : public ACE_Task_Base
 {
-  // = TITLE
-  //     Prime number scheduler for the Active Object.
-  //
-  // = DESCRIPTION
-  //     This class also plays the role of the Proxy and the Servant
-  //     in the Active Object pattern.  Naturally, these roles could
-  //     be split apart from the Prime_Scheduler.
 
   friend class Method_Request_work;
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Prime_Scheduler (const ACE_TCHAR *,
                    Prime_Scheduler * = 0);
-  // Constructor.
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Initializer.
   virtual int open (void *args = 0);
-  // Initializer.
-
-  virtual int shutdown (void);
-  // Terminator.
   //FUZZ: enable check_for_lack_ACE_OS
 
+  /// Terminator.
+  virtual int shutdown (void);
+
+  /// Destructor.
   virtual ~Prime_Scheduler (void);
-  // Destructor.
 
   // = These methods are part of the Active Object Proxy interface.
   ACE_Future<u_long> work (u_long param, int count = 1);
@@ -90,9 +89,9 @@ public:
   void end (void);
 
 protected:
+  /// Runs the Prime_Scheduler's event loop, which dequeues
+  /// <Method_Requests> and dispatches them.
   virtual int svc (void);
-  // Runs the Prime_Scheduler's event loop, which dequeues
-  // <Method_Requests> and dispatches them.
 
   // = These are the Servant methods that do the actual work.
   u_long work_i (u_long, int);
@@ -105,10 +104,13 @@ private:
   Prime_Scheduler *scheduler_;
 };
 
+/**
+ * @class Method_Request_work
+ *
+ * @brief Reification of the <work> method.
+ */
 class Method_Request_work : public ACE_Method_Request
 {
-  // = TITLE
-  //     Reification of the <work> method.
 public:
   Method_Request_work (Prime_Scheduler *,
                        u_long,
@@ -116,21 +118,21 @@ public:
                        ACE_Future<u_long> &);
   virtual ~Method_Request_work (void);
 
+  /// This is the entry point into the Active Object method.
   virtual int call (void);
-  // This is the entry point into the Active Object method.
 
 private:
   Prime_Scheduler *scheduler_;
 
+  /// Parameter to the method that's used to determine if a number if
+  /// prime.
   u_long param_;
-  // Parameter to the method that's used to determine if a number if
-  // prime.
 
+  /// Unused.
   int count_;
-  // Unused.
 
+  /// Store the result of the Future.
   ACE_Future<u_long> future_result_;
-  // Store the result of the Future.
 };
 
 Method_Request_work::Method_Request_work (Prime_Scheduler *new_Prime_Scheduler,
@@ -162,17 +164,20 @@ Method_Request_work::call (void)
                                     this->count_));
 }
 
+/**
+ * @class Method_Request_name
+ *
+ * @brief Reification of the <name> method.
+ */
 class Method_Request_name : public ACE_Method_Request
 {
-  // = TITLE
-  //     Reification of the <name> method.
 public:
   Method_Request_name (Prime_Scheduler *,
                        ACE_Future<const ACE_TCHAR*> &);
   virtual ~Method_Request_name (void);
 
+  /// This is the entry point into the Active Object method.
   virtual int call (void);
-  // This is the entry point into the Active Object method.
 
 private:
   Prime_Scheduler *scheduler_;
@@ -202,10 +207,13 @@ Method_Request_name::call (void)
   return future_result_.set (scheduler_->name_i ());
 }
 
+/**
+ * @class Method_Request_end
+ *
+ * @brief Reification of the <end> method.
+ */
 class Method_Request_end : public ACE_Method_Request
 {
-  // = TITLE
-  //     Reification of the <end> method.
 public:
   Method_Request_end (Prime_Scheduler *new_Prime_Scheduler);
   virtual ~Method_Request_end (void);

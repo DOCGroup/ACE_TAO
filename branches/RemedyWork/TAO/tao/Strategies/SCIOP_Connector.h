@@ -75,7 +75,7 @@ public:
 
   typedef ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler,
                                ACE_SOCK_SEQPACK_CONNECTOR>
-          TAO_SCIOP_CONNECT_STRATEGY ;
+          TAO_SCIOP_CONNECT_STRATEGY;
 
   typedef ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler,
                                  ACE_SOCK_SEQPACK_CONNECTOR>

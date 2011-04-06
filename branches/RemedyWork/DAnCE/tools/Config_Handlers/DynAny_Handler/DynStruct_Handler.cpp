@@ -15,9 +15,13 @@ namespace DAnCE
   namespace Config_Handlers
   {
     void create_type_map (const DataType &type,
-                          std::map <std::basic_string<ACE_TCHAR>, DataType const *> &dt_map)
+                          std::map <std::basic_string <ACE_TCHAR>,
+                          DataType const *> &dt_map)
     {
-      for (StructType::member_const_iterator i = type.struct_ ().begin_member ();
+      DANCE_TRACE("Config_Handlers::create_type_map");
+
+      for (StructType::member_const_iterator i =
+             type.struct_ ().begin_member ();
            i != type.struct_ ().end_member (); ++i)
         {
           dt_map[(*i)->name ()] = &((*i)->type ());
@@ -29,6 +33,8 @@ namespace DAnCE
                                             const DataValue &value,
                                             CORBA::TypeCode_ptr req_tc)
     {
+      DANCE_TRACE("DynStruct_Handler::extract_into_dynany");
+
       try
         {
           CORBA::TypeCode_var tc;
@@ -44,7 +50,8 @@ namespace DAnCE
           // Make the actual DynStruct
           DynamicAny::DynAny_var temp =
             DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-          DynamicAny::DynStruct_var retval = DynamicAny::DynStruct::_narrow (temp.in ());
+          DynamicAny::DynStruct_var retval =
+            DynamicAny::DynStruct::_narrow (temp.in ());
 
           CORBA::ULong pos (0);
           DynamicAny::NameDynAnyPairSeq values;
@@ -53,9 +60,11 @@ namespace DAnCE
           for (DataValue::member_const_iterator i = value.begin_member ();
                i != value.end_member (); ++i)
             {
-              values[pos].id = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
-              values[pos].value = DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
-                                                                       (*i)->value ());
+              values[pos].id =
+                ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
+              values[pos].value =
+                DYNANY_HANDLER->extract_into_dynany (*dt_map[(*i)->name ()],
+                                                     (*i)->value ());
               ++pos;
             }
 
@@ -80,16 +89,25 @@ namespace DAnCE
     void
     DynStruct_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
-      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Structs not yet supported\n")));
+      DANCE_TRACE("DynStruct_Handler::extract_out_of_dynany");
+
+      DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
+        (LM_ERROR, ACE_TEXT ("Extracting Structs not yet supported\n")));
     }
 
     CORBA::TypeCode_ptr
     DynStruct_Handler::create_typecode (const DataType &type)
     {
+      DANCE_TRACE("DynStruct_Handler::create_typecode");
+
       if (!type.struct_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Struct type description required\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected struct type information, tc_kind may be incorrect\n"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR,
+             ACE_TEXT ("ERROR: Struct type description required\n")));
+          throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Expected struct type information, tc_kind may be"\
+                      "incorrect\n"));
         }
 
       std::basic_string<ACE_TCHAR> rid (type.struct_ ().typeId ());
@@ -99,7 +117,8 @@ namespace DAnCE
       members.length (type.struct_ ().count_member ());
       CORBA::ULong pos (0);
 
-      for (StructType::member_const_iterator i = type.struct_ ().begin_member ();
+      for (StructType::member_const_iterator i =
+        type.struct_ ().begin_member ();
            i != type.struct_ ().end_member (); ++i)
         {
           members[pos].name = ACE_TEXT_ALWAYS_CHAR ((*i)->name ().c_str ());
@@ -108,9 +127,10 @@ namespace DAnCE
         }
 
       CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_struct_tc (ACE_TEXT_ALWAYS_CHAR (rid.c_str ()),
-                                                  ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
-                                                  members);
+        DYNANY_HANDLER->orb ()->create_struct_tc (
+          ACE_TEXT_ALWAYS_CHAR (rid.c_str ()),
+          ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+          members);
 
       DYNANY_HANDLER->register_typecode (type.struct_ ().typeId (), tc.in ());
 

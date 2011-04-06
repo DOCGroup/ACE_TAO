@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//     target.cpp
-//
-// = DESCRIPTION
-// Target class defines target SNMP agents.
-//
-// = AUTHOR
-//   Peter E Mellquist
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     target.cpp
+ *
+ *  $Id$
+ *
+ * Target class defines target SNMP agents.
+ *
+ *
+ *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

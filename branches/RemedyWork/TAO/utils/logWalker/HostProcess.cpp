@@ -69,7 +69,8 @@ HostProcess::find_thread (long tid)
         return thr;
     }
   char alias[20];
-  ACE_OS::sprintf (alias,"Thread[%d]",this->threads_.size() + 1);
+  ACE_OS::sprintf (alias,"Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
+                   this->threads_.size() + 1);
   thr = new Thread (tid, alias);
   threads_.insert_tail (thr);
   return thr;
@@ -163,7 +164,9 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
     }
   const ACE_CString &addr = peer->is_server() ?
     peer->server_addr() : peer->last_client_addr();
-  this->by_addr_.bind (addr,peer);
+  int result = this->by_addr_.bind (addr,peer);
+  if (result != 0)
+    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s %p\n", addr.c_str(), "by_addr_.bind"));
   PeerNode *node = new PeerNode (handle,peer);
   this->by_handle_.insert_tail(node);
 }

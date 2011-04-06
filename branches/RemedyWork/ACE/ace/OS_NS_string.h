@@ -449,11 +449,11 @@ namespace ACE_OS {
   wchar_t *strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts);
 #endif  // ACE_HAS_WCHAR
 
-#if !defined (ACE_HAS_REENTRANT_FUNCTIONS) || defined (ACE_LACKS_STRTOK_R)
+#if defined (ACE_LACKS_STRTOK_R)
   /// Emulated strtok_r.
   extern ACE_Export
   char *strtok_r_emulation (char *s, const char *tokens, char **lasts);
-#endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
+#endif /* ACE_LACKS_STRTOK_R */
 
 # if defined (ACE_HAS_WCHAR) && defined(ACE_LACKS_WCSTOK)
   /// Emulated strtok_r (wchar_t version).

@@ -1,30 +1,26 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Threads/
-//
-// = FILENAME
-//    process_manager.cpp
-//
-// = DESCRIPTION
-//   Test out the mechanisms provided by the ACE_Process_Manager.
-//   Using the global ACE_Process_Manager::instance(), we first spawn
-//   some processes (re-invoke this program, and plain-old-fork on
-//   systems that support it), and try the wait() functions.
-//
-//   Then, we register the Process_Manager with
-//   ACE_Reactor::instance() and spawn more processes, counting on the
-//   autoreap to clean up.
-//
-//   Specific-pid and generic exit-handler functions are also tested.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
-//    Dave Madden <dhm@mersenne.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    process_manager.cpp
+ *
+ *  $Id$
+ *
+ * Test out the mechanisms provided by the ACE_Process_Manager.
+ * Using the global ACE_Process_Manager::instance(), we first spawn
+ * some processes (re-invoke this program, and plain-old-fork on
+ * systems that support it), and try the wait() functions.
+ *
+ * Then, we register the Process_Manager with
+ * ACE_Reactor::instance() and spawn more processes, counting on the
+ * autoreap to clean up.
+ *
+ * Specific-pid and generic exit-handler functions are also tested.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
@@ -38,13 +34,13 @@ class ExitHandler : public ACE_Event_Handler
 public:
   ExitHandler (const char *name);
 
+  /// Called when object is removed from the <ACE_Reactor>.
   virtual ~ExitHandler (void);
   virtual int handle_exit (ACE_Process *proc);
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  // Called when object is removed from the <ACE_Reactor>.
 private:
   const char *name_;
 };

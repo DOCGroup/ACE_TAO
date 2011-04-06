@@ -22,7 +22,7 @@
  *   The implementation expects that buffers are aligned according
  *   to the strongest CDR alignment restriction.
  *
- *   NOTE: this does everything "CDR 1.1" does ... that is, it
+ *   @note This does everything "CDR 1.1" does ... that is, it
  *   supports the five extended OMG-IDL data types in UNO Appendix
  *   A, which provide richer arithmetic types (64 bit integers,
  *   "quad precision" FP) and UNICODE-based characters and strings.

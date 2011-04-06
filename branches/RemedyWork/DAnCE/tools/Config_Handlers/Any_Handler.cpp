@@ -18,10 +18,12 @@ namespace DAnCE
 
     Any_Handler::Any_Handler (void)
     {
+      DANCE_TRACE("Any_Handler::constructor");
     }
 
     Any_Handler::~Any_Handler (void)
     {
+      DANCE_TRACE("Any_Handler::destructor");
     }
 
     void
@@ -37,6 +39,16 @@ namespace DAnCE
           toconfig = *any_safe;
 
           dyn->destroy ();
+        }
+      catch (CORBA::Exception &ex)
+        {
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
+                           ACE_TEXT ("Any_Handler::extract_into_any -")
+                           ACE_TEXT (" Caught CORBA Exception while extracting into")
+                           ACE_TEXT (" dynany: %C\n"),
+                           ex._info ().c_str ()));
+          throw Config_Error (ACE_TEXT (""),
+                              ACE_TEXT ("CORBA Exception while extracting into dynany\n"));
         }
       catch (Config_Error &ex)
         {

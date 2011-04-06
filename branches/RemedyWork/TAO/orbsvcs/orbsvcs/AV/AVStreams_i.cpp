@@ -3667,7 +3667,8 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
 
               ACE_TCHAR buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
-              ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (), buf);
+              ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (),
+                               ACE_TEXT_ALWAYS_CHAR (buf));
             }
           else
             {

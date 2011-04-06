@@ -1,3 +1,1506 @@
+Tue Apr  5 14:27:40 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Fixes for MingW32 link problem.
+
+Tue Apr  5 13:01:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Added new feature, iphone_codesign, to only use the iPhone codesign
+          utility if explicitly set.  Recent changes in behavior have make this
+          problematic in automated builds.
+
+Tue Apr  5 12:36:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Get_Opt.inl:
+        * ace/Guard_T.inl:
+        * ace/Guard_T.cpp:
+        * ace/Handle_Set.h:
+        * ace/Handle_Set.cpp:
+        * ace/Hash_Multi_Map_Manager_T.cpp:
+        * ace/Hashable.inl:
+        * ace/Hashable.cpp:
+        * ace/IO_SAP.inl:
+        * ace/IO_SAP.cpp:
+          Layout changes
+
+        * ace/Handle_Set.inl:
+          Removed some old includes, should not be a problem with the current
+          supported platforms
+
+        * bin/vx_repo_link.pl:
+          Removed this file, vxsim is not supported anymore
+
+Mon Apr  4 09:42:27 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added support to build from symlinked project root.
+
+Thu Mar 31 12:59:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          If CROSS_COMPILE is set, set CROSS-COMPILE to 1
+
+Tue Mar 29 12:37:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/doxygen-convert-h.pl:
+          Also convert idl files
+
+        * apps/JAWS2/JAWS/Policy.h:
+        * apps/JAWS2/JAWS/Reaper.h:
+        * tests/Message_Queue_Test_Ex.cpp:
+        * tests/Wild_Match_Test.cpp:
+          Doxygen changes
+
+Tue Mar 29 07:09:56 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Made explicit export defs on nested classes default for all MSVC
+          compilers as it turns out VC10 is troubled by this deficiency
+          as well.
+
+Mon Mar 28 09:58:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+          Fuzz fixes
+
+Mon Mar 28 07:50:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/asnmp/vb.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+        * ASNMP/tests/Gauge_Test.cpp:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+        * apps/Gateway/Peer/peerd.cpp:
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+        * apps/JAWS2/JAWS/IO_Handler.h:
+        * apps/JAWS2/JAWS/IO_Handler.cpp:
+        * apps/JAWS2/JAWS/Jaws_IO.h:
+        * apps/drwho/Hash_Table.h:
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+          Fuzz fixes
+
+Mon Mar 28 07:41:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended to check for old documentation style
+
+          Converted to doxygen
+        * ASNMP/agent/agent_impl.h:
+        * ASNMP/agent/snmp_agent.h:
+
+        * ASNMP/asnmp/address.cpp:
+        * ASNMP/asnmp/asn1.cpp:
+        * ASNMP/asnmp/counter.cpp:
+        * ASNMP/asnmp/ctr64.cpp:
+        * ASNMP/asnmp/gauge.cpp:
+        * ASNMP/asnmp/integer.cpp:
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/oid.cpp:
+        * ASNMP/asnmp/pdu.cpp:
+        * ASNMP/asnmp/sagent.cpp:
+        * ASNMP/asnmp/snmp.cpp:
+        * ASNMP/asnmp/target.cpp:
+        * ASNMP/asnmp/timetick.cpp:
+        * ASNMP/asnmp/transaction.cpp:
+        * ASNMP/asnmp/vb.cpp:
+        * ASNMP/asnmp/wpdu.cpp:
+
+        * ASNMP/examples/get/get.cpp:
+        * ASNMP/examples/get/get_async.cpp:
+
+        * ASNMP/examples/next/next.cpp:
+
+        * ASNMP/examples/set/set.cpp:
+
+        * ASNMP/examples/trap/trap.cpp:
+
+        * ASNMP/examples/walk/walk.cpp:
+
+        * ASNMP/tests/Address_Test.cpp:
+        * ASNMP/tests/Counter64_Test.cpp:
+        * ASNMP/tests/Counter_Test.cpp:
+        * ASNMP/tests/Gauge_Test.cpp:
+        * ASNMP/tests/Integer_Test.cpp:
+        * ASNMP/tests/Octet_Test.cpp:
+        * ASNMP/tests/Oid_Test.cpp:
+        * ASNMP/tests/Target_Test.cpp:
+        * ASNMP/tests/Varbind_Test.cpp:
+        * ASNMP/tests/test_config.h:
+
+        * Kokyu/Kokyu_dsrt.h:
+
+        * ace/Codeset_Registry.h:
+        * ace/Codeset_Registry.inl:
+
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL_y.cpp:
+
+        * ace/OS_NS_signal.inl:
+
+        * apps/Gateway/Gateway/Concrete_Connection_Handlers.h:
+        * apps/Gateway/Gateway/Config_Files.h:
+        * apps/Gateway/Gateway/Connection_Handler.h:
+        * apps/Gateway/Gateway/Connection_Handler_Acceptor.h:
+        * apps/Gateway/Gateway/Connection_Handler_Connector.h:
+        * apps/Gateway/Gateway/Consumer_Dispatch_Set.h:
+        * apps/Gateway/Gateway/Event.h:
+        * apps/Gateway/Gateway/Event_Channel.h:
+        * apps/Gateway/Gateway/Event_Forwarding_Discriminator.h:
+        * apps/Gateway/Gateway/File_Parser.h:
+        * apps/Gateway/Gateway/Gateway.h:
+        * apps/Gateway/Gateway/Options.h:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+
+        * apps/Gateway/Peer/Options.h:
+        * apps/Gateway/Peer/Peer.h:
+        * apps/Gateway/Peer/peerd.cpp:
+
+        * apps/JAWS/clients/Blobby/Blob.h:
+        * apps/JAWS/clients/Blobby/Blob_Handler.h:
+        * apps/JAWS/clients/Blobby/Options.h:
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+
+        * apps/JAWS/clients/Caching/ID_Generator.h:
+        * apps/JAWS/clients/Caching/Local_Locator.h:
+        * apps/JAWS/clients/Caching/Locator_Request_Reply.h:
+        * apps/JAWS/clients/Caching/URL_Array_Helper.h:
+        * apps/JAWS/clients/Caching/URL_Locator.h:
+        * apps/JAWS/clients/Caching/URL_Properties.h:
+        * apps/JAWS/clients/Caching/http_client.cpp:
+        * apps/JAWS/clients/Caching/http_handler.h:
+        * apps/JAWS/clients/Caching/http_handler.cpp:
+
+        * apps/JAWS2/JAWS/IO_Handler.h:
+        * apps/JAWS2/JAWS/Jaws_IO.h:
+
+        * apps/drwho/BS_Client.h:
+        * apps/drwho/BS_Server.h:
+        * apps/drwho/Binary_Search.h:
+        * apps/drwho/CM_Client.h:
+        * apps/drwho/CM_Server.h:
+        * apps/drwho/Comm_Manager.h:
+        * apps/drwho/Drwho_Node.h:
+        * apps/drwho/File_Manager.h:
+        * apps/drwho/HT_Client.h:
+        * apps/drwho/HT_Server.h:
+        * apps/drwho/Hash_Table.h:
+        * apps/drwho/Multicast_Manager.h:
+        * apps/drwho/Options.h:
+        * apps/drwho/PMC_All.h:
+        * apps/drwho/PMC_Flo.h:
+        * apps/drwho/PMC_Ruser.h:
+        * apps/drwho/PMC_Usr.h:
+        * apps/drwho/PMS_All.h:
+        * apps/drwho/PMS_Flo.h:
+        * apps/drwho/PMS_Ruser.h:
+        * apps/drwho/PMS_Usr.h:
+        * apps/drwho/PM_Client.h:
+        * apps/drwho/PM_Server.h:
+        * apps/drwho/Protocol_Manager.h:
+        * apps/drwho/Protocol_Record.h:
+        * apps/drwho/Rwho_DB_Manager.h:
+        * apps/drwho/SL_Client.h:
+        * apps/drwho/SL_Server.h:
+        * apps/drwho/SML_Client.h:
+        * apps/drwho/SML_Server.h:
+        * apps/drwho/SMR_Client.h:
+        * apps/drwho/SMR_Server.h:
+        * apps/drwho/SM_Client.h:
+        * apps/drwho/SM_Server.h:
+        * apps/drwho/Search_Struct.h:
+        * apps/drwho/Select_Manager.h:
+        * apps/drwho/Single_Lookup.h:
+        * apps/drwho/client.cpp:
+        * apps/drwho/global.h:
+        * apps/drwho/server.cpp:
+
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.cpp:
+
+        * protocols/tests/HTBP/Send_Recv_Tests/client.cpp:
+        * protocols/tests/HTBP/Send_Recv_Tests/server.cpp:
+
+        * websvcs/lib/URL_Addr.h:
+
+Sat Mar 26 12:07:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          AIO is not available in single thread builds on LynxOS 4.x.
+
+Thu Mar 24 18:59:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Define ACE_LACKS_REALPATH on LynxOS 5.0. Platform has
+          function prototype but doesn't provide implementation.
+
+Thu Mar 24 18:31:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Misc/basic_func.h:
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/preempt.cpp:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_Association_Test.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+          Converted to doxygen
+
+Thu Mar 24 13:26:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Bounded_Packet_Relay/BPR_Drivers.h:
+        * examples/Bounded_Packet_Relay/BPR_Drivers.cpp:
+        * examples/Bounded_Packet_Relay/BPR_Drivers_T.h:
+        * examples/Bounded_Packet_Relay/BPR_Drivers_T.cpp:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.h:
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.cpp:
+        * examples/Bounded_Packet_Relay/bpr_thread.cpp:
+        * examples/Connection/misc/Connection_Handler.cpp:
+        * examples/DLL/Magazine.h:
+        * examples/DLL/Newsweek.h:
+        * examples/DLL/Today.h:
+        * examples/IPC_SAP/UPIPE_SAP/ex1.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex2.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex3.cpp:
+        * examples/Log_Msg/test_callback.cpp:
+        * examples/Log_Msg/test_log_msg.cpp:
+        * examples/Log_Msg/test_ostream.cpp:
+        * examples/Logger/simple-server/Logging_Acceptor.h:
+        * examples/Logger/simple-server/Logging_Handler.h:
+        * examples/Logger/simple-server/Reactor_Singleton.h:
+        * examples/Misc/test_trace.cpp:
+        * examples/NT_Service/main.cpp:
+        * examples/NT_Service/ntsvc.h:
+        * examples/NT_Service/ntsvc.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Receiver_FlowSpec/FlowSpec_Dbase.h:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Util.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/receiver.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
+        * examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Sender_TSpec/FlowSpec_Dbase.h:
+        * examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/QoS_Util.h:
+        * examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/receiver.cpp:
+        * examples/QOS/Change_Sender_TSpec/sender.cpp:
+        * examples/QOS/Simple/Fill_ACE_QoS.h:
+        * examples/QOS/Simple/FlowSpec_Dbase.h:
+        * examples/QOS/Simple/QoS_Signal_Handler.h:
+        * examples/QOS/Simple/QoS_Util.h:
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/receiver.cpp:
+        * examples/QOS/Simple/sender.cpp:
+        * examples/Reactor/Misc/test_early_timeouts.cpp:
+        * examples/Reactor/Proactor/Aio_Platform_Test_C.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/simple_test_proactor.cpp:
+        * examples/Reactor/Proactor/test_aiocb.cpp:
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp:
+        * examples/Reactor/Proactor/test_aiosig.cpp:
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_multiple_loops.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_proactor3.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_timeout_st.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/Console_Input.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Exceptions.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Reactor/WFMO_Reactor/Timeouts.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * examples/Service_Configurator/Misc/main.cpp:
+        * examples/Threads/TSS_Data.h:
+        * examples/Threads/TSS_Obj.h:
+        * examples/Threads/TSS_Task.h:
+        * examples/Threads/future1.cpp:
+        * examples/Threads/future2.cpp:
+        * examples/Threads/process_manager.cpp:
+        * examples/Threads/task_five.cpp:
+        * examples/Threads/tss1.cpp:
+        * examples/Threads/tss2.cpp:
+        * examples/Timer_Queue/Custom_Handler.h:
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.h:
+        * examples/Timer_Queue/Thread_Timer_Queue_Custom_Handler_Test.cpp:
+        * examples/Timer_Queue/main_thread_custom_handler.cpp:
+        * examples/Web_Crawler/Command_Processor.h:
+        * examples/Web_Crawler/HTTP_URL.h:
+        * examples/Web_Crawler/Iterators.h:
+        * examples/Web_Crawler/Mem_Map_Stream.h:
+        * examples/Web_Crawler/Options.h:
+        * examples/Web_Crawler/URL.h:
+        * examples/Web_Crawler/URL_Addr.h:
+        * examples/Web_Crawler/URL_Status.h:
+        * examples/Web_Crawler/URL_Visitor.h:
+        * examples/Web_Crawler/URL_Visitor_Factory.h:
+        * examples/Web_Crawler/Web_Crawler.h:
+        * examples/Web_Crawler/main.cpp:
+          Converted to doxygen style of documentation
+
+Thu Mar 24 13:10:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/ACE_Init_Test.h:
+        * tests/ACE_Init_Test_Resource.h:
+        * tests/ACE_Init_Test_StdAfx.h:
+        * tests/Aio_Platform_Test.cpp:
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Auto_Event_Test.cpp:
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/Barrier_Test.cpp:
+        * tests/Based_Pointer_Test.cpp:
+        * tests/Based_Pointer_Test_Lib.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Bound_Ptr_Test.h:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/Bug_2434_Regression_Test.cpp:
+        * tests/Bug_2653_Regression_Test.cpp:
+        * tests/Bug_2659_Regression_Test.cpp:
+        * tests/Bug_3539_Regression_Test.cpp:
+        * tests/Bug_3729_Regression_Test.cpp:
+        * tests/CDR_Array_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Cache_Map_Manager_Test.h:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.h:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/Cached_Conn_Test.h:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Capabilities_Test.cpp:
+        * tests/Codecs_Test.cpp:
+        * tests/Collection_Test.h:
+        * tests/Collection_Test.cpp:
+        * tests/Config_Test.h:
+        * tests/Config_Test.cpp:
+        * tests/Conn_Test.h:
+        * tests/Conn_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.h:
+        * tests/DLL_Test_Impl.cpp:
+        * tests/DLList_Test.cpp:
+        * tests/Dirent_Test.cpp:
+        * tests/Dynamic_Priority_Test.cpp:
+        * tests/Dynamic_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/FIFO_Test.cpp:
+        * tests/FlReactor_Test.cpp:
+        * tests/Framework_Component_DLL.h:
+        * tests/Framework_Component_DLL.cpp:
+        * tests/Framework_Component_Test.h:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/Hash_Multi_Map_Manager_Test.cpp:
+        * tests/High_Res_Timer_Test.cpp:
+        * tests/INET_Addr_Test.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/Intrusive_Auto_Ptr_Test.cpp:
+        * tests/Lazy_Map_Manager_Test.cpp:
+        * tests/Log_Msg_Backend_Test.cpp:
+        * tests/Log_Msg_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MEM_Stream_Test.h:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_NonBlocking_Connect_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.h:
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/MT_Reference_Counted_Notify_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Main.cpp:
+        * tests/Malloc_Test.h:
+        * tests/Malloc_Test.cpp:
+        * tests/Manual_Event_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Map_Test.h:
+        * tests/Map_Test.cpp:
+        * tests/Max_Default_Port_Test.h:
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/Message_Queue_Test_Ex.cpp:
+        * tests/Missing_Svc_Conf_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test_IPV6.cpp:
+        * tests/NDDS_Timer_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Network_Adapters_Test.h:
+        * tests/Network_Adapters_Test.cpp:
+        * tests/New_Fail_Test.cpp:
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/NonBlocking_Conn_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Object_Manager_Flipping_Test.cpp:
+        * tests/Object_Manager_Test.cpp:
+        * tests/Obstack_Test.cpp:
+        * tests/OrdMultiSet_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
+        * tests/Priority_Reactor_Test.h:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Proactor_Test.h:
+        * tests/Proactor_Timer_Test.cpp:
+        * tests/Process_Env_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Manual_Event_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Semaphore_Test.cpp:
+        * tests/Process_Strategy_Test.h:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/QtReactor_Test.cpp:
+        * tests/RB_Tree_Test.h:
+        * tests/RB_Tree_Test.cpp:
+        * tests/RW_Process_Mutex_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp:
+        * tests/Reactor_Exceptions_Test.cpp:
+        * tests/Reactor_Fairness_Test.h:
+        * tests/Reactor_Fairness_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Reactor_Performance_Test.h:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactor_Registration_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Recursive_Condition_Bug_Test.cpp:
+        * tests/Recursive_Condition_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/Refcounted_Auto_Ptr_Test.h:
+        * tests/Refcounted_Event_Handler_Test_DevPoll.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Reverse_Lock_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_Dgram_Bcast_Test.cpp:
+        * tests/SOCK_Dgram_Test.cpp:
+        * tests/SOCK_Netlink_Test.cpp:
+        * tests/SOCK_SEQPACK_SCTP_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/SSL/Main.cpp:
+        * tests/SSL/SSL_Asynch_Stream_Test.cpp:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.h:
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * tests/SString_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Sig_Handlers_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/Sigset_Ops_Test.cpp:
+        * tests/Simple_Message_Block_Test.cpp:
+        * tests/Singleton_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/TP_Reactor_Test.h:
+        * tests/TP_Reactor_Test.cpp:
+        * tests/TSS_Static_Test.cpp:
+        * tests/TSS_Test.cpp:
+        * tests/TSS_Test_Errno.h:
+        * tests/Task_Ex_Test.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Attrs_Test.cpp:
+        * tests/Thread_Creation_Threshold_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.h:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.h:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        * tests/Timeprobe_Test.cpp:
+        * tests/Timer_Cancellation_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/TkReactor_Test.cpp:
+        * tests/Tokens_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp:
+        * tests/UUID_Test.cpp:
+        * tests/Unbounded_Set_Test.cpp:
+        * tests/Unload_libACE.cpp:
+        * tests/Upgradable_RW_Test.h:
+        * tests/Upgradable_RW_Test.cpp:
+        * tests/Vector_Test.cpp:
+        * tests/WFMO_Reactor_Test.cpp:
+        * tests/XtAthenaReactor_Test.cpp:
+        * tests/XtMotifReactor_Test.cpp:
+          Converted to doxygen style of documentation
+
+Wed Mar 23 18:36:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check numeric log level for dds4ccm
+
+Wed Mar 23 13:17:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/fuzz.pl:
+
+          Enabled the numeric dance log check at a lower level so it will
+          run with the fuzz build.
+
+Tue Mar 22 21:09:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Acceptor.h:
+          Doxygen change
+
+        * ace/config-win32-borland.h:
+          Updated comment
+
+Tue Mar 22 15:40:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_ifaddrs.h:
+          New wrapper file
+
+        * ace/OS_NS_stdlib.inl:
+        * ace/config-WinCE.h:
+          Added new define to not check for OS in OS_NS_ file
+
+        * ace/Sock_Connect.cpp:
+          use new os_ifaddrs.h wrapper
+
+        * tests/Dirent_Test.cpp:
+        * tests/Test_Output.cpp:
+          Cleanup
+
+Tue Mar 22 09:24:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Added back ACE_LACKS_SETSCHED. OpenBSD does not provide
+          implementation.
+
+Tue Mar 22 09:18:44 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Reverted: Mon Mar 21 16:10:05 UTC 2011  Olli Savia  <ops@iki.fi>
+          Put back ACE_LACKS_RLIMIT_NOFILE. The problem with LynxOS 4.2
+          seems to be rlimit.
+
+Mon Mar 21 20:40:36 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * bin/fuzz.pl:
+          Commented out lines that may be used for debugging the
+          trace error checker
+
+Mon Mar 21 20:18:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * bin/fuzz.pl:
+          Reverted previous changes
+
+Mon Mar 21 19:07:52 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * bin/fuzz.pl:
+          Stopped fuzz.pl from looking into lib/bin/Debug/Release
+          Stopped fuzz.pl from considering *C.* and *S.* generated files
+          Stopped fuzz.pl from considering *_export.h
+
+Mon Mar 21 19:02:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/index.shtml:
+          Playstation xampler results are not available anymore
+
+Mon Mar 21 16:10:05 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          ACE_LACKS_THREAD_PROCESS_SCOPING is needed on LynxOS 4.2.
+
+Mon Mar 21 15:15:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also check DANCE_TRACE
+
+Mon Mar 21 14:23:46 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+        * include/makeinclude/platform_openbsd.GNU:
+          Improved support for OpenBSD.
+
+Mon Mar 21 12:48:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+        * ace/OS_NS_netdb.h:
+        * ace/OS_NS_netdb.inl:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_pwd.h:
+        * ace/Ping_Socket.h:
+        * ace/Process.cpp:
+        * ace/ace_wchar.h:
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_stdio.h:
+          Cleanup, removed lot of old VxWorks code not needed anymore
+
+        * include/makeinclude/platform_sunos5_common.GNU:
+          Add to the correct make flags
+
+Sat Mar 19 15:01:11 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Removed this file.
+
+        * ace/config-linux.h:
+          Merged contents of config-linux-common.h to config-linux.h
+          for easier maintenance.
+
+        * ACE-INSTALL.html:
+          Update due to changes above.
+
+Sat Mar 19 14:57:04 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Improved support for LynxOS 4.2 and 5.0.
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Removed unused SOBUILD variable.
+
+Sat Mar 19 06:17:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * examples/APG/ThreadSafety/Tokens.cpp:
+          Fixes due to ACE rand_r() changes.
+
+Fri Mar 18 05:21:08 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Layout changes and cleanups.
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Use -lnetinet instead of -lbsd
+
+Fri Mar 18 05:16:45 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Removed some macros which are no longer used.
+
+Fri Mar 18 05:10:32 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/Message_Queue_Test.cpp:
+          Fixes due to ACE rand_r() changes.
+
+Thu Mar 17 21:13:36 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/Message_Queue_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/randomize.h:
+          Fixes due to ACE rand_r() changes.
+
+Thu Mar 17 15:03:52 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * include/makeinclude/platform_macosx_lion.GNU:
+
+          Fuzz.
+
+Thu Mar 17 09:48:53 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * examples/Shared_Malloc/test_malloc.cpp:
+          Fixes due to ACE rand_r() changes.
+
+Thu Mar 17 07:51:20 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/os_include/os_stdlib.h:
+        * tests/randomize.h:
+          Removed references to unused ACE_RANDR_TYPE.
+
+Thu Mar 17 07:32:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_stdlib.inl:
+        * ace/OS_NS_stdlib.cpp:
+          Changed rand_r() API to conform POSIX.
+
+        * ace/config-freebsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-rtems.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-common.h:
+          Added/removed some defines due to change above.
+
+Thu Mar 17 07:20:50 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-WinCE.h:
+          Added ACE_LACKS_STRTOK_R.
+
+Thu Mar 17 04:58:19 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-lion.h:
+        * include/makeinclude/platform_macosx_lion.GNU:
+        * include/makeinclude/platform_macosx_snowleopard.GNU:
+
+          Updated to Mac config/platform files.
+
+Thu Mar 17 04:55:30 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/fuzz.pl:
+
+          Added check at level 6 for numeric log priorities in DAnCE.
+
+Wed Mar 16 14:34:57 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/os_pwd.h:
+          Removed legacy _posix_getpwnam_r() declaration.
+
+Wed Mar 16 14:27:15 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_pwd.inl:
+        * ace/config-lynxos.h:
+          Renamed ACE_HAS_NONSTD_GETPWNAM_R to ACE_HAS_LYNXOS4_GETPWNAM_R
+          since LynxOS 4.x is the only platform that has nonstandard
+          getpwnam_r() implementation.
+
+Wed Mar 16 14:12:56 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-win32-msvc-7.h:
+          Added ACE_LACKS_STRTOK_R ACE_LACKS_LOCALTIME_R.
+
+Wed Mar 16 14:00:26 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_time.cpp:
+          Rearranged localtime_r() code to eliminate macro
+          ACE_HAS_REENTRANT_FUNCTIONS.
+
+        * ace/config-win32-mingw.h:
+          Added ACE_LACKS_STRTOK_R ACE_LACKS_LOCALTIME_R.
+
+Wed Mar 16 13:49:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ICMP_Socket.cpp:
+          Use ACE_OS
+
+Wed Mar 16 12:08:36 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-7.h: New config for AIX 7.
+
+Wed Mar 16 09:00:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux-common.h:
+          Fixed format specifiers for 64bit PPC
+
+Wed Mar 16 06:26:54 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Removed ACE_HAS_PTHREADS_STD.
+
+Tue Mar 15 21:24:11 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-kfreebsd.h:
+        * ace/config-lynxos.h:
+        * ace/config-macosx-leopard.h:
+        * ace/config-openbsd.h:
+        * ace/config-win32-interix.h:
+          Removed ACE_HAS_PTHREADS_STD.
+
+        * tests/Service_Config_Test.cpp:
+          Check features against ACE_HAS_PTHREADS instead of
+          ACE_HAS_PTHREADS_STD.
+
+Tue Mar 15 19:47:01 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.inl:
+        * ace/OS_NS_string.cpp:
+          Rearranged strtok_r() code to eliminate macro
+          ACE_HAS_REENTRANT_FUNCTIONS.
+
+Tue Mar 15 19:29:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-sunos5.5.h:
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Moved _POSIX_PTHREAD_SEMANTICS definition from config file to
+          command line.
+
+Mon Mar 14 18:58:40 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-sunos5.5.h:
+          Define _POSIX_PTHREAD_SEMANTICS if it not already set.
+          Hopefully fixes getpwnam_r() problems.
+
+Mon Mar 14 11:01:41 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openvms.h:
+          Removed ACE_HAS_NONSTD_GETPWNAM_R.
+
+Mon Mar 14 08:16:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
+        * ace/OS_NS_time.cpp:
+          Removed ghs method
+
+        * ace/Guard_T.h:
+          Doxygen change
+
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * ace/config-sunos5.5.h:
+        * ace/config-sunos5.7.h:
+        * ace/config-vxworks6.4.h:
+        * ace/config-win32-msvc.h:
+          Removed ghs workaround
+
+        * tests/Multihomed_INET_Addr_Test.cpp:
+          Layout change
+
+        * ace/gethrtime.cpp:
+          Removed this file, ghs is not supported anymore a long time
+
+        * ace/ace.mpc:
+        * ace/Makefile.am:
+          Removed gethrtime.cpp
+
+Sun Mar 13 10:32:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp (test_getpwnam_r):
+          Handle case where getlogin() returns 0.
+
+Sun Mar 13 09:37:13 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Service_Object.cpp:
+        * ace/Naming_Context.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * apps/gperf/src/Options.cpp:
+        * apps/JAWS/clients/Blobby/Blob_Handler.cpp:
+        * examples/Log_Msg/test_callback.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+          Fixed compile warnings from incorrect use of ACE_TCHAR* type in
+          printf in wchar builds.
+
+Sat Mar 12 09:26:56 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/config-linux.h:
+          Disable clock_{get,set}time() for single thread build.
+
+Fri Mar 11 20:07:05 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/config-openbsd.h:
+          Attempted to fix warnings about wrong format for size_t type
+          on OpenBSD same as this works on NetBSD. It appears that %u is
+          too little for size_t, let's try %lu.
+
+Fri Mar 11 16:30:16 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * apps/JAWS/server/HTTP_Request.cpp:
+          Fixed compile error due getpwnam_r() changes.
+
+Fri Mar 11 12:24:43 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * tests/OS_Test.cpp:
+          Compile fix for platforms that lack pwd-functions.
+
+Fri Mar 11 12:09:00 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_pwd.h:
+        * ace/OS_NS_pwd.inl:
+          Rewrote getpwnam_r(). Changed API to conform POSIX.
+          Fixes Bug #3952.
+
+        * ace/config-aix-5.x.h:
+        * ace/config-cygwin32.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-kfreebsd.h:
+        * ace/config-linux.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-openvms.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-win32-interix.h:
+          Config changes due getpwnam_r() rewrite and API change.
+
+        * tests/OS_Test.cpp:
+          Added atest for getpwnam_r().
+
+Thu Mar 10 16:42:30 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/fuzz.pl:
+          Fix the test so it correctly ignores OS.h when explicitly disabled.
+
+Thu Mar 10 16:42:09 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.mpc: Add OS.h to the Headers to be installed. Thanks to
+          Phil Mesnier for pointing this out.
+
+Thu Mar 10 11:41:15 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tests/MEM_Stream_Test.cpp:
+          Fixed printf warning on MinGW.
+
+Thu Mar 10 11:04:08 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * include/makeinclude/platform_linux_suncc.GNU:
+          Sun Studio related updates.
+
+Thu Mar 10 10:37:44 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/OS_NS_netdb.inl:
+        * ace/Stack_Trace.cpp:
+          Fixed warnings on VxWorks.
+
+        * ace/ACE.cpp:
+          Added a cast for a type that is expected by printf to be long.
+
+        * examples/Timer_Queue/Custom_Handler.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp:
+          Added casts for arguments to printf as it expects unsigned long.
+
+Thu Mar 10 08:29:30 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added some feature defines.
+
+Thu Mar 10 07:31:51 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Include config-posix.h on non-NPTL platforms as well.
+
+        * ace/config-linux.h:
+          Compile fixes for single thread build.
+
+Wed Mar  9 19:14:01 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Re-added OS.h due to popular demand. It's been slimmed down
+          from its pre-ACE 6 days, now including primarily the OS_NS_*.h files
+          which can be disabled by setting the preprocessor macro
+          DO_NOT_INCLUDE_OS_H before including OS.h.
+          This file is here to maintain backwards build compatibility with
+          older ACE versions. Using it will slow your compile time over
+          simply including the requisite OS_NS_*.h file(s).
+
+        * bin/fuzz.pl: Added a new test check_for_include_OS_h to be sure no
+          source within ACE includes ace/OS.h.
+
+        * tests/OS_Test.cpp: Added #include "ace/OS.h" to be sure that it
+          at least compiles.
+
+        * NEWS: Note that OS.h is back.
+
+Wed Mar  9 16:22:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Removed "-e config.h" from the depgen.pl invocation, we do want
+          dependencies included from config.h to be considered.
+
+Wed Mar  9 10:38:39 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Service_Object.cpp:
+          Fixed incorrect arguments for the provided format.
+
+        * ace/Process.h:
+          Reverted my change from 'Mon Mar  7 16:14:33 UTC 2011'. GCC cannot
+          check formats in wide strings.
+
+Tue Mar  8 15:36:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Put back accidentally removed MT_SAFE define.
+
+Tue Mar  8 10:31:41 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/config-macros.h:
+          Fixed compilation errors from my addition of
+          ACE_GCC_FORMAT_ATTRIBUTE.
+
+Tue Mar  8 06:39:00 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Cleanup.
+
+Mon Mar  7 16:14:33 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/config-g++-common.h:
+        * ace/OS_NS_stdio.h:
+        * ace/Process.h:
+        * ace/OS_NS_time.h:
+          Added format GCC __attribute__ to printf-like functions.
+
+        * tests/TP_Reactor_Test.cpp:
+        * apps/gperf/src/Options.cpp:
+        * examples/APG/Threads/Message_Blocks.cpp:
+          Fixed warnings from incorrect use of printf format.
+
+Sun Mar  6 14:49:04 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ACE-INSTALL.html: Update this document to explain how to use the
+          "make install" step for MinGW.  Thanks to Laura Aut�n Garc�a
+          <darklulu+ace at gmail dot com> for contributing this
+          description.
+
+Mon Mar  7 09:38:57 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Initializer.cpp:
+        * ace/SSL/SSL_Initializer.h:
+          Added SSL initializer which is a part of the fix for bug#3418.
+          The initializer if used does correct SSL cleanup. Moved SSL context
+          singleton cleanup from ACE_SSL_Context::ssl_library_fini() to
+          the initializer.
+
+Sun Mar  6 20:53:26 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Removed some old checks.
+
+Sun Mar  6 13:50:09 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-openbsd.h:
+          Define _THREAD_SAFE.
+
+Sun Mar  6 09:20:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/INET_Addr_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+          Fixed gcc 4.5 warnings
+
+        * tests/Log_Thread_Inheritance_Test.cpp:
+        * tests/MT_Reference_Counted_Notify_Test.cpp:
+        * tests/NDDS_Timer_Test.cpp:
+          Zapped some empty lines
+
+Sat Mar  5 17:31:08 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+          Minor layout changes.
+
+        * ace/config-openbsd.h:
+          Define MT_SAFE. Minor layout changes.
+
+        * ace/config-macros.h:
+          Do not define _REENTRANT. It should be defined in platform
+          specific files if needed.
+
+Sat Mar  5 12:14:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Set qt4 instead of qt to default 1
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Also don't use strict aliasing with gcc 4.2/4.3
+
+Sat Mar  5 07:16:12 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux.h:
+          Removed some GLIBC 2.1 related settings.
+
+Fri Mar  4 16:00:26 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+        * include/makeinclude/platform_freebsd.GNU:
+          Threads related cleanup.
+
+Fri Mar  4 14:54:49 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/OS_NS_signal.h:
+          OpenBSD needs os_pthread.h to pick up pthread_sigmask().
+
+        * ace/config-openbsd.h:
+        * include/makeinclude/platform_openbsd.GNU:
+          Threads related cleanup.
+
+Fri Mar  4 12:39:39 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Fixed linking problems.
+
+Thu Mar  3 15:49:52 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: Ensure that _AMD64_ is defined for
+          both MPC and non-MPC projects built for 64-bit Windows.
+
+Thu Mar  3 12:22:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Further improvements to this file, thanks to Glenn Zickert
+          <gzickert at comcast dot net> for reporting these
+
+Wed Mar  2 20:56:42 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+          Removed some ancient settings.
+
+Wed Mar  2 12:42:58 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-linux-common.h:
+        * ace/config-linux.h:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_linux_common.GNU:
+          Simplified setting of ACE_HAS_AIO_CALLS.
+
+Tue Mar  1 11:31:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux.GNU:
+          Fixed setting of CC and CXX variables (conditional assignment
+          doesn't work in this case).
+
+Tue Mar  1 07:35:43 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux.GNU:
+          Added missing SOFLAGS += -pthread.
+
+Mon Feb 28 21:05:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-WinCE.h:
+        * ace/config-cygwin32.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-kfreebsd.h:
+        * ace/config-lynxos.h:
+        * ace/config-netbsd.h:
+        * ace/config-openbsd.h:
+        * ace/config-win32-interix.h:
+          No need to define ACE_HAS_POSITION_INDEPENDENT_POINTERS since it
+          is default setting.
+
+Mon Feb 28 20:29:59 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp: Replaced the
+          name "mod_name" with "module_name" to avoid a clash with macro
+          defined in /usr/include/sys/stropts.h encountered when optimized
+          build was done.
+
+Mon Feb 28 18:10:19 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Remove the -qfuncsect
+          option from CCFLAGS; it caused an occasional odd problem and the
+          only reason it was added (Jul 17 2002) was to try and remove
+          duplicate symbol diagnostics from template instantiations.
+          Thanks to Phil Mesnier for raising this issue and identifying
+          the fix.
+
+Mon Feb 28 13:31:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/index.html:
+        * html/index.html:
+          Mention DAnCE
+
+Mon Feb 28 13:18:53 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * bin/make_release.py:
+          Reverted the change tagged as
+          'Thu Oct 28 11:40:01 UTC 2010  Vladimir Zykov'.
+
+Mon Feb 28 09:21:21 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/config-freebsd.h:
+          Do not define __ACE_INLINE__
+
+Sun Feb 27 08:50:14 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_linux.GNU:
+          Use option "-pthread" instead of setting _REENTRANT macro.
+
+Sat Feb 26 07:31:41 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Added missing DCCFLAGS and OCCFLAGS.
+
+Sat Feb 26 07:24:33 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Added missing DCCFLAGS and OCCFLAGS.
+
+Fri Feb 25 12:19:58 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-lite.h: Adjust the __SUNPRO_CC version checks to include
+          Sun Studio 12.2. Thanks to Henk Jan Priester <hjpriester@gmail.com>
+          for this fix.
+
+        * THANKS: Added Henk Jan Priester to the thank-you list.
+
+Wed Feb 23 10:24:02 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * ace/Connector.cpp:
+          Changed initialization of ACE_Strategy_Connector so that its
+          CREATION_STRATEGY and its base class ACE_Connector use reactor
+          provided by user instead of the default one returned by
+          ACE_Reactor::instance().
+
+Wed Feb 23 10:23:36 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Removed unneeded options. Minor cleanups.
+
+Wed Feb 23 08:20:01 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_netbsd.GNU:
+          Cleanup.
+
+Wed Feb 23 08:12:47 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Added some flags. Minor cleanups.
+
+Tue Feb 22 12:17:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/index.html:
+          Updated location of the daily doxygen tree to
+          http://doxygen.theaceorb.nl
+
+Mon Feb 21 09:14:55 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+          Removed legacy threads related settings.
+
+Sun Feb 20 11:04:02 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Removed CPPFLAGS from SOFLAGS.
+
+Sat Feb 19 09:07:32 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Removed unneeded compile options
+
+Fri Feb 18 22:20:42 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * ace/Functor_String.h:
+        * ace/Functor_String.inl:
+
+          Specialized the string functors for std::string.
+
+Fri Feb 18 13:37:44 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Removed -fsigned-char compiler option.
+
+Thu Feb 17 19:26:57 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added pipes ?= 1
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_win32_dmc.GNU:
+        * include/makeinclude/platform_win32_icc.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Removed setting of pipes variable.
+          It now set in platform_g++_common.GNU.
+
+Thu Feb 17 18:53:07 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Removed CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
+
+Thu Feb 17 18:36:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * configure.ac:
+          Replaced ACE_LIB_TEXT with ACE_TEXT, thanks to Andrew Hill
+          <lists at thefrog dot net> for reporting this
+
+Thu Feb 17 08:35:31 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+          Removed CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
+
+Thu Feb 17 08:20:57 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Added $(FLAGS_C_CC) to compile and link rules.
+
+        * include/makeinclude/platform_linux.GNU:
+          Removed CFLAGS+=$(FLAGS_C_CC) and CCFLAGS+=$(FLAGS_C_CC)
+
+Wed Feb 16 12:41:59 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Moved some settings from CFLAGS to CPPFLAGS
+          and FLAGS_C_CC.
+
+Wed Feb 16 09:12:53 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_openbsd.GNU:
+          Removed legacy settings.
+
+Wed Feb 16 08:41:23 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+          Removed legacy settings. Layout changes.
+
+Tue Feb 15 20:46:01 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+          Removed "-W -Wall" from CFLAGS.
+
+Tue Feb 15 20:39:49 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_rtems.x_g++.GNU:
+        * include/makeinclude/platform_vxworks6.2.GNU:
+        * include/makeinclude/platform_vxworks6.3.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Make sure FLAGS_C_CC is added to CCFLAGS.
+
+Tue Feb 15 20:20:36 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_freebsd.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_lynxos.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_macosx_common.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_netbsd.GNU:
+        * include/makeinclude/platform_openbsd.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+        * include/makeinclude/platform_sunos5_g++.GNU:
+        * include/makeinclude/platform_win32_interix.GNU:
+          Moved setting "-Wall -W -Wpointer-arith" from platform_xxx.GNU
+          files to platform_g++_common.GNU.
+
+Tue Feb 15 20:00:34 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Removed TEMPLATES_FLAG which is no longer used.
+
+Tue Feb 15 14:40:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Monitor_Control/Monitor_Group.cpp:
+          Fixed warning
+
+Mon Feb 14 20:20:11 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/Lock_Adapter_T.inl:
+
+          Constructor moved from .cpp to .inl in
+          Wed Jan 26 13:53:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+          requires #include in the .inl as well.
+
+Mon Feb 14 09:42:38 UTC 2011  Martin Corino  <corino_m@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added change to enable suppression of strict-aliasing checks
+          (-fno-strict-aliasing) by default for GCC >= 4.4.
+          Default behaviour can be suppressed by explicitly setting
+          no_strict_aliasing=0 in platform_macros.GNU.
+
+Sun Feb 13 13:31:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed file that got removed
+
+Sat Feb 12 09:13:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Options.h:
+        * apps/JAWS2/JAWS/Cache_Object.h:
+          Reordered includes to fix compile errors with inline enabled
+
+Fri Feb 11 20:25:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Fixed cross compile
+
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
@@ -586,6 +2089,10 @@ Mon Dec 27 20:32:33 UTC 2010  Adam Mitz  <mitza@ociweb.com>
         * include/makeinclude/platform_linux.GNU:
 
           Set LD_RPATH_FLAGS to enable DT_RUNPATH in the ELF headers.
+
+Sat Dec 25 15:52:56 UTC 2010  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Merry Christmas and Peace on Earth.
 
 Tue Dec 21 09:57:54 UTC 2010  Olli Savia  <ops@iki.fi>
 

@@ -1,18 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    LifeCycleService.idl
-//
-// = DESCRIPTION
-//    A generic creation service named lifecycle service using
-//    the GenericFactory interface of the LifeCycle Service specification.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    LifeCycleService.idl
+ *
+ *  $Id$
+ *
+ *  A generic creation service named lifecycle service using
+ *  the GenericFactory interface of the LifeCycle Service specification.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_LIFECYCLESERVICE_IDL
 #define TAO_LIFECYCLESERVICE_IDL

@@ -45,17 +45,17 @@ namespace CIAO
     const ::Deployment::InstanceDeploymentDescription &inst =
       plan.instance[index];
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                     ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                     ACE_TEXT ("Interceptor post install for instance %C\n"),
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                    "CIAO_StoreReferences_i::post_install - "
+                    "Interceptor post install for instance %C\n",
                      plan.instance[index].name.in ()));
 
     if (reference.type() == ::CORBA::_tc_null)
       {
-        DANCE_ERROR (3, (LM_WARNING, DLINFO
-                         ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                         ACE_TEXT ("Got a nil reference, unable to store reference ")
-                         ACE_TEXT ("for instance <%C>\n"),
+        CIAO_ERROR (3, (LM_WARNING, CLINFO
+                        "CIAO_StoreReferences_i::post_install - "
+                        "Got a nil reference, unable to store reference "
+                        "for instance <%C>\n",
                          inst.name.in ()));
         return;
       }
@@ -71,17 +71,17 @@ namespace CIAO
 
             if (!(reference >>= CORBA::Any::to_object (obj)))
               {
-                DANCE_ERROR (1, (LM_WARNING, DLINFO
-                                 ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                                 ACE_TEXT ("Unable to extract instance reference from Any\n")));
+                CIAO_ERROR (1, (LM_WARNING, CLINFO
+                                "CIAO_StoreReferences_i::post_install - "
+                                "Unable to extract instance reference from Any\n"));
               }
 
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
 
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO
-                             ACE_TEXT ("CIAO_StoreReferences_i::post_install - ")
-                             ACE_TEXT ("Registering name %C for instance %C\n"),
+            CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                            "CIAO_StoreReferences_i::post_install - "
+                            "Registering name %C for instance %C\n",
                              name,
                              plan.instance[index].name.in ()));
 

@@ -175,6 +175,40 @@ AST_Home::primary_key (void) const
 }
 
 void
+AST_Home::transfer_scope_elements (AST_Interface *dst)
+{
+  for (UTL_ScopeActiveIterator src_iter (this, UTL_Scope::IK_decls);
+       ! src_iter.is_done ();
+       src_iter.next ())
+    {
+      AST_Decl *d = src_iter.item ();
+
+      Identifier *local_id = 0;
+      ACE_NEW (local_id,
+               Identifier (d->local_name ()->get_string ()));
+      UTL_ScopedName *last_segment = 0;
+      ACE_NEW (last_segment,
+               UTL_ScopedName (local_id,
+                               0));
+      UTL_ScopedName *full_name =
+        static_cast<UTL_ScopedName *> (dst->name ()->copy ());
+      full_name->nconc (last_segment);
+
+      d->set_name (full_name);
+      dst->add_to_scope (d);
+      d->set_defined_in (dst);
+    }
+
+  // Zero decls so that they are not cleaned twice.
+  long const end = this->pd_decls_used;
+  for (long i = 0; i < end; ++i)
+    {
+      this->pd_decls[i] = 0;
+      --this->pd_decls_used;
+    }
+}
+
+void
 AST_Home::destroy (void)
 {
   // If it's a param holder, it was created on the fly.
@@ -185,44 +219,7 @@ AST_Home::destroy (void)
       this->pd_primary_key = 0;
     }
 
-  // We have to go through these conniptions to destroy
-  // a home because its decls (for which there are no
-  // copy constructors) are assigned to the scope
-  // of the equivalent interface, which will destroy
-  // them. But we still have to destroy the containers
-  // for those references, which may be private or
-  // protected.
-
-  delete [] this->inherits ();
-  delete [] this->inherits_flat ();
-
-  delete [] this->pd_decls;
-  this->pd_decls = 0;
-  this->pd_decls_allocated = 0;
-  this->pd_decls_used = 0;
-
-  delete [] this->pd_referenced;
-  this->pd_referenced = 0;
-  this->pd_referenced_allocated = 0;
-  this->pd_referenced_used = 0;
-
-  // These are stored by copying the Identifier.
-  for (long i = 0; i < this->pd_name_referenced_used; ++i)
-    {
-      this->pd_name_referenced[i]->destroy ();
-      delete this->pd_name_referenced[i];
-      this->pd_name_referenced[i] = 0;
-    }
-
-  delete [] this->pd_name_referenced;
-  this->pd_name_referenced = 0;
-  this->pd_name_referenced_allocated = 0;
-  this->pd_name_referenced_used = 0;
-
-  // Skip AST_Interface, since the home's decls
-  // are added to the equivalent interface, and
-  // they should get destroyed there.
-  this->AST_Type::destroy ();
+  this->AST_Interface::destroy ();
 }
 
 void

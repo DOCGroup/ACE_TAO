@@ -1,5 +1,6 @@
+# -*- Makefile -*-
 # $Id$
-#
+
 # RTEMS 4.6.6 and later with GNU g++.
 
 CROSS-COMPILE = 1
@@ -7,7 +8,6 @@ CROSS-COMPILE = 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-pipes ?= 1
 
 shared_libs =
 static_libs = 1
@@ -40,8 +40,7 @@ ifeq (no,$(RTEMS_HAS_NETWORKING))
  CCFLAGS += -DACE_LACKS_NETWORKING
 endif
 
-CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
-CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 DCFLAGS         += -g
 DCCFLAGS        += -g
 DLD             = $(LD)
@@ -51,4 +50,3 @@ LD              = $(CXX)
 LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib -Wl,-Ttext,0x00100000
 OCFLAGS         += -O
 PIC             =
-

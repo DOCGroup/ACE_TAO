@@ -1,22 +1,19 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    utils
-//
-// = FILENAME
-//    nsdel.cpp
-//
-// = DESCRIPTION
-//    Naming Service del utility
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@uci.edu>
-//     enhanced Jan 15, 2001 Paul Caffrey <denginere@hotmail.com>
-//     redone   Jun 21, 2006 Simon Massey <sma@prismtech.com>
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    nsdel.cpp
+ *
+ *  $Id$
+ *
+ *  Naming Service del utility
+ *
+ *
+ *  @author  Carlos O'Ryan <coryan@uci.edu>  enhanced Jan 15
+ *  @author 2001 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21
+ *  @author 2006 Simon Massey <sma@prismtech.com>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Time_Utilities.h"

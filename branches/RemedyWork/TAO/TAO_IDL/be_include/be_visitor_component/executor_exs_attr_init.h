@@ -17,19 +17,14 @@
 #ifndef _BE_COMPONENT_EXECUTOR_EXS_ATTR_INIT_H_
 #define _BE_COMPONENT_EXECUTOR_EXS_ATTR_INIT_H_
 
+/**
+ * This is a concrete visitor to generate
+ * the executor attribute members' initialization
+ * in the constructor.
+ */
 class be_visitor_executor_exs_attr_init
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_executor_exs_attr_init
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor attribute members' initialization
-  //   in the constructor.
-  //
-  //
 public:
   be_visitor_executor_exs_attr_init (be_visitor_context *ctx);
   ~be_visitor_executor_exs_attr_init (void);

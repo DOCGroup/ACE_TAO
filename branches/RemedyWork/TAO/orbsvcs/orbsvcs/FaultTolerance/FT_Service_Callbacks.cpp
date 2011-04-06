@@ -18,7 +18,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core)
-
   : orb_core_ (orb_core)
 {
 }
@@ -198,7 +197,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
   sc.context_id = IOP::FT_GROUP_VERSION;
 
   if (service_context.get_context (sc) == 0)
-      return false;
+      return false; /* false */
 
   IOP::TaggedComponent tc;
   tc.tag = IOP::TAG_FT_GROUP;
@@ -210,7 +209,7 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
       // set lock, as forward_profiles might be deleted concurrently
       ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                                 guard,
-                                stub->profile_lock (),
+                                const_cast <TAO_SYNCH_MUTEX&>(stub->profile_lock ()),
                                 0));
 
       // even now, the forward profiles might have been deleted in the meanwhile
@@ -229,9 +228,9 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_pt
 
       if (tagged_components.get_component (tc) == 0)
         // releasing lock
-        return false;
+        return false; /* false */
 
-      return true;
+      return true; /* true */
 
       // releasing lock
     }

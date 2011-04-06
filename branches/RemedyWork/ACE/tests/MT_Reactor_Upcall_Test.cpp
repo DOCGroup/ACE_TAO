@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MT_Reactor_Upcall_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test that shows how to handle upcalls from the
-//    TP_Reactor and the WFMO_Reactor when the event loop is being run
-//    by multiple threads.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MT_Reactor_Upcall_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a test that shows how to handle upcalls from the
+ *  TP_Reactor and the WFMO_Reactor when the event loop is being run
+ *  by multiple threads.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

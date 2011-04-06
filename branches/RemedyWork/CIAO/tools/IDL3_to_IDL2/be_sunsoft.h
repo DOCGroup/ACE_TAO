@@ -1,45 +1,43 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    be_sunsoft.h
-//
-// = DESCRIPTION
-//    SunSoft specific backend output generation
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_sunsoft.h
+ *
+ *  $Id$
+ *
+ *  SunSoft specific backend output generation
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef TAO_BE_HELPER_H
 #define TAO_BE_HELPER_H
 
 #include "be_helper.h"
 
+/**
+ * @class TAO_SunSoft_OutStream
+ *
+ * Backend specific to SunSoft AST nodes
+ */
 class TAO_IDL3_TO_IDL2_BE_Export TAO_SunSoft_OutStream : public TAO_OutStream
 {
-  // =TITLE
-  //  TAO_SunSoft_OutStream
-  // =DESCRIPTION
-  //  Backend specific to SunSoft AST nodes
 public:
+  /// constructor
   TAO_SunSoft_OutStream (void);
-  // constructor
 
+  /// destuctor
   ~TAO_SunSoft_OutStream (void);
-  // destuctor
 
+  /// output the SunSoft IDL Identifier Node
   virtual TAO_OutStream &print (Identifier *id);
-  // output the SunSoft IDL Identifier Node
 
+  /// output the contents of the AST_Expression node
   virtual TAO_OutStream &print (AST_Expression *expr);
-  // output the contents of the AST_Expression node
 };
 
 #endif // if !defined

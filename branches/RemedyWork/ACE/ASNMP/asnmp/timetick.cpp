@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//     timetick.cpp
-//
-// = DESCRIPTION
-// Class implentation for SMI Timeticks class.
-//
-// = AUTHOR
-//   Peter E Mellquist
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     timetick.cpp
+ *
+ *  $Id$
+ *
+ * Class implentation for SMI Timeticks class.
+ *
+ *
+ *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

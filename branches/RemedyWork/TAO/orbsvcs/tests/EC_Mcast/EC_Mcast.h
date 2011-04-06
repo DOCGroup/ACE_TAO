@@ -221,13 +221,13 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             ACE_RANDR_TYPE &seed);
+             unsigned int *seed);
   // This method connects the consumer to the EC.
 
   void close (void);
   // Disconnect from the EC.
 
-  void connect (ACE_RANDR_TYPE& seed);
+  void connect (unsigned int *seed);
   void disconnect (void);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
@@ -357,7 +357,7 @@ private:
   // @@ TODO Eventually we may need several of this objects to handle
   // OS limitations on the number of multicast groups per socket.
 
-  ACE_RANDR_TYPE seed_;
+  unsigned int seed_;
   // The seed for a random number generator.
 
   CORBA::ULong subscription_change_period_;

@@ -1,28 +1,25 @@
-// $Id$
 
-// ===========================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    SOCK_Send_Recv_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the <ACE_SOCK>'s various send and receive
-//     methods.  The test forks two processes or spawns two threads
-//     (depending upon the platform) and then executes client and
-//     server allowing them to connect and exchange data in ways
-//     designed to exercise the send and recv functions.
-//
-//     Right now, it primarily tests the iov-like send and recv
-//     functions, but others should be added to completely cover the
-//     possible scenarios.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_Send_Recv_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the <ACE_SOCK>'s various send and receive
+ *   methods.  The test forks two processes or spawns two threads
+ *   (depending upon the platform) and then executes client and
+ *   server allowing them to connect and exchange data in ways
+ *   designed to exercise the send and recv functions.
+ *
+ *   Right now, it primarily tests the iov-like send and recv
+ *   functions, but others should be added to completely cover the
+ *   possible scenarios.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"

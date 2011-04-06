@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Barrier_Test.cpp
-//
-// = DESCRIPTION
-//     This program illustrates how the ACE barrier synchronization
-//     mechanisms work.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Barrier_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program illustrates how the ACE barrier synchronization
+ *   mechanisms work.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Barrier.h"

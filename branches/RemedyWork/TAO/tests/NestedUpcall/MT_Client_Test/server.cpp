@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    This class implements a simple server for the
-//    Nested Upcalls - MT_Client test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  This class implements a simple server for the
+ *  Nested Upcalls - MT_Client test.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "server.h"
 #include "tao/debug.h"

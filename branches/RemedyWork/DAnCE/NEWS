@@ -1,5 +1,12 @@
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
 =======================================================
+. Significant re-work of the internal DAnCE logging system.  Many log
+  message levels have changed.  Details of the intended logging levels
+  may be found in dance/Logger/Log_Macros.h
+
+. A new logging macro, DANCE_LOG_TRACE has been added to the most
+  fine-grained tracing messages.  This can be disabled to improve
+  performance and footprint seperate from more useful logging messages.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.0 and DAnCE-1.0.1
 =======================================================

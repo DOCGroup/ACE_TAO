@@ -1,23 +1,20 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    interop_test/wchar
-//
-// = FILENAME
-//    wchar_reference.cpp
-//
-// = DESCRIPTION
-//    C++ reference data for testing interoperability with wchars. This is
-//    linked into both clients and servers so that both sides have common
-//    values for testing what is received or sent.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    wchar_reference.cpp
+ *
+ *  $Id$
+ *
+ *  C++ reference data for testing interoperability with wchars. This is
+ *  linked into both clients and servers so that both sides have common
+ *  values for testing what is received or sent.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 #include "wchar_reference.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"

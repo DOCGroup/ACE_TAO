@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    idl3_to_idl2_visitor.h
-//
-// = DESCRIPTION
-//    Generates equivalent IDL2 from IDL3.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    idl3_to_idl2_visitor.h
+ *
+ *  $Id$
+ *
+ *  Generates equivalent IDL2 from IDL3.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDL3_TO_IDL2_VISITOR_H
 #define TAO_IDL3_TO_IDL2_VISITOR_H
@@ -29,18 +26,14 @@
 
 #include "TAO_IDL3_TO_IDL2_BE_Export.h"
 
+/**
+ * IDL3 to IDL2 conversion visitor. The methods are
+ * not pure virtual to facilitate the implementation of some
+ * derived visitors that override only a few.
+ */
 class TAO_IDL3_TO_IDL2_BE_Export idl3_to_idl2_visitor
   : public basic_visitor
 {
-  //
-  // = TITLE
-  //    idl3_to_idl2_visitor.
-  //
-  // = DESCRIPTION
-  //    IDL3 to IDL2 conversion visitor. The methods are
-  //    not pure virtual to facilitate the implementation of some
-  //    derived visitors that override only a few.
-  //
 public:
   idl3_to_idl2_visitor (void);
   virtual ~idl3_to_idl2_visitor (void);

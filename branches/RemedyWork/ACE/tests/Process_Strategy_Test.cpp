@@ -1,41 +1,37 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Strategy_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the <ACE_Strategy_Acceptor> and
-//     <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
-//     either the <ACE_Process_Strategy> (which forks a
-//     process-per-connection and runs as a concurrent server
-//     process), the <ACE_Thread_Strategy> (which spawns a
-//     thread-per-connection and runs as a concurrent server thread),
-//     or <ACE_Reactive_Strategy> (which register the <Svc_Handler>
-//     with the <Reactor> and runs in the main thread of control as an
-//     iterative server).  This server queries and increments a
-//     "counting value" in a file.
-//
-//     This test program can be run in the following ways:
-//
-//     # Run the server "reactively" (i.e., iteratively)
-//     % Process_Strategy_Test -c REACTIVE
-//
-//     # Run the server in multi-threads.
-//     % Process_Strategy_Test -c THREAD
-//
-//     # Run the server in multi-processes
-//     % Process_Strategy_Test -c PROCESS
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//    and Kevin Boyle <kboyle@sanwafp.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Strategy_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the <ACE_Strategy_Acceptor> and
+ *   <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
+ *   either the <ACE_Process_Strategy> (which forks a
+ *   process-per-connection and runs as a concurrent server
+ *   process), the <ACE_Thread_Strategy> (which spawns a
+ *   thread-per-connection and runs as a concurrent server thread),
+ *   or <ACE_Reactive_Strategy> (which register the <Svc_Handler>
+ *   with the <Reactor> and runs in the main thread of control as an
+ *   iterative server).  This server queries and increments a
+ *   "counting value" in a file.
+ *
+ *   This test program can be run in the following ways:
+ *
+ *   # Run the server "reactively" (i.e., iteratively)
+ *   % Process_Strategy_Test -c REACTIVE
+ *
+ *   # Run the server in multi-threads.
+ *   % Process_Strategy_Test -c THREAD
+ *
+ *   # Run the server in multi-processes
+ *   % Process_Strategy_Test -c PROCESS
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Kevin Boyle <kboyle@sanwafp.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

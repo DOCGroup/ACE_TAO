@@ -116,6 +116,10 @@ public:
   void _incr_refcnt (void);
   void _decr_refcnt (void);
 
+  /// Return the Profile lock. This lock can be used at places where
+  /// profiles need to be edited.
+  const TAO_SYNCH_MUTEX& profile_lock (void) const;
+
   /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.
@@ -261,8 +265,6 @@ public:
   void forwarded_on_exception (bool forwarded);
   bool forwarded_on_exception () const;
 
-  TAO_SYNCH_MUTEX& profile_lock () const;
-
 protected:
 
   /// Destructor is to be called only through _decr_refcnt() to
@@ -359,15 +361,15 @@ protected:
   /// linked list of TAO_MProfile objects.
   TAO_MProfile *forward_profiles_;
 
-  // The bookmark indicating permanent forward occured,
-  // the pointer is used to indentify bottom of stack forward_profiles_
+  /// The bookmark indicating permanent forward occurred,
+  /// the pointer is used to identify bottom of stack forward_profiles_
   TAO_MProfile *forward_profiles_perm_;
 
   /// This is the profile that we are currently sending/receiving with.
   TAO_Profile *profile_in_use_;
 
   /// Mutex to protect access to the forwarding profile.
-  mutable TAO_SYNCH_MUTEX profile_lock_;
+  TAO_SYNCH_MUTEX profile_lock_;
 
   /// Have we successfully talked to the forward profile yet?
   CORBA::Boolean profile_success_;
@@ -397,7 +399,7 @@ protected:
   /**
    * This should be the same value as cached in the ORB_Core. The
    * reason for caching this helps our generated code, notably the
-   * stubs to be decoubled from ORB_Core. Please do not move it away.
+   * stubs to be decoupled from ORB_Core. Please do not move it away.
    */
   CORBA::Boolean const collocation_opt_;
 
@@ -431,7 +433,6 @@ public:
 
 protected:
   TAO_Stub *p_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

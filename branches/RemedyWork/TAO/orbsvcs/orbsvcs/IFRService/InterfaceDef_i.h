@@ -53,74 +53,53 @@ public:
   virtual ~TAO_InterfaceDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind (void);
 
-  virtual void destroy (
-    );
+  virtual void destroy (void);
 
-  virtual void destroy_i (
-    );
+  virtual void destroy_i (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (
-    );
+  virtual CORBA::Contained::Description *describe (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (
-    );
+  virtual CORBA::Contained::Description *describe_i (void);
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type (
-    );
+  virtual CORBA::TypeCode_ptr type (void);
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i (
-    );
+  virtual CORBA::TypeCode_ptr type_i (void);
 
-  virtual CORBA::InterfaceDefSeq *base_interfaces (
-    );
+  virtual CORBA::InterfaceDefSeq *base_interfaces (void);
 
-  CORBA::InterfaceDefSeq *base_interfaces_i (
-    );
+  CORBA::InterfaceDefSeq *base_interfaces_i (void);
 
-  virtual void base_interfaces (
-      const CORBA::InterfaceDefSeq &base_interfaces
-    );
+  virtual void base_interfaces (const CORBA::InterfaceDefSeq &base_interfaces);
 
-  void base_interfaces_i (
-      const CORBA::InterfaceDefSeq &base_interfaces
-    );
+  void base_interfaces_i (const CORBA::InterfaceDefSeq &base_interfaces);
 
-  virtual CORBA::Boolean is_a (
-      const char *interface_id
-    );
+  virtual CORBA::Boolean is_a (const char *interface_id);
 
-  CORBA::Boolean is_a_i (
-      const char *interface_id
-    );
+  CORBA::Boolean is_a_i (const char *interface_id);
 
-  virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface (
-    );
+  virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface ();
 
-  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (
-    );
+  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (void);
 
   virtual CORBA::AttributeDef_ptr create_attribute (
       const char *id,
       const char *name,
       const char *version,
       CORBA::IDLType_ptr type,
-      CORBA::AttributeMode mode
-    );
+      CORBA::AttributeMode mode);
 
   CORBA::AttributeDef_ptr create_attribute_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::IDLType_ptr type,
-      CORBA::AttributeMode mode
-    );
+      CORBA::AttributeMode mode);
 
   virtual CORBA::OperationDef_ptr create_operation (
       const char *id,
@@ -130,8 +109,7 @@ public:
       CORBA::OperationMode mode,
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts
-    );
+      const CORBA::ContextIdSeq &contexts);
 
   CORBA::OperationDef_ptr create_operation_i (
       const char *id,
@@ -141,16 +119,14 @@ public:
       CORBA::OperationMode mode,
       const CORBA::ParDescriptionSeq &params,
       const CORBA::ExceptionDefSeq &exceptions,
-      const CORBA::ContextIdSeq &contexts
-    );
+      const CORBA::ContextIdSeq &contexts);
 
   /// Gathers the attributes and operations of all the ancestors.
   void interface_contents (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
       CORBA::DefinitionKind limit_type,
-      CORBA::Boolean exclude_inherited
-    );
+      CORBA::Boolean exclude_inherited);
 
   /// Called from TAO_IFR_Service_Utils::name_exists() when we
   /// are in a list of supported interfaces.
@@ -159,27 +135,23 @@ public:
   /// Depth-first traversal of the inheritance tree to get all the
   /// attributes.
   void inherited_attributes (
-      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
-    );
+      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue);
 
   /// Depth-first traversal of the inheritance tree to get all the
   /// operations.
   void inherited_operations (
-      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
-    );
+      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue);
 
 private:
   /// Depth-first traversal of the inheritance tree to get all
   /// the base interfaces.
   void base_interfaces_recursive (
       ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue
-    );
+      ACE_Unbounded_Queue<ACE_TString> &path_queue);
 
   /// When creating a new attribute, check for a clash with an inherited
   /// attribute name.
-  void check_inherited (const char *name,
-                        CORBA::DefinitionKind kind);
+  void check_inherited (const char *name, CORBA::DefinitionKind kind);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

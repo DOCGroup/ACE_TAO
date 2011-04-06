@@ -1,49 +1,166 @@
-Wed Apr  6 11:52:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Apr  1 17:39:00 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
-        * ChangeLog:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+
+          Fixes.
+
+Thu Mar 31 22:12:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+
+          Fuzz.
+
+Wed Mar 30 09:27:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/impl/Getter_T.cpp:
-        * connectors/dds4ccm/impl/Reader_T.cpp:
-
-Tue Apr  5 18:18:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ChangeLog:
-
-        * connectors/dds4ccm/impl/Getter_T.cpp:
-        * connectors/dds4ccm/impl/Reader_T.cpp:
-
-        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
-
-        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
-
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
-
-        * tests/DAnCE/LocalityManager/CommandlinePassage/Component.cdp:
-
-Sun Mar  6 09:35:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ChangeLog:
-
-        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
-
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+        Changed number of samples in get_many from 1 to max_samples .
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        Solved error initilizing array for get_many test.
 
 
-Sat Mar  5 09:31:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Mar 29 12:14:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        * tools/IDL3_to_IDL2/identifier_helper.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.h:
+        * tools/IDL3_to_XMI/be_global.h:
+        * tools/IDL3_to_XMI/be_helper.h:
+        * tools/IDL3_to_XMI/identifier_helper.h:
+          Doxygen changes
 
-        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Deployment/descriptors/Plan.cdp:
+Tue Mar 29 09:34:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Removed try/catch in ccm_activate which isn't needed anymore after
+          we removed caching of the receptacles
+
+Mon Mar 28 07:25:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * performance-tests/Protocols/Sender/Custom_Network_Priority_Mapping.h:
         * tests/IDL_Test/IDL3_Plus/KitchenSink.mpc:
+        * tools/IDL3_to_IDL2/basic_visitor.h:
+        * tools/IDL3_to_IDL2/be_global.h:
+        * tools/IDL3_to_IDL2/be_global.cpp:
+        * tools/IDL3_to_IDL2/be_helper.h:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_IDL2/be_sunsoft.h:
+        * tools/IDL3_to_IDL2/checking_visitor.h:
+        * tools/IDL3_to_IDL2/identifier_helper.h:
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.h:
+        * tools/IDL3_to_IDL2/idl3p_checking_visitor.h:
+        * tools/IDL3_to_XMI/be_global.h:
+        * tools/IDL3_to_XMI/be_global.cpp:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.h:
+        * tools/IDL3_to_XMI/identifier_helper.h:
+          Converted to doxygen style
+
+Wed Mar 23 19:45:48 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/generate_component_mpc.pl:
+
+          Fix bug that suppressed help message.
+
+Wed Mar 16 00:39:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+          Extended the test to include a sequence of zero length.
+
+Tue Mar 15 14:12:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/README:
+          Fixed typo
+
+        * docs/releasenotes/index.html:
+        * docs/releasenotes/switch.html:
+        * examples/Display/README.html:
+        * examples/Hello/step-by-step.html:
+          Updated email address
+
+Fri Mar 11 10:10:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Connectors.graffle:
+          Added AMI4CCM diagram
+
+Thu Mar 10 11:23:32 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_IDL2/be_sunsoft.cpp:
+        * tools/IDL3_to_IDL2/be_helper.cpp:
+        * tools/IDL3_to_XMI/be_sunsoft.cpp:
+        * tools/IDL3_to_XMI/be_helper.cpp:
+          Fixed warnings in the use of printf format.
+
+Wed Mar  9 11:06:52 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/examples/Hello/DDS_Sender/Hello_Sender.cpp:
+          Fixed use of types in printf format.
+
+Sat Mar  5 12:27:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+          Override all topic_name methods to resolve Intel C++ warnings
+
+Sat Mar  5 09:31:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/basic_visitor.cpp:
         * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Generate space after sequence< to silence Intel C++ warnings
+
+Thu Mar  3 14:26:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Ignore DDS_ as prefix
+
+Thu Mar  3 05:03:44 UTC 2011  William R. Otte  <r._w@local>
+
+        * tests/DAnCE/LocalityManager/UnexpectedShutdown/nodemanager-besteffort.lconfig:
+        * tests/DAnCE/LocalityManager/UnexpectedShutdown/run_test.pl:
+
+          Convert from --best-effort.
+
+Wed Mar  2 14:56:28 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Made use of transfer_scope_elements() defined in ast_home.
+
+Tue Feb 15 10:11:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Added quotes.
+
+Tue Feb 15 10:07:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Resolved issues related to include paths.
+
+Tue Feb 15 09:20:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          One dds test should now run again
+
+Mon Feb 14 08:35:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Resolved warnings in case lw ccm.
 
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 

@@ -61,7 +61,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n",msg);
+  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
   // next, compose and dump what we want to say.
 
@@ -83,7 +83,9 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int 
   double t_avg = samples_count_ / seconds;
 
   ACE_OS::sprintf (out_msg,
-                   "# Throughput: %.2f (events/second) [%u samples in %.2f seconds]\n",
+                   "# Throughput: %.2f (events/second) ["
+                   ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
+                   " samples in %.2f seconds]\n",
                    t_avg, samples_count_, seconds);
   ACE_OS::fprintf (output_file, "%s",out_msg);
 

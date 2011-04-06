@@ -843,7 +843,7 @@ ACE_Process_Manager::wait (pid_t pid,
           // WAIT_OBJECT_0 is a pointless comparison because
           // WAIT_OBJECT_0 is zero and DWORD is unsigned long, so this
           // test is skipped for Green Hills.  Same for mingw.
-# if defined (ghs) || defined (__MINGW32__) || defined (_MSC_VER)
+# if defined (__MINGW32__) || defined (_MSC_VER)
           ACE_ASSERT (result < WAIT_OBJECT_0 + this->current_count_);
 # else
           ACE_ASSERT (result >= WAIT_OBJECT_0

@@ -42,6 +42,8 @@ namespace DAnCE
                                               Deployment::MonolithicDeploymentDescription& toconfig,
                                               CORBA::ULong pos)
     {
+      DANCE_TRACE("MDD_Handler::mono_deployment_description");
+
       toconfig.name =
         CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ()));
 
@@ -103,7 +105,7 @@ namespace DAnCE
         }
       else
         {
-          DANCE_ERROR(2, (LM_WARNING,
+          DANCE_ERROR(DANCE_LOG_NONFATAL_ERROR, (LM_WARNING,
                      "(%P|%t) Warning:  MDD %s has no idref\n",
                      desc.name ().c_str ()));
         }
@@ -112,19 +114,21 @@ namespace DAnCE
 
     MonolithicDeploymentDescription
     MDD_Handler::mono_deployment_description(
-                                             const Deployment::MonolithicDeploymentDescription &src)
+        const Deployment::MonolithicDeploymentDescription &src)
     {
       DANCE_TRACE("mono_deployment_description - reverse");
 
       //Get the name and instantiate the mdd
-      XMLSchema::string < ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR (src.name));
+      XMLSchema::string < ACE_TCHAR > name (
+        ACE_TEXT_CHAR_TO_TCHAR (src.name));
       MonolithicDeploymentDescription mdd (name);
 
       //Get the source(s) from the IDL and store them
       size_t total = src.source.length();
       for(size_t i = 0; i < total; i++)
         {
-          XMLSchema::string< ACE_TCHAR > curr (ACE_TEXT_CHAR_TO_TCHAR(src.source[i]));
+          XMLSchema::string< ACE_TCHAR > curr (
+            ACE_TEXT_CHAR_TO_TCHAR(src.source[i]));
           //mdd.add_source(curr);
         }
 
@@ -143,14 +147,16 @@ namespace DAnCE
       total = src.execParameter.length();
       for(size_t k = 0; k < total; k++)
         {
-          //mdd.add_execParameter (Property_Handler::get_property (src.execParameter[k]));
+          //mdd.add_execParameter (Property_Handler::
+          //get_property (src.execParameter[k]));
         }
 
       //Get the deployRequirement(s) from the IDL and store them
       total = src.deployRequirement.length();
       for(size_t l = 0; l < total; l++)
         {
-          //mdd.add_deployRequirement(Req_Handler::get_requirement (src.deployRequirement[l]));
+          //mdd.add_deployRequirement(Req_Handler::
+          //get_requirement (src.deployRequirement[l]));
         }
 
       // Generate a UUID to use for the IDREF.

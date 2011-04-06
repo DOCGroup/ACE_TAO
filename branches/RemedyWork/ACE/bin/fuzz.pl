@@ -96,6 +96,7 @@ sub find_files ()
 sub store_file ($)
 {
     my $name = shift;
+
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
@@ -1640,6 +1641,39 @@ sub check_for_generated_headers()
     }
 }
 
+sub check_for_numeric_log()
+{
+    print "Running check for numeric flags in DAnCE and DDS4CCM\n";
+
+    foreach $file (@files_inl, @files_cpp, @files_h) {
+        if (open (FILE, $file)) {
+            while (<FILE>) {
+                # look for debug statements
+                if (m/DANCE_DEBUG\s*\(\s*\d*\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in debug statement");
+                }
+                if (m/DANCE_ERROR\s*\(\s*\d\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in error statement");
+                }
+                if (m/DANCE_TRACE_LOG\s*\(\s*\d\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in trace log statement");
+                }
+                if (m/DDS4CCM_DEBUG\s*\(\s*\d*\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in debug statement");
+                }
+                if (m/DDS4CCM_ERROR\s*\(\s*\d\s*,/) {
+                    print_warning ("$file:$.: Found numeric log level in error statement");
+                }
+            }
+
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 # Make sure ACE_[OS_]TRACE matches the function/method
 sub check_for_bad_ace_trace()
 {
@@ -1666,10 +1700,13 @@ sub check_for_bad_ace_trace()
                     $function = $1;
                 }
 
+                # print "TRACE_CHECK. Class = $class\n";
+
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
                     || m/ACE_TRACE\s*\(\s*\"(.*)\"/
                     || m/CIAO_TRACE\s*\(\s*\"(.*)\"/
+                    || m/DANCE_TRACE\s*\(\s*\"(.*)\"/
                     || m/DDS4CCM_TRACE\s*\(\s*\"(.*)\"/) {
                     my $trace = $1;
 
@@ -1678,9 +1715,13 @@ sub check_for_bad_ace_trace()
                         $class = $1;
                     }
 
+                    # print "TRACE_CHECK. Found a trace. Class = $class\n";
+
                     if ($class =~ m/([^\s^\&^\*]*)\s*$/) {
                         $class = $1;
                     }
+
+                    # print "TRACE_CHECK. Augmenting class. Class = $class\n";
 
                     if ($trace !~ m/\Q$function\E/
                         || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {
@@ -1962,6 +2003,27 @@ sub check_for_refcountservantbase ()
     }
 }
 
+sub check_for_old_documentation_style ()
+{
+    print "Running documentation style check\n";
+
+    foreach $file (@files_h, @files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+
+                if (/\/\/\= TITLE/) {
+                  print_error ("$file:$.: found old documentation style //= TITLE");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 sub check_for_TAO_Local_RefCounted_Object ()
 {
     print "Running TAO_Local_RefCounted_Object check\n";
@@ -2073,6 +2135,42 @@ sub check_for_ORB_init ()
     }
 }
 
+# This test checks for the presence of an include for ace/OS.h
+# which should never occur. Only user code is allowed to include OS.h.
+sub check_for_include_OS_h ()
+{
+    print "Running the OS.h inclusion check\n";
+    foreach $file (@files_h, @files_cpp, @files_inl) {
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_include_OS_h/) {
+                    $disable = 1;
+                    next;
+                }
+                elsif (/FUZZ\: enable check_for_include_OS_h/) {
+                    $disable = 0;
+                    next;
+                }
+                elsif ($disable == 0 and /^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
+                    print_error ("$file:$.: include <ace\/..> used");
+                    ++$bad_occurance;
+                }
+                else {
+                    if ($disable == 0 and /^\s*#\s*include\s*"ace\/OS.h"/) {
+                        print_error ("$file:$.: include ace/OS.h used");
+                    }
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m/;
@@ -2125,7 +2223,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_refcountservantbase
            check_for_TAO_Local_RefCounted_Object
            check_for_ORB_init
-           check_for_trailing_whitespace\n";
+           check_for_trailing_whitespace
+           check_for_include_OS_h\n";
     exit (1);
 }
 
@@ -2198,7 +2297,10 @@ check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l >= 1);
 check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
+check_for_include_OS_h () if ($opt_l >= 1);
+check_for_numeric_log () if ($opt_l >= 3);
 check_for_ORB_init () if ($opt_l >= 1);
+check_for_old_documentation_style () if ($opt_l >= 5);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 

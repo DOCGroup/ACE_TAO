@@ -34,17 +34,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Base class used to form a containment hierarchy
+ * for component-related types in the Interface Repository.
+ * Defines the relevant create_* methods.
+ */
 class TAO_IFRService_Export TAO_ComponentContainer_i
   : public virtual TAO_Container_i
 {
-  // = TITLE
-  //    TAO_ComponentContainer_i
-  //
-  // = DESCRIPTION
-  //    Base class used to form a containment hierarchy
-  //    for component-related types in the Interface Repository.
-  //    Defines the relevant create_* methods.
-  //
 public:
   TAO_ComponentContainer_i (TAO_Repository_i *repo);
 

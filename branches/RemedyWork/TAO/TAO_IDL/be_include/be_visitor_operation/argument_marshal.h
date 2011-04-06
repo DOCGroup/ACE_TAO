@@ -22,17 +22,13 @@
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************
 
+/**
+ * This is a visitor to generate a variable declaration of an operation
+ * return type
+ */
 class be_visitor_operation_argument_marshal
   : public be_visitor_operation_argument
 {
-  //
-  // = TITLE
-  //   be_compiled_visitor_operation_argument_marshal
-  //
-  // = DESCRIPTION
-  //   This is a visitor to generate a variable declaration of an operation
-  //   return type
-  //
 public:
   /// constructor
   be_visitor_operation_argument_marshal (be_visitor_context *ctx);

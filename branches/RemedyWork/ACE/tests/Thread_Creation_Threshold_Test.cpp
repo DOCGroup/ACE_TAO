@@ -1,27 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Creation_Threshold_Test.cpp
-//
-// = DESCRIPTION
-//     This test program stresses how many threads can be
-//     consecutively (not simultaneously) created on a platform.
-//     Rather than testing exhaustively, it establishes a
-//     semi-arbitrary upper limit (MAX_THREAD)of threads.  The limit
-//     is only partly arbitrary because it was chosen as a value that
-//     exceeded an observed upper limit on the values that Solaris 9
-//     will accept as arguments to thr_concurrency(), used by
-//     ACE_OS::thr_create(THR_NEW_LWP).
-//
-// = AUTHOR
-//    Chris Cleeland <cleeland@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Creation_Threshold_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This test program stresses how many threads can be
+ *   consecutively (not simultaneously) created on a platform.
+ *   Rather than testing exhaustively, it establishes a
+ *   semi-arbitrary upper limit (MAX_THREAD)of threads.  The limit
+ *   is only partly arbitrary because it was chosen as a value that
+ *   exceeded an observed upper limit on the values that Solaris 9
+ *   will accept as arguments to thr_concurrency(), used by
+ *   ACE_OS::thr_create(THR_NEW_LWP).
+ *
+ *
+ *  @author Chris Cleeland <cleeland@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -49,53 +46,56 @@ namespace
   const bool PRINT_DEBUG_MSGS = true;
 }
 
+/**
+ * @class Thread_Pool
+ *
+ * @brief Defines a thread pool abstraction based on the <ACE_Task>.
+ */
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
+  /// Create the thread pool containing <n_threads>.
   Thread_Pool (int n_threads);
-  // Create the thread pool containing <n_threads>.
 
+  /// Destructor...
   ~Thread_Pool (void);
-  // Destructor...
 
+  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// for all other threads to complete this iteration.
   virtual int svc (void);
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
+  /// Start the threads in the pool.
   void start();
-  // Start the threads in the pool.
 
   unsigned long total_threads()
     {
       return this->total_activated_threads_.value();
     }
 
+  /// Number of threads to spawn.
   int n_threads_;
-  // Number of threads to spawn.
 
+  /// Returns true iff failed_ == false.
   bool operator! ();
-  // Returns true iff failed_ == false.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Spawn the threads in the pool.
   virtual int open (void * = 0);
-  // Spawn the threads in the pool.
 
+  /// Close hook.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (u_long);
-  // Close hook.
-  //FUZZ: enable check_for_lack_ACE_OS
 
+  /// Total number of threads activated through this thread pool ever.
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> total_activated_threads_;
-  // Total number of threads activated through this thread pool ever.
 
+  /// Flag set only in worker threads to indicate whether they should print
+  /// debug messages.
   bool doprint_;
-  // Flag set only in worker threads to indicate whether they should print
-  // debug messages.
 
+  /// Flag indicating that start() failed.
   bool failed_;
-  // Flag indicating that start() failed.
 };
 
 bool

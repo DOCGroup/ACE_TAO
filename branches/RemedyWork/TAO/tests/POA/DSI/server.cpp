@@ -1,19 +1,17 @@
-// $Id$
 
-//===================================================================
-//  = LIBRARY
-//      TAO/tests/POA/Default_Servant/server
-//
-//  = FILENAME
-//      server.cpp
-//
-//  = DESCRIPTION
-//      A server program for the File IDL module
-//
-//  = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file      server.cpp
+ *
+ *  $Id$
+ *
+ *    A server program for the File IDL module
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "Database_i.h"
 #include "ace/Get_Opt.h"

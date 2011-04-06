@@ -1,22 +1,18 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Pluggable
-//
-// = FILENAME
-//    PP_Test_Server.h
-//
-// = DESCRIPTION
-//      This class implements simple oneway and twoway no-op requests
-//      to time latency and overhead of the pluggable protocol functionality.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PP_Test_Server.h
+ *
+ *  $Id$
+ *
+ *    This class implements simple oneway and twoway no-op requests
+ *    to time latency and overhead of the pluggable protocol functionality.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _PP_TEST_SERVER_H
 #define _PP_TEST_SERVER_H
@@ -30,52 +26,54 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "PP_Test_i.h"
 
+/**
+ * @class PP_Test_Server
+ *
+ * @brief Defines a server class that implements the functionality
+ * of a server process as an object.
+ *
+ * The interface is quite simple. A server program has to call
+ * init to initialize the server's state and then call run
+ * to run the orb.
+ */
 class PP_Test_Server
 {
-  // = TITLE
-  //   Defines a server class that implements the functionality
-  //   of a server process as an object.
-  //
-  // = DESCRIPTION
-  //   The interface is quite simple. A server program has to call
-  //   init to initialize the server's state and then call run
-  //   to run the orb.
 public:
   // = Initialization and termination methods.
+  /// Default constructor
   PP_Test_Server (void);
-  // Default constructor
 
+  /// Destructor
   ~PP_Test_Server (void);
-  // Destructor
 
+  /// Initialize the server state - parsing arguments, etc.
   int init (int argc,
             ACE_TCHAR **argv);
-  // Initialize the server state - parsing arguments, etc.
 
+  /// Run the orb
   int run (void);
-  // Run the orb
 
 private:
+  /// Parses the commandline arguments.
   int parse_args (void);
-  // Parses the commandline arguments.
 
+  /// File to output the cubit factory IOR.
   FILE* ior_output_file_;
-  // File to output the cubit factory IOR.
 
+  /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager.
 
+  /// Implementation object of the Pluggable Test factory.
   Pluggable_Test_Factory_i *factory_impl_;
-  // Implementation object of the Pluggable Test factory.
 
+  /// ID of the factory.
   CORBA::String_var factory_id_;
-  // ID of the factory.
 
+  /// Number of commandline arguments.
   int argc_;
-  // Number of commandline arguments.
 
+  /// commandline arguments.
   ACE_TCHAR **argv_;
-  // commandline arguments.
 };
 
 #endif /* _PP_TEST_SERVER_H */

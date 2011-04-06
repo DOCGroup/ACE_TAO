@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Manual_Event Test
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Manual_Event>
-//    implementation.
-//
-// = AUTHOR
-//    Martin Corino <mcorino@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Manual_Event_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Manual_Event>
+ *  implementation.
+ *
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Manual_Event.h"

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Semaphore_Test.cpp
-//
-// = DESCRIPTION
-//    Tests an ACE Semaphore shared between multiple child processes.
-//
-// = AUTHOR
-//    Martin Corino <mcorino@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Semaphore_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests an ACE Semaphore shared between multiple child processes.
+ *
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Mutex.h"

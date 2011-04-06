@@ -1,20 +1,17 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/Smart_Proxy
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is the client program that tests TAO's Smart Proxy extension.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is the client program that tests TAO's Smart Proxy extension.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "testC.h"

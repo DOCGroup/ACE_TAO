@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_wstr_seq.cpp
-//
-// = DESCRIPTION
-//    tests bounded wide string sequences
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_wstr_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests bounded wide string sequences
+ *
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_wstr_seq.h"

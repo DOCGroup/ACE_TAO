@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Manager_Test.cpp
-//
-// = DESCRIPTION
-//      This program tests the group management mechanisms provided by
-//      the <ACE_Thread_Manager>, including the group signal handling,
-//      group suspension and resumption, and cooperative thread
-//      cancellation mechanisms.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program tests the group management mechanisms provided by
+ *    the <ACE_Thread_Manager>, including the group signal handling,
+ *    group suspension and resumption, and cooperative thread
+ *    cancellation mechanisms.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"

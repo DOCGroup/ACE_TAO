@@ -31,8 +31,9 @@ namespace DAnCE
     get_pci (const ::Deployment::PackagedComponentImplementation &src)
     {
       DANCE_TRACE ("PCI_Handler::get_pci - reverse");
-      return PackagedComponentImplementation (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
-                          CID_Handler::component_impl_descr (src.referencedImplementation));
+      return PackagedComponentImplementation (
+        ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()),
+        CID_Handler::component_impl_descr (src.referencedImplementation));
     }
       };
 
@@ -43,8 +44,9 @@ namespace DAnCE
 
 
       void
-      CPD_Handler::handle_component_package_descr (const ComponentPackageDescription &desc,
-                           ::Deployment::ComponentPackageDescription &toconfig)
+      CPD_Handler::handle_component_package_descr (
+        const ComponentPackageDescription &desc,
+        ::Deployment::ComponentPackageDescription &toconfig)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr");
 
@@ -76,9 +78,6 @@ namespace DAnCE
                        cpd->end_infoProperty (),
                        Property_Functor (toconfig.configProperty));
 
-        //        DANCE_DEBUG (1, (LM_ERROR, "***** Count of PCIs is %i\n",
-        //           cpd->count_implementation ()));
-
         // Packaged Component Implementations
         toconfig.implementation.length ( cpd->count_implementation ());
         SEQ_HAND_GCC_BUG_WORKAROUND (PCI_Handler::handle_pci,
@@ -96,7 +95,8 @@ namespace DAnCE
       }
 
       ComponentPackageDescription
-      CPD_Handler::component_package_descr (const Deployment::ComponentPackageDescription& src)
+      CPD_Handler::component_package_descr (
+        const Deployment::ComponentPackageDescription& src)
       {
         DANCE_TRACE ("CPD_Handler::component_package_descr - reverse");
         ComponentPackageDescription toconfig;
@@ -133,7 +133,8 @@ namespace DAnCE
         return toconfig;
       }
 
-      ComponentPackageDescription * CPD_Handler::resolve_cpd (const ACE_TCHAR *uri)
+      ComponentPackageDescription * CPD_Handler::resolve_cpd (
+        const ACE_TCHAR *uri)
       {
         DANCE_TRACE ("CPD_Handler::resolve_cpd");
         if (!XML_Helper::XML_HELPER.is_initialized ())
@@ -143,18 +144,17 @@ namespace DAnCE
           XML_Helper::XML_HELPER.create_dom (uri);
 
         if (!dom)
-          throw Parse_Error (ACE_TEXT ("Unable to create DOM for component package description"));
+          throw Parse_Error ( ACE_TEXT (
+            "Unable to create DOM for component package description"));
 
         try {
-          //DANCE_DEBUG (1, (LM_ERROR, "Creating new CPD XSC Object\n"));
           return new ComponentPackageDescription (reader::componentPackageDescription (dom));
         }
         catch (...) {
-          throw Parse_Error (ACE_TEXT ("Unable to create XSC structure for CID"));
+          throw Parse_Error (ACE_TEXT (
+            "Unable to create XSC structure for CID"));
         }
       }
     }
-
-
   }
 }

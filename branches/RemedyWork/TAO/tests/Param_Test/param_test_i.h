@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    param_test_i.h
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    param_test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_I_H
 #define PARAM_TEST_I_H
@@ -23,77 +20,81 @@ class Coffee_i : public POA_Coffee
 
 {
 public:
+  /// constructor
   Coffee_i (const char *name);
-  // constructor
 
+  /// destructor
   ~Coffee_i (void);
-  // destructor
 
   // =methods for the attribute
 
+  /// get attribute
   virtual Coffee::Desc * description (void);
-  // get attribute
 
+  /// set attribute
   virtual void description (const Coffee::Desc &description);
-  // set attribute
 
 private:
+  /// my description
   CORBA::String_var name_;
-  // my description
 };
 
 // the implementation of the Param_test interface
+/**
+ * @class Param_Test_i
+ *
+ * @brief Param_Test_i
+ *
+ * Implementation of the Param_Test test suite.
+ */
 class Param_Test_i : public POA_Param_Test
 {
-  // = TITLE
-  //    Param_Test_i
-  // = DESCRIPTION
-  //    Implementation of the Param_Test test suite.
 public:
+  /// Constructor
   Param_Test_i (const char *coffee_name,
                 CORBA::ORB_ptr orb);
-  // Constructor
 
+  /// Destructor
   ~Param_Test_i (void);
-  // Destructor
 
+  /// test for shorts
   virtual CORBA::Short test_short (CORBA::Short s1,
                                    CORBA::Short &s2,
                                    CORBA::Short_out s3);
-  // test for shorts
 
+  /// test for unsigned long long
   virtual CORBA::ULongLong test_ulonglong (CORBA::ULongLong s1,
                                            CORBA::ULongLong &s2,
                                            CORBA::ULongLong_out s3);
-  // test for unsigned long long
 
+  /// test for unbounded strings
   virtual char *test_unbounded_string (const char *s1,
                                        char *&s2,
                                        CORBA::String_out s3);
-  // test for unbounded strings
 
+  /// test for bounded strings
   virtual char *test_bounded_string (const char *s1,
                                      char *&s2,
                                      CORBA::String_out s3);
-  // test for bounded strings
 
+  /// test for unbounded wstrings
   virtual CORBA::WChar *test_unbounded_wstring (const CORBA::WChar *ws1,
                                                 CORBA::WChar *&ws2,
                                                 CORBA::WString_out ws3);
-  // test for unbounded wstrings
 
+  /// test for bounded wstrings
   virtual CORBA::WChar *test_bounded_wstring (const CORBA::WChar *ws1,
                                               CORBA::WChar *&ws2,
                                               CORBA::WString_out ws3);
-  // test for bounded wstrings
 
+  /// test for fixed structures
   virtual Param_Test::Fixed_Struct
   test_fixed_struct (const Param_Test::Fixed_Struct &s1,
                      Param_Test::Fixed_Struct &s2,
                      Param_Test::Fixed_Struct_out s3);
-  // test for fixed structures
 
   // = Start of sequences tests...
+  /// = End of sequences tests....
   virtual CORBA::LongSeq * test_long_sequence (
       const CORBA::LongSeq & s1,
       CORBA::LongSeq & s2,
@@ -158,64 +159,63 @@ public:
           const CORBA::AnySeq & s1,
           CORBA::AnySeq & s2,
           CORBA::AnySeq_out s3);
-  // = End of sequences tests....
 
+  /// test for variable structs
   virtual Param_Test::Var_Struct *
   test_var_struct (const Param_Test::Var_Struct &s1,
                    Param_Test::Var_Struct &s2,
                    Param_Test::Var_Struct_out s3);
-  // test for variable structs
 
+  /// test for nested structs
   virtual Param_Test::Nested_Struct *
   test_nested_struct (const Param_Test::Nested_Struct &s1,
                       Param_Test::Nested_Struct &s2,
                       Param_Test::Nested_Struct_out s3);
-  // test for nested structs
 
+  /// test for recursive structs
   virtual Param_Test::Recursive_Struct *
     test_recursive_struct (const Param_Test::Recursive_Struct &rs1,
                            Param_Test::Recursive_Struct &rs2,
                            Param_Test::Recursive_Struct_out rs3);
-  // test for recursive structs
 
   virtual Param_Test::Objref_Struct *
   test_objref_struct (const Param_Test::Objref_Struct &s1,
                       Param_Test::Objref_Struct &s2,
                       Param_Test::Objref_Struct_out s3);
 
+  /// make a coffee object
   virtual Coffee_ptr
   make_coffee (void);
-  // make a coffee object
 
+  /// test for object references
   virtual Coffee_ptr
   test_objref (Coffee_ptr o1,
                Coffee_ptr &o2,
                Coffee_out o3);
-  // test for object references
 
+  /// test for typecodes
   virtual CORBA::TypeCode_ptr
   test_typecode (CORBA::TypeCode_ptr t1,
                  CORBA::TypeCode_ptr &o2,
                  CORBA::TypeCode_out o3);
-  // test for typecodes
 
+  /// test for Anys
   virtual CORBA::Any *
   test_any (const CORBA::Any &a1,
             CORBA::Any &a2,
             CORBA::Any_out a3);
-  // test for Anys
 
+  /// test for fixed size arrays
   virtual Param_Test::Fixed_Array_slice *
   test_fixed_array (const Param_Test::Fixed_Array a1,
                     Param_Test::Fixed_Array a2,
                     Param_Test::Fixed_Array_out a3);
-  // test for fixed size arrays
 
+  /// test for arrays of variable types
   virtual Param_Test::Var_Array_slice *
   test_var_array (const Param_Test::Var_Array a1,
                   Param_Test::Var_Array a2,
                   Param_Test::Var_Array_out a3);
-  // test for arrays of variable types
 
   virtual CORBA::ULong test_exception (CORBA::ULong s1,
                                        CORBA::ULong& s2,
@@ -251,17 +251,19 @@ public:
 
 
 private:
+  /// Remember out ORB.
   CORBA::ORB_var orb_;
-  // Remember out ORB.
 
+  /// the coffee object reference we maintain
   Coffee_i obj_;
-  // the coffee object reference we maintain
 
+  /**
+   * Called by test_exception. This will avoid the compiler
+   * warning that test_exception is throwing an exception
+   * not in its THROW_SPEC, but still test TAO's
+   * conversion of such an exception to UNKNOWN.
+   */
   void throw_badboy (void);
-  // Called by test_exception. This will avoid the compiler
-  // warning that test_exception is throwing an exception
-  // not in its THROW_SPEC, but still test TAO's
-  // conversion of such an exception to UNKNOWN.
 };
 
 #endif /* PARAM_TEST_I_H */

@@ -16,18 +16,13 @@
 #ifndef _BE_COMPONENT_CONTEXT_EX_IDL_H_
 #define _BE_COMPONENT_CONTEXT_EX_IDL_H_
 
+/**
+ * This is a concrete visitor to generate the
+ * CIAO context IDL.
+ */
 class be_visitor_context_ex_idl
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_context_ex_idl
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the
-  //   CIAO context IDL.
-  //
-  //
 public:
   be_visitor_context_ex_idl (be_visitor_context *ctx);
 

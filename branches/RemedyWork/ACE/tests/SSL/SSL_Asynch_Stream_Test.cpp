@@ -1,33 +1,30 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests/SSL
-//
-// = FILENAME
-//    SSL_Asynch_Stream_Test.cpp
-//
-// = DESCRIPTION
-//      This program is a functionality test of ACE_SSL_Asynch_Stream.
-//      It demonstrates one proper use case of ACE_SSL_Asynch_Stream in the
-//      Proactor framework and validates its basic functionality.
-//
-//      Usage: SSL_Asynch_Stream_Test [-r <hostname:port#>]
-//                [-t <num threads>] [-d <delay>]
-//                [-i <client conn attempt#>] [-n <client request# per conn>]
-//
-//      Default value:
-//          <hostname:port#>:       ACE_DEFAULT_SERVER_HOST:ACE_DEFAULT_PORT
-//          <num threads>:          ACE_MAX_THREADS
-//          <client conn attempt#>: ACE_MAX_ITERATIONS
-//          <client req# per conn>: 20
-//          <delay>:                0 usec
-//
-// = AUTHOR
-//      Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SSL_Asynch_Stream_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program is a functionality test of ACE_SSL_Asynch_Stream.
+ *    It demonstrates one proper use case of ACE_SSL_Asynch_Stream in the
+ *    Proactor framework and validates its basic functionality.
+ *
+ *    Usage: SSL_Asynch_Stream_Test [-r <hostname:port#>]
+ *              [-t <num threads>] [-d <delay>]
+ *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *
+ *    Default value:
+ *        <hostname:port#>:       ACE_DEFAULT_SERVER_HOST:ACE_DEFAULT_PORT
+ *        <num threads>:          ACE_MAX_THREADS
+ *        <client conn attempt#>: ACE_MAX_ITERATIONS
+ *        <client req# per conn>: 20
+ *        <delay>:                0 usec
+ *
+ *
+ *  @author   Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "../test_config.h"
 #include "ace/Default_Constants.h"

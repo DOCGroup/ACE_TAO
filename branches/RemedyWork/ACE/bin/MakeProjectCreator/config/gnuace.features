@@ -1,7 +1,7 @@
 // $Id$
 
 ssl=1
-qt=1
+qt4=1
 fl=1
 tk=1
 xt=1

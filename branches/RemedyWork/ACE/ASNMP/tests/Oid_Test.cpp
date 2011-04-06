@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    Oid_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Oid class. An Object
-//  representing an ASN.1 Integer64 SMI OID SYNTAX.
-//
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Oid_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Oid class. An Object
+ *  representing an ASN.1 Integer64 SMI OID SYNTAX.
+ *
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 

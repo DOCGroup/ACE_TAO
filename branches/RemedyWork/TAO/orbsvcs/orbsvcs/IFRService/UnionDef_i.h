@@ -33,15 +33,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents an OMG IDL union definition.
+ */
 class TAO_IFRService_Export TAO_UnionDef_i : public virtual TAO_TypedefDef_i,
                                              public virtual TAO_Container_i
 {
-  // = TITLE
-  //    TAO_UnionDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an OMG IDL union definition.
-  //
 public:
   /// Constructor
   TAO_UnionDef_i (TAO_Repository_i *repo);

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_struct_seq.h
-//
-// = DESCRIPTION
-//     Tests unbounded struct sequence
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_struct_seq.h
+ *
+ *  $Id$
+ *
+ *   Tests unbounded struct sequence
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 #define ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
@@ -28,37 +25,37 @@
 class Test_Unbounded_Struct_Sequence
 {
 public:
+  /// ctor
   Test_Unbounded_Struct_Sequence (void);
-  // ctor
 
+  /// dtor
   ~Test_Unbounded_Struct_Sequence (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Alt_Mapping_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Alt_Mapping_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
 protected:
+  /// compare
   CORBA::Boolean compare (const Alt_Mapping::StructSeq &s1,
                           const Alt_Mapping::StructSeq &s2);
-  // compare
 
+  /// print individual sequence
   void print_sequence (const Alt_Mapping::StructSeq &s);
-  // print individual sequence
 
 private:
  char *opname_;

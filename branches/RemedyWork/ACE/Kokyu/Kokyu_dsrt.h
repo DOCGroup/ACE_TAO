@@ -13,10 +13,6 @@
 #include /**/ "ace/pre.h"
 #include "ace/Copy_Disabled.h"
 
-//#if !defined (ACE_LACKS_PRAGMA_ONCE)
-//# pragma once
-//#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 

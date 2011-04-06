@@ -1,19 +1,17 @@
-// $Id$
-// ============================================================================
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Custom_Handler.cpp
-//
-// = DESCRIPTION
-//    This is a custom event handler to be used with the thread timer queue
-//    adapter, and its appropriate upcall.
-//
-// = AUTHOR
-//    Alon Diamant <diamant.alon@gmail.com
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Custom_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  This is a custom event handler to be used with the thread timer queue
+ *  adapter, and its appropriate upcall.
+ *
+ *
+ *  @author Alon Diamant <diamant.alon@gmail.com
+ */
+//=============================================================================
+
 
 #include "Custom_Handler.h"
 #include "ace/OS_NS_stdio.h"
@@ -46,10 +44,10 @@ Custom_Handler::on_timeout (const ACE_Time_Value &current_time,
   ACE_OS::printf ("\nexpiring timer %d at %lu.%7.7lu secs\n"
                   "\tthere was a %lu.%7.7lu secs delay\n",
                   this->id_,
-                  current_time.sec (),
-                  current_time.usec (),
-                  delay.sec (),
-                  delay.usec ());
+                  static_cast<unsigned long> (current_time.sec ()),
+                  static_cast<unsigned long> (current_time.usec ()),
+                  static_cast<unsigned long> (delay.sec ()),
+                  static_cast<unsigned long> (delay.usec ()));
 
   // Notice this delete is protected.
   delete this;

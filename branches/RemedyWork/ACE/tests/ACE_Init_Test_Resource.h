@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    ACE_Init_Test_Resource.h
-//
-// = DESCRIPTION
-//   Header file for the ACE_INIT_TEST application.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ACE_Init_Test_Resource.h
+ *
+ *  $Id$
+ *
+ * Header file for the ACE_INIT_TEST application.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.

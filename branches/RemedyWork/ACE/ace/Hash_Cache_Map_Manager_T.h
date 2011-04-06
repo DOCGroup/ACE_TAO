@@ -55,7 +55,7 @@ class ACE_Allocator;
   * Hash_Cache_Map_Manager provides extra functionality on top
   * of the Cache_Map_Manager.
   * No locking mechanism provided since locking at this level
-  * isnt efficient.  Locking has to be provided by the
+  * isn't efficient.  Locking has to be provided by the
   * application.
   */
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>

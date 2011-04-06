@@ -20,8 +20,9 @@ namespace DAnCE
       IDREF_Base<CORBA::ULong> SID_Handler::IDREF;
 
       void
-      SID_Handler::handle_sub_comp_inst_descr (const SubcomponentInstantiationDescription &desc,
-                                         ::Deployment::SubcomponentInstantiationDescription &toconfig)
+      SID_Handler::handle_sub_comp_inst_descr (
+        const SubcomponentInstantiationDescription &desc,
+         ::Deployment::SubcomponentInstantiationDescription &toconfig)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr");
         toconfig.name = ACE_TEXT_ALWAYS_CHAR (desc.name ().c_str ());
@@ -41,11 +42,13 @@ namespace DAnCE
         else if (desc.importedPackage_p ())
           {
             toconfig.importedPackage.length (1);
-            toconfig.importedPackage[0].location.length (desc.importedPackage ().count_location ());
+            toconfig.importedPackage[0].location.length (
+              desc.importedPackage ().count_location ());
 
             std::for_each (desc.importedPackage ().begin_location (),
                            desc.importedPackage ().end_location (),
-                           String_Seq_Functor (toconfig.importedPackage[0].location));
+                           String_Seq_Functor (
+                             toconfig.importedPackage[0].location));
           }
         else if (desc.referencedPackage_p ())
           {
@@ -53,14 +56,17 @@ namespace DAnCE
 
             if (desc.referencedPackage ().requiredUUID_p ())
               toconfig.referencedPackage[0].requiredUUID =
-                ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredUUID ().c_str ());
+                ACE_TEXT_ALWAYS_CHAR (
+                  desc.referencedPackage ().requiredUUID ().c_str ());
 
             if (desc.referencedPackage ().requiredName_p ())
               toconfig.referencedPackage[0].requiredName =
-                ACE_TEXT_ALWAYS_CHAR (desc.referencedPackage ().requiredName ().c_str ());
+                ACE_TEXT_ALWAYS_CHAR (
+                  desc.referencedPackage ().requiredName ().c_str ());
 
-            Comp_Intf_Descr_Handler::comp_intf_descr (desc.referencedPackage ().requiredType (),
-                                                      toconfig.referencedPackage[0].requiredType);
+            Comp_Intf_Descr_Handler::comp_intf_descr (
+              desc.referencedPackage ().requiredType (),
+              toconfig.referencedPackage[0].requiredType);
 
           }
 
@@ -80,16 +86,19 @@ namespace DAnCE
             SID_Handler::IDREF.bind_next_available (str);
           }
         else
-          DANCE_ERROR (1, (LM_WARNING, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
-                           desc.name ().c_str ()));
+          DANCE_ERROR (DANCE_LOG_WARNING,
+            (LM_WARNING, ACE_TEXT ("Warning: SID With Name %s has no ID\n"),
+             desc.name ().c_str ()));
 
       }
 
       SubcomponentInstantiationDescription
-      SID_Handler::sub_comp_inst_descr (const Deployment::SubcomponentInstantiationDescription &src)
+      SID_Handler::sub_comp_inst_descr (
+        const Deployment::SubcomponentInstantiationDescription &src)
       {
         DANCE_TRACE ("SID_Handler::sub_comp_inst_descr - reverse");
-        SubcomponentInstantiationDescription retval (ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
+        SubcomponentInstantiationDescription retval (
+          ACE_TEXT_CHAR_TO_TCHAR (src.name.in ()));
 
         if (src.basePackage.length () == 1)
           retval.basePackage
@@ -101,16 +110,21 @@ namespace DAnCE
           {
             ComponentPackageImport ci;
 #if 0
-            for (CORBA::ULong i = 0; i < src.importedPackage[0].location.length (); ++i)
+            for (CORBA::ULong i = 0;
+              i < src.importedPackage[0].location.length (); ++i)
               ci.add_location (src.importedPackage[0].location[i].in ());
 #endif
             retval.importedPackage (ci);
           }
         else if (src.referencedPackage.length () == 1)
           {
-            ComponentPackageReference cpr (Comp_Intf_Descr_Handler::comp_intf_descr (src.referencedPackage[0].requiredType));
-            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredUUID.in ()));
-            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (src.referencedPackage[0].requiredName.in ()));
+            ComponentPackageReference cpr (
+              Comp_Intf_Descr_Handler::comp_intf_descr (
+                src.referencedPackage[0].requiredType));
+            cpr.requiredUUID (ACE_TEXT_CHAR_TO_TCHAR (
+              src.referencedPackage[0].requiredUUID.in ()));
+            cpr.requiredName (ACE_TEXT_CHAR_TO_TCHAR (
+              src.referencedPackage[0].requiredName.in ()));
 
             retval.referencedPackage (cpr);
           }
@@ -128,14 +142,10 @@ namespace DAnCE
           ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
         ACE_TString uuid ( ACE_TEXT_CHAR_TO_TCHAR (safe_uuid->to_string ()->c_str ()));
 
-        //        ACE_ERROR ((LM_ERROR, "*** Binding to %s\n",
-        //           uuid.c_str ()));
-
         SID_Handler::IDREF.bind_next_available (uuid);
 
         return retval;
       }
-
     }
   }
 }

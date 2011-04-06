@@ -61,7 +61,7 @@ ACE_Time_Value::set (time_t sec, suseconds_t usec)
 # if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) && defined (_MSC_VER)
     // The WinCE 6.0 SDK ships with a timeval tv_sec member that uses long as type
     // not time_t. This resolves in compilation warnings because time_t
-    // can be 64bit. Disable at this momemt the warning for just this method
+    // can be 64bit. Disable at this moment the warning for just this method
     // else we get a compile warnings each time this inline file is included
     // this file.
 #   pragma warning (push)

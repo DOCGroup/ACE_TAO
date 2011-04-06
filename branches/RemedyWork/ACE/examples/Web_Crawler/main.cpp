@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Web_Crawler
-//
-// = FILENAME
-//    main.cpp
-//
-// = DESCRIPTION
-//     This program implements a Web crawler that can be configured to
-//     apply various strategies to URLs that it visits.
-//
-// = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    main.cpp
+ *
+ *  $Id$
+ *
+ *   This program implements a Web crawler that can be configured to
+ *   apply various strategies to URLs that it visits.
+ *
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/Signal.h"

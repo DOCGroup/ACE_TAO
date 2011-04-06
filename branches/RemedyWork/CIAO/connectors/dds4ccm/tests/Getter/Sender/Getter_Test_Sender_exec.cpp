@@ -184,7 +184,7 @@ namespace CIAO_Getter_Test_Sender_Impl
         for (CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
           {
             new_key.iteration = iter;
-            write_many[(iter - 1) + ((key - 2) * 10)] = new_key;
+            write_many[(iter -1) + ((key -1) * 10)] = new_key;
           }
       }
     try
@@ -211,7 +211,7 @@ namespace CIAO_Getter_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    //start can be called more than once...
+    // Start can be called more than once...
     if (!this->done_ && this->ccm_activated_)
       {
         this->done_ = true;

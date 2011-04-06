@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Sigset_Ops_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests the correctness of following functions.
-//     sigfillset(), sigemptyset(), sigaddset(), sigdelset(),
-//     sigismember().
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sigset_Ops_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the correctness of following functions.
+ *   sigfillset(), sigemptyset(), sigaddset(), sigdelset(),
+ *   sigismember().
+ *
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_signal.h"

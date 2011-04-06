@@ -45,14 +45,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-   typedef u_int ACE_RANDR_TYPE;
-#if defined (ACE_HAS_BROKEN_RANDR)
-   // The SunOS 5.4.X version of rand_r is inconsistent with the header
-   // files...
-   int rand_r (ACE_RANDR_TYPE seed);
-#else
-#endif /* ACE_HAS_BROKEN_RANDR */
-
 #if defined (ACE_LACKS_PUTENV_PROTOTYPE)
   int putenv (char *);
 #endif /* ACE_LACKS_PUTENV_PROTOTYPE */

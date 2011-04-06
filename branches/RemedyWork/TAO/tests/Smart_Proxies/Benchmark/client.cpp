@@ -1,20 +1,17 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/Smart_Proxies/Benchmark
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is the client program that tests TAO's Smart Proxy extension.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is the client program that tests TAO's Smart Proxy extension.
+ *
+ *
+ *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
@@ -55,8 +52,8 @@ class Marker
 
     }
  private:
+  /// Keep throughput statistics on a per-thread basis
   ACE_Throughput_Stats throughput_;
-  // Keep throughput statistics on a per-thread basis
 };
 
 

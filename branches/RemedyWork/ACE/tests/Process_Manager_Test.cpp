@@ -1,29 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Manager_Test.cpp
-//
-// = DESCRIPTION
-//      This program tests the various methods provided by
-//      <ACE_Process_Manager>.  It illustrates both the explicit <wait>
-//      functions and the Reactor-style auto-reaping.  There's an
-//      Exit_Handler class that can print out (in Debug mode) when a
-//      child has been reaped.
-//
-//      The child processes spawned are simply this program itself, with
-//      an integer argument specifying how long to "process" (actually,
-//      the child just sleeps for the specified length of time).
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
-//    Dave Madden <dhm@mersenne.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program tests the various methods provided by
+ *    <ACE_Process_Manager>.  It illustrates both the explicit <wait>
+ *    functions and the Reactor-style auto-reaping.  There's an
+ *    Exit_Handler class that can print out (in Debug mode) when a
+ *    child has been reaped.
+ *
+ *    The child processes spawned are simply this program itself, with
+ *    an integer argument specifying how long to "process" (actually,
+ *    the child just sleeps for the specified length of time).
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/SString.h"
@@ -181,8 +177,8 @@ public:
       sleep_time_ (sleep_time) { }
 
       // FUZZ: disable check_for_lack_ACE_OS
+      /// FUZZ: enable check_for_lack_ACE_OS
   int open (void*)
-      // FUZZ: enable check_for_lack_ACE_OS
   {
     char tmp[10];
     order += ACE_OS::itoa (sleep_time_, tmp, 10);
@@ -222,8 +218,8 @@ public:
   }
 
       // FUZZ: disable check_for_lack_ACE_OS
+      /// FUZZ: enable check_for_lack_ACE_OS
   int close (u_long)
-      // FUZZ: enable check_for_lack_ACE_OS
   {
     --running_tasks;
     return 0;

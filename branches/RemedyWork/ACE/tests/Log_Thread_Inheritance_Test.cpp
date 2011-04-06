@@ -9,8 +9,6 @@
 # include <pthread.h>
 #endif /* ACE_HAS_PTHREADS */
 
-
-
 #if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_IOSTREAM_TOTALLY)
 int run_main (int, ACE_TCHAR *[])
 {

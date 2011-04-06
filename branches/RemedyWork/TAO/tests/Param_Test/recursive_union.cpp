@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    recursive_union.cpp
-//
-// = DESCRIPTION
-//    test union that contains a sequence of itself
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    recursive_union.cpp
+ *
+ *  $Id$
+ *
+ *  test union that contains a sequence of itself
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "recursive_union.h"
 

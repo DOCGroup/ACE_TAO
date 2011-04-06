@@ -82,7 +82,7 @@ public:
 
   typedef ACE_Connect_Strategy<TAO_IIOP_Connection_Handler,
                                ACE_SOCK_CONNECTOR>
-          TAO_IIOP_CONNECT_STRATEGY ;
+          TAO_IIOP_CONNECT_STRATEGY;
 
   typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>

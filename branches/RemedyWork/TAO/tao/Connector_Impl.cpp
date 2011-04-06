@@ -5,6 +5,7 @@
 
 #include "tao/Connector_Impl.h"
 #include "tao/Transport.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -16,7 +17,7 @@ template <class SVC_HANDLER>
 TAO_Connect_Creation_Strategy<SVC_HANDLER>::
     TAO_Connect_Creation_Strategy (ACE_Thread_Manager* t,
                                    TAO_ORB_Core *orb_core)
-    : ACE_Creation_Strategy <SVC_HANDLER> (t),
+    : ACE_Creation_Strategy <SVC_HANDLER> (t, orb_core->reactor ()),
       orb_core_ (orb_core)
 {
 
@@ -42,8 +43,8 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
 template <class SVC_HANDLER>
 TAO_Connect_Concurrency_Strategy<SVC_HANDLER>::
-     TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core)
-       : orb_core_ (orb_core)
+    TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core)
+    : orb_core_ (orb_core)
 {
 }
 

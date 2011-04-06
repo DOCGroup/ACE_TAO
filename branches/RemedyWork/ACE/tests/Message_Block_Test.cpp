@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Message_Block_Test.cpp
-//
-// = DESCRIPTION
-//      This test program is a torture test that illustrates how
-//      <ACE_Message_Block> reference counting works in multi-threaded
-//      code.
-//
-// = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Message_Block_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test program is a torture test that illustrates how
+ *    <ACE_Message_Block> reference counting works in multi-threaded
+ *    code.
+ *
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -50,21 +47,21 @@ static ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  /// Activate the task.
   Worker_Task (void);
-  // Activate the task.
 
+  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// for all other threads to complete this iteration.
   virtual int svc (void);
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
+  /// Allows the producer to pass messages to the <Message_Block>.
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  // Allows the producer to pass messages to the <Message_Block>.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Close hook.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (u_long);
-  // Close hook.
-  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 int

@@ -1,38 +1,35 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Message_Queue_Notification_Test.cpp
-//
-// = DESCRIPTION
-//      There are two tests that test 2 different notification
-//      mechanisms in Message Queue.
-//
-//      The first test illustrates the notification mechanisms in
-//      Message_Queue and its integration with Reactor.
-//
-//      Note the following things about this part of the test:
-//
-//      1. Multiple threads are not required.
-//      2. You do not have to explicitly notify the Reactor
-//      3. This code will work the same with any Reactor Implementation
-//      4. handle_input, handle_exception, handle_output are the only
-//         callbacks supported by this mechanism
-//      5. The notification mechanism need not notify the Reactor. You can
-//         write your own strategy classes that can do whatever application
-//         specific behavior you want.
-//
-//      The second test also makes sure the high/low water mark
-//      signaling mechanism works flawlessly.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Message_Queue_Notifications_Test.cpp
+ *
+ *  $Id$
+ *
+ *    There are two tests that test 2 different notification
+ *    mechanisms in Message Queue.
+ *
+ *    The first test illustrates the notification mechanisms in
+ *    Message_Queue and its integration with Reactor.
+ *
+ *    Note the following things about this part of the test:
+ *
+ *    1. Multiple threads are not required.
+ *    2. You do not have to explicitly notify the Reactor
+ *    3. This code will work the same with any Reactor Implementation
+ *    4. handle_input, handle_exception, handle_output are the only
+ *       callbacks supported by this mechanism
+ *    5. The notification mechanism need not notify the Reactor. You can
+ *       write your own strategy classes that can do whatever application
+ *       specific behavior you want.
+ *
+ *    The second test also makes sure the high/low water mark
+ *    signaling mechanism works flawlessly.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -56,14 +53,17 @@ static const size_t default_high_water_mark = 20;
 static const size_t default_low_water_mark = 10;
 static const int watermark_iterations = 2 * default_high_water_mark;
 
+/**
+ * @class Message_Handler
+ *
+ * @brief This class implements a notification strategy for the Reactor.
+ */
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //   This class implements a notification strategy for the Reactor.
 public:
   // = Initialization and termination.
+  /// Constructor.
   Message_Handler (ACE_Reactor &reactor);
-  // Constructor.
 
   // = Demuxing hooks.
   virtual int handle_input (ACE_HANDLE);
@@ -77,11 +77,14 @@ private:
   ACE_Reactor_Notification_Strategy notification_strategy_;
 };
 
+/**
+ * @class Watermark_Test
+ *
+ * @brief This class test the correct functioning of build-in flow
+ * control machanism in ACE_Task.
+ */
 class Watermark_Test : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //     This class test the correct functioning of build-in flow
-  //     control machanism in ACE_Task.
 public:
   Watermark_Test (void);
 

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Arrays in the client inline.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Arrays in the client inline.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  visitor for array declaration in client inline
@@ -179,7 +176,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
                       '\0',
                       NAMEBUFSIZE);
       ACE_OS::sprintf (buf,
-                       "_%ld",
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        node->dims ()[i]->ev ()->u.ulval);
       unique += buf;
     }

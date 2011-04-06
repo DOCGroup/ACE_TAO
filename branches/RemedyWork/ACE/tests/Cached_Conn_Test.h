@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Cache_Conn_Test.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cached_Conn_Test.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_CACHED_CONN_TEST_H
 #define ACE_TESTS_CACHED_CONN_TEST_H

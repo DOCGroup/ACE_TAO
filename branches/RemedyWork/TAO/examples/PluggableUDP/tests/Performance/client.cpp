@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Basic
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    This is the client for the UDP performance test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  This is the client for the UDP performance test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 
 #include "ace/Get_Opt.h"

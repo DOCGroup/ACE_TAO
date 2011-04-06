@@ -24,16 +24,12 @@
 
 class be_visitor;
 
+/**
+ * Extension of class AST_Extended_Port for C++ code generation.
+ */
 class be_extended_port : public virtual AST_Extended_Port,
                          public virtual be_field
 {
-  //
-  // = TITLE
-  //   be_extended_port
-  //
-  // = DESCRIPTION
-  //   Extension of class AST_Extended_Port for C++ code generation.
-  //
 public:
   be_extended_port (
     UTL_ScopedName *n,

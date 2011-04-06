@@ -11,7 +11,7 @@ DAnCE::ResourceCommitmentManager_i::ResourceCommitmentManager_i (void)
 
 DAnCE::ResourceCommitmentManager_i::~ResourceCommitmentManager_i (void)
 {
-  DANCE_TRACE ("DAnCE::~ResourceCommitmentManager_i");
+  DANCE_TRACE ("DAnCE::ResourceCommitmentManager_i::~ResourceCommitmentManager_i");
 }
 
 void
@@ -48,7 +48,7 @@ void
 DAnCE::ResourceCommitmentManager_i::add_to_committed_resource (
     ::Deployment::ResourceAllocations res)
 {
-  DANCE_TRACE ("DAnCE::ResourceCommitmentManager_i::add_to_commited_resource");
+  DANCE_TRACE ("DAnCE::ResourceCommitmentManager_i::add_to_committed_resource");
 
   CORBA::ULong const current_length = this->resources_.length ();
 

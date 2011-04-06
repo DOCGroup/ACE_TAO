@@ -19,34 +19,44 @@ namespace DAnCE
       orb_ (0),
       daf_ (0)
     {
+      DANCE_TRACE("DynAny_Handler::constructor");
+
       int argc = 0;
       char **argv = 0;
 
       orb_ = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var temp = orb_->resolve_initial_references ("DynAnyFactory");
+      CORBA::Object_var temp = orb_->resolve_initial_references (
+        "DynAnyFactory");
       daf_ = DynamicAny::DynAnyFactory::_narrow (temp.in ());
 
       if (CORBA::is_nil (daf_.in ()))
         {
-          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Unable to narrow DynAny factory"));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("Unable to narrow Dynamic Any factory\n")));
+          throw Config_Error (
+            ACE_TEXT (""), ACE_TEXT ("Unable to narrow DynAny factory"));
         }
     }
 
     DynAny_Handler::~DynAny_Handler (void)
     {
+      DANCE_TRACE("DynAny_Handler::destructor");
     }
 
     CORBA::ORB_ptr
     DynAny_Handler::orb ()
     {
+      DANCE_TRACE("DynAny_Handler::orb");
+
       return orb_.in ();
     }
 
     DynamicAny::DynAnyFactory_ptr
     DynAny_Handler::daf ()
     {
+      DANCE_TRACE("DynAny_Handler::daf");
+
       return daf_.in ();
     }
 
@@ -55,6 +65,8 @@ namespace DAnCE
                                          const DataValue &value,
                                          CORBA::TypeCode_ptr req_tc)
     {
+      DANCE_TRACE("DynAny_Handler::extract_into_dynany");
+
       DynamicAny::DynAny_var retval;
 
       if (req_tc)
@@ -65,93 +77,162 @@ namespace DAnCE
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
-          DANCE_DEBUG (1, (LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Null or void types not supported"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_WARNING,
+            ACE_TEXT ("I don't know how to handle null or void types\n")));
+          throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Null or void types not supported"));
           break;
 
         case TCKind::tk_short_l:
-          if (!value.count_short ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_short data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_short);
-          retval->insert_short (CORBA::Short (static_cast < ::XMLSchema::short_ const & > (*(*value.begin_short ()))));
+          if (!value.count_short ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_short data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_short);
+          retval->insert_short (CORBA::Short (static_cast <
+            ::XMLSchema::short_ const & > (*(*value.begin_short ()))));
           break;
 
         case TCKind::tk_long_l:
-          if (!value.count_long ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_long data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_long);
-          retval->insert_long (CORBA::Long (static_cast < ::XMLSchema::int_ const& > (*(*value.begin_long ()))));
+          if (!value.count_long ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_long data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_long);
+          retval->insert_long (CORBA::Long (static_cast <
+            ::XMLSchema::int_ const& > (*(*value.begin_long ()))));
           break;
 
         case TCKind::tk_ushort_l:
-          if (!value.count_ushort ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_ushort data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ushort);
-          retval->insert_ushort (CORBA::UShort (static_cast< ::XMLSchema::unsignedShort const & > (*(*value.begin_ushort ()))));
+          if (!value.count_ushort ())
+            throw Config_Error (
+              ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_ushort data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+              CORBA::_tc_ushort);
+          retval->insert_ushort (CORBA::UShort (static_cast<
+            ::XMLSchema::unsignedShort const & > (
+              *(*value.begin_ushort ()))));
           break;
 
         case TCKind::tk_ulong_l:
-          if (!value.count_ulong ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_ulong data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulong);
-          retval->insert_ulong (CORBA::ULong (static_cast < ::XMLSchema::unsignedInt const& > (*(*value.begin_ulong ()))));
+          if (!value.count_ulong ())
+            throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Wrong value type for tk_ulong data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+              CORBA::_tc_ulong);
+          retval->insert_ulong (CORBA::ULong (static_cast <
+            ::XMLSchema::unsignedInt const& > (*(*value.begin_ulong ()))));
           break;
 
         case TCKind::tk_float_l:
-          if (!value.count_float ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_float data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_float);
+          if (!value.count_float ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_float data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+              CORBA::_tc_float);
           retval->insert_float (CORBA::Float (*(*value.begin_float ())));
           break;
 
         case TCKind::tk_double_l:
-          if (!value.count_double ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_double data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_double);
+          if (!value.count_double ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_double data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_double);
           retval->insert_double (CORBA::Double (*(*value.begin_double ())));
           break;
 
         case TCKind::tk_boolean_l:
-          if (!value.count_boolean ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_boolean data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_boolean);
-          retval->insert_boolean (static_cast < ::XMLSchema::boolean const& > (*(*value.begin_boolean ())));
+          if (!value.count_boolean ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_boolean data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_boolean);
+          retval->insert_boolean (static_cast <
+            ::XMLSchema::boolean const& > (*(*value.begin_boolean ())));
           break;
 
         case TCKind::tk_char_l:
-          if (!value.count_string ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_char data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_char);
-          retval->insert_char (CORBA::Char (*(*value.begin_string ())->c_str ()));
+          if (!value.count_string ())
+            throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Wrong value type for tk_char data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_char);
+          retval->insert_char (CORBA::Char (
+            *(*value.begin_string ())->c_str ()));
           break;
 
         case TCKind::tk_octet_l:
-          if (!value.count_octet ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_octet data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
-          retval->insert_octet (static_cast <const unsigned char &> (*(*(value.begin_octet ()))));
+          if (!value.count_octet ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_octet data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
+          retval->insert_octet (static_cast <const unsigned char &> (
+            *(*(value.begin_octet ()))));
           break;
 
         case TCKind::tk_string_l:
-          if (!value.count_string ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_string data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
-          retval->insert_string (ACE_TEXT_ALWAYS_CHAR ((*value.begin_string ())->c_str ()));
+          if (!value.count_string ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_string data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_string);
+          retval->insert_string (ACE_TEXT_ALWAYS_CHAR ((
+            *value.begin_string ())->c_str ()));
           break;
 
         case TCKind::tk_longlong_l:
-          if (!value.count_longlong ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_longlong data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_longlong);
-          retval->insert_longlong (CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (*(*value.begin_longlong ()))));
+          if (!value.count_longlong ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_longlong data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+              CORBA::_tc_longlong);
+          retval->insert_longlong (CORBA::LongLong (static_cast <
+            ::XMLSchema::long_ const& > (*(*value.begin_longlong ()))));
           break;
 
         case TCKind::tk_ulonglong_l:
-          if (!value.count_ulonglong ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_ulonglong data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_ulonglong);
-          retval->insert_ulonglong (CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (*(*value.begin_ulonglong ()))));
+          if (!value.count_ulonglong ())
+            throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Wrong value type for tk_ulonglong data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+            CORBA::_tc_ulonglong);
+          retval->insert_ulonglong (CORBA::ULongLong (static_cast <
+            ::XMLSchema::unsignedLong const& > (
+              *(*value.begin_ulonglong ()))));
           break;
 
         case TCKind::tk_wchar_l:
-          if (!value.count_string ()) throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for tk_wchar data type"));
-          if (!req_tc) retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_wchar);
-          retval->insert_wchar (CORBA::WChar (*(*value.begin_string ())->c_str ()));
+          if (!value.count_string ())
+            throw Config_Error (ACE_TEXT (""),
+              ACE_TEXT ("Wrong value type for tk_wchar data type"));
+          if (!req_tc)
+            retval = this->daf_->create_dyn_any_from_type_code (
+              CORBA::_tc_wchar);
+          retval->insert_wchar (CORBA::WChar (
+            *(*value.begin_string ())->c_str ()));
           break;
 
         case TCKind::tk_enum_l:
           return DynEnum_Handler::extract_into_dynany (type, value, req_tc);
 
         case TCKind::tk_sequence_l:
-          return DynSequence_Handler::extract_into_dynany (type, value, req_tc);
+          return DynSequence_Handler::extract_into_dynany (
+            type, value, req_tc);
 
         case TCKind::tk_struct_l:
           return DynStruct_Handler::extract_into_dynany (type, value, req_tc);
@@ -177,7 +258,8 @@ namespace DAnCE
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
+            ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -187,6 +269,8 @@ namespace DAnCE
     Any
     DynAny_Handler::extract_from_dynany (const CORBA::Any &any)
     {
+      DANCE_TRACE("DynAny_Handler::extract_from_dynany");
+
       DynamicAny::DynAny_var dyn = this->daf_->create_dyn_any (any);
 
       DataValue val;
@@ -256,8 +340,11 @@ namespace DAnCE
         case CORBA::tk_TypeCode:
         case ::CORBA::tk_null:
         default:
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform a reverse mapping.\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("reverse mapping for this type not supported"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (
+            LM_ERROR, ACE_TEXT ("DynAny_Handler: I have no idea how to perform"\
+                                " a reverse mapping.\n")));
+          throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("reverse mapping for this type not supported"));
         }
 #endif
       Any retval (TCKind::tk_char, val);
@@ -267,14 +354,17 @@ namespace DAnCE
     CORBA::TypeCode_ptr
     DynAny_Handler::create_typecode (const DataType &type)
     {
+      DANCE_TRACE("DynAny_Handler::create_typecode");
 
       switch (type.kind ().integral ())
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
         case TCKind::tk_void_l:
-          DANCE_DEBUG (1, (LM_WARNING, ACE_TEXT ("I don't know how to handle null or void types\n")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Null or void types not supported"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_WARNING,
+            ACE_TEXT ("I don't know how to handle null or void types\n")));
+          throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Null or void types not supported"));
           break;
 
         case TCKind::tk_short_l:
@@ -363,7 +453,8 @@ namespace DAnCE
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -371,9 +462,12 @@ namespace DAnCE
     }
 
     void
-    DynAny_Handler::register_typecode (const std::basic_string<ACE_TCHAR> typeID,
-                                       CORBA::TypeCode_ptr tc)
+    DynAny_Handler::register_typecode (
+      const std::basic_string<ACE_TCHAR> typeID,
+      CORBA::TypeCode_ptr tc)
     {
+      DANCE_TRACE("DynAny_Handler::register_typecode");
+
       this->typecode_map_[typeID] = tc;
     }
 
@@ -381,6 +475,8 @@ namespace DAnCE
     CORBA::TypeCode_ptr
     DynAny_Handler::get_typecode (const std::basic_string<ACE_TCHAR> typeID)
     {
+      DANCE_TRACE("DynAny_Handler::get_typecode");
+
       try
         {
           return this->typecode_map_ [typeID];

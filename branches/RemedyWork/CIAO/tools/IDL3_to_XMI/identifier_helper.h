@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    identifier_helper.h
-//
-// = DESCRIPTION
-//    Utilities associated with UTL_Identifier.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    identifier_helper.h
+ *
+ *  $Id$
+ *
+ *  Utilities associated with UTL_Identifier.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef IDENTIFIER_HELPER_H
 #define IDENTIFIER_HELPER_H
@@ -30,19 +27,14 @@
 
 class Identifier;
 
+/**
+ * 1) keeps escape (leading underscore character in generated identifier in IDL
+ * 2) removes the '_' escape character when the identifier is
+ * part of another identifier such as in provides_XXX
+ * 3) removes any '_cxx_' in generated IDL
+ */
 struct IdentifierHelper
 {
-  //
-  // = TITLE
-  //    IdentifierHelper.
-  //
-  // = DESCRIPTION
-  //    1) keeps escape (leading underscore character in generated
-  //       identifier in IDL
-  //    2) removes the '_' escape character when the identifier is
-  //       part of another identifier such as in provides_XXX
-  //    3) removes any '_cxx_' in generated IDL
-
   static Identifier *
   original_local_name (Identifier * local_name);
 

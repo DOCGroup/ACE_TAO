@@ -73,6 +73,11 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   // Cache the ORB pointer to respond faster to certain queries.
   this->orb_ = CORBA::ORB::_duplicate (this->orb_core_->orb ());
 
+  // Explicit trigger the loading of the client strategy factory at this moment.
+  // Not doing it here could lead to a problem loading it later on during
+  // an upcall
+  (void) this->orb_core_->client_factory ();
+
   this->base_profiles (profiles);
 }
 
@@ -218,7 +223,7 @@ TAO_Stub::object_key (void) const
     {
       // Double-checked
       // FUZZ: disable check_for_ACE_Guard
-      ACE_Guard<TAO_SYNCH_MUTEX> obj (this->profile_lock_);
+      ACE_Guard<TAO_SYNCH_MUTEX> obj (const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
       // FUZZ: enable check_for_ACE_Guard
 
       if (obj.locked () != 0 &&  this->forward_profiles_ != 0)

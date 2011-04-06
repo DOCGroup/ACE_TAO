@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Anyop
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//    The basis for this file is the IDL file in TAO/tests/Param_Test
-//    but modified slightly for testing the performance of Any
-//    insertion and extraction operators. Not every IDL type in this
-//    file is tested yet.
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  $Id$
+ *
+ *  The basis for this file is the IDL file in TAO/tests/Param_Test
+ *  but modified slightly for testing the performance of Any
+ *  insertion and extraction operators. Not every IDL type in this
+ *  file is tested yet.
+ *
+ *
+ *  @author Aniruddha Gokhale Jeff Parsons
+ */
+//=============================================================================
+
 
 #include <orb.idl>
 

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    typecode.idl
-//
-// = DESCRIPTION
-//    Test a sequence of typecodes
-//
-// = AUTHORS
-//    Johnny Willemsen  <jwillemsen@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typecode.idl
+ *
+ *  $Id$
+ *
+ *  Test a sequence of typecodes
+ *
+ *
+ *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "orb.idl"
 

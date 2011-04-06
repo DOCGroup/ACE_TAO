@@ -152,8 +152,6 @@ else
   #CCFLAGS += -qstaticinline
 endif
 
-CCFLAGS += -qfuncsect
-
 # The Visual Age preprocessor is not usable with the TAO_IDL compiler.
 # At the moment an idl file just contains includes of other idl files
 # the Visual Age preprocessor doesn't report that file in the list of

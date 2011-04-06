@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    results.h
-//
-// = DESCRIPTION
-//    Printing the results
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    results.h
+ *
+ *  $Id$
+ *
+ *  Printing the results
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef RESULTS_H
 #define RESULTS_H
@@ -38,51 +35,51 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class Results
 {
 public:
+  /// ctor
   Results (void);
-  // ctor
 
+  /// destructor
   ~Results (void);
-  // destructor
 
+  /// prints the time stats
   void print_stats (void);
-  // prints the time stats
 
+  /// print the exception
   void print_exception (const char *call_name);
-  // print the exception
 
+  /// start timing
   void start_timer (void);
-  // start timing
 
+  /// stop timing
   void stop_timer (void);
-  // stop timing
 
+  /// return call count
   CORBA::ULong call_count (void);
-  // return call count
 
+  /// set the call count
   void call_count (CORBA::ULong);
-  // set the call count
 
+  /// return the error count
   CORBA::ULong error_count (void);
-  // return the error count
 
+  /// set error count
   void error_count (CORBA::ULong);
-  // set error count
 
+  /// set the number of times the test will be run
   void iterations (CORBA::ULong iters);
-  // set the number of times the test will be run
 
 private:
+  /// # of calls made to functions
   CORBA::ULong call_count_;
-  // # of calls made to functions
 
+  /// # of errors incurred in the lifetime of the application.
   CORBA::ULong error_count_;
-  // # of errors incurred in the lifetime of the application.
 
+  /// for timing the test
   ACE_Profile_Timer timer_;
-  // for timing the test
 
+  /// holds the elapsed time for each iteration
   ACE_Profile_Timer::ACE_Elapsed_Time *elapsed_time_;
-  // holds the elapsed time for each iteration
 };
 
 #endif /* RESULTS_H */

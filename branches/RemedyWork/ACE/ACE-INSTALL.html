@@ -908,7 +908,7 @@ For our build we require the packages
 
 </p><ol>
 
-  <li> Install the MinGW tools into a common directory, say c:/mingw.
+  <li> Install the MinGW tools (including the MinGW Development toolkit) into a common directory, say c:/mingw.
       <br><br>
 
   </li><li> Install the MSYS tools into a common directory, say c:/msys.
@@ -955,6 +955,19 @@ For our build we require the packages
        before the previous one.
        <br><br>
 
+	   <p>
+       If you want to install ACE (using "make install") and want all the <tt>.pc</tt> files generated, 
+	   set the installation prefix in platform_macros.GNU.
+       </p><blockquote><code></code><pre>      INSTALL_PREFIX=/c/ACE
+       </pre></blockquote>
+	   Headers will be installed to $INSTALL_PREFIX/include, documentation and 
+	   build system files to $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib. With INSTALL_PREFIX set, RPATH will be enabled. 
+	   To disable RPATH (for example, if $INSTALL_PREFIX/$INSTALL_LIB is already 
+	   a system-known location for shared libraries), set the make macro 
+	   install_rpath to 0 by adding install_rpath=0 to platform_macros.GNU.
+	   
+       <br><br>
+
   </li><li> In the MSYS shell, change to the $ACE_ROOT/ace directory and
        run make:
 
@@ -973,6 +986,14 @@ For our build we require the packages
 
        </p><blockquote><code></code><pre>       % make static_libs=1
        </pre></blockquote>
+
+  </li><li> Run make install:
+  
+		<blockquote><code></code><pre>       % make install
+       </pre></blockquote>
+	   <p>
+       This should create <tt>ACE.pc</tt> to use with pkg-config.
+       </p>
 
   </li><li> <a name="mingwrunpath">
        The same rules for Win32 search of DLLs apply for MinGW. If you
@@ -2094,7 +2115,7 @@ libraries.
             can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
             enabled.<p>
         </p></li><li>Enable IP multicast in ACE.  It is enabled by default in
-            <code>ace/config-linux-common.h</code>.  If you don't use
+            <code>ace/config-linux.h</code>.  If you don't use
             IP multicast, add <code>#define ACE_HAS_IP_MULTICAST 0</code>
             to your <code>ace/config.h</code> before building ACE.<p>
         </p></li><li>There must be a network interface that is up and supports

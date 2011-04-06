@@ -221,9 +221,9 @@ namespace CIAO_Hello_Sender_Impl
     char timestamp[16];
     ACE_Date_Time now;
     ACE_OS::sprintf (timestamp,
-                      "%02d.%06d",
-                      now.second(),
-                      now.microsec ());
+                     "%02d.%06d",
+                     static_cast<int> (now.second()),
+                     static_cast<int> (now.microsec ()));
     ACE_CString ret (timestamp);
     ret = ret + " " + msg;
     return ret.c_str ();

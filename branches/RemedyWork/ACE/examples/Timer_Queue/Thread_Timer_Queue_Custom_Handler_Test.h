@@ -1,25 +1,20 @@
 /* -*- C++ -*- */
 
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Thread_Timer_Queue_Custom_Handler_Test.h
-//
-// = DESCRIPTION
-//    This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
-//    an <ACE_Timer_Heap_T>. It also demonstrates using a custom handler for
-//    timer events.
-//
-// = AUTHORS
-//    Carlos O'Ryan <coryan@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu> and
-//    Alon Diamant <diamant.alon@gmail.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Timer_Queue_Custom_Handler_Test.h
+ *
+ *  $Id$
+ *
+ *  This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
+ *  an <ACE_Timer_Heap_T>. It also demonstrates using a custom handler for
+ *  timer events.
+ *
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu> and Alon Diamant <diamant.alon@gmail.com>
+ */
+//=============================================================================
+
 
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_
@@ -54,63 +49,67 @@ typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap, Custom_Handler*>
 // Forward declaration.
 class Thread_Timer_Queue_Custom_Handler_Test;
 
+/**
+ * @class Custom_Handler_Input_Task
+ *
+ * @brief Read user actions on the Timer_Queue from stdin.
+ *
+ * This class reads user input from stdin; those commands permit
+ * the control of a Timer_Queue, which is dispatched by another
+ * thread.
+ */
 class Custom_Handler_Input_Task : public ACE_Task_Base
 {
-  // = TITLE
-  //   Read user actions on the Timer_Queue from stdin.
-  //
-  // = DESCRIPTION
-  //   This class reads user input from stdin; those commands permit
-  //   the control of a Timer_Queue, which is dispatched by another
-  //   thread.
 public:
   typedef int (Custom_Handler_Input_Task::*ACTION) (void *);
 
   Custom_Handler_Input_Task (Thread_Timer_Queue *queue,
               Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver);
 
+  /// This method runs the event loop in the new thread.
   virtual int svc (void);
-  // This method runs the event loop in the new thread.
 
   // = Some helper methods.
 
+  /// Add a new timer to expire in <seconds> more.
   int add_timer (void *);
-  // Add a new timer to expire in <seconds> more.
 
+  /// Cancel timer <id>.
   int cancel_timer (void *);
-  // Cancel timer <id>.
 
+  /// List the current scheduled timers.
   int list_timer (void *);
-  // List the current scheduled timers.
 
+  /// Shutdown task.
   int shutdown_timer (void *);
-  // Shutdown task.
 
+  /// Dump the state of the timer queue.
   void dump (void);
-  // Dump the state of the timer queue.
 
 private:
+  /// The timer queue implementation.
   Thread_Timer_Queue *queue_;
-  // The timer queue implementation.
 
+  /// How many micro seconds are in a second.
   const int usecs_;
-  // How many micro seconds are in a second.
 
+  /// The thread timer queue test driver.
   Thread_Timer_Queue_Custom_Handler_Test &driver_;
-  // The thread timer queue test driver.
 };
 
+/**
+ * @class Thread_Timer_Queue_Custom_Handler_Test
+ *
+ * @brief Implements an example application that exercises
+ * <Thread_Timer_Queue> timer queue.
+ *
+ * This class implements a simple test driver for the
+ * <Thread_Timer_Queue>.  The <display_menu> hook method is
+ * called from the base class to print a menu specific to the
+ * thread implementation of the timer queue.
+ */
 class ACE_Svc_Export Thread_Timer_Queue_Custom_Handler_Test : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION>
 {
-  // = TITLE
-  //    Implements an example application that exercises
-  //    <Thread_Timer_Queue> timer queue.
-  //
-  // = DESCRIPTION
-  //    This class implements a simple test driver for the
-  //    <Thread_Timer_Queue>.  The <display_menu> hook method is
-  //    called from the base class to print a menu specific to the
-  //    thread implementation of the timer queue.
 public:
   Thread_Timer_Queue_Custom_Handler_Test (void);
   ~Thread_Timer_Queue_Custom_Handler_Test (void);
@@ -120,8 +119,8 @@ public:
   virtual int run_test (void);
 
 private:
+  /// Subclassed from ACE_Task.
   Custom_Handler_Input_Task input_task_;
-  // Subclassed from ACE_Task.
 };
 
 #endif /* _THREAD_TIMER_QUEUE_TEST_H_ */

@@ -30,19 +30,14 @@ class Identifier;
 class be_type;
 class be_visitor;
 
+/**
+ * 1) keeps escape (leading underscore character in generated identifier in IDL
+ * 2) removes the '_' escape character when the identifier is
+ * part of another identifier such as in provides_XXX
+ * 3) removes any '_cxx_' in generated IDL
+ */
 struct TAO_IDL_BE_Export IdentifierHelper
 {
-  //
-  // = TITLE
-  //    IdentifierHelper.
-  //
-  // = DESCRIPTION
-  //    1) keeps escape (leading underscore character in generated
-  //       identifier in IDL
-  //    2) removes the '_' escape character when the identifier is
-  //       part of another identifier such as in provides_XXX
-  //    3) removes any '_cxx_' in generated IDL
-
   static const char *
   type_name (be_type *t, be_visitor *visitor);
 

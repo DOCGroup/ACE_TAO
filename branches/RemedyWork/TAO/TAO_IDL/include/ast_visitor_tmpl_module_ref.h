@@ -20,19 +20,15 @@
 
 #include "ast_visitor_tmpl_module_inst.h"
 
+/**
+ * Adds implied IDL code to the AST related to the
+ * alias of a template module. This class reuses all
+ * the methods from the base class except the no-op
+ * visit_template_module_ref(), which it overrides.
+ */
 class ast_visitor_tmpl_module_ref
   : public ast_visitor_tmpl_module_inst
 {
-  //
-  // = TITLE
-  //   ast_visitor_tmpl_module_ref
-  //
-  // = DESCRIPTION
-  //   Adds implied IDL code to the AST related to the
-  //   alias of a template module. This class reuses all
-  //   the methods from the base class except the no-op
-  //   visit_template_module_ref(), which it overrides.
-  //
 public:
   ast_visitor_tmpl_module_ref (ast_visitor_context *ctx);
 

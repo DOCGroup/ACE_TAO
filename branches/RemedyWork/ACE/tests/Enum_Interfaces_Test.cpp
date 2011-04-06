@@ -1,31 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Enum_interfaces.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of <ACE::get_ip_interfaces>.  This call
-//     retrieves the IP addresses assigned to the host by
-//     interrogating the kernel.  Network applications typically
-//     assume gethostbyname(uname()) will work, but this is just a
-//     convention. It is also problematic if the resolver code
-//     (DNS/NIS+...) is misconfigured. This happens more than
-//     programmers realize. It is better to find out by asking the
-//     kernel for local address assignments. This API is similar to
-//     what netstat -ni or ifconfig -a produces on UNIX or ipconfig on
-//     Windows NT. In fact, it was by reverse engineering these tools
-//     that this api was created.
-//
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Enum_Interfaces_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of <ACE::get_ip_interfaces>.  This call
+ *   retrieves the IP addresses assigned to the host by
+ *   interrogating the kernel.  Network applications typically
+ *   assume gethostbyname(uname()) will work, but this is just a
+ *   convention. It is also problematic if the resolver code
+ *   (DNS/NIS+...) is misconfigured. This happens more than
+ *   programmers realize. It is better to find out by asking the
+ *   kernel for local address assignments. This API is similar to
+ *   what netstat -ni or ifconfig -a produces on UNIX or ipconfig on
+ *   Windows NT. In fact, it was by reverse engineering these tools
+ *   that this api was created.
+ *
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_utsname.h"

@@ -1,18 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    RTEventLogAdmin.idl
-//
-// = DESCRIPTION
-//    This module defines the EventLog and
-//    EventLogFactory interfaces.
-//
-// = AUTHOR
-//    D A Hanvey (d.hanvey@qub.ac.uk)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RTEventLogAdmin.idl
+ *
+ *  $Id$
+ *
+ *  This module defines the EventLog and
+ *  EventLogFactory interfaces.
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
+//=============================================================================
+
 
 #ifndef RTEVENT_LOG_ADMIN_IDL
 #define RTEVENT_LOG_ADMIN_IDL

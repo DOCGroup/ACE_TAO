@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Drwho_Node.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Drwho_Node.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _DRWHO_NODE_H
 #define _DRWHO_NODE_H
 
 #include "global.h"
 
+/**
+ * @class Drwho_Node
+ *
+ * @brief Stores information about a host for a specific friend.
+ */
 class Drwho_Node
 {
-  // = TITLE
-  //   Stores information about a host for a specific friend.
 public:
   Drwho_Node (const char *host, Drwho_Node *next);
   Drwho_Node (void);

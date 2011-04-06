@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   LifeCycle.h
-//
-// = DESCRIPTION
-//   Test to check it ec and admin objects are destroyed.
-//
-// = AUTHOR
-//   Chanaka Liyanaarachchi <chanaka@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   LifeCycle.h
+ *
+ *  $Id$
+ *
+ * Test to check it ec and admin objects are destroyed.
+ *
+ *
+ *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_LIFECYCLETST_H
 #define NOTIFY_LIFECYCLETST_H
@@ -41,8 +41,8 @@ private:
    CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
    CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
+  /// Number of times to create destroy.
   int count_;
-  // Number of times to create destroy.
 };
 
 #endif /* NOTIFY_LIFECYCLETST_H */

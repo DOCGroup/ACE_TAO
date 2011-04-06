@@ -27,7 +27,7 @@ TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
     connect_strategy_ (),
-    base_connector_ ()
+    base_connector_ (0)
 {
 }
 
@@ -514,8 +514,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
             }
         }
-
-      safe_handler.release ();
     }
   else
     {

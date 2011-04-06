@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    CM_Server.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CM_Server.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _CM_SERVER_H
 #define _CM_SERVER_H
@@ -21,10 +18,13 @@
 #include "global.h"
 #include "Comm_Manager.h"
 
+/**
+ * @class CM_Server
+ *
+ * @brief Provides a virtual communcations layer for the server in drwho.
+ */
 class CM_Server : public Comm_Manager
 {
-  // = TITLE
-  //    Provides a virtual communcations layer for the server in drwho.
 public:
   CM_Server (void);
   virtual ~CM_Server (void);

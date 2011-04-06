@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    wpdu.cpp
-//
-// = DESCRIPTION
-//  Adapter class. Converts between raw wire format and Pdu objects
-//  that can be stuffed out a I/O port or reconstructed
-//
-// = AUTHOR
-//   Michael R. MacFaden rework the class api and impl using ACE
-//   Peter E Mellquist  implementation/code from snmp++ snmpmsg class
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    wpdu.cpp
+ *
+ *  $Id$
+ *
+ *  Adapter class. Converts between raw wire format and Pdu objects
+ *  that can be stuffed out a I/O port or reconstructed
+ *
+ *
+ *  @author Michael R. MacFaden rework the class api and impl using ACEPeter E Mellquist  implementation/code from snmp++ snmpmsg class
+ */
+//=============================================================================
+
 
 #include "asnmp/wpdu.h"
 #include "ace/Log_Msg.h"

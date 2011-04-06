@@ -10,7 +10,7 @@
 #include "ace/OS_NS_time.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-ACE_RANDR_TYPE seed;
+unsigned int seed;
 int payload_size = 4;
 
 int
@@ -74,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       policies[0]->destroy ();
 
-      seed = (ACE_RANDR_TYPE) ACE_OS::gethrtime ();
+      seed = (unsigned int) ACE_OS::gethrtime ();
 
       if (parse_args (argc, argv) != 0)
         return 1;

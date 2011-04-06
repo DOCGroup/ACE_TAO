@@ -49,15 +49,19 @@ namespace DAnCE
       }
     catch (const CORBA::Exception &ex)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("EM_Launcher::lookup_by_uuid - ")
-                         ACE_TEXT ("Caught CORBA Exception: %C\n"),
-                         ex._info ().c_str ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("EM_Launcher::lookup_by_uuid - ")
+                      ACE_TEXT ("Caught CORBA Exception: %C\n"),
+                      ex._info ().c_str ()));
         throw Deployment_Failure (ex._info ());
       }
     catch (...)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("EM_Launcher::lookup_by_uuid - ")
-                         ACE_TEXT ("Unknown C++ exception\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("EM_Launcher::lookup_by_uuid - ")
+                      ACE_TEXT ("Unknown C++ exception\n")));
         throw Deployment_Failure ("Unknown C++ exception in lookup_by_uuid\n");
       }
 

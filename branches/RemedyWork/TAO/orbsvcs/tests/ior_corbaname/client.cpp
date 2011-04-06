@@ -1,23 +1,18 @@
-// $Id$
-//
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/ior_corbaname/
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//     This implements a simple CORBA client for the
-//     corbaname: style IOR parser
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *   This implements a simple CORBA client for the
+ *   corbaname: style IOR parser
+ *
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "ior_corbaname_client_i.h"
 

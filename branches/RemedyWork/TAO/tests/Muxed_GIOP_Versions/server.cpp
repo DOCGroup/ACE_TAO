@@ -59,14 +59,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 /*****************************************************/
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   /// ctor
   Worker (CORBA::ORB_ptr orb);
@@ -82,14 +81,13 @@ private:
 
 /*****************************************************/
 
+/**
+ * Run a client thread
+ *
+ * Use the ACE_Task_Base class to run client threads
+ */
 class SelfClient : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
   SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server, int niterations);
   // ctor

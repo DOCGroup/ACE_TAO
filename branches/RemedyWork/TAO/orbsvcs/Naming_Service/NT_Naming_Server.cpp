@@ -1,24 +1,19 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    NT_Naming_Server.cpp
-//
-//
-// = DESCRIPTION
-//    Driver program that runs the TAO Naming Service as a Windows NT
-//    Service.
-//
-// = AUTHORS
-//    John Tucker <jtucker@infoglide.com> and
-//    Mike Vitalo <mvitalo@infoglide.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    NT_Naming_Server.cpp
+ *
+ *  $Id$
+ *
+ *  Driver program that runs the TAO Naming Service as a Windows NT
+ *  Service.
+ *
+ *
+ *  @author John Tucker <jtucker@infoglide.com> and Mike Vitalo <mvitalo@infoglide.com>
+ */
+//=============================================================================
+
 
 #include "ace/Log_Msg.h"
 
@@ -43,10 +38,13 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP SERVICE_DEMAND_START
 
+/**
+ * @class Options
+ *
+ * @brief Keeps track of the command-line options for this program.
+ */
 class Options
 {
-  // = TITLE
-  //   Keeps track of the command-line options for this program.
 public:
   Options (void);
   ~Options (void);

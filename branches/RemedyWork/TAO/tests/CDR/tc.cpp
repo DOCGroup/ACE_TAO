@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    tc.cpp
-//
-// = DESCRIPTION
-//   Verify that the basic typecodes are able to interpret their CDR
-//   buffers.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tc.cpp
+ *
+ *  $Id$
+ *
+ * Verify that the basic typecodes are able to interpret their CDR
+ * buffers.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"

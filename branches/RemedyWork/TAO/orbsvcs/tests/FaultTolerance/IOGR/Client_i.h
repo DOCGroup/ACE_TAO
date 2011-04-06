@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    test
-//
-// = FILENAME
-//    Client_i.h
-//
-// = DESCRIPTION
-//    A helper class for the client
-//
-// = AUTHOR
-//     Bala Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Client_i.h
+ *
+ *  $Id$
+ *
+ *  A helper class for the client
+ *
+ *
+ *  @author  Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TEST_FT_IOGR_CLIENT_I_H
 #define TEST_FT_IOGR_CLIENT_I_H
@@ -30,11 +27,11 @@
 class Client_i
 {
 public:
+  /// Our constructor
   Client_i (CORBA::ORB_ptr orb);
-  // Our constructor
 
+  /// Initialize the ORB etc.
   void init (void);
-  // Initialize the ORB etc.
 
 private:
   CORBA::ORB_var orb_;

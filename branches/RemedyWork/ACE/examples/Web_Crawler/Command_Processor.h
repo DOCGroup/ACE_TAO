@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Web_Crawler
-//
-// = FILENAME
-//    Command_Processor.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Command_Processor.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _COMMAND_PROCESSOR_H
 #define _COMMAND_PROCESSOR_H
@@ -27,65 +24,71 @@
 // Forward decl.
 class URL;
 
+/**
+ * @class Command
+ *
+ * @brief Abstract base class for a command.
+ *
+ * Each command is executed by a <Command_Processor>.
+ */
 class Command
 {
-  // = TITLE
-  //     Abstract base class for a command.
-  //
-  // = DESCRIPTION
-  //     Each command is executed by a <Command_Processor>.
 public:
+  /// Virtual destructor.
   virtual ~Command (void);
-  // Virtual destructor.
 
+  /// This is the entry point to execute the command.
   virtual int execute (void) = 0;
-  // This is the entry point to execute the command.
   virtual int destroy (void) = 0;
 };
 
+/**
+ * @class URL_Command
+ *
+ * @brief Defines an API for executing a command on a URL.
+ *
+ * Each command is executed by a <Command_Processor>.
+ */
 class URL_Command : public Command
 {
-  // = TITLE
-  //     Defines an API for executing a command on a URL.
-  //
-  // = DESCRIPTION
-  //     Each command is executed by a <Command_Processor>.
 public:
+  /// Constructor.
   URL_Command (URL *);
-  // Constructor.
 
+  /// Execute the URL command.
   virtual int execute (void);
-  // Execute the URL command.
 
+  /// Commit suicide.
   int destroy (void);
-  // Commit suicide.
 private:
+  /// Pointer to the URL.
   URL *url_;
-  // Pointer to the URL.
 };
 
+/**
+ * @class Command_Processor
+ *
+ * @brief Execute commands that are passed to it.
+ *
+ * This class implements the Command Processor pattern.
+ */
 class Command_Processor
 {
-  // = TITLE
-  //     Execute commands that are passed to it.
-  //
-  // = DESCRIPTION
-  //     This class implements the Command Processor pattern.
 public:
   Command_Processor (void);
 
+  /// Insert a new <Command> into the <Command_Processor>'s queue.
   int insert (Command *);
-  // Insert a new <Command> into the <Command_Processor>'s queue.
 
+  /// Execute all the <Commands> in the queue.
   int execute (void);
-  // Execute all the <Commands> in the queue.
 
+  /// Destroy the <Command_Processor>.
   int destroy (void);
-  // Destroy the <Command_Processor>.
 
 protected:
+  /// Ensure dynamic allocation.
   ~Command_Processor (void);
-  // Ensure dynamic allocation.
 
 private:
   // @@ You fill in here...

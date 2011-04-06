@@ -62,8 +62,8 @@ Test_ECG::Test_ECG (void)
 void
 print_priority_info (const char *const name)
 {
-#if defined (ACE_HAS_PTHREADS_STD) || defined (sun)
-#if defined (ACE_HAS_PTHREADS_STD)
+#if defined (ACE_HAS_PTHREADS) || defined (sun)
+#if defined (ACE_HAS_PTHREADS)
   struct sched_param param;
   int policy, status;
 
@@ -91,7 +91,7 @@ print_priority_info (const char *const name)
   }
 #else
   ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS_STD */
+#endif /* ACE_HAS_PTHREADS */
 
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
@@ -121,7 +121,7 @@ print_priority_info (const char *const name)
 #endif /* sun */
 #else
   ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS_STD */
+#endif /* ACE_HAS_PTHREADS || sun */
 }
 
 int

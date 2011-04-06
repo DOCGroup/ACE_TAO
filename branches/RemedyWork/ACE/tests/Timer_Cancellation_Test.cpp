@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Timer_Cancellation_Test.cpp
-//
-// = DESCRIPTION
-//    A test to ensure the timer cancellation works correctly.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timer_Cancellation_Test.cpp
+ *
+ *  $Id$
+ *
+ *  A test to ensure the timer cancellation works correctly.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

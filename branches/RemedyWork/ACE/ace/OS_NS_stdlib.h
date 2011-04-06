@@ -272,7 +272,7 @@ namespace ACE_OS {
   int rand (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rand_r (ACE_RANDR_TYPE &seed);
+  int rand_r (unsigned int *seed);
 
   extern ACE_Export
   void *realloc (void *, size_t);

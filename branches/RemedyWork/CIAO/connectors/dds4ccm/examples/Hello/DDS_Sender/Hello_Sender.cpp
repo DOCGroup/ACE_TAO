@@ -114,9 +114,9 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
         ACE_CString ret;
         ACE_Date_Time now;
         ACE_OS::sprintf (timestamp,
-                          "%02d.%d",
-                          now.second(),
-                          now.microsec ());
+                         "%02d.%d",
+                         static_cast<int> (now.second()),
+                         static_cast<int> (now.microsec ()));
         ret.set (timestamp);
         ret = ret + " " + msg;
         retcode = string_writer->write(

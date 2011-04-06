@@ -364,7 +364,7 @@ ifneq ($(optimize),1)
   CC_OPTIM_NORMAL =
 endif
 
-CCFLAGS         += $(C++FLAGS)
+CCFLAGS         += $(C++FLAGS) $(FLAGS_C_CC)
 
 ifeq ($(VXWORKSLINK), 1)
 

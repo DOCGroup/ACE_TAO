@@ -56,7 +56,7 @@ namespace DAnCE
             }
           else
             {
-              DANCE_ERROR (2, (LM_WARNING,
+              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR, (LM_WARNING,
                                "(%P|%t) Warning:  IDD %s has no idref\n",
                                ACE_TEXT_ALWAYS_CHAR (src.name ().c_str ())));
             }
@@ -96,8 +96,9 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
-                           src.name ().c_str ()));
+          DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT ("Unknown exception at IDD:%s"),
+            src.name ().c_str ()));
           throw Config_Error (src.name (), ACE_TEXT ("Unknown exception"));
         }
 
@@ -106,7 +107,7 @@ namespace DAnCE
 
     InstanceDeploymentDescription
     IDD_Handler::instance_deployment_descr (
-                                            const Deployment::InstanceDeploymentDescription& src)
+                     const Deployment::InstanceDeploymentDescription& src)
     {
       DANCE_TRACE("IDD_Handler::instance_deployment_descr - reverse");
       //Get all the string/IDREFs
@@ -115,7 +116,8 @@ namespace DAnCE
       XMLSchema::string < ACE_TCHAR > source (ACE_TEXT (""));
       if (src.source.length () > 0)
         {
-          XMLSchema::string < ACE_TCHAR > source_detail (ACE_TEXT_CHAR_TO_TCHAR (src.source[0]));
+          XMLSchema::string < ACE_TCHAR > source_detail (
+            ACE_TEXT_CHAR_TO_TCHAR (src.source[0]));
           source = source_detail;
         }
       ACE_TString temp;
@@ -131,19 +133,23 @@ namespace DAnCE
       size_t total = src.configProperty.length();
       for(size_t j = 0; j < total; j++)
         {
-          //idd.add_configProperty(Property_Handler::get_property (src.configProperty[j]));
+          //idd.add_configProperty(
+          //Property_Handler::get_property (src.configProperty[j]));
         }
 
       // Get and store the deployedResource(s)
       size_t dp_total = src.deployedResource.length ();
       for (size_t k = 0; k < dp_total; k++)
         {
-          //idd.add_deployedResource (IRDD_Handler::instance_resource_deployment_descr (src.deployedResource[k]));
+          //idd.add_deployedResource (IRDD_Handler::
+          //instance_resource_deployment_descr (src.deployedResource[k]));
         }
 
       //Check if there is a deployedSharedResource, if so store it
       if(src.deployedSharedResource.length() != 0)
-        idd. deployedSharedResource(IRDD_Handler::instance_resource_deployment_descr(src.deployedSharedResource[0]));
+        idd. deployedSharedResource(
+          IRDD_Handler::instance_resource_deployment_descr(
+            src.deployedSharedResource[0]));
 
       // Generate a UUID to use for the IDREF.
       ACE_Utils::UUID uuid;

@@ -1,21 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2L_BE_DLL
-//
-// = FILENAME
-//    be_global.cpp
-//
-// = DESCRIPTION
-//    Stores global data specific to the compiler back end.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_global.cpp
+ *
+ *  $Id$
+ *
+ *  Stores global data specific to the compiler back end.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "be_global.h"
 #include "be_sunsoft.h"

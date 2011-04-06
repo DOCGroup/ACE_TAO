@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Event_Sup.h
-//
-// = DESCRIPTION
-//   Event Supplier for the simulation
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Event_Sup.h
+ *
+ *  $Id$
+ *
+ * Event Supplier for the simulation
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef EVENT_SUP_H
 #define EVENT_SUP_H
@@ -32,37 +32,39 @@ struct Schedule_Viewer_Data
   u_long computation_time;
 };
 
+/**
+ * @class Event_Supplier
+ *
+ * @brief Event Supplier.
+ *
+ * Reads Scheduler information out of a file and
+ * feeds it with additional navigation and
+ * weapon data into the dove_supplier, which
+ * is connected to the event channel
+ */
 class Event_Supplier
 {
-  // = TITLE
-  //    Event Supplier.
-  //
-  // = DESCRIPTION
-  //    Reads Scheduler information out of a file and
-  //    feeds it with additional navigation and
-  //    weapon data into the dove_supplier, which
-  //    is connected to the event channel
 public:
 
   Event_Supplier (int argc, ACE_TCHAR** argv);
 
   ~Event_Supplier (void);
 
+  /// connect the DOVE_Supplier
   int init (void);
-  // connect the DOVE_Supplier
 
+  /// here is really something going on,
+  /// here we deliver the messages
   void start_generating_events (void);
-  // here is really something going on,
-  // here we deliver the messages
 
+  /// Load the scheduling information into memory
   void load_schedule_data (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
-  // Load the scheduling information into memory
 
 
 private:
+  /// just a helper to put all the information into the CORBA::Any
   void insert_event_data (CORBA::Any &data,
                           ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
-  // just a helper to put all the information into the CORBA::Any
 
   unsigned int get_options (int argc, ACE_TCHAR *argv []);
 

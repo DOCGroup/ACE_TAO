@@ -16,18 +16,12 @@
 #ifndef BE_VISITOR_ATTRIBUTE_CCM_INIT_H
 #define BE_VISITOR_ATTRIBUTE_CCM_INIT_H
 
+/**
+ * Generates the body of a CIAO component or home's set_attributes() method.
+ */
 class be_visitor_attribute_ccm_init
   : public be_visitor_any_extracted_type_decl
 {
-  //
-  // = TITLE
-  //   be_visitor_attribute_ccm_init
-  //
-  // = DESCRIPTION
-  //   Generates the body of a
-  //   CIAO component or home's set_attributes() method.
-  //
-  //
 public:
   be_visitor_attribute_ccm_init (be_visitor_context *ctx);
   ~be_visitor_attribute_ccm_init (void);

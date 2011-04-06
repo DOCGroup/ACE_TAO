@@ -1,35 +1,32 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    performance-tests/Misc
-//
-// = FILENAME
-//    preempt.cpp
-//
-// = DESCRIPTION
-//      This is a simple test to illustrate OS thread preemption.  One
-//      ore more high priority threads periodically (every half
-//      second, by default) reads the clock.  They use select () to
-//      block for that duration.  Meanwhile, a low priority thread
-//      continually chews up the CPU.  Without preemption, the high
-//      priority thread won't have a chance to read the clock in a
-//      timely manner.
-//
-//      At the end of the test, the actual clock read intervals by the
-//      high priority task(s) are printed out.  With proper
-//      preemption, the intervals should correspond to the requested
-//      clock read interval.
-//
-//      There is a -y option for the low priority thread to periodically
-//      yield.  It shouldn't be necessary to use that option, if preemption
-//      is supported.  It's a handy option for testing.
-//
-// = AUTHOR
-//    David L. Levine
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    preempt.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test to illustrate OS thread preemption.  One
+ *    ore more high priority threads periodically (every half
+ *    second, by default) reads the clock.  They use select () to
+ *    block for that duration.  Meanwhile, a low priority thread
+ *    continually chews up the CPU.  Without preemption, the high
+ *    priority thread won't have a chance to read the clock in a
+ *    timely manner.
+ *
+ *    At the end of the test, the actual clock read intervals by the
+ *    high priority task(s) are printed out.  With proper
+ *    preemption, the intervals should correspond to the requested
+ *    clock read interval.
+ *
+ *    There is a -y option for the low priority thread to periodically
+ *    yield.  It shouldn't be necessary to use that option, if preemption
+ *    is supported.  It's a handy option for testing.
+ *
+ *
+ *  @author David L. Levine
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/ACE.h"

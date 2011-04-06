@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Map_Manager_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the <ACE_Map_Manager> and
-//     <ACE_Hash_Map_Manager> that illustrates how to use the forward
-//     and reverse iterators.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Map_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the <ACE_Map_Manager> and
+ *   <ACE_Hash_Map_Manager> that illustrates how to use the forward
+ *   and reverse iterators.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Map_Manager.h"

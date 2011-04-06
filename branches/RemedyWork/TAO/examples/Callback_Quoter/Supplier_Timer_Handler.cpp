@@ -1,20 +1,13 @@
-// $Id$
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//  Supplier_Time _Handler.cpp
-//
-// = DESCRIPTION
-//    Implementation of the Supplier_Time_Handler class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  Implementation of the Supplier_Time_Handler class.
+ *
+ *  $Id$
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/ACE.h"
 

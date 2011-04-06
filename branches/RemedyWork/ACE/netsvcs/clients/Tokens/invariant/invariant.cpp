@@ -1,19 +1,13 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    invariant.cpp
-//
-// = DESCRIPTION
-//
-// = AUTHOR
-//    Tim Harrison
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    invariant.cpp
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison
+ */
+//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
@@ -21,8 +15,6 @@
 #include "ace/Token_Invariants.h"
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
-
-
 
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 

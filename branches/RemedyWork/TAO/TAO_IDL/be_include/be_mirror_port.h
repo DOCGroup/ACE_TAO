@@ -23,16 +23,12 @@
 
 class be_visitor;
 
+/**
+ * Extension of class AST_Mirror_Port for C++ code generation.
+ */
 class be_mirror_port : public virtual AST_Mirror_Port,
                        public virtual be_extended_port
 {
-  //
-  // = TITLE
-  //   be_mirror_port
-  //
-  // = DESCRIPTION
-  //   Extension of class AST_Mirror_Port for C++ code generation.
-  //
 public:
   be_mirror_port (
     UTL_ScopedName *n,

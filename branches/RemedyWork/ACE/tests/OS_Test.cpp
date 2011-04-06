@@ -15,6 +15,10 @@
 
 #include "test_config.h"
 #include "ace/ACE.h"
+//FUZZ: disable check_for_include_OS_h
+#include "ace/OS.h"
+//FUZZ: enable check_for_include_OS_h
+
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -641,6 +645,41 @@ snprintf_test (void)
     }
 
   return error_count;
+}
+
+static int
+getpwnam_r_test (void)
+{
+  int result = 0;
+
+#if !defined (ACE_LACKS_PWD_FUNCTIONS)
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getpwnam_r\n")));
+
+  struct passwd pwd;
+  struct passwd *pwd_ptr;
+  char buf[1024];
+
+  const char* login = getlogin ();
+  if (login == 0)
+    login = "root";
+
+  if (ACE_OS::getpwnam_r (login,
+                          &pwd,
+                          buf,
+                          sizeof (buf),
+                          &pwd_ptr) != 0)
+    {
+      result = 1;
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("getpwnam_r() failed\n")));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" User '%s' has uid=%d and gid=%d\n"),
+                  pwd_ptr->pw_name, pwd_ptr->pw_uid, pwd_ptr->pw_gid));
+    }
+#endif
+
+  return result;
 }
 
 static int
@@ -1341,6 +1380,9 @@ run_main (int, ACE_TCHAR *[])
   if ((result = snprintf_test ()) != 0)
     status = result;
 #endif /* !ACE_LACKS_VSNPRINTF || ACE_HAS_TRIO */
+
+  if ((result = getpwnam_r_test ()) != 0)
+    status = result;
 
   if ((result = ctime_r_test ()) != 0)
     status = result;

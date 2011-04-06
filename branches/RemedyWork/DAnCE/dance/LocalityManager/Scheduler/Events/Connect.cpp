@@ -50,17 +50,19 @@ namespace DAnCE
   {
     DANCE_TRACE ("Connect_Instance::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Connect_Instance::invoke - ")
-                      ACE_TEXT ("Invoking connect_instance on handler\n")));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Connect_Instance::invoke - ")
+                  ACE_TEXT ("Invoking connect_instance on handler\n")));
 
     handler->connect_instance (this->plan_,
                                this->connectionRef_,
                                this->provided_ref_);
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Connect_Instance::invoke - ")
-                      ACE_TEXT ("connect_instance successful completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Connect_Instance::invoke - ")
+                  ACE_TEXT ("connect_instance successful completed\n")));
   }
 
 

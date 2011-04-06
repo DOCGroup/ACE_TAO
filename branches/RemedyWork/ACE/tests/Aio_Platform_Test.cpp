@@ -1,22 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    aio_platform_test.cpp
-//
-// =  DESCRITPTION
-//     Testing the platform for POSIX Asynchronous I/O. Basically
-//     prints the predefined constants and also checks for their run
-//     time values. If this test succeeds further tests at
-//     $ACE_ROOT/examples/Reactor/Proactor can be used to test the
-//     features further.
-//
-// = AUTHOR
-//    Programming for the Real World. Bill O. GallMeister.  Modified
-//    by Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// =====================================================================
+//=============================================================================
+/**
+ *  @file    Aio_Platform_Test.cpp
+ *
+ *  Testing the platform for POSIX Asynchronous I/O. Basically
+ *  prints the predefined constants and also checks for their run
+ *  time values. If this test succeeds further tests at
+ *  $ACE_ROOT/examples/Reactor/Proactor can be used to test the
+ *  features further.
+ *
+ *  $Id$
+ *
+ *  @author Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"

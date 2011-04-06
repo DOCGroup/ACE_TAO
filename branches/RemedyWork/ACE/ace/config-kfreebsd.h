@@ -153,13 +153,6 @@
 /* Platform contains <poll.h> */
 #define ACE_HAS_POLL 1
 
-/* Platform supports "position-independent" features provided by
-   ACE_Based_Pointer<>. */
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-
-/* Platform supports POSIX getpwnam_r() function */
-#define ACE_HAS_POSIX_GETPWNAM_R 1
-
 /* Platform supports POSIX O_NONBLOCK semantics */
 #define ACE_HAS_POSIX_NONBLOCK 1
 
@@ -175,9 +168,6 @@
 
 /* Define to 1 if platform has POSIX threads */
 #define ACE_HAS_PTHREADS 1
-
-/* Platform supports POSIX.1c-1995 threads */
-#define ACE_HAS_PTHREADS_STD 1
 
 /* Platform has the UNIX98 extensions to Pthreads (rwlocks) */
 #define ACE_HAS_PTHREADS_UNIX98_EXT 1

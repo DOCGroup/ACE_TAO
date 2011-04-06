@@ -1,21 +1,18 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/MT_Servant_Locator
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//     This program tests that multiple calls to the Servant Locator
-//     can take place simultaneously.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests that multiple calls to the Servant Locator
+ *   can take place simultaneously.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "tao/PortableServer/ServantLocatorC.h"

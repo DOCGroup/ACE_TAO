@@ -1,35 +1,34 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/OctetSeq
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #ifndef TAO_OCTETSEQ_TEST_I_H
 #define TAO_OCTETSEQ_TEST_I_H
 
 #include "testS.h"
 
+/**
+ * @class Database_i
+ *
+ * Implements the Database interface in test.idl
+ */
 class Database_i : public POA_Test::Database
 {
-  // = DESCRIPTION
-  //   Implements the Database interface in test.idl
-  //
 public:
+  /// ctor
   Database_i (CORBA::ORB_ptr orb,
               Test::Index max_range);
-  // ctor
 
+  /// dtor
   ~Database_i (void);
-  // dtor
 
   // = The Simple_Server methods.
   void set (Test::Index i,
@@ -44,14 +43,14 @@ public:
   void shutdown (void);
 
 private:
+  /// The ORB pointer
   CORBA::ORB_var orb_;
-  // The ORB pointer
 
+  /// The maximum number of elements in the database
   Test::Index max_range_;
-  // The maximum number of elements in the database
 
+  /// The elements
   Test::OctetSeq* elements_;
-  // The elements
 };
 
 #if defined(__ACE_INLINE__)

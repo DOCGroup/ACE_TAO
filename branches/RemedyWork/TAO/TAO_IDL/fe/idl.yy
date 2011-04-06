@@ -564,6 +564,10 @@ module
               (void) s->fe_add_module (m);
             }
 
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
+
           /*
            * Push it on the stack
            */

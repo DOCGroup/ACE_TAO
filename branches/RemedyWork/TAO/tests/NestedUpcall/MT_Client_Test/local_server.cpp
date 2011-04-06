@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/MT_Client_Test
-//
-// = FILENAME
-//    local_server.cpp
-//
-// = DESCRIPTION
-//    This server will run the ORB briefly and then make
-//    several calls on the distant MT Object.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    local_server.cpp
+ *
+ *  $Id$
+ *
+ *  This server will run the ORB briefly and then make
+ *  several calls on the distant MT Object.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "local_server.h"
 #include "tao/debug.h"

@@ -1,17 +1,17 @@
-// $Id$
 
-// ================================================================
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client that uses buffered AMI calls.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client that uses buffered AMI calls.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "tao/Messaging/Messaging.h"

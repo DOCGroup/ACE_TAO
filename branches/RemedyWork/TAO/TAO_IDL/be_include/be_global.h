@@ -51,7 +51,7 @@ public:
   /// connectors.
   enum DDS_IMPL
   {
-    NONE,
+    DDS_NONE,
     NDDS,
     OPENSPLICE,
     OPENDDS

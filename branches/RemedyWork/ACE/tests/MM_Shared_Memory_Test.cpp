@@ -1,25 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Shared_Memory_MM_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of <ACE_Shared_Memory_MM>.  The test
-//     forks two processes or spawns two threads (depending upon the
-//     platform) and then executes child and parent allowing them to
-//     exchange data using shared memory. No user input is required as
-//     far as command line arguments are concerned.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>
-//    and Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MM_Shared_Memory_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of <ACE_Shared_Memory_MM>.  The test
+ *   forks two processes or spawns two threads (depending upon the
+ *   platform) and then executes child and parent allowing them to
+ *   exchange data using shared memory. No user input is required as
+ *   far as command line arguments are concerned.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
@@ -42,12 +38,15 @@ static ACE_TCHAR *shm_key;
 #include "ace/Thread_Semaphore.h"
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
 #elif defined (ACE_HAS_POSIX_SEM) && defined(ACE_HAS_SYSV_IPC)
+/**
+ * @class SYNCHRONIZER
+ *
+ * @brief If the platform has native cross-process POSIX semaphores, we
+ * must *force* this test to use the System V Semaphores in order
+ * to get the right semantics.
+ */
 class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
 {
-  // = TITLE
-  //   If the platform has native cross-process POSIX semaphores, we
-  //   must *force* this test to use the System V Semaphores in order
-  //   to get the right semantics.
 public:
   SYNCHRONIZER (int initial_value)
     : ACE_SV_Semaphore_Simple ((const char *) 0,

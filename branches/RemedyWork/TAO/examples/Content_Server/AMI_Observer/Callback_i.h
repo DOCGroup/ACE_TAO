@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     AMI_Observer
-//
-// = FILENAME
-//     Callback_i.h
-//
-// = DESCRIPTION
-//     Header file for the Web_Server::Callback implementation.
-//
-// = AUTHOR
-//     Ossama Othman <ossama@uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Callback_i.h
+ *
+ *  $Id$
+ *
+ *   Header file for the Web_Server::Callback implementation.
+ *
+ *
+ *  @author  Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef CALLBACK_I_H
 #define CALLBACK_I_H
@@ -53,73 +50,75 @@ class Callback_i :
   //    concurrently running threads attempt to update the state
   //    contained within a given <Callback> object.
 
+  /// Dummy friend class declaration to quiet down a warning.
   friend class Callback_i_Friend;
-  // Dummy friend class declaration to quiet down a warning.
 
 public:
+  /// Constructor
   Callback_i (int *request_count);
-  // Constructor
 
+  /// This operation returns the next <chunk> of the file starting at
+  /// <offset>.  If there are no more bindings, false is returned.
   virtual void next_chunk (const Web_Server::Chunk_Type &chunk,
                            CORBA::Boolean last_chunk);
-  // This operation returns the next <chunk> of the file starting at
-  // <offset>.  If there are no more bindings, false is returned.
 
+  /// Set metadata associated with received data.
   void metadata (const Web_Server::Metadata_Type &metadata);
-  // Set metadata associated with received data.
 
 private:
 
+  /// Destructor must be private to ensure that this object is
+  /// allocated on the heap.
   ~Callback_i (void);
-  // Destructor must be private to ensure that this object is
-  // allocated on the heap.
 
+  /// Returns one if the metadata was received, and zero otherwise.
   int metadata_received (void);
-  // Returns one if the metadata was received, and zero otherwise.
 
+  /// Returns one if the entire content was received, and zero
+  /// otherwise.
   int content_received (void);
-  // Returns one if the entire content was received, and zero
-  // otherwise.
 
+  /// Get the name of the viewer associated with the file being
+  /// retrieved.
   int get_viewer (char *viewer, size_t length);
-  // Get the name of the viewer associated with the file being
-  // retrieved.
 
+  /// Spawn an external view to display the retrieved file.
   int spawn_viewer (void);
-  // Spawn an external view to display the retrieved file.
 
 private:
 
+  /// Deactivate this Callback servant.
   void deactivate (void);
-  // Deactivate this Callback servant.
 
 private:
 
+  /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
-  // The Addr corresponding to the retrieved file.
 
+  /// The object that provides all file related IO operations
+  /// (e.g. read, write, etc).
   ACE_FILE_IO file_io_;
-  // The object that provides all file related IO operations
-  // (e.g. read, write, etc).
 
+  /// Reference to this Reply Handler's self.
   Web_Server::AMI_CallbackHandler_var ami_handler_;
-  // Reference to this Reply Handler's self.
 
+  /// The metadata associated with the file being retrieved from the
+  /// web server.
   Web_Server::Metadata_Type metadata_;
-  // The metadata associated with the file being retrieved from the
-  // web server.
 
+  /// Flag that indicates entire data content has been received.
   int last_chunk_;
-  // Flag that indicates entire data content has been received.
 
+  /// Lock used to prevent race conditions when checking to see if
+  /// metadata or entire content has been received.
   TAO_SYNCH_MUTEX lock_;
-  // Lock used to prevent race conditions when checking to see if
-  // metadata or entire content has been received.
 
+  /**
+   * Pointer to external status monitoring variable. The contents (not
+   * the pointer itself) of the <pending_data> parameter will be
+   * decremented when file retrieval has completed.
+   */
   int *request_count_;
-  // Pointer to external status monitoring variable. The contents (not
-  // the pointer itself) of the <pending_data> parameter will be
-  // decremented when file retrieval has completed.
 };
 
 #endif  /* CALLBACK_I_H */

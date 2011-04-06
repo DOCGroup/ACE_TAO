@@ -47,16 +47,18 @@ namespace DAnCE
   {
     DANCE_TRACE ("Remove_Instance::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Remove_Instance::invoke - ")
-                      ACE_TEXT ("Invoking remove_instance on handler for type <%C>\n"),
-                      this->instance_type_.c_str ()));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Remove_Instance::invoke - ")
+                  ACE_TEXT ("Invoking remove_instance on handler for type <%C>\n"),
+                  this->instance_type_.c_str ()));
     handler->remove_instance (this->plan_,
                               this->instanceRef_,
                               this->reference_);
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Remove_Instance::invoke - ")
-                      ACE_TEXT ("remove_instance completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Remove_Instance::invoke - ")
+                  ACE_TEXT ("remove_instance completed\n")));
   }
 
 

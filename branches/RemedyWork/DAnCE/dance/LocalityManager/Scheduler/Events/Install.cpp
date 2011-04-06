@@ -52,18 +52,20 @@ namespace DAnCE
   {
     DANCE_TRACE ("Install_Instance::invoke");
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Install_Instance::invoke - ")
-                      ACE_TEXT ("Invoking install_instance on handler for type <%C>\n"),
-                      this->instance_type_.c_str ()));
+    DANCE_DEBUG (DANCE_LOG_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Install_Instance::invoke - ")
+                  ACE_TEXT ("Invoking install_instance on handler for type <%C>\n"),
+                  this->instance_type_.c_str ()));
 
     handler->install_instance (this->plan_,
                                this->instanceRef_,
                                this->instance_.out ());
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Install_Instance::invoke - ")
-                      ACE_TEXT ("install_instance completed\n")));
+    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Install_Instance::invoke - ")
+                  ACE_TEXT ("install_instance completed\n")));
   }
 
 

@@ -49,6 +49,8 @@ public:
 
   AST_Type *primary_key (void) const;
 
+  void transfer_scope_elements (AST_Interface *dst);
+
   // Cleanup function.
   virtual void destroy (void);
 
