@@ -13,8 +13,6 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Filecache.h"
 
-
-
 JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler (void)
 {
 }

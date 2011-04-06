@@ -1,4 +1,6 @@
+# -*- Makefile -*-
 # $Id$
+
 # platform_macosx.GNU
 # support for Mac OS X 10.3 (Panther)
 
@@ -8,11 +10,9 @@ optimize ?= 0
 versioned_so ?= 0
 with_ld = macosx
 
-pipes ?= 1
-
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wall -Wpointer-arith -Wno-long-double
+CFLAGS          += -Wno-long-double
 
 DCFLAGS         += -g
 DLD             = libtool
@@ -31,4 +31,4 @@ SOBUILD = -o $(VSHDIR)$*.dylib $<
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 LDFLAGS         += -flat_namespace -undefined warning
-CCFLAGS         += $(CFLAGS)
+CCFLAGS         += $(CFLAGS) $(FLAGS_C_CC)

@@ -24,32 +24,34 @@ namespace DAnCE
 
       try
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("Admin::install_package - ")
+          DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                       (LM_TRACE, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Installing package with URI: %s, name: %s\n"),
                         uri, name));
           this->rm_->installPackage (ACE_TEXT_ALWAYS_CHAR (name),
                                      ACE_TEXT_ALWAYS_CHAR (uri),
                                      replace);
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("Admin::install_package - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                       (LM_TRACE, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Package installed successfully\n")));
         }
       catch (Deployment::NameExists &)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Package with name %s already installed.\n"),
                         name));
           return false;
         }
       catch (Deployment::PackageError &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Internal error while installing package with name %s: %C - %C\n"),
                         name, ex.source.in (), ex.reason.in ()));
           return false;
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Unexpected CORBA Exception while installing package with name: %s.  Reason: %C\n"),
                         name,
                         ex._info ().c_str ()));
@@ -57,7 +59,7 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Unexpected C++ exception while installing package with name: %s\n"),
                         name));
           return false;
@@ -87,24 +89,26 @@ namespace DAnCE
 
       try
         {
-          DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
+          DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                       (LM_TRACE, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
                         ACE_TEXT ("Attempting to uninstall package %s\n"),
                         uuid));
           this->rm_->deletePackage (ACE_TEXT_ALWAYS_CHAR (uuid));
-          DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
+          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                       (LM_INFO, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
                         ACE_TEXT ("Successfully uninstalled package %s\n"),
                         uuid));
         }
       catch (Deployment::NoSuchName &)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
                         ACE_TEXT ("No package with the given UUID found: %s\n"),
                         uuid));
           return false;
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
                         ACE_TEXT ("Unexpected CORBA Exception while uninstalling package with uuid: %s. Reason: %C\n"),
                         uuid,
                         ex._info ().c_str ()));
@@ -112,7 +116,7 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
                         ACE_TEXT ("Unexpected C++ exception while installing package with uuid: %C\n"),
                         uuid));
           return false;
@@ -134,14 +138,14 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_packages - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_packages - ")
                         ACE_TEXT ("Unexpected CORBA Exception while listing packages: %C\n"),
                         ex._info ().c_str ()));
           return 0;
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_package - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_package - ")
                         ACE_TEXT ("Unexpected C++ exception while listing packages\n")));
           return 0;
         }
@@ -162,14 +166,14 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_types - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_types - ")
                         ACE_TEXT ("Unexpected CORBA Exception while listing package types: %C\n"),
                         ex._info ().c_str ()));
           return 0;
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_types - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_types - ")
                         ACE_TEXT ("Unexpected C++ exception while listing package types\n")));
           return 0;
         }
@@ -185,8 +189,8 @@ namespace DAnCE
 
       if (type == 0)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
-                        ACE_TEXT ("Nill type passed to find_by_type\n")));
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
+                                         ACE_TEXT ("Nill type passed to find_by_type\n")));
           return 0;
         }
 
@@ -197,7 +201,7 @@ namespace DAnCE
         }
       catch (CORBA::Exception &ex)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
                         ACE_TEXT ("Unexpected CORBA Exception while listing packages of type %C: %C\n"),
                         type,
                         ex._info ().c_str ()));
@@ -205,7 +209,7 @@ namespace DAnCE
         }
       catch (...)
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
+          DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
                         ACE_TEXT ("Unexpected C++ exception while listing packages by type %C\n"),
                         type));
           return 0;
@@ -220,15 +224,18 @@ namespace DAnCE
     {
       DANCE_TRACE ("Admin::shutdown");
 
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT ("Admin::shutdown - ")
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_TRACE, DLINFO ACE_TEXT ("Admin::shutdown - ")
                     ACE_TEXT ("Attempting to shut down Repository Manager\n")));
       CIAO::RepositoryManagerDaemon_var rmd =
         CIAO::RepositoryManagerDaemon::_narrow (this->rm_.in ());
-      DANCE_DEBUG (8, (LM_INFO, DLINFO ACE_TEXT ("Admin::shutdown - ")
+      DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                   (LM_INFO, DLINFO ACE_TEXT ("Admin::shutdown - ")
                     ACE_TEXT ("Repository Manager shut down.\n")));
       if (CORBA::is_nil (rmd.in ()))
         {
-          DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("Admin::shutdown - ")
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Admin::shutdown - ")
                         ACE_TEXT ("Unable to narrow provided RM reference to a CIAO::RepositoryManagerDaemon\n")));
           return false;
         }

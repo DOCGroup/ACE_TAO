@@ -80,7 +80,7 @@
   </xsd:complexType>
 
   <xsd:complexType name="DataValue">
-    <xsd:choice maxOccurs="unbounded">
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="short" type="xsd:short"/>
       <xsd:element name="long" type="xsd:int"/>
       <xsd:element name="ushort" type="xsd:unsignedShort"/>

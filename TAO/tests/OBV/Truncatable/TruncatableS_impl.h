@@ -1,35 +1,33 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/OBV/Truncatable
-//
-// = FILENAME
-//   TruncatableS_impl.h
-//
-// = AUTHOR
-//   Boris Kolpackov <bosk@ipmce.ru>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   TruncatableS_impl.h
+ *
+ *  $Id$
+ *
+ *  @author Boris Kolpackov <bosk@ipmce.ru>
+ */
+//=============================================================================
+
 
 #ifndef TAO_TRUNCATABLE_S_IMPL_H
 #define TAO_TRUNCATABLE_S_IMPL_H
 
 #include "TruncatableS.h"
 
+/**
+ * @class Test_impl
+ *
+ * @brief Implementation of Test interface
+ *
+ * This interface is provided to produce valuetypes and test
+ * marshaling
+ */
 class Test_impl : public POA_OBV_TruncatableTest::Test
 {
-  // = TITLE
-  //   Implementation of Test interface
-  //
-  // = DESCRIPTION
-  //   This interface is provided to produce valuetypes and test
-  //   marshaling
-  //
 public:
+  /// ctor
   Test_impl (CORBA::ORB_ptr orb);
-  // ctor
 
   virtual void op1 (
         const char * id,
@@ -71,8 +69,8 @@ public:
   virtual void shutdown (void);
 
 private:
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 };
 
 #endif /* TAO_TRUNCATABLE_S_IMPL_H */

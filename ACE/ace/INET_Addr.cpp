@@ -411,9 +411,6 @@ ACE_INET_Addr::set (u_short port_number,
                       encode);
   else
     {
-#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME)
-      hostent *hp = ACE_OS::gethostbyname (host_name);
-#else
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       int h_error = 0;  // Not the same as errno!
@@ -422,7 +419,6 @@ ACE_INET_Addr::set (u_short port_number,
                                              buf, &h_error);
       if (hp == 0)
         errno = h_error;
-#endif /* ACE_VXWORKS */
 
       if (hp == 0)
         {
@@ -857,19 +853,6 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
     }
   else
     {
-#if defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR)
-      ACE_UNUSED_ARG (len);
-      int error =
-        ::hostGetByAddr ((int) this->inet_addr_.in4_.sin_addr.s_addr,
-                         hostname);
-      if (error == OK)
-        return 0;
-      else
-        {
-          errno = error;
-          return -1;
-        }
-#else
       void* addr = this->ip_addr_pointer ();
       int   size = this->ip_addr_size ();
       int   type = this->get_type ();
@@ -919,7 +902,6 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
 
       ACE_OS::strcpy (hostname, hp->h_name);
       return 0;
-#endif /* ACE_VXWORKS */
     }
 }
 

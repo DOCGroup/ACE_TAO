@@ -24,23 +24,9 @@
 // SunOS 5.5 does not provide getloadavg()
 #define ACE_LACKS_GETLOADAVG
 
-// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
-// We need to be check if the user has manually defined the macro before
-// including <sys/feature_tests.h>.
-#if defined (_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_PTHREAD_SEMANTICS
-#endif /* _POSIX_PTHREAD_SEMANTICS */
-
 // Before we do anything, we should include <sys/feature_tests.h> to
 // ensure that things are set up properly.
 #include <sys/feature_tests.h>
-
-// Some SunOS releases define _POSIX_PTHREAD_SEMANTICS automatically.
-// We need to undef if the macro is set and not defined by the user.
-#if defined (_POSIX_PTHREAD_SEMANTICS) && \
- !defined (ACE_HAS_POSIX_PTHREAD_SEMANTICS)
-# undef _POSIX_PTHREAD_SEMANTICS
-#endif /* _POSIX_PTHREAD_SEMANTICS && !ACE_HAS_POSIX_PTHREAD_SEMANTICS */
 
 // Sun has the posix defines so let this file sort out what Sun delivers
 #include "ace/config-posix.h"
@@ -125,33 +111,11 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-#elif defined (ghs)
-
-# if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
-    // ACE_MT_SAFE is #defined below, for all compilers.
-#   if !defined (_REENTRANT)
-    /* If you want to disable threading, comment out the following
-       line.  Or, add -DACE_MT_SAFE=0 to your CFLAGS, e.g., using
-       make threads=0. */
-#     define _REENTRANT
-#   endif /* _REENTRANT */
-# endif /* !ACE_MT_SAFE */
-
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
-  // To avoid warning about inconsistent declaration between Sun's
-  // stdlib.h and Green Hills' ctype.h.
-# include <stdlib.h>
-
-  // IOStream_Test never halts with Green Hills 1.8.9.
-# define ACE_LACKS_ACE_IOSTREAM
-
-#else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
+#else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-sunos5.5.h
 #  endif /* __cplusplus */
-#endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
+#endif /* ! __SUNPRO_CC && ! __GNUG__ */
 
 #if !defined (__ACE_INLINE__)
 // @note If you have link problems with undefined inline template
@@ -281,12 +245,6 @@
 #if !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION - 0 >= 4))
 #  define ACE_HAS_CHARPTR_SHMDT
 #endif
-
-// Platform has posix getpwnam_r
-#if (defined (_POSIX_C_SOURCE) && _POSIX_C_SOURCE - 0 >= 199506L) || \
-    defined(_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_GETPWNAM_R
-#endif /* _POSIX_C_SOURCE || _POSIX_PTHREAD_SEMANTICS */
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 1)
 #if defined (_REENTRANT) || \

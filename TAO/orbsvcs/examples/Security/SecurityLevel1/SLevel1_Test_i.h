@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   orbsvcs/examples/Security/SecurityLevel1
-//
-// = FILENAME
-//   SLevel1_Test_i.h
-//
-// = AUTHOR
-//   Priyanka Gontla <gontla_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   SLevel1_Test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Priyanka Gontla <gontla_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SLEVEL1_TEST_I_H
 #define TAO_SLEVEL1_TEST_I_H

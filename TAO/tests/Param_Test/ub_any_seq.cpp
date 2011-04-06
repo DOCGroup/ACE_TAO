@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_any_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded Any sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_any_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded Any sequences
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_any_seq.h"

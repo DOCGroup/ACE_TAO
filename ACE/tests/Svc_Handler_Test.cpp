@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Svc_Handler_Test.cpp
-//
-// = DESCRIPTION
-//    This tests illustrates the "buffering" strategy of the
-//    <ACE_Buffered_Svc_Handler>.  This test also illustrates how the
-//    <ACE_FILE_IO> classes work.
-//
-// = AUTHORS
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Svc_Handler_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This tests illustrates the "buffering" strategy of the
+ *  <ACE_Buffered_Svc_Handler>.  This test also illustrates how the
+ *  <ACE_FILE_IO> classes work.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

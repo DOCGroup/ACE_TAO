@@ -1,64 +1,61 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    (none)
-//
-// = FILENAME
-//    childbirth_time.cpp
-//
-// = DESCRIPTION
-//   This program is used to measure various child-creation mechanisms
-//   on various platforms.  By default, the program measure the time
-//   to 'fork' a new process using ACE_Process.spawn ().  Other tests
-//   are possible as described below.   James Hu provides the idea to
-//   batch measuring threads creation.
-//
-//   Usage: childbirth_time [-n ###] [-l ###] [-p|-f|-t|-a|-m|-x] [-h] [-e]
-//
-//          -n ###: Specify number of iteration in tens.  If this
-//                  option is not specified, the default is
-//                  MULTIPLY_FACTOR * (100 iterations,) which is
-//                  equivalent to -n 10.
-//
-//          -l ###: Specify MULTIPLY_FACTOR.  Default is 10.
-//
-//             *-p: Measure the performance of forking a child process
-//                  and exec an "empty" program.  This test uses
-//                  ACE_Process.spawn ().  (Default)
-//
-//              -f: Measure the performance of native "fork" function
-//                  call.  Notice that there is no equivalent NT
-//                  function calls and this option is only available
-//                  on UN*X platform.
-//
-//              -t: Measure the performance of native thread creation
-//                  mechanisms.  On Solaris, this is thr_create ().
-//                  On NT, this is CreateThread ().  Currently, only
-//                  these two platforms are implemented.
-//
-//              -m: Measure the performance of Thread_Manager::spawn_n
-//                  method.
-//
-//              -x: Test the baseline performance of ACE_Thread_Mutex.
-//                  This really doesn't belong here
-//
-//              -a: Measure the performance of thread creation using
-//                  ACE_OS::thr_create ().
-//
-//              -h: Use High Resolution Timer if supported by platform.
-//
-//              -e: Exec a program after fork ().  This option has no
-//                  effect on NT.
-//
-//   = CREATION DATE
-//      June 29, 1997
-//
-//   = AUTHOR
-//      Nanbor Wang
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    childbirth_time.cpp
+ *
+ *  $Id$
+ *
+ * This program is used to measure various child-creation mechanisms
+ * on various platforms.  By default, the program measure the time
+ * to 'fork' a new process using ACE_Process.spawn ().  Other tests
+ * are possible as described below.   James Hu provides the idea to
+ * batch measuring threads creation.
+ *
+ * Usage: childbirth_time [-n ###] [-l ###] [-p|-f|-t|-a|-m|-x] [-h] [-e]
+ *
+ *        -n ###: Specify number of iteration in tens.  If this
+ *                option is not specified, the default is
+ *                MULTIPLY_FACTOR * (100 iterations,) which is
+ *                equivalent to -n 10.
+ *
+ *        -l ###: Specify MULTIPLY_FACTOR.  Default is 10.
+ *
+ *           *-p: Measure the performance of forking a child process
+ *                and exec an "empty" program.  This test uses
+ *                ACE_Process.spawn ().  (Default)
+ *
+ *            -f: Measure the performance of native "fork" function
+ *                call.  Notice that there is no equivalent NT
+ *                function calls and this option is only available
+ *                on UN*X platform.
+ *
+ *            -t: Measure the performance of native thread creation
+ *                mechanisms.  On Solaris, this is thr_create ().
+ *                On NT, this is CreateThread ().  Currently, only
+ *                these two platforms are implemented.
+ *
+ *            -m: Measure the performance of Thread_Manager::spawn_n
+ *                method.
+ *
+ *            -x: Test the baseline performance of ACE_Thread_Mutex.
+ *                This really doesn't belong here
+ *
+ *            -a: Measure the performance of thread creation using
+ *                ACE_OS::thr_create ().
+ *
+ *            -h: Use High Resolution Timer if supported by platform.
+ *
+ *            -e: Exec a program after fork ().  This option has no
+ *                effect on NT.
+ *
+ * = CREATION DATE
+ *    June 29, 1997
+ *
+ *
+ *  @author   Nanbor Wang
+ */
+//=============================================================================
+
 
 // Process Creation profiling
 

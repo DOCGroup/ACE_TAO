@@ -103,7 +103,10 @@ ACE_Blob_Reader::send_request (void)
     ACE_ERROR_RETURN((LM_ERROR,"Request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int len = ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_, filename_, request_suffix_);
+  int len = ACE_OS::sprintf (mesg, "%s %s %s",
+                             request_prefix_,
+                             ACE_TEXT_ALWAYS_CHAR (filename_),
+                             request_suffix_);
 
   // Send the message to server
   if (peer ().send_n (mesg, len) != len)
@@ -278,7 +281,8 @@ ACE_Blob_Writer::send_request (void)
 
   // Create the header, store the actual length in mesglen.
   mesglen = ACE_OS::sprintf (mesg, "%s /%s %s " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n\n",
-                             request_prefix_, filename_, request_suffix_, length_);
+                             request_prefix_, ACE_TEXT_ALWAYS_CHAR (filename_),
+                             request_suffix_, length_);
 
   // Send the header followed by the data
 

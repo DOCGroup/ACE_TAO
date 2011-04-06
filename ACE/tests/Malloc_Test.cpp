@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Malloc_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the position-independent <ACE_Malloc> memory
-//     manager using the <ACE_MMAP_Memory_Pool> and <ACE_Process_Mutex>.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Malloc_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the position-independent <ACE_Malloc> memory
+ *   manager using the <ACE_MMAP_Memory_Pool> and <ACE_Process_Mutex>.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Malloc_Test.h"

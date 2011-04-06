@@ -33,8 +33,8 @@ namespace DAnCE
 
     void
     PSPE_Handler::sub_component_port_endpoint (
-                                               const PlanSubcomponentPortEndpoint &src,
-                                               ::Deployment::PlanSubcomponentPortEndpoint &dest)
+      const PlanSubcomponentPortEndpoint &src,
+      ::Deployment::PlanSubcomponentPortEndpoint &dest)
     {
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint");
       dest.portName =
@@ -51,8 +51,8 @@ namespace DAnCE
 
       CORBA::ULong tmp = 0;
 
-      IDD_Handler::IDREF.find_ref (ACE_TString (src.instance ().idref ().id ().c_str ()),
-                                   tmp);
+      IDD_Handler::IDREF.find_ref (
+        ACE_TString (src.instance ().idref ().id ().c_str ()), tmp);
 
       dest.instanceRef = tmp;
 
@@ -83,17 +83,19 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_DEBUG (1, (LM_DEBUG, "Invalid port kind in connection\n"));
+          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
+            (LM_DEBUG, "Invalid port kind in connection\n"));
 
         }
     }
 
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
-                                               const Deployment::PlanSubcomponentPortEndpoint &src)
+      const Deployment::PlanSubcomponentPortEndpoint &src)
     { // @@MAJO
       DANCE_TRACE("PSPE_Handler::sub_component_port_endpoint - reverse");
-      XMLSchema::string< ACE_TCHAR > pname (ACE_TEXT_CHAR_TO_TCHAR (src.portName));
+      XMLSchema::string< ACE_TCHAR > pname (
+        ACE_TEXT_CHAR_TO_TCHAR (src.portName));
       XMLSchema::string< ACE_TCHAR > tval  (ACE_TEXT ("true"));
       XMLSchema::string< ACE_TCHAR > prov  (ACE_TEXT (""));
       ACE_TString id;
@@ -138,7 +140,8 @@ namespace DAnCE
           break;
 
         default:
-          DANCE_ERROR (1, (LM_ERROR, "Invalid port kind in PSPE\n"));
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+            (LM_ERROR, "Invalid port kind in PSPE\n"));
         }
 
 

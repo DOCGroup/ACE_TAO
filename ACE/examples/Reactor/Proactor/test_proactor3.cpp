@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_proactor3.cpp
-//
-// = DESCRIPTION
-//    This program illustrates how the <ACE_Proactor> can be used to
-//    implement an application that does various asynchronous
-//    operations.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//    modified by  Alexander Libman <alibman@baltimore.com>
-//    from original test_proactor.cpp
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_proactor3.cpp
+ *
+ *  $Id$
+ *
+ *  This program illustrates how the <ACE_Proactor> can be used to
+ *  implement an application that does various asynchronous
+ *  operations.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu> modified by  Alexander Libman <alibman@baltimore.com> from original test_proactor.cpp
+ */
+//=============================================================================
+
 
 #include "ace/Signal.h"
 
@@ -88,10 +84,13 @@ static int threads = 1;
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
+/**
+ * @class MyTask:
+ *
+ * @brief MyTask plays role for Proactor threads pool
+ */
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   MyTask plays role for Proactor threads pool
 public:
   MyTask (void) : threads_ (0), proactor_ (0) {}
 
@@ -193,23 +192,23 @@ public:
   ~Receiver (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// This is called after the new connection has been accepted.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
-  // This is called after the new connection has been accepted.
-  //FUZZ: enable check_for_lack_ACE_OS
 
   static long get_number_sessions (void) { return sessions_; }
 
 protected:
   // These methods are called by the framework
 
+  /// This is called when asynchronous <read> operation from the socket
+  /// complete.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous <read> operation from the socket
-  // complete.
 
+  /// This is called when an asynchronous <write> to the file
+  /// completes.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when an asynchronous <write> to the file
-  // completes.
 
 private:
   int  initiate_read_stream (void);
@@ -418,18 +417,21 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   check_destroy ();
 }
 
+/**
+ * @class Sender
+ *
+ * @brief Sends welcome messages receives them back.
+ */
 class Sender : public ACE_Handler
 {
-  // = TITLE
-  //   Sends welcome messages receives them back.
 public:
   Sender (void);
   ~Sender (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle (void) const;
   virtual void handle (ACE_HANDLE);
@@ -437,28 +439,28 @@ public:
 protected:
   // These methods are called by the freamwork
 
+  /// This is called when asynchronous reads from the socket complete
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous reads from the socket complete
 
+  /// This is called when asynchronous writes from the socket complete
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when asynchronous writes from the socket complete
 
 private:
 
   int initiate_read_stream (void);
   int initiate_write_stream (void);
 
+  /// Network I/O handle
   ACE_SOCK_Stream stream_;
-  // Network I/O handle
 
+  /// ws (write stream): for writing to the socket
   ACE_Asynch_Write_Stream ws_;
-  // ws (write stream): for writing to the socket
 
+  /// rs (read file): for reading from the socket
   ACE_Asynch_Read_Stream rs_;
-  // rs (read file): for reading from the socket
 
+  /// Welcome message
   ACE_Message_Block welcome_message_;
-  // Welcome message
 
   ACE_Recursive_Thread_Mutex mutex_;
   long io_count_;

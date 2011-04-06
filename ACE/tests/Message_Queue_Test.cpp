@@ -1,31 +1,28 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Message_Queue_Test.cpp
-//
-// = DESCRIPTION
-//      This is:
-//      0) a test that ensures key ACE_Message_Queue features are
-//         working properly, including timeouts and priorities
-//      1) a simple test of the ACE_Message_Queue that illustrates how to
-//         use the forward and reverse iterators
-//      2) a simple performance measurement test for both single-threaded
-//         (null synch), thread-safe ACE_Message_Queues, and
-//         ACE_Message_Queue_Vx, which wraps VxWorks message queues
-//      3) a test/usage example of ACE_Message_Queue_Vx
-//      4) a test of the message counting in a message queue under load.
-//
-// = AUTHORS
-//    Irfan Pyarali <irfan@cs.wustl.edu>,
-//    David L. Levine <levine@cs.wustl.edu>, and
-//    Douglas C. Schmidt <schmidt@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Message_Queue_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is:
+ *    0) a test that ensures key ACE_Message_Queue features are
+ *       working properly, including timeouts and priorities
+ *    1) a simple test of the ACE_Message_Queue that illustrates how to
+ *       use the forward and reverse iterators
+ *    2) a simple performance measurement test for both single-threaded
+ *       (null synch), thread-safe ACE_Message_Queues, and
+ *       ACE_Message_Queue_Vx, which wraps VxWorks message queues
+ *    3) a test/usage example of ACE_Message_Queue_Vx
+ *    4) a test of the message counting in a message queue under load.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author David L. Levine <levine@cs.wustl.edu>
+ *  @author and Douglas C. Schmidt <schmidt@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
@@ -123,7 +120,7 @@ Counting_Test_Producer::svc (void)
   // correct.
   // Also, to be sure there's not just 1 producer and 1 consumer pinging
   // back and forth, make the producers randomly delay between blocks.
-  ACE_OS::srand (static_cast<ACE_RANDR_TYPE> (ACE_OS::time ()));
+  ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
   int multiple = ACE_OS::rand () % 10;
   int delay_ms = (ACE_OS::rand () % 10) / 2;
   // The delay usually causes the test to time out in the automated
@@ -213,10 +210,10 @@ Counting_Test_Consumer::svc (void)
   // a calculated number of blocks then stop; the test checker will determine
   // if the number consumed plus the number remaining is correct for the
   // number produced.
-  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time ());
+  unsigned int seed = static_cast<unsigned int> (ACE_OS::time ());
 
-  int multiple = ACE_OS::rand_r (seed) % 10;
-  int delay_ms = ACE_OS::rand_r (seed) % 10;
+  int multiple = ACE_OS::rand_r (&seed) % 10;
+  int delay_ms = ACE_OS::rand_r (&seed) % 10;
   // The delay usually causes the test to time out in the automated
   // regression testing. I just left it here in case it's needed someday.
   delay_ms = 0;

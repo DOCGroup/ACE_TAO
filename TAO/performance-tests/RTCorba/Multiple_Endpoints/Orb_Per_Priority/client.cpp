@@ -251,7 +251,7 @@ Client::svc (void)
       char ior[100];
       ACE_OS::sprintf (ior,
                        "%s_%d",
-                       ior_base,
+                       ACE_TEXT_ALWAYS_CHAR (ior_base),
                        priorities[this->id_]);
 
       CORBA::Object_var object =

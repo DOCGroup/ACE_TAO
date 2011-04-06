@@ -85,8 +85,6 @@ Session::svc (void)
       return -1;
     }
 
-  this->_remove_ref ();
-
   return 0;
 }
 
@@ -125,18 +123,9 @@ Session::start (const Test::Session_List &other_sessions)
 
     for (CORBA::ULong i = 0; i != this->thread_count_; ++i)
       {
-        // Increase the reference count because the new thread will have
-        // access to this object....
         try
           {
-            this->_add_ref ();
-
-            if (this->task_.activate (
-                    THR_NEW_LWP | THR_JOINABLE, 1, 1) == -1)
-              {
-                this->_remove_ref ();
-              }
-            else
+            if (this->task_.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1) != -1)
               {
                 this->running_ = 1;
                 this->active_thread_count_++;
@@ -245,5 +234,4 @@ Session::terminate (CORBA::Boolean success)
     {
       ex._tao_print_exception ("Session::terminate, ignored");
     }
-
 }

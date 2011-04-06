@@ -88,8 +88,6 @@ TAO_OutStream::TAO_OutStream (void)
     {
       this->tab_unit_str_ += ' ';
     }
-
-  this->tab_unit_ = this->tab_unit_str_.c_str ();
 }
 
 TAO_OutStream::~TAO_OutStream (void)
@@ -214,7 +212,7 @@ TAO_OutStream::indent (void)
     {
       for (int i = 0; i < this->indent_level_; i++)
         {
-          ACE_OS::fprintf (this->fp_, this->tab_unit_);
+          ACE_OS::fprintf (this->fp_, "%s", this->tab_unit_str_.c_str ());
         }
     }
 
@@ -460,8 +458,7 @@ TAO_OutStream::operator<< (AST_Expression *expr)
 TAO_OutStream &
 TAO_OutStream::print (Identifier *id)
 {
-  ACE_OS::fprintf (this->fp_,
-                   id->get_string ());
+  ACE_OS::fprintf (this->fp_, "%s", id->get_string ());
 
   return *this;
 }

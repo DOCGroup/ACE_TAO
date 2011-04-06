@@ -337,7 +337,7 @@ TAO_ZIOP_Loader::check_min_ratio (const ::Compression::CompressionRatio& this_ra
                                   ::Compression::CompressionRatio overall_ratio,
                                   ::Compression::CompressionRatio min_ratio) const
 {
-  bool accepted = min_ratio == 0 || (this_ratio * 10000) > (min_ratio * 10000);
+  bool accepted = ACE::is_equal (min_ratio, 0.0f) || (this_ratio * 10000) > (min_ratio * 10000);
   if (TAO_debug_level > 8)
     {
       ACE_ERROR ((LM_ERROR,

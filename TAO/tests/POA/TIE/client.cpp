@@ -1,18 +1,17 @@
-// $Id$
 
-//===========================================================================
-//
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a simple client implementation.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//===========================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple client implementation.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"

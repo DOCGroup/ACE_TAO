@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    options.cpp
-//
-// = DESCRIPTION
-//    Options for the Param_Test application
-//
-// = AUTHORS
-//    Jeff Parsonss
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    options.cpp
+ *
+ *  $Id$
+ *
+ *  Options for the Param_Test application
+ *
+ *
+ *  @author Jeff Parsonss
+ */
+//=============================================================================
+
 
 #include "options.h"
 #include "tao/debug.h"

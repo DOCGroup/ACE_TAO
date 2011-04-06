@@ -7,12 +7,21 @@
 #include "DnC_Dump_T.h"
 #include <iostream>
 
-using namespace ::Deployment::DnC_Dump_T;
+// James Edmondson <james.r.edmondson@vanderbilt.edu> note:
+// All of the dumps in this file had log levels of 1, which in our Log_Macros
+// indicates a terminal error. Ideally, I would think these should take
+// a parameter to indicate the log level to assume, rather than assuming
+// the worst. Although dumps tend to happen when a fatal error has
+// occurred, it can also be a debugging tool. Not sure if I agree with
+// them being terminal error prints, but perhaps this is something
+// we can discuss
+
 namespace Deployment
 {
   void
   DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     CORBA::ULong size = str_seq.length ();
 
     if (size != 0)
@@ -21,9 +30,9 @@ namespace Deployment
 
         for (CORBA::ULong i = 0; i < size; ++i)
           {
-            DANCE_DEBUG (1, (LM_DEBUG, "%s%s %d:\n",
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s%s %d:\n",
                         Dump_Obj::indent(), caption, i));
-            DANCE_DEBUG (1, (LM_DEBUG, "%s  %s:\n",
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "%s  %s:\n",
                         Dump_Obj::indent(), str_seq[i].in ()));
           }
       }
@@ -32,15 +41,19 @@ namespace Deployment
   // Dumps a string
   void DnC_Dump::dump (const char* caption, const TAO::String_Manager& str)
   {
-    DANCE_DEBUG (1, (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
-                caption, str.in()));
+    DANCE_TRACE("DnC_Dump::dump");
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
+      caption, str.in()));
   }
 
   // Dumps a boolean
   void DnC_Dump::dump (const char* caption, const CORBA::Boolean& val)
   {
-    DANCE_DEBUG (1, (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
-                caption, val ? "true" : "false"));
+    DANCE_TRACE("DnC_Dump::dump");
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
+      caption, val ? "true" : "false"));
   }
 
   /*
@@ -50,58 +63,77 @@ namespace Deployment
   // SatisfierProperty
   void DnC_Dump::dump (const Deployment::SatisfierProperty& sp)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("SatisfierProperty");
     dump ("name", sp.name);
 
-    DANCE_DEBUG (1, (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+
     switch (sp.kind) {
-    case Quantity: DANCE_DEBUG (1, (LM_DEBUG, "Quantity\n")); break;
-    case Capacity: DANCE_DEBUG (1, (LM_DEBUG, "Capacity\n")); break;
-    case Minimum: DANCE_DEBUG (1, (LM_DEBUG, "Minimum\n")); break;
-    case Maximum: DANCE_DEBUG (1, (LM_DEBUG, "Maximum\n")); break;
-    case Attribute: DANCE_DEBUG (1, (LM_DEBUG, "Attribute\n")); break;
-    case Selection: DANCE_DEBUG (1, (LM_DEBUG, "Selection\n")); break;
+    case Quantity:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "Quantity\n"));
+      break;
+    case Capacity:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "Capacity\n"));
+      break;
+    case Minimum:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "Minimum\n"));
+      break;
+    case Maximum:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "Maximum\n"));
+      break;
+    case Attribute:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "Attribute\n"));
+      break;
+    case Selection:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "Selection\n"));
+      break;
     }
 
-    DANCE_DEBUG (1, (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
     dump (sp.value);
   }
 
   // SharedResource
   void DnC_Dump::dump (const Deployment::SharedResource& sr)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("SharedResource");
     dump ("name", sr.name);
     dump ("resourceType", sr.resourceType);
 #if 0
-    dump_ref_seq<Deployment::Domain> ("nodeRef",
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> ("nodeRef",
                                       sr.nodeRef,
                                       "Domain",
                                       &Domain::node);
 #endif /*if 0*/
-    dump_sequence ("property",
-                   sr.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property",
+                                             sr.property);
   }
 
   // Resource
   void DnC_Dump::dump (const Deployment::Resource& resource)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("Resource");
     dump ("name", resource.name);
     dump ("resourceType", resource.resourceType);
-    dump_sequence ("property",
-                   resource.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property",
+                                             resource.property);
   }
 
   // Node
   void DnC_Dump::dump (const Deployment::Node& node)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("Node");
     dump ("name", node.name);
     dump ("label", node.label);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "sharedResourceRef",
                                       node.sharedResourceRef,
                                       "Domain",
@@ -109,14 +141,14 @@ namespace Deployment
 #endif
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectionRef",
                                       node.connectionRef,
                                       "Domain",
                                       &Domain::interconnect);
 #endif
 
-    dump_sequence ("resource",
+    ::Deployment::DnC_Dump_T::dump_sequence ("resource",
                    node.resource);
 
   }
@@ -124,25 +156,26 @@ namespace Deployment
   // Interconnect
   void DnC_Dump::dump (const Deployment::Interconnect& conn)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("Interconnect");
     dump ("name", conn.name);
     dump ("label", conn.label);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectionRef",
                                       conn.connectionRef,
                                       "Domain",
                                       &Domain::bridge);
 #endif
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectRef",
                                       conn.connectRef,
                                       "Domain",
                                       &Domain::node);
 #endif
-    dump_sequence ("resource",
+    ::Deployment::DnC_Dump_T::dump_sequence ("resource",
                    conn.resource);
   }
 
@@ -150,23 +183,25 @@ namespace Deployment
   void
   DnC_Dump::dump (const Deployment::Bridge& bridge)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("Bridge");
     dump ("name", bridge.name);
     dump ("label", bridge.label);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::Domain> (
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::Domain> (
                                       "connectRef",
                                       bridge.connectRef,
                                       "Domain",
                                       &Domain::interconnect);
 #endif
 
-    dump_sequence ("resource", bridge.resource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("resource", bridge.resource);
   }
 
   void DnC_Dump::dump (const ::Deployment::Domain &domain)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     CORBA::Any val;
     val <<= domain;
 
@@ -178,16 +213,16 @@ namespace Deployment
     dump ("label",
           domain.label);
 
-    dump_sequence ("sharedResource",
+    ::Deployment::DnC_Dump_T::dump_sequence ("sharedResource",
                    domain.sharedResource);
-    dump_sequence ("node",
+    ::Deployment::DnC_Dump_T::dump_sequence ("node",
                    domain.node);
-    dump_sequence ("interconnect",
+    ::Deployment::DnC_Dump_T::dump_sequence ("interconnect",
                    domain.interconnect);
-    dump_sequence ("bridge",
+    ::Deployment::DnC_Dump_T::dump_sequence ("bridge",
                    domain.bridge);
 
-    dump_sequence ("infoProperty",
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty",
                    domain.infoProperty);
   }
 
@@ -196,6 +231,7 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ComponentPortDescription
                        &compportdesc)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("ComponentPortDescription");
 
     dump ("name", compportdesc.name);
@@ -206,15 +242,37 @@ namespace Deployment
     dump ("exclusiveUser", compportdesc.exclusiveUser);
     dump ("optional", compportdesc.optional);
 
-    DANCE_DEBUG (1, (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
     switch (compportdesc.kind) {
-    case Facet: DANCE_DEBUG (1, (LM_DEBUG, "Facet\n")); break;
-    case SimplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "SimplexReceptacle\n")); break;
-    case MultiplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "MultiplexReceptacle\n")); break;
-    case EventEmitter: DANCE_DEBUG (1, (LM_DEBUG, "EventEmitter\n")); break;
-    case EventPublisher: DANCE_DEBUG (1, (LM_DEBUG, "EventPublisher\n")); break;
-    case EventConsumer: DANCE_DEBUG (1, (LM_DEBUG, "EventConsumer\n")); break;
-    default: DANCE_DEBUG (1, (LM_DEBUG, "Unknown port kind\n")); break;
+    case Facet:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "Facet\n"));
+      break;
+    case SimplexReceptacle:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "SimplexReceptacle\n"));
+      break;
+    case MultiplexReceptacle:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "MultiplexReceptacle\n"));
+      break;
+    case EventEmitter:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "EventEmitter\n"));
+      break;
+    case EventPublisher:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "EventPublisher\n"));
+      break;
+    case EventConsumer:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "EventConsumer\n"));
+      break;
+    default:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "Unknown port kind\n"));
+      break;
     }
   }
 
@@ -222,49 +280,125 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ComponentPropertyDescription &comppropdesc)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("ComponentPropertyDescription");
 
     dump ("name", comppropdesc.name);
 
-    DANCE_DEBUG (1, (LM_DEBUG, "%stype: ", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%stype: ", Dump_Obj::indent()));
     switch (comppropdesc.type.in()->kind()) {
-    case ::CORBA::tk_null: DANCE_DEBUG (1, (LM_DEBUG, "tk_null\n")); break;
-    case ::CORBA::tk_void: DANCE_DEBUG (1, (LM_DEBUG, "tk_void\n")); break;
-    case ::CORBA::tk_short: DANCE_DEBUG (1, (LM_DEBUG, "tk_short\n")); break;
-    case ::CORBA::tk_long: DANCE_DEBUG (1, (LM_DEBUG, "tk_long\n")); break;
-    case ::CORBA::tk_ushort: DANCE_DEBUG (1, (LM_DEBUG, "tk_ushort\n")); break;
-    case ::CORBA::tk_ulong: DANCE_DEBUG (1, (LM_DEBUG, "tk_ulong\n")); break;
-    case ::CORBA::tk_float: DANCE_DEBUG (1, (LM_DEBUG, "tk_float\n")); break;
-    case ::CORBA::tk_double: DANCE_DEBUG (1, (LM_DEBUG, "tk_double\n")); break;
-    case ::CORBA::tk_boolean: DANCE_DEBUG (1, (LM_DEBUG, "tk_boolean\n")); break;
-    case ::CORBA::tk_char: DANCE_DEBUG (1, (LM_DEBUG, "tk_char\n")); break;
-    case ::CORBA::tk_octet: DANCE_DEBUG (1, (LM_DEBUG, "tk_octet\n")); break;
-    case ::CORBA::tk_any: DANCE_DEBUG (1, (LM_DEBUG, "tk_any\n")); break;
-    case ::CORBA::tk_TypeCode: DANCE_DEBUG (1, (LM_DEBUG, "tk_TypeCode\n")); break;
-    case ::CORBA::tk_Principal: DANCE_DEBUG (1, (LM_DEBUG, "tk_Principal\n")); break;
-    case ::CORBA::tk_objref: DANCE_DEBUG (1, (LM_DEBUG, "tk_objref\n")); break;
-    case ::CORBA::tk_struct: DANCE_DEBUG (1, (LM_DEBUG, "tk_struct\n")); break;
-    case ::CORBA::tk_union: DANCE_DEBUG (1, (LM_DEBUG, "tk_union\n")); break;
-    case ::CORBA::tk_enum: DANCE_DEBUG (1, (LM_DEBUG, "tk_enum\n")); break;
-    case ::CORBA::tk_string: DANCE_DEBUG (1, (LM_DEBUG, "tk_string\n")); break;
-    case ::CORBA::tk_sequence: DANCE_DEBUG (1, (LM_DEBUG, "tk_sequence\n")); break;
-    case ::CORBA::tk_array: DANCE_DEBUG (1, (LM_DEBUG, "tk_array\n")); break;
-    case ::CORBA::tk_alias: DANCE_DEBUG (1, (LM_DEBUG, "tk_alias\n")); break;
-    case ::CORBA::tk_except: DANCE_DEBUG (1, (LM_DEBUG, "tk_except\n")); break;
-    case ::CORBA::tk_longlong: DANCE_DEBUG (1, (LM_DEBUG, "tk_longlong\n")); break;
-    case ::CORBA::tk_ulonglong: DANCE_DEBUG (1, (LM_DEBUG, "tk_ulonglong\n")); break;
-    case ::CORBA::tk_longdouble: DANCE_DEBUG (1, (LM_DEBUG, "tk_longdouble\n")); break;
-    case ::CORBA::tk_wchar: DANCE_DEBUG (1, (LM_DEBUG, "tk_wchar\n")); break;
-    case ::CORBA::tk_wstring: DANCE_DEBUG (1, (LM_DEBUG, "tk_wstring\n")); break;
-    case ::CORBA::tk_fixed: DANCE_DEBUG (1, (LM_DEBUG, "tk_fixed\n")); break;
-    case ::CORBA::tk_value: DANCE_DEBUG (1, (LM_DEBUG, "tk_value\n")); break;
-    case ::CORBA::tk_value_box: DANCE_DEBUG (1, (LM_DEBUG, "tk_value_box\n")); break;
-    case ::CORBA::tk_native: DANCE_DEBUG (1, (LM_DEBUG, "tk_native\n")); break;
-    case ::CORBA::tk_abstract_interface: DANCE_DEBUG (1, (LM_DEBUG, "tk_abstract_interface\n")); break;
-    case ::CORBA::tk_local_interface: DANCE_DEBUG (1, (LM_DEBUG, "tk_local_interface\n")); break;
-    case ::CORBA::tk_component: DANCE_DEBUG (1, (LM_DEBUG, "tk_component\n")); break;
-    case ::CORBA::tk_home: DANCE_DEBUG (1, (LM_DEBUG, "tk_home\n")); break;
-    case ::CORBA::tk_event: DANCE_DEBUG (1, (LM_DEBUG, "tk_event\n")); break;
+    case ::CORBA::tk_null:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_null\n"));
+      break;
+    case ::CORBA::tk_void:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_void\n"));
+      break;
+    case ::CORBA::tk_short:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_short\n"));
+      break;
+    case ::CORBA::tk_long:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_long\n"));
+      break;
+    case ::CORBA::tk_ushort:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_ushort\n"));
+      break;
+    case ::CORBA::tk_ulong:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_ulong\n"));
+      break;
+    case ::CORBA::tk_float:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_float\n"));
+      break;
+    case ::CORBA::tk_double:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_double\n"));
+      break;
+    case ::CORBA::tk_boolean:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_boolean\n"));
+      break;
+    case ::CORBA::tk_char:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_char\n"));
+      break;
+    case ::CORBA::tk_octet:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_octet\n"));
+      break;
+    case ::CORBA::tk_any:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_any\n"));
+      break;
+    case ::CORBA::tk_TypeCode:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_TypeCode\n"));
+      break;
+    case ::CORBA::tk_Principal:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_Principal\n"));
+      break;
+    case ::CORBA::tk_objref:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_objref\n"));
+      break;
+    case ::CORBA::tk_struct:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_struct\n"));
+      break;
+    case ::CORBA::tk_union:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_union\n"));
+      break;
+    case ::CORBA::tk_enum:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_enum\n"));
+      break;
+    case ::CORBA::tk_string:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_string\n"));
+      break;
+    case ::CORBA::tk_sequence:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_sequence\n"));
+      break;
+    case ::CORBA::tk_array:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_array\n"));
+      break;
+    case ::CORBA::tk_alias:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_alias\n"));
+      break;
+    case ::CORBA::tk_except:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_except\n"));
+      break;
+    case ::CORBA::tk_longlong:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_longlong\n"));
+      break;
+    case ::CORBA::tk_ulonglong:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_ulonglong\n"));
+      break;
+    case ::CORBA::tk_longdouble:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_longdouble\n"));
+      break;
+    case ::CORBA::tk_wchar:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_wchar\n"));
+      break;
+    case ::CORBA::tk_wstring:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_wstring\n"));
+      break;
+    case ::CORBA::tk_fixed:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_fixed\n"));
+      break;
+    case ::CORBA::tk_value:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_value\n"));
+      break;
+    case ::CORBA::tk_value_box:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_value_box\n"));
+      break;
+    case ::CORBA::tk_native:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_native\n"));
+      break;
+    case ::CORBA::tk_abstract_interface:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_abstract_interface\n"));
+      break;
+    case ::CORBA::tk_local_interface:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_local_interface\n"));
+      break;
+    case ::CORBA::tk_component:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_component\n"));
+      break;
+    case ::CORBA::tk_home:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_home\n"));
+      break;
+    case ::CORBA::tk_event:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG, "tk_event\n"));
+      break;
     default:
       break;
     };
@@ -274,78 +408,102 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::ComponentInterfaceDescription &cid)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("ComponentInterfaceDescription");
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
     dump ("specificType", cid.specificType);
     dump ("supportedType", cid.supportedType);
     dump ("idlFile", cid.idlFile);
-    dump_sequence ("configProperty", cid.configProperty);
-    dump_sequence ("port", cid.port);
-    dump_sequence ("property", cid.property);
-    dump_sequence ("infoProperty", cid.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", cid.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("port", cid.port);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property", cid.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", cid.infoProperty);
   }
 
   // Requirement
 
   void DnC_Dump::dump (const ::Deployment::Requirement &req)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("Requirement");
 
     dump ("resourceType", req.resourceType);
     dump ("name", req.name);
-    dump_sequence ("property", req.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property", req.property);
   }
 
   // MonolithicDeploymentDescription
 
   void DnC_Dump::dump(const Deployment::MonolithicDeploymentDescription &mdd)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("MonolithicDeploymentDescription");
 
     dump ("name", mdd.name);
     dump ("source", mdd.source);
 
 #if (_MSC_VER)
-    dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef,
+    ::Deployment::DnC_Dump_T::dump_ref_seq<Deployment::DeploymentPlan> ("artifactRef", mdd.artifactRef,
                                               "DeploymentPlan",
                                               &DeploymentPlan::artifact);
 #endif
-    dump_sequence ("execParameter", mdd.execParameter);
-    dump_sequence ("deployRequirement", mdd.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", mdd.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", mdd.deployRequirement);
   }
 
   // ResourceUsageKind
 
   void DnC_Dump::dump(const Deployment::ResourceUsageKind &ruk)
   {
-    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceUsage: ", Dump_Obj::indent()));
+    DANCE_TRACE("DnC_Dump::dump");
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%sresourceUsage: ", Dump_Obj::indent()));
     switch (ruk) {
-    case None: DANCE_DEBUG (1, (LM_DEBUG, "None\n")); break;
-    case InstanceUsesResource: DANCE_DEBUG (1, (LM_DEBUG, "InstanceUsesResource\n")); break;
-    case ResourceUsesInstance: DANCE_DEBUG (1, (LM_DEBUG, "ResourceUsesInstance\n")); break;
-    case PortUsesResource: DANCE_DEBUG (1, (LM_DEBUG, "PortUsesResource\n")); break;
-    case ResourceUsesPort: DANCE_DEBUG (1, (LM_DEBUG, "ResourceUsesPort\n")); break;
+    case None:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "None\n"));
+      break;
+    case InstanceUsesResource:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "InstanceUsesResource\n"));
+      break;
+    case ResourceUsesInstance:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "ResourceUsesInstance\n"));
+      break;
+    case PortUsesResource:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "PortUsesResource\n"));
+      break;
+    case ResourceUsesPort:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "ResourceUsesPort\n"));
+      break;
     }
   }
 
   // InstanceResourceDeploymentDescription
 
-  void DnC_Dump::dump(const Deployment::InstanceResourceDeploymentDescription &irdd)
+  void DnC_Dump::dump(
+    const Deployment::InstanceResourceDeploymentDescription &irdd)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("InstanceResourceDeploymentDescription");
 
     dump (irdd.resourceUsage);
     dump ("requirementName", irdd.requirementName);
     dump ("resourceName", irdd.resourceName);
-    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump_sequence ("property",  irdd.property);
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
+      "%sresourceValue:\n", Dump_Obj::indent()));
+    ::Deployment::DnC_Dump_T::dump_sequence ("property",  irdd.property);
   }
 
   // InstanceDeploymentDescription
 
   void DnC_Dump::dump(const Deployment::InstanceDeploymentDescription &idd)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("InstanceDeploymentDescription");
 
     dump ("name", idd.name);
@@ -353,20 +511,22 @@ namespace Deployment
     dump ("source", idd.source);
 
 #if (_MSC_VER)
-    dump_ref<Deployment::DeploymentPlan> ("implementationRef",
-                                          idd.implementationRef,
-                                          "DeploymentPlan",
-                                          &DeploymentPlan::implementation);
+    ::Deployment::DnC_Dump_T::dump_ref<Deployment::DeploymentPlan>
+      ("implementationRef",
+       idd.implementationRef,
+       "DeploymentPlan",
+       &DeploymentPlan::implementation);
 #endif
-    dump_sequence ("configProperty", idd.configProperty);
-    dump_sequence ("deployedResource", idd.deployedResource);
-    dump_sequence ("deployedSharedResource", idd.deployedSharedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", idd.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", idd.deployedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedSharedResource", idd.deployedSharedResource);
   }
 
   // ComponentExternalPortEndpoint
 
   void DnC_Dump::dump (const ::Deployment::ComponentExternalPortEndpoint &cepe)
   {
+    DANCE_TRACE("DnC_Dump::dump");
     Dump_Obj dump_obj("ComponentExternalPortEndpoint");
 
     dump ("portName", cepe.portName);
@@ -380,20 +540,43 @@ namespace Deployment
 
     dump ("portName", pspe.portName);
     dump ("provider", pspe.provider);
-    DANCE_DEBUG (1, (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%skind: ", Dump_Obj::indent()));
     switch (pspe.kind) {
-    case Facet: DANCE_DEBUG (1, (LM_DEBUG, "Facet\n")); break;
-    case SimplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "SimplexReceptacle\n")); break;
-    case MultiplexReceptacle: DANCE_DEBUG (1, (LM_DEBUG, "MultiplexReceptacle\n")); break;
-    case EventEmitter: DANCE_DEBUG (1, (LM_DEBUG, "EventEmitter\n")); break;
-    case EventPublisher: DANCE_DEBUG (1, (LM_DEBUG, "EventPublisher\n")); break;
-    case EventConsumer: DANCE_DEBUG (1, (LM_DEBUG, "EventConsumer\n")); break;
-    default: DANCE_DEBUG (1, (LM_DEBUG, "Unknown port kind\n")); break;
+    case Facet:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "Facet\n"));
+      break;
+    case SimplexReceptacle:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "SimplexReceptacle\n"));
+      break;
+    case MultiplexReceptacle:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "MultiplexReceptacle\n"));
+      break;
+    case EventEmitter:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "EventEmitter\n"));
+      break;
+    case EventPublisher:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "EventPublisher\n"));
+      break;
+    case EventConsumer:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "EventConsumer\n"));
+      break;
+    default:
+      DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+        (LM_DEBUG, "Unknown port kind\n"));
+      break;
     }
 #if (_MSC_VER)
-    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspe.instanceRef,
-                                          "DeploymentPlan",
-                                          &DeploymentPlan::instance);
+    ::Deployment::DnC_Dump_T::dump_ref<Deployment::DeploymentPlan>
+      ("instanceRef", pspe.instanceRef,
+       "DeploymentPlan",
+       &DeploymentPlan::instance);
 #endif
   }
 
@@ -415,8 +598,9 @@ namespace Deployment
     dump ("targetName", crdd.targetName);
     dump ("requirementName", crdd.requirementName);
     dump ("resourceName", crdd.resourceName);
-    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump_sequence ("properties", crdd.property);
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+    ::Deployment::DnC_Dump_T::dump_sequence ("properties", crdd.property);
   }
 
   // PlanConnectionDescription
@@ -427,11 +611,11 @@ namespace Deployment
 
     dump ("name", pcd.name);
     dump ("source", pcd.source);
-    dump_sequence ("deployRequirement", pcd.deployRequirement);
-    dump_sequence ("externalEndpoint", pcd.externalEndpoint);
-    dump_sequence ("internalEndpoint", pcd.internalEndpoint);
-    dump_sequence ("externalReference", pcd.externalReference);
-    dump_sequence ("deployedResource", pcd.deployedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", pcd.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalEndpoint", pcd.externalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("internalEndpoint", pcd.internalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalReference", pcd.externalReference);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", pcd.deployedResource);
   }
 
   // PlanSubcomponentPropertyReference
@@ -443,9 +627,10 @@ namespace Deployment
     dump ("propertyName", pspr.propertyName);
 
 #if (_MSC_VER)
-    dump_ref<Deployment::DeploymentPlan> ("instanceRef", pspr.instanceRef,
-                                          "DeploymentPlan",
-                                          &DeploymentPlan::instance);
+    ::Deployment::DnC_Dump_T::dump_ref<Deployment::DeploymentPlan>
+      ("instanceRef", pspr.instanceRef,
+       "DeploymentPlan",
+       &DeploymentPlan::instance);
 #endif
   }
 
@@ -458,7 +643,7 @@ namespace Deployment
     dump ("name", ppm.name);
     dump ("source", ppm.source);
     dump ("externalName", ppm.externalName);
-    dump_sequence ("delegatesTo", ppm.delegatesTo);
+    ::Deployment::DnC_Dump_T::dump_sequence ("delegatesTo", ppm.delegatesTo);
   }
 
   // ImplementationDependency
@@ -478,8 +663,9 @@ namespace Deployment
 
     dump ("requirementName", rdd.requirementName);
     dump ("resourceName", rdd.resourceName);
-    DANCE_DEBUG (1, (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
-    dump_sequence ("properties", rdd.property);
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%sresourceValue:\n", Dump_Obj::indent()));
+    ::Deployment::DnC_Dump_T::dump_sequence ("properties", rdd.property);
   }
 
   // ArtifactDeploymentDescription
@@ -492,9 +678,9 @@ namespace Deployment
     dump ("location", add.location);
     dump ("node", add.node);
     dump ("source", add.source);
-    dump_sequence ("execParameter", add.execParameter);
-    dump_sequence ("deployRequirement", add.deployRequirement);
-    dump_sequence ("deployedResource", add.deployedResource);
+    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", add.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", add.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployedResource", add.deployedResource);
   }
 
   void DnC_Dump::dump(const Deployment::DeploymentPlan &plan)
@@ -508,13 +694,13 @@ namespace Deployment
     dump ("label", plan.label);
     dump ("UUID", plan.UUID);
     dump (plan.realizes);
-    dump_sequence ("implementation", plan.implementation);
-    dump_sequence ("instance", plan.instance);
-    //dump_sequence ("connection", plan.connection);
-    dump_sequence ("externalProperty", plan.externalProperty);
-    dump_sequence ("dependsOn", plan.dependsOn);
-    dump_sequence ("artifact", plan.artifact);
-    dump_sequence ("infoProperty", plan.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("implementation", plan.implementation);
+    ::Deployment::DnC_Dump_T::dump_sequence ("instance", plan.instance);
+    //::Deployment::DnC_Dump_T::dump_sequence ("connection", plan.connection);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalProperty", plan.externalProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", plan.dependsOn);
+    ::Deployment::DnC_Dump_T::dump_sequence ("artifact", plan.artifact);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", plan.infoProperty);
   }
 
   // ComponentPackageReference
@@ -530,15 +716,16 @@ namespace Deployment
 
   // SubcomponentInstantiationDescription
 
-  void DnC_Dump::dump (const ::Deployment::SubcomponentInstantiationDescription &sid)
+  void DnC_Dump::dump (
+    const ::Deployment::SubcomponentInstantiationDescription &sid)
   {
     Dump_Obj dump_obj("SubcomponentInstantiationDescription");
 
     dump ("name", sid.name);
-    //    dump_sequence ("basePackage", sid.package);
-    dump_sequence ("configProperty", sid.configProperty);
-    dump_sequence ("selectRequirement", sid.selectRequirement);
-    //    dump_sequence ("reference", sid.reference);
+    //    ::Deployment::DnC_Dump_T::dump_sequence ("basePackage", sid.package);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", sid.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("selectRequirement", sid.selectRequirement);
+    //    ::Deployment::DnC_Dump_T::dump_sequence ("reference", sid.reference);
   }
 
   // SubcomponentPortEndpoint
@@ -555,8 +742,9 @@ namespace Deployment
 
     a >>= v;
 
-    DANCE_DEBUG (1, (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
-                v->instance[value].name.in ()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
+      v->instance[value].name.in ()));
   }
 
   // AssemblyConnectionDescription
@@ -566,10 +754,10 @@ namespace Deployment
     Dump_Obj dump_obj("AssemblyConnectionDescription");
 
     dump ("name", acd.name);
-    dump_sequence ("deployRequirement", acd.deployRequirement);
-    dump_sequence ("externalEndpoint", acd.externalEndpoint);
-    dump_sequence ("internalEndpoint", acd.internalEndpoint);
-    dump_sequence ("externalReference", acd.externalReference);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", acd.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalEndpoint", acd.externalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("internalEndpoint", acd.internalEndpoint);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalReference", acd.externalReference);
   }
 
   // SubcomponentPropertyReference
@@ -588,8 +776,9 @@ namespace Deployment
 
     a >>= v;
 
-    DANCE_DEBUG (1, (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
-                v->instance[value].name.in ()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%sinstance: %s\n", Dump_Obj::indent (),
+      v->instance[value].name.in ()));
   }
 
   void
@@ -599,7 +788,7 @@ namespace Deployment
 
     dump ("name", apm.name);
     dump ("externalName", apm.externalName);
-    dump_sequence ("delegatesTo", apm.delegatesTo);
+    ::Deployment::DnC_Dump_T::dump_sequence ("delegatesTo", apm.delegatesTo);
   }
 
   // ComponentAssemblyDescription
@@ -612,24 +801,25 @@ namespace Deployment
     Dump_Obj dump_obj ("ComponentAssemblyDescription",
                        a);
 
-    dump_sequence ("instance", cad.instance);
-    dump_sequence ("connection", cad.connection);
-    dump_sequence ("externalProperty", cad.externalProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("instance", cad.instance);
+    ::Deployment::DnC_Dump_T::dump_sequence ("connection", cad.connection);
+    ::Deployment::DnC_Dump_T::dump_sequence ("externalProperty", cad.externalProperty);
   }
 
   // ImplementationArtifactDescription
 
-  void DnC_Dump::dump (const ::Deployment::ImplementationArtifactDescription &iad)
+  void DnC_Dump::dump (
+    const ::Deployment::ImplementationArtifactDescription &iad)
   {
     Dump_Obj dump_obj("ImplementationArtifactDescription");
 
     dump ("label", iad.label);
     dump ("UUID", iad.UUID);
     dump ("location", iad.location);
-    dump_sequence ("execParameter", iad.execParameter);
-    dump_sequence ("deployRequirement", iad.deployRequirement);
-    dump_sequence ("dependsOn", iad.dependsOn);
-    dump_sequence ("infoProperty", iad.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", iad.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", iad.deployRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", iad.dependsOn);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", iad.infoProperty);
   }
 
   // NamedImplementationArtifact
@@ -648,12 +838,12 @@ namespace Deployment
   {
     Dump_Obj dump_obj("ImplementationRequirement");
 
-    dump_sequence ("resourceUsage", ir.resourceUsage);
+    ::Deployment::DnC_Dump_T::dump_sequence ("resourceUsage", ir.resourceUsage);
     dump ("resourcePort", ir.resourcePort);
     dump ("componentPort", ir.componentPort);
     dump ("resourceType", ir.resourceType);
     dump ("name", ir.name);
-    dump_sequence ("property", ir.property);
+    ::Deployment::DnC_Dump_T::dump_sequence ("property", ir.property);
   }
 
   // MonolithicImplementationDescription
@@ -663,9 +853,9 @@ namespace Deployment
   {
     Dump_Obj dump_obj("MonolithicImplementationDescription");
 
-    //    dump_sequence ("execParameter", mid.execParameter);
-    dump_sequence ("primaryArtifact", mid.primaryArtifact);
-    dump_sequence ("deployRequirement", mid.deployRequirement);
+    //    ::Deployment::DnC_Dump_T::dump_sequence ("execParameter", mid.execParameter);
+    ::Deployment::DnC_Dump_T::dump_sequence ("primaryArtifact", mid.primaryArtifact);
+    ::Deployment::DnC_Dump_T::dump_sequence ("deployRequirement", mid.deployRequirement);
   }
 
   void
@@ -675,37 +865,39 @@ namespace Deployment
 
     dump ("name", capability.name);
     DnC_Dump::dump ("resourceType", capability.resourceType);
-    dump_sequence ("property",
+    ::Deployment::DnC_Dump_T::dump_sequence ("property",
                    capability.property);
   }
 
   // ComponentImplementationDescription
 
   void DnC_Dump::dump (
-                       const ::Deployment::ComponentImplementationDescription &cid)
+       const ::Deployment::ComponentImplementationDescription &cid)
   {
     Dump_Obj dump_obj("ComponentImplementationDescription");
 
     dump ("label", cid.label);
     dump ("UUID", cid.UUID);
-    DANCE_DEBUG (1, (LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%sImplements:\n", Dump_Obj::indent()));
     dump (cid.implements);
-    dump_sequence ("assemblyImpl", cid.assemblyImpl);
-    dump_sequence ("monolithicImpl", cid.monolithicImpl);
-    dump_sequence ("configProperty", cid.configProperty);
-    dump_sequence ("capability", cid.capability);
-    dump_sequence ("dependsOn", cid.dependsOn);
-    dump_sequence ("infoProperty", cid.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("assemblyImpl", cid.assemblyImpl);
+    ::Deployment::DnC_Dump_T::dump_sequence ("monolithicImpl", cid.monolithicImpl);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", cid.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("capability", cid.capability);
+    ::Deployment::DnC_Dump_T::dump_sequence ("dependsOn", cid.dependsOn);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", cid.infoProperty);
   }
 
   // PackagedComponentImplementation
 
-  void DnC_Dump::dump (const ::Deployment::PackagedComponentImplementation &pci)
+  void DnC_Dump::dump (
+    const ::Deployment::PackagedComponentImplementation &pci)
   {
     Dump_Obj dump_obj("PackagedComponentImplementation");
 
     dump ("Name", pci.name);
-    DANCE_DEBUG (1, (LM_DEBUG,
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
                 "%sreferencedImplementation:\n", Dump_Obj::indent()));
     DnC_Dump::dump (pci.referencedImplementation);
   }
@@ -719,11 +911,12 @@ namespace Deployment
 
     dump ("label", comppkgdesc.label);
     dump ("UUID", comppkgdesc.UUID);
-    DANCE_DEBUG (1, (LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%srealizes:\n", Dump_Obj::indent ()));
     DnC_Dump::dump (comppkgdesc.realizes); // ComponentInterfaceDescription
-    dump_sequence ("configProperty", comppkgdesc.configProperty);
-    dump_sequence ("implementation", comppkgdesc.implementation);
-    dump_sequence ("infoProperty", comppkgdesc.infoProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", comppkgdesc.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("implementation", comppkgdesc.implementation);
+    ::Deployment::DnC_Dump_T::dump_sequence ("infoProperty", comppkgdesc.infoProperty);
   }
 
   // PackageConfiguration
@@ -734,11 +927,11 @@ namespace Deployment
 
     dump ("label", pc.label);
     dump ("UUID", pc.UUID);
-    dump_sequence ("specializedConfig", pc.specializedConfig);
-    dump_sequence ("basePackage", pc.basePackage);
-    dump_sequence ("reference", pc.referencedPackage);
-    dump_sequence ("selectRequirement", pc.selectRequirement);
-    dump_sequence ("configProperty", pc.configProperty);
+    ::Deployment::DnC_Dump_T::dump_sequence ("specializedConfig", pc.specializedConfig);
+    ::Deployment::DnC_Dump_T::dump_sequence ("basePackage", pc.basePackage);
+    ::Deployment::DnC_Dump_T::dump_sequence ("reference", pc.referencedPackage);
+    ::Deployment::DnC_Dump_T::dump_sequence ("selectRequirement", pc.selectRequirement);
+    ::Deployment::DnC_Dump_T::dump_sequence ("configProperty", pc.configProperty);
   }
 
   // Property
@@ -746,7 +939,8 @@ namespace Deployment
   {
     Dump_Obj dump_obj("Property");
     dump ("name", property.name);
-    DANCE_DEBUG (1, (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
+    DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+      (LM_DEBUG, "%svalue:\n", Dump_Obj::indent()));
     dump (property.value);
   }
 
@@ -762,33 +956,39 @@ namespace Deployment
           CORBA::Short temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC_Dump::dump (CORBA::Any), expected short\
 encoded different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+            temp));
         }
         break;
 
       case CORBA::tk_null:
-        DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: null value encoded\n",
-                    Dump_Obj::indent ()));
+        DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+          (LM_DEBUG, "%sAny value: null value encoded\n",
+          Dump_Obj::indent ()));
         break;
 
       case CORBA::tk_void:
-        DANCE_DEBUG (1, (LM_DEBUG, "Any value: void type encoded\n"));
+        DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+          (LM_DEBUG, "Any value: void type encoded\n"));
         break;
       case CORBA::tk_long:
         {
           CORBA::Long temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected long\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -798,12 +998,14 @@ encoded with different type"));
           CORBA::UShort temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected u short\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
+            temp));
         }
         break;
 
@@ -812,11 +1014,13 @@ encoded with different type"));
           CORBA::ULong temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected ulong\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %u\n", Dump_Obj::indent (),
                       temp));
         }
         break;
@@ -826,12 +1030,14 @@ encoded with different type"));
           CORBA::Float temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected float\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
+            temp));
         }
         break;
       case CORBA::tk_double:
@@ -839,12 +1045,14 @@ encoded with different type"));
           CORBA::Double temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected double\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %f\n", Dump_Obj::indent (),
+            temp));
         }
         break;
       case CORBA::tk_boolean:
@@ -852,15 +1060,18 @@ encoded with different type"));
           CORBA::Boolean temp;
           if (! (any >>= CORBA::Any::to_boolean (temp)))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected bool\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
 
           if (temp)
-            DANCE_DEBUG (1, (LM_DEBUG, "Any value: True\n"));
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "Any value: True\n"));
           else
-            DANCE_DEBUG (1, (LM_DEBUG, "Any value: False\n"));
+            DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "Any value: False\n"));
         }
         break;
 
@@ -869,12 +1080,14 @@ encoded with different type"));
           CORBA::Char temp;
           if (! (any >>= CORBA::Any::to_char (temp)))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected char\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
+             temp));
         }
         break;
 
@@ -883,12 +1096,14 @@ encoded with different type"));
           CORBA::Octet temp;
           if (! (any >>= CORBA::Any::to_octet (temp)))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected octet\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
+            "%sAny value: %d\n", Dump_Obj::indent (),
+            temp));
         }
         break;
 
@@ -897,12 +1112,14 @@ encoded with different type"));
           const char * temp = 0;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected string\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
+            temp));
         }
         break;
       case CORBA::tk_longlong:
@@ -910,12 +1127,14 @@ encoded with different type"));
           CORBA::LongLong temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected longlong\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %l\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %l\n", Dump_Obj::indent (),
+            temp));
         }
         break;
 
@@ -924,12 +1143,14 @@ encoded with different type"));
           CORBA::LongDouble temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected longdouble\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %d\n", Dump_Obj::indent (),
+            temp));
         }
 
         break;
@@ -938,12 +1159,14 @@ encoded with different type"));
           CORBA::WChar temp;
           if (! (any >>= CORBA::Any::to_wchar (temp)))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected wchar\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_DEBUG, "%sAny value: %c\n", Dump_Obj::indent (),
+            temp));
         }
         break;
 
@@ -952,12 +1175,14 @@ encoded with different type"));
           const CORBA::WChar * temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+                (LM_DEBUG, "DnC::dump (CORBA::Any) expected wstring\
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: %s\n", Dump_Obj::indent (),
-                      temp));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
+            "%sAny value: %s\n", Dump_Obj::indent (),
+            temp));
         }
         break;
 
@@ -966,16 +1191,19 @@ encoded with different type"));
 /*          CORBA::Enum temp;
           if (! (any >>= temp))
             {
-              DANCE_DEBUG (1, (LM_DEBUG, "DnC::dump (CORBA::Any) expected enum \
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_DEBUG,
+              "DnC::dump (CORBA::Any) expected enum \
 encoded with different type"));
               throw CORBA::INTERNAL ();
             }
-*/          DANCE_DEBUG (1, (LM_DEBUG, "%sAny value: some enum\n", Dump_Obj::indent ()));
+*/          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+              (LM_DEBUG, "%sAny value: some enum\n", Dump_Obj::indent ()));
         }
         break;
 
       default:
-        DANCE_DEBUG (1, (LM_DEBUG, "Unknown type encoded in Any\n"));
+        DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+          (LM_DEBUG, "Unknown type encoded in Any\n"));
         throw CORBA::INTERNAL ();
       }
   }

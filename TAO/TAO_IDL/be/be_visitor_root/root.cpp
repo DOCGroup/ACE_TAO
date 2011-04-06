@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the Root node. This is a generic visitor.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the Root node. This is a generic visitor.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // Generic Root visitor
 be_visitor_root::be_visitor_root (be_visitor_context *ctx)

@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    nested_scope.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    nested_scope.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 // Tests all the problem datatypes for repeating a scope
 // name after skipping one nesting level.

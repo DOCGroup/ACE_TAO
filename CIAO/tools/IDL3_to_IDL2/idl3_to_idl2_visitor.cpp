@@ -273,7 +273,7 @@ idl3_to_idl2_visitor::visit_uses (AST_Uses *node)
           << impl_name << " objref;" << be_nl
           << "Components::Cookie ck;" << be_uidt_nl
           << "};" << be_nl << be_nl
-          << "typedef sequence<" << ext_port_name
+          << "typedef sequence< " << ext_port_name
           << "Connection> " << ext_port_name << "Connections;"
           << be_nl << be_nl;
 
@@ -609,6 +609,7 @@ idl3_to_idl2_visitor::visit_home (AST_Home *node)
   *os << be_uidt_nl
       << "};" << be_nl << be_nl;
 
+  xplicit.set_defined_in (0);
   xplicit.destroy ();
   sn->destroy ();
   delete sn;
@@ -818,20 +819,7 @@ idl3_to_idl2_visitor::tranfer_scope_elements (AST_Home *src,
 {
   // Transfer the elements of the home's scope to the temporary
   // explicit home interface.
-  for (UTL_ScopeActiveIterator src_iter (src, UTL_Scope::IK_decls);
-       ! src_iter.is_done ();
-       src_iter.next ())
-    {
-      AST_Decl *d = src_iter.item ();
-      d->set_defined_in (&dst);
-      UTL_ScopedName *new_name =
-        this->create_scoped_name (0,
-                                  d->local_name ()->get_string (),
-                                  0,
-                                  &dst);
-      d->set_name (new_name);
-      dst.add_to_scope (d);
-    }
+  src->transfer_scope_elements (&dst);
 
   // Visit the transferred scope elements normally to generate the IDL.
   // This way referenced items will have the interface's name in the
@@ -915,4 +903,3 @@ idl3_to_idl2_visitor::visit_porttype_scope_mirror (
 
   return 0;
 }
-

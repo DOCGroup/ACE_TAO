@@ -1,39 +1,36 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_cancel.cpp
-//
-// = DESCRIPTION
-//    This program tests cancelling an Asynchronous Operation in the
-//    Proactor framework.
-//
-//    This tests accepts a connection and issues an Asynchronous Read
-//    Stream. It reads <read_size> (option -s) number of bytes and
-//    when this operation completes, it issues another Asynchronous
-//    Read Stream to <read_size> and immediately calls <cancel> to
-//    cancel the operation and so the program exits closing the
-//    connection.
-//
-//    Works fine on NT. On Solaris platforms, the asynch read is
-//    pending, but the cancel returns with the value <AIO_ALLDONE>
-//    indicating all the operations in that handle are done.
-//    But, LynxOS has a good <aio_cancel> implementation. It works
-//    fine.
-//
-// = RUN
-//   ./test_cancel -p <port_number>
-//   Then telnet to this port and send <read_size> bytes and your
-//   connection should get closed down.
-//
-// = AUTHOR
-//    Irfan Pyarali (irfan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_cancel.cpp
+ *
+ *  $Id$
+ *
+ *  This program tests cancelling an Asynchronous Operation in the
+ *  Proactor framework.
+ *
+ *  This tests accepts a connection and issues an Asynchronous Read
+ *  Stream. It reads <read_size> (option -s) number of bytes and
+ *  when this operation completes, it issues another Asynchronous
+ *  Read Stream to <read_size> and immediately calls <cancel> to
+ *  cancel the operation and so the program exits closing the
+ *  connection.
+ *
+ *  Works fine on NT. On Solaris platforms, the asynch read is
+ *  pending, but the cancel returns with the value <AIO_ALLDONE>
+ *  indicating all the operations in that handle are done.
+ *  But, LynxOS has a good <aio_cancel> implementation. It works
+ *  fine.
+ *
+ * = RUN
+ * ./test_cancel -p <port_number>
+ * Then telnet to this port and send <read_size> bytes and your
+ * connection should get closed down.
+ *
+ *
+ *  @author Irfan Pyarali (irfan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"

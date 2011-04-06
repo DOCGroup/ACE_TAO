@@ -1,18 +1,17 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    basic_visitor.h
-//
-// = DESCRIPTION
-//    Base class for other visitors in this backend.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    basic_visitor.h
+ *
+ *  $Id$
+ *
+ *  Base class for other visitors in this backend.
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef TAO_BASIC_VISITOR_H
 #define TAO_BASIC_VISITOR_H
@@ -30,16 +29,12 @@
 class TAO_OutStream;
 class UTL_ExceptList;
 
+/**
+ * Base class for visitors in this backend and others.
+ */
 class TAO_IDL3_TO_IDL2_BE_Export basic_visitor
   : public ast_visitor
 {
-  //
-  // = TITLE
-  //    basic_visitor.
-  //
-  // = DESCRIPTION
-  //    Base class for visitors in this backend and others.
-  //
 public:
   basic_visitor (void);
   virtual ~basic_visitor (void);

@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Dirent_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the opendir and readdir emulation provided by the
-//     class ACE_Dirent.  It is used to ensure that the emulation code
-//     works properly on platforms that don't support this capability
-//     natively.  As the emulation code is not compiled in other
-//     platforms, this test also ensures that there is no impact to
-//     platforms that natively support directory scanning operations.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>,
-//    Zvika Ashani <zvika@aspectusvi.com>,
-//    Rich Newman <RNewman@directv.com>, and
-//    Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Dirent_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the opendir and readdir emulation provided by the
+ *   class ACE_Dirent.  It is used to ensure that the emulation code
+ *   works properly on platforms that don't support this capability
+ *   natively.  As the emulation code is not compiled in other
+ *   platforms, this test also ensures that there is no impact to
+ *   platforms that natively support directory scanning operations.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ *  @author Zvika Ashani <zvika@aspectusvi.com>
+ *  @author Rich Newman <RNewman@directv.com>
+ *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Dirent.h"
@@ -301,21 +298,12 @@ dirent_count (const ACE_TCHAR *dir_path,
               ++dir_count;
 
 #if !defined (ACE_LACKS_CHDIR)
-# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
-              // Move back to parent directory.
-              if (ACE_OS::chdir (full_path) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("chdir: %p\n"),
-                                   full_path),
-                                  -1);
-# else
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("chdir: %p\n"),
                                    dir_path),
                                   -1);
-# endif
 #endif /* !ACE_LACKS_CHDIR */
             }
           break;

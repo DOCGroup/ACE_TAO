@@ -25,9 +25,10 @@ namespace DAnCE
 
     if (retval == -1)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Deployment_Scheduler::schedule_event - ")
-                         ACE_TEXT ("Error: Unable to schedule event for execution\n")));
+        DANCE_ERROR (DANCE_LOG_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Deployment_Scheduler::schedule_event - ")
+                      ACE_TEXT ("Error: Unable to schedule event for execution\n")));
       }
 
     return retval;
@@ -48,9 +49,10 @@ namespace DAnCE
 
         if (de.get ())
           {
-            DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                              ACE_TEXT ("Deployment_Scheduler::svc - ")
-                              ACE_TEXT ("Invoking a deployment event\n")));
+            DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                         (LM_TRACE, DLINFO
+                          ACE_TEXT ("Deployment_Scheduler::svc - ")
+                          ACE_TEXT ("Invoking a deployment event\n")));
             de->call ();
           }
         else
@@ -68,9 +70,10 @@ namespace DAnCE
 
       if (de.get ())
         {
-          DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                            ACE_TEXT ("Deployment_Scheduler::perform_work - ")
-                            ACE_TEXT ("Invoking a deployment event\n")));
+          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT ("Deployment_Scheduler::perform_work - ")
+                        ACE_TEXT ("Invoking a deployment event\n")));
           de->call ();
         }
     }

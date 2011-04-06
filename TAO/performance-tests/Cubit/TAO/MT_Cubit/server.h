@@ -1,19 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    server.h
-//
-// = AUTHOR
-//    Andy Gokhale, Sumedh Mungee,Sergio Flores-Gaitan and Nagarajan
-//    Surendran.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.h
+ *
+ *  $Id$
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
+ */
+//=============================================================================
+
 
 #ifndef SERVER_H
 #define SERVER_H
@@ -51,91 +49,95 @@ extern "C" STATUS vmeDrv (void);
 extern "C" STATUS vmeDevCreate (char *);
 #endif /* VME_DRIVER */
 
+/**
+ * @class Server
+ *
+ * @brief A multithreaded cubit server class.
+ *
+ * This class encapsulates the functionality of a multi-threaded
+ * cubit server. To use this, call initialize and then
+ * start_servants method.
+ */
 class Server
 {
-  // = TITLE
-  //     A multithreaded cubit server class.
-  //
-  // = DESCRIPTION
-  //     This class encapsulates the functionality of a multi-threaded
-  //     cubit server. To use this, call initialize and then
-  //     start_servants method.
 public:
+  /// Default constructor.
   Server (void);
-  // Default constructor.
 
+  /// Initialize the server state.
   int init (int argc, ACE_TCHAR **argv);
-  // Initialize the server state.
 
+  /// Run method.
   int run (void);
-  // Run method.
 
 private:
+  /// Start the high and low priority servants.
   int start_servants (void);
-  // Start the high and low priority servants.
 
+  /// Preliminary argument processing code.
   void prelim_args_process (void);
-  // Preliminary argument processing code.
 
+  /// sets the priority to be used for the low priority servants.
   void init_low_priority (void);
-  // sets the priority to be used for the low priority servants.
 
+  /// Writes the iors of the servants to a file
   int write_iors (void);
-  // Writes the iors of the servants to a file
 
+  /// Activates the high priority servant.
   int activate_high_servant (void);
-  // Activates the high priority servant.
 
+  /// Activates the low priority servants.
   int activate_low_servants (void);
-  // Activates the low priority servants.
 
+  /// Number of arguments for the servant.
   int argc_;
-  // Number of arguments for the servant.
 
+  /// Arguments for the ORB.
   ACE_TCHAR **argv_;
-  // Arguments for the ORB.
 
+  /// Array to hold pointers to the Cubit objects.
   char * *cubits_;
-  // Array to hold pointers to the Cubit objects.
 
+  /// Pointer to the high priority task
   Cubit_Task *high_priority_task_;
-  // Pointer to the high priority task
 
+  /// Array to hold pointers to the low priority tasks.
   Cubit_Task **low_priority_tasks_;
-  // Array to hold pointers to the low priority tasks.
 
+  /// Priority used for the high priority servant.
   ACE_Sched_Priority high_priority_;
-  // Priority used for the high priority servant.
 
+  /// Priority used by the low priority servants.
   ACE_Sched_Priority low_priority_;
-  // Priority used by the low priority servants.
 
+  /// Number of low priority servants
   u_int num_low_priority_;
-  // Number of low priority servants
 
+  /// Number of priorities used.
   u_int num_priorities_;
-  // Number of priorities used.
 
+  /**
+   * Granularity of the assignment of the priorities.  Some OSs have
+   * fewer levels of priorities than we have threads in our test, so
+   * with this mechanism we assign priorities to groups of threads
+   * when there are more threads than priorities.
+   */
   u_int grain_;
-  // Granularity of the assignment of the priorities.  Some OSs have
-  // fewer levels of priorities than we have threads in our test, so
-  // with this mechanism we assign priorities to groups of threads
-  // when there are more threads than priorities.
 
+  /// count of the number of priorities used within a grain.
   u_int counter_;
-  // count of the number of priorities used within a grain.
 
+  /// argv passed to the high priority servant.
   ACE_ARGV *high_argv_;
-  // argv passed to the high priority servant.
 
+  /// argv passed to the low priority servants.
   ACE_ARGV *low_argv_;
-  // argv passed to the low priority servants.
 
+  /// Priority helper object.
   MT_Priority priority_;
-  // Priority helper object.
 
+  /// Thread manager for the servant threads.
   ACE_Thread_Manager servant_manager_;
-  // Thread manager for the servant threads.
 };
 
 #endif /* SERVER_H */

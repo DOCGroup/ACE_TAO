@@ -1,31 +1,28 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MT_Reference_Counted_Event_Handler_Test.cpp
-//
-// = DESCRIPTION
-//
-//    This test tries to represents what happens in the ORB wrt to
-//    event handlers, reactors, timer queues, threads, and connection
-//    caches, minus the other complexities.  The following reactors
-//    are tested: Select, TP, WFMO, and Dev Poll (if enabled).
-//
-//    The test checks proper use and shutting down of client-side
-//    event handlers when it is used by invocation threads and/or
-//    event loop threads.  Server-side event handlers are either
-//    threaded or reactive. A purger thread is introduced to check the
-//    connection recycling and cache purging.  Nested upcalls are also
-//    tested.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MT_Reference_Counted_Event_Handler_Test.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This test tries to represents what happens in the ORB wrt to
+ *  event handlers, reactors, timer queues, threads, and connection
+ *  caches, minus the other complexities.  The following reactors
+ *  are tested: Select, TP, WFMO, and Dev Poll (if enabled).
+ *
+ *  The test checks proper use and shutting down of client-side
+ *  event handlers when it is used by invocation threads and/or
+ *  event loop threads.  Server-side event handlers are either
+ *  threaded or reactive. A purger thread is introduced to check the
+ *  connection recycling and cache purging.  Nested upcalls are also
+ *  tested.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -152,8 +149,8 @@ public:
   Pipe (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE read_handle (void) const;
 
@@ -247,8 +244,8 @@ public:
   ssize_t send_message (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   void close (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle_;
 
@@ -394,8 +391,8 @@ public:
   int svc (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int close (u_long flags);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   int handle_input (ACE_HANDLE);
 
@@ -557,10 +554,10 @@ public:
              int nested_upcalls);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int connect (ACE_HANDLE &client_handle,
                ACE_HANDLE &server_handle,
                int run_receiver_thread);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_Thread_Manager &thread_manager_;
 

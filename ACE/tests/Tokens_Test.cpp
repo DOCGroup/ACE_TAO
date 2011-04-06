@@ -1,29 +1,26 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Tokens_Test.cpp
-//
-// = DESCRIPTION
-//     This application tests the ACE Token library including local
-//     and remote readers/writer and mutex locks, and token
-//     collections.  This is accomplished with the ACE Token Invariant
-//     utilities that allow and application to check that
-//     readers/writer and mutex lock invariants are always satisfied.
-//     Throughout this test, ACE_TEST_ASSERTs are used in conjunction with
-//     Token Invariant operations, so that errors are reported using
-//     the ACE tests convention.  This application performs a local
-//     test and then fork_execs a token server and performs the same
-//     test remotely.
-//
-// = AUTHOR
-//    Tim Harrison <harrison@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Tokens_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This application tests the ACE Token library including local
+ *   and remote readers/writer and mutex locks, and token
+ *   collections.  This is accomplished with the ACE Token Invariant
+ *   utilities that allow and application to check that
+ *   readers/writer and mutex lock invariants are always satisfied.
+ *   Throughout this test, ACE_TEST_ASSERTs are used in conjunction with
+ *   Token Invariant operations, so that errors are reported using
+ *   the ACE tests convention.  This application performs a local
+ *   test and then fork_execs a token server and performs the same
+ *   test remotely.
+ *
+ *
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    fixed_struct.cpp
-//
-// = DESCRIPTION
-//    tests fixed sized structs
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    fixed_struct.cpp
+ *
+ *  $Id$
+ *
+ *  tests fixed sized structs
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "fixed_struct.h"

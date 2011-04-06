@@ -1,23 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    EventComm
-//
-// = FILENAME
-//    Consumer_Handler.h
-//
-// = DESCRIPTION
-//    Subclass of Corba_Handler that sets up the Consumer handler
-//    for use with the ACE ACE_Reactor.
-//
-// = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore
-//    (pradeep@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Consumer_Handler.h
+ *
+ *  $Id$
+ *
+ *  Subclass of Corba_Handler that sets up the Consumer handler
+ *  for use with the ACE ACE_Reactor.
+ *
+ *
+ *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #ifndef _CONSUMER_HANDLER_H
 #define _CONSUMER_HANDLER_H
@@ -26,66 +22,68 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/CosNamingC.h"
 
+/**
+ * @class Consumer_Handler
+ *
+ * @brief The Consumer_Handler class.
+ *
+ * Starts up the ORB, registers the <Event_Comm::Consumer>
+ * servant with the orb and gets a reference to a <Notifier>
+ * from the Naming Service.
+ */
 class Consumer_Handler
 {
-  // = TITLE
-  //    The Consumer_Handler class.
-  //
-  // = DESCRIPTION
-  //     Starts up the ORB, registers the <Event_Comm::Consumer>
-  //     servant with the orb and gets a reference to a <Notifier>
-  //     from the Naming Service.
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Consumer_Handler (void);
-  // Constructor.
 
+  /// Destructor.
  virtual ~Consumer_Handler (void);
-  // Destructor.
 
+  /// Initializes the ORB, gets the Notifier reference from the Naming
+  /// Service, and starts the servant for the Consumer object.
   int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *_shutdowncallback);
-  // Initializes the ORB, gets the Notifier reference from the Naming
-  // Service, and starts the servant for the Consumer object.
 
+  /// runs the ORB.
   int run (void);
-  // runs the ORB.
 
+  /// shutdown the orb.
   void close (void);
-  // shutdown the orb.
 
+  /// called to shutdown the consumer application.
   void shutdown (void);
-  // called to shutdown the consumer application.
 
   // = Accessors
   Event_Comm::Consumer *receiver (void);
   Event_Comm::Notifier *notifier (void);
 
+  /// returns the ORB's reactor.
   ACE_Reactor *reactor (void);
-  // returns the ORB's reactor.
 
 private:
+  /// gets the notifier reference from the naming service.
+  /// returns 0 on success, -1 on error.
   int get_notifier (void);
-  // gets the notifier reference from the naming service.
-  // returns 0 on success, -1 on error.
 
+  /// Remember our orb.
   CORBA::ORB_var orb_;
-  // Remember our orb.
 
+  /// The <Consumer> implementation.
   Consumer_i receiver_i_;
-  // The <Consumer> implementation.
 
+  /// Pointer to an IDL <Consumer> proxy object.
   Event_Comm::Consumer_var receiver_;
-  // Pointer to an IDL <Consumer> proxy object.
 
+  /// Pointer to an IDL <Notifier> proxy object.
   Event_Comm::Notifier_var notifier_;
-  // Pointer to an IDL <Notifier> proxy object.
 
+  /// An instance of the name client used for resolving the factory
+  /// objects.
   TAO_Naming_Client naming_services_client_;
-  // An instance of the name client used for resolving the factory
-  // objects.
 
+  /// The Shutdown callback used to shutdown the consumer application.
   ShutdownCallback* shutdowncallback;
-  // The Shutdown callback used to shutdown the consumer application.
 };
 
 #define NOTIFIER_BIND_NAME "Notifier"

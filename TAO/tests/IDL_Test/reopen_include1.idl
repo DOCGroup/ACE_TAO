@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    reopen_include1.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    reopen_include1.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 #ifndef IDL_TEST_REOPEN_INCLUDE1_IDL
 #define IDL_TEST_REOPEN_INCLUDE1_IDL

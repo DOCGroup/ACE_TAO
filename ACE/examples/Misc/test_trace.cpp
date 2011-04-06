@@ -1,40 +1,36 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Misc
-//
-// = FILENAME
-//    test_trace.cpp
-//
-// = DESCRIPTION
-//    This example illustrates how to use the ACE tracing feature and
-//    the ACE_TRACE macro.  It also shows the use of the ACE_Task_Base
-//    class running as an "active object".
-//
-//    When adding ACE tracing to an application one option is to add
-//
-//    #define ACE_NTRACE 0
-//
-//    in the line above #include "ace/Log_Msg.h".  That's the approach shown below.
-//
-//    Another option is to add this line in $ACE_ROOT/ace/config.h.
-//    Note, however, that if you add the line in config.h, you need to
-//    add it *after* you've built ACE, i.e., don't build ACE with it
-//    set to 0 as then you will get all the internal ACE_TRACE calls
-//    showing up as well!  In a nutshell, in this second option you
-//    do this:
-//
-//    1. Build ACE without tracing (i.e., don't #define ACE_NTRACE 0 in config.h)
-//    2. Add #define ACE_NTRACE 0 in config.h
-//    3. Build your app with tracing.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_trace.cpp
+ *
+ *  $Id$
+ *
+ *  This example illustrates how to use the ACE tracing feature and
+ *  the ACE_TRACE macro.  It also shows the use of the ACE_Task_Base
+ *  class running as an "active object".
+ *
+ *  When adding ACE tracing to an application one option is to add
+ *
+ *  #define ACE_NTRACE 0
+ *
+ *  in the line above #include "ace/Log_Msg.h".  That's the approach shown below.
+ *
+ *  Another option is to add this line in $ACE_ROOT/ace/config.h.
+ *  Note, however, that if you add the line in config.h, you need to
+ *  add it *after* you've built ACE, i.e., don't build ACE with it
+ *  set to 0 as then you will get all the internal ACE_TRACE calls
+ *  showing up as well!  In a nutshell, in this second option you
+ *  do this:
+ *
+ *  1. Build ACE without tracing (i.e., don't #define ACE_NTRACE 0 in config.h)
+ *  2. Add #define ACE_NTRACE 0 in config.h
+ *  3. Build your app with tracing.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // Enable tracing
 #define ACE_NTRACE 0
@@ -61,8 +57,8 @@ public:
   }
 
 private:
+  /// Depth of the recursion.
   size_t depth_;
-  // Depth of the recursion.
 };
 
 int

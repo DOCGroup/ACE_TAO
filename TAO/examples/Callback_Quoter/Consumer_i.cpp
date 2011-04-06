@@ -1,21 +1,18 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Consumer_i.cpp
-//
-// = DESCRIPTION
-//    Implements the Consumer_i class, which is used by the
-//    callback quoter client.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Consumer_i.cpp
+ *
+ *  $Id$
+ *
+ *  Implements the Consumer_i class, which is used by the
+ *  callback quoter client.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Consumer_i.h"
 

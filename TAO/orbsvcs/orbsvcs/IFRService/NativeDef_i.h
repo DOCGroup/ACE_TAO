@@ -32,15 +32,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents an OMG IDL native definition.
+ */
 class TAO_IFRService_Export TAO_NativeDef_i : public virtual TAO_TypedefDef_i
 {
-public:
-  // = TITLE
-  //    TAO_NativeDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an OMG IDL native definition.
-  //
 public:
   /// Constructor
   TAO_NativeDef_i (TAO_Repository_i *repo);

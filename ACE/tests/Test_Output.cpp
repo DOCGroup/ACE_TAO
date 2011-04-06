@@ -132,7 +132,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #else /* ! ACE_VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
   // exist: it creates a plain file instead of a directory.  If the
-  // directory does exist, it causes a wierd console error message
+  // directory does exist, it causes a weird console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
   ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    be_codegen.cpp
@@ -2206,7 +2205,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
       extension = fname;
     }
 
-  ACE_OS::sprintf (macro_name, prefix);
+  ACE_OS::sprintf (macro_name, "%s", prefix);
 
   size_t offset = ACE_OS::strlen (prefix);
 
@@ -3401,7 +3400,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             this->gen_conn_ts_includes (
               idl_global->ciao_oci_ts_file_names ());
             break;
-          case BE_GlobalData::NONE:
+          case BE_GlobalData::DDS_NONE:
             break;
         }
     }
@@ -3516,7 +3515,7 @@ TAO_CodeGen::make_rand_extension (char * const t)
   // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
   // we need to use a C-style cast as a catch-all in order to use a
   // static_cast<> to an integral type.
-  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
+  unsigned int seed = static_cast<unsigned int> (msec);
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -3552,7 +3551,7 @@ TAO_CodeGen::make_rand_extension (char * const t)
       // selection to work for EBCDIC, as well.
       do
         {
-          r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
+          r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (&seed));
         }
       while (!ACE_OS::ace_isalnum (r));
 

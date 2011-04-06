@@ -9,6 +9,8 @@ project(*Server): taoserver, messaging, bidir_giop, threads {
 
 project(*Client): taoserver, bidir_giop, threads {
   exename = client
+  after  += *Server
+
   Source_Files {
     test_i.cpp
     client.cpp

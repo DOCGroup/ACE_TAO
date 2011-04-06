@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    included.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    included.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 #ifndef IDL_TEST_INCLUDED_IDL
 #define IDL_TEST_INCLUDED_IDL

@@ -8,48 +8,19 @@
 #include /**/ "ace/pre.h"
 
 #if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
+#  define ACE_MT_SAFE 1
 #endif
-
-#if ACE_MT_SAFE
-  // Yes, we do have threads.
-# define ACE_HAS_THREADS 1
-#else
-  // Set to 0 since that's what config-posix.h checks for.
-# define ACE_HAS_THREADS 0
-#endif /* ACE_MT_SAFE */
-
-#include "ace/config-posix.h"
 
 // Make sure we source in the OS version.
 #include <osreldate.h>
 
-#if !defined (__ACE_INLINE__)
-# define __ACE_INLINE__
-#endif /* ! __ACE_INLINE__ */
+#include "ace/config-posix.h"
 
-#if (__FreeBSD_version < 220000)
-# if defined (ACE_HAS_THREADS)
-#  error Threads are not supported.
-# endif /* ACE_HAS_THREADS */
-#endif /* __FreeBSD_version < 220000 */
-
-#if defined (__GNUG__)
-# include "ace/config-g++-common.h"
-#endif /* __GNUG__ */
+#include "ace/config-g++-common.h"
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
 #endif /* ACE_HAS_PENTIUM */
-
-// Platform specific directives
-// gcc defines __FreeBSD__ automatically for us.
-#ifdef ACE_HAS_THREADS
-# if !defined (_THREAD_SAFE)
-#  define _THREAD_SAFE
-# endif /* _THREAD_SAFE */
-#endif
-
 
 #define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_3_PARAM_WCSTOK
@@ -160,7 +131,6 @@
 # define ACE_LACKS_SETSCHED
 # define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 # define ACE_LACKS_UCONTEXT_H
-# define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 
 enum schedparam_policy {
         SCHED_RR,
@@ -189,7 +159,6 @@ enum schedparam_policy {
 
 #if (__FreeBSD_version < 501000)
 # define ACE_LACKS_STDINT_H
-# define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
 #endif
 
 #if (__FreeBSD_version >= 501000)

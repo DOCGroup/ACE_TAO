@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    DLL_Test.cpp
-//
-// = DESCRIPTION
-//    This test illustrates the use of <ACE_DLL> wrapper class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DLL_Test_Impl.cpp
+ *
+ *  $Id$
+ *
+ *  This test illustrates the use of <ACE_DLL> wrapper class.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "DLL_Test_Impl.h"
 #include "ace/ACE.h"

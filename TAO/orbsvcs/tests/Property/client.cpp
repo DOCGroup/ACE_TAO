@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/Property
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    Test client for the Property Service.
-//
-// = AUTHORS
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  Test client for the Property Service.
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "client.h"
 #include "tao/debug.h"

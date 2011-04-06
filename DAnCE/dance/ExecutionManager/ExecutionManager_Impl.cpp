@@ -25,17 +25,25 @@ ExecutionManager_Impl::~ExecutionManager_Impl()
        iter != this->managers_.end();
        ++iter)
     {
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
-                    ACE_TEXT("deactivating DAM \"%C\"\n"), (*iter).ext_id_.c_str()));
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+                        ACE_TEXT("deactivating DAM \"%C\"\n"), (*iter).ext_id_.c_str()));
       PortableServer::ObjectId_var id = this->poa_->servant_to_id ( (*iter).int_id_);
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+      DANCE_TRACE_LOG (DANCE_LOG_DETAILED_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
                     ACE_TEXT("before deactivate_object...\n")));
       this->poa_->deactivate_object (id.in());
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
+                   (LM_TRACE, DLINFO
+                    ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
                     ACE_TEXT("deleting DomainApplicationManager\n")));
       delete (*iter).int_id_;
-      DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
-                    ACE_TEXT("DomainApplicationManager deleted\n")));
+      DANCE_TRACE_LOG (DANCE_LOG_DETAILED_TRACE,
+                       (LM_TRACE, DLINFO
+                        ACE_TEXT("ExecutionManager_Impl::~ExecutionManager_Impl - ")
+                        ACE_TEXT("DomainApplicationManager deleted\n")));
     }
 }
 
@@ -50,8 +58,10 @@ ExecutionManager_Impl::preparePlan (::Deployment::AMH_ExecutionManagerResponseHa
   DomainApplicationManager_Impl * dam = 0;
   if (0 == this->managers_.find (plan.UUID.in(), dam))
     {
-      DANCE_DEBUG (6, (LM_NOTICE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
-                   ACE_TEXT("DomainApplicationManager with specified UUID already exists\n")));
+      DANCE_ERROR (DANCE_LOG_WARNING,
+                   (LM_NOTICE, DLINFO
+                    ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+                    ACE_TEXT("DomainApplicationManager with specified UUID already exists\n")));
       // Should we return on this situation reference on existed DomainApplicationManager or
       // we should throw PlanError exception?
       CORBA::Object_var ref = this->poa_->servant_to_reference (dam);
@@ -69,8 +79,9 @@ ExecutionManager_Impl::preparePlan (::Deployment::AMH_ExecutionManagerResponseHa
                       CORBA::NO_MEMORY ());
     DomainApplicationManager_Impl_var dam_servant (dam_servant_ptr);
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
-                ACE_TEXT("Domain Application Manager was successfully created.\n")));
+    DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                 (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+                  ACE_TEXT("Domain Application Manager was successfully created.\n")));
 
     PreparePlanCompletionHandler* ppch = 0;
     ACE_NEW_THROW_EX (ppch,
@@ -80,42 +91,55 @@ ExecutionManager_Impl::preparePlan (::Deployment::AMH_ExecutionManagerResponseHa
 
     dam_servant->preparePlan (ppch);
 
-    DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
-                ACE_TEXT("Domain Application Manager preparePlan has been called.\n")));
-  }
-  catch (CORBA::Exception& ex) {
-    DANCE_ERROR (1, (LM_ERROR, DLINFO
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                 (LM_TRACE, DLINFO
                   ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
-                  ACE_TEXT("Propagating CORBA exception caught here\n")));
-    CORBA::Exception* local_ex = ex._tao_duplicate ();
-    ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
-    _tao_rh->preparePlan_excep (&amh_exholder);
+                  ACE_TEXT("Domain Application Manager preparePlan has been called.\n")));
   }
-  catch (...) {
-    DANCE_ERROR (1, (LM_ERROR, DLINFO
-                  ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
-                  ACE_TEXT("Propagating exception caught here\n")));
-    CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
-    ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (unknown_ex);
-    _tao_rh->preparePlan_excep (&amh_exholder);
-  }
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::preparePlan - finished\n")));
+  catch (CORBA::Exception& ex)
+    {
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+                    ACE_TEXT("Propagating CORBA exception caught here\n")));
+      CORBA::Exception* local_ex = ex._tao_duplicate ();
+      ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
+      _tao_rh->preparePlan_excep (&amh_exholder);
+    }
+  catch (...)
+    {
+      DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                   (LM_ERROR, DLINFO
+                    ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
+                    ACE_TEXT("Propagating exception caught here\n")));
+      CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
+      ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (unknown_ex);
+      _tao_rh->preparePlan_excep (&amh_exholder);
+    }
+
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::preparePlan - finished\n")));
 }
 
 void
 ExecutionManager_Impl::finish_preparePlan (::Deployment::AMH_ExecutionManagerResponseHandler_ptr _tao_rh,
                                            DomainApplicationManager_Impl *dam_servant)
 {
-  DANCE_DEBUG (6, (LM_NOTICE, DLINFO ACE_TEXT("ExecutionManager_Impl::finish_preparePlan - ")
-              ACE_TEXT("Plan with UUID %C was successfully prepared.\n"),
-                        dam_servant->getPlanUUID ()));
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_NOTICE, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::finish_preparePlan - ")
+                ACE_TEXT("Plan with UUID %C was successfully prepared.\n"),
+                dam_servant->getPlanUUID ()));
 
   this->managers_.rebind (dam_servant->getPlanUUID (), dam_servant);
 
   PortableServer::ObjectId_var id = this->poa_->activate_object (dam_servant);
 
-  DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::finish_preparePlan - ")
-              ACE_TEXT("Domain Application Manager was successfully activated.\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_TRACE, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::finish_preparePlan - ")
+                ACE_TEXT("Domain Application Manager was successfully activated.\n")));
 
   CORBA::Object_var ref = this->poa_->id_to_reference (id.in());
   _tao_rh->preparePlan (Deployment::DomainApplicationManager::_narrow (ref.in ()));
@@ -125,7 +149,9 @@ void
 ExecutionManager_Impl::fail_preparePlan (::Deployment::AMH_ExecutionManagerResponseHandler_ptr _tao_rh,
                                          CORBA::Exception* local_ex)
 {
-  DANCE_DEBUG (6, (LM_NOTICE, DLINFO ACE_TEXT("ExecutionManager_Impl::fail_preparePlan called\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_NOTICE, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::fail_preparePlan called\n")));
 
   ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
   _tao_rh->preparePlan_excep (&amh_exholder);
@@ -136,44 +162,49 @@ ExecutionManager_Impl::getManagers (::Deployment::AMH_ExecutionManagerResponseHa
 {
   DANCE_TRACE ( "ExecutionManager_Impl::getManagers ()");
 
-  try {
-    ::Deployment::DomainApplicationManagers_var managers;
-    ACE_NEW_THROW_EX (managers,
-                      ::Deployment::DomainApplicationManagers(),
-                      CORBA::NO_MEMORY());
+  try
+    {
+      ::Deployment::DomainApplicationManagers_var managers;
+      ACE_NEW_THROW_EX (managers,
+                        ::Deployment::DomainApplicationManagers(),
+                        CORBA::NO_MEMORY());
 
-    managers->length (this->managers_.current_size());
-    CORBA::ULong index = 0;
-    for (TDomainManagers::iterator iter = this->managers_.begin();
-        iter != this->managers_.end();
-        ++iter)
-      {
-        CORBA::Object_var ref = this->poa_->servant_to_reference ( (*iter).int_id_);
-        (*managers) [index]
+      managers->length (this->managers_.current_size());
+      CORBA::ULong index = 0;
+      for (TDomainManagers::iterator iter = this->managers_.begin();
+           iter != this->managers_.end();
+           ++iter)
+        {
+          CORBA::Object_var ref = this->poa_->servant_to_reference ( (*iter).int_id_);
+          (*managers) [index]
             = Deployment::DomainApplicationManager::_narrow (ref.in ());
-        ++index;
-      }
+          ++index;
+        }
 
-    _tao_rh->getManagers (managers);
-    return;
-  }
-  catch (CORBA::Exception& ex) {
-    CORBA::Exception* local_ex = ex._tao_duplicate ();
-    ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
-    _tao_rh->getManagers_excep (&amh_exholder);
-  }
-  catch (...) {
-    CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
-    ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (unknown_ex);
-    _tao_rh->getManagers_excep (&amh_exholder);
-  }
+      _tao_rh->getManagers (managers);
+      return;
+    }
+  catch (CORBA::Exception& ex)
+    {
+      CORBA::Exception* local_ex = ex._tao_duplicate ();
+      ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
+      _tao_rh->getManagers_excep (&amh_exholder);
+    }
+  catch (...)
+    {
+      CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
+      ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (unknown_ex);
+      _tao_rh->getManagers_excep (&amh_exholder);
+    }
 }
 
 void
 ExecutionManager_Impl::destroyManager (::Deployment::AMH_ExecutionManagerResponseHandler_ptr _tao_rh,
                                        ::Deployment::DomainApplicationManager_ptr appManager)
 {
-  DANCE_DEBUG (6, (LM_DEBUG, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - started\n")));
+  DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+               (LM_DEBUG, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::destroyManager - started\n")));
 
   try {
     for (TDomainManagers::iterator iter = this->managers_.begin();
@@ -206,29 +237,35 @@ ExecutionManager_Impl::destroyManager (::Deployment::AMH_ExecutionManagerRespons
 
             dam_servant->destroyManager (dmch);
 
-            DANCE_DEBUG (9, (LM_TRACE, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - ")
-                        ACE_TEXT("Domain Application Manager destroyManager has been called.\n")));
+            DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                         (LM_TRACE, DLINFO
+                          ACE_TEXT("ExecutionManager_Impl::destroyManager - ")
+                          ACE_TEXT("Domain Application Manager destroyManager has been called.\n")));
             return;
           }
       }
-    DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - ")
+
+    DANCE_ERROR (DANCE_LOG_ERROR,
+                 (LM_ERROR, DLINFO ACE_TEXT("ExecutionManager_Impl::destroyManager - ")
                   ACE_TEXT("corresponding DomainApplicationManager cannot be found\n")));
     CORBA::Exception* local_ex =
-        new ::Deployment::StopError("ExecutionManager_Impl::destroyManager",
-                                    "corresponding DomainApplicationManager cannot be found");
+      new ::Deployment::StopError("ExecutionManager_Impl::destroyManager",
+                                  "corresponding DomainApplicationManager cannot be found");
     ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
     _tao_rh->destroyManager_excep (&amh_exholder);
   }
-  catch (CORBA::Exception& ex) {
-    CORBA::Exception* local_ex = ex._tao_duplicate ();
-    ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
-    _tao_rh->destroyManager_excep (&amh_exholder);
-  }
-  catch (...) {
-    CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
-    ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (unknown_ex);
-    _tao_rh->destroyManager_excep (&amh_exholder);
-  }
+  catch (CORBA::Exception& ex)
+    {
+      CORBA::Exception* local_ex = ex._tao_duplicate ();
+      ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
+      _tao_rh->destroyManager_excep (&amh_exholder);
+    }
+  catch (...)
+    {
+      CORBA::Exception* unknown_ex = new CORBA::UNKNOWN;
+      ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (unknown_ex);
+      _tao_rh->destroyManager_excep (&amh_exholder);
+    }
 }
 
 void
@@ -279,16 +316,19 @@ ExecutionManager_Impl::DestroyManagerCompletionHandler::DestroyManagerCompletion
 void ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_completion (
     DomainApplicationManager_Impl * /*dam_servant*/)
 {
-  DANCE_DEBUG (8, (LM_INFO, DLINFO
-      ACE_TEXT("ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_completion - ")
-      ACE_TEXT("finished\n")));
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_INFO, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_completion - ")
+                ACE_TEXT("finished\n")));
   em_rh_->destroyManager ();
 }
 
 void ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_exception (
     CORBA::Exception* local_ex)
 {
-  DANCE_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT("ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_exception - ")
+  DANCE_ERROR (DANCE_LOG_ERROR,
+               (LM_ERROR, DLINFO
+                ACE_TEXT("ExecutionManager_Impl::DestroyManagerCompletionHandler::handle_exception - ")
                 ACE_TEXT("propagating exception\n")));
   ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
   em_rh_->destroyManager_excep (&amh_exholder);

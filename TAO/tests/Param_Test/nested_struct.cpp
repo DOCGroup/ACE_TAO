@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    nested_struct.cpp
-//
-// = DESCRIPTION
-//    tests nested structs
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    nested_struct.cpp
+ *
+ *  $Id$
+ *
+ *  tests nested structs
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "nested_struct.h"

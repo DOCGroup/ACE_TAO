@@ -1018,6 +1018,7 @@ TAO_IMR_Op_Register::run (void)
             ACE_DEBUG((LM_DEBUG, "Adding Server <%C> on update command.\n", this->server_name_.c_str ()));
             is_add_ = true;
           }
+          local.activation= ImplementationRepository::NORMAL;
           options = &local;
         }
 

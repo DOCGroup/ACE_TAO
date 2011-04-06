@@ -238,7 +238,7 @@ Server::svc (void)
       char file_name[100];
       ACE_OS::sprintf (file_name,
                        "%s_%d",
-                       ior_output_file_base,
+                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_base),
                        this->priority_);
 
       // Output the ior to a file.

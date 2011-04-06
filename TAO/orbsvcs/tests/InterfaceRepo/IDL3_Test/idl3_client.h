@@ -1,53 +1,52 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/InterfaceRepo
-//
-// = FILENAME
-//    idl3_client.h
-//
-// = DESCRIPTION
-//    This class tests the IFR support for CCM-related types.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    idl3_client.h
+ *
+ *  $Id$
+ *
+ *  This class tests the IFR support for CCM-related types.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef IDL3_CLIENT_H
 #define IDL3_CLIENT_H
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
+/**
+ * @class IDL3_Client
+ *
+ * @brief Component-aware IFR Client Implementation
+ *
+ * Class wrapper for a client which tests the Interface Repository
+ * support for the OMG IDL3 extensions.
+ */
 class IDL3_Client
 {
-  // = TITLE
-  //     Component-aware IFR Client Implementation
-  //
-  // = DESCRIPTION
-  //     Class wrapper for a client which tests the Interface Repository
-  //     support for the OMG IDL3 extensions.
 public:
+  /// Constructor
   IDL3_Client (void);
-  // Constructor
 
+  /// Destructor
   ~IDL3_Client (void);
-  // Destructor
 
+  /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Initialize the ORB and get the IFR object reference.
 
+  /// Execute test code.
   int run (void);
-  // Execute test code.
 
 private:
+  /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
-  // Process the command line arguments.
 
   int component_test (void);
   int home_test (void);
@@ -104,14 +103,14 @@ private:
   int home_finder_test (CORBA::ComponentIR::HomeDescription *);
 
 private:
+  /// Flag to output detailed error messages.
   bool debug_;
-  // Flag to output detailed error messages.
 
+  /// Storage of the ORB reference.
   CORBA::ORB_var orb_;
-  // Storage of the ORB reference.
 
+  /// Storage of the IFR reference.
   CORBA::Repository_var repo_;
-  // Storage of the IFR reference.
 };
 
 #endif /* IDL3_CLIENT_H */

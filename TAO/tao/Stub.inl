@@ -1,16 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_INLINE
-TAO_SYNCH_MUTEX&
-TAO_Stub::profile_lock () const
-{
-  return this->profile_lock_;
-}
 
 ACE_INLINE void
 TAO_Stub::reset_base (void)
@@ -21,6 +15,12 @@ TAO_Stub::reset_base (void)
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
+
+ACE_INLINE const TAO_SYNCH_MUTEX&
+TAO_Stub::profile_lock (void) const
+{
+  return this->profile_lock_;
+}
 
 ACE_INLINE void
 TAO_Stub::reset_forward (void)

@@ -32,15 +32,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Adds IDL3 extensions to AttributeDef.
+ */
 class TAO_IFRService_Export TAO_ExtAttributeDef_i
   : public virtual TAO_AttributeDef_i
 {
-  // = TITLE
-  //    TAO_ExtAttributeDef_i
-  //
-  // = DESCRIPTION
-  //    Adds IDL3 extensions to AttributeDef.
-  //
 public:
   /// Constructor
   TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
@@ -48,45 +45,31 @@ public:
   /// Destructor
   virtual ~TAO_ExtAttributeDef_i (void);
 
-  virtual CORBA::ExcDescriptionSeq *get_exceptions (
-    );
+  virtual CORBA::ExcDescriptionSeq *get_exceptions (void);
 
-  CORBA::ExcDescriptionSeq *get_exceptions_i (
-    );
+  CORBA::ExcDescriptionSeq *get_exceptions_i (void);
 
-  virtual void get_exceptions (
-      const CORBA::ExcDescriptionSeq &get_exceptions
-    );
+  virtual void get_exceptions (const CORBA::ExcDescriptionSeq &get_exceptions);
 
-  void get_exceptions_i (
-      const CORBA::ExcDescriptionSeq &get_exceptions
-    );
+  void get_exceptions_i (const CORBA::ExcDescriptionSeq &get_exceptions);
 
-  virtual CORBA::ExcDescriptionSeq *set_exceptions (
-    );
+  virtual CORBA::ExcDescriptionSeq *set_exceptions (void);
 
-  CORBA::ExcDescriptionSeq *set_exceptions_i (
-    );
+  CORBA::ExcDescriptionSeq *set_exceptions_i (void);
 
   virtual void set_exceptions (
-      const CORBA::ExcDescriptionSeq &set_exceptions
-    );
+      const CORBA::ExcDescriptionSeq &set_exceptions);
 
   void set_exceptions_i (
-      const CORBA::ExcDescriptionSeq &set_exceptions
-    );
+      const CORBA::ExcDescriptionSeq &set_exceptions);
 
-  virtual CORBA::ExtAttributeDescription *describe_attribute (
-    );
+  virtual CORBA::ExtAttributeDescription *describe_attribute (void);
 
-  CORBA::ExtAttributeDescription *describe_attribute_i (
-    );
+  CORBA::ExtAttributeDescription *describe_attribute_i (void);
 
   // Utility function that fills sequence elements for a
   // ComponentDescription.
-  void fill_description (
-      CORBA::ExtAttributeDescription &desc
-    );
+  void fill_description (CORBA::ExtAttributeDescription &desc);
 
 private:
   /// Common code for the set and get varieties.

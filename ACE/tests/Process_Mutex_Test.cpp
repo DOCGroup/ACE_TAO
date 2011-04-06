@@ -1,19 +1,16 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Mutex_Test.cpp
-//
-// = DESCRIPTION
-//    Tests an <ACE_Process_Mutex> shared between multiple child processes.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Mutex_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests an <ACE_Process_Mutex> shared between multiple child processes.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Mutex.h"

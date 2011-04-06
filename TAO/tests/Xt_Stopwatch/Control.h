@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Xt_Stopwatch/Stopwatch_client
-//
-// = FILENAME
-//   Control.h
-//
-// = AUTHOR
-//   Balachandran  Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Control.h
+ *
+ *  $Id$
+ *
+ *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CONTROL_H
 #define CONTROL_H
@@ -28,34 +25,34 @@
 class Control
 {
  public:
+  /// Stopwatch constructor
   Control (Widget &parent);
-  // Stopwatch constructor
 
+  /// Destructor
   virtual ~Control (void);
-  // Destructor
 
+  /// Manage the widget
   virtual void manage (void);
-  // Manage the widget
 
+  /// Return the start widget
   Widget& startwidget (void);
-  // Return the start widget
 
+  /// Return the stop widget..
   Widget& stopwidget (void);
-  // Return the stop widget..
 
  private:
 
+  /// A frame widget...
   Widget frame_;
-  // A frame widget...
 
+  /// A row column widget..
   Widget rowcolumn_;
-  // A row column widget..
 
+  /// Pushbutton  Widget that is used to start the  timer..
   Widget startwidget_;
-  // Pushbutton  Widget that is used to start the  timer..
 
+  /// Pushbutton widget that is used to stop the timer..
   Widget stopwidget_;
-  // Pushbutton widget that is used to stop the timer..
 
 };
 

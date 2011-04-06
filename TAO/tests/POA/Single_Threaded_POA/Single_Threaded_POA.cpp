@@ -1,23 +1,20 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/Single_Threaded_POA
-//
-// = FILENAME
-//     Single_Threaded_POA.cpp
-//
-// = DESCRIPTION
-//     This program tests to make sure that two threads cannot call
-//     servants in a single threaded POA simultaneously. At the same
-//     time, it makes sure that a servant can call itself or other
-//     servants in the same POA while in an upcall.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     Single_Threaded_POA.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests to make sure that two threads cannot call
+ *   servants in a single threaded POA simultaneously. At the same
+ *   time, it makes sure that a servant can call itself or other
+ *   servants in the same POA while in an upcall.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "ace/Task.h"

@@ -1,21 +1,17 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Exposed_Policies
-//
-// = FILENAME
-//    Policy_Verifier.h
-//
-// = DESCRIPTION
-//     This class verifies that the policy are correctly embedded
-//     in the IOR.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Policy_Verifier.h
+ *
+ *  $Id$
+ *
+ *   This class verifies that the policy are correctly embedded
+ *   in the IOR.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef POLICY_VERIFIER_H_
 #define POLICY_VERIFIER_H_

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    small_union.h
-//
-// = DESCRIPTION
-//     Tests Anys
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    small_union.h
+ *
+ *  $Id$
+ *
+ *   Tests Anys
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_SMALL_UNION_H
 #define PARAM_TEST_SMALL_UNION_H
@@ -27,57 +24,57 @@
 class Test_Small_Union
 {
 public:
+  /// ctor
   Test_Small_Union (void);
-  // ctor
 
+  /// dtor
   ~Test_Small_Union (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
+  /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
-  // invoke DII request with appropriate exception handling.
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// Coffee object used to test Small_Union with object.
   Coffee_var cobj_;
-  // Coffee object used to test Small_Union with object.
 
+  /// test counter.
   static size_t counter;
-  // test counter.
 
+  /// in parameter
   Param_Test::Small_Union in_;
-  // in parameter
 
+  /// inout parameter
   Param_Test::Small_Union inout_;
-  // inout parameter
 
+  /// out parameter
   Param_Test::Small_Union_var out_;
-  // out parameter
 
+  /// return value
   Param_Test::Small_Union_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_SMALL_UNION_H */

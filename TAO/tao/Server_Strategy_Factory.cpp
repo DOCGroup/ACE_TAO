@@ -14,36 +14,6 @@ TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
 {
 }
 
-int
-TAO_Server_Strategy_Factory::open (TAO_ORB_Core*)
-{
-  return 0;
-}
-
-int
-TAO_Server_Strategy_Factory::activate_server_connections (void)
-{
-  return 0;
-}
-
-int
-TAO_Server_Strategy_Factory::thread_per_connection_timeout (ACE_Time_Value &)
-{
-  return -1;
-}
-
-int
-TAO_Server_Strategy_Factory::server_connection_thread_flags (void)
-{
-  return 0;
-}
-
-int
-TAO_Server_Strategy_Factory::server_connection_thread_count (void)
-{
-  return 0;
-}
-
 const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
 TAO_Server_Strategy_Factory::active_object_map_creation_parameters (void) const
 {

@@ -35,12 +35,13 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Best_Effort::post_install - ")
-                         ACE_TEXT ("Received exception while installing instance ")
-                         ACE_TEXT ("<%C>:<%C>\n"),
-                         plan.instance[index].name.in (),
-                         result.c_str ()));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Best_Effort::post_install - ")
+                      ACE_TEXT ("Received exception while installing instance ")
+                      ACE_TEXT ("<%C>:<%C>\n"),
+                      plan.instance[index].name.in (),
+                      result.c_str ()));
       }
   }
 
@@ -54,12 +55,13 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Best_Effort::post_install - ")
-                         ACE_TEXT ("Received exception while establishing connection ")
-                         ACE_TEXT ("<%C>:<%C>\n"),
-                         plan.connection[connection].name.in (),
-                         result.c_str ()));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Best_Effort::post_install - ")
+                      ACE_TEXT ("Received exception while establishing connection ")
+                      ACE_TEXT ("<%C>:<%C>\n"),
+                      plan.connection[connection].name.in (),
+                      result.c_str ()));
       }
   }
 
@@ -73,12 +75,13 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Best_Effort::post_install - ")
-                         ACE_TEXT ("Received exception while completing configuration of ")
-                         ACE_TEXT ("instance <%C>:<%C>\n"),
-                         plan.instance[index].name.in (),
-                         result.c_str ()));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Best_Effort::post_install - ")
+                      ACE_TEXT ("Received exception while completing configuration of ")
+                      ACE_TEXT ("instance <%C>:<%C>\n"),
+                      plan.instance[index].name.in (),
+                      result.c_str ()));
       }
   }
 
@@ -93,12 +96,13 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Best_Effort::post_install - ")
-                         ACE_TEXT ("Received exception while activating instance ")
-                         ACE_TEXT ("<%C>:<%C>\n"),
-                         plan.instance[index].name.in (),
-                         result.c_str ()));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Best_Effort::post_install - ")
+                      ACE_TEXT ("Received exception while activating instance ")
+                      ACE_TEXT ("<%C>:<%C>\n"),
+                      plan.instance[index].name.in (),
+                      result.c_str ()));
       }
   }
 
@@ -113,12 +117,13 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Best_Effort::post_install - ")
-                         ACE_TEXT ("Received exception while passivating instance ")
-                         ACE_TEXT ("<%C>:<%C>\n"),
-                         plan.instance[index].name.in (),
-                         result.c_str ()));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Best_Effort::post_install - ")
+                      ACE_TEXT ("Received exception while passivating instance ")
+                      ACE_TEXT ("<%C>:<%C>\n"),
+                      plan.instance[index].name.in (),
+                      result.c_str ()));
       }
   }
 
@@ -133,12 +138,13 @@ namespace DAnCE
         std::string result;
         DAnCE::Utility::stringify_exception_from_any (exception,
                                                       result);
-        DANCE_ERROR (3, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Best_Effort::post_install - ")
-                         ACE_TEXT ("Received exception while removing instance ")
-                         ACE_TEXT ("<%C>:<%C>\n"),
-                         plan.instance[index].name.in (),
-                         result.c_str ()));
+        DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Best_Effort::post_install - ")
+                      ACE_TEXT ("Received exception while removing instance ")
+                      ACE_TEXT ("<%C>:<%C>\n"),
+                      plan.instance[index].name.in (),
+                      result.c_str ()));
 
       }
   }

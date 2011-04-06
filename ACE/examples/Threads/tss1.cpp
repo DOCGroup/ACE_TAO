@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    TSS_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests thread specific storage of data. The ACE_TSS
-//     wrapper transparently ensures that the objects of this class
-//     will be placed in thread-specific storage. All calls on
-//     ACE_TSS::operator->() are delegated to the appropriate method
-//     in the Errno class.  Note that each thread of control has its
-//     own unique TSS object.
-//
-// = AUTHOR
-//    Detlef Becker <Detlef.Becker@med.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    tss1.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests thread specific storage of data. The ACE_TSS
+ *   wrapper transparently ensures that the objects of this class
+ *   will be placed in thread-specific storage. All calls on
+ *   ACE_TSS::operator->() are delegated to the appropriate method
+ *   in the Errno class.  Note that each thread of control has its
+ *   own unique TSS object.
+ *
+ *
+ *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
@@ -56,11 +53,11 @@ public:
   virtual int svc (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Activate the thread.
   virtual int open (void *args = 0);
-  // Activate the thread.
 
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (u_long args = 0);
-  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 template <ACE_SYNCH_DECL> int

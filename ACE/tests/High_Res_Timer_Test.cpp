@@ -1,19 +1,16 @@
-// $Id$
-//============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    High_Res_Timer_Test.cpp
-//
-// = DESCRIPTION
-//    Simple test of ACE_High_Res_Timer.
-//
-// = AUTHOR
-//    David L. Levine <levine@cs.wustl.edu>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    High_Res_Timer_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Simple test of ACE_High_Res_Timer.
+ *
+ *
+ *  @author David L. Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"

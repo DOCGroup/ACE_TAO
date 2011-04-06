@@ -16,17 +16,21 @@ namespace DAnCE
   SHS_Daemon_i::SHS_Daemon_i (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
+    DANCE_TRACE ("SHS_Daemon_i::constructor");
   }
 
   // Implementation skeleton destructor
   SHS_Daemon_i::~SHS_Daemon_i (void)
   {
+    DANCE_TRACE ("SHS_Daemon_i::destructor");
   }
 
   void
   SHS_Daemon_i::update (const ::DAnCE::SHS::Status_Update & update)
   {
-    DANCE_DEBUG (6, (LM_DEBUG, DLINFO
+    DANCE_TRACE ("SHS_Daemon_i::update");
+
+    DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_DEBUG, DLINFO
                      ACE_TEXT ("SHS_Daemon_i::update - ")
                      ACE_TEXT ("Received status update from <%C>\n"),
                      update.id.in ()));
@@ -64,6 +68,8 @@ namespace DAnCE
 
   void SHS_Daemon_i::shutdown (void)
   {
+    DANCE_TRACE ("SHS_Daemon_i::shutdown");
+
     this->orb_->shutdown ();
   }
 

@@ -191,7 +191,7 @@ void PC_Updater::update (::Deployment::ImplementationArtifactDescription &iad)
     iter++;
   }
 
-  DANCE_ERROR (1, (LM_ERROR,
+  DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR,
              "[PC_Updater::update] Unable to update: %s!\n",
              location));
 

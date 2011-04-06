@@ -131,8 +131,8 @@ class TAO_IDL_FE_Export UTL_IdListActiveIterator
 public:
   UTL_IdListActiveIterator (UTL_IdList *s);
 
+  /// Retrieves the next item.
   Identifier *item (void);
-  // Retrieves the next item.
 };
 
 #endif          // _UTL_IDLIST_UTL_IDLIST_HH

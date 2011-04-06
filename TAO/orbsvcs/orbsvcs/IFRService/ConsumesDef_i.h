@@ -32,16 +32,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents the definition of an event that is consumed
+ * by a component.
+ */
 class TAO_IFRService_Export TAO_ConsumesDef_i
   : public virtual TAO_EventPortDef_i
 {
-  // = TITLE
-  //    TAO_ConsumesDef_i
-  //
-  // = DESCRIPTION
-  //    Represents the definition of an event that is consumed
-  //    by a component.
-  //
 public:
   /// Constructor
     TAO_ConsumesDef_i (TAO_Repository_i *repo);
@@ -50,8 +47,7 @@ public:
   virtual ~TAO_ConsumesDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

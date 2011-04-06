@@ -1,19 +1,16 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    none
-//
-// = FILENAME
-//    URL_Locator.h
-//
-// = AUTHOR
-//    Nanbor Wang
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    URL_Properties.h
+ *
+ *  $Id$
+ *
+ *  @author Nanbor Wang
+ */
+//=============================================================================
+
 
 #ifndef ACE_URL_PROPERTIES_H
 #define ACE_URL_PROPERTIES_H
@@ -26,63 +23,69 @@
 
 #include "ace/Containers.h"
 
+/**
+ * @class ACE_WString_Helper
+ *
+ * @brief Some helper functions for manipulate ACE_WString.
+ *
+ * These functions simplify encoding/decoding of
+ * ACE_WString objects for network communication.
+ */
 class ACE_Svc_Export ACE_WString_Helper
-  // = TITLE
-  //     Some helper functions for manipulate ACE_WString.
-  //
-  // = DESCRIPTION
-  //     These functions simplify encoding/decoding of
-  //     ACE_WString objects for network communication.
 {
 public:
+  /// Returns the actual size (in bytes) required to contain the
+  /// ACE_WString.
   static size_t size (const ACE_WString &wstr);
-  // Returns the actual size (in bytes) required to contain the
-  // ACE_WString.
 
+  /// Encode <wstr> into <buf> for network communication.
+  /// Return total octets consumed.
   static size_t encode (void *buf, const ACE_WString &wstr);
-  // Encode <wstr> into <buf> for network communication.
-  // Return total octets consumed.
 
+  /**
+   * This function doesn't relate to ACE_WString directly.
+   * It converts an ACE_UINT16 string from network
+   * byte order to host byte order.  Returns size of the string.
+   */
   static size_t decode (void *buf);
-  // This function doesn't relate to ACE_WString directly.
-  // It converts an ACE_UINT16 string from network
-  // byte order to host byte order.  Returns size of the string.
 };
 
+/**
+ * @class ACE_URL_Property
+ *
+ * @brief Defines a property of a URL.
+ *
+ * A property contains a <name> and a <value>.
+ * A URL may contain some properties and we can "locate"
+ * the URL's we are looking for by examming URL for certain
+ * properties that match our need.
+ */
 class ACE_Svc_Export ACE_URL_Property
-  // = TITLE
-  //     Defines a property of a URL.
-  //
-  // = DESCRIPTION
-  //     A property contains a <name> and a <value>.
-  //     A URL may contain some properties and we can "locate"
-  //     the URL's we are looking for by examming URL for certain
-  //     properties that match our need.
 {
 public:
+  /// Create a new property.
   ACE_URL_Property (const char *name = 0,
                     const char *value=0);
-  // Create a new property.
 
+  /// Create a new property using wchar strings.  This is mostly used
+  /// to support DBCS or UNICODE.
   ACE_URL_Property (const ACE_UINT16 *name,
                     const ACE_UINT16 *value);
-  // Create a new property using wchar strings.  This is mostly used
-  // to support DBCS or UNICODE.
 
+  /// Copy constructor.
   ACE_URL_Property (const ACE_URL_Property &p);
-  // Copy constructor.
 
+  /// Destructor.
   ~ACE_URL_Property (void);
-  // Destructor.
 
+  /// Assignment operator.
   ACE_URL_Property &operator= (const ACE_URL_Property &rhs);
-  // Assignment operator.
 
+  /// Equals operator.
   bool operator== (const ACE_URL_Property &rhs) const;
-  // Equals operator.
 
+  /// Inequality operator.
   bool operator!= (const ACE_URL_Property &rhs) const;
-  // Inequality operator.
 
   // = Query property name.
   ACE_WString &name_rep (void);
@@ -101,58 +104,60 @@ public:
   void value (const char *v);
 
   // = Helper functions for encoding and decoding.
+  /// Returns memory size (in bytes) required to encode this object.
   size_t size (void) const;
-  // Returns memory size (in bytes) required to encode this object.
 
+  /// Encodes this object into buf for network transmission.
   size_t encode (void *buf) const;
-  // Encodes this object into buf for network transmission.
 
+  /// Decodes buf and modifies this object, you should
+  /// probably create this with default ctor.
   size_t decode (void *buf);
-  // Decodes buf and modifies this object, you should
-  // probably create this with default ctor.
 
+  /// Dump out this object for debug.
   void dump (void) const;
-  // Dump out this object for debug.
 
 protected:
+  /// Property name pointer.
   ACE_WString name_;
-  // Property name pointer.
 
+  /// Property value.
   ACE_WString value_;
-  // Property value.
 } ;
 
 typedef ACE_Array<ACE_URL_Property> ACE_URL_Property_Seq;
 // type of URL_Property collections.
 
+/**
+ * @class ACE_URL_Offer
+ *
+ * @brief Defines a URL offer.
+ *
+ * A URL offer is defined by a <url> and an
+ * <ACE_URL_Property_Seq>.  An offer is stored at server end
+ * thru registering or reported back to querying client from the
+ * sever.
+ */
 class ACE_Svc_Export ACE_URL_Offer
-  // = TITLE
-  //     Defines a URL offer.
-  //
-  // = DESCRIPTION
-  //     A URL offer is defined by a <url> and an
-  //     <ACE_URL_Property_Seq>.  An offer is stored at server end
-  //     thru registering or reported back to querying client from the
-  //     sever.
 {
 public:
+  /// Create an offer.
   ACE_URL_Offer (const size_t size = 1, const char *url = 0);
-  // Create an offer.
 
+  /// Copy ctor.
   ACE_URL_Offer (const ACE_URL_Offer &o);
-  // Copy ctor.
 
+  /// Default destructor.
   ~ACE_URL_Offer (void);
-  // Default destructor.
 
+  /// Assignment operator.
   ACE_URL_Offer &operator= (const ACE_URL_Offer &rhs);
-  // Assignment operator.
 
+  /// Equality operator.
   bool operator== (const ACE_URL_Offer &rhs) const;
-  // Equality operator.
 
+  /// Inequality operator.
   bool operator!= (const ACE_URL_Offer &rhs) const;
-  // Inequality operator.
 
   // = Get URL string.
   ACE_WString &url_rep (void);
@@ -162,33 +167,33 @@ public:
   void url (const char *url);
   void url (const ACE_UINT16 *url);
 
+  /// Get properties of this offer.
   ACE_URL_Property_Seq &url_properties (void);
-  // Get properties of this offer.
 
+  /// Set properties of this offer.  This operation virtually get a
+  /// copy of the passed in prop.
   void url_properties (const ACE_URL_Property_Seq &prop);
-  // Set properties of this offer.  This operation virtually get a
-  // copy of the passed in prop.
 
   // = Helper functions for encoding and decoding.
+  /// Returns memory size (in bytes) required to encode this object.
   size_t size (void) const;
-  // Returns memory size (in bytes) required to encode this object.
 
+  /// Encodes this object into buf for network transmission.
   size_t encode (void *buf) const;
-  // Encodes this object into buf for network transmission.
 
+  /// Decodes buf into current object, you better use
+  /// the default ctor.
   size_t decode (void *buf);
-  // Decodes buf into current object, you better use
-  // the default ctor.
 
+  /// Dump this object for debug.
   void dump (void) const;
-  // Dump this object for debug.
 
 protected:
+  /// URL of this offer.
   ACE_WString url_;
-  // URL of this offer.
 
+  /// Properties associate with this offer.
   ACE_URL_Property_Seq prop_;
-  // Properties associate with this offer.
 };
 
 typedef ACE_Array<ACE_URL_Offer> ACE_URL_Offer_Seq;

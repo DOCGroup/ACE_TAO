@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    PMC_Ruser.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PMC_Ruser.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PMC_RUSER_H
 #define _PMC_RUSER_H
 
 #include "PM_Client.h"
 
+/**
+ * @class PMC_Ruser
+ *
+ * @brief Provides the client's lookup table abstraction for `ruser' users...
+ */
 class PMC_Ruser : public PM_Client
 {
-  // = TITLE
-  //   Provides the client's lookup table abstraction for `ruser' users...
 
 public:
   PMC_Ruser (void);

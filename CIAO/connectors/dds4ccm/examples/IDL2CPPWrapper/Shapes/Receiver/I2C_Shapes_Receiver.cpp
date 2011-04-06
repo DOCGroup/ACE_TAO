@@ -15,7 +15,7 @@ read (TypedDataReader::_ptr_type shapes_dr)
     {
       while (samples_received < 1000)
         {
-          //start to read
+          // Start to read
           ShapeTypeSeq data;
           ::DDS::SampleInfoSeq  info;
           ::DDS::ReturnCode_t retcode = shapes_dr->take (

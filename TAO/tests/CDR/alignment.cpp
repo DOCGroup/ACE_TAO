@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/CDR
-//
-// = FILENAME
-//   alignment.cpp
-//
-// = DESCRIPTION
-//   Verifies that octet sequence marshaling does not affect
-//   marshaling.
-//
-// = AUTHORS
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   alignment.cpp
+ *
+ *  $Id$
+ *
+ * Verifies that octet sequence marshaling does not affect
+ * marshaling.
+ *
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "tao/CDR.h"
 

@@ -68,10 +68,11 @@ namespace DAnCE
 
     if (plan.instance.length () <= instanceRef)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                         ACE_TEXT ("Invalid instance reference %u provided ")
-                         ACE_TEXT ("to install_instance\n"),
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                      ACE_TEXT ("Invalid instance reference %u provided ")
+                      ACE_TEXT ("to install_instance\n"),
                       instanceRef));
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid instance reference");
@@ -82,11 +83,12 @@ namespace DAnCE
 
     if (plan.implementation.length () <= idd.implementationRef)
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                         ACE_TEXT ("Invalid implementation reference %u provided ")
-                         ACE_TEXT ("to install_instance\n"),
-                         idd.implementationRef));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                      ACE_TEXT ("Invalid implementation reference %u provided ")
+                      ACE_TEXT ("to install_instance\n"),
+                      idd.implementationRef));
         throw ::Deployment::PlanError (plan.UUID.in (),
                                        "Invalid Implementation reference");
       }
@@ -94,19 +96,21 @@ namespace DAnCE
     const ::Deployment::MonolithicDeploymentDescription &mdd =
       plan.implementation[idd.implementationRef];
 
-    DANCE_DEBUG (10, (LM_TRACE, DLINFO
-                      ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                      ACE_TEXT ("Starting installation of instance <%C>\n"),
-                      idd.name.in ()));
+    DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                  ACE_TEXT ("Starting installation of instance <%C>\n"),
+                  idd.name.in ()));
 
     const char *entrypt (0);
     if (!DAnCE::Utility::get_property_value (DAnCE::DANCE_PLUGIN_ENTRYPT,
                                              mdd.execParameter,
                                              entrypt))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                         ACE_TEXT ("No entrypoint found for plug-in initialization\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                      ACE_TEXT ("No entrypoint found for plug-in initialization\n")));
         throw ::Deployment::StartError (idd.name.in (),
                                         "No entrypoint found for plug-in initialization\n");
       }
@@ -116,9 +120,10 @@ namespace DAnCE
                                              mdd.execParameter,
                                              artifact))
       {
-        DANCE_ERROR (1, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                         ACE_TEXT ("No artifact found for plug-in initialization\n")));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                      ACE_TEXT ("No artifact found for plug-in initialization\n")));
         throw ::Deployment::StartError (idd.name.in (),
                                         "No artifact found for plug-in initialization\n");
       }
@@ -139,9 +144,10 @@ namespace DAnCE
           }
         else
           {
-            DANCE_ERROR (1, (LM_ERROR, DLINFO
-                             ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
-                             ACE_TEXT ("Unable to extract dependency order from string")));
+            DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT ("Inst_Handler_Impl::install_instance - ")
+                          ACE_TEXT ("Unable to extract dependency order from string")));
             throw ::Deployment::StartError (idd.name.in (),
                                             "Unable to extract dependency order from string");
           }

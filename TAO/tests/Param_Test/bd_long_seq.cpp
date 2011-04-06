@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_long_seq.cpp
-//
-// = DESCRIPTION
-//    tests bounded long sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_long_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests bounded long sequences
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_long_seq.h"

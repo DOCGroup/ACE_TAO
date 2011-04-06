@@ -16,18 +16,13 @@
 #ifndef _BE_COMPONENT_FACET_EX_IDL_H_
 #define _BE_COMPONENT_FACET_EX_IDL_H_
 
+/**
+ * This is a concrete visitor to generate the
+ * CIAO executor IDL for facets.
+ */
 class be_visitor_facet_ex_idl
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_facet_ex_idl
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the
-  //   CIAO executor IDL for facets.
-  //
-  //
 public:
   be_visitor_facet_ex_idl (be_visitor_context *ctx);
 

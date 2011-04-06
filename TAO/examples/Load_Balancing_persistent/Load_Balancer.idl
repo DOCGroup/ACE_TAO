@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Load_Balancer.idl
-//
-// = DESCRIPTION
-//    Interfaces for a simple CORBA Load Balancing service, which can
-//    be used in conjunction with the Naming Service or alone to
-//    improve distributed load balancing.  See README file for a short
-//    discussion of other solution approaches for load balancing as
-//    well as use cases for this approach.
-//
-// = AUTHOR
-//    Interfaces in this file came from OrbixNames Load Balancing
-//    features with modifications by:
-//    Doug Schmidt (schmidt@cs.wustl.edu)
-//    Marina Spivak (marina@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Load_Balancer.idl
+ *
+ *  $Id$
+ *
+ *  Interfaces for a simple CORBA Load Balancing service, which can
+ *  be used in conjunction with the Naming Service or alone to
+ *  improve distributed load balancing.  See README file for a short
+ *  discussion of other solution approaches for load balancing as
+ *  well as use cases for this approach.
+ *
+ *
+ *  @author Interfaces in this file came from OrbixNames Load Balancing features with modifications by: Doug Schmidt (schmidt@cs.wustl.edu) Marina Spivak (marina@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 module Load_Balancer
 {

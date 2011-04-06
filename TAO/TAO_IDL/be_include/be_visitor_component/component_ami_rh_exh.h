@@ -21,21 +21,17 @@
 
 class be_visitor_context;
 
-/// This class inherits from the AMI connector visitor that its
-/// code generation tracks closely.
+/**
+ * This class inherits from the AMI connector visitor that its
+ * code generation tracks closely.
+ *
+ * This is a concrete visitor to generate
+ * the implementation header for AMI4CCM reply handlers.
+ */
+
 class be_visitor_component_ami_rh_exh
   : public be_visitor_component_ami_rh_ex_base
 {
-  //
-  // = TITLE
-  //   be_visitor_component_ami_rh_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the implementation header for
-  //   AMI4CCM reply handers.
-  //
-  //
 public:
   be_visitor_component_ami_rh_exh (be_visitor_context *ctx);
   ~be_visitor_component_ami_rh_exh (void);

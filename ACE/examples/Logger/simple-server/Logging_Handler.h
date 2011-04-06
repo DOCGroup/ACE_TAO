@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Logging_Handler.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Logging_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _CLIENT_HANDLER_H
 #define _CLIENT_HANDLER_H
@@ -28,15 +25,17 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/os_include/os_netdb.h"
 
+/**
+ * @class Logging_Handler
+ *
+ * @brief Receive client message from the remote clients.
+ *
+ * This class demonstrates how to receive messages from remote
+ * clients using the notification mechanisms in the
+ * <ACE_Reactor>.  In addition, it also illustrates how to
+ * utilize the <ACE_Reactor> timer mechanisms, as well.
+ */
 class Logging_Handler : public ACE_Event_Handler
-  // = TITLE
-  //     Receive client message from the remote clients.
-  //
-  // = DESCRIPTION
-  //     This class demonstrates how to receive messages from remote
-  //     clients using the notification mechanisms in the
-  //     <ACE_Reactor>.  In addition, it also illustrates how to
-  //     utilize the <ACE_Reactor> timer mechanisms, as well.
 {
 public:
   Logging_Handler (void);
@@ -45,8 +44,8 @@ public:
   virtual int open (void);
   virtual int close (void);
 
+  /// Conversion operators.
   ACE_SOCK_Stream &peer (void);
-  // Conversion operators.
 
 protected:
   // = Demultiplexing hooks.
@@ -57,15 +56,15 @@ protected:
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
 
   // = Really should be private...
+  /// Ensure dynamic allocation.
   virtual ~Logging_Handler (void);
-  // Ensure dynamic allocation.
 
 private:
+  /// Host we are connected to.
   char host_name_[MAXHOSTNAMELEN + 1];
-  // Host we are connected to.
 
+  /// Connection with client
   ACE_SOCK_Stream cli_stream_;
-  // Connection with client
 };
 
 #endif /* _CLIENT_HANDLER_H */

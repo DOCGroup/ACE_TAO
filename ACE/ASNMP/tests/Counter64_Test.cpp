@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Counter64_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Counter64 class. An Object
-//  representing an ASN.1 Counter64 SMI 64 bit Integer SYNTAX.
-// (SNMPv2c)
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Counter64_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Counter64 class. An Object
+ *  representing an ASN.1 Counter64 SMI 64 bit Integer SYNTAX.
+ * (SNMPv2c)
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 

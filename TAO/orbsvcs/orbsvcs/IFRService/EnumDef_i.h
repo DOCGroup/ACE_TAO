@@ -32,15 +32,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents an OMG IDL enumeration definition.
+ */
 class TAO_IFRService_Export TAO_EnumDef_i : public virtual TAO_TypedefDef_i
 {
-public:
-  // = TITLE
-  //    TAO_EnumDef_i
-  //
-  // = DESCRIPTION
-  //    Represents an OMG IDL enumeration definition.
-  //
 public:
   /// Constructor
   TAO_EnumDef_i (TAO_Repository_i *repo);

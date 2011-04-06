@@ -22,14 +22,12 @@
 
 class AST_PortType;
 
+/**
+ * The back end extension of the AST_Component class
+ */
 class be_component : public virtual AST_Component,
                      public virtual be_interface
 {
-  // = TITLE
-  //   The back end extension of the AST_Component class
-  //
-  // = DESCRIPTION
-  //
 public:
   be_component (UTL_ScopedName *n,
                 AST_Component *base_component,

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Any operators for Interface in the stubs
-//    file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Any operators for Interface in the stubs
+ *  file.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Interface visitor for generating Any operator declarations in the client

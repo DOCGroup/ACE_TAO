@@ -1,23 +1,20 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CodeSets/libs/IBM1047_ISO8859
-//
-// = FILENAME
-//    Char_IBM1047_ISO8859_Factory.h
-//
-// = DESCRIPTION
-//    A tempate instantiation of the codeset translator factory from TAO. This
-//    one loads a modified version of ACE's IBM1047 (EBCDIC) to ISO8859 (ASCII)
-//    translator.
-//
-// = AUTHORS
-//      Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Char_IBM1047_ISO8859_Factory.h
+ *
+ *  $Id$
+ *
+ *  A tempate instantiation of the codeset translator factory from TAO. This
+ *  one loads a modified version of ACE's IBM1047 (EBCDIC) to ISO8859 (ASCII)
+ *  translator.
+ *
+ *
+ *  @author   Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef CHAR_IBM1047_ISO8859_FACTORY_H
 #define CHAR_IBM1047_ISO8859_FACTORY_H

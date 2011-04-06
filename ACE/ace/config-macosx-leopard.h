@@ -176,7 +176,6 @@
 # define ACE_HAS_THREADS
 // And they're even POSIX pthreads
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_STD
 # define ACE_HAS_PTHREAD_SCHEDPARAM
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #endif  /* ACE_MT_SAFE == 1 */

@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    UPIPE_SAP_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
-//      intra-process communication.
-//
-// = AUTHOR
-//    Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
-//    Prashant Jain <pjain@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UPIPE_SAP_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
+ *    intra-process communication.
+ *
+ *
+ *  @author Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and Prashant Jain <pjain@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Stream.h"

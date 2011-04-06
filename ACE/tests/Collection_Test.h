@@ -1,23 +1,20 @@
 // -*- C++ -*-
 
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Collection_Test.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Collection_Test.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_COLLECTION_TEST_H
 #define ACE_TESTS_COLLECTION_TEST_H

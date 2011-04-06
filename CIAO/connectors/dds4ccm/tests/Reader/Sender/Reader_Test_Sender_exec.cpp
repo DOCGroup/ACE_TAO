@@ -117,7 +117,7 @@ namespace CIAO_Reader_Test_Sender_Impl
     ReaderStarter_var starter =
       this->ciao_context_->get_connection_start_reader ();
 
-    //start can be called more than once...
+    // Start can be called more than once...
     if (!this->done_ && this->ccm_activated_)
       {
         this->done_ = true;

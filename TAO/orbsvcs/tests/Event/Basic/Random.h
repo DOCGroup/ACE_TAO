@@ -23,14 +23,12 @@
 
 class RND_Driver;
 
+/**
+ * Simple consumer object
+ */
 class RND_Consumer
   : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //
 public:
   /// Constructor
   RND_Consumer (RND_Driver *driver);
@@ -77,15 +75,13 @@ RND_Timer::RND_Timer (RND_Driver *driver)
 
 // ****************************************************************
 
+/**
+ * Simple supplier object
+ */
 class RND_Supplier
   : public POA_RtecEventComm::PushSupplier
   , public ACE_Task_Base
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //
 public:
   /// Constructor
   RND_Supplier (int verbose);

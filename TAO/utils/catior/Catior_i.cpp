@@ -1,24 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/Utils/catior
-//
-// = FILENAME
-//    Catior_i.cpp
-//
-// = DESCRIPTION
-//    Reads stringified IORs and outputs the encoded information.
-//
-// = AUTHORS
-//      Jeff Hopper <jrhopper@cts.com>
-//      SCIOP and Tagged component modifications by:
-//      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
-//      Split into a separate library by:
-//      Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Catior_i.cpp
+ *
+ *  $Id$
+ *
+ *  Reads stringified IORs and outputs the encoded information.
+ *
+ *
+ *  @author   Jeff Hopper <jrhopper@cts.com>   SCIOP and Tagged component modifications by:   Jason Cohen
+ *  @author Lockheed Martin ATL <jcohen@atl.lmco.com>   Split into a separate library by:   Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "Catior_i.h"
 #include "tao/Messaging_PolicyValueC.h"
@@ -307,6 +301,10 @@ Catior_i::catior (char const * str)
           {
             continue_decoding = cat_iiop_profile (stream);
           }
+        else if (tag == IOP::TAG_MULTIPLE_COMPONENTS)
+          {
+            continue_decoding = cat_multiple_components (stream);
+          }
         else if (tag == TAO_TAG_SCIOP_PROFILE)
           {
             continue_decoding = cat_sciop_profile (stream);
@@ -540,6 +538,12 @@ Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
                          "ORB Type: 0x%x (TIDorbC++)\n", orbtype);
        break;
      }
+  case 0x4a414300:
+    {
+       ACE_OS::snprintf (buf, bufsize,
+                         "ORB Type: 0x%x (JacORB)\n", orbtype);
+       break;
+    }
    default:
      {
        ACE_OS::snprintf (buf, bufsize,
@@ -989,7 +993,7 @@ Catior_i::cat_octet_seq (const char *object_name,
       if (!stream.read_octet (anOctet))
         return false;
 
-      ACE_OS::snprintf (buf, bufsize, "%02.2x ", anOctet);
+      ACE_OS::snprintf (buf, bufsize, "%2.2x ", anOctet);
       buffer_ += buf;
       objKey[i] = (char) anOctet;
     }
@@ -1110,7 +1114,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   for ( ; index < c_ccslen; ++index)
     {
       // CodesetId for char
-      ACE_OS::snprintf (buf, bufsize, "\t%u) ", index + 1L);
+      ACE_OS::snprintf (buf, bufsize,
+                        "\t" ACE_UINT32_FORMAT_SPECIFIER_ASCII ") ",
+                        index + 1);
       buffer_ += buf;
       displayHex (stream);
     }
@@ -1137,7 +1143,9 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   //  Loop through and display them
   for (index = 0; index < w_ccslen; ++index)
     {
-      ACE_OS::snprintf (buf, bufsize, "\t %u) ", index + 1L);
+      ACE_OS::snprintf (buf, bufsize,
+                        "\t " ACE_UINT32_FORMAT_SPECIFIER_ASCII ") ",
+                        index + 1);
       buffer_ += buf;
       displayHex (stream);
     }
@@ -1170,7 +1178,9 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
 
       indent ();
       ACE_OS::snprintf (buf, bufsize,
-                        "The component <%d> ID is ", i+1, tag);
+                        "The component <" ACE_UINT32_FORMAT_SPECIFIER_ASCII
+                        "> ID is " ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                        i+1, tag);
       buffer_ += buf;
 
       if (tag == IOP::TAG_ORB_TYPE) {
@@ -1273,7 +1283,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
     {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
-                        "detected new v%d.%d %C profile that catior cannot decode\n",
+                        "detected new v%d.%d %s profile that catior cannot decode\n",
                         iiop_version_major,
                         iiop_version_minor,
                         protocol);
@@ -1486,6 +1496,18 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
 }
 
 CORBA::Boolean
+Catior_i::cat_multiple_components (TAO_InputCDR& stream)
+{
+  static const size_t bufsize = 512;
+  char buf[bufsize];
+
+  ACE_OS::snprintf (buf, bufsize,
+                    "Multiple Components Profile\n");
+  buffer_ += buf;
+  return cat_tagged_components (stream);
+}
+
+CORBA::Boolean
 Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
 {
   // OK, we've got an SCIOP profile.
@@ -1626,7 +1648,7 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
     {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
-                        "detected new v%d.%d %C profile that catior cannot decode",
+                        "detected new v%d.%d %s profile that catior cannot decode",
                         iiop_version_major,
                         iiop_version_minor,
                         protocol);

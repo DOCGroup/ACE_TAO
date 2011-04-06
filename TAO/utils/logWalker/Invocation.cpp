@@ -528,7 +528,7 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
   if (size_str == 0 || id == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Not a request preamble:\n '%s'\n",
+                  "Not a request preamble line %d:\n '%s'\n",offset,
                   text));
       return false;
   }

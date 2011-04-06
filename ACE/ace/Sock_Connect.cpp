@@ -29,13 +29,9 @@
 # endif /* _AIX */
 #endif /* ACE_HAS_IPV6 */
 
-# if defined (ACE_HAS_GETIFADDRS)
-#   if defined (ACE_VXWORKS)
-#     include /**/ <net/ifaddrs.h>
-#   else
-#     include /**/ <ifaddrs.h>
-#   endif /*ACE_VXWORKS */
-# endif /* ACE_HAS_GETIFADDRS */
+#if defined (ACE_HAS_GETIFADDRS)
+#  include "ace/os_include/os_ifaddrs.h"
+#endif /* ACE_HAS_GETIFADDRS */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670) && defined (__RTP__) && defined (ACE_HAS_IPV6)
 const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
@@ -132,17 +128,6 @@ namespace
 # undef SETFAMILY
 # define SA_FAMILY sa_family
 #endif /* ACE_HAS_IPV6 */
-
-// This is a hack to work around a problem with Visual Age C++ 5 and 6 on AIX.
-// Without this, the compiler auto-instantiates the ACE_Auto_Array_Ptr for
-// ifreq (contained in this module) but only adds the #include for <net/if.h>
-// and not the one for <sys/socket.h> which is also needed.  Although we
-// don't need the template defined here, it makes the compiler pull in
-// <sys/socket.h> and the build runs clean.
-#if defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 500) && (__IBMCPP__ < 700)
-static ACE_Auto_Array_Ptr<sockaddr> force_compiler_to_include_socket_h;
-#endif /* AIX && __IBMCPP__ >= 500 */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

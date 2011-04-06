@@ -2883,6 +2883,10 @@ tao_yyreduce:
               (void) s->fe_add_module (m);
             }
 
+          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+          delete (tao_yyvsp[(1) - (1)].idlist);
+          (tao_yyvsp[(1) - (1)].idlist) = 0;
+
           /*
            * Push it on the stack
            */

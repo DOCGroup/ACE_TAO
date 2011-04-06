@@ -61,6 +61,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              "New Directive",
                              message.inout() );
     std::cout << "message was sent" << std::endl;
+
+    orb->destroy ();
   }
 
   catch(const CORBA::Exception& ex) {

@@ -162,6 +162,20 @@
       </value>
     </configProperty>
     <configProperty>
+      <name>my_empty_sequence</name>
+      <value>
+        <type>
+          <kind>tk_sequence</kind>
+          <sequence>
+            <elementType>
+              <kind>tk_short</kind>
+            </elementType>
+          </sequence>
+        </type>
+        <value />
+      </value>
+    </configProperty>
+    <configProperty>
       <name>my_long_sequence</name>
       <value>
         <type>

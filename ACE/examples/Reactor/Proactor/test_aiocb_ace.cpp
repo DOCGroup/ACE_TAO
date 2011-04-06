@@ -1,36 +1,33 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    proactor
-//
-// = FILENAME
-//    test_aiocb_ace.cpp
-//
-// = DESCRIPTION
-//    This program helps you to test the <aio_*> calls on a
-//    platform.
-//
-//    Before running this test, make sure the platform can
-//    support POSIX <aio_> calls, using
-//    ACE_ROOT/tests/Aio_Platform_Test.
-//
-//    This program tests the AIOCB (AIO Control Blocks) based
-//    completion approach which uses <aio_suspend> for completion
-//    querying.
-//
-//    If this test is successful, ACE_POSIX_AIOCB_PROACTOR
-//    can be used on this platform.
-//
-// = COMPILE and RUN
-//    % make
-//    % ./test_aiocb_ace
-//
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_aiocb_ace.cpp
+ *
+ *  $Id$
+ *
+ *  This program helps you to test the <aio_*> calls on a
+ *  platform.
+ *
+ *  Before running this test, make sure the platform can
+ *  support POSIX <aio_> calls, using
+ *  ACE_ROOT/tests/Aio_Platform_Test.
+ *
+ *  This program tests the AIOCB (AIO Control Blocks) based
+ *  completion approach which uses <aio_suspend> for completion
+ *  querying.
+ *
+ *  If this test is successful, ACE_POSIX_AIOCB_PROACTOR
+ *  can be used on this platform.
+ *
+ * = COMPILE and RUN
+ *  % make
+ *  % ./test_aiocb_ace
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
@@ -40,32 +37,32 @@
 class Test_Aio
 {
 public:
+  /// Default constructor.
   Test_Aio (void);
-  // Default constructor.
 
+  /// Initting the output file and the buffer.
   int init (void);
-  // Initting the output file and the buffer.
 
+  /// Doing the testing stuff.
   int do_aio (void);
-  // Doing the testing stuff.
 
+  /// Destructor.
   ~Test_Aio (void);
-  // Destructor.
 private:
+  /// Output file descriptor.
   int out_fd_;
-  // Output file descriptor.
 
+  /// For writing to the file.
   struct aiocb *aiocb_write_;
-  // For writing to the file.
 
+  /// Reading stuff from the file.
   struct aiocb *aiocb_read_;
-  // Reading stuff from the file.
 
+  /// The buffer to be written to the out_fd.
   char *buffer_write_;
-  // The buffer to be written to the out_fd.
 
+  /// The buffer to be read back from the file.
   char *buffer_read_;
-  // The buffer to be read back from the file.
 };
 
 Test_Aio::Test_Aio (void)

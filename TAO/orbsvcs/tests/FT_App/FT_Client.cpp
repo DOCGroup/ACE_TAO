@@ -184,12 +184,14 @@ FTClientMain::parse_args (int argc, ACE_TCHAR *argv[])
         this->inFile_ = ACE_OS::fopen (this->inFileName_, "r");
         if(this->inFile_ && !ferror (this->inFile_))
         {
-          ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n", this->inFileName_);
+          ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n",
+                           ACE_TEXT_ALWAYS_CHAR (this->inFileName_));
           this->commandIn_ = this->inFile_;
         }
         else
         {
-          ACE_OS::fprintf (stderr, "FT Client: Can't open input file: %s\n", this->inFileName_);
+          ACE_OS::fprintf (stderr, "FT Client: Can't open input file: %s\n",
+                           ACE_TEXT_ALWAYS_CHAR (this->inFileName_));
           result = -1;
         }
         break;
@@ -510,7 +512,11 @@ int FTClientMain::next_replica (void)
   }
   else
   {
-    ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** %d\n", this->replica_pos_);
+    ACE_OS::fprintf (stderr,
+                     "***OUT_OF_REPLICAS*** "
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
+                     "\n",
+                     this->replica_pos_);
   }
   return result;
 }

@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    full.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    full.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 // This file, along with its companion fwd.idl, test the
 // handling of forward interface declarations that are

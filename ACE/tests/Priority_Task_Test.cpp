@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Priority_Task_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test to illustrate the priority mechanism of
-//      ACE Tasks.  The test requires no options, but the -d option
-//      enables LM_DEBUG output.
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Priority_Task_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test to illustrate the priority mechanism of
+ *    ACE Tasks.  The test requires no options, but the -d option
+ *    enables LM_DEBUG output.
+ *
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -28,30 +25,34 @@ static const ACE_TCHAR *usage = ACE_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)
 
+/**
+ * @class Priority_Task
+ *
+ * @brief A simple Task that runs itself a different priorities.
+ *
+ * This task uses the void* argument on open to run the svc()
+ * method at a different priority. The point is execise the thread
+ * priority features of ACE.
+ */
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   A simple Task that runs itself a different priorities.
-  //
-  // = DESCRIPTION
-  //   This task uses the void* argument on open to run the svc()
-  //   method at a different priority. The point is execise the thread
-  //   priority features of ACE.
 public:
+  /// The constructor
   Priority_Task (void);
-  // The constructor
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /**
+   * Receives the priority and run svc() on a separate thread at that
+   * priority.
+   *FUZZ: enable check_for_lack_ACE_OS
+   */
   int open (void *);
-  // Receives the priority and run svc() on a separate thread at that
-  // priority.
-  //FUZZ: enable check_for_lack_ACE_OS
 
+  /// Runs on a separate thread an checks the priority.
   int svc (void);
-  // Runs on a separate thread an checks the priority.
 
+  /// Returns 1 if priority was set properly, 0 otherwise.
   int succeeded (void) { return error_ == 0; }
-  // Returns 1 if priority was set properly, 0 otherwise.
 
 private:
   int priority_;

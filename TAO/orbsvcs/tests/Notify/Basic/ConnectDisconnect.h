@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   ConnectDisconnect.h
-//
-// = DESCRIPTION
-//   Test connect-disconnect methods of Notify.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   ConnectDisconnect.h
+ *
+ *  $Id$
+ *
+ * Test connect-disconnect methods of Notify.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_CONNECT_DISCONNECT_H
 #define NOTIFY_CONNECT_DISCONNECT_H
@@ -31,9 +31,12 @@
 
 class ConnectDisconnect;
 
+/**
+ * @class CD_Entity
+ The entity that connects/disconnects.
+ */
 class CD_Entity
 {
-  // The entity that connects/disconnects.
 public:
   CD_Entity (ConnectDisconnect* cd, int id);
   ~CD_Entity ();
@@ -66,64 +69,64 @@ public:
   ConnectDisconnect (void);
   virtual ~ConnectDisconnect ();
 
+  /// Keeps track of how many objects were destroyed.
   void on_entity_destroyed (void);
-  // Keeps track of how many objects were destroyed.
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
+  /// initialization.
   int init (int argc,
             ACE_TCHAR *argv []);
-  // initialization.
 
+  /// Run the test.
   void run_test (void);
-  // Run the test.
 
+  /// End the test.
   void end_test (void);
-  // End the test.
 
+  /// Check if we got the expected results.
   int check_results (void);
-  // Check if we got the expected results.
 
 protected:
+  /// Create EC.
   void create_EC (void);
-  // Create EC.
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Arrays of Consumers.
   TAO_Notify_Tests_PushConsumer** any_consumer_;
   TAO_Notify_Tests_StructuredPushConsumer** structured_consumer_;
   TAO_Notify_Tests_SequencePushConsumer** sequence_consumer_;
-  // Arrays of Consumers.
 
+  /// arrays of Suppliers
   TAO_Notify_Tests_PushSupplier** any_supplier_;
   TAO_Notify_Tests_StructuredPushSupplier** structured_supplier_;
   TAO_Notify_Tests_SequencePushSupplier** sequence_supplier_;
-  // arrays of Suppliers
 
+  /// Count of clients destroyed. for c consumers, s suppliers and for t times.
+  /// this should be (s+c)*t.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // Count of clients destroyed. for c consumers, s suppliers and for t times.
-  // this should be (s+c)*t.
 
   int expected_count_; // (s+c)*t
 
   // = command line params
 
+  /// The number of iterations to connect disconnect.
   int count_;
-  // The number of iterations to connect disconnect.
 
+  /// The number of counsumers to create.
   int consumers_;
-  // The number of counsumers to create.
 
+  /// The number of suppliers to create.
   int suppliers_;
-  // The number of suppliers to create.
 };
 
 /***************************************************************************/

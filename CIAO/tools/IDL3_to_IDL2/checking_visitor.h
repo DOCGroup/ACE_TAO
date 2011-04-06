@@ -1,21 +1,18 @@
-// $Id$
 
 /* -*- c++ -*- */
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IDL3_TO_IDL2_BE_DLL
-//
-// = FILENAME
-//    checking_visitor.h
-//
-// = DESCRIPTION
-//    Visitor that checks input IDL3 in a separate pass.
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    checking_visitor.h
+ *
+ *  $Id$
+ *
+ *  Visitor that checks input IDL3 in a separate pass.
+ *
+ *
+ *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IDL_CHECKING_VISITOR_H
 #define TAO_IDL_CHECKING_VISITOR_H
@@ -33,16 +30,16 @@
 
 class UTL_ExceptList;
 
+/**
+ * @class checking_visitor
+ *
+ * @brief checking_visitor.
+ *
+ * Checks input IDL3 and sets flags used by subsequent
+ * equivalent IDL generating visitor.
+ */
 class TAO_IDL3_TO_IDL2_BE_Export checking_visitor : public ast_visitor
 {
-  //
-  // = TITLE
-  //    checking_visitor.
-  //
-  // = DESCRIPTION
-  //    Checks input IDL3 and sets flags used by subsequent
-  //    equivalent IDL generating visitor.
-  //
 public:
   checking_visitor (void);
   virtual ~checking_visitor (void);

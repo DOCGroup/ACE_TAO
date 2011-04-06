@@ -1,3 +1,416 @@
+Wed Apr  6 01:17:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_deployment_stub.mpb:
+
+          Link in the logger, as it's used by some files in this project. 
+
+        * dance/ExecutionManager/Execution_Manager.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * dance/NodeManager/Node_Manager.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          Initialize the ORB before the logger, so dynamic services from
+          svc.conf are available to the logger.
+          
+        * dance/Logger/Logger_Service.h:
+        * dance/Logger/Logger_Service.cpp:
+
+          Log backends can now be loaded from dynamic services from svc.conf. 
+          DANCE_LOG_BACKEND will specify the name of the dynamic service. See
+          the below svc.conf file for an example.
+
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+        * tools/Logger_Backend/ndds/USER_QOS_PROFILES.xml:
+        * tools/Logger_Backend/ndds/svc.conf:
+
+          Bugfixes, expanded capabilities.  
+
+Tue Apr  5 13:27:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Attempt to fix error on windows.
+
+Tue Apr  5 13:18:32 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Server.cpp:
+
+          Warnings.
+
+Tue Apr  5 13:16:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+
+          Linker fix for Windows.
+
+Mon Apr  4 01:03:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/Log_Server.cpp:
+
+          Warnings.
+
+Fri Apr  1 15:19:41 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+
+          more fuzz.
+
+Thu Mar 31 22:27:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+
+          Warnings.
+
+Thu Mar 31 22:08:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+
+          Fuzz.
+
+Wed Mar 30 03:43:13 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend/ndds/Log_RecordS.cpp:
+
+          Removed this file.
+
+Wed Mar 30 03:38:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Logger_Backend:
+        * tools/Logger_Backend/ndds:
+        * tools/Logger_Backend/ndds/DAnCE_NDDS_Log_Export.h:
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+        * tools/Logger_Backend/ndds/Log_Record.idl:
+        * tools/Logger_Backend/ndds/Log_RecordS.cpp:
+        * tools/Logger_Backend/ndds/Log_Server.cpp:
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+
+          NDDS-based logging backend for DAnCE.  This serves as both a
+          useful error reporting tool, and as a case study in DDS for
+          myself.  As such, the implementation is rather simple now, and
+          possibly incorrect.  In the future it will be expanded to take
+          better advantage of DDS features.
+
+          It has not yet been integrated into the Logger_Service as yet.
+
+Thu Mar 24 20:13:28 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+          One more.
+
+Thu Mar 24 20:10:55 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+          Stab at a fix for a compile error.
+
+Thu Mar 24 18:48:45 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+        * dance/RepositoryManager/Repository_Manager.cpp:
+        * dance/RepositoryManager/ZIP_Wrapper.cpp:
+
+          Compile errors.
+
+Thu Mar 24 00:21:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * tests/Parsing/domain.cpp:
+        * tests/Parsing/test.cpp:
+        * tools/Split_Plan/Split_Plan.cpp:
+        * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+
+          Defuzzing. I fixed my laptop emacs too.
+
+Wed Mar 23 18:54:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * tools/Split_Plan/Split_Plan.cpp:
+        * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+
+          Fixed scoreboard issues related to split strings on a build
+          using wide characters.
+
+Wed Mar 23 14:08:12 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/TargetManager/CmpClient.cpp:
+
+          Log macros.
+
+Wed Mar 23 14:04:55 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/TargetManager/DomainDataManager.cpp:
+        * dance/TargetManager/Target_Manager.cpp:
+        * dance/TargetManager/Target_Manager_Module.cpp:
+
+          New logging macros.
+
+Wed Mar 23 13:50:37 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/RepositoryManager/PC_Updater.cpp:
+        * dance/RepositoryManager/RepositoryManager.cpp:
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+        * dance/RepositoryManager/Repository_Manager.cpp:
+        * dance/RepositoryManager/Repository_Manager_Module.cpp:
+        * dance/RepositoryManager/URL_Parser.cpp:
+        * dance/RepositoryManager/ZIP_Wrapper.cpp:
+        * dance/RepositoryManager/repository_manager_admin.cpp:
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+
+          New logging macros.
+
+Tue Mar 22 18:54:09 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DAnCE_Utility.cpp:
+        * dance/DAnCE_Utility.tpp:
+        * dance/DomainApplication/Domain_Application_Impl.cpp:
+        * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * dance/DomainApplicationManager/Node_Locator.cpp:
+        * dance/ExecutionManager/ExecutionManager_Impl.cpp:
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+        * dance/ExecutionManager/Execution_Manager.cpp:
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+        * dance/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager.cpp:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * dance/Plan_Launcher/Daemon/PL_Daemon.cpp:
+        * dance/Plan_Launcher/EM_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Converted to new logging macros.
+
+Tue Mar 22 15:00:28 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Convert_Plan/Convert_Plan_Impl.cpp:
+
+          Another compile error fix.
+
+Tue Mar 22 14:33:54 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tools/Config_Handlers/DnC_Dump_T.cpp:
+
+          One more compile error fix.
+
+Tue Mar 22 13:26:13 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/Logger/Logger_Service.cpp:
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+        * dance/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/RepositoryManager/RepositoryManager.cpp:
+        * dance/RepositoryManager/Repository_Manager_Module.cpp:
+        * dance/RepositoryManager/ZIP_Wrapper.h:
+        * dance/TargetManager/ResourceCommitmentManager.cpp:
+        * dance/TargetManager/Target_Manager_Module.cpp:
+        * tests/TargetManager/CmpClient.cpp:
+        * tools/Artifact_Installation/Artifact_Installation_Impl.h:
+
+          Fuzz.
+
+Tue Mar 22 11:33:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+          Fix compile errors.
+
+Tue Mar 22 11:32:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Log_Macros.h:
+        * dance/Logger/Log_Macros.cpp:
+        * dance/Logger/Logger_Service.cpp:
+
+          Reworked log levels to start at 1 by default.
+
+Tue Mar 22 06:32:47 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        * tools/Config_Handlers/DnC_Dump.cpp:
+
+          removed using namespace
+
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+
+          removed using namespace
+
+Mon Mar 21 11:07:19 UTC 2011  James Edmondson  <james.r.edmondson@vanderbilt.edu>
+
+        - Applied formatting for 80 columns where possible
+        - Added DANCE_TRACE to all functions so we have the option
+          to turn them off and on.
+        - Applied macros from dance\Logger\Log_Macros.h to replace
+          numbers with appropriate log levels
+
+        * tools/Artifact_Installation/Artifact_Installation_exec.cpp
+        * tools/Artifact_Installation/Artifact_Installation_Impl.cpp
+        * tools/Artifact_Installation/Installation_Repository_Manager.cpp
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/DataType_Handler.cpp
+        * tools/Config_Handlers/DnC_Dump.cpp
+        * tools/Config_Handlers/DnC_Dump_T.cpp
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/Dump_Obj.cpp
+        * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynStruct_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp
+        * tools/Config_Handlers/XML_File_Intf.cpp
+        * tools/Convert_Plan/Convert_Plan.cpp
+        * tools/Convert_Plan/Convert_Plan_Impl.cpp
+        * tools/Split_Plan/Locality_Splitter.cpp
+        * tools/Split_Plan/Split_Plan.cpp
+        * tools/Split_Plan/Split_Plan_exec.cpp
+        * tools/System_Health/Daemon/SHS_Daemon.cpp
+        * tools/System_Health/Daemon/SHS_Daemon_Impl.cpp
+        * tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp
+
+
+Thu Mar 17 15:07:19 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+
+          Fuzz.
+
+Thu Mar 17 04:48:06 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Log_Macros.h:
+
+          Updated log level descriptions, added DANCE_LOG_TRACE macro.
+
+        * NEWS:
+
+          Noted logging changes.
+
+Thu Mar 17 03:19:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * dance/LocalityManager/Configuration/Process_Name.cpp:
+        * dance/LocalityManager/Configuration/Process_Priority.cpp:
+        * dance/LocalityManager/Handler/Config_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Interceptor_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * dance/LocalityManager/Handler/Locality_Manager_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+        * dance/LocalityManager/Interceptors/Best_Effort.cpp:
+        * dance/LocalityManager/Interceptors/Standard_Error.cpp:
+        * dance/LocalityManager/Scheduler/Deployment_Completion.cpp:
+        * dance/LocalityManager/Scheduler/Deployment_Scheduler.cpp:
+        * dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+        * dance/LocalityManager/Scheduler/Events/Configured.cpp:
+        * dance/LocalityManager/Scheduler/Events/Connect.cpp:
+        * dance/LocalityManager/Scheduler/Events/Disconnect.cpp:
+        * dance/LocalityManager/Scheduler/Events/Endpoint.cpp:
+        * dance/LocalityManager/Scheduler/Events/Install.cpp:
+        * dance/LocalityManager/Scheduler/Events/Passivate.cpp:
+        * dance/LocalityManager/Scheduler/Events/Remove.cpp:
+        * dance/LocalityManager/Scheduler/Events/Start.cpp:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+          Updated to new log level macros.
+
+Thu Mar 17 01:34:33 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Daemon/Locality_Manager.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+
+          Updated to use new log level macros.
+
+        * dance/Logger/Log_Macros.h:
+
+          New log level macros.
+
+Wed Mar 16 00:41:46 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/schema/Basic_Deployment_Data.xsd:
+
+          Extended DataValue content model to allow for zero length sequences.
+
+Thu Mar 10 09:16:00 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * tools/Split_Plan/Locality_Splitter.cpp:
+          Fixed warning from incorrect use of printf format.
+
+Thu Mar  3 12:31:50 UTC 2011  William R. Otte  <r._w@local>
+
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * tools/Config_Handlers/Any_Handler.cpp:
+
+          Fuzz.
+
+Thu Mar  3 05:10:34 UTC 2011  William R. Otte  <r._w@local>
+
+        * dance/NodeManager/NodeManager_Impl.h:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+
+          Fuzz.
+
+Thu Mar  3 05:08:23 UTC 2011  William R. Otte  <r._w@local>
+
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * tools/Config_Handlers/Any_Handler.cpp:
+
+          Fuzz.
+
+Thu Mar  3 05:06:20 UTC 2011  William R. Otte  <r._w@local>
+
+        * dance/NodeManager/Node_Manager_Module.h:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+
+          Removed --best-effort as a command line option.
+
+Thu Mar  3 05:05:20 UTC 2011  William R. Otte  <r._w@local>
+
+        * tools/Config_Handlers/Any_Handler.cpp:
+
+          Catch CORBA exceptions to give better error message.
+
+Thu Mar  3 05:04:29 UTC 2011  William R. Otte  <r._w@local>
+
+        * docs/LocalityManager-Plugins.txt:
+
+          Updated to reflect --best-effort change.
+
+Thu Mar  3 03:44:35 UTC 2011  William R. Otte  <r._w@local>
+
+        * bin/nodemanager.localityconfig:
+        * dance/NodeManager/NodeManager_Impl.h:
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/NodeManager/Node_Manager_Module.h:
+        * dance/NodeManager/Node_Manager_Module.cpp:
+
+          Removed --best-effort and integrated localityconfig based configuration
+          to the NodeManager.  Default configuration read from
+          DANCE_ROOT/docs/nodemanager.localityconfig, alternates may be
+          supplied with the --node-config command line option.
+
+Mon Feb 28 13:22:16 UTC 2011  Vladimir Zykov  <vladimir.zykov@prismtech.com>
+
+        * rules.dance.GNU:
+          Fixed spelling of DAnCE versions.
+
 Fri Feb 11 11:16:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHOR
-//    Andy Gokhale,
-//    Sumedh Mungee,
-//    Sergio Flores-Gaitan, and
-//    Nagarajan Surendran
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  @author Andy Gokhale
+ *  @author Sumedh Mungee
+ *  @author Sergio Flores-Gaitan
+ *  @author and Nagarajan Surendran
+ */
+//=============================================================================
+
 
 #include "ace/config-all.h"
 
@@ -178,7 +175,7 @@ Server::activate_high_servant (void)
 
   ACE_OS::sprintf (orbendpoint,
                    "-ORBEndpoint %s ",
-                   GLOBALS::instance ()->endpoint);
+                   ACE_TEXT_ALWAYS_CHAR (GLOBALS::instance ()->endpoint));
 
   char *high_second_argv[] =
     {orbendpoint,

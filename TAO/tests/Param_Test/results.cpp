@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    results.cpp
-//
-// = DESCRIPTION
-//    Printing the results
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    results.cpp
+ *
+ *  $Id$
+ *
+ *  Printing the results
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "results.h"
 #include "tao/debug.h"

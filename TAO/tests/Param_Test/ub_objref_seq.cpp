@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_objref_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded objref sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_objref_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded objref sequences
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_objref_seq.h"

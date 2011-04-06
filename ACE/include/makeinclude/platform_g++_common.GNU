@@ -6,10 +6,17 @@ ifeq ($(insure),1)
   CXX = insure
 else
   ifneq ($(CROSS_COMPILE),)
+    CROSS-COMPILE = 1
     # Build using the cross-tools
-    CC  = ${CROSS_COMPILE}gcc{$CROSS_COMPILE_POSTFIX}
-    CXX = ${CROSS_COMPILE}g++{$CROSS_COMPILE_POSTFIX}
-    AR  = ${CROSS_COMPILE}ar{$CROSS_COMPILE_POSTFIX}
+    ifneq ($($CROSS_COMPILE_POSTFIX),)
+      CC  = ${CROSS_COMPILE}gcc{$CROSS_COMPILE_POSTFIX}
+      CXX = ${CROSS_COMPILE}g++{$CROSS_COMPILE_POSTFIX}
+      AR  = ${CROSS_COMPILE}ar{$CROSS_COMPILE_POSTFIX}
+    else
+      CC  = ${CROSS_COMPILE}gcc
+      CXX = ${CROSS_COMPILE}g++
+      AR  = ${CROSS_COMPILE}ar
+    endif
     # Cross-linker requires this for linked in shared libs that depend
     # themselves on other shared libs (not directly linked in)
     LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
@@ -124,6 +131,18 @@ endif # GNU_LD
 
 ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
+else
+  ifneq ($(no_strict_aliasing), 0)
+    # if not explicitly disabled enable suppression of strict-aliasing checks by default
+    # for GCC >= 4.2; these checks and the resulting warnings are very controversial and
+    # popular opinion on the web seems to be that it brings little practical value and a
+    # lot of pain to attempt to solve code issues and the best way to deal is to suppress
+    ifeq ($(GXX_4_OR_BETTER), 1)
+      ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
+        CCFLAGS += -fno-strict-aliasing
+      endif
+    endif
+  endif
 endif
 
 ifeq ($(shared_libs), 1)
@@ -183,4 +202,6 @@ ifeq ($(minimaltoc),1)
   FLAGS_C_CC += -mminimal-toc
 endif
 
+pipes ?= 1
 
+FLAGS_C_CC += -Wall -W -Wpointer-arith

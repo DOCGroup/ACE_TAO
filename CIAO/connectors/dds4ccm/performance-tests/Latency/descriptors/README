@@ -1,7 +1,7 @@
 
-This performace test (LatencyTT) shows the latency , round trip time, with two topics. 
+This performace test (LatencyTT) shows the latency , round trip time, with two topics.
 One for sending from publisher to subscriber and one for sending back from subscriber to publicher.
-The other Latency test (LAtency) shows the latency, round trip time, with one topic.
+The other Latency test (Latency) shows the latency, round trip time, with one topic.
 The test can run with different options.
 
 
@@ -11,4 +11,4 @@ The test can run with different options.
 
 To test changes in the next attributes, changes this values in the publisher cdp-files:
 iterations : the number of messages per run to send. Has to be greater as 0.
-sleep:  time in ms to sleep before writing the next message 
+sleep:  time in ms to sleep before writing the next message

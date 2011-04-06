@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Sig_Handlers_Test.cpp
-//
-// = DESCRIPTION
-//    This is a simple program that tests whether the ACE_Sig_Handlers
-//    class works properly.  To run this test, start the application
-//    and then type ^C.  If everything is working properly the test
-//    will shutdown gracefully.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@dre.vanderbilt.edu> and Andreas Drescher <ace at anticat dot ch>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sig_Handlers_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a simple program that tests whether the ACE_Sig_Handlers
+ *  class works properly.  To run this test, start the application
+ *  and then type ^C.  If everything is working properly the test
+ *  will shutdown gracefully.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu> and Andreas Drescher <ace at anticat dot ch>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"

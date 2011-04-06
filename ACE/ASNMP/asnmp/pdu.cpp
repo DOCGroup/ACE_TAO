@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//     pdu.cpp
-//
-// = DESCRIPTION
-//  Pdu class implementation. Encapsulation of an SMI Protocol
-//  Data Unit (PDU) in C++.
-//
-// = AUTHOR
-//   Peter E Mellquist
-//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     pdu.cpp
+ *
+ *  $Id$
+ *
+ *  Pdu class implementation. Encapsulation of an SMI Protocol
+ *  Data Unit (PDU) in C++.
+ *
+ *
+ *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
+ */
+//=============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company

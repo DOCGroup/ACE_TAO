@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Options.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Options.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
 #include "global.h"
 
+/**
+ * @class Options
+ *
+ * @brief This file is used to provide a consolidated Options handling facility.
+ */
 class Options
 {
-  // = TITLE
-  //   This file is used to provide a consolidated Options handling facility.
 public:
   enum Option_Types
   {

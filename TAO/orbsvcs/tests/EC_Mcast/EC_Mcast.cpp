@@ -736,7 +736,7 @@ ECM_Consumer::ECM_Consumer (ECM_Local_Federation *federation)
 void
 ECM_Consumer::open (const char*,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
-                    ACE_RANDR_TYPE &seed)
+                    unsigned int *seed)
 {
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -751,7 +751,7 @@ ECM_Consumer::open (const char*,
 }
 
 void
-ECM_Consumer::connect (ACE_RANDR_TYPE &seed)
+ECM_Consumer::connect (unsigned int *seed)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
@@ -880,7 +880,7 @@ ECM_Local_Federation::open (int event_count,
 
   ACE_OS::strcpy (buf, this->federation_->name ());
   ACE_OS::strcat (buf, "/consumer");
-  this->consumer_.open (buf, ec, this->seed_);
+  this->consumer_.open (buf, ec, &this->seed_);
 
   this->last_subscription_change_ = ACE_OS::gettimeofday ();
 }
@@ -933,7 +933,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   ACE_Time_Value delta = ACE_OS::gettimeofday () -
     this->last_subscription_change_;
 
-  unsigned int x = ACE_OS::rand_r (this->seed_);
+  unsigned int x = ACE_OS::rand_r (&this->seed_);
   double p = double (x) / RAND_MAX;
   double maxp = double (delta.msec ()) / this->subscription_change_period_;
 
@@ -943,7 +943,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
                   "Reconfiguring federation %s: %f %f [%d]\n",
                   this->name (), p, maxp, x));
       this->consumer_.disconnect ();
-      this->consumer_.connect (this->seed_);
+      this->consumer_.connect (&this->seed_);
       this->last_subscription_change_ = ACE_OS::gettimeofday ();
     }
 }

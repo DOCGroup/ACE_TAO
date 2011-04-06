@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    SL_Server.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SL_Server.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _SL_SERVER_H
 #define _SL_SERVER_H
 
 #include "Single_Lookup.h"
 
+/**
+ * @class SL_Server
+ *
+ * @brief Provides the server's single user lookup table abstraction.
+ */
 class SL_Server : public Single_Lookup
 {
-  // = TITLE
-  //   Provides the server's single user lookup table abstraction.
 
 public:
   SL_Server (const char *packet);

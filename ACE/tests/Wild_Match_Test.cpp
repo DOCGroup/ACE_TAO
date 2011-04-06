@@ -3,8 +3,6 @@
 #include "ace/ACE.h"
 #include "test_config.h"
 
-
-
 bool match (const char *str, const char *pat, bool cs = true, bool cc = false)
 {
   bool result = ACE::wild_match (str, pat, cs, cc);

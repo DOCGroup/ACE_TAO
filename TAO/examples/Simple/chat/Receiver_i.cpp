@@ -1,20 +1,17 @@
-// $Id$
 
-// ===========================================================
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Receiver_i.cpp
-//
-// = DESCRIPTION
-//    Implements the Receiver_i class, which is used by the chat client.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Receiver_i.cpp
+ *
+ *  $Id$
+ *
+ *  Implements the Receiver_i class, which is used by the chat client.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Receiver_i.h"
 

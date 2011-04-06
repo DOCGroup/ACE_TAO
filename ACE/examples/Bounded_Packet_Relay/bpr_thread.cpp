@@ -1,27 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    bpr_thread.cpp
-//
-// = DESCRIPTION
-//    Exercises drivers for a bounded packet relay, based on threaded timer queues.
-//
-// = AUTHORS
-//    Chris Gill           <cdgill@cs.wustl.edu>  and
-//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
-//
-//    Based on the Timer Queue Test example written by
-//
-//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
-//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bpr_thread.cpp
+ *
+ *  $Id$
+ *
+ *  Exercises drivers for a bounded packet relay, based on threaded timer queues.
+ *
+ *
+ *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Auto_Ptr.h"
 #include "Thread_Bounded_Packet_Relay.h"

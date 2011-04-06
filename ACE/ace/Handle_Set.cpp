@@ -9,8 +9,6 @@
 
 #include "ace/OS_NS_string.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)

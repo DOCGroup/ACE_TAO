@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//      tests
-//
-// = FILENAME
-//      Reactor_Notify_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that illustrates how the <ACE_Reactor>'s
-//      <notify> method works under various <max_notify_iterations>
-//      settings.  It also tests that the <disable_notify_pipe> option
-//      works correctly.  Moreover, if the $ACE_ROOT/ace/config.h file
-//      has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
-//      test will also exercise this feature.
-//
-// = AUTHOR
-//      Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file      Reactor_Notify_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that illustrates how the <ACE_Reactor>'s
+ *    <notify> method works under various <max_notify_iterations>
+ *    settings.  It also tests that the <disable_notify_pipe> option
+ *    works correctly.  Moreover, if the $ACE_ROOT/ace/config.h file
+ *    has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
+ *    test will also exercise this feature.
+ *
+ *
+ *  @author   Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -48,8 +45,8 @@ public:
   ~Quiet_Notify_Tester (void) { this->wait (); }
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Start the reactor event thread.
   virtual int open (void * = 0);
-  // Start the reactor event thread.
 
   // Run the reactor event loop.
   virtual int svc (void);
@@ -117,58 +114,64 @@ run_quiet_notify_test (void)
 class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  /// Constructor.
   Supplier_Task (int disable_notify_pipe,
                  const ACE_Time_Value &tv);
-  // Constructor.
 
+  /// Destructor.
   ~Supplier_Task (void);
-  // Destructor.
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Make this an Active Object.
   virtual int open (void * = 0);
-  // Make this an Active Object.
 
+  /// Close down the supplier.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (u_long);
-  // Close down the supplier.
-  //FUZZ: enable check_for_lack_ACE_OS
 
+  /// Generates events and sends them to the <Reactor>'s <notify>
+  /// method.
   virtual int svc (void);
-  // Generates events and sends them to the <Reactor>'s <notify>
-  // method.
 
+  /// Releases the <waiter_> semaphore when called by the <Reactor>'s
+  /// notify handler.
   virtual int handle_exception (ACE_HANDLE);
-  // Releases the <waiter_> semaphore when called by the <Reactor>'s
-  // notify handler.
 
+  /**
+   * Called every time through the main <ACE_Reactor> event loop to
+   * illustrate the difference between "limited" and "unlimited"
+   * notification.
+   */
   virtual int handle_output (ACE_HANDLE);
-  // Called every time through the main <ACE_Reactor> event loop to
-  // illustrate the difference between "limited" and "unlimited"
-  // notification.
 
+  /// Release the <waiter_>.
   void release (void);
-  // Release the <waiter_>.
 
 private:
+  /// Perform the notifications.
   int perform_notifications (int notifications);
-  // Perform the notifications.
 
+  /// Used to hand-shake between the <Supplier_Task> and the
+  /// <Reactor>'s notify mechanism.
   ACE_Thread_Semaphore waiter_;
-  // Used to hand-shake between the <Supplier_Task> and the
-  // <Reactor>'s notify mechanism.
 
+  /**
+   * We use this pipe just to get a handle that is always "active,"
+   * i.e., the <ACE_Reactor> will always dispatch its <handle_output>
+   * method.
+   */
   ACE_Pipe pipe_;
-  // We use this pipe just to get a handle that is always "active,"
-  // i.e., the <ACE_Reactor> will always dispatch its <handle_output>
-  // method.
 
+  /// Keeps track of whether the notification pipe in the <ACE_Reactor>
+  /// has been diabled or not.
   int disable_notify_pipe_;
-  // Keeps track of whether the notification pipe in the <ACE_Reactor>
-  // has been diabled or not.
 
+  /**
+   * Keeps track of whether we're running with a <LONG_TIMEOUT>, which
+   * is used for the ACE_HAS_REACTOR_NOTIFICATION_QUEUE portion of
+   * this test.
+   */
   int long_timeout_;
-  // Keeps track of whether we're running with a <LONG_TIMEOUT>, which
-  // is used for the ACE_HAS_REACTOR_NOTIFICATION_QUEUE portion of
-  // this test.
 };
 
 void
@@ -439,13 +442,16 @@ run_test (int disable_notify_pipe,
 
 #endif /* ACE_HAS_THREADS */
 
+/**
+ * @class Purged_Notify
+ *
+ * @brief <run_notify_purge_test> tests the reactor's
+ * purge_pending_notifications function. It does 2 notifications,
+ * and explicitly cancels one, and deletes the other's event
+ * handler, which should cause it to be cancelled as well.
+ */
 class Purged_Notify : public ACE_Event_Handler
 {
-  // = TITLE
-  //   <run_notify_purge_test> tests the reactor's
-  //   purge_pending_notifications function. It does 2 notifications,
-  //   and explicitly cancels one, and deletes the other's event
-  //   handler, which should cause it to be cancelled as well.
 
   virtual int handle_exception (ACE_HANDLE = ACE_INVALID_HANDLE)
   {

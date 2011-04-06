@@ -1,21 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Test_Future.cpp
-//
-// = DESCRIPTION
-//    This example tests the ACE Future.
-//
-// = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    future1.cpp
+ *
+ *  $Id$
+ *
+ *  This example tests the ACE Future.
+ *
+ *
+ *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -51,9 +47,12 @@ static ATOMIC_INT capsule_no (0);
 static ATOMIC_INT methodobject_count (0);
 static ATOMIC_INT methodobject_no (0);
 
+/**
+ * @class Scheduler
+ *
+ * @brief Active Object Scheduler.
+ */
 class Scheduler : public ACE_Task_Base
-  // = TITLE
-  //     Active Object Scheduler.
 {
   friend class Method_RequestWork;
 public:
@@ -61,9 +60,9 @@ public:
   virtual ~Scheduler (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int svc (void);
 
@@ -80,9 +79,12 @@ private:
   Scheduler *scheduler_;
 };
 
+/**
+ * @class Method_Request_work
+ *
+ * @brief Reification of the <work> method.
+ */
 class Method_Request_work : public ACE_Method_Request
-  // = TITLE
-  //     Reification of the <work> method.
 {
 public:
   Method_Request_work (Scheduler *, u_long, int, ACE_Future<u_long> &);
@@ -121,9 +123,12 @@ Method_Request_work::call (void)
   return this->future_result_.set (this->scheduler_->work_i (this->param_, this->count_));
 }
 
+/**
+ * @class Method_Request_name
+ *
+ * @brief Reification of the <name> method.
+ */
 class Method_Request_name : public ACE_Method_Request
-  // = TITLE
-  //     Reification of the <name> method.
 {
 public:
   Method_Request_name (Scheduler *, ACE_Future<const char*> &);
@@ -156,9 +161,12 @@ Method_Request_name::call (void)
   return future_result_.set (scheduler_->name_i ());
 }
 
+/**
+ * @class Method_Request_end
+ *
+ * @brief Reification of the <end> method.
+ */
 class Method_Request_end : public ACE_Method_Request
-  // = TITLE
-  //     Reification of the <end> method.
 {
 public:
   Method_Request_end (Scheduler *new_scheduler): scheduler_ (new_scheduler) {}
@@ -166,8 +174,8 @@ public:
   virtual int call (void) { return -1; }
 
 private:
+  /// Keep track of our scheduler.
   Scheduler *scheduler_;
-  // Keep track of our scheduler.
 };
 
 // Constructor.

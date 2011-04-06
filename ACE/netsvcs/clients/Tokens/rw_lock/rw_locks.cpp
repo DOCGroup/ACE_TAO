@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    rw_locks.cpp
-//
-// = DESCRIPTION
-//    test_rw_locks shows how to use ACE_Local_RLock, ACE_Local_WLock,
-//    ACE_Remote_RLock, and ACE_Remote_WLock.
-//
-// = AUTHOR
-//    Tim Harrison
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    rw_locks.cpp
+ *
+ *  $Id$
+ *
+ *  test_rw_locks shows how to use ACE_Local_RLock, ACE_Local_WLock,
+ *  ACE_Remote_RLock, and ACE_Remote_WLock.
+ *
+ *
+ *  @author Tim Harrison
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"

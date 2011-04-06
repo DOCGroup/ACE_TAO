@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    PM_Client.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PM_Client.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PM_CLIENT_H
 #define _PM_CLIENT_H
 
 #include "Protocol_Manager.h"
 
+/**
+ * @class PM_Client
+ *
+ * @brief Provides the client side of the friend manager lookup table abstraction.
+ */
 class PM_Client : public Protocol_Manager
 {
-  // = TITLE
-  //   Provides the client side of the friend manager lookup table abstraction.
 public:
   PM_Client (void);
   virtual ~PM_Client (void);

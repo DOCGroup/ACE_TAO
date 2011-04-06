@@ -32,10 +32,11 @@ namespace DAnCE
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
-        DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::post_install - ")
-                         ACE_TEXT ("Propagating exception from instance <%C>\n"),
-                         plan.instance[index].name.in ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Standard_Error::post_install - ")
+                      ACE_TEXT ("Propagating exception from instance <%C>\n"),
+                      plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
@@ -47,10 +48,11 @@ namespace DAnCE
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
-        DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::post_connect - ")
-                         ACE_TEXT ("Propagating exception from connection <%C>\n"),
-                         plan.connection[connection].name.in ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Standard_Error::post_connect - ")
+                      ACE_TEXT ("Propagating exception from connection <%C>\n"),
+                      plan.connection[connection].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
@@ -62,10 +64,11 @@ namespace DAnCE
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
-        DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::post_configured - ")
-                         ACE_TEXT ("Propagating exception from configuring instance <%C>\n"),
-                         plan.instance[index].name.in ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Standard_Error::post_configured - ")
+                      ACE_TEXT ("Propagating exception from configuring instance <%C>\n"),
+                      plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
@@ -78,10 +81,11 @@ namespace DAnCE
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
-        DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::post_activate - ")
-                         ACE_TEXT ("Propagating exception from activation of instance <%C>\n"),
-                         plan.instance[index].name.in ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Standard_Error::post_activate - ")
+                      ACE_TEXT ("Propagating exception from activation of instance <%C>\n"),
+                      plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
@@ -94,10 +98,11 @@ namespace DAnCE
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
-        DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::post_passivate - ")
-                         ACE_TEXT ("Propagating exception from passivation of instance <%C>\n"),
-                         plan.instance[index].name.in ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Standard_Error::post_passivate - ")
+                      ACE_TEXT ("Propagating exception from passivation of instance <%C>\n"),
+                      plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }
@@ -110,10 +115,11 @@ namespace DAnCE
   {
     if (exception.type() != ::CORBA::_tc_null)
       {
-        DANCE_ERROR (2, (LM_ERROR, DLINFO
-                         ACE_TEXT ("Standard_Error::post_remove - ")
-                         ACE_TEXT ("Propagating exception from removal of instance <%C>\n"),
-                         plan.instance[index].name.in ()));
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Standard_Error::post_remove - ")
+                      ACE_TEXT ("Propagating exception from removal of instance <%C>\n"),
+                      plan.instance[index].name.in ()));
         DAnCE::Utility::throw_exception_from_any (exception);
       }
   }

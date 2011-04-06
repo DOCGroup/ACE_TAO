@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Priority_Reactor_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the <ACE_Priority_Reactor>.  The test forks
-//     two processes (for a total of three processes) which connect to
-//     the main process and The clients send data to a connector,
-//     interestingly enough the acceptor will give more priority to
-//     the second connection, which should run always before the first
-//     one.
-//
-//     The test itself is interesting, it shows how to write very
-//     simple <ACE_Svc_Handler>, <ACE_Connectors> and <ACE_Acceptors>.
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Priority_Reactor_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the <ACE_Priority_Reactor>.  The test forks
+ *   two processes (for a total of three processes) which connect to
+ *   the main process and The clients send data to a connector,
+ *   interestingly enough the acceptor will give more priority to
+ *   the second connection, which should run always before the first
+ *   one.
+ *
+ *   The test itself is interesting, it shows how to write very
+ *   simple <ACE_Svc_Handler>, <ACE_Connectors> and <ACE_Acceptors>.
+ *
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

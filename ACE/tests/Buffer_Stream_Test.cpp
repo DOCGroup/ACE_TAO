@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Buffer_Stream_Test.cpp
-//
-// = DESCRIPTION
-//     This program illustrates an implementation of the classic
-//     "bounded buffer" program using an ASX STREAM containing two
-//     Modules.  Each ACE_Module contains two Tasks.  Each ACE_Task
-//     contains a ACE_Message_Queue and a pointer to a
-//     ACE_Thread_Manager.  Note how the use of these reusable
-//     components reduces the reliance on global variables.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Buffer_Stream_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program illustrates an implementation of the classic
+ *   "bounded buffer" program using an ASX STREAM containing two
+ *   Modules.  Each ACE_Module contains two Tasks.  Each ACE_Task
+ *   contains a ACE_Message_Queue and a pointer to a
+ *   ACE_Thread_Manager.  Note how the use of these reusable
+ *   components reduces the reliance on global variables.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Stream.h"
@@ -38,48 +35,57 @@ typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
 typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
 
+/**
+ * @class Common_Task
+ *
+ * @brief Methods that are common to the Supplier and consumer.
+ */
 class Common_Task : public MT_Task
-  // = TITLE
-  //   Methods that are common to the Supplier and consumer.
 {
 public:
   Common_Task (void) {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = ACE_Task hooks.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int open (void * = 0);
   virtual int close (u_long = 0);
-  //FUZZ: enable check_for_lack_ACE_OS
 };
 
+/**
+ * @class Supplier
+ *
+ * @brief Define the Supplier interface.
+ */
 class Supplier : public Common_Task
-// = TITLE
-// Define the Supplier interface.
 {
 public:
   Supplier (void) {}
 
+  /// Read data from stdin and pass to consumer.
   virtual int svc (void);
-  // Read data from stdin and pass to consumer.
 };
 
+/**
+ * @class Consumer
+ *
+ * @brief Define the Consumer interface.
+ */
 class Consumer : public Common_Task
-  // = TITLE
-  //    Define the Consumer interface.
 {
 public:
   Consumer (void) {}
 
+  /// Enqueue the message on the ACE_Message_Queue for subsequent
+  /// handling in the svc() method.
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  // Enqueue the message on the ACE_Message_Queue for subsequent
-  // handling in the svc() method.
 
+  /// Receive message from Supplier and print to stdout.
   virtual int svc (void);
-  // Receive message from Supplier and print to stdout.
 private:
 
+  /// Amount of time to wait for a timeout.
   ACE_Time_Value timeout_;
-  // Amount of time to wait for a timeout.
 };
 
 // Spawn off a new thread.

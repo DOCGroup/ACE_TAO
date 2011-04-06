@@ -86,16 +86,14 @@ command line option --locality-config on the node manager).   (1) will
 apply only to an individual locality instance, (2) will apply to ALL
 locality instances spawned by the node manager.
 
-The dance_node_manager currently loads the following plug-ins:
+The dance_node_manager currently loads plug-ins by default from the
+nodemanager.localityconfig file, which contains the following:
 .  Locality Manager installation handler
-.  SH&S interceptor
-.  Best-effort or standard error interceptor, based on the
-   --best-effort command line option.
+.  Standard effor handling interceptor
 
-The --best-effort command line option now only applies to the node
-manager, best effort deployment semantics are requested for the
-locality manager by supplying the following line in the localityconfig
-file in lieu of the standard error interceptor:
+Best effort deployment semantics are requested for the locality
+manager by supplying the following line in the localityconfig file in
+lieu of the standard error interceptor:
 
 edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Best_Effort
 

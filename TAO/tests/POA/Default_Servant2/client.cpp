@@ -1,19 +1,17 @@
-// $Id$
 
-//===================================================================
-//  = LIBRARY
-//      TAO/tests/POA/Default_Servant/client
-//
-//  = FILENAME
-//     client.cpp
-//
-//  = DESCRIPTION
-//      A client program for the File IDL module
-//
-//  = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *    A client program for the File IDL module
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "FileC.h"
 #include "tao/debug.h"

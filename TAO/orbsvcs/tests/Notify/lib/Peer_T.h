@@ -5,8 +5,6 @@
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PEER_T_H

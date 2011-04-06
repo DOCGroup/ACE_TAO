@@ -282,7 +282,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
   UTL_ScopedName *dt_name = datatype->name ();
   BE_GlobalData::DDS_IMPL the_dds_impl = be_global->dds_impl ();
 
-  if (the_dds_impl != BE_GlobalData::NONE)
+  if (the_dds_impl != BE_GlobalData::DDS_NONE)
     {
       os_ << be_nl
           << "struct " << datatype->flat_name () << "_DDS_Traits" << be_nl

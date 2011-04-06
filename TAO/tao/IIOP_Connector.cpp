@@ -89,7 +89,7 @@ TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
   , connect_strategy_ ()
-  , base_connector_ ()
+  , base_connector_ (0)
 {
 }
 
@@ -449,6 +449,9 @@ TAO_IIOP_Connector::complete_connection (int result,
       // the winner is the last member of the list, because the
       // iterator stopped on a successful connect.
       transport = tlist[count-1];
+
+      this->cleanup_pending (transport, tlist, count);
+
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();

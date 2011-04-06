@@ -1,4 +1,3 @@
-// $Id$
 
 /*  A Bison parser, made from ETCL/ETCL.yy
     by GNU Bison version 1.28  */
@@ -49,22 +48,17 @@
 #define  ETCL_TYPE_ID 298
 #define  ETCL_REPOS_ID  299
 
-//#line 1 "ETCL/ETCL.yy"
 
-// $Id$
-// ========================================================================
-//
-// = LIBRARY
-//   ace/ETCL / Extended Trader Constraint Language parser.
-//
-// = FILENAME
-//   ETCL.yy
-//
-// = AUTHOR
-//   Carlos O'Ryan <coryan@uci.edu> based on previous work by
-//   Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+//=============================================================================
+/**
+ *  @file   ETCL_y.cpp
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu> based on previous work by Seth Widoff <sbw1@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/ETCL/ETCL_y.h"
 #include "ace/ETCL/ETCL_Constraint.h"

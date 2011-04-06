@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    typedef.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    typedef.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 
 // Must keep unaliasing until all levels of typedef

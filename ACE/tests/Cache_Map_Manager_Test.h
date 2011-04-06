@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Cache_Map_Manager_Test.h
-//
-// = DESCRIPTION
-//    Define class needed for generating templates. IBM C++ requires this to
-//    be in its own file for auto template instantiation.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cache_Map_Manager_Test.h
+ *
+ *  $Id$
+ *
+ *  Define class needed for generating templates. IBM C++ requires this to
+ *  be in its own file for auto template instantiation.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef __ACE_CACHE_MAP_MANAGER_TEST_H
 #define __ACE_CACHE_MAP_MANAGER_TEST_H

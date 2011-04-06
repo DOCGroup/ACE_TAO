@@ -1,22 +1,19 @@
-// $Id$
 
 
-// ============================================================================
-//
-// = LIBRARY
-//      TAO/tests/Cubit/TAO/DII_Cubit
-//
-// = FILENAME
-//      client.cpp
-//
-// = DESCRIPTION
-//      This class implements a simple CORBA client of the Cubit
-//      interface using DII functionality.
-//
-// = AUTHOR
-//      Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file      client.cpp
+ *
+ *  $Id$
+ *
+ *    This class implements a simple CORBA client of the Cubit
+ *    interface using DII functionality.
+ *
+ *
+ *  @author   Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/DynamicInterface/Request.h"
 #include "tao/debug.h"
@@ -40,44 +37,46 @@ const int SMALL_LONG_SEQ_LENGTH = 4;
 const int LARGE_LONG_SEQ_LENGTH = 1024;
 const int NUMBER_OF_TESTS = 10;
 
+/**
+ * @class DII_Cubit_Client
+ *
+ * @brief Defines a class that encapsulates behaviour of a Cubit client
+ * that makes requests using DII rather than stubs.
+ *
+ * This class declares an interface to run an example client for
+ * a Cubit CORBA server.  All the complexity for initializing the
+ * client is hidden in the class.  Just the run() interface is
+ * needed.
+ */
 class DII_Cubit_Client
 {
-  // = TITLE
-  //    Defines a class that encapsulates behaviour of a Cubit client
-  //    that makes requests using DII rather than stubs.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to run an example client for
-  //    a Cubit CORBA server.  All the complexity for initializing the
-  //    client is hidden in the class.  Just the run() interface is
-  //    needed.
 public:
   // = Constructor and destructor.
+  /// Constructor.
   DII_Cubit_Client (void);
-  // Constructor.
 
+  /// Destructor.
   ~DII_Cubit_Client (void);
-  // Destructor.
 
+  /// Initialize the ORB and gets the Cubit objref.
   int init (int argc, ACE_TCHAR **argv);
-  // Initialize the ORB and gets the Cubit objref.
 
+  /// Execute client example code.
   int run (void);
-  // Execute client example code.
 
 private:
+  /// Gets objref through naming service.
   int init_naming_service (void);
-  // Gets objref through naming service.
 
+  /// Parses the arguments passed on the command line.
   int parse_args (void);
-  // Parses the arguments passed on the command line.
 
+  /// Function to read the cubit factory IOR from a file.
   int read_ior (ACE_TCHAR *filename);
-  // Function to read the cubit factory IOR from a file.
 
+  /// Prints the timing stats.
   void print_stats (const char *call_name,
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
-  // Prints the timing stats.
 
   // = DII versions of Cubit operations:
 
@@ -91,54 +90,54 @@ private:
 
   // = Wrappers for cubing small and large sequences w/o args:
 
+  /// Wrapper for the mixin call, just to be neat.
   void cube_small_long_seq (void);
   void cube_large_long_seq (void);
   void cube_small_octet_seq (void);
   void cube_large_octet_seq (void);
   void cube_mixin (void);
-  // Wrapper for the mixin call, just to be neat.
 
+  /// Array of pointers to the operation functions.
   void (DII_Cubit_Client::*op_array_[NUMBER_OF_TESTS])(void);
-  // Array of pointers to the operation functions.
 
+  /// Array of labels for passing to print_stats.
   static const char *stats_messages_[];
-  // Array of labels for passing to print_stats.
 
+  /// # of arguments on the command line.
   int argc_;
-  // # of arguments on the command line.
 
+  /// arguments from command line.
   ACE_TCHAR **argv_;
-  // arguments from command line.
 
+  /// # of calls in test loop.
   CORBA::ULong loop_count_;
-  // # of calls in test loop.
 
+  /// Flag to tell server to exit.
   int shutdown_;
-  // Flag to tell server to exit.
 
+  /// Storage of the ORB reference.
   CORBA::ORB_var orb_var_;
-  // Storage of the ORB reference.
 
+  /// Storage of the Cubit_factory objref
   CORBA::Object_var factory_var_;
-  // Storage of the Cubit_factory objref
 
+  /// Storage of the Cubit objref.
   CORBA::Object_var obj_var_;
-  // Storage of the Cubit objref.
 
+  /// # of calls made to functions.
   CORBA::ULong call_count_;
-  // # of calls made to functions.
 
+  /// # of errors incurred in the lifetime of the application.
   CORBA::ULong error_count_;
-  // # of errors incurred in the lifetime of the application.
 
+  /// IOR of the factory used to make a Cubit object.
   ACE_CString factory_IOR_;
-  // IOR of the factory used to make a Cubit object.
 
+  /// File from which to obtain the IOR.
   FILE *cubit_factory_ior_file_;
-  // File from which to obtain the IOR.
 
+  /// File handle to read the IOR.
   ACE_HANDLE f_handle_;
-  // File handle to read the IOR.
 };
 
 // Constructor

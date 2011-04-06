@@ -1,21 +1,17 @@
-//$Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Multiple
-//
-// = FILENAME
-//    Collocation_Tester.h
-//
-// = DESCRIPTION
-//     This file contains the class that tests the TAO's collocation
-//     mechanism.
-//
-// = AUTHOR
-//     Angelo Corsaro <corsaro@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Collocation_Tester.h
+ *
+ *  $Id$
+ *
+ *   This file contains the class that tests the TAO's collocation
+ *   mechanism.
+ *
+ *
+ *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 // -- Custom App. Include --
 #include "MultipleC.h"
@@ -41,38 +37,40 @@ public:
   ~Collocation_Tester ();
 
   // -- Command --
+  /// Runs the test.
   void run (void);
-  // Runs the test.
 
 
 private:
 
   // -- Helper Methods --
 
+  /// Tests the method accessible thru the
+  /// Top interface.
   int  test_top (void);
-  // Tests the method accessible thru the
-  // Top interface.
 
+  /// Tests the method accessible thru the
+  /// Right interface.
   int test_right (void);
-  // Tests the method accessible thru the
-  // Right interface.
 
+  /// Tests the method accessible thru the
+  /// Left interface.
   int test_left (void);
-  // Tests the method accessible thru the
-  // Left interface.
 
+  /// Tests the method accessible thru the
+  /// Bottom interface.
   int test_bottom (void);
-  // Tests the method accessible thru the
-  // Bottom interface.
 
+  /**
+   * This method tests wether the answer obtained
+   * is the one expected. As strcmp, it returns zero
+   * if a match occurs and a non-zero value if there
+   * is no match (actually 1 is returned if there is
+   * no match.
+   */
   int match_answer (const char *actual_answer,
                      const char *right_answer,
                      const char *method_name);
-  // This method tests wether the answer obtained
-  // is the one expected. As strcmp, it returns zero
-  // if a match occurs and a non-zero value if there
-  // is no match (actually 1 is returned if there is
-  // no match.
 
   void shutdown (void);
 private:

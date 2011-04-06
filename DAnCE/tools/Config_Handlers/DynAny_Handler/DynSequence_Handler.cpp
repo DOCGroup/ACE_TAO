@@ -23,6 +23,8 @@ namespace DAnCE
                                               const DataValue &value,
                                               CORBA::TypeCode_ptr req_tc)
     {
+      DANCE_TRACE("DynSequence_Handler::extract_into_dynany");
+
       CORBA::TypeCode_var tc;
       if (req_tc)
         tc = req_tc;
@@ -32,7 +34,8 @@ namespace DAnCE
       // Make the actual DynSequence
       DynamicAny::DynAny_var temp =
         DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-      DynamicAny::DynSequence_var retval = DynamicAny::DynSequence::_narrow (temp.in ());
+      DynamicAny::DynSequence_var retval =
+        DynamicAny::DynSequence::_narrow (temp.in ());
 
       DynamicAny::DynAnySeq dynseq;
       CORBA::ULong pos = 0;
@@ -47,7 +50,8 @@ namespace DAnCE
         case TCKind::tk_component_l:
         case TCKind::tk_home_l:
 
-          DANCE_DEBUG (1, (LM_WARNING, "I don't know how to handle null or void types\n"));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_WARNING, "I don't know how to handle null or void types\n"));
           throw 1;
 
         case TCKind::tk_short_l:
@@ -85,7 +89,7 @@ namespace DAnCE
             }
           catch (DynamicAny::DynAny::InvalidValue)
             {
-              DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
+              DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
                           ACE_TEXT ("populate %ith element of a sequence\n"),
                           pos));
               throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
@@ -114,7 +118,7 @@ namespace DAnCE
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
 
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -124,16 +128,24 @@ namespace DAnCE
     void
     DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
-      DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
+      DANCE_TRACE("DynSequence_Handler::extract_out_of_dynany");
+
+      DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
+        (LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
     }
 
     CORBA::TypeCode_ptr
     DynSequence_Handler::create_typecode (const DataType &type)
     {
+      DANCE_TRACE("DynSequence_Handler::create_typecode");
+
       if (!type.sequence_p ())
         {
-          DANCE_DEBUG (1, (LM_ERROR, ACE_TEXT ("ERROR: Sequence type description required")));
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
+            (LM_ERROR, ACE_TEXT (
+              "ERROR: Sequence type description required")));
+          throw Config_Error (ACE_TEXT (""),
+            ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
         }
 
       CORBA::TypeCode_var etc =

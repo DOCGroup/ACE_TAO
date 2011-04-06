@@ -100,7 +100,7 @@ Options::print_options (void)
 
   for (i = 0; i < argc_; i++)
     ACE_OS::printf ("%s ",
-                    argv_[i]);
+                    ACE_TEXT_ALWAYS_CHAR (argv_[i]));
 
   ACE_OS::printf (" */");
 }
@@ -186,14 +186,14 @@ Options::~Options (void)
                        "\nLINEARSEARCH is: %s"
                        "\nBINARYSEARCH is: %s"
                        "\niterations = %d"
-                       "\nlookup function name = %C"
-                       "\nfill default = %C"
-                       "\nhash function name = %C"
-                       "\nkey name = %C"
+                       "\nlookup function name = %s"
+                       "\nfill default = %s"
+                       "\nhash function name = %s"
+                       "\nkey name = %s"
                        "\njump value = %d"
                        "\nmax associcated value = %d"
                        "\ninitial associated value = %d"
-                       "\ndelimiters = %C"
+                       "\ndelimiters = %s"
                        "\nnumber of switch statements = %d"
                        "\n",
                        ACE_BIT_ENABLED (option_word_, DEBUGGING) ? "enabled" : "disabled",

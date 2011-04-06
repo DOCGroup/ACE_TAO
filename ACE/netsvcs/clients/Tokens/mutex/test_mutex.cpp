@@ -1,19 +1,13 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_mutex.cpp
-//
-// = DESCRIPTION
-//
-// = AUTHOR
-//    Tim Harrison
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_mutex.cpp
+ *
+ *  $Id$
+ *
+ *  @author Tim Harrison
+ */
+//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
@@ -22,8 +16,6 @@
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
-
-
 
 static ACE_Token_Proxy *mutex;
 static int remote_mutexes = 0;

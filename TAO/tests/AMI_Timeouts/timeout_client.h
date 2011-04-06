@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/AMI_Timeouts
-//
-// = FILENAME
-//    timeout_client.h
-//
-// = DESCRIPTION
-//    Tests timeouts with AMI.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    timeout_client.h
+ *
+ *  $Id$
+ *
+ *  Tests timeouts with AMI.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 
 #include "ace/Task.h"

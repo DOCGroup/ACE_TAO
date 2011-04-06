@@ -1,19 +1,16 @@
-// $Id$
-//============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    NDDS_Timer_Test.cpp
-//
-// = DESCRIPTION
-//    Simple test of NDDS_Timer. Copied from NDDS_Timer_Test.
-//
-// = AUTHOR
-//    Marcel Smit <msmit@remedy.nl>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    NDDS_Timer_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Simple test of NDDS_Timer. Copied from NDDS_Timer_Test.
+ *
+ *
+ *  @author Marcel Smit <msmit@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -23,8 +20,6 @@
 
 #include <ndds/ndds_cpp.h>
 #include <ndds/clock/clock_highResolution.h>
-
-
 
 static
 u_int

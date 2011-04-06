@@ -71,6 +71,7 @@ component Foo
   attribute string_array my_string_array;
 
   attribute short_sequence  my_short_sequence;
+  attribute short_sequence  my_empty_sequence;
   attribute long_sequence   my_long_sequence;
   attribute float_sequence  my_float_sequence;
   attribute double_sequence my_double_sequence;

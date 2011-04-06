@@ -1,46 +1,46 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Simple
-//
-// = FILENAME
-//    sender.h
-//
-// = DESCRIPTION
-//    This application reads data from a file and sends it to s
-//    receiver.
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    sender.h
+ *
+ *  $Id$
+ *
+ *  This application reads data from a file and sends it to s
+ *  receiver.
+ *
+ *
+ *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
+/**
+ * @class Sender_StreamEndPoint
+ *
+ * @brief Defines a sender stream endpoint.
+ */
 class Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
-  // = TITLE
-  //    Defines a sender stream endpoint.
 public:
+  /// Create the application callback and return its handle to
+  /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-  // Create the application callback and return its handle to
-  // AVStreams for further application callbacks.
 
+  /// Set protocol object corresponding to the transport protocol
+  /// chosen.
   int set_protocol_object (const char *flowname,
                            TAO_AV_Protocol_Object *object);
-  // Set protocol object corresponding to the transport protocol
-  // chosen.
 
 protected:
+  /// Application callback.
   TAO_AV_Callback callback_;
-  // Application callback.
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A
@@ -49,82 +49,84 @@ typedef TAO_AV_Endpoint_Reactive_Strategy_A
            AV_Null_MediaCtrl>
         SENDER_ENDPOINT_STRATEGY;
 
+/**
+ * @class Sender
+ *
+ * @brief Sender Application.
+ *
+ * Class is responsible for streaming (and pacing) data to a
+ * receiver.
+ */
 class Sender
 {
-  // = TITLE
-  //    Sender Application.
-  //
-  // = DESCRIPTION
-  //    Class is responsible for streaming (and pacing) data to a
-  //    receiver.
 public:
+  /// Constructor
   Sender (void);
-  // Constructor
 
+  /// Method to initialize the various data components.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Method to initialize the various data components.
 
+  /// Method to pace and send data from a file.
   int pace_data (void);
-  // Method to pace and send data from a file.
 
+  /// Set the protocol object corresponding to the transport protocol chosen.
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
-  // Set the protocol object corresponding to the transport protocol chosen.
 
 private:
+  /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Method to parse the command line arguments.
 
+  /// Method that binds the sender to the receiver.
   int bind_to_receiver (void);
-  // Method that binds the sender to the receiver.
 
+  /// The endpoint strategy used by the sender.
   SENDER_ENDPOINT_STRATEGY endpoint_strategy_;
-  // The endpoint strategy used by the sender.
 
+  /// The receiver MMDevice that the sender connects to.
   AVStreams::MMDevice_var receiver_mmdevice_;
-  // The receiver MMDevice that the sender connects to.
 
+  /// The sender MMDevice.
   TAO_MMDevice *sender_mmdevice_;
-  // The sender MMDevice.
 
+  /// Stream controller
   TAO_StreamCtrl *streamctrl_;
-  // Stream controller
 
+  /// Number of frames sent.
   int frame_count_;
-  // Number of frames sent.
 
+  /// File from which data is read.
   ACE_TString filename_;
-  // File from which data is read.
 
+  /// The Naming Service client.
   TAO_Naming_Client naming_client_;
-  // The Naming Service client.
 
+  /// File handle of the file read from.
   FILE *input_file_;
-  // File handle of the file read from.
 
+  /// Selected protocol - default is UDP
   ACE_TString protocol_;
-  // Selected protocol - default is UDP
 
+  /// Rate at which the data will be sent.
   double frame_rate_;
-  // Rate at which the data will be sent.
 
+  /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-  // Message block into which data is read from a file and then sent.
 
+  /// Protocol object corresponding to the transport protocol selected.
   TAO_AV_Protocol_Object *protocol_object_;
-  // Protocol object corresponding to the transport protocol selected.
 
+  /// Destination Address.
   char* address_;
-  // Destination Address.
 
+  /// Destination Address.
   char* peer_address_;
-  // Destination Address.
 
+  /// Local secondary addresses
   char** local_sec_addrs_;
-  // Local secondary addresses
 
+  /// Peer secondary addresses
   char** peer_sec_addrs_;
-  // Peer secondary addresses
 
   int num_local_sec_addrs_;
   int num_peer_sec_addrs_;

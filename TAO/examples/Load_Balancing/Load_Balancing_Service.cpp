@@ -1,16 +1,13 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Load_Balancing
-//
-// = FILENAME
-//    Load_Balancing_Service.cpp
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Load_Balancing_Service.cpp
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Load_Balancing_Service.h"
 #include "Load_Balancer_i.h"
