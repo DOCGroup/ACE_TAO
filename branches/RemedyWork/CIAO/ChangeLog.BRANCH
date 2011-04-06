@@ -1,3 +1,14 @@
+Wed Apr  6 08:16:39 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/run_test.pl:
+          Passing the Domain ID to the Sender and Receiver to the command line. It now uses
+          'DDS4CCM_DEFAULT_DOMAIN_ID'. This way the tests on the build systems won't mix.
+
 Wed Apr  6 07:54:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:

@@ -253,7 +253,7 @@ int clean_up (DDSDomainParticipant * participant)
   return main_result;
 }
 
-int ACE_TMAIN (int , ACE_TCHAR *[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int                 main_result = 1; /* error by default */
   DDSTopic*           topic = 0;
@@ -269,8 +269,11 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
 //       static_cast <NDDS_Config_LogVerbosity> (3);
 //     NDDSConfigLogger::get_instance()->set_verbosity (n_verbosity);
 
-  const char * env_domain_id = std::getenv ("DEFAULT_DOMAIN_ID");
-
+  const char * env_domain_id = 0;
+  if (argc > 1)
+    {
+      env_domain_id = argv[1];
+    }
   if (!env_domain_id)
     {
       printf ("Environment variable DEFAULT_DOMAIN_ID not set "
@@ -280,7 +283,7 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
   else
     printf ("Domain ID set to %s\n", env_domain_id);
 
-  const int domain_id = std::atoi (env_domain_id);
+  const int domain_id = atoi (env_domain_id);
   /* Create the domain participant on domain ID 0 */
   DDSDomainParticipant *participant = DDSDomainParticipantFactory::get_instance()->
       create_participant_with_profile (domain_id,    /* Domain ID */
