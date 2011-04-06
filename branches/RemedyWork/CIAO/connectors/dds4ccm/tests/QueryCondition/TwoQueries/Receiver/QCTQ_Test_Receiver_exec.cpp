@@ -783,7 +783,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   {
     if (this->samples_received_ != this->samples_expected_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: TWO QUERIESS GETTER : "
+        ACE_ERROR ((LM_ERROR, "ERROR: TWO QUERIES GETTER : "
                               "Unexpected number of samples received: "
                               "expected <%d> - received <%d>\n",
                               this->samples_expected_,
@@ -791,7 +791,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "TWO QUERIESS : GETTER : "
+        ACE_DEBUG ((LM_DEBUG, "TWO QUERIES : GETTER : "
                               "Expected number of samples received: "
                               "expected <%d> - received <%d>\n",
                               this->samples_expected_,
