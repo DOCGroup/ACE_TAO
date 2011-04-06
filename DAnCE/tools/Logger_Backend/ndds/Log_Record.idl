@@ -16,7 +16,7 @@ module DAnCE
     string node;
 
     /// The process ID of the node.
-    long pid; 
+    long pid;
 
     /// The log priority of the message
     unsigned long priority;

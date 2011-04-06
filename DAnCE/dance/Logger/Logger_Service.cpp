@@ -90,15 +90,15 @@ namespace DAnCE
         ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
         ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       }
-    
+
     if (this->backend_.length () > 0)
       {
 
         ACE_Log_Msg_Backend* logger_be =
           ACE_Dynamic_Service<ACE_Log_Msg_Backend>::instance(this->backend_.c_str ());
-        
+
         //        backend->open ("");
-        
+
         if (logger_be == 0)
           {
             DANCE_ERROR (DANCE_LOG_EMERGENCY,
@@ -110,7 +110,7 @@ namespace DAnCE
           }
 
         ACE_Log_Msg::msg_backend (logger_be);
-        
+
         ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
         ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
       }
