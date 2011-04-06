@@ -3,10 +3,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Env_Value_T.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Dynamic_Service.h"
 #include "tao/SystemException.h"
 #include "Log_Macros.h"
 #include "ace/Service_Config.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Log_Msg_Backend.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
@@ -18,6 +20,7 @@ namespace DAnCE
 {
   Logger_Service::Logger_Service (void)
     : filename_ (ACE_TEXT("")),
+      backend_ ("stderr"),
       trace_ (false)
   {
   }
@@ -35,6 +38,9 @@ namespace DAnCE
 
     ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("DANCE_LOG_FILE"), this->filename_.c_str ());
     this->filename_ = filename;
+
+    ACE_Env_Value<const ACE_TCHAR *> backend (ACE_TEXT("DANCE_LOG_BACKEND"), this->backend_.c_str ());
+    this->backend_ = backend;
 
     this->parse_args (argc, argv);
 
@@ -83,6 +89,30 @@ namespace DAnCE
 
         ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
         ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+      }
+    
+    if (this->backend_.length () > 0)
+      {
+
+        ACE_Log_Msg_Backend* logger_be =
+          ACE_Dynamic_Service<ACE_Log_Msg_Backend>::instance(this->backend_.c_str ());
+        
+        //        backend->open ("");
+        
+        if (logger_be == 0)
+          {
+            DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                         (LM_EMERGENCY, DLINFO
+                          "Logger_Service::init - "
+                          "Unable to load backend %s\n",
+                          this->backend_.c_str ()));
+            return -1;
+          }
+
+        ACE_Log_Msg::msg_backend (logger_be);
+        
+        ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
+        ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
       }
 
     return 0;

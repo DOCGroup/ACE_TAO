@@ -601,6 +601,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      ORB_Destroyer safe_orb (orb);
+
       DAnCE::Logger_Service * dlf =
         ACE_Dynamic_Service<DAnCE::Logger_Service>::instance ("DAnCE_Logger");
 
@@ -608,14 +611,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           dlf->init (argc, argv);
         }
-
-      DANCE_TRACE_LOG (DANCE_LOG_TRACE,
-                       (LM_TRACE, DLINFO
-                        ACE_TEXT("PlanLauncher - initializing ORB\n")));
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-      ORB_Destroyer safe_orb (orb);
 
       if (!parse_args (argc, argv, options))
         {

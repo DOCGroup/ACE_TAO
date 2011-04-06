@@ -1,0 +1,30 @@
+<!-- $Id$ -->
+<!-- Default QoS specification for NDDS logger. -->
+<dds>
+  <qos_library name="DAnCE">
+    <qos_profile name="Logger" is_default_qos="true">
+      <topic_qos name="DAnCELogging">
+        <reliability>
+          <kind>RELIABLE_RELIABILITY_QOS</kind>
+          <max_blocking_time>
+            <sec>1</sec>
+            <nanosec>0</nanosec>
+          </max_blocking_time>
+        </reliability>
+
+
+        <history>
+          <kind>KEEP_LAST_HISTORY_QOS</kind>
+          <depth>50</depth>
+        </history>
+        
+        <durability>
+          <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+        </durability>
+      </topic_qos>
+    </qos_profile>
+  </qos_library>
+</dds>
+
+
+

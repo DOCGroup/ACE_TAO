@@ -59,6 +59,8 @@ namespace DAnCE
 
     std::string topic_name_;
     std::string node_;
+    std::string qos_file_;
+
     long domain_;
 
     DDSDomainParticipant *participant_;
