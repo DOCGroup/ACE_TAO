@@ -16,7 +16,7 @@ NDDS_QOS_PROFILES is defined and points to this file.
 For more information about XML QoS Profiles see Chapter 15 in the
 RTI Data Distribution Service user manual.
 -->
-<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.4d/scripts/../resource/rtiddsgen/../qos_profiles_4.4d/schema/rti_dds_qos_profiles.xsd" version="4.4d">
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.5d/scripts/../resource/rtiddsgen/../qos_profiles_4.5d/schema/rti_dds_qos_profiles.xsd" version="4.5d">
   <!-- QoS Library containing the QoS profile used in the generated example.
 
         A QoS library is a named set of QoS profiles.

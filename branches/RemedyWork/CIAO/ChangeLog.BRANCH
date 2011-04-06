@@ -1,3 +1,37 @@
+Wed Apr  6 17:56:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Getter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/ListenManyByMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/Different/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Reader/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Updated to 4.5d
+
+        * tests/DAnCE/Threading/descriptors/Plan.cdp:
+          No ORB logging
+
 Wed Apr  6 14:14:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
