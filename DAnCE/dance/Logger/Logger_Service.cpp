@@ -20,7 +20,7 @@ namespace DAnCE
 {
   Logger_Service::Logger_Service (void)
     : filename_ (ACE_TEXT("")),
-      backend_ (""),
+      backend_ (ACE_TEXT ("")),
       trace_ (false)
   {
   }
