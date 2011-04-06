@@ -1,3 +1,9 @@
+Wed Apr  6 12:57:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/ACE-guidelines.html:
+
+          Updated emacs directive to remove trailing whitespace.
+
 Tue Apr  5 14:27:40 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/ClientRequestHandler.h:
