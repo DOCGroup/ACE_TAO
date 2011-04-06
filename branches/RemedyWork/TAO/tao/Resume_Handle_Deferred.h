@@ -12,7 +12,8 @@
 
 #ifndef TAO_RESUME_HANDLE_DEFERRED_H
 #define TAO_RESUME_HANDLE_DEFERRED_H
-#include "ace/pre.h"
+
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 #include "ace/Event_Handler.h"
@@ -29,7 +30,7 @@ class TAO_ORB_Core;
  *
  * @brief A utility class that helps in resuming handlers if TAO uses
  *  a TP Reactor from ACE. In contrast with the Resume_Handle class
- *  however, the resumption is performed at the expiration of a timer, 
+ *  however, the resumption is performed at the expiration of a timer,
  *  previously registered with the reactor. TAO_Resume_Handle_Deferred
  *  will also notify the reactor (reactor->notify())
  *
@@ -51,7 +52,7 @@ class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
 
     /// Disposes off this instance
     virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-    
+
   private:
     /// Implements the timeout handling
     int handle_timeout_eh ();
@@ -65,5 +66,5 @@ class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
 # include "Resume_Handle_Deferred.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_RESUME_HANDLE_DEFERRED_H*/
