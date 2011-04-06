@@ -2188,7 +2188,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
   while (this->has_shutdown () == false)
     {
-      // Every time we perform an interation we have to become the
+      // Every time we perform an interaction we have to become the
       // leader again, because it is possible that a client has
       // acquired the leader role...
       TAO_Leader_Follower &leader_follower = this->leader_follower ();
