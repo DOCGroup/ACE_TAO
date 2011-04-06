@@ -218,7 +218,7 @@ namespace CIAO
 
       TYPED_DDS_READER * rti_entity (void);
 
-      void complete_read (
+      ::DDS::ReturnCode_t complete_read (
         RTI_SEQ_TYPE & dds_data_values,
         SEQ_TYPE & data_values,
         DDS_SampleInfoSeq & dds_sample_infos,

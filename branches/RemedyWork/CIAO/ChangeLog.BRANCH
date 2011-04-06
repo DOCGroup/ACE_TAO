@@ -1,3 +1,32 @@
+Wed Apr  6 13:14:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+          Added a comment why we shouldn't throw an exception when
+          return_loan fails.
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.h:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Reviewed return_loan methods. When return_loan fails, we should
+          throw an exception to the user in case the data retrievel from
+          DDS succeeds. When the data retrieval from DDS fails, the user
+          want to see that exception (instead of the return_loan exception).
+          Still, there's always a return_loan invoked, regardless of the
+          outcome of the DDS retrieval.
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.h:
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          When an error occurs during return_loan, this error will be returned
+          to the user when the data retrieval from DDS succeeds. If the data
+          retrieval from DDS fails, this failure will be returned to the users.
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+          Expanded test. When data was not read during the invocation of get_many,
+          the sample state of this (unread) data should be "FRESH_INFO"; otherwise
+          it should be "ALREADY_SEEN".
+
 Wed Apr  6 10:13:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
