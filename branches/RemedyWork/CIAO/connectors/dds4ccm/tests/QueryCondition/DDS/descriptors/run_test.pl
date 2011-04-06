@@ -24,7 +24,7 @@ $S = $tg_sender->CreateProcess ("./DDS_Sender", "$domain_id");
 $S->Spawn ();
 
 
-sleep (300);
+sleep (90);
 
 $R->Kill ();
 $S->Kill ();

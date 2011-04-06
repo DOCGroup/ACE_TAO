@@ -14,9 +14,9 @@ using namespace std;
 bool shutdown_flag = false;
 long num_samples = 0;
 long received_samples = 0;
-long expected_samples_run1 = 2 * 5;    //only samples between 2 and 5 should be received
-long expected_samples_run2 = 11 * 5;   //only samples between 22 and 34 should be received
-long expected_samples_run3 = (60 - 13) * 5;
+long expected_samples_run1 = 1 * 2;    //only sample 2 should be received of 2 keys
+long expected_samples_run2 = 1 * 2;   //only sample 5 should be received o 2 keys
+long expected_samples_run3 = (9 - 2) * 2; //all samples 1-9 except sample 2 and 5 of both keys.
 
 
 DDSWaitSet* ws_ = new DDSWaitSet ();
@@ -39,19 +39,19 @@ void check_iter (const QueryConditionTest & sample,
   bool error = false;
   if (run == 1)
     {
-      //only samples between 2 and 5 should be received
-      error = sample.iteration <= 2 && sample.iteration >= 5;
+      //only sample 2 should be received
+      error = sample.iteration <= 1 && sample.iteration >= 3;
     }
   else if (run == 2)
     {
-      //only samples between 22 and 34 should be received
-      error = sample.iteration <= 22 && sample.iteration >= 34;
+      //only samples 8 should be received
+      error = sample.iteration <= 4 && sample.iteration >= 6;
     }
   else if (run == 3)
     {
       //all other unread samples.
-      error = sample.iteration > 2 && sample.iteration < 5;
-      error |= sample.iteration > 22 && sample.iteration < 34;
+      error = sample.iteration == 2;
+      error |= sample.iteration ==5;
     }
 
   error
@@ -65,7 +65,7 @@ void check_iter (const QueryConditionTest & sample,
     :
     cout << "Received: key <"
         << sample.symbol
-        << "> - iteration "
+        << "> - iteration <"
         << sample.iteration
         << "> - instance status <"
         << readinfo.instance_state
@@ -106,13 +106,8 @@ void read (DDSDataReader * dr,
                 {
                   received_samples = 0;
 
-                // *************** end read one by one
-                //  DDS_SampleStateMask sample = rc->get_sample_state_mask ();
-                //  DDS_ViewStateMask view = rc->get_view_state_mask ();
-                //  DDS_InstanceStateMask instance = rc->get_instance_state_mask ();
-                //  ::printf("************sample_state %ld, view_state %ld instance_state %ld\n",
-                //                               (long)sample, (long)view, (long)instance);
-                //  **************  read all in one
+                  //  **************  read all in one
+                  cout << "CHECKING..... SAMPLES with read_w_condition with readcondition:" << endl;
                   typed_dr->read_w_condition (data,
                                               info_seq,
                                               DDS_LENGTH_UNLIMITED,
@@ -133,7 +128,6 @@ void read (DDSDataReader * dr,
                            <<  expected_samples_run3 << "> - received <"
                            << received_samples << ">" << endl;
                     }
-
                 // end read all in one
 
                 }
@@ -142,11 +136,12 @@ void read (DDSDataReader * dr,
                   cerr << "ERROR: Should be woken up on ReadCondition" << endl;
                 }
             }
-          else
+          else // run 1 and 2
             {
               if (cond[i] == qc)
                 {
                   received_samples = 0;
+                  cout << "CHECKING..... SAMPLES with read_w_condition with querycondition:" << endl;
                   typed_dr->read_w_condition (data,
                                                info_seq,
                                               DDS_LENGTH_UNLIMITED,
@@ -203,10 +198,10 @@ void read (DDSDataReader * dr,
       typed_dr->read (data,
                       info_seq,
                       DDS_LENGTH_UNLIMITED);
-      cout << "CHECKING..... TOTAL NUMBER OF SAMPLES IN DDS : <"
-            << data.length ()
-            << ">"
-            << endl;
+      cout << "\nCHECKING..... TOTAL NUMBER OF SAMPLES IN DDS with a read : <"
+             << data.length ()
+             << ">"
+             << endl;
       for (DDS_Long i = 0; i < data.length (); ++i)
         {
           cout << "Received: key <"
@@ -222,10 +217,10 @@ void read (DDSDataReader * dr,
               << ">"
               << endl;
         }
-      if (data.length () != 300)
+      if (data.length () != 18)
         {
           cerr << "ERROR: unexpected number of samples received : "
-          << "expected <300> - received <"
+          << "expected <18> - received <"
           << data.length () << ">" << endl;
         }
       typed_dr->return_loan (data, info_seq);
@@ -343,7 +338,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return clean_up (participant);
   }
 
-  const char* PARAMS_RUN_1[] = {"2", "5"};
+  const char* PARAMS_RUN_1[] = {"1", "3"};
   DDS_StringSeq parameters_run_1;
   parameters_run_1.from_array (PARAMS_RUN_1, 2);
 
@@ -358,18 +353,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return clean_up (participant);
   }
   else
-    cout << "RECEIVER: query condition created" << endl;
+    cout << "RECEIVER: query condition created : iteration > 1 AND iteration < 3" << endl;
 
   ws_->attach_condition (qc);
 
-  cout << "RECEIVER: Expecting samples with iteration 3 and 4" <<endl;
+  cout << "RECEIVER: Expecting two samples (key_1 and key_2) with iteration 3." <<endl;
 
   read (data_reader, qc, rc, ++run);
 
   //Second run: change the parameters
   if (qc)
     {
-      const char* PARAMS_RUN_2[] = {"22", "34"};
+      const char* PARAMS_RUN_2[] = {"4", "6"};
       DDS_StringSeq parameters_run_2;
       parameters_run_2.from_array (PARAMS_RUN_2, 2);
       if (qc->set_query_parameters (parameters_run_2) != DDS_RETCODE_OK)
@@ -378,8 +373,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return clean_up (participant);
         }
     }
+  cout << "RECEIVER: query condition changed : iteration > 4 AND iteration < 6" << endl;
 
-  cout << "RECEIVER: Expecting samples with iterations between 22 and 34" <<endl;
+  cout << "RECEIVER: Expecting two samples (key_1 and key_2) with iterations 5" <<endl;
 
   read (data_reader, qc, rc, ++run);
   // Third run: Detach querycondition and create read condition instead.
@@ -390,6 +386,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       cerr << "RECEIVER: Error detaching query condition" << endl;
       return clean_up (participant);
     }
+  cout << "RECEIVER: query condition deleted" << endl;
+  cout << "RECEIVER: create read condition : DDS_NOT_READ_SAMPLE_STATE,"
+       << "DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,"
+       << "DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE" << endl;
+
   // Delete the query condition from the data reader
   typed_dr->delete_readcondition (qc);
   sleep_now(10);
@@ -409,7 +410,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return clean_up (participant);
     }
 
-  cout << "RECEIVER: Expecting ALL UNREAD samples with iterations between 1 and 60" <<endl;
+  cout << "RECEIVER: Expecting ALL UNREAD samples (key_1 and key_2) with iterations between 1 and 9, except 2 and 5" <<endl;
 
   read (data_reader, qc, rc, ++run);
 
