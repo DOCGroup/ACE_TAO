@@ -173,9 +173,11 @@ namespace CIAO
       if (retval != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "Reader_T::read_last - "
+                        "Reader_T::return_loan - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
+
+          throw ::CCM_DDS::InternalError (retval, 0);
         }
     }
 
@@ -244,8 +246,8 @@ namespace CIAO
       SEQ_VALUE_TYPE data;
 
       this->read_w_instance (data,
-                              sample_info,
-                              lookup_hnd);
+                             sample_info,
+                             lookup_hnd);
 
       ::CORBA::Long sample = data.length();
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO

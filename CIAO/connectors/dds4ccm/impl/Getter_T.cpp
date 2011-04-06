@@ -148,8 +148,8 @@ namespace CIAO
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
               ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                              sample_info,
-                                                              max_samples);
+                                                             sample_info,
+                                                             max_samples);
 
               if (retcode == ::DDS::RETCODE_OK && data.length () >= 1)
                 {
@@ -211,6 +211,8 @@ namespace CIAO
                     "Getter_Base_T::get_many - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
+
+                  throw ::CCM_DDS::InternalError (retcode, 1);
                 }
             }
         }
@@ -301,8 +303,8 @@ namespace CIAO
                   SEQ_VALUE_TYPE data;
 
                   ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                                  sample_info,
-                                                                  1);
+                                                                 sample_info,
+                                                                 1);
 
                   if (retcode == ::DDS::RETCODE_NO_DATA)
                     {
@@ -346,6 +348,7 @@ namespace CIAO
                             "Getter_T::get_one - "
                             "No valid data available in DDS.\n"));
                     }
+                    
                   // Return the loan of each read.
                   ::DDS::ReturnCode_t const retval =
                     this->dds_reader ()->return_loan (data, sample_info);
@@ -355,6 +358,8 @@ namespace CIAO
                         "Getter_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
+                      
+                        throw ::CCM_DDS::InternalError (retcode, 1);
                     }
                 }
             }
