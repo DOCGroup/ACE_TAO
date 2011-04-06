@@ -20,7 +20,7 @@ TAO_Resume_Handle_Deferred::~TAO_Resume_Handle_Deferred  (void)
 {
 }
 
-int 
+int
 TAO_Resume_Handle_Deferred:: handle_timeout (const ACE_Time_Value &, const void *)
 {
   if (handle_timeout_eh () == -1)
@@ -29,7 +29,7 @@ TAO_Resume_Handle_Deferred:: handle_timeout (const ACE_Time_Value &, const void 
   // Send a notification to the reactor to cause the awakening of a new
   // follower, if there is one already available.
   ACE_Reactor *reactor = this->orbc_->reactor ();
-  int retval = reactor->notify (0, ACE_Event_Handler::READ_MASK); 
+  int retval = reactor->notify (0, ACE_Event_Handler::READ_MASK);
   if (TAO_debug_level > 2)
     {
       // @@todo: need to think about what is the action that
