@@ -4,14 +4,14 @@
 
 #include "ciao/Servants/Servant_Impl_Base.h"
 #include "ciao/Logger/Log_Macros.h"
+#include "ciao/Base/CIAO_ExceptionsC.h"
 
 namespace CIAO
 {
   ///////////////////////////////////////////////////////////////
 
-  Session_Container_i::Session_Container_i (
-        CORBA::ORB_ptr o,
-        PortableServer::POA_ptr poa)
+  Session_Container_i::Session_Container_i (CORBA::ORB_ptr o,
+                                            PortableServer::POA_ptr poa)
     : Container_i < ::CIAO::Session_Container> (o, poa)
   {
   }
@@ -69,32 +69,38 @@ namespace CIAO
     tmp_ptr = reinterpret_cast<ptrdiff_t> (void_ptr_servant);
     HomeServantFactory screator = reinterpret_cast<HomeServantFactory> (tmp_ptr);
 
-    if (!hcreator)
+    if (hcreator == 0)
       {
+        std::ostringstream err;
+        err << "Home executor factory function [" << entry_point << "] invalid in DLL ["
+            << primary_artifact;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
                      "Session_Container_i::install_home "
-                     "- Error: Entry point [%C] "
-                     "invalid in dll [%C]\n",
-                     entry_point,
-                     primary_artifact));
+                     "- Error: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::ImplEntryPointNotFound ();
+        throw CIAO::Installation_Failure (name,
+                                          err.str ().c_str ());
       }
 
-    if (!screator)
+    if (screator == 0)
       {
+        std::ostringstream err;
+        err << "Home servant factory function [" << servant_entrypoint << "] invalid in DLL ["
+            << servant_artifact;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
-                     "Session_Container_i::install_home"
-                     " - Error: Entry point [%C] "
-                     "invalid in dll [%C]\n",
-                     servant_entrypoint,
-                     servant_artifact));
+                     "Session_Container_i::install_home "
+                     "- Error: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::ImplEntryPointNotFound ();
+        throw CIAO::Installation_Failure (name,
+                                          err.str ().c_str ());
       }
 
     CIAO_DEBUG (9,
@@ -113,7 +119,8 @@ namespace CIAO
                      "Session_Container_i::install_home - "
                      "Home executor factory failed.\n"));
 
-        throw Components::Deployment::InstallationFailure ();
+        throw CIAO::Installation_Failure (name,
+                                          "Home executor factory function failed\n");
       }
 
     CIAO_DEBUG (9,
@@ -127,13 +134,14 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-            CIAO_ERROR (1,
-                        (LM_ERROR,
-                         CLINFO
-                         "Session_Container_i::install_home - "
-                         "Home servant factory failed.\n"));
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Session_Container_i::install_home - "
+                     "Home servant factory failed.\n"));
 
-        throw Components::Deployment::InstallationFailure ();
+        throw CIAO::Installation_Failure (name,
+                                          "Home servant factory function failed\n");
       }
 
     PortableServer::ServantBase_var safe (home_servant);
@@ -195,30 +203,36 @@ namespace CIAO
 
     if (ccreator == 0)
       {
+        std::ostringstream err;
+        err << "Entry point [" << entry_point << "] invalid in DLL ["
+            << primary_artifact;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
                      "Session_Container_i::install_component "
-                     "- Error: Entry point [%C] "
-                     "invalid in dll [%C]\n",
-                     entry_point,
-                     primary_artifact));
+                     "- Error: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::ImplEntryPointNotFound ();
+        throw CIAO::Installation_Failure (name,
+                                          err.str ().c_str ());
       }
 
     if (screator == 0)
       {
+        std::ostringstream err;
+        err << "Entry point [" << servant_entrypoint << "] invalid in DLL ["
+            << servant_artifact;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
                      "Session_Container_i::install_component "
-                     "- Error: Entry point [%C] "
-                     "invalid in dll [%C]\n",
-                     servant_entrypoint,
-                     servant_artifact));
+                     "- Error: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::ImplEntryPointNotFound ();
+        throw CIAO::Installation_Failure (name,
+                                          err.str ().c_str ());
       }
 
     CIAO_DEBUG (9,
@@ -238,7 +252,8 @@ namespace CIAO
                      "Session_Container_i::install_component - "
                      "Component executor factory failed.\n"));
 
-        throw Components::Deployment::InstallationFailure ();
+        throw CIAO::Installation_Failure (name,
+                                          "Component executor factory failed");
       }
 
     CIAO_DEBUG (9,
@@ -254,13 +269,14 @@ namespace CIAO
 
     if (component_servant == 0)
       {
-      CIAO_ERROR (1,
-                  (LM_ERROR,
-                   CLINFO
-                   "Session_Container_i::install_component - "
-                   "Component servant factory failed.\n"));
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Session_Container_i::install_component - "
+                     "Component servant factory failed.\n"));
 
-        throw Components::Deployment::InstallationFailure ();
+        throw CIAO::Installation_Failure (name,
+                                          "Componet servant factory failed");
       }
 
     PortableServer::ServantBase_var safe (component_servant);
@@ -282,8 +298,8 @@ namespace CIAO
       Components::CCMObject::_narrow (objref.in ());
 
     CIAO_DEBUG (9, (LM_TRACE, CLINFO
-                "Session_Container_i::install_component - "
-                "Component successfully created\n"));
+                    "Session_Container_i::install_component - "
+                    "Component successfully created\n"));
 
     return componentref._retn ();
   }

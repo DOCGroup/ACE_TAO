@@ -1,0 +1,17 @@
+// $Id$
+
+/**
+ * @file CIAO_Exceptions.idl
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ *
+ * Exceptions used by the CIAO Container.
+ */
+
+module CIAO
+{
+  exception Installation_Failure
+  {
+    string name;
+    string reason;
+  };
+};
