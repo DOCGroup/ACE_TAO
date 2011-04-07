@@ -217,7 +217,7 @@ namespace DAnCE
                                  resources[i].resourceType[k]) == 0)
               {
                 DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
-                             (LM_TRACE, DLINFO,
+                             (LM_TRACE, DLINFO
                               ACE_TEXT("Node_Locator::get_resource_value - ")
                               ACE_TEXT("Found resource for type '%C'\n"),
                               type));
