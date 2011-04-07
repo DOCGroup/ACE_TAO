@@ -1,3 +1,9 @@
+Thu Apr  7 12:24:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/DomainApplicationManager/Node_Locator.cpp:
+          Removed comma after DLINFO in a log message. Therefor the message
+          will be logged properly.
+
 
 Local Variables:
 mode: change-log
