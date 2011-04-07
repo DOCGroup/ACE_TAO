@@ -1,10 +1,55 @@
+Thu Apr  7 11:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Wed Apr  6 18:28:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * bin/corba-boolean.pl:
+                * bin/subst_env.pl:
+                * bin/tao_env.pl:
+                  Removed these files, obsolete
+
+        Mon Apr  4 17:46:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tests/Bug_3953_Regression:
+                * tests/Bug_3953_Regression:
+                * tests/MT_NoUpcall_Client_Leader:
+                  New tests for Wait Strategy mt_noupcall
+
+                * tao/Connection_Handler.h:
+                * tao/Connection_Handler.cpp:
+                  Integrated some changes from 1.3a as start to get mt_noupcall working
+
+                * tao/LF_Event.h:
+                * tao/LF_Invocation_Event.h:
+                * tao/LF_Multi_Event.h:
+                  Doxygen
+
+                * tao/tao.mpc:
+                  Added new files
+
+        Sun Feb 20 18:57:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/fe/lex.yy.cpp:
+                  Added missing include
+
+                * tests/IDL_Test/IDL_Test.mpc:
+                * tests/IDL_Test/anyunion.idl:
+                * tests/IDL_Test/union.idl:
+                  Moved union with any to its own file because RTI DDS 4.5d now gives
+                  an error when using an union with an Any
+
+        === end changelog ===
+
 Wed Apr  6 13:56:43 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * performance-tests/Sequence_Latency/Sequence_Operations_Time/run_test.pl:
         * bin/tao_other_tests.lst:
-        
+
           Added run_test.pl to new performance test and included it in the
-          other tests list for nightly running.        
+          other tests list for nightly running.
 
 Wed Apr  6 12:58:38 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 

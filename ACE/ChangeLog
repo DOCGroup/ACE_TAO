@@ -1,3 +1,61 @@
+Thu Apr  7 11:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Mon Mar 21 17:58:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/Lock.h:
+                * ace/Map_T.h:
+                * ace/WFMO_Reactor.h:
+                  Doxygen updates
+
+        Mon Feb 28 13:32:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/Local_Tokens.h:
+                  Doxygen updates
+
+        Tue Feb 22 13:21:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/Reactor.h:
+                * ace/WFMO_Reactor.h:
+                  Doxygen updates
+
+        Sun Feb 20 12:47:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * ace/OS_NS_Thread.h:
+                * ace/OS_NS_Thread.inl:
+                * ace/OS_NS_Thread.cpp:
+                  Removed ACE_HAS_NONSCALAR_THREAD_KEY_T, we don't have a config file
+                  that defines this
+
+                * ace/TSS_Adapter.h:
+                * ace/TSS_Adapter.cpp:
+                * ace/TSS_T.cpp:
+                  Added missing ACE_Export
+
+                * ace/os_include/os_signal.h:
+                  Simplified ifdef checks
+
+                * bin/MakeProjectCreator/config/acedefaults.mpb:
+                  Removed exceptions, added cdt6
+
+                * ace/config-qnx.h:
+                * include/makeinclude/platform_qnx_gcc.GNU:
+                  New files for QNX, simplified them and extended support for QNX 6.5
+
+                * include/makeinclude/platform_qnx_neutrino.GNU:
+                * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+                  Removed these files.
+
+        Mon Feb 14 18:02:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * rpmbuild/ace-tao.spec:
+                  Set explicit MPC_ROOT
+
+        === end changelog ===
+
 Wed Apr  6 14:39:10 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/tests.mpc:
