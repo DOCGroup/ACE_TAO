@@ -135,7 +135,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   int result = 0;
-  
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
