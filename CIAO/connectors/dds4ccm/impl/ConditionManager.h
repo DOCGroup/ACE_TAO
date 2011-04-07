@@ -187,7 +187,7 @@ namespace CIAO
         *
         * Internal getter for the DataReader.
         * If the internal dds_entity is not set before this method
-        * is called, a ::CORBA::BAD_INV_ORDER exception is thrown.
+        * is called, a CORBA::BAD_INV_ORDER exception is thrown.
         *
         */
       ::DDS::DataReader_ptr dds_entity (void);
