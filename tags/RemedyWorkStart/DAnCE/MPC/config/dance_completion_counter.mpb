@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  includes += $(DANCE_ROOT)/tools
-}
