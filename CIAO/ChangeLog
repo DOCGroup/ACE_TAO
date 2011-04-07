@@ -1,3 +1,11 @@
+Thu Apr  7 18:48:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+          Fixed valgrind memory leaks
+
 Thu Apr  7 18:01:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:

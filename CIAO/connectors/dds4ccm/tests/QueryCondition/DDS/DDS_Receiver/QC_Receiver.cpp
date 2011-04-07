@@ -243,12 +243,13 @@ int clean_up (DDSDomainParticipant * participant)
       main_result = 1;
     }
   }
+  delete ws_;
+  DDSDomainParticipantFactory::finalize_instance ();
   return main_result;
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int                 main_result = 1; /* error by default */
   DDSTopic*           topic = 0;
   DDSDataReader*      data_reader = 0;
   DDSSubscriber*      sub = 0;
@@ -412,7 +413,5 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   read (data_reader, qc, rc, ++run);
 
-  main_result = 0;
-
-  return main_result;
+  return clean_up (participant);
 }
