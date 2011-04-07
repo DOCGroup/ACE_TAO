@@ -16,7 +16,7 @@ namespace DAnCE
       static int Initializer (void);
     private:
       void parse_args (int argc, ACE_TCHAR **argv);
-      
+
       ACE_TString filename_;
       ACE_TString backend_;
       bool trace_;

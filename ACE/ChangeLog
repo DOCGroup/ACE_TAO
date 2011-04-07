@@ -1,3 +1,22 @@
+Wed Apr  6 14:39:10 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/tests.mpc:
+
+          Added Bug 3943 regression test to build.
+
+Wed Apr  6 14:14:59 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3943_Regression_Test.cpp:
+        * tests/run_test.lst:
+
+          Adding new test prior to committing fix.
+
+Wed Apr  6 12:57:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/ACE-guidelines.html:
+
+          Updated emacs directive to remove trailing whitespace.
+
 Tue Apr  5 14:27:40 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * protocols/ace/INet/ClientRequestHandler.h:

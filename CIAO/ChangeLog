@@ -1,3 +1,17 @@
+Wed Apr  6 12:55:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+
+          Trailing whitespace.
+
+Wed Apr  6 01:24:02 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors.mpc:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+
+          Removed ACE_TEXT from logging messages.
+
 Fri Apr  1 17:39:00 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:

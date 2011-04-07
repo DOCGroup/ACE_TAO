@@ -34,9 +34,9 @@ namespace DAnCE
     opts.long_option (ACE_TEXT ("domain"), 'd', ACE_Get_Opt::ARG_REQUIRED);
     opts.long_option (ACE_TEXT ("qos-file"), 'q', ACE_Get_Opt::ARG_REQUIRED);
     opts.long_option (ACE_TEXT ("node-name"), 'n', ACE_Get_Opt::ARG_REQUIRED);
-    
+
     int c = 0;
-    
+
     while ((c = opts ()) != -1)
       {
         switch (c)
@@ -48,22 +48,22 @@ namespace DAnCE
           case 'd':
             this->domain_ = ACE_OS::atoi (opts.opt_arg ());
             break;
-            
+
           case 'q':
             this->qos_file_ = opts.opt_arg ();
             break;
-            
+
           case 'n':
             this->node_ = opts.opt_arg ();
             break;
-            
+
           default:
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unknown option for NDDS_Log_Backend: %s\n"),
                         opts.last_option ()));
           }
 
       }
-    
+
     return this->open (ACE_TEXT (""));
   }
 
@@ -113,7 +113,7 @@ namespace DAnCE
       }
 
     DDS_ReturnCode_t retval;
-    
+
     retval = Log_RecordTypeSupport::register_type (this->participant_,
                                                    Log_RecordTypeSupport::get_type_name ());
 
