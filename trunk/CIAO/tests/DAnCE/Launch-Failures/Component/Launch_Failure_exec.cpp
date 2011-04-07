@@ -245,12 +245,12 @@ namespace CIAO_Launch_Failure_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Launch_Failure_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
 
@@ -259,11 +259,11 @@ namespace CIAO_Launch_Failure_Impl
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Launch_Failure_Home_exec_i);
-    
+
     return retval;
   }
 }
