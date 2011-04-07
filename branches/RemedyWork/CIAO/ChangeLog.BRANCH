@@ -1,3 +1,7 @@
+Thu Apr  7 12:15:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.h:
+          Fixed doxygen warning
 
 Local Variables:
 mode: change-log
