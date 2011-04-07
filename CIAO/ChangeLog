@@ -1,3 +1,10 @@
+Thu Apr  7 21:43:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/descriptors/SuccessfulDeployment.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/run_test.pl:
+
+          Successfull deployment baseline for the Launch-Failures test.
+
 Thu Apr  7 21:04:51 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Base/CIAO_Base.mpc:
