@@ -7,6 +7,9 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ciao/Containers/Servant_Activator.h"
 #include "ciao/Servants/Connector_Servant_Impl_Base.h"
+#include "ciao/Base/CIAO_ExceptionsC.h"
+
+#include <sstream>
 
 namespace CIAO
 {
@@ -172,73 +175,82 @@ namespace CIAO
 
     if (!primary_artifact)
       {
+        std::ostringstream err;
+        err << "Component [" << name << "] has a nil component executor DLL name." ;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
-                      "ERROR: Null component executor DLL name\n",
-                      entity));
+                     "ERROR: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::UnknownImplId ();
+        throw CIAO::Installation_Failure (name, err.str ().c_str ());
       }
 
     if (!servant_artifact)
       {
+        std::ostringstream err;
+        err << "Component [" << name << "] has a nil component servant DLL name." ;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
-                      "ERROR: Null component servant DLL name\n",
-                      entity));
+                     "ERROR: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::UnknownImplId ();
+        throw CIAO::Installation_Failure (name, err.str ().c_str ());
       }
 
     if (!entry_point)
       {
+        std::ostringstream err;
+        err << "Component [" << name << "] has a nil executor entrypoint." ;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
-                      "ERROR: Null entry point for "
-                      "executor DLL [%C]\n",
-                      entity,
-                      primary_artifact));
+                     "ERROR: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::ImplEntryPointNotFound ();
+        throw CIAO::Installation_Failure (name, err.str ().c_str ());
       }
 
     if (!servant_entrypoint)
       {
+        std::ostringstream err;
+        err << "Component [" << name << "] has a nil servant entrypoint." ;
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
-                      "ERROR: Null entry point for "
-                      "servant DLL [%C]\n",
-                      entity,
-                      servant_artifact));
+                     "ERROR: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::ImplEntryPointNotFound ();
+        throw CIAO::Installation_Failure (name, err.str ().c_str ());
       }
 
     if (executor_dll.open (ACE_TEXT_CHAR_TO_TCHAR (primary_artifact),
                            ACE_DEFAULT_SHLIB_MODE,
                            false) != 0)
       {
+        std::ostringstream err;
         const ACE_TCHAR* error = executor_dll.error ();
+
+        err << "Unable to open executor DLL for component [" << name
+            << "]: " << error;
 
         CIAO_ERROR (1,
                     (LM_ERROR,
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
-                      "ERROR in opening the executor "
-                      "DLL [%C] with error [%s]\n",
-                      entity,
-                      primary_artifact,
-                      error));
+                     "ERROR: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::UnknownImplId ();
+        throw CIAO::Installation_Failure (name, err.str ().c_str ());
       }
     else
       {
@@ -255,19 +267,20 @@ namespace CIAO
                           ACE_DEFAULT_SHLIB_MODE,
                           false) != 0)
       {
+        std::ostringstream err;
         const ACE_TCHAR* error = servant_dll.error ();
+
+        err << "Unable to open servant DLL for component [" << name
+            << "]: " << error;
 
         CIAO_ERROR (1,
                     (LM_ERROR,
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
-                      "ERROR in opening the servant "
-                      "DLL [%C] with error [%s]\n",
-                      entity,
-                      servant_artifact,
-                      error));
+                     "ERROR: %C\n",
+                     err.str ().c_str ()));
 
-        throw Components::Deployment::UnknownImplId ();
+        throw CIAO::Installation_Failure (name, err.str ().c_str ());
       }
     else
       {

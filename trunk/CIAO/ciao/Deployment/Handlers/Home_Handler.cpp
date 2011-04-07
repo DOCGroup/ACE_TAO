@@ -3,6 +3,7 @@
 #include "Home_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Base/CIAO_PropertiesC.h"
+#include "ciao/Base/CIAO_ExceptionsC.h"
 #include "ciao/Containers/Container_BaseC.h"
 #include "CIAO_State.h"
 
@@ -197,6 +198,15 @@ namespace CIAO
                                                            attr_config);
 
         container->set_attributes (home_ref.in (), attr_config);
+      }
+    catch (::CIAO::Installation_Failure &ex)
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Home_Handler::install_instance - "
+                        "Caught Installation_Failure exception: %C:%C\n",
+                        ex.name.in (), ex.reason.in ()));
+        throw ::Deployment::StartError (ex.name.in (),
+                                        ex.reason.in ());
       }
     catch (::CORBA::Exception &ex)
       {
