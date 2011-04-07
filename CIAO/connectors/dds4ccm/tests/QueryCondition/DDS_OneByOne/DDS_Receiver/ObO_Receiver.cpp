@@ -260,14 +260,6 @@ int clean_up (DDSDomainParticipant * participant)
   return main_result;
 }
 
-#if !defined (ACE_TMAIN)
-# define ACE_TMAIN main
-#endif
-
-#if !defined (ACE_TCHAR)
-# define ACE_TCHAR char
-#endif
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int                 main_result = 1; /* error by default */

@@ -66,14 +66,6 @@ void write (DDSDataWriter * writer)
   last_iteration_ = number_of_iterations_ * run_;
 }
 
-#if !defined (ACE_TMAIN)
-# define ACE_TMAIN main
-#endif
-
-#if !defined (ACE_TCHAR)
-# define ACE_TCHAR char
-#endif
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
     DDS_ReturnCode_t    retcode;
