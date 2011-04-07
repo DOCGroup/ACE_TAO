@@ -1,0 +1,138 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Launch_Failure"
+
+project(Launch_Failure_idl_gen) : componentidldefaults {
+  custom_only = 1
+
+  idlflags += -Wb,stub_export_macro=LAUNCH_FAILURE_STUB_Export \
+              -Wb,stub_export_include=Launch_Failure_stub_export.h \
+              -Wb,skel_export_macro=LAUNCH_FAILURE_SVNT_Export \
+              -Wb,skel_export_include=Launch_Failure_svnt_export.h \
+              -Wb,exec_export_macro=LAUNCH_FAILURE_EXEC_Export \
+              -Wb,exec_export_include=Launch_Failure_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
+
+  IDL_Files {
+    Launch_Failure.idl
+  }
+}
+
+project(Launch_Failure_lem_gen) : ciaoidldefaults {
+  after += Launch_Failure_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=LAUNCH_FAILURE_LEM_STUB_Export \
+              -Wb,stub_export_include=Launch_Failure_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    Launch_FailureE.idl
+  }
+}
+
+project(Launch_Failure_lem_stub) : ccm_svnt {
+  after += Launch_Failure_lem_gen Launch_Failure_stub
+  libs  +=  Launch_Failure_stub
+
+  libout = ../lib
+
+  sharedname = Launch_Failure_lem_stub
+  dynamicflags += LAUNCH_FAILURE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Launch_FailureEC.cpp
+  }
+
+  Header_Files {
+    Launch_FailureEC.h
+    Launch_Failure_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Launch_FailureEC.inl
+  }
+}
+
+project(Launch_Failure_stub) : ccm_stub {
+  after += Launch_Failure_idl_gen
+  libs  +=
+
+  libout = ../lib_stub
+
+  sharedname = Launch_Failure_stub
+  dynamicflags += LAUNCH_FAILURE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Launch_FailureC.cpp
+  }
+
+  Header_Files {
+    Launch_FailureC.h
+    Launch_Failure_stub_export.h
+  }
+
+  Inline_Files {
+    Launch_FailureC.inl
+  }
+}
+
+project(Launch_Failure_exec) : ciao_executor {
+  after   +=  Launch_Failure_lem_stub Launch_Failure_stub
+  sharedname = Launch_Failure_exec
+  libs +=  Launch_Failure_stub Launch_Failure_lem_stub
+
+  libout = ../lib
+
+  dynamicflags += LAUNCH_FAILURE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Launch_Failure_exec.cpp
+  }
+
+  Header_Files {
+    Launch_Failure_exec.h
+    Launch_Failure_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Launch_Failure_svnt) : ciao_servant  {
+  after      +=   Launch_Failure_lem_stub
+  sharedname  = Launch_Failure_svnt
+  libs       += Launch_Failure_stub Launch_Failure_lem_stub
+
+  libout = ../lib
+
+  dynamicflags += LAUNCH_FAILURE_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Launch_FailureS.cpp
+    Launch_Failure_svnt.cpp
+  }
+
+  Header_Files {
+    Launch_FailureS.h
+    Launch_Failure_svnt.h
+    Launch_Failure_svnt_export.h
+  }
+
+  Inline_Files {
+    Launch_FailureS.inl
+  }
+}
+
+
