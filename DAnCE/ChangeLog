@@ -1,3 +1,9 @@
+Thu Apr  7 22:06:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/DAnCE_Logging.txt:
+
+          Documentation of logging service.
+
 Thu Apr  7 12:45:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
