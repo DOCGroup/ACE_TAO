@@ -1,3 +1,17 @@
+Thu Apr  7 07:26:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base/Base_ObO.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+          Simplified these plain RTI DDS tests, don't use the CCK and TAO
+
 Wed Apr  6 17:56:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml:
