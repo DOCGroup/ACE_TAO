@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(ccm_noevent) {
-  avoids += ccm_noevent
-}
