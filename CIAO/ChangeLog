@@ -1,3 +1,17 @@
+Thu Apr  7 11:35:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures:
+        * tests/DAnCE/Launch-Failures/Component:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.idl:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.mpc:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.h:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * tests/DAnCE/Launch-Failures/descriptors:
+        * tests/DAnCE/Launch-Failures/lib:
+        * tests/DAnCE/Launch-Failures/lib_stub:
+
+          Testing framework for launch failures.
+
 Wed Apr  6 12:55:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Interceptors/Name_Utilities.cpp:
