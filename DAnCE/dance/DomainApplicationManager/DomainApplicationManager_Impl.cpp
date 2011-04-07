@@ -417,6 +417,42 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
                             ACE_TEXT("preparePlan on node %C has been called\n"),
                             (*iter_plans).ext_id_.c_str()));
             }
+          catch (Deployment::PlanError &ex)
+            {
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+                            ACE_TEXT("Caught a PlanError exception handling node %C : %C\n"),
+                            (*iter_plans).ext_id_.c_str(),
+                            ex._info ().c_str ()));
+              std::ostringstream err;
+              err << (*iter_plans).ext_id_.c_str()
+                  << " - PlanError exception starting preparePlan : "
+                  << ex.name.in () << ", " << ex.reason.in ();
+              // mark failure
+              _counter_ptr->increment_fail_count (err.str ().c_str ());
+              // mark off node
+              _counter_ptr->decrement_exec_count ();
+              // continue for next node
+            }
+          catch (Deployment::StartError &ex)
+            {
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT("DomainApplicationManager_Impl::preparePlan - ")
+                            ACE_TEXT("Caught a StartLaunch exception handling node %C : %C\n"),
+                            (*iter_plans).ext_id_.c_str(),
+                            ex._info ().c_str ()));
+              std::ostringstream err;
+              err << (*iter_plans).ext_id_.c_str()
+                  << " - StartLaunch exception starting preparePlan : "
+                  << ex.name.in () << ", " << ex.reason.in ();
+              // mark failure
+              _counter_ptr->increment_fail_count (err.str ().c_str ());
+              // mark off node
+              _counter_ptr->decrement_exec_count ();
+              // continue for next node
+            }
           catch (CORBA::Exception &ex)
             {
               DANCE_ERROR (DANCE_LOG_ERROR,

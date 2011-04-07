@@ -405,6 +405,45 @@ launch_plan (const Options &opts,
 
       return 1;
     }
+  catch (const Deployment::PlanError &ex)
+    {
+      if (!opts.quiet_)
+        {
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                        ACE_TEXT ("Caught PlanError exception: %C, %C\n"),
+                        ex.name.in (),
+                        ex.reason.in ()
+                        ));
+        }
+      return 1;
+    }
+  catch (const Deployment::StartError &ex)
+    {
+      if (!opts.quiet_)
+        {
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                        ACE_TEXT ("Caught PlanError exception: %C, %C\n"),
+                        ex.name.in (),
+                        ex.reason.in ()
+                        ));
+        }
+      return 1;
+    }
+  catch (const Deployment::StopError &ex)
+    {
+      if (!opts.quiet_)
+        {
+          DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                       (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher::launch_plan - ")
+                        ACE_TEXT ("Caught PlanError exception: %C, %C\n"),
+                        ex.name.in (),
+                        ex.reason.in ()
+                        ));
+        }
+      return 1;
+    }
   catch (const CORBA::Exception &ex)
     {
       if (!opts.quiet_)
