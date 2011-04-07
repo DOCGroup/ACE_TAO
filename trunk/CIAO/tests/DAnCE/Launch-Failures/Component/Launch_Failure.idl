@@ -1,0 +1,38 @@
+// $Id$
+
+#include <Components.idl>
+
+interface Remote_Interface
+{
+};
+
+local interface Local_Interface
+{
+};
+
+enum Failure_Reason
+{
+  ATTRIBUTE_EXCEPTION,
+  NIL_FACET_REFERENCE
+};
+
+exception Custom_Exception
+{
+};
+
+component Launch_Failure
+{
+  provides Remote_Interface remote_out;
+  uses Remote_Interface remote_in;
+
+  provides Local_Interface local_out;
+  provides Local_Interface local_in;
+
+  attribute Failure_Reason failure_reason;
+
+
+};
+
+home Launch_Failure_Home manages Launch_Failure
+{
+};
