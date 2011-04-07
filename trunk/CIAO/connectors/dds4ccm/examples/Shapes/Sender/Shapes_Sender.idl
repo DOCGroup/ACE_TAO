@@ -22,6 +22,7 @@ module Shapes
     attribute unsigned short max_y;
     attribute unsigned short max_size;
     attribute boolean resize_shape;
+    attribute string color;
   };
 };
 

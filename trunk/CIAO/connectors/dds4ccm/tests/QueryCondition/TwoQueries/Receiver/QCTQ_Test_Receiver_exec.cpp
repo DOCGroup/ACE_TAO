@@ -33,18 +33,13 @@
 #include "dds4ccm/impl/Utils.h"
 
 #define QUERY "( (iteration > %0) AND (iteration < %1) )"
+// #define QUERY_2 "( (iteration > %0) AND (iteration < %1) )"
 
 #define MIN_ITERATION_1 "2"
 #define MAX_ITERATION_1 "5"
 
-// Since QueryCondition contains a bug, we've changed
-// the iterations of the second run in order for this test
-// to succeed. There's a different tests which reproduces
-// the bug.
-// #define MIN_ITERATION_2 "22"
-// #define MAX_ITERATION_2 "34"
-#define MIN_ITERATION_2 "7"
-#define MAX_ITERATION_2 "9"
+#define MIN_ITERATION_2 "22"
+#define MAX_ITERATION_2 "34"
 
 #define MIN_ITERATION_3 "68"
 #define MAX_ITERATION_3 "77"
@@ -52,12 +47,12 @@
 // Reader also reads already read samples.
 // The getter receives the following iterations:
 // During run 1: 2 (iterations 3 and 4)
-// During run 2: 1 (iteration 8)
+// During run 2: 11 (iterations between 22 and 34)
 // During run 3: 2 (all unread samples, meaning iterations 1-60
-//               without iteration 3, 4 and 8)
+//               without iteration 3, 4 and iterations between 22 and 34)
 // During run 4: 8 (iterations between 68 and 77)
 
-#define SAMPLES_PER_KEY_GETTER (2 + 1 + 57 + 8)
+#define SAMPLES_PER_KEY_GETTER (2 + 11 + 47 + 8)
 
 namespace CIAO_QCTQ_Test_Receiver_Impl
 {
@@ -232,12 +227,16 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   // Supported operations and attributes.
   void
   Receiver_exec_i::check_iter (const QueryConditionTest & sample,
-                               ::CORBA::UShort run)
+                               ::CORBA::UShort run,
+                               ::CCM_DDS::ReadInfo * info)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL : ")
-        ACE_TEXT ("sample received for <%C>: iteration <%02u>\n"),
-        sample.symbol.in (),
-        sample.iteration));
+    if (!info)
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL : ")
+            ACE_TEXT ("sample received for <%C>: iteration <%02u>\n"),
+            sample.symbol.in (),
+            sample.iteration));
+      }
     if (run == 3)
       {
         // We need to receive all UNread samples. Therefor we should
@@ -249,17 +248,46 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
             (sample.iteration > ACE_OS::atoi (MIN_ITERATION_2)  &&
              sample.iteration < ACE_OS::atoi (MAX_ITERATION_2)))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
-                                  "Didn't except samples between "
-                                  "<%02d> and <%02d> and between "
-                                  "<%02d> and <%02d>\n",
-                                  ACE_OS::atoi (MIN_ITERATION_1),
-                                  ACE_OS::atoi (MAX_ITERATION_1),
-                                  ACE_OS::atoi (MIN_ITERATION_2),
-                                  ACE_OS::atoi (MAX_ITERATION_2)));
+            // Read supplies info. There check the sample status mask
+            // as well
+            if (info != 0)
+              { // access mask should be "ALREADY_SEEN" since the getter should
+                // already have seen this sample.
+                if (info->access_status != ::CCM_DDS::ALREADY_SEEN)
+                  {
+                    // READ ALL since this check is only performed
+                    // during a read.
+                    if (info->access_status == ::CCM_DDS::FRESH_INFO)
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                    "Unexpected sample access mask - "
+                                    "expected <ALREADY_SEEN> - "
+                                    "received <FRESH_INFO>\n"));
+                      }
+                    else
+                      {
+                        ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                    "Unexpected sample access mask - "
+                                    "expected <ALREADY_SEEN> - "
+                                    "received <UNKNOWN>\n"));
+                      }
+                  }
+              }
+            else
+              {
+                // Getter functionality
+                ACE_ERROR ((LM_ERROR, "ERROR: GET ALL: "
+                                      "Didn't except samples between "
+                                      "<%02d> and <%02d> and between "
+                                      "<%02d> and <%02d>\n",
+                                      ACE_OS::atoi (MIN_ITERATION_1),
+                                      ACE_OS::atoi (MAX_ITERATION_1),
+                                      ACE_OS::atoi (MIN_ITERATION_2),
+                                      ACE_OS::atoi (MAX_ITERATION_2)));
+              }
           }
       }
-    else
+    else if (!info)
       {
         if (sample.iteration <= current_min_iteration_)
           {
@@ -276,7 +304,74 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
                                   this->current_max_iteration_));
           }
       }
+    if (info != 0)
+      { // access mask should be "FRESH_INFO" since the getter has not
+        // "seen" this sample but the reader has seen the samples
+        // of the previous runs.
+        if (sample.iteration > this->current_min_iteration_)
+          {
+            if (info->access_status != ::CCM_DDS::FRESH_INFO)
+              {
+                // READ ALL since this check is only performed
+                // during a read.
+                if (info->access_status == ::CCM_DDS::ALREADY_SEEN)
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                "Unexpected sample access mask - "
+                                "expected <FRESH_INFO> - "
+                                "received <ALREADY_SEEN>\n"));
+                  }
+                else
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR: READ ALL: "
+                                "Unexpected sample access mask - "
+                                "expected <FRESH_INFO> - "
+                                "received <UNKNOWN>\n"));
+                  }
+              }
+          }
+      }
   }
+
+
+  void
+  Receiver_exec_i::read_all (::CORBA::UShort run)
+  {
+    ::QCTQ_Test::QueryConditionTestConnector::Reader_var reader =
+      this->ciao_context_->get_connection_read_port_data ();
+
+    if (::CORBA::is_nil (reader.in ()))
+      {
+        ACE_ERROR ((LM_ERROR, "Receiver_exec_i::read_all - "
+                              "ERROR: No Reader\n"));
+        return;
+      }
+    QueryConditionTestSeq qf_info;
+    ::CCM_DDS::ReadInfoSeq readinfos;
+    ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::read_all - "
+                "Start checking samples in DDS\n"));
+    reader->read_all (qf_info, readinfos);
+    ::CORBA::ULong expected =
+      static_cast < ::CORBA::ULong > (run * this->iterations_ * this->keys_);
+    if (qf_info.length () != expected)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_all - "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%u>\n",
+                               expected, qf_info.length ()));
+      }
+    for (::CORBA::ULong i = 0; i < qf_info.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "READ ALL : Receiver_exec_i::read_all - "
+                              "Sample received: key <%C> - iteration <%d> - "
+                              "sample_read_state <%d>\n",
+                              qf_info[i].symbol.in (),
+                              qf_info[i].iteration,
+                              readinfos[i].access_status));
+        this->check_iter (qf_info[i], run, &readinfos[i]);
+      }
+  }
+
 
   ::CORBA::ULong
   Receiver_exec_i::get_all (::CORBA::UShort run)
@@ -289,6 +384,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
       {
         ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
                               "ERROR: No Getter\n"));
+        return 0;
       }
     QueryConditionTest_var qf_info;
     ::CCM_DDS::ReadInfo readinfo;
@@ -478,6 +574,8 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
             this->current_min_iteration_ = ACE_OS::atoi (MIN_ITERATION_3);
             this->current_max_iteration_ = ACE_OS::atoi (MAX_ITERATION_3);
           }
+        ACE_DEBUG ((LM_DEBUG, "Filter : Query <%C>, parameter[0] <%C>, parameter[1] <%C>\n",
+              filter.expression.in (), filter.parameters[0].in (), filter.parameters[1].in ()));
         reader->query (filter);
       }
     catch (const ::CCM_DDS::InternalError &ex)
@@ -529,8 +627,10 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
             {
               this->samples_received_ += this->test_all (run);
               this->check_filter (run);
+              this->read_all (run);
               //set filter for the next run
               this->set_filter (run + 1);
+              // inform the sender that it may start the next run
               restarter->restart_write ();
             }
             break;
@@ -538,8 +638,10 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
             {
               this->samples_received_ += this->test_all (run);
               check_filter (run);
+              this->read_all (run);
               //set filter for the next run
               this->set_filter (run + 1);
+              // inform the sender that it may start the next run
               restarter->restart_write ();
             }
             break;
@@ -547,14 +649,17 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
             {
               this->samples_received_ += this->test_all (run);
               this->check_filter (run);
+              this->read_all (run);
               //set filter for the next run
               this->set_filter (run + 1);
+              // inform the sender that it may start the next run
               restarter->restart_write ();
             }
             break;
           case 4:
             {
               this->samples_received_ += this->test_all (run);
+              this->read_all (run);
             }
         }
       }
@@ -600,6 +705,12 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     return
       ::CCM_DDS::CCM_PortStatusListener::_duplicate (
         this->ciao_get_port_status_.in ());
+  }
+
+  ::CCM_DDS::CCM_PortStatusListener_ptr
+  Receiver_exec_i::get_read_port_status (void)
+  {
+    return ::CCM_DDS::CCM_PortStatusListener::_nil ();
   }
 
   ::CCM_TwoQueriesStarter_ptr
@@ -672,7 +783,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
   {
     if (this->samples_received_ != this->samples_expected_)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: READGET GETTER : "
+        ACE_ERROR ((LM_ERROR, "ERROR: TWO QUERIES GETTER : "
                               "Unexpected number of samples received: "
                               "expected <%d> - received <%d>\n",
                               this->samples_expected_,
@@ -680,7 +791,7 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "READGET : GETTER : "
+        ACE_DEBUG ((LM_DEBUG, "TWO QUERIES : GETTER : "
                               "Expected number of samples received: "
                               "expected <%d> - received <%d>\n",
                               this->samples_expected_,

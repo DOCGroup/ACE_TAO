@@ -94,7 +94,8 @@ namespace CIAO
 
       void return_loan (
         SEQ_VALUE_TYPE& data,
-        ::DDS::SampleInfoSeq sample_info);
+        ::DDS::SampleInfoSeq sample_info,
+        bool throw_exception=true);
     };
   }
 }

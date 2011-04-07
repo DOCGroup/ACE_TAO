@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
+#include "tao/Resume_Handle_Deferred.h"
 #include "tao/Transport.h"
 #include "tao/Wait_Strategy.h"
 
@@ -169,8 +170,7 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
 
   // Enable reference counting on the event handler.
   this->transport_->event_handler_i ()->reference_counting_policy ().value (
-      ACE_Event_Handler::Reference_Counting_Policy::ENABLED
-    );
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
 int
@@ -214,12 +214,37 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
   // If we can't process upcalls just return
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
+      ACE_Time_Value suspend_delay (0, 2000);
+
       if (TAO_debug_level > 6)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
                     "not going to handle_input on transport "
                     "because upcalls temporarily suspended on this thread\n",
                     this->transport()->id()));
+
+      if (TAO_debug_level > 5)
+        ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
+                  "scheduled to resume in %#T sec\n",
+                  eh->get_handle(),
+                  &suspend_delay));
+
+      // Using the heap to create the timeout handler, since we do not know
+      // which handle we will have to try to resume. The destructor, called from
+      // handle_close() will self delete (destruct)
+      TAO_Resume_Handle_Deferred* prhd = 0;
+      ACE_NEW_RETURN (prhd,
+                     TAO_Resume_Handle_Deferred (this->orb_core_,
+                                                 eh->get_handle()),
+                     -1);
+
+      this->orb_core_->reactor()->schedule_timer (prhd,
+                                                  0,
+                                                  suspend_delay);
+
+      // Returning 0 causes the wait strategy to exit and the leader thread
+      // to enter the reactor's select() call.
       return 0;
     }
 
@@ -242,7 +267,7 @@ TAO_Connection_Handler::handle_input_internal (
   (void) this->transport ()->update_transport ();
 
   // Grab the transport id now and use the cached value for printing
-  // since the  transport could dissappear by the time the thread
+  // since the  transport could disappear by the time the thread
   // returns.
   size_t const t_id = this->transport ()->id ();
 

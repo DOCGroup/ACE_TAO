@@ -69,7 +69,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent");
       CORBA::PolicyCurrent_var policy_current =

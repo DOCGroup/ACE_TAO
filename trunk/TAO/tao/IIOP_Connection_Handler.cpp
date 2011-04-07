@@ -85,7 +85,8 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
     {
       TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d] ctor, ")
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@\n"),
                   tport != 0 ? tport->id () : 0,
                   this));
@@ -101,8 +102,9 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
     {
       TAO_Transport *tport = this->transport ();
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d] dtor, ")
-                  ACE_TEXT("this=%@,transport=%@\n"),
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
+                  ACE_TEXT("~IIOP_Connection_Handler, ")
+                  ACE_TEXT("this=%@, transport=%@\n"),
                   tport != 0 ? tport->id () : 0,
                   this,
                   tport));

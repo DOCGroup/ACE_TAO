@@ -254,19 +254,17 @@ namespace CIAO_Getter_Test_Receiver_Impl
   {
     // this is very hard to test in a controlled environment.
     // When data arrives in DDS, the waiting ends and the
-    // Getter starts to read the data. The number of samples
-    // read will (almost) always be one.
+    // Getter starts to read the data. In this test we expected
+    // therefor more then one, and less then but not exactly max_delivered_data.
     // On the other hand, when the user want to have all the
     // samples in DDS, one shouldn't use the wait method.
     // Since the spec is not clear about this, the test will
     // pass when at least one sample is returned.
-    // Also, max_delivered_data cannot be tested since only
-    // one sample is returned.
-    ::Getter_Test::GetterTestConnector::Getter_var getter =
+     ::Getter_Test::GetterTestConnector::Getter_var getter =
       this->ciao_context_->get_connection_info_get_fresh_data ();
 
     DDS::Duration_t to;
-    to.sec = 10;
+    to.sec = 20;
     to.nanosec = 0;
     getter->time_out (to);
     getter->max_delivered_data (40);
@@ -282,6 +280,8 @@ namespace CIAO_Getter_Test_Receiver_Impl
     ::CCM_DDS::ReadInfoSeq readinfo;
     bool const result = getter->get_many (gettertest_seq, readinfo);
     if (result)
+         getter->get_many (gettertest_seq, readinfo);
+    if (result)
       {
         if (gettertest_seq.length () == 0)
           {
@@ -290,6 +290,20 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   "number of samples: "
                                   "expected at least one - received <0>\n"));
           }
+        if (gettertest_seq.length () == 1)
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_many: "
+                                  "Not enough data returned. "
+                                  "number of samples: "
+                                  "expected at least two - received <1>\n"));
+          }
+        if (gettertest_seq.length () > 40)
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_many: "
+                                  "To much data returned. "
+                                  "number of samples: "
+                                  "expected not more then 40 - received <1>\n"));
+           }
         for (CORBA::ULong i = 0; i < gettertest_seq.length (); ++i)
           {
             ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::get_many: "
@@ -303,7 +317,112 @@ namespace CIAO_Getter_Test_Receiver_Impl
         ACE_ERROR ((LM_ERROR, "ERROR: GET MANY: "
                               "Time out occurred\n"));
       }
+    // Wait a while before reading.
+    ACE_Time_Value tv (3, 0);
+    ACE_OS::sleep (tv);
+    this->read_many (keys, iterations, gettertest_seq);
   }
+
+  void
+  Receiver_exec_i::read_many (CORBA::Short keys ,
+                              CORBA::Long iterations,
+                              GetterTestSeq gettertest_seq)
+  {
+
+
+    ::Getter_Test::GetterTestConnector::Reader_var reader =
+      this->ciao_context_->get_connection_info_get_data ();
+
+    GetterTestSeq read_seq;
+    ::CCM_DDS::ReadInfoSeq readinfos;
+    reader->read_all (read_seq, readinfos);
+
+    ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::read_many - "
+                "Start checking samples in DDS\n"));
+    reader->read_all (read_seq, readinfos);
+    // we expect all samples written during the test for get one (KEY_1)
+    // AND all samples written during the test for get many (number of keys)
+    ::CORBA::ULong expected =
+      static_cast < ::CORBA::ULong > (iterations * (keys + 1));
+    if (read_seq.length () != expected)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
+                              "Unexpected number of samples received: "
+                              "expected <%d> - received <%u>\n",
+                              expected, read_seq.length ()));
+      }
+    for (::CORBA::ULong i = 0; i < read_seq.length (); ++i)
+      {
+        ACE_DEBUG ((LM_DEBUG, "READ ALL : Receiver_exec_i::read_many - "
+                              "Sample received: key <%C> - iteration <%d> - "
+                              "sample_read_state <%d>\n",
+                              read_seq[i].key.in (),
+                              read_seq[i].iteration,
+                              readinfos[i].access_status));
+      }
+
+    for (::CORBA::Short key = 0; key < keys; ++key)
+      {
+        ::CORBA::Long iter = 0;
+        char str_key[8];
+        ACE_OS::sprintf (str_key, "KEY_%d", key + 1);
+        for (::CORBA::ULong i = 0; i < read_seq.length (); ++i)
+          {
+            if (ACE_OS::strcmp (read_seq[i].key.in (), str_key) == 0)
+              ++iter;
+            if (iter > iterations)
+              ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
+                          "Unexpected number of iterations received "
+                          "for key <%C>: <%d>\n",
+                          str_key,
+                          iter));
+          }
+      }
+    // check which sample states should be ALREADY_SEEN/FRESH_INFO
+    for (::CORBA::ULong readed = 0; readed < read_seq.length (); ++readed)
+      {
+        ::CCM_DDS::AccessStatus received_access_status =
+          readinfos[readed].access_status;
+        bool found = false;
+
+        for (::CORBA::ULong got = 0;
+             got < gettertest_seq.length () && !found;
+             ++got)
+          {
+            if (ACE_OS::strcmp (read_seq[readed].key.in (),
+                                gettertest_seq[got].key.in ()) == 0 &&
+                read_seq[readed].iteration == gettertest_seq[got].iteration)
+              {
+                found = true;
+                if (received_access_status != ::CCM_DDS::ALREADY_SEEN)
+                  {
+                    ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
+                                "Unexpected access state received: "
+                                "expected <%d> - received <%d>\n",
+                                ::CCM_DDS::ALREADY_SEEN,
+                                received_access_status));
+                  }
+              }
+          }
+        // Samples which are not read by get_many or get_one (the samples belonging to
+        // KEY_1), should have FRESH_INFO as access status.
+        if (!found && ACE_OS::strcmp (read_seq[readed].key.in (), "KEY_1") != 0)
+          {
+            if (received_access_status != ::CCM_DDS::FRESH_INFO)
+              {
+                ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::read_many - "
+                            "Unexpected access state received for sample "
+                            "<%C>:<%d> : "
+                            "expected <%d> - received <%d>\n",
+                            read_seq[readed].key.in (),
+                            read_seq[readed].iteration,
+                            ::CCM_DDS::FRESH_INFO,
+                            received_access_status));
+              }
+          }
+      }
+  }
+
 
   void
   Receiver_exec_i::get_one_fixed (CORBA::Long fixed_key, CORBA::Long iteration)
@@ -580,7 +699,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
           this->ciao_context_->get_connection_info_get_fresh_data ();
 
         DDS::Duration_t to;
-        to.sec = 1;
+        to.sec = 3;
         to.nanosec = 0;
         getter->time_out (to);
         ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::timeout_get_many: "

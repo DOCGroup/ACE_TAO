@@ -10,7 +10,6 @@
 
 #pragma ciao lem "Shapes_ShapeType_connE.idl"
 
-// @todo, moved outside of Shapes, needed if we are 100% dds compliant
 typedef sequence<ShapeType> ShapeTypeSeq;
 
 module Shapes

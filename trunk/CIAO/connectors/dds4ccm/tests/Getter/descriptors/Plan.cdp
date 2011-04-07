@@ -229,6 +229,17 @@
     <source/>
     <implementation xmi:idref="Getter_Test_ConnectorComponentImplementation" />
     <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Getter_Library#Getter_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
       <name>topic_name</name>
       <value>
         <type>
@@ -246,6 +257,17 @@
     <!-- hostname -->
     <source/>
     <implementation xmi:idref="Getter_Test_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Getter_Library#Getter_Profile</string>
+        </value>
+      </value>
+    </configProperty>
     <configProperty>
       <name>topic_name</name>
       <value>
@@ -328,7 +350,7 @@
   </instance>
 
   <connection>
-    <name>info_get_data</name>
+    <name>info_get_fresh_data</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
       <resourceType>Local_Interface</resourceType>
@@ -341,6 +363,26 @@
     </internalEndpoint>
     <internalEndpoint>
       <portName>pull_consumer_fresh_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Getter_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>info_get_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_get_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_consumer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
       <instance xmi:idref="Getter_Test_ConnectorComponentInstance2" />

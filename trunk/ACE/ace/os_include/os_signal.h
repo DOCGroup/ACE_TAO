@@ -34,11 +34,11 @@
 
 #if defined (ACE_HAS_SIGINFO_T)
 #  if !defined (ACE_LACKS_SIGINFO_H)
-#    if defined (__QNX__) || defined (__OpenBSD__) || defined (__INTERIX)
+#    if defined (ACE_HAS_SYS_SIGINFO_H)
 #      include /**/ <sys/siginfo.h>
-#    else  /* __QNX__ || __OpenBSD__ */
+#    else  /* ACE_HAS_SYS_SIGINFO_H */
 #      include /**/ <siginfo.h>
-#    endif /* __QNX__ || __OpenBSD__ */
+#    endif /* ACE_HAS_SYS_SIGINFO_H */
 #  endif /* ACE_LACKS_SIGINFO_H */
 #endif /* ACE_HAS_SIGINFO_T */
 
