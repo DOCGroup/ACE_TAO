@@ -1,0 +1,143 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Receiver"
+
+project(Thread_Receiver_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += Thread_Base_idl_gen
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
+              -Wb,stub_export_include=Receiver_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_SKEL_Export \
+              -Wb,skel_export_include=Receiver_skel_export.h \
+              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
+              -Wb,svnt_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h
+
+  IDL_Files {
+    Receiver.idl
+  }
+}
+
+project(Thread_Receiver_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  after += Thread_Receiver_idl_gen
+  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
+              -Wb,export_include=Receiver_exec_export.h \
+              -SS
+
+  IDL_Files {
+    ReceiverE.idl
+  }
+}
+
+project(Thread_Receiver_stub) : ccm_stub {
+  after += Thread_Receiver_idl_gen Thread_Base_stub
+  libs  += Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Thread_Receiver_stub
+  dynamicflags += RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverC.cpp
+  }
+
+  Header_Files {
+    ReceiverC.h
+    Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    ReceiverC.inl
+  }
+}
+
+project(Thread_Receiver_exec) : ciao_executor {
+  after   += Thread_Receiver_lem_gen Thread_Receiver_stub
+  sharedname = Thread_Receiver_exec
+  libs += Thread_Receiver_stub Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += RECEIVER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverEC.cpp
+    Receiver_exec.cpp
+  }
+
+  Header_Files {
+    ReceiverEC.h
+    Receiver_exec.h
+    Receiver_exec_export.h
+  }
+
+  Inline_Files {
+    ReceiverEC.inl
+  }
+}
+
+project(Thread_Receiver_skel) : ccm_svnt {
+  after     += Thread_Base_skel Thread_Receiver_stub
+  sharedname = Thread_Receiver_skel
+  libs      += Thread_Receiver_stub \
+               Thread_Base_skel \
+               Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+  dynamicflags += RECEIVER_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverS.cpp
+  }
+
+  Header_Files {
+    ReceiverS.h
+    Receiver_skel_export.h
+  }
+
+  Inline_Files {
+    ReceiverS.inl
+  }
+}
+
+project(Thread_Receiver_svnt) : ciao_servant {
+  after      += Thread_Receiver_skel Thread_Receiver_exec
+  sharedname  = Thread_Receiver_svnt
+  libs       += Thread_Receiver_exec \
+                Thread_Receiver_skel \
+                Thread_Receiver_stub \
+                Thread_Base_skel \
+                Thread_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += RECEIVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    Receiver_svnt.h
+    Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+

@@ -1,0 +1,28 @@
+USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
+=======================================================
+. Significant re-work of the internal DAnCE logging system.  Many log
+  message levels have changed.  Details of the intended logging levels
+  may be found in dance/Logger/Log_Macros.h
+
+. A new logging macro, DANCE_LOG_TRACE has been added to the most
+  fine-grained tracing messages.  This can be disabled to improve
+  performance and footprint seperate from more useful logging messages.
+
+USER VISIBLE CHANGES BETWEEN DAnCE-1.0.0 and DAnCE-1.0.1
+=======================================================
+
+USER VISIBLE CHANGES BETWEEN DAnCE-0.8.3 and DAnCE-1.0.0
+=======================================================
+
+. The option --node-map to use a *.dat file for the node manager map
+  has been replaced by the --cdd option with as argument a  *.cdd xml file.
+
+USER VISIBLE CHANGES BETWEEN DAnCE-0.8.2 and DAnCE-0.8.3
+=======================================================
+
+. DAnCE has been made an entirely separate product from CIAO, and has
+  been moved from ACE_wrappers/TAO/CIAO/DAnCE to
+  ACE_wrappers/TAO/DAnCE.
+
+. The Config Handlers have been moved from the CIAO namespace to the
+  DAnCE namespace.
