@@ -1,3 +1,17 @@
+Thu Apr  7 21:04:51 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Base/CIAO_Base.mpc:
+        * ciao/Base/CIAO_Exceptions.idl:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+
+          Vastly improved error reporting for component loading problems.
+          Plain CCM exceptions are no longer reported to DAnCE, and
+          additional meta-data is now included that will report the exact
+          source of library loading problems.
+
 Thu Apr  7 21:03:27 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Logger/Logger_Service.h:

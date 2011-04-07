@@ -11,6 +11,10 @@ project(CIAO_Base_IDL) : install, ciaoidldefaults, anytypecode {
     idlflags += -Gxhst
   }
 
+  IDL_Files {
+    CIAO_Exceptions.idl
+  }
+
   specific {
    install_dir = ciao/Base
   }
@@ -26,6 +30,7 @@ project(CIAO_Base_stub) : install, ciaolib_with_idl, ciao_output, \
   }
   Source_Files {
     CIAO_PropertiesC.cpp
+    CIAO_ExceptionsC.cpp
     Server_init.cpp
     Client_init.cpp
   }
