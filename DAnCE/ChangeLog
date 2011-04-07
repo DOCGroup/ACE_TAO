@@ -1,3 +1,10 @@
+Thu Apr  7 12:45:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          Improved error handling.
+
 Wed Apr  6 18:32:27 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Logger/Logger_Service.cpp:
