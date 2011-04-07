@@ -1,6 +1,0 @@
-// $Id$
-
-project : adbc_defaults {
-  after += ADBC
-  libs  += ADBC
-}
