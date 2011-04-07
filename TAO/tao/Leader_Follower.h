@@ -103,7 +103,7 @@ public:
   /// side leader-follower set.
   void reset_client_leader_thread (void) ;
 
-  /// sets the thread ID of the leader thread in the leader-follower
+  /// Sets the thread ID of the leader thread in the leader-follower
   /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
 

@@ -4,8 +4,8 @@
  xmlns:xmi="http://www.omg.org/XMI"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>Hello_DDS_Deployment_1</label>
-  <UUID>Hello_DDS_Deployment_1</UUID>
+  <label>CommandLinePassage_Deployment_1</label>
+  <UUID>CommandLinePassage_Deployment_1</UUID>
 
   <!-- Implementations declarations -->
 

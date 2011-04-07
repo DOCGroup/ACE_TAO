@@ -110,11 +110,11 @@ public:
   // i.e., the one returned from ACE_Reactor::instance().
   /**
    * Run the event loop until the
-   * <ACE_Reactor::handle_events/ACE_Reactor::alertable_handle_events>
+   * ACE_Reactor::handle_events()/ACE_Reactor::alertable_handle_events()
    * method returns -1 or the end_event_loop() method is invoked.
    * Note that this method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to run another reactor use
-   * <ACE_Reactor::run_reactor_event_loop>.
+   * ACE_Reactor::run_reactor_event_loop().
    *
    * @deprecated Use ACE_Reactor::instance()->run_reactor_event_loop() instead
    */

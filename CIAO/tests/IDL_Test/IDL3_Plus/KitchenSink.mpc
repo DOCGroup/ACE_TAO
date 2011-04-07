@@ -1,6 +1,6 @@
 // $Id$
 
-project(KitchenSink_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+project(KitchenSink_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Gex \
               -Wb,stub_export_macro=KITCHENSINK_STUB_Export \
@@ -17,7 +17,7 @@ project(KitchenSink_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   }
 }
 
-project(KitchenSink_lem_gen) : ciaoidldefaults , avoids_ccm_noevent {
+project(KitchenSink_lem_gen) : ciaoidldefaults {
   after += KitchenSink_idl_gen
   custom_only = 1
   idlflags += -Wb,export_macro=KITCHENSINK_EXEC_Export \
@@ -29,7 +29,7 @@ project(KitchenSink_lem_gen) : ciaoidldefaults , avoids_ccm_noevent {
   }
 }
 
-project(KitchenSink_stub) : ccm_stub, avoids_ccm_noevent {
+project(KitchenSink_stub) : ccm_stub {
   after += KitchenSink_idl_gen
 
   sharedname = KitchenSink_stub
@@ -52,7 +52,7 @@ project(KitchenSink_stub) : ccm_stub, avoids_ccm_noevent {
   }
 }
 
-project(KitchenSink_exec) : ciao_executor, avoids_ccm_noevent {
+project(KitchenSink_exec) : ciao_executor {
   after   += KitchenSink_lem_gen KitchenSink_stub
   sharedname = KitchenSink_exec
   libs += KitchenSink_stub
@@ -78,7 +78,7 @@ project(KitchenSink_exec) : ciao_executor, avoids_ccm_noevent {
   }
 }
 
-project(KitchenSink_svnt) : ciao_servant, avoids_ccm_noevent {
+project(KitchenSink_svnt) : ciao_servant {
   after      += KitchenSink_exec
   sharedname  = KitchenSink_svnt
   libs       += KitchenSink_exec \
@@ -105,7 +105,7 @@ project(KitchenSink_svnt) : ciao_servant, avoids_ccm_noevent {
   }
 }
 
-project(KitchenSink_ConvertIDL3_Plus) : taoidl3toidl2defaults, avoids_ccm_noevent {
+project(KitchenSink_ConvertIDL3_Plus) : taoidl3toidl2defaults {
   custom_only = 1
 
   IDL3TOIDL2_Files {
@@ -117,7 +117,7 @@ project(KitchenSink_IDL2_gen) : taoidldefaults, ccm_lw, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -Sm
   after += KitchenSink_ConvertIDL3_Plus
-  
+
   IDL_Files {
     KitchenSink_IDL2.idl
   }
@@ -128,17 +128,17 @@ project(KitchenSink_IDL2_skel) : ciao_executor, avoids_ccm_noevent{
 
   IDL_Files {
   }
-  
+
   Source_Files {
     KitchenSink_IDL2C.cpp
     KitchenSink_IDL2S.cpp
   }
-  
+
   Header_Files {
     KitchenSink_IDL2C.h
     KitchenSink_IDL2S.h
   }
-  
+
   Inline_Files {
     KitchenSink_IDL2C.inl
     KitchenSink_IDL2S.inl

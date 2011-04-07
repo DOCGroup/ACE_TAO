@@ -54,7 +54,7 @@ namespace CIAO
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
-    void
+    ::DDS::ReturnCode_t
     DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::complete_read (
         RTI_SEQ_TYPE & dds_data_values,
         SEQ_TYPE & data_values,
@@ -91,7 +91,12 @@ namespace CIAO
                         ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                         method_name,
                         ::CIAO::DDS4CCM::translate_retcode (retcode_return_loan)));
+          // In case a read action from DDS causes errors, the users wants to see
+          // this error (and not the return loan error).
+          if (retcode  == ::DDS::RETCODE_OK)
+            return retcode_return_loan;
         }
+      return retcode;
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -117,10 +122,9 @@ namespace CIAO
                                    sample_states,
                                    view_states,
                                    instance_states);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_read, "read");
-      return retcode_read;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_read, "read");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -147,10 +151,9 @@ namespace CIAO
                                    view_states,
                                    instance_states);
 
-      this->complete_read (dds_data_values, data_values,
-             dds_sample_infos, sample_infos,
-             retcode_take, "take");
-      return retcode_take;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_take, "take");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -205,10 +208,9 @@ namespace CIAO
                                                                 0);
             }
         }
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_read_w_condition, "read_w_condition");
-      return retcode_read_w_condition;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_read_w_condition, "read_w_condition");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -264,10 +266,9 @@ namespace CIAO
             }
         }
 
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_take_w_condition, "read_w_condition");
-      return retcode_take_w_condition;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_take_w_condition, "read_w_condition");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -332,11 +333,9 @@ namespace CIAO
                                             sample_states,
                                             view_states,
                                             instance_states);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_read_instance, "read_instance");
-
-      return retcode_read_instance;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_read_instance, "read_instance");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -367,10 +366,9 @@ namespace CIAO
                                             sample_states,
                                             view_states,
                                             instance_states);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_take_instance, "take_instance");
-      return retcode_take_instance;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_take_instance, "take_instance");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -401,10 +399,9 @@ namespace CIAO
                                                  sample_states,
                                                  view_states,
                                                  instance_states);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_read_next_instance, "read_next_instance");
-      return retcode_read_next_instance;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_read_next_instance, "read_next_instance");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -435,10 +432,9 @@ namespace CIAO
                                                  sample_states,
                                                  view_states,
                                                  instance_states);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_take_next_instance, "take_next_instance");
-      return retcode_take_next_instance;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_take_next_instance, "take_next_instance");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -473,11 +469,10 @@ namespace CIAO
                                                              max_samples,
                                                              dds_handle,
                                                              dds_condition);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_read_next_instance_w_condition,
-                           "read_next_instance_w_condition");
-      return retcode_read_next_instance_w_condition;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_read_next_instance_w_condition,
+                                  "read_next_instance_w_condition");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -512,11 +507,10 @@ namespace CIAO
                                                              max_samples,
                                                              dds_handle,
                                                              dds_condition);
-      this->complete_read (dds_data_values, data_values,
-                           dds_sample_infos, sample_infos,
-                           retcode_take_next_instance_w_condition,
-                           "take_next_instance_w_condition");
-      return retcode_take_next_instance_w_condition;
+      return this->complete_read (dds_data_values, data_values,
+                                  dds_sample_infos, sample_infos,
+                                  retcode_take_next_instance_w_condition,
+                                  "take_next_instance_w_condition");
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>

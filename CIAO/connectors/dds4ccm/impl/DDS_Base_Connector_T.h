@@ -121,7 +121,7 @@ protected:
    *
    * For example:
    *
-   * ::DDS::TopicListener_var tmp = this->topic_listener_._retn ();
+   * DDS::TopicListener_var tmp = this->topic_listener_._retn ();
    * if (!::CORBA::is_nil (tmp.in ())) this->passivate_topi (this->topic_.in (),
    *                                                         tmp.in ());
    *

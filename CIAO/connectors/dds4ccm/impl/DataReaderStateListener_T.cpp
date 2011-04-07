@@ -142,25 +142,21 @@ namespace CIAO
                   // Sample data may not be valid anymore when
                   // deleted so don't check the valid_data flag
                   // here.
+                  ::CCM_DDS::ReadInfo readinfo;
+                  readinfo <<= sample_info[i];
                   if (sample_info[i].instance_state ==
                           ::DDS::NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                     {
-                      ::CCM_DDS::ReadInfo readinfo;
-                      readinfo <<= sample_info[i];
                       this->listener_->on_deletion (data[i], readinfo);
                     }
                   else if (sample_info[i].valid_data)
                     {
                       if (sample_info[i].view_state == ::DDS::NEW_VIEW_STATE)
                         {
-                          ::CCM_DDS::ReadInfo readinfo;
-                          readinfo <<= sample_info[i];
                           this->listener_->on_creation (data[i], readinfo);
                         }
                       else
                         {
-                          ::CCM_DDS::ReadInfo readinfo;
-                          readinfo <<= sample_info[i];
                           this->listener_->on_one_update (data[i], readinfo);
                         }
                     }
@@ -200,18 +196,16 @@ namespace CIAO
                           updates.clear ();
                         }
                       // Now invoke on_creation or on_deletion
+                      ::CCM_DDS::ReadInfo readinfo;
+                      readinfo <<= sample_info[i];
                       if (sample_info[i].valid_data &&
                           sample_info[i].view_state == ::DDS::NEW_VIEW_STATE)
                         {
-                          ::CCM_DDS::ReadInfo readinfo;
-                          readinfo <<= sample_info[i];
                           this->listener_->on_creation (data[i], readinfo);
                         }
                       else if (sample_info[i].instance_state ==
                                ::DDS::NOT_ALIVE_DISPOSED_INSTANCE_STATE)
                         {
-                          ::CCM_DDS::ReadInfo readinfo;
-                          readinfo <<= sample_info[i];
                           this->listener_->on_deletion (data[i], readinfo);
                         }
                     }
@@ -248,6 +242,8 @@ namespace CIAO
                             ACE_TEXT ("DataReaderStateListener_T::on_data_available_i - ")
                             ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                             translate_retcode (retval)));
+              // No exception here since this the DDS vendor doesn't expect this.
+              // It will likely causes a crash in their implementation
             }
         }
       catch (const ::CORBA::Exception& ex)

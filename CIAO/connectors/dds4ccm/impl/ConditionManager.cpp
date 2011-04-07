@@ -132,6 +132,8 @@ namespace CIAO
 
       if (! ::CORBA::is_nil (this->rd_condition_.in ()))
         {
+          // When a query condition is set, the rd_condition is not set
+          // and therefor nil.
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         ACE_TEXT ("ConditionManager::query - ")
                         ACE_TEXT ("Error: No QueryCondition set yet. ")
@@ -231,13 +233,16 @@ namespace CIAO
         }
       else if (ACE_OS::strlen (filter.expression.in ()) > 0)
         {
+          // Filter has been set. Change the parameters of this filter.
           this->set_parameters (filter, this->qc_reader_.in ());
           this->set_parameters (filter, this->qc_getter_.in ());
           this->set_parameters (filter, this->qc_listener_.in ());
         }
       else
         {
-          // Remove query conditions
+          // No expression set so remove the query conditions and
+          // create the read condition again. ConditionManager has
+          // the same state as at start up.
           this->remove_conditions ();
           this->init_readcondition ();
         }
@@ -303,7 +308,7 @@ namespace CIAO
     #endif
 
       ::DDS::ReturnCode_t const retcode =
-         this->ws_.wait (active_conditions, time_out);
+        this->ws_.wait (active_conditions, time_out);
 
     #if !defined (DDS4CCM_NLOGGING)
       ACE_Time_Value const waited = ACE_OS::gettimeofday () - start;
@@ -355,6 +360,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::remove_conditions");
 
+      // Save to remove the query conditions of the reader and listener since
+      // these are not attached to a waitset.
       ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
       if (! ::CORBA::is_nil (this->qc_reader_.in ()))
         {
@@ -369,6 +376,8 @@ namespace CIAO
 
       if (this->ws_.get_rti_entity ())
         {
+          // Waitset is created. Therefor detach any condition
+          // from the waitset first (in this case, the query condition).
           if (! ::CORBA::is_nil (this->qc_getter_.in ()))
             {
               retcode = this->ws_.detach_condition (this->qc_getter_.in ());
@@ -377,6 +386,7 @@ namespace CIAO
                   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                                 ACE_TEXT ("ConditionManager::remove_conditions - ")
                                 ACE_TEXT ("Query condition successfully detached from waitset.\n")));
+                  // Query condition is detached. Now we can savely remove it.
                   ::DDS::QueryCondition_var qc = this->qc_getter_._retn ();
                   this->remove_condition (qc.in (), "getter");
                 }
@@ -391,9 +401,12 @@ namespace CIAO
             }
           else
             {
+              // No query condition on of the getter.
+              // TODO: Check whether we can savely remove the following check:
               ::DDS::QueryCondition_var q_condition = this->get_querycondition_getter ();
               if (::CORBA::is_nil (q_condition.in ()))
                 {
+                  // Read condition should be attached to the waitset.
                   retcode = this->ws_.detach_condition (this->rd_condition_.in ());
                   if (retcode != ::DDS::RETCODE_OK)
                     {
@@ -412,6 +425,7 @@ namespace CIAO
                 }
             }
         }
+      // Now we can savely remove the read condition (in a thread safe manner)
       if (! ::CORBA::is_nil (this->rd_condition_.in ()))
         {
           retcode = ::DDS::RETCODE_OK;

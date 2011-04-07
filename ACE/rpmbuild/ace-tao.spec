@@ -806,6 +806,7 @@ using the XtResource_Factory.
 %build
 
 export ACE_ROOT=$(pwd)
+export MPC_ROOT=$ACE_ROOT/MPC
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
 export DANCE_ROOT=$CIAO_ROOT/DAnCE

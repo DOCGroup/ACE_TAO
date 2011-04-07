@@ -1,0 +1,21 @@
+// $Id$
+
+project(*qc_receiver) : nddslib {
+  exename = DDS_ObO_receiver
+  after += Base_obo_stub
+
+  includes += ../Base
+
+  libs += Base_obo_stub
+  libpaths += ../descriptors
+
+  exeout += ../descriptors
+
+  Source_Files {
+    ObO_Receiver.cpp
+  }
+
+  Header_Files {
+  }
+}
+

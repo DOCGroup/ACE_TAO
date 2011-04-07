@@ -1,3 +1,24 @@
+ace (6.0.1-1) unstable; urgency=low
+
+  [ Pau Garcia i Quiles ]
+  * New upstream release
+  * Drop patch 12-add-DESTDIR-to-MPC (applied upstream)
+  * Drop patch 13-add-QtReactor-export (applied upstream)
+  * Drop patch 14-fix-tcl-flags (applied upstream)
+  * Drop patch 16-fix-pidl-install (applied upstream)
+  * Update patch 11-promote-QtResource-to-qt4
+  * Update patch 15-fix-lzo-flags
+  * Update patch 34-bts386713
+  * Require debhelper >= 7 (it was already required, in practice)
+  * Register documentation with doc-base
+  * Explicitly set source format 1.0 until we move to 3.0
+  * Package ACE_INet and ACE_INet_SSL
+
+  [ Thomas Girard ]
+  * Build-depend on Tcl/Tk >= 8.5.
+
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sun, 20 Feb 2011 16:33:13 +0100
+
 ace (6.0.0-1) experimental; urgency=low
 
   * New upstream release:
@@ -33,10 +54,11 @@ ace (6.0.0-1) experimental; urgency=low
       - 12-add-DESTDIR-to-MPC.dpatch, to add and use DESTDIR in make install
       - 13-add-QtReactor_export.h.dpatch, to add a missing header in
         libace-qtreactor-dev package.
+      - 16-fix-pidl-install.dpatch, to add missing .pidl files.
       - fix_doxygen.sh, to regenerate the patch for Doxygen reduction.
   * Bump Standards-Version: to 3.9.1.
 
- -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 30 Dec 2010 20:56:08 +0100
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 06 Jan 2011 07:39:04 +0100
 
 ace (5.7.7-4) unstable; urgency=high
   [ Marek Brudka ]
@@ -48,7 +70,7 @@ ace (5.7.7-3) unstable; urgency=low
   [ Marek Brudka ]
   * Configuration file for KFreeBSD created. Closes: #591586.
   * Restored pkgconfig files. Closes: #591610.
-  * Provided manpages for tao_catior, tao_nslist, tao_nsdel,
+  * Provided manpages for tao_catior, tao_nslist, tao_nsdel, 
     tao_nsadd, ace_netsvcs.
 
   [ Thomas Girard ]
@@ -152,7 +174,7 @@ ace (5.6.3-6) unstable; urgency=low
   [ Pau Garcia i Quiles ]
   * Add new patches:
     - Remove duplicate files from .mpc files so that Makefile.am files do
-      not have duplicates
+      not have duplicates 
     - Run autoupdate and autoreconf in the ACE and TAO directories in order
       to update from libtool 1.5 (what upstream uses) to libtool 2.2
 
@@ -393,9 +415,9 @@ ace (5.4.7-6) unstable; urgency=low
   * debian/patches/16-g++4-visibility-tweaks.dpatch:
     Backport upstream tweaks for g++ 4 visibility feature and disable
     visibility hiding for now. (Closes: #324271).
-  * debian/rules: g++ 4.0.2 was ICE'ing on #pragma once. This is no
+  * debian/rules: g++ 4.0.2 was ICE'ing on #pragma once. This is no 
     longer true as of g++-4.0_4.0.2-4, so we can use g++4 again. For the
-    record, another possible fix was to #define ACE_LACKS_PRAGMA_ONCE in
+    record, another possible fix was to #define ACE_LACKS_PRAGMA_ONCE in 
     `$ACE_ROOT/ace/config.h`.
   * Add `c2a` suffix to all libs for libstdc++ allocator change.
     (Closes: #339142).
@@ -446,7 +468,7 @@ ace (5.4.7-1) unstable; urgency=low
  -- Konstantinos Margaritis <markos@debian.org>  Fri, 12 Aug 2005 12:45:13 +0300
 
 ace (5.4.2.1.0-4) unstable; urgency=high
-
+  
     * Thomas Girard <thomas.g.girard@free.fr>
       - debian/control:
         o libacexml-dev depends on libace-dev.
@@ -457,7 +479,7 @@ ace (5.4.2.1.0-4) unstable; urgency=high
         reported by lintian.
       - debian/libciao-dev.install: add missing .idl and .pidl files.
         (Closes: #307258)
-
+  
  -- Thomas Girard <thomas.g.girard@free.fr>  Mon,  2 May 2005 19:30:01 +0200
 
 ace (5.4.2.1.0-3) unstable; urgency=high
@@ -551,9 +573,9 @@ ace (5.4.2.1-1) unstable; urgency=low
   * Konstantinos Margaritis
     - Fixed missed path for libACE.so.5.4.2 in dh_shlibdeps
     - Fixed incorrect timestamp of original archive (1970 etc).
-
+ 
  -- Konstantinos Margaritis <markos@debian.org>  Thu,  2 Sep 2004 23:04:56 +0200
-
+ 
 ace (5.4.0.1-1.1) unstable; urgency=low
 
   * Fixed ACE_NDEBUG configuration of ACE. (Closes: #242881)
@@ -619,7 +641,7 @@ ace (5.3.1-7) unstable; urgency=low
 
 ace (5.3.1-6) unstable; urgency=low
 
-  * Added the ORB services .idl files that were left out from the
+  * Added the ORB services .idl files that were left out from the 
     libtao-orbsvcs-dev package. (Closes: #213568)
 
  -- Konstantinos Margaritis <markos@debian.org>  Sun,  5 Oct 2003 12:31:21 +0300
@@ -645,7 +667,7 @@ ace (5.3.1-3) unstable; urgency=low
 
   * Updated to new standards version 3.6.1
   * Fixed the section of a couple of packages.
-  * Now the getrlimit, etc functions are always defined
+  * Now the getrlimit, etc functions are always defined 
     as ints. g++ 3.x does not complain anymore (Closes: #104681).
 
  -- Konstantinos Margaritis <markos@debian.org>  Tue, 16 Sep 2003 10:31:03 +0300
@@ -660,7 +682,7 @@ ace (5.3.1-2) unstable; urgency=low
   * Full doxygen documentation not included due to size concerns.
     (Closes: #108749).
   * tao-config included in libtao-dev. (Closes: #159234).
-  * All -dev packages carry their respective examples in full and
+  * All -dev packages carry their respective examples in full and 
     uncompressed. (Closes: #52145, #76967).
   * libACE.a is compiled with thread support enabled. (Closes: #126717).
     dbbalancer now builds successfully with -static.
@@ -701,7 +723,7 @@ ace (5.2.4-1.2) unstable; urgency=low
 
 ace (5.2.4-1.1) unstable; urgency=low
 
-  * gcc-3.2 transition, NMU patch by Andreas Metzler <ametzler@debian.org>
+  * gcc-3.2 transition, NMU patch by Andreas Metzler <ametzler@debian.org> 
   * (Closes: #188328)
 
  -- Konstantinos Margaritis <markos@debian.org>  Fri, 11 Apr 2003 23:25:38 +0200
@@ -771,7 +793,7 @@ ace (5.1.8-5) unstable; urgency=low
     5.0 debian packages, since both sets of packages have files with the
     same name.  libace5.1-dev also conflicts with libace4.6-dev.  (#74031)
   * Added xlib6g-dev to the list of build dependencies.  The X11 libraries
-    aren't strictly necessary to build ACE, but the Debian packages enable
+    aren't strictly necessary to build ACE, but the Debian packages enable    
     ACE's XtReactor support.
   * Updated `README.Debian'.  The Debian ACE packages are no longer built
     using experimental ACE Configuration Project distributions.  They are

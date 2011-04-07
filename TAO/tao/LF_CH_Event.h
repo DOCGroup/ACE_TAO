@@ -44,7 +44,7 @@ public:
   /**
    * The TAO_LF_Multi_Event class is another specialization of
    * TAO_LF_Event, used for aggregating many connection handlers into
-   * a single event object.. It requires friendship so that it can
+   * a single event object. It requires friendship so that it can
    * check the is_state_final() flag on each of its contained
    * connection handlers.
    */
