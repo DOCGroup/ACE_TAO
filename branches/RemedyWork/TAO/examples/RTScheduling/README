@@ -1,0 +1,27 @@
+Pluggable  Schedulers
+=====================
+
+The Real-Time CORBA 2.0 specification provides interfaces for a  framework that facilitates dynamic scheduling in distributed real-time systems. The specification introduces the following concepts:
+
+* Scheduling Segment - A sequence of code, on a single host, with
+specific scheduling requirements
+* Distributable Thread (DT) - A programming model abstraction for a
+distributed task
+* Pluggable Scheduler - Facilitate the use of multiple scheduling
+disciplines
+* Scheduling Points - To interact with the scheduler at the
+application and ORB level
+
+This dir contains two pluggable schedulers:
+
+Fixed Priority Scheduler - This scheduler uses the OS scheduler to
+schedule the various  DTs dynamically entering and leaving the
+system. The DTs are scheduled based on their importance.
+
+Most Important First (MIF) Scheduler - This scheduler uses a custom
+MIF scheduler to schedule the DTs in the system. The tasks are
+scheduled according to their importance. The scheduler maintains a
+ready queue of DTs. When a DT enters the system it puts the DT in the
+ready queue in order of its importance. It then activates the DT
+of highest importance in the ready queue. So at any given time the
+DT with the highest importance is running.

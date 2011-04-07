@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file QCTQ_Test_Connector.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef QUERY_CONDITION_TEST_CONNECTOR_IDL_
+#define QUERY_CONDITION_TEST_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/QCTQ_Test_Base.idl"
+
+#pragma ciao lem "Connector/QCTQ_Test_ConnectorE.idl"
+
+module QCTQ_Test
+{
+  module ::CCM_DDS::Typed < ::QueryConditionTest, ::QueryConditionTestSeq> QueryConditionTestConnector;
+};
+
+#endif /* QUERY_CONDITION_TEST_CONNECTOR_IDL_ */

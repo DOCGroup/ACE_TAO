@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file Event_MemLeakDetection_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef EVENT_MEMLEAKDETECTION_TEST_BASE_IDL
+#define EVENT_MEMLEAKDETECTION_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/Event_MemLeakDetection_Test_BaseSupport.h"
+
+struct Event_MemLeakDetectionTest {
+  string key; //@key
+  long iteration;
+};
+
+typedef sequence<Event_MemLeakDetectionTest> Event_MemLeakDetectionTestSeq;
+
+#endif

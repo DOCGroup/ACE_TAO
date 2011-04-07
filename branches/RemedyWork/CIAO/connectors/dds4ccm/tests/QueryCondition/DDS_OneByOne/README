@@ -1,0 +1,40 @@
+# $Id$
+
+This is a plain DDS test, which test the use of 2 different query conditions, followed through a
+readcondition.
+
+Use a sample with {
+  string symbol; //@key
+  long iteration;
+}
+
+The sender writes samples with symbol <KEY_1> and <KEY_2> and iteration <1> through <3>
+The  receiver uses a querycondition with 'iteration > 1 AND iteration < 3' and use a
+read_w_condition with this querycondition.
+
+What we expect is that the receiver receives two samples (key_1 and key_2) with iteration 2.
+
+Next, the sender writes samples with symbol <KEY_1> and <KEY_2> and iteration <4> through <6>
+The  receiver changes the querycondition with 'iteration > 4 AND iteration < 6' and use a
+read_w_condition with this querycondition.
+
+What we expect is that the receiver receives two samples (key_1 and key_2) with iteration 5.
+
+Next, the sender writes samples with symbol <KEY_1> and <KEY_2> and iteration <7> through <9>
+The receiver deletes the query condition and creates the next  readcondition:
+  "DDS_NOT_READ_SAMPLE_STATE,DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE"
+and uses, in a loop, a read_w_condition with this readcondition and number of samples = 1.
+
+(This test (QueryCondition/DDS_OneByOne) differs with the test QueryCondition/DDS that the DDS test doesn't use a loop, but a
+read_w_condition with this readcondition and number of samples = DDS_LENGTH_UNLIMITED.)
+
+
+What we expect is that the receiver receives samples (key_1 and key_2) with iterations between 1 and 9, except 2 and 5 which
+are already received before.
+
+Next we check the number of samples in DDS with a plain read.
+What we expect is that the receiver receives all 18 samples.
+
+
+
+

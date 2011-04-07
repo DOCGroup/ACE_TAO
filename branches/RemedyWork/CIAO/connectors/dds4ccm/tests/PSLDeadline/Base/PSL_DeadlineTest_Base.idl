@@ -1,0 +1,20 @@
+// $Id$
+
+/**
+ * @file   PSL_DeadlineTest_Base.idl
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef PSL_DEADLINETEST_BASE_IDL
+#define PSL_DEADLINETEST_BASE_IDL
+
+#pragma ndds typesupport "Base/PSL_DeadlineTest_BaseSupport.h"
+
+struct TestTopic {
+  string key; //@key
+  long x;
+};
+
+typedef sequence<TestTopic> TestTopicSeq;
+
+#endif

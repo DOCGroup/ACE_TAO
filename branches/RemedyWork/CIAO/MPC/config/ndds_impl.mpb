@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  after += CIAO_DDS4CCM_DDS_NDDS
+  libs += CIAO_DDS4CCM_DDS_NDDS
+}
+
