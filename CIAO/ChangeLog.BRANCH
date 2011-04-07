@@ -1,3 +1,16 @@
+Thu Apr  7 12:26:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+          Using the getter as well to read samples from DDS.
+
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/Plan.cdp:
+          Rewritten in order to use the state and event connectors properly.
+
+        * tests/DAnCE/Progressive_Deployments/run_test.pl:
+          Optimized logging.
+
 Thu Apr  7 12:15:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.h:
