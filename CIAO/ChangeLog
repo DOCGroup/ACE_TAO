@@ -1,3 +1,12 @@
+Thu Apr  7 21:03:27 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Logger/Logger_Service.h:
+        * ciao/Logger/Logger_Service.cpp:
+        * connectors/dds4ccm/impl/logger/Logger_Service.h:
+        * connectors/dds4ccm/impl/logger/Logger_Service.cpp:
+
+          Add backend support from DAnCE.
+
 Thu Apr  7 18:48:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
