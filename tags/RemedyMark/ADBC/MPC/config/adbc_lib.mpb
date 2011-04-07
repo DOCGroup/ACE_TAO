@@ -1,6 +1,0 @@
-// $Id$
-
-project : acelib, adbclib {
-  libout = $(ADBC_ROOT)/lib
-  dllout = $(ADBC_ROOT)/lib
-}
