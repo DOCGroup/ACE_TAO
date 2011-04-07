@@ -7,6 +7,8 @@
 #include "tao/SystemException.h"
 #include "ace/Service_Config.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Log_Msg_Backend.h"
+#include "ace/Dynamic_Service.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
@@ -43,6 +45,9 @@ CIAO::DDS4CCM::Logger_Service::init ()
 
   ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("DDS4CCM_LOG_FILE"), this->filename_.c_str ());
   this->filename_ = filename;
+
+  ACE_Env_Value<const ACE_TCHAR *> backend (ACE_TEXT("DDS4CCM_LOG_BACKEND"), this->backend_.c_str ());
+  this->backend_ = backend;
 }
 
 int
@@ -80,6 +85,30 @@ CIAO::DDS4CCM::Logger_Service::init (int argc, ACE_TCHAR * argv[])
 
       ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
+    }
+
+  if (this->backend_.length () > 0)
+    {
+
+      ACE_Log_Msg_Backend* logger_be =
+        ACE_Dynamic_Service<ACE_Log_Msg_Backend>::instance(this->backend_.c_str ());
+
+      //        backend->open ("");
+
+      if (logger_be == 0)
+        {
+          DDS4CCM_ERROR (1,
+                       (LM_EMERGENCY, DDS4CCM_INFO
+                        "Logger_Service::init - "
+                        "Unable to load backend %s\n",
+                        this->backend_.c_str ()));
+          return -1;
+        }
+
+      ACE_Log_Msg::msg_backend (logger_be);
+
+      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
+      ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
     }
 
   return 0;
