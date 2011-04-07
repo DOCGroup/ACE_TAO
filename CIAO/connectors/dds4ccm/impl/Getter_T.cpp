@@ -50,6 +50,7 @@ namespace CIAO
       ::DDS::ReadCondition_var rc = this->condition_manager_->get_readcondition ();
       if (! ::CORBA::is_nil (rc.in ()))
         {
+          // Read, using the read condition
           return this->get (data,
                             sample_info,
                             max_samples,
@@ -57,6 +58,8 @@ namespace CIAO
         }
       else
         {
+          // A filter has been set. Use the appropriate query condition
+          // to read data from DDS.
           ::DDS::QueryCondition_var qc = this->condition_manager_->get_querycondition_getter ();
           if (::CORBA::is_nil (qc.in ()))
             {
@@ -124,6 +127,8 @@ namespace CIAO
       ::DDS::ConditionSeq active_conditions;
       if (!this->condition_manager_->wait (active_conditions, this->time_out_))
         {
+          // Wait hasn't been triggered (no samples which match the attached
+          // conditions are received).
           return false;
         }
 
@@ -136,19 +141,20 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
 
+      // Check which conditions have triggered the wait method to 'wake up'.
       for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
         {
+          // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
-              // Check trigger
-              active_conditions[i]->get_trigger_value ();
-
               ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                              sample_info,
-                                                              max_samples);
+                                                             sample_info,
+                                                             max_samples);
 
               if (retcode == ::DDS::RETCODE_OK && data.length () >= 1)
                 {
+                  // Determine which samples are valid and return these to
+                  // the caller.
                   ::CORBA::ULong number_read = 0;
                   for (::CORBA::ULong index = 0; index < sample_info.length (); index ++)
                     {
@@ -205,6 +211,8 @@ namespace CIAO
                     "Getter_Base_T::get_many - "
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
+
+                  throw ::CCM_DDS::InternalError (retcode, 1);
                 }
             }
         }
@@ -275,23 +283,28 @@ namespace CIAO
       ::DDS::ConditionSeq active_conditions;
       if (!this->condition_manager_->wait (active_conditions, this->time_out_))
         {
+          // None of the attached conditions have triggered wait.
           return false;
         }
 
+      // Check which conditions have triggered the wait method to 'wake up'.
       for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
         {
+          // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
               bool valid_data_read = false;
 
+              // Read the samples one by one until a valid sample
+              // has been found.
               while (!valid_data_read)
                 {
                   ::DDS::SampleInfoSeq sample_info;
                   SEQ_VALUE_TYPE data;
 
                   ::DDS::ReturnCode_t const retcode = this->get (data,
-                                                                  sample_info,
-                                                                  1);
+                                                                 sample_info,
+                                                                 1);
 
                   if (retcode == ::DDS::RETCODE_NO_DATA)
                     {
@@ -303,6 +316,7 @@ namespace CIAO
                     }
                   else if (retcode != ::DDS::RETCODE_OK)
                     {
+                      //something went wrong.
                       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             "Getter_T::get_one - "
                             "Error while reading from DDS: <%C>\n",
@@ -322,6 +336,8 @@ namespace CIAO
                     }
                   else if (data.length () == 1 && sample_info[0].valid_data)
                     {
+                      // Add the valid sample to the list which will be returned
+                      // to the caller
                       info <<= sample_info[0];
                       an_instance = data[0];
                       valid_data_read = true;
@@ -330,8 +346,9 @@ namespace CIAO
                     {
                       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                             "Getter_T::get_one - "
-                            "No valid available in DDS.\n"));
+                            "No valid data available in DDS.\n"));
                     }
+
                   // Return the loan of each read.
                   ::DDS::ReturnCode_t const retval =
                     this->dds_reader ()->return_loan (data, sample_info);
@@ -341,6 +358,8 @@ namespace CIAO
                         "Getter_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
+
+                      throw ::CCM_DDS::InternalError (retcode, 1);
                     }
                 }
             }
@@ -365,16 +384,22 @@ namespace CIAO
       if (!this->condition_manager_->wait (active_conditions,
                                             this->time_out_))
         {
+          // None of the attached conditions have triggered wait.
           return false;
         }
+
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
+      // Check which conditions have triggered the wait method to 'wake up'.
       for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
         {
+          // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
             {
               bool valid_data_read = false;
 
+              // Read the samples one by one until a valid sample
+              // has been found.
               while (!valid_data_read)
                 {
                   ::DDS::SampleInfoSeq sample_info;
@@ -410,6 +435,8 @@ namespace CIAO
                     }
                   else if (data.length () == 1 && sample_info[0].valid_data)
                     {
+                      // Add the valid sample to the list which will be returned
+                      // to the caller
                       info <<= sample_info[0];
                       *an_instance = data[0];
                       valid_data_read = true;
@@ -428,6 +455,7 @@ namespace CIAO
                         "Getter_T::get_one - "
                         "Error returning loan to DDS - <%C>\n",
                         translate_retcode (retval)));
+                      throw ::CCM_DDS::InternalError (retval, 0);
                     }
                 }
             }

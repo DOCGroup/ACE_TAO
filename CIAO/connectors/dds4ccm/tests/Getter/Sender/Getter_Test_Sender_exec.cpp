@@ -42,7 +42,6 @@ namespace CIAO_Getter_Test_Sender_Impl
   int
   pulse_Generator::handle_timeout (const ACE_Time_Value &, const void *)
   {
-    // Notify the subscribers
     this->pulse_callback_.tick ();
     return 0;
   }
@@ -170,9 +169,13 @@ namespace CIAO_Getter_Test_Sender_Impl
     GetInvoker_var invoker =
       this->ciao_context_->get_connection_invoke_getter ();
 
+
+    //Prepare the samples.
     GetterTestSeq write_many (this->keys_ * this->iterations_);
     write_many.length (this->keys_ * this->iterations_);
-    for (CORBA::UShort key = 1; key < this->keys_ + 1; ++key)
+    // since the test for get_one already writes samples to DDS with
+    // key=KEY_1 we start with key = 2 when writing many samples.
+    for (CORBA::UShort key = 2; key < this->keys_ + 2; ++key)
       {
         GetterTest new_key;
         char tmp[7];
@@ -186,9 +189,13 @@ namespace CIAO_Getter_Test_Sender_Impl
       }
     try
       {
+        // Inform the receiver that the sender has written many
+        // samples to DDS.
         invoker->start_get_many (this->keys_, this->iterations_);
-        ACE_Time_Value tv (1, 0);
+        // Wait a while before writing the samples.
+        ACE_Time_Value tv (2, 0);
         ACE_OS::sleep (tv);
+        // Now start writing.
         writer->write_many (write_many);
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("write_many : written <%u> samples\n"),
               write_many.length ()));
@@ -237,7 +244,10 @@ namespace CIAO_Getter_Test_Sender_Impl
         GetterTest *new_key = new GetterTest;
         new_key->key = CORBA::string_dup ("KEY_1");
         fixed_key.key = 1;
+        // Inform the receiver that this class (as the sender) is about to
+        // write samples to DDS.
         invoker->start_get_one ("KEY_1", 1, last_iter_);
+
         new_key->iteration = last_iter_;
         fixed_key.iteration = last_iter_;
 
@@ -254,8 +264,10 @@ namespace CIAO_Getter_Test_Sender_Impl
     }
    else
     {
-      write_many ();
+      // Stop the timer at forehand.
       this->reactor ()->cancel_timer (this->ticker_);
+      // Perform the last test.
+      this->write_many ();
     }
   }
 

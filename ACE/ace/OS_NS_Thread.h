@@ -1023,22 +1023,11 @@ private:
 
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
 
-// Support non-scalar thread keys, such as with some POSIX
-// implementations, e.g., MVS.
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-#   define ACE_KEY_INDEX(OBJ,KEY) \
-  u_int OBJ; \
-  ACE_OS::memcpy (&OBJ, &KEY, sizeof (u_int))
-# else
-#   define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_mutex_lock_cleanup_adapter)
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
 
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
@@ -1288,7 +1277,7 @@ namespace ACE_OS {
                   const ACE_Time_Value &timeout);
 
   /**
-   * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
+   * If @a timeout == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
    * this method attempts to acquire a lock, but gives up if the lock
    * has not been acquired by the given time, in which case it returns
    * -1 with an @c ETIME errno on platforms that actually support timed
@@ -1312,7 +1301,7 @@ namespace ACE_OS {
   int mutex_trylock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
-  /// mutexes, <abandoned> is set to 1 and 0 is returned.
+  /// mutexes, @a abandoned is set to 1 and 0 is returned.
   extern ACE_Export
   int mutex_trylock (ACE_mutex_t *m,
                      int &abandoned);
@@ -1410,7 +1399,7 @@ namespace ACE_OS {
   int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
   //@}
 
-  /// Find the schedling class ID that corresponds to the class name.
+  /// Find the scheduling class ID that corresponds to the class name.
   extern ACE_Export
   int scheduling_class (const char *class_name, ACE_id_t &);
 
@@ -1509,7 +1498,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_continue (ACE_hthread_t target_thread);
 
-  /*
+  /**
    * Creates a new thread having @a flags attributes and running @a func
    * with @a args (if @a thread_adapter is non-0 then @a func and @a args
    * are ignored and are obtained from @a thread_adapter).  @a thr_id

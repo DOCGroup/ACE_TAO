@@ -6,10 +6,18 @@ Before the Sender starts writing samples to DDS, he informs the
 Receiver (via a 'normal' CCM interface) about how many keys and
 iterations to get from DDS. The receiver starts waiting on those
 samples by calling get_one or get_many, using a timeout.
+
 In the meantime the Sender will sleep for half a second before actual
 writing the samples to DDS.
 Once the DDS connector on the receiver side receives the written samples,
 he should wake up and should return the samples to the user code.
 
-To prevent deadlocks, both getting and writing takes place on the
-ORB reactor thread.
+So the starting points for the Receiver to start 'working' are:
+. start_timeout_get_one ();
+. start_timeout_get_many ();
+. start_get_one (in string key, in long fixed_key, in long iteration);
+. start_get_many (in short keys, in long iterations);
+
+In order to prevent deadlocks an event handler on the reactor is created
+for each sample to be received. This event handler is created during invocation
+of the latter two methods.

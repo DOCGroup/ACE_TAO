@@ -58,7 +58,7 @@ public:
   /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (const CORBA::Any& val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of @c this.
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone (void) const;
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
@@ -73,7 +73,7 @@ public:
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
 private:

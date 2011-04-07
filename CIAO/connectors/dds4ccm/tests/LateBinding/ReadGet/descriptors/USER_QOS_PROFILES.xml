@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.4d/scripts/../resource/rtiddsgen/../qos_profiles_4.4d/schema/rti_dds_qos_profiles.xsd" version="4.4d">
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:/ndds/ndds.4.5d/scripts/../resource/rtiddsgen/../qos_profiles_4.5d/schema/rti_dds_qos_profiles.xsd" version="4.5d">
   <qos_library name="LateBinding_Library">
     <qos_profile name="LateBinding_Profile" is_default_qos="true">
       <datawriter_qos>

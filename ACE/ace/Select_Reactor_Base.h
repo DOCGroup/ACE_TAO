@@ -92,7 +92,6 @@ public:
 class ACE_Event_Tuple
 {
 public:
-
   /// Default constructor.
   ACE_Event_Tuple (void);
 
@@ -106,7 +105,6 @@ public:
   bool operator!= (const ACE_Event_Tuple &rhs) const;
 
 public:
-
   /// Handle.
   ACE_HANDLE handle_;
 

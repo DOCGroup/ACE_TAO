@@ -708,12 +708,11 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   return 1;
 }
 
-
 int
 TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
                                      ACE_Time_Value *max_wait_time)
 {
-  // Dont clone now.. We could be sent in one shot!
+  // Don't clone now.. We could be sent in one shot!
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
@@ -1619,11 +1618,9 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
   return 0;
 }
 
-/*
- *
+/**
  * All the methods relevant to the incoming data path of the ORB are
  * defined below
- *
  */
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
@@ -1876,7 +1873,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
     }
 
   // Saving the size of the received buffer in case any one needs to
-  // get the size of the message thats received in the
+  // get the size of the message that is received in the
   // context. Obviously the value will be changed for each recv call
   // and the user is supposed to invoke the accessor only in the
   // invocation context to get meaningful information.

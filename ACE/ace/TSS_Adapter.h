@@ -30,8 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This class encapsulates a TSS object and its associated
  * C++ destructor function.  It is used by the ACE_TSS...
  * methods (in Synch_T.cpp) in order to allow an extern
- * "C" cleanup routine to be used.  Needed by the "frigging"
- * MVS C++ compiler.
+ * "C" cleanup routine to be used.
  *
  * Objects of this class are stored in thread specific
  * storage. ts_obj_ points to the "real" object and

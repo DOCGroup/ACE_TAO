@@ -5,8 +5,8 @@
 // RTP at http://get.qnx.com.
 // This header is intended to switch between configuration for
 // various NTO versions.
-#ifndef ACE_CONFIG_QNX_RTP_H
-#define ACE_CONFIG_QNX_RTP_H
+#ifndef ACE_CONFIG_QNX_H
+#define ACE_CONFIG_QNX_H
 #include /**/ "ace/pre.h"
 
 #include <sys/neutrino.h>
@@ -14,7 +14,31 @@
 #  error "Could not detect QNX version from macro _NTO_VERSION"
 #endif
 
-#include /**/ "ace/config-qnx-rtp-common.h"
+#define _POSIX_C_SOURCE 199506
+#define _QNX_SOURCE
+
+// The following defines the Neutrino compiler.
+// gcc should know to call g++ as necessary
+#ifdef __GNUC__
+# define ACE_CC_NAME ACE_TEXT ("gcc")
+#else
+# define ACE_CC_NAME ACE_TEXT ("QNX-RTP compiler ??")
+#endif
+
+#include "ace/config-g++-common.h"
+
+// /usr/nto/include/float.h defines
+//  FLT_MAX_EXP 127
+//  DBL_MAX_EXP 1023
+//  ace expects 128 & 1024 respectively
+//  to set the following macros in ace/Basic_Types.h
+//  These macros are:
+#define ACE_SIZEOF_DOUBLE   8
+#define ACE_SIZEOF_FLOAT    4
+
+// At least qnx 6.3.2 uses a void return for unsetenv
+// This assumes that older versions do too.
+#define ACE_HAS_VOID_UNSETENV
 
 /////////////////////////////////////////////////////////////////
 //    Definition of the features that are available.
@@ -38,10 +62,8 @@
 #define ACE_HAS_DIRENT
 #define ACE_HAS_GETPAGESIZE
 #define ACE_HAS_GETIFADDRS
-// Enable gperf, this is a hosted configuration.
 #define ACE_HAS_GPERF
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-//#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
@@ -50,7 +72,6 @@
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_PTHREADS
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SELECT_H
@@ -59,6 +80,7 @@
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_SIOCGIFCONF
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
@@ -66,7 +88,6 @@
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 #define ACE_HAS_TERMIOS
-#define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_THR_C_DEST
 #define ACE_HAS_THR_C_FUNC
@@ -75,6 +96,29 @@
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_VOIDPTR_MMAP
 #define ACE_HAS_VOIDPTR_SOCKOPT
+#define ACE_HAS_NET_IF_DL_H
+#define ACE_HAS_SYS_SIGINFO_H
+#define ACE_HAS_GETTIMEOFDAY 1
+#define ACE_HAS_GETRUSAGE 1
+#define ACE_HAS_GETRUSAGE_PROTOTYPE 1
+#define ACE_HAS_NEW_NO_H 1
+#define ACE_HAS_WCHAR 1
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
+#define ACE_IOCTL_TYPE_ARG2 u_long
+#define ACE_HAS_TIMEZONE 1
+#define ACE_HAS_SOCKADDR_MSG_NAME 1
+#define ACE_HAS_SIG_C_FUNC 1
+#define ACE_HAS_SOCKADDR_IN6_SIN6_LEN 1
+#define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#define ACE_HAS_STRING_CLASS 1
+#define ACE_HAS_STRSIGNAL
+#define ACE_HAS_POLL 1
+#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
+#define ACE_HAS_POSIX_NONBLOCK 1
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
+#define ACE_HAS_BSWAP_16
+#define ACE_HAS_BSWAP_32
+#define ACE_HAS_BSWAP_64
 
 /////////////////////////////////////////////////////////////////
 //    Definition of the features that are not available.
@@ -84,30 +128,33 @@
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 #define ACE_LACKS_MADVISE
-// lacks mqueue mgr or speed-up named sem by shm emulation
-#define ACE_LACKS_NAMED_POSIX_SEM
-#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 // Multicast_Tests reports for NTO 621 frames from unsubscribed groups
 #define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
-#define ACE_LACKS_POLL_H
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SO_SNDBUF
 #define ACE_LACKS_SO_RCVBUF
 #define ACE_LACKS_STREAM_MODULES
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_STRPTIME
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_T_ERRNO
 #define ACE_LACKS_U_LONGLONG_T
-#define ACE_LACKS_ALPHASORT
-#define ACE_LACKS_FD_MASK
-#define ACE_LACKS_NFDBITS
+#define ACE_HAS_SYS_SOCKIO_H 1
+#define ACE_HAS_SYSCTL
+#define ACE_HAS_SIGACTION_CONSTP2 1
+
+#if _NTO_VERSION < 650
+# define ACE_LACKS_NFDBITS
+# define ACE_LACKS_FD_MASK
+# define ACE_LACKS_SYS_MSG_H
+# define ACE_LACKS_ALPHASORT
+# define ACE_LACKS_STRPTIME
+# define ACE_LACKS_POLL_H
+#endif
+
 #define ACE_LACKS_ISCTYPE
 
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
@@ -130,6 +177,15 @@
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
 
+#if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+# define ACE_HAS_THREADS
+# define ACE_HAS_PTHREADS
+# define ACE_HAS_PTHREADS_UNIX98_EXT 1
+# define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+# define ACE_HAS_PTHREAD_GETCONCURRENCY
+#endif /* ACE_MT_SAFE */
+
+
 // The default value of FD_SETSIZE is 32, but actually x86 NTO
 // supports by default at least 1000 descriptors in fd_set.
 #if defined( FD_SETSIZE )
@@ -138,4 +194,4 @@
 #define FD_SETSIZE 1000
 
 #include /**/ "ace/post.h"
-#endif /* ACE_CONFIG_QNX_RTP_H */
+#endif /* ACE_CONFIG_QNX_H */

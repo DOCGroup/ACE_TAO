@@ -29,6 +29,7 @@ interface iface
 
 typedef sequence<iface> ifaceSeq;
 
+#if !defined (CCM_NOEVENT)
 eventtype ev
 {
 };
@@ -41,12 +42,14 @@ module orange
     eventtype Bar;
   };
 };
+#endif
 
 module GlobalTyped<typename A, typename B>
 {
   typedef short x;
 };
 
+#if !defined (CCM_NOEVENT)
 module orange
 {
   module apple
@@ -56,6 +59,7 @@ module orange
     };
   };
 };
+#endif
 
 module A
 {

@@ -26,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Wait_On_Read
  *
- *
  * Simply block on read() to wait for the reply.
  */
 class TAO_Wait_On_Read :  public TAO_Wait_Strategy

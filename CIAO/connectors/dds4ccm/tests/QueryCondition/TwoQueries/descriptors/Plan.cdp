@@ -110,6 +110,59 @@
       </value>
     </execParameter>
   </implementation>
+
+  <implementation xmi:id="QCTQ_Test_StateConnectorImplementation">
+    <name>QCTQ_Test_StateConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="QCTQ_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="QCTQ_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_QCTQ_Test_QueryConditionTestConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_QCTQ_Test_QueryConditionTestConnector_DDS_State_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QC_QCTQ_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QC_QCTQ_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -228,6 +281,37 @@
       </value>
     </configProperty>
   </instance>
+
+  <instance xmi:id="QCTQ_Test_StateConnector">
+    <name>QCTQ_Test_StateConnector</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="QCTQ_Test_StateConnectorImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QueryCondition_Library#QueryCondition_Profile</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>QCTQ_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -246,6 +330,26 @@
       </value>
     </configProperty>
   </instance>
+
+  <connection>
+    <name>read_port_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_port_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>passive_observer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="QCTQ_Test_StateConnector" />
+    </internalEndpoint>
+  </connection>
 
   <connection>
     <name>get_port_data</name>

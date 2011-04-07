@@ -62,7 +62,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     void check_samples (
       const char * test,
       const RG_LateBindingTestSeq& samples,
-      const ::CORBA::UShort& expected);
+      const ::CORBA::UShort& expected=0);
 
     ACE_Reactor* reactor (void);
   };

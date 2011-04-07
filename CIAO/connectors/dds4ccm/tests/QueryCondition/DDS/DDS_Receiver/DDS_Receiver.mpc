@@ -1,6 +1,6 @@
 // $Id$
 
-project(*qc_receiver) : nddslib, dds4ccm_ts_default {
+project(*qc_receiver) : nddslib {
   exename = DDS_receiver
   after += Base_stub
 

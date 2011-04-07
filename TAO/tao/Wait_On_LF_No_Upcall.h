@@ -36,10 +36,9 @@ namespace TAO
    * that indicates that the thread is unavailable to service upcalls.
    * Connection handler that are acting in a server role cooperate by
    * checking this flag in their handle_input, and returning if they're
-   * in a thread that is currently suspending upcalls.  The flag gets
+   * in a thread that is currently suspending upcalls. The flag gets
    * reset once the reply is received.
    */
-
   class Wait_On_LF_No_Upcall : public TAO_Wait_On_Leader_Follower
   {
   public:

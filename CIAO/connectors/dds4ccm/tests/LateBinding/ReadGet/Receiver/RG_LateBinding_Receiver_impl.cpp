@@ -148,7 +148,12 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     const RG_LateBindingTestSeq& samples,
     const ::CORBA::UShort& expected)
   {
-    if (samples.length () != expected)
+    bool error = samples.length () != expected;
+    if (ACE_OS::strcmp (test, "get") == 0)
+      {
+        error = !(samples.length () > 0);
+      }
+    if (error)
       {
         ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::check_samples - "
                     "ERROR: Unexpected number of %C samples received: "
@@ -274,7 +279,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         RG_LateBindingTestSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfos;
         getter->get_many (samples, readinfos);
-        this->check_samples ("get", samples, 1);
+        this->check_samples ("get", samples);
       }
     catch (const CORBA::Exception &e)
       {

@@ -146,6 +146,10 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     virtual ::CCM_DDS::CCM_PortStatusListener_ptr
     get_get_port_status (void);
 
+    virtual ::CCM_DDS::CCM_PortStatusListener_ptr
+    get_read_port_status (void);
+
+
     virtual ::CCM_TwoQueriesStarter_ptr
     get_reader_start (void);
     //@}
@@ -197,8 +201,10 @@ namespace CIAO_QCTQ_Test_Receiver_Impl
     /** User defined private operations. */
     ::CORBA::ULong test_all (::CORBA::UShort run);
     ::CORBA::ULong get_all (::CORBA::UShort run);
+    void read_all (::CORBA::UShort run);
     void check_iter (const QueryConditionTest & sample,
-                     ::CORBA::UShort run);
+                     ::CORBA::UShort run,
+                     ::CCM_DDS::ReadInfo * info = 0);
     void check_filter (::CORBA::UShort run);
     void set_filter (::CORBA::UShort run);
 
