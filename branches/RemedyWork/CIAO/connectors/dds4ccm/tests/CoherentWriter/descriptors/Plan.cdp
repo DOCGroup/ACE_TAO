@@ -59,8 +59,60 @@
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="CoherentWrite_Test_ConnectorComponentImplementation">
-    <name>CoherentWrite_Test_ConnectorComponentImplementation</name>
+  <implementation xmi:id="CoherentWrite_Test_StateConnectorImplementation">
+    <name>CoherentWrite_Test_StateConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="CoherentWrite_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="CoherentWrite_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoherentWriteTestConnector_DDS_State_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_CoherentWriteTestConnector_DDS_State_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CoherentWrite_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>CoherentWrite_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="CoherentWrite_Test_EventConnectorImplementation">
+    <name>CoherentWrite_Test_EventConnectorImplementation</name>
     <source/>
     <artifact xmi:idref="CoherentWrite_Test_Connector_ExecArtifact" />
     <artifact xmi:idref="CoherentWrite_Test_Connector_SvntArtifact" />
@@ -110,6 +162,7 @@
       </value>
     </execParameter>
   </implementation>
+
   <implementation xmi:id="SenderComponentImplementation">
     <name>SenderComponentImplementation</name>
     <source/>
@@ -161,6 +214,7 @@
       </value>
     </execParameter>
   </implementation>
+
   <instance xmi:id="ReceiverComponentInstance">
     <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
@@ -179,12 +233,13 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="CoherentWrite_Test_ConnectorComponentInstance">
+
+  <instance xmi:id="CoherentWrite_Test_SenderConnectorInstance">
     <name>CoherentWrite_Test_ConnectorComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="CoherentWrite_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="CoherentWrite_Test_EventConnectorImplementation" />
     <configProperty>
       <name>qos_profile</name>
       <value>
@@ -208,12 +263,13 @@
       </value>
     </configProperty>
   </instance>
-  <instance xmi:id="CoherentWrite_Test_ConnectorComponentInstance2">
-    <name>CoherentWrite_Test_ConnectorComponent2</name>
+
+  <instance xmi:id="CoherentWrite_Test_ReceiverConnectorInstance">
+    <name>CoherentWrite_Test_ReceiverConnector</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="CoherentWrite_Test_ConnectorComponentImplementation" />
+    <implementation xmi:idref="CoherentWrite_Test_StateConnectorImplementation" />
     <configProperty>
       <name>qos_profile</name>
       <value>
@@ -237,6 +293,7 @@
       </value>
     </configProperty>
   </instance>
+
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
     <node>SenderNode</node>
@@ -269,10 +326,30 @@
       <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>push_consumer_data</portName>
+      <portName>pull_observer_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="CoherentWrite_Test_ConnectorComponentInstance2" />
+      <instance xmi:idref="CoherentWrite_Test_ReceiverConnectorInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>info_out_fresh_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_fresh_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>pull_observer_fresh_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CoherentWrite_Test_ReceiverConnectorInstance" />
     </internalEndpoint>
   </connection>
 
@@ -292,7 +369,7 @@
       <portName>supplier_data</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="CoherentWrite_Test_ConnectorComponentInstance" />
+      <instance xmi:idref="CoherentWrite_Test_SenderConnectorInstance" />
     </internalEndpoint>
   </connection>
 
