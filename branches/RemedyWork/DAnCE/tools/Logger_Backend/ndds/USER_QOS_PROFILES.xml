@@ -17,7 +17,7 @@
           <kind>KEEP_LAST_HISTORY_QOS</kind>
           <depth>50</depth>
         </history>
-        
+
         <durability>
           <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
         </durability>

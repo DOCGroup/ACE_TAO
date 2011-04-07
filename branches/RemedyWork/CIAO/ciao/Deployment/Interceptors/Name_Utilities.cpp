@@ -48,7 +48,7 @@ namespace CIAO
 
           if (nm.length () == 0)
             {
-              CIAO_ERROR (1, (LM_WARNING, CLINFO 
+              CIAO_ERROR (1, (LM_WARNING, CLINFO
                               "Name_Utilities::bind_object - "
                               "build_name resulted in an invalid name for string %C\n",
                               name));
@@ -95,7 +95,7 @@ namespace CIAO
 
       if (CORBA::is_nil (ctx))
         {
-          CIAO_ERROR (1, (LM_WARNING, CLINFO 
+          CIAO_ERROR (1, (LM_WARNING, CLINFO
                           "Name_Utilities::bind_context - "
                           "Provided naming context is nil, the naming context will not be bound."));
         }

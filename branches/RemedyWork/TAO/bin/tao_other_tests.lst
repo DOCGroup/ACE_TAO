@@ -25,6 +25,7 @@ TAO/performance-tests/Sequence_Latency/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPAC
 TAO/performance-tests/Sequence_Latency/DSI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Sequence_Latency/DII/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
+TAO/performance-tests/Sequence_Latency/Sequence_Operations_Time/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/Throughput/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl: !Win32 !ACE_FOR_TAO !OpenVMS !CORBA_E_MICRO
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !Win32 !OpenVMS !LynxOS
