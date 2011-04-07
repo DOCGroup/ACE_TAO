@@ -33,6 +33,7 @@
 
 #define ON_CREATION_EXPECTED 4
 #define ON_MANY_EXPECTED 4
+#define ON_MANY_TRIGGERED 2
 #define ON_DELETION_EXPECTED 4
 #define ON_READER_EXPECTED 0
 
@@ -67,6 +68,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
         Atomic_Long &no_operation,
         Atomic_Long &on_creation,
         Atomic_Long &on_many_update,
+        Atomic_Long &on_many_upd_trigger,
         Atomic_Long &on_deletion,
         Atomic_Bool &create_data,
         Atomic_Bool &update_data)
@@ -75,6 +77,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       , no_operation_ (no_operation)
       , on_creation_ (on_creation)
       , on_many_update_ (on_many_update)
+      , on_many_upd_trigger_ (on_many_upd_trigger)
       , on_deletion_ (on_deletion)
       , create_data_ (create_data)
       , update_data_ (update_data)
@@ -120,16 +123,25 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   info_out_data_listener_exec_i::on_many_updates (const ::TestTopicSeq & data,
   const ::CCM_DDS::ReadInfoSeq & infos)
   {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("on_many_update triggered,")
+                          ACE_TEXT (" received sequence of ")
+                          ACE_TEXT ("<%u> samples\n"),
+                          infos.length()));
+    //number of times this is triggered
+    this->on_many_upd_trigger_ ++;
+
+    //number of total samples received
     this->on_many_update_ += infos.length();
     for(CORBA::ULong i = 0; i < infos.length(); ++i)
       {
         if (infos[i].instance_status != CCM_DDS::INSTANCE_UPDATED)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
-                                  ACE_TEXT ("info.instance_status ")
-                                  ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED' ")
-                                  ACE_TEXT ("with operation 'on_many_updates' ")
-                                  ACE_TEXT ("from StateListener in Receiver\n")
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ERROR: did not receive the expected ")
+                        ACE_TEXT ("info.instance_status ")
+                        ACE_TEXT ("'CCM_DDS::INSTANCE_UPDATED' ")
+                        ACE_TEXT ("with operation 'on_many_updates' ")
+                        ACE_TEXT ("from StateListener in Receiver\n")
                         ));
 
           }
@@ -141,8 +153,8 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       }
     for (CORBA::ULong i = 0; i < data.length(); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("on_many_updates info : ")
-                              ACE_TEXT ("Number <%d> : received TestTopic_info ")
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("on_many_updates info : Number <%d> :")
+                              ACE_TEXT (" received TestTopic_info ")
                               ACE_TEXT ("for <%C> at %u\n"),
                               i,
                               data[i].key.in (),
@@ -161,15 +173,35 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
   {
     if (info.instance_status != CCM_DDS::INSTANCE_DELETED)
       {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected info.instance_status ")
-                              ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED'")
-                              ACE_TEXT ("  with operation 'on_deletion' from StateListener in Receiver\n")
-                    ));
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("ERROR: did not receive the expected ")
+                    ACE_TEXT ("info.instance_status ")
+                    ACE_TEXT ("'CCM_DDS::INSTANCE_DELETED' with operation ")
+                    ACE_TEXT ("'on_deletion' from StateListener in Receiver\n")
+                   ));
 
       }
-    if (!datum.key.in() == 0 && info.instance_status == CCM_DDS::INSTANCE_DELETED)
+    else
       {
-        ++this->on_deletion_;
+        // Because of the settings <serialize_key_with_dispose> and
+        // <propagate_dispose_of_unregistered_instances> in the QoS , we expect
+        // an existing datum.key
+        if ((ACE_OS::strncmp (datum.key.in(), "KEY", 3) == 0  ) ||
+            (ACE_OS::strncmp (datum.key.in(), "many", 4) == 0  ))
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Statelistener:on_deletion : ")
+                        ACE_TEXT ("Received datum for <%C> \n"),
+                        datum.key.in ()));
+            ++this->on_deletion_;
+           }
+        else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ERROR Statelistener:on_deletion : did not ")
+                        ACE_TEXT ("receive the expected datum, received <%C>")
+                        ACE_TEXT (", expected <KEY_.> or <many_.>\n"),
+                        datum.key.in ()));
+          }
       }
   }
 
@@ -212,6 +244,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     : no_operation_ (0)
       , on_creation_ (0)
       , on_many_update_ (0)
+      , on_many_upd_trigger_ (0)
       , on_deletion_ (0)
       , create_data_ (false)
       , update_data_ (false)
@@ -263,7 +296,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       }
     try
       {
-        TestTopicSeq TestTopic_infos;
+       TestTopicSeq TestTopic_infos;
         ::CCM_DDS::ReadInfoSeq readinfoseq;
         reader->read_all (TestTopic_infos, readinfoseq);
         this->reader_data_ += TestTopic_infos.length ();
@@ -305,6 +338,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
             this->no_operation_,
             this->on_creation_,
             this->on_many_update_,
+            this->on_many_upd_trigger_,
             this->on_deletion_,
             this->create_data_,
             this->update_data_),
@@ -375,8 +409,10 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     lc->mode (::CCM_DDS::MANY_BY_MANY);
     if (this->reactor ()->schedule_timer (this->ticker_,
                                           0,
-                                          ACE_Time_Value(3, 0),
-                                          ACE_Time_Value(3, 0)) == -1)
+                                        ACE_Time_Value(18, 0),
+                                        ACE_Time_Value(1, 0)) == -1)
+   //                                        ACE_Time_Value(1, 0),
+   //                                        ACE_Time_Value(1, 0)) == -1)
       {
          ACE_ERROR ((LM_INFO, "Receiver_exec_i::ccm_activate - "
                    "ERROR:  Unable to schedule timer!\n"));
@@ -441,6 +477,24 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
                     ));
       }
 
+    if(this->on_many_upd_trigger_.value  () < ON_MANY_TRIGGERED)
+      {
+         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't trigger the expected ")
+                               ACE_TEXT ("number of 'on_many_update': ")
+                               ACE_TEXT ("expected minimum <%d> - received <%d>\n"),
+                               ON_MANY_TRIGGERED,
+                               this->on_many_upd_trigger_.value ()
+                    ));
+      }
+    else
+      {
+         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did trigger the minimum expected ")
+                               ACE_TEXT ("number of 'on_many_update': ")
+                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ON_MANY_TRIGGERED,
+                               this->on_many_upd_trigger_.value ()
+                    ));
+      }
     if(this->on_many_update_.value  () != ON_MANY_EXPECTED)
       {
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: didn't receive the expected ")
@@ -454,9 +508,11 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       {
          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: did receive the expected ")
                                ACE_TEXT ("number of 'on_many_update' samples: ")
-                               ACE_TEXT ("expected <%d> - received <%d>\n"),
+                               ACE_TEXT ("expected <%d> - received <%d>,")
+                               ACE_TEXT ("on_many_update triggered at <%d> times.\n"),
                                ON_MANY_EXPECTED,
-                               this->on_many_update_.value ()
+                               this->on_many_update_.value (),
+                               ON_MANY_TRIGGERED
                     ));
       }
 

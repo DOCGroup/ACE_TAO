@@ -1,3 +1,16 @@
+Thu Apr  7 15:55:20 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SLManyByMany/README:
+        Changed timing in test. Added extra check on key content in on_deletion. Therefore also added QoS file.
+
+
+
 Thu Apr  7 12:26:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.idl:
