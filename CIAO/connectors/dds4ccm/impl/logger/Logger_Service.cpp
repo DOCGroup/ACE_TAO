@@ -97,11 +97,11 @@ CIAO::DDS4CCM::Logger_Service::init (int argc, ACE_TCHAR * argv[])
 
       if (logger_be == 0)
         {
-          DDS4CCM_ERROR (1,
-                       (LM_EMERGENCY, DDS4CCM_INFO
-                        "Logger_Service::init - "
-                        "Unable to load backend %s\n",
-                        this->backend_.c_str ()));
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR,
+                         (LM_EMERGENCY, DDS4CCM_INFO
+                          "Logger_Service::init - "
+                          "Unable to load backend %s\n",
+                          this->backend_.c_str ()));
           return -1;
         }
 
