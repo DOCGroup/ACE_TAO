@@ -1,3 +1,8 @@
+Fri Apr  8 09:22:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Resolved issue.
+
 Fri Apr  8 00:39:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * connectors/dds4ccm/impl/logger/Logger_Service.cpp:
