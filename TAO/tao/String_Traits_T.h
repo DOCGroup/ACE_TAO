@@ -51,10 +51,11 @@ struct string_traits_decorator
 
   // Allow MSVC++ >= 8 checked iterators to be used.
   template <typename iter>
-  inline static void copy_swap_range(
+  inline static bool copy_swap_range(
       char_type ** begin, char_type ** end, iter dst)
   {
     std::swap_ranges(begin, end, dst);
+    return true;
   }
 
   inline static void release_range(
