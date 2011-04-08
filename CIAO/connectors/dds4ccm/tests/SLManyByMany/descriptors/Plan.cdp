@@ -187,15 +187,15 @@
       </value>
     </configProperty>
     <configProperty>
-    <name>qos_profile</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
+      <name>qos_profile</name>
       <value>
-        <string>SlMbM_Library#SlMbM_Profile</string>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SlMbM_Library#SlMbM_Profile</string>
+        </value>
       </value>
-    </value>
     </configProperty>
   </instance>
   <instance xmi:id="SL_ManyByMany_ConnectorComponentInstance2">
@@ -216,15 +216,15 @@
       </value>
     </configProperty>
     <configProperty>
-    <name>qos_profile</name>
-    <value>
-      <type>
-        <kind>tk_string</kind>
-      </type>
+      <name>qos_profile</name>
       <value>
-        <string>SlMbM_Library#SlMbM_Profile</string>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SlMbM_Library#SlMbM_Profile</string>
+        </value>
       </value>
-    </value>
     </configProperty>
   </instance>
   <instance xmi:id="SenderComponentInstance">
