@@ -1,3 +1,12 @@
+Fri Apr  8 13:15:08 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_sys_socket.h:
+        * ace/OS_NS_sys_socket.inl:
+        * ace/OS_NS_sys_socket.cpp:
+
+          Fix for bug 3943, the regression test added the other day should
+          pass now.
+
 Thu Apr  7 11:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
