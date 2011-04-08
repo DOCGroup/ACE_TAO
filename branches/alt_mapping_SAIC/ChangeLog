@@ -1,3 +1,13 @@
+Fri Apr  8 20:49:40 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/Options.cpp:
+
+          Removed ACE_RCSID macro.
+
+        * tao/String_Manager_T.h:
+
+          Debugging changes and comments.
+
 Tue Apr  5 17:46:38 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BiDir_GIOP/*.cpp:
