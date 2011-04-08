@@ -1,3 +1,9 @@
+Fri Apr  8 00:39:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/impl/logger/Logger_Service.cpp:
+
+          Fuzz.
+
 Thu Apr  7 21:43:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Launch-Failures/descriptors/SuccessfulDeployment.cdp:
