@@ -1,3 +1,10 @@
+Fri Apr  8 17:59:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.inl:
+        * tao/Resume_Handle_Deferred.cpp:
+          Added versioned namespace macros
+
 Fri Apr  8 13:21:17 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Array_Traits_T.h:
