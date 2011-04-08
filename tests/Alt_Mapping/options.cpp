@@ -24,10 +24,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Param_Test,
-           options,
-           "$Id$")
-
 // Constructor.p
 Options::Options (void)
   : ior_ (CORBA::string_dup ("file://test.ior")),
