@@ -186,6 +186,17 @@
         </value>
       </value>
     </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SlObO_Library#SlObO_Profile</string>
+        </value>
+      </value>
+    </configProperty>
   </instance>
   <instance xmi:id="SL_OneByOne_ConnectorComponentInstance2">
     <name>SL_OneByOne_ConnectorComponent2</name>
@@ -201,6 +212,17 @@
         </type>
         <value>
           <string>TestQoS</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>SlObO_Library#SlObO_Profile</string>
         </value>
       </value>
     </configProperty>
