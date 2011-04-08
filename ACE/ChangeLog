@@ -1,3 +1,10 @@
+Fri Apr  8 13:35:54 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * ace/config-linux.h:
+        * include/makeinclude/platform_linux_clang.GNU:
+
+          Support for the Clang C++ compiler (http://clang.llvm.org) on Linux.
+
 Fri Apr  8 13:15:08 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_sys_socket.h:
