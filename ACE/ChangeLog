@@ -1,3 +1,13 @@
+Fri Apr  8 21:55:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_sys_socket.cpp:
+
+        * tests/Bug_3943_Regression_Test.cpp:
+
+          Clean up code for non-windows builds. The test now runs on
+          non-windows, although the 3943 regression isn't actually
+          evaluated as the error is windows specfic.
+
 Fri Apr  8 13:35:54 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * ace/config-linux.h:

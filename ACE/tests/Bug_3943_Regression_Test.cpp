@@ -74,7 +74,6 @@
 
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
-#if defined (ACE_WIN32)
 namespace {
 
   const char FINISHED_CHAR = '%';
@@ -82,7 +81,7 @@ namespace {
   const char START_CHAR = '0';
   bool server_complete = false;
   bool client_complete = false;
-  volatile unsigned int expected_num_messages = 0;
+  volatile int expected_num_messages = 0;
 
   char nextChar(const char current)
   {
@@ -94,7 +93,10 @@ namespace {
     return current + 1;
   }
 
-  int beforeVersion(const DWORD majorVersion, const DWORD minorVersion, const BYTE productType)
+#if defined (ACE_WIN32)
+  int beforeVersion(const DWORD majorVersion,
+                    const DWORD minorVersion,
+                    const BYTE productType)
   {
 #if !defined(ACE_HAS_WINCE)
     OSVERSIONINFOEX versioninfo;
@@ -104,17 +106,20 @@ namespace {
     versioninfo.wProductType = productType;
 
     ULONGLONG aboveMajorVer6TypeMask = 0;
-    aboveMajorVer6TypeMask = ::VerSetConditionMask(0, VER_MAJORVERSION, VER_GREATER);
+    aboveMajorVer6TypeMask =
+      ::VerSetConditionMask(0, VER_MAJORVERSION, VER_GREATER);
 
-    if (::VerifyVersionInfo(&versioninfo, VER_MAJORVERSION, aboveMajorVer6TypeMask) > 0)
+    if (::VerifyVersionInfo(&versioninfo, VER_MAJORVERSION,
+                            aboveMajorVer6TypeMask) > 0)
       return 1;
 
     ACE_OS::set_errno_to_last_error ();
     if (errno != ERROR_OLD_WIN_VERSION)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) VerifyVersionInfo errno=%d,")
-                    ACE_TEXT (" major version check must have been defined incorrectly.\n"),
+                    ACE_TEXT ("(%P|%t) VerifyVersionInfo errno = %d, ")
+                    ACE_TEXT ("major version check must have been ")
+                    ACE_TEXT ("defined incorrectly.\n"),
                     errno));
         return -1;
       }
@@ -123,9 +128,11 @@ namespace {
     majorV6AboveMinorV1TypeMask =
       ::VerSetConditionMask(0, VER_MAJORVERSION, VER_EQUAL);
     majorV6AboveMinorV1TypeMask =
-      ::VerSetConditionMask(majorV6AboveMinorV1TypeMask, VER_MINORVERSION, VER_GREATER);
+      ::VerSetConditionMask(majorV6AboveMinorV1TypeMask,
+                            VER_MINORVERSION, VER_GREATER);
 
-    if (::VerifyVersionInfo(&versioninfo, VER_MAJORVERSION | VER_MINORVERSION,
+    if (::VerifyVersionInfo(&versioninfo,
+                            VER_MAJORVERSION | VER_MINORVERSION,
                             majorV6AboveMinorV1TypeMask) > 0)
       return 1;
 
@@ -133,8 +140,9 @@ namespace {
     if (errno != ERROR_OLD_WIN_VERSION)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) VerifyVersionInfo errno=%d,")
-                    ACE_TEXT (" minor version check must have been defined incorrectly.\n"),
+                    ACE_TEXT ("(%P|%t) VerifyVersionInfo errno = %d, ")
+                    ACE_TEXT ("minor version check must have been ")
+                    ACE_TEXT ("defined incorrectly.\n"),
                     errno));
         return -1;
       }
@@ -143,12 +151,14 @@ namespace {
     majorV6MinorV1NTTypeMask =
       ::VerSetConditionMask(0, VER_MAJORVERSION, VER_EQUAL);
     majorV6MinorV1NTTypeMask =
-      ::VerSetConditionMask(majorV6MinorV1NTTypeMask, VER_MINORVERSION, VER_EQUAL);
+      ::VerSetConditionMask(majorV6MinorV1NTTypeMask,
+                            VER_MINORVERSION, VER_EQUAL);
     majorV6MinorV1NTTypeMask =
-      ::VerSetConditionMask(majorV6MinorV1NTTypeMask, VER_PRODUCT_TYPE, VER_EQUAL);
+      ::VerSetConditionMask(majorV6MinorV1NTTypeMask,
+                            VER_PRODUCT_TYPE, VER_EQUAL);
 
     if (::VerifyVersionInfo(&versioninfo,
-                            VER_MAJORVERSION | VER_MINORVERSION | VER_PRODUCT_TYPE,
+                       VER_MAJORVERSION | VER_MINORVERSION | VER_PRODUCT_TYPE,
                             majorV6MinorV1NTTypeMask) > 0)
       return 1;
 
@@ -165,13 +175,17 @@ namespace {
     return 0;
 #else // defined(ACE_HAS_WINCE)
     // no version testing of WinCE has been performed
+    ACE_UNUSED_ARG (majorVersion);
+    ACE_UNUSED_ARG (minorVersion);
+    ACE_UNUSED_ARG (productType);
     return -1;
-#endif
+#endif /* ACE_HAS_WINCE */
   }
+#endif /* ACE_WIN32 */
 
   int processENOBUFS()
   {
-#if !defined(ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined(ACE_HAS_WINCE)
     // it has been identified that Windows7 does not have the ENOBUFS issue
     // but testing has not been performed on Server 2008 or Vista to identify
     // wether the issue exists or not
@@ -179,54 +193,14 @@ namespace {
 #else // defined(ACE_HAS_WINCE)
     // currently, no versions of WINCE identified to not have the ENOBUFS error
     return 0;
-#endif
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
   }
 
   struct IovecGuard
   {
-    IovecGuard(const int count, const int slot, const u_long max)
-    : iovcnt_(count)
-    , totalBytes_(0)
-    {
-      ACE_NEW (iov_,
-               iovec[iovcnt_]);
-      int i = 0;
-      char expChar = START_CHAR;
-      for ( ; i < iovcnt_; ++i)
-        {
-          iov_[i].iov_len = ((slot == i) || (slot == ALL_SLOTS)) ? max : 10;
-          totalBytes_ += iov_[i].iov_len;
-        }
-      char* totalBuffer;
-      // allocate all iov_bases as one big chunk
-      ACE_NEW (totalBuffer,
-               char[totalBytes_]);
-      for (i = 0; i < iovcnt_; ++i)
-        {
-          iov_[i].iov_base = totalBuffer;
-          totalBuffer += iov_[i].iov_len;
-          for (unsigned long j = 0; j < iov_[i].iov_len; ++j)
-            {
-              iov_[i].iov_base[j] = expChar;
-              expChar = nextChar(expChar);
-            }
-        }
-    }
-
-    ~IovecGuard()
-    {
-      int i = 0;
-      // iov_bases are all just part of one big buffer
-      delete [] iov_[0].iov_base;
-
-      delete [] iov_;
-      iov_ = 0;
-    }
-
-    char* getBufferAtOffset(const ssize_t offset)
-    {
-      return iov_[0].iov_base + offset;
-    }
+    IovecGuard(const int count, const int slot, const u_long max);
+    ~IovecGuard();
+    char* getBufferAtOffset(const ssize_t offset);
 
     const int iovcnt_;
     u_long totalBytes_;
@@ -264,17 +238,67 @@ namespace {
     enum Direction { READ, WRITE };
     bool wait(Direction direction);
 
-    ssize_t send(IovecGuard& iovec_array, const ACE_TCHAR* send_desc, bool use_sendv, bool test_message = false);
-    ssize_t send(char send_char, const ACE_TCHAR* const send_desc);
+    ssize_t send (IovecGuard& iovec_array,
+                  const ACE_TCHAR * const send_desc,
+                  bool use_sendv,
+                  bool test_message = false);
+
+    ssize_t send (char send_char, const ACE_TCHAR * const send_desc);
+
     const ACE_Time_Value DEFAULT_TIME_VALUE;
 
   };
-}
+} // namespace ""
 
 typedef ACE_Oneshot_Acceptor<Svc_Handler,
                              LOCK_SOCK_ACCEPTOR> ACCEPTOR;
 typedef ACE_Connector<Svc_Handler,
                       ACE_SOCK_CONNECTOR> CONNECTOR;
+
+
+IovecGuard::IovecGuard(const int count, const int slot, const u_long max)
+  : iovcnt_(count),
+    totalBytes_(0)
+{
+  ACE_NEW (iov_,iovec[iovcnt_]);
+  int i = 0;
+  char expChar = START_CHAR;
+  for ( ; i < iovcnt_; ++i)
+    {
+      iov_[i].iov_len = ((slot == i) || (slot == ALL_SLOTS)) ? max : 10;
+      totalBytes_ += iov_[i].iov_len;
+    }
+  char* totalBuffer;
+  // allocate all iov_bases as one big chunk
+  ACE_NEW (totalBuffer,
+           char[totalBytes_]);
+  for (i = 0; i < iovcnt_; ++i)
+    {
+      iov_[i].iov_base = totalBuffer;
+      totalBuffer += iov_[i].iov_len;
+      for (u_long j = 0; j < iov_[i].iov_len; ++j)
+        {
+          char *charbase = static_cast<char *>(iov_[i].iov_base);
+          charbase[j] = expChar;
+          expChar = ::nextChar(expChar);
+        }
+    }
+}
+
+IovecGuard::~IovecGuard()
+{
+  // iov_bases are all just part of one big buffer
+  char* totalBuffer = static_cast<char *>(iov_[0].iov_base);
+  delete [] totalBuffer;
+  delete [] iov_;
+}
+
+char*
+IovecGuard::getBufferAtOffset(const ssize_t offset)
+{
+  char * totalBuffer = static_cast<char *>(iov_[0].iov_base);
+  return totalBuffer + offset;
+}
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
 : DEFAULT_TIME_VALUE (ACE_DEFAULT_TIMEOUT)
@@ -301,7 +325,10 @@ void
 Svc_Handler::send_data (void)
 {
   bool successful = true;
+  bool win32_test = false;
   const int testType = processENOBUFS();
+  const ACE_TCHAR *send_desc = "";
+  ssize_t result = 0;
   if (testType == 0)
     {
       ssize_t tryThreshold = 0x7fff;
@@ -318,7 +345,8 @@ Svc_Handler::send_data (void)
       while (tryThreshold < MAX)
         {
           IovecGuard all(1, 0, static_cast<u_long>(tryThreshold));
-          thresholdActualSend = send(all, ACE_TEXT ("identifying threshold"), true, true);
+          thresholdActualSend =
+            this->send(all, ACE_TEXT ("identifying threshold"), true, true);
           if (thresholdActualSend <= tryThreshold/2 + 1)
             if (shift <= 1)
               break;
@@ -337,86 +365,168 @@ Svc_Handler::send_data (void)
           retry = 0;
           ACE_OS::sleep(0);
         }
+
+#if defined (ACE_WIN32)
+      win32_test = true;
+      // THis test only applies to win32 platforms, on systems with
+      // sane sendv impls, this is not a problem.
       if (thresholdActualSend != tryThreshold/2 + 1)
         {
           if (tryThreshold == MAX)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) was not able to identify a point where")
-                        ACE_TEXT (" ACE_OS::sendv does not send a complete buffer so the Bug")
-                        ACE_TEXT (" #3943 ENOBUFS condition does not occur on this platform.\n")));
+                        ACE_TEXT ("(%P|%t) was not able to identify a point ")
+                        ACE_TEXT ("where ACE_OS::sendv does not send a ")
+                        ACE_TEXT ("complete buffer so the Bug #3943 ENOBUFS ")
+                        ACE_TEXT ("condition does not occur on this ")
+                        ACE_TEXT ("platform.\n")));
           else
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) was not able to identify a point where")
-                        ACE_TEXT (" ACE_OS::sendv sent a partial buffer that was consistent")
-                        ACE_TEXT (" with Bug #3943 ENOBUFS condition logic, so this test")
-                        ACE_TEXT (" probably running into other socket limitations and")
-                        ACE_TEXT (" needs to be redesigned. Stuck sending %d.\n"),
+                        ACE_TEXT ("(%P|%t) was not able to identify a point ")
+                        ACE_TEXT ("where ACE_OS::sendv sent a partial buffer ")
+                        ACE_TEXT ("that was consistent with Bug #3943 ")
+                        ACE_TEXT ("ENOBUFS condition logic, so this test ")
+                        ACE_TEXT ("probably running into other socket ")
+                        ACE_TEXT ("limitations and needs to be redesigned. ")
+                        ACE_TEXT ("Stuck sending %d.\n"),
                         thresholdActualSend));
           close ();
           return;
         }
-      const u_long overThreshold = static_cast<u_long>(tryThreshold);
+#endif /* ACE_WIN32 */
+
+      u_long overThreshold = static_cast<u_long>(tryThreshold);
       if (ACE::debug())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) identified a buffer with %d bytes hits the ENOBUFS condition.\n"),
+                    ACE_TEXT ("(%P|%t) identified a buffer with %d bytes ")
+                    ACE_TEXT ("hits the ENOBUFS condition.\n"),
                     overThreshold));
 
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+#if !defined (ACE_WIN32) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
       {
-        const unsigned long underThreshold = (overThreshold + 1) / 2;
+        u_long underThreshold = (overThreshold + 1) / 2;
         // verify that if the total buffer is too large that partial is sent
         IovecGuard all(2, IovecGuard::ALL_SLOTS, underThreshold);
-        if (send(all, ACE_TEXT ("2 iovecs combined to be too large"), true) != underThreshold)
+        send_desc = ACE_TEXT ("2 iovecs combined to be too large");
+        result = this->send(all, send_desc, true);
+        if (win32_test && static_cast<u_long>(result) != underThreshold)
           {
             successful = false;
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) logic should have sent the complete first iovec")));
+                        ACE_TEXT ("(%P|%t) logic should have sent the ")
+                        ACE_TEXT ("complete first iovec, ")
+                        ACE_TEXT ("expected %d got %d out of %d\n"),
+                        underThreshold, result,all.totalBytes_ ));
           }
       }
 
       {
         IovecGuard all(2, IovecGuard::ALL_SLOTS, overThreshold);
-        successful &= (send(all, ACE_TEXT ("2 iovecs each are too large"), true) >= 1);
+        send_desc = ACE_TEXT ("2 iovecs each are too large");
+        result = this->send(all, send_desc, true);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
       {
-        IovecGuard small_iovec(2, 0, overThreshold);
-        successful &= (send(small_iovec, ACE_TEXT ("large iovec followed by small iovec"), true) >= 1);
+        IovecGuard small(2, 0, overThreshold);
+        send_desc = ACE_TEXT ("large iovec followed by small iovec");
+        result = this->send(small, send_desc, true);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
       {
         IovecGuard large(4, 2, overThreshold);
-        successful &= (send(large, ACE_TEXT ("4 iovecs with third large"), true) >= 1);
+        send_desc = ACE_TEXT ("4 iovecs with third large");
+        result = this->send(large, send_desc, true);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
       {
         // verify that the buffer gets divided till it can send
         IovecGuard large(6, 5, 2 * overThreshold);
-        successful &= (send(large, ACE_TEXT ("6 iovecs with last very large"), true) >= 1);
+        send_desc = ACE_TEXT ("6 iovecs with last very large");
+        result = this->send(large, send_desc, true);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
+
       }
 
       {
-        IovecGuard one_iovec_array(1, 0, overThreshold);
-        successful &= (send(one_iovec_array, ACE_TEXT ("just one large iovec in array"), true) >= 1);
+        IovecGuard array(1, 0, overThreshold);
+        send_desc = ACE_TEXT ("just one large iovec in array");
+        result = this->send(array, send_desc, true);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
       {
-        IovecGuard one_iovec_array(1, 0, 2 * overThreshold);
-        successful &= (send(one_iovec_array, ACE_TEXT ("just one very large iovec in array"), true) >= 1);
+        IovecGuard array(1, 0, 2 * overThreshold);
+        send_desc = ACE_TEXT ("just one very large iovec in array");
+        result = this->send(array, send_desc, true);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
 #endif /* ACE_HAS_WINSOCK2 && (ACE_HAS_WINSOCK2 != 0) */
 #if !defined (ACE_LACKS_SEND)
 
       {
-        IovecGuard one_iovec(1, 0, overThreshold);
-        successful &= (send(one_iovec, ACE_TEXT ("large"), false) >= 1);
+        IovecGuard one(1, 0, overThreshold);
+        send_desc = ACE_TEXT ("large");
+        result = this->send(one, send_desc, false);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
       {
-        IovecGuard one_iovec(1, 0, 2 * overThreshold);
-        successful &= (send(one_iovec, ACE_TEXT ("very large"), false) >= 1);
+        IovecGuard one(1, 0, 2 * overThreshold);
+        send_desc = ACE_TEXT ("very large");
+        result = send(one, send_desc, false);
+        if (!(result > 0))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected > 0, got %d\n"),
+                        send_desc, result));
+            successful = false;
+          }
       }
 
 #endif /* !ACE_LACKS_SEND */
@@ -429,23 +539,45 @@ Svc_Handler::send_data (void)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
       {
-        IovecGuard small_iovec(2, 0, 0x0fffffff);
-        successful &=
-          (send(small_iovec, ACE_TEXT ("large iovec followed by small iovec"), true, true) == small_iovec.totalBytes_);
+        IovecGuard small(2, 0, 0x0fffffff);
+        send_desc =  ACE_TEXT ("large iovec followed by small iovec");
+        result = this->send(small, send_desc, true, true);
+        if (result < 0 || static_cast<u_long>(result) != small.totalBytes_)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
+                        send_desc, small.totalBytes_, result));
+            successful = false;
+          }
       }
 
       {
-        IovecGuard one_iovec_array(1, 0, 0x0fffffff);
-        successful &=
-          (send(one_iovec_array, ACE_TEXT ("just one large iovec in array"), true, true) == one_iovec_array.totalBytes_);
+        IovecGuard array(1, 0, 0x0fffffff);
+        send_desc = ACE_TEXT ("just one large iovec in array");
+        result = this->send(array, send_desc, true, true);
+        if (result < 0 || (static_cast<u_long>(result) != array.totalBytes_))
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
+                        send_desc, array.totalBytes_, result));
+            successful = false;
+          }
       }
 
 #endif /* ACE_HAS_WINSOCK2 && (ACE_HAS_WINSOCK2 != 0) */
 #if !defined (ACE_LACKS_SEND)
 
       {
-        IovecGuard one_iovec(1, 0, 0x0fffffff);
-        successful &= (send(one_iovec, ACE_TEXT ("large"), false, true) == one_iovec.totalBytes_);
+        IovecGuard one(1, 0, 0x0fffffff);
+        send_desc = ACE_TEXT ("large");
+        result = this->send(one, send_desc, false, true);
+        if (result < 0 || static_cast<u_long>(result) != one.totalBytes_)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
+                        send_desc, one.totalBytes_, result));
+            successful = false;
+          }
       }
 
 #endif /* !ACE_LACKS_SEND */
@@ -457,9 +589,10 @@ Svc_Handler::send_data (void)
   // need to indicate that the message is restarting
   // this may fail if the server reads the char and closes before
   // it is done, so let the server report the error if there was one
-  send(FINISHED_CHAR, ACE_TEXT ("indicating no more messages"));
+  send_desc = ACE_TEXT ("indicating no more messages");
+  this->send(FINISHED_CHAR, send_desc);
 
-  wait(READ);
+  this->wait(READ);
   if (close () == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -471,11 +604,14 @@ Svc_Handler::send_data (void)
 }
 
 ssize_t
-Svc_Handler::send(IovecGuard& iovec_array, const ACE_TCHAR* const send_desc, const bool use_sendv,
-                  const bool test_message)
+Svc_Handler::send (IovecGuard& iovec_array,
+                   const ACE_TCHAR * const send_desc,
+                   const bool use_sendv,
+                   const bool test_message)
 {
   ++expected_num_messages;
-  const ACE_TCHAR* const send_func_name = (use_sendv) ? ACE_TEXT ("ACE_OS::sendv") : ACE_TEXT ("ACE_OS::send");
+  const ACE_TCHAR* const send_func_name =
+    (use_sendv) ? ACE_TEXT ("ACE_OS::sendv") : ACE_TEXT ("ACE_OS::send");
   if (ACE::debug())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) send, using %s for %s (%d bytes)\n"),
@@ -484,26 +620,32 @@ Svc_Handler::send(IovecGuard& iovec_array, const ACE_TCHAR* const send_desc, con
   if (!use_sendv && (iovec_array.iovcnt_ != 1))
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) send, this function is not designed to send")
-                  ACE_TEXT (" an array of iovecs as individual iovecs %s\n"),
+                  ACE_TEXT ("(%P|%t) send, this function is not designed to ")
+                  ACE_TEXT ("send an array of iovecs as individuals, %s\n"),
                   send_desc));
       return -1;
     }
 
   if (expected_num_messages > 1)
     // need to indicate that the message is restarting
-    if (send(RESTART_CHAR, send_desc) < 1)
+    if (this->send(RESTART_CHAR, send_desc) < 1)
       return -1;
 
   ssize_t actual_send_status;
 
   if (use_sendv)
-    while (((actual_send_status = this->peer ().sendv (iovec_array.iov_, iovec_array.iovcnt_, &DEFAULT_TIME_VALUE)) == -1) &&
+    while (((actual_send_status =
+             this->peer ().sendv (iovec_array.iov_,
+                                  iovec_array.iovcnt_,
+                                  &DEFAULT_TIME_VALUE)) == -1) &&
            (errno == EWOULDBLOCK))
       {
       }
   else
-    while (((actual_send_status = this->peer ().send (iovec_array.iov_->iov_base, iovec_array.iov_->iov_len, &DEFAULT_TIME_VALUE)) == -1) &&
+    while (((actual_send_status =
+             this->peer ().send (iovec_array.iov_->iov_base,
+                                 iovec_array.iov_->iov_len,
+                                 &DEFAULT_TIME_VALUE)) == -1) &&
            (errno == EWOULDBLOCK))
       {
       }
@@ -527,46 +669,63 @@ Svc_Handler::send(IovecGuard& iovec_array, const ACE_TCHAR* const send_desc, con
                     send_func_name, send_desc, errno));
       return -1;
     }
-  const u_long sent_bytes = static_cast<u_long>(actual_send_status);
+  u_long sent_bytes = static_cast<u_long>(actual_send_status);
   if (sent_bytes >= iovec_array.totalBytes_)
     {
+#if defined (ACE_WIN32)
       if (!test_message)
         {
           // the particular call to send was designed poorly and is not
           // hitting the ENOBUFS condition
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) expected %s to hit an ENOBUFS condition and")
-                      ACE_TEXT (" divide the buffer in half, till a partial buffer is")
-                      ACE_TEXT (" finally sent, but the whole buffer was sent, so either")
-                      ACE_TEXT (" the call to Svc_Handler::send was designed poorly, or")
-                      ACE_TEXT (" the ENOBUFS condition doesn't occur on this platform.")
+                      ACE_TEXT ("(%P|%t) expected %s to hit an ENOBUFS ")
+                      ACE_TEXT ("condition and divide the buffer in half, ")
+                      ACE_TEXT ("till a partial buffer is finally sent, ")
+                      ACE_TEXT ("but the whole buffer was sent, so either ")
+                      ACE_TEXT ("the call to Svc_Handler::send was designed ")
+                      ACE_TEXT ("poorly, or the ENOBUFS condition doesn't ")
+                      ACE_TEXT ("occur on this platform.")
                       ACE_TEXT (" See call to beforeVersion.\n"),
                       send_func_name));
           return -1;
         }
       else
         return sent_bytes;
+#else
+      ACE_UNUSED_ARG (test_message);
+      return sent_bytes;
+#endif /* ACE_WIN32 */
     }
+
+#if defined (ACE_win32)
+  // the test here only matters for windows, on other platforms there is
+  // no issue, so we skip this test
+
   // the algorithm subtracts half of the whole, so we round up
-  u_long expectedBytes = (iovec_array.totalBytes_ % 2) + (iovec_array.totalBytes_ / 2);
-  for ( ; sent_bytes < expectedBytes; expectedBytes = (expectedBytes % 2) + (expectedBytes / 2))
+  u_long expectedBytes =
+    (iovec_array.totalBytes_ % 2) + (iovec_array.totalBytes_ / 2);
+  for ( ; sent_bytes < expectedBytes;
+        expectedBytes = (expectedBytes % 2) + (expectedBytes / 2))
     {
     }
   if (sent_bytes != expectedBytes)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p, bytes sent are not consistent with the sendv logic")
-                  ACE_TEXT (", so the call to this function is not testing for regression\n"),
-                  send_func_name));
+                  ACE_TEXT ("(%P|%t) %p, bytes sent are not consistent ")
+                  ACE_TEXT ("with the sendv logic, expected %d, got %d\n"),
+                  send_func_name, expectedBytes, sent_bytes));
       return -1;
     }
+#endif /* ACE_WIN32 */
 
-  size_t send_remainder = static_cast<size_t>(iovec_array.totalBytes_) - actual_send_status;
+  size_t send_remainder =
+    static_cast<size_t>(iovec_array.totalBytes_) - actual_send_status;
   char* offset = iovec_array.getBufferAtOffset(actual_send_status);
   ssize_t send_status;
   while (send_remainder > 0)
     {
-      const ssize_t sendSize = (send_remainder < 10000) ? send_remainder : 10000;
+      const ssize_t sendSize =
+        (send_remainder < 10000) ? send_remainder : 10000;
       ACE_OS::sleep(0);
       send_status = this->peer ().send (offset, sendSize, &DEFAULT_TIME_VALUE);
       if (send_status == 0)
@@ -582,7 +741,8 @@ Svc_Handler::send(IovecGuard& iovec_array, const ACE_TCHAR* const send_desc, con
             continue;
 
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p, %s remainder send returned errno=%d\n"),
+                      ACE_TEXT ("(%P|%t) %p, %s remainder send returned ")
+                      ACE_TEXT ("errno = %d\n"),
                       send_func_name, send_desc, errno));
           return -1;
         }
@@ -594,10 +754,11 @@ Svc_Handler::send(IovecGuard& iovec_array, const ACE_TCHAR* const send_desc, con
 }
 
 ssize_t
-Svc_Handler::send(char send_char, const ACE_TCHAR* const send_desc)
+Svc_Handler::send (char send_char, const ACE_TCHAR * const send_desc)
 {
   ssize_t send_status;
-  while ((send_status = this->peer ().send (&send_char, 1, &DEFAULT_TIME_VALUE)) < 1)
+  while ((send_status =
+          this->peer ().send (&send_char, 1, &DEFAULT_TIME_VALUE)) < 1)
     {
       if (send_status == -1)
         {
@@ -605,14 +766,16 @@ Svc_Handler::send(char send_char, const ACE_TCHAR* const send_desc)
             continue;
 
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p, %s sending character %c returned errno=%d\n"),
+                      ACE_TEXT ("(%P|%t) %p, %s sending character ")
+                      ACE_TEXT ("%c returned errno=%d\n"),
                       ACE_TEXT ("send"), send_desc, send_char, errno));
           return -1;
         }
       if (send_status == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p, socket closed prematurely while %s sending character %c\n"),
+                      ACE_TEXT ("(%P|%t) %p, socket closed prematurely while ")
+                      ACE_TEXT ("%s sending character %c\n"),
                       ACE_TEXT ("send"), send_desc, send_char));
           return -1;
         }
@@ -639,7 +802,7 @@ Svc_Handler::recv_data (void)
   for ( ; i < EXPECTED_BUFFER_SIZE; ++i)
     {
       expectedBuffer[i] = expChar;
-      expChar = nextChar(expChar);
+      expChar = ::nextChar(expChar);
     }
   expChar = START_CHAR;
   int messages = 0;
@@ -652,7 +815,9 @@ Svc_Handler::recv_data (void)
                     ACE_TEXT ("select")));
       else
         {
-          for ( ;((r_bytes = new_stream.recv(&buffer[0], BUFFER_SIZE)) > 0); total_bytes += r_bytes)
+          for ( ;
+                ((r_bytes = new_stream.recv(&buffer[0], BUFFER_SIZE)) > 0);
+                total_bytes += r_bytes)
             {
               bool finished = false;
               const char* const actualBufferEnd = buffer + r_bytes;
@@ -665,13 +830,15 @@ Svc_Handler::recv_data (void)
                   ++messages;
                   if (ACE::debug())
                     ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("(%P|%t) identified %d messages and it is finished.\n"),
+                                ACE_TEXT ("(%P|%t) identified %d messages ")
+                                ACE_TEXT ("and it is finished.\n"),
                                 messages));
                 }
               // loop through in case there is more than one message represented
               while (partOfBufferStart < partOfBufferEnd)
                 {
-                  const char* restartLoc = ACE_OS::strchr(partOfBufferStart, RESTART_CHAR);
+                  const char* restartLoc =
+                    ACE_OS::strchr(partOfBufferStart, RESTART_CHAR);
                   if ((restartLoc > 0) && (restartLoc < partOfBufferEnd))
                     {
                       ++messages;
@@ -679,22 +846,26 @@ Svc_Handler::recv_data (void)
                       partOfBufferEnd = restartLoc;
                       if (ACE::debug())
                         ACE_DEBUG ((LM_DEBUG,
-                                    ACE_TEXT ("(%P|%t) identified %d messages.\n"),
+                                    ACE_TEXT ("(%P|%t) identified %d ")
+                                    ACE_TEXT ("messages.\n"),
                                     messages));
                     }
                   else if (finished)
                     --partOfBufferEnd;
                   else
-                    total_bytes_since_last_message += partOfBufferEnd - partOfBufferStart;
+                    total_bytes_since_last_message +=
+                      partOfBufferEnd - partOfBufferStart;
 
-                  if (ACE_OS::memcmp(partOfBufferStart, &(expectedBuffer[expChar - START_CHAR]),
+                  if (ACE_OS::memcmp(partOfBufferStart,
+                                     &(expectedBuffer[expChar - START_CHAR]),
                                      partOfBufferEnd - partOfBufferStart) != 0)
                     {
                       badData = true;
                     }
                   const char lastCharOfBuffer =
-                    *((partOfBufferEnd < actualBufferEnd) ? partOfBufferEnd : partOfBufferEnd - 1);
-                  expChar = nextChar(lastCharOfBuffer);
+                    *((partOfBufferEnd < actualBufferEnd) ?
+                      partOfBufferEnd : partOfBufferEnd - 1);
+                  expChar = ::nextChar(lastCharOfBuffer);
                   // see if there is more data in the buffer
                   partOfBufferStart = partOfBufferEnd + 1;
                   partOfBufferEnd = actualBufferEnd;
@@ -708,11 +879,13 @@ Svc_Handler::recv_data (void)
                                 ACE_TEXT ("close")));
                   else if (badData)
                     ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) received final char, but did not receive all data\n")));
+                                ACE_TEXT ("(%P|%t) received final char, ")
+                                ACE_TEXT ("but did not receive all data\n")));
                   else if (messages != expected_num_messages)
                     ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("(%P|%t) received final char, but expected %d")
-                                ACE_TEXT (" messages and got %d\n"),
+                                ACE_TEXT ("(%P|%t) received final char, ")
+                                ACE_TEXT ("but expected %d messages ")
+                                ACE_TEXT ("and got %d\n"),
                                 expected_num_messages,
                                 messages));
                   else
@@ -731,13 +904,14 @@ Svc_Handler::recv_data (void)
             }
           else if (r_bytes < 0)
             {
-              int temp = errno;
               if (errno != EWOULDBLOCK)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("(%P|%t) %p, received %d messages and %Q bytes")
-                              ACE_TEXT (" and %Q bytes since the last message\n"),
-                              ACE_TEXT ("recv"), messages, total_bytes, total_bytes_since_last_message));
+                              ACE_TEXT ("(%P|%t) %p, received %d messages and ")
+                              ACE_TEXT ("%Q bytes and %Q bytes since the ")
+                              ACE_TEXT ("last message\n"),
+                              ACE_TEXT ("recv"), messages,
+                              total_bytes, total_bytes_since_last_message));
                   break;
                 }
             }
@@ -760,10 +934,12 @@ Svc_Handler::wait(Direction direction)
 #else
   int select_width = int (new_stream.get_handle ()) + 1;
 #endif /* ACE_WIN64 */
-  if (direction == READ)
-    return (ACE_OS::select (select_width, handle_set, 0, 0, &DEFAULT_TIME_VALUE) != -1);
-  else
-    return (ACE_OS::select (select_width, 0, handle_set, 0, &DEFAULT_TIME_VALUE) != -1);
+
+  int result =
+   (direction == READ) ?
+    ACE_OS::select (select_width, handle_set, 0, 0, &DEFAULT_TIME_VALUE) :
+    ACE_OS::select (select_width, 0, handle_set, 0, &DEFAULT_TIME_VALUE);
+  return result != -1;
 }
 
 int
@@ -923,15 +1099,14 @@ spawn_threads (ACCEPTOR *acceptor,
   return status;
 }
 #endif /* ACE_HAS_THREADS */
-#endif /* ACE_WIN32 */
+//#endif /* ACE_WIN32 */
 
 int
 run_main (int , ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3943_Regression_Test"));
   int status = 0;
-#if defined (ACE_WIN32)
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || !defined (ACE_LACKS_SEND)
+#if !defined (ACE_WIN32) || ((defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || !defined (ACE_LACKS_SEND))
   // Acceptor
   ACCEPTOR acceptor;
   ACE_INET_Addr server_addr;
@@ -965,12 +1140,11 @@ run_main (int , ACE_TCHAR *[])
 #endif /* ACE_HAS_THREADS */
     }
 
-  if (!client_complete ||
-      !server_complete)
+  if (!client_complete || !server_complete)
     status = 1;
 
 #endif /* ACE_HAS_WINSOCK2 && (ACE_HAS_WINSOCK2 != 0)) || !ACE_LACKS_SEND */
-#endif /* ACE_WIN32 */
+
   ACE_END_TEST;
   return status;
 }
