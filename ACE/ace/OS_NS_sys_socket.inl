@@ -572,10 +572,21 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
-                               buf,
-                               static_cast<int> (len),
-                               flags), ssize_t, -1);
+  ssize_t result = ::send ((ACE_SOCKET) handle,
+                           buf,
+                           static_cast<int> (len),
+                           flags);
+  if (result == -1)
+    {
+      ACE_OS::set_errno_to_wsa_last_error();
+      if (errno != ENOBUFS)
+        return -1;
+
+      ACE_SOCKCALL_RETURN(send_partial_i(handle, buf, len, flags), ssize_t, -1);
+    }
+  else
+    return result;
+
 #else
   ssize_t const ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
 
@@ -761,7 +772,18 @@ ACE_OS::sendv (ACE_HANDLE handle,
   if (result == SOCKET_ERROR)
     {
       ACE_OS::set_errno_to_wsa_last_error ();
-      return -1;
+      if ((errno != ENOBUFS) ||
+          (bytes_sent != 0))
+        {
+          return -1;
+        }
+      result = sendv_partial_i(handle, buffers, n);
+      if (result == SOCKET_ERROR)
+        {
+          ACE_OS::set_errno_to_wsa_last_error ();
+          return -1;
+        }
+      bytes_sent = static_cast<DWORD>(result);
     }
 # else
   for (int i = 0; i < n; ++i)

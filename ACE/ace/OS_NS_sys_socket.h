@@ -192,6 +192,14 @@ namespace ACE_OS
                 size_t len,
                 int flags = 0);
 
+  /// internal function used by send when an ENOBUFS condition
+  /// requires a buffer to do a partial send
+  extern ACE_Export
+  ssize_t send_partial_i (ACE_HANDLE handle,
+                          const char *buf,
+                          size_t len,
+                          int flags);
+
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendmsg (ACE_HANDLE handle,
                    const struct msghdr *msg,
@@ -221,6 +229,12 @@ namespace ACE_OS
                  const iovec *iov,
                  int iovcnt);
 
+  /// internal function used by sendv when an ENOBUFS condition
+  /// requires a buffer to do a partial send
+  extern ACE_Export
+  ssize_t sendv_partial_i (ACE_HANDLE handle,
+                           const iovec *iov,
+                           int iovcnt);
 
   /// Manipulate the options associated with a socket.
   ACE_NAMESPACE_INLINE_FUNCTION
