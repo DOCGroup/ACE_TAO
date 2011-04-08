@@ -1,3 +1,16 @@
+Fri Apr  8 13:21:17 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Array_Traits_T.h:
+        * tao/Generic_Sequence_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Valuetype/Valuetype_Traits_T.h:
+
+          Optimizations for growing unbounded sequences by changing the
+          length. Shallow copies are now used whenever possible during the
+          duplication of the existing sequence elements.
+
 Thu Apr  7 11:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
