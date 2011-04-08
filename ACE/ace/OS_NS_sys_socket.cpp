@@ -222,8 +222,12 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
 
   return (ssize_t) bytes_sent;
 # else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buffers);
+  ACE_UNUSED_ARG (n);
+
   return -1;
-# endif
+# endif /* ACE_HAS_WINSOCK2 */
 }
 
 ssize_t
@@ -264,8 +268,13 @@ ACE_OS::send_partial_i (ACE_HANDLE handle,
 
   return result;
 # else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (len);
+  ACE_UNUSED_ARG (flags);
+
   return -1;
-# endif
+# endif /* ACE_LACKS_SEND && ACE_WIN32 */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
