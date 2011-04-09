@@ -1,3 +1,17 @@
+Sat Apr  9 17:47:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Apr  7 12:24:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * dance/DomainApplicationManager/Node_Locator.cpp:
+                  Removed comma after DLINFO in a log message. Therefor the message
+                  will be logged properly.
+
+        === end changelog ===
+
 Sat Apr  9 11:36:47 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:

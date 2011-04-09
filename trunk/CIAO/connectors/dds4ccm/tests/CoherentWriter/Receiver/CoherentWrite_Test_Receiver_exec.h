@@ -190,6 +190,10 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
 
     read_action_Generator *ticker_;
 
+    void check_iters (const char * test,
+                      const CoherentWriteTestSeq& coherentwrite_info_seq);
+
+    void get_all (void);
     void read_all (void);
 
     //@}
