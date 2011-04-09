@@ -236,7 +236,7 @@ namespace {
 
   private:
     enum Direction { READ, WRITE };
-    bool wait(Direction direction);
+    bool wait_for_completion(Direction direction);
 
     ssize_t send (IovecGuard& iovec_array,
                   const ACE_TCHAR * const send_desc,
@@ -592,7 +592,7 @@ Svc_Handler::send_data (void)
   send_desc = ACE_TEXT ("indicating no more messages");
   this->send(FINISHED_CHAR, send_desc);
 
-  this->wait(READ);
+  this->wait_for_completion(READ);
   if (close () == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -809,7 +809,7 @@ Svc_Handler::recv_data (void)
 
   for (;;)
     {
-      if (!wait(READ))
+      if (!this->wait_for_completion(READ))
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("select")));
@@ -920,7 +920,7 @@ Svc_Handler::recv_data (void)
 }
 
 bool
-Svc_Handler::wait(Direction direction)
+Svc_Handler::wait_for_completion(Direction direction)
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 
@@ -1091,7 +1091,7 @@ spawn_threads (ACCEPTOR *acceptor,
                     ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
                                max_wait.msec ()));
       else
-        ACE_OS::perror (ACE_TEXT ("wait"));
+        ACE_OS::perror (ACE_TEXT ("ACE_Thread_Manager::wait"));
 
       status = -1;
     }
