@@ -11,7 +11,7 @@
 class Chatter : public Worker
 {
 public:
-  Chatter (CORBA::ORB_ptr orb, const char *ior, ACE_Condition<ACE_Mutex>& cond);
+  Chatter (CORBA::ORB_ptr orb, const ACE_TCHAR *ior, ACE_Condition<ACE_Mutex>& cond);
   virtual int svc (void);
   int farewell ();
   long nrequests (void);
@@ -20,7 +20,7 @@ public:
   long nrequests_;
   long nreplies_;
 private:
-  CORBA::String_var ior_;
+  const ACE_TCHAR* ior_;
   ACE_Condition<ACE_Mutex>& cond_;
 };
 #endif /* CHATTER_H */
