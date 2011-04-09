@@ -1,3 +1,0 @@
-../../ACE_wrappers/netsvcs/lib/*.h usr/include/netsvcs
-../../ACE_wrappers/netsvcs/lib/*_T.cpp usr/include/netsvcs
-../../ACE_wrappers/netsvcs/lib/libnetsvcs.so usr/lib
