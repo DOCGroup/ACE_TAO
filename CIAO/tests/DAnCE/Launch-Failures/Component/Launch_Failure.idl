@@ -12,8 +12,11 @@ local interface Local_Interface
 
 enum Failure_Reason
 {
+  NO_ERROR,
   ATTRIBUTE_EXCEPTION,
-  NIL_FACET_REFERENCE
+  NIL_FACET_REFERENCE,
+  FACET_REFERENCE_EXCEPTION
+
 };
 
 exception Custom_Exception
@@ -26,7 +29,7 @@ component Launch_Failure
   uses Remote_Interface remote_in;
 
   provides Local_Interface local_out;
-  provides Local_Interface local_in;
+  uses Local_Interface local_in;
 
   attribute Failure_Reason failure_reason;
 
