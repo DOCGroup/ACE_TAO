@@ -1,3 +1,9 @@
+Sat Apr  9 12:56:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3943_Regression_Test.cpp:
+          
+          Scoreboard cleanup.
+
 Sat Apr  9 08:29:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-qnx.h:
