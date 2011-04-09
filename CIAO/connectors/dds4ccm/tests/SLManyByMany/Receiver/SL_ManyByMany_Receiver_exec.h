@@ -81,6 +81,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
       Atomic_Long &no_operation,
       Atomic_Long &on_creation,
       Atomic_Long &on_many_update,
+      Atomic_Long &on_many_upd_trigger,
       Atomic_Long &on_deletion,
       Atomic_Bool &create_data,
       Atomic_Bool &update_data);
@@ -111,6 +112,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
      Atomic_Long &no_operation_;
      Atomic_Long &on_creation_;
      Atomic_Long &on_many_update_;
+     Atomic_Long &on_many_upd_trigger_;
      Atomic_Long &on_deletion_;
      Atomic_Bool &create_data_;
      Atomic_Bool &update_data_;
@@ -203,6 +205,7 @@ namespace CIAO_SL_ManyByMany_Receiver_Impl
     Atomic_Long no_operation_;
     Atomic_Long on_creation_;
     Atomic_Long on_many_update_;
+    Atomic_Long on_many_upd_trigger_;
     Atomic_Long on_deletion_;
     Atomic_Bool create_data_;
     Atomic_Bool update_data_;

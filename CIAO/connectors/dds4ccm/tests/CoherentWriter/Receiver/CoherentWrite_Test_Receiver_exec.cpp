@@ -51,7 +51,16 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   {
     ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
                           "is available in DDS...\n"));
-    if (this->callback_.check_last ())
+    // Use get_many for every even number. In that case, don't check whether
+    // the last sample has arrived since the samples are read by then (the
+    // getter only reads unread samples).
+    if (this->run_ % 2 == 1)
+      {
+        // Odd number so check if the last sample is available in DDS.
+        if (this->callback_.check_last ())
+          this->callback_.run (this->run_);
+      }
+    else
       this->callback_.run (this->run_);
     return 0;
   }
@@ -192,17 +201,98 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
   }
 
   void
+  Receiver_exec_i::check_iters (const char * test,
+                                const CoherentWriteTestSeq& coherentwrite_info_seq)
+  {
+    for (CORBA::ULong it = 0; it < coherentwrite_info_seq.length (); ++it)
+      {
+        if (coherentwrite_info_seq[it].iteration > this->last_iter_)
+          {
+            if (coherentwrite_info_seq[it].iteration == ++this->last_iter_)
+              {
+                ACE_DEBUG ((LM_DEBUG, "%C ALL OK: ", test));
+              }
+            else
+              {
+                ACE_ERROR ((LM_ERROR, "%C ALL ERROR: ", test));
+              }
+            ACE_DEBUG ((LM_DEBUG, "expected: <%u> - "
+                                  "received <%d>\n",
+                                  this->last_iter_,
+                                  coherentwrite_info_seq[it].iteration));
+            }
+      }
+    if (this->run_ < this->nr_runs () + 1)
+      {
+        ::CoherentWriteRestarter_var restarter =
+          this->ciao_context_->get_connection_writer_restart ();
+        if (!::CORBA::is_nil (restarter.in ()))
+          restarter->restart_write ();
+        else
+          ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                                "Unable to restart the writer "
+                                "since the restarter is nil.\n"));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "Finished: wait for shutdown\n"));
+      }
+  }
+
+  void
+  Receiver_exec_i::get_all (void)
+  {
+    try
+      {
+        ::CoherentWriteTestConnector::Getter_var getter =
+          this->ciao_context_->get_connection_info_out_fresh_data ();
+
+        if (::CORBA::is_nil (getter.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "Receiver_exec_i::get_all - "
+                                  "Unable to get samples since "
+                                  "getter is nil.\n"));
+            return;
+          }
+        DDS::Duration_t to;
+        to.sec = 5;
+        to.nanosec = 0;
+        getter->time_out (to);
+
+        CoherentWriteTestSeq coherentwrite_info_seq;
+        ::CCM_DDS::ReadInfoSeq readinfo_seq;
+        getter->get_many (coherentwrite_info_seq, readinfo_seq);
+
+        this->check_iters ("GET", coherentwrite_info_seq);
+      }
+    catch (const CCM_DDS::NonExistent& ex)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET ALL: ")
+              ACE_TEXT ("caught NonExistent exception\n")));
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET ALL: ")
+              ACE_TEXT ("caught InternalError exception: retval <%u>\n"),
+              ex.error_code));
+      }
+    catch (const ::CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("ERROR: GET ALL: ");
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("ERROR: Receiver_exec_i::get_all : Exception caught\n")));
+      }
+  }
+
+  void
   Receiver_exec_i::read_all (void)
   {
     try
       {
         ::CoherentWriteTestConnector::Reader_var reader =
           this->ciao_context_->get_connection_info_out_data ();
-        CoherentWriteRestarter_var restarter =
-          this->ciao_context_->get_connection_writer_restart ();
 
-        if (::CORBA::is_nil (reader.in ()) ||
-            ::CORBA::is_nil (restarter.in ()))
+        if (::CORBA::is_nil (reader.in ()))
           {
             ACE_ERROR ((LM_ERROR, "Receiver_exec_i::read_all - "
                                   "Unable to read since reader or "
@@ -214,32 +304,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
         reader->read_all (coherentwrite_info_seq, readinfo_seq);
 
-        for (CORBA::ULong it = 0; it < coherentwrite_info_seq.length (); ++it)
-          {
-            if (coherentwrite_info_seq[it].iteration > this->last_iter_)
-              {
-                if (coherentwrite_info_seq[it].iteration == ++this->last_iter_)
-                  {
-                    ACE_DEBUG ((LM_DEBUG, "OK: "));
-                  }
-                else
-                  {
-                    ACE_ERROR ((LM_ERROR, "ERROR: "));
-                  }
-                ACE_DEBUG ((LM_DEBUG, "expected: <%u> - "
-                                      "received <%d>\n",
-                                      this->last_iter_,
-                                      coherentwrite_info_seq[it].iteration));
-               }
-          }
-        if (this->run_ < this->nr_runs () + 1)
-          {
-            restarter->restart_write ();
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG, "Finished: wait for shutdown\n"));
-          }
+        this->check_iters ("READ", coherentwrite_info_seq);
       }
     catch (const CCM_DDS::NonExistent& ex)
       {
@@ -293,7 +358,10 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
                           "Starting run number <%d>\n",
                           run));
     this->run_ = run;
-    read_all ();
+    if (this->run_ % 2 == 1)
+      this->read_all ();
+    else
+      this->get_all ();
   }
 
   ::CORBA::UShort

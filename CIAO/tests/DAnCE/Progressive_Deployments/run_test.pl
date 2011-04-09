@@ -26,7 +26,6 @@ $nr_daemon = 2;
 
 $status = 0;
 $dat_file = "NodeManagerMap.cdd";
-$cdp_file = "DeploymentPlan.cdp";
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
@@ -179,7 +178,7 @@ if ($status != 0) {
 $daemons_running = 1;
 
 # Invoke execution manager.
-print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
+print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile --cdd $dat_file\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
                                     "-e$ior_emfile --cdd $dat_file");
 $EM->Spawn ();
@@ -197,17 +196,17 @@ $em_running = 1;
 # Invoke executor - start the application -.
 print "Invoking executor - launch the application -\n";
 
-print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile -l\n";
+print "Start dance_plan_launcher.exe with -x Plan_A.cpd -k file://$ior_emfile -l\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-x Plan_A.cdp -k file://$ior_emfile -l");
 $E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
 
-print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile -l\n";
+print "Start dance_plan_launcher.exe with -x Plan_B.cpd -k file://$ior_emfile -l\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-x Plan_B.cdp -k file://$ior_emfile -l");
 $E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
 
-print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile -l\n";
+print "Start dance_plan_launcher.exe with -x Plan_C.cpd -k file://$ior_emfile -l\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-x Plan_C.cdp -k file://$ior_emfile -l");
 $E->SpawnWaitKill (2*$tg_executor->ProcessStartWaitInterval ());
@@ -223,19 +222,19 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -s\n";
+print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x Plan_C.cdp -s\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                  "-k file://$ior_emfile -x Plan_A.cdp -s");
+                                  "-k file://$ior_emfile -x Plan_C.cdp -s");
 $E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
 
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -s\n";
+print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x Plan_B.cdp -s\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
                                   "-k file://$ior_emfile -x Plan_B.cdp -s");
 $E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
 
-print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x $cdp_file -s\n";
+print "by running dance_plan_launcher.exe with -k file://$ior_emfile -x Plan_A.cdp -s\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                                  "-k file://$ior_emfile -x Plan_C.cdp -s");
+                                  "-k file://$ior_emfile -x Plan_A.cdp -s");
 $E->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
 
 print "Executor returned.\n";
