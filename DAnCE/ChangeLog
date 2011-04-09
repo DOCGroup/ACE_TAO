@@ -1,3 +1,9 @@
+Sat Apr  9 01:41:02 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Logger_Service.cpp:
+
+          Add command line option for backend selection.
+
 Thu Apr  7 22:06:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/DAnCE_Logging.txt:
