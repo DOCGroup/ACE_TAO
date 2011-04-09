@@ -329,7 +329,7 @@ module Ast<typename T,
   typedef T T_array[M][Ast_Const][LC];
 };
 
-#if !defined (CCM_LW)
+#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
 module Ast<iface,
            ev,
            iface::iface_excep,

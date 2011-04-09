@@ -19,7 +19,7 @@ $debug_level = '0';
 foreach $i (@ARGV) {
     if ($i eq '-d') {
         $debug_level = '10';
-    } 
+    }
 }
 
 my $server_iorbase = "server.ior";
@@ -47,7 +47,7 @@ if ($server->WaitForFileTimed ($server_iorbase,
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
-  
+
 $CL = $client->CreateProcess ("client", "-k file://$client1_iorfile");
 
 $client_status = $CL->Spawn ();
@@ -88,4 +88,4 @@ $client->DeleteFile($client_iorfile);
 
 print "INFO: Test succeeded\n";
 exit 0;
- 
+

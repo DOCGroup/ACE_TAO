@@ -86,7 +86,7 @@ namespace CIAO_Launch_Failure_Impl
    */
 
   Launch_Failure_exec_i::Launch_Failure_exec_i (void)
-    : failure_reason_ (static_cast< ::Failure_Reason> (0UL))
+    : failure_reason_ (NO_ERROR)
   {
   }
 
@@ -101,6 +101,11 @@ namespace CIAO_Launch_Failure_Impl
   ::CCM_Remote_Interface_ptr
   Launch_Failure_exec_i::get_remote_out (void)
   {
+    if (this->failure_reason_ == FACET_REFERENCE_EXCEPTION)
+      {
+        throw 1;
+      }
+
     if ( ::CORBA::is_nil (this->ciao_remote_out_.in ()))
       {
         remote_out_exec_i *tmp = 0;
@@ -121,6 +126,11 @@ namespace CIAO_Launch_Failure_Impl
   ::CCM_Local_Interface_ptr
   Launch_Failure_exec_i::get_local_out (void)
   {
+    if (this->failure_reason_ == FACET_REFERENCE_EXCEPTION)
+      {
+        throw 1;
+      }
+
     if ( ::CORBA::is_nil (this->ciao_local_out_.in ()))
       {
         local_out_exec_i *tmp = 0;
@@ -138,26 +148,6 @@ namespace CIAO_Launch_Failure_Impl
         this->ciao_local_out_.in ());
   }
 
-  ::CCM_Local_Interface_ptr
-  Launch_Failure_exec_i::get_local_in (void)
-  {
-    if ( ::CORBA::is_nil (this->ciao_local_in_.in ()))
-      {
-        local_in_exec_i *tmp = 0;
-        ACE_NEW_RETURN (
-          tmp,
-          local_in_exec_i (
-            this->ciao_context_.in ()),
-            ::CCM_Local_Interface::_nil ());
-
-          this->ciao_local_in_ = tmp;
-      }
-
-    return
-      ::CCM_Local_Interface::_duplicate (
-        this->ciao_local_in_.in ());
-  }
-
   ::Failure_Reason
   Launch_Failure_exec_i::failure_reason (void)
   {
@@ -168,6 +158,9 @@ namespace CIAO_Launch_Failure_Impl
   Launch_Failure_exec_i::failure_reason (
     const ::Failure_Reason failure_reason)
   {
+    if (failure_reason == ATTRIBUTE_EXCEPTION)
+      throw 1;
+
     this->failure_reason_ = failure_reason;
   }
 
@@ -245,12 +238,12 @@ namespace CIAO_Launch_Failure_Impl
   {
     ::Components::EnterpriseComponent_ptr retval =
       ::Components::EnterpriseComponent::_nil ();
-    
+
     ACE_NEW_THROW_EX (
       retval,
       Launch_Failure_exec_i,
       ::CORBA::NO_MEMORY ());
-    
+
     return retval;
   }
 
@@ -259,11 +252,11 @@ namespace CIAO_Launch_Failure_Impl
   {
     ::Components::HomeExecutorBase_ptr retval =
       ::Components::HomeExecutorBase::_nil ();
-    
+
     ACE_NEW_NORETURN (
       retval,
       Launch_Failure_Home_exec_i);
-    
+
     return retval;
   }
 }

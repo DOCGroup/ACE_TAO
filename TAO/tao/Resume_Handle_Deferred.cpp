@@ -9,6 +9,8 @@
 #  include "Resume_Handle_Deferred.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Resume_Handle_Deferred::TAO_Resume_Handle_Deferred  (TAO_ORB_Core* orbc, ACE_HANDLE h)
       : ACE_Event_Handler (orbc->reactor())
       , h_ (h)
@@ -42,4 +44,5 @@ TAO_Resume_Handle_Deferred:: handle_timeout (const ACE_Time_Value &, const void 
   return -1; // -1 will cause the reactor to call handle_close() and dispose of the instance
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 

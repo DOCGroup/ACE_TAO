@@ -34,6 +34,7 @@ project(Launch_Failure_lem_stub) : ccm_svnt {
   libs  +=  Launch_Failure_stub
 
   libout = ../lib
+  libpaths += ../lib
 
   sharedname = Launch_Failure_lem_stub
   dynamicflags += LAUNCH_FAILURE_LEM_STUB_BUILD_DLL
@@ -60,6 +61,7 @@ project(Launch_Failure_stub) : ccm_stub {
   libs  +=
 
   libout = ../lib_stub
+  libpaths += ../lib
 
   sharedname = Launch_Failure_stub
   dynamicflags += LAUNCH_FAILURE_STUB_BUILD_DLL
@@ -87,6 +89,7 @@ project(Launch_Failure_exec) : ciao_executor {
   libs +=  Launch_Failure_stub Launch_Failure_lem_stub
 
   libout = ../lib
+  libpaths += ../lib ../lib_sub
 
   dynamicflags += LAUNCH_FAILURE_EXEC_BUILD_DLL
 
@@ -113,6 +116,7 @@ project(Launch_Failure_svnt) : ciao_servant  {
   libs       += Launch_Failure_stub Launch_Failure_lem_stub
 
   libout = ../lib
+  libpaths += ../lib ../lib_sub
 
   dynamicflags += LAUNCH_FAILURE_SVNT_BUILD_DLL
 

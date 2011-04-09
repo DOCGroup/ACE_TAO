@@ -1,3 +1,90 @@
+Sat Apr  9 11:39:26 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.mpc:
+
+          Link fix.
+
+Sat Apr  9 08:16:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/IDL3_Plus/KitchenSink.idl:
+          Disabled a little bit more IDL in case of no event
+
+Sat Apr  9 01:42:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.idl:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.h:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * tests/DAnCE/Launch-Failures/descriptors/DestEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/SourceEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/besteffort.localityconfig:
+        * tests/DAnCE/Launch-Failures/descriptors/run_tests_besteffort.pl:
+
+          Expanded tested failure cases.
+
+Fri Apr  8 09:22:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+          Resolved issue.
+
+Fri Apr  8 00:39:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * connectors/dds4ccm/impl/logger/Logger_Service.cpp:
+
+          Fuzz.
+
+Thu Apr  7 21:43:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/descriptors/SuccessfulDeployment.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/run_test.pl:
+
+          Successfull deployment baseline for the Launch-Failures test.
+
+Thu Apr  7 21:04:51 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Base/CIAO_Base.mpc:
+        * ciao/Base/CIAO_Exceptions.idl:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Containers/Session/Session_Container.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+
+          Vastly improved error reporting for component loading problems.
+          Plain CCM exceptions are no longer reported to DAnCE, and
+          additional meta-data is now included that will report the exact
+          source of library loading problems.
+
+Thu Apr  7 21:03:27 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Logger/Logger_Service.h:
+        * ciao/Logger/Logger_Service.cpp:
+        * connectors/dds4ccm/impl/logger/Logger_Service.h:
+        * connectors/dds4ccm/impl/logger/Logger_Service.cpp:
+
+          Add backend support from DAnCE.
+
+Thu Apr  7 18:48:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+          Fixed valgrind memory leaks
+
+Thu Apr  7 18:01:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base/Base_ObO.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+          Depend on cck because the ndds_ts_defaults base project assumes that
+          we always use it
+
 Thu Apr  7 11:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

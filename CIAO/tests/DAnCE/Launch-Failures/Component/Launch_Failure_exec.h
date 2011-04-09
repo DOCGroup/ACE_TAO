@@ -130,9 +130,6 @@ namespace CIAO_Launch_Failure_Impl
     virtual ::CCM_Local_Interface_ptr
     get_local_out (void);
 
-    virtual ::CCM_Local_Interface_ptr
-    get_local_in (void);
-
     virtual ::Failure_Reason failure_reason (void);
 
     virtual void failure_reason (::Failure_Reason failure_reason);

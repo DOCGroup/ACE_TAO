@@ -64,7 +64,6 @@ namespace DAnCE
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
 
     Plugin_Configurator config;
-    bool tmp;
 
     DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
                  (LM_DEBUG, DLINFO
@@ -82,22 +81,6 @@ namespace DAnCE
                       ACE_TEXT ("Loading plugin file <%C>\n"),
                       i->c_str ()));
         config.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (i->c_str ()));
-      }
-
-    if (props &&
-        DAnCE::Utility::get_property_value (DAnCE::LOCALITY_BESTEFFORT,
-                                            *props,
-                                            tmp))
-      {
-        PLUGIN_MANAGER::instance ()->register_interceptor (
-          ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
-      }
-    else
-      {
-        PLUGIN_MANAGER::instance ()->register_interceptor (
-          ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
       }
 
     if (this->props_)
