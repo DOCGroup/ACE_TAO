@@ -15,7 +15,7 @@ module CoherentWrite_Test
 {
   component Receiver
   {
-    port CoherentWriteTestConnector::DDS_Read info_out;
+    port CoherentWriteTestConnector::DDS_Get info_out;
 
     provides CoherentWriteStarter reader_start;
     uses CoherentWriteRestarter writer_restart;

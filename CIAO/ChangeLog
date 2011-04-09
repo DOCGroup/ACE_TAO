@@ -1,3 +1,52 @@
+Sat Apr  9 17:47:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Fri Apr  8 13:57:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+                  Alignment.
+
+                * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/SLOneByOne/descriptors/Plan.cdp:
+                  Added check on received sample during on_deletion. on_deletion should be invoked
+                  with a valid key. Therefor changed the QOS settings.
+
+        Thu Apr  7 15:55:20 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+                * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+                * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/USER_QOS_PROFILES.xml:
+                * connectors/dds4ccm/tests/SLManyByMany/README:
+                Changed timing in test. Added extra check on key content in on_deletion. Therefore also added QoS file.
+
+
+
+        Thu Apr  7 12:26:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.idl:
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+                  Using the getter as well to read samples from DDS.
+
+                * connectors/dds4ccm/tests/CoherentWriter/descriptors/Plan.cdp:
+                  Rewritten in order to use the state and event connectors properly.
+
+                * tests/DAnCE/Progressive_Deployments/run_test.pl:
+                  Optimized logging.
+
+        Thu Apr  7 12:15:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * connectors/dds4ccm/impl/ConditionManager.h:
+                  Fixed doxygen warning
+
+        === end changelog ===
+
 Sat Apr  9 11:39:26 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Launch-Failures/Component/Launch_Failure.mpc:

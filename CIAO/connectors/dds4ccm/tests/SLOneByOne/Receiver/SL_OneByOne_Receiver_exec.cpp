@@ -126,15 +126,28 @@ namespace CIAO_SL_OneByOne_Receiver_Impl
                     ACE_TEXT ("from StateListener in Receiver\n")));
 
       }
-    if (!datum.key.in() == 0 &&
-        info.instance_status == CCM_DDS::INSTANCE_DELETED)
+    else
       {
-        ++this->on_deletion_;
+        // Because of the settings <serialize_key_with_dispose> and
+        // <propagate_dispose_of_unregistered_instances> in the QoS , we expect
+        // an existing datum.key
+        if ((ACE_OS::strncmp (datum.key.in(), "KEY", 3) == 0  ) ||
+            (ACE_OS::strncmp (datum.key.in(), "many", 4) == 0  ))
+          {
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Statelistener:on_deletion : ")
+                        ACE_TEXT ("Received datum for <%C> \n"),
+                        datum.key.in ()));
+            ++this->on_deletion_;
+           }
+        else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("ERROR Statelistener:on_deletion : did not ")
+                        ACE_TEXT ("receive the expected datum, received <%C>")
+                        ACE_TEXT (", expected <KEY_.> or <many_.>\n"),
+                        datum.key.in ()));
+          }
       }
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("StateListener_exec_i::on_deletion - ")
-                          ACE_TEXT ("Received sample: key <%C> - iteration <%d>\n"),
-                          datum.key.in (),
-                          datum.x));
   }
 
   /**
