@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ndds_stub {
-  libs += CIAO_NDDS_skel
-  after += CIAO_NDDS_skel
-}
