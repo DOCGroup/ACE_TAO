@@ -1,3 +1,15 @@
+Sat Apr  9 01:42:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.idl:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.h:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * tests/DAnCE/Launch-Failures/descriptors/DestEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/SourceEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/besteffort.localityconfig:
+        * tests/DAnCE/Launch-Failures/descriptors/run_tests_besteffort.pl:
+
+          Expanded tested failure cases.
+
 Fri Apr  8 09:22:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
