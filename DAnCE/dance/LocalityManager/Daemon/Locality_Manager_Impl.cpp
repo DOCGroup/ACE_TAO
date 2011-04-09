@@ -64,7 +64,6 @@ namespace DAnCE
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
 
     Plugin_Configurator config;
-    bool tmp;
 
     DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
                  (LM_DEBUG, DLINFO
