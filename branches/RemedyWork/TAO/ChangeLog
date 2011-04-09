@@ -1,3 +1,29 @@
+Sat Apr  9 08:03:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_NoUpcall_Client_Leader/chatter.h:
+        * tests/MT_NoUpcall_Client_Leader/chatter.cpp:
+          Unicode fixes
+
+Fri Apr  8 17:59:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.inl:
+        * tao/Resume_Handle_Deferred.cpp:
+          Added versioned namespace macros
+
+Fri Apr  8 13:21:17 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Array_Traits_T.h:
+        * tao/Generic_Sequence_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+        * tao/Valuetype/Valuetype_Traits_T.h:
+
+          Optimizations for growing unbounded sequences by changing the
+          length. Shallow copies are now used whenever possible during the
+          duplication of the existing sequence elements.
+
 Thu Apr  7 11:40:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

@@ -1,3 +1,39 @@
+Sat Apr  9 11:36:47 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Warning.
+
+Sat Apr  9 01:41:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DomainApplication/Domain_Application_Impl.cpp:
+
+          Improved error handling.
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+          Remove logic that installed error handler interceptors outside of
+          a localityconfig file.
+
+Sat Apr  9 01:41:02 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Logger/Logger_Service.cpp:
+
+          Add command line option for backend selection.
+
+Thu Apr  7 22:06:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/DAnCE_Logging.txt:
+
+          Documentation of logging service.
+
+Thu Apr  7 12:45:08 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          Improved error handling.
+
 Wed Apr  6 18:32:27 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Logger/Logger_Service.cpp:

@@ -22,8 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORB_Core;
+#include /**/ "tao/Versioned_Namespace.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ORB_Core;
 
 /**
  * @class TAO_Resume_Handle_Deferred
@@ -61,6 +64,8 @@ class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
     ACE_HANDLE h_;
     TAO_ORB_Core * orbc_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Resume_Handle_Deferred.inl"

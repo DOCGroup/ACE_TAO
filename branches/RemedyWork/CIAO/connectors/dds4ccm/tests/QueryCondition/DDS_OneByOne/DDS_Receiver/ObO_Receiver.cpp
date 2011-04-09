@@ -108,11 +108,11 @@ void read (DDSDataReader * dr,
                   int loop = 0;
                   cout << "CHECKING..... SAMPLES with read_w_condition with readcondition:" << endl;
 
-  	              received_samples = 0;
+                  received_samples = 0;
 
-	                while (loop  < 30)
+                  while (loop  < 30)
                     {
-	                    DDS_ReturnCode_t retcode = typed_dr->read_w_condition (data,
+                      DDS_ReturnCode_t retcode = typed_dr->read_w_condition (data,
                                                             info_seq,
                                                             1,
                                                             rc);
@@ -190,7 +190,7 @@ void read (DDSDataReader * dr,
                            <<  expected_samples_run2 << "> - received <"
                            << received_samples << ">" << endl;
                         }
-		    }
+                    }
                 }
               else
                 {
@@ -257,20 +257,13 @@ int clean_up (DDSDomainParticipant * participant)
       main_result = 1;
     }
   }
+  delete ws_;
+  DDSDomainParticipantFactory::finalize_instance ();
   return main_result;
 }
 
-#if !defined (ACE_TMAIN)
-# define ACE_TMAIN main
-#endif
-
-#if !defined (ACE_TCHAR)
-# define ACE_TCHAR char
-#endif
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int                 main_result = 1; /* error by default */
   DDSTopic*           topic = 0;
   DDSDataReader*      data_reader = 0;
   DDSSubscriber*      sub = 0;
@@ -434,7 +427,5 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   read (data_reader, qc, rc, ++run);
 
-  main_result = 0;
-
-  return main_result;
+  return clean_up (participant);
 }

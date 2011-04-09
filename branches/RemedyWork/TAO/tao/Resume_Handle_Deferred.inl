@@ -4,6 +4,8 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE int
 TAO_Resume_Handle_Deferred::handle_timeout_eh ()
 {
@@ -25,3 +27,5 @@ TAO_Resume_Handle_Deferred::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   delete this;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
