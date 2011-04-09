@@ -84,22 +84,6 @@ namespace DAnCE
         config.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (i->c_str ()));
       }
 
-    if (props &&
-        DAnCE::Utility::get_property_value (DAnCE::LOCALITY_BESTEFFORT,
-                                            *props,
-                                            tmp))
-      {
-        PLUGIN_MANAGER::instance ()->register_interceptor (
-          ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Best_Effort"));
-      }
-    else
-      {
-        PLUGIN_MANAGER::instance ()->register_interceptor (
-          ACE_TEXT_CHAR_TO_TCHAR ("DAnCE_Error_Interceptors"),
-          ACE_TEXT_CHAR_TO_TCHAR ("create_DAnCE_Standard_Error"));
-      }
-
     if (this->props_)
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,

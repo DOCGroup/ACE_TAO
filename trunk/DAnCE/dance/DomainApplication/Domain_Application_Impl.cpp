@@ -853,6 +853,17 @@ namespace DAnCE
                         this->node_id_.c_str ()));
           err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
+      catch (Deployment::InvalidConnection &ex)
+        {
+          DANCE_ERROR (DANCE_LOG_ERROR,
+                       (LM_ERROR, DLINFO
+                        ACE_TEXT("DA_NA_ReplyHandlerImpl::finishLaunch_excep - ")
+                        ACE_TEXT("Plan %C DomainApplication[%@] node %C : InvalidConnection exception caught.\n"),
+                        this->da_servant_->planUUID_.c_str (),
+                        this->da_servant_.in (),
+                        this->node_id_.c_str ()));
+          err << "InvalidConnection : " << ex.name.in () << "." << ex.reason.in ();
+        }
       catch (CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR,
