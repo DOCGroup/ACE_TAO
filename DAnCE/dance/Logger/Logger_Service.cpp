@@ -151,6 +151,14 @@ namespace DAnCE
 
             arg_shifter.consume_arg ();
           }
+        else if (0 != (current_arg =
+                       arg_shifter.get_the_parameter
+                       (ACE_TEXT ("-DAnCELogBackend"))))
+          {
+            this->backend_ = current_arg;
+
+            arg_shifter.consume_arg ();
+          }
         else
           {
             // Can't interpret this argument.  Move on to the next
