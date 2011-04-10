@@ -1,7 +1,14 @@
+Sun Apr 10 14:58:13 UTC 2011  Phil Mesnier  <mesnier_p@ociwb.com>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        
+          Bug_3943_Regression_Test needs to avoid ace_for_tao.
+
 Sat Apr  9 12:56:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3943_Regression_Test.cpp:
-          
+
           Scoreboard cleanup.
 
 Sat Apr  9 08:29:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
