@@ -11,6 +11,7 @@
 
 #include "EM_Launcher.h"
 #include "NM_Launcher.h"
+#include "LM_Launcher.h"
 
 //#include "Plan_Launcher_Impl.h"
 
@@ -31,6 +32,7 @@ namespace
     Options (void)
       : em_ior_ (0),
         nm_ior_ (0),
+        lm_ior_ (0),
         xml_plan_ (0),
         cdr_plan_ (0),
         uuid_ (0),
@@ -45,6 +47,7 @@ namespace
 
     const ACE_TCHAR *em_ior_;
     const ACE_TCHAR *nm_ior_;
+    const ACE_TCHAR *lm_ior_;
     const ACE_TCHAR *xml_plan_;
     const ACE_TCHAR *cdr_plan_;
     const ACE_TCHAR *uuid_;
@@ -67,6 +70,8 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("ExecutionManager IOR for EM based deployment.\n")
               ACE_TEXT ("\t-n|--nm-ior <NodeManager IOR>\t")
               ACE_TEXT ("NodeManager IOR for NM based deployment.\n")
+              ACE_TEXT ("\t--lm-ior <LocalityManager IOR>\t")
+              ACE_TEXT ("LocalityManager IOR for LM based deployment.\n")
               /*
               ACE_TEXT ("\nName Service Options\n")
               ACE_TEXT ("\t--domain-nc [NC]\t\t)
@@ -127,6 +132,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
                       ACE_TEXT ("k:n:c:x:u:m:a:lsfqo::h"));
   get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("nm-ior"), 'n', ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("lm-ior"), ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("xml-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("cdr-plan"), 'c', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("plan-uuid"), 'u', ACE_Get_Opt::ARG_REQUIRED);
@@ -263,6 +269,20 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
         case 'h':
           usage (argv[0]);
           return false;
+
+        case 0:
+          if (ACE_OS::strcmp (get_opt.long_option (),
+                              ACE_TEXT ("lm-ior")) == 0)
+            {
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::parse_args - ")
+                            ACE_TEXT ("Got LM IOR file: %C"),
+                            get_opt.opt_arg ()));
+              options.lm_ior_ = get_opt.opt_arg ();
+              break;
+            }
+
         default:
           usage (argv[0]);
           return false;
@@ -687,7 +707,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           pl_base.reset (em_pl);
         }
-      else
+      else if (options.nm_ior_)
         {
           // Resolve NM IOR for NM based deployment.
           DAnCE::NM_Launcher *nm_pl (0);
@@ -703,7 +723,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
                               ACE_TEXT ("Unable to resolve ")
                               ACE_TEXT ("NodeManager reference <%s>\n"),
-                              options.em_ior_));
+                              options.nm_ior_));
                 }
               return 1;
             }
@@ -714,6 +734,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             CORBA::NO_MEMORY ());
 
           pl_base.reset (nm_pl);
+        }
+      else if (options.lm_ior_)
+        {
+          // Resolve NM IOR for NM based deployment.
+          DAnCE::LM_Launcher *lm_pl (0);
+
+          CORBA::Object_var obj = orb->string_to_object (options.lm_ior_);
+          DAnCE::LocalityManager_var tmp_em =
+            DAnCE::LocalityManager::_narrow (obj);
+
+          if (CORBA::is_nil (tmp_em.in ()))
+            {
+              if (!options.quiet_)
+                {
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                              ACE_TEXT ("Unable to resolve ")
+                              ACE_TEXT ("LocalityManager reference <%s>\n"),
+                              options.lm_ior_));
+                }
+              return 1;
+            }
+
+          ACE_NEW_THROW_EX (lm_pl,
+                            DAnCE::LM_Launcher (orb.in (),
+                                                tmp_em.in ()),
+                            CORBA::NO_MEMORY ());
+
+          pl_base.reset (lm_pl);
         }
 
       Deployment::DeploymentPlan_var dp;
