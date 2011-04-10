@@ -6,6 +6,7 @@ inline ?= 1
 debug ?= 1
 optimize ?= 0
 threads ?= 1
+pipes ?= 0
 
 CCFLAGS += -fexceptions
 LDFLAGS += -fexceptions
