@@ -15,7 +15,6 @@
 #endif
 
 #define _POSIX_C_SOURCE 199506
-#define _QNX_SOURCE
 
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
