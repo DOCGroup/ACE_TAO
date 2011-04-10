@@ -421,7 +421,7 @@ namespace CIAO
             CIAO_ERROR (1, (LM_ERROR, CLINFO
                             "Container_i::activate_component - "
                             "Caught unknown while retrieving servant\n"));
-            throw InvalidComponent ();
+            throw CIAO::InvalidComponent ();
           }
 
         if (!svt)
@@ -545,7 +545,7 @@ namespace CIAO
   template <typename BASE>
   void
   Container_i<BASE>::set_attributes (CORBA::Object_ptr compref,
-    const ::Components::ConfigValues & values)
+                                     const ::Components::ConfigValues & values)
   {
     CIAO_TRACE("Container_i::set_attributes");
 
@@ -559,22 +559,38 @@ namespace CIAO
           }
         catch (CORBA::Exception &ex)
           {
+            std::ostringstream err;
+            err << "Internal Container Error: "
+                << "Caught CORBA Exception while retrieving servant: "
+                << ex._info ().c_str ();
+
             CIAO_ERROR (1, (LM_ERROR, CLINFO
-                            "Container_i::set_attributes - "
-                            "Caught CORBA exception while retrieving servant: %C",
-                            ex._info ().c_str ()));
-            throw CIAO::InvalidComponent ();
+                            "Container_i::set_attributes - %C\n",
+                            err.str ().c_str ()));
+            throw CIAO::InvalidComponent (0,
+                                          err.str ().c_str ());
           }
         catch (...)
           {
-            CIAO_ERROR (1, (LM_EMERGENCY, "ex in ref to servant\n"));
-            throw CIAO::InvalidComponent ();
+            CIAO_ERROR (1, (LM_EMERGENCY, CLINFO
+                            "Container_i::set_attributes - %C\n"
+                            "Internal Container Error: Unknown C++ exception "
+                            "while retrieving servant.\n"));
+            throw CIAO::InvalidComponent (0,
+                                          "Internal Container Error: Unknown C++ "
+                                          "exception while retrieving servant.");
           }
 
         if (!svt)
           {
-            CIAO_ERROR (1, (LM_EMERGENCY, "invalid servant reference\n"));
-            throw CIAO::InvalidComponent  ();
+            CIAO_ERROR (1, (LM_EMERGENCY,  CLINFO
+                            "Container_i::set_attributes - %C\n"
+                            "Internal Container Error: "
+                            "Invalid servant reference from reference_to_servant\n"));
+
+            throw CIAO::InvalidComponent  (0,
+                                           "Internal Container Error: "
+                                           "Invalid servant reference from reference_to_servant");
           }
         else
           {
@@ -605,8 +621,12 @@ namespace CIAO
               }
             else
               {
-                CIAO_ERROR (1, (LM_EMERGENCY, "not home or component\n"));
-                throw CIAO::InvalidComponent ();
+                CIAO_ERROR (1, (LM_EMERGENCY, CLINFO
+                                "Container_i::set_attributes - "
+                                "Internal Container Error: Instance isn't a home or component\n"));
+                throw CIAO::InvalidComponent (0,
+                                              "Internal Container Error: "
+                                              "Instance isn't a home or component\n");
               }
           }
       }
@@ -620,16 +640,34 @@ namespace CIAO
                      "to servant pointer.\n"));
         throw;
       }
-    catch (const CORBA::Exception &ex)
+    catch (const CORBA::BAD_PARAM &)
       {
+        std::ostringstream err;
+        err << "Caught BAD_PARAM while setting attributes.  Likely indicates incorrect "
+            << "data type in directive.\n";
+
         CIAO_ERROR (1,
                     (LM_ERROR,
                      CLINFO
                      "Container_i::set_attributes - "
-                     "Caught CORBA exception while configuring "
-                     "component attributes: %C\n",
-                     ex._info ().c_str ()));
-        throw;
+                     "Error: %C\n",
+                     err.str ().c_str ()));
+
+        throw Installation_Failure (0,
+                                    err.str ().c_str ());
+      }
+    catch (const CORBA::Exception &ex)
+      {
+        std::ostringstream err;
+        err << "Caught CORBA exception while configuring attributes: "
+            << ex._info ().c_str ();
+
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Container_i::set_attributes - %C\n",
+                     err.str ().c_str ()));
+        throw Installation_Failure (0,err.str ().c_str ());
       }
     catch (...)
       {
@@ -640,7 +678,8 @@ namespace CIAO
                      "Caught unknown C++ exception while "
                      "configuring component attributes.\n"));
 
-        throw;
+        throw Installation_Failure (0,
+                                    "Unknown C++ exception while configuring attributes\n");
       }
   }
 
