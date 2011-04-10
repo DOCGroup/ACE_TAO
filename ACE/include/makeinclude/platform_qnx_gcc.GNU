@@ -24,8 +24,6 @@ ifeq ($(optimize),1)
 OCFLAGS += -O3
 endif #optimize
 
-CFLAGS  += -W -Wall -Wpointer-arith
-
 LIBS    += -lsocket -lstdc++ -lm
 
 PIC     = -fPIC
