@@ -1,3 +1,14 @@
+Sun Apr 10 17:51:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Base/CIAO_Exceptions.idl:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Improved error handling.
+
 Sun Apr 10 12:04:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ndds_ts_default.mpb:
