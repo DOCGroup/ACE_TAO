@@ -1,3 +1,11 @@
+Sun Apr 10 12:06:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Layout change
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Use ndds_cck_ts_defaults
+
 Sat Apr  9 08:03:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_NoUpcall_Client_Leader/chatter.h:
