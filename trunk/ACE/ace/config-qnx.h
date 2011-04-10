@@ -116,9 +116,6 @@
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 #define ACE_HAS_POSIX_NONBLOCK 1
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
-#define ACE_HAS_BSWAP_16
-#define ACE_HAS_BSWAP_32
-#define ACE_HAS_BSWAP_64
 
 /////////////////////////////////////////////////////////////////
 //    Definition of the features that are not available.
