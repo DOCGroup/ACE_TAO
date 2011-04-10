@@ -152,7 +152,6 @@
 # define ACE_LACKS_SYS_MSG_H
 # define ACE_LACKS_ALPHASORT
 # define ACE_LACKS_STRPTIME
-# define ACE_LACKS_ISWBLANK
 # define ACE_LACKS_POLL_H
 #endif
 
