@@ -86,7 +86,7 @@ namespace CIAO_Launch_Failure_Impl
    */
 
   Launch_Failure_exec_i::Launch_Failure_exec_i (void)
-    : failure_reason_ (NO_ERROR)
+    : failure_reason_ (::NO_ERROR)
   {
   }
 
@@ -101,7 +101,7 @@ namespace CIAO_Launch_Failure_Impl
   ::CCM_Remote_Interface_ptr
   Launch_Failure_exec_i::get_remote_out (void)
   {
-    if (this->failure_reason_ == FACET_REFERENCE_EXCEPTION)
+    if (this->failure_reason_ == ::FACET_REFERENCE_EXCEPTION)
       {
         throw 1;
       }
@@ -126,7 +126,7 @@ namespace CIAO_Launch_Failure_Impl
   ::CCM_Local_Interface_ptr
   Launch_Failure_exec_i::get_local_out (void)
   {
-    if (this->failure_reason_ == FACET_REFERENCE_EXCEPTION)
+    if (this->failure_reason_ == ::FACET_REFERENCE_EXCEPTION)
       {
         throw 1;
       }
