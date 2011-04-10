@@ -76,7 +76,7 @@ namespace DAnCE
   typename Plan_Launcher_Base_Impl< Manager, AppManager, Application>::AppManager_var app_manager;
     try
       {
-        app_manager = this->manager_->preparePlan (plan, 0);
+        app_manager = AppManager::_narrow (this->manager_->preparePlan (plan, 0));
       }
     catch (::Deployment::PlanError &ex)
       {
