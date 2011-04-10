@@ -24,6 +24,9 @@ ifeq ($(optimize),1)
 OCFLAGS += -O3
 endif #optimize
 
+DLD     = $(CXX)
+LD      = $(CXX)
+
 LIBS    += -lsocket -lstdc++ -lm
 
 PIC     = -fPIC
