@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#include "ace/OS_main.h"
+
 #include "Base_ObO.h"
 #include "Base_ObOSupport.h"
 

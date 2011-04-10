@@ -1,6 +1,6 @@
 // $Id$
 
-project(*qc_receiver) : nddslib, ndds_ts_default {
+project(*qc_receiver) : aceexe, nddslib, ndds_ts_defaults {
   exename = DDS_ObO_receiver
   after += Base_obo_stub
 
