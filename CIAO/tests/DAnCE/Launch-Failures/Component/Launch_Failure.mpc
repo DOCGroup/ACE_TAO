@@ -89,7 +89,7 @@ project(Launch_Failure_exec) : ciao_executor {
   libs +=  Launch_Failure_stub Launch_Failure_lem_stub
 
   libout = ../lib
-  libpaths += ../lib ../lib_sub
+  libpaths += ../lib ../lib_stub
 
   dynamicflags += LAUNCH_FAILURE_EXEC_BUILD_DLL
 
@@ -116,7 +116,7 @@ project(Launch_Failure_svnt) : ciao_servant  {
   libs       += Launch_Failure_stub Launch_Failure_lem_stub
 
   libout = ../lib
-  libpaths += ../lib ../lib_sub
+  libpaths += ../lib ../lib_stub
 
   dynamicflags += LAUNCH_FAILURE_SVNT_BUILD_DLL
 
