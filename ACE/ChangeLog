@@ -1,8 +1,16 @@
+Sun Apr 10 17:03:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx.h:
+          Made some fixes for qnx65
+
+        * include/makeinclude/platform_qnx_gcc.GNU:
+          Simplified
+
 Sun Apr 10 14:58:13 UTC 2011  Phil Mesnier  <mesnier_p@ociwb.com>
 
         * tests/run_test.lst:
         * tests/tests.mpc:
-        
+
           Bug_3943_Regression_Test needs to avoid ace_for_tao.
 
 Sat Apr  9 12:56:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
