@@ -247,7 +247,7 @@ project(*Main): taoserver, messaging, gen_ostream {
   }
 }
 
-project(*NDDS_IDL): ndds_ts_defaults {
+project(*NDDS_IDL): ndds_cck_ts_defaults {
   custom_only=1
 
   NDDSTypeSupport_Files {
