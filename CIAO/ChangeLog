@@ -1,3 +1,9 @@
+Sun Apr 10 03:40:52 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+
+          Compile error.
+
 Sat Apr  9 17:47:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
