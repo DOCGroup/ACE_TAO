@@ -12,7 +12,7 @@
 #include "ccm/CCM_StandardConfigurator.idl"
 #include "ccm/CCM_CCMException.idl"
 #include "ciao/Containers/CIAO_Servant_Activator.idl"
-
+#include "ciao/Base/CIAO_Exceptions.idl"
 #include "ccm/CCM_Exceptions.idl"
 #include "ccm/CCM_Navigation.idl"
 
@@ -60,10 +60,6 @@ module CIAO
       HOME_t,
       FACET_CONSUMER_t
     };
-  };
-
-  exception InvalidComponent
-  {
   };
 
   /**

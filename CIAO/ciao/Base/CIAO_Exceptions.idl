@@ -14,4 +14,10 @@ module CIAO
     string name;
     string reason;
   };
+
+  exception InvalidComponent
+  {
+    string name;
+    string reason;
+  };
 };
