@@ -1,6 +1,6 @@
 // $Id$
 
-project(DAnCE_NDDS_Logger) : nddslib_with_idl, taolib_with_idl, dance_output, install {
+project(DAnCE_NDDS_Logger) : ndds_cck_ts_defaults, nddslib, taolib_with_idl, dance_output, install {
 
   dynamicflags += DANCE_NDDS_LOG_BUILD_DLL DAnCE_NDDS_Log_Stub_BUILD_DLL
 
@@ -22,7 +22,7 @@ project(DAnCE_NDDS_Logger) : nddslib_with_idl, taolib_with_idl, dance_output, in
   }
 }
 
-project(DAnCE_NDDS_Log_Server) : nddsexe_with_idl, taoidldefaults, taoclient, dance_output, install {
+project(DAnCE_NDDS_Log_Server) : ndds_cck_ts_defaults, nddsexe, taoidldefaults, taoclient, dance_output, install {
   after += DAnCE_NDDS_Logger
   exename = dance_ndds_log_server
 

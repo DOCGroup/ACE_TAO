@@ -1,3 +1,8 @@
+Sun Apr 10 17:37:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+          Fixed base project due to ndds base project changes
+
 Sat Apr  9 17:47:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
