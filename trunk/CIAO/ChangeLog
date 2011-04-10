@@ -1,3 +1,20 @@
+Sun Apr 10 19:41:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.mpc:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * tests/DAnCE/Launch-Failures/Interceptors:
+        * tests/DAnCE/Launch-Failures/Interceptors/Interceptors.mpc:
+        * tests/DAnCE/Launch-Failures/Interceptors/Selective_Error.h:
+        * tests/DAnCE/Launch-Failures/Interceptors/Selective_Error.cpp:
+        * tests/DAnCE/Launch-Failures/Interceptors/Selective_Error_Export.h:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalDestEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalFacetConnectionDifferentLMs.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalNilFacetConnection.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalSourceEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/besteffort.localityconfig:
+
+          Expanded testing.
+
 Sun Apr 10 17:51:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Base/CIAO_Exceptions.idl:

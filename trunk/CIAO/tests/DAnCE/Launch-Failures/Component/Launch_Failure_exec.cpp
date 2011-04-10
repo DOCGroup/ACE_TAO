@@ -106,6 +106,11 @@ namespace CIAO_Launch_Failure_Impl
         throw 1;
       }
 
+    if (this->failure_reason_ == ::NIL_FACET_REFERENCE)
+      {
+        return 0;
+      }
+
     if ( ::CORBA::is_nil (this->ciao_remote_out_.in ()))
       {
         remote_out_exec_i *tmp = 0;
@@ -129,6 +134,11 @@ namespace CIAO_Launch_Failure_Impl
     if (this->failure_reason_ == ::FACET_REFERENCE_EXCEPTION)
       {
         throw 1;
+      }
+
+    if (this->failure_reason_ == ::NIL_FACET_REFERENCE)
+      {
+        return 0;
       }
 
     if ( ::CORBA::is_nil (this->ciao_local_out_.in ()))
