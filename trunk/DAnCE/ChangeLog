@@ -1,3 +1,13 @@
+Sun Apr 10 19:38:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/LM_Launcher.h:
+        * dance/Plan_Launcher/LM_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.mpc:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Add capability to launch directly to the LocalityManager.
+
 Sun Apr 10 17:37:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
