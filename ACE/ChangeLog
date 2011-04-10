@@ -1,3 +1,8 @@
+Sun Apr 10 17:32:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx.h:
+          qnx63 has much less than qnx65
+
 Sun Apr 10 17:03:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-qnx.h:
