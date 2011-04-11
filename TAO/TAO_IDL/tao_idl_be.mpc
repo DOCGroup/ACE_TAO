@@ -20,10 +20,6 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe 
     optimize =
   }
 
-  verbatim(gnuace, macros) {
-    override minimaltoc = 1
-  }
-
   Source_Files {
     be
   }
