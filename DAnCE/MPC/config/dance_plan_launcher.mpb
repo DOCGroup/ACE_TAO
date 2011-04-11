@@ -7,7 +7,7 @@ project : dance_logger, dance_convert_plan, \
           dance_domainapplication_stub, \
           dance_nodemanager_stub, \
           dance_nodeapplicationmanager_stub, \
-          dance_nodeapplication_stub {
+          dance_nodeapplication_stub, dance_stub {
   after += DAnCE_Plan_Launcher_Impl
   libs += DAnCE_Plan_Launcher_Impl
 }
