@@ -12,7 +12,7 @@ local interface Local_Interface
 
 enum Failure_Reason
 {
-  NO_ERROR,
+  NO_LAUNCH_ERROR,
   ATTRIBUTE_EXCEPTION,
   NIL_FACET_REFERENCE,
   FACET_REFERENCE_EXCEPTION
