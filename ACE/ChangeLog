@@ -1,3 +1,8 @@
+Mon Apr 11 06:30:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added support for no-optimize-sibling-calls
+
 Sun Apr 10 18:04:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-qnx.h:

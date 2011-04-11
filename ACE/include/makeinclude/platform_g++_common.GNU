@@ -129,6 +129,10 @@ ifeq ($(GNU_LD),1)
   STATIC_LINK_FLAG ?= -static
 endif # GNU_LD
 
+ifeq ($(no-optimize-sibling-calls), 1)
+  FLAGS_C_CC += -fno-optimize-sibling-calls
+endif
+
 ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
 else
