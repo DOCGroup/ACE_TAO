@@ -86,7 +86,7 @@ namespace CIAO_Launch_Failure_Impl
    */
 
   Launch_Failure_exec_i::Launch_Failure_exec_i (void)
-    : failure_reason_ (::NO_ERROR)
+    : failure_reason_ (::NO_LAUNCH_ERROR)
   {
   }
 

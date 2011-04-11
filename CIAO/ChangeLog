@@ -1,3 +1,10 @@
+Mon Apr 11 03:08:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.idl:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+
+          Attempt at a compile fix for Windows.
+
 Mon Apr 11 03:02:24 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Launch-Failures/Interceptors/Interceptors.mpc:
