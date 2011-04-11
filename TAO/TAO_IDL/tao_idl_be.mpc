@@ -21,7 +21,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe 
   }
 
   verbatim(gnuace, macros) {
-    override no-optimize-sibling-calls = 1
+    override minimaltoc = 1
   }
 
   Source_Files {
