@@ -1,3 +1,18 @@
+Mon Apr 11 03:00:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/LocalityManager/CircularDependency:
+        * tests/LocalityManager/CircularDependency/CircularDependency.mpc:
+        * tests/LocalityManager/CircularDependency/CircularDependency_export.h:
+        * tests/LocalityManager/CircularDependency/Deployment.cdp:
+        * tests/LocalityManager/CircularDependency/Handler_A.h:
+        * tests/LocalityManager/CircularDependency/Handler_A.cpp:
+        * tests/LocalityManager/CircularDependency/Handler_B.h:
+        * tests/LocalityManager/CircularDependency/Handler_B.cpp:
+        * tests/LocalityManager/CircularDependency/run_test.pl:
+
+          Test excercising the behavior when a circular dependency exists between
+          installation handlers.  This has revealed a bug, which has yet to be fixed.
+
 Mon Apr 11 02:57:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Plan_Launcher/LM_Launcher.h:
