@@ -1,3 +1,8 @@
+Mon Apr 11 10:48:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_NoUpcall_Client_Leader/MT_NoUpcall.mpc:
+          This test requires threads
+
 Mon Apr 11 06:31:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl_be.mpc:
