@@ -1,3 +1,8 @@
+Mon Apr 11 06:31:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl_be.mpc:
+          Added no-optimize-sibling-calls
+
 Sun Apr 10 12:06:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
