@@ -280,8 +280,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
     ::CCM_DDS::ReadInfoSeq readinfo;
     bool const result = getter->get_many (gettertest_seq, readinfo);
     if (result)
-         getter->get_many (gettertest_seq, readinfo);
-    if (result)
       {
         if (gettertest_seq.length () == 0)
           {
@@ -335,8 +333,6 @@ namespace CIAO_Getter_Test_Receiver_Impl
 
     GetterTestSeq read_seq;
     ::CCM_DDS::ReadInfoSeq readinfos;
-    reader->read_all (read_seq, readinfos);
-
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::read_many - "
                 "Start checking samples in DDS\n"));
     reader->read_all (read_seq, readinfos);
