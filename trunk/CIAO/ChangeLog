@@ -1,3 +1,11 @@
+Mon Apr 11 10:11:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+          Resolved warning.
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+          Resolved test errors.
+
 Mon Apr 11 03:08:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Launch-Failures/Component/Launch_Failure.idl:

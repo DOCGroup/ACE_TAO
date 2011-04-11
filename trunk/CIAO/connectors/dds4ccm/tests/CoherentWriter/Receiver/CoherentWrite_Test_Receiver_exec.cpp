@@ -265,7 +265,7 @@ namespace CIAO_CoherentWrite_Test_Receiver_Impl
 
         this->check_iters ("GET", coherentwrite_info_seq);
       }
-    catch (const CCM_DDS::NonExistent& ex)
+    catch (const CCM_DDS::NonExistent& )
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: GET ALL: ")
               ACE_TEXT ("caught NonExistent exception\n")));
