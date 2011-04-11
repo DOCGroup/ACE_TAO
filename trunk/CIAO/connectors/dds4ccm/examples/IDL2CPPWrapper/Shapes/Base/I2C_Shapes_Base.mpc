@@ -1,6 +1,6 @@
 // $Id$
 
-project(I2C_Shapes_Base_stub) : taoidldefaults, ndds_ts_default {
+project(I2C_Shapes_Base_stub) : taoidldefaults, ndds_idltocpp_ts_defaults {
   sharedname = I2C_Shapes_Base_stub
   dynamicflags += SHAPES_BASE_STUB_BUILD_DLL
   libout = ../lib

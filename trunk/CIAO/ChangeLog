@@ -1,3 +1,40 @@
+Mon Apr 11 12:28:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/dds4ccm_impl.mpb:
+        * MPC/config/dds4ccm_ts_default.mpb:
+        * MPC/config/ndds_idltocpp.mpb:
+        * MPC/config/ndds_idltocpp_impl.mpb:
+        * MPC/config/ndds_idltocpp_lem_stub.mpb:
+        * MPC/config/ndds_idltocpp_skel.mpb:
+        * MPC/config/ndds_idltocpp_stub.mpb:
+        * MPC/config/ndds_idltocpp_ts_defaults.mpb:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Base.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_lem_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+        * connectors/dds4ccm/impl/ndds/ndds_idltocpp.mpc:
+          Renamed base projects to make a difference between plain RTI DDS (the
+          ndds* base projects) and our IDL to CPP wrapper around RTI DDS (the
+          ndds_idltocpp_* base projects)
+
+        * MPC/config/ndds.mpb:
+        * MPC/config/ndds_impl.mpb:
+        * MPC/config/ndds_lem_stub.mpb:
+        * MPC/config/ndds_skel.mpb:
+        * MPC/config/ndds_stub.mpb:
+        * MPC/config/ndds_ts_default.mpb:
+        * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+          Removed these files.
+
 Mon Apr 11 10:11:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:

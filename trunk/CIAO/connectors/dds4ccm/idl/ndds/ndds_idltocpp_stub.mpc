@@ -1,6 +1,6 @@
 // $Id$
 
-project (CIAO_NDDS_idl_gen) : install, ndds, componentidldefaults {
+project (CIAO_NDDS_idl_gen) : install, ndds_idltocpp, componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NDDS_STUB_Export \
               -Wb,stub_export_include=ndds_stub_export.h \
@@ -17,7 +17,7 @@ project (CIAO_NDDS_idl_gen) : install, ndds, componentidldefaults {
   }
 }
 
-project (CIAO_NDDS_stub) : install, ndds, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
+project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
 
   after += CIAO_NDDS_idl_gen
   includes += $(CIAO_ROOT)/connectors
