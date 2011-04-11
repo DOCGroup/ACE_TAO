@@ -10,8 +10,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-
-project(*Server): messaging, taoserver {
+project(*Server): messaging, taoserver, threads {
   exename = server
   after += *idl
   Source_Files {
@@ -20,7 +19,7 @@ project(*Server): messaging, taoserver {
     worker.cpp
     chatter.cpp
     police.cpp
-  }  
+  }
   Source_Files {
     SharedIntfC.cpp
     SharedIntfS.cpp
@@ -28,8 +27,8 @@ project(*Server): messaging, taoserver {
   IDL_Files {
   }
 }
- 
-project(*Client): messaging, taoserver {
+
+project(*Client): messaging, taoserver, threads {
   exename = client
   after += *idl
   Source_Files {
@@ -38,7 +37,7 @@ project(*Client): messaging, taoserver {
     worker.cpp
     chatter.cpp
     police.cpp
-  }  
+  }
   Source_Files {
     SharedIntfC.cpp
     SharedIntfS.cpp
