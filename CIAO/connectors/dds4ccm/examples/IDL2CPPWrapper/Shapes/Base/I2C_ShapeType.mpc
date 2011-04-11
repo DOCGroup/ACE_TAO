@@ -1,6 +1,6 @@
 // $Id$
 
-project(I2C_ShapeType_idl_gen) : connectoridldefaults, ndds, ndds_stub {
+project(I2C_ShapeType_idl_gen) : connectoridldefaults, ndds_idltocpp_stub {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=I2C_SHAPES_CONNECTOR_STUB_Export \
@@ -12,7 +12,7 @@ project(I2C_ShapeType_idl_gen) : connectoridldefaults, ndds, ndds_stub {
   }
 }
 
-project(I2C_ShapeType_lem_gen) : ciaoidldefaults, ndds_stub {
+project(I2C_ShapeType_lem_gen) : ciaoidldefaults, ndds_idltocpp_stub {
   custom_only = 1
   after += I2C_ShapeType_idl_gen
   idlflags += -Wb,stub_export_macro=I2C_SHAPES_CONNECTOR_LEM_STUB_Export \
@@ -25,7 +25,7 @@ project(I2C_ShapeType_lem_gen) : ciaoidldefaults, ndds_stub {
   }
 }
 
-project(I2C_ShapeType_lem_stub) : ndds_lem_stub {
+project(I2C_ShapeType_lem_stub) : ndds_idltocpp_lem_stub {
   after += I2C_ShapeType_lem_gen I2C_ShapeType_stub I2C_Shapes_Base_stub
   libs  += I2C_Shapes_Base_stub I2C_ShapeType_stub
   libpaths += ../lib
@@ -51,7 +51,7 @@ project(I2C_ShapeType_lem_stub) : ndds_lem_stub {
   }
 }
 
-project(I2C_ShapeType_stub) : ndds_ts_default, ndds_stub {
+project(I2C_ShapeType_stub) : ndds_idltocpp_stub {
   after += I2C_ShapeType_idl_gen I2C_Shapes_Base_stub
   libs  += I2C_Shapes_Base_stub
   libpaths += ../lib

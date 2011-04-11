@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (CIAO_NDDS_skel) : install, ndds_lem_stub, ciaolib_with_idl, ciao_output, taolib, portableserver, ciao_servant {
+project (CIAO_NDDS_skel) : install, ndds_idltocpp_stub, ciaolib_with_idl, ciao_output, taolib, portableserver, ciao_servant {
   includes += $(CIAO_ROOT)/connectors
 
   dynamicflags += NDDS_SKEL_BUILD_DLL
