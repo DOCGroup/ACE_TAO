@@ -1,3 +1,10 @@
+Mon Apr 11 02:57:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/LM_Launcher.h:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          Fuzz and bugfixes.
+
 Sun Apr 10 19:38:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Plan_Launcher/LM_Launcher.h:

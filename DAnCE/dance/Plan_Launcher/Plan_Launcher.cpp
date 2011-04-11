@@ -292,12 +292,12 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   /// Sanity checking on the options.
 
   // In all cases, we need to have a EM/NM IOR specified, but only one.
-  if ((!options.em_ior_ && !options.nm_ior_) ||
-      (options.em_ior_ && options.nm_ior_))
+  if ((!options.em_ior_ && !options.nm_ior_ && !options.lm_ior_) ||
+      (options.em_ior_ && options.nm_ior_ && options.lm_ior_))
     {
       DANCE_ERROR (DANCE_LOG_EMERGENCY,
                    (LM_ERROR, DLINFO ACE_TEXT ("Plan_launcher::parse_args - ")
-                    ACE_TEXT ("Error: Must specify either EM IOR or NM IOR\n")));
+                    ACE_TEXT ("Error: Must specify either EM IOR, NM IOR, LM IOR\n")));
       return false;
     }
 
