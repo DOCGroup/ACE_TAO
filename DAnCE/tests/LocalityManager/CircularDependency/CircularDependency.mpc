@@ -1,0 +1,9 @@
+// $Id$
+project(CircularDependency) : dance_skel, dance_lib {
+  dynamicflags += CIRCULARDEPENDENCY_BUILD_DLL
+
+  Source_Files {
+    Handler_A.cpp
+    Handler_B.cpp
+  }
+}
