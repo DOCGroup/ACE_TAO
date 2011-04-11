@@ -1,3 +1,8 @@
+Mon Apr 11 15:36:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/USER_QOS_PROFILES.xml:
+          Added this file. SLOneByOne should work now.
+
 Mon Apr 11 12:28:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
