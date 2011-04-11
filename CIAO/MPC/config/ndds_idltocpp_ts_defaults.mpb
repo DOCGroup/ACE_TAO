@@ -3,7 +3,7 @@
 
 project : ndds_cck_ts_defaults, nddslib, typecode {
   Define_Custom(DDSGenerator) : NDDSTypeSupport {
-    commandflags += -typeSequenceSuffix RTISeq -enableEscapeChar -verbosity 1 -I $(CIAO_ROOT)/connectors/dds4ccm/idl -I $(CIAO_ROOT)/ccm -I $(CIAO_ROOT)
+    commandflags += -typeSequenceSuffix RTISeq -verbosity 1 -I $(CIAO_ROOT)/connectors/dds4ccm/idl -I $(CIAO_ROOT)/ccm -I $(CIAO_ROOT)
     keyword dds_ts_flags = commandflags
   }
 
