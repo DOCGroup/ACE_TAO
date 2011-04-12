@@ -1,3 +1,10 @@
+Tue Apr 12 01:16:47 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/LocalityManager/CircularDependency/Handler_A.cpp:
+        * tests/LocalityManager/CircularDependency/Handler_B.cpp:
+
+          Warnings.
+
 Mon Apr 11 11:13:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_plan_launcher.mpb:

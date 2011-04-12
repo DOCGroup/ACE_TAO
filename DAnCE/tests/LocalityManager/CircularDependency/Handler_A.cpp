@@ -57,9 +57,9 @@ namespace DAnCE
   }
 
   void
-  Handler_A_Impl::install_instance (const ::Deployment::DeploymentPlan & plan,
-                                       ::CORBA::ULong instanceRef,
-                                       ::CORBA::Any_out instance_reference)
+  Handler_A_Impl::install_instance (const ::Deployment::DeploymentPlan &,
+                                       ::CORBA::ULong,
+                                       ::CORBA::Any_out)
   {
     throw CORBA::NO_IMPLEMENT ();
   }
