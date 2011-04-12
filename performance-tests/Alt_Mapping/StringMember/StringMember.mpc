@@ -1,0 +1,103 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    idlflags -= -Sa -St
+    idlflags += -Wb,stub_export_macro=STRING_MEMBER_STUB_Export \
+                -Wb,stub_export_include=string_member_stub_export.h \
+                -Wb,skel_export_macro=STRING_MEMBER_SKEL_Export \
+                -Wb,skel_export_include=string_member_skel_export.h \
+                -Gxhst -Gxhsk -Gstl
+
+    StringMember.idl
+  }
+
+  custom_only = 1
+}
+
+project(*Stub): taolib, anytypecode, codeset, avoids_minimum_corba, avoids_ace_for_tao {
+  after += *idl
+  sharedname = String_Member_Stub
+  dynamicflags += STRING_MEMBER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+  
+  Source_Files {
+    StringMemberC.cpp
+  }
+
+  Inline_Files {
+    StringMemberC.inl
+  }
+  
+  Header_Files {
+    StringMemberC.h
+    string_member_stub_export.h
+  }
+}
+
+project(*Client): taoexe, codeset {
+  exename = client
+  after  += *Stub
+  libs += String_Member_Stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+}
+
+project(*Skel): portableserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after += *Stub
+  sharedname = String_Member_Skel
+  libs += String_Member_Stub
+  dynamicflags += STRING_MEMBER_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+  
+  Source_Files {
+    StringMemberS.cpp
+  }
+
+  Inline_Files {
+    StringMemberS.inl
+  }
+  
+  Header_Files {
+    StringMemberS.h
+    string_member_skel_export.h
+  }
+}
+
+project(*Server): taoexe, codeset, portableserver {
+  exename = server
+  after  += *Skel
+  libs += String_Member_Skel String_Member_Stub
+  
+  IDL_Files {
+  }
+
+  Source_Files {
+    server.cpp
+  }
+  
+  Header_Files {
+  }
+  
+  Inline_Files {
+  }
+}
+
+
+
