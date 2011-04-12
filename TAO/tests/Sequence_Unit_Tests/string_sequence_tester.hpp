@@ -377,9 +377,9 @@ struct string_sequence_tester
 
       CHECK_THROW(tested_sequence y(x), testing_exception);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
-      FAIL_RETURN_IF_NOT(f.expect(1), f);
+      FAIL_RETURN_IF_NOT(f.expect(0), f);
       FAIL_RETURN_IF_NOT(d.expect(4), d);
-      FAIL_RETURN_IF_NOT(r.expect(x.maximum()), r);
+      FAIL_RETURN_IF_NOT(r.expect(0), r);
     }
     FAIL_RETURN_IF_NOT(f.expect(1), f);
     return 0;
@@ -420,13 +420,13 @@ struct string_sequence_tester
         FAIL_RETURN_IF_NOT(d.expect(4), d);
         FAIL_RETURN_IF_NOT(r.expect(y.maximum()), r);
 
-        CHECK_EQUAL(CORBA::ULong(8), y.length());
-        for(CORBA::ULong i = 0; i != 8; ++i)
+        CHECK_EQUAL(CORBA::ULong(4), x.length());
+        for(CORBA::ULong i = 0; i != 4; ++i)
         {
           FAIL_RETURN_IF_NOT(
-              helper::compare_test_string(y[i]),
+              helper::compare_test_string(x[i]),
               "Mismatch in element " << i
-              << ", got=" << y[i]);
+              << ", got=" << x[i]);
         }
       }
       FAIL_RETURN_IF_NOT(f.expect(1), f);
