@@ -1,3 +1,8 @@
+Tue Apr 12 20:39:11 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * NEWS:
+          Added a note about rand_r() and getpwnam_r() changes.
+
 Tue Apr 12 18:51:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3943_Regression_Test.cpp:
