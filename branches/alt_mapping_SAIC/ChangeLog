@@ -1,3 +1,12 @@
+Tue Apr 12 20:11:30 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Alt_Mapping/StringMember/*.*:
+
+          New test, measures latency of a CORBA operation sending a
+          struct with a string member, in two versions - when the
+          string member in question is assigned with a copy and
+          without a copy.
+
 Fri Apr  8 20:49:40 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Alt_Mapping/Options.cpp:

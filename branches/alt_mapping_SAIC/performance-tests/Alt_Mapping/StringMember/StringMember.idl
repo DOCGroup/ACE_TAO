@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef STRINGMEMBER_IDL
+#define STRINGMEMBER_IDL
+
+struct Foo
+{
+  string strmem;
+};
+
+interface Test
+{
+  void test_op (in Foo inarg);
+
+  void shutdown ();
+};
+
+#endif // STRINGMEMBER_IDL
