@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: TAO_CosLifeCycle
+Description: TAO CosLifeCycle Stub Library
+Requires: TAO_CosNaming, TAO_AnyTypeCode, TAO
+Version: @VERSION@
+Libs: -L${libdir} -lTAO_CosLifeCycle
+Cflags: -I${includedir}

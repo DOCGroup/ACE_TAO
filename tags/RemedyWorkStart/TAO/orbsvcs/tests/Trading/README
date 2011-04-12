@@ -1,0 +1,3301 @@
+$Id$
+
+The TAO Trading Service Tests
+
+Thank you for your interest in the TAO Trading Service. Documentation
+on using the Trading Service and its tests can be found in:
+
+	$TAO_ROOT/docs/releasenotes/trader.html
+
+Just for reference, a correct execution of the tests is included below:
+
+Enjoy!
+
+> export_test 
+
+*** Bootstrap to the Lookup interface.
+*** Narrowing the lookup interface.
+*** Running the Service Type Exporter tests.
+*** TAO_Service_Type_Exporter::removing all types from the Repository.
+Service type not yet registered: PostScript_Printer
+Service type not yet registered: File_System
+Service type not yet registered: Printer
+Service type not yet registered: Plotter
+Service type not yet registered: Remote_IO
+*** TAO_Service_Type_Exporter::adding all types to the Repository.
+*** TAO_Service_Type_Exporter::removing all types from the Repository.
+*** TAO_Service_Type_Exporter::adding all types to the Repository.
+*** TAO_Service_Type_Exporter::listing all types in the Repository.
+type name: Plotter
+type name: Printer
+type name: Remote_IO
+type name: File_System
+type name: PostScript_Printer
+*** TAO_Service_Type_Exporter::describing all types in the Repository.
+Type Name: Remote_IO
+Interface Name: IDL:TAO_Trader_Test/Remote_Output:1.0
+Property: Miscellaneous         Mode: Normal                  
+Property: Trader_Name           Mode: Normal                  
+Property: Host_Name             Mode: Mandatory               
+Property: Description           Mode: Normal                  
+Property: Location              Mode: Mandatory               
+Property: Name                  Mode: Mandatory and Readonly  
+------------------------------
+Type Name: Plotter
+Interface Name: IDL:TAO_Trader_Test/Plotter:1.0
+Super Type: Remote_IO
+Property: File_Sizes_Pending    Mode: Normal                  
+Property: User_Queue            Mode: Normal                  
+Property: Model_Number          Mode: Read only               
+Property: Cost_Per_Page         Mode: Normal                  
+Property: Auto_Loading          Mode: Read only               
+Property: Num_Colors            Mode: Normal                  
+------------------------------
+Type Name: Printer
+Interface Name: IDL:TAO_Trader_Test/Printer:1.0
+Super Type: Remote_IO
+Property: File_Sizes_Pending    Mode: Normal                  
+Property: User_Queue            Mode: Normal                  
+Property: Pages_Per_Sec         Mode: Read only               
+Property: Model_Number          Mode: Read only               
+Property: Cost_Per_Page         Mode: Normal                  
+Property: Double_Sided          Mode: Read only               
+Property: Color                 Mode: Mandatory and Readonly  
+------------------------------
+Type Name: File_System
+Interface Name: IDL:TAO_Trader_Test/File_System:1.0
+Super Type: Remote_IO
+Property: Permission_Level      Mode: Normal                  
+Property: Space_Remaining       Mode: Normal                  
+Property: Disk_Space            Mode: Mandatory and Readonly  
+------------------------------
+Type Name: PostScript_Printer
+Interface Name: IDL:TAO_Trader_Test/PostScript_Printer:1.0
+Super Type: Printer
+Property: Version               Mode: Mandatory and Readonly  
+------------------------------
+*** TAO_Service_Type_Exporter::fully describing all types in the Repository.
+Type Name: Remote_IO
+Interface Name: IDL:TAO_Trader_Test/Remote_Output:1.0
+Property: Name                  Mode: Mandatory and Readonly  
+Property: Location              Mode: Mandatory               
+Property: Description           Mode: Normal                  
+Property: Host_Name             Mode: Mandatory               
+Property: Trader_Name           Mode: Normal                  
+Property: Miscellaneous         Mode: Normal                  
+------------------------------
+Type Name: Plotter
+Interface Name: IDL:TAO_Trader_Test/Plotter:1.0
+Super Type: Remote_IO
+Property: Name                  Mode: Mandatory and Readonly  
+Property: Location              Mode: Mandatory               
+Property: Description           Mode: Normal                  
+Property: Host_Name             Mode: Mandatory               
+Property: Trader_Name           Mode: Normal                  
+Property: Miscellaneous         Mode: Normal                  
+Property: Num_Colors            Mode: Normal                  
+Property: Auto_Loading          Mode: Read only               
+Property: Cost_Per_Page         Mode: Normal                  
+Property: Model_Number          Mode: Read only               
+Property: User_Queue            Mode: Normal                  
+Property: File_Sizes_Pending    Mode: Normal                  
+------------------------------
+Type Name: Printer
+Interface Name: IDL:TAO_Trader_Test/Printer:1.0
+Super Type: Remote_IO
+Property: Name                  Mode: Mandatory and Readonly  
+Property: Location              Mode: Mandatory               
+Property: Description           Mode: Normal                  
+Property: Host_Name             Mode: Mandatory               
+Property: Trader_Name           Mode: Normal                  
+Property: Miscellaneous         Mode: Normal                  
+Property: Color                 Mode: Mandatory and Readonly  
+Property: Double_Sided          Mode: Read only               
+Property: Cost_Per_Page         Mode: Normal                  
+Property: Model_Number          Mode: Read only               
+Property: Pages_Per_Sec         Mode: Read only               
+Property: User_Queue            Mode: Normal                  
+Property: File_Sizes_Pending    Mode: Normal                  
+------------------------------
+Type Name: File_System
+Interface Name: IDL:TAO_Trader_Test/File_System:1.0
+Super Type: Remote_IO
+Property: Name                  Mode: Mandatory and Readonly  
+Property: Location              Mode: Mandatory               
+Property: Description           Mode: Normal                  
+Property: Host_Name             Mode: Mandatory               
+Property: Trader_Name           Mode: Normal                  
+Property: Miscellaneous         Mode: Normal                  
+Property: Disk_Space            Mode: Mandatory and Readonly  
+Property: Space_Remaining       Mode: Normal                  
+Property: Permission_Level      Mode: Normal                  
+------------------------------
+Type Name: PostScript_Printer
+Interface Name: IDL:TAO_Trader_Test/PostScript_Printer:1.0
+Super Type: Remote_IO
+Super Type: Printer
+Property: Name                  Mode: Mandatory and Readonly  
+Property: Location              Mode: Mandatory               
+Property: Description           Mode: Normal                  
+Property: Host_Name             Mode: Mandatory               
+Property: Trader_Name           Mode: Normal                  
+Property: Miscellaneous         Mode: Normal                  
+Property: Color                 Mode: Mandatory and Readonly  
+Property: Double_Sided          Mode: Read only               
+Property: Cost_Per_Page         Mode: Normal                  
+Property: Model_Number          Mode: Read only               
+Property: Pages_Per_Sec         Mode: Read only               
+Property: User_Queue            Mode: Normal                  
+Property: File_Sizes_Pending    Mode: Normal                  
+Property: Version               Mode: Mandatory and Readonly  
+------------------------------
+*** Service Type Exporter tests complete.
+*** Running the Offer Exporter tests.
+*** TAO_Offer_Exporter::Withdrawing all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+*** TAO_Offer_Exporter::Exporting offers.
+Registered offer id: 0000000000000001Plotter.
+Registered offer id: 0000000000000001Printer.
+Registered offer id: 0000000000000001File_System.
+Registered offer id: 0000000000000002Plotter.
+Registered offer id: 0000000000000002Printer.
+Registered offer id: 0000000000000002File_System.
+Registered offer id: 0000000000000003Plotter.
+Registered offer id: 0000000000000003Printer.
+Registered offer id: 0000000000000003File_System.
+Registered offer id: 0000000000000004Plotter.
+Registered offer id: 0000000000000004Printer.
+Registered offer id: 0000000000000004File_System.
+Registered offer id: 0000000000000005Plotter.
+Registered offer id: 0000000000000005Printer.
+Registered offer id: 0000000000000005File_System.
+Registered offer id: 0000000000000006Plotter.
+Registered offer id: 0000000000000006Printer.
+Registered offer id: 0000000000000006File_System.
+Registered offer id: 0000000000000007Plotter.
+Registered offer id: 0000000000000007Printer.
+Registered offer id: 0000000000000007File_System.
+Registered offer id: 0000000000000008Plotter.
+Registered offer id: 0000000000000008Printer.
+Registered offer id: 0000000000000008File_System.
+Registered offer id: 0000000000000009Plotter.
+Registered offer id: 0000000000000009Printer.
+Registered offer id: 0000000000000009File_System.
+Registered offer id: 0000000000000010Plotter.
+Registered offer id: 0000000000000010Printer.
+Registered offer id: 0000000000000010File_System.
+Registered offer id: 0000000000000011Plotter.
+Registered offer id: 0000000000000011Printer.
+Registered offer id: 0000000000000011File_System.
+Registered offer id: 0000000000000012Plotter.
+Registered offer id: 0000000000000012Printer.
+Registered offer id: 0000000000000012File_System.
+Registered offer id: 0000000000000013Plotter.
+Registered offer id: 0000000000000013Printer.
+Registered offer id: 0000000000000013File_System.
+Registered offer id: 0000000000000014Plotter.
+Registered offer id: 0000000000000014Printer.
+Registered offer id: 0000000000000014File_System.
+Registered offer id: 0000000000000015Plotter.
+Registered offer id: 0000000000000015Printer.
+Registered offer id: 0000000000000015File_System.
+*** TAO_Offer_Exporter::Describing all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+Offer Id: 0000000000000001File_System
+Offer Id: 0000000000000002File_System
+Offer Id: 0000000000000003File_System
+Offer Id: 0000000000000004File_System
+Offer Id: 0000000000000005File_System
+Offer Id: 0000000000000006File_System
+Offer Id: 0000000000000007File_System
+Offer Id: 0000000000000008File_System
+Offer Id: 0000000000000009File_System
+Offer Id: 0000000000000010File_System
+Offer Id: 0000000000000011File_System
+Offer Id: 0000000000000012File_System
+Offer Id: 0000000000000013File_System
+Offer Id: 0000000000000014File_System
+Offer Id: 0000000000000015File_System
+Offer Id: 0000000000000001Printer
+Offer Id: 0000000000000002Printer
+Offer Id: 0000000000000003Printer
+Offer Id: 0000000000000004Printer
+Offer Id: 0000000000000005Printer
+Offer Id: 0000000000000006Printer
+Offer Id: 0000000000000007Printer
+Offer Id: 0000000000000008Printer
+Offer Id: 0000000000000009Printer
+Offer Id: 0000000000000010Printer
+Offer Id: 0000000000000011Printer
+Offer Id: 0000000000000012Printer
+Offer Id: 0000000000000013Printer
+Offer Id: 0000000000000014Printer
+Offer Id: 0000000000000015Printer
+Offer Id: 0000000000000001Plotter
+Offer Id: 0000000000000002Plotter
+Offer Id: 0000000000000003Plotter
+Offer Id: 0000000000000004Plotter
+Offer Id: 0000000000000005Plotter
+Offer Id: 0000000000000006Plotter
+Offer Id: 0000000000000007Plotter
+Offer Id: 0000000000000008Plotter
+Offer Id: 0000000000000009Plotter
+Offer Id: 0000000000000010Plotter
+Offer Id: 0000000000000011Plotter
+Offer Id: 0000000000000012Plotter
+Offer Id: 0000000000000013Plotter
+Offer Id: 0000000000000014Plotter
+Offer Id: 0000000000000015Plotter
+------------------------------
+Offer Id: 0000000000000001File_System
+Service Type: File_System
+Name           : String File System #0
+Location       : String Bryan 509
+Description    : String File System #0 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 0
+Permission_Level: UShort 1
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000002File_System
+Service Type: File_System
+Name           : String File System #1
+Location       : String Bryan 503
+Description    : String File System #1 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 2000000
+Permission_Level: UShort 2
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000003File_System
+Service Type: File_System
+Name           : String File System #2
+Location       : String Dunker 102
+Description    : String File System #2 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 4000000
+Permission_Level: UShort 3
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000004File_System
+Service Type: File_System
+Name           : String File System #3
+Location       : String Jolley 408
+Description    : String File System #3 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 6000000
+Permission_Level: UShort 4
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000005File_System
+Service Type: File_System
+Name           : String File System #4
+Location       : String Lopata 401
+Description    : String File System #4 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 8000000
+Permission_Level: UShort 5
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000006File_System
+Service Type: File_System
+Name           : String File System #5
+Location       : String January 110
+Description    : String File System #5 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 10000000
+Permission_Level: UShort 6
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000007File_System
+Service Type: File_System
+Name           : String File System #6
+Location       : String Cupples I 30
+Description    : String File System #6 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 12000000
+Permission_Level: UShort 7
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000008File_System
+Service Type: File_System
+Name           : String File System #7
+Location       : String Cupples II 201
+Description    : String File System #7 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 14000000
+Permission_Level: UShort 8
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000009File_System
+Service Type: File_System
+Name           : String File System #8
+Location       : String Urbauer 321
+Description    : String File System #8 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 16000000
+Permission_Level: UShort 9
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000010File_System
+Service Type: File_System
+Name           : String File System #9
+Location       : String Umrath 302
+Description    : String File System #9 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 18000000
+Permission_Level: UShort 10
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000011File_System
+Service Type: File_System
+Name           : String File System #10
+Location       : String Wilson 110
+Description    : String File System #10 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 20000000
+Permission_Level: UShort 11
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000012File_System
+Service Type: File_System
+Name           : String File System #11
+Location       : String Olin 239
+Description    : String File System #11 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 22000000
+Permission_Level: UShort 12
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000013File_System
+Service Type: File_System
+Name           : String File System #12
+Location       : String Simon 238
+Description    : String File System #12 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 24000000
+Permission_Level: UShort 13
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000014File_System
+Service Type: File_System
+Name           : String File System #13
+Location       : String Rebstock 232
+Description    : String File System #13 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 26000000
+Permission_Level: UShort 14
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000015File_System
+Service Type: File_System
+Name           : String File System #14
+Location       : String McMillan 123
+Description    : String File System #14 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 28000000
+Permission_Level: UShort 15
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000001Printer
+Service Type: Printer
+Name           : String Printer #0
+Location       : String Bryan 509
+Description    : String Printer #0 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+Pages_Per_Sec  : UShort 0
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000002Printer
+Service Type: Printer
+Name           : String Printer #1
+Location       : String Bryan 503
+Description    : String Printer #1 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+Pages_Per_Sec  : UShort 1
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000003Printer
+Service Type: Printer
+Name           : String Printer #2
+Location       : String Dunker 102
+Description    : String Printer #2 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+Pages_Per_Sec  : UShort 2
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000004Printer
+Service Type: Printer
+Name           : String Printer #3
+Location       : String Jolley 408
+Description    : String Printer #3 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+Pages_Per_Sec  : UShort 3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000005Printer
+Service Type: Printer
+Name           : String Printer #4
+Location       : String Lopata 401
+Description    : String Printer #4 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+Pages_Per_Sec  : UShort 4
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000006Printer
+Service Type: Printer
+Name           : String Printer #5
+Location       : String January 110
+Description    : String Printer #5 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+Pages_Per_Sec  : UShort 5
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000007Printer
+Service Type: Printer
+Name           : String Printer #6
+Location       : String Cupples I 30
+Description    : String Printer #6 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+Pages_Per_Sec  : UShort 6
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000008Printer
+Service Type: Printer
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000009Printer
+Service Type: Printer
+Name           : String Printer #8
+Location       : String Urbauer 321
+Description    : String Printer #8 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+Pages_Per_Sec  : UShort 8
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000010Printer
+Service Type: Printer
+Name           : String Printer #9
+Location       : String Umrath 302
+Description    : String Printer #9 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+Pages_Per_Sec  : UShort 9
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000011Printer
+Service Type: Printer
+Name           : String Printer #10
+Location       : String Wilson 110
+Description    : String Printer #10 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+Pages_Per_Sec  : UShort 10
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000012Printer
+Service Type: Printer
+Name           : String Printer #11
+Location       : String Olin 239
+Description    : String Printer #11 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000013Printer
+Service Type: Printer
+Name           : String Printer #12
+Location       : String Simon 238
+Description    : String Printer #12 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+Pages_Per_Sec  : UShort 12
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000014Printer
+Service Type: Printer
+Name           : String Printer #13
+Location       : String Rebstock 232
+Description    : String Printer #13 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+Pages_Per_Sec  : UShort 13
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000015Printer
+Service Type: Printer
+Name           : String Printer #14
+Location       : String McMillan 123
+Description    : String Printer #14 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+Pages_Per_Sec  : UShort 14
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000001Plotter
+Service Type: Plotter
+Name           : String Plotter #0
+Location       : String Bryan 509
+Description    : String Plotter #0 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 0
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000002Plotter
+Service Type: Plotter
+Name           : String Plotter #1
+Location       : String Bryan 503
+Description    : String Plotter #1 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 2
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000003Plotter
+Service Type: Plotter
+Name           : String Plotter #2
+Location       : String Dunker 102
+Description    : String Plotter #2 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 4
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000004Plotter
+Service Type: Plotter
+Name           : String Plotter #3
+Location       : String Jolley 408
+Description    : String Plotter #3 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 6
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000005Plotter
+Service Type: Plotter
+Name           : String Plotter #4
+Location       : String Lopata 401
+Description    : String Plotter #4 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 8
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000006Plotter
+Service Type: Plotter
+Name           : String Plotter #5
+Location       : String January 110
+Description    : String Plotter #5 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 10
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000007Plotter
+Service Type: Plotter
+Name           : String Plotter #6
+Location       : String Cupples I 30
+Description    : String Plotter #6 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 12
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000008Plotter
+Service Type: Plotter
+Name           : String Plotter #7
+Location       : String Cupples II 201
+Description    : String Plotter #7 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000009Plotter
+Service Type: Plotter
+Name           : String Plotter #8
+Location       : String Urbauer 321
+Description    : String Plotter #8 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 16
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000010Plotter
+Service Type: Plotter
+Name           : String Plotter #9
+Location       : String Umrath 302
+Description    : String Plotter #9 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 18
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000011Plotter
+Service Type: Plotter
+Name           : String Plotter #10
+Location       : String Wilson 110
+Description    : String Plotter #10 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 20
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000012Plotter
+Service Type: Plotter
+Name           : String Plotter #11
+Location       : String Olin 239
+Description    : String Plotter #11 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 22
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000013Plotter
+Service Type: Plotter
+Name           : String Plotter #12
+Location       : String Simon 238
+Description    : String Plotter #12 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 24
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000014Plotter
+Service Type: Plotter
+Name           : String Plotter #13
+Location       : String Rebstock 232
+Description    : String Plotter #13 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 26
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000015Plotter
+Service Type: Plotter
+Name           : String Plotter #14
+Location       : String McMillan 123
+Description    : String Plotter #14 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 28
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+*** TAO_Offer_Exporter::Modifying all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+Offer Id: 0000000000000001File_System
+Offer Id: 0000000000000002File_System
+Offer Id: 0000000000000003File_System
+Offer Id: 0000000000000004File_System
+Offer Id: 0000000000000005File_System
+Offer Id: 0000000000000006File_System
+Offer Id: 0000000000000007File_System
+Offer Id: 0000000000000008File_System
+Offer Id: 0000000000000009File_System
+Offer Id: 0000000000000010File_System
+Offer Id: 0000000000000011File_System
+Offer Id: 0000000000000012File_System
+Offer Id: 0000000000000013File_System
+Offer Id: 0000000000000014File_System
+Offer Id: 0000000000000015File_System
+Offer Id: 0000000000000001Printer
+Offer Id: 0000000000000002Printer
+Offer Id: 0000000000000003Printer
+Offer Id: 0000000000000004Printer
+Offer Id: 0000000000000005Printer
+Offer Id: 0000000000000006Printer
+Offer Id: 0000000000000007Printer
+Offer Id: 0000000000000008Printer
+Offer Id: 0000000000000009Printer
+Offer Id: 0000000000000010Printer
+Offer Id: 0000000000000011Printer
+Offer Id: 0000000000000012Printer
+Offer Id: 0000000000000013Printer
+Offer Id: 0000000000000014Printer
+Offer Id: 0000000000000015Printer
+Offer Id: 0000000000000001Plotter
+Offer Id: 0000000000000002Plotter
+Offer Id: 0000000000000003Plotter
+Offer Id: 0000000000000004Plotter
+Offer Id: 0000000000000005Plotter
+Offer Id: 0000000000000006Plotter
+Offer Id: 0000000000000007Plotter
+Offer Id: 0000000000000008Plotter
+Offer Id: 0000000000000009Plotter
+Offer Id: 0000000000000010Plotter
+Offer Id: 0000000000000011Plotter
+Offer Id: 0000000000000012Plotter
+Offer Id: 0000000000000013Plotter
+Offer Id: 0000000000000014Plotter
+Offer Id: 0000000000000015Plotter
+*** TAO_Offer_Exporter::Describing all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+Offer Id: 0000000000000001File_System
+Offer Id: 0000000000000002File_System
+Offer Id: 0000000000000003File_System
+Offer Id: 0000000000000004File_System
+Offer Id: 0000000000000005File_System
+Offer Id: 0000000000000006File_System
+Offer Id: 0000000000000007File_System
+Offer Id: 0000000000000008File_System
+Offer Id: 0000000000000009File_System
+Offer Id: 0000000000000010File_System
+Offer Id: 0000000000000011File_System
+Offer Id: 0000000000000012File_System
+Offer Id: 0000000000000013File_System
+Offer Id: 0000000000000014File_System
+Offer Id: 0000000000000015File_System
+Offer Id: 0000000000000001Printer
+Offer Id: 0000000000000002Printer
+Offer Id: 0000000000000003Printer
+Offer Id: 0000000000000004Printer
+Offer Id: 0000000000000005Printer
+Offer Id: 0000000000000006Printer
+Offer Id: 0000000000000007Printer
+Offer Id: 0000000000000008Printer
+Offer Id: 0000000000000009Printer
+Offer Id: 0000000000000010Printer
+Offer Id: 0000000000000011Printer
+Offer Id: 0000000000000012Printer
+Offer Id: 0000000000000013Printer
+Offer Id: 0000000000000014Printer
+Offer Id: 0000000000000015Printer
+Offer Id: 0000000000000001Plotter
+Offer Id: 0000000000000002Plotter
+Offer Id: 0000000000000003Plotter
+Offer Id: 0000000000000004Plotter
+Offer Id: 0000000000000005Plotter
+Offer Id: 0000000000000006Plotter
+Offer Id: 0000000000000007Plotter
+Offer Id: 0000000000000008Plotter
+Offer Id: 0000000000000009Plotter
+Offer Id: 0000000000000010Plotter
+Offer Id: 0000000000000011Plotter
+Offer Id: 0000000000000012Plotter
+Offer Id: 0000000000000013Plotter
+Offer Id: 0000000000000014Plotter
+Offer Id: 0000000000000015Plotter
+------------------------------
+Offer Id: 0000000000000001File_System
+Service Type: File_System
+Name           : String File System #0
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 0
+Permission_Level: UShort 1
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000002File_System
+Service Type: File_System
+Name           : String File System #1
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 2000000
+Permission_Level: UShort 2
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000003File_System
+Service Type: File_System
+Name           : String File System #2
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 4000000
+Permission_Level: UShort 3
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000004File_System
+Service Type: File_System
+Name           : String File System #3
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 6000000
+Permission_Level: UShort 4
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000005File_System
+Service Type: File_System
+Name           : String File System #4
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 8000000
+Permission_Level: UShort 5
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000006File_System
+Service Type: File_System
+Name           : String File System #5
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 10000000
+Permission_Level: UShort 6
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000007File_System
+Service Type: File_System
+Name           : String File System #6
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 12000000
+Permission_Level: UShort 7
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000008File_System
+Service Type: File_System
+Name           : String File System #7
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 14000000
+Permission_Level: UShort 8
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000009File_System
+Service Type: File_System
+Name           : String File System #8
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 16000000
+Permission_Level: UShort 9
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000010File_System
+Service Type: File_System
+Name           : String File System #9
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 18000000
+Permission_Level: UShort 10
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000011File_System
+Service Type: File_System
+Name           : String File System #10
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 20000000
+Permission_Level: UShort 11
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000012File_System
+Service Type: File_System
+Name           : String File System #11
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 22000000
+Permission_Level: UShort 12
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000013File_System
+Service Type: File_System
+Name           : String File System #12
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 24000000
+Permission_Level: UShort 13
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000014File_System
+Service Type: File_System
+Name           : String File System #13
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 26000000
+Permission_Level: UShort 14
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000015File_System
+Service Type: File_System
+Name           : String File System #14
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 28000000
+Permission_Level: UShort 15
+Space_Remaining: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000001Printer
+Service Type: Printer
+Name           : String Printer #0
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+Pages_Per_Sec  : UShort 0
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000002Printer
+Service Type: Printer
+Name           : String Printer #1
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+Pages_Per_Sec  : UShort 1
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000003Printer
+Service Type: Printer
+Name           : String Printer #2
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+Pages_Per_Sec  : UShort 2
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000004Printer
+Service Type: Printer
+Name           : String Printer #3
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+Pages_Per_Sec  : UShort 3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000005Printer
+Service Type: Printer
+Name           : String Printer #4
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+Pages_Per_Sec  : UShort 4
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000006Printer
+Service Type: Printer
+Name           : String Printer #5
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+Pages_Per_Sec  : UShort 5
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000007Printer
+Service Type: Printer
+Name           : String Printer #6
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+Pages_Per_Sec  : UShort 6
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000008Printer
+Service Type: Printer
+Name           : String Printer #7
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000009Printer
+Service Type: Printer
+Name           : String Printer #8
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+Pages_Per_Sec  : UShort 8
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000010Printer
+Service Type: Printer
+Name           : String Printer #9
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+Pages_Per_Sec  : UShort 9
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000011Printer
+Service Type: Printer
+Name           : String Printer #10
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+Pages_Per_Sec  : UShort 10
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000012Printer
+Service Type: Printer
+Name           : String Printer #11
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000013Printer
+Service Type: Printer
+Name           : String Printer #12
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+Pages_Per_Sec  : UShort 12
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000014Printer
+Service Type: Printer
+Name           : String Printer #13
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+Pages_Per_Sec  : UShort 13
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000015Printer
+Service Type: Printer
+Name           : String Printer #14
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+Pages_Per_Sec  : UShort 14
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000001Plotter
+Service Type: Plotter
+Name           : String Plotter #0
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 0
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000002Plotter
+Service Type: Plotter
+Name           : String Plotter #1
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 2
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000003Plotter
+Service Type: Plotter
+Name           : String Plotter #2
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 4
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000004Plotter
+Service Type: Plotter
+Name           : String Plotter #3
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 6
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000005Plotter
+Service Type: Plotter
+Name           : String Plotter #4
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 8
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000006Plotter
+Service Type: Plotter
+Name           : String Plotter #5
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 10
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000007Plotter
+Service Type: Plotter
+Name           : String Plotter #6
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 12
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000008Plotter
+Service Type: Plotter
+Name           : String Plotter #7
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000009Plotter
+Service Type: Plotter
+Name           : String Plotter #8
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 16
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000010Plotter
+Service Type: Plotter
+Name           : String Plotter #9
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 18
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000011Plotter
+Service Type: Plotter
+Name           : String Plotter #10
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 20
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000012Plotter
+Service Type: Plotter
+Name           : String Plotter #11
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 22
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000013Plotter
+Service Type: Plotter
+Name           : String Plotter #12
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 24
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000014Plotter
+Service Type: Plotter
+Name           : String Plotter #13
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 26
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+Offer Id: 0000000000000015Plotter
+Service Type: Plotter
+Name           : String Plotter #14
+Location       : String MODIFIED
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 28
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+Miscellaneous  : String MODIFIED
+------------------------------
+*** TAO_Offer_Exporter::Withdrawing with constraint.
+Constraint: (not exist Description) and (Location == 'MODIFIED') and (exist Name)
+*** TAO_Offer_Exporter::Describing all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+------------------------------
+*** TAO_Offer_Exporter::Withdrawing all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+*** TAO_Offer_Exporter::Exporting offers.
+Registered offer id: 0000000000000001Plotter.
+Registered offer id: 0000000000000001Printer.
+Registered offer id: 0000000000000001File_System.
+Registered offer id: 0000000000000002Plotter.
+Registered offer id: 0000000000000002Printer.
+Registered offer id: 0000000000000002File_System.
+Registered offer id: 0000000000000003Plotter.
+Registered offer id: 0000000000000003Printer.
+Registered offer id: 0000000000000003File_System.
+Registered offer id: 0000000000000004Plotter.
+Registered offer id: 0000000000000004Printer.
+Registered offer id: 0000000000000004File_System.
+Registered offer id: 0000000000000005Plotter.
+Registered offer id: 0000000000000005Printer.
+Registered offer id: 0000000000000005File_System.
+Registered offer id: 0000000000000006Plotter.
+Registered offer id: 0000000000000006Printer.
+Registered offer id: 0000000000000006File_System.
+Registered offer id: 0000000000000007Plotter.
+Registered offer id: 0000000000000007Printer.
+Registered offer id: 0000000000000007File_System.
+Registered offer id: 0000000000000008Plotter.
+Registered offer id: 0000000000000008Printer.
+Registered offer id: 0000000000000008File_System.
+Registered offer id: 0000000000000009Plotter.
+Registered offer id: 0000000000000009Printer.
+Registered offer id: 0000000000000009File_System.
+Registered offer id: 0000000000000010Plotter.
+Registered offer id: 0000000000000010Printer.
+Registered offer id: 0000000000000010File_System.
+Registered offer id: 0000000000000011Plotter.
+Registered offer id: 0000000000000011Printer.
+Registered offer id: 0000000000000011File_System.
+Registered offer id: 0000000000000012Plotter.
+Registered offer id: 0000000000000012Printer.
+Registered offer id: 0000000000000012File_System.
+Registered offer id: 0000000000000013Plotter.
+Registered offer id: 0000000000000013Printer.
+Registered offer id: 0000000000000013File_System.
+Registered offer id: 0000000000000014Plotter.
+Registered offer id: 0000000000000014Printer.
+Registered offer id: 0000000000000014File_System.
+Registered offer id: 0000000000000015Plotter.
+Registered offer id: 0000000000000015Printer.
+Registered offer id: 0000000000000015File_System.
+*** TAO_Offer_Exporter::Describing all offers.
+TAO_Offer_Exporter::Grabbing all offer ids.
+The following offer ids are registered:
+Offer Id: 0000000000000001File_System
+Offer Id: 0000000000000002File_System
+Offer Id: 0000000000000003File_System
+Offer Id: 0000000000000004File_System
+Offer Id: 0000000000000005File_System
+Offer Id: 0000000000000006File_System
+Offer Id: 0000000000000007File_System
+Offer Id: 0000000000000008File_System
+Offer Id: 0000000000000009File_System
+Offer Id: 0000000000000010File_System
+Offer Id: 0000000000000011File_System
+Offer Id: 0000000000000012File_System
+Offer Id: 0000000000000013File_System
+Offer Id: 0000000000000014File_System
+Offer Id: 0000000000000015File_System
+Offer Id: 0000000000000001Printer
+Offer Id: 0000000000000002Printer
+Offer Id: 0000000000000003Printer
+Offer Id: 0000000000000004Printer
+Offer Id: 0000000000000005Printer
+Offer Id: 0000000000000006Printer
+Offer Id: 0000000000000007Printer
+Offer Id: 0000000000000008Printer
+Offer Id: 0000000000000009Printer
+Offer Id: 0000000000000010Printer
+Offer Id: 0000000000000011Printer
+Offer Id: 0000000000000012Printer
+Offer Id: 0000000000000013Printer
+Offer Id: 0000000000000014Printer
+Offer Id: 0000000000000015Printer
+Offer Id: 0000000000000001Plotter
+Offer Id: 0000000000000002Plotter
+Offer Id: 0000000000000003Plotter
+Offer Id: 0000000000000004Plotter
+Offer Id: 0000000000000005Plotter
+Offer Id: 0000000000000006Plotter
+Offer Id: 0000000000000007Plotter
+Offer Id: 0000000000000008Plotter
+Offer Id: 0000000000000009Plotter
+Offer Id: 0000000000000010Plotter
+Offer Id: 0000000000000011Plotter
+Offer Id: 0000000000000012Plotter
+Offer Id: 0000000000000013Plotter
+Offer Id: 0000000000000014Plotter
+Offer Id: 0000000000000015Plotter
+------------------------------
+Offer Id: 0000000000000001File_System
+Service Type: File_System
+Name           : String File System #0
+Location       : String Bryan 509
+Description    : String File System #0 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 0
+Permission_Level: UShort 1
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000002File_System
+Service Type: File_System
+Name           : String File System #1
+Location       : String Bryan 503
+Description    : String File System #1 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 2000000
+Permission_Level: UShort 2
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000003File_System
+Service Type: File_System
+Name           : String File System #2
+Location       : String Dunker 102
+Description    : String File System #2 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 4000000
+Permission_Level: UShort 3
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000004File_System
+Service Type: File_System
+Name           : String File System #3
+Location       : String Jolley 408
+Description    : String File System #3 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 6000000
+Permission_Level: UShort 4
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000005File_System
+Service Type: File_System
+Name           : String File System #4
+Location       : String Lopata 401
+Description    : String File System #4 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 8000000
+Permission_Level: UShort 5
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000006File_System
+Service Type: File_System
+Name           : String File System #5
+Location       : String January 110
+Description    : String File System #5 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 10000000
+Permission_Level: UShort 6
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000007File_System
+Service Type: File_System
+Name           : String File System #6
+Location       : String Cupples I 30
+Description    : String File System #6 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 12000000
+Permission_Level: UShort 7
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000008File_System
+Service Type: File_System
+Name           : String File System #7
+Location       : String Cupples II 201
+Description    : String File System #7 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 14000000
+Permission_Level: UShort 8
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000009File_System
+Service Type: File_System
+Name           : String File System #8
+Location       : String Urbauer 321
+Description    : String File System #8 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 16000000
+Permission_Level: UShort 9
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000010File_System
+Service Type: File_System
+Name           : String File System #9
+Location       : String Umrath 302
+Description    : String File System #9 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 18000000
+Permission_Level: UShort 10
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000011File_System
+Service Type: File_System
+Name           : String File System #10
+Location       : String Wilson 110
+Description    : String File System #10 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 20000000
+Permission_Level: UShort 11
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000012File_System
+Service Type: File_System
+Name           : String File System #11
+Location       : String Olin 239
+Description    : String File System #11 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 22000000
+Permission_Level: UShort 12
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000013File_System
+Service Type: File_System
+Name           : String File System #12
+Location       : String Simon 238
+Description    : String File System #12 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 24000000
+Permission_Level: UShort 13
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000014File_System
+Service Type: File_System
+Name           : String File System #13
+Location       : String Rebstock 232
+Description    : String File System #13 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 26000000
+Permission_Level: UShort 14
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000015File_System
+Service Type: File_System
+Name           : String File System #14
+Location       : String McMillan 123
+Description    : String File System #14 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 28000000
+Permission_Level: UShort 15
+Space_Remaining: Dynamic Property
+------------------------------
+Offer Id: 0000000000000001Printer
+Service Type: Printer
+Name           : String Printer #0
+Location       : String Bryan 509
+Description    : String Printer #0 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+Pages_Per_Sec  : UShort 0
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000002Printer
+Service Type: Printer
+Name           : String Printer #1
+Location       : String Bryan 503
+Description    : String Printer #1 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+Pages_Per_Sec  : UShort 1
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000003Printer
+Service Type: Printer
+Name           : String Printer #2
+Location       : String Dunker 102
+Description    : String Printer #2 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+Pages_Per_Sec  : UShort 2
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000004Printer
+Service Type: Printer
+Name           : String Printer #3
+Location       : String Jolley 408
+Description    : String Printer #3 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+Pages_Per_Sec  : UShort 3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000005Printer
+Service Type: Printer
+Name           : String Printer #4
+Location       : String Lopata 401
+Description    : String Printer #4 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+Pages_Per_Sec  : UShort 4
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000006Printer
+Service Type: Printer
+Name           : String Printer #5
+Location       : String January 110
+Description    : String Printer #5 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+Pages_Per_Sec  : UShort 5
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000007Printer
+Service Type: Printer
+Name           : String Printer #6
+Location       : String Cupples I 30
+Description    : String Printer #6 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+Pages_Per_Sec  : UShort 6
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000008Printer
+Service Type: Printer
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000009Printer
+Service Type: Printer
+Name           : String Printer #8
+Location       : String Urbauer 321
+Description    : String Printer #8 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+Pages_Per_Sec  : UShort 8
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000010Printer
+Service Type: Printer
+Name           : String Printer #9
+Location       : String Umrath 302
+Description    : String Printer #9 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+Pages_Per_Sec  : UShort 9
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000011Printer
+Service Type: Printer
+Name           : String Printer #10
+Location       : String Wilson 110
+Description    : String Printer #10 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+Pages_Per_Sec  : UShort 10
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000012Printer
+Service Type: Printer
+Name           : String Printer #11
+Location       : String Olin 239
+Description    : String Printer #11 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000013Printer
+Service Type: Printer
+Name           : String Printer #12
+Location       : String Simon 238
+Description    : String Printer #12 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+Pages_Per_Sec  : UShort 12
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000014Printer
+Service Type: Printer
+Name           : String Printer #13
+Location       : String Rebstock 232
+Description    : String Printer #13 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+Pages_Per_Sec  : UShort 13
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000015Printer
+Service Type: Printer
+Name           : String Printer #14
+Location       : String McMillan 123
+Description    : String Printer #14 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+Pages_Per_Sec  : UShort 14
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000001Plotter
+Service Type: Plotter
+Name           : String Plotter #0
+Location       : String Bryan 509
+Description    : String Plotter #0 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 0
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000002Plotter
+Service Type: Plotter
+Name           : String Plotter #1
+Location       : String Bryan 503
+Description    : String Plotter #1 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 2
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000003Plotter
+Service Type: Plotter
+Name           : String Plotter #2
+Location       : String Dunker 102
+Description    : String Plotter #2 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 4
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000004Plotter
+Service Type: Plotter
+Name           : String Plotter #3
+Location       : String Jolley 408
+Description    : String Plotter #3 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 6
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000005Plotter
+Service Type: Plotter
+Name           : String Plotter #4
+Location       : String Lopata 401
+Description    : String Plotter #4 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 8
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000006Plotter
+Service Type: Plotter
+Name           : String Plotter #5
+Location       : String January 110
+Description    : String Plotter #5 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 10
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000007Plotter
+Service Type: Plotter
+Name           : String Plotter #6
+Location       : String Cupples I 30
+Description    : String Plotter #6 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 12
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000008Plotter
+Service Type: Plotter
+Name           : String Plotter #7
+Location       : String Cupples II 201
+Description    : String Plotter #7 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000009Plotter
+Service Type: Plotter
+Name           : String Plotter #8
+Location       : String Urbauer 321
+Description    : String Plotter #8 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 16
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000010Plotter
+Service Type: Plotter
+Name           : String Plotter #9
+Location       : String Umrath 302
+Description    : String Plotter #9 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 18
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000011Plotter
+Service Type: Plotter
+Name           : String Plotter #10
+Location       : String Wilson 110
+Description    : String Plotter #10 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 20
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000012Plotter
+Service Type: Plotter
+Name           : String Plotter #11
+Location       : String Olin 239
+Description    : String Plotter #11 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 22
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000013Plotter
+Service Type: Plotter
+Name           : String Plotter #12
+Location       : String Simon 238
+Description    : String Plotter #12 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 24
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000014Plotter
+Service Type: Plotter
+Name           : String Plotter #13
+Location       : String Rebstock 232
+Description    : String Plotter #13 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 26
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+Offer Id: 0000000000000015Plotter
+Service Type: Plotter
+Name           : String Plotter #14
+Location       : String McMillan 123
+Description    : String Plotter #14 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 28
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+User_Queue     : Dynamic Property
+File_Sizes_Pending: Dynamic Property
+------------------------------
+*** Offer Exporter tests complete.
+*** Now serving dynamic properties.
+
+> import_test
+
+Bootstrap to the Lookup interface.
+Narrowing the lookup interface.
+Running the Offer Importer tests.
+*** TAO_Offer_Importer::Federated Query.
+
+*** Performing query for Remote_IO.
+*** Query: 
+*** Preferences: 
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String File System #0
+Location       : String Bryan 509
+Description    : String File System #0 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 0
+Permission_Level: UShort 1
+Space_Remaining: ULong 0
+------------------------------
+Name           : String File System #1
+Location       : String Bryan 503
+Description    : String File System #1 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 2000000
+Permission_Level: UShort 2
+Space_Remaining: ULong 4434343
+------------------------------
+Name           : String File System #2
+Location       : String Dunker 102
+Description    : String File System #2 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 4000000
+Permission_Level: UShort 3
+Space_Remaining: ULong 8868686
+------------------------------
+Name           : String File System #3
+Location       : String Jolley 408
+Description    : String File System #3 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 6000000
+Permission_Level: UShort 4
+Space_Remaining: ULong 13303029
+------------------------------
+Name           : String File System #4
+Location       : String Lopata 401
+Description    : String File System #4 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 8000000
+Permission_Level: UShort 5
+Space_Remaining: ULong 17737372
+------------------------------
+Name           : String File System #5
+Location       : String January 110
+Description    : String File System #5 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 10000000
+Permission_Level: UShort 6
+Space_Remaining: ULong 22171715
+------------------------------
+Name           : String File System #6
+Location       : String Cupples I 30
+Description    : String File System #6 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 12000000
+Permission_Level: UShort 7
+Space_Remaining: ULong 26606058
+------------------------------
+Name           : String File System #7
+Location       : String Cupples II 201
+Description    : String File System #7 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 14000000
+Permission_Level: UShort 8
+Space_Remaining: ULong 31040401
+------------------------------
+  Offers in the iterator:
+------------------------------
+Name           : String File System #8
+Location       : String Urbauer 321
+Description    : String File System #8 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 16000000
+Permission_Level: UShort 9
+Space_Remaining: ULong 35474744
+------------------------------
+Name           : String File System #9
+Location       : String Umrath 302
+Description    : String File System #9 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 18000000
+Permission_Level: UShort 10
+Space_Remaining: ULong 39909087
+------------------------------
+Name           : String File System #10
+Location       : String Wilson 110
+Description    : String File System #10 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 20000000
+Permission_Level: UShort 11
+Space_Remaining: ULong 44343430
+------------------------------
+Name           : String File System #11
+Location       : String Olin 239
+Description    : String File System #11 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 22000000
+Permission_Level: UShort 12
+Space_Remaining: ULong 48777773
+------------------------------
+Name           : String File System #12
+Location       : String Simon 238
+Description    : String File System #12 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 24000000
+Permission_Level: UShort 13
+Space_Remaining: ULong 53212116
+------------------------------
+Name           : String File System #13
+Location       : String Rebstock 232
+Description    : String File System #13 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 26000000
+Permission_Level: UShort 14
+Space_Remaining: ULong 57646459
+------------------------------
+Name           : String File System #14
+Location       : String McMillan 123
+Description    : String File System #14 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 28000000
+Permission_Level: UShort 15
+Space_Remaining: ULong 62080802
+------------------------------
+Name           : String Printer #0
+Location       : String Bryan 509
+Description    : String Printer #0 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+Pages_Per_Sec  : UShort 0
+User_Queue     : sbw1 schmidt naga alex 
+File_Sizes_Pending: 0 10000 20000 30000 
+------------------------------
+Name           : String Printer #1
+Location       : String Bryan 503
+Description    : String Printer #1 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+Pages_Per_Sec  : UShort 1
+User_Queue     : mk1 marina sumedh sergio 
+File_Sizes_Pending: 40000 50000 60000 70000 
+------------------------------
+Name           : String Printer #2
+Location       : String Dunker 102
+Description    : String Printer #2 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+Pages_Per_Sec  : UShort 2
+User_Queue     : coryan cdgill levine jxh 
+File_Sizes_Pending: 80000 90000 100000 110000 
+------------------------------
+Name           : String Printer #3
+Location       : String Jolley 408
+Description    : String Printer #3 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+Pages_Per_Sec  : UShort 3
+User_Queue     : irfan nanbor eea1 sbw1 
+File_Sizes_Pending: 120000 130000 140000 0 
+------------------------------
+Name           : String Printer #4
+Location       : String Lopata 401
+Description    : String Printer #4 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+Pages_Per_Sec  : UShort 4
+User_Queue     : schmidt naga alex mk1 
+File_Sizes_Pending: 10000 20000 30000 40000 
+------------------------------
+Name           : String Printer #5
+Location       : String January 110
+Description    : String Printer #5 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+Pages_Per_Sec  : UShort 5
+User_Queue     : marina sumedh sergio coryan 
+File_Sizes_Pending: 50000 60000 70000 80000 
+------------------------------
+Name           : String Printer #6
+Location       : String Cupples I 30
+Description    : String Printer #6 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+Pages_Per_Sec  : UShort 6
+User_Queue     : cdgill levine jxh irfan 
+File_Sizes_Pending: 90000 100000 110000 120000 
+------------------------------
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+Name           : String Printer #8
+Location       : String Urbauer 321
+Description    : String Printer #8 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+Pages_Per_Sec  : UShort 8
+User_Queue     : naga alex mk1 marina 
+File_Sizes_Pending: 20000 30000 40000 50000 
+------------------------------
+Name           : String Printer #9
+Location       : String Umrath 302
+Description    : String Printer #9 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+Pages_Per_Sec  : UShort 9
+User_Queue     : sumedh sergio coryan cdgill 
+File_Sizes_Pending: 60000 70000 80000 90000 
+------------------------------
+Name           : String Printer #10
+Location       : String Wilson 110
+Description    : String Printer #10 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+Pages_Per_Sec  : UShort 10
+User_Queue     : levine jxh irfan nanbor 
+File_Sizes_Pending: 100000 110000 120000 130000 
+------------------------------
+Name           : String Printer #11
+Location       : String Olin 239
+Description    : String Printer #11 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : eea1 sbw1 schmidt naga 
+File_Sizes_Pending: 140000 0 10000 20000 
+------------------------------
+Name           : String Printer #12
+Location       : String Simon 238
+Description    : String Printer #12 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+Pages_Per_Sec  : UShort 12
+User_Queue     : alex mk1 marina sumedh 
+File_Sizes_Pending: 30000 40000 50000 60000 
+------------------------------
+Name           : String Printer #13
+Location       : String Rebstock 232
+Description    : String Printer #13 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+Pages_Per_Sec  : UShort 13
+User_Queue     : sergio coryan cdgill levine 
+File_Sizes_Pending: 70000 80000 90000 100000 
+------------------------------
+Name           : String Printer #14
+Location       : String McMillan 123
+Description    : String Printer #14 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+Pages_Per_Sec  : UShort 14
+User_Queue     : jxh irfan nanbor eea1 
+File_Sizes_Pending: 110000 120000 130000 140000 
+------------------------------
+Name           : String Plotter #0
+Location       : String Bryan 509
+Description    : String Plotter #0 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 0
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+User_Queue     : sbw1 schmidt naga alex 
+File_Sizes_Pending: 0 10000 20000 30000 
+------------------------------
+Name           : String Plotter #1
+Location       : String Bryan 503
+Description    : String Plotter #1 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 2
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+User_Queue     : mk1 marina sumedh sergio 
+File_Sizes_Pending: 40000 50000 60000 70000 
+------------------------------
+Name           : String Plotter #2
+Location       : String Dunker 102
+Description    : String Plotter #2 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 4
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+User_Queue     : coryan cdgill levine jxh 
+File_Sizes_Pending: 80000 90000 100000 110000 
+------------------------------
+Name           : String Plotter #3
+Location       : String Jolley 408
+Description    : String Plotter #3 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 6
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+User_Queue     : irfan nanbor eea1 sbw1 
+File_Sizes_Pending: 120000 130000 140000 0 
+------------------------------
+Name           : String Plotter #4
+Location       : String Lopata 401
+Description    : String Plotter #4 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 8
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+User_Queue     : schmidt naga alex mk1 
+File_Sizes_Pending: 10000 20000 30000 40000 
+------------------------------
+Name           : String Plotter #5
+Location       : String January 110
+Description    : String Plotter #5 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 10
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+User_Queue     : marina sumedh sergio coryan 
+File_Sizes_Pending: 50000 60000 70000 80000 
+------------------------------
+Name           : String Plotter #6
+Location       : String Cupples I 30
+Description    : String Plotter #6 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 12
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+User_Queue     : cdgill levine jxh irfan 
+File_Sizes_Pending: 90000 100000 110000 120000 
+------------------------------
+Name           : String Plotter #7
+Location       : String Cupples II 201
+Description    : String Plotter #7 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+Name           : String Plotter #8
+Location       : String Urbauer 321
+Description    : String Plotter #8 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 16
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+User_Queue     : naga alex mk1 marina 
+File_Sizes_Pending: 20000 30000 40000 50000 
+------------------------------
+Name           : String Plotter #9
+Location       : String Umrath 302
+Description    : String Plotter #9 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 18
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+User_Queue     : sumedh sergio coryan cdgill 
+File_Sizes_Pending: 60000 70000 80000 90000 
+------------------------------
+Name           : String Plotter #10
+Location       : String Wilson 110
+Description    : String Plotter #10 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 20
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+User_Queue     : levine jxh irfan nanbor 
+File_Sizes_Pending: 100000 110000 120000 130000 
+------------------------------
+Name           : String Plotter #11
+Location       : String Olin 239
+Description    : String Plotter #11 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 22
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+User_Queue     : eea1 sbw1 schmidt naga 
+File_Sizes_Pending: 140000 0 10000 20000 
+------------------------------
+Name           : String Plotter #12
+Location       : String Simon 238
+Description    : String Plotter #12 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 24
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+User_Queue     : alex mk1 marina sumedh 
+File_Sizes_Pending: 30000 40000 50000 60000 
+------------------------------
+Name           : String Plotter #13
+Location       : String Rebstock 232
+Description    : String Plotter #13 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 26
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+User_Queue     : sergio coryan cdgill levine 
+File_Sizes_Pending: 70000 80000 90000 100000 
+------------------------------
+Name           : String Plotter #14
+Location       : String McMillan 123
+Description    : String Plotter #14 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 28
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+User_Queue     : jxh irfan nanbor eea1 
+File_Sizes_Pending: 110000 120000 130000 140000 
+------------------------------
+
+*** Performing query for Remote_IO.
+*** Query: Location ~ 'Cupples'
+*** Preferences: 
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String File System #6
+Location       : String Cupples I 30
+Description    : String File System #6 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 12000000
+Permission_Level: UShort 7
+Space_Remaining: ULong 26606058
+------------------------------
+Name           : String File System #7
+Location       : String Cupples II 201
+Description    : String File System #7 is a File System. It stores stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Disk_Space     : ULong 14000000
+Permission_Level: UShort 8
+Space_Remaining: ULong 31040401
+------------------------------
+Name           : String Printer #6
+Location       : String Cupples I 30
+Description    : String Printer #6 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+Pages_Per_Sec  : UShort 6
+User_Queue     : cdgill levine jxh irfan 
+File_Sizes_Pending: 90000 100000 110000 120000 
+------------------------------
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+Name           : String Plotter #6
+Location       : String Cupples I 30
+Description    : String Plotter #6 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 12
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+User_Queue     : cdgill levine jxh irfan 
+File_Sizes_Pending: 90000 100000 110000 120000 
+------------------------------
+Name           : String Plotter #7
+Location       : String Cupples II 201
+Description    : String Plotter #7 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+  Offers in the iterator:
+------------------------------
+
+*** Performing query for Plotter.
+*** Query: 'sbw1' in User_Queue
+*** Preferences: min Cost_Per_Page
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String Plotter #0
+Location       : String Bryan 509
+Description    : String Plotter #0 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 0
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+User_Queue     : sbw1 schmidt naga alex 
+File_Sizes_Pending: 0 10000 20000 30000 
+------------------------------
+Name           : String Plotter #3
+Location       : String Jolley 408
+Description    : String Plotter #3 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 6
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+User_Queue     : irfan nanbor eea1 sbw1 
+File_Sizes_Pending: 120000 130000 140000 0 
+------------------------------
+Name           : String Plotter #7
+Location       : String Cupples II 201
+Description    : String Plotter #7 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+Name           : String Plotter #11
+Location       : String Olin 239
+Description    : String Plotter #11 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 22
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+User_Queue     : eea1 sbw1 schmidt naga 
+File_Sizes_Pending: 140000 0 10000 20000 
+------------------------------
+  Offers in the iterator:
+------------------------------
+
+*** Performing query for Plotter.
+*** Query: Num_Colors > 1 and Location ~ 'Cupples'
+*** Preferences: min Cost_Per_Page
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String Plotter #6
+Location       : String Cupples I 30
+Description    : String Plotter #6 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 12
+Auto_Loading   : Boolean FALSE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+User_Queue     : cdgill levine jxh irfan 
+File_Sizes_Pending: 90000 100000 110000 120000 
+------------------------------
+Name           : String Plotter #7
+Location       : String Cupples II 201
+Description    : String Plotter #7 is a plotter. It plots stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Num_Colors     : Long 14
+Auto_Loading   : Boolean TRUE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+  Offers in the iterator:
+------------------------------
+
+*** Performing query for Printer.
+*** Query: Pages_Per_Sec > 3 and Color == TRUE
+*** Preferences: with 'sbw1' in User_Queue
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String Printer #11
+Location       : String Olin 239
+Description    : String Printer #11 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : eea1 sbw1 schmidt naga 
+File_Sizes_Pending: 140000 0 10000 20000 
+------------------------------
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+Name           : String Printer #5
+Location       : String January 110
+Description    : String Printer #5 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+Pages_Per_Sec  : UShort 5
+User_Queue     : marina sumedh sergio coryan 
+File_Sizes_Pending: 50000 60000 70000 80000 
+------------------------------
+Name           : String Printer #9
+Location       : String Umrath 302
+Description    : String Printer #9 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+Pages_Per_Sec  : UShort 9
+User_Queue     : sumedh sergio coryan cdgill 
+File_Sizes_Pending: 60000 70000 80000 90000 
+------------------------------
+Name           : String Printer #13
+Location       : String Rebstock 232
+Description    : String Printer #13 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+Pages_Per_Sec  : UShort 13
+User_Queue     : sergio coryan cdgill levine 
+File_Sizes_Pending: 70000 80000 90000 100000 
+------------------------------
+  Offers in the iterator:
+------------------------------
+
+*** Performing query for Printer.
+*** Query: Color == TRUE or Double_Sided == TRUE
+*** Preferences: random
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String Printer #14
+Location       : String McMillan 123
+Description    : String Printer #14 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 14.000000
+Model_Number   : String 9q834jidlj234ujof
+Pages_Per_Sec  : UShort 14
+User_Queue     : jxh irfan nanbor eea1 
+File_Sizes_Pending: 110000 120000 130000 140000 
+------------------------------
+Name           : String Printer #13
+Location       : String Rebstock 232
+Description    : String Printer #13 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 13.000000
+Model_Number   : String kladfp72wu34j230f
+Pages_Per_Sec  : UShort 13
+User_Queue     : sergio coryan cdgill levine 
+File_Sizes_Pending: 70000 80000 90000 100000 
+------------------------------
+Name           : String Printer #12
+Location       : String Simon 238
+Description    : String Printer #12 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 12.000000
+Model_Number   : String asdfj0283jkdf0923
+Pages_Per_Sec  : UShort 12
+User_Queue     : alex mk1 marina sumedh 
+File_Sizes_Pending: 30000 40000 50000 60000 
+------------------------------
+Name           : String Printer #11
+Location       : String Olin 239
+Description    : String Printer #11 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : eea1 sbw1 schmidt naga 
+File_Sizes_Pending: 140000 0 10000 20000 
+------------------------------
+Name           : String Printer #10
+Location       : String Wilson 110
+Description    : String Printer #10 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 10.000000
+Model_Number   : String 09234kejdfq934jed
+Pages_Per_Sec  : UShort 10
+User_Queue     : levine jxh irfan nanbor 
+File_Sizes_Pending: 100000 110000 120000 130000 
+------------------------------
+Name           : String Printer #9
+Location       : String Umrath 302
+Description    : String Printer #9 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 9.000000
+Model_Number   : String 09a834ojfda09wu3r
+Pages_Per_Sec  : UShort 9
+User_Queue     : sumedh sergio coryan cdgill 
+File_Sizes_Pending: 60000 70000 80000 90000 
+------------------------------
+Name           : String Printer #8
+Location       : String Urbauer 321
+Description    : String Printer #8 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 8.000000
+Model_Number   : String 9p83q4jklsdj098q3
+Pages_Per_Sec  : UShort 8
+User_Queue     : naga alex mk1 marina 
+File_Sizes_Pending: 20000 30000 40000 50000 
+------------------------------
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+  Offers in the iterator:
+------------------------------
+Name           : String Printer #6
+Location       : String Cupples I 30
+Description    : String Printer #6 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 6.000000
+Model_Number   : String q834jfda09q834djk
+Pages_Per_Sec  : UShort 6
+User_Queue     : cdgill levine jxh irfan 
+File_Sizes_Pending: 90000 100000 110000 120000 
+------------------------------
+Name           : String Printer #5
+Location       : String January 110
+Description    : String Printer #5 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 5.000000
+Model_Number   : String q9834fdkjwq0934kf
+Pages_Per_Sec  : UShort 5
+User_Queue     : marina sumedh sergio coryan 
+File_Sizes_Pending: 50000 60000 70000 80000 
+------------------------------
+Name           : String Printer #4
+Location       : String Lopata 401
+Description    : String Printer #4 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 4.000000
+Model_Number   : String 09q834efjhqw834q3
+Pages_Per_Sec  : UShort 4
+User_Queue     : schmidt naga alex mk1 
+File_Sizes_Pending: 10000 20000 30000 40000 
+------------------------------
+Name           : String Printer #3
+Location       : String Jolley 408
+Description    : String Printer #3 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+Pages_Per_Sec  : UShort 3
+User_Queue     : irfan nanbor eea1 sbw1 
+File_Sizes_Pending: 120000 130000 140000 0 
+------------------------------
+Name           : String Printer #2
+Location       : String Dunker 102
+Description    : String Printer #2 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 2.000000
+Model_Number   : String 8328323n293kljs98
+Pages_Per_Sec  : UShort 2
+User_Queue     : coryan cdgill levine jxh 
+File_Sizes_Pending: 80000 90000 100000 110000 
+------------------------------
+Name           : String Printer #1
+Location       : String Bryan 503
+Description    : String Printer #1 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 1.000000
+Model_Number   : String PK92839nkse092309
+Pages_Per_Sec  : UShort 1
+User_Queue     : mk1 marina sumedh sergio 
+File_Sizes_Pending: 40000 50000 60000 70000 
+------------------------------
+Name           : String Printer #0
+Location       : String Bryan 509
+Description    : String Printer #0 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+Pages_Per_Sec  : UShort 0
+User_Queue     : sbw1 schmidt naga alex 
+File_Sizes_Pending: 0 10000 20000 30000 
+------------------------------
+
+*** Performing query for Printer.
+*** Query: (Color or Double_Sided) and 'sbw1' in User_Queue
+*** Preferences: with Location ~ 'Cupples'
+*** Results:
+
+------------------------------
+Offers in the sequence:
+------------------------------
+Name           : String Printer #7
+Location       : String Cupples II 201
+Description    : String Printer #7 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 7.000000
+Model_Number   : String kajsd09q384kjda90
+Pages_Per_Sec  : UShort 7
+User_Queue     : nanbor eea1 sbw1 schmidt 
+File_Sizes_Pending: 130000 140000 0 10000 
+------------------------------
+Name           : String Printer #0
+Location       : String Bryan 509
+Description    : String Printer #0 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean FALSE
+Double_Sided   : Boolean TRUE
+Cost_Per_Page  : Float 0.000000
+Model_Number   : String HP238293892bn2398
+Pages_Per_Sec  : UShort 0
+User_Queue     : sbw1 schmidt naga alex 
+File_Sizes_Pending: 0 10000 20000 30000 
+------------------------------
+Name           : String Printer #3
+Location       : String Jolley 408
+Description    : String Printer #3 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 3.000000
+Model_Number   : String 29309sjdkq34jksd2
+Pages_Per_Sec  : UShort 3
+User_Queue     : irfan nanbor eea1 sbw1 
+File_Sizes_Pending: 120000 130000 140000 0 
+------------------------------
+Name           : String Printer #11
+Location       : String Olin 239
+Description    : String Printer #11 is a printer. It prints stuff.
+Host_Name      : String sophocles.cimds.ri.cmu.edu
+Trader_Name    : String Default
+Color          : Boolean TRUE
+Double_Sided   : Boolean FALSE
+Cost_Per_Page  : Float 11.000000
+Model_Number   : String 0q83kjefd09384jda
+Pages_Per_Sec  : UShort 11
+User_Queue     : eea1 sbw1 schmidt naga 
+File_Sizes_Pending: 140000 0 10000 20000 
+------------------------------
+  Offers in the iterator:
+------------------------------
+

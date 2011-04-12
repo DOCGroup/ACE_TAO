@@ -1,0 +1,13 @@
+// $Id$
+
+#ifndef DEPLOYMENT_INVALIDPROPERTY_IDL
+#define DEPLOYMENT_INVALIDPROPERTY_IDL
+
+module Deployment {
+  exception InvalidProperty {
+    string name;
+    string reason;
+  };
+};
+
+#endif
