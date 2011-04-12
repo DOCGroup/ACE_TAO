@@ -1,3 +1,8 @@
+Tue Apr 12 14:12:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+          Get the reactor from the event handler
+
 Tue Apr 12 12:47:58 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:

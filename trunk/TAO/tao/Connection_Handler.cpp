@@ -239,9 +239,14 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
                                                  eh->get_handle()),
                      -1);
 
-      this->orb_core_->reactor()->schedule_timer (prhd,
-                                                  0,
-                                                  suspend_delay);
+      ACE_Reactor * reactor = eh->reactor ();
+
+      if (reactor == 0)
+        {
+          reactor = this->orb_core_->reactor();
+        }
+
+      reactor->schedule_timer (prhd, 0, suspend_delay);
 
       // Returning 0 causes the wait strategy to exit and the leader thread
       // to enter the reactor's select() call.
