@@ -80,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_Mutex mutex;
     ACE_Condition<ACE_Mutex> stop_condition (mutex);
 
-    Chatter worker2 (orb_.in (), "file://client.ior", stop_condition);
+    Chatter worker2 (orb_.in (), ACE_TEXT("file://client.ior"), stop_condition);
     if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate chatty client threads"), -1);
