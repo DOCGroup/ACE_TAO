@@ -2,7 +2,6 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl CircularDependency
 // ------------------------------
 #ifndef CIRCULARDEPENDENCY_EXPORT_H
 #define CIRCULARDEPENDENCY_EXPORT_H
@@ -54,5 +53,3 @@
 #endif /* (CIRCULARDEPENDENCY_NTRACE == 1) */
 
 #endif /* CIRCULARDEPENDENCY_EXPORT_H */
-
-// End of auto generated file.
