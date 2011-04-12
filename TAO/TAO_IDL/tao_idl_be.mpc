@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   includes    += $(TAO_ROOT)
