@@ -1,3 +1,9 @@
+Tue Apr 12 10:39:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/dds4ccm_stub.mpb:
+          Attempt to fix windows link errors
+
 Tue Apr 12 08:26:58 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany:
@@ -31,8 +37,8 @@ Tue Apr 12 07:20:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
         * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
         * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
-          Made some timing changes to make it more likely that DDS will call the on_requested_deadline_missed 
-          callback of the PortStatusListener in the Receiver. 
+          Made some timing changes to make it more likely that DDS will call the on_requested_deadline_missed
+          callback of the PortStatusListener in the Receiver.
           Also improved logging slightly.
 
 Mon Apr 11 15:36:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
