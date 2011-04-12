@@ -1,3 +1,9 @@
+Tue Apr 12 08:03:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_be.mpc:
+          Enable again in cross build
+
 Mon Apr 11 18:29:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl.mpc:
