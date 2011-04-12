@@ -1,0 +1,43 @@
+// $Id$
+
+#ifndef TEST_IDL
+#define TEST_IDL
+
+module A {
+  module C {
+    interface B_itf {
+    };
+
+    interface C_itf {
+    };
+
+    eventtype E_evt {
+    };
+
+    eventtype F_evt {
+    };
+
+    component B_comp {
+      provides C_itf c_facet;
+      consumes E_evt e_consumer;
+    };
+  };
+};
+
+module A {
+  module B {
+    module C {
+      module D {
+        component A_comp : ::A::C::B_comp {
+          provides ::A::C::B_itf a_facet;
+          consumes ::A::C::F_evt f_consumer;
+        };
+
+        home A_home manages ::A::B::C::D::A_comp {
+        };
+      };
+    };
+  };
+};
+
+#endif // TEST_IDL

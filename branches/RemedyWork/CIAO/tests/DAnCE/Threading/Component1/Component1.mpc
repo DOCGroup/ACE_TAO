@@ -1,0 +1,153 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Threading Component1"
+
+project(Threading_Component1_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=COMPONENT1_STUB_Export \
+              -Wb,stub_export_include=Component1_stub_export.h \
+              -Wb,skel_export_macro=COMPONENT1_SVNT_Export \
+              -Wb,skel_export_include=Component1_svnt_export.h \
+              -Wb,exec_export_macro=COMPONENT1_EXEC_Export \
+              -Wb,exec_export_include=Component1_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst -I..
+
+  IDL_Files {
+    Component1.idl
+  }
+}
+
+project(Threading_Component1_lem_gen) : ciaoidldefaults   {
+  after += Threading_Component1_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=COMPONENT1_LEM_STUB_Export \
+              -Wb,stub_export_include=Component1_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Component1E.idl
+  }
+}
+
+project(Threading_Component1_lem_stub) : ccm_svnt   {
+  after += Threading_Component1_lem_gen Threading_Component1_stub \
+           Threading_stub
+  libs  += Threading_stub Component1_stub
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Component1_lem_stub
+  dynamicflags += COMPONENT1_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component1EC.cpp
+  }
+
+  Header_Files {
+    Component1EC.h
+    Component1_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Component1EC.inl
+  }
+}
+
+project(Threading_Component1_stub) : ccm_stub   {
+  after += Threading_Component1_idl_gen Threading_stub
+  libs  += Threading_stub
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Component1_stub
+  dynamicflags += COMPONENT1_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component1C.cpp
+  }
+
+  Header_Files {
+    Component1C.h
+    Component1_stub_export.h
+  }
+
+  Inline_Files {
+    Component1C.inl
+  }
+}
+
+project(Threading_Component1_exec) : ciao_executor   {
+  after   += Threading_Component1_lem_stub Threading_Component1_stub
+  sharedname = Component1_exec
+  libs += Component1_stub Component1_lem_stub Threading_stub
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += COMPONENT1_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component1_exec.cpp
+  }
+
+  Header_Files {
+    Component1_exec.h
+    Component1_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Threading_Component1_svnt) : ciao_servant   {
+  after      += Threading_Component1_lem_stub \
+                Threading_Component1_lem_stub \
+                Threading_skel
+  sharedname  = Component1_svnt
+  libs       += Component1_stub Component1_lem_stub \
+                Threading_stub Threading_skel
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += COMPONENT1_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component1S.cpp
+    Component1_svnt.cpp
+  }
+
+  Header_Files {
+    Component1S.h
+    Component1_svnt.h
+    Component1_svnt_export.h
+  }
+
+  Inline_Files {
+    Component1S.inl
+  }
+}
+
+

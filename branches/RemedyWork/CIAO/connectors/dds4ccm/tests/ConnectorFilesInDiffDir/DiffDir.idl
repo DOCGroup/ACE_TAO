@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef DIFFDIR_IDL
+#define DIFFDIR_IDL
+
+#pragma ndds typesupport "DiffDirSupport.h"
+
+struct DiffDirType {
+  string value; //@key
+};
+
+typedef sequence<DiffDirType> DiffDirTypeSeq;
+
+#endif

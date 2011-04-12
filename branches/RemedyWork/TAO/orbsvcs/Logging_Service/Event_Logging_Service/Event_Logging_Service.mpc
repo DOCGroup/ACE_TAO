@@ -1,0 +1,5 @@
+// $Id$
+
+project: namingexe, iortable, install, dseventlogadmin_serv, valuetype {
+  exename   = tao_tls_event
+}

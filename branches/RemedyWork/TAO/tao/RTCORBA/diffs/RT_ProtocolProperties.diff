@@ -1,0 +1,76 @@
+--- orig/RTCORBAC.h	2005-03-25 19:39:53.847483200 +0100
++++ RTCORBAC.h	2005-03-25 19:41:00.863848000 +0100
+@@ -36,12 +36,18 @@
+
+ #include "ace/config-all.h"
+
++#ifndef TAO_RTCORBA_SAFE_INCLUDE
++#error "You should not include RTCORBAC.h directly, use RTCORBA.h"
++#endif /* !TAO_RTCORBA_SAFE_INCLUDE */
++
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ #include "rtcorba_export.h"
++#include "rtcorba_typedefs.h"
+ #include "tao/ORB.h"
++#include "tao/TimeBaseC.h"
+ #include "tao/SystemException.h"
+ #include "tao/Environment.h"
+ #include "tao/Object.h"
+@@ -576,6 +585,9 @@
+     virtual const char* _interface_repository_id (void) const;
+     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+
++    // CDR Encoder/Decoder methods. (handcrafted)
++    virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
++    virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+   protected:
+     // Abstract or local interface only.
+     ProtocolProperties (void);
+--- orig/RTCORBAC.cpp	2005-03-25 19:39:53.847483200 +0100
++++ RTCORBAC.cpp	2005-03-25 19:39:54.318160000 +0100
+@@ -29,7 +29,7 @@
+ // be\be_codegen.cpp:302
+
+
+-#include "RTCORBAC.h"
++#include "RTCORBA.h"
+ #include "tao/CDR.h"
+ #include "tao/Null_RefCount_Policy.h"
+ #include "tao/TypeCode_Constants.h"
+@@ -61,6 +61,22 @@
+ {
+ }
+
++//////////////////////////////////////////////////////
++// CDR Encoding Support hand crafted
++
++CORBA::Boolean
++RTCORBA::ProtocolProperties::_tao_encode (TAO_OutputCDR &)
++{
++  return true;
++}
++// TAO_IDL - Generated from
++// be/be_visitor_arg_traits.cpp:60
++
++CORBA::Boolean
++RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
++{
++  return true;
++}
+
+ // TAO_IDL - Generated from
+ // be\be_visitor_structure/structure_cs.cpp:68
+--- orig/RTCORBAA.cpp	2005-03-25 19:39:53.857497600 +0100
++++ RTCORBAA.cpp	2005-03-25 19:40:06.796102400 +0100
+@@ -25,7 +25,7 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+
+-#include "RTCORBAC.h"
++#include "RTCORBA.h"
+ #include "tao/Null_RefCount_Policy.h"
+ #include "tao/TypeCode_Constants.h"
+ #include "tao/Alias_TypeCode.h"
