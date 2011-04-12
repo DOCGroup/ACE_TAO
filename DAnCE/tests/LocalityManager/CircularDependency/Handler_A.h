@@ -18,7 +18,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CircularDependency_export.h"
+#include "Circular_Dependency_export.h"
 #include "tao/LocalObject.h"
 
 namespace DAnCE
