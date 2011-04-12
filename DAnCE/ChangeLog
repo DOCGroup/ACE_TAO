@@ -1,3 +1,15 @@
+Tue Apr 12 11:44:20 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/LocalityManager/CircularDependency/Circular_Dependency_export.h:
+        * tests/LocalityManager/CircularDependency/Handler_A.h:
+        * tests/LocalityManager/CircularDependency/Handler_B.h:
+
+          Renamed the export file to avoid a spurious fuzz error.
+
+        * tests/LocalityManager/CircularDependency/CircularDependency_export.h:
+
+          Removed this file.
+
 Tue Apr 12 01:16:47 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/LocalityManager/CircularDependency/Handler_A.cpp:
