@@ -3,5 +3,6 @@ edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Home_Ha
 edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Component_Handler
 edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Homed_Component_Handler
 edu.vanderbilt.dre.DAnCE.DeploymentInterceptor CIAO_Deployment_Interceptors create_CIAO_StoreReferences
-edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Best_Effort
+edu.vanderbilt.dre.DAnCE.DeploymentInterceptor Launch_Failure_Interceptors create_DAnCE_Selective_Error
+
 

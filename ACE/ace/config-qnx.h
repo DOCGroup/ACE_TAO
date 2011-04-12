@@ -15,7 +15,6 @@
 #endif
 
 #define _POSIX_C_SOURCE 199506
-#define _QNX_SOURCE
 
 // The following defines the Neutrino compiler.
 // gcc should know to call g++ as necessary
@@ -102,8 +101,6 @@
 #define ACE_HAS_GETRUSAGE 1
 #define ACE_HAS_GETRUSAGE_PROTOTYPE 1
 #define ACE_HAS_NEW_NO_H 1
-#define ACE_HAS_WCHAR 1
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
 #define ACE_IOCTL_TYPE_ARG2 u_long
 #define ACE_HAS_TIMEZONE 1
 #define ACE_HAS_SOCKADDR_MSG_NAME 1
@@ -112,13 +109,9 @@
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_HAS_STRING_CLASS 1
 #define ACE_HAS_STRSIGNAL
-#define ACE_HAS_POLL 1
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 #define ACE_HAS_POSIX_NONBLOCK 1
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS 1
-#define ACE_HAS_BSWAP_16
-#define ACE_HAS_BSWAP_32
-#define ACE_HAS_BSWAP_64
 
 /////////////////////////////////////////////////////////////////
 //    Definition of the features that are not available.
@@ -142,6 +135,7 @@
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_LACKS_T_ERRNO
 #define ACE_LACKS_U_LONGLONG_T
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_HAS_SYS_SOCKIO_H 1
 #define ACE_HAS_SYSCTL
 #define ACE_HAS_SIGACTION_CONSTP2 1
@@ -152,8 +146,11 @@
 # define ACE_LACKS_SYS_MSG_H
 # define ACE_LACKS_ALPHASORT
 # define ACE_LACKS_STRPTIME
-# define ACE_LACKS_ISWBLANK
 # define ACE_LACKS_POLL_H
+#else
+# define ACE_HAS_POLL 1
+# define ACE_HAS_WCHAR 1
+# define ACE_HAS_XPG4_MULTIBYTE_CHAR 1
 #endif
 
 #define ACE_LACKS_ISCTYPE

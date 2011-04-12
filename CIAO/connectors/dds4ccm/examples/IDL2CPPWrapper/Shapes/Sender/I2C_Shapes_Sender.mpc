@@ -1,6 +1,6 @@
 // $Id$
 
-project(*i2c_shapes_sender) : dds4ccm_logger, ndds_impl, ndds_stub, ndds_ts_default {
+project(*i2c_shapes_sender) : dds4ccm_logger, ndds_idltocpp_impl, ndds_cck_ts_defaults {
   exename = I2C_Shapes_Sender
   after += I2C_Shapes_Base_Stub I2C_ShapeType_stub I2C_Shapes_Common
 

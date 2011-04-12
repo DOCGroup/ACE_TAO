@@ -61,7 +61,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   info_get_status_exec_i::info_get_status_exec_i (
         ::PSL_DeadlineTest::CCM_Receiver_Context_ptr ctx,
-        Atomic_Boolean &deadline_port_get,
+        Atomic_Short &deadline_port_get,
         ACE_Thread_ID &thread_id_get)
     : ciao_context_ (
         ::PSL_DeadlineTest::CCM_Receiver_Context::_duplicate (ctx))
@@ -82,7 +82,9 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   {
     if (! ::CORBA::is_nil (the_reader) && status.total_count != 0)
       {
-        this->deadline_port_get_ = true;
+        ACE_DEBUG ((LM_DEBUG, "info_get_status_exec_i::on_requested_deadline_missed - "
+                    "on_requested_deadline_missed received in PSL of the Getter\n"));
+        ++this->deadline_port_get_;
         ACE_Thread_ID t_id;
         this->thread_id_get_ = t_id;
       }
@@ -135,7 +137,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   info_out_status_exec_i::info_out_status_exec_i (
         ::PSL_DeadlineTest::CCM_Receiver_Context_ptr ctx,
-        Atomic_Boolean &deadline_port_listener,
+        Atomic_Short &deadline_port_listener,
         ACE_Thread_ID &thread_id_listener)
     : ciao_context_ (
         ::PSL_DeadlineTest::CCM_Receiver_Context::_duplicate (ctx))
@@ -156,7 +158,9 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   {
     if (! ::CORBA::is_nil (the_reader) && status.total_count != 0)
       {
-        this->deadline_port_listener_ = true;
+        ACE_DEBUG ((LM_DEBUG, "info_get_status_exec_i::on_requested_deadline_missed - "
+                    "on_requested_deadline_missed received in PSL of the Listener\n"));
+        ++this->deadline_port_listener_;
         ACE_Thread_ID t_id;
         this->thread_id_listener_ = t_id;
       }
@@ -174,8 +178,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
    */
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : deadline_port_listener_ (false)
-      , deadline_port_get_ (false)
+    : deadline_port_listener_ (0)
+      , deadline_port_get_ (0)
       , thread_id_listener_listener_ (0, 0)
       , thread_id_listener_get_ (0, 0)
   {
@@ -230,16 +234,11 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
             ACE_Time_Value tv;
             tv <<= readinfoseq[i].source_timestamp;
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL ReadInfo ")
-                                  ACE_TEXT ("-> UTC date =%#T\n"),
-                                  &tv));
-          }
-        for(CORBA::ULong i = 0; i < TestTopic_infos.length(); ++i)
-          {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ_ALL keyed test info : ")
-                  ACE_TEXT ("Number <%d> : received TestTopic_info for <%C> at %u\n"),
-                i,
-                TestTopic_infos[i].key.in (),
-                TestTopic_infos[i].x));
+                                  ACE_TEXT ("-> UTC date =%#T ")
+                                  ACE_TEXT ("for sample %C:%u\n"),
+                                  &tv,
+                                  TestTopic_infos[i].key.in (),
+                                  TestTopic_infos[i].x));
           }
       }
     catch (const CCM_DDS::InternalError& )
@@ -338,7 +337,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   Receiver_exec_i::ccm_activate (void)
   {
     ::CCM_DDS::DataListenerControl_var lc =
-    this->ciao_context_->get_connection_info_out_data_control ();
+      this->ciao_context_->get_connection_info_out_data_control ();
 
     if (::CORBA::is_nil (lc.in ()))
       {
@@ -348,11 +347,10 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     lc->mode (::CCM_DDS::NOT_ENABLED);
 
     // calculate the interval time
-    long const usec = 100000;
     if (this->reactor ()->schedule_timer (this->ticker_,
                                           0,
-                                          ACE_Time_Value(2, usec),
-                                          ACE_Time_Value(1, usec)) == -1)
+                                          ACE_Time_Value(2, 0),
+                                          ACE_Time_Value(1, 300000)) == -1)
       {
         ACE_ERROR ((LM_ERROR, "Unable to schedule Timer\n"));
       }
@@ -367,7 +365,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
-     if (!this->deadline_port_get_.value ())
+     if (this->deadline_port_get_.value () == 0)
       {
 
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
@@ -377,10 +375,11 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
-                               ACE_TEXT ("'on_requested_deadline_missed' in PortStatusListener Get in Receiver\n")
+                              ACE_TEXT ("'on_requested_deadline_missed' %d times in PortStatusListener Get in Receiver\n"),
+                              this->deadline_port_get_.value ()
                     ));
       }
-     if (!this->deadline_port_listener_.value ())
+     if (this->deadline_port_listener_.value () == 0)
       {
 
          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: did not receive the expected ")
@@ -390,7 +389,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     else
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK : Have received the expected ")
-                               ACE_TEXT ("'on_requested_deadline_missed' in PortStatusListener Listener in Receiver\n")
+                              ACE_TEXT ("'on_requested_deadline_missed' %d times in PortStatusListener Listener in Receiver\n"),
+                              this->deadline_port_listener_.value ()
                     ));
       }
         //get current thread

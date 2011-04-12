@@ -6,7 +6,7 @@ inline ?= 1
 debug ?= 1
 optimize ?= 0
 threads ?= 1
-pipes ?= 1
+pipes ?= 0
 
 CCFLAGS += -fexceptions
 LDFLAGS += -fexceptions
@@ -24,7 +24,8 @@ ifeq ($(optimize),1)
 OCFLAGS += -O3
 endif #optimize
 
-CFLAGS  += -W -Wall -Wpointer-arith
+DLD     = $(CXX)
+LD      = $(CXX)
 
 LIBS    += -lsocket -lstdc++ -lm
 
@@ -38,7 +39,3 @@ PRELIB  = @true
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS += $(CFLAGS) $(FLAGS_C_CC)
-
-CFLAGS  += $(FLAGS_C_CC)

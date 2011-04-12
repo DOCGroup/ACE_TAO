@@ -40,7 +40,7 @@
 
 namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 {
-  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean > Atomic_Boolean;
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Short > Atomic_Short;
 
   class Receiver_exec_i;
   /**
@@ -74,7 +74,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   public:
     info_get_status_exec_i (
       ::PSL_DeadlineTest::CCM_Receiver_Context_ptr ctx,
-      Atomic_Boolean &deadline_port_get,
+      Atomic_Short &deadline_port_get,
       ACE_Thread_ID &thread_id_get);
     virtual ~info_get_status_exec_i (void);
 
@@ -92,7 +92,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   private:
     ::PSL_DeadlineTest::CCM_Receiver_Context_var ciao_context_;
-    Atomic_Boolean &deadline_port_get_;
+    Atomic_Short &deadline_port_get_;
     ACE_Thread_ID &thread_id_get_;
   };
 
@@ -136,7 +136,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
   public:
     info_out_status_exec_i (
       ::PSL_DeadlineTest::CCM_Receiver_Context_ptr ctx,
-      Atomic_Boolean &deadline_port_listener,
+      Atomic_Short &deadline_port_listener,
       ACE_Thread_ID &thread_id_listener);
     virtual ~info_out_status_exec_i (void);
 
@@ -154,7 +154,7 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
 
   private:
     ::PSL_DeadlineTest::CCM_Receiver_Context_var ciao_context_;
-    Atomic_Boolean &deadline_port_listener_;
+    Atomic_Short &deadline_port_listener_;
     ACE_Thread_ID &thread_id_listener_;
   };
 
@@ -217,8 +217,8 @@ namespace CIAO_PSL_DeadlineTest_Receiver_Impl
     /** User defined members. */
     read_action_Generator * ticker_;
 
-    Atomic_Boolean deadline_port_listener_;
-    Atomic_Boolean deadline_port_get_;
+    Atomic_Short deadline_port_listener_;
+    Atomic_Short deadline_port_get_;
     ACE_Thread_ID thread_id_listener_listener_;
     ACE_Thread_ID thread_id_listener_get_;
 

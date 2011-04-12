@@ -16,7 +16,7 @@ feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   }
 }
 
-feature(dds4ccm_ndds) : dds4ccm, ndds_ts_default {
+feature(dds4ccm_ndds) : dds4ccm, ndds_idltocpp_ts_defaults {
 }
 
 feature(!dds4ccm_opendds) {

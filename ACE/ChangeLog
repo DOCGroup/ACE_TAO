@@ -1,7 +1,42 @@
+Mon Apr 11 17:21:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx.h:
+          Another try to fix qnx 6.3
+
+Mon Apr 11 06:30:07 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added support for no-optimize-sibling-calls
+
+Sun Apr 10 18:04:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx.h:
+          Don't define _QNX_SOURCE, already defined by default
+
+Sun Apr 10 17:32:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx.h:
+          qnx63 has much less than qnx65
+
+Sun Apr 10 17:03:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx.h:
+          Made some fixes for qnx65
+
+        * include/makeinclude/platform_qnx_gcc.GNU:
+          Simplified
+
+Sun Apr 10 14:58:13 UTC 2011  Phil Mesnier  <mesnier_p@ociwb.com>
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+
+          Bug_3943_Regression_Test needs to avoid ace_for_tao.
+
 Sat Apr  9 12:56:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3943_Regression_Test.cpp:
-          
+
           Scoreboard cleanup.
 
 Sat Apr  9 08:29:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>

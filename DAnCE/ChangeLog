@@ -1,3 +1,67 @@
+Tue Apr 12 01:16:47 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/LocalityManager/CircularDependency/Handler_A.cpp:
+        * tests/LocalityManager/CircularDependency/Handler_B.cpp:
+
+          Warnings.
+
+Mon Apr 11 11:13:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_plan_launcher.mpb:
+
+          Link fix.
+
+Mon Apr 11 03:00:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/LocalityManager/CircularDependency:
+        * tests/LocalityManager/CircularDependency/CircularDependency.mpc:
+        * tests/LocalityManager/CircularDependency/CircularDependency_export.h:
+        * tests/LocalityManager/CircularDependency/Deployment.cdp:
+        * tests/LocalityManager/CircularDependency/Handler_A.h:
+        * tests/LocalityManager/CircularDependency/Handler_A.cpp:
+        * tests/LocalityManager/CircularDependency/Handler_B.h:
+        * tests/LocalityManager/CircularDependency/Handler_B.cpp:
+        * tests/LocalityManager/CircularDependency/run_test.pl:
+
+          Test excercising the behavior when a circular dependency exists between
+          installation handlers.  This has revealed a bug, which has yet to be fixed.
+
+Mon Apr 11 02:57:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/LM_Launcher.h:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          Fuzz and bugfixes.
+
+Sun Apr 10 19:38:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/LM_Launcher.h:
+        * dance/Plan_Launcher/LM_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.mpc:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Add capability to launch directly to the LocalityManager.
+
+Sun Apr 10 17:37:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+          Fixed base project due to ndds base project changes
+
+Sat Apr  9 17:47:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Apr  7 12:24:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * dance/DomainApplicationManager/Node_Locator.cpp:
+                  Removed comma after DLINFO in a log message. Therefor the message
+                  will be logged properly.
+
+        === end changelog ===
+
 Sat Apr  9 11:36:47 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:

@@ -1,3 +1,34 @@
+Tue Apr 12 08:03:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_be.mpc:
+          Enable again in cross build
+
+Mon Apr 11 18:29:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+        * TAO_IDL/tao_idl_be.mpc:
+          Reverted the enabling of these projects with cross compilation for
+          the moment
+
+Mon Apr 11 10:48:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_NoUpcall_Client_Leader/MT_NoUpcall.mpc:
+          This test requires threads
+
+Mon Apr 11 06:31:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl_be.mpc:
+          Added no-optimize-sibling-calls
+
+Sun Apr 10 12:06:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Layout change
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Use ndds_cck_ts_defaults
+
 Sat Apr  9 08:03:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_NoUpcall_Client_Leader/chatter.h:

@@ -8,6 +8,8 @@ using namespace std;
 #include "Base.h"
 #include "BaseSupport.h"
 
+#include "ace/OS_main.h"
+
 #define LIBRARY_NAME  "QueryCondition_Library"
 #define PROFILE_NAME  "QueryCondition_Profile"
 

@@ -1,3 +1,205 @@
+Tue Apr 12 08:26:58 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Starter.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Starter.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/README:
+         New test with two different queries and an empty one, uses get_many.
+
+Tue Apr 12 07:20:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
+          Made some timing changes to make it more likely that DDS will call the on_requested_deadline_missed 
+          callback of the PortStatusListener in the Receiver. 
+          Also improved logging slightly.
+
+Mon Apr 11 15:36:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/USER_QOS_PROFILES.xml:
+          Added this file. SLOneByOne should work now.
+
+Mon Apr 11 12:28:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_base.mpb:
+        * MPC/config/dds4ccm_impl.mpb:
+        * MPC/config/dds4ccm_ts_default.mpb:
+        * MPC/config/ndds_idltocpp.mpb:
+        * MPC/config/ndds_idltocpp_impl.mpb:
+        * MPC/config/ndds_idltocpp_lem_stub.mpb:
+        * MPC/config/ndds_idltocpp_skel.mpb:
+        * MPC/config/ndds_idltocpp_stub.mpb:
+        * MPC/config/ndds_idltocpp_ts_defaults.mpb:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_ShapeType.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Base/I2C_Shapes_Base.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Common/I2C_Shapes_Common.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Receiver/I2C_Shapes_Receiver.mpc:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/Sender/I2C_Shapes_Sender.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_lem_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+        * connectors/dds4ccm/impl/ndds/ndds_idltocpp.mpc:
+          Renamed base projects to make a difference between plain RTI DDS (the
+          ndds* base projects) and our IDL to CPP wrapper around RTI DDS (the
+          ndds_idltocpp_* base projects)
+
+        * MPC/config/ndds.mpb:
+        * MPC/config/ndds_impl.mpb:
+        * MPC/config/ndds_lem_stub.mpb:
+        * MPC/config/ndds_skel.mpb:
+        * MPC/config/ndds_stub.mpb:
+        * MPC/config/ndds_ts_default.mpb:
+        * connectors/dds4ccm/idl/ndds/ndds_lem_stub.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_skel.mpc:
+        * connectors/dds4ccm/idl/ndds/ndds_stub.mpc:
+        * connectors/dds4ccm/impl/ndds/ndds.mpc:
+          Removed these files.
+
+Mon Apr 11 10:11:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+          Resolved warning.
+
+        * connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+          Resolved test errors.
+
+Mon Apr 11 03:08:04 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.idl:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+
+          Attempt at a compile fix for Windows.
+
+Mon Apr 11 03:02:24 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Interceptors/Interceptors.mpc:
+
+          Fuzz.
+
+Sun Apr 10 19:41:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure.mpc:
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * tests/DAnCE/Launch-Failures/Interceptors:
+        * tests/DAnCE/Launch-Failures/Interceptors/Interceptors.mpc:
+        * tests/DAnCE/Launch-Failures/Interceptors/Selective_Error.h:
+        * tests/DAnCE/Launch-Failures/Interceptors/Selective_Error.cpp:
+        * tests/DAnCE/Launch-Failures/Interceptors/Selective_Error_Export.h:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalDestEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalFacetConnectionDifferentLMs.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalNilFacetConnection.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/LocalSourceEndpointFailure.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/besteffort.localityconfig:
+
+          Expanded testing.
+
+Sun Apr 10 17:51:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Base/CIAO_Exceptions.idl:
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Improved error handling.
+
+Sun Apr 10 12:04:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ndds_ts_default.mpb:
+          Derive from the new ndds_cck_ts_defaults, we always use the CCK for
+          dds4ccm
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base/Base_ObO.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+          No need for the CCK and TAO, we just use ACE to get a portable
+          main
+
+Sun Apr 10 03:40:52 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+
+          Compile error.
+
+Sat Apr  9 17:47:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Fri Apr  8 13:57:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+                  Alignment.
+
+                * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/SLOneByOne/descriptors/Plan.cdp:
+                  Added check on received sample during on_deletion. on_deletion should be invoked
+                  with a valid key. Therefor changed the QOS settings.
+
+        Thu Apr  7 15:55:20 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/run_test.pl:
+                * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+                * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/SLManyByMany/descriptors/USER_QOS_PROFILES.xml:
+                * connectors/dds4ccm/tests/SLManyByMany/README:
+                Changed timing in test. Added extra check on key content in on_deletion. Therefore also added QoS file.
+
+
+
+        Thu Apr  7 12:26:20 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver.idl:
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+                * connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+                  Using the getter as well to read samples from DDS.
+
+                * connectors/dds4ccm/tests/CoherentWriter/descriptors/Plan.cdp:
+                  Rewritten in order to use the state and event connectors properly.
+
+                * tests/DAnCE/Progressive_Deployments/run_test.pl:
+                  Optimized logging.
+
+        Thu Apr  7 12:15:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * connectors/dds4ccm/impl/ConditionManager.h:
+                  Fixed doxygen warning
+
+        === end changelog ===
+
 Sat Apr  9 11:39:26 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Launch-Failures/Component/Launch_Failure.mpc:

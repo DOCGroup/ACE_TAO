@@ -2807,7 +2807,7 @@ TAO_Transport::io_timeout(
 }
 
 bool
-TAO_Transport::using_blocking_io_for_synch_messages() const
+TAO_Transport::using_blocking_io_for_synch_messages (void) const
 {
   if (this->wait_strategy()->can_process_upcalls())
   {
@@ -2817,7 +2817,7 @@ TAO_Transport::using_blocking_io_for_synch_messages() const
 }
 
 bool
-TAO_Transport::using_blocking_io_for_asynch_messages() const
+TAO_Transport::using_blocking_io_for_asynch_messages (void) const
 {
   return false;
 }

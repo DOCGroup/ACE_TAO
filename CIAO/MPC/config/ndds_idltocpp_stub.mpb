@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ndds, typecode {
+project : ndds_idltocpp, typecode {
   includes += $(ACE_ROOT) $(CIAO_ROOT)
   libs += CIAO_NDDS_stub
   after += CIAO_NDDS_stub
