@@ -1,3 +1,13 @@
+Tue Apr 12 12:47:58 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+
+          The shallow-copy optimizations added to the sequence implementation
+          changes the number of freebufs and releases that happen. The tests
+          needed to be updated to reflect this new reality.
+
 Tue Apr 12 08:03:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl.mpc:
