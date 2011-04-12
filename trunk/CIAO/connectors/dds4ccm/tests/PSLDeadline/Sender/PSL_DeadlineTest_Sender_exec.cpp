@@ -174,8 +174,12 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    long sec = 1L;
-    long const usec = 0L;
+    // deadline period in QoS is set to two so the reader expects data every
+    // two seconds. Setting the interval to somewhat more than two seconds,
+    // the reader should (almost) always receive an on_requested_deadline_missed
+    // callback from DDS.
+    long sec = 2L;
+    long const usec = 100000L;
     if (this->reactor ()->schedule_timer (
                 this->ticker_,
                 0,
@@ -250,8 +254,16 @@ namespace CIAO_PSL_DeadlineTest_Sender_Impl
   Sender_exec_i::ccm_activate (void)
   {
     //add 2 different instances of topic
-    this->add_instance_of_topic ("ONE",1);
-    this->add_instance_of_topic ("TWO",2);
+    this->add_instance_of_topic ("ONE", 1);
+    this->add_instance_of_topic ("ONE", 2);
+    this->add_instance_of_topic ("ONE", 3);
+    this->add_instance_of_topic ("ONE", 4);
+    this->add_instance_of_topic ("ONE", 5);
+    this->add_instance_of_topic ("TWO", 1);
+    this->add_instance_of_topic ("TWO", 2);
+    this->add_instance_of_topic ("TWO", 3);
+    this->add_instance_of_topic ("TWO", 4);
+    this->add_instance_of_topic ("TWO", 5);
     this->start ();
   }
 

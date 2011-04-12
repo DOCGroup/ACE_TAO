@@ -1,3 +1,12 @@
+Tue Apr 12 07:20:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
+          Made some timing changes to make it more likely that DDS will call the on_requested_deadline_missed 
+          callback of the PortStatusListener in the Receiver. 
+          Also improved logging slightly.
+
 Mon Apr 11 15:36:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/SLOneByOne/descriptors/USER_QOS_PROFILES.xml:
