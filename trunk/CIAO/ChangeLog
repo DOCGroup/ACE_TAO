@@ -1,3 +1,11 @@
+Tue Apr 12 11:42:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/Threading/Component1/Component1_exec.cpp:
+        * tests/DAnCE/Threading/Component2/Component2.mpc:
+        * tests/DAnCE/Threading/Component2/Component2_exec.cpp:
+          Use a timeout to detect the deadlock instead of causing a real
+          deadlock, that is much harder to handle in our test framework
+
 Tue Apr 12 10:39:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_base.mpb:
