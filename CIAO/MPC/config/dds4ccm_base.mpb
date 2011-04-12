@@ -1,17 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : dds4ccm, ciao_connector_base, dcps {
-  after += DDS4CCM_stub DDS4CCM_lem_gen
-  libs += DDS4CCM_stub
+feature(dds4ccm_opendds) : dds4ccm_stub, ciao_connector_base, dcps {
+  after += DDS4CCM_lem_gen
 }
 
-feature(dds4ccm_splice) : dds4ccm, ciao_connector_base {
-  after += DDS4CCM_stub DDS4CCM_lem_gen
-  libs += DDS4CCM_stub
+feature(dds4ccm_splice) : dds4ccm_stub, ciao_connector_base {
+  after += DDS4CCM_lem_gen
 }
 
-feature(dds4ccm_ndds) : ndds_idltocpp_lem_stub, ndds_idltocpp_impl, ciao_connector_base {
+feature(dds4ccm_ndds) : dds4ccm_stub, ndds_idltocpp_lem_stub, ndds_idltocpp_impl, ciao_connector_base {
   after += DDS4CCM_lem_gen
 }
 
