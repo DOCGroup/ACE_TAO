@@ -1,3 +1,31 @@
+Tue Apr 12 08:26:58 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Connector/QCTQM_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Starter.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Starter.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/README:
+         New test with two different queries and an empty one, uses get_many.
+
 Tue Apr 12 07:20:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
