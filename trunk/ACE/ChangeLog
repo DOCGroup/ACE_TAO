@@ -1,3 +1,12 @@
+Wed Apr 13 13:29:13 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Bug_3943_Regression_Test.cpp:
+
+          Still more scoreboard cleanup. The ACE defined iovec struct uses
+          u_long for the iovlen rather than size_t, and on x64 systems, size_t
+          is actually larger than u_long, so a "possible loss of data" warning
+          is generated when assigning from a size_t to a u_long.
+
 Wed Apr 13 09:39:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Time_Value_Test.cpp:
