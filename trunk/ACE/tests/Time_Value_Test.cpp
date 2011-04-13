@@ -97,32 +97,6 @@ run_main (int, ACE_TCHAR *[])
   tv1 *= -10.0;
   ACE_TEST_ASSERT (tv1 == tv2);
 
-  const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
-  const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
-
-  // test protection against overflows
-  // ACE_TEST_ASSERT( ACE_Time_Value(max_time_t,ACE_ONE_SECOND_IN_USECS) != ACE_Time_Value(ACE_Numeric_Limits<time_t>::min()) );
-
-  // test saturated result
-  tv1.set (max_time_t - 1, 499999);
-  tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time
-  tv1 *= 10.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t - 1, 499999);
-  tv2.set (min_time_t, -999999);
-  tv1 *= -10.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-
-  // test results near limits
-  tv1.set ((max_time_t >> 1), 499999);
-  tv2.set ((-(max_time_t >> 1) << 1), -999998);
-  tv1 *= -2.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t >> 1, 499999);
-  tv2.set (((max_time_t >> 1) << 1), 999998);
-  tv1 *= 2.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-
   // Test correct msec() convert; also checks for compile error reported in
   // Bugzilla 3336.
   ACE_Time_Value msec_test (42, 555000);
