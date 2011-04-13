@@ -15,11 +15,8 @@
  */
 //=============================================================================
 
-
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"
-
-
 
 #include "test_config.h"
 #include "ace/ACE.h"
@@ -51,6 +48,11 @@ run_main (int, ACE_TCHAR *[])
   // ACE_Time_Value (2.5).  Some compilers, such as g++ 2.7.2.3,
   // actually warn about it without the case.
   ACE_Time_Value tv8 (static_cast <long> (2.5));
+
+  ACE_Time_Value first;
+  ACE_Time_Value last(ACE_Time_Value::max_time);
+  first = last;
+  ACE_TEST_ASSERT (first == last);
 
   // Test assignment operator, tv9 and tv6 must be the same after this
   ACE_Time_Value tv9;

@@ -131,7 +131,7 @@ ACE_INLINE void
 ACE_Time_Value::sec (time_t sec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
-  this->tv_.tv_sec = ACE_Utils::truncate_cast<long> (sec);
+  this->tv_.tv_sec = sec;
 }
 
 /// Converts from Time_Value format into milli-seconds format.
