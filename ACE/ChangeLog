@@ -1,3 +1,12 @@
+Wed Apr 13 07:41:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.inl:
+          Removed truncate_cast because it gives problems on Windows. Thanks
+          to Jonathan Saxton <jsaxton at appsecinc dot com>
+
+        * tests/Time_Value_Test.cpp:
+          Extended with new test for change above
+
 Tue Apr 12 20:39:11 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * NEWS:
