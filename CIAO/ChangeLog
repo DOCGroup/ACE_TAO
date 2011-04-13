@@ -1,3 +1,9 @@
+Wed Apr 13 19:13:43 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+
+          Additional error reporting.
+
 Wed Apr 13 19:12:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
