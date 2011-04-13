@@ -1,3 +1,11 @@
+Wed Apr 13 16:54:52 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/NodeManager/NodeManager_Impl.cpp:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          gen_ostream fixes.
+
 Wed Apr 13 13:54:11 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * tests/LocalityManager/CircularDependency/CircularDependency.mpc:
