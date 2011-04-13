@@ -1,3 +1,9 @@
+Wed Apr 13 11:52:01 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Compile fix.
+
 Tue Apr 12 11:44:20 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/LocalityManager/CircularDependency/Circular_Dependency_export.h:
