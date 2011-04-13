@@ -225,6 +225,23 @@ namespace CIAO_Launch_Failure_Impl
 
     return retval;
   }
+
+  extern "C" LAUNCH_FAILURE_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Launch_Failure_Nil (void)
+  {
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+
+    // Intentionally return nil.
+    return retval;
+  }
+
+  extern "C" LAUNCH_FAILURE_EXEC_Export ::Components::EnterpriseComponent_ptr
+  create_Launch_Failure_Exception (void)
+  {
+    // Throw an exception
+    throw 1;
+  }
 }
 
 namespace CIAO_Launch_Failure_Impl
