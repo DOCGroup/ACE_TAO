@@ -1,3 +1,16 @@
+Wed Apr 13 19:12:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * tests/DAnCE/Launch-Failures/descriptors/AttributeException.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/AttributeMismatch.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/EntrypointException.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/EntrypointFails.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/EntrypointIncorrect.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/IncorrectLibraryName.cdp:
+        * tests/DAnCE/Launch-Failures/descriptors/InvalidInstanceType.cdp:
+
+          Additional failure testing.
+
 Wed Apr 13 07:48:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
