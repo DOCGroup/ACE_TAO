@@ -1,3 +1,10 @@
+Wed Apr 13 13:54:11 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/LocalityManager/CircularDependency/CircularDependency.mpc:
+
+          Don't attempt to put the library in $ACE_ROOT/lib.
+          Fixed missing end-of-file newline.
+
 Wed Apr 13 11:52:01 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
