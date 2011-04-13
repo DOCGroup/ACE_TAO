@@ -1,3 +1,15 @@
+Wed Apr 13 09:39:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Time_Value_Test.cpp:
+        * tests/Bug_2434_Regression_Test.cpp:
+          Overflow problem is part of bugzilla 2434, only do the test there,
+          that way Time_Value_Test should run in all builds
+
+        * tests/ACE_Test.cpp:
+        * tests/Bug_3758_Regression_Test.cpp:
+        * tests/Date_Time_Test.cpp:
+          Layout changes
+
 Wed Apr 13 07:41:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.inl:
