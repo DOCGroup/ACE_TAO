@@ -70,7 +70,6 @@ namespace DAnCE
                          (LM_TRACE, DLINFO "Convert_Plan - Input plan: %C\n",
                           plan_stream.str ().c_str ()));
       }
-  }
 #endif /* GEN_OSTREAM_OPS */
 
   typename AppManager::_var_type app_manager;
