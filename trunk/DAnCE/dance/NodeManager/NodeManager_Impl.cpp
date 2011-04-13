@@ -140,7 +140,7 @@ namespace DAnCE
                   this->name_.c_str(), plan.UUID.in()));
 
 #ifdef GEN_OSTREAM_OPS
-    if (DANCE_debug_level >= DANCE_LOG_DETAILED_TRACE)
+    if (DAnCE_debug_level >= DANCE_LOG_DETAILED_TRACE)
       {
         std::ostringstream plan_stream;
         plan_stream << plan << std::endl;
