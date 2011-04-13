@@ -241,8 +241,20 @@ namespace CIAO
                  "Session_Container_i::install_component - "
                  "Loading component executor\n"));
 
-    Components::EnterpriseComponent_var component_executor =
-      ccreator ();
+    Components::EnterpriseComponent_var component_executor;
+    try
+      {
+        component_executor = ccreator ();
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR, CLINFO
+                    "Session_Container_i::install_component - "
+                     "Caught unexpected exception from component factory."));
+        throw CIAO::Installation_Failure (name,
+                                          "Component executor factory threw exception");
+      }
 
     if (CORBA::is_nil (component_executor.in ()))
       {
@@ -262,10 +274,24 @@ namespace CIAO
                  "Session_Container_i::install_component - "
                  "Loading component servant\n"));
 
-    PortableServer::Servant component_servant =
-      screator (component_executor.in (),
-                this,
-                name);
+    PortableServer::Servant component_servant;
+
+    try
+      {
+        component_servant = screator (component_executor.in (),
+                                      this,
+                                      name);
+      }
+    catch (...)
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR, CLINFO
+                    "Session_Container_i::install_component - "
+                     "Caught unexpected exception from component servant factory."));
+        throw CIAO::Installation_Failure (name,
+                                          "Component servant factory threw exception");
+      }
+
 
     if (component_servant == 0)
       {
