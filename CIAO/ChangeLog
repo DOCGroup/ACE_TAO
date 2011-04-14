@@ -1,7 +1,15 @@
+Thu Apr 14 09:29:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm_impl.mpb:
+        * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+          Added needed base projects
+
+        * bin/ciao_tests.lst:
+          All tests should now run
+
 Wed Apr 13 19:13:43 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Session/Session_Container.cpp:
-
           Additional error reporting.
 
 Wed Apr 13 19:12:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
@@ -14,7 +22,6 @@ Wed Apr 13 19:12:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
         * tests/DAnCE/Launch-Failures/descriptors/EntrypointIncorrect.cdp:
         * tests/DAnCE/Launch-Failures/descriptors/IncorrectLibraryName.cdp:
         * tests/DAnCE/Launch-Failures/descriptors/InvalidInstanceType.cdp:
-
           Additional failure testing.
 
 Wed Apr 13 07:48:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
