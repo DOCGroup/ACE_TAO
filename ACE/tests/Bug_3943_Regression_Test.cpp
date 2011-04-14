@@ -434,9 +434,9 @@ Svc_Handler::send_data (void)
       }
 
       {
-        IovecGuard small(2, 0, overThreshold);
+        IovecGuard small_iov(2, 0, overThreshold);
         send_desc = ACE_TEXT ("large iovec followed by small iovec");
-        result = this->send(small, send_desc, true);
+        result = this->send(small_iov, send_desc, true);
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
@@ -539,14 +539,14 @@ Svc_Handler::send_data (void)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
       {
-        IovecGuard small(2, 0, 0x0fffffff);
+        IovecGuard small_iov(2, 0, 0x0fffffff);
         send_desc =  ACE_TEXT ("large iovec followed by small iovec");
-        result = this->send(small, send_desc, true, true);
-        if (result < 0 || static_cast<u_long>(result) != small.totalBytes_)
+        result = this->send(small_iov, send_desc, true, true);
+        if (result < 0 || static_cast<u_long>(result) != small_iov.totalBytes_)
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
-                        send_desc, small.totalBytes_, result));
+                        send_desc, small_iov.totalBytes_, result));
             successful = false;
           }
       }
