@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef guard_generic_sequence_hpp
 #define guard_generic_sequence_hpp
 /**
@@ -145,14 +143,29 @@ public:
     , buffer_(0)
     , release_(false)
   {
-    copy_internal(rhs);
+    if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
+    {
+      maximum_ = rhs.maximum_;
+      length_ = rhs.length_;
+      return;
+    }
+    generic_sequence tmp(rhs.maximum_, rhs.length_,
+                         allocation_traits::allocbuf_noinit(rhs.maximum_),
+                         true);
+    element_traits::initialize_range(
+        tmp.buffer_ + tmp.length_, tmp.buffer_ + tmp.maximum_);
+    element_traits::copy_range(
+        rhs.buffer_,
+        rhs.buffer_ + rhs.length_,
+        ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+    swap(tmp);
   }
 
   /// Assignment operator
   generic_sequence & operator=(generic_sequence const & rhs)
   {
-    copy_internal(rhs);
-
+    generic_sequence tmp(rhs);
+    swap(tmp);
     return * this;
   }
 
@@ -186,15 +199,6 @@ public:
   /// Set a new length for the sequence
   void length(CORBA::ULong length)
   {
-    // When sequence doesn't own a buffer it's not allowed
-    // to change it in any way.
-    if (buffer_ && !release_)
-    {
-//       ACE_ERROR ((LM_ERROR,
-//                   ACE_TEXT ("Tried to change length of sequence when doesn't have ownership\n")));
-      return;
-    }
-
     if (length <= maximum_)
     {
       if (buffer_ == 0)
@@ -209,7 +213,7 @@ public:
 
       // When sequence doesn't own a buffer it's not allowed
       // to change it in any way.
-      if (length < length_ )
+      if (length < length_ && release_)
       {
         // TODO This code does not provide the strong-exception
         //      guarantee, but it does provide the weak-exception
@@ -234,15 +238,10 @@ public:
     // destructed but *this will remain unchanged.
     element_traits::initialize_range(
         tmp.buffer_ + length_, tmp.buffer_ + length);
-    if (element_traits::copy_swap_range(
-        buffer_,
-        buffer_ + length_,
-        ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_))) {
-
-      // Made a shallow copy so release buffer_ because tmp.buffer_
-      // now has the contents.
-      element_traits::zero_range(buffer_, buffer_ + length_);
-    }
+    element_traits::copy_swap_range(
+      buffer_,
+      buffer_ + length_,
+      ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
 
     swap(tmp);
   }
@@ -448,47 +447,6 @@ private:
   /// If true then the sequence should release the buffer when it is
   /// destroyed.
   mutable CORBA::Boolean release_;
-
-  /// helper method for assignment operator and copy constructor
-  /// to minimize creation of tmp sequences.
-  void copy_internal(generic_sequence const & rhs)
-  {
-    if (buffer_ == 0)
-    {
-      if (rhs.maximum_ == 0 || rhs.buffer_ == 0)
-      {
-        maximum_ = rhs.maximum_;
-        length_ = rhs.length_;
-      }
-      else
-      {
-        maximum_ = rhs.maximum_;
-        length_ = rhs.length_;
-        buffer_ = allocation_traits::allocbuf_noinit(maximum_);
-        release_ = true;
-
-        element_traits::initialize_range(
-            buffer_ + length_, buffer_ + maximum_);
-        element_traits::copy_range(
-            rhs.buffer_,
-            rhs.buffer_ + rhs.length_,
-            ACE_make_checked_array_iterator (buffer_, length_));
-      }
-    }
-    else
-    {
-      generic_sequence tmp(rhs.maximum_, rhs.length_,
-                           allocation_traits::allocbuf_noinit(rhs.maximum_),
-                           true);
-      element_traits::initialize_range(
-          tmp.buffer_ + tmp.length_, tmp.buffer_ + tmp.maximum_);
-      element_traits::copy_range(
-          rhs.buffer_,
-          rhs.buffer_ + rhs.length_,
-          ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
-      swap(tmp);
-    }
-  }
 };
 
 #if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1

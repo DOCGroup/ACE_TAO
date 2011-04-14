@@ -56,11 +56,10 @@ struct value_traits
 
   // Allow MSVC++ >= 8 checked iterators to be used.
   template <typename iter>
-  inline static bool copy_swap_range(
+  inline static void copy_swap_range(
       value_type * begin, value_type * end, iter dst)
   {
     copy_range(begin, end, dst);
-    return false;
   }
 };
 
