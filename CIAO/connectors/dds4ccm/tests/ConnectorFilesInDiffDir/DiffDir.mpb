@@ -3,3 +3,7 @@
 feature (dds4ccm_ndds) {
   dds_ts_flags += -d Connector
 }
+
+feature (dds4ccm_opendds) {
+  dds_ts_flags += -o Connector
+}
