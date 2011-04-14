@@ -200,9 +200,9 @@ struct Tester
       CHECK_THROW(tested_sequence y(x), testing_exception);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(da.expect(0), da);
-      FAIL_RETURN_IF_NOT(f.expect(0), f);
+      FAIL_RETURN_IF_NOT(f.expect(1), f);
       FAIL_RETURN_IF_NOT(d.expect(8), d);
-      FAIL_RETURN_IF_NOT(r.expect(0), r);
+      FAIL_RETURN_IF_NOT(r.expect(TMAX), r);
     }
     FAIL_RETURN_IF_NOT(d.expect(0), d);
     FAIL_RETURN_IF_NOT(r.expect(TMAX), r);

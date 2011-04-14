@@ -53,11 +53,10 @@ struct object_reference_traits_decorator
 
   // Allow MSVC++ >= 8 checked iterators to be used.
   template <typename iter>
-  inline static bool copy_swap_range(
+  inline static void copy_swap_range(
       object_type ** begin, object_type ** end, iter dst)
   {
-    std::copy(begin, end, dst);
-    return true;
+    std::swap_ranges(begin, end, dst);
   }
 
   inline static void release_range(
