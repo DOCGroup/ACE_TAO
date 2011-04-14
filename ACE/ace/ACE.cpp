@@ -2853,7 +2853,7 @@ ACE::set_handle_limit (int new_limit,
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
       rl.rlim_cur = new_limit;
       return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
-#elif defined (ACE_LACKS_RLIMIT_NOFILE)
+#elif !defined (RLIMIT_NOFILE)
       return 0;
 #else
       // Must return EINVAL errno.

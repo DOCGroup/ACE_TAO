@@ -50,17 +50,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-// There must be a better way to do this...
-#if !defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT_NOFILE)
-#  if defined (linux) || defined (AIX)
-#    if defined (RLIMIT_OFILE)
-#      define RLIMIT_NOFILE RLIMIT_OFILE
-#    else
-#      define RLIMIT_NOFILE 200
-#    endif /* RLIMIT_OFILE */
-#  endif /* defined (linux) || defined (AIX) */
-#endif /* RLIMIT_NOFILE */
-
 #if defined (ACE_WIN32)
 #  define RUSAGE_SELF 1
    /// Fake the UNIX rusage structure.  Perhaps we can add more to this
