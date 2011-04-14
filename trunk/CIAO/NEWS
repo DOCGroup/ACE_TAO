@@ -8,6 +8,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.1 and CIAO-1.0.2
 . Improved disconnect of connections in general and extended our test suite
   for that
 
+. Restructured base projects for dds4ccm to make a clear distinction between
+  plain ndds and our idl to cpp wrapper around it
+
+. Validated with ndds 4.5drev03
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
 =======================================================
 
