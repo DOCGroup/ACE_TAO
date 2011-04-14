@@ -1,3 +1,20 @@
+Thu Apr 14 19:03:06 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Array_Traits_T.h:
+        * tao/Generic_Sequence_T.h:
+        * tao/Object_Reference_Traits_T.h:
+        * tao/String_Traits_T.h:
+        * tao/Value_Traits_T.h:
+
+        * tao/Valuetype/Valuetype_Traits_T.h:
+
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+
+          Reverted the shallow-copy optimizations, they caused a memory
+          leak in some usages.
+
 Thu Apr 14 11:55:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Resume_Handle.h:
