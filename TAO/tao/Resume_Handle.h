@@ -48,7 +48,6 @@ class TAO_Export TAO_Resume_Handle
 {
 
 public:
-
   /// Constructor.
   TAO_Resume_Handle (TAO_ORB_Core *orb_core = 0,
                      ACE_HANDLE h = ACE_INVALID_HANDLE);

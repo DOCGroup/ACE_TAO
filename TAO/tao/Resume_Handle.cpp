@@ -26,7 +26,7 @@ TAO_Resume_Handle::resume_handle (void)
       this->orb_core_->reactor ()->resume_handler (this->handle_);
     }
 
-  // Set the flag, so that we dont resume again..
+  // Set the flag, so that we don't resume again..
   this->flag_ = TAO_HANDLE_ALREADY_RESUMED;
 }
 
