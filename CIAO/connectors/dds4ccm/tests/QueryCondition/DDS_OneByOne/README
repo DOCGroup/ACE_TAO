@@ -21,7 +21,7 @@ read_w_condition with this querycondition.
 What we expect is that the receiver receives two samples (key_1 and key_2) with iteration 5.
 
 Next, the sender writes samples with symbol <KEY_1> and <KEY_2> and iteration <7> through <9>
-The receiver deletes the query condition and creates the next  readcondition:
+The receiver deletes the query condition and creates the next readcondition:
   "DDS_NOT_READ_SAMPLE_STATE,DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE"
 and uses, in a loop, a read_w_condition with this readcondition and number of samples = 1.
 

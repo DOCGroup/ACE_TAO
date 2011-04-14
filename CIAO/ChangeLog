@@ -1,3 +1,17 @@
+Thu Apr 14 13:39:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/Base/Base_ObO.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/DDS_ObO_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/DDS_ObO_Sender.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/README:
+          Disabled these tests for the moment, they are using ndds without
+          the cck which causes a lot of warnings on the scoreboard, making
+          it impossible to see if there are other issues
+
 Thu Apr 14 11:56:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
