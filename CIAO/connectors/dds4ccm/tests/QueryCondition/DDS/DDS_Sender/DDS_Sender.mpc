@@ -1,6 +1,7 @@
 // $Id$
 
 project(*qc_sender) : aceexe, nddslib, ndds_ts_defaults {
+  requires += dummy_label
   exename = DDS_Sender
   after += Base_stub
 
