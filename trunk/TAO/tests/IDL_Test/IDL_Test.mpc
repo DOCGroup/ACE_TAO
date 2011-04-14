@@ -304,6 +304,63 @@ project(*NDDS_IDL): ndds_cck_ts_defaults {
   }
 }
 
+project(*CoreDX_IDL): coredx_ts_defaults {
+  custom_only=1
+
+  CoreDXTypeSupport_Files {
+    anonymous.idl
+    array.idl
+    array_only.idl
+    attribute.idl
+    Bug_2350_Regression.idl
+    Bug_2577_Regression.idl
+    Bug_2582_Regression.idl
+    Bug_2583_Regression.idl
+    Bug_2616_Regression.idl
+    Bug_2619_Regression.idl
+    Bug_3243_Regression.idl
+    Bug_3312_Regression.idl
+    Bug_3819_Regression.idl
+    Bug_3821_Regression.idl
+    constants.idl
+    dif2.idl
+    enum_in_struct.idl
+    full.idl
+    fwd.idl
+    generic_object.idl
+    gperf.idl
+    included.idl
+    including.idl
+    inherit.idl
+    interface.idl
+    keywords.idl
+    module.idl
+    nested_scope.idl
+    old_array.idl
+    old_constants.idl
+    old_sequence.idl
+    old_struct.idl
+    old_union.idl
+//    old_union2.idl
+    params.idl
+    pragma.idl
+    primtypes.idl
+    reopened_modules.idl
+    reopen_include1.idl
+    reopen_include2.idl
+    repo_id_mod.idl
+    sequence.idl
+    simple.idl
+    simple2.idl
+    struct.idl
+    typecode.idl
+    typedef.idl
+    typeprefix.idl
+    union.idl
+    valuetype.idl
+  }
+}
+
 project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
   after += *DLL *NDDS_IDL
   libs += IDL_Test_DLL
