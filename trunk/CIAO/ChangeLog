@@ -1,3 +1,10 @@
+Thu Apr 14 11:56:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+        * MPC/config/dds4ccm_ts_default.mpb:
+        * connectors/dds4ccm/examples/Quoter/Base/Quoter_Base.idl:
+          Extended portability
+
 Thu Apr 14 10:01:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm_impl.mpb:

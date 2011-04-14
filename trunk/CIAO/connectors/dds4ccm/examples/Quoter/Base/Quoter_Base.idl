@@ -10,6 +10,7 @@
 
 #pragma ndds typesupport "Base/Quoter_BaseSupport.h"
 #pragma opendds typesupport "Base/Quoter_BaseTypeSupportC.h"
+#pragma coredx typesupport "Base/Quoter_BaseTypeSupport.hh"
 
 #pragma DCPS_DATA_TYPE "Quoter::Stock_Info"
 #pragma DCPS_DATA_KEY "Quoter::Stock_Info symbol"
