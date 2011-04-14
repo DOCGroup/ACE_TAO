@@ -1,3 +1,12 @@
+Thu Apr 14 11:55:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resume_Handle.h:
+        * tao/Resume_Handle.cpp:
+          Layout changes
+
+        * tests/IDL_Test/IDL_Test.mpc:
+          Added CoreDX project
+
 Tue Apr 12 18:00:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_NoUpcall_Client_Leader/server.cpp:
