@@ -1,3 +1,10 @@
+Thu Apr 14 07:58:19 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * ace/ACE.cpp:
+        * ace/config-lynxos.h:
+        * ace/os_include/sys/os_resource.h:
+          Removed legacy rlimit related settings.
+
 Wed Apr 13 13:29:13 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3943_Regression_Test.cpp:
