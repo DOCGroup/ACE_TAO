@@ -9,7 +9,5 @@ project : nddslib, nddsmonitor, taoidldefaults {
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl/ndds
-  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
-              $(CIAO_ROOT)/connectors/dds4ccm/idl/ndds \
-              $(CIAO_ROOT)/connectors
+  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl/ndds
 }
