@@ -577,8 +577,7 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 
 template <typename Manager, typename AppManager, typename Application>
 void
-Plan_Launcher_Base_Impl< Manager, AppManager, Application>
-::destroy_app_manager(CORBA::Object_ptr am_obj)
+Plan_Launcher_Base_Impl< Manager, AppManager, Application>::destroy_app_manager(CORBA::Object_ptr am_obj)
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::destroy_app_manager");
 
