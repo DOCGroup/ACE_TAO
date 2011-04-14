@@ -31,8 +31,6 @@ PRELIB          = @true
 RANLIB          = ranlib
 SOFLAGS         += -shared
 
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-
 ifeq ($(threads),1)
   FLAGS_C_CC += -pthread
   SOFLAGS += -pthread
