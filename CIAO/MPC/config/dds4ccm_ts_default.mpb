@@ -11,7 +11,12 @@ feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps, typecode {
 
 feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   Define_Custom(DDSGenerator) : SpliceTypeSupport {
-//    keyword splice_ts_flags = commandflags
+    keyword dds_ts_flags = commandflags
+  }
+}
+
+feature(dds4ccm_coredx) : dds4ccm, coredx_ts_defaults, coredxlib {
+  Define_Custom(DDSGenerator) : CoreDXTypeSupport {
     keyword dds_ts_flags = commandflags
   }
 }
@@ -43,7 +48,15 @@ feature(!dds4ccm_splice) {
   }
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) : typecode {
+feature(!dds4ccm_coredx) {
+  // this allows the user's project to reference coredx_ts_flags,
+  // which will simply be ignored
+  Define_Custom(CoreDXDummyTypeSupport) {
+    keyword coredx_ts_flags
+  }
+}
+
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice, !dds4ccm_coredx) : typecode {
   Define_Custom(DDSGenerator) {
     keyword dds_ts_flags
   }
