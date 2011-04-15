@@ -1,8 +1,12 @@
+Fri Apr 15 07:34:39 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+          Fixed memory leak
+
 Thu Apr 14 14:05:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Logger/Logger_Service.cpp:
         * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
-
           Errors.
 
 Wed Apr 13 16:54:52 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
