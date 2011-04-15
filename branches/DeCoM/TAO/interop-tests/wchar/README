@@ -1,0 +1,32 @@
+Test for passing wchar data between TAO and JacORB processes.
+This test may also be run for tao-tao on different platforms.
+
+To build this test for JacORB requires a JacORB 2.0 installation, and the
+ant build tool. The Java classpath must include $JACORB_HOME/lib/jacorb.jar
+and $TAO_ROOT/interop-tests/classes.
+
+To build the tao test client and server, first run mwc.pl in the ordinary
+way to generate makefiles or project files. Then to build the JacORB client
+and server, use "ant" which assumes $JACORB_HOME is set to the JacORB home
+directory.
+
+The TAO server command line is:
+  ./server [-o iorfile] [-v]
+The default ior file for the server is "./IOR"
+The -v option causes the server to output some details of its operation.
+
+The TAO client command line is:
+  ./client [-k ior] [[-t 0 < n <= 14]...] [-v] [-x]
+The default ior is "file://IOR". Note that it is an IOR, not a filename.
+The -t option selects individual tests, no selection implies all tests,
+  the -t option may be repeated to select a number of tests
+The -v option make the test more verbose, not adding it only outputs final
+  pass/fail message.
+The -x option makes the client send a shutdown request to the server.
+Anything else, such as -?, will yield a list of options and test descriptions.
+
+To run the JacORB client or server, use the "jaco" utility,
+
+jaco -classpath ../classes interop.wchar.Server [-o iorfile] [-v]
+jaco -classpath ../classes interop.wchar.Client [-i iorfile] [-t 0..14] [-v] [-x]
+Note that Client takes -i iorfile, not -k ior.

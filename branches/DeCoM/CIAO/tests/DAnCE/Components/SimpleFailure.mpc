@@ -1,0 +1,108 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl SimpleFailure"
+
+project(SimpleFailure_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SIMPLEATTRIBUTE_STUB_Export \
+              -Wb,stub_export_include=SimpleFailure_stub_export.h \
+              -Wb,skel_export_macro=SIMPLEATTRIBUTE_SVNT_Export \
+              -Wb,skel_export_include=SimpleFailure_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEATTRIBUTE_EXEC_Export \
+              -Wb,exec_export_include=SimpleFailure_exec_export.h
+
+  IDL_Files {
+    SimpleFailure.idl
+  }
+}
+
+project(SimpleFailure_lem_gen) : ciaoidldefaults {
+  after += SimpleFailure_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SIMPLEATTRIBUTE_EXEC_Export \
+              -Wb,export_include=SimpleFailure_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SimpleFailureE.idl
+  }
+}
+
+project(SimpleFailure_stub) : ccm_stub {
+  after += SimpleFailure_idl_gen
+  libs  +=
+
+  sharedname = SimpleFailure_stub
+  dynamicflags += SIMPLEATTRIBUTE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleFailureC.cpp
+  }
+
+  Header_Files {
+    SimpleFailureC.h
+    SimpleFailure_stub_export.h
+  }
+
+  Inline_Files {
+    SimpleFailureC.inl
+  }
+}
+
+project(SimpleFailure_exec) : ciao_executor {
+  after   += SimpleFailure_lem_gen SimpleFailure_stub
+  sharedname = SimpleFailure_exec
+  libs += SimpleFailure_stub
+
+  dynamicflags += SIMPLEATTRIBUTE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleFailureEC.cpp
+    SimpleFailure_exec.cpp
+  }
+
+  Header_Files {
+    SimpleFailureEC.h
+    SimpleFailure_exec.h
+    SimpleFailure_exec_export.h
+  }
+
+  Inline_Files {
+    SimpleFailureEC.inl
+  }
+}
+
+
+project(SimpleFailure_svnt) : ciao_servant {
+  after      +=  SimpleFailure_exec
+  sharedname  = SimpleFailure_svnt
+  libs       += SimpleFailure_exec \
+                SimpleFailure_stub
+
+  dynamicflags += SIMPLEATTRIBUTE_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleFailureS.cpp
+    SimpleFailure_svnt.cpp
+  }
+
+  Header_Files {
+    SimpleFailureS.h
+    SimpleFailure_svnt.h
+    SimpleFailure_svnt_export.h
+  }
+
+  Inline_Files {
+    SimpleFailureS.inl
+  }
+}
+
+

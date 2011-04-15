@@ -1,0 +1,39 @@
+// $Id$
+
+The TwoQueries exists of 4 runs. During each run the Sender writes 20 samples to DDS.
+After that it informs the receiver that the samples were written. The receiver
+in turn sets a filter and starts to pull the samples from DDS, using the Getter.
+Once the receiver has received all samples, it informs the Sender that the next
+run can be started.
+Since the getter only receives non-read samples, an extra check is build in. The
+receiver also performs a read on a different port in order to check whether the
+right samples are available in DDS. This Reader should always receive ALL samples
+since the QueryFilter only applies to the Getter.
+
+The following query expression is defined:
+  ( (iteration > %0) AND (iteration < %1) )
+
+The following runs are defined:
+
+1.  Sender writes iterations 1-20 to DDS for a certain number of keys,
+    defined in the deployment plan. The receiver sets the filter and filter
+    parameters and starts receiving the samples one by one, using get_one.
+    After that it changes the filter parameters and informs the Sender that a
+    new run can be started.
+2.  Sender writes iterations 21-40 to DDS for the defined number of keys. After
+    that it informs the receiver which starts to get the samples from DDS. After
+    that, the receiver reset the QueryFilter (by setting the expression to an
+    empty string) and informs the Sender that a new run can be started.
+3.  Sender writes iterations 41-60 to DDS for the defined number of keys. After
+    that it informs the receiver which should receive all samples with iterations
+    1-60 without the ones it read during run 1, 2 and 3.
+    The receiver then creates a new filter, using the same expression as used during
+    runs 1, 2 and 3 but with different parameters. Again the receiver informs the
+    Sender that a new run can be started.
+4.  Sender writes iterations 61-80 to DDS for the defined number of keys. Again it
+    informs the receiver about this action. The receiver should only get the samples
+    according to the query expression and its parameters.
+
+After each get-action, the receiver reads the data from DDS. During this read action,
+the receiver should read all samples the Sender has written up to that moment. Since
+there's no filter applied to this reader, all sample states should be 'FRESH_INFO'.

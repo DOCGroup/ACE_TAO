@@ -1,0 +1,28 @@
+// -*- MPC -*-
+// $Id$
+
+project (*client) : taoserver, messaging, strategies {
+  exename = client
+  after = *server
+  source_files {
+    TestC.cpp
+    client.cpp
+  }
+  header_files {
+    TestC.h
+  }
+  idl_files {
+  }
+}
+
+project (*server) : taoserver, messaging, strategies {
+  source_files {
+    TestC.cpp
+    TestS.cpp
+    server.cpp
+  }
+  header_files {
+    TestS.h
+    TestC.h
+  }
+}

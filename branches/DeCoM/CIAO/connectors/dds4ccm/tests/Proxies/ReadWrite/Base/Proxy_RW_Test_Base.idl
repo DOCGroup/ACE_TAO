@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file Proxy_RW_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef PROXY_RW_TEST_BASE_IDL
+#define PROXY_RW_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/Proxy_RW_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "ProxyReadWriteTest"
+#pragma DCPS_DATA_KEY "ProxyReadWriteTest key"
+
+struct ProxyReadWriteTest {
+  string key; //@key
+  long iteration;
+};
+
+typedef sequence<ProxyReadWriteTest> ProxyReadWriteTestSeq;
+
+#endif /* PROXY_RW_TEST_BASE_IDL */
