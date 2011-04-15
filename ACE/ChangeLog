@@ -1,3 +1,10 @@
+Fri Apr 15 14:07:34 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tests/Bug_3709_Regression_Test.cpp:
+
+          Work-around a clang compiler crash in this test.
+          A bugzilla bug has been filed with the clang project.
+
 Fri Apr 15 08:30:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3943_Regression_Test.cpp:
