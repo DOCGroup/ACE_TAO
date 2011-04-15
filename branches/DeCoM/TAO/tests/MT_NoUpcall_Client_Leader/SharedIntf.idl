@@ -1,8 +1,0 @@
-// $Id$
-
-module Test_Idl {
-   interface SharedIntf {
-      void ping();
-      oneway void farewell();
-   };
-};
