@@ -1,3 +1,8 @@
+Fri Apr 15 07:51:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Disable coredx by default
+
 Thu Apr 14 19:17:04 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Bug_3943_Regression_Test.cpp:
