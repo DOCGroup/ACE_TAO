@@ -368,11 +368,11 @@ Svc_Handler::send_data (void)
 
 #if defined (ACE_WIN32)
       win32_test = true;
-      // THis test only applies to win32 platforms, on systems with
+      // This test only applies to win32 platforms, on systems with
       // sane sendv impls, this is not a problem.
       if (thresholdActualSend != static_cast<ssize_t>(tryThreshold)/2 + 1)
         {
-          if (tryThreshold == MAX)
+          if (static_cast<ssize_t>(tryThreshold) == MAX)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) was not able to identify a point ")
                         ACE_TEXT ("where ACE_OS::sendv does not send a ")
