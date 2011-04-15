@@ -13,6 +13,10 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.1 and CIAO-1.0.2
 
 . Validated with ndds 4.5drev03
 
+. Added serialize_key_with_dispose and propagate_dispose_of_unregistered_instances
+  as BOOLEAN_TRUE to the DDS QoS xml file for several tests to always get
+  the key of the sample in the on_deletion callback
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
 =======================================================
 
