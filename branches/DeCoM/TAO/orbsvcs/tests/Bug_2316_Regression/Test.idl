@@ -1,0 +1,12 @@
+// $Id$
+
+#ifndef _TEST_IDL_
+#define _TEST_IDL_
+
+interface server
+{
+    void method (in Object obj);
+    oneway void shutdown ();
+};
+
+#endif // _TEST_IDL_

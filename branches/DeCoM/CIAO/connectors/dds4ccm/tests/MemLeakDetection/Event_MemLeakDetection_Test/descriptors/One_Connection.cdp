@@ -1,0 +1,194 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Event_MemLeakDetection_Test_Depl_1</label>
+  <UUID>Event_MemLeakDetection_Test_Depl_1</UUID>
+
+  <implementation xmi:id="Event_MemLeakDetection_Test_ConnectorComponentImplementation">
+    <name>Event_MemLeakDetection_Test_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Event_MemLeakDetection_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="Event_MemLeakDetection_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Event_MemLeakDetectionConnector_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Event_MemLeakDetectionConnector_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Event_MemLeakDetection_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Event_MemLeakDetection_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="SenderComponentImplementation">
+    <name>SenderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Event_MemLeakDetection_Test_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Event_MemLeakDetection_Test_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <instance xmi:id="Event_MemLeakDetection_Test_ConnectorComponentInstance">
+    <name>Event_MemLeakDetection_Test_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Event_MemLeakDetection_Test_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Event_MemLeakDetection_Test</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="SenderComponentInstance">
+    <name>SenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation" />
+  </instance>
+
+  <connection>
+    <name>writer_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Event_MemLeakDetection_Test_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="Sender_StubArtifact">
+    <name>Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+  <artifact xmi:id="Event_MemLeakDetection_Test_Connector_ExecArtifact">
+    <name>Event_MemLeakDetection_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>DDS_EMLDT_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="Event_MemLeakDetection_Test_Connector_SvntArtifact">
+    <name>Event_MemLeakDetection_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>DDS_EMLDT_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="Event_MemLeakDetection_Test_Connector_StubArtifact">
+    <name>Event_MemLeakDetection_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>DDS_EMLDT_Connector_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>

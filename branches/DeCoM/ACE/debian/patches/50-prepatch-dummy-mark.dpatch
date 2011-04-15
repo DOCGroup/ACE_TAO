@@ -1,0 +1,8 @@
+#! /bin/sh -e
+## 50-prepatch-mark-dummy.dpatch by Raphael Bossek <bossekr@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: This files does nothing then be a mark for the `autotools'
+## DP: debian/rules's target.
+
+exit 0

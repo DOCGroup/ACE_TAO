@@ -1,0 +1,36 @@
+// -*- IDL -*-
+
+/**
+ * @file Policy_Forward.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source to forward declare some critical
+ * Policy-related types.
+ */
+
+#ifndef TAO_CORBA_POLICY_FORWARD_PIDL
+#define TAO_CORBA_POLICY_FORWARD_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef unsigned long PolicyType;
+
+  interface Policy;
+
+  typedef sequence<Policy> PolicyList;
+
+  typedef sequence<PolicyType> PolicyTypeSeq;
+
+  local interface PolicyCurrent;
+
+  enum SetOverrideType
+  {
+    SET_OVERRIDE,
+    ADD_OVERRIDE
+  };
+};
+
+#endif /* TAO_CORBA_POLICY_FORWARD_PIDL */

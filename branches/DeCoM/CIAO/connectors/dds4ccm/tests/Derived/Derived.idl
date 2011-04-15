@@ -1,0 +1,14 @@
+// $Id$
+
+#ifndef NOMODULE_IDL
+#define NOMODULE_IDL
+
+#pragma ndds typesupport "DerivedSupport.h"
+
+struct DerivedType {
+  string value; //@key
+};
+
+typedef sequence<DerivedType> DerivedTypeSeq;
+
+#endif
