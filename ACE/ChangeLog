@@ -1,3 +1,8 @@
+Fri Apr 15 08:30:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3943_Regression_Test.cpp:
+          Fixed mingw warning
+
 Fri Apr 15 07:51:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/global.features:
