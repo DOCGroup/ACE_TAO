@@ -60,7 +60,6 @@ namespace DAnCE
   {
     DANCE_TRACE ("Plan_Launcher_Base_Impl::prepare_plan");
 
-
 #ifdef GEN_OSTREAM_OPS
     if (DAnCE_debug_level >= DANCE_LOG_DETAILED_TRACE)
       {
@@ -76,7 +75,9 @@ namespace DAnCE
 
   try
     {
-      app_manager = AppManager::_narrow (this->manager_->preparePlan (plan, 0));
+      ::Deployment::ApplicationManager_var l_manager =
+        this->manager_->preparePlan (plan, 0);
+      app_manager = app_manager = AppManager::_narrow (l_manager.in ());
     }
   catch (::Deployment::PlanError &ex)
     {
