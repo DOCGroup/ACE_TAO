@@ -1,7 +1,6 @@
 // $Id$
 
 project(*qc_receiver) : aceexe, nddslib, ndds_ts_defaults {
-  requires += dummy_label
   exename = DDS_ObO_receiver
   after += Base_obo_stub
 
