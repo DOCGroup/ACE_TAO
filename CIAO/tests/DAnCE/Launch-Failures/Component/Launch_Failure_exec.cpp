@@ -240,7 +240,7 @@ namespace CIAO_Launch_Failure_Impl
   create_Launch_Failure_Exception (void)
   {
     // Throw an exception
-    throw 1;
+    //throw 1;
   }
 }
 
