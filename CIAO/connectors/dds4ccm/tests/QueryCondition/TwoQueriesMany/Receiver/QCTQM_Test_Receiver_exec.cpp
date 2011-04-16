@@ -28,6 +28,7 @@
 #include "QCTQM_Test_Receiver_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 #include "dds4ccm/impl/Utils.h"
@@ -385,7 +386,7 @@ namespace CIAO_QCTQM_Test_Receiver_Impl
   {
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL  run %d: \n"), run));
-    sleep (3);
+    ACE_OS::sleep (3);
 
     ::QCTQM_Test::QueryConditionTestConnector::Getter_var getter =
       this->ciao_context_->get_connection_get_port_fresh_data ();
