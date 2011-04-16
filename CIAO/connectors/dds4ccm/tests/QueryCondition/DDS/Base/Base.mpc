@@ -1,7 +1,6 @@
 // $Id$
 
 project(Base_stub) : ndds_ts_defaults, nddslib {
-  requires += dummy_label
   sharedname = Base_stub
   dynamicflags += NDDS_USER_DLL_EXPORT
   libout = ../descriptors
