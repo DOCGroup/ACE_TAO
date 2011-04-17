@@ -1,3 +1,11 @@
+Sun Apr 17 17:48:54 UTC 2011  Chad Beaulac <chad@objectivesolutions.com>
+       * tests/Bug_3912_Regression_Test.conf
+       * tests/run_test.lst
+       * tests/Bug_3912_Regression_Test.cpp
+       * tests/tests.mpc
+	 Removed 3912 Test and conf file.
+	 Will re-add after code freeze for upcoming release.
+
 Sun Apr 17 14:11:52 UTC 2011  Chad Beaulac <chad@objectivesolutions.com>
 	* ace/Stream.cpp
 	  Reverted previous commit. #3912 is not fixed.
