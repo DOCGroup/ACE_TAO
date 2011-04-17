@@ -241,6 +241,9 @@ namespace CIAO_Launch_Failure_Impl
   {
     // Throw an exception
     //throw 1;
+    ::Components::EnterpriseComponent_ptr retval =
+      ::Components::EnterpriseComponent::_nil ();
+    return retval;
   }
 }
 
