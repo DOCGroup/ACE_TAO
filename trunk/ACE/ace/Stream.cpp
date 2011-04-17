@@ -260,12 +260,12 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
         else
           prev->link (mod->next ());
 
-        // Close down the module.
-        mod->close (flags);
-       
         // Don't delete the Module unless the flags request this.
         if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
           {
+            // Close down the module.
+            mod->close (flags);
+       
             // Release the memory.
             delete mod;
           }
