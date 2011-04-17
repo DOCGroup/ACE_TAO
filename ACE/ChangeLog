@@ -1,3 +1,24 @@
+Sun Apr 17 13:30:23 UTC 2011  Chad Beaulac <chad@objectivesolutions.com>
+
+	* ace/Stream.cpp
+	  ACE_Stream::remove(module) always calls close on the Module now.
+	  It use to only call close when the flags was M_DELETE_NONE.
+
+	* tests/Bug_3912_Regression_Test.conf
+	* tests/Bug_3912_Regression_Test.cpp
+	  Tests that close is called on an ACE_Task that's
+	  the reader in a Module that's removed from the Stream.
+
+	* tests/Service_Config_Stream_DLL.cpp
+	  Added make_close factory method for a new Module.
+	
+	* tests/Bug_3334_Regression_Test.cpp
+	  Initialized status variable to zero.
+	
+	* tests/run_test.lst
+	* tests/tests.mpc
+	  Added new test.
+
 Fri Apr 15 14:07:34 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * tests/Bug_3709_Regression_Test.cpp:
