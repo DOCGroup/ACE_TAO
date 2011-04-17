@@ -247,7 +247,7 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
     if (ACE::debug ())
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("ACE_Stream::remove comparing existing module :%s: with :%s:\n"),
+        ACE_TEXT ("ACE_Stream::remove - comparing existing module :%s: with :%s:\n"),
         mod->name (),
         name));
     }
@@ -260,11 +260,13 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
         else
           prev->link (mod->next ());
 
+        // Close down the module.
+        mod->close (flags);
+       
         // Don't delete the Module unless the flags request this.
         if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
           {
-            // Close down the module and release the memory.
-            mod->close (flags);
+            // Release the memory.
             delete mod;
           }
 

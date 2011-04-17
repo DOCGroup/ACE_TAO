@@ -54,6 +54,7 @@ extern "C" Service_Config_Stream_DLL_Export MT_Stream *make_stream (void);
 extern "C" Service_Config_Stream_DLL_Export MT_Module *make_da (void);
 extern "C" Service_Config_Stream_DLL_Export MT_Module *make_ea (void);
 extern "C" Service_Config_Stream_DLL_Export MT_Module *make_mr (void);
+extern "C" Service_Config_Stream_DLL_Export MT_Module *make_close (void);
 
 MT_Stream *
 make_stream (void)
@@ -79,6 +80,13 @@ MT_Module *
 make_mr (void)
 {
   return new MT_Module (ACE_TEXT ("Multicast_Router"),
+                        new Test_Task, new Test_Task);
+}
+
+MT_Module *
+make_close (void)
+{
+  return new MT_Module (ACE_TEXT ("Close_Test_Module"),
                         new Test_Task, new Test_Task);
 }
 

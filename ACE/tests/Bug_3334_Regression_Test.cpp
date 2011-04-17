@@ -30,7 +30,7 @@ run_main (int, ACE_TCHAR *argv[])
                           const_cast<ACE_TCHAR*> (ACE_TEXT ("-f")),
                           const_cast<ACE_TCHAR*>
                             (ACE_TEXT ("Bug_3334_Regression_Test.conf")) };
-  int status;
+  int status = 0;
   if ((status = ACE_Service_Config::open (3,
                                           _argv,
                                           ACE_DEFAULT_LOGGER_KEY,
