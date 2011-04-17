@@ -265,7 +265,7 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
           {
             // Close down the module.
             mod->close (flags);
-       
+
             // Release the memory.
             delete mod;
           }
