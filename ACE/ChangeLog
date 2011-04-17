@@ -1,3 +1,10 @@
+Sun Apr 17 14:11:52 UTC 2011  Chad Beaulac <chad@objectivesolutions.com>
+	* ace/Stream.cpp
+	  Reverted previous commit. #3912 is not fixed.
+
+	* tests/run_test.lst
+	  Added (not)FIX_BUGS_ONLY to Bug_3912_Regression_Test
+
 Sun Apr 17 13:30:23 UTC 2011  Chad Beaulac <chad@objectivesolutions.com>
 
 	* ace/Stream.cpp
