@@ -17,6 +17,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.1 and CIAO-1.0.2
   as BOOLEAN_TRUE to the DDS QoS xml file for several tests to always get
   the key of the sample in the on_deletion callback
 
+. The logging service now supports custom backends.  These are enabled
+  using CIAO_LOG_BACKEND.  Please see the DAnCE NEWS file for more
+  details.  DDS4CCM also supports the custom backend service,
+  initialized with DDS4CCM_LOG_BACKEND.
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
 =======================================================
 
