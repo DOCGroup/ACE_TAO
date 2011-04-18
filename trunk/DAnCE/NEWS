@@ -4,9 +4,26 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
   message levels have changed.  Details of the intended logging levels
   may be found in dance/Logger/Log_Macros.h
 
+. The new default logging level in DAnCE is 1 instead of 0.  Messages
+  at log level 1 will only be those errors that cause a premature exit
+  of the process in question.
+
 . A new logging macro, DANCE_LOG_TRACE has been added to the most
   fine-grained tracing messages.  This can be disabled to improve
   performance and footprint seperate from more useful logging messages.
+
+. Added capability to plugin custom log backends into the DAnCE
+  logging service.  These backends must be loaded via a svc.conf file
+  (please see tools/Logger_Backend/ndds/svc.conf) for an example, and
+  are loaded via the DANCE_LOG_BACKEND environment variable or the
+  DAnCELogBackend command line option.
+
+. An example Logger Backend written against RTI DDS has been added.
+  This backend is still in early stages of development and doesn't take
+  advantage of QoS features of DDS.
+
+. Error reporting has been substantially improved, and most exceptions
+  should now be propagated to the user with a human-readable error message.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.0 and DAnCE-1.0.1
 =======================================================
