@@ -14,12 +14,6 @@ USER VISIBLE CHANGES BETWEEN ACE-6.0.1 and ACE-6.0.2
 . Fixed performance of send_v on windows when individual iovec elements
   are particularly large.
 
-. Improved performance of the Parallel Connect Strategy in TAO.
-
-. tao_catior does a better job with JacORB generated IORs.
-
-. tao_cosnaming can now be multithreaded.
-
 USER VISIBLE CHANGES BETWEEN ACE-6.0.0 and ACE-6.0.1
 ====================================================
 
