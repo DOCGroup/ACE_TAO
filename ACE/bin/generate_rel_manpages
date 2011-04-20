@@ -33,7 +33,6 @@ my $find = 'find';
 my $gzip = 'gzip';
 my $bzip = 'bzip2';
 my $tar = 'tar';
-my $make = 'make -f Release -s';
 my $mv = 'mv -f';
 my $scp = 'scp ';
 my $rm = 'rm -f';
@@ -53,10 +52,6 @@ my $release_filter = '\\( -name .svn -o -name build \\) -prune -o ' .
 my $bin_files =
     "\"\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
     "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\"";
-
-my $release_files = '';
-
-chomp ($release_files = `$make show_release_files`);
 
 ########
 ######## Main execution thread.

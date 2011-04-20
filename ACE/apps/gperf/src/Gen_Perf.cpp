@@ -39,8 +39,10 @@ extern const char *version_string;
 /// the maximum hash table size.  Note: using the random numbers is
 /// often helpful, though not as deterministic, of course!
 Gen_Perf::Gen_Perf (void)
-  : fewest_collisions (0),
-    num_done (1)
+  : max_hash_value (0),
+    fewest_collisions (0),
+    num_done (1),
+    union_set (0)
 {
 }
 

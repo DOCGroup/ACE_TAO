@@ -483,7 +483,7 @@ sub check_for_ACE_Guard ()
 sub check_for_tab ()
 {
     print "Running tabs check\n";
-    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp, @files_doxygen) {
+    ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl, @files_cdp, @files_doxygen, @@files_changelog) {
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
@@ -1760,7 +1760,7 @@ sub check_for_changelog_errors ()
                     print_error ("$file:$.: Backslashes in file path");
                 }
 
-                # Check for CVS conflict tags
+                # Check for svn conflict tags
                 if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
                     print_error ("$file:$.: svn conflict markers");
                 }
@@ -2012,8 +2012,8 @@ sub check_for_old_documentation_style ()
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
 
-                if (/\/\/\= TITLE/) {
-                  print_error ("$file:$.: found old documentation style //= TITLE");
+                if (/\/\/\s*\= TITLE/) {
+                  print_error ("$file:$.: found old documentation style // = TITLE");
                 }
             }
             close (FILE);
@@ -2300,7 +2300,7 @@ check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_include_OS_h () if ($opt_l >= 1);
 check_for_numeric_log () if ($opt_l >= 3);
 check_for_ORB_init () if ($opt_l >= 1);
-check_for_old_documentation_style () if ($opt_l >= 5);
+check_for_old_documentation_style () if ($opt_l >= 6);
 
 print "\nfuzz.pl - $errors error(s), $warnings warning(s)\n";
 
