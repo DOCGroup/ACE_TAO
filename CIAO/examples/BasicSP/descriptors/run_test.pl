@@ -50,7 +50,7 @@ sub create_targets {
     #   naming service
     $tg_naming = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
     $tg_naming->AddLibPath ('../lib');
-    #   daemon
+    #   daemon (Node Manager)
     for ($i = 0; $i < $daemons; ++$i) {
         $tg_daemons[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target for daemon $i failed\n";
         $tg_daemons[$i]->AddLibPath ('../lib');
