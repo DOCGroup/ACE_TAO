@@ -120,7 +120,7 @@ CIAO::DDS4CCM::CCM_DataWriter::get_matched_subscriptions (::DDS::InstanceHandleS
 ::DDS::ReturnCode_t
 CIAO::DDS4CCM::CCM_DataWriter::get_matched_subscription_data (
   ::DDS::SubscriptionBuiltinTopicData & data,
-  const ::DDS::InstanceHandle_t &handle)
+  DDS_INSTANCE_HANDLE_T_IN handle)
 {
   return this->impl ()->get_matched_subscription_data (data, handle);
 }

@@ -33,11 +33,11 @@ namespace CIAO
 
       virtual void update_one (
         const VALUE_TYPE& an_instance,
-        const ::DDS::InstanceHandle_t & instance_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle);
 
       virtual void delete_one (
         const VALUE_TYPE& an_instance,
-        const ::DDS::InstanceHandle_t & instance_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle);
 
       virtual void create_many (const SEQ_VALUE_TYPE& data);
 
@@ -64,12 +64,12 @@ namespace CIAO
 
       void update_i (
         const VALUE_TYPE& an_instance,
-        const ::DDS::InstanceHandle_t & instance_handle,
+        DDS_INSTANCE_HANDLE_T_IN instance_handle,
         ::CCM_DDS::DataNumber_t index);
 
       void delete_i (
         const VALUE_TYPE& an_instance,
-        const ::DDS::InstanceHandle_t & instance_handle,
+        DDS_INSTANCE_HANDLE_T_IN instance_handle,
         ::CCM_DDS::DataNumber_t index);
 
       void check_existent (const SEQ_VALUE_TYPE& data);

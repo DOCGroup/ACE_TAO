@@ -58,11 +58,13 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
         }
       if (qos_profile)
         {
+#if (CIAO_DDS4CCM_NDDS==1)
           dr = subscriber->create_datareader_with_profile (
                                           td.in (),
                                           qos_profile,
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
+#endif
         }
       else
         {

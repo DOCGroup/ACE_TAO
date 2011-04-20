@@ -36,7 +36,7 @@ namespace CIAO
 
       virtual void unregister_instance (
         const VALUE_TYPE& datum,
-        const ::DDS::InstanceHandle_t & instance_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle);
 
       void set_dds_writer (::DDS::DataWriter_ptr dds_writer);
 

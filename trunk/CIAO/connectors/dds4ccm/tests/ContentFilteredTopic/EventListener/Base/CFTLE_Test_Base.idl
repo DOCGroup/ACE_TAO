@@ -9,6 +9,7 @@
 #define CONTENTFILTEREDTOPIC_LISTEN_EVENT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/CFTLE_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/CFTLE_Test_BaseTypeSupportImpl.h"
 
 struct ContentFilteredTopicListenEventTest {
   string key; //@key

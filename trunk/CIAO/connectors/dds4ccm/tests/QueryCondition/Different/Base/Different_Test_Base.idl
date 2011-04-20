@@ -9,6 +9,7 @@
 #define DIFFERENT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Different_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Different_Test_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "QueryConditionTest"
 #pragma DCPS_DATA_KEY "QueryConditionTest symbol"

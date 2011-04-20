@@ -9,6 +9,7 @@
 #define VTOPIC_BASE_IDL
 
 #pragma ndds typesupport "Base/VTopic_BaseSupport.h"
+#pragma opendds typesupport "Base/VTopic_BaseTypeSupportImpl.h"
 
 typedef octet octet_array[5];
 

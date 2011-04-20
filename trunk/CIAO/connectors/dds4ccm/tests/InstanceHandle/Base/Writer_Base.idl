@@ -9,6 +9,7 @@
 #define WRITER_BASE_IDL
 
 #pragma ndds typesupport "Base/Writer_BaseSupport.h"
+#pragma opendds typesupport "Base/Writer_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "WriterTest"
 #pragma DCPS_DATA_KEY "WriterTest key"

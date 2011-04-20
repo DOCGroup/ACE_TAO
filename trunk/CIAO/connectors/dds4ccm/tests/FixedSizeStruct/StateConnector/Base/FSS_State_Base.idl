@@ -9,6 +9,7 @@
 #define FIXED_SIZE_STRUCT_STATE_BASE_IDL
 
 #pragma ndds typesupport "Base/FSS_State_BaseSupport.h"
+#pragma opendds typesupport "Base/FSS_State_BaseTypeSupportImpl.h"
 
 struct FixedStructSizeTest {
   long one;

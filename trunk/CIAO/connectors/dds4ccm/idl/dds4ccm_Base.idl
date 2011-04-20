@@ -8,6 +8,7 @@
 #define DDS4CCM_BASE_IDL3
 
 #include "connectors/dds4ccm/idl/dds_rtf2_dcps.idl"
+#include "connectors/dds4ccm/idl/dds4ccm_QueryFilter.idl"
 
 #pragma ciao lem "connectors/dds4ccm/idl/dds4ccm_BaseE.idl"
 
@@ -37,11 +38,6 @@ module CCM_DDS
     InstanceStatus instance_status;
   };
   typedef sequence<ReadInfo> ReadInfoSeq;
-
-  struct QueryFilter {
-    string            expression;
-    ::DDS::StringSeq  parameters;
-  };
 
   enum ListenerMode {
     NOT_ENABLED,

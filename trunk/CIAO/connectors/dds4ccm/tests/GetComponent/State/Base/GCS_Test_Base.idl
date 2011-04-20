@@ -9,6 +9,7 @@
 #define GET_COMPONENT_STATE_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/GCS_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/GCS_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "GCSTest"
 #pragma DCPS_DATA_KEY "GCSTest symbol"
