@@ -1,0 +1,36 @@
+/**
+ * @file Generic_Container.idl
+ * @author Johnny Willemsen
+ * $Id$
+ * Extends the basic container interface for extension capabilities.
+ */
+
+#include "ciao/Containers/Container_Base.idl"
+#include "ccm/Generic/CCM_ClientContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_ServantContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_ServerContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_StubContainerInterceptorRegistration.idl"
+
+module CIAO
+{
+  local interface Generic_Container : Container
+  {
+    Components::Cookie install_service_reference(in string service_id, in Object objref)
+      raises (Components::CCMException);
+    Object uninstall_service_reference(in Components::Cookie ck)
+      raises (Components::CCMException);
+
+    Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration
+      get_client_interceptor_registration ()
+        raises (Components::CCMException);
+    Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration
+      get_server_interceptor_registration ()
+        raises (Components::CCMException);
+    Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration
+      get_stub_interceptor_registration()
+        raises (Components::CCMException);
+    Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration
+      get_servant_interceptor_registration()
+        raises (Components::CCMException);
+  };
+};
