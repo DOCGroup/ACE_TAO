@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Global_Macros.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_resource.h"
@@ -383,10 +384,10 @@ public:
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Cond_Signal cmd\n"));
-    ACE_Guard<ACE_Thread_Mutex> guard (this->cond_.mutex ());
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard ,this->cond_.mutex (), 0);
     return this->cond_.signal ();
   }
-  ACE_Thread_Mutex& lock ()
+  TAO_SYNCH_MUTEX& lock ()
   {
     return lock_;
   }
@@ -406,7 +407,7 @@ public:
   }
 
 private:
-  ACE_Thread_Mutex lock_;
+  TAO_SYNCH_MUTEX lock_;
   ACE_Condition_Thread_Mutex cond_;
   int ref_count_;
 };
@@ -462,7 +463,7 @@ void synch_with_worker (Worker& worker)
   // executed the cmd
   Cond_Signal* cond = new Cond_Signal;
   {
-    ACE_Guard<ACE_Thread_Mutex> guard (cond->lock ());
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, cond->lock ());
     worker.put (cond);
     ACE_Time_Value tv (1, 0);
     tv += ACE_OS::gettimeofday ();
