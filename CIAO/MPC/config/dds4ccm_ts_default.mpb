@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps, typecode {
+feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps {
   Define_Custom(DDSGenerator) : TypeSupport {
     commandflags += -Wb,opendds_sequence_suffix=DDSSeq
     keyword opendds_ts_flags = commandflags

@@ -4,6 +4,7 @@
 #define DIFFDIR_IDL
 
 #pragma ndds typesupport "DiffDirSupport.h"
+#pragma opendds typesupport "DiffDirTypeSupportImpl.h"
 
 struct DiffDirType {
   string value; //@key

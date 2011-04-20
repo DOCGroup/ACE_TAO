@@ -9,6 +9,7 @@
 #define PSL_DEADLINETEST_BASE_IDL
 
 #pragma ndds typesupport "Base/PSL_DeadlineTest_BaseSupport.h"
+#pragma opendds typesupport "Base/PSL_DeadlineTest_BaseSupportImpl.h"
 
 struct TestTopic {
   string key; //@key

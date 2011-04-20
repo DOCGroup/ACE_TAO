@@ -9,6 +9,7 @@
 #define CONTENTFILTEREDTOPIC_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/CFT_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/CFT_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "CFTTwoDimensionalTest"
 #pragma DCPS_DATA_KEY "CFTTwoDimensionalTest symbol"

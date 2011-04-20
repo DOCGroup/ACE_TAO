@@ -9,6 +9,7 @@
 #define LATENCYTT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/LatencyTT_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/LatencyTT_Test_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "LatencyTTTest"
 

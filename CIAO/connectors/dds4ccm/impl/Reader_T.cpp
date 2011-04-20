@@ -26,7 +26,7 @@ namespace CIAO
     ::DDS::InstanceHandle_t
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::check_handle (
       const VALUE_TYPE& an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       ::DDS::InstanceHandle_t const lookup_hnd =
           this->dds_reader ()->lookup_instance (an_instance);
@@ -96,7 +96,7 @@ namespace CIAO
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_w_instance (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
-      const ::DDS::InstanceHandle_t & lookup_hnd)
+      DDS_INSTANCE_HANDLE_T_IN lookup_hnd)
     {
       DDS4CCM_TRACE ("Reader_T::read_w_instance");
 
@@ -247,7 +247,7 @@ namespace CIAO
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_one_last (
       VALUE_TYPE& an_instance,
       ::CCM_DDS::ReadInfo_out info,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       ::DDS::InstanceHandle_t const lookup_hnd =
         this->check_handle (an_instance, instance_handle);
@@ -285,7 +285,7 @@ namespace CIAO
       const VALUE_TYPE& an_instance,
       SEQ_VALUE_TYPE& instances,
       ::CCM_DDS::ReadInfoSeq& infos,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       ::DDS::InstanceHandle_t const lookup_hnd =
         this->check_handle (an_instance, instance_handle);

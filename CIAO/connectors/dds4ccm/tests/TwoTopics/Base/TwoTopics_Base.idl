@@ -9,6 +9,7 @@
 #define TWOTOPICS_BASE_IDL
 
 #pragma ndds typesupport "Base/TwoTopics_BaseSupport.h"
+#pragma opendds typesupport "Base/TwoTopics_BaseTypeSupportImpl.h"
 
 struct HelloTopic {
   string hello; //@key

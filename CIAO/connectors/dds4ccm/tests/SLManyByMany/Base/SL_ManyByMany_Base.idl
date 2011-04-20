@@ -9,6 +9,7 @@
 #define SL_MANYBYMANY_BASE_IDL
 
 #pragma ndds typesupport "Base/SL_ManyByMany_BaseSupport.h"
+#pragma opendds typesupport "Base/SL_ManyByMany_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

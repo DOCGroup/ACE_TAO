@@ -9,7 +9,7 @@
 #define SHAPES_BASE_IDL
 
 #pragma ndds typesupport "Base/Shapes_BaseSupport.h"
-#pragma opendds typesupport "Base/Shapes_BaseTypeSupportC.h"
+#pragma opendds typesupport "Base/Shapes_BaseTypeSupportImpl.h"
 #pragma splice typesupport "Base/Shapes_BaseDscpC.h"
 
 #pragma DCPS_DATA_TYPE "ShapeType"

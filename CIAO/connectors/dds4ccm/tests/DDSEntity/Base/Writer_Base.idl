@@ -9,6 +9,7 @@
 #define WRITER_BASE_IDL
 
 #pragma ndds typesupport "Base/Writer_BaseSupport.h"
+#pragma opendds typesupport "Base/Writer_BaseTypeSupportImpl.h"
 
 struct WriterTest {
   string key; //@key

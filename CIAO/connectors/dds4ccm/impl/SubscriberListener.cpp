@@ -155,13 +155,13 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
           ACE_TEXT ("SubscriberListener::on_liveliness_changed: ")
-      ACE_TEXT ("alive count <%d> - not alive count <%d> - ")
-      ACE_TEXT ("alive count change <%d> - not alive count change <%d> ")
-      ACE_TEXT ("last publication handle length <%d> - isValid <%d>\n"),
-      status.alive_count, status.not_alive_count,
-      status.alive_count_change, status.not_alive_count_change,
-      status.last_publication_handle.length,
-      status.last_publication_handle.isValid));
+          ACE_TEXT ("alive count <%d> - not alive count <%d> - ")
+          ACE_TEXT ("alive count change <%d> - not alive count change <%d> ")
+          ACE_TEXT ("last publication handle ") DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+          ACE_TEXT ("\n"),
+          status.alive_count, status.not_alive_count,
+          status.alive_count_change, status.not_alive_count_change,
+          DDS_INSTANCE_HANDLE_LOG (status.last_publication_handle)));
 
       this->on_unexpected_status (reader, ::DDS::LIVELINESS_CHANGED_STATUS);
     }
@@ -175,13 +175,12 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
           ACE_TEXT ("SubscriberListener::on_sample_rejected: ")
-      ACE_TEXT ("total count <%d> - count change <%d> - ")
-      ACE_TEXT ("last reason <%C> - last instance handle ")
-      ACE_TEXT ("<length <%d> - isValid <%d>\n"),
-      status.total_count, status.total_count_change,
-      translate_rejectedstatuskind (status.last_reason),
-      status.last_instance_handle.length,
-      status.last_instance_handle.isValid));
+          ACE_TEXT ("total count <%d> - count change <%d> - ")
+          ACE_TEXT ("last reason <%C> - last instance handle ")
+          DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
+          status.total_count, status.total_count_change,
+          translate_rejectedstatuskind (status.last_reason),
+          DDS_INSTANCE_HANDLE_LOG (status.last_instance_handle)));
 
       if (! ::CORBA::is_nil (this->error_listener_))
         {
@@ -237,13 +236,13 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
           ACE_TEXT ("SubscriberListener::on_subscription_matched: ")
-      ACE_TEXT ("total count <%d> - count change <%d> - ")
-      ACE_TEXT ("current count <%d> - current count change <%d> ")
-      ACE_TEXT ("last publication handle length <%d> - isValid <%d>\n"),
-      status.total_count, status.total_count_change,
-      status.current_count, status.current_count_change,
-      status.last_publication_handle.length,
-      status.last_publication_handle.isValid));
+          ACE_TEXT ("total count <%d> - count change <%d> - ")
+          ACE_TEXT ("current count <%d> - current count change <%d> ")
+          ACE_TEXT ("last publication handle ") DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER
+          ACE_TEXT ("\n"),
+          status.total_count, status.total_count_change,
+          status.current_count, status.current_count_change,
+          DDS_INSTANCE_HANDLE_LOG (status.last_publication_handle)));
 
       this->on_unexpected_status (reader, ::DDS::SUBSCRIPTION_MATCHED_STATUS);
     }

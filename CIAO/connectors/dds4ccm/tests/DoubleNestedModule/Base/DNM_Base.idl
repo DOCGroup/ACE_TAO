@@ -9,6 +9,7 @@
 #define DOUBLE_NESTED_MODULE_BASE_IDL
 
 #pragma ndds typesupport "Base/DNM_BaseSupport.h"
+#pragma opendds typesupport "Base/DNM_BaseTypeSupportImpl.h"
 
 module X
 {

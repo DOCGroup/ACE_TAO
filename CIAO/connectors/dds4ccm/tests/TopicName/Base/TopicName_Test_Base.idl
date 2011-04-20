@@ -9,6 +9,7 @@
 #define TOPICNAME_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/TopicName_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/TopicName_Test_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TopicNameTest"
 #pragma DCPS_DATA_KEY "TopicNameTest symbol"

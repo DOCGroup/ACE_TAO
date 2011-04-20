@@ -72,7 +72,13 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete");
 
   BaseConnector::configuration_complete ();
-  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  ::CORBA::String_var typesupport_name;
+#if (CIAO_DDS4CCM_NDDS==1)
+  typesupport_name = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+  typename DDS_TYPE::type_support type;
+  typesupport_name = type.get_type_name ();
+#endif
 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
@@ -81,7 +87,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
       this->init_topic (this->domain_participant_.in (),
                         this->topic_.inout () ,
                         this->topic_name_.in (),
-                        typesupport_name);
+                        typesupport_name.in ());
     }
   this->init_subscriber (this->domain_participant_.in (),
                          this->subscriber_.inout ());
@@ -151,9 +157,16 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
                           topic.in ());
     }
 
-  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  ::CORBA::String_var typesupport_name;
+#if (CIAO_DDS4CCM_NDDS==1)
+  typesupport_name = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+  typename DDS_TYPE::type_support type;
+  typesupport_name = type.get_type_name ();
+#endif
+
   this->unregister_type (this->domain_participant_.in (),
-                         typesupport_name);
+                         typesupport_name.in ());
 
   ::DDS::Subscriber_var subscriber = this->subscriber_._retn ();
   if (! CORBA::is_nil (subscriber.in ()))

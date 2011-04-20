@@ -9,6 +9,7 @@
 #define GET_COMPONENT_EVENT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/GCE_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/GCE_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "GCETest"
 #pragma DCPS_DATA_KEY "GCETest symbol"

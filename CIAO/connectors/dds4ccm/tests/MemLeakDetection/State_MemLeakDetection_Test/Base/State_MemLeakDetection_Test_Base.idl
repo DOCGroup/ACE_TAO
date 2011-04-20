@@ -9,6 +9,7 @@
 #define STATE_MEMLEAKDETECTION_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/State_MemLeakDetection_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/State_MemLeakDetection_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "State_MemLeakDetectionTest"
 #pragma DCPS_DATA_KEY "State_MemLeakDetectionTest key"

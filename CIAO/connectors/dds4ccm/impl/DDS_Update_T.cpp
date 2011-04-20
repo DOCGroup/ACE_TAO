@@ -36,11 +36,13 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
       ::DDS::DataWriter_var dwv_tmp;
       if (qos_profile)
         {
+#if (CIAO_DDS4CCM_NDDS==1)
           dwv_tmp = publisher->create_datawriter_with_profile (
               topic,
               qos_profile,
               ::DDS::DataWriterListener::_nil (),
               0);
+#endif
         }
       else
         {

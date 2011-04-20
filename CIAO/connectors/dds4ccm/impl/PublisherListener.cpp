@@ -91,10 +91,10 @@ namespace CIAO
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("PublisherListener::on_offered_deadline_missed: ")
                     ACE_TEXT ("total count <%d> - count change <%d> - ")
-                    ACE_TEXT ("last instance handle length <%d> - isValid <%d>\n"),
+                    ACE_TEXT ("last instance handle ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
                     status.total_count, status.total_count_change,
-                    status.last_instance_handle.length,
-                    status.last_instance_handle.isValid));
+                    DDS_INSTANCE_HANDLE_LOG (status.last_instance_handle)));
 
       if (! ::CORBA::is_nil (this->error_listener_))
         {
@@ -233,11 +233,11 @@ namespace CIAO
                     ACE_TEXT ("PublisherListener::on_publication_matched: ")
                     ACE_TEXT ("total count <%d> - count change <%d> - ")
                     ACE_TEXT ("current count <%d> - current count change <%d> ")
-                    ACE_TEXT ("last publication handle length <%d> - isValid <%d>\n"),
+                    ACE_TEXT ("last publication handle ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
                     status.total_count, status.total_count_change,
                     status.current_count, status.current_count_change,
-                    status.last_subscription_handle.length,
-                    status.last_subscription_handle.isValid));
+                    DDS_INSTANCE_HANDLE_LOG (status.last_subscription_handle)));
 
       this->on_unexpected_status (the_Writer, ::DDS::PUBLICATION_MATCHED_STATUS);
     }

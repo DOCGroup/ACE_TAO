@@ -9,6 +9,7 @@
 #define CSL_USTEST_BASE_IDL
 
 #pragma ndds typesupport "Base/CSL_USTest_BaseSupport.h"
+#pragma opendds typesupport "Base/CSL_USTest_BaseTypeSupportImpl.h"
 
 struct TestTopic {
   string key; //@key

@@ -16,11 +16,9 @@ workspace {
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
   ccm
   ciao
-  $(DANCE_ROOT)
+  $(DANCE_ROOT)/dance
+  $(DANCE_ROOT)/tools
   connectors/ami4ccm/ami4ccm
   connectors/dds4ccm/idl
   connectors/dds4ccm/impl
-  exclude {
-    $(DANCE_ROOT)/tests
-  }
 }

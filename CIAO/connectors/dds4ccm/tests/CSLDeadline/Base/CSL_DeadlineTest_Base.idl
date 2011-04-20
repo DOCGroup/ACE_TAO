@@ -9,6 +9,7 @@
 #define CSL_DEADLINETEST_BASE_IDL
 
 #pragma ndds typesupport "Base/CSL_DeadlineTest_BaseSupport.h"
+#pragma opendds typesupport "Base/CSL_DeadlineTest_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

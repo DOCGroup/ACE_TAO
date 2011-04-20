@@ -4,6 +4,7 @@
 #define NOMODULE_IDL
 
 #pragma ndds typesupport "DerivedSupport.h"
+#pragma opendds typesupport "DerivedTypeSupportImpl.h"
 
 struct DerivedType {
   string value; //@key

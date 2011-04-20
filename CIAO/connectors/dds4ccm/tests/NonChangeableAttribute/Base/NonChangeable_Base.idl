@@ -9,6 +9,7 @@
 #define NONCHANGEABLE_BASE_IDL
 
 #pragma ndds typesupport "Base/NonChangeable_BaseSupport.h"
+#pragma opendds typesupport "Base/NonChangeable_BaseSupportImpl.h"
 
 struct NonChangeableTest {
   string key;

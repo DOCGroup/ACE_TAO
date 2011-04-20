@@ -9,6 +9,7 @@
 #define EVENT_CONNECTION_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Event_Connection_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Event_Connection_Test_BaseTypeSupportImpl.h"
 
 struct Event_ConnectionTest {
   string key; //@key
