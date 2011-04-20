@@ -299,12 +299,31 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
           os_ << "DDS";
         }
 
-      os_ << "Seq dds_seq_type;" << be_nl
-          << "typedef ::" << dt_name
-          << "TypeSupport type_support;" << be_nl
-          << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
-          << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl
-          << "typedef ::" << dt_name
+      os_ << "Seq dds_seq_type;" << be_nl;
+
+      if (the_dds_impl == BE_GlobalData::NDDS)
+        {
+          os_ << "typedef ::" << dt_name
+              << "TypeSupport type_support;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "typedef ::" << dt_name
+              << "TypeSupportImpl type_support;" << be_nl;
+        }
+
+      if (the_dds_impl == BE_GlobalData::NDDS)
+        {
+          os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
+              << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "typedef ::DDS::SampleInfoSeq sampleinfo_seq_type;" << be_nl
+              << "typedef ::DDS::SampleInfo sampleinfo_type;" << be_nl;
+        }
+
+      os_ << "typedef ::" << dt_name
           << "DataWriter datawriter_type;" << be_nl
           << "typedef ::" << dt_name
           << "DataReader datareader_type;" << be_nl

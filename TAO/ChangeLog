@@ -1,3 +1,24 @@
+Wed Apr 20 08:59:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Improved portability
+
+        * bin/tao_orb_tests.lst:
+          Added new test
+
+        * tao/Leader_Follower.h:
+          Layout change
+
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+          Fixed coverity errors
+
+        * tests/Bug_3531b_Regression:
+        * tests/Bug_3531b_Regression/Bug_3531b_Regression.mpc:
+        * tests/Bug_3531b_Regression/run_test.pl:
+        * tests/Bug_3531b_Regression/server.cpp:
+          New test
+
 Wed Apr 20 09:52:52 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.0.2 released.
