@@ -37,10 +37,8 @@ int
 #if 1 || defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) || defined (ACE_LACKS_FORK)
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
 // arguments.  And on platforms that lack fork (), we can't use spawn.
-run_main (int argc, ACE_TCHAR* [])
+run_main (int, ACE_TCHAR* [])
 {
-  ACE_UNUSED_ARG (argc);
-
   // Only Win32 can set wide-char environment strings. So, for all
   // others, use char string literals regardless of ACE_USES_WCHAR.
 #  if defined (ACE_WIN32)
