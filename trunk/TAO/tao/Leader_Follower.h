@@ -107,7 +107,7 @@ public:
   /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
 
-  /// checks if we are a leader thread
+  /// Checks if we are a leader thread
   int is_client_leader_thread (void) const;
 
   /**

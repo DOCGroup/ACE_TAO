@@ -142,6 +142,7 @@ TAO/tests/Bug_3499_Regression/run_test.pl: !STATIC
 TAO/tests/Bug_3506_Regression/run_test.pl:
 TAO/tests/Bug_3524_Regression/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_3531_Regression/run_test.pl: !ST !NO_MESSAGING !CORBA_E_MICRO !FIXED_BUGS_ONLY
+TAO/tests/Bug_3531b_Regression/run_test.pl: !ST !FIXED_BUGS_ONLY
 TAO/tests/Bug_3542_Regression/run_test.pl: !STATIC !ST !NO_MESSAGING !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 #TAO/tests/Bug_3543_Regression/run_test.pl: !ST
 TAO/tests/Bug_3548_Regression/run_test.pl:
