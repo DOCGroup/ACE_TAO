@@ -1,0 +1,112 @@
+// $Id$
+
+project(QC_QCTQM_Starter_idl_gen) : componentidldefaults, dds4ccm {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=READER_STARTER_STUB_Export \
+              -Wb,stub_export_include=QCTQM_Starter_stub_export.h \
+              -Wb,skel_export_macro=READER_STARTER_SVNT_Export \
+              -Wb,skel_export_include=QCTQM_Starter_svnt_export.h \
+              -Wb,svnt_export_macro=READER_STARTER_SVNT_Export \
+              -Wb,svnt_export_include=QCTQM_Starter_svnt_export.h \
+              -Wb,exec_export_macro=READER_STARTER_EXEC_Export \
+              -Wb,exec_export_include=QCTQM_Starter_exec_export.h -I..
+
+  IDL_Files {
+    QCTQM_Starter.idl
+  }
+}
+
+project(QC_QCTQM_Starter_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += QC_QCTQM_Starter_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=READER_STARTER_LEM_STUB_Export \
+              -Wb,stub_export_include=QCTQM_Starter_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    QCTQM_StarterE.idl
+  }
+}
+
+project(QC_QCTQM_Starter_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += QC_QCTQM_Starter_lem_gen QC_QCTQM_Starter_stub
+  libs  += QC_QCTQM_Starter_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = QC_QCTQM_Starter_lem_stub
+  dynamicflags += READER_STARTER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCTQM_StarterEC.cpp
+  }
+
+  Header_Files {
+    QCTQM_StarterEC.h
+    QCTQM_Starter_lem_stub_export.h
+  }
+
+  Inline_Files {
+    QCTQM_StarterEC.inl
+  }
+}
+
+project(QC_QCTQM_Starter_stub) : ccm_stub, dds4ccm_base {
+  after += QC_QCTQM_Starter_idl_gen
+  libs  +=
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = QC_QCTQM_Starter_stub
+  dynamicflags += READER_STARTER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCTQM_StarterC.cpp
+  }
+
+  Header_Files {
+    QCTQM_StarterC.h
+    QCTQM_Starter_stub_export.h
+  }
+
+  Inline_Files {
+    QCTQM_StarterC.inl
+  }
+}
+
+
+project(QC_QCTQM_Starter_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += QC_QCTQM_Starter_lem_stub QC_QCTQM_Starter_stub
+  sharedname  = QC_QCTQM_Starter_svnt
+  libs       += QC_QCTQM_Starter_stub QC_QCTQM_Starter_lem_stub 
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += READER_STARTER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    QCTQM_StarterS.cpp
+    QCTQM_Starter_svnt.cpp
+  }
+
+  Header_Files {
+    QCTQM_StarterS.h
+    QCTQM_Starter_svnt.h
+    QCTQM_Starter_svnt_export.h
+  }
+
+  Inline_Files {
+    QCTQM_StarterS.inl
+  }
+}
+
+

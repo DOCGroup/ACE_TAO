@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file TopicName_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef TOPICNAME_TEST_BASE_IDL
+#define TOPICNAME_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/TopicName_Test_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "TopicNameTest"
+#pragma DCPS_DATA_KEY "TopicNameTest symbol"
+
+struct TopicNameTest {
+  string symbol; //@key
+  long x;
+  long y;
+};
+
+typedef sequence<TopicNameTest> TopicNameTestSeq;
+
+#endif /* TOPICNAME_TEST_BASE_IDL */
