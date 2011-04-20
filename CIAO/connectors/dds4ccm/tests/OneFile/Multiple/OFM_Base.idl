@@ -4,6 +4,7 @@
 #define OFM_BASE_IDL
 
 #pragma ndds typesupport "OFM_BaseSupport.h"
+#pragma opendds typesupport "OFM_BaseSupportImpl.h"
 
 struct Topic1 {
   string key_value_topic1; //@key

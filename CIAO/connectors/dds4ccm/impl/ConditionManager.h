@@ -3,11 +3,14 @@
 #ifndef CONDITIONMANAGER_H_
 #define CONDITIONMANAGER_H_
 
+#include "dds4ccm/idl/dds4ccm_BaseC.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
+
 #if (CIAO_DDS4CCM_NDDS==1)
 #include "dds4ccm/impl/ndds/WaitSet.h"
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds/DCPS/WaitSet.h"
 #endif
-
-#include <dds4ccm/idl/dds4ccm_BaseC.h>
 
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
 
@@ -27,7 +30,6 @@ namespace CIAO
       *
       * Manages the read and query conditions for the Getter,
       * Reader and listeners.
-      *
       */
     class DDS4CCM_DDS_IMPL_Export ConditionManager
     {
@@ -63,8 +65,8 @@ namespace CIAO
         *
         */
       ::DDS::InstanceHandle_t check_handle (
-        const ::DDS::InstanceHandle_t & instance_handle,
-        const ::DDS::InstanceHandle_t & lookup_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle,
+        DDS_INSTANCE_HANDLE_T_IN lookup_handle);
 
       /**
         *
@@ -170,7 +172,11 @@ namespace CIAO
       ::DDS::DataReader_var dr_;
 
       //TODO: Not allowed
+#if (CIAO_DDS4CCM_NDDS==1)
       ::CIAO::NDDS::DDS_WaitSet_i ws_;
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+      ::DDS::WaitSet ws_;
+#endif
 
       /**
         * Different QueryConditions since the sample mask

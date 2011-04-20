@@ -108,6 +108,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
 
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
+#if (CIAO_DDS4CCM_NDDS==1)
       this->participant_factory_.set_default_participant_qos_with_profile (
                                       this->qos_profile_.in ());
 
@@ -116,6 +117,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                                       this->qos_profile_.in (),
                                       ::DDS::DomainParticipantListener::_nil (),
                                       0);
+#endif
     }
   else
     {
@@ -236,11 +238,13 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
   ::DDS::Topic_var tp;
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
+#if (CIAO_DDS4CCM_NDDS==1)
       tp = participant->create_topic_with_profile (topic_name,
                                           typesupport_name,
                                           this->qos_profile_.in (),
                                           ::DDS::TopicListener::_nil (),
                                           0);
+#endif
     }
   else
     {
@@ -273,10 +277,12 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
     {
       if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
+#if (CIAO_DDS4CCM_NDDS==1)
           publisher = participant->create_publisher_with_profile (
                                               this->qos_profile_.in (),
                                               ::DDS::PublisherListener::_nil (),
                                               0);
+#endif
         }
       else
         {
@@ -307,10 +313,12 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
     {
       if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
+#if (CIAO_DDS4CCM_NDDS==1)
           subscriber = participant->create_subscriber_with_profile (
                                               this->qos_profile_.in (),
                                               ::DDS::SubscriberListener::_nil (),
                                               0);
+#endif
         }
       else
         {

@@ -7,9 +7,13 @@
 #define DDS_BASE_CONNECTOR_T_H_
 
 #include "dds4ccm/idl/dds_rtf2_dcpsC.h"
-#include "ace/Copy_Disabled.h"
+#if (CIAO_DDS4CCM_NDDS==1)
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds/DCPS/DomainParticipantFactoryImpl.h"
+#endif
 #include "dds4ccm/impl/logger/Logger_Service.h"
+#include "ace/Copy_Disabled.h"
 
 template <typename CCM_TYPE>
 class DDS_Base_Connector_T
@@ -17,9 +21,12 @@ class DDS_Base_Connector_T
     public virtual ::CORBA::LocalObject,
     private virtual ACE_Copy_Disabled
 {
-typedef ::CIAO::NDDS::DDS_DomainParticipantFactory_i
-  DomainParticipantFactory;
-
+#if (CIAO_DDS4CCM_NDDS==1)
+  typedef ::CIAO::NDDS::DDS_DomainParticipantFactory_i
+    DomainParticipantFactory;
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+  typedef ::OpenDDS::DCPS::DomainParticipantFactoryImpl DomainParticipantFactory;
+#endif
 public:
   DDS_Base_Connector_T (void);
   virtual ~DDS_Base_Connector_T (void);

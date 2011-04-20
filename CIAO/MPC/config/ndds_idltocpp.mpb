@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : nddslib, nddsmonitor, taoidldefaults {
+project : nddslib, nddsmonitor, taoidldefaults, taolib {
   requires += ndds
   macros += CIAO_DDS4CCM_NDDS=1
   idlflags += -DCIAO_DDS4CCM_NDDS=1 \

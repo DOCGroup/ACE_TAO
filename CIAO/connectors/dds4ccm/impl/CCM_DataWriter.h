@@ -11,6 +11,7 @@
 
 #include "dds4ccm/idl/dds_rtf2_dcpsEC.h"
 #include "dds4ccm/impl/dds4ccm_dds_impl_export.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO
 {
@@ -80,7 +81,7 @@ namespace CIAO
 
       virtual ::DDS::ReturnCode_t
       get_matched_subscription_data (::DDS::SubscriptionBuiltinTopicData & ,
-                                     const ::DDS::InstanceHandle_t & );
+                                     DDS_INSTANCE_HANDLE_T_IN);
 
       void set_dds_entity (::DDS::DataWriter_ptr dw);
 

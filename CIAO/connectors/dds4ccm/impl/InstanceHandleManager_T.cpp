@@ -47,7 +47,7 @@ namespace CIAO
     void
     InstanceHandleManager_T<BASE_TYPE, WRITER_TYPE, VALUE_TYPE>::unregister_instance (
       const VALUE_TYPE& datum,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       this->dds_writer ()->unregister_instance (datum, instance_handle);
     }

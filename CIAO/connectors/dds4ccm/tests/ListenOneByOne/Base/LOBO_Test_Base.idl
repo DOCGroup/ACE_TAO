@@ -9,6 +9,7 @@
 #define LISTEN_ONE_BY_ONE_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/LOBO_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/LOBO_Test_BaseTypeSupportImpl.h"
 
 struct ListenOneByOneTest {
   string key; //@key

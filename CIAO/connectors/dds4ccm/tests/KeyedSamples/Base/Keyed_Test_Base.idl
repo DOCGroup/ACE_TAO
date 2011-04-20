@@ -9,6 +9,7 @@
 #define KEYED_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Keyed_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Keyed_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "KeyedTest"
 #pragma DCPS_DATA_KEY "KeyedTest key"

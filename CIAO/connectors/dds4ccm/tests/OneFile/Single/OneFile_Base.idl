@@ -9,6 +9,7 @@
 #define ONEFILE_BASE_IDL_
 
 #pragma ndds typesupport "OneFile_BaseSupport.h"
+#pragma opendds typesupport "OneFile_BaseSupportImpl.h"
 
 struct OneFileTopic {
   string hello; //@key

@@ -1,22 +1,20 @@
 // $Id$
 
-#include "dds4ccm/impl/ConditionManager.h"
-
-#include "dds4ccm/impl/Utils.h"
-
-#include "ace/OS_NS_sys_time.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
+#include "dds4ccm/impl/ConditionManager.h"
+#include "dds4ccm/impl/Utils.h"
+#include "ace/OS_NS_sys_time.h"
 
 namespace CIAO
 {
   namespace DDS4CCM
   {
-    ConditionManager::ConditionManager ()
+    ConditionManager::ConditionManager (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::ConditionManager");
     }
 
-    ConditionManager::~ConditionManager ()
+    ConditionManager::~ConditionManager (void)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::~ConditionManager");
     }
@@ -54,15 +52,19 @@ namespace CIAO
     }
 
     ::DDS::InstanceHandle_t
-    ConditionManager::check_handle (const ::DDS::InstanceHandle_t & instance_handle,
-                                    const ::DDS::InstanceHandle_t & lookup_handle)
+    ConditionManager::check_handle (DDS_INSTANCE_HANDLE_T_IN instance_handle,
+                                    DDS_INSTANCE_HANDLE_T_IN lookup_handle)
     {
       bool error = false;
       bool non_existent = false;
+#if (CIAO_DDS4CCM_NDDS==1)
       ::DDS::InstanceHandle_t ret = this->ws_.check_handle (instance_handle,
                                                             lookup_handle,
                                                             error,
                                                             non_existent);
+#else
+      ::DDS::InstanceHandle_t ret;
+#endif
       if (error)
         throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
       if (non_existent)
@@ -79,7 +81,11 @@ namespace CIAO
       ::DDS::ReadCondition_var rc = this->get_readcondition ();
       ::DDS::QueryCondition_var qc = this->get_querycondition_getter ();
 
+#if (CIAO_DDS4CCM_NDDS==1)
       return this->ws_.check_condition (rc.in (), qc.in (), condition);
+#else
+      return false;
+#endif
     }
 
     void
@@ -87,6 +93,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::init_readcondition");
 
+#if (CIAO_DDS4CCM_NDDS==1)
       if (!this->ws_.get_rti_entity ())
         {
           // Waitset is created when a query condition is attached.
@@ -94,6 +101,7 @@ namespace CIAO
           // (including its proxy).
           this->ws_.init ();
         }
+#endif
       if ( ::CORBA::is_nil (this->rd_condition_.in ()))
         {
           this->rd_condition_ = this->dds_entity ()->create_readcondition (
@@ -272,10 +280,12 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::ConditionManager::attach_querycondition");
 
+#if (CIAO_DDS4CCM_NDDS==1)
       if (!this->ws_.get_rti_entity ())
         {
           this->ws_.init ();
         }
+#endif
 
       ::DDS::ReturnCode_t retcode =
         this->ws_.attach_condition (this->qc_getter_.in ());
@@ -374,7 +384,9 @@ namespace CIAO
           this->remove_condition (qc.in (), "listener");
         }
 
+#if (CIAO_DDS4CCM_NDDS==1)
       if (this->ws_.get_rti_entity ())
+#endif
         {
           // Waitset is created. Therefor detach any condition
           // from the waitset first (in this case, the query condition).

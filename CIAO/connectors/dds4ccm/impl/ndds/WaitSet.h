@@ -27,7 +27,6 @@ namespace CIAO
       * @brief Representative (proxy) class for the RTI waitset.
       *
       * Implementation of the RTI waitset functionality.
-      *
       */
     class DDS4CCM_NDDS_Export DDS_WaitSet_i :
       public virtual ::DDS::WaitSet,
@@ -89,7 +88,6 @@ namespace CIAO
       DDSWaitSet * get_rti_entity (void);
 
       /**
-        *
         * Used in the Reader in order to check whether whether the
         * user has supplied the correct handle with the type specific
         * instance. See Reader_T::read_one_last and the DDS4CCM spec
@@ -102,7 +100,7 @@ namespace CIAO
         * TODO: We actually want this method to be in the DDS4CCM
         * connector but since we're not allowed to use RTI specific code
         * there it's located here.
-        *        *
+        *
         * 'error' will be true if instance_handle != DDS_HANDLE_NIL and
         * when instance_handle != lookup_handle.
         *

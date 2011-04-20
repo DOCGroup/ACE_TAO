@@ -9,7 +9,7 @@
 #define QUOTER_BASE_IDL
 
 #pragma ndds typesupport "Base/Quoter_BaseSupport.h"
-#pragma opendds typesupport "Base/Quoter_BaseTypeSupportC.h"
+#pragma opendds typesupport "Base/Quoter_BaseTypeSupportImpl.h"
 #pragma coredx typesupport "Base/Quoter_BaseTypeSupport.hh"
 
 #pragma DCPS_DATA_TYPE "Quoter::Stock_Info"

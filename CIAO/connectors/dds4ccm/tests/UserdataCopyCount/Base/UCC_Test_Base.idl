@@ -9,6 +9,7 @@
 #define USERDATA_COPY_COUNT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/UCC_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/UCC_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "UCCVariableSizedStructTest"
 #pragma DCPS_DATA_KEY "UCCVariableSizedStructTest symbol"

@@ -9,6 +9,7 @@
 #define QUERY_CONDITION_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/ReadGet_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/ReadGet_Test_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "QueryConditionTest"
 #pragma DCPS_DATA_KEY "QueryConditionTest symbol"

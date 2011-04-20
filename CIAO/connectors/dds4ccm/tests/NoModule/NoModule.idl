@@ -4,6 +4,7 @@
 #define NOMODULE_IDL
 
 #pragma ndds typesupport "NoModuleSupport.h"
+#pragma opendds typesupport "NoModuleSupportImpl.h"
 
 struct NoModuleType {
   string value; //@key

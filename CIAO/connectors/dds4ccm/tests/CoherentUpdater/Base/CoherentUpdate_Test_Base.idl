@@ -9,6 +9,7 @@
 #define COHERENT_UPDATE_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/CoherentUpdate_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/CoherentUpdate_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "CoherentUpdateTest"
 #pragma DCPS_DATA_KEY "CoherentUpdateTest symbol"

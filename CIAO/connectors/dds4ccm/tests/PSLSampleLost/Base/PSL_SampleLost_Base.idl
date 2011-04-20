@@ -9,6 +9,7 @@
 #define PSL_SAMPLELOST_BASE_IDL
 
 #pragma ndds typesupport "Base/PSL_SampleLost_BaseSupport.h"
+#pragma opendds typesupport "Base/PSL_SampleLost_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

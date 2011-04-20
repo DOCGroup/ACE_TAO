@@ -9,6 +9,7 @@
 #define MULTIPLE_TEMP_BASE_IDL
 
 #pragma ndds typesupport "Base/MultipleTemp_BaseSupport.h"
+#pragma opendds typesupport "Base/MultipleTemp_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopicOne"
 #pragma DCPS_DATA_KEY "TestTopicOne keyOne"

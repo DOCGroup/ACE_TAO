@@ -9,6 +9,7 @@
 #define EVENT_MEMLEAKDETECTION_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Event_MemLeakDetection_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Event_MemLeakDetection_Test_BaseTypeSupportImpl.h"
 
 struct Event_MemLeakDetectionTest {
   string key; //@key
