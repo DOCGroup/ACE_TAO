@@ -1,5 +1,9 @@
+USER VISIBLE CHANGES BETWEEN DAnCE-1.0.2 and DAnCE-1.0.3
+=======================================================
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
 =======================================================
+
 . Significant re-work of the internal DAnCE logging system.  Many log
   message levels have changed.  Details of the intended logging levels
   may be found in dance/Logger/Log_Macros.h
