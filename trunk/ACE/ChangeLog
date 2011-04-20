@@ -1,3 +1,21 @@
+Wed Apr 20 08:53:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/src/Gen_Perf.cpp:
+          Fixed coverity errors
+
+        * bin/fuzz.pl:
+          Extended fuzz
+
+        * bin/generate_rel_manpages:
+          Removed obsolete make steps
+
+        * docs/bczar/bczar.html:
+          zip should also be available
+
+        * tests/Env_Value_Test.cpp:
+        * tests/Reactor_Fairness_Test.cpp:
+          Layout changes
+
 Wed Apr 20 09:52:52 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.0.2 released.
