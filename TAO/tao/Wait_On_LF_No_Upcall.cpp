@@ -25,7 +25,7 @@ namespace TAO
   public:
     // Maybe we should instead just take in a ptr to
     // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
-    Nested_Upcall_Guard (TAO_Transport *t)
+    explicit Nested_Upcall_Guard (TAO_Transport *t)
       : t_ (t)
     {
       TAO_ORB_Core_TSS_Resources *tss =
@@ -54,9 +54,7 @@ namespace TAO
     }
 
   private:
-    Nested_Upcall_Guard (void)
-    {
-    }
+    Nested_Upcall_Guard (void);
 
     /// Disallow copying and assignment.
     Nested_Upcall_Guard (const Nested_Upcall_Guard&);
