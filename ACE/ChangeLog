@@ -1,3 +1,13 @@
+Wed Apr 20 10:27:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * etc/index.html:
+          Make x.0.2 available
+
+        * html/Stats/index.shtml:
+          Removed cell xampler
+
 Wed Apr 20 08:53:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/gperf/src/Gen_Perf.cpp:
