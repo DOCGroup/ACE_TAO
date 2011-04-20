@@ -50,7 +50,7 @@ In addition to the statistics described above, a number of other ACE/TAO/CIAO de
   <a href="http://www.dre.vanderbilt.edu/Scoreboard/">Automated Builds</a>
 </li>
 <li>
-  Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>, and <a href="http://www.dre.vanderbilt.edu/~jwillemsen/ibmcellbuild_xampler/ps3xampler/_Report/">IBM Cell</a>
+  Xampler Performance benchmarks for <a href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/isislab/emulab/FC6xampler/Template-Display/_Report/">x86</a>
 </li>
 <li>
   <a href="http://www.dre.vanderbilt.edu/Stats/CORBAecompact/">Footprint CORBA/e compact</a>
