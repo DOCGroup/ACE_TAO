@@ -1,3 +1,9 @@
+Wed Apr 20 11:29:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/gnuace.features:
+          Don't set ndds default to 1, reduced size of release and makes it
+          possible to support more dds vendors
+
 Wed Apr 20 10:27:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
