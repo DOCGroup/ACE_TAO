@@ -1,3 +1,8 @@
+Thu Apr 21 08:29:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ndds_idltocpp_ts_defaults.mpb:
+          Added taolib
+
 Wed Apr 20 08:11:49 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO_TAO_DAnCE.mwc:
