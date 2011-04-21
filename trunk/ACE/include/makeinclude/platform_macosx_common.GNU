@@ -1,7 +1,6 @@
 # -*- Makefile -*-
 # $Id$
 
-# platform_macosx.GNU
 # support for Mac OS X 10.4 (Tiger)
 # By default, this uses the default compiler selected using gcc_select.
 
