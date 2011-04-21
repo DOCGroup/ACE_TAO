@@ -15,11 +15,11 @@ feature(dds4ccm_splice) : dds4ccm, splice_ts_defaults {
   }
 }
 
-//feature(dds4ccm_coredx) : dds4ccm, coredx_ts_defaults, coredxlib {
-//  Define_Custom(DDSGenerator) : CoreDXTypeSupport {
-//    keyword dds_ts_flags = commandflags
-//   }
-//}
+feature(dds4ccm_coredx) : dds4ccm, coredx_ts_defaults, coredxlib {
+  Define_Custom(DDSGenerator) : CoreDXTypeSupport {
+    keyword dds_ts_flags = commandflags
+   }
+}
 
 feature(dds4ccm_ndds) : dds4ccm, ndds_idltocpp_ts_defaults {
 }
@@ -56,7 +56,7 @@ feature(!dds4ccm_coredx) {
   }
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) : typecode {
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice, !dds4ccm_coredx) : typecode {
   Define_Custom(DDSGenerator) {
     keyword dds_ts_flags
   }
