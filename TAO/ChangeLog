@@ -1,3 +1,8 @@
+Thu Apr 21 10:31:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+          Use the orb core reactor which is the LF reactor
+
 Wed Apr 20 08:59:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
