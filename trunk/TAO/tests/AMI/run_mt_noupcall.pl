@@ -11,22 +11,16 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
+$client_conf = $client->LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
 
 $server_debug_level = '0';
 $client_debug_level = '0';
 $iterations = '1';
 
 foreach $i (@ARGV) {
-    if ($i eq '-mux') {
-        $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
-    }
-    elsif ($i eq '-debug') {
+    if ($i eq '-debug') {
         $server_debug_level = '1';
         $client_debug_level = '1';
-    }
-    elsif ($i eq '-exclusive') {
-        $client_conf = $client->LocalFile ("exclusive$PerlACE::svcconf_ext");
     }
 }
 
@@ -66,24 +60,9 @@ $CL = $client->CreateProcess ("simple_client",
                               "-ORBsvcconf $client_conf "
                               . "-ORBdebuglevel $client_debug_level"
                               . " -k file://$client_iorfile "
-                              . " -i $iterations -d");
+                              . " -i $iterations -d -x");
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-
-$CL2 = $client->CreateProcess ("simple_client",
-                               "-ORBsvcconf $client_conf"
-                               . " -ORBCollocation no"
-                               . " -ORBdebuglevel $client_debug_level"
-                               . " -k file://$client_iorfile "
-                               . " -i $iterations -x -d");
-
-$client_status = $CL2->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
