@@ -1,3 +1,17 @@
+Thu Apr 21 13:02:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Updated test list
+
+        * tests/AMI/mt_noupcall.conf:
+        * tests/AMI/run_mt_noupcall.pl:
+        * tests/AMI/run_test.pl:
+          New run_mt_noupcall, the existing script was using -ORBCollocation no
+          which doesn't work with AMI and mt_noupcall
+
+        * tests/AMI/simple_client.cpp:
+          Layout change
+
 Thu Apr 21 12:07:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
