@@ -22,6 +22,13 @@ feature(dds4ccm_ndds) : dds4ccm_skel, dds4ccm_lem_stub, ndds_idltocpp_impl, ndds
               $(CIAO_ROOT)/connectors/dds4ccm/idl
 }
 
-feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice) {
+feature(dds4ccm_coredx) : dds4ccm_skel, dds4ccm_lem_stub {
+  after += CIAO_DDS4CCM_DDS_Impl
+  libs += CIAO_DDS4CCM_DDS_Impl
+  includes += $(CIAO_ROOT)/connectors \
+              $(CIAO_ROOT)/connectors/dds4ccm/idl
+}
+
+feature(!dds4ccm_opendds, !dds4ccm_ndds, !dds4ccm_splice, !dds4ccm_coredx) {
   requires += dummy_label
 }
