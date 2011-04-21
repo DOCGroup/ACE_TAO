@@ -27,6 +27,8 @@ TAO/tests/ORB_Local_Config/Two_DLL_ORB/run_test.pl: !ST !STATIC
 TAO/tests/Param_Test/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/tests/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/AMI/run_test.pl -mt_noupcall: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/AMI/run_test.pl -exclusive: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/tests/AMH_Oneway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
