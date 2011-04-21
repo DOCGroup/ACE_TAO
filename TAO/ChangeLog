@@ -1,3 +1,18 @@
+Thu Apr 21 12:07:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Run AMI test with more options
+
+        * tests/AMI/exclusive.conf:
+        * tests/AMI/server.conf:
+          Added Id tag
+
+        * tests/AMI/mt_noupcall.conf:
+          New file for testing with mt_noupcall
+
+        * tests/AMI/run_test.pl:
+          Add option -mt_noupcall and give client/server separate debug levels
+
 Thu Apr 21 11:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Wait_On_LF_No_Upcall.cpp:
