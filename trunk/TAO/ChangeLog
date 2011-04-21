@@ -1,3 +1,8 @@
+Thu Apr 21 11:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Wait_On_LF_No_Upcall.cpp:
+          Log transport id
+
 Thu Apr 21 10:31:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
