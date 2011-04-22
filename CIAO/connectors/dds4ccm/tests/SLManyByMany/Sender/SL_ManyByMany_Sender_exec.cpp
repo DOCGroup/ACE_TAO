@@ -361,6 +361,7 @@ namespace CIAO_SL_ManyByMany_Sender_Impl
           case DELETE_ONE:
             this->test_ok_ = this->delete_one ();
             this->test_nr_ = CREATE_MANY;
+            break;
           case CREATE_MANY:
             this->test_ok_ = this->create_many ();
             if(this->test_ok_.value ())
