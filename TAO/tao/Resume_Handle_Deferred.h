@@ -44,7 +44,7 @@ class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
 {
   public:
     /// Ctor
-    TAO_Resume_Handle_Deferred (TAO_ORB_Core* orbc, ACE_HANDLE h);
+    TAO_Resume_Handle_Deferred (TAO_ORB_Core* orbc, ACE_Event_Handler* h);
 
     /// Destructor
     ~TAO_Resume_Handle_Deferred (void);
@@ -57,15 +57,11 @@ class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
     virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
   private:
-    ACE_HANDLE h_;
+    ACE_Event_Handler* h_;
     TAO_ORB_Core * orbc_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-# include "Resume_Handle_Deferred.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_RESUME_HANDLE_DEFERRED_H*/
