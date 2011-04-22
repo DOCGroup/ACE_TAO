@@ -1,3 +1,25 @@
+Fri Apr 22 12:41:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/tests/Bug_3418_Regression/b.conf:
+        * orbsvcs/tests/HTIOP/HT_Config.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/non-windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/non-windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/windows.conf:
+        * orbsvcs/tests/Notify/Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/Lanes/notify.conf:
+        * performance-tests/Protocols/lksctp_params.conf:
+        * performance-tests/Protocols/sctp_params.conf:
+        * performance-tests/RTCorba/Thread_Pool/native-svc.conf:
+        * tests/Bug_3068_Regression/server.conf:
+        * tests/ORB_Local_Config/Bug_1459/m.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-empty.conf:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+          Fuzz: added $Id string
+
 Fri Apr 22 12:14:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp:
