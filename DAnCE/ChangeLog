@@ -1,3 +1,8 @@
+Fri Apr 22 12:41:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tools/Logger_Backend/ndds/svc.conf:
+          Fuzz: Added $Id string
+
 Wed Apr 20 09:52:52 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE version 1.0.2 released.
