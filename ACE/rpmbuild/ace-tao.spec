@@ -24,7 +24,6 @@
 %{!?_with_opt: %{!?_without_opt: %define _with_opt --with-opt}}
 %{!?_with_zlib: %{!?_without_zlib: %define _with_zlib --with-zlib}}
 %{!?_with_bzip2: %{!?_without_bzip2: %define _with_bzip2 --with-bzip2}}
-%{!?_with_autoconf: %{!?_without_autoconf: %define _without_autoconf --without-autoconf}}
 %{!?_with_ftlk: %{!?_without_ftlk: %define _without_ftlk --without-ftlk}}
 %{!?_with_tk: %{!?_without_tk: %define _without_tk --without-tk}}
 %{!?_with_xt: %{!?_without_xt: %define _without_xt --without-xt}}
@@ -37,7 +36,6 @@
 %{?_with_opt: %{?_without_opt: %{error: both _with_opt and _without_opt}}}
 %{?_with_zlib: %{?_without_zlib: %{error: both _with_zlib and _without_zlib}}}
 %{?_with_bzip2: %{?_without_bzip2: %{error: both _with_bzip2 and _without_bzip2}}}
-%{?_with_autoconf: %{?_without_autoconf: %{error: both _with_autoconf and _without_autoconf}}}
 %{?_with_fltk: %{?_without_fltk: %{error: both _with_fltk and _without_fltk}}}
 %{?_with_tk: %{?_without_tk: %{error: both _with_tk and _without_tk}}}
 %{?_with_xt: %{?_without_xt: %{error: both _with_xt and _without_xt}}}
@@ -823,8 +821,6 @@ cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
 
 %else
 
-%if %{?_with_autoconf:0}%{!?_with_autoconf:1}
-
 cat > $ACE_ROOT/ace/config.h << EOF
 EOF
 
@@ -1007,59 +1003,6 @@ done
 
 $MAKECMD -C $TAO_ROOT/utils
 
-%else
-
-autoreconf -fi
-
-mkdir -p objdir && cd objdir
-
-%if %{?_with_opt:0}%{!?_with_opt:1}
-export CFLAGS="${CFLAGS:-%optflags} -O0"
-export CXXFLAGS="${CXXFLAGS:-%optflags} -O0"
-%else
-export CFLAGS="${CFLAGS:-%optflags}"
-export CXXFLAGS="${CXXFLAGS:-%optflags}"
-%endif
-
-../configure --build=%{_build} --host=%{_host} \
-        --target=%{_target_platform} \
-        --program-prefix=%{?_program_prefix} \
-        --prefix=%{_prefix} \
-        --exec-prefix=%{_exec_prefix} \
-        --bindir=%{_bindir} \
-        --sbindir=%{_sbindir} \
-        --sysconfdir=%{_sysconfdir} \
-        --datadir=%{_datadir} \
-        --includedir=%{_includedir} \
-        --libdir=%{_libdir} \
-        --libexecdir=%{_libexecdir} \
-        --localstatedir=%{_localstatedir} \
-        --sharedstatedir=%{_sharedstatedir} \
-        --mandir=%{_mandir} \
-        --infodir=%{_infodir} \
-%if %{?_with_ipv6:1}%{!?_with_ipv6:0}
-        --enable-ipv4-ipv6 \
-        --enable-ipv6     \
-%endif
-%if %{?_with_rnq:1}%{!?_with_rnq:0}
-        --enable-ace-reactor-notification-queue \
-%endif
-%if %{?_with_qt:1}%{!?_with_qt:0}
-        --enable-qt-reactor \
-%endif
-%if %{?_with_tk:1}%{!?_with_tk:0}
-        --enable-tk-reactor \
-%endif
-%if %{?_with_xt:1}%{!?_with_xt:0}
-        --enable-xt-reactor \
-%endif
-%if %{?_with_fl:1}%{!?_with_fl:0}
-        --enable-fl-reactor \
-%endif
-
-make %{?jobs:-j%jobs}
-
-%endif
 %endif
 
 # ================================================================
