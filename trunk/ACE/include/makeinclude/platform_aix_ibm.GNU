@@ -1,7 +1,7 @@
 # $Id$
 
 # This file is for use with AIX 5.x and up, using either of the IBM
-# compilers (Visual Age C++ 6 or newer compiler).
+# compilers (Visual Age C++ 6 or newer XL C++ compiler).
 
 debug ?= 1
 distrib ?= 0
@@ -111,8 +111,11 @@ else
       # try-catch blocks.
       CCFLAGS     += -qeh=v6
     else
-      # For now, use the V9 settings for V10.1
+      # Until there's a reason to change, use the V9 settings for V10.1 and 11.
       ifeq ($(XLCVERSION),0x0a01)
+        XLCVERSION = 0x0900
+      endif
+      ifeq ($(XLCVERSION),0x0b01)
         XLCVERSION = 0x0900
       endif
       ifeq ($(XLCVERSION),0x0900)
