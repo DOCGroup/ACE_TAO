@@ -3280,10 +3280,7 @@ ACE::strnew (const char *s)
   ACE_NEW_RETURN (t,
                   char [ACE_OS::strlen (s) + 1],
                   0);
-  if (t == 0)
-    return 0;
-  else
-    return ACE_OS::strcpy (t, s);
+  return ACE_OS::strcpy (t, s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3296,10 +3293,7 @@ ACE::strnew (const wchar_t *s)
   ACE_NEW_RETURN (t,
                   wchar_t[ACE_OS::strlen (s) + 1],
                   0);
-  if (t == 0)
-    return 0;
-  else
-    return ACE_OS::strcpy (t, s);
+  return ACE_OS::strcpy (t, s);
 }
 #endif /* ACE_HAS_WCHAR */
 
