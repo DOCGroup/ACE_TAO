@@ -516,10 +516,8 @@ TAO_Transport::update_transport (void)
   return this->transport_cache_manager ().update_entry (this->cache_map_entry_);
 }
 
-/*
- *
+/**
  *  Methods called and used in the output path of the ORB.
- *
  */
 TAO_Transport::Drain_Result
 TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
