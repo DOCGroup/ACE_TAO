@@ -62,14 +62,26 @@ namespace CIAO_Shapes_Sender_Impl
       resize_shape_ (false),
       TypeOfShape (SHAPE_TYPE_SQUARE)
   {
-    this->ticker_ = new pulse_Generator (*this);
-    this->square_ = new ShapeType;
-    this->triangle_ = new ShapeType;
-    this->circle_ = new ShapeType;
+    ACE_NEW_THROW_EX (this->ticker_,
+                      pulse_Generator (*this),
+                      ::CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (this->square_,
+                      ShapeType,
+                      ::CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (this->triangle_,
+                      ShapeType,
+                      ::CORBA::NO_MEMORY ());
+    ACE_NEW_THROW_EX (this->circle_,
+                      ShapeType,
+                      ::CORBA::NO_MEMORY ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
+    delete this->square_;
+    delete this->triangle_;
+    delete this->circle_;
   }
 
   // Supported operations and attributes.

@@ -58,11 +58,14 @@ namespace CIAO_Writer_Sender_Impl
       , keys_ (5)
       , assignment_ (WRITE_UNKEYED)
   {
-    this->ticker_ = new pulse_Generator (*this);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      pulse_Generator (*this),
+                      ::CORBA::NO_MEMORY ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
