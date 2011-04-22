@@ -1,3 +1,13 @@
+Fri Apr 22 12:14:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.cpp:
+          Notify a specific event handler
+
+        * tao/Resume_Handle_Deferred.inl:
+          Removed this file, virtual methods may not be inline
+
 Fri Apr 22 11:56:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Resume_Handle_Deferred.h:
