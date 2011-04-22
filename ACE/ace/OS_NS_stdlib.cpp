@@ -259,13 +259,13 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
   // Now reverse the string to get the correct result
 
   while (e > b)
-  {
-    wchar_t temp = *e;
-    *e = *b;
-    *b = temp;
-    ++b;
-    --e;
-  }
+    {
+      wchar_t temp = *e;
+      *e = *b;
+      *b = temp;
+      ++b;
+      --e;
+    }
 
   return string;
 }
