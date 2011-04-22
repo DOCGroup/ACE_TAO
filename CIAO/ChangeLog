@@ -1,3 +1,14 @@
+Fri Apr 22 13:01:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+          Always delete stuf which was created in the constructor.
+
 Fri Apr 22 08:24:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:

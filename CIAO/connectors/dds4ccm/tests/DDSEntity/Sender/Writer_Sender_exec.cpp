@@ -68,6 +68,7 @@ namespace CIAO_Writer_Sender_Impl
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.

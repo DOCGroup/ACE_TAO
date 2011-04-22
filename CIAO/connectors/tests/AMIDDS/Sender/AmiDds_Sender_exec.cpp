@@ -60,11 +60,14 @@ namespace CIAO_AmiDds_Sender_Impl
   : test_nr_(UPDATE_ONE),
     test_ok_(true)
   {
-    this->ticker_ = new pulse_Generator (*this);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      pulse_Generator (*this),
+                      ::CORBA::NO_MEMORY ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
