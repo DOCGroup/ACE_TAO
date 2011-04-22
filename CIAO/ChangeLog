@@ -1,3 +1,8 @@
+Fri Apr 22 19:26:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Updater_T.cpp:
+          Give local variable a different name to not match argument
+
 Fri Apr 22 13:01:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
