@@ -1,3 +1,8 @@
+Fri Apr 22 11:16:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed autoconf support
+
 Fri Apr 22 07:25:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/MMAP_Memory_Pool.cpp:
