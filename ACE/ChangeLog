@@ -1,3 +1,7 @@
+Fri Apr 22 15:19:29 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Add support for XL C++ 11.
+
 Fri Apr 22 12:43:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * protocols/tests/HTBP/HTBP_Config.conf:
