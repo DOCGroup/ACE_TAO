@@ -105,6 +105,7 @@ namespace CIAO_Shapes_Receiver_Impl
 
   Receiver_exec_i::~Receiver_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.

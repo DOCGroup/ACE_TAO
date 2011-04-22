@@ -55,11 +55,14 @@ namespace CIAO_CSL_SRTest_Sender_Impl
   Sender_exec_i::Sender_exec_i (void)
     : rate_ (100)
   {
-    this->ticker_ = new pulse_Generator (*this);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      pulse_Generator (*this),
+                      ::CORBA::NO_MEMORY ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
