@@ -236,7 +236,7 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
       TAO_Resume_Handle_Deferred* prhd = 0;
       ACE_NEW_RETURN (prhd,
                      TAO_Resume_Handle_Deferred (this->orb_core_,
-                                                 eh->get_handle()),
+                                                 eh),
                      -1);
 
       this->orb_core_->reactor()->schedule_timer (prhd, 0, suspend_delay);
