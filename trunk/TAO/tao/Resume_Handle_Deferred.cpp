@@ -25,9 +25,6 @@ TAO_Resume_Handle_Deferred::~TAO_Resume_Handle_Deferred  (void)
 int
 TAO_Resume_Handle_Deferred:: handle_timeout (const ACE_Time_Value &, const void *)
 {
-  if (handle_timeout_eh () == -1)
-    return -1;
-
   // Send a notification to the reactor to cause the awakening of a new
   // follower, if there is one already available.
   ACE_Reactor *reactor = this->orbc_->reactor ();

@@ -1,3 +1,13 @@
+Fri Apr 22 11:56:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.inl:
+        * tao/Resume_Handle_Deferred.cpp:
+          We should only trigger the reactor
+
+        * tao/Transport.cpp:
+          Doxygen changes
+
 Fri Apr 22 07:28:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * DevGuideExamples/Multithreading/Reactive/svc.conf:

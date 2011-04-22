@@ -57,10 +57,6 @@ class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
     virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
   private:
-    /// Implements the timeout handling
-    int handle_timeout_eh ();
-
-  private:
     ACE_HANDLE h_;
     TAO_ORB_Core * orbc_;
 };
