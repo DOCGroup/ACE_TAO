@@ -1,3 +1,10 @@
+Fri Apr 22 08:24:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp:
+          Added missing breaks
+
 Fri Apr 22 07:35:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * performance-tests/Protocols/descriptors/svc.conf:
