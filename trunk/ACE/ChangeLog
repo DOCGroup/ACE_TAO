@@ -1,3 +1,10 @@
+Fri Apr 22 12:43:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * protocols/tests/HTBP/HTBP_Config.conf:
+        * protocols/tests/HTBP/Reactor_Tests/inside.conf:
+        * tests/Service_Config_Test.WCHAR_T.conf:
+          Fuzz: Added $Id string
+
 Fri Apr 22 11:16:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
