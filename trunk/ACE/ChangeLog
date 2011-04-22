@@ -1,3 +1,59 @@
+Fri Apr 22 07:25:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/OS_NS_stdlib.cpp:
+          Layout changes
+
+        * Kokyu/tests/DSRT_MIF/svc.conf:
+        * apps/Gateway/Gateway/svc.conf:
+        * apps/Gateway/Peer/svc.conf:
+        * apps/JAWS/server/svc.conf:
+        * apps/JAWS3/jaws3/jaws.conf:
+        * apps/JAWS3/small/jaws.conf:
+        * apps/JAWS3/small/svc.conf:
+        * examples/APG/Logging/client.conf:
+        * examples/APG/Logging/logging_strategy.conf:
+        * examples/APG/Logging/server.conf:
+        * examples/APG/Naming/svc.conf:
+        * examples/APG/Svc_Config/svc.conf.dynamic:
+        * examples/APG/Svc_Config/svc.conf.static:
+        * examples/ASX/CCM_App/svc.conf:
+        * examples/C++NPv2/svc.conf:
+        * examples/Service_Configurator/IPC-tests/server/svc.conf:
+        * examples/Service_Configurator/Misc/svc.conf1:
+        * examples/Service_Configurator/Misc/svc.conf2:
+        * netsvcs/clients/Naming/Client/svc.conf:
+        * netsvcs/clients/Naming/Client/svc2.conf:
+        * netsvcs/servers/svc.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t1.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t16.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t2.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t32.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t4.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t64.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/perf_t8.conf:
+        * performance-tests/Synch-Benchmarks/svcconf/svc.conf:
+        * protocols/tests/HTBP/HTBP_Config.conf:
+        * protocols/tests/HTBP/Reactor_Tests/inside.conf:
+        * rpmbuild/etc/tao/tao-cosconcurrency.conf:
+        * rpmbuild/etc/tao/tao-cosevent.conf:
+        * rpmbuild/etc/tao/tao-cosnaming.conf:
+        * rpmbuild/etc/tao/tao-cosnotification.conf:
+        * rpmbuild/etc/tao/tao-costrading.conf:
+        * rpmbuild/etc/tao/tao-rtevent.conf:
+        * tests/Bug_3334_Regression_Test.conf:
+        * tests/Service_Config_Stream_Test.conf:
+        * tests/Service_Config_Test.UTF-16.conf:
+        * tests/Service_Config_Test.conf:
+        * tests/Service_Config_Test.conf.xml:
+        * tests/UNIXclerk.conf:
+        * tests/UNIXserver.conf:
+        * tests/UNIXtokens.conf:
+        * tests/Win32clerk.conf:
+        * tests/Win32server.conf:
+        * tests/Win32tokens.conf:
+          Fuzz: Added $Id string.
+
 Thu Apr 21 12:25:13 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
