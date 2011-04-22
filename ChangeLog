@@ -1,3 +1,7 @@
+Fri Apr 22 15:19:29 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Add support for XL C++ 11.
+
 Mon Feb 28 20:29:59 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
