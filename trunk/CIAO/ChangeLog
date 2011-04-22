@@ -1,3 +1,8 @@
+Fri Apr 22 07:35:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * performance-tests/Protocols/descriptors/svc.conf:
+          Fuzz: Added $Id string.
+
 Thu Apr 21 09:38:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
