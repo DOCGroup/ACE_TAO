@@ -318,7 +318,6 @@ namespace CIAO_AmiDds_Sender_Impl
   {
     this->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    delete this->ticker_;
   }
 
   void
