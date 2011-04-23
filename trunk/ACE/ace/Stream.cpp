@@ -450,7 +450,7 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
-  ACE_Message_Block *db;
+  ACE_Message_Block *db = 0;
 
   // Try to create a data block that contains the user-supplied data.
   ACE_NEW_RETURN (db,
@@ -464,12 +464,11 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   // field.
   ACE_Message_Block *cb = 0;
 
-  ACE_NEW_RETURN (cb,
-                  ACE_Message_Block (sizeof ioc,
-                                     ACE_Message_Block::MB_IOCTL,
-                                     db,
-                                     (char *) &ioc),
-                  -1);
+  ACE_NEW_NORETURN (cb,
+                    ACE_Message_Block (sizeof ioc,
+                                       ACE_Message_Block::MB_IOCTL,
+                                       db,
+                                       (char *) &ioc));
   // @@ Michael: The old semantic assumed that cb returns == 0
   //             if no memory was available. We will now return immediately
   //             without release (errno is set to ENOMEM by the macro).
