@@ -1,3 +1,12 @@
+Sat Apr 23 19:48:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
+          Deleting the ticker in a consistent manner. Created in the constructor,
+          deleting it in the destructor. 
+
 Fri Apr 22 19:26:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Updater_T.cpp:
