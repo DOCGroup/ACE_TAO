@@ -86,7 +86,7 @@ public:
   int make_mprofile (const char *ior, TAO_MProfile &mprofile);
 
   /// Helper function to assist corbaloc parsing. The default simply validates
-  /// the protocol identifyier and scans up to the next comma or slash.
+  /// the protocol identifier and scans up to the next comma or slash.
   /// Any protocol that has a specific need, such as uiop, can override this
   /// method to  provide a custom scanner.
   /// The profile returned is either null if this the ior does not match or an
@@ -108,7 +108,7 @@ public:
                                   TAO_Transport_Descriptor_Interface *desc,
                                   ACE_Time_Value *timeout);
 
-  /// A variation on connect that will try simultanious connections
+  /// A variation on connect that will try simultaneous connections
   /// on all endpoints listed in the desc.
   virtual TAO_Transport *parallel_connect (TAO::Profile_Transport_Resolver *r,
                                            TAO_Transport_Descriptor_Interface
@@ -129,7 +129,7 @@ public:
 
 protected:
   /// A flag indicating the actual connector supports parallel connection
-  /// attempts. The base implementation alwayse returns 0. Override to return
+  /// attempts. The base implementation always returns 0. Override to return
   /// non-zero if parallel connection attempts may be tried.
   virtual int supports_parallel_connects (void) const;
 
@@ -152,7 +152,7 @@ protected:
       TAO_Transport_Descriptor_Interface &desc,
       ACE_Time_Value *timeout);
 
-  /// Cancel the passed cvs handler from the connector
+  /// Cancel the passed @a svc_handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler *svc_handler) = 0;
 
   /// Check whether the connection is not closed
@@ -201,8 +201,8 @@ protected:
 
   /// Wait for a transport to be connected
   /// Note: no longer changes transport reference count
-  /// @ returns true if wait was uneventful
-  /// @         false if error occurred during wait
+  /// @retval true if wait was uneventful
+  /// @retval false if error occurred during wait
   bool wait_for_transport (TAO::Profile_Transport_Resolver *r,
                            TAO_Transport *base_transport,
                            ACE_Time_Value * timeout,
