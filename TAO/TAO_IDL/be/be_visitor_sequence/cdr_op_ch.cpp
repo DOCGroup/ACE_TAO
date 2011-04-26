@@ -88,8 +88,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       *os << node->name ();
     }
 
-  *os << " &_tao_sequence" << be_uidt_nl
-      << ");" << be_uidt_nl;
+  *os << " &_tao_sequence);" << be_uidt << be_uidt_nl;
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (" << be_idt << be_idt_nl
@@ -104,8 +103,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       *os << node->name ();
     }
 
-  *os << " &_tao_sequence" << be_uidt_nl
-      << ");" << be_uidt;
+  *os << " &_tao_sequence);" << be_uidt << be_uidt;
 
   if (be_global->gen_ostream_operators ())
     {
