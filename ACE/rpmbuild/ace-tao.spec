@@ -68,13 +68,10 @@ Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-
 Source1:      ace-tao-rpmlintrc
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 %define _extension .gz
-BuildRequires: redhat-rpm-config elfutils sendmail
-%endif
 
-%if 0%{?suse_version}
-%define _extension .gz
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+BuildRequires: redhat-rpm-config elfutils sendmail
 %endif
 
 %if !0%{?suse_version}
@@ -825,7 +822,6 @@ cat > $ACE_ROOT/ace/config.h << EOF
 EOF
 
 # If ipv6 support is indicated insert some lines into the config.h file
-#
 %if %{?_with_ipv6:1}%{!?_with_ipv6:0}
 cat >> $ACE_ROOT/ace/config.h << EOF
 #define ACE_HAS_IPV6
@@ -1018,7 +1014,7 @@ $MAKECMD -C $TAO_ROOT/utils
 export ACE_ROOT=$(pwd)
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$CIAO_ROOT/DAnCE
+export DANCE_ROOT=$TAO_ROOT/DAnCE
 
 # ---------------- Runtime Components ----------------
 
