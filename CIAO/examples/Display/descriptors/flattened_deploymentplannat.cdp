@@ -1,0 +1,543 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <label>Display-DeploymentPlan</label>
+  <UUID>Display_Plan_UUID_0001</UUID>
+ 
+  <implementation xmi:id="HUDisplay-RateGen-mdd">
+    <name>HUDisplay-RateGen-mdd</name>
+    <source/>
+    <artifact xmi:idref="HUDisplay-RateGen_svnt" />
+    <artifact xmi:idref="HUDisplay-RateGen_exec" />
+   <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createRateGenHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_HUDisplay_RateGenHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RateGen_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RateGen_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="HUDisplay-RateGen-comp-mdd">
+    <name>HUDisplay-RateGen-comp-mdd</name>
+    <source/>
+    <artifact xmi:idref="HUDisplay-RateGen_svnt" />
+    <artifact xmi:idref="HUDisplay-RateGen_exec" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+
+
+  <implementation xmi:id="HUDisplay-NavDisplay-mdd">
+    <name>HUDisplay-NavDisplay-mdd</name>
+    <source/>
+    <artifact xmi:idref="HUDisplay-NavDisplay_svnt"/>
+    <artifact xmi:idref="HUDisplay-NavDisplay_exec"/>
+   <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+     <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createNavDisplayHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_HUDisplay_NavDisplayHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NavDisplay_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NavDisplay_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+ <implementation xmi:id="HUDisplay-NavDisplay-comp-mdd">
+    <name>HUDisplay-NavDisplay-comp-mdd</name>
+    <source/>
+    <artifact xmi:idref="HUDisplay-NavDisplay_svnt"/>
+    <artifact xmi:idref="HUDisplay-NavDisplay_exec"/>
+   <execParameter>
+     <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+ </implementation>
+
+  <implementation xmi:id="HUDisplay-GPS-mdd">
+    <name>HUDisplay-GPS-mdd</name>
+    <source/>
+    <artifact xmi:idref="HUDisplay-GPS_svnt" />
+    <artifact xmi:idref="HUDisplay-GPS_exec" />
+  <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+     <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>createGPSHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_HUDisplay_GPSHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GPS_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GPS_exec</string>
+        </value>
+      </value>
+    </execParameter>
+   </implementation>
+  <implementation xmi:id="HUDisplay-GPS-comp-mdd">
+    <name>HUDisplay-GPS-comp_mdd</name>
+    <source/>
+    <artifact xmi:idref="HUDisplay-GPS_svnt" />
+    <artifact xmi:idref="HUDisplay-GPS_exec" />
+    <execParameter>
+     <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+ </implementation>
+
+  <instance xmi:id="HUDisplay-GPS-idd">
+    <name>HUDisplay-GPS-idd</name>
+    <node>AirFrameDevice_2</node>
+    <source/>
+    <implementation xmi:idref="HUDisplay-GPS-mdd"/>
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GPSHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GPSHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+<instance xmi:id="HUDisplay-GPS-comp-idd">
+    <name>HUDisplay-GPS-comp_idd</name>
+    <node>AirFrameDevice_2</node>
+    <source/>
+    <implementation xmi:idref="HUDisplay-GPS-comp-mdd"/>
+    <!-- Add this property if you want to write component reference to IOR -->
+   <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HUDisplay-GPS-idd</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GPS.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>GPS</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+ <instance xmi:id="HUDisplay-RateGen-idd">
+    <name>HUDisplay-RateGen-idd</name>
+    <node>AirFrameDevice</node>
+    <source/>
+    <implementation  xmi:idref="HUDisplay-RateGen-mdd"/>
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RateGenHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RateGenHome</string>
+        </value>
+      </value>
+    </configProperty>
+   </instance>
+   
+   <instance xmi:id="HUDisplay-RateGen-comp-idd">
+    <name>HUDisplay-RateGen-comp-idd</name>
+    <node>AirFrameDevice</node>
+    <source/>
+    <implementation  xmi:idref="HUDisplay-RateGen-comp-mdd"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HUDisplay-RateGen-idd</string>
+        </value>
+      </value>
+    </configProperty>
+
+    <!-- Add this property if you want to write component reference to IOR -->
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RateGen.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>RateGen</string>
+        </value>
+      </value>
+    </configProperty>
+    <!-- Add this property if you want to initialize component attribute -->
+    <configProperty>
+      <name>hertz</name>
+      <value>
+        <type>
+         <kind>tk_long</kind>
+        </type>
+        <value>
+          <long>2</long>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+   <instance xmi:id="HUDisplay-NavDisplay-idd">
+    <name>HUDisplay-NavDisplay-idd</name>
+    <node>AirFrameDevice_3</node>
+    <source/>
+    <implementation xmi:idref="HUDisplay-NavDisplay-mdd" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NavDisplayHome.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NavDisplayHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+ <instance xmi:id="HUDisplay-NavDisplay-comp-idd">
+    <name>HUDisplay-NavDisplay-comp-idd</name>
+    <node>AirFrameDevice_3</node>
+    <source/>
+    <implementation xmi:idref="HUDisplay-NavDisplay-comp-mdd" />
+   <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>HUDisplay-NavDisplay-idd</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NavDisplay.ior</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NavDisplay</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+   <connection>
+    <name>Pulse_Refresh</name>
+    <internalEndpoint>
+      <portName>Pulse</portName>
+      <provider>false</provider>
+      <kind>EventPublisher</kind>
+      <instance  xmi:idref="HUDisplay-RateGen-comp-idd"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>Refresh</portName>
+      <provider>true</provider>
+      <kind>EventConsumer</kind>
+      <instance  xmi:idref="HUDisplay-GPS-comp-idd" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>Refresh_Ready</name>
+    <internalEndpoint>
+      <portName>Ready</portName>
+     <provider>false</provider>
+      <kind>EventPublisher</kind>
+      <instance  xmi:idref="HUDisplay-GPS-comp-idd" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>Refresh</portName>
+      <provider>true</provider>
+      <kind>EventConsumer</kind>
+      <instance  xmi:idref="HUDisplay-NavDisplay-comp-idd" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>GPSLocation_MyLocation_facet</name>
+    <internalEndpoint>
+      <portName>MyLocation</portName>
+     <provider>true</provider>
+      <kind>Facet</kind>
+      <instance  xmi:idref="HUDisplay-GPS-comp-idd"/>
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>GPSLocation</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance  xmi:idref="HUDisplay-NavDisplay-comp-idd" />
+    </internalEndpoint>
+  </connection>
+
+
+
+
+
+  <artifact xmi:id="HUDisplay-RateGen_svnt">
+    <name>RateGen_svnt</name>
+    <source/>
+    <node/>
+    <location>RateGen_svnt</location>
+  </artifact>
+
+  <artifact xmi:id="HUDisplay-RateGen_exec">
+    <name>RateGen_exec</name>
+    <source><!-- @@ Not sure --></source>
+    <node><!-- blank --></node>
+    <location>RateGen_exec</location>
+  </artifact>
+
+
+   <artifact xmi:id="HUDisplay-GPS_svnt">
+    <name>GPS_svnt</name>
+    <source/>
+    <node/>
+    <location>GPS_svnt</location>
+   </artifact>
+
+  <artifact xmi:id="HUDisplay-GPS_exec">
+    <name>GPS_exec</name>
+    <source/>
+    <node/>
+    <location>GPS_exec</location>
+   </artifact>
+
+
+  <artifact xmi:id="HUDisplay-NavDisplay_svnt">
+    <name>NavDisplay_svnt</name>
+    <source/>
+    <node/>
+    <location>NavDisplay_svnt</location>
+  </artifact>
+
+
+  <artifact xmi:id="HUDisplay-NavDisplay_exec">
+    <name>NavDisplay_exec</name>
+    <source/>
+    <node/>
+    <location>NavDisplay_exec</location>
+  </artifact>
+
+
+</Deployment:DeploymentPlan>

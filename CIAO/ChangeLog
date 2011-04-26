@@ -1,3 +1,21 @@
+Tue Apr 26 13:57:23 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * examples/Display/descriptors/run_test_without_ns.pl:
+        * examples/Display/descriptors/NodeManagerMap.cdd:
+        * examples/Display/descriptors/run_NodeDaemons.pl:
+        Deleted unused files.
+
+        * examples/Display/README.html:
+        * examples/Display/RateGen/RateGen_exec.cpp:
+        * examples/Display/GPS/GPS_exec.cpp:
+        Changed to make test working again. 
+
+        * examples/Display/ run_test_contr.pl:
+        * examples/Display/flattened_deploymentplannat.cdp:
+        * examples/Display/run_test.pl:
+        Added for running test in console mode. 
+
+
 Sat Apr 23 19:48:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
