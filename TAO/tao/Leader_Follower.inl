@@ -74,7 +74,7 @@ TAO_Leader_Follower::set_event_loop_thread (ACE_Time_Value *max_wait_time)
   if (this->client_thread_is_leader_ &&
       tss->client_leader_thread_ == 0)
     {
-      int result =
+      int const result =
         this->wait_for_client_leader_to_complete (max_wait_time);
 
       if (result != 0)

@@ -34,7 +34,7 @@ class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 
 public:
   /// Constructor.
-  TAO_Wait_On_Reactor (TAO_Transport *transport);
+  explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
 
   /// Destructor.
   virtual ~TAO_Wait_On_Reactor (void);
