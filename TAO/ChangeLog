@@ -1,3 +1,20 @@
+Tue Apr 26 13:04:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocation_Resolver.h:
+        * tao/Connect_Strategy.h:
+        * tao/Endpoint_Selector_Factory.h:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_11.h:
+        * tao/GIOP_Message_Generator_Parser_Impl.h:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Utils.h:
+        * tao/GUIResource_Factory.h:
+        * tao/LF_Connect_Strategy.h:
+        * tao/LF_Follower.cpp:
+          Doxygen changes
+
 Tue Apr 26 12:50:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
