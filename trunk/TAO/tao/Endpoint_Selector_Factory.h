@@ -46,7 +46,7 @@ class TAO_Invocation_Endpoint_Selector;
  * @brief Factory for initializing <Endpoint_Selection_State> and
  * obtaining appropriate <Invocation_Endpoint_Selector>.
  *
- * Used by Invocation classes to intialize its endpoint selection
+ * Used by Invocation classes to initialize its endpoint selection
  * strategy and state based on the effective policies.
  * Endpoint selection strategies are stateless objects - all the
  * state they need is contained by Invocation in

@@ -56,7 +56,7 @@ public:
                          TAO_Transport * transport,
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Dtor
+  /// Destructor
   ~TAO_GIOP_Message_Base (void);
 
   /// Initialize the underlying state object based on the @a major and
@@ -64,7 +64,7 @@ public:
   void init (CORBA::Octet major, CORBA::Octet minor);
 
   /// Write the RequestHeader in to the @a cdr stream. The underlying
-  /// implementation of the mesaging should do the right thing.
+  /// implementation of the messaging should do the right thing.
   int generate_request_header (TAO_Operation_Details &op,
                                TAO_Target_Specification &spec,
                                TAO_OutputCDR &cdr);
@@ -83,7 +83,7 @@ public:
   int generate_fragment_header (TAO_OutputCDR & cdr, CORBA::ULong request_id);
 
   /// Format the message. As we have not written the message length in
-  /// the header, we make use of this oppurtunity to insert and format
+  /// the header, we make use of this opportunity to insert and format
   /// the message.
   int format_message (TAO_OutputCDR &cdr, TAO_Stub* stub);
 
@@ -131,12 +131,12 @@ public:
   TAO_OutputCDR &out_stream (void);
 
   /// Consolidate fragmented message with associated fragments, being
-  /// stored withi this class.  If reliable transport is used (like
-  /// TCP) fragments are partialy ordered on stack, last fragment on
+  /// stored within this class.  If reliable transport is used (like
+  /// TCP) fragments are partially ordered on stack, last fragment on
   /// top. Otherwise If un-reliable transport is used (like UDP)
   /// fragments may be dis-ordered, and must be ordered before
   /// consolidation.  @return 0 on success and @a msg points to
-  /// consolidated message, 1 if there are still fragmens outstanding,
+  /// consolidated message, 1 if there are still fragments outstanding,
   /// in case of error -1 is being returned. In any case @a qd must be
   /// released by method implementation.
   int consolidate_fragmented_message (TAO_Queued_Data *qd,
@@ -144,7 +144,7 @@ public:
 
   /// Discard all fragments associated to request-id encoded in
   /// cancel_request.  This operation will never be called
-  /// concurrently by multiplpe threads nor concurrently to
+  /// concurrently by multiple threads nor concurrently to
   /// consolidate_fragmented_message @return -1 on failure, 0 on
   /// success, 1 no fragment on stack relating to CancelRequest.
   int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
@@ -160,11 +160,10 @@ private:
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
   /// Decompresses a ZIOP message and turns it into a GIOP message
   /// When decompressed, db contains a complete new ACE_Data_Block and
-  /// therefore qd its data block is alse replaced.
+  /// therefore qd its data block is also replaced.
   bool decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                    size_t& rd_pos, size_t& wr_pos);
 #endif
-
 
   /// Processes the GIOP_REQUEST messages
   int process_request (TAO_Transport *transport,

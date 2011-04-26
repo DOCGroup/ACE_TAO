@@ -41,7 +41,7 @@ class TAO_Export TAO_GIOP_Message_State
 {
 public:
 
-  /// Ctor
+  /// Constructor
   TAO_GIOP_Message_State (void);
 
   /// Parse the message header.

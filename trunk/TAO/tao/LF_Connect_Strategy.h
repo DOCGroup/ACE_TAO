@@ -34,7 +34,7 @@ class TAO_LF_Event;
  * @class TAO_LF_Connect_Strategy
  *
  * @brief Concrete implementation of a connect strategy that waits on
- *  the leader-follower during asynch connects
+ *  the leader-follower during asynchronous connects
  */
 
 class TAO_Export TAO_LF_Connect_Strategy : public TAO_Connect_Strategy
@@ -46,7 +46,7 @@ public:
   /// Destructor
   ~TAO_LF_Connect_Strategy (void);
 
-  /*
+  /**
    * Concrete implementation for this class. Please see
    * Connect_Strategy.h for details
    */
