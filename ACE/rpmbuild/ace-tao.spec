@@ -807,7 +807,7 @@ export ACE_ROOT=$(pwd)
 export MPC_ROOT=$ACE_ROOT/MPC
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$CIAO_ROOT/DAnCE
+export DANCE_ROOT=$TAO_ROOT/DAnCE
 export LD_LIBRARY_PATH=$ACE_ROOT/lib
 
 # Dump the g++ versions, in case the g++ version is broken we can
@@ -884,7 +884,7 @@ EOF
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-qt = 1
+qt4 = 1
 gl = 1
 ace_qt4reactor = 1
 tao_qt4resource = 1
