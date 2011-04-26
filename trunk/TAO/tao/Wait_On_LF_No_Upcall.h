@@ -42,10 +42,9 @@ namespace TAO
   class Wait_On_LF_No_Upcall : public TAO_Wait_On_Leader_Follower
   {
   public:
-
     typedef TAO_Wait_On_Leader_Follower base;
 
-    Wait_On_LF_No_Upcall (TAO_Transport *t);
+    explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
     virtual ~Wait_On_LF_No_Upcall (void);
 

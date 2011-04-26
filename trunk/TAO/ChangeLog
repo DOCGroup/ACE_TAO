@@ -1,3 +1,14 @@
+Tue Apr 26 11:57:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.inl:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_Strategy.h:
+          Use explicit for single argument constructors, doxygen improvements
+
 Tue Apr 26 11:13:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/MT_NoUpcall_Client_Leader/client.cpp:
