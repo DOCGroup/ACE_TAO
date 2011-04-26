@@ -501,12 +501,13 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
       leader_follower.has_clients ())
     {
       reactor->wakeup_all_threads ();
-      return;
     }
-
-  // End the reactor if we want shutdown dropping replies along the
-  // way.
-  reactor->end_reactor_event_loop ();
+  else
+    {
+      // End the reactor if we want shutdown dropping replies along the
+      // way.
+      reactor->end_reactor_event_loop ();
+    }
 }
 
 void
