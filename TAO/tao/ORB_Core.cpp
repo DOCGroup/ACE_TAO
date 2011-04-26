@@ -2257,9 +2257,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
   // wait only in the parent thread.
   if (this->has_shutdown () == true &&
       (this->server_factory_->activate_server_connections () ||
-       (this->tm_.task() == 0 && this->tm_.count_threads() > 0) ) ) {
-    this->tm_.wait ();
-  }
+       (this->tm_.task() == 0 && this->tm_.count_threads() > 0) ) )
+    {
+      this->tm_.wait ();
+    }
 
   if (TAO_debug_level > 10)
     {

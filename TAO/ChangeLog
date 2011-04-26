@@ -1,3 +1,14 @@
+Tue Apr 26 12:50:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/Thread_Lane_Resources.h:
+        * tao/Thread_Lane_Resources_Manager.h:
+        * tao/Thread_Per_Connection_Handler.h:
+        * tao/Transport.h:
+        * tao/Transport_Connector.h:
+        * tao/TypeCodeFactory_Adapter.h:
+          Doxygen changes
+
 Tue Apr 26 12:21:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.h:
