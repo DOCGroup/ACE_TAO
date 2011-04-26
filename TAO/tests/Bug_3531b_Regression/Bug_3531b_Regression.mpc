@@ -1,7 +1,7 @@
 // $Id$
 
 project(*Server): taoserver {
-  avoids += dummy_label
+  requires += dummy_label
   after += *idl
   Source_Files {
     server.cpp
