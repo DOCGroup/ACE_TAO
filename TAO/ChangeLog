@@ -1,3 +1,25 @@
+Tue Apr 26 12:21:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Impl.h:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Registry.h:
+        * tao/Adapter_Registry.h:
+        * tao/Bind_Dispatcher_Guard.h:
+        * tao/Blocked_Connect_Strategy.h:
+        * tao/Blocked_Connect_Strategy.cpp:
+        * tao/Cleanup_Func_Registry.h:
+        * tao/Collocated_Invocation.cpp:
+        * tao/LF_Event_Loop_Thread_Helper.inl:
+        * tao/LF_Follower_Auto_Adder.inl:
+        * tao/Leader_Follower.cpp:
+        * tao/Queued_Message.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.h:
+          Doxygen changes
+
 Tue Apr 26 11:57:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.h:

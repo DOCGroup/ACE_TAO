@@ -69,7 +69,7 @@ namespace TAO
   //=================================================================
 
   Wait_On_LF_No_Upcall::Wait_On_LF_No_Upcall (TAO_Transport *t)
-    : base (t)
+    : TAO_Wait_On_Leader_Follower (t)
   {
   }
 
@@ -83,7 +83,7 @@ namespace TAO
   {
     Nested_Upcall_Guard upcall_guard (this->transport_);
 
-    return base::wait (max_wait_time, rd);
+    return TAO_Wait_On_Leader_Follower::wait (max_wait_time, rd);
   }
 
   bool

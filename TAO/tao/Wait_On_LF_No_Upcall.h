@@ -42,15 +42,17 @@ namespace TAO
   class Wait_On_LF_No_Upcall : public TAO_Wait_On_Leader_Follower
   {
   public:
-    typedef TAO_Wait_On_Leader_Follower base;
-
+     /// Constructor.
     explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
+    /// Destructor.
     virtual ~Wait_On_LF_No_Upcall (void);
 
+    /*! @copydoc TAO_Wait_Strategy::wait() */
     virtual int wait (ACE_Time_Value *max_wait_time,
                       TAO_Synch_Reply_Dispatcher &rd);
 
+    /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
     virtual bool can_process_upcalls (void) const;
   };
 }
