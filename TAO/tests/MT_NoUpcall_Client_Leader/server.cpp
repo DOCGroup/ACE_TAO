@@ -6,9 +6,36 @@
 #include "police.h"
 
 #include "ace/SString.h"
-#include "ace/streams.h"
+#include "ace/Get_Opt.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+int nr_threads = 1;
+
+int
+parse_args (int argc, ACE_TCHAR *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:"));
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 't':
+        nr_threads = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-t threads "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates successful parsing of the command line
+  return 0;
+}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -21,6 +48,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_DEBUG((LM_INFO,"(%P|%t) START OF SERVER TEST\n"));
 
     orb_ = CORBA::ORB_init (argc, argv, "myorb-server");
+
+    if (parse_args (argc, argv) != 0)
+      return 1;
 
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references("RootPOA");
@@ -70,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Running ORB in separate thread
     Worker worker (orb_.in ());
-    if (worker.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+    if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nr_threads) != 0)
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate server thread(s)"), -1);
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Await client initialization\n"));

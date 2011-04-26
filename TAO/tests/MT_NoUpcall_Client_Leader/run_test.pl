@@ -32,7 +32,7 @@ $client->DeleteFile($client_iorbase);
 
 $SV = $server->CreateProcess ("server",
                               "-ORBDebugLevel $debug_level -ORBSvcConf $server_conf " .
-                              "-o $server_iorfile");
+                              "-t 1");
 
 $server_status = $SV->Spawn ();
 
@@ -48,7 +48,7 @@ if ($server->WaitForFileTimed ($server_iorbase,
     exit 1;
 }
 
-$CL = $client->CreateProcess ("client", "-k file://$client1_iorfile");
+$CL = $client->CreateProcess ("client", "-t 1");
 
 $client_status = $CL->Spawn ();
 
