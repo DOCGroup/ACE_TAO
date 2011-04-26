@@ -38,16 +38,16 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
   HUDisplay::CCM_position_ptr
   MyImpl::GPS_exec_i::get_MyLocation ()
   {
-//     ACE_DEBUG ((LM_DEBUG,
-//                 "GPS_exec::get_MyLocation called\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                 "GPS_exec::get_MyLocation called\n"));
     return (new Position_Impl (*this));
   }
 
 void
 MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *)
 {
-//   ACE_DEBUG ((LM_DEBUG,
-//               ACE_TEXT ("GPS: Received Refresh Event\n")));
+  ACE_DEBUG ((LM_DEBUG,
+               ACE_TEXT ("GPS: Received Refresh Event\n")));
 
   // Refresh position
   this->positionx_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
@@ -82,8 +82,10 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx)
     HUDisplay::CCM_GPS_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    throw CORBA::INTERNAL ();
-  // Urm, we actually discard exceptions thown from this operation.
+    {
+      ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::context is NIL !\n"));
+      throw CORBA::INTERNAL ();
+    }
 }
 
 void

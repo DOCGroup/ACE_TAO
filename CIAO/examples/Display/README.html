@@ -6,6 +6,8 @@
 <body alink="#0000ff" bgcolor="#ffffff" link="#000fff" text="#000000" vlink="#ff0f0f">
 
 <h2>Display example README</h2>
+Note: The GUI display is still under development and does not work currently.  Test only works in console mode at this moment.
+
 <li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Display</code>.</li>
 <hr>
 
@@ -38,19 +40,17 @@ the following three components:
   <li>The <font face="Courier New">NavDisplayGUI</font> directory contains
   implementations for a <font face="Courier New">NavDisplay</font> with
   graphical interface. To use this graphical interface you need to install qt
-  libraries and have qt enabled (qt = 1) in your
+  libraries and have qt enabled (qt = 1, qt4 = 1) in your
   <font face="Courier New">$ACE_ROOT/bin/MakeProjectCreator/config/global.features</font>.
   In some Linux distributions qt is installed by default. There is a
   non-commercial version of qt libraries for Windows
   <a href="http://www.dre.vanderbilt.edu/%7Edengg/ITS/qt-win-noncommercial-msvc-3.2.1.exe">
   here</a> and more information about qt
   <a href="http://www.trolltech.com/products/qt/index.html">here</a>. </li>
-  <li>If you just want to run the application, just go to the last section of
+  <li>If you just want to run the application (preliminary without the GUI display) , just go to the last section of
   this page.</li>
 </ul>
-<hr>
-
-<h2>The files you will find.</h2>
+<hr><h2>The files you will find.</h2>
 
 
 <li>1. The interfaces,
@@ -132,49 +132,26 @@ Note: Creating the deployment plan descriptor is a tedious and error-prone job, 
 Finally you are ready to test the application you have made. From different shells in <code>$CIAO_ROOT/examples/Display/descriptors/</code> directory:
 <br><br>
 
+To run in console mode:<br>
 <ul>
-  <li> Start NodeManagers (NodeDameon) by running <code> basicNodeDaemons.pl </code>
-
-  </li><li> Start the execution manager:
-  <code>$DANCE_ROOT/bin/dance_execution_manager -o EM.ior -i NodeManagerMap.dat </code>
-  The NodeManagerMap.dat file describes the deployment daemons DAnCE's Execution_Manager
-  will contact to instantiate ComponentServer's, home's, and component
-  instances.  Each line specify the name of a installation
-  "destination" and the corresponding IOR for
-  the CIAO_Daemon. For example, the NodeManagerMap.dat contains:
-
-      AirFrameDevice corbaloc:iiop:localhost:10000/NodeManager
-      TimerDevice  corbaloc:iiop:localhost:12000/NodeManager
-
+  <li> Start NodeManagers (NodeDameon), execution manager and dance_plan_launcher, using the Naming Service 
+  and the deploymentplan the flattened_deploymentplannat.cdp by running <code> run_test.pl </code>
+   
   You can copy and modify the copy to deploy the components in various
   different locations to let the application truely "distributed".
-
-  Remember to start up the Execution_Manager  using the
-  revised .dat file you created, and start up the CIAO_Daemon according to the specification.
-
-  </li>
-
-  <ul type="square"> <li> <em>NOTE</em>: As one can see, we use the "NodeManagerMap.dat" file to instruct the
-       Execution_Manager how to find the endpoint of each individual NodeManager (i.e., Node Daemon) where
-       component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
-  </li></ul>
-
-  <li> Start the plan_launcher:
-  <code>$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior </code>
-
   After this, components should be deployed successfully.
 
-  </li><li> The Assembly_Manager is instructed to write the IOR of the RateGen
+  </li>
+  <li> The Assembly_Manager is instructed to write the IOR of the RateGen
   component to a file called "rategen.ior" in this
   directory.  You will then need to use a controller program in a
   separate shell window to switch on/off the Rate Generator.
-  Go to the <em> $CIAO_ROOT/examples/Display/descriptor </em> directory and run the <code>$CIAO_ROOT/examples/Display/RateGen/controller
-  -o </code> to start the application. To stop the application run <code>$CIAO_ROOT/examples/Display/RateGen/controller
+  Go to the <em> $CIAO_ROOT/examples/Display/descriptor </em> directory and run <code>run_test_contr.pl </code>
+  In this script the command <code>$CIAO_ROOT/examples/Display/RateGen/controller
+  -o </code> starts the application and after a 20 sec stopp the application with <code>$CIAO_ROOT/examples/Display/RateGen/controller
   -f </code>
   </li>
 </ul>
-
-
 
 <hr>
 <b>Email: </b><a href="mailto:"></a><address>ciao-users@list.isis.vanderbilt.edu</address>
