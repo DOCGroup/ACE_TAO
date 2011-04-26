@@ -129,9 +129,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "::CORBA::Boolean operator<< ("
           << be_idt << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const " << node->name () << " &_tao_sequence"
+          << "const " << node->name () << " &_tao_sequence)"
+          << be_uidt
           << be_uidt_nl
-          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "return TAO::marshal_sequence(strm, _tao_sequence);"
           << be_uidt_nl
@@ -181,9 +181,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "TAO_InputCDR &strm"
           << "," << be_nl
           << node->name ()
-          << " &_tao_sequence"
+          << " &_tao_sequence)"
+          << be_uidt
           << be_uidt_nl
-          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "return TAO::demarshal_sequence(strm, _tao_sequence);"
           << be_uidt_nl
