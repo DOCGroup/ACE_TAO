@@ -167,7 +167,7 @@ public:
    * message to update its state and determine if all the data has
    * been sent already.
    *
-   * @param byte_count The number of bytes succesfully sent.  The
+   * @param byte_count The number of bytes successfully sent.  The
    *                   TAO_Queued_Message should decrement this value
    *                   by the number of bytes that must still be sent.
    * @return Returns 1 if the TAO_Queued_Message has any more data to
