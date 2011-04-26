@@ -33,7 +33,7 @@ public:
 
   ~TAO_Bind_Dispatcher_Guard (void);
 
-  /// Returns 0 if succesful and non-zero otherwise.
+  /// Returns 0 if successful and non-zero otherwise.
   int unbind_dispatcher (void);
 
   /// State information

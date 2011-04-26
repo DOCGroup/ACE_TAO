@@ -70,8 +70,7 @@ public:
    * TAO_Server_Strategy_Factory, it activates the Svc_Handler to run
    * in its own thread.
    */
-  int activate_svc_handler (SVC_HANDLER *svc_handler,
-                            void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
 
 protected:
   /// Pointer to the ORB Core.

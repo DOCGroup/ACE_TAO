@@ -38,12 +38,17 @@ public:
   /// Destructor.
   virtual ~TAO_Wait_On_Read (void);
 
-  // = Documented in TAO_Wait_Strategy.
-
+  /*! @copydoc TAO_Wait_Strategy::wait() */
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
+
+  /*! @copydoc TAO_Wait_Strategy::register_handler() */
   virtual int register_handler (void);
+
+  /*! @copydoc TAO_Wait_Strategy::non_blocking() */
   virtual bool non_blocking (void) const;
+
+  /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   virtual bool can_process_upcalls (void) const;
 };
 

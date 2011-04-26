@@ -149,7 +149,7 @@ namespace TAO
             retval = this->cache_map_.bind (ext_id, int_id, entry);
             if (retval == 0)
               {
-                // The entry has been added to cache succesfully
+                // The entry has been added to cache successfully
                 // Add the cache_map_entry to the transport
                 int_id.transport ()->cache_map_entry (entry);
                 more_to_do = false;

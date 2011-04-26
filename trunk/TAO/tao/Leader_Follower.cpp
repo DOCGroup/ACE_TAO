@@ -389,7 +389,6 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       reactor->owner (ACE_Thread::self ());
 
       // Run the reactor event loop.
-
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"

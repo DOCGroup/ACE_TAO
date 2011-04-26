@@ -39,14 +39,12 @@ public:
    * Concrete implementation for this class. Please see
    * Connect_Strategy.h for details
    */
-  virtual void synch_options (ACE_Time_Value *val,
-                              ACE_Synch_Options &opt);
+  virtual void synch_options (ACE_Time_Value *val, ACE_Synch_Options &opt);
 
 protected:
   virtual int wait_i (TAO_LF_Event *ev,
                       TAO_Transport *t,
-                     ACE_Time_Value *val);
-
+                      ACE_Time_Value *val);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

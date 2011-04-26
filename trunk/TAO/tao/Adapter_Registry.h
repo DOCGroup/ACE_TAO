@@ -58,7 +58,7 @@ public:
   /**
    * Close each of of the Adapters and then cleanup the Registry.
    * It is possible that an Adapter will reject a close() call if it
-   * is invoked in an innapropriate context (think shutting down the
+   * is invoked in an inappropriate context (think shutting down the
    * POA while performing an upcall).
    */
   void close (int wait_for_completion);
