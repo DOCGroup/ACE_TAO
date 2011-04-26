@@ -63,7 +63,7 @@ TAO_Leader_Follower::elect_new_leader_i (void)
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
               "TAO (%P|%t) - TAO_Leader_Follower::elect_new_leader_i - "
-              "follower is %x\n",
+              "follower is %@\n",
               follower));
 #endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
@@ -231,7 +231,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                      " (follower), cond <%x>\n",
+                      " (follower), cond <%@>\n",
                       t_id, follower.get ()));
 
         // Bound the follower and the LF_Event, this is important to
