@@ -1,3 +1,19 @@
+Tue Apr 26 09:00:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled some tests with CORBA/e micro
+
+        * tao/Connection_Handler.cpp:
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.cpp:
+          Use reference counting for deletion, also log an error and return -1
+          when schedule_timer fails, we have a critical error at that moment
+
+        * tao/Policy_Validator.cpp:
+        * tao/TAO_Singleton.cpp:
+        * tao/Leader_Follower.cpp:
+          Use %@ for logging pointers
+
 Fri Apr 22 12:41:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/tests/Bug_3418_Regression/b.conf:
