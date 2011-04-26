@@ -1,3 +1,10 @@
+Tue Apr 26 11:13:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_NoUpcall_Client_Leader/client.cpp:
+        * tests/MT_NoUpcall_Client_Leader/run_test.pl:
+        * tests/MT_NoUpcall_Client_Leader/server.cpp:
+          Make it possible to pass number of threads through the commandline
+
 Tue Apr 26 09:42:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.h:
