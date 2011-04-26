@@ -33,7 +33,7 @@ class TAO_Wait_On_Read :  public TAO_Wait_Strategy
 
 public:
   /// Constructor.
-  TAO_Wait_On_Read (TAO_Transport *transport);
+  explicit TAO_Wait_On_Read (TAO_Transport *transport);
 
   /// Destructor.
   virtual ~TAO_Wait_On_Read (void);

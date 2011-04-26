@@ -117,7 +117,7 @@ public:
    */
   int elect_new_leader (void);
 
-  /** @name Follower creation/destructions
+  /** @name Follower creation/destruction
    *
    * The Leader/Followers set acts as a factory for the Follower
    * objects.  Followers are used to represent a thread blocked
@@ -205,7 +205,7 @@ private:
    *
    */
   //@{
-  /// Remote a follower from the Followers set and promote it to the
+  /// Remove a follower from the Followers set and promote it to the
   /// leader role.
   /**
    * This is a helper routine for elect_new_leader(), after verifying

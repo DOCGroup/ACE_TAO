@@ -44,7 +44,7 @@ class TAO_Export TAO_Wait_Strategy
 
 public:
   /// Constructor.
-  TAO_Wait_Strategy (TAO_Transport *transport);
+  explicit TAO_Wait_Strategy (TAO_Transport *transport);
 
   /// Destructor.
   virtual ~TAO_Wait_Strategy (void);
