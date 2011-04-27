@@ -1,3 +1,8 @@
+Wed Apr 27 09:01:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Improved this file
+
 Tue Apr 26 09:38:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:

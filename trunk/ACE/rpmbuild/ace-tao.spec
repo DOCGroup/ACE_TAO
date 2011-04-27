@@ -377,7 +377,7 @@ Summary:        ACE_QtReactor for use with Qt library
 Version:        %{ACEVER}
 Group:          Development/Libraries/C and C++
 Requires:       ace = %{ACEVER}
-Requires:       qt
+Requires:       qt4
 
 %description -n ace-qtreactor
 
@@ -395,7 +395,7 @@ Version:        %{ACEVER}
 Group:          Development/Libraries/C and C++
 Requires:       ace-devel = %{ACEVER}
 Requires:       ace-qtreactor = %{ACEVER}
-Requires:       qt-devel
+Requires:       qt4-devel
 
 %description -n ace-qtreactor-devel
 
