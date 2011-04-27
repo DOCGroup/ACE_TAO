@@ -103,7 +103,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   ACE_U_LongLong LL_100ns(file_time.dwLowDateTime, file_time.dwHighDateTime);
   LL_100ns -= ACE_Time_Value::FILETIME_to_timval_skew;
   // Convert 100ns units to seconds;
-  this->tv_.tv_sec = (long) (LL_100ns / ((double) (10000 * 1000)));
+  this->tv_.tv_sec = (time_t) (LL_100ns / ((double) (10000 * 1000)));
   // Convert remainder to microseconds;
   this->tv_.tv_usec = (suseconds_t)((LL_100ns % ((ACE_UINT32)(10000 * 1000))) / 10);
 #else
@@ -115,7 +115,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   _100ns.QuadPart -= ACE_Time_Value::FILETIME_to_timval_skew;
 
   // Convert 100ns units to seconds;
-  this->tv_.tv_sec = (long) (_100ns.QuadPart / (10000 * 1000));
+  this->tv_.tv_sec = (time_t) (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
   this->tv_.tv_usec = (suseconds_t) ((_100ns.QuadPart % (10000 * 1000)) / 10);
 #endif // ACE_LACKS_LONGLONG_T
