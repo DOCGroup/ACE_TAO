@@ -58,19 +58,7 @@ ACE_INLINE void
 ACE_Time_Value::set (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) && defined (_MSC_VER)
-    // The WinCE 6.0 SDK ships with a timeval tv_sec member that uses long as type
-    // not time_t. This resolves in compilation warnings because time_t
-    // can be 64bit. Disable at this moment the warning for just this method
-    // else we get a compile warnings each time this inline file is included
-    // this file.
-#   pragma warning (push)
-#   pragma warning (disable: 4244)
-# endif
   this->tv_.tv_sec = sec;
-# if defined (_WIN32_WCE) && (_WIN32_WCE == 0x600) && !defined (_USE_32BIT_TIME_T) && defined (_MSC_VER)
-#   pragma warning (pop)
-# endif
   this->tv_.tv_usec = usec;
 #if __GNUC__
   if (__builtin_constant_p(sec) &&
@@ -85,7 +73,7 @@ ACE_INLINE void
 ACE_Time_Value::set (double d)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  long l = (long) d;
+  time_t l = (time_t) d;
   this->tv_.tv_sec = l;
   this->tv_.tv_usec = (suseconds_t) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS + .5);
   this->normalize ();
