@@ -148,7 +148,7 @@ private:
   DWORD pipe_mode_;
 
   // On Windows, the handle maintained in the ACE_IPC_SAP class is the
-  // event handle from event_. The pipe handle is useless for telling
+  // event handle from event. The pipe handle is useless for telling
   // when a pipe connect is done/ready, and it changes on each pipe
   // acceptance, quite unlike other acceptor-type classes in ACE.
   // This allows the get_handle()-obtained handle to be used for
