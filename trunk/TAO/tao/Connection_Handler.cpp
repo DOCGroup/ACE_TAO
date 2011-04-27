@@ -231,8 +231,7 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
                   &suspend_delay));
 
       // Using the heap to create the timeout handler, since we do not know
-      // which handle we will have to try to resume. The destructor, called from
-      // handle_close() will self delete (destruct)
+      // which handle we will have to try to resume.
       TAO_Resume_Handle_Deferred* prhd = 0;
       ACE_NEW_RETURN (prhd,
                      TAO_Resume_Handle_Deferred (this->orb_core_, eh),
