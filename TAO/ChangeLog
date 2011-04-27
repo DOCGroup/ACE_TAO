@@ -1,3 +1,8 @@
+Wed Apr 27 13:35:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO.mwc:
+          Exclude DAnCE
+
 Tue Apr 26 13:12:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
