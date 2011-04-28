@@ -1,3 +1,9 @@
+Thu Apr 28 19:53:33 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * adbc/SQLite/Parameter.cpp:
+
+          Bug fix where bind_datatime () was throwing an uncessary exception.
+
 Tue Nov 23 14:56:59 UTC 2010  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * adbc/SQLite/Exception.h:

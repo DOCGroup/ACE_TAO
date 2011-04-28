@@ -86,11 +86,10 @@ void Parameter::bind (::ADBC::Date_Time * date_time)
   ADBC::SQLite::Date_Time * dt =
     dynamic_cast < ::ADBC::SQLite::Date_Time * > (date_time);
 
-  if (0 != dt)
-    this->bind (dt);
+  if (0 == dt)
+    throw Exception ("value is not an ::ADBC::SQLite::Date_Time object");
 
-  // Throw an exception since type is invalid.
-  throw Exception ("value is not an ::ADBC::SQLite::Date_Time object");
+  this->bind (dt);
 }
 
 //
