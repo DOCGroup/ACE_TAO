@@ -1,3 +1,14 @@
+Thu Apr 28 14:00:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/generate_component_mpc.pl:
+          Added a -I as commandline parameter. This will set an
+          include directory for all projects (cpp and idl).
+
+        * connectors/dds4ccm/impl/DataReaderHandler_T.h:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+          Adding and removing reference manually. This'll prevent removing the
+          listener while the reactor still has messages to handle.
+
 Tue Apr 26 13:57:23 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * examples/Display/descriptors/run_test_without_ns.pl:
@@ -8,12 +19,12 @@ Tue Apr 26 13:57:23 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/Display/README.html:
         * examples/Display/RateGen/RateGen_exec.cpp:
         * examples/Display/GPS/GPS_exec.cpp:
-        Changed to make test working again. 
+        Changed to make test working again.
 
         * examples/Display/ run_test_contr.pl:
         * examples/Display/flattened_deploymentplannat.cdp:
         * examples/Display/run_test.pl:
-        Added for running test in console mode. 
+        Added for running test in console mode.
 
 
 Sat Apr 23 19:48:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
@@ -23,7 +34,7 @@ Sat Apr 23 19:48:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
         * connectors/tests/AMIDDS/Sender/AmiDds_Sender_exec.cpp:
           Deleting the ticker in a consistent manner. Created in the constructor,
-          deleting it in the destructor. 
+          deleting it in the destructor.
 
 Fri Apr 22 19:26:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
