@@ -851,6 +851,7 @@ EOF
 
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 ssl = 1
+inline = 0
 EOF
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
