@@ -1,3 +1,8 @@
+Thu Apr 28 06:39:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Disable inlining
+
 Wed Apr 27 13:33:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-visualage.h:
