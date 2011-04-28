@@ -7,7 +7,7 @@
 
   <label>Display-DeploymentPlan</label>
   <UUID>Display_Plan_UUID_0001</UUID>
- 
+
   <implementation xmi:id="HUDisplay-RateGen-mdd">
     <name>HUDisplay-RateGen-mdd</name>
     <source/>
@@ -318,7 +318,7 @@
       </value>
     </configProperty>
    </instance>
-   
+
    <instance xmi:id="HUDisplay-RateGen-comp-idd">
     <name>HUDisplay-RateGen-comp-idd</name>
     <node>AirFrameDevice</node>
@@ -490,10 +490,6 @@
     </internalEndpoint>
   </connection>
 
-
-
-
-
   <artifact xmi:id="HUDisplay-RateGen_svnt">
     <name>RateGen_svnt</name>
     <source/>
@@ -507,7 +503,6 @@
     <node><!-- blank --></node>
     <location>RateGen_exec</location>
   </artifact>
-
 
    <artifact xmi:id="HUDisplay-GPS_svnt">
     <name>GPS_svnt</name>
@@ -523,14 +518,12 @@
     <location>GPS_exec</location>
    </artifact>
 
-
   <artifact xmi:id="HUDisplay-NavDisplay_svnt">
     <name>NavDisplay_svnt</name>
     <source/>
     <node/>
     <location>NavDisplay_svnt</location>
   </artifact>
-
 
   <artifact xmi:id="HUDisplay-NavDisplay_exec">
     <name>NavDisplay_exec</name>
