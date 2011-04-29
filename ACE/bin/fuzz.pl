@@ -159,6 +159,9 @@ sub store_file ($)
         push @files_doxygen, ($name);
     }
     elsif ($name =~ /\.(conf)$/i) {
+        if ($name =~ /\.(WCHAR_T.conf|UTF-16.conf)$/i) {
+            return;
+        }
         push @files_conf, ($name);
     }
     elsif ($name =~ /\.(pm|cmd|java|sh|txt|xml)$/i) {
