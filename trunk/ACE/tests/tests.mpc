@@ -934,6 +934,13 @@ project(Message Queue Test) : acetest {
   Source_Files {
     Message_Queue_Test.cpp
   }
+  verbatim(gnuace,local) {
+    # Needs a larger heap on AIX to avoid overwriting stacks in the counting
+    # part of the test.
+    ifdef AIX_VERS
+      LDFLAGS += -bmaxdata:0x20000000
+    endif
+  }
 }
 
 project(Message Queue Test Ex) : acetest {

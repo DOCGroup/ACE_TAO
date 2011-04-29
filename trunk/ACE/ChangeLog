@@ -1,3 +1,9 @@
+Fri Apr 29 14:01:29 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * tests/tests.mpc: For Message_Queue_Test add -bmaxdata:0x20000000 to
+          linker options to extend the available data space at run time.
+          Avoids the heap smashing the stacks.
+
 Fri Apr 29 06:39:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:
