@@ -7,8 +7,8 @@ Fri Apr 29 14:01:29 UTC 2011  Steve Huston  <shuston@riverace.com>
 Fri Apr 29 06:39:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:
-          Exclude *.WCHAR_T.conf and *.UTF-16.conf files from $Id$ check. 
-          These files are not UTF-8 formate and cannot read by perl. 
+          Exclude *.WCHAR_T.conf and *.UTF-16.conf files from $Id check.
+          These files are not UTF-8 format and cannot be read by perl.
 
 Thu Apr 28 06:39:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
