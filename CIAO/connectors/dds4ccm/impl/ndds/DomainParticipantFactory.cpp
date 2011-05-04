@@ -151,6 +151,19 @@ namespace CIAO
           char * lib_name = get_library_name(qos_profile);
           char * prof_name = get_profile_name(qos_profile);
 
+          if (lib_name == 0 || prof_name == 0)
+            {
+              ACE_OS::free (lib_name);
+              ACE_OS::free (prof_name);
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_DomainParticipantFactory_i::"
+                            "create_participant_with_profile <%C> - "
+                            "Malformed qos_profile. Expected format: "
+                            "<library_name>#<profile_name>\n",
+                            qos_profile));
+              throw ::CORBA::INTERNAL ();
+            }
+
           dds_dp = DDSDomainParticipantFactory::get_instance ()->
                             create_participant_with_profile (domain_id,
                                                              lib_name,
@@ -342,6 +355,19 @@ namespace CIAO
     {
       char * lib_name = get_library_name(qos_profile);
       char * prof_name = get_profile_name(qos_profile);
+
+      if (lib_name == 0 || prof_name == 0)
+        {
+          ACE_OS::free (lib_name);
+          ACE_OS::free (prof_name);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_DomainParticipantFactory_i::"
+                        "set_default_participant_qos_with_profile <%C> - "
+                        "Malformed qos_profile. Expected format: "
+                        "<library_name>#<profile_name>\n",
+                        qos_profile));
+          throw ::CORBA::INTERNAL ();
+        }
 
       ::DDS::ReturnCode_t retcode = DDSDomainParticipantFactory::get_instance ()->
         set_default_participant_qos_with_profile (lib_name, prof_name);
