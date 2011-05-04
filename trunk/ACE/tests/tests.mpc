@@ -1956,6 +1956,15 @@ project(Bug_3334_Regression_Test) : acetest {
   }
 }
 
+project(Bug_3912_Regression_Test) : acetest {
+  after  += Service_Config_Stream_DLL
+  libs  += Service_Config_Stream_DLL
+  exename = Bug_3912_Regression_Test
+  Source_Files {
+    Bug_3912_Regression_Test.cpp
+  }
+}
+
 project(Missing_Svc_Conf_Test) : acetest {
   exename = Missing_Svc_Conf_Test
   Source_Files {
