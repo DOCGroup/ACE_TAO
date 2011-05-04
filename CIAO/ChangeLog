@@ -1,3 +1,22 @@
+Wed May  4 11:37:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+          Improved handling of Qos profile string. Throwing a ::CORBA::INTERAL
+          when the Qos profile string does not meet the requirements
+          (i.e. containing a '#'-sign).
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/PlanNoHash.cdp:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/PlanWrongNames.cdp:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/run_test.pl:
+          Extended this test with a malformed Qos profile string.
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/Plan.cdp:
+          Removed this file.
+
 Thu Apr 28 14:00:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/generate_component_mpc.pl:

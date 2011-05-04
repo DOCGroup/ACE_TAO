@@ -119,6 +119,18 @@ namespace CIAO
       char * lib_name = get_library_name(qos_profile);
       char * prof_name = get_profile_name(qos_profile);
 
+      if (lib_name == 0 || prof_name == 0)
+        {
+          ACE_OS::free (lib_name);
+          ACE_OS::free (prof_name);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Publisher_i::create_datawriter_with_profile <%C> - "
+                        "Malformed qos_profile. Expected format: "
+                        "<library_name>#<profile_name>\n",
+                        qos_profile));
+          throw ::CORBA::INTERNAL ();
+        }
+
       DDSDataWriter *ccm_dds_dw = this->rti_entity ()->create_datawriter_with_profile (
                                                               topic->get_rti_entity (),
                                                               lib_name,

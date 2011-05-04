@@ -69,6 +69,18 @@ namespace CIAO
       char * lib_name = get_library_name(qos_profile);
       char * prof_name = get_profile_name(qos_profile);
 
+      if (lib_name == 0 || prof_name == 0)
+        {
+          ACE_OS::free (lib_name);
+          ACE_OS::free (prof_name);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_DomainParticipant_i::create_publisher_with_profile<%C> - "
+                        "Malformed qos_profile. Expected format: "
+                        "<library_name>#<profile_name>\n",
+                        qos_profile));
+          throw ::CORBA::INTERNAL ();
+        }
+
       DDSPublisher * ccm_dds_pub =
         this->rti_entity ()->create_publisher_with_profile (
                                                       lib_name,
@@ -241,6 +253,18 @@ namespace CIAO
         }
       char * lib_name = get_library_name(qos_profile);
       char * prof_name = get_profile_name(qos_profile);
+
+      if (lib_name == 0 || prof_name == 0)
+        {
+          ACE_OS::free (lib_name);
+          ACE_OS::free (prof_name);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_DomainParticipant_i::create_subscriber_with_profile<%C> - "
+                        "Malformed qos_profile. Expected format: "
+                        "<library_name>#<profile_name>\n",
+                        qos_profile));
+          throw ::CORBA::INTERNAL ();
+        }
 
       DDSSubscriber * ccm_dds_sub =
         this->rti_entity ()->create_subscriber_with_profile (
@@ -549,6 +573,17 @@ namespace CIAO
           char * lib_name = get_library_name(qos_profile);
           char * prof_name = get_profile_name(qos_profile);
 
+          if (lib_name == 0 || prof_name == 0)
+            {
+              ACE_OS::free (lib_name);
+              ACE_OS::free (prof_name);
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_DomainParticipant_i::create_topic_with_profile <%C> - "
+                            "Malformed qos_profile. Expected format: "
+                            "<library_name>#<profile_name>\n",
+                            qos_profile));
+              throw ::CORBA::INTERNAL ();
+            }
           dds_tp = this->rti_entity ()->create_topic_with_profile (
                                                         impl_name,
                                                         type_name,
