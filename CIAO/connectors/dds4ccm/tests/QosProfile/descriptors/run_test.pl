@@ -207,9 +207,9 @@ foreach $file (@files) {
     }
     else {
         print "ERROR : dance_plan_launcher didn't return with an error.\n";
+        $status=$pl_status;
     }
 
-    $status=$pl_status;
 
     for ($i = 0; $i < $nr_daemon; ++$i) {
         if ($tg_daemons[$i]->WaitForFileTimed ($iorbases[$i],
