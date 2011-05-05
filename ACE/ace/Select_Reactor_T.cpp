@@ -495,6 +495,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
       // determine the size at run-time by checking the process file
       // descriptor limit on platforms that support this feature.
 
+      // reset the errno so that subsequent checks are valid
+      errno = 0;
+
       // There is no need to deallocate resources from previous open()
       // call since the open() method deallocates any resources prior
       // to exiting if an error was encountered.

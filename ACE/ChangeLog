@@ -1,16 +1,28 @@
-Wed May  4 15:07:46 UTC 2011  Chad Beaulac <chad.beaulac@objectivesolutions.com>
-	* ace/Stream.cpp:
-	  Modified ACE_Stream::remove(name,flags) so close is always called
-	  on the module that's removed regardless of the flags. Close needs
-	  to be called to ensure proper lifecycle management when the
-	  ACE_Service_Repository shuts down in its fini method.
-	  Bugzilla #3912
+Thu May  5 21:38:45 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* tests/Bug_3912_Regression_Test.conf:
-	* tests/Bug_3912_Regression_Test.cpp:
-	* tests/run_test.lst
-	* tests/test.mpc
-	  Added test to assert that close is called.
+        * ace/Select_Reactor_T.cpp:
+
+          Added a reset of errno during the ctor in case there was an
+          error during the first attempt at opening the reactor. Turns out
+          that in this case on at least on Linux, the errno leaks through
+          the second, good call to open. This can happen for example, when
+          ACE::max_handles() is less than the select reactor's DEFAULT_SIZE.
+          Since all this happens in a ctor, there's no result value for
+          application code to check, apart from errno.
+
+Wed May  4 15:07:46 UTC 2011  Chad Beaulac <chad.beaulac@objectivesolutions.com>
+        * ace/Stream.cpp:
+          Modified ACE_Stream::remove(name,flags) so close is always called
+          on the module that's removed regardless of the flags. Close needs
+          to be called to ensure proper lifecycle management when the
+          ACE_Service_Repository shuts down in its fini method.
+          Bugzilla #3912
+
+        * tests/Bug_3912_Regression_Test.conf:
+        * tests/Bug_3912_Regression_Test.cpp:
+        * tests/run_test.lst
+        * tests/test.mpc
+          Added test to assert that close is called.
 
 Fri Apr 29 14:01:29 UTC 2011  Steve Huston  <shuston@riverace.com>
 
