@@ -317,7 +317,6 @@ clean_exit:
      */
     ThroughputTestDataReader * test_reader =
                              ThroughputTestDataReader::narrow(reader);
-    ThroughputTest *instance = new ThroughputTest;
     if (!test_reader)
     {
       /* In this specific case, this will never fail */
@@ -325,6 +324,8 @@ clean_exit:
                   ACE_TEXT ("::DDS::StringDataReader::narrow failed.\n")));
       return;
     }
+
+    ThroughputTest *instance = new ThroughputTest;
 
     /* Loop until there are messages available in the queue */
      for(;;)
@@ -358,7 +359,6 @@ clean_exit:
   {
     ThroughputCommandDataReader * cmd_reader =
                               ThroughputCommandDataReader::narrow(reader);
-    ThroughputCommand *instance = new ThroughputCommand;
 
     if (!cmd_reader)
       {
@@ -367,6 +367,8 @@ clean_exit:
                     ACE_TEXT ("::DDS::StringDataReader::narrow failed.\n")));
         return;
       }
+
+    ThroughputCommand *instance = new ThroughputCommand;
 
     /* Loop until there are messages available in the queue */
     for(;;)
