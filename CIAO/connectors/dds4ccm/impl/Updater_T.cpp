@@ -125,10 +125,10 @@ namespace CIAO
         {
           // Check explicitly if the instance handle matches the instance, this
           // is not checked by RTI DDS
-          ::DDS::InstanceHandle_t const instance_handle =
+          ::DDS::InstanceHandle_t const instance_handle_l =
               this->dds_writer ()->lookup_instance (an_instance);
 
-          if (hnd != instance_handle)
+          if (hnd != instance_handle_l)
             {
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
