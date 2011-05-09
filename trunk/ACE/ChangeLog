@@ -1,3 +1,12 @@
+Mon May  9 19:09:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dump.h:
+        * ace/FIFO.cpp:
+        * ace/Filecache.cpp:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_y.cpp:
+          Fixed coverity errors
+
 Sun May  8 17:57:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ETCL/ETCL_Constraint.h:
