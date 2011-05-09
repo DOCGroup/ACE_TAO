@@ -1118,7 +1118,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // Make a new outstream to hold the gperf_temp_file for this
         // interface.
         TAO_OutStream *os = 0;
-        ACE_NEW_RETURN (os, TAO_OutStream, -1);
+        ACE_NEW_NORETURN (os, TAO_OutStream);
 
         if (os == 0)
           {

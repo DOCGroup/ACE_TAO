@@ -126,10 +126,10 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
             else
               {
                 TAO_IIOP_Endpoint *endpoint = 0;
-                ACE_NEW (endpoint,
-                         TAO_IIOP_Endpoint (endpoints[i].host,
-                                            endpoints[i].port,
-                                            endpoints[i].priority));
+                ACE_NEW_NO_RETURN (endpoint,
+                                   TAO_IIOP_Endpoint (endpoints[i].host,
+                                                      endpoints[i].port,
+                                                      endpoints[i].priority));
                 if (endpoint == 0)
                   {
                     new_profile->_decr_refcnt ();

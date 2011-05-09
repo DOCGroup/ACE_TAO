@@ -49,22 +49,19 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
 {
   Thread_Counter num = 1;
 
-  if (num_threads_ptr != 0)
+  Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
+
+  if (tmp == 0)
     {
-      Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
-
-      if (tmp == 0)
-        {
-          //FUZZ: disable check_for_lack_ACE_OS
-          ACE_ERROR_RETURN((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
-                            ACE_TEXT ("Invalid argument type passed to open().\n")),
-                           -1);
-          //FUZZ: enable check_for_lack_ACE_OS
-        }
-
-      num = *tmp;
+      //FUZZ: disable check_for_lack_ACE_OS
+      ACE_ERROR_RETURN((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
+                        ACE_TEXT ("Invalid argument type passed to open().\n")),
+                        -1);
+      //FUZZ: enable check_for_lack_ACE_OS
     }
+
+  num = *tmp;
 
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
