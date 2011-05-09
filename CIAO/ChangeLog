@@ -1,3 +1,13 @@
+Mon May  9 08:56:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.h:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+          Created a template class for the DataReaderListener and DataReaderStateListener
+          threadswitch. This'll reduce double code.
+
 Sun May  8 19:05:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Updater_T.cpp:
