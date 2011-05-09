@@ -1,3 +1,17 @@
+Mon May  9 10:58:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/Utils.cpp:
+          Don't throw an exception when a wrong QosProfile is applied. In the 
+          end the creation of the DDS entity will fail. As a result to that, an
+          exception is thrown. This'll simply code and logging.
+
+        * connectors/dds4ccm/tests/QosProfile/descriptors/PlanMultipleHashes.cdp:
+          Added another test.
+
 Mon May  9 08:56:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_StateListen_T.h:

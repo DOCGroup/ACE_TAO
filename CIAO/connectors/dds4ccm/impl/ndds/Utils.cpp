@@ -18,6 +18,11 @@ namespace CIAO
       if (lib_name == 0)
         {
           ACE_OS::free (buf);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "get_library_name <%C> - "
+                        "Error: malformed qos_profile. Expected format: "
+                        "<library_name>#<profile_name>\n",
+                        qos_profile));
           return 0;
         }
 
@@ -34,9 +39,14 @@ namespace CIAO
       const char * lib_name = tok.next ();
       const char * prof_name = tok.next ();
 
-      if (lib_name == 0 || prof_name == 0)
+      if (lib_name == 0 || prof_name == 0 || tok.next () != 0)
         {
           ACE_OS::free (buf);
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "get_profile_name <%C> - "
+                        "Error: malformed qos_profile. Expected format: "
+                        "<library_name>#<profile_name>\n",
+                        qos_profile));
           return 0;
         }
 
