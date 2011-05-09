@@ -27,7 +27,9 @@ namespace CIAO
     class DataReaderListener_T :
       public PortStatusListener
     {
-    typedef ::CIAO::DDS4CCM::DataReaderHandler_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>
+    typedef DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>
+      DataReaderListener_type;
+    typedef ::CIAO::DDS4CCM::DataReaderHandler_T<DataReaderListener_type>
       DataReaderHandler_type;
 
     public:
