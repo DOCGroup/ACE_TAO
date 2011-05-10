@@ -9,7 +9,9 @@ feature(dds4ccm_opendds) : taoidldefaults, dcps {
               -Wb,opendds_sequence_suffix=DDSSeq \
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl
-  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
+  includes += $(CIAO_ROOT)/connectors/dds4ccm/idl \
+              $(CIAO_ROOT)/connectors \
+
 }
 
 feature(dds4ccm_splice) : taoidldefaults {
@@ -19,6 +21,7 @@ feature(dds4ccm_splice) : taoidldefaults {
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
+              $(CIAO_ROOT)/connectors \
 }
 
 feature(dds4ccm_coredx) : taoidldefaults, taolib {
@@ -28,6 +31,7 @@ feature(dds4ccm_coredx) : taoidldefaults, taolib {
               -I $(CIAO_ROOT)/connectors \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl
   includes += $(CIAO_ROOT)/connectors/dds4ccm/idl
+              $(CIAO_ROOT)/connectors \
 }
 
 feature(dds4ccm_ndds) : ndds_idltocpp_stub {

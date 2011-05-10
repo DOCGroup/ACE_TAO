@@ -32,8 +32,7 @@
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
-  /**
-   * Read action generator
+  /**   * Read action generator
    */
   read_action_Generator::read_action_Generator (Receiver_exec_i &callback)
     : callback_ (callback)
@@ -159,7 +158,11 @@ namespace CIAO_Reader_Test_Receiver_Impl
    * Component Executor Implementation Class: Receiver_exec_i
    */
 
-  Receiver_exec_i::Receiver_exec_i (void)
+  Receiver_exec_i::Receiver_exec_i (void) :
+    iterations_ (0),
+    keys_ (0),
+    has_run_ (false),
+    ticker_ (0)
   {
   }
 

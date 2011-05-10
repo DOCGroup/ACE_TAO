@@ -1,3 +1,12 @@
+Tue May 10 18:32:40 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dds4ccm.mpb:
+          Added include paths
+
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+          Fixed Coverity errors
+
 Tue May 10 12:38:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -34,16 +43,16 @@ Tue May 10 12:38:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/Display/descriptors/DeploymentPlan.cdp:
         * examples/Display/GPS/GPS_tracing_exec.cpp:
         * examples/Display/GPS/GPS_tracing_exec.h:
-        Deleted this files. Not used anymore. 
+        Deleted this files. Not used anymore.
 
         * examples/Display/descriptors/deploymentplanmore.cdp:
         * examples/Display/descriptors/run_test_one_contr.pl:
-        * examples/Display/descriptors/run_all_in_one.pl:                                                            
-        * examples/Display/descriptors/run_test_more.pl:                                                               
-        * examples/Display/descriptors/deploymentplanone.cdp:                                                          
-        * examples/Display/descriptors/run_test_more_contr.pl:                                                         
-        * examples/Display/descriptors/run_test_one.pl: 
-        Added scripts for running GUI test (one and more) and test_all_in_one for testsuite.            
+        * examples/Display/descriptors/run_all_in_one.pl:
+        * examples/Display/descriptors/run_test_more.pl:
+        * examples/Display/descriptors/deploymentplanone.cdp:
+        * examples/Display/descriptors/run_test_more_contr.pl:
+        * examples/Display/descriptors/run_test_one.pl:
+        Added scripts for running GUI test (one and more) and test_all_in_one for testsuite.
 
 Tue May 10 06:25:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
