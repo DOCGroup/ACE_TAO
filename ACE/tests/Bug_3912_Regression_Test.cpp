@@ -6,7 +6,7 @@
 //    tests
 //
 // = DESCRIPTION
-//    This test asserts that close is called on Modules during 
+//    This test asserts that close is called on Modules during
 //    ACE_Service_Repository shutdown
 //
 // = AUTHOR
@@ -109,9 +109,9 @@ run_main(int, ACE_TCHAR *argv[])
     // by getting the close methods called so user shutdown hooks can fire.
     //
     ACE_Stream_Type* close_test_stream = (ACE_Stream_Type*) (st2->type ());
-    
+
     close_test_stream->remove ((ACE_Module_Type*)(st->type ()));
- 
+
    if (close_called != 1)
     {
       ACE_ERROR ((LM_ERROR,
