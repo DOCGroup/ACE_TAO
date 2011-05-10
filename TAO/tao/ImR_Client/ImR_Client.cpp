@@ -202,9 +202,9 @@ namespace TAO
 
       if (this->server_object_)
         {
-          PortableServer::POA_var poa = this->server_object_->_default_POA ();
+          PortableServer::POA_var default_poa = this->server_object_->_default_POA ();
 
-          TAO_Root_POA *root_poa = dynamic_cast <TAO_Root_POA*> (poa.in ());
+          TAO_Root_POA *root_poa = dynamic_cast <TAO_Root_POA*> (default_poa.in ());
 
           if (!root_poa)
             {
