@@ -126,7 +126,7 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
             else
               {
                 TAO_IIOP_Endpoint *endpoint = 0;
-                ACE_NEW_NO_RETURN (endpoint,
+                ACE_NEW_NORETURN (endpoint,
                                    TAO_IIOP_Endpoint (endpoints[i].host,
                                                       endpoints[i].port,
                                                       endpoints[i].priority));
