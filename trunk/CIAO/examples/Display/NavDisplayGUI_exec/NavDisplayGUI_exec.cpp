@@ -16,7 +16,7 @@ static const char *argv[] =
 
 /// Default constructor.
 MyImpl::NavDisplayGUI_exec_impl::NavDisplayGUI_exec_impl (void)
-  : unit_(1, "Model T3+"), loc_(50, 20, 0)
+  : number_of_GPS_(1), loc_(10, 10)
 {
 }
 
@@ -31,44 +31,58 @@ void
 MyImpl::NavDisplayGUI_exec_impl::push_Refresh (
   HUDisplay::tick * /* ev */)
 {
-  //ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
+  ACE_DEBUG ((LM_DEBUG, "ENTER: MyImpl::NavDisplayGUI_exec_impl::push_Refresh().\n"));
+  ACE_DEBUG ((LM_DEBUG, "NavDisplay receives Refresh event from a GPS supplier.\n"));
 
   // Refresh position
-  HUDisplay::position_var loc =
-    this->context_->get_connection_GPSLocation ();
+  ACE_DEBUG ((LM_DEBUG, "NavDisplay reads coordinates via GPS receptacles.\n"));
 
-  CORBA::Long lx = loc->posx ();
+  ::HUDisplay::NavDisplay::GPSLocationConnections_var locs =
+      this->context_->get_connections_GPSLocation ();
 
-  CORBA::Long ly = loc->posy ();
-
-  mutex_.acquire ();
-
-  loc_.x_ = lx % 500;
-  loc_.y_ = ly % 300;
-
-  this->unit_.setLocation (loc_);
-
-  mutex_.release ();
-
-  //ACE_DEBUG ((LM_DEBUG, "DISPLAY: Current Location is: %d %d\n", int(attrs.x_), int(attrs.y_)));
-
-  RootPanel *root_pane = worker_->getMainWindow ();
-
-  if (root_pane != 0)
+  for(CORBA::ULong i = 0; i < locs->length(); ++i)
     {
-      UpdatePositionCmd *cmd = UpdatePositionCmd::create (
-        root_pane,
-        &(this->unit_));
-      QCustomEvent *evt = new QCustomEvent (QEvent::User, cmd);
-      QApplication::postEvent (root_pane, evt);
-    }
+      HUDisplay::position_var loc = locs[i].objref;
 
-  //ACE_DEBUG ((LM_DEBUG, "LEAVE: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
+      //only if GPS is started, update position
+      if (loc->started ())
+        {
+          HUDisplay::GPS_position posxy = loc->posxy();
+          loc_.x_ = posxy.pos_x;
+          loc_.y_ = posxy.pos_y;
+
+          navunitarr[i]->setLocation (loc_);
+          RootPanel *root_pane = worker_->getMainWindow ();
+
+          if (root_pane != 0)
+            {
+              UpdatePositionCmd *cmd = UpdatePositionCmd::create (
+                 root_pane, navunitarr[i]);
+              NavEvent *evt = new NavEvent (cmd);
+              QApplication::postEvent (root_pane, evt);
+            }
+        }
+    }
+  ACE_DEBUG ((LM_DEBUG,
+              "LEAVE: MyImpl::NavDisplayGUI_exec_impl::push_Refresh()\n"));
+}
+
+CORBA::Long
+MyImpl::NavDisplayGUI_exec_impl::number_of_GPS ()
+{
+  return this->number_of_GPS_;
+}
+
+void
+MyImpl::NavDisplayGUI_exec_impl::number_of_GPS (CORBA::Long number_of_GPS)
+{
+  this->number_of_GPS_ = number_of_GPS;
 }
 
 // Operations from Components::SessionComponent
 void
-MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext_ptr ctx)
+MyImpl::NavDisplayGUI_exec_impl::set_session_context (
+                                        Components::SessionContext_ptr ctx)
 {
   this->context_ =
     HUDisplay::CCM_NavDisplay_Context::_narrow (ctx);
@@ -77,7 +91,7 @@ MyImpl::NavDisplayGUI_exec_impl::set_session_context (Components::SessionContext
     {
       throw CORBA::INTERNAL ();
     }
-  // Urm, we actually discard exceptions thown from this operation.
+  // Urm, we actually discard exceptions thrown from this operation.
 }
 
 void
@@ -88,6 +102,7 @@ MyImpl::NavDisplayGUI_exec_impl::configuration_complete (void)
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_activate (void)
 {
+  ACE_DEBUG((LM_DEBUG,"MyImpl::NavDisplayGUI_exec_impl::ccm_activate \n"));
   worker_ = new Worker (sizeof (argv) / sizeof (argv[0]),
                         const_cast<char **> (argv));
 
@@ -97,14 +112,24 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_activate (void)
                  "Cannot activate client threads\n"));
       throw Components::CCMException ();
     }
-
   worker_->waitUntillInitialized ();
 
-  AddNavUnitCmd *cmd = AddNavUnitCmd::create (
-    worker_->getMainWindow(),
-    &(this->unit_));
-  QCustomEvent *evt = new QCustomEvent (QEvent::User, cmd);
-  QApplication::postEvent (worker_->getMainWindow (), evt);
+  NavEvent::set_type(QEvent::User);
+
+  //make for all GPS devices a unit with initial different locations.
+  for (int i = 0; i < number_of_GPS(); i ++)
+    {
+      NavUnit * unit;
+      unit = new NavUnit((i+ 1));
+      navunitarr.push_back(unit);
+      navunitarr[i]->setLocation (UnitLocation(10.0 + (10*i), 20.0 + (10*i)));
+
+      AddNavUnitCmd *cmd = AddNavUnitCmd::create (
+         worker_->getMainWindow(),
+        (navunitarr[i]));
+      NavEvent *evt = new NavEvent (cmd);
+      QApplication::postEvent (worker_->getMainWindow (), evt);
+   }
 }
 
 void
@@ -115,7 +140,7 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (void)
   if (target != 0)
     {
       QuitCmd *cmd = QuitCmd::create( target);
-      QCustomEvent *evt = new QCustomEvent (QEvent::User, cmd);
+      NavEvent *evt = new NavEvent (cmd);
       QApplication::postEvent (target, evt);
       worker_->thr_mgr ()->wait ();
     }
@@ -126,6 +151,11 @@ MyImpl::NavDisplayGUI_exec_impl::ccm_passivate (void)
 void
 MyImpl::NavDisplayGUI_exec_impl::ccm_remove (void)
 {
+  for  (std::vector<NavUnit*>::iterator unitObj = navunitarr.begin();
+        unitObj != navunitarr.end(); ++unitObj)
+    {
+      delete *unitObj;
+    }
 }
 
 /// Default ctor.

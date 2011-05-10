@@ -21,7 +21,7 @@ $nr_daemon = 3;
 @iorbases = ( "RateGen.ior" , "GPS.ior", "NavDisplay.ior");
 @iorfiles = 0;
 @nodenames = ( "RateGenNode", "GPSNode", "AirFrameDevice");
-#$controller_exec = "$CIAO_ROOT/examples/Display/RateGen/controller";
+$controller_exec = "$CIAO_ROOT/examples/Display/RateGen/controller";
 
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
@@ -218,8 +218,31 @@ for ($i = 0; $i < $nr_daemon; ++$i) {
     }
 }
 
-print "Sleeping 300 seconds to allow task to complete\n";
-sleep (300);
+print "Sleeping 5 seconds to allow task to complete\n";
+sleep (5);
+print "Invoking the controller for RateGen with rate = 1\n";
+$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://RateGen.ior -o");
+$result = $controller->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+if ($result != 0) {
+    print STDERR "ERROR: The controller returned $result\n";
+    $status = 1;
+}
+
+# put some delay here.
+sleep (10);
+
+# invoking the controller again to stop the rategen
+print "Invoking the controller to stop RateGen\n";
+$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://RateGen.ior -f");
+$result = $controller->SpawnWaitKill ($tg_executor->ProcessStopWaitInterval ());
+if ($result != 0) {
+    print STDERR "ERROR: The controller returned $result\n";
+    $status = 1;
+}
+print "Sleeping 10 seconds to allow task to complete\n";
+sleep (10);
+
+
 
 # Invoke executor - stop the application -.
 print "Invoking executor - stop the application -\n";
@@ -235,6 +258,8 @@ if ($pl_status != 0) {
     kill_open_processes ();
     exit 1;
 }
+
+
 
 print "Executor returned.\n";
 print "Shutting down rest of the processes.\n";

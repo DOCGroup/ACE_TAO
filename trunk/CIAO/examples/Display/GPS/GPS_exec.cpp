@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "GPS_exec.h"
@@ -8,21 +7,28 @@
 #define DISPLACEMENT 256
 
 // Operations from HUDisplay::position
-CORBA::Long
-MyImpl::Position_Impl::posx ()
+
+HUDisplay::GPS_position
+MyImpl::Position_Impl::posxy ()
 {
-  return component_.posx();
+  return component_.posxy();
 }
 
-CORBA::Long
-MyImpl::Position_Impl::posy ()
+CORBA::UShort
+MyImpl::Position_Impl::id ()
 {
-  return component_.posy();
+  return component_.id();
 }
 
+CORBA::Boolean
+MyImpl::Position_Impl::started ()
+{
+  return component_.started ();
+}
 
 /// Default constructor.
 MyImpl::GPS_exec_i::GPS_exec_i ()
+: id_(1), started_(false)
 {
   ACE_OS::srand ((u_int) ACE_OS::time ());
   this->positionx_ = ACE_OS::rand ();
@@ -35,42 +41,61 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 }
 
 // Operations from HUDisplay::GPS
-  HUDisplay::CCM_position_ptr
-  MyImpl::GPS_exec_i::get_MyLocation ()
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                 "GPS_exec::get_MyLocation called\n"));
-    return (new Position_Impl (*this));
-  }
+HUDisplay::CCM_position_ptr
+MyImpl::GPS_exec_i::get_MyLocation ()
+{
+  ACE_DEBUG ((LM_DEBUG,
+                 "GPS_exec::get_MyLocation facet called by NavDisplay\n"));
+  return (new Position_Impl (*this));
+}
 
 void
 MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *)
 {
   ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT ("GPS: Received Refresh Event\n")));
+              ACE_TEXT ("GPS: Received Refresh Event from RateGen for GPS %u\n"),
+              this->id_));
 
   // Refresh position
   this->positionx_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
   this->positiony_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
+  started_= true;
 
-  // Nitify others
-  HUDisplay::tick_var event = new OBV_HUDisplay::tick;
+  // Notify others
+  HUDisplay::tick_var event = new OBV_HUDisplay::tick ();
 
+  ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("GPS: Notify NavDisplay via Ready event.\n")));
   this->context_->push_Ready (event);
 }
 
-CORBA::Long
-MyImpl::GPS_exec_i::posx ()
+HUDisplay::GPS_position
+MyImpl::GPS_exec_i::posxy ()
 {
-  return this->positionx_;
+  HUDisplay::GPS_position pos;
+  pos.pos_x =  this->positionx_;
+  pos.pos_y =  this->positiony_;
+  return pos;
 }
 
-CORBA::Long
-MyImpl::GPS_exec_i::posy ()
+CORBA::UShort
+MyImpl::GPS_exec_i::id ()
 {
-  return this->positiony_;
+  return this->id_;
 }
 
+void
+MyImpl::GPS_exec_i::id (
+  const ::CORBA::UShort id)
+{
+  this->id_ = id;
+}
+
+CORBA::Boolean
+MyImpl::GPS_exec_i::started ()
+{
+  return started_;
+}
 
 // Operations from Components::SessionComponent
 void

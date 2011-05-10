@@ -41,13 +41,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case '?':  // display help for use of the server.
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                              "usage:  %s\n"
-                              "-o (Turn on the rate generator)\n"
-                              "-f (Turn off the rate generator)\n"
-                              "-k <RateGen IOR> (default is file://RateGen.ior)\n"
-                              "-r <rate in hertz> (default is 3)\n"
-                              "\n",
-                              argv [0]),
+                            "usage:  %s\n"
+                            "-o (Turn on the rate generator)\n"
+                            "-f (Turn off the rate generator)\n"
+                            "-k <RateGen IOR> (default is file://RateGen.ior)\n"
+                            "-r <rate in hertz> (default is 3)\n"
+                            "\n",
+                            argv [0]),
                             -1);
           break;
         }
@@ -107,7 +107,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           ACE_DEBUG ((LM_DEBUG, "Rate Generator stopped\n"));
         }
-
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)

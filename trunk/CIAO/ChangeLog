@@ -1,3 +1,50 @@
+Tue May 10 12:38:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Display/Display_Base/Display_Base.idl:
+        * examples/Display/descriptors/flattened_deploymentplannat.cdp:
+        * examples/Display/descriptors/run_test.pl:
+        * examples/Display/NavDisplayGUI_exec/DetailView.h:
+        * examples/Display/NavDisplayGUI_exec/RootPanel.cpp:
+        * examples/Display/NavDisplayGUI_exec/NodeItem.cpp:
+        * examples/Display/NavDisplayGUI_exec/MapView.cpp:
+        * examples/Display/NavDisplayGUI_exec/RootPanel.h:
+        * examples/Display/NavDisplayGUI_exec/NodeItem.h:
+        * examples/Display/NavDisplayGUI_exec/Worker.cpp:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc:
+        * examples/Display/NavDisplayGUI_exec/MapView.h:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp:
+        * examples/Display/NavDisplayGUI_exec/NavUnit.cpp:
+        * examples/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.h:
+        * examples/Display/NavDisplayGUI_exec/NavUnit.h:
+        * examples/Display/NavDisplayGUI_exec/DetailView.cpp:
+        * examples/Display/RateGen/controller.cpp:
+        * examples/Display/RateGen/RateGen_exec.cpp:
+        * examples/Display/GPS/GPS.idl:
+        * examples/Display/GPS/GPS_exec.h:
+        * examples/Display/GPS/GPS_exec.cpp:
+        * examples/Display/NavDisplay/NavDisplay_exec.cpp:
+        * examples/Display/NavDisplay/NavDisplay.idl:
+        * examples/Display/NavDisplay/NavDisplay_exec.h:
+        Made test  working again with GUI display, using one or more GPS devices.
+        Used only QT4, removed qt3support. Not yet tested on Windows.
+
+        * examples/Display/descriptors/basicNodeDaemon.pl:
+        * examples/Display/descriptors/flattened_deploymentplan.cdp:
+        * examples/Display/descriptors/DeploymentPlan.cdp:
+        * examples/Display/GPS/GPS_tracing_exec.cpp:
+        * examples/Display/GPS/GPS_tracing_exec.h:
+        Deleted this files. Not used anymore. 
+
+        * examples/Display/descriptors/deploymentplanmore.cdp:
+        * examples/Display/descriptors/run_test_one_contr.pl:
+        * examples/Display/descriptors/run_all_in_one.pl:                                                            
+        * examples/Display/descriptors/run_test_more.pl:                                                               
+        * examples/Display/descriptors/deploymentplanone.cdp:                                                          
+        * examples/Display/descriptors/run_test_more_contr.pl:                                                         
+        * examples/Display/descriptors/run_test_one.pl: 
+        Added scripts for running GUI test (one and more) and test_all_in_one for testsuite.            
+
 Tue May 10 06:25:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/WaitSet.cpp:

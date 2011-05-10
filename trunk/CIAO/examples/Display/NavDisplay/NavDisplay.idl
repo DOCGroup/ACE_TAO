@@ -18,7 +18,11 @@ module HUDisplay
   component NavDisplay
     {
       consumes tick Refresh;
-      uses position GPSLocation;
+      uses multiple position GPSLocation;
+      /// The attribute can be configured via deploymentplan
+      // This number must indicate the number of GPS devices
+      // which are also defined in the deploymentplan.
+      attribute long number_of_GPS;
     };
 
   home NavDisplayHome manages NavDisplay

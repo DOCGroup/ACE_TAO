@@ -19,6 +19,8 @@ module HUDisplay
       provides position MyLocation;
       publishes tick Ready;
       consumes tick Refresh;
+      /// The attribute can be configured via the deploymentplan
+      attribute unsigned short id;
     };
 
   home GPSHome manages GPS

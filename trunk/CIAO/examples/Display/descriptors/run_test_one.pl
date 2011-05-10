@@ -17,12 +17,12 @@ $em_running = 0;
 $ns_running = 0;
 
 $nr_daemon = 3;
-@ports = ( 60001, 60002, 60003 );
-@iorbases = ( "RateGen.ior" , "GPS.ior", "NavDisplay.ior");
+@ports = ( 60001, 60003, 60004 );
+@iorbases = ( "GPS.ior", "RateGen.ior" ,"NavDisplay.ior");
 @iorfiles = 0;
-@nodenames = ( "RateGenNode", "GPSNode", "AirFrameDevice");
-#$controller_exec = "$CIAO_ROOT/examples/Display/RateGen/controller";
+@nodenames = ( "GPSNode", "RateGenNode", "AirFrameDevice");
 
+# ior files other than daemon
 # ior files other than daemon
 $ior_nsbase = "ns.ior";
 $ior_nsfile = 0;
@@ -42,7 +42,7 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 
 $status = 0;
-$cdp_file = "flattened_deploymentplannat.cdp";
+$cdp_file = "deploymentplanone.cdp";
 
 sub create_targets {
     #   naming service
@@ -114,7 +114,9 @@ sub run_node_daemons {
         $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
-        $d_param = "-s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
+#        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
+       $d_param = "-s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
+
   
         print "Run dance_node_manager with $d_param\n";
 
@@ -139,7 +141,7 @@ init_ior_files ();
 
 # Invoke naming service
 
-$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming", "-ORBEndpoint iiop://localhost:60004 -o $ior_nsfile");
+$NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming", "-ORBEndpoint iiop://localhost:60005 -o $ior_nsfile");
 
 $ns_status = $NS->Spawn ();
 
@@ -149,7 +151,7 @@ if ($ns_status != 0) {
     exit 1;
 }
 
-print STDERR "Starting Naming Service with  -ORBEndpoint iiop://localhost:60004 -o ns.ior\n";
+print STDERR "Starting Naming Service with  -ORBEndpoint iiop://localhost:60005 -o ns.ior\n";
 
 if ($tg_naming->WaitForFileTimed ($ior_nsbase,
                                   $tg_naming->ProcessStartWaitInterval ()) == -1) {
@@ -160,7 +162,7 @@ if ($tg_naming->WaitForFileTimed ($ior_nsbase,
 
 $ns_running = 1;
 # Set up NamingService environment
-$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60004/NameService";
+$ENV{"NameServiceIOR"} = "corbaloc:iiop:localhost:60005/NameService";
 
 # Invoke node daemon.
 print "Invoking node daemon\n";
