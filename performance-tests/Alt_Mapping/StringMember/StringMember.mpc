@@ -38,25 +38,6 @@ project(*Stub): taolib, anytypecode, codeset, avoids_minimum_corba, avoids_ace_f
   }
 }
 
-project(*Client): taoexe, codeset {
-  exename = client
-  after  += *Stub
-  libs += String_Member_Stub
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    client.cpp
-  }
-
-  Header_Files {
-  }
-
-  Inline_Files {
-  }
-}
-
 project(*Skel): portableserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *Stub
   sharedname = String_Member_Skel
@@ -80,8 +61,8 @@ project(*Skel): portableserver, codeset, avoids_minimum_corba, avoids_corba_e_co
   }
 }
 
-project(*Server): taoexe, codeset, portableserver {
-  exename = server
+project(*Test): taoexe, codeset, portableserver {
+  exename = test
   after  += *Skel
   libs += String_Member_Skel String_Member_Stub
   
@@ -89,10 +70,11 @@ project(*Server): taoexe, codeset, portableserver {
   }
 
   Source_Files {
-    server.cpp
+    StringMember_Test.cpp
   }
   
   Header_Files {
+    StringMember_Test.h
   }
   
   Inline_Files {

@@ -8,17 +8,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-my $server = PerlACE::TestTarget::create_target(1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target(2) || die "Create target 2 failed\n";
-
-$iorbase = "StringMember.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+my $test = PerlACE::TestTarget::create_target(1) || die "Create target failed\n";
 
 $num = 10000;
 $len = 40;
+$copy = 0;
 $status = 0;
 
 # Parse the arguments
@@ -30,6 +24,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
       print "\n";
       print "-n num              -- num iterations for stats\n";
       print "-l length           -- string member length\n";
+      print "-c                  -- toggle copying string assignment\n";
       exit 0;
     }
     elsif ($ARGV[$i] eq "-n") {
@@ -40,59 +35,25 @@ for ($i = 0; $i <= $#ARGV; $i++) {
       $len = $ARGV[$i + 1];
       $i++;
     }
+    elsif ($ARGV[$i] eq "-c") {
+      $copy = 1;
+    }
 }
 
-$SV = $server->CreateProcess ("server");
-$CL = $client->CreateProcess ("client");
+$TEST = $test->CreateProcess ("test");
 
-$server->DeleteFile($iorbase); # Ignore errors
-$client->DeleteFile($iorbase);
+if ($copy == 1) {
+  $TEST->Arguments ("-n $num -l $len -c");
+}
+else {
+  $TEST->Arguments ("-n $num -l $len");
+}
 
-$server_status = $SV->Spawn ();
+$test_status = $TEST->SpawnWaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($test_status != 0) {
+    print STDERR "ERROR: test returned $test_status\n";
     $status = 1;
-} else {
-    if ($server->WaitForFileTimed ($iorbase,
-                                    $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-        $SV->Kill ();
-        exit 1;
-    }
-
-    if ($server->GetFile ($iorbase) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-    if ($client->PutFile ($iorbase) == -1) {
-        print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-
-    $CL->Arguments ("-n $num -l $len");
-    $client_status = $CL->SpawnWaitKill ($server->ProcessStartWaitInterval() + 45);
-
-    if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
-        $status = 1;
-    }
-
-    $server_status = $SV->Kill ();
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        $status = 1;
-    }
-
-    $server->GetStderrLog();
-
-    $server->DeleteFile($iorbase);
-    $client->DeleteFile($iorbase);
 }
-
-$server->DeleteFile($iorbase);
 
 exit $status;

@@ -11,8 +11,6 @@ struct Foo
 interface Test
 {
   void test_op (in Foo inarg);
-
-  void shutdown ();
 };
 
 #endif // STRINGMEMBER_IDL
