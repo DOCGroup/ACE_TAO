@@ -1,3 +1,9 @@
+Tue May 10 11:59:32 UTC 2011  Chad Beaulac  <chad.beaulac@objectivesolutions.com>
+	* ace/Stream.cpp
+	* tests/Bug_3912_Regression_Test.cpp
+	* tests/Bug_3912_Regression_Test.conf
+	  Fixed FUZZ whitespace and Id
+
 Mon May  9 19:09:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dump.h:
