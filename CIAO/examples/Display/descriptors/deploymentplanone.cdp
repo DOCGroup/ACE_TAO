@@ -77,6 +77,8 @@
     </execParameter>
   </implementation>
 
+
+
   <implementation xmi:id="HUDisplay-NavDisplay-mdd">
     <name>HUDisplay-NavDisplay-mdd</name>
     <source/>
@@ -112,7 +114,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>NavDisplay_svnt</string>
+          <string>NavDisplayGUI_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -123,7 +125,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>NavDisplay_exec</string>
+          <string>NavDisplayGUI_exec</string>
         </value>
       </value>
     </execParameter>
@@ -199,7 +201,7 @@
     </execParameter>
    </implementation>
   <implementation xmi:id="HUDisplay-GPS-comp-mdd">
-    <name>HUDisplay-GPS-comp-mdd</name>
+    <name>HUDisplay-GPS-comp_mdd</name>
     <source/>
     <artifact xmi:idref="HUDisplay-GPS_svnt" />
     <artifact xmi:idref="HUDisplay-GPS_exec" />
@@ -244,7 +246,7 @@
         </value>
       </value>
     </configProperty>
-  </instance>
+    </instance>
 
 <instance xmi:id="HUDisplay-GPS-comp-idd">
     <name>HUDisplay-GPS-comp-idd</name>
@@ -285,18 +287,8 @@
         </value>
       </value>
     </configProperty>
-   <configProperty>
-      <name>id</name>
-      <value>
-        <type>
-          <kind>tk_ushort</kind>
-        </type>
-        <value>
-          <ushort>1</ushort>
-        </value>
-      </value>
-    </configProperty> 
-  </instance>
+ </instance>
+
 
  <instance xmi:id="HUDisplay-RateGen-idd">
     <name>HUDisplay-RateGen-idd</name>
@@ -344,9 +336,7 @@
         </value>
       </value>
     </configProperty>
-
-    <!-- Add this property if you want to write component reference to IOR -->
-    <configProperty>
+   <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
         <type>
@@ -381,6 +371,7 @@
       </value>
     </configProperty>
   </instance>
+
 
    <instance xmi:id="HUDisplay-NavDisplay-idd">
     <name>HUDisplay-NavDisplay-idd</name>
@@ -449,7 +440,6 @@
         </value>
       </value>
     </configProperty>
-   <!-- Add this property if you have nore then 1 GPS instance.-->
    <configProperty>
       <name>number_of_GPS</name>
       <value>
@@ -540,17 +530,17 @@
    </artifact>
 
   <artifact xmi:id="HUDisplay-NavDisplay_svnt">
-    <name>NavDisplay_svnt</name>
+    <name>NavDisplayGUI_svnt</name>
     <source/>
     <node/>
-    <location>NavDisplay_svnt</location>
+    <location>NavDisplayGUI_svnt</location>
   </artifact>
 
   <artifact xmi:id="HUDisplay-NavDisplay_exec">
-    <name>NavDisplay_exec</name>
+    <name>NavDisplayGUI_exec</name>
     <source/>
     <node/>
-    <location>NavDisplay_exec</location>
+    <location>NavDisplayGUI_exec</location>
   </artifact>
 
 </Deployment:DeploymentPlan>

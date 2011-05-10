@@ -241,7 +241,7 @@ MyImpl::RateGen_exec_i::pulse (void)
   try
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
+                  ACE_TEXT ("Rate Generator sends Pulse to GPS!\n")));
       HUDisplay::tick_var ev = new OBV_HUDisplay::tick ();
 
       this->context_->push_Pulse (ev.in ());

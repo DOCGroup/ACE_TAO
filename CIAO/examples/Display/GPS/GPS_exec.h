@@ -40,9 +40,12 @@ namespace MyImpl
     void push_Refresh (HUDisplay::tick *);
 
     // Operations from HUDisplay::position
-    CORBA::Long posx ();
+    HUDisplay::GPS_position posxy ();
 
-    CORBA::Long posy ();
+    CORBA::UShort id ();
+    void id ( const ::CORBA::UShort id);
+
+    CORBA::Boolean started ();
 
     // Operations from Components::SessionComponent
     void set_session_context (Components::SessionContext_ptr ctx);
@@ -61,8 +64,9 @@ namespace MyImpl
 
    private:
     CORBA::Long positionx_, positiony_;
+    CORBA::UShort id_;
+    CORBA::Boolean started_;
   };
-
 
   /**
    * @class GPSHome_exec_i
@@ -95,9 +99,11 @@ namespace MyImpl
     }
 
     // Operations from HUDisplay::position
-    CORBA::Long posx ();
+    HUDisplay::GPS_position posxy ();
 
-    CORBA::Long posy ();
+    CORBA::UShort id ();
+
+    CORBA::Boolean started ();
 
   private:
     GPS_exec_i& component_;

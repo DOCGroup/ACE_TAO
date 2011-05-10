@@ -17,6 +17,11 @@
 
 module HUDisplay
 {
+  struct GPS_position
+  {
+    long pos_x;
+    long pos_y;
+  };
   /**
    * @brief interface opmode defines the "operation mode" interface.
    */
@@ -40,8 +45,9 @@ module HUDisplay
    */
   interface position
   {
-    long posx ();
-    long posy ();
+    GPS_position posxy ();
+    unsigned short id ();
+    boolean started ();
   };
 };
 

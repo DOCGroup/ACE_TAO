@@ -3,32 +3,25 @@
 #include "RootPanel.h"
 #include <Qt/qmenubar.h>
 #include <Qt/qapplication.h>
-#include <Qt/qprogressdialog.h>
 #include <Qt/qsplitter.h>
 #include <stdlib.h>
 #include "NodeItem.h"
 #include "Command.h"
 
 
-RootPanel::RootPanel(Q3Canvas &c, QWidget *parent, const char *name)
-: QMainWindow(parent, name), canvas(c)
+RootPanel::RootPanel(QGraphicsScene &c, QWidget *parent)
+: QMainWindow(parent), canvas(c)
 {
-  QSplitter *s1 = new QSplitter( Qt::Vertical, this , "main" );
-  navview = new MapView(canvas, s1);
-  s1->moveToFirst(navview);
+  QSplitter *s1 = new QSplitter( Qt::Vertical, parent );
 
+  navview = new MapView(canvas, s1);
   details = new DetailView(s1);
 
-  QMenuBar* menu = menuBar();
-
-  Q3PopupMenu* file = new Q3PopupMenu;
-    //file->insertItem("&Fill canvas", this, SLOT(init()), CTRL+Key_F);
-    //file->insertItem("&Erase canvas", this, SLOT(clear()), CTRL+Key_E);
-    //file->insertItem("&New view", this, SLOT(newView()), CTRL+Key_N);
-    file->insertSeparator();
-    file->insertItem("E&xit", qApp, SLOT(quit()), Qt::CTRL + Qt::Key_Q);
-  menu->insertItem("&File", file);
-
+  QMenu *filemenu = menuBar()->addMenu(tr("&File"));
+  QAction *exitAct = new QAction(tr("E&xit"), this);
+  exitAct->setShortcut(Qt::CTRL + Qt::Key_Q);
+  connect(exitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
+  filemenu->addAction(exitAct);
   setCentralWidget(s1);
 }
 
@@ -42,10 +35,11 @@ RootPanel::addUnit(NavUnit *unit)
 {
   NodeItem *el = new NodeItem(&canvas, *unit);
   nodeMap.bind(unit->getID(), el);
-  UnitLocation loc = unit->getLocation();
-  el->move(loc.x_, loc.y_);
-  el->show();
-  this->details->currentNode(unit);
+  // only for first GPS  write details.
+  if(unit->getID() == 0)
+    {
+      this->details->currentNode(unit);
+    }
 }
 
 void
@@ -53,11 +47,19 @@ RootPanel::updateUnit(NavUnit *unit)
 {
   NodeItem *el = 0;
   nodeMap.find(unit->getID(), el);
-  UnitLocation loc = unit->getLocation();
-  el->move(loc.x_, loc.y_);
-  //canvas.update();
 
-  this->details->updateLocation(loc);
+  UnitLocation loc = unit->getLocation();
+  //width is incl. borders and text, so correct for this .
+  loc.x_ = (long)loc.x_ % (navview->width() + 40);
+  loc.y_ = (long)loc.y_ % (navview->height() + 80);
+
+  el->moveBy(loc.x_ - el->pos().x() , loc.y_ - el->pos().y());
+  el->show();
+  canvas.update();
+  if(unit->getID() == 0)
+    {
+      this->details->updateLocation(loc);
+    }
 }
 
 void
@@ -66,20 +68,40 @@ RootPanel::clear()
   navview->clear();
 }
 
-void
-RootPanel::customEvent(QCustomEvent *e)
-{
-  CommandBase *cmd = (CommandBase*)(e->data());
-  cmd->execute();
-  delete cmd;
-/*
-  int elapsed = time.restart();
-  int fps = (elapsed == 0 ? 1000 : 1000 / elapsed);
+int NavEvent::registered_type_ = (-1);
 
-  if(prev_fps != fps)
-  {
-    prev_fps = fps;
-    ups->setNum(prev_fps);
-  }
-*/
+NavEvent::NavEvent(CommandBase* cmd)
+ : QEvent (static_cast<QEvent::Type> (NavEvent::registered_type_)),
+   cmd_ (cmd)
+{
+}
+NavEvent::~NavEvent ()
+{
+}
+
+CommandBase* NavEvent::cmd () const
+{
+  return this->cmd_;
+}
+
+void NavEvent::set_type (int type)
+{
+  NavEvent::registered_type_ = type;
+}
+
+QEvent::Type NavEvent::get_type ()
+{
+  return static_cast<QEvent::Type> (NavEvent::registered_type_);
+}
+
+void
+RootPanel::customEvent(QEvent *e)
+{
+  if (e->type () == NavEvent::get_type ())
+    {
+      NavEvent* ne = dynamic_cast<NavEvent*> (e);
+      CommandBase* cmd = ne->cmd ();
+      cmd->execute();
+      delete cmd;
+    }
 }
