@@ -1,3 +1,28 @@
+Tue May 10 16:13:44 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Alt_Mapping/StringMember/client.cpp:
+        * performance-tests/Alt_Mapping/StringMember/server.cpp:
+
+          Removed these files.
+
+        * performance-tests/Alt_Mapping/StringMember/StringMember_Test.cpp:
+        * performance-tests/Alt_Mapping/StringMember/StringMember_Test.h:
+
+          New files, combining client and server in the same process.
+
+        * performance-tests/Alt_Mapping/StringMember/StringMember.idl:
+
+          Removed the shutdown() operation, no need to invoke it remotely
+          any more.
+
+        * performance-tests/Alt_Mapping/StringMember/StringMember.mpc:
+        * performance-tests/Alt_Mapping/StringMember/run_test.pl:
+
+          Mods reflecting the above changes. The overall intent is to
+          measure the average latency difference between setting the
+          operation argument with and without a string copy, without
+          including any measurement of network overhead.
+
 Tue Apr 12 20:11:30 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Alt_Mapping/StringMember/*.*:
