@@ -17,14 +17,12 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Argv_Type_Converter.h"
 
-CORBA::ORB_var orb;
 int showIOR = 0;
 int showNSonly = 0;
 
 int
-ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
@@ -33,9 +31,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
   try
     {
       // Contact the orb
-      ACE_Argv_Type_Converter argcon (argcw, argvw);
-      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
-                             "");
+      orb = CORBA::ORB_init (argc, argv);
 
       // Scan through the command line options
       bool
@@ -43,10 +39,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         quiet = false,
         rebind = false,
         context = false;
-      int
-        argc = argcon.get_argc ();
-      ACE_TCHAR
-        **argv = argcon.get_TCHAR_argv ();
       const ACE_TCHAR
         *const pname = argv[0];
       const ACE_TCHAR *nameService = 0;
@@ -374,6 +366,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                 root_nc->bind (the_name, obj.in ());
             }
         }
+      orb->destroy ();
     }
   catch (const CosNaming::NamingContext::NotFound& nf)
     {
@@ -424,7 +417,6 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
       return 1;
     }
 
-  orb->destroy ();
   return 0;
 }
 

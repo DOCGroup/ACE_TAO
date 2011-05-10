@@ -718,6 +718,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      ((showCtxIOR)? str.in () : "")));
           list_context (root_nc.in (), 1);
         }
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -726,6 +727,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  orb->destroy ();
   return 0;
 }

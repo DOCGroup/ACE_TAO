@@ -1,7 +1,18 @@
+Tue May 10 18:15:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImR_Client.cpp:
+          changed variable name to not match method argument
+
+        * utils/catior/catior.cpp:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+        * utils/nslist/nslist.cpp:
+          Fixed coverity errors, not leak exceptions
+
 Tue May 10 06:15:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
-          Fixed compile error. 
+          Fixed compile error.
 
 Mon May  9 19:10:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
