@@ -1,3 +1,8 @@
+Tue May 10 06:25:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Resolved coverity errors/warnings. Check pointer if nil before using it.
+
 Mon May  9 10:58:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
@@ -5,7 +10,7 @@ Mon May  9 10:58:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/impl/ndds/Publisher.cpp:
         * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
         * connectors/dds4ccm/impl/ndds/Utils.cpp:
-          Don't throw an exception when a wrong QosProfile is applied. In the 
+          Don't throw an exception when a wrong QosProfile is applied. In the
           end the creation of the DDS entity will fail. As a result to that, an
           exception is thrown. This'll simply code and logging.
 
