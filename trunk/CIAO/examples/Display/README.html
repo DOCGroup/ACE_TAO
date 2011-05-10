@@ -6,7 +6,7 @@
 <body alink="#0000ff" bgcolor="#ffffff" link="#000fff" text="#000000" vlink="#ff0f0f">
 
 <h2>Display example README</h2>
-Note: The GUI display is still under development and does not work currently.  Test only works in console mode at this moment.
+Note: The GUI display is still under development. It does work on Linux, the windows variant should be tested yet.
 
 <li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Display</code>.</li>
 <hr>
@@ -40,7 +40,7 @@ the following three components:
   <li>The <font face="Courier New">NavDisplayGUI</font> directory contains
   implementations for a <font face="Courier New">NavDisplay</font> with
   graphical interface. To use this graphical interface you need to install qt
-  libraries and have qt enabled (qt = 1, qt4 = 1) in your
+  libraries (qt4.7) and have qt enabled (qt = 1, qt4 = 1) in your
   <font face="Courier New">$ACE_ROOT/bin/MakeProjectCreator/config/global.features</font>.
   In some Linux distributions qt is installed by default. There is a
   non-commercial version of qt libraries for Windows
@@ -57,9 +57,9 @@ the following three components:
 data types and exceptions used by the components of this application are
 specified in the
 <a href="./Display_Base/Display_Base.idl"> <code>
-HUDisplay.idl</code></a> file, placed in this example root directory ($CIAO_ROOT/examples/Display_Base).
-This is a IDL2 file and uses the familiar CORBA data types. The lib generated
-from HUDisplay.idl is linked to all the components of this example. <p></p>
+Display_Base.idl</code></a> file, placed in this example root directory ($CIAO_ROOT/examples/Display_Base).
+This is a IDL file and uses the familiar CORBA data types. The lib generated
+from Display_Base.idl is linked to all the components of this example. <p></p>
 
 </li><li>2. mpc  files for each of the components
 are available in the components directories. We use the <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a>
@@ -68,7 +68,7 @@ all <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE.html">ACE</a>,
 <a href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a> and
 <a href="http://www.cs.wustl.edu/%7Eschmidt/CIAO.html">CIAO</a> libraries.
 
-</li><li>3. idl and cidl files for each component are placed in components directory.  </li>
+</li><li>3. idl files for each component are placed in components directory.  </li>
 
 <li>4. The <code>_exec.h</code> and <code>_exec.cpp</code> files are the actual implementation of the components.</li>
 
@@ -108,7 +108,8 @@ build.</font>
 <h3><font size="5">Assemble</font></h3>
 Now we can step forward to build the assembly.
 
-<li> In the descriptor subdirectory, you'll find a XML descriptor file that describes your <em>deployment plan</em>, the flattened_deploymentplan.cdp:
+<li> In the descriptor subdirectory, you'll find XML descriptor files that describes your <em>deployment plan</em>,
+ the *deploymentplan*.cdp's:
   <dd>
 This file declaratively specifies how the component assembly is
 constructed. Specifically, it specifies the component types, component
@@ -120,9 +121,6 @@ Display/descriptors directory.
 The former file could be found in $CIAO_ROOT/docs/schema directory.
 <br>
 
-
-<br>
-Note: Creating the deployment plan descriptor is a tedious and error-prone job, you can download <a href="http://www.dre.vanderbilt.edu/cosmic"> CoSMIC</a> to assist you in this step.
 </li>
 
 <p>&nbsp;</p>
@@ -151,6 +149,51 @@ To run in console mode:<br>
   -o </code> starts the application and after a 20 sec stopp the application with <code>$CIAO_ROOT/examples/Display/RateGen/controller
   -f </code>
   </li>
+</ul>
+
+To run in GUI mode with one GPS component:<br>
+<ul>
+  <li> Start NodeManagers, execution manager and dance_plan_launcher, using the Naming Service 
+  and the deploymentplan deploymentplanone.cdp by running <code> run_test_one.pl </code>
+  After this, components should be deployed successfully.
+  </li>
+  <li> The Assembly_Manager is instructed to write the IOR of the RateGen
+  component to a file called "rategen.ior" in this
+  directory.  You will then need to use a controller program in a
+  separate shell window to switch on/off the Rate Generator.
+  Go to the <em> $CIAO_ROOT/examples/Display/descriptor </em> directory and run <code>run_test_contr.pl </code>
+  In this script the command <code>$CIAO_ROOT/examples/Display/RateGen/controller
+  -o </code> starts the application and after a 20 sec stops the Rate generator with <code>$CIAO_ROOT/examples/Display/RateGen/controller
+  -f </code>
+  </li>
+</ul>
+
+To run in GUI mode with three GPS and RateGen components:<br>
+<ul>
+  <li> Start NodeManagers, execution manager and dance_plan_launcher, using the Naming Service 
+  and the deploymentplan deploymentplanmore.cdp by running <code> run_test_more.pl </code>
+  After this, components should be deployed successfully.
+  </li>
+  <li> 
+  Go to the <em> $CIAO_ROOT/examples/Display/descriptor </em> directory and run <code>run_test_more_contr.pl </code>
+  In this script the Rate Generators are activated and after a while are stopped.</code>
+  </li>
+</ul>
+
+To experience in GUI mode   (or console mode) with a different number of GPS and RateGen components:<br>
+<ul>
+  <li>Add to the deploymentplan.cdp (or flattened_deploymentplannat.cdp) new instances of GPS - and RateGen components.
+      Change in de deploymentplan the 
+       configProperty: number_of_GPS  from the HUDisplay-NavDisplay-comp display instance. 
+       Add the new connections to the deploymentplan.
+  </li>
+  <li>
+      Change the scripts <code> run_test_more.pl  ( or run_test.pl) </code> and <code>run_test_more_contr.pl </code> 
+      for the correct number of components.
+  </li>
+  <li>
+     Run the scripts run_test_more.pl for GUI display or run_test.pl for console display. You will then need to run the
+     script <code>run_test_more_contr.pl </code> in a separate shell window to switch on/off the Rate Generator(s).  
 </ul>
 
 <hr>
