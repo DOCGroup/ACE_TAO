@@ -11,10 +11,30 @@
 #include "DetailView.h"
 #include <Qt/qmainwindow.h>
 #include <Qt/qevent.h>
-#include <Qt/q3popupmenu.h>
+#include <Qt/qgraphicsscene.h>
+
+#include "Command.h"
 
 class NodeItem;
 class QMouseEvent;
+
+class NavEvent : public QEvent
+{
+public:
+  NavEvent(CommandBase* cmd);
+  virtual ~NavEvent ();
+
+  CommandBase* cmd () const;
+
+  static void set_type (int type);
+
+  static QEvent::Type get_type ();
+
+private:
+  CommandBase* cmd_;
+
+  static int registered_type_;
+};
 
 class RootPanel : public QMainWindow
 {
@@ -27,7 +47,7 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_UINT64,
                                 ACE_Null_Mutex> NodeItemMap;
 
 public:
-  RootPanel(Q3Canvas&, QWidget *parent = 0, const char *name = 0);
+  RootPanel(QGraphicsScene&, QWidget *parent = 0);
   ~RootPanel();
 
 public:
@@ -36,13 +56,11 @@ public:
 
 protected:
   void clear();
-  virtual void customEvent(QCustomEvent *e);
+  virtual void customEvent(QEvent *e);
 
-  Q3Canvas& canvas;
+  QGraphicsScene& canvas;
   MapView *navview;
   DetailView *details;
-
-  Q3PopupMenu* options;
   NodeItemMap nodeMap;
 };
 

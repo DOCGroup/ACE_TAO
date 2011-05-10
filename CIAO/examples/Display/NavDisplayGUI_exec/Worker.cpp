@@ -6,6 +6,7 @@
 #include <Qt/qcdestyle.h>
 #include <Qt/qwindowsstyle.h>
 #include <Qt/qdesktopwidget.h>
+#include <Qt/qgraphicsscene.h>
 
 int
 Worker::svc (void)
@@ -13,18 +14,12 @@ Worker::svc (void)
   ACE_DEBUG((LM_DEBUG, "ENTER: Worker::svc()\n"));
 
   QApplication a(argc_, argv_);
-//  a.setStyle(new QPlatinumStyle);
-  Q3Canvas canvas(600, 387);
-  //QCanvas canvas(566, 679);
-  //QCanvas canvas(550, 723);
-  canvas.setAdvancePeriod(30);
+  QGraphicsScene canvas(1,1,650, 410);
   RootPanel root_panel(canvas);
-  root_panel.resize(root_panel.sizeHint());
+  root_panel.resize(620, 460);
+  root_panel.setWindowTitle("NavDisplay");
 
-  root_panel.resize(600, 650);
-  root_panel.setCaption("NavDisplay");
-
-  a.setMainWidget(&root_panel);
+  a.setActiveWindow(&root_panel);
 
   QObject::connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
 

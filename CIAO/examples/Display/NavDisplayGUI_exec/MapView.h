@@ -3,16 +3,20 @@
 #ifndef __MAPVIEW_H
 #define __MAPVIEW_H
 
-#include <Qt/q3canvas.h>
 #include <Qt/qpixmap.h>
+#include <Qt/qgraphicsscene.h>
+#include <Qt/qgraphicsview.h>
+#include <Qt/qwidget.h>
+#include <Qt/qevent.h>
 
-class MapView : public Q3CanvasView
+class MapView : public QGraphicsView
 {
   Q_OBJECT
 
 public:
-  MapView(Q3Canvas&, QWidget* parent=0, const char* name=0, Qt::WindowFlags f=0);
+  MapView(QGraphicsScene&, QWidget* parent=0);
   void clear();
+  void resizeEvent (QResizeEvent *);
 
 protected:
   QPixmap bg_pixmap_;

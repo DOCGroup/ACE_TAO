@@ -1,6 +1,6 @@
 // $Id$
 
-project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support , avoids_ccm_noevent{
+project(Display_NavDisplayGUI_exec_moc) : ace_qt4, avoids_ccm_noevent{
   custom_only = 1
   MOC_Files {
     DetailView.h
@@ -10,7 +10,7 @@ project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support , avoids_ccm_n
   }
 }
 
-project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support , avoids_ccm_noevent{
+project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4,  avoids_ccm_noevent{
   after   += Display_NavDisplay_lem_gen \
              Display_NavDisplay_svnt \
              Display_NavDisplayGUI_exec_moc
@@ -54,7 +54,7 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support , a
   }
 }
 
-project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support, avoids_ccm_noevent {
+project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, avoids_ccm_noevent {
   after      += Display_Base_skel Display_NavDisplayGUI_exec
   sharedname  = NavDisplayGUI_svnt
   includes  += ../NavDisplay
