@@ -55,8 +55,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
 
     ~read_action_Generator ();
 
-    virtual int handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg);
+    virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
   private:
     Receiver_exec_i &callback_;
 
