@@ -1,3 +1,15 @@
+Tue May 11 07:09:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * examples/Display/descriptors/run_test_more.pl:
+        * examples/Display/descriptors/deploymentplanone.cdp:
+        * examples/Display/descriptors/deploymentplanmore.cdp:
+        * examples/Display/descriptors/run_test_more_contr.pl:
+        * examples/Display/descriptors/flattened_deploymentplannat.cdp:
+        * examples/Display/descriptors/run_all_in_one.pl:
+        * examples/Display/descriptors/run_test.pl:
+        * examples/Display/descriptors/run_test_one.pl:
+        Solved Fuzz errors.
+
 Wed May 11 05:32:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/dds4ccm.mpb:
