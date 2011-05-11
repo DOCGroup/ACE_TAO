@@ -1,3 +1,10 @@
+Wed May 11 18:43:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjectKey_Table.h:
+        * tao/orbconf.h:
+        * tao/params.h:
+          Doxygen changes
+
 Wed May 11 13:35:28 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tao/QtResource/QtResource_Loader.h:
