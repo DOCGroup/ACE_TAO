@@ -1,10 +1,15 @@
-Wed May 11 12:45:21 UTC 2011  Chad Beaulac  <chad.beaulac@objectivesolutions.com>
-	* tests/Bug_3912_Regression_Test.cpp
-	  Returning a value from close now.
+Wed May 11 13:41:28 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
-	* tests/tests.mpc
-	  Removed libs Stream_Config_Stream_DLL.
-	  It's dynamically loaded by the ASR.
+        * ace/QtReactor/QtReactor.h:
+        Changed for QT4 deprecated include QT/..
+
+Wed May 11 12:45:21 UTC 2011  Chad Beaulac  <chad.beaulac@objectivesolutions.com>
+        * tests/Bug_3912_Regression_Test.cpp
+        Returning a value from close now.
+
+        * tests/tests.mpc
+        Removed libs Stream_Config_Stream_DLL.
+        It's dynamically loaded by the ASR.
 
 Tue May 10 11:59:32 UTC 2011  Chad Beaulac  <chad.beaulac@objectivesolutions.com>
         * ace/Stream.cpp
