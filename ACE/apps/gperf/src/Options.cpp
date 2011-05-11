@@ -94,11 +94,9 @@ Options::usage (void)
 void
 Options::print_options (void)
 {
-  int i;
-
   ACE_OS::printf ("/* Command-line: ");
 
-  for (i = 0; i < argc_; i++)
+  for (int i = 0; i < argc_; i++)
     ACE_OS::printf ("%s ",
                     ACE_TEXT_ALWAYS_CHAR (argv_[i]));
 
