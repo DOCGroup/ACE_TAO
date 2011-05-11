@@ -39,6 +39,7 @@ public:
   close(u_long flags)
   {
     *close_called = 1;
+    return 0;
   }
 
 private:
