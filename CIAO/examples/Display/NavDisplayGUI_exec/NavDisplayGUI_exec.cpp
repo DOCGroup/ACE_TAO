@@ -1,8 +1,8 @@
 // $Id$
 
 #include "NavDisplayGUI_exec.h"
-#include <Qt/qapplication.h>
-#include <Qt/qevent.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qevent.h>
 
 #include "UpdatePositionCmd.h"
 #include "QuitCmd.h"

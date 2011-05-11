@@ -86,7 +86,7 @@ MyImpl::GPS_exec_i::id ()
 
 void
 MyImpl::GPS_exec_i::id (
-  const ::CORBA::UShort id)
+  CORBA::UShort id)
 {
   this->id_ = id;
 }

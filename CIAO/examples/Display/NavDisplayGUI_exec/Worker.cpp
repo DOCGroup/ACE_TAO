@@ -1,12 +1,12 @@
 // $Id$
 
 #include "Worker.h"
-#include <Qt/qapplication.h>
-#include <Qt/qmotifstyle.h>
-#include <Qt/qcdestyle.h>
-#include <Qt/qwindowsstyle.h>
-#include <Qt/qdesktopwidget.h>
-#include <Qt/qgraphicsscene.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qmotifstyle.h>
+#include <QtGui/qcdestyle.h>
+#include <QtGui/qwindowsstyle.h>
+#include <QtGui/qdesktopwidget.h>
+#include <QtGui/qgraphicsscene.h>
 
 int
 Worker::svc (void)

@@ -3,11 +3,11 @@
 #ifndef __MAPVIEW_H
 #define __MAPVIEW_H
 
-#include <Qt/qpixmap.h>
-#include <Qt/qgraphicsscene.h>
-#include <Qt/qgraphicsview.h>
-#include <Qt/qwidget.h>
-#include <Qt/qevent.h>
+#include <QtGui/qpixmap.h>
+#include <QtGui/qgraphicsscene.h>
+#include <QtGui/qgraphicsview.h>
+#include <QtGui/qwidget.h>
+#include <QtGui/qevent.h>
 
 class MapView : public QGraphicsView
 {

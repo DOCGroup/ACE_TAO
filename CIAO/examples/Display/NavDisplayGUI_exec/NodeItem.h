@@ -4,10 +4,10 @@
 #define __NODEITEM_H
 
 #include "NavUnit.h"
-#include <Qt/qtimer.h>
-#include <Qt/qbrush.h>
-#include <Qt/qobject.h>
-#include <Qt/qgraphicsitem.h>
+#include <QtCore/qtimer.h>
+#include <QtGui/qbrush.h>
+#include <QtCore/qobject.h>
+#include <QtGui/qgraphicsitem.h>
 
 const int  arrayColors[] =  {
      12,  //Qt::yellow,

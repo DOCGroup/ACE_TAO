@@ -1,9 +1,9 @@
 // $Id$
 
 #include "RootPanel.h"
-#include <Qt/qmenubar.h>
-#include <Qt/qapplication.h>
-#include <Qt/qsplitter.h>
+#include <QtGui/qmenubar.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qsplitter.h>
 #include <stdlib.h>
 #include "NodeItem.h"
 #include "Command.h"
@@ -36,7 +36,7 @@ RootPanel::addUnit(NavUnit *unit)
   NodeItem *el = new NodeItem(&canvas, *unit);
   nodeMap.bind(unit->getID(), el);
   // only for first GPS  write details.
-  if(unit->getID() == 0)
+  if(unit->getID() == 1)
     {
       this->details->currentNode(unit);
     }
@@ -56,7 +56,7 @@ RootPanel::updateUnit(NavUnit *unit)
   el->moveBy(loc.x_ - el->pos().x() , loc.y_ - el->pos().y());
   el->show();
   canvas.update();
-  if(unit->getID() == 0)
+  if(unit->getID() == 1)
     {
       this->details->updateLocation(loc);
     }
