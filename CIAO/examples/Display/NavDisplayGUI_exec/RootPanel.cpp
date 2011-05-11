@@ -50,8 +50,8 @@ RootPanel::updateUnit(NavUnit *unit)
 
   UnitLocation loc = unit->getLocation();
   //width is incl. borders and text, so correct for this .
-  loc.x_ = (long)loc.x_ % (navview->width() + 40);
-  loc.y_ = (long)loc.y_ % (navview->height() + 80);
+  loc.x_ = (long)loc.x_ % (navview->width() - 40);
+  loc.y_ = (long)loc.y_ % (navview->height() - 80);
 
   el->moveBy(loc.x_ - el->pos().x() , loc.y_ - el->pos().y());
   el->show();
