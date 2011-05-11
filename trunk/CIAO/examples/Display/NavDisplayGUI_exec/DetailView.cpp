@@ -1,9 +1,9 @@
 // $Id$
 
 #include "DetailView.h"
-#include <Qt/qlayout.h>
-#include <Qt/qlabel.h>
-#include <Qt/qspinbox.h>
+#include <QtGui/qlayout.h>
+#include <QtGui/qlabel.h>
+#include <QtGui/qspinbox.h>
 
 DetailView::DetailView(QWidget *parent)
 : QWidget(parent)

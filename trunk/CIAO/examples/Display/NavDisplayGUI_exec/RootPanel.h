@@ -9,9 +9,9 @@
 #include "ace/Null_Mutex.h"
 #include "MapView.h"
 #include "DetailView.h"
-#include <Qt/qmainwindow.h>
-#include <Qt/qevent.h>
-#include <Qt/qgraphicsscene.h>
+#include <QtGui/qmainwindow.h>
+#include <QtGui/qevent.h>
+#include <QtGui/qgraphicsscene.h>
 
 #include "Command.h"
 

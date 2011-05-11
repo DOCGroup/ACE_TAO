@@ -37,7 +37,7 @@ if ($result != 0) {
 # put some delay here.
 sleep (5);
 print "Invoking the controller for second RateGen with rate = 2\n";
-$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://RateGen2.ior -o -r2");
+$controller = $tg_executor->CreateProcess ("$controller_exec", "-k file://RateGen2.ior -o -r3");
 $result = $controller->SpawnWaitKill (3 * $tg_executor->ProcessStopWaitInterval ());
 if ($result != 0) {
     print STDERR "ERROR: The controller returned $result\n";
