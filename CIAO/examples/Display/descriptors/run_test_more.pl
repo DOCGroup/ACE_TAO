@@ -119,7 +119,6 @@ sub run_node_daemons {
 #        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
        $d_param = "-s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService";
 
-  
         print "Run dance_node_manager with $d_param\n";
 
         $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
