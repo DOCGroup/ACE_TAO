@@ -5,7 +5,7 @@
 
 
 #include "NavUnit.h"
-#include <Qt/qwidget.h>
+#include <QtGui/qwidget.h>
 
 class QLabel;
 class QSpinBox;

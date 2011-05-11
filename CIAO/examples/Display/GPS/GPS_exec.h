@@ -43,7 +43,7 @@ namespace MyImpl
     HUDisplay::GPS_position posxy ();
 
     CORBA::UShort id ();
-    void id ( const ::CORBA::UShort id);
+    void id ( CORBA::UShort id);
 
     CORBA::Boolean started ();
 

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "NodeItem.h"
-#include <Qt/qbrush.h>
+#include <QtGui/qbrush.h>
 
 NodeItem::NodeItem(QGraphicsScene *canvas, NavUnit &unit)
   : QGraphicsRectItem(0.0, 0.0, 10.0, 10.0,0, canvas),

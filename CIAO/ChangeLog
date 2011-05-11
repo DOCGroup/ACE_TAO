@@ -1,3 +1,23 @@
+Tue May 11 13:21:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * examples\Display\NavDisplayGUI_exec\DetailView.h:
+        * examples\Display\NavDisplayGUI_exec\RootPanel.cpp:
+        * examples\Display\NavDisplayGUI_exec\NodeItem.cpp:
+        * examples\Display\NavDisplayGUI_exec\RootPanel.h:
+        * examples\Display\NavDisplayGUI_exec\NodeItem.h:
+        * examples\Display\NavDisplayGUI_exec\Worker.cpp:
+        * examples\Display\NavDisplayGUI_exec\MapView.h:
+        * examples\Display\NavDisplayGUI_exec\Command.h:
+        * examples\Display\NavDisplayGUI_exec\NavDisplayGUI_exec.cpp:
+        * examples\Display\NavDisplayGUI_exec\NavUnit.cpp:
+        * examples\Display\NavDisplayGUI_exec\UpdatePositionCmd.cpp:
+        * examples\Display\NavDisplayGUI_exec\DetailView.cpp:
+        * examples\Display\GPS\GPS_exec.h:
+        * examples\Display\GPS\GPS_exec.cpp:
+        * examples\Display\README.html:
+        Made example running on Windows, changed deprecated Qt includes. 
+
+
 Tue May 11 08:15:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * examples/Display/README.html:
