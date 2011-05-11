@@ -24,7 +24,7 @@
 #include "tao/Versioned_Namespace.h"
 
 #if defined (ACE_HAS_QT4)
-#include <Qt/qapplication.h>
+#include <QtGui/qapplication.h>
 #else
 #include <qapplication.h>
 #endif
