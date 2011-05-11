@@ -1,3 +1,8 @@
+Wed May 11 13:35:28 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tao/QtResource/QtResource_Loader.h:
+        Changed for QT4 deprecated include QT/..
+
 Tue May 10 18:15:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client.cpp:
