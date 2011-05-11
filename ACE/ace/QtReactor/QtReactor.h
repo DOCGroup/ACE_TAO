@@ -26,7 +26,7 @@
 #include "ace/Map_Manager.h"
 
 #if defined (ACE_HAS_QT4)
-# include "Qt/qglobal.h"
+# include "QtCore/qglobal.h"
 #endif
 
 // QT toolkit specific includes.
