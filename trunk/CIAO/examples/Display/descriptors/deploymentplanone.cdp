@@ -7,7 +7,7 @@
 
   <label>Display-DeploymentPlan</label>
   <UUID>Display_Plan_UUID_0001</UUID>
- 
+
   <implementation xmi:id="HUDisplay-RateGen-mdd">
     <name>HUDisplay-RateGen-mdd</name>
     <source/>
@@ -319,7 +319,7 @@
       </value>
     </configProperty>
    </instance>
-   
+
    <instance xmi:id="HUDisplay-RateGen-comp-idd">
     <name>HUDisplay-RateGen-comp-idd</name>
     <node>RateGenNode</node>
@@ -371,7 +371,6 @@
       </value>
     </configProperty>
   </instance>
-
 
    <instance xmi:id="HUDisplay-NavDisplay-idd">
     <name>HUDisplay-NavDisplay-idd</name>
