@@ -18,7 +18,7 @@ ACE_Thread_Control::dump (void) const
 }
 
 int
-ACE_Thread_Control::insert (ACE_Thread_Manager *tm, int insert)
+ACE_Thread_Control::insert (ACE_Thread_Manager *tm, bool insert)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::insert");
 
@@ -33,7 +33,6 @@ ACE_Thread_Control::insert (ACE_Thread_Manager *tm, int insert)
 }
 
 // Initialize the thread controller.
-
 ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
                                         int insert)
   : tm_ (t),
@@ -50,7 +49,6 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
 }
 
 // Automatically kill thread on exit.
-
 ACE_Thread_Control::~ACE_Thread_Control (void)
 {
   ACE_OS_TRACE ("ACE_Thread_Control::~ACE_Thread_Control");
@@ -63,7 +61,6 @@ ACE_Thread_Control::~ACE_Thread_Control (void)
 }
 
 // Exit from thread (but clean up first).
-
 ACE_THR_FUNC_RETURN
 ACE_Thread_Control::exit (ACE_THR_FUNC_RETURN exit_status, int do_thr_exit)
 {
