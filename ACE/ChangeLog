@@ -1,3 +1,8 @@
+Thu May 12 01:04:19 UTC 2011   Chad Beaulac  <chad.beaulac@objectivesolutions.com>
+	* tests/Bug_3912_Regression_Test.cpp:
+	  Integrated changes from Phil Mesnier.
+	  Added static_cast and const_cast instead of C-style casts.
+
 Wed May 11 18:26:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Control.h:
