@@ -114,6 +114,12 @@ endif
 nullstring :=
 CC_OUTPUT_FLAG_SEP ?= $(nullstring) #space
 
+%.$(PREPROCESS_SUFFIX): %.c
+	$(PREPROCESS.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+
+%.$(PREPROCESS_SUFFIX): %.cpp
+	$(PREPROCESS.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+
 $(VDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
 	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
