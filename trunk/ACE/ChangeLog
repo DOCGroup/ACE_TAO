@@ -1,3 +1,15 @@
+Thu May 12 18:08:47 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/wrapper_macros.GNU: Added command settings for
+          preprocessing C and C++ source files.
+
+        * include/makeinclude/rules.local.GNU: Added rules to preprocess
+          C and C++ files when directed.
+        
+          These allow one to now quickly produce a preprocessed version of
+          a source file. Ala... make -f GNUmakefile.ACE ACE.i
+          would preprocess ACE.cpp and put the result in ACE.i.
+
 Thu May 12 01:04:19 UTC 2011   Chad Beaulac  <chad.beaulac@objectivesolutions.com>
         * tests/Bug_3912_Regression_Test.cpp:
           Integrated changes from Phil Mesnier.
