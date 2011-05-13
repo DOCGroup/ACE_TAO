@@ -41,7 +41,7 @@ public:
   typedef const_value_type const_subscript_type;
 
 
-  /// @copydoc details::generic_sequence::generic_sequence()
+  /// @copydoc TAO::details::generic_sequence::generic_sequence()
   inline unbounded_basic_string_sequence()
     : impl_()
   {}
@@ -60,35 +60,35 @@ public:
 
   /* Use default ctor, operator= and dtor */
 
-  /// @copydoc details::generic_sequence::maximum()
+  /// @copydoc TAO::details::generic_sequence::maximum()
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }
-  /// @copydoc details::generic_sequence::release()
+  /// @copydoc TAO::details::generic_sequence::release()
   inline CORBA::Boolean release() const {
     return impl_.release();
   }
-  /// @copydoc details::generic_sequence::length()
+  /// @copydoc TAO::details::generic_sequence::length()
   inline CORBA::ULong length() const {
     return impl_.length();
   }
-  /// @copydoc details::generic_sequence::length()
+  /// @copydoc TAO::details::generic_sequence::length()
   inline void length(CORBA::ULong length) {
     impl_.length(length);
   }
-  /// @copydoc details::generic_sequence::operator[]
+  /// @copydoc TAO::details::generic_sequence::operator[]
   inline const_element_type operator[](CORBA::ULong i) const {
     return const_element_type (impl_[i], release());
   }
-  /// @copydoc details::generic_sequence::operator[]
+  /// @copydoc TAO::details::generic_sequence::operator[]
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  /// @copydoc details::generic_sequence::get_buffer()
+  /// @copydoc TAO::details::generic_sequence::get_buffer()
   inline const_value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
-  /// @copydoc details::generic_sequence::replace()
+  /// @copydoc TAO::details::generic_sequence::replace()
   inline void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,
@@ -96,11 +96,11 @@ public:
       CORBA::Boolean release = false) {
     impl_.replace(maximum, length, data, release);
   }
-  /// @copydoc details::generic_sequence::get_buffer(CORBA::Boolean)
+  /// @copydoc TAO::details::generic_sequence::get_buffer(CORBA::Boolean)
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  /// @copydoc details::generic_sequence::swap
+  /// @copydoc TAO::details::generic_sequence::swap
   inline void swap(unbounded_basic_string_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
