@@ -1,3 +1,12 @@
+Fri May 13 08:04:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+          Doxygen changes.
+
 Wed May 11 18:43:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjectKey_Table.h:
