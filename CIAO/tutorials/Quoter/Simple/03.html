@@ -6,42 +6,42 @@
 <style>
 <!--
 h3 {
-	font-size:13.5pt;
-	font-family:"Times New Roman";
-	font-weight:bold;
+  font-size:13.5pt;
+  font-family:"Times New Roman";
+  font-weight:bold;
 }
 a:link, span.MsoHyperlink {
-	color:#000FFF;
-	text-decoration:underline;
-	text-underline:single;
+  color:#000FFF;
+  text-decoration:underline;
+  text-underline:single;
 }
 a:visited, span.MsoHyperlinkFollowed {
-	color:#FF0F0F;
-	text-decoration:underline;
-	text-underline:single;
+  color:#FF0F0F;
+  text-decoration:underline;
+  text-underline:single;
 }
 p {
-	font-size:12.0pt;
-	font-family:"Times New Roman";
+  font-size:12.0pt;
+  font-family:"Times New Roman";
 }
 address {
-	font-size:12.0pt;
-	font-family:"Times New Roman";
-	font-style:italic;
+  font-size:12.0pt;
+  font-family:"Times New Roman";
+  font-style:italic;
 }
 code {
-	font-family:"Courier New";
+  font-family:"Courier New";
 }
 kbd {
-	font-family:"Courier New";
+  font-family:"Courier New";
 }
 pre {
-	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
-	font-size:10.0pt;
-	font-family:"Courier New";
+  tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+  font-size:10.0pt;
+  font-family:"Courier New";
 }
 div.Section1 {
-	page:Section1
+  page:Section1
 }
 -->
 </style>
@@ -115,15 +115,15 @@ div.Section1 {
     <img border="0" id="_x0000_i1027" src="images/fig2.jpg" width="80%"><br>
     <br>
     Figure 2</span></p>
-  <p><span style='COLOR:black'>&nbsp; In the Browser of the generated model, the 
-    <tt>PredefinedTypes</tt> 
+  <p><span style='COLOR:black'>&nbsp; In the Browser of the generated model, the
+    <tt>PredefinedTypes</tt>
     folder contains a bunch of atomic datatype elements that will be referenced by
     other modeling parts later. You don't have to worry about them for now. The
     models in <tt>InterfaceDefinitions</tt> folder are the PICML representations
     of the IDL files you just imported. Double-click to open <tt>StockBroker</tt>, it
-    will show you a yellow box-shaped entity representing a &lt;&lt;Package&gt;&gt; 
-    instance. Its equivalent representation in IDL is &quot;module&quot;. Figure 3 
-    gives you a clear view of GME representation of all the 3 IDL files created. 
+    will show you a yellow box-shaped entity representing a &lt;&lt;Package&gt;&gt;
+    instance. Its equivalent representation in IDL is &quot;module&quot;. Figure 3
+    gives you a clear view of GME representation of all the 3 IDL files created.
     We will cover the other folders in the next section.</span></p>
   <p align="center" style='MARGIN-BOTTOM:12pt;TEXT-ALIGN:center'><span style='COLOR:black'>
   <img border="1" id="_x0000_i1028" src="images/fig3.jpg"><br>
@@ -137,15 +137,15 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
-    
+
   <h3>Building Stock Quoter System in PICML<span style='COLOR:black'> </span></h3>
-  
+
   <p><span style='COLOR:black'>This section describes modeling the Quoter
     application using PICML. If you have trouble producing a functioning model from
     this tutorial, please see the, <a href="Model/Quoter.xme">pre-built Quoter model</a>
      which is provided for your reference. This model contains all
     elements created as part of this tutorial.</span></p>
-  <p><strong><span style='COLOR:black'>Note:</span></strong><span style='COLOR:black'> 
+  <p><strong><span style='COLOR:black'>Note:</span></strong><span style='COLOR:black'>
     To import an XML file in GME, select <b>File | Import XML...</b> from GME and choose your XML model</span></p>
   <p><span style='COLOR:black'>The PICML paradigm is designed for the <a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-08">OMG
     Deployment &amp; Configuration (D&amp;C) specification (ptc/2003-07-08)</a>, so the modeling process
@@ -161,12 +161,12 @@ div.Section1 {
   <ul type="disc">
     <li style='COLOR:black;'> <a href="#1">ImplementationArtifacts</a>
     <li style='COLOR:black;'> <a href="#2">ComponentImplementations</a>
-    
+
     <!-- disabled part of tutorial -->
     <!-- li style='COLOR:black;'> <a href="#3">ComponentPackages</a>
     <li style='COLOR:black;'> <a href="#4">PackageConfiguration</a>
     <li style='COLOR:black;'> <a href="#5">TopLevelPackage</a -->
-    
+
     <li style='COLOR:black;'> <a href="#6">Targets</a>
     <li style='COLOR:black;'> <a href="#7">DeploymentPlan</a></li>
   </ul>
@@ -180,18 +180,18 @@ div.Section1 {
     section will explain the purpose of each folder as well as the modeling
     entities contained in these folders. We will also show how to model some of the
     folders that have to be done by hand.</span></p>
-    
+
   <p><b><span style='BACKGROUND:silver;COLOR:red;FONT-VARIANT:small-caps;'>Important:</span></b><span style='BACKGROUND:silver;COLOR:black;'> The interpreters that generate deployment
     artifacts expect very strict constraints in the model. When you finish your
     model, and any time you wish to generate anything, it is a good idea to check
     constraints by clicking on <b>Tools | Constraints | Check All</b> in GME. This
     will help you find many logic errors in your model.</span><span style='COLOR:black'> </span></p>
-    
+
   <h3><span style='COLOR:black'>ImplementationArtifacts</span></h3>
   <p><span style='COLOR:black'>This folder contains implementation artifacts
     associated with components. <tt>idl_to_picml</tt> has created these artifacts
-    for us to ensure the are named correctly when associated with their 
-    target implementation. Figure 4 shows the Implementation Artifacts for 
+    for us to ensure the are named correctly when associated with their
+    target implementation. Figure 4 shows the Implementation Artifacts for
     the <tt>StockBroker</tt> implementation.</span>
   </p>
 
@@ -204,20 +204,20 @@ div.Section1 {
   <h3><span style='COLOR:black'>ComponentImplementation<a name="2"></a></span></h3>
   <p><span style='COLOR:black'>This folder contains models that describe the implementations
     of component interfaces. In the Quoter example, we will have two monolithic
-    component implementations - named <tt>Stock_StockDistributorImpl</tt> and 
-    <tt>Stock_StockBrokerImpl</tt> - and an assembly component implementation 
-    named <tt>StockQuoter</tt>, which is an assembly of 
-    <tt>Stock_StockDistributorImpl</tt> and <tt>Stock_StockBrokerImpl</tt>. 
-    <tt>idl_to_picml</tt> has created the monolithic component implementations 
+    component implementations - named <tt>Stock_StockDistributorImpl</tt> and
+    <tt>Stock_StockBrokerImpl</tt> - and an assembly component implementation
+    named <tt>StockQuoter</tt>, which is an assembly of
+    <tt>Stock_StockDistributorImpl</tt> and <tt>Stock_StockBrokerImpl</tt>.
+    <tt>idl_to_picml</tt> has created the monolithic component implementations
     for us, as shown in Figure 5.</span></p>
-    
+
   <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <img border="0" id="_x0000_i1033" src="images/fig5.jpg" width="70%"><br>
     Figure 5</span>
   </p>
 
-  <p><span style='COLOR:black'>We also need to specify the connections between a <tt>Stock_StockDistributorImpl</tt> 
-    and a <tt>Stock_StockBrokerImpl</tt> in order to construct a Quoter system. We 
+  <p><span style='COLOR:black'>We also need to specify the connections between a <tt>Stock_StockDistributorImpl</tt>
+    and a <tt>Stock_StockBrokerImpl</tt> in order to construct a Quoter system. We
     therefore we need to create the mentioned StockQuoter component assemby.</span></p>
 
   <p><span style='COLOR:black'>Assembly components provide a boundary for the composition
@@ -230,59 +230,40 @@ div.Section1 {
     COLOR:black'>MonolithicImplementation</span></code><span style='COLOR:black'>.
     Instead, <em>instances</em> of other components are placed within the assembly
     and connected. Let's try to assemble the <tt>StockQuoter</tt>.</span></p>
-    
+
   <ol start="1" type="1">
     <li style='COLOR:black;'> Right click the <em>ComponentImplementations</em> folder, choose <strong>Insert
       Model-&gt;ComponentImplementationContainer</strong>, rename it as
       "StockQuoterImplementation" in the Attribute Panel. Double click to open it.</li>
-      
+
     <li style='COLOR:black;'> From the Part Browser, drag a &lt;&lt;ComponentAssembly&gt;&gt; to the modeling
       window, name it "StockQuoter". Double click to open it.</li>
-      
-    <li style='COLOR:black;'> Now we will create two instances for interfaces <tt>StockBroker</tt> 
+
+    <li style='COLOR:black;'> Now we will create two instances for interfaces <tt>StockBroker</tt>
     and <tt>StockDistributor</tt>. To do that, first add a &lt;&lt;ComponentInstance&gt;&gt; element
-    to the model and name it &quot;StockBroker&quot;. Open the newly added model and select the
-    <tt>ComponentImplementationAspect</tt> aspect. Finally, press and hold SHIFT + CTRL while
-    dragging <tt><span style="FONT-SIZE:10pt;FONT-FAMILY:'Courier New'">
-    ComponentImplementations/Stock_StockBrokerImpl/Stock_StockBrokerImpl</span></tt>
-    into the open model. Figure 6 shows the element that will be referenced as
-    a result of this operation.</li>
-    
-  <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="_x0000_i1034" width="70%" src="images/fig6.jpg"><br>
-    Figure 6</span></p>
-  
+    to the model, select the Stock_StockBrokerImpl from the pop-up dialog, and
+    change the name of the &lt;&lt;ComponentInstance&gt;&gt; to &quot;StockBroker&quot;.
+
     <li style='COLOR:black;'>Repeat the same process for the <tt>StockDistributor</tt>
-    component instance. Figure 6a show the model of the both the <tt>StockBroker</tt>
+    component instance. Figure 6 show the model of the both the <tt>StockBroker</tt>
     and <tt>StockDistributor</tt> component instances.</li>
   <p align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'><img border="0" id="Img1" width="70%" src="images/fig6a.jpg"><br>
-    Figure 6a</span></p>
+    Figure 6</span></p>
 
     <li style='COLOR:black;'> Now assemble the components together according to <a href="images/fig1.jpg">Figure
       1</a> (make sure you change to connect mode <img border="0" width="16" height="16" id="_x0000_i1035" src="Icons/AddConnMode.gif" />)
-      and the resulting assembly model should look like Figure 7. Note that to create connections between StockDistributor.notify_out and StockBroker.notify_in,
-      you will need the intermediate connector &lt;&lt;PublishConnector&gt;&gt;.
+      and the resulting assembly model should look like Figure 7.
     </li>
-    <li style='COLOR:black;'>In one of the previous steps we've removed ComponentIOR. With ComponentIOR one could
-      configure the name of the IOR file. This is still needed. In this step we need to create them again. This can
-      be done by dragging two &lt;&lt;Property&gt;&gt; items from the part browser onto the window;
-      one for StockBroker and one for StockDistributor. The following steps should be taken in order
-      to configure both properties correct:
-      <ol>
-        <li>Double click on one of them. An empty window appears and the part browser only has one 
-        part, called &quot;DataType&quot;. Drag this part onto the empty window.
-        </li>
-        <li>In the tree window, browse to <code> <span style='FONT-SIZE:10pt'>Quoter/PredefinedTypes</span></code>
-        </li>
-        <li>Drag tree item &quot;String&quot; onto the &quot;DataType&quot; item.
-        </li>
-        <li>Go back to the previous window and repeat these steps for the other &lt;&lt;Property&gt;&gt;.
-        </li>
-      </ol>
-      Now it's time to configure the name and value of both &lt;&lt;Property&gt;&gt; items.
+    <li style='COLOR:black;'>With ComponentIOR, one could
+      configure the name of the IOR file. This can
+      be done by dragging two &lt;&lt;SimpleProperty&gt;&gt; items from the part browser onto the window,
+      one for StockBroker and one for StockDistributor, and setting to reference the
+      &lt;&lt;String&gt;&gt; predefined type.
+      Now it's time to configure the name and value of both &lt;&lt;SimpleProperty&gt;&gt; items.
       <ul>
-        <li>The name of each &lt;&lt;Property&gt;&gt; should be &quot;ComponentIOR&quot;
+        <li>The name of each &lt;&lt;SimpleProperty&gt;&gt; should be &quot;ComponentIOR&quot;
         </li>
-        <li>One of the values should be &quot;StockBroker.ior&quot; and the other 
+        <li>One of the values should be &quot;StockBroker.ior&quot; and the other
         should be &quot;StockDistributor.ior&quot;
         </li>
       </ul>
@@ -296,7 +277,7 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
-    
+
   <!-- h3><a name="3"></a><span style='COLOR:black'>ComponentPackage</span></h3>
   <p><span style='COLOR:black'>This folder contains deployable component packages. Every instance in an assembly should have a corresponding
     monolithic implementation and packaged in a ComponentPackage. To create a package for <em>StockBroker</em>.instance</span></p>
@@ -359,7 +340,7 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div -->
-    
+
   <!-- h3><a name="4"></a><span style='COLOR:black'>PackageConfiguration</span></h3>
   <p><span style='COLOR:black'>This folder contains just one
     model capturing specific configuration of Component packages.</span></p>
@@ -393,7 +374,7 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div-->
-    
+
   <h3><a name="6"></a><span style='COLOR:black'>Targets</span></h3>
   <p><span style='COLOR:black'>This folder contains
     domain-specific models capturing information about the target environment in
@@ -411,7 +392,7 @@ div.Section1 {
   <div align="center" style='TEXT-ALIGN:center'><span style='COLOR:black'>
     <hr size="2" width="100%" align="center">
     </span></div>
-    
+
   <h3><a name="7"></a><span style='COLOR:black'>Deployment Plan</span></h3>
   <p><span style='COLOR:black'>This folder contains a plan model
     that captures information about the assignment of component to nodes.</span></p>
