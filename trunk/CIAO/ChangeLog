@@ -1,3 +1,9 @@
+Fri May 13 18:00:06 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * tutorials/Quoter/Simple/03.html:
+
+          Updated the stock quoter example.
+
 Tue May 11 13:21:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * examples\Display\NavDisplayGUI_exec\DetailView.h:
@@ -15,7 +21,7 @@ Tue May 11 13:21:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples\Display\GPS\GPS_exec.h:
         * examples\Display\GPS\GPS_exec.cpp:
         * examples\Display\README.html:
-        Made example running on Windows, changed deprecated Qt includes. 
+        Made example running on Windows, changed deprecated Qt includes.
 
 
 Tue May 11 08:15:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
