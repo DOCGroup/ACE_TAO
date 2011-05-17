@@ -1,3 +1,9 @@
+Tue May 17 19:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Indirection/MessengerServer.cpp:
+        * tests/Portable_Interceptors/Slot/driver.cpp:
+          Catch exceptions in main
+
 Tue May 17 11:32:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
