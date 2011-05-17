@@ -1,3 +1,9 @@
+Tue May 17 11:32:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+          Layout changes to the generated code
+
 Fri May 13 08:04:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Bounded_Basic_String_Sequence_T.h:
