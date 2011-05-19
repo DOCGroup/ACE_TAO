@@ -1,3 +1,12 @@
+Thu May 19 14:53:55 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/QtTests/client.cpp:
+        * tests/QtTests/client.h:
+        * tests/QtTests/QtTests.mpc:
+        * tests/QtTests/server.cpp:
+        * tests/QtTests/test_i.h:
+        Adapted to qt4. 
+
 Tue May 17 19:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Indirection/MessengerServer.cpp:
