@@ -129,7 +129,7 @@ Client::create_widgets (/**/)
                     this,
                     SLOT (remote_call (int)));
 
-  this->mainwindow_.setlayout(&box);
+  this->mainwindow_.setLayout(&box_);
 
 
 }

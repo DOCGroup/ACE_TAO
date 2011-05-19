@@ -15,7 +15,7 @@
 
 #include "testC.h"
 
-#include <QtCore/qapplication.h>
+#include <QtGui/qapplication.h>
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qslider.h>
 #include <QtGui/qpushbutton.h>
