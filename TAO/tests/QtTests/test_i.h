@@ -14,8 +14,8 @@
 
 #include "testS.h"
 
-#include <qapplication.h>
-#include <qobject.h>
+#include <QtGui/qapplication.h>
+#include <QtCore/qobject.h>
 
 class LCD_Display_imp : public QObject,
                         public POA_LCD_Display

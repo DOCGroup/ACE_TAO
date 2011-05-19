@@ -15,10 +15,10 @@
 
 #include "testC.h"
 
-#include <qapplication.h>
-#include <qvbox.h>
-#include <qslider.h>
-#include <qpushbutton.h>
+#include <QtCore/qapplication.h>
+#include <QtGui/qboxlayout.h>
+#include <QtGui/qslider.h>
+#include <QtGui/qpushbutton.h>
 
 class Client : public QObject
 {
@@ -40,7 +40,8 @@ public:
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// A box widget..
-  QVBox box_;
+  QHBoxLayout box_;
+  QWidget mainwindow_;
 
  public slots:
    /// Two slot handlers for the two widgets that we have
