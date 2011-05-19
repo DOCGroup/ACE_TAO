@@ -27,7 +27,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // This may look a bit suspect, but Qt wants the manager widget
       // as the toplevel widget unlike Xt for display purposes.
-      app.setMainWidget (&(client.box_));
+      app.setActiveWindow (&(client.mainwindow_));
 
       // Show them on Screen
       client.show ();
@@ -96,12 +96,13 @@ void
 Client::create_widgets (/**/)
 {
   // Ewsize the box
-  this->box_.resize (200,120);
+  this->mainwindow_.resize (200,120);
+  this->mainwindow_.setWindowTitle("QtClient");
 
   // Make a pushbutton widget
   ACE_NEW (this->push_button_,
-           QPushButton ("Quit",
-                        &this->box_));
+           QPushButton ("Quit"));
+  box_.addWidget(this->push_button_);
 
   // Connect the click () SIGNAL routine with the SLOT handler that we
   // have defined
@@ -112,13 +113,14 @@ Client::create_widgets (/**/)
 
   // Create a slider widget
   ACE_NEW (this->slider_,
-           QSlider (QSlider::Horizontal,
-                    &this->box_,
-                    "Slider"));
+           QSlider (Qt::Horizontal));
 
   // Add resource for the slider
   this->slider_->setRange (0, 99);
   this->slider_->setValue (0);
+
+  box_.addWidget(this->slider_);
+
 
   // Connect the valuechanged SIGNAL routine with the slot that we
   // have defined. THe slot routine would invoke the remote call.
@@ -127,12 +129,15 @@ Client::create_widgets (/**/)
                     this,
                     SLOT (remote_call (int)));
 
+  this->mainwindow_.setlayout(&box);
+
+
 }
 
 void
 Client::show (void)
 {
-  this->box_.show ();
+  this->mainwindow_.show ();
 }
 
 void
