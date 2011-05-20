@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/Event_Connection_Test_BaseSupport.h"
 #pragma opendds typesupport "Base/Event_Connection_Test_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "Event_ConnectionTest"
+#pragma DCPS_DATA_KEY "Event_ConnectionTest key"
+
 struct Event_ConnectionTest {
   string key; //@key
   long iteration;

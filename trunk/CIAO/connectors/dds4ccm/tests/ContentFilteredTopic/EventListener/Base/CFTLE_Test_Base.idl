@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/CFTLE_Test_BaseSupport.h"
 #pragma opendds typesupport "Base/CFTLE_Test_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "ContentFilteredTopicListenEventTest"
+#pragma DCPS_DATA_KEY "ContentFilteredTopicListenEventTest key"
+
 struct ContentFilteredTopicListenEventTest {
   string key; //@key
   long iteration;
