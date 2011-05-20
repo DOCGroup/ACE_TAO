@@ -1,3 +1,8 @@
+Fri May 20 14:20:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Timeouts/test.mpc:
+          Added explicit idl project to get correct build order on VMS
+
 Thu May 19 14:53:55 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/QtTests/client.cpp:
@@ -5,7 +10,7 @@ Thu May 19 14:53:55 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * tests/QtTests/QtTests.mpc:
         * tests/QtTests/server.cpp:
         * tests/QtTests/test_i.h:
-        Adapted to qt4. 
+        Adapted to qt4.
 
 Tue May 17 19:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
