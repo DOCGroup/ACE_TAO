@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/CSL_USTest_BaseSupport.h"
 #pragma opendds typesupport "Base/CSL_USTest_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "TestTopic"
+#pragma DCPS_DATA_KEY "TestTopic key"
+
 struct TestTopic {
   string key; //@key
   long x;
