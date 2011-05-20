@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/LOBO_Test_BaseSupport.h"
 #pragma opendds typesupport "Base/LOBO_Test_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "ListenOneByOneTest"
+#pragma DCPS_DATA_KEY "ListenOneByOneTest key"
+
 struct ListenOneByOneTest {
   string key; //@key
   long iteration;

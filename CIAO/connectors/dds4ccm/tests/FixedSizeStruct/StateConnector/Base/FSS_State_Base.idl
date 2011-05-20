@@ -11,6 +11,8 @@
 #pragma ndds typesupport "Base/FSS_State_BaseSupport.h"
 #pragma opendds typesupport "Base/FSS_State_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "FixedStructSizeTest"
+
 struct FixedStructSizeTest {
   long one;
   long two;

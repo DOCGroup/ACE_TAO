@@ -9,12 +9,17 @@
 #define PERF_KEYED_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Perf_Keyed_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Perf_Keyed_Test_BaseSupportImpl.h"
 
-// Flag used to indicate message is used for initialization only
+/// Flag used to indicate message is used for initialization only
 const unsigned long INITIALIZE_SIZE = 1234;
-// Flag used to indicate end of test
+
+/// Flag used to indicate end of test
 const unsigned long FINISHED_SIZE = 1235;
 const unsigned long OVERHEAD_BYTES = 31;
+
+#pragma DCPS_DATA_TYPE "PerfKeyedTest"
+#pragma DCPS_DATA_KEY "PerfKeyedTest key"
 
 struct PerfKeyedTest {
   string key; //@key
