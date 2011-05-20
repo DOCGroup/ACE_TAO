@@ -1,3 +1,12 @@
+Fri May 20 07:55:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
+        * connectors/dds4ccm/tests/CSLUnexpStat/Base/CSL_USTest_Base.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/EventConnector/Base/FSS_Event_Base.idl:
+        * connectors/dds4ccm/tests/FixedSizeStruct/StateConnector/Base/FSS_State_Base.idl:
+        * connectors/dds4ccm/tests/ListenOneByOne/Base/LOBO_Test_Base.idl:
+          Added needed pragma's for OpenDDS
+
 Fri May 13 18:00:06 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * tutorials/Quoter/Simple/03.html:
