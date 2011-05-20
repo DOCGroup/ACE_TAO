@@ -13,17 +13,26 @@
 
 typedef octet octet_array[5];
 
+#pragma DCPS_DATA_TYPE "TestTopic"
+#pragma DCPS_DATA_KEY "TestTopic key"
+
 // Plain topic
 struct TestTopic {
   string key; //@key
   long x;
 };
 
+#pragma DCPS_DATA_TYPE "TopicString"
+#pragma DCPS_DATA_KEY "TopicString key"
+
 // String
 struct TopicString {
   string key; //@key
   string x_str;
 };
+
+#pragma DCPS_DATA_TYPE "TopicArray"
+#pragma DCPS_DATA_KEY "TopicArray key"
 
 // Arrays
 struct TopicArray {
@@ -39,6 +48,9 @@ union X_Union switch (short) {
       long   x_long;
 };
 
+#pragma DCPS_DATA_TYPE "TopicUnion"
+#pragma DCPS_DATA_KEY "TopicUnion key"
+
 struct TopicUnion {
   string key; //@key
   X_Union x_uni;
@@ -51,6 +63,9 @@ struct test {
 };
 typedef sequence<test> testSeq;
 
+#pragma DCPS_DATA_TYPE "TopicSeq"
+#pragma DCPS_DATA_KEY "TopicSeq key"
+
 struct TopicSeq {
   string key; //@key
   testSeq x_seq;
@@ -61,6 +76,9 @@ valuetype X_Valuetype {
   public string type;
   public long x_long;
 };
+
+#pragma DCPS_DATA_TYPE "TopicValuetype"
+#pragma DCPS_DATA_KEY "TopicValuetype key"
 
 struct TopicValuetype {
   string key; //@key
