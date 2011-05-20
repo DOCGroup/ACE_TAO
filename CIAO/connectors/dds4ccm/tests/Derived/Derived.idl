@@ -6,6 +6,9 @@
 #pragma ndds typesupport "DerivedSupport.h"
 #pragma opendds typesupport "DerivedTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "DerivedType"
+#pragma DCPS_DATA_KEY "DerivedType value"
+
 struct DerivedType {
   string value; //@key
 };

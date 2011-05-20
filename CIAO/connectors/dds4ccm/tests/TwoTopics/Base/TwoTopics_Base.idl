@@ -11,11 +11,17 @@
 #pragma ndds typesupport "Base/TwoTopics_BaseSupport.h"
 #pragma opendds typesupport "Base/TwoTopics_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "HelloTopic"
+#pragma DCPS_DATA_KEY "HelloTopic hello"
+
 struct HelloTopic {
   string hello; //@key
   long iteration;
 };
 typedef sequence<HelloTopic> HelloTopicSeq;
+
+#pragma DCPS_DATA_TYPE "GoodbyeTopic"
+#pragma DCPS_DATA_KEY "GoodbyeTopic goodbye"
 
 struct GoodbyeTopic {
   string goodbye; //@key

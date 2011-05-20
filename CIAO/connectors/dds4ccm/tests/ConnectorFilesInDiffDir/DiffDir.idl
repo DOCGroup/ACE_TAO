@@ -6,6 +6,9 @@
 #pragma ndds typesupport "DiffDirSupport.h"
 #pragma opendds typesupport "DiffDirTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "DiffDirType"
+#pragma DCPS_DATA_KEY "DiffDirType value"
+
 struct DiffDirType {
   string value; //@key
 };

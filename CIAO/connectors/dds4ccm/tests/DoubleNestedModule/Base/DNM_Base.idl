@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/DNM_BaseSupport.h"
 #pragma opendds typesupport "Base/DNM_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "X::Y::Z::DNM_Test_Struct"
+#pragma DCPS_DATA_KEY "X::Y::Z::DNM_Test_Struct key"
+
 module X
 {
   module Y
