@@ -1,3 +1,9 @@
+Fri May 20 22:17:29 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
+
+          Assignment to "after" must match the target MPC project name.
+
 Thu May 12 18:08:47 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/wrapper_macros.GNU: Added command settings for
@@ -5,7 +11,7 @@ Thu May 12 18:08:47 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/rules.local.GNU: Added rules to preprocess
           C and C++ files when directed.
-        
+
           These allow one to now quickly produce a preprocessed version of
           a source file. Ala... make -f GNUmakefile.ACE ACE.i
           would preprocess ACE.cpp and put the result in ACE.i.
