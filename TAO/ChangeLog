@@ -1,3 +1,14 @@
+Fri May 20 22:07:56 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/AnyTypeCode/TAO_AnyTypeCode.rc:
+        * tao/Codeset/TAO_Codeset.rc:
+        * tao/PI/TAO_PI.rc:
+        * tao/PI_Server/TAO_PI_Server.rc:
+        * tao/Utils/TAO_Utils.rc:
+        * tao/ZIOP/TAO_ZIOP.rc:
+
+          Add resource files to get TAO version number on DLLs.
+
 Fri May 20 14:20:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Oneway_Timeouts/test.mpc:
