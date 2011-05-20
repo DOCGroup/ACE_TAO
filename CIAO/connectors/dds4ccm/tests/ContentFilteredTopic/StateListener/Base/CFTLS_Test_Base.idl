@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/CFTLS_Test_BaseSupport.h"
 #pragma opendds typesupport "Base/CFTLS_Test_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "ContentFilteredTopicListenStateTest"
+#pragma DCPS_DATA_KEY "ContentFilteredTopicListenStateTest key"
+
 struct ContentFilteredTopicListenStateTest {
   string key; //@key
   long iteration;
