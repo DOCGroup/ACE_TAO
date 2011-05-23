@@ -11,6 +11,9 @@
 #pragma ndds typesupport "Base/QCLS_Test_BaseSupport.h"
 #pragma opendds typesupport "Base/QCLS_Test_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "QueryConditionListenStateTest"
+#pragma DCPS_DATA_KEY "QueryConditionListenStateTest key"
+
 struct QueryConditionListenStateTest {
   string key; //@key
   long iteration;

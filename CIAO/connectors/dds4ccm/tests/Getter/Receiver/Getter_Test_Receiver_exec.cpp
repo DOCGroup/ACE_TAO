@@ -29,6 +29,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_sys_time.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_Getter_Test_Receiver_Impl
 {
@@ -467,7 +468,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   gettertest_info.iteration));
           }
         // check readinfo struct.
-        if (readinfo.instance_handle.isValid)
+        if (DDS_INSTANCE_HANDLE_VALID(readinfo.instance_handle))
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR FIXED: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")
@@ -547,7 +548,7 @@ namespace CIAO_Getter_Test_Receiver_Impl
                                   gettertest_info->iteration));
           }
         // check readinfo struct.
-        if (readinfo.instance_handle.isValid)
+        if (DDS_INSTANCE_HANDLE_VALID(readinfo.instance_handle))
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR VARIABLE: GET MANY: ")
                     ACE_TEXT ("received instance handle should be invalid ")

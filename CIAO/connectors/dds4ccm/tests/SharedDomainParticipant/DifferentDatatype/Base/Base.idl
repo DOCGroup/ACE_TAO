@@ -9,7 +9,7 @@
 #define BASE_IDL
 
 #pragma ndds typesupport "Base/BaseSupport.h"
-#pragma opendds typesupport "Base/BaseSupportTypeSupportImpl.h"
+#pragma opendds typesupport "Base/BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "SharedDPTest1"
 #pragma DCPS_DATA_KEY "SharedDPTest1 key1"

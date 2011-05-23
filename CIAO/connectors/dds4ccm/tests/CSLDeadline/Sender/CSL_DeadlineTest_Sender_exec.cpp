@@ -54,7 +54,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     ACE_Thread_ID t_id;
     this->thread_id_ = t_id;
 
-    if(status.last_instance_handle.isValid && ! ::CORBA::is_nil (the_writer))
+    if(DDS_INSTANCE_HANDLE_VALID(status.last_instance_handle) && ! ::CORBA::is_nil (the_writer))
       {
         this->deadline_missed_ = true;
       }

@@ -38,7 +38,7 @@ namespace CIAO_LOBO_Test_Receiver_Impl
                             "key <%C> - iteration <%d>\n",
                             an_instance.key.in (),
                             an_instance.iteration));
-    if (!info.instance_handle.isValid)
+    if (DDS_INSTANCE_HANDLE_INVALID (info.instance_handle))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "instance handle seems to be invalid "
