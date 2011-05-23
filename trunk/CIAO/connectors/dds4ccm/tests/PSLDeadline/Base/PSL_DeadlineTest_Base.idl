@@ -9,7 +9,7 @@
 #define PSL_DEADLINETEST_BASE_IDL
 
 #pragma ndds typesupport "Base/PSL_DeadlineTest_BaseSupport.h"
-#pragma opendds typesupport "Base/PSL_DeadlineTest_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/PSL_DeadlineTest_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"
