@@ -1,3 +1,8 @@
+Mon May 23 08:36:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          Added DDS_INSTANCE_HANDLE_VALID
+
 Mon May 23 07:41:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
