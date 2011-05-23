@@ -89,8 +89,8 @@ namespace ACE
               int flush_buffer ();
 
               std::streamsize bufsize_;
-              ACE_Auto_Ptr<char_type> read_buffer_;
-              ACE_Auto_Ptr<char_type> write_buffer_;
+              ACE_Auto_Array_Ptr<char_type> read_buffer_;
+              ACE_Auto_Array_Ptr<char_type> write_buffer_;
               openmode        mode_;
               STREAM_HANDLER *stream_;
               interceptor_type* interceptor_;

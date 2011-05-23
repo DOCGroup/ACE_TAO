@@ -57,7 +57,7 @@ public:
     LAST_CODEC
   };
 
-  MessageType (int codec, ACE_FILE_Addr addr)
+  MessageType (int codec, const ACE_FILE_Addr& addr)
     : codec_(codec), addr_(addr)
   { }
 
