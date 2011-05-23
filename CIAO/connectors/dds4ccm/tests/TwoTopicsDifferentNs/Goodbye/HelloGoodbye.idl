@@ -8,6 +8,12 @@
 #ifndef GOODBYE_IDL_
 #define GOODBYE_IDL_
 
+#pragma ndds typesupport "Goodbye/HelloGoodbyeSupport.h"
+#pragma opendds typesupport "Goodbye/HelloGoodbyeTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "HelloGoodbye"
+#pragma DCPS_DATA_KEY "HelloGoodbye goodbye"
+
 module Goodbye
 {
   struct HelloGoodbye {
