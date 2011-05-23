@@ -4,7 +4,10 @@
 #define OFM_BASE_IDL
 
 #pragma ndds typesupport "OFM_BaseSupport.h"
-#pragma opendds typesupport "OFM_BaseSupportImpl.h"
+#pragma opendds typesupport "OFM_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "Topic1"
+#pragma DCPS_DATA_KEY "Topic1 key_value_topic1"
 
 struct Topic1 {
   string key_value_topic1; //@key
@@ -12,11 +15,17 @@ struct Topic1 {
 };
 typedef sequence<Topic1> Topic1Seq;
 
+#pragma DCPS_DATA_TYPE "Topic2"
+#pragma DCPS_DATA_KEY "Topic2 key_value_topic2"
+
 struct Topic2 {
   string key_value_topic2; //@key
   float float_value;
 };
 typedef sequence<Topic2> Topic2Seq;
+
+#pragma DCPS_DATA_TYPE "Topic3"
+#pragma DCPS_DATA_KEY "Topic3 key_value_topic3"
 
 struct Topic3 {
   string key_value_topic3; //@key

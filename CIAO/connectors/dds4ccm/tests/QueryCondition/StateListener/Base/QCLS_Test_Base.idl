@@ -9,7 +9,7 @@
 #define QUERY_CONDITION_LISTEN_STATE_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/QCLS_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/QCLS_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/QCLS_Test_BaseTypeSupportImpl.h"
 
 struct QueryConditionListenStateTest {
   string key; //@key

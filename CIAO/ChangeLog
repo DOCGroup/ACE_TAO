@@ -1,3 +1,33 @@
+Mon May 23 07:41:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Keyed/Base/Perf_Keyed_Test_Base.idl:
+        * connectors/dds4ccm/tests/NoModule/NoModule.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl:
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+        * connectors/dds4ccm/tests/OneFile/Multiple/OFM_Base.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Base/PSL_DeadlineTest_Base.idl:
+        * connectors/dds4ccm/tests/PSLSampleLost/Base/PSL_SampleLost_Base.idl:
+        * connectors/dds4ccm/tests/PortUsage/Base/PortUsage_Test_Base.idl:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/Base/Proxy_RW_Test_Base.idl:
+        * connectors/dds4ccm/tests/QosProfile/Base/QosProfile_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/Different/Base/Different_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/EventListener/Base/QCLE_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/Base/ReadGet_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/StateListener/Base/QCLS_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoListeners/Base/QCTL_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/Base/QCTQ_Test_Base.idl:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Base/QCTQM_Test_Base.idl:
+        * connectors/dds4ccm/tests/Reader/Base/Reader_Test_Base.idl:
+        * connectors/dds4ccm/tests/SLDisabled/Base/SL_Disabled_Base.idl:
+        * connectors/dds4ccm/tests/SLManyByMany/Base/SL_ManyByMany_Base.idl:
+        * connectors/dds4ccm/tests/SLOneByOne/Base/SL_OneByOne_Base.idl:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Base/SetConnectorAttribute_Base.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Base/Base.idl:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Base/Base.idl:
+        * connectors/dds4ccm/tests/State_Connection_Test/Base/State_Connection_Test_Base.idl:
+        * connectors/dds4ccm/tests/TopicName/Base/TopicName_Test_Base.idl:
+          Fixes for OpenDDS support
+
 Fri May 20 14:14:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.idl:

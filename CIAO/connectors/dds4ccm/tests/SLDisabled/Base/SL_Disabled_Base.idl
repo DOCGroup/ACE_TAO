@@ -9,7 +9,7 @@
 #define SL_DISABLED_BASE_IDL
 
 #pragma ndds typesupport "Base/SL_Disabled_BaseSupport.h"
-#pragma opendds typesupport "Base/SL_Disabled_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/SL_Disabled_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

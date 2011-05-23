@@ -9,7 +9,7 @@
 #define PERF_KEYED_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Perf_Keyed_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/Perf_Keyed_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/Perf_Keyed_Test_BaseTypeSupportImpl.h"
 
 /// Flag used to indicate message is used for initialization only
 const unsigned long INITIALIZE_SIZE = 1234;
