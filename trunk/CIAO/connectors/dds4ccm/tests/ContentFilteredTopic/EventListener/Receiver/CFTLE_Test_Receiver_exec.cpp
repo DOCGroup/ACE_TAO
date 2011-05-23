@@ -69,7 +69,7 @@ namespace CIAO_CFTLE_Test_Receiver_Impl
                           "key <%C> - iteration <%d>\n",
                           datum.key.in (),
                           datum.iteration));
-    if (!info.instance_handle.isValid)
+    if (!DDS_INSTANCE_HANDLE_VALID(info.instance_handle))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ContentFilteredTopicListenEventTest_Listener::on_one_data: "
                               "instance handle seems to be invalid "

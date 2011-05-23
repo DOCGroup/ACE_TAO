@@ -29,7 +29,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-
 #include "Base/Writer_BaseSupport.h"
 #include "Connector/Writer_Connector_conn.h"
 
@@ -107,7 +106,7 @@ namespace CIAO_Writer_Sender_Impl
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
                       i->first.c_str (),
                       i->second->iteration,
-                      hnd.isValid));
+                      hnd));
           }
         catch (...)
           {
@@ -123,8 +122,8 @@ namespace CIAO_Writer_Sender_Impl
     Writer_Table::iterator i = this->ktests_.begin ();
     for (i = this->ktests_.begin(); i != this->ktests_.end(); ++i)
       {
-        DDS_InstanceHandle_t hnd = this->writer_->register_instance (i->second);
-        if (!hnd.isValid)
+        DDS_InstanceHandle_t const hnd = this->writer_->register_instance (i->second);
+        if (DDS_INSTANCE_HANDLE_INVALID(hnd))
           {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
               i->first.c_str (), i->second->iteration));

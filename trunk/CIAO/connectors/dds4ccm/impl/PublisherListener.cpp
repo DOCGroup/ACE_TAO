@@ -287,11 +287,11 @@ namespace CIAO
                     ACE_TEXT ("PublisherListener::on_reliable_reader_activity_changed: ")
                     ACE_TEXT ("active count <%d> - active change <%d> - ")
                     ACE_TEXT ("not active count <%d> - inactive count change <%d>")
-                    ACE_TEXT ("last instance handle length <%d> - isValid <%d>\n"),
+                    ACE_TEXT ("last instance handle ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("\n"),
                     status.active_count, status.active_count_change,
                     status.inactive_count, status.inactive_count_change,
-                    status.last_instance_handle.length,
-                    status.last_instance_handle.isValid));
+                    DDS_INSTANCE_HANDLE_LOG(status.last_instance_handle)));
 
       this->on_unexpected_status (the_Writer, ::DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS);
     }

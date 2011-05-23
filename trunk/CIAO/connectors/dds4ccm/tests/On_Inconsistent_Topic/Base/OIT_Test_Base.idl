@@ -22,6 +22,9 @@ struct OIT_Receiver_Topic {
 
 typedef sequence<OIT_Receiver_Topic> OIT_Receiver_TopicSeq;
 
+#pragma DCPS_DATA_TYPE "OIT_Sender_Topic"
+#pragma DCPS_DATA_KEY "OIT_Sender_Topic symbol"
+
 struct OIT_Sender_Topic {
   string symbol; //@key
   long x;
