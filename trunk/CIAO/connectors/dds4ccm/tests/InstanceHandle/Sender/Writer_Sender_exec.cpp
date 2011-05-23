@@ -29,7 +29,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-#include "Base/Writer_BaseSupport.h"
 #include "Connector/Writer_Connector_conn.h"
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"

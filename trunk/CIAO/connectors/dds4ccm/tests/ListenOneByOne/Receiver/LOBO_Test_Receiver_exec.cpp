@@ -1,10 +1,8 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "LOBO_Test_Receiver_exec.h"
 #include "ace/Log_Msg.h"
-
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_LOBO_Test_Receiver_Impl

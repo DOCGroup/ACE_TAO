@@ -139,6 +139,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         this->thread_id_publication_matched_ = t_id;
 
       }
+#if (CIAO_DDS4CCM_NDDS==1)
     else if (! ::CORBA::is_nil(the_entity) && status_kind == DDS::RELIABLE_READER_ACTIVITY_CHANGED_STATUS)
       {
         this->reliable_dr_activity_changed_received_ = true;
@@ -149,6 +150,7 @@ namespace CIAO_CSL_USTest_Sender_Impl
         this->reliable_writer_cache_changed_received_ = true;
         this->thread_id_reliable_writer_cache_changed_ = t_id;
       }
+#endif
   }
 
   /**

@@ -37,7 +37,7 @@ project (DDS_CCM_Example_PSAT_idl_gen) : taoidldefaults, anytypecode, dds4ccm_ts
     ccm_dds_psat.idl
   }
 
-  opendds_ts_flags += --export=CCM_DDS_PSAT_STUB_Export
+  opendds_ts_flags += --export=CCM_DDS_PSAT_STUB_Export -I $(CIAO_ROOT)/connectors/dds4ccm/idl
   ndds_ts_flags += -I $(CIAO_ROOT)/connectors/dds4ccm/idl
 
   DDSGenerator_Files {
