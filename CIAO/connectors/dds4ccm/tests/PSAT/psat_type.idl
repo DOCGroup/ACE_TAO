@@ -8,7 +8,7 @@
 #define PSAT_TYPE_IDL
 
 #pragma ndds typesupport "psat_typeSupport.h"
-#pragma opendds typesupport "psat_typeSupportImpl.h"
+#pragma opendds typesupport "psat_typeTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

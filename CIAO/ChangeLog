@@ -1,3 +1,18 @@
+Mon May 23 10:49:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/Latency/Base/LatencyTT_Test_Base.idl:
+        * connectors/dds4ccm/performance-tests/Throughput/Base/Throughput_Base.idl:
+        * connectors/dds4ccm/tests/CSLQoS/Base/CSL_QoSTest_Base.idl:
+        * connectors/dds4ccm/tests/CSLSampleRejected/Base/CSL_SRTest_Base.idl:
+        * connectors/dds4ccm/tests/InstanceHandle/Base/Writer_Base.idl:
+        * connectors/dds4ccm/tests/NoModule/NoModule.idl:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Base/NonChangeable_Base.idl:
+        * connectors/dds4ccm/tests/OneFile/Single/OneFile_Base.idl:
+        * connectors/dds4ccm/tests/PSAT/psat_type.idl:
+        * connectors/dds4ccm/tests/PSLDeadline/Base/PSL_DeadlineTest_Base.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
+          Added needed pragma's for OpenDDS
+
 Mon May 23 09:49:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/tests/AMIDDS/Base/AmiDds_DDS.idl:

@@ -9,7 +9,7 @@
 #define CSL_QOSTEST_BASE_IDL
 
 #pragma ndds typesupport "Base/CSL_QoSTest_BaseSupport.h"
-#pragma opendds typesupport "Base/CSL_QoSTest_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/CSL_QoSTest_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"
