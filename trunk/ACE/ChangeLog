@@ -1,3 +1,9 @@
+Mon May 23 07:55:41 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/QtReactor_Test.h:
+        * tests/QtReactor_Test.cpp:
+        Changed deprecated qt4 functions and includes.
+
 Mon May 23 07:10:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Naming/Name_Binding.h:
