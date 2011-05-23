@@ -4,7 +4,7 @@
 #define NOMODULE_IDL
 
 #pragma ndds typesupport "NoModuleSupport.h"
-#pragma opendds typesupport "NoModuleSupportImpl.h"
+#pragma opendds typesupport "NoModuleTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "NoModuleType"
 #pragma DCPS_DATA_KEY "NoModuleType value"
