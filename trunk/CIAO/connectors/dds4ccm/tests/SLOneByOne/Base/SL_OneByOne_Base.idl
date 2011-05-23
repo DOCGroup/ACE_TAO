@@ -9,7 +9,7 @@
 #define SL_ONEBYONE_BASE_IDL
 
 #pragma ndds typesupport "Base/SL_OneByOne_BaseSupport.h"
-#pragma opendds typesupport "Base/SL_OneByOne_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/SL_OneByOne_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

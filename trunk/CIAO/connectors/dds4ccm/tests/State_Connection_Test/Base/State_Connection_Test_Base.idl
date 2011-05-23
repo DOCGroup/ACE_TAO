@@ -9,7 +9,7 @@
 #define STATE_CONNECTION_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/State_Connection_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/State_Connection_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/State_Connection_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "State_ConnectionTest"
 #pragma DCPS_DATA_KEY "State_ConnectionTest key"

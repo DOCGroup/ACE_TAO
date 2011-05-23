@@ -9,7 +9,7 @@
 #define PORTUSAGE_EVENT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/PortUsage_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/PortUsage_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/PortUsage_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "PortUsageTest"
 #pragma DCPS_DATA_KEY "PortUsageTest symbol"
