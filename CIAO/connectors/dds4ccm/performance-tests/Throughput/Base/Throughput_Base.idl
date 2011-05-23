@@ -32,6 +32,8 @@ struct ThroughputTest {
 
 typedef sequence<ThroughputTest> ThroughputTestSeq;
 
+#pragma DCPS_DATA_TYPE "ThroughputCommand"
+
 struct ThroughputCommand
 {
     CommandKind  command;

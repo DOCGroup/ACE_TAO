@@ -11,6 +11,8 @@
 #pragma ndds typesupport "Base/SetConnectorAttribute_BaseSupport.h"
 #pragma opendds typesupport "Base/SetConnectorAttribute_BaseTypeSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "SetConnectorAttributeTest"
+
 struct SetConnectorAttributeTest {
   string key;
   long iteration;

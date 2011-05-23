@@ -6,6 +6,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_Writer_Sender_Impl
 {
@@ -190,10 +191,11 @@ namespace CIAO_Writer_Sender_Impl
             WriterTestConnector::Writer_var writer =
               this->ciao_context_->get_connection_info_write_data ();
             writer->unregister_instance (i->second, hnd);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - valid handle <%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unregistered <%C> - iteration <%d> - ")
+                      DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("\n"),
                       i->first.c_str (),
                       i->second->iteration,
-                      hnd.isValid));
+                      DDS_INSTANCE_HANDLE_LOG(hnd)));
           }
         catch (...)
           {
@@ -211,21 +213,22 @@ namespace CIAO_Writer_Sender_Impl
 
     Writer_Table::iterator i = this->ktests_.begin ();
     ::DDS::InstanceHandle_t hnd = writer->register_instance (i->second);
-    if (!hnd.isValid)
+    if (DDS_INSTANCE_HANDLE_INVALID(hnd))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Unable to register handle for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
       }
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance with <%C> - iteration <%d> - valid handle <%d>\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering instance with <%C> - iteration <%d> - ")
+                DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("\n"),
                 i->second->key.in (),
                 i->second->iteration,
-                hnd.isValid));
+                DDS_INSTANCE_HANDLE_LOG(hnd)));
     this->handles_[i->first.c_str ()] = hnd;
     ++i;
     // Test exception. In Qos, max_instances is set to 1
     // so only one instance may be registered.
     hnd = writer->register_instance (i->second);
-    if (hnd.isValid)
+    if (DDS_INSTANCE_HANDLE_VALID(hnd))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Shouldn't be able to register instance for <%C> - iteration <%d>\n"),
           i->first.c_str (), i->second->iteration));
@@ -259,10 +262,11 @@ namespace CIAO_Writer_Sender_Impl
             ++this->last_key_->second->iteration;
             ::DDS::InstanceHandle_t hnd = this->handles_[this->last_key_->first.c_str ()];
             writer->write_one (this->last_key_->second, hnd);
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - valid handle <%d>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written keyed <%C> - iteration <%d> - ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
                     this->last_key_->first.c_str (),
                     this->last_key_->second->iteration,
-                    hnd.isValid));
+                    DDS_INSTANCE_HANDLE_LOG(hnd)));
           }
         catch (const CCM_DDS::InternalError& )
           {

@@ -26,6 +26,7 @@
  **/
 
 #include "Unkeyed_Test_Receiver_exec.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_Unkeyed_Test_Receiver_Impl
 {
@@ -58,7 +59,7 @@ namespace CIAO_Unkeyed_Test_Receiver_Impl
             ACE_TEXT ("received keyed_test_info for <%C> at %u\n"),
             datum.key.in (),
             datum.iteration));
-    if (info.instance_handle.isValid)
+    if (DDS_INSTANCE_HANDLE_VALID (info.instance_handle))
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: UnkeyedTest_Listener::on_one_data: ")
                 ACE_TEXT ("received instance handle should be invalid ")

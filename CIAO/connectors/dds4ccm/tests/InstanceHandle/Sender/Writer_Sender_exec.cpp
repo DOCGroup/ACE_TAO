@@ -108,9 +108,10 @@ namespace CIAO_Writer_Sender_Impl
             ::DDS::InstanceHandle_t const hnd = this->handles_[i->first.c_str ()];
             ccm_writer->unregister_instance (i->second, hnd);
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Unregistered <%C> - valid handle <%d>\n"),
+                        ACE_TEXT ("Unregistered <%C> - valid ")
+                        DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
                         i->first.c_str (),
-                        hnd.isValid));
+                        DDS_INSTANCE_HANDLE_LOG(hnd)));
           }
         catch (...)
           {
@@ -130,7 +131,7 @@ namespace CIAO_Writer_Sender_Impl
       {
         DDS::InstanceHandle_t const hnd =
           ccm_writer->register_instance (i->second);
-        if (!hnd.isValid)
+        if (DDS_INSTANCE_HANDLE_INVALID(hnd))
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("ERROR: Unable to register handle for <%C>\n"),

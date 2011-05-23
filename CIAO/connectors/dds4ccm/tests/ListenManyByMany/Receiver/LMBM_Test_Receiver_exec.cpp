@@ -3,6 +3,7 @@
 
 #include "LMBM_Test_Receiver_exec.h"
 #include "ace/Log_Msg.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_LMBM_Test_Receiver_Impl
 {
@@ -47,7 +48,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
                                "key <%C> - iteration <%d>\n",
                                an_instance[i].key.in (),
                                an_instance[i].iteration));
-        if (!info[i].instance_handle.isValid)
+        if (DDS_INSTANCE_HANDLE_INVALID(info[i].instance_handle))
           {
             ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
                                 "instance handle %d seems to be invalid"

@@ -29,6 +29,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_Reader_Test_Receiver_Impl
 {
@@ -335,10 +336,10 @@ namespace CIAO_Reader_Test_Receiver_Impl
                     key,
                     readertest_info_seq.length ()));
                 ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("READ ONE ALL: ")
-                    ACE_TEXT ("Handle created for <%C>: length <%u> - isValid <%d>\n"),
+                    ACE_TEXT ("Handle created for <%C>: ")
+                    DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("\n"),
                     key,
-                    readinfo_seq[0].instance_handle.length,
-                    readinfo_seq[0].instance_handle.isValid));
+                    DDS_INSTANCE_HANDLE_LOG(readinfo_seq[0].instance_handle)));
               }
           }
       }
@@ -458,7 +459,7 @@ namespace CIAO_Reader_Test_Receiver_Impl
                     ++nr_keys_changed;
                   }
                 // check readinfo struct.
-                if (!readinfo_seq[it].instance_handle.isValid)
+                if (DDS_INSTANCE_HANDLE_INVALID(readinfo_seq[it].instance_handle))
                   {
                     ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: READ ALL: ")
                             ACE_TEXT ("received instance handle should be valid ")
