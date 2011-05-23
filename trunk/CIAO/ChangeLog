@@ -1,3 +1,8 @@
+Mon May 23 09:00:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+          Added needed pragma's for OpenDDS
+
 Mon May 23 08:36:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_conf.h:
