@@ -1,3 +1,15 @@
+Mon May 23 06:55:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Streams/MessageInfo.h:
+          Pass argument as const& to fix Coverity error
+
+        * protocols/ace/INet/BidirStreamBuffer.h:
+        * protocols/ace/INet/BufferedStreamBuffer.h:
+        * protocols/ace/INet/HTTP_BasicAuthentication.cpp:
+        * protocols/ace/RMCast/Link.cpp:
+          Fixed memory leaks, thanks to Max Zhou <earthdog at 126 dot com>
+          for creating the patch, this fixes bugzilla 3959
+
 Fri May 20 22:17:29 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * bin/MakeProjectCreator/config/ace_qt4reactor.mpb:
