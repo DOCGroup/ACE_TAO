@@ -39,8 +39,8 @@
 #include "test_config.h"
 
 #include <assert.h>
-#include <qapplication.h>
-#include <qtimer.h>
+#include <QtGui/qapplication.h>
+#include <QtCore/qtimer.h>
 
 #include "ace/OS_NS_time.h"
 #include "ace/Time_Value.h"
@@ -76,7 +76,10 @@ void QTestApplication::exec (int msec)
 {
   finishTimer_.stop ();
   if (0 < msec )
-    finishTimer_.start (msec, TRUE);
+  {
+    finishTimer_.setSingleShot (TRUE);
+    finishTimer_.start (msec);
+  }
   inherited::exec ();
 }
 
