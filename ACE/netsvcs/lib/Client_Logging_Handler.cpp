@@ -677,7 +677,7 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR *local_addr_cstr = local_addr_str.rep ();
       if (-1 == local_addr_.string_to_addr (ACE_TEXT_ALWAYS_CHAR (local_addr_cstr)))
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), local_addr_cstr));
-      delete local_addr_cstr;
+      delete [] local_addr_cstr;
     }
 
   if (this->server_addr_.set (this->server_port_,
