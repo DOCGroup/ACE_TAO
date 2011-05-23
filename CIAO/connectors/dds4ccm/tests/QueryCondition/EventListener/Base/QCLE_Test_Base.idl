@@ -9,7 +9,7 @@
 #define QUERY_CONDITION_LISTEN_EVENT_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/QCLE_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/QCLE_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/QCLE_Test_BaseTypeSupportImpl.h"
 
 struct QueryConditionListenEventTest {
   string key; //@key

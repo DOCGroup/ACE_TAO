@@ -9,7 +9,7 @@
 #define PROXY_RW_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Proxy_RW_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/Proxy_RW_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/Proxy_RW_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "ProxyReadWriteTest"
 #pragma DCPS_DATA_KEY "ProxyReadWriteTest key"

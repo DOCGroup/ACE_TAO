@@ -9,7 +9,7 @@
 #define SETCONNECTORATTRIBUTE_BASE_IDL
 
 #pragma ndds typesupport "Base/SetConnectorAttribute_BaseSupport.h"
-#pragma opendds typesupport "Base/SetConnectorAttribute_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/SetConnectorAttribute_BaseTypeSupportImpl.h"
 
 struct SetConnectorAttributeTest {
   string key;

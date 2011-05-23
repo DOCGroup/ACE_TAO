@@ -11,6 +11,8 @@
 #pragma ndds typesupport "Base/NonChangeable_BaseSupport.h"
 #pragma opendds typesupport "Base/NonChangeable_BaseSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "NonChangeableTest"
+
 struct NonChangeableTest {
   string key;
   long iteration;

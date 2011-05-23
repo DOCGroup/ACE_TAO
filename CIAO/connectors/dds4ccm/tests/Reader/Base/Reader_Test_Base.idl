@@ -9,7 +9,7 @@
 #define READER_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Reader_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/Reader_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/Reader_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "ReaderTest"
 #pragma DCPS_DATA_KEY "ReaderTest key"

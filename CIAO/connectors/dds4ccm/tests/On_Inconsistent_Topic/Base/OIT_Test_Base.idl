@@ -9,7 +9,7 @@
 #define ON_INCONSISTENT_TOPIC_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/OIT_Test_BaseSupport.h"
-#pragma opendds typesupport "Base/OIT_Test_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/OIT_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "OIT_Receiver_Topic"
 #pragma DCPS_DATA_KEY "OIT_Receiver_Topic symbol"

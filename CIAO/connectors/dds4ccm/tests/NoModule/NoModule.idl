@@ -6,6 +6,9 @@
 #pragma ndds typesupport "NoModuleSupport.h"
 #pragma opendds typesupport "NoModuleSupportImpl.h"
 
+#pragma DCPS_DATA_TYPE "NoModuleType"
+#pragma DCPS_DATA_KEY "NoModuleType value"
+
 struct NoModuleType {
   string value; //@key
 };
