@@ -32,10 +32,12 @@
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 #define DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("length <%d> - isValid <%d>")
 #define DDS_INSTANCE_HANDLE_LOG(X) X.length, X.isValid
+#define DDS_INSTANCE_HANDLE_VALID(X) X.isValid
 #elif (CIAO_DDS4CCM_OPENDDS==1)
 #define DDS_INSTANCE_HANDLE_T_IN ::DDS::InstanceHandle_t
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
 #define DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("<%d>")
 #define DDS_INSTANCE_HANDLE_LOG(X) X
+#define DDS_INSTANCE_HANDLE_VALID(X) true
 #endif
 #endif /* DDS4CCM_CONF_H_ */
