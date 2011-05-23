@@ -7,8 +7,8 @@
 #pragma opendds typesupport "Shapes_ShapeType_msgTypeTypeSupportImpl.h"
 #pragma splice typesupport "Shapes_ShapeType_msgDscpC.h"
 
-#pragma DCPS_DATA_TYPE "ShapeType_msg"
-#pragma DCPS_DATA_KEY "ShapeType_msg color"
+#pragma DCPS_DATA_TYPE "ShapeType"
+#pragma DCPS_DATA_KEY "ShapeType color"
 
 struct ShapeType {
   string color; //@key
@@ -17,6 +17,6 @@ struct ShapeType {
   long shapesize;
 };
 
-#pragma keylist ShapeType_msg color
+#pragma keylist ShapeType color
 
 #endif /* SHAPES_SHAPETYPE_MSG_IDL_ */
