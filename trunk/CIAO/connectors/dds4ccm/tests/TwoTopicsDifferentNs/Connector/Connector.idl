@@ -13,12 +13,7 @@
 #include "Hello/HelloGoodbye.idl"
 #include "Goodbye/HelloGoodbye.idl"
 
-
 #pragma ciao lem "Connector/ConnectorE.idl"
-#pragma ndds typesupport "Hello/HelloGoodbyeSupport.h"
-#pragma ndds typesupport "Goodbye/HelloGoodbyeSupport.h"
-#pragma opendds typesupport "Hello/HelloGoodbyeTypeSupportImpl.h"
-#pragma opendds typesupport "Goodbye/HelloGoodbyeTypeSupportImpl.h"
 
 module Hello
 {
