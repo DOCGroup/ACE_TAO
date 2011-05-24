@@ -106,9 +106,9 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                 "Start configuring default domain <%d>\n",
                 this->domain_id_));
 
+#if (CIAO_DDS4CCM_NDDS==1)
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       this->participant_factory_.set_default_participant_qos_with_profile (
                                       this->qos_profile_.in ());
 
@@ -117,9 +117,9 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                                       this->qos_profile_.in (),
                                       ::DDS::DomainParticipantListener::_nil (),
                                       0);
-#endif
     }
   else
+#endif
     {
       ::DDS::DomainParticipantQos qos;
       participant = this->participant_factory_.create_participant (
@@ -236,17 +236,17 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
   DDS4CCM_TRACE ("DDS_Base_Connector_T::init_topic");
 
   ::DDS::Topic_var tp;
+#if (CIAO_DDS4CCM_NDDS==1)
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
-#if (CIAO_DDS4CCM_NDDS==1)
       tp = participant->create_topic_with_profile (topic_name,
                                           typesupport_name,
                                           this->qos_profile_.in (),
                                           ::DDS::TopicListener::_nil (),
                                           0);
-#endif
     }
   else
+#endif
     {
       ::DDS::TopicQos tqos;
       tp = participant->create_topic (topic_name,
@@ -275,16 +275,16 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
 
   if (::CORBA::is_nil (publisher))
     {
+#if (CIAO_DDS4CCM_NDDS==1)
       if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
-#if (CIAO_DDS4CCM_NDDS==1)
           publisher = participant->create_publisher_with_profile (
                                               this->qos_profile_.in (),
                                               ::DDS::PublisherListener::_nil (),
                                               0);
-#endif
         }
       else
+#endif
         {
           ::DDS::PublisherQos pqos;
           publisher = participant->create_publisher (pqos,
@@ -311,16 +311,16 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
 
   if (::CORBA::is_nil (subscriber))
     {
+#if (CIAO_DDS4CCM_NDDS==1)
       if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
-#if (CIAO_DDS4CCM_NDDS==1)
           subscriber = participant->create_subscriber_with_profile (
                                               this->qos_profile_.in (),
                                               ::DDS::SubscriberListener::_nil (),
                                               0);
-#endif
         }
       else
+#endif
         {
           ::DDS::SubscriberQos sqos;
           subscriber = participant->create_subscriber (sqos,
