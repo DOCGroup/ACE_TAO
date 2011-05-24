@@ -218,6 +218,9 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
 
   retcode = DDS_TYPE::type_support::register_type(
     part->get_rti_entity (), typesupport_name);
+#else
+  ACE_UNUSED_ARG (participant);
+  ACE_UNUSED_ARG (typesupport_name);
 #endif
   if (retcode != ::DDS::RETCODE_OK)
     {
@@ -243,6 +246,9 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
     ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
   delete factory;
+#else
+  ACE_UNUSED_ARG (participant);
+  ACE_UNUSED_ARG (typesupport_name);
 #endif
 }
 
