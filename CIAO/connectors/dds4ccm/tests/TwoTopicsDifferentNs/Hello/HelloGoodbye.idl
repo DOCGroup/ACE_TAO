@@ -11,8 +11,8 @@
 #pragma ndds typesupport "Hello/HelloGoodbyeSupport.h"
 #pragma opendds typesupport "Hello/HelloGoodbyeTypeSupportImpl.h"
 
-#pragma DCPS_DATA_TYPE "HelloGoodbye"
-#pragma DCPS_DATA_KEY "HelloGoodbye hello"
+#pragma DCPS_DATA_TYPE "Hello::HelloGoodbye"
+#pragma DCPS_DATA_KEY "Hello::HelloGoodbye hello"
 
 module Hello
 {

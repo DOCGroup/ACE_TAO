@@ -1,3 +1,16 @@
+Tue May 24 11:17:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver.mpc:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.cpp:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/Component/Component.mpc:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/Component/Component.mpc:
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Goodbye/HelloGoodbye.idl:
+        * connectors/dds4ccm/tests/TwoTopicsDifferentNs/Hello/HelloGoodbye.idl:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+          Increased portability
+
 Tue May 24 09:12:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ConditionManager.cpp:
