@@ -4,7 +4,7 @@
 #define SHAPES_SHAPETYPE_MSG_IDL_
 
 #pragma ndds typesupport "Shapes_ShapeType_msgSupport.h"
-#pragma opendds typesupport "Shapes_ShapeType_msgTypeTypeSupportImpl.h"
+#pragma opendds typesupport "Shapes_ShapeType_msgTypeSupportImpl.h"
 #pragma splice typesupport "Shapes_ShapeType_msgDscpC.h"
 
 #pragma DCPS_DATA_TYPE "ShapeType"

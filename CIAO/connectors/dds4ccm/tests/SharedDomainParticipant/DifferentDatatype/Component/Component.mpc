@@ -90,16 +90,17 @@ project(DDS_SharedDP_DDComponent_exec) : ciao_executor, dds4ccm_impl {
   after   += DDS_SharedDP_DDComponent_lem_stub DDS_SharedDP_DDComponent_stub \
              DDS_SharedDP_Connector1_lem_stub DDS_SharedDP_Connector1_stub \
              DDS_SharedDP_Connector2_lem_stub DDS_SharedDP_Connector2_stub \
-             DDS_SharedDP_Connector3_lem_stub DDS_SharedDP_Connector3_stub 
+             DDS_SharedDP_Connector3_lem_stub DDS_SharedDP_Connector3_stub
   sharedname = Component_exec
   libs += Component_stub Component_lem_stub DDS_SharedDP_DDBase_stub \
           DDS_Connector1_lem_stub DDS_Connector1_stub \
           DDS_Connector2_lem_stub DDS_Connector2_stub \
-          DDS_Connector3_lem_stub DDS_Connector3_stub 
+          DDS_Connector3_lem_stub DDS_Connector3_stub
   libpaths += ../lib
   includes += ..
   libout = ../lib
   dynamicflags += COMPONENT_EXEC_BUILD_DLL
+  requires += ndds
 
   IDL_Files {
   }

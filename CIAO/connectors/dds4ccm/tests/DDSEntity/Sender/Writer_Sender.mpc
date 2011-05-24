@@ -97,6 +97,7 @@ project(DDS_DDSWriterEntitySender_exec) : ciao_executor, dds4ccm_impl {
   includes += ..
   libout = ../lib
   dynamicflags += SENDER_EXEC_BUILD_DLL
+  requires += ndds
 
   IDL_Files {
   }
