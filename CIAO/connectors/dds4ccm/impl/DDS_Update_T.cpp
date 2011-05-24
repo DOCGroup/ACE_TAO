@@ -34,17 +34,17 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
   if (::CORBA::is_nil (dw.in ()))
     {
       ::DDS::DataWriter_var dwv_tmp;
+#if (CIAO_DDS4CCM_NDDS==1)
       if (qos_profile)
         {
-#if (CIAO_DDS4CCM_NDDS==1)
           dwv_tmp = publisher->create_datawriter_with_profile (
               topic,
               qos_profile,
               ::DDS::DataWriterListener::_nil (),
               0);
-#endif
         }
       else
+#endif
         {
           ::DDS::DataWriterQos dwqos;
           dwv_tmp = publisher->create_datawriter (
