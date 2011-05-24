@@ -90,6 +90,7 @@ project(DDS_DDSWriterEntityReceiver_exec) : ciao_executor, dds4ccm_impl {
   libout = ../lib
   includes += ..
   dynamicflags += RECEIVER_EXEC_BUILD_DLL
+  requires += ndds
 
   IDL_Files {
   }

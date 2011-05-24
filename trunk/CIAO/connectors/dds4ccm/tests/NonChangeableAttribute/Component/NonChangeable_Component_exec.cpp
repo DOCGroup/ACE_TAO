@@ -1,9 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "NonChangeable_Component_exec.h"
-#include "Base/NonChangeable_BaseSupport.h"
 
 #include "dds4ccm/impl/Utils.h"
 
