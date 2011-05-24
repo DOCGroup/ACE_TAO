@@ -63,7 +63,9 @@ namespace CIAO
                                                             error,
                                                             non_existent);
 #else
-      ::DDS::InstanceHandle_t ret;
+      ACE_UNUSED_ARG (instance_handle);
+      ACE_UNUSED_ARG (lookup_handle);
+      ::DDS::InstanceHandle_t ret = ::DDS::RETCODE_OK;
 #endif
       if (error)
         throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
@@ -84,6 +86,7 @@ namespace CIAO
 #if (CIAO_DDS4CCM_NDDS==1)
       return this->ws_.check_condition (rc.in (), qc.in (), condition);
 #else
+      ACE_UNUSED_ARG (condition);
       return false;
 #endif
     }
