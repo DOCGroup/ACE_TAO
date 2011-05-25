@@ -66,6 +66,8 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
                                           0);
         }
       else
+#else
+        ACE_UNUSED_ARG (qos_profile);
 #endif
         {
           ::DDS::DataReaderQos_var drqos;

@@ -44,6 +44,8 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
               0);
         }
       else
+#else
+        ACE_UNUSED_ARG (qos_profile);
 #endif
         {
           ::DDS::DataWriterQos dwqos;
