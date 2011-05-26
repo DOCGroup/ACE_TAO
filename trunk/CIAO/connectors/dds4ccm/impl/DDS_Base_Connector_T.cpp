@@ -248,8 +248,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
                                           0);
     }
   else
-#else
-        ACE_UNUSED_ARG (qos_profile);
 #endif
     {
       ::DDS::TopicQos tqos;
