@@ -1,3 +1,8 @@
+Thu May 26 14:27:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
 Thu May 26 14:11:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
