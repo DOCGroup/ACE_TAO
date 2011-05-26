@@ -1,3 +1,8 @@
+Thu May 26 15:25:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/fe/fe_utils.cpp:
+          tmp variable wasn't necessary. Removed it.
+
 Thu May 26 14:13:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
