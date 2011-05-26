@@ -1,3 +1,11 @@
+Thu May 26 20:29:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp:
+          Resolved gcc 4.6 warnings. Some variables were declared and assigned
+          a value but weren't used after that.
+
 Fri Apr 22 12:41:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tools/Logger_Backend/ndds/svc.conf:
