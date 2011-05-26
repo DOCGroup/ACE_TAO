@@ -183,34 +183,27 @@ be_visitor_valuebox_ci::visit_interface (be_interface *node)
 int
 be_visitor_valuebox_ci::visit_predefined_type (be_predefined_type *node)
 {
-  const char *marshal_arg;
   bool is_any = false;
 
   switch (node->pt())
     {
     case AST_PredefinedType::PT_boolean:
-      marshal_arg = "::ACE_OutputCDR::from_boolean (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_char:
-      marshal_arg = "::ACE_OutputCDR::from_char (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_wchar:
-      marshal_arg = "::ACE_OutputCDR::from_wchar (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_octet:
-      marshal_arg = "::ACE_OutputCDR::from_octet (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_any:
-      marshal_arg = "this->_pd_value.in ()";
       is_any = true;
       break;
 
     default:
-      marshal_arg = "this->_pd_value";
       break;
     }
 

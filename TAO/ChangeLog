@@ -1,3 +1,10 @@
+Thu May 26 14:13:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * tao/Strategies/COIOP_Acceptor.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
 Thu May 26 13:48:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
