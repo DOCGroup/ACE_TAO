@@ -87,7 +87,6 @@ namespace DAnCE
       DANCE_TRACE("SatisfierProperty_Handler::get_sat_property - reverse");
 
       ::XMLSchema::string< ACE_TCHAR > name (ACE_TEXT_CHAR_TO_TCHAR ((src.name)));
-      SatisfierPropertyKind::Value kind;
 
       const SatisfierPropertyKind *spk = 0;
 
@@ -107,14 +106,6 @@ namespace DAnCE
 
         case Deployment::Maximum:
           spk = &SatisfierPropertyKind::Maximum;
-          break;
-
-          //        case Deployment::_Attribute:
-          //kind = SatisfierPropertyKind::Attribute_l;
-          //break;
-
-        case Deployment::Selection:
-          kind = SatisfierPropertyKind::Selection_l;
           break;
 
         default:
