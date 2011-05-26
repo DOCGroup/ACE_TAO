@@ -1,7 +1,12 @@
+Thu May 26 11:39:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added a yum install with all packages you could need on FC
+
 Thu May 26 13:09:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Compiler_Features_10_Test.cpp:
-          Resolved coverity warnings. 
+          Resolved coverity warnings.
 
 Mon May 23 07:55:41 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
