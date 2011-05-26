@@ -95,7 +95,6 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
-  size_t index = 0;
   TAO_Profile *pfile = 0;
   TAO_COIOP_Profile *coiop_profile = 0;
 
@@ -137,8 +136,6 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           if (csm)
             csm->set_codeset(pfile->tagged_components());
         }
-
-      index = 1;
     }
 
   TAO_COIOP_Endpoint *endpoint = 0;
