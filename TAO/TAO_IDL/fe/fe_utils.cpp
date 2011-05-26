@@ -65,7 +65,7 @@ void
 FE_Utils::T_ARGLIST::destroy (void)
 {
   AST_Decl **d = 0;
-  AST_Decl *tmp = 0;
+  AST_Decl *tmp;
 
   for (T_ARGLIST::ITERATOR i (this->begin ());
        !i.done ();
