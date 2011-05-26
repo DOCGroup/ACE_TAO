@@ -1,3 +1,12 @@
+Thu May 26 13:48:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Bounded_String.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Octet.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+          Catch uncaught exceptions in main.
+
 Thu May 26 13:11:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tao/Generic_Sequence_T.h:
