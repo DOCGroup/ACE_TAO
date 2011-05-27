@@ -1,3 +1,10 @@
+Fri May 27 14:13:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * tests/Bug_2677_Regression/DllORB.cpp:
+        * tests/Bug_2683_Regression/server.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
 Fri May 27 13:52:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_union/union_ch.cpp:
