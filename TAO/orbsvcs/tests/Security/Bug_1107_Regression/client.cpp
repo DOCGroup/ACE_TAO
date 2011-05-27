@@ -165,7 +165,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // then result in a CORBA::NO_PERMISSION exception.
           //
           // The server is not shutdown by this test.
-          status = insecure_invocation_test (orb.in (), object.in ());
+          insecure_invocation_test (orb.in (), object.in ());
         }
 
       // This test uses the default secure SSLIOP settings to securely
@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // The server *is* shutdown by this test.
       try
         {
-          status = secure_invocation_test (object.in ());
+          secure_invocation_test (object.in ());
         }
       catch (CORBA::Exception const &ex)
         {
@@ -201,9 +201,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n"
-              "Bug_1107_Regression test passed.\n"));
+  if (status == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n"
+                  "Bug_1107_Regression test passed.\n"));
+    }
 
-  return 0;
+  return status;
 }
