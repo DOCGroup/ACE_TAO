@@ -8,7 +8,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ior_mcast_Client_i client;
 
-      client.init (argc, argv);
+      int status = client.init (argc, argv);
+      ACE_UNUSED_ARG (status);
 
       return 0;
     }
