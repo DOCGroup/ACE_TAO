@@ -1,3 +1,18 @@
+Fri May 27 09:14:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/tests/Bug_3486_Regression/server.cpp:
+        * orbsvcs/tests/IOR_MCast/client.cpp:
+        * orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
 Thu May 26 15:25:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/fe/fe_utils.cpp:
