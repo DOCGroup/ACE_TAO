@@ -48,9 +48,11 @@ run_main (int, ACE_TCHAR *[])
 
   Array<int, Pair> pairs;
   pairs.array[0].x1 = 0;
+  ACE_UNUSED_ARG (pairs);
 
   Array<int, Triple> triples;
   triples.array[1].t3 = 0;
+  ACE_UNUSED_ARG (triples);
 
   ACE_END_TEST;
   return status;
