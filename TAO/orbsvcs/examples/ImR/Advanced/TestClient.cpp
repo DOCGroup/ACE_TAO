@@ -199,13 +199,12 @@ int TestClient::svc()
             // Calculate the number of requests
             int newReqCount (randomRequests_ == false ? requestCount_ :
             (int)((((double)ACE_OS::rand() / (double)RAND_MAX) * (double)(requestCount_ - 1)) + .5) + 1);
-            int serverInstance = 0;
             // For each request
             for (requestIter = 1; requestIter <= newReqCount;  requestIter++)
             {
               try
               {
-                serverInstance = test->send_message(threadNum, i, objIter, requestIter);
+                test->send_message(threadNum, i, objIter, requestIter);
               }
               catch (CORBA::SystemException& ex)
               {
