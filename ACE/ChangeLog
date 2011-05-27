@@ -1,8 +1,15 @@
+Fri May 27 14:44:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_2653_Regression_Test.cpp:
+        * tests/Compiler_Features_12_Test.cpp:
+        * tests/Reference_Counted_Event_Handler_Test.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
 Fri May 27 09:49:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
           Made changes to satisfy Coverity and the GNU 4.6 gcc compiler.
-          fgets returns a void*. This is stored in dummy. We use 
+          fgets returns a void*. This is stored in dummy. We use
           ACE_UNUSED_ARG to fool the 4.6 gcc compiler.
 
 Thu May 26 14:27:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>

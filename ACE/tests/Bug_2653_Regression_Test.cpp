@@ -69,11 +69,9 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
   : ACE_Event_Handler (&reactor)
 {
   // Create the pipe.
-  bool ok = true;
   if (0 != this->other_pipe_.open () || 0 != this->pipe_.open())
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
-      ok = false;
     }
   else
     {
@@ -84,7 +82,6 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
                   ACE_Event_Handler::READ_MASK))
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
-          ok = false;
         }
 
       if (-1 == this->reactor ()->schedule_wakeup
@@ -92,14 +89,12 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
            ACE_Event_Handler::WRITE_MASK))
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("Schedule")));
-          ok = false;
         }
 
       // closing the other pipe sets up the spinner error.
       // leaving it open sets up the segv.
       if (close_other)
         this->other_pipe_.close();
-
     }
 }
 
