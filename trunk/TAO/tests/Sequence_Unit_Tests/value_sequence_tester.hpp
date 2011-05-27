@@ -12,7 +12,7 @@
 #include "tao/Basic_Types.h"
 
 #include "test_macros.h"
-#include <tao/SystemException.h>
+#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

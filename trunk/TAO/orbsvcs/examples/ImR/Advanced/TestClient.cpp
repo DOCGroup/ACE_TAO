@@ -204,7 +204,8 @@ int TestClient::svc()
             {
               try
               {
-                test->send_message(threadNum, i, objIter, requestIter);
+                ::CORBA::Long instance = test->send_message(threadNum, i, objIter, requestIter);
+                ACE_UNUSED_ARG (instance);
               }
               catch (CORBA::SystemException& ex)
               {
