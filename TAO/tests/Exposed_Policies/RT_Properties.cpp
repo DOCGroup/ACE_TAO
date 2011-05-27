@@ -41,20 +41,28 @@ RT_Properties::read_from (const ACE_TCHAR *file_name)
       if (ACE_OS::strcmp (string_field, "Priority") == 0)
         {
           n_matched = fscanf (fp, "%d", &int_field);
+          ACE_UNUSED_ARG (n_matched);
+
           rt_properties->priority (int_field);
         }
       else if (ACE_OS::strcmp (string_field, "Priority_Bands") == 0)
         {
           n_matched = fscanf (fp, "%d", &int_field);
+          ACE_UNUSED_ARG (n_matched);
+
           rt_properties->priority_bands_.length (int_field);
 
         }
       else if (ACE_OS::strcmp (string_field, "Priority_Range") == 0)
         {
           n_matched = fscanf (fp, "%d", &int_field);
+          ACE_UNUSED_ARG (n_matched);
+
           rt_properties->priority_bands_[i].low = int_field;
 
           n_matched = fscanf (fp, "%d", &int_field);
+          ACE_UNUSED_ARG (n_matched);
+
           rt_properties->priority_bands_[i].high = int_field;
 
           ++i;

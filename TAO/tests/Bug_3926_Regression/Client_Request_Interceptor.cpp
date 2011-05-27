@@ -118,6 +118,7 @@ Client_Request_Interceptor::receive_other (
                   ACE_TEXT ("CRI: in receive_other, before reply_status\n")));
 
       reply_status = ri->reply_status ();
+      ACE_UNUSED_ARG (reply_status);
     }
   catch(CORBA::BAD_INV_ORDER const &e)
     {
