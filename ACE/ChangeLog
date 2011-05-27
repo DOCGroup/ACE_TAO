@@ -1,3 +1,10 @@
+Fri May 27 09:49:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
+          Made changes to satisfy Coverity and the GNU 4.6 gcc compiler.
+          fgets returns a void*. This is stored in dummy. We use 
+          ACE_UNUSED_ARG to fool the 4.6 gcc compiler.
+
 Thu May 26 14:27:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ace/Monitor_Control/Linux_Network_Interface_Monitor.cpp:
