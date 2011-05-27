@@ -1,9 +1,15 @@
+Fri May 27 13:52:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+          Removed generation of holder_ member of an union, it is not used
+          at all
+
 Fri May 27 10:09:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
         * orbsvcs/tests/IOR_MCast/client.cpp:
         * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
-          Statisfy Coverity and the GNU 4.6 gcc compiler. Using a 
+          Statisfy Coverity and the GNU 4.6 gcc compiler. Using a
           returned value either by using ACE_UNUSED_ARG or to print
           in a log message.
 
