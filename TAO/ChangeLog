@@ -1,3 +1,15 @@
+Fri May 27 14:35:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_2936_Regression/bug2936.cpp:
+        * tests/Bug_3926_Regression/Client_Request_Interceptor.cpp:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+        
+        * tests/POA/Bug_2511_Regression/server.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+          Code alignment.
+
 Fri May 27 14:13:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * performance-tests/POA/Demux/demux_test_server.cpp:
