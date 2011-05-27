@@ -194,6 +194,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 
       ACE_OS::memset (poa_name, 0, 128);
       int n_matched = fscanf (this->poa_fp_, "%s", poa_name);
+      ACE_UNUSED_ARG (n_matched);
 
       try
         {
@@ -265,6 +266,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
                   ACE_OS::memset (servant_name, 0, 128);
 
                   n_matched = fscanf (this->servant_fp_, "%s", servant_name);
+                  ACE_UNUSED_ARG (n_matched);
 
                   ACE_DEBUG ((LM_DEBUG,
                               "Activating Servant with Name : %s\n",

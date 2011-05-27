@@ -19,25 +19,8 @@ DllORB::~DllORB (void)
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
 {
-  int threadCnt = 1;
-
   try
     {
-      ACE_Arg_Shifter as (argc, argv);
-      const ACE_TCHAR *currentArg = 0;
-      while (as.is_anything_left ())
-        {
-          if (0 != (currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
-            {
-              int num = ACE_OS::atoi (currentArg);
-              if (num >= 1)
-                threadCnt = num;
-              as.consume_arg ();
-            }
-        else
-          as.ignore_arg ();
-        }
-
       if (failPrePostInit_ < 3)
         {
           ACE_DEBUG ((LM_INFO,
