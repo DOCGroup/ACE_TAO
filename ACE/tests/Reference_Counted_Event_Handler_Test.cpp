@@ -892,7 +892,6 @@ void
 closed_in_upcall_event_handler (ACE_Reactor *reactor)
 {
   int events = 0;
-  int handle_events_result = 0;
 
   if (test_io)
     {
@@ -923,8 +922,9 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
 
   while (events > 0)
     {
-      handle_events_result =
+      int handle_events_result =
         reactor->handle_events ();
+      ACE_UNUSED_ARG (handle_events_result);
     }
 }
 
