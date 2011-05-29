@@ -3,7 +3,7 @@
 
 feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps {
   Define_Custom(DDSGenerator) : TypeSupport {
-    commandflags += -Wb,opendds_sequence_suffix=DDSSeq
+    commandflags += -Wb,opendds_sequence_suffix=DDSSeq -DCIAO_DDS4CCM_OPENDDS=1
     keyword opendds_ts_flags = commandflags
     keyword dds_ts_flags = commandflags
   }
