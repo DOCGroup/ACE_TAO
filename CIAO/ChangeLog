@@ -1,3 +1,11 @@
+Sun May 29 17:22:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver.mpc:
+        * connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender.mpc:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/Component/SetConnectorAttribute_Component.mpc:
+          These components use ndds specific features
+
 Fri May 27 12:44:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
