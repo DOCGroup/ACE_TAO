@@ -117,6 +117,7 @@ project(DDS_DDSWriterEntityReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   libout = ../lib
   includes += ..
   dynamicflags += RECEIVER_SVNT_BUILD_DLL
+  requires += ndds
 
   IDL_Files {
   }
