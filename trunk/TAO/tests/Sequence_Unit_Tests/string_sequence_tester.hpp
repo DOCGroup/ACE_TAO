@@ -204,7 +204,7 @@ struct string_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    character_type const * lhs = 0;
+    character_type const * lhs;
     character_type const * rhs = 0;
     CHECK_THROW(lhs = y[32], std::range_error);
     CHECK_THROW(x[32] = rhs, std::range_error);

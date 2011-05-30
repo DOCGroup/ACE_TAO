@@ -1,3 +1,9 @@
+Mon May 30 06:39:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
 Fri May 27 14:35:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_2936_Regression/bug2936.cpp:
@@ -5,7 +11,7 @@ Fri May 27 14:35:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * tests/Exposed_Policies/RT_Properties.cpp:
         * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
           Resolved gcc 4.6 warnings: variable was set but not used.
-        
+
         * tests/POA/Bug_2511_Regression/server.cpp:
           Resolved gcc 4.6 warnings: variable was set but not used.
           Code alignment.

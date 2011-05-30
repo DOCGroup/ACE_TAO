@@ -177,7 +177,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           now - latency_base);
 
            if (TAO_debug_level > 0 && i % 100 == 0)
-             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
+             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration <%d> - price <%d> - cost <%d>\n",
+                         i, price, cost));
          }
 
        marker.dump_stats (ACE_TEXT("buying tickets "), gsf);
