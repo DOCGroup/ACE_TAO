@@ -32,10 +32,12 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
   return server_ == 0 ? -1 : 0;
 }
 
-
+// NOTE! The (ACCEPTOR*) cast below is NOT technically necessary, but it
+// works around a bug in IBM XL C++ 9 that resolves to the wrong version of
+// handle_close().
 template <class ACCEPTOR> int
-Reactor_Logging_Server_Adapter<ACCEPTOR>::fini () 
-{ server_->handle_close (); server_ = 0; return 0; }
+Reactor_Logging_Server_Adapter<ACCEPTOR>::fini ()
+{ ((ACCEPTOR*)server_)->handle_close (); server_ = 0; return 0; }
 
 
 template <class ACCEPTOR> int
