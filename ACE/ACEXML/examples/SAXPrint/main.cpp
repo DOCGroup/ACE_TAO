@@ -34,7 +34,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_Char* filename = 0;
   int sax = 0;                  // Use SAXPrint handler or not.
   int str = 0;
-  int zip = 0;
   ACEXML_Char* url = 0;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
@@ -85,6 +84,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_StrCharStream* sstm = 0;
 #ifdef USE_ZZIP
   ACEXML_ZipCharStream* zstm = 0;
+  int zip = 0;
 #endif /* USE_ZZIP */
   if (filename != 0)
     {

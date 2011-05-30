@@ -1,3 +1,11 @@
+Mon May 30 18:44:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+          Fixed gcc 4.6 warning
+
+        * docs/bczar/bczar.html:
+          Added some more packages
+
 Fri May 27 14:44:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_2653_Regression_Test.cpp:
