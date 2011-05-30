@@ -1,3 +1,8 @@
+Mon May 30 10:00:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+          Fixed compiler error on Windows.
+
 Mon May 30 06:39:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:

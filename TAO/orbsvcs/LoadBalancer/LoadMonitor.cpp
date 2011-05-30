@@ -317,6 +317,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // ensure graceful shutdown of the LoadMonitor so that
       // LoadMonitors registered with the LoadManager can be
       // deregistered.
+      CosLoadBalancing::LoadManager_ptr tmp;
+
+      if (timer_id == -1)
+        tmp = load_manager.in ();   // PULL monitoring
+      else
+        tmp = CosLoadBalancing::LoadManager::_nil ();  // PUSH
+                                                       // monitoring
       TAO_LB_Monitor_Signal_Handler signal_handler (
          orb.in (),
          root_poa.in (),
