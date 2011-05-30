@@ -119,8 +119,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                                       0);
     }
   else
-#else
-        ACE_UNUSED_ARG (this->qos_profile_);
 #endif
     {
       ::DDS::DomainParticipantQos qos;
@@ -286,8 +284,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
                                               0);
         }
       else
-#else
-        ACE_UNUSED_ARG (this->qos_profile_);
 #endif
         {
           ::DDS::PublisherQos pqos;
@@ -324,8 +320,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
                                               0);
         }
       else
-#else
-        ACE_UNUSED_ARG (this->qos_profile_);
 #endif
         {
           ::DDS::SubscriberQos sqos;

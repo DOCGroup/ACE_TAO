@@ -24,16 +24,20 @@ project (DDS_CCM_Example_PSAT_type_stub) : taoidldefaults, dds4ccm_ts_default {
   }
 }
 
-project (DDS_CCM_Example_PSAT_idl_gen) : taoidldefaults, anytypecode, dds4ccm_ts_default, dds4ccm {
-  custom_only = 1
-  idlflags += -Wb,stub_export_macro=CCM_DDS_PSAT_STUB_Export \
+project (DDS_CCM_Example_PSAT_stub) : taoidldefaults, anytypecode, dds4ccm_ts_default, dds4ccm, dds4ccm_stub, ccm_stub {
+  sharedname = DDS_CCM_Example_PSAT_stub
+  dynamicflags += CCM_DDS_PSAT_STUB_BUILD_DLL
+  libout = lib
+
+  idlflags += -SS \
+              -Wb,stub_export_macro=CCM_DDS_PSAT_STUB_Export \
               -Wb,stub_export_include=ccm_dds_psat_stub_export.h \
               -Wb,skel_export_macro=CCM_DDS_PSAT_SKEL_Export \
               -Wb,skel_export_include=ccm_dds_psat_skel_export.h \
-              -SS -Gxhst -Gxhsk \
               -I $(CIAO_ROOT)/connectors/dds4ccm/idl
 
   IDL_Files {
+    idlflags += -Gxhst -Gxhsk
     ccm_dds_psat.idl
   }
 
@@ -43,37 +47,11 @@ project (DDS_CCM_Example_PSAT_idl_gen) : taoidldefaults, anytypecode, dds4ccm_ts
   DDSGenerator_Files {
     ccm_dds_psat.idl
   }
-}
-
-project (DDS_CCM_Example_PSAT_stub) : anytypecode, dds4ccm_stub, ccm_stub, dds4ccm_ts_default {
-  after += DDS_CCM_Example_PSAT_idl_gen
-  sharedname = DDS_CCM_Example_PSAT_stub
-  dynamicflags += CCM_DDS_PSAT_STUB_BUILD_DLL
-  libout = lib
-  includes += -I $(CIAO_ROOT)/connectors/dds4ccm/idl
-
-  IDL_Files {
-  }
 
   Source_Files {
-    ccm_dds_psat.cxx
-    ccm_dds_psatC.cpp
-    ccm_dds_psatPlugin.cxx
-    ccm_dds_psatSupport.cxx
-  }
-
-  Header_Files {
-    ccm_dds_psat.h
-    ccm_dds_psatC.h
-    ccm_dds_psatPlugin.h
-    ccm_dds_psatSupport.h
-    ccm_dds_psat_stub_export.h
-  }
-
-  Inline_Files {
-    ccm_dds_psatC.inl
   }
 }
+
 
 project(PSAT_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
