@@ -34,6 +34,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_Char* filename = 0;
   int sax = 0;                  // Use SAXPrint handler or not.
   int str = 0;
+#ifdef USE_ZZIP
+  int zip = 0;
+#endif
   ACEXML_Char* url = 0;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
@@ -56,7 +59,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             url = get_opt.opt_arg();
             break;
           case 'z':
-            zip = 1;
 #ifndef USE_ZZIP
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("ZZIPLIB support has not been")
                         ACE_TEXT (" compiled in. Refer to ")
@@ -64,6 +66,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("information.\n")));
             return -1;
 #else
+            zip = 1;
             break;
 #endif /* USE_ZZIP */
           default:
@@ -84,7 +87,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACEXML_StrCharStream* sstm = 0;
 #ifdef USE_ZZIP
   ACEXML_ZipCharStream* zstm = 0;
-  int zip = 0;
 #endif /* USE_ZZIP */
   if (filename != 0)
     {
