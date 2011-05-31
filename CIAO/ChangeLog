@@ -1,3 +1,13 @@
+Tue May 31 12:27:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Union/VT_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Conn_Valuetype/VT_Valuetype_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Base/VTopics_Base.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Union/VTS_Union_Connector.idl:
+        * connectors/dds4ccm/tests/VariousTopicsState/Conn_Valuetype/VTS_Valuetype_Connector.idl:
+          Disable some parts for opendds
+
 Tue May 31 08:56:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
