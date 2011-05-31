@@ -1,3 +1,8 @@
+Tue May 31 09:16:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          OBS now stands for Open Build Service
+
 Tue May 31 07:13:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ACEXML/examples/SAXPrint/main.cpp:
