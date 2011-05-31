@@ -1,7 +1,12 @@
+Tue May 31 05:47:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+          Fixed gcc 4.6 warnings: variable was set but not used.
+
 Mon May 30 10:21:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Logging/Logger_i.cpp:
-          Resolved gcc 4.6 warning: variable may be used uninitialized 
+          Resolved gcc 4.6 warning: variable may be used uninitialized
           in this function
 
 Mon May 30 10:00:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
