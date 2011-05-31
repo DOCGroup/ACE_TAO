@@ -79,14 +79,16 @@ valuetype X_Valuetype {
   public long x_long;
 };
 
+#if !defined (CIAO_DDS4CCM_OPENDDS)
 // OpenDDS doesn't support valuetype as topic member
-//#pragma DCPS_DATA_TYPE "TopicValuetype"
-//#pragma DCPS_DATA_KEY "TopicValuetype key"
+#pragma DCPS_DATA_TYPE "TopicValuetype"
+#pragma DCPS_DATA_KEY "TopicValuetype key"
 
 struct TopicValuetype {
   string key; //@key
   X_Valuetype x_vt;
 };
+#endif
 
 // Sequences
 typedef sequence<TestTopic> TestTopicSeq;
@@ -95,7 +97,9 @@ typedef sequence<TopicArray> TopicArraySeq;
 typedef sequence<TopicUnion> TopicUnionSeq;
 typedef sequence<X_Union> X_UnionSeq;
 typedef sequence<TopicSeq> TopicSeqSeq;
+#if !defined (CIAO_DDS4CCM_OPENDDS)
 typedef sequence<TopicValuetype> TopicValuetypeSeq;
+#endif
 typedef sequence<X_Valuetype> X_ValuetypeSeq;
 
 #endif
