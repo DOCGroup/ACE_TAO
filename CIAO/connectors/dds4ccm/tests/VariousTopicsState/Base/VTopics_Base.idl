@@ -77,8 +77,9 @@ valuetype X_Valuetype {
   public long x_long;
 };
 
-#pragma DCPS_DATA_TYPE "TopicValuetype"
-#pragma DCPS_DATA_KEY "TopicValuetype key"
+// OpenDDS doesn't support valuetype as topic member
+//#pragma DCPS_DATA_TYPE "TopicValuetype"
+//#pragma DCPS_DATA_KEY "TopicValuetype key"
 
 struct TopicValuetype {
   string key; //@key
