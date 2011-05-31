@@ -15,12 +15,12 @@
 
 #pragma ciao lem "Conn_Valuetype/VTS_Valuetype_ConnectorE.idl"
 
+#if !defined (CIAO_DDS4CCM_OPENDDS)
 module VTopics
 {
-#if !defined (CIAO_DDS4CCM_OPENDDS)
   module ::CCM_DDS::Typed < ::TopicValuetype, ::TopicValuetypeSeq> TopicValuetypeConnector;
-#endif
   //module ::CCM_DDS::Typed < ::X_Valuetype, ::X_ValuetypeSeq> X_ValuetypeConnector;
 };
+#endif
 
 #endif /* VTS_VALUE_TYPE_CONNECTOR_IDL_ */
