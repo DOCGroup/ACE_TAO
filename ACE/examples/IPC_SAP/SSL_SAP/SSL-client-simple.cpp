@@ -217,8 +217,6 @@ Options::oneway_client_test (void)
   // locking.
   size_t iteration = 0;
 
-  // Keep track of return value.
-  int result = 0;
   ACE_INT32 len =
     ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ());
 
@@ -241,7 +239,6 @@ Options::oneway_client_test (void)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send_n")));
-        result = -1;
         break;
       }
 

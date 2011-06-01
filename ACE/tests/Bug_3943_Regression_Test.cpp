@@ -333,7 +333,6 @@ Svc_Handler::send_data (void)
     {
       buffer_len tryThreshold = 0x7fff;
       ssize_t thresholdActualSend = -1;
-      int retry = 0;
       const ssize_t MAX =
         static_cast<ssize_t>(
           (static_cast<unsigned long long>(1) <<
@@ -362,7 +361,6 @@ Svc_Handler::send_data (void)
             shift /= 2;
 
           tryThreshold = (tryThreshold << shift) | trailingMask;
-          retry = 0;
           ACE_OS::sleep(0);
         }
 
