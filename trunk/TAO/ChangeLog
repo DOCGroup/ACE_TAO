@@ -1,3 +1,22 @@
+Wed Jun  1 19:39:08 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/AST_Expression.h:
+        * TAO_IDL/ast/AST_Expression.cpp
+        * TAO_IDL/ast/AST_Constant.cpp
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+
+          Added support for long double constants in IDL.
+
+        * tests/IDL_Test/constants.idl:
+
+          Added test cases for long double constants.
+
+        * NEWS:
+
+          Added item about long double constant support.
+
 Wed Jun  1 09:46:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
