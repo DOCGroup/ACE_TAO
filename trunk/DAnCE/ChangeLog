@@ -1,3 +1,11 @@
+Wed Jun  1 11:10:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+
+          Emit the IOR/register with the naming service closer to ORB
+          activation to reduce the possibility of a race condition with
+          the plan_launcher.
+
 Wed Jun  1 10:14:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/Error_Messages.txt:
