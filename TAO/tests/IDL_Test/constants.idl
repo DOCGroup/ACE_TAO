@@ -69,6 +69,15 @@ const double take = 2e3;
 const double dip = 1.797693134862315E+308;
 const double trouble = 2.2250738585072014E-308;
 
+// A few long double cases. No test for values outside
+// the range of 8-byte doubles, since some supported
+// platforms have 8-byte long doubles.
+
+const long double dbl_easy = 698.91148263188057;
+const long double dbl_dip = 1.797693134862315E+308;
+const long double dbl_trouble = 2.2250738585072014E-308;
+const long double dbl_int = 7.;
+
 // const values created through mathematic operations
 const long neg = -8;
 const long sub1 = 0x10 - 0x01;

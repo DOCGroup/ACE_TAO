@@ -80,12 +80,26 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
     }
 
   *os << " " << node->name ();
+
   if (!be_global->gen_inline_constants () || forbidden_in_class)
     {
       // For those constants not defined in the outermost scope,
       // or in a module, they get assigned to their values in the source file.
+#if defined (NONNATIVE_LONGDOUBLE)
+      if (etype == AST_Expression::EV_longdouble)
+        {
+          
+          *os << " (" << node->constant_value () << ")";
+        }
+      else
+        {
+          *os << " = " << node->constant_value ();
+        }
+#else
       *os << " = " << node->constant_value ();
+#endif // defined (NONNATIVE_LONGDOUBLE)
     }
+
   *os << ";";
 
   if (be_global->gen_inline_constants () && !forbidden_in_class)

@@ -254,6 +254,8 @@ AST_Constant::exprtype_to_string (void)
       return "CORBA::Float";
     case AST_Expression::EV_double:
       return "CORBA::Double";
+    case AST_Expression::EV_longdouble:
+      return "CORBA::LongDouble";
     case AST_Expression::EV_char:
       return "CORBA::Char";
     case AST_Expression::EV_octet:
@@ -275,7 +277,6 @@ AST_Constant::exprtype_to_string (void)
     case AST_Expression::EV_wstring:
       return "CORBA::WChar *const";
     case AST_Expression::EV_enum:
-    case AST_Expression::EV_longdouble:
     case AST_Expression::EV_any:
     case AST_Expression::EV_object:
       return 0;
