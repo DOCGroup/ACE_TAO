@@ -295,6 +295,7 @@ public:
 #      define NONNATIVE_LONGDOUBLE
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
 #      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
+
        struct ACE_Export LongDouble
        {
        // VxWorks' compiler (gcc 2.96) gets confused by the operator long
@@ -310,12 +311,17 @@ public:
          typedef double NativeImpl;
 #      else
          typedef long double NativeImpl;
-#      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE==1 */
+#      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE == 1 */
 
          char ld[16];
 
+         LongDouble (void);
+         LongDouble (const long double &val);
+
          LongDouble& assign (const NativeImpl& rhs);
          LongDouble& assign (const LongDouble& rhs);
+
+         LongDouble& operator= (const NativeImpl& rhs);
 
          bool operator== (const LongDouble &rhs) const;
          bool operator!= (const LongDouble &rhs) const;
@@ -351,6 +357,7 @@ public:
 
          operator NativeImpl () const;
        };
+
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
   //@}
