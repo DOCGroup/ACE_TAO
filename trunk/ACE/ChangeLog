@@ -1,3 +1,11 @@
+Wed Jun  1 05:53:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/APG/Naming/Temperature_Monitor2.cpp:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+        * tests/Bug_3943_Regression_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+          Resolved gcc 4.6 warning: variable was set but not used.
+
 Tue May 31 09:16:33 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
