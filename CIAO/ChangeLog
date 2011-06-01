@@ -1,3 +1,8 @@
+Wed Jun  1 08:27:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.mpc:
+          Fixed export macro for OpenDDS
+
 Wed Jun  1 01:56:05 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Executor-Destructor/Exec_Dest_Status.h:
