@@ -82,9 +82,9 @@ project(Executor_Destructor_exec) : ciao_executor   {
   after   += Executor_Destructor_lem_stub Executor_Destructor_stub
   sharedname = Executor_Destructor_exec
   libs += Executor_Destructor_stub Executor_Destructor_lem_stub 
-  
-  after += Executor_Destructor_Interceptor
-  libs +=  Executor_Destructor_Interceptor
+
+  after += Exec_Dest_Status
+  libs += Exec_Dest_Status
   
   dynamicflags += EXECUTOR_DESTRUCTOR_EXEC_BUILD_DLL
 
@@ -132,20 +132,37 @@ project(Executor_Destructor_svnt) : ciao_servant   {
   }
 }
 
+project (Exec_Dest_Status) : \
+	dance_stub, dance_deployment_stub {
+  dynamicflags += EXEC_DEST_STATUS_BUILD_DLL	
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Exec_Dest_Status.cpp
+  }
+
+  Header_Files {
+    Exec_Dest_Status.h
+  }
+}
+
 project (Executor_Destructor_Interceptor) : \
         dance_stub, dance_deployment_stub {
   dynamicflags += EXECUTOR_DESTRUCTOR_INTERCEPTOR_BUILD_DLL
+
+  after += Exec_Dest_Status
+  libs += Exec_Dest_Status
 
   IDL_Files {
   }
 
   Source_Files {
     Executor_Destructor_Interceptor.cpp
-    Exec_Dest_Status.cpp
   }
 
   Header_Files {
     Executor_Destructor_Interceptor.h
-    Exec_Dest_Status.h
   }
 }
