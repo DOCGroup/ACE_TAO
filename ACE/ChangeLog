@@ -1,3 +1,17 @@
+Wed Jun  1 19:30:44 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+
+          To the struct ACE_CDR::LongDouble, used for platforms with
+          a native long double that isn't 16 bytes, added an
+          assignment operator and a constructor. The former is for
+          internal use by the IDL compiler, and the latter is for
+          code generation for long double constants. For types
+          using the non-native struct, a const declaration is
+          impossible to initialize by assignment to a literal,
+          so a constructor is generated instead.
+
 Wed Jun  1 10:17:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:

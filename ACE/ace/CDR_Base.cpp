@@ -605,6 +605,15 @@ ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 #endif /* NONNATIVE_LONGLONG */
 
 #if defined (NONNATIVE_LONGDOUBLE)
+ACE_CDR::LongDouble::LongDouble (void)
+{
+}
+
+ACE_CDR::LongDouble::LongDouble (const long double& val)
+{
+  (*this) += (NativeImpl) val;
+}
+
 ACE_CDR::LongDouble&
 ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
 {
@@ -684,11 +693,12 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
   return *this;
 }
 
-bool
-ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
+ACE_CDR::LongDouble&
+ACE_CDR::LongDouble::operator= (const ACE_CDR::LongDouble::NativeImpl& rhs)
 {
-  return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
+  return this->assign (rhs);
 }
+
 
 bool
 ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
@@ -772,6 +782,13 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
 
   return ret;
 }
+
+bool
+ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
+{
+  return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
+}
+
 #endif /* NONNATIVE_LONGDOUBLE */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
