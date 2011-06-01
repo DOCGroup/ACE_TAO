@@ -23,8 +23,6 @@ MapView::clear()
 void
 MapView::resizeEvent (QResizeEvent * event)
 {
-  QSize old = event->oldSize();
-  QSize size(this->width(), this->height());
   QPixmap oo  = bg_pixmap_.scaled(this->width() , this->height());
   setBackgroundBrush(QBrush(oo));
 }
