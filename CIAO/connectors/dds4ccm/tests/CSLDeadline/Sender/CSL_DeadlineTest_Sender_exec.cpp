@@ -9,6 +9,9 @@
 #include "ace/OS_NS_unistd.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
+#endif
 
 namespace CIAO_CSL_DeadlineTest_Sender_Impl
 {
@@ -54,7 +57,7 @@ namespace CIAO_CSL_DeadlineTest_Sender_Impl
     ACE_Thread_ID t_id;
     this->thread_id_ = t_id;
 
-    if(DDS_INSTANCE_HANDLE_VALID(status.last_instance_handle) && ! ::CORBA::is_nil (the_writer))
+    if(status.last_instance_handle != ::DDS::HANDLE_NIL && ! ::CORBA::is_nil (the_writer))
       {
         this->deadline_missed_ = true;
       }
