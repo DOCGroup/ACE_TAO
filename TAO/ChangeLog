@@ -1,3 +1,11 @@
+Wed Jun  1 09:46:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+          Fixed Coverity warnings regarding uncaught exceptions.
+
 Tue May 31 05:47:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
