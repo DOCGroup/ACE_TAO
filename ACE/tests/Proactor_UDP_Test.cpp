@@ -816,8 +816,6 @@ Master::~Master (void)
 void
 Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 {
-  bool restart_recv = true;
-
   // We should only receive Start datagrams with valid addresses to reply to.
   if (result.success ())
     {
@@ -886,7 +884,6 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("All expected sessions are up\n")));
-                  restart_recv = false;
                 }
             }
           else
