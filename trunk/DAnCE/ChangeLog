@@ -1,3 +1,20 @@
+Wed Jun  1 11:14:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          New option --manager-timeout which allows the user to indicate
+          to the plan_launcher that it should wait a specified number of
+          seconds for a manager (e.g., execution_manager) reference to
+          become valid before proceeding with deployment.
+
+        * tests/Plan_Launcher:
+        * tests/Plan_Launcher/EM-Delay:
+        * tests/Plan_Launcher/EM-Delay/run_test.pl:
+        * tests/Plan_Launcher/EM-Delay/run_test_ns.pl:
+        * bin/dance_tests.lst:
+
+          New test to excercise the new delay on manager reference functionality.
+
 Wed Jun  1 11:10:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/ExecutionManager/ExecutionManager_Module.cpp:
