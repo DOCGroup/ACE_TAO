@@ -126,7 +126,18 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   if (!node->is_nested ()
       || (be_global->gen_inline_constants () && !forbidden_in_class))
     {
+#if defined (NONNATIVE_LONGDOUBLE)
+      if (etype == AST_Expression::EV_longdouble)
+        {
+          *os << " (" << node->constant_value () << ")";
+        }
+      else
+        {
+          *os << " = " << node->constant_value ();
+        }
+#else
       *os << " = " << node->constant_value ();
+#endif // defined (NONNATIVE_LONGDOUBLE)
     }
 
   *os << ";";
