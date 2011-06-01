@@ -1,3 +1,16 @@
+Wed Jun  1 01:56:05 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Executor-Destructor/Exec_Dest_Status.h:
+        * tests/DAnCE/Executor-Destructor/Exec_Dest_Status.cpp:
+        * tests/DAnCE/Executor-Destructor/Exec_Dest_Status_export.h:
+        * tests/DAnCE/Executor-Destructor/Executor_Destructor.mpc:
+        * tests/DAnCE/Executor-Destructor/Executor_Destructor_Interceptor.cpp:
+
+          Fix for bugzilla 3963.  On certain platforms (e.g., FC15), when
+        a library which is dlopened links another library which is
+        dlopened, this may cause spurious error messages upon exit
+        exit of the LocalityManager from ld.so.
+
 Tue May 31 12:27:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:

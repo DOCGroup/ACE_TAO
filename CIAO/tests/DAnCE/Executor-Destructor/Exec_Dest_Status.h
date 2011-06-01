@@ -15,7 +15,7 @@
 #include <map>
 #include <string>
 
-#include "Exec_Dest_export.h"
+#include "Exec_Dest_Status_export.h"
 
 namespace Deployment
 {
@@ -24,7 +24,7 @@ namespace Deployment
 
 namespace dance_test
 {
-  class Executor_Destructor_Interceptor_Export Exec_Dest_Status
+  class Exec_Dest_Status_Export Exec_Dest_Status
   {
   public:
     Exec_Dest_Status (void);
@@ -53,8 +53,8 @@ namespace dance_test
                          ACE_Null_Mutex> EXEC_DEST_STATUS;
 }
 
-EXECUTOR_DESTRUCTOR_INTERCEPTOR_SINGLETON_DECLARE (ACE_Singleton,
-                                                   dance_test::Exec_Dest_Status,
-                                                   ACE_Null_Mutex)
+EXEC_DEST_STATUS_SINGLETON_DECLARE (ACE_Singleton,
+                                    dance_test::Exec_Dest_Status,
+                                    ACE_Null_Mutex)
 
 #endif
