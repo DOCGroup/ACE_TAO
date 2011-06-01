@@ -316,23 +316,6 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
       // Binding ior to IOR Table
       adapter->bind ("ExecutionManager", em_ior.in ());
 
-      // Saving execution manager ior
-      if (0 != this->options_.exec_mgr_file_)
-        {
-          DAnCE::ExecutionManager::write_IOR (this->options_.exec_mgr_file_, em_ior.in ());
-        }
-
-      // Binding execution manager to name service
-      if (!CORBA::is_nil (domain_nc.in ()))
-        {
-          DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
-                       (LM_TRACE, DLINFO ACE_TEXT("Registering EM in NC.\n")));
-          CosNaming::Name name (1);
-          name.length (1);
-          name[0].id = CORBA::string_dup ("ExecutionManager");
-          domain_nc->rebind (name, em_daemon.in());
-        }
-
       // End ExecutionManager initialization part
 
       // Initializing NodeManagers
@@ -377,6 +360,23 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
           }
 
       mgr->activate ();
+
+      // Saving execution manager ior
+      if (0 != this->options_.exec_mgr_file_)
+        {
+          DAnCE::ExecutionManager::write_IOR (this->options_.exec_mgr_file_, em_ior.in ());
+        }
+
+      // Binding execution manager to name service
+      if (!CORBA::is_nil (domain_nc.in ()))
+        {
+          DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                       (LM_TRACE, DLINFO ACE_TEXT("Registering EM in NC.\n")));
+          CosNaming::Name name (1);
+          name.length (1);
+          name[0].id = CORBA::string_dup ("ExecutionManager");
+          domain_nc->rebind (name, em_daemon.in());
+        }
 
       return em_obj._retn ();
     }
