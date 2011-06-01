@@ -1,3 +1,8 @@
+Wed Jun  1 10:17:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed typo.
+
 Wed Jun  1 05:53:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/APG/Naming/Temperature_Monitor2.cpp:
