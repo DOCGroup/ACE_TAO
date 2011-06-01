@@ -4,6 +4,8 @@ project (ADBC_ODBC) : odbc, adbc_lib {
   sharedname   += ADBC_ODBC
   dynamicflags += ADBC_ODBC_BUILD_DLL
 
+  requires += odbc
+
   Source_Files {
     ODBC_Connection.cpp
     ODBC_Env.cpp
