@@ -42,7 +42,8 @@ namespace
         output_prefix_ (0),
         mode_ (LAUNCH),
         force_ (false),
-        quiet_ (false)
+        quiet_ (false),
+        em_timeout_ (1)
     {}
 
     const ACE_TCHAR *em_ior_;
@@ -58,6 +59,7 @@ namespace
     MODE mode_;
     bool force_;
     bool quiet_;
+    int em_timeout_;
   };
 }
 
@@ -72,6 +74,8 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("NodeManager IOR for NM based deployment.\n")
               ACE_TEXT ("\t--lm-ior <LocalityManager IOR>\t")
               ACE_TEXT ("LocalityManager IOR for LM based deployment.\n")
+              ACE_TEXT ("\t--manager-timeout <seconds>\t")
+              ACE_TEXT ("Number of seconds to wait for a valid manager reference.\n")
               /*
               ACE_TEXT ("\nName Service Options\n")
               ACE_TEXT ("\t--domain-nc [NC]\t\t)
@@ -129,8 +133,8 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   ACE_Get_Opt get_opt(argc, argv,
-                      ACE_TEXT ("k:n:c:x:u:m:a:lsfqo::h"));
-  get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
+                      ACE_TEXT ("k::n:c:x:u:m:a:lsfqo::h"));
+  get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_OPTIONAL);
   get_opt.long_option(ACE_TEXT("nm-ior"), 'n', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("lm-ior"), ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("xml-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
@@ -144,6 +148,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("quiet"), 'q', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("output"), 'o', ACE_Get_Opt::ARG_OPTIONAL);
   get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
+  get_opt.long_option(ACE_TEXT("manager-timeout"), ACE_Get_Opt::ARG_REQUIRED);
 
   int c;
   ACE_CString s;
@@ -280,6 +285,17 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
                             ACE_TEXT ("Got LM IOR file: %C"),
                             get_opt.opt_arg ()));
               options.lm_ior_ = get_opt.opt_arg ();
+              break;
+            }
+          if (ACE_OS::strcmp (get_opt.long_option (),
+                              ACE_TEXT ("manager-timeout")) == 0)
+            {
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::parse_args - ")
+                            ACE_TEXT ("Got Manager Timeout value: %C"),
+                            get_opt.opt_arg ()));
+              options.em_timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             }
 
@@ -635,6 +651,86 @@ teardown_plan (const Options &opts,
   return rc;
 }
 
+template <typename Manager>
+typename Manager::_ptr_type
+resolve_manager (int delay, const ACE_TCHAR * ior, CORBA::ORB_ptr orb)
+{
+  ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (delay));
+  ACE_Time_Value retry (0, 1000000 / 4);
+
+  CORBA::Object_var obj;
+  typename Manager::_var_type tmp_em;
+
+  ACE_CString last_error;
+
+  do
+    {
+      try
+        {
+          obj = orb->string_to_object (ior);
+
+          if (CORBA::is_nil (obj))
+            {
+              ACE_OS::sleep (retry);
+            }
+          else
+            break;
+        }
+      catch (CORBA::Exception &ex)
+        {
+          DANCE_ERROR (DANCE_LOG_WARNING,
+                       (LM_ERROR, DLINFO, ACE_TEXT ("Plan_Launcher - ")
+                        ACE_TEXT ("Caught CORBA Exception while resolving Manager object reference: %C\n"),
+                        ex._info ().c_str ()));
+          last_error = ex._info ();
+        }
+    } while (ACE_OS::gettimeofday () < timeout);
+
+  tmp_em = Manager::_narrow (obj);
+
+  if (CORBA::is_nil (tmp_em.in ()))
+    {
+      DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                                         ACE_TEXT ("Unable to resolve ")
+                                         ACE_TEXT ("Manager reference <%s>, %C\n"),
+                                         ior,
+                                         last_error.c_str ()));
+      return 0;
+    }
+
+  bool non_existant (false);
+
+  do {
+    try
+      {
+        non_existant = tmp_em->_non_existent ();
+
+        if (!non_existant)
+          break;
+        ACE_OS::sleep (retry);
+      }
+    catch (CORBA::Exception &ex)
+      {
+        DANCE_ERROR (DANCE_LOG_WARNING,
+                     (LM_ERROR, DLINFO, ACE_TEXT ("Plan_Launcher - ")
+                      ACE_TEXT ("Caught CORBA Exception while resolving Manager object reference: %C\n"),
+                      ex._info ().c_str ()));
+        last_error = ex._info ();
+      }
+  } while (ACE_OS::gettimeofday () < timeout);
+
+  if (non_existant)
+    {
+      DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                   (LM_EMERGENCY, DLINFO, ACE_TEXT ("Plan_Launcher - ")
+                    ACE_TEXT ("Unable to validate connection to Manager: %C\n"),
+                    last_error.c_str ()));
+      return 0;
+    }
+
+  return tmp_em._retn ();
+}
+
 struct ORB_Destroyer
 {
   ORB_Destroyer (CORBA::ORB_var &orb) :
@@ -684,20 +780,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // Resolve ExecutionManager IOR for EM base deployment.
           DAnCE::EM_Launcher *em_pl (0);
 
-          CORBA::Object_var obj = orb->string_to_object (options.em_ior_);
           Deployment::ExecutionManager_var tmp_em =
-            Deployment::ExecutionManager::_narrow (obj);
+            resolve_manager<Deployment::ExecutionManager> (options.em_timeout_,
+                                                           options.em_ior_,
+                                                           orb);
 
-          if (CORBA::is_nil (tmp_em.in ()))
+          if (CORBA::is_nil (tmp_em))
             {
-              if (!options.quiet_)
-                {
-                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                              ACE_TEXT ("Unable to resolve ")
-                              ACE_TEXT ("ExecutionManager reference <%s>\n"),
-                              options.em_ior_));
-                }
-              return 1;
+              DANCE_ERROR(DANCE_LOG_EMERGENCY,
+                          (LM_ERROR, DLINFO
+                           ACE_TEXT ("Plan_Launcher - ")
+                           ACE_TEXT ("Unable to resolve EM object reference\n")));
+              return 0;
             }
 
           ACE_NEW_THROW_EX (em_pl,
