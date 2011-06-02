@@ -1,5 +1,8 @@
 // $Id$
 
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Get_Opt.h"
