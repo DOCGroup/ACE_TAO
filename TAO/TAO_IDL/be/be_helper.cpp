@@ -548,21 +548,13 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_float:
-      if ((long) ev->u.fval == ev->u.fval)
-        {
-          this->TAO_OutStream::print ("%g", ev->u.fval);
-        }
-      else
-        {
-          this->TAO_OutStream::print ("%g%c", ev->u.fval, 'F');
-        }
-
+      this->TAO_OutStream::print ("%#gF", ev->u.fval);
       break;
     case AST_Expression::EV_double:
-      this->TAO_OutStream::print ("%G", ev->u.dval);
+      this->TAO_OutStream::print ("%#G", ev->u.dval);
       break;
     case AST_Expression::EV_longdouble:
-      this->TAO_OutStream::print ("%GL", ev->u.ldval);
+      this->TAO_OutStream::print ("%#LGL", ev->u.ldval);
       break;
     case AST_Expression::EV_char:
       // isprint() sees \ and ' as printable characters
