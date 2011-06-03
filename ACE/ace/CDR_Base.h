@@ -316,7 +316,7 @@ public:
          char ld[16];
 
          LongDouble (void);
-         LongDouble (const long double &val);
+         explicit LongDouble (const long double &val);
 
          LongDouble& assign (const NativeImpl& rhs);
          LongDouble& assign (const LongDouble& rhs);
