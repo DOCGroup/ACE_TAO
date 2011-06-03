@@ -88,7 +88,12 @@ namespace TAO
       // Use signed long long as the container.
       CORBA::LongLong ull;
 #endif
+#if !defined (NONNATIVE_LONGDOUBLE)
+      // Portable impl of non-native long double requires a struct
+      // with constructors, which can't be a C++ union member,
+      // at least until C++0x is adopted.
       CORBA::LongDouble ld;
+#endif
       CORBA::WChar wc;
     }u_;
   };
