@@ -1,7 +1,7 @@
 Mon Jun  6 15:08:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
-          Added support for CoreDX
+          Extended support
 
 Wed Jun  1 12:56:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
