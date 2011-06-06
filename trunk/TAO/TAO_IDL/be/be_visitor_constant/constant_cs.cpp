@@ -88,8 +88,9 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 #if defined (NONNATIVE_LONGDOUBLE)
       if (etype == AST_Expression::EV_longdouble)
         {
-          
-          *os << " (" << node->constant_value () << ")";
+          *os << " (" << be_idt_nl
+              << "ACE_CDR::LongDoubleAssign ("
+              << node->constant_value () << "))" << be_uidt;
         }
       else
         {

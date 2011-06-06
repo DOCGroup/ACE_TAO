@@ -64,7 +64,7 @@ namespace TAO
         break;
 #endif
       case CORBA::tk_longdouble:
-        this->ld_ = *static_cast<CORBA::LongDouble *> (value);
+        this->u_.ld = *static_cast<CORBA::LongDouble *> (value);
         break;
       case CORBA::tk_wchar:
         this->u_.wc = *static_cast<CORBA::WChar *> (value);
@@ -199,7 +199,7 @@ namespace TAO
         return cdr << this->u_.ull;
 #endif
       case CORBA::tk_longdouble:
-        return cdr << this->ld_;
+        return cdr << this->u_.ld;
       case CORBA::tk_wchar:
         return cdr << CORBA::Any::from_wchar (this->u_.wc);
       default:
@@ -246,7 +246,7 @@ namespace TAO
         return cdr >> this->u_.ull;
 #endif
       case CORBA::tk_longdouble:
-        return cdr >> this->ld_;
+        return cdr >> this->u_.ld;
       case CORBA::tk_wchar:
         return cdr >> CORBA::Any::to_wchar (this->u_.wc);
       default:
@@ -283,7 +283,7 @@ namespace TAO
         break;
       case CORBA::tk_longdouble:
         {
-          CORBA::LongDouble tmp (0.0L);
+          CORBA::LongDouble tmp (ACE_CDR::LongDoubleAssign (0.0L));
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
                           0);
@@ -361,7 +361,7 @@ namespace TAO
   #endif
 #endif
       case CORBA::tk_longdouble:
-        *static_cast<CORBA::LongDouble *> (dest) = src->ld_;
+        *static_cast<CORBA::LongDouble *> (dest) = src->u_.ld;
         break;
       case CORBA::tk_wchar:
         *static_cast<CORBA::WChar *> (dest) = src->u_.wc;
