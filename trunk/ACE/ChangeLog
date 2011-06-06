@@ -1,3 +1,19 @@
+Mon Jun  6 19:51:27 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Base.h:
+
+          Added a struct LongDoubleAssign which inherits from LongDouble,
+          and contains the assignment operator and constructors, as well
+          as a cast operator to LongDouble. This scheme allows generated
+          code to use the LongDouble struct (when no 16-byte native long
+          double exists) as a member in C++ unions, and to be initialized
+          (when it appears as a constant) with the default copy constructor
+          from LongDouble, converted from the supplied LongDoubleAssign,
+          which is in turn initialized from the rhs literal. Thanks to
+          Adam Mitz <mitza at ociweb dot com> for the LongDoubleAssign
+          suggestion to work around the C++ union restriction.
+
 Mon Jun  6 16:59:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
