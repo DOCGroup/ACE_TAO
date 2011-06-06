@@ -115,7 +115,7 @@ Test_DynAny::run_test (void)
         fa1->destroy ();
         ftc1->destroy ();
       }
-#if !defined (NONNATIVE_LONGDOUBLE)
+
       {
         ACE_DEBUG ((LM_DEBUG,
           "\t*=*=*=*= %C =*=*=*=*\n",
@@ -173,7 +173,6 @@ Test_DynAny::run_test (void)
         fa1->destroy ();
         ftc1->destroy ();
       }
-#endif // !defined NONNATIVE_LONGDOUBLE
 
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %C =*=*=*=*\n",

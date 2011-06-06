@@ -1,3 +1,21 @@
+Mon Jun  6 17:28:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+
+          Added a separate member for long doubles, rather than have
+          support for long doubles on all platforms disabled because
+          the struct that is now used for some long double representations
+          has a constructor.
+
+        * tests/DynAny_Test/test_dynany.cpp:
+
+          Reverted the change in
+
+          Fri Jun  3 18:54:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since that part of the test will work again.
+
 Mon Jun  6 15:06:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
