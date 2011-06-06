@@ -1,3 +1,11 @@
+Mon Jun  6 18:59:41 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+          Restored minimum significant digit suggestions for the format
+          string for double, and added them to the format string for
+          long double.
+
 Mon Jun  6 17:28:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Basic_Impl.cpp:
