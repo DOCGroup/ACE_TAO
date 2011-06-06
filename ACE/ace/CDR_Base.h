@@ -315,13 +315,8 @@ public:
 
          char ld[16];
 
-         LongDouble (void);
-         explicit LongDouble (const long double &val);
-
          LongDouble& assign (const NativeImpl& rhs);
          LongDouble& assign (const LongDouble& rhs);
-
-         LongDouble& operator= (const NativeImpl& rhs);
 
          bool operator== (const LongDouble &rhs) const;
          bool operator!= (const LongDouble &rhs) const;
@@ -356,6 +351,16 @@ public:
          }
 
          operator NativeImpl () const;
+       };
+
+       struct LongDoubleAssign : LongDouble
+       {
+         LongDoubleAssign (void);
+         explicit LongDoubleAssign (const long double &val);
+
+         LongDoubleAssign& operator= (const LongDouble::NativeImpl& rhs);
+
+         operator LongDouble (void);
        };
 
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
