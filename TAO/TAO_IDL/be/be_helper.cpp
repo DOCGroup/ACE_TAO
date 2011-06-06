@@ -551,10 +551,10 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print ("%#gF", ev->u.fval);
       break;
     case AST_Expression::EV_double:
-      this->TAO_OutStream::print ("%#G", ev->u.dval);
+      this->TAO_OutStream::print ("%#24.16G", ev->u.dval);
       break;
     case AST_Expression::EV_longdouble:
-      this->TAO_OutStream::print ("%#LGL", ev->u.ldval);
+      this->TAO_OutStream::print ("%#24.16LGL", ev->u.ldval);
       break;
     case AST_Expression::EV_char:
       // isprint() sees \ and ' as printable characters
