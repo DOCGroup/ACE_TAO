@@ -1,3 +1,8 @@
+Mon Jun  6 13:44:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+          Fixed gcc 4.6 warning.
+
 Fri Jun  3 18:46:50 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Base.h:
