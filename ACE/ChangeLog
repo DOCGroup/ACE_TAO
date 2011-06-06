@@ -1,3 +1,12 @@
+Mon Jun  6 16:59:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Fixed typo
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added support for c++0x, adding this to your platform_macros.GNU
+          enables the g++ c++0x extensions
+
 Mon Jun  6 13:44:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
