@@ -1,3 +1,26 @@
+Mon Jun  6 19:53:54 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+
+          Restored the long double member back to the member union of
+          Any_Basic_Impl. A change suggested by Adam Mitz <mitza at
+          ociweb dot com> enabled the use of the LongDouble emulator
+          struct without constructors or assignment operators.
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+
+          Changed code generation for long double constant initialization,
+          when 16-byte native long double does not exist, to use the
+          new LongDoubleAssign struct in ACE_CDR.
+
+        * tests/IDL_Test/union.idl:
+
+          Added a test case of a union containing a long double, to
+          test that the generated union doesn't contain a member
+          with a constructor.
+
 Mon Jun  6 18:59:41 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_helper.cpp:
