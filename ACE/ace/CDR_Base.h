@@ -353,7 +353,7 @@ public:
          operator NativeImpl () const;
        };
 
-       struct LongDoubleAssign : LongDouble
+       struct ACE_Export LongDoubleAssign : LongDouble
        {
          LongDoubleAssign (void);
          explicit LongDoubleAssign (const long double &val);
