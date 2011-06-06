@@ -306,6 +306,11 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
           os_ << "typedef ::" << dt_name
               << "TypeSupport type_support;" << be_nl;
         }
+      else if (the_dds_impl == BE_GlobalData::COREDX)
+        {
+          os_ << "typedef ::" << dt_name
+              << "TypeSupport type_support;" << be_nl;
+        }
       else if (the_dds_impl == BE_GlobalData::OPENDDS)
         {
           os_ << "typedef ::" << dt_name
@@ -313,6 +318,11 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
         }
 
       if (the_dds_impl == BE_GlobalData::NDDS)
+        {
+          os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
+              << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::COREDX)
         {
           os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
               << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;

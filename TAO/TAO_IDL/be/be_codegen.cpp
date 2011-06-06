@@ -3400,6 +3400,10 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
             this->gen_conn_ts_includes (
               idl_global->ciao_oci_ts_file_names ());
             break;
+          case BE_GlobalData::COREDX:
+            this->gen_conn_ts_includes (
+              idl_global->ciao_coredx_ts_file_names ());
+            break;
           case BE_GlobalData::DDS_NONE:
             break;
         }

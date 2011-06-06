@@ -608,6 +608,10 @@ public:
   ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names (void);
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
 
+    void add_ciao_coredx_ts_file_names (const char *s);
+  ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names (void);
+  // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
+
   void add_ciao_ami_iface_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_iface_names (void);
   // Accessor/mutator for the ciao_ami_iface_names_ member.
@@ -895,6 +899,9 @@ private:
 
   ACE_Unbounded_Queue<char *> ciao_oci_ts_file_names_;
   // Files parsed with OpenDDS typesupport pragma
+
+  ACE_Unbounded_Queue<char *> ciao_coredx_ts_file_names_;
+  // Files parsed with CoreDX typesupport pragma
 
   ACE_Unbounded_Queue<char *> ciao_ami_iface_names_;
   // Interfaces that get a reply handler generated for AMI4CCM.

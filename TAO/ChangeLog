@@ -1,3 +1,14 @@
+Mon Jun  6 15:06:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+          Added support for CoreDX DDS
+
 Fri Jun  3 18:54:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Basic_Impl.cpp:

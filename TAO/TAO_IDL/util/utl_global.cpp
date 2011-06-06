@@ -1126,6 +1126,18 @@ IDL_GlobalData::ciao_oci_ts_file_names (void)
 }
 
 void
+IDL_GlobalData::add_ciao_coredx_ts_file_names (const char *s)
+{
+  this->ciao_coredx_ts_file_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_coredx_ts_file_names (void)
+{
+  return this->ciao_coredx_ts_file_names_;
+}
+
+void
 IDL_GlobalData::add_ciao_ami_iface_names (const char *s)
 {
   this->ciao_ami_iface_names_.enqueue_tail (ACE::strnew (s));
