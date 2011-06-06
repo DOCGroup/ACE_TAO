@@ -3344,6 +3344,14 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
+  else if (ACE_OS::strncmp (buf + 8, "coredx typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_coredx_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
   else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
