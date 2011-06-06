@@ -63,14 +63,9 @@ namespace TAO
   #endif
         break;
 #endif
-#if !defined (NONNATIVE_LONGDOUBLE)
-      // Portable impl of non-native long double requires a struct
-      // with constructors, which can't be a C++ union member,
-      // at least until C++0x is adopted.
       case CORBA::tk_longdouble:
-        this->u_.ld = *static_cast<CORBA::LongDouble *> (value);
+        this->ld_ = *static_cast<CORBA::LongDouble *> (value);
         break;
-#endif
       case CORBA::tk_wchar:
         this->u_.wc = *static_cast<CORBA::WChar *> (value);
         break;
@@ -203,13 +198,8 @@ namespace TAO
       case CORBA::tk_ulonglong:
         return cdr << this->u_.ull;
 #endif
-#if !defined (NONNATIVE_LONGDOUBLE)
-      // Portable impl of non-native long double requires a struct
-      // with constructors, which can't be a C++ union member,
-      // at least until C++0x is adopted.
       case CORBA::tk_longdouble:
-        return cdr << this->u_.ld;
-#endif
+        return cdr << this->ld_;
       case CORBA::tk_wchar:
         return cdr << CORBA::Any::from_wchar (this->u_.wc);
       default:
@@ -255,13 +245,8 @@ namespace TAO
       case CORBA::tk_ulonglong:
         return cdr >> this->u_.ull;
 #endif
-#if !defined (NONNATIVE_LONGDOUBLE)
-      // Portable impl of non-native long double requires a struct
-      // with constructors, which can't be a C++ union member,
-      // at least until C++0x is adopted.
       case CORBA::tk_longdouble:
-        return cdr >> this->u_.ld;
-#endif
+        return cdr >> this->ld_;
       case CORBA::tk_wchar:
         return cdr >> CORBA::Any::to_wchar (this->u_.wc);
       default:
@@ -375,14 +360,9 @@ namespace TAO
         *static_cast<CORBA::LongLong *> (dest) = src->u_.ull;
   #endif
 #endif
-#if !defined (NONNATIVE_LONGDOUBLE)
-      // Portable impl of non-native long double requires a struct
-      // with constructors, which can't be a C++ union member,
-      // at least until C++0x is adopted.
       case CORBA::tk_longdouble:
-        *static_cast<CORBA::LongDouble *> (dest) = src->u_.ld;
+        *static_cast<CORBA::LongDouble *> (dest) = src->ld_;
         break;
-#endif
       case CORBA::tk_wchar:
         *static_cast<CORBA::WChar *> (dest) = src->u_.wc;
         break;
