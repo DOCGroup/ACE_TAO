@@ -88,10 +88,9 @@ namespace TAO
       // Use signed long long as the container.
       CORBA::LongLong ull;
 #endif
+      CORBA::LongDouble ld;
       CORBA::WChar wc;
     }u_;
-
-    CORBA::LongDouble ld_;
   };
 }
 
