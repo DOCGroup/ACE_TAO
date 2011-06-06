@@ -1801,6 +1801,10 @@ BE_GlobalData::dds_impl (char const * const val)
     {
       this->dds_impl_ = OPENDDS;
     }
+  else if (tmp == "coredx")
+    {
+      this->dds_impl_ = COREDX;
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,

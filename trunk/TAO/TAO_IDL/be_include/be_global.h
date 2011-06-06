@@ -54,7 +54,8 @@ public:
     DDS_NONE,
     NDDS,
     OPENSPLICE,
-    OPENDDS
+    OPENDDS,
+    COREDX
   };
 
   BE_GlobalData (void);
