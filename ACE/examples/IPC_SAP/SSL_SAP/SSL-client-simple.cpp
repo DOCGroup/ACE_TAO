@@ -264,9 +264,6 @@ Options::twoway_client_test (void)
   // locking.
   size_t iteration = 0;
 
-  // Keep track of return value.
-  int result = 0;
-
   // Timer business.
   ACE_High_Res_Timer timer;
 
@@ -302,7 +299,6 @@ Options::twoway_client_test (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("send_n")));
-            result = -1;
             break;
           }
         // Receive the reply from the server.  Normally, it just sends
@@ -312,7 +308,6 @@ Options::twoway_client_test (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("recv")));
-            result = -1;
             break;
           }
 
