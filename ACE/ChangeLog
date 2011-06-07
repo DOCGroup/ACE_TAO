@@ -1,3 +1,11 @@
+Tue Jun  7 20:45:56 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Base.h:
+
+          The inline function needs to be static to match the semantics of
+          a struct constructor when the environment has native long
+          doubles.
+
 Tue Jun  7 18:20:36 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/CDR_Base.h:
