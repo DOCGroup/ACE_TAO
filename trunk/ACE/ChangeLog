@@ -1,3 +1,13 @@
+Tue Jun  7 18:20:36 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/CDR_Base.h:
+
+          Added an inline function called LongDoubleAssign tha works
+          as an alternative to the struct constructor of the same
+          name when a 16-byte native long double exists and the struct
+          is not defined. Thanks again to Adam Mitz <mitza at ociweb dot com>
+          for the idea.
+
 Mon Jun  6 22:17:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * ace/CDR_Base.h:
