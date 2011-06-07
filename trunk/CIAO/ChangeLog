@@ -1,3 +1,8 @@
+Tue Jun  7 12:34:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
+          Removed unused declaration
+
 Tue Jun  7 11:56:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
