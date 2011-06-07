@@ -295,7 +295,7 @@ public:
        // Trivial alternative to the derived class of the same name below,
        // so the same code will work whether or not a native long double
        // is used.
-       inline LongDouble LongDoubleAssign (const LongDouble &ld) {return ld;}
+       inline static LongDouble LongDoubleAssign (const LongDouble &ld) {return ld;}
 #    else
 #      define NONNATIVE_LONGDOUBLE
 #      define ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
