@@ -291,10 +291,15 @@ public:
        typedef long double      LongDouble;
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER 0
 #      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS = RHS
+
+       // Trivial alternative to the derived class of the same name below,
+       // so the same code will work whether or not a native long double
+       // is used.
+       inline LongDouble LongDoubleAssign (const LongDouble &ld) {return ld;}
 #    else
 #      define NONNATIVE_LONGDOUBLE
-#      define   ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
-#      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
+#      define ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
+#      define ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
 
        struct ACE_Export LongDouble
        {
