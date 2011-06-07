@@ -1,3 +1,12 @@
+Tue Jun  7 21:18:05 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * tests/Plan_Launcher/EM-Delay/run_test_ns.pl:
+
+          Rework the plan launcher options a bit.  --em-ior is back to requiring an
+          argument, if no --{em,nm,lm}-ior option is specified, we default to
+          name service lookup.
+
 Fri Jun  3 12:07:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/dance_tests.lst:

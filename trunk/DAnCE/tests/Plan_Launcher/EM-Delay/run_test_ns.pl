@@ -179,7 +179,7 @@ print "Invoking executor - launch the application -\n";
 
 print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-x $cdp_file --em-ior --manager-timeout 10");
+                        "-x $cdp_file --manager-timeout 10");
 
 $pl_status = $E->Spawn ();
 
