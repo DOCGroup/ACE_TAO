@@ -52,11 +52,11 @@ namespace CIAO_AmiDds_Receiver_Impl
                           "key <%C> - iteration <%d>\n",
                           an_instance.key.in (),
                           an_instance.x));
-    if (DDS_INSTANCE_HANDLE_INVALID(info.instance_handle))
+    if (info.instance_handle == ::DDS::HANDLE_NIL)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "instance handle seems to be invalid "
-                            "key <%C> - iteration <%d>\n",
+                            "key <%C> - iteration <%d> %d\n",
                             an_instance.key.in (),
                             an_instance.x));
       }
