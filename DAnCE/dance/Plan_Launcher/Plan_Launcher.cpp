@@ -33,7 +33,7 @@ namespace
       };
 
     Options (void)
-      : em_ior_ (0),
+      : em_ior_ ("corbaname:rir:/NameService#ExecutionManager"),
         nm_ior_ (0),
         lm_ior_ (0),
         xml_plan_ (0),
@@ -136,8 +136,8 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
     }
 
   ACE_Get_Opt get_opt(argc, argv,
-                      ACE_TEXT ("k::n:c:x:u:m:a:lsfqo::h"));
-  get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_OPTIONAL);
+                      ACE_TEXT ("k:n:c:x:u:m:a:lsfqo::h"));
+  get_opt.long_option(ACE_TEXT("em-ior"), 'k', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("nm-ior"), 'n', ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("lm-ior"), ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("xml-plan"), 'x', ACE_Get_Opt::ARG_REQUIRED);
@@ -179,6 +179,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           break;
 
         case 'n':
+          options.em_ior_ = 0;
           options.nm_ior_ = get_opt.opt_arg ();
           options.output_ = true;
           DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO, (LM_DEBUG, DLINFO
@@ -282,6 +283,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
           if (ACE_OS::strcmp (get_opt.long_option (),
                               ACE_TEXT ("lm-ior")) == 0)
             {
+              options.em_ior_ = 0;
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                            (LM_DEBUG, DLINFO
                             ACE_TEXT ("Plan_Launcher::parse_args - ")
