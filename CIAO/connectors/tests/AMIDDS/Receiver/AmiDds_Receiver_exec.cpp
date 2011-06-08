@@ -10,6 +10,9 @@
 #include "dds4ccm/impl/TimeUtilities.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
+#endif
 
 namespace CIAO_AmiDds_Receiver_Impl
 {
