@@ -1,3 +1,8 @@
+Wed Jun  8 07:00:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
+          Resolved compile error in case NDDS.
+
 Tue Jun  7 12:34:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
