@@ -61,21 +61,22 @@ $warnings = 0;
 
 ##############################################################################
 
-# Find_Modified_Files will use 'cvs -nq' to get a list of locally modified
+# Find_Modified_Files will use 'svn -q st' to get a list of locally modified
 # files to look through
 sub find_mod_files ()
 {
-    unless (open (CVS, "cvs -nq up |")) {
-        print STDERR "Error: Could not run cvs\n";
+    unless (open (SVN, "svn -q st |")) {
+        print STDERR "Error: Could not run svn\n";
         exit (1);
     }
 
-    while (<CVS>) {
-        if (/^[M|A] (.*)/) {
+    while (<SVN>) {
+        #        1234567   (see "svn help st" for column definitions)
+        if (/^[MA].....\s+(.*)$/) {
             store_file ($1);
         }
     }
-    close (CVS);
+    close (SVN);
 }
 
 
@@ -2192,7 +2193,7 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
     print "    -l level       set detection level (default = 5)\n";
     print "    -t test_names  specify comma-separated list of tests to run\n".
           "                       this will disable the run level setting\n";
-    print "    -m             only check locally modified files (uses cvs)\n";
+    print "    -m             only check locally modified files (uses svn)\n";
     print "======================================================\n";
     print "list of the tests that could be run:\n";
     print "\t   check_for_noncvs_files
