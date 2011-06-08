@@ -1,3 +1,10 @@
+Wed Jun  8 21:05:56 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Switch from cvs to svn for the -m option that checks only modified
+          files.  We haven't used cvs for some time now.
+
 Tue Jun  7 20:45:56 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/CDR_Base.h:
