@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Param_Test
+//    TAO/tests/Alt_Mappings
 //
 // = FILENAME
 //    ub_string.cpp
@@ -68,7 +68,7 @@ Test_Unbounded_String::run_sii_test (Alt_Mapping_ptr objref)
     {
       this->ret_ = objref->test_unbounded_string (this->in_,
                                                   this->inout_,
-                                                  this->out_);//str_out);
+                                                  this->out_);
 
       return 0;
     }

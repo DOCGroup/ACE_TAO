@@ -50,6 +50,34 @@ interface Alt_Mapping
                                        inout CORBA::OctetSeq s2,
                                        out CORBA::OctetSeq s3);
 
+  typedef string DUMMY;
+
+  // Variable structure.
+  struct Var_Struct
+  {
+    double dbl;
+    DUMMY dummy1;
+    boolean boole;
+    DUMMY dummy2;
+    short shrt;
+    CORBA::StringSeq seq;
+  };
+
+  Var_Struct test_var_struct (in Var_Struct s1,
+                              inout Var_Struct s2,
+                              out Var_Struct s3);
+
+  // Nested structs (We reuse the var_struct defn above to make a very
+  // complicated nested structure).
+  struct Nested_Struct
+  {
+    Var_Struct vs;
+  };
+
+  Nested_Struct test_nested_struct (in Nested_Struct s1,
+                                    inout Nested_Struct s2,
+                                    out Nested_Struct s3);
+
   void shutdown ();
   // Shutdown the server: this is useful to check for memory leaks,
   // performance results and in general to verify that orderly

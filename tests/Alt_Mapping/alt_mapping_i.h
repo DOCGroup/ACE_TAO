@@ -51,6 +51,16 @@ public:
       CORBA::OctetSeq & s2,
       CORBA::OctetSeq & s3);
 
+  virtual Alt_Mapping::Var_Struct *
+  test_var_struct (const Alt_Mapping::Var_Struct & s1,
+                   Alt_Mapping::Var_Struct & s2,
+                   Alt_Mapping::Var_Struct_out s3);
+  
+  virtual Alt_Mapping::Nested_Struct *
+  test_nested_struct (const Alt_Mapping::Nested_Struct & s1,
+                      Alt_Mapping::Nested_Struct & s2,
+                      Alt_Mapping::Nested_Struct_out s3);
+
   void shutdown (void);
 
 private:

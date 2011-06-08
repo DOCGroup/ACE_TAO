@@ -17,26 +17,29 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$invocation = "sii";
 $num = 5;
 $debug = "";
 $status = 0;
 
 # Parse the arguments
 
-@types = ("ubstring", "ub_struct_seq", "ub_strseq", "ub_long_seq", "ub_octet_seq");
-
+@types = ("ubstring",
+          "ub_struct_seq",
+          "ub_strseq",
+          "ub_long_seq",
+          "ub_octet_seq",
+          "var_struct",
+          "nested_struct");
 
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
       print "Run_Test Perl script for TAO Param Test\n\n";
-      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)] [-chorus <target>]\n";
+      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-chorus <target>]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
       print "-h                  -- prints this information\n";
       print "-t type             -- runs only one type of param test\n";
-      print "-i (dii|sii)        -- Changes the type of invocation\n";
       print "-chorus <target>    -- Run tests on chorus target\n";
       exit 0;
     }
@@ -49,10 +52,6 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "-t") {
       @types = split (',', $ARGV[$i + 1]);
-      $i++;
-    }
-    elsif ($ARGV[$i] eq "-i") {
-      $invocation = $ARGV[$i + 1];
       $i++;
     }
 }
@@ -90,7 +89,7 @@ foreach $type (@types) {
             exit 1;
         }
 
-        $CL->Arguments ("$debug -f $client_iorfile  -i $invocation -t $type -n $num -x");
+        $CL->Arguments ("$debug -f $client_iorfile -t $type -n $num -x");
         $client_status = $CL->SpawnWaitKill ($server->ProcessStartWaitInterval() + 45);
 
         if ($client_status != 0) {
