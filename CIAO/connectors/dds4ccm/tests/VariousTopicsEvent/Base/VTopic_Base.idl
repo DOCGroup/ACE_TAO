@@ -40,8 +40,6 @@ struct TopicArray {
   octet_array x_array;
  };
 
-#pragma DCPS_DATA_TYPE "X_Union"
-
 // Unions
 union X_Union switch (short) {
     case 0:

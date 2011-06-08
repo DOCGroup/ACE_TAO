@@ -1,3 +1,8 @@
+Wed Jun  8 12:32:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
+          Fixed problem with OpenDDS
+
 Wed Jun  8 07:00:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/tests/AMIDDS/Receiver/AmiDds_Receiver_exec.cpp:
