@@ -1,3 +1,36 @@
+Wed Jun  8 13:35:39 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Alt_Mapping/nested_struct.cpp:
+        * tests/Alt_Mapping/nested_struct.h:
+        * tests/Alt_Mapping/var_struct.cpp:
+        * tests/Alt_Mapping/var_struct.h:
+
+          New files, contain new test cases - a variable size struct
+          and a nested struct containing it.
+
+        * tests/Alt_Mapping/alt_mapping.idl:
+        * tests/Alt_Mapping/alt_mapping.mpc:
+        * tests/Alt_Mapping/alt_mapping_i.cpp:
+        * tests/Alt_Mapping/alt_mapping_i.h:
+        * tests/Alt_Mapping/driver.cpp:
+        * tests/Alt_Mapping/options.cpp:
+        * tests/Alt_Mapping/options.h:
+        * tests/Alt_Mapping/tests.h:
+
+          Changes reflecting the new test cases.
+
+        * tests/Alt_Mapping/run_test.pl:
+
+          Eliminated the $invocation local variable, not used in this test.
+
+        * tests/Alt_Mapping/ub_long_seq.cpp:
+        * tests/Alt_Mapping/ub_octet_seq.cpp:
+        * tests/Alt_Mapping/ub_str_seq.cpp:
+        * tests/Alt_Mapping/ub_struct_seq.cpp:
+        * tests/Alt_Mapping/ub_string.cpp:
+
+          Fixed comments.
+
 Tue May 10 16:13:44 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Alt_Mapping/StringMember/client.cpp:

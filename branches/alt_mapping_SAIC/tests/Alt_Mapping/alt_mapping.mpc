@@ -48,6 +48,7 @@ project(*Client): taoexe, codeset {
     client.cpp
     driver.cpp
     helper.cpp
+    nested_struct.cpp
     options.cpp
     results.cpp
     ub_octet_seq.cpp
@@ -55,6 +56,7 @@ project(*Client): taoexe, codeset {
     ub_string.cpp
     ub_struct_seq.cpp
     ub_str_seq.cpp
+    var_struct.cpp
   }
   
   Header_Files {

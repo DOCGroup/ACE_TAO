@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Param_Test
+//    TAO/tests/Alt_Mapping
 //
 // = FILENAME
 //    options.cpp
@@ -44,7 +44,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xdn:f:i:t:k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xdn:f:t:k:"));
   int c;
   int result;
 
@@ -75,26 +75,25 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
 
         break;
 
-     case 'k':
-        this->ior_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
-        break;
-
-      case 'i':  // invocation
-        if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("dii")))
-          this->invoke_type_ = Options::DII;
+      case 'k':
+        this->ior_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
 
       case 't': // data type
-        if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ubstring")))
+        if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("ubstring")))
           this->test_type_ = Options::TEST_UB_STRING;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_struct_seq")))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("ub_struct_seq")))
           this->test_type_ = Options::TEST_UB_STRUCT_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_strseq")))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("ub_strseq")))
           this->test_type_ = Options::TEST_UB_STRING_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_long_seq")))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("ub_long_seq")))
           this->test_type_ = Options::TEST_UB_LONG_SEQUENCE;
-        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_octet_seq")))
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("ub_octet_seq")))
           this->test_type_ = Options::TEST_UB_OCTET_SEQUENCE;
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("var_struct")))
+          this->test_type_ = Options::TEST_VAR_STRUCT;
+        else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT ("nested_struct")))
+          this->test_type_ = Options::TEST_NESTED_STRUCT;
         break;
 
       case '?':
@@ -104,7 +103,6 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
                            " [-d]"
                            " [-n loopcount]"
                            " [-f servant-IOR-file]"
-                           " [-i invocation (sii/dii)]"
                            " [-t data type]"
                            "\n",
                            argv [0]),

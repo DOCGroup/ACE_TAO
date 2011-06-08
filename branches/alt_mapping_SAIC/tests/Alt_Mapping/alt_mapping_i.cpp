@@ -64,9 +64,10 @@ Alt_Mapping_i::test_strseq (
 }
 
 CORBA::LongSeq
-Alt_Mapping_i::test_long_sequence (const CORBA::LongSeq & s1,
-                                   CORBA::LongSeq & s2,
-                                   CORBA::LongSeq & s3)
+Alt_Mapping_i::test_long_sequence (
+  const CORBA::LongSeq & s1,
+  CORBA::LongSeq & s2,
+  CORBA::LongSeq & s3)
 {
   s2 = s1;
   s3 = s1;
@@ -76,14 +77,49 @@ Alt_Mapping_i::test_long_sequence (const CORBA::LongSeq & s1,
 }
 
 CORBA::OctetSeq
-Alt_Mapping_i::test_octet_sequence (const CORBA::OctetSeq & s1,
-                                    CORBA::OctetSeq & s2,
-                                    CORBA::OctetSeq & s3)
+Alt_Mapping_i::test_octet_sequence (
+  const CORBA::OctetSeq & s1,
+  CORBA::OctetSeq & s2,
+  CORBA::OctetSeq & s3)
 {
   s2 = s1;
   s3 = s1;
   CORBA::OctetSeq ret (s1);
   
+  return ret;
+}
+
+Alt_Mapping::Var_Struct *
+Alt_Mapping_i::test_var_struct (
+  const Alt_Mapping::Var_Struct & s1,
+  Alt_Mapping::Var_Struct & s2,
+  Alt_Mapping::Var_Struct_out s3)
+{
+  Alt_Mapping::Var_Struct
+    *ret = new Alt_Mapping::Var_Struct,
+    *out = new Alt_Mapping::Var_Struct;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  return ret;
+}
+
+Alt_Mapping::Nested_Struct *
+Alt_Mapping_i::test_nested_struct (
+  const Alt_Mapping::Nested_Struct & s1,
+  Alt_Mapping::Nested_Struct & s2,
+  Alt_Mapping::Nested_Struct_out s3)
+{
+  Alt_Mapping::Nested_Struct
+    *ret = new Alt_Mapping::Nested_Struct,
+    *out = new Alt_Mapping::Nested_Struct;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
   return ret;
 }
 

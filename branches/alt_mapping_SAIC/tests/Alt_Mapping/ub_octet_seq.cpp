@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Param_Test
+//    TAO/tests/Alt_Mapping
 //
 // = FILENAME
 //    ub_octet_seq.cpp

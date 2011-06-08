@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Param_Test
+//    TAO/tests/Alt_Mapping
 //
 // = FILENAME
 //    ub_struct_seq.cpp
@@ -13,6 +13,7 @@
 //
 // = AUTHORS
 //      Aniruddha Gokhale
+//      Jeff Parsons
 //
 // ============================================================================
 

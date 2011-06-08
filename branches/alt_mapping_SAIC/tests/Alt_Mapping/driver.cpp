@@ -21,7 +21,7 @@
 
 // This function runs the test (main program)
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // get an instance of the driver object
   Driver drv;
@@ -185,6 +185,34 @@ Driver::run (void)
               this->objref_.in (),
               new Test_Octet_Sequence);
               
+        retstatus = client->run_sii_test ();
+
+        delete client;
+      }
+      break;
+    case Options::TEST_VAR_STRUCT:
+      {
+        Alt_Mapping_Client<Test_Var_Struct> *client =
+          new
+            Alt_Mapping_Client<Test_Var_Struct> (
+              this->orb_.in (),
+              this->objref_.in(),
+              new Test_Var_Struct);
+
+        retstatus = client->run_sii_test ();
+
+        delete client;
+      }
+      break;
+    case Options::TEST_NESTED_STRUCT:
+      {
+        Alt_Mapping_Client<Test_Nested_Struct> *client =
+          new
+            Alt_Mapping_Client<Test_Nested_Struct> (
+              this->orb_.in (),
+              this->objref_.in(),
+              new Test_Nested_Struct);
+
         retstatus = client->run_sii_test ();
 
         delete client;
