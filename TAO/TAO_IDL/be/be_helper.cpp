@@ -554,7 +554,11 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print ("%#24.16G", ev->u.dval);
       break;
     case AST_Expression::EV_longdouble:
+#if defined (NONNATIVE_LONGDOUBLE)
+      this->TAO_OutStream::print ("%#24.16G", ev->u.ldval);
+#else
       this->TAO_OutStream::print ("%#24.16LGL", ev->u.ldval);
+#endif // defined (NONNATIVE_LONGDOUBLE)
       break;
     case AST_Expression::EV_char:
       // isprint() sees \ and ' as printable characters
