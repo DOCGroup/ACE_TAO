@@ -1,3 +1,9 @@
+Thu Jun  9 07:05:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/tests/Bug_2709_Regression/Client_Task.cpp:
+          Fixed gcc 4.6 warnings
+
 Thu Jun  9 01:09:40 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp (TAO_Notify_ThreadPool_Task::execute):
@@ -63,7 +69,7 @@ Mon Jun  6 15:06:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
-          Extended DDS support 
+          Extended DDS support
 
 Fri Jun  3 18:54:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
