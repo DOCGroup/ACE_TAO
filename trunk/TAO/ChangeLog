@@ -1,3 +1,11 @@
+Thu Jun  9 19:38:48 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+          Changed print format of long double literal to be conditional,
+          based on the existence of a native 16-byte long double, in
+          order to eliminate warnings of rhs and lhs type mismatch.
+
 Thu Jun  9 17:28:25 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
