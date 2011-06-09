@@ -1,3 +1,10 @@
+Thu Jun  9 01:09:40 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp (TAO_Notify_ThreadPool_Task::execute):
+          Fixed a memory leak that occurred when the enqueue() failed.
+          Thanks to Jochen Meier <gesammeltimusenet2009 at arcor dot de> for
+          reporting this and suggesting a fix.
+
 Mon Jun  6 19:53:54 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Basic_Impl.cpp:

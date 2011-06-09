@@ -47,14 +47,14 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
 
   TAO_Notify_Timer_Queue* timer = 0;
   ACE_NEW_THROW_EX (timer,
-    TAO_Notify_Timer_Queue (),
-    CORBA::NO_MEMORY ());
+                    TAO_Notify_Timer_Queue (),
+                    CORBA::NO_MEMORY ());
   this->timer_.reset (timer);
 
   TAO_Notify_Buffering_Strategy* buffering_strategy = 0;
   ACE_NEW_THROW_EX (buffering_strategy,
-    TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties),
-    CORBA::NO_MEMORY ());
+                    TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties),
+                    CORBA::NO_MEMORY ());
   this->buffering_strategy_.reset (buffering_strategy);
 
   long flags = THR_NEW_LWP | THR_DETACHED;
@@ -74,44 +74,46 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
 
   // Become an active object.
   if (this->ACE_Task <ACE_NULL_SYNCH>::activate (flags,
-    tp_params.static_threads,
-    0,
-    ACE_THR_PRI_OTHER_DEF) == -1)
-  {
-    // Undo the ref counts on error
-    for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
-      {
-        this->_decr_refcnt();
-      }
-
-    if (ACE_OS::last_error () == EPERM)
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
-    else if (ACE_OS::last_error () == EAGAIN)
+                                                 tp_params.static_threads,
+                                                 0,
+                                                 ACE_THR_PRI_OTHER_DEF) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) task activation at priority %d failed %p\n"),
-      tp_params.default_priority, "activate"));
-      throw CORBA::NO_RESOURCES ();
-    }
+      // Undo the ref counts on error
+      for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
+        {
+          this->_decr_refcnt();
+        }
 
-    throw CORBA::BAD_PARAM ();
-  }
+      if (ACE_OS::last_error () == EPERM)
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+      else if (ACE_OS::last_error () == EAGAIN)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) task activation at priority %d failed %p\n"),
+                      tp_params.default_priority, "activate"));
+          throw CORBA::NO_RESOURCES ();
+        }
+
+      throw CORBA::BAD_PARAM ();
+    }
 }
 
 void
 TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
 {
   if (!shutdown_)
-  {
-    TAO_Notify_Method_Request_Queueable* request_copy = method_request.copy ();
-
-    if (this->buffering_strategy_->enqueue (request_copy) == -1)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
-        "failed to enqueue\n"));
+      TAO_Notify_Method_Request_Queueable* request_copy = method_request.copy ();
+
+      if (this->buffering_strategy_->enqueue (request_copy) == -1)
+        {
+          ACE_Message_Block::release (request_copy);
+
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
+                        "failed to enqueue\n"));
+        }
     }
-  }
 }
 
 int
@@ -120,43 +122,43 @@ TAO_Notify_ThreadPool_Task::svc (void)
   TAO_Notify_Method_Request_Queueable* method_request = 0;
 
   while (!shutdown_)
-  {
-    try
     {
-      ACE_Time_Value* dequeue_blocking_time = 0;
-      ACE_Time_Value earliest_time;
+      try
+        {
+          ACE_Time_Value* dequeue_blocking_time = 0;
+          ACE_Time_Value earliest_time;
 
-      if (!this->timer_->impl().is_empty ())
-      {
-        earliest_time = this->timer_->impl().earliest_time ();
-        dequeue_blocking_time = &earliest_time;
-      }
+          if (!this->timer_->impl().is_empty ())
+            {
+              earliest_time = this->timer_->impl().earliest_time ();
+              dequeue_blocking_time = &earliest_time;
+            }
 
-      // Dequeue 1 item
-      int const result = buffering_strategy_->dequeue (method_request, dequeue_blocking_time);
+          // Dequeue 1 item
+          int const result = buffering_strategy_->dequeue (method_request, dequeue_blocking_time);
 
-      if (result > 0)
-      {
-        method_request->execute ();
+          if (result > 0)
+            {
+              method_request->execute ();
 
-        ACE_Message_Block::release (method_request);
-      }
-      else if (errno == ETIME)
-      {
-        this->timer_->impl ().expire ();
-      }
-      else
-      {
-        if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
-      }
-    }
-    catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (
-        "ThreadPool_Task (%P|%t) exception in method request\n");
-    }
-  } /* while */
+              ACE_Message_Block::release (method_request);
+            }
+          else if (errno == ETIME)
+            {
+              this->timer_->impl ().expire ();
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
+            }
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          ex._tao_print_exception (
+                                   "ThreadPool_Task (%P|%t) exception in method request\n");
+        }
+    } /* while */
 
   return 0;
 }
@@ -165,9 +167,9 @@ void
 TAO_Notify_ThreadPool_Task::shutdown (void)
 {
   if (this->shutdown_)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   this->shutdown_ = true;
 
