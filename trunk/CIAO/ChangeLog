@@ -1,3 +1,10 @@
+Fri Jun 10 14:48:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.mpc:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component.mpc:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.mpc:
+          Fuzz. Shorten project names
+
 Fri Jun 10 11:35:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
