@@ -79,7 +79,8 @@ namespace CIAO
     private:
       DDS_TypeSupport_i (void);
       ~DDS_TypeSupport_i (void);
-      typedef std::map <ACE_CString, DDS_TypeFactory_i*> typefactories;
+
+      typedef std::map < ACE_CString, DDS_TypeFactory_i* > typefactories;
 
       typedef std::map< ::DDS::DomainParticipant_ptr, typefactories > participantfactories;
       static participantfactories participant_factories;

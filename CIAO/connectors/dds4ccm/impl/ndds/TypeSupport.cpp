@@ -2,13 +2,13 @@
 
 #include "dds4ccm/impl/ndds/TypeSupport.h"
 
-std::map < ::DDS::DomainParticipant_ptr, ::CIAO::NDDS::DDS_TypeSupport_i::typefactories >
-  CIAO::NDDS::DDS_TypeSupport_i::participant_factories;
-
 namespace CIAO
 {
   namespace NDDS
   {
+    std::map < ::DDS::DomainParticipant_ptr, ::CIAO::NDDS::DDS_TypeSupport_i::typefactories >
+      CIAO::NDDS::DDS_TypeSupport_i::participant_factories;
+
     DDS_TypeFactory_i::~DDS_TypeFactory_i (void)
     {
     }
