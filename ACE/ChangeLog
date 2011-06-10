@@ -1,3 +1,8 @@
+Fri Jun 10 12:58:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ChangeLog:
+          Fuzz. Removed tab.
+
 Thu Jun  9 01:16:23 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/RB_Tree.cpp: Fixed overly long ACE_TRACE string literals
@@ -258,8 +263,9 @@ Thu May  5 21:38:45 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
           application code to check, apart from errno.
 
 Wed May  4 15:07:46 UTC 2011  Chad Beaulac <chad.beaulac@objectivesolutions.com>
-  
-	* ace/Stream.cpp: Modified ACE_Stream::remove(name,flags) so close
+
+          * ace/Stream.cpp:
+          Modified ACE_Stream::remove(name,flags) so close
           is always called on the module that's removed regardless of the
           flags. Close needs to be called to ensure proper lifecycle
           management when the ACE_Service_Repository shuts down in its
