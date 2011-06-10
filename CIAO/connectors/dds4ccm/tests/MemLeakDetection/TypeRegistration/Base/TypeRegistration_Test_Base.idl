@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file TypeRegistration_Test_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef MLD_TYPE_REGISTRATION_TEST_BASE_IDL
+#define MLD_TYPE_REGISTRATION_TEST_BASE_IDL
+
+#pragma ndds typesupport "Base/TypeRegistration_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/TypeRegistration_Test_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "MLDTypeRegistrationTest"
+#pragma DCPS_DATA_KEY "MLDTypeRegistrationTest symbol"
+
+struct MLDTypeRegistrationTest {
+  unsigned long key;
+};
+
+typedef sequence<MLDTypeRegistrationTest> MLDTypeRegistrationTestSeq;
+
+#endif /* MLD_TYPE_REGISTRATION_TEST_BASE_IDL */

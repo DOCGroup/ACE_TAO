@@ -208,13 +208,19 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
       throw ::CORBA::INTERNAL ();
     }
 
-  typedef ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE, SEQ_TYPE> dds_type_factory;
-  ::CIAO::NDDS::DDS_TypeFactory_i * factory = 0;
+  dds_type_factory *factory = 0;
   ACE_NEW_THROW_EX (factory,
                     dds_type_factory (),
                     ::CORBA::NO_MEMORY ());
 
-  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant);
+  if (! ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant))
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    ACE_TEXT ("DDS_TopicBase_Connector_T::register_type - ")
+                    ACE_TEXT ("Type <%C> is already registered.\n"),
+                    typesupport_name));
+      delete factory;
+    }
 
   retcode = DDS_TYPE::type_support::register_type(
     part->get_rti_entity (), typesupport_name);
@@ -242,9 +248,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
   const char * typesupport_name)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::unregister_type");
+
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
     ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
+
   delete factory;
 #else
   ACE_UNUSED_ARG (participant);

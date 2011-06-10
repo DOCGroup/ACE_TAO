@@ -1,0 +1,253 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>MLDTest_Depl</label>
+  <UUID>MLDTest_Depl</UUID>
+
+  <implementation xmi:id="ComponentImplementation">
+    <name>ComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Component_ExecArtifact" />
+    <artifact xmi:idref="Component_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MLD_TypeRegistration_Test_CFTTestComponent_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MLD_TypeRegistration_Test_CFTTestComponent_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="MLD_TypeRegistration_Test_ConnectorImplementation">
+    <name>MLD_TypeRegistration_Test_ConnectorImplementation</name>
+    <source/>
+    <artifact xmi:idref="MLD_TypeRegistration_Test_Connector_ExecArtifact" />
+    <artifact xmi:idref="MLD_TypeRegistration_Test_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MLDTypeRegistrationTestConn_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MLDTypeRegistrationTestConn_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MLD_TypeRegistration_Test_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MLD_TypeRegistration_Test_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+
+  <instance xmi:id="ComponentInstance">
+    <name>Component</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ComponentImplementation" />
+  </instance>
+
+  <instance xmi:id="MLD_TypeRegistration_Test_ConnectorInstance_Writer">
+    <name>MLD_TypeRegistration_Test_Connector_Writer</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="MLD_TypeRegistration_Test_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MLDTypeRegistration_Writer</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="MLD_TypeRegistration_Test_ConnectorInstance_Listener">
+    <name>MLD_TypeRegistration_Test_Connector_Listener</name>
+    <node>ComponentNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="MLD_TypeRegistration_Test_ConnectorImplementation" />
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MLDTypeRegistration_Listener</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>listener_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>listener_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="MLD_TypeRegistration_Test_ConnectorInstance_Listener" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>listener_data_control</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>listener_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="MLD_TypeRegistration_Test_ConnectorInstance_Listener" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>writer_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="MLD_TypeRegistration_Test_ConnectorInstance_Writer" />
+    </internalEndpoint>
+  </connection>
+
+
+  <artifact xmi:id="MLD_TypeRegistration_Test_Connector_ExecArtifact">
+    <name>MLD_TypeRegistration_Test_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>MLD_TypeRegistration_Test_Connector_exec</location>
+  </artifact>
+  <artifact xmi:id="MLD_TypeRegistration_Test_Connector_SvntArtifact">
+    <name>MLD_TypeRegistration_Test_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>MLD_TypeRegistration_Test_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="MLD_TypeRegistration_Test_Connector_StubArtifact">
+    <name>MLD_TypeRegistration_Test_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>MLD_TypeRegistration_Test_Connector_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component_ExecArtifact">
+    <name>Component_exec</name>
+    <source/>
+    <node/>
+    <location>Component_exec</location>
+  </artifact>
+  <artifact xmi:id="Component_SvntArtifact">
+    <name>Component_svnt</name>
+    <source/>
+    <node/>
+    <location>Component_svnt</location>
+  </artifact>
+</Deployment:DeploymentPlan>
