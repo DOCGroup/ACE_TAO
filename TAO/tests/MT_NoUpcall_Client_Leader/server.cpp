@@ -109,29 +109,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     ACE_Mutex mutex;
     ACE_Condition<ACE_Mutex> stop_condition (mutex);
-
-    Chatter worker2 (orb_.in (), ACE_TEXT("file://client.ior"), stop_condition);
-    if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate chatty client threads"), -1);
+      ACE_GUARD_RETURN (ACE_Mutex, guard, mutex, -1);
+
+      Chatter worker2 (orb_.in (), ACE_TEXT("file://client.ior"), stop_condition);
+      if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "Cannot activate chatty client threads"), -1);
+        }
+
+      do {
+        stop_condition.wait ();
+        ACE_DEBUG((LM_INFO,"(%P|%t) So far, %d/%d requests/replies have been processed\n",
+                   worker2.nrequests (), worker2.nreplies ()));
+      } while (worker2.nrequests () < 1);
+
+      worker.thr_mgr()->wait ();
+
+      root_poa->destroy(1, 1);
+
+      orb_->destroy();
+
+      ACE_DEBUG((LM_INFO,"(%P|%t) Server Test %C\n",
+                 (worker2.nrequests() == worker2.nreplies())?"succeeded":"failed"));
+      result = (worker2.nrequests() == worker2.nreplies())? 0 : -1;
     }
-
-    do {
-      stop_condition.wait ();
-      ACE_DEBUG((LM_INFO,"(%P|%t) So far, %d/%d requests/replies have been processed\n",
-        worker2.nrequests (), worker2.nreplies ()));
-    }
-    while (worker2.nrequests () < 1);
-
-    worker.thr_mgr()->wait ();
-
-    root_poa->destroy(1, 1);
-
-    orb_->destroy();
-
-    ACE_DEBUG((LM_INFO,"(%P|%t) Server Test %C\n",
-      (worker2.nrequests() == worker2.nreplies())?"succeeded":"failed"));
-    result = (worker2.nrequests() == worker2.nreplies())? 0 : -1;
   }
   catch (const CORBA::Exception& ex)
   {

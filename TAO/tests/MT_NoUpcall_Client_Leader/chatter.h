@@ -17,10 +17,11 @@ public:
   long nrequests (void);
   long nreplies (void);
 public:
-  long nrequests_;
-  long nreplies_;
+  volatile long nrequests_;
+  volatile long nreplies_;
 private:
   const ACE_TCHAR* ior_;
   ACE_Condition<ACE_Mutex>& cond_;
+  TAO_SYNCH_MUTEX request_reply_count_mutex_;
 };
 #endif /* CHATTER_H */

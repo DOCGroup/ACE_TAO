@@ -5,9 +5,11 @@
 
 void poll (const char* filename)
 {
-  ACE_stat st;
-  for (int r=1; r != 0; r = ACE_OS::stat (filename, &st))
+  int r;
+  do
   {
-    ACE_OS::sleep (1);
-  }
+    ACE_stat st;
+    r = ACE_OS::stat (filename, &st);
+    ACE_OS::sleep (1); // Allows time between waiting scans and for contents to be written
+  } while (r != 0);
 }
