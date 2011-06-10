@@ -1,3 +1,35 @@
+Fri Jun 10 12:41:00 UTC 2011  Simon Massey <sma at prismtech dot com>
+
+        * tests/MT_NoUpcall_Client_Leader/run_test.pl:
+
+          This test wasn't capable of exiting with an error, it was
+          always successful even if the test failed.
+
+        * tests/MT_NoUpcall_Client_Leader/client.cpp:
+        * tests/MT_NoUpcall_Client_Leader/server.cpp:
+
+          The mutex needed to be locked prior to worker thread creation
+          and the stop_condition.wait condition, then released after,
+          otherwise worker threads can signal prior to the server/client
+          being ready to deal with the event. Client needed to
+          pause before the issuing the shutdown request to the server
+          so as to allow it to finish its own worker thread.
+
+        * tests/MT_NoUpcall_Client_Leader/police.cpp:
+
+          The stat test in the loop was occationally detecting the creation
+          of the ior file before the contents had been written. Moving
+          the sleep after the stat and before the test allows the contents to
+          be output before allowing the client/server to use the ior it
+          has just detected.
+
+        * tests/MT_NoUpcall_Client_Leader/chatter.cpp:
+        * tests/MT_NoUpcall_Client_Leader/chatter.h:
+
+          Need to mutex control access to the two nrequests_ and nreplies_
+          counts, as the client has two concurrent worker threads competing
+          to update them, these counts also need to be volitile.
+
 Thu Jun  9 19:38:48 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_helper.cpp:

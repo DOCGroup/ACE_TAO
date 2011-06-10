@@ -28,7 +28,7 @@ Chatter::nrequests (void)
 int
 Chatter::svc (void)
 {
-  long nrq = nrequests ();
+  long nrq = -1;
   try
   {
      //sleep(1);
@@ -43,12 +43,19 @@ Chatter::svc (void)
        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", ior_), -1);
 
      // make call on server
+     {
+       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, request_reply_count_mutex_, -1);
+       nrq= nrequests ();
+       nrequests_++;
+     }
      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] started for %s\n", nrq, ior_));
-     nrequests_++;
      intf_var->ping();
-     nreplies_++;
+     {
+       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, request_reply_count_mutex_, -1);
+       nreplies_++;
+     }
 
-     ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] completed for %s\n", nrq, ior_));
+     ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d,%d,%d] completed for %s\n", nrq, nrequests_, nreplies_, ior_));
      cond_.signal();
      return 0;
    }

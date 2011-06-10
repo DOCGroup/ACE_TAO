@@ -7,6 +7,7 @@
 
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("client.ior");
 int nr_threads = 1;
@@ -107,54 +108,57 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     ACE_Mutex mutex;
     ACE_Condition<ACE_Mutex> stop_condition (mutex);
-
-    const ACE_TCHAR* serverior = ACE_TEXT("file://server.ior");
-    Chatter worker2 (orb_.in (), serverior, stop_condition);
-
-    if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-      "Cannot activate chatty client threads"), -1);
-
-
-    do {
-      stop_condition.wait ();
-      ACE_DEBUG((LM_INFO,"(%P|%t) So far, %d/%d requests/replies have been processed\n",
-        worker2.nrequests (), worker2.nreplies ()));
-    }
-    while (worker2.nreplies () < 2);
-
-    // Kill the peer
     {
-      CORBA::Object_var rawObject = orb_->string_to_object( serverior);
+      ACE_GUARD_RETURN (ACE_Mutex, guard, mutex, -1);
 
-      Test_Idl::SharedIntf_var intf_var =
+      const ACE_TCHAR* serverior = ACE_TEXT("file://server.ior");
+      Chatter worker2 (orb_.in (), serverior, stop_condition);
+
+      if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+        "Cannot activate chatty client threads"), -1);
+
+      do {
+        stop_condition.wait ();
+        ACE_DEBUG((LM_INFO,"(%P|%t) So far, %d/%d requests/replies have been processed\n",
+                   worker2.nrequests (), worker2.nreplies ()));
+      } while (worker2.nreplies () < 2);
+      ACE_OS::sleep (8);
+
+      // Kill the peer
+      {
+        CORBA::Object_var rawObject = orb_->string_to_object( serverior);
+
+        Test_Idl::SharedIntf_var intf_var =
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
-      if (CORBA::is_nil (intf_var.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", serverior), -1);
+        if (CORBA::is_nil (intf_var.in ()))
+          ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", serverior), -1);
 
-      // make call on server
-      ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", serverior));
+        // make call on server
+        ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", serverior));
 
-      intf_var->farewell();
+        intf_var->farewell();
 
-      ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", serverior));
+        ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", serverior));
+      }
+      ACE_OS::sleep (8);
+
+      ACE_DEBUG((LM_INFO,"(%P|%t) END OF CLIENT TEST\n"));
+
+      orb_.in()->shutdown ();
+
+      worker.thr_mgr()->wait ();
+
+      root_poa->destroy(1,1);
+
+      orb_->destroy();
+
+      ACE_DEBUG((LM_INFO,"(%P|%t) Client Test %C\n",
+                 (worker2.nrequests() == worker2.nreplies())?"succeeded":"failed"));
+
+      result = (worker2.nrequests_ == worker2.nreplies_)? 0 : -1;
     }
-
-    ACE_DEBUG((LM_INFO,"(%P|%t) END OF CLIENT TEST\n"));
-
-    orb_.in()->shutdown ();
-
-    worker.thr_mgr()->wait ();
-
-    root_poa->destroy(1,1);
-
-    orb_->destroy();
-
-    ACE_DEBUG((LM_INFO,"(%P|%t) Client Test %C\n",
-      (worker2.nrequests() == worker2.nreplies())?"succeeded":"failed"));
-
-    result = (worker2.nrequests_ == worker2.nreplies_)? 0 : -1;
   }
   catch (const CORBA::Exception& ex)
   {
