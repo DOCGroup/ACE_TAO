@@ -1,3 +1,33 @@
+Fri Jun 10 11:17:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Fixed memory leak in the register_type/unregister_type implemenation. This
+          memory existed because of the fact that two different topics where based
+          on the same datatype.
+          To fix this, a new map was created wich contains the DomainParticipant in
+          combination with the already existing type factories. Type factories
+          are now stored and removed per DomainParticipant.
+
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.idl:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.mpc:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component.idl:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component.mpc:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component_exec.h:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component_exec.cpp:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.idl:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Connector/TypeRegistration_Test_Connector.mpc:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/descriptors/run_test.pl:
+          Added test to verify whether the memory leak is fixed.
+
 Wed Jun  8 12:32:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/VariousTopicsEvent/Base/VTopic_Base.idl:
