@@ -1,3 +1,13 @@
+Fri Jun 10 15:01:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/TypeSupport:
+        * connectors/dds4ccm/tests/TypeSupport/TypeSupport.mpc:
+        * connectors/dds4ccm/tests/TypeSupport/main.cpp:
+        * connectors/dds4ccm/tests/TypeSupport/run_test.pl:
+          Added a new (regular C++) which tests the TypeSupport class and its
+          internal type factory administration.
+
 Fri Jun 10 14:54:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/TypeSupport.h:
