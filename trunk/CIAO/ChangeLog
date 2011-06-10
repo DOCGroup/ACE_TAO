@@ -1,3 +1,8 @@
+Fri Jun 10 11:35:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added the memory leak test to the test framework
+
 Fri Jun 10 11:17:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
