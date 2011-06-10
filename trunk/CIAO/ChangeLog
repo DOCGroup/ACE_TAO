@@ -1,3 +1,11 @@
+Fri Jun 10 14:54:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/TypeSupport.h:
+          Code alignment.
+
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Fuzz. Mismatched trace.
+
 Fri Jun 10 14:48:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.mpc:
