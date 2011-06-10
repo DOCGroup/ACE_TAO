@@ -66,8 +66,10 @@ namespace CIAO
     {
     public:
       static void close (void);
-      static void register_type (const char* type, DDS_TypeFactory_i* factory, ::DDS::DomainParticipant_ptr dp);
-      static DDS_TypeFactory_i* unregister_type (const char* type, ::DDS::DomainParticipant_ptr dp);
+      static bool register_type (const char* type, DDS_TypeFactory_i* factory,
+                                 ::DDS::DomainParticipant_ptr dp);
+      static DDS_TypeFactory_i * unregister_type (const char* type,
+                                                  ::DDS::DomainParticipant_ptr dp);
       static ::DDS::DataWriter_ptr create_datawriter (DDSDataWriter* dw,
                                                       ::DDS::DomainParticipant_ptr dp,
                                                       ::DDS::Publisher_ptr pub);
@@ -78,7 +80,20 @@ namespace CIAO
       DDS_TypeSupport_i (void);
       ~DDS_TypeSupport_i (void);
       typedef std::map <ACE_CString, DDS_TypeFactory_i*> typefactories;
-      static typefactories type_factories;
+
+      typedef std::map< ::DDS::DomainParticipant_ptr, typefactories > participantfactories;
+      static participantfactories participant_factories;
+
+      static DDS_TypeFactory_i* get_factory (const char* type,
+                                            ::DDS::DomainParticipant_ptr dp);
+
+      static bool set_factory (const char* type,
+                        DDS_TypeFactory_i* f,
+                        ::DDS::DomainParticipant_ptr dp);
+
+      static void remove_participant_factory (const char * type,
+                                              ::DDS::DomainParticipant_ptr dp);
+
     };
   }
 }
