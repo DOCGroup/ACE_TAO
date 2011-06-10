@@ -1,3 +1,11 @@
+Fri Jun 10 19:05:30 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Added #define of ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          to make generation of a long double literal by the TAO IDL
+          compiler more portable.
+
 Fri Jun 10 12:58:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ChangeLog:
