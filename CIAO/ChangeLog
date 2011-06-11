@@ -1,3 +1,8 @@
+Sat Jun 11 08:18:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/TypeSupport/main.cpp:
+          Fuzz: no ending new line at the end of the file.
+
 Sat Jun 11 08:17:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.mpc:
