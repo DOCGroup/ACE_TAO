@@ -13,7 +13,7 @@ project(TypeRegistration_Component_idl_gen) : componentidldefaults, dds4ccm {
               -Wb,exec_export_include=Component_exec_export.h -I..
 
   IDL_Files {
-    TypeRegistration_Component.idl
+    TypeRegistration_Test_Component.idl
   }
 }
 
@@ -25,7 +25,7 @@ project(TypeRegistration_Component_lem_gen) : ciaoidldefaults, dds4ccm {
               -SS -Gxhst -I..
 
   IDL_Files {
-    TypeRegistration_ComponentE.idl
+    TypeRegistration_Test_ComponentE.idl
   }
 }
 
@@ -44,16 +44,16 @@ project(TypeRegistration_Component_lem_stub) : ccm_svnt, dds4ccm_base {
   }
 
   Source_Files {
-    TypeRegistration_ComponentEC.cpp
+    TypeRegistration_Test_ComponentEC.cpp
   }
 
   Header_Files {
-    TypeRegistration_ComponentEC.h
+    TypeRegistration_Test_ComponentEC.h
     Component_lem_stub_export.h
   }
 
   Inline_Files {
-    TypeRegistration_ComponentEC.inl
+    TypeRegistration_Test_ComponentEC.inl
   }
 }
 
@@ -71,16 +71,16 @@ project(TypeRegistration_Component_stub) : ccm_stub, dds4ccm_base {
   }
 
   Source_Files {
-    TypeRegistration_ComponentC.cpp
+    TypeRegistration_Test_ComponentC.cpp
   }
 
   Header_Files {
-    TypeRegistration_ComponentC.h
+    TypeRegistration_Test_ComponentC.h
     Component_stub_export.h
   }
 
   Inline_Files {
-    TypeRegistration_ComponentC.inl
+    TypeRegistration_Test_ComponentC.inl
   }
 }
 
@@ -100,11 +100,11 @@ project(TypeRegistration_Component_exec) : ciao_executor, dds4ccm_lem_stub {
   }
 
   Source_Files {
-    TypeRegistration_Component_exec.cpp
+    TypeRegistration_Test_Component_exec.cpp
   }
 
   Header_Files {
-    TypeRegistration_Component_exec.h
+    TypeRegistration_Test_Component_exec.h
     Component_exec_export.h
   }
 
@@ -130,18 +130,18 @@ project(TypeRegistration_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4c
   }
 
   Source_Files {
-    TypeRegistration_ComponentS.cpp
-    TypeRegistration_Component_svnt.cpp
+    TypeRegistration_Test_ComponentS.cpp
+    TypeRegistration_Test_Component_svnt.cpp
   }
 
   Header_Files {
-    TypeRegistration_ComponentS.h
-    TypeRegistration_Component_svnt.h
+    TypeRegistration_Test_ComponentS.h
+    TypeRegistration_Test_Component_svnt.h
     Component_svnt_export.h
   }
 
   Inline_Files {
-    TypeRegistration_ComponentS.inl
+    TypeRegistration_Test_ComponentS.inl
   }
 }
 

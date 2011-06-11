@@ -11,13 +11,13 @@ project (TypeRegistration_Base_stub) : taoidldefaults, dds4ccm_ts_default {
 
   IDL_Files {
     idlflags += -Gxhst
-    TypeRegistration_Base.idl
+    TypeRegistration_Test_Base.idl
   }
 
   opendds_ts_flags += --export=MLD_TYPE_REGISTRATION_TEST_BASE_STUB_Export
 
   DDSGenerator_Files {
-    TypeRegistration_Base.idl
+    TypeRegistration_Test_Base.idl
   }
 
   Source_Files {

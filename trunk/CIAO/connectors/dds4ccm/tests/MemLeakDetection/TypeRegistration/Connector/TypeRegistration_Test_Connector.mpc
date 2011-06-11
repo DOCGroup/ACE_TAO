@@ -15,7 +15,7 @@ project(TypeRegistration_Connector_idl_gen) : connectoridldefaults, dds4ccm {
               -I ..
 
   IDL_Files {
-    TypeRegistration_Connector.idl
+    TypeRegistration_Test_Connector.idl
   }
 }
 
@@ -28,13 +28,13 @@ project(TypeRegistration_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
               -I ..
 
   IDL_Files {
-    TypeRegistration_ConnectorE.idl
+    TypeRegistration_Test_ConnectorE.idl
   }
 }
 
 project(TypeRegistration_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += TypeRegistration_Connector_lem_gen TypeRegistration_Connector_stub TypeRegistration_Base_stub 
-  libs  += TypeRegistration_Base_stub TypeRegistration_Connector_stub 
+  after += TypeRegistration_Connector_lem_gen TypeRegistration_Connector_stub TypeRegistration_Base_stub
+  libs  += TypeRegistration_Base_stub TypeRegistration_Connector_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -45,16 +45,16 @@ project(TypeRegistration_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   }
 
   Source_Files {
-    TypeRegistration_ConnectorEC.cpp
+    TypeRegistration_Test_ConnectorEC.cpp
   }
 
   Header_Files {
-    TypeRegistration_ConnectorEC.h
-    TypeRegistration_Connector_lem_stub_export.h
+    TypeRegistration_Test_ConnectorEC.h
+    TypeRegistration_Test_Connector_lem_stub_export.h
   }
 
   Inline_Files {
-    TypeRegistration_ConnectorEC.inl
+    TypeRegistration_Test_ConnectorEC.inl
   }
 }
 
@@ -71,16 +71,16 @@ project(TypeRegistration_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 
   Source_Files {
-    TypeRegistration_ConnectorC.cpp
+    TypeRegistration_Test_ConnectorC.cpp
   }
 
   Header_Files {
-    TypeRegistration_ConnectorC.h
-    TypeRegistration_Connector_stub_export.h
+    TypeRegistration_Test_ConnectorC.h
+    TypeRegistration_Test_Connector_stub_export.h
   }
 
   Inline_Files {
-    TypeRegistration_ConnectorC.inl
+    TypeRegistration_Test_ConnectorC.inl
   }
 }
 
@@ -97,12 +97,12 @@ project(TypeRegistration_Connector_exec) : ciao_executor, dds4ccm_impl {
   }
 
   Source_Files {
-    TypeRegistration_Connector_conn.cpp
+    TypeRegistration_Test_Connector_conn.cpp
   }
 
   Header_Files {
-    TypeRegistration_Connector_conn.h
-    TypeRegistration_Connector_conn_export.h
+    TypeRegistration_Test_Connector_conn.h
+    TypeRegistration_Test_Connector_conn_export.h
   }
 
   Inline_Files {
@@ -111,12 +111,12 @@ project(TypeRegistration_Connector_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(TypeRegistration_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += TypeRegistration_Connector_lem_stub TypeRegistration_Connector_exec TypeRegistration_Connector_stub 
+  after      += TypeRegistration_Connector_lem_stub TypeRegistration_Connector_exec TypeRegistration_Connector_stub
   sharedname  = TypeRegistration_Connector_svnt
   libs       += TypeRegistration_Connector_stub \
                 TypeRegistration_Connector_lem_stub  \
                 TypeRegistration_Base_stub \
-                TypeRegistration_Connector_exec 
+                TypeRegistration_Connector_exec
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -126,18 +126,18 @@ project(TypeRegistration_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Source_Files {
-    TypeRegistration_ConnectorS.cpp
-    TypeRegistration_Connector_svnt.cpp
+    TypeRegistration_Test_ConnectorS.cpp
+    TypeRegistration_Test_Connector_svnt.cpp
   }
 
   Header_Files {
-    TypeRegistration_ConnectorS.h
-    TypeRegistration_Connector_svnt.h
-    TypeRegistration_Connector_svnt_export.h
+    TypeRegistration_Test_ConnectorS.h
+    TypeRegistration_Test_Connector_svnt.h
+    TypeRegistration_Test_Connector_svnt_export.h
   }
 
   Inline_Files {
-    TypeRegistration_ConnectorS.inl
+    TypeRegistration_Test_ConnectorS.inl
   }
 }
 
