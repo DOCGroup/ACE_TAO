@@ -94,7 +94,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>MLD_TypeRegistration_Test_Connector_svnt</string>
+          <string>TypeRegistration_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -105,7 +105,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>MLD_TypeRegistration_Test_Connector_exec</string>
+          <string>TypeRegistration_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -220,22 +220,22 @@
 
 
   <artifact xmi:id="MLD_TypeRegistration_Test_Connector_ExecArtifact">
-    <name>MLD_TypeRegistration_Test_Connector_exec</name>
+    <name>TypeRegistration_Connector_exec</name>
     <source/>
     <node/>
-    <location>MLD_TypeRegistration_Test_Connector_exec</location>
+    <location>TypeRegistration_Connector_exec</location>
   </artifact>
   <artifact xmi:id="MLD_TypeRegistration_Test_Connector_SvntArtifact">
-    <name>MLD_TypeRegistration_Test_Connector_svnt</name>
+    <name>TypeRegistration_Connector_svnt</name>
     <source/>
     <node/>
-    <location>MLD_TypeRegistration_Test_Connector_svnt</location>
+    <location>TypeRegistration_Connector_svnt</location>
   </artifact>
   <artifact xmi:id="MLD_TypeRegistration_Test_Connector_StubArtifact">
-    <name>MLD_TypeRegistration_Test_Connector_stub</name>
+    <name>TypeRegistration_Connector_stub</name>
     <source/>
     <node/>
-    <location>MLD_TypeRegistration_Test_Connector_stub</location>
+    <location>TypeRegistration_Connector_stub</location>
   </artifact>
 
   <artifact xmi:id="Component_ExecArtifact">
