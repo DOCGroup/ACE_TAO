@@ -12,8 +12,8 @@
 
 #include "ciao/Containers/Generic/Generic_Container_export.h"
 
-#include "ccm/Generic/CCM_ServerContainerInterceptorC.h"
-#include "ccm/Generic/CCM_ServerContainerInterceptorRegistrationC.h"
+#include "ccm/Extension/CCM_ServerContainerInterceptorC.h"
+#include "ccm/Extension/CCM_ServerContainerInterceptorRegistrationC.h"
 #include "ciao/Containers/Generic/Interceptor_Registration_T.h"
 
 namespace CIAO

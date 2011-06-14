@@ -1,0 +1,21 @@
+/**
+ * @file Session_Container.idl
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ *
+ * Extends the basic container interface for session capabilities.
+ */
+
+#include "ciao/Containers/Container_Base.idl"
+
+module CIAO
+{
+  local interface FT_Session_Container : Container
+  {
+    // *** Methods used by component specific container portions
+    /*
+    Object install_servant_with_id (in PortableServer::Servant svnt, 
+                                    in Container_Types::OA_Type type,
+                                    in PortableServer::ObjectId oid);
+    */
+  };
+};
