@@ -105,6 +105,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
     this->create_exception_holder (node);
   excep_holder->set_defined_in (node->defined_in ());
   excep_holder->original_interface (node);
+  excep_holder->is_amh_excep_holder (true);
 
   AST_Module *module =
     AST_Module::narrow_from_scope (node->defined_in ());
