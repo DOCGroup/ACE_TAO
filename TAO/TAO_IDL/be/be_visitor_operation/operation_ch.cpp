@@ -32,9 +32,13 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   this->ctx_->node (node);
 
-  // Every operation is declared virtual in the client code.
-  *os << be_nl_2
-      << "virtual ";
+  *os << be_nl_2;
+
+  // Only local operations are generated virtual
+  if (node->is_local ())
+    {
+      *os << "virtual ";
+    }
 
   // STEP I: generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -84,7 +88,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
 
-  /// If we are in a reply handler, are not an execp_* operation,
+  /// If we are in a reply handler, are not an excep_* operation,
   /// and have no native args, then generate the AMI static
   /// reply stub declaration.
   if (intf != 0
