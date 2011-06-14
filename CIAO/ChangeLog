@@ -1,3 +1,9 @@
+Tue Jun 14 13:36:00 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/DAnCE/Executor-Destructor/Exec_Dest_Status_export.h:
+
+          Fuzz.
+
 Tue Jun 14 12:03:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
