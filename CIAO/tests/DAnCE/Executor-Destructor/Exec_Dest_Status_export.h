@@ -2,7 +2,6 @@
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.
-// This file is generated automatically by generate_export_file.pl Exec_Dest_Status
 // ------------------------------
 #ifndef EXEC_DEST_STATUS_EXPORT_H
 #define EXEC_DEST_STATUS_EXPORT_H
