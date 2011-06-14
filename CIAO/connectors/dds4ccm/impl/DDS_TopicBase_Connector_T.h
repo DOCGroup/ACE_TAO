@@ -56,7 +56,10 @@ protected:
   ::DDS::SubscriberListener_var subscriber_listener_;
 
   typedef DDS_Base_Connector_T<CCM_TYPE> BaseConnector;
+
+#if (CIAO_DDS4CCM_NDDS==1)
   typedef ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE, SEQ_TYPE> dds_type_factory;
+#endif
 
 private:
   bool late_binding_;
