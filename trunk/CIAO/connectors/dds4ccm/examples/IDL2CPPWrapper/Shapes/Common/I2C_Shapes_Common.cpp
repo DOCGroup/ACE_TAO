@@ -62,9 +62,14 @@ I2C_Shapes_Common::initialize (void)
 
   const char* typesupport_name = ShapeType_DDS_Traits::type_support::get_type_name ();
 
-  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name,
-                                                  this->factory_,
-                                                  this->participant_);
+  if (! ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name,
+                                                        this->factory_,
+                                                        this->participant_))
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+          "I2C_Shapes_Common::initialize - Unable to register type factory\n"));
+      throw ::CORBA::INTERNAL ();
+    }
 
   ::DDS::ReturnCode_t retcode = ShapeType_DDS_Traits::type_support::register_type (
         part->get_rti_entity (),
