@@ -21,4 +21,26 @@ workspace {
   connectors/ami4ccm/ami4ccm
   connectors/dds4ccm/idl
   connectors/dds4ccm/impl
+
+  exclude {
+    $(DANCE_ROOT)/tests
+    $(ACE_ROOT)/ace/ACE_Iterative_Logging.mpc
+    $(ACE_ROOT)/ace/ACE_Iterative_Logging.mwc
+    $(ACE_ROOT)/ace/ACE_PPC_Logging.mpc
+    $(ACE_ROOT)/ace/ACE_PPC_Logging.mwc
+    $(ACE_ROOT)/ace/ACE_RT_TPC_Logging.mpc
+    $(ACE_ROOT)/ace/ACE_RT_TPC_Logging.mwc
+    $(ACE_ROOT)/ace/ACE_Reactive_Logging.mpc
+    $(ACE_ROOT)/ace/ACE_Reactive_Logging.mwc
+    $(ACE_ROOT)/ace/ACE_TPC_Logging.mpc
+    $(ACE_ROOT)/ace/ACE_TPC_Logging.mwc
+  }
+
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTSched.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTSchedEvent.mpc
+  $(TAO_ROOT)/orbsvcs/Event_Service/Event_Service.mpc
+  $(TAO_ROOT)/orbsvcs/DevGuideExamples
 }
