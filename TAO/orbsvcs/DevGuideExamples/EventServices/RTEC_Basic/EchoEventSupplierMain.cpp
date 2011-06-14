@@ -50,6 +50,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
 
+    // Activate the POA via its POAManager.
+    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
+    poa_manager->activate();
+
     // Instantiate an EchoEventSupplier_i servant.
     PortableServer::Servant_var<EchoEventSupplier_i> servant =
       new EchoEventSupplier_i(orb.in());
@@ -70,10 +74,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Connect as a supplier of the published events.
     consumer->connect_push_supplier (supplier.in (),
                                      qos.get_SupplierQOS ());
-
-    // Activate the POA via its POAManager.
-    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
-    poa_manager->activate();
 
     // Create an event (just a string in this case).
     const CORBA::String_var eventData = CORBA::string_dup("Hello, world.");

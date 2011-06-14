@@ -47,6 +47,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
 
+
+    // Activate the POA via its POAManager.
+    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
+    poa_manager->activate();
+
     // Instantiate an EchoEventConsumer_i servant.
     PortableServer::Servant_var<EchoEventConsumer_i> servant =
       new EchoEventConsumer_i(orb.in(), supplier.in(), EVENT_LIMIT);
@@ -64,10 +69,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      0);                // handle to the rt_info
     supplier->connect_push_consumer (consumer.in (),
                                      qos.get_ConsumerQOS ());
-
-    // Activate the POA via its POAManager.
-    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
-    poa_manager->activate();
 
     std::cout << "EchoEventConsumerMain.cpp: Ready to receive events..." << std::endl;
 
