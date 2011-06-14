@@ -80,7 +80,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    custom),
     supports_abstract_ (false),
     var_out_seq_decls_gen_ (false),
-    full_obv_skel_name_ (0)
+    full_obv_skel_name_ (0),
+    is_amh_excep_holder_ (false)
 {
   // Check that redefine() copies all members.
 
@@ -425,6 +426,18 @@ be_valuetype::has_member (void)
     }
 
   return false;
+}
+
+bool
+be_valuetype::is_amh_excep_holder (void) const
+{
+  return this->is_amh_excep_holder_;
+}
+
+void
+be_valuetype::is_amh_excep_holder (bool val)
+{
+  this->is_amh_excep_holder_ = val;
 }
 
 int

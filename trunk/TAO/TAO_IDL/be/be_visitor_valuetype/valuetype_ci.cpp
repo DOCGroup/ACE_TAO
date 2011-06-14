@@ -48,6 +48,11 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
   *os << "ACE_INLINE" << be_nl;
   *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
 
+  if (node->is_amh_excep_holder ())
+    {
+      *os << "  : exception (0)" << be_nl;
+    }
+
   if (node->truncatable())
     {
       *os << "{" << be_idt_nl
@@ -55,7 +60,9 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
           << "}" << be_nl_2;
     }
   else
-    *os << "{}" << be_nl_2;
+    {
+      *os << "{}" << be_nl_2;
+    }
 
 
   *os << "ACE_INLINE const char* " << be_nl
