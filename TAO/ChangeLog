@@ -1,3 +1,9 @@
+Tue Jun 14 12:18:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Only the methods for operations in local interfaces need to be
+          virtual. This reduces footprint and improves performance
+
 Fri Jun 10 19:08:19 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_helper.cpp:
