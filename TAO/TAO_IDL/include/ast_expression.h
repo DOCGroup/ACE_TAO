@@ -179,7 +179,7 @@ public:
           ACE_CDR::Float      fval;     // Contains 32-bit float expr value.
           ACE_CDR::Double     dval;     // Contains 64-bit float expr value.
           ACE_CDR::Char       cval;     // Contains char expression value.
-          ACE_CDR::WChar      wcval;    // Contains wchar expression value. 
+          ACE_CDR::WChar      wcval;    // Contains wchar expression value.
           ACE_CDR::Octet      oval;     // Contains octet expr value.
           UTL_String          *strval;  // Contains String * expr value.
           char                *wstrval; // Contains wide string expr value.
