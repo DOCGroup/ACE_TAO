@@ -14,78 +14,116 @@ namespace CIAO
     }
 
     DDS_TypeFactory_i*
-    DDS_TypeSupport_i::get_factory (const char* type,
-                                    ::DDS::DomainParticipant_ptr dp)
+    DDS_TypeSupport_i::get_factory_i (const char* type,
+                                      ::DDS::DomainParticipant_ptr dp)
     {
-      DDS4CCM_TRACE ("DDS_TypeSupport_i::get_factory");
+      DDS4CCM_TRACE ("DDS_TypeSupport_i::get_factory_i");
 
       participantfactories::iterator entry = participant_factories.find(dp);
       if (entry != participant_factories.end())
         {
+          if (entry->second.size () == 0UL)
+            {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                            "DDS_TypeSupport_i::get_factory_i - "
+                            "No type-factory combinations for DomainParticipant <%@> found\n",
+                            dp));
+              return 0;
+            }
+
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_TypeSupport_i::get_factory - "
+                        "DDS_TypeSupport_i::get_factory_i - "
                         "A factory of type <%C> and with DomainParticipant <%@> "
-                        "is registred\n",
+                        "is registered\n",
                         type,
                         dp));
-          if (entry->second.size () == 0)
-            return 0;
 
           // Return factory belonging to the specified type.
-          return entry->second[type];
+          typefactories tf = entry->second;
+          typefactories::iterator it = tf.find(type);
+          if (it != tf.end())
+            return it->second;
+          else
+            return 0;
         }
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_TypeSupport_i::get_factory - "
+                    "DDS_TypeSupport_i::get_factory_i - "
                     "A factory of type <%C> and with DomainParticipant <%@> "
-                    "was not registred\n",
+                    "is not registered\n",
                     type,
                     dp));
       return 0;
     }
 
     bool
-    DDS_TypeSupport_i::set_factory (const char* type,
-                                    DDS_TypeFactory_i* f,
-                                    ::DDS::DomainParticipant_ptr dp)
+    DDS_TypeSupport_i::register_factory_i (const char* type,
+                                          DDS_TypeFactory_i* f,
+                                          ::DDS::DomainParticipant_ptr dp)
     {
-      DDS4CCM_TRACE ("DDS_TypeSupport_i::set_factory");
+      DDS4CCM_TRACE ("DDS_TypeSupport_i::register_factory_i");
 
       participantfactories::iterator dp_entry = participant_factories.find(dp);
+
       if (dp_entry == participant_factories.end())
         { // entry not found -> insert.
-          // first create a new type factory for this dp.
+          // Add the DomainParticipant.
           typefactories tf;
+          std::pair <participantfactories::iterator, bool> dp_ret = participant_factories.insert(
+            std::pair< ::DDS::DomainParticipant_ptr, typefactories > (dp, tf));
+          if (dp_ret.second == false)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                            "DDS_TypeSupport_i::register_factory_i - "
+                            "Unable to create new DomainParticipant entry: "
+                            "type <%C> - DomainParticipant <%@>\n",
+                            type,
+                            dp));
+              return false;
+            }
+        }
+
+      // DomainParticipant has been added
+      dp_entry = participant_factories.find(dp);
+      typefactories tf = dp_entry->second;
+      // tf contains the list of type-factory combinations.
+      // search for the given type
+      typefactories::iterator tf_entry = tf.find(type);
+      if (tf_entry == tf.end())
+        { // Factory not registered for specified type.
+          // Register it
           std::pair <typefactories::iterator, bool> tf_ret =
             tf.insert(typefactories::value_type (type, f));
           if (tf_ret.second == false)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_TypeSupport_i::set_factory - "
-                            "Unable to create new Type factory for type <%C>\n",
+                            "DDS_TypeSupport_i::register_factory_i - "
+                            "Unable to create new factory entry type <%C>\n",
                             type));
               return false;
             }
-
-          std::pair <participantfactories::iterator, bool> dp_ret =
-            participant_factories.insert(
-              std::pair< ::DDS::DomainParticipant_ptr, typefactories > (dp, tf));
-          if (dp_ret.second == false)
-            {
-              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_TypeSupport_i::set_factory - "
-                            "Unable to create new DomainParticipant entry type <%C>\n",
-                            type));
-              return false;
-            }
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_TypeSupport_i::register_factory_i - "
+                        "Created new factory entry for type <%C>\n",
+                        type));
+          // necessary to assign the type-factory combination to the correct
+          // DomainParticipant entry.
+          dp_entry->second = tf;
+          return true;
         }
-      return true;
+      // Unable to register type-factory combination since it already exists.
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_TypeSupport_i::register_factory_i - "
+                    "Unable to register type-factory combination since "
+                    "it already exists for type <%C>\n",
+                    type));
+      return false;
     }
 
     void
-    DDS_TypeSupport_i::remove_participant_factory(const char * type,
-                                                  ::DDS::DomainParticipant_ptr dp)
+    DDS_TypeSupport_i::unregister_participant_factory_i (const char * type,
+                                                        ::DDS::DomainParticipant_ptr dp)
     {
-      DDS4CCM_TRACE ("DDS_TypeSupport_i::remove_participant_factory");
+      DDS4CCM_TRACE ("DDS_TypeSupport_i::unregister_participant_factory_i");
 
       participantfactories::iterator dp_entry = participant_factories.find(dp);
 
@@ -97,30 +135,34 @@ namespace CIAO
           if (it != tf.end())
             {
               it->second = 0;
+              tf.erase(it);
+
+              if (tf.size () == 0UL)
+                { // no more entries -> remove the participant from
+                  // the list
+                  participant_factories.erase(dp_entry);
+
+                  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                                "DDS_TypeSupport_i::unregister_participant_factory_i - "
+                                "Erased entry for participant <%@>\n",
+                                dp,
+                                type));
+                }
             }
           else
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            "DDS_TypeSupport_i::remove_participant_factory - "
+                            "DDS_TypeSupport_i::unregister_participant_factory_i - "
                             "Could not find the correct factory belonging to participant <%@> "
                             "and type <%C>. Unable to remove.\n",
                             dp,
                             type));
             }
-
-          // erase the participant from the map
-          participant_factories.erase(dp_entry);
-
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                        "DDS_TypeSupport_i::remove_participant_factory - "
-                        "Erased entry for participant <%@>\n",
-                        dp,
-                        type));
         }
       else
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                        "DDS_TypeSupport_i::remove_participant_factory - "
+                        "DDS_TypeSupport_i::unregister_participant_factory_i - "
                         "Could not find the correct factory belonging to participant <%@>. "
                         "Unable to remove.\n",
                         dp));
@@ -134,7 +176,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_TypeSupport_i::register_type");
 
-      if (get_factory (type, dp))
+      if (get_factory_i (type, dp))
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "DDS_TypeSupport_i::register_type - "
@@ -147,7 +189,7 @@ namespace CIAO
                     "Registered factory for type %C and participant <%@>\n",
                     type, dp));
 
-      return set_factory (type, f, dp);
+      return register_factory_i (type, f, dp);
     }
 
     DDS_TypeFactory_i*
@@ -155,8 +197,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_TypeSupport_i::unregister_type");
 
-      DDS_TypeFactory_i * f = get_factory(type, dp);
-      remove_participant_factory (type, dp);
+      DDS_TypeFactory_i * f = get_factory_i(type, dp);
+      unregister_participant_factory_i(type, dp);
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "DDS_TypeSupport_i::unregister_type - "
@@ -174,7 +216,7 @@ namespace CIAO
 
       const char* type = dw->get_topic ()->get_type_name();
 
-      DDS_TypeFactory_i *f = get_factory (type, dp);
+      DDS_TypeFactory_i *f = get_factory_i(type, dp);
       if (f)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
@@ -199,7 +241,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_TypeSupport_i::create_datareader");
 
       const char* type = dr->get_topicdescription ()->get_type_name();
-      DDS_TypeFactory_i *f = get_factory (type, dp);
+      DDS_TypeFactory_i *f = get_factory_i(type, dp);
       if (f)
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
