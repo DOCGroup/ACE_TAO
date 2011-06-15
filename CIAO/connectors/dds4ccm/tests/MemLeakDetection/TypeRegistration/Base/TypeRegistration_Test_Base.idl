@@ -12,7 +12,7 @@
 #pragma opendds typesupport "Base/TypeRegistration_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "MLDTypeRegistrationTest"
-#pragma DCPS_DATA_KEY "MLDTypeRegistrationTest symbol"
+#pragma DCPS_DATA_KEY "MLDTypeRegistrationTest key"
 
 struct MLDTypeRegistrationTest {
   unsigned long key;
