@@ -1,3 +1,8 @@
+Wed Jun 15 07:30:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Base/TypeRegistration_Test_Base.idl:
+          Fixed error in openDDS.
+
 Tue Jun 14 13:36:00 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/DAnCE/Executor-Destructor/Exec_Dest_Status_export.h:
