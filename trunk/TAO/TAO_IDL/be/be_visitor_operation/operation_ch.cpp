@@ -36,7 +36,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   // Only local operations are generated virtual
 //  if (node->is_local ())
-    {
+  //  {
       *os << "virtual ";
 //    }
 
