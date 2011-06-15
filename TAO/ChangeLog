@@ -1,3 +1,8 @@
+Wed Jun 15 08:54:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Reverted 3971 change, broke some CCM tests
+
 Tue Jun 14 13:12:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
@@ -5,7 +10,7 @@ Tue Jun 14 13:12:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
 
-          Added code generation for AMH exception holder's default 
+          Added code generation for AMH exception holder's default
           constructor to initialize the CORBA::Exception* member
           to 0. This fix closes [BUGID:3970].
 
