@@ -21,7 +21,7 @@ MapView::clear()
 }
 
 void
-MapView::resizeEvent (QResizeEvent * event)
+MapView::resizeEvent (QResizeEvent * /*event*/)
 {
   QPixmap oo  = bg_pixmap_.scaled(this->width() , this->height());
   setBackgroundBrush(QBrush(oo));
