@@ -1,3 +1,71 @@
+Wed Jun 15 14:36:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client_cert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client_key.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server_cert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server_key.pem:
+        * orbsvcs/tests/Security/Callback/cacert.pem:
+        * orbsvcs/tests/Security/Callback/client_cert.pem:
+        * orbsvcs/tests/Security/Callback/client_key.pem:
+        * orbsvcs/tests/Security/Callback/server_cert.pem:
+        * orbsvcs/tests/Security/Callback/server_key.pem:
+        * orbsvcs/tests/Security/Crash_Test/cacert.pem:
+        * orbsvcs/tests/Security/Crash_Test/client_cert.pem:
+        * orbsvcs/tests/Security/Crash_Test/client_key.pem:
+        * orbsvcs/tests/Security/Crash_Test/server_cert.pem:
+        * orbsvcs/tests/Security/Crash_Test/server_key.pem:
+        * orbsvcs/tests/Security/Null_Cipher/cacert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/client_cert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/client_key.pem:
+        * orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/server_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+        * orbsvcs/tests/Security/mixed_security_test/cacert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_cert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_key.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_cert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_key.pem:
+
+          Updated certificates. 
+        
+        * orbsvcs/tests/Security/cert:
+        * orbsvcs/tests/Security/cert/DOCCA:
+        * orbsvcs/tests/Security/cert/DOCCA/cacert.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/certs:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt.attr:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt.attr.old:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt.old:
+        * orbsvcs/tests/Security/cert/DOCCA/newcerts:
+        * orbsvcs/tests/Security/cert/DOCCA/newcerts/1000.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/newcerts/1001.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/private:
+        * orbsvcs/tests/Security/cert/DOCCA/private/cakey.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/serial:
+        * orbsvcs/tests/Security/cert/DOCCA/serial.old:
+        * orbsvcs/tests/Security/cert/README:
+        * orbsvcs/tests/Security/cert/cacert.pem:
+        * orbsvcs/tests/Security/cert/client_cert.pem:
+        * orbsvcs/tests/Security/cert/client_key.pem:
+        * orbsvcs/tests/Security/cert/openssl.cnf:
+        * orbsvcs/tests/Security/cert/server_cert.pem:
+        * orbsvcs/tests/Security/cert/server_key.pem:
+
+          Added the full CA information used to sign the above certs.  These certs
+          are good for the next 20 years. 
+
+        * orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_key_nopasswd.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_key_nopasswd.pem:
+
+          Removed these files.
+
 Wed Jun 15 08:54:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
