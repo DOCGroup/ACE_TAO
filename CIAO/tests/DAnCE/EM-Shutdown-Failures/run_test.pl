@@ -18,7 +18,7 @@ $ns_running = 0;
 $app_running = 0;
 
 $nr_daemon = 2;
-$port_start = 60001;
+$port_start = 60010;
 $iorbase = "NodeApp";
 @iorfiles = 0;
 $nodebase = "Node";
@@ -174,7 +174,7 @@ foreach $file (@files) {
     print STDERR "Starting Naming Service\n";
 
     my $ns_host = $tg_naming->HostName ();
-    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming", "-m 0 -ORBEndpoint iiop://$ns_host:60000 -o $ior_nsfile");
+    $NS = $tg_naming->CreateProcess ("$TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming", "-m 0 -ORBEndpoint iiop://$ns_host:60001 -o $ior_nsfile");
     $NS->Spawn ();
 
     if ($tg_naming->WaitForFileTimed ($ior_nsbase,
@@ -186,8 +186,8 @@ foreach $file (@files) {
 
     $ns_running = 1;
     # Set up NamingService environment
-    $tg_exe_man->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60000/NameService");
-    $tg_executor->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60000/NameService");
+    $tg_exe_man->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60001/NameService");
+    $tg_executor->SetEnv ("NameServiceIOR", "corbaloc:iiop:$ns_host:60001/NameService");
 
     # Invoke node daemon(s).
     print "Invoking $nr_daemon node daemon(s)\n";
