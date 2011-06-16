@@ -80,7 +80,7 @@ namespace CIAO_Stock_StockDistributor_Impl
     {
       return -1;
     }
-    // cancle the timer
+    // cancel the timer
     this->reactor ()->cancel_timer (this);
     this->active_ = 0;
     return 0;
