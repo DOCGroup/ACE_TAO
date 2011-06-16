@@ -1,0 +1,3 @@
+feature (lwft_dds) {
+  macros += FLARE_USES_DDS
+}
