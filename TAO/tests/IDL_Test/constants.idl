@@ -74,7 +74,12 @@ const double trouble = 2.2250738585072014E-308;
 // platforms have 8-byte long doubles.
 
 const long double dbl_easy = 698.91148263188057;
+
+#if !defined (__MINGW32__)
+// Outputs a floating point error for this value.
 const long double dbl_dip = 1.797693134862315E+308;
+#endif /* defined (__MINGW32__) */
+
 const long double dbl_trouble = 2.2250738585072014E-308;
 const long double dbl_int = 7.;
 
