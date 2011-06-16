@@ -36,6 +36,18 @@ ACE_TMAIN (int , ACE_TCHAR **)
   return 0;
 #endif
 
+  // first turn on or off tracing
+  ACE_Env_Value<int> trace (ACE_TEXT("DDS4CCM_TRACE_ENABLE"), 0);
+  if (trace)
+    {
+      DDS4CCM_ENABLE_TRACE ();
+    }
+  else
+    {
+      DDS4CCM_DISABLE_TRACE ();
+    }
+  DDS4CCM_debug_level = 0;
+
   int ret = 0;
 
   try
@@ -61,9 +73,11 @@ ACE_TMAIN (int , ACE_TCHAR **)
 
       const char * type1 = "DataType1";
       const char * type2 = "DataType2";
+      const char * type3 = "DataType3";
 
       TestTypeFactory * f1 = 0;
       TestTypeFactory * f2 = 0;
+      TestTypeFactory * f3 = 0;
 
       ACE_NEW_THROW_EX (f1,
                         TestTypeFactory (),
@@ -71,110 +85,185 @@ ACE_TMAIN (int , ACE_TCHAR **)
       ACE_NEW_THROW_EX (f2,
                         TestTypeFactory (),
                         ::CORBA::NO_MEMORY ());
+      ACE_NEW_THROW_EX (f3,
+                        TestTypeFactory (),
+                        ::CORBA::NO_MEMORY ());
 
-
-      // Register the the first factory
+      /// Register type 1 with f1
       if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type1, f1, dp1.in()))
         {
-          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> for DP1 succesfully registered\n",
-                    type1));
+          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> and Factory <%@> for DP1 succesfully registered\n",
+                    type1, f1));
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> for DP1 could not be registered\n",
-                    type1));
+          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> and Factory <%@> for DP1 could not be registered\n",
+                    type1, f1));
           ++ret;
         }
-      // Register the same factory again
+      /// DP1 should now contain one type-factory combination
+
+      /// Register the same factory again
       if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type1, f1, dp1.in()))
         {
-          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> for DP1 could be registered\n",
-                    type1));
+          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> and Factory <%@> for DP1 could be registered\n",
+                    type1, f1));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> for DP1 could not be registered\n",
-                    type1));
+          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> and Factory <%@> for DP1 could not be registered\n",
+                    type1, f1));
         }
-      // Register the same factory again but with another name
+      /// DP1 should now contain one type-factory combination
+
+      /// Register the same factory again but with another name
       if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type2, f1, dp1.in()))
         {
-          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> for DP1 could be registered\n",
-                    type2));
+          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> and Factory <%@> for DP1 could be registered\n",
+                    type2, f1));
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> for DP1 could not be registered\n",
-                    type2));
+          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> and Factory <%@> for DP1 could not be registered\n",
+                    type2, f1));
           ++ret;
         }
+      /// DP1 should now contain two type-factory combinations
 
-      // Unregister an unused factory by using an unused domain participant
+      /// Register the same type with another factory
+      if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type2, f2, dp1.in()))
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C>  and Factory <%@> for DP1 could be registered\n",
+                    type2, f2));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> and Factory <%@> for DP1 could not be registered\n",
+                    type2, f2));
+        }
+      /// DP1 should now contain two type-factory combinations
+
+      /// Just register type 3 with f3
+      if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type3, f3, dp1.in()))
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> and Factory <%@> for DP1 succesfully registered\n",
+                    type3, f3));
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> and Factory <%@> for DP1 could not be registered\n",
+                    type3, f3));
+          ++ret;
+        }
+      /// DP1 should now contain three type-factory combinations
+
+
+
+      /// Unregister an unused factory by using an unused domain participant
       ::CIAO::NDDS::DDS_TypeFactory_i * tmp = ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type(type1, dp2.in());
 
       if (tmp)
         {
           ACE_ERROR ((LM_ERROR, "ERROR - Unregistered type <%C> for DP2 could be unregistered\n",
-                    type2));
+                    type1));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "OK - Unregistered Type <%C> for DP2 could not be unregistered\n",
-                    type2));
+          ACE_DEBUG ((LM_DEBUG, "OK - Unregistered type <%C> for DP2 could not be unregistered\n",
+                    type1));
         }
 
-      // Unregister a registered type by using a used domain participant
+      /// Unregister a registered type by using a used domain participant
       tmp = ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type(type1, dp1.in());
 
       if (tmp)
         {
           ACE_DEBUG ((LM_DEBUG, "OK - Unregistered type <%C> for DP1 could be unregistered\n",
-                    type2));
+                    type1));
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, "ERROR - Unregistered Type <%C> for DP1 could not be unregistered\n",
-                    type2));
+          ACE_ERROR ((LM_ERROR, "ERROR - Unregistered type <%C> for DP1 could not be unregistered\n",
+                    type1));
           ++ret;
         }
+      /// DP1 should now contain two type-factory combinations
 
-      // Unregister a the same type and domain participant again
+      /// Unregister a the same type and domain participant again
       tmp = ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type(type1, dp1.in());
 
       if (tmp)
         {
           ACE_ERROR ((LM_ERROR, "ERROR - Unregistered type <%C> for DP1 could be unregistered\n",
-                    type2));
+                    type1));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "OK - Unregistered Type <%C> for DP1 could not be unregistered\n",
-                    type2));
+          ACE_DEBUG ((LM_DEBUG, "OK - Unregistered type <%C> for DP1 could not be unregistered\n",
+                    type1));
         }
+      /// DP1 should now contain two type-factory combinations
 
-      // Call Close on TypeSupport. This should remove the last remaining entry.
+      /// Call Close on TypeSupport. This should remove the last remaining entries.
       ::CIAO::NDDS::DDS_TypeSupport_i::close();
 
-      // Unregister the type and domain participant which should be removed by 'close'
+      /// Unregister the type and domain participant which should be removed by 'close'
       tmp = ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type(type2, dp1.in());
 
       if (tmp)
         {
-          ACE_ERROR ((LM_ERROR, "ERROR - Unregistered type <%C> for DP1 could be unregistered\n",
+          ACE_ERROR ((LM_ERROR, "ERROR - Deleted type <%C> for DP1 could be unregistered\n",
                     type2));
           ++ret;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "OK - Unregistered Type <%C> for DP1 could not be unregistered\n",
+          ACE_DEBUG ((LM_DEBUG, "OK - Deleted type <%C> for DP1 could not be unregistered\n",
                     type2));
         }
 
-      delete f1;
+      /// Unregister the type and domain participant which should be removed by 'close'
+      tmp = ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type(type3, dp1.in());
+
+      if (tmp)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR - Deleted type <%C> for DP1 could be unregistered\n",
+                    type3));
+          ++ret;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK - Deleted type <%C> for DP1 could not be unregistered\n",
+                    type3));
+        }
+
+      /// We should now be able to register type 3 again
+      if (::CIAO::NDDS::DDS_TypeSupport_i::register_type(type3, f3, dp1.in()))
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK - Type <%C> and Factory <%@> for DP1 succesfully registered\n",
+                    type3, f3));
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR - Type <%C> and Factory <%@> for DP1 could not be registered\n",
+                    type3, f3));
+          ++ret;
+        }
+      /// DP1 should now contain one type-factory combination
+
+      /// Call Close on TypeSupport. This should remove the last remaining entries.
+      ::CIAO::NDDS::DDS_TypeSupport_i::close();
+
+      delete f3;
       delete f2;
+      delete f1;
+
+      pf.delete_participant(dp1);
+      pf.delete_participant(dp2);
     }
   catch (const ::CORBA::Exception& e)
     {

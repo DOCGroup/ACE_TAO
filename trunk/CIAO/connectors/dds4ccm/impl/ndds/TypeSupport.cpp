@@ -105,8 +105,7 @@ namespace CIAO
                         "DDS_TypeSupport_i::register_factory_i - "
                         "Created new factory entry for type <%C>\n",
                         type));
-          // necessary to assign the type-factory combination to the correct
-          // DomainParticipant entry.
+          // assign the type-factory combination to the DomainParticipant entry.
           dp_entry->second = tf;
           return true;
         }
@@ -129,14 +128,11 @@ namespace CIAO
 
       if (dp_entry != participant_factories.end())
         {
-          // initialize every factory to nil
           typefactories tf = dp_entry->second;
           typefactories::iterator it = tf.find(type);
           if (it != tf.end())
             {
-              it->second = 0;
               tf.erase(it);
-
               if (tf.size () == 0UL)
                 { // no more entries -> remove the participant from
                   // the list
@@ -147,6 +143,11 @@ namespace CIAO
                                 "Erased entry for participant <%@>\n",
                                 dp,
                                 type));
+                }
+              else
+                {
+                  // assign the type-factory combination to the DomainParticipant entry.
+                  dp_entry->second = tf;
                 }
             }
           else
@@ -163,7 +164,7 @@ namespace CIAO
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                         "DDS_TypeSupport_i::unregister_participant_factory_i - "
-                        "Could not find the correct factory belonging to participant <%@>. "
+                        "Could not find the entry for participant <%@>. "
                         "Unable to remove.\n",
                         dp));
         }
@@ -268,13 +269,12 @@ namespace CIAO
           ++i )
         {
           typefactories tf = i->second;
-          for(typefactories::iterator j = tf.begin();
-              j != tf.end();
-              ++j )
+
+          for(size_t j = tf.size() - 1; j != 0; j--)
             {
-              delete j->second;
-              j->second = 0;
+              delete tf[j];
             }
+          tf.clear();
         }
       participant_factories.clear ();
     }
