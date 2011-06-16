@@ -59,21 +59,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::LongDouble ld =
+      CORBA::LongDouble ldl =
         longDoubleTest->get_long_double ();
+      long double ldh =
+        Global::get_long_double ();
 
-      if (ld == Global::get_long_double ())
-        {
-          cout << "Received: " << ld << endl;
-        }
-      else
+      if (ldl > ldh || ldl < ldh)
         {
           ACE_ERROR ((LM_DEBUG,
                       "Client did not receive "
                       "expected CORBA::LongDouble\n"));
-          cerr << "Received: " << ld << " instead of "
-               << Global::get_long_double () << endl;
+          cerr << "Received: " << ldl << " instead of "
+               << ldh << endl;
           status = 1;
+        }
+      else
+        {
+          cout << "Received: " << ldl << endl;
         }
 
       longDoubleTest->shutdown ();
