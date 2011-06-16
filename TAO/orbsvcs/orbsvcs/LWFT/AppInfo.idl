@@ -1,0 +1,69 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file    AppInfo.idl
+ *
+ *  $Id$
+ *
+ *  @author  Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
+ */
+//=============================================================================
+
+#ifndef _LWFT_APPINFO_IDL_
+#define _LWFT_APPINFO_IDL_
+
+#include "LWFTDataStructures.idl"
+#include "StateSynchronizationAgent.idl"
+
+module FLARE
+{
+  module ReplicationManager
+  {
+    enum AppRole
+    {
+      PRIMARY,
+      BACKUP
+    };
+
+    struct AppInfo
+    {
+      string object_id;
+      double load;
+      string host_name;
+      string process_id;
+      AppRole role;
+      Object ior;
+    };
+
+    typedef sequence<AppInfo> AppInfoSeq;
+
+    typedef ObjectList AgentList;
+
+    struct StateSyncAgentEntry
+    {
+      StateSynchronizationAgent agent;
+      string process_id;
+    };
+
+    typedef sequence<StateSyncAgentEntry> StateSyncAgentEntries;
+
+    struct HostUtil
+    {
+      string hostname;
+      double utilization;
+    };
+
+    typedef sequence<HostUtil> HostUtilSeq;
+
+    struct ReplicationManagerState
+    {
+      AppInfoSeq app_set_list;
+      AgentList forwarding_agents;
+      StateSyncAgentEntries state_sync_agents;
+      HostUtilSeq utilization;
+    };
+  }; // end module ReplicationManager
+}; // end module FLARE
+
+#endif /* _LWFT_APPINFO_IDL_ */
