@@ -1,3 +1,11 @@
+Thu Jun 16 14:00:53 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/LongDouble/client.cpp:
+
+          Replaced '==' with equivalent '<' and '>' expressions for
+          a long double, some platoforms warn that '==' shouldn't
+          be used with floating point types.
+
 Thu Jun 16 07:56:54 UTC 2011  Simon Massey  <sma at prismtech dot com>
 
         * orbsvcs/tests/Security/Big_Request/cacert.pem:
