@@ -1,3 +1,11 @@
+Thu Jun 16 15:30:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+
+          Guarded out the long double constant set to the double max
+          value, for MinGW, which outputs a floating point error
+          for this value.
+
 Thu Jun 16 14:00:53 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/LongDouble/client.cpp:
@@ -49,8 +57,8 @@ Wed Jun 15 14:36:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
         * orbsvcs/tests/Security/mixed_security_test/server_cert.pem:
         * orbsvcs/tests/Security/mixed_security_test/server_key.pem:
 
-          Updated certificates. 
-        
+          Updated certificates.
+
         * orbsvcs/tests/Security/cert:
         * orbsvcs/tests/Security/cert/DOCCA:
         * orbsvcs/tests/Security/cert/DOCCA/cacert.pem:
@@ -75,7 +83,7 @@ Wed Jun 15 14:36:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
         * orbsvcs/tests/Security/cert/server_key.pem:
 
           Added the full CA information used to sign the above certs.  These certs
-          are good for the next 20 years. 
+          are good for the next 20 years.
 
         * orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
         * orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
