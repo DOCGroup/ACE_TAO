@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_ft_componentserver_stub, ccm_componentserver_svnt, ciao_ft_session_container {
+     after += CIAO_FTComponentServer_svnt
+     libs += CIAO_FTComponentServer_svnt
+}

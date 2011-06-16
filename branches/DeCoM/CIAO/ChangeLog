@@ -1,3 +1,23 @@
+Thu Jun 16 19:57:59 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * MPC/config/ccm_componentserver_stub.mpb:
+        * MPC/config/ccm_componentserver_svnt.mpb:
+        * MPC/config/ciao_client.mpb:
+        * MPC/config/ciao_config_manager.mpb:
+        * MPC/config/ciao_ft_componentserver_configurator.mpb:
+        * MPC/config/ciao_ft_componentserver_stub.mpb:
+        * MPC/config/ciao_ft_componentserver_svnt.mpb:
+        * MPC/config/ciao_ft_session_container.mpb:
+        * MPC/config/ciao_server.mpb:
+
+        * ciao/Containers/FTSession/FT_Session_Container.mpc:
+
+        * ciao/Containers/Swapping/Swapping_Container.mpc:
+
+        * ciao/Servants/Swapping/Swapping_Servants.mpc:
+
+        Added and fixed some projects
+
 Wed Jun 15 19:29:26 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
 
         * CIAO_TAO_DAnCE.mwc:
