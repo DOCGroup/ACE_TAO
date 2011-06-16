@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_FT_Session_Container) : ccm_svnt, ciao_lib, ciao_container_base, utils,  \
+project(CIAO_FT_Session_Container) : ccm_svnt, ciao_lib, ciao_container_base_stub, utils,  \
                                   ccm_componentserver_stub, ciao_servant_activator, ciao_servant {
   dynamicflags += FT_SESSION_CONTAINER_BUILD_DLL
   idlflags   += -Wb,export_include=FT_Session_Container_export.h
