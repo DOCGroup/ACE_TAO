@@ -1,9 +1,16 @@
+Thu Jun 16 13:31:16 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Changed the logic of what ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          expands to in order to eliminate warnings on FC6 and FC8.
+
 Wed Jun 15 13:10:40 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Basic_Types.h:
 
           Added a special version of ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
-          for Minggw32, which seems to diverge from other platforms in how
+          for MinGW32, which seems to diverge from other platforms in how
           it conforms to the printf print format.
 
 Fri Jun 10 19:05:30 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
