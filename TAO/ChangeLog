@@ -1,3 +1,13 @@
+Thu Jun 16 07:56:54 UTC 2011  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Security/Big_Request/cacert.pem:
+        * orbsvcs/tests/Security/Big_Request/client_cert.pem:
+        * orbsvcs/tests/Security/Big_Request/client_key.pem:
+        * orbsvcs/tests/Security/Big_Request/server_cert.pem:
+        * orbsvcs/tests/Security/Big_Request/server_key.pem:
+
+          Updated certificates - Missed one.
+
 Wed Jun 15 14:36:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
