@@ -1,3 +1,8 @@
+Thu Jun 16 11:05:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer_exec.cpp:
+          Fixed memory leak in this test
+
 Thu Jun 16 08:36:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
