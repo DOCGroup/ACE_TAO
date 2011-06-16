@@ -1,3 +1,8 @@
+Thu Jun 16 07:19:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/ContentFilteredTopic/StateListener/Sender/CFTLS_Test_Sender_exec.cpp:
+          Fixed memory leak in this test
+
 Wed Jun 15 13:38:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/TypeSupport.h:
