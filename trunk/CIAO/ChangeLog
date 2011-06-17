@@ -1,3 +1,9 @@
+Fri Jun 17 11:33:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
+        * examples/Hello/descriptors/PlanLocality_SameProcess.cdp:
+          According to latest version of the Hello example.
+
 Fri Jun 17 11:23:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/Hello_Base/Hello_Base.mpc:

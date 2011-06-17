@@ -189,28 +189,28 @@
     <name>PICML_default_xme_file.ImplementationArtifacts.Hello_ReceiverArtifacts.Hello_Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_svnt</location>
+    <location>Receiver_svnt</location>
   </artifact>
 
   <artifact xmi:id="_5FFE7D8E-2003-11DF-B475-000C2916C803">
     <name>PICML_default_xme_file.ImplementationArtifacts.Hello_ReceiverArtifacts.Hello_Receiver_exec</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_exec</location>
+    <location>Receiver_exec</location>
   </artifact>
 
   <artifact xmi:id="_5FFE7D8E-2003-11DF-B476-000C2916C803">
     <name>PICML_default_xme_file.ImplementationArtifacts.Hello_SenderArtifacts.Hello_Sender_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Sender_svnt</location>
+    <location>Sender_svnt</location>
   </artifact>
 
   <artifact xmi:id="_5FFE7D8E-2003-11DF-B477-000C2916C803">
     <name>PICML_default_xme_file.ImplementationArtifacts.Hello_SenderArtifacts.Hello_Sender_exec</name>
     <source/>
     <node/>
-    <location>Hello_Sender_exec</location>
+    <location>Sender_exec</location>
   </artifact>
 
   <localityConstraint>
