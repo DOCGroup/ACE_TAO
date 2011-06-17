@@ -1,6 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.filter_null.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <static id="EC_Factory" params="-ECProxyPushConsumerCollection mt:copy_on_write:list -ECProxyPushSupplierCollection mt:copy_on_write:list -ECSupplierFilter null -ECDispatching reactive"/>
-</ACE_Svc_Conf>
