@@ -1,3 +1,14 @@
+Fri Jun 17 11:52:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Sender/Sender.mpc:
+          Regenerated, using the -e option in generate_component_mpc.
+          We're using events in this example.
+
+        * examples/Hello/step-by-step.html:
+          Added the -e option to the description of generate_component_mpc.
+
 Fri Jun 17 11:33:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
