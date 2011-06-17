@@ -15,91 +15,163 @@
 <hr>
 <h2>Simple <a href="http://www.dre.vanderbilt.edu/CIAO">CIAO</a> tutorial</h2>
 <b>Note:</b>
-<UL>
-<li><a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> tools are not used in this tutorial.</li>
-<li>This is only a <em>GENERAL</em> way of building up a CIAO application and deploying it with DAnCE. The user could always change the process in his own way. For example: the IDL file content, the project structure etc.</li>
-<li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Hello</code>.</li>
-</UL>
+<ul>
+  <li><a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> tools are not used in this tutorial.</li>
+  <li>This is only a <em>GENERAL</em> way of building up a CIAO application and deploying it with DAnCE.
+    The user could always change the process in his own way. For example: the IDL file content, the project structure etc.
+  </li>
+  <li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Hello</code>.</li>
+</ul>
 <hr>
 
 <h2>Example Description</h2>
 This Hello example is contructed in the following ways:
-<UL>
-<li>1. There are 2 components in the system: Sender and Receiver</li>
-<li>2. The Sender will send out the timeout event to the Receiver.</li>
-<li>3. Upon receiving the timeout event, the Receiver will go and fetch data from the Sender. </li>
-<li>4. The user could deploy multiple instances of the Receiver without changing any C++/idl source code.</li>
-</UL>
+<ol>
+  <li>There are 2 components in the system: Sender and Receiver</li>
+  <li>The Sender will send out the timeout event to the Receiver.</li>
+  <li>Upon receiving the timeout event, the Receiver will go and fetch data from the Sender. </li>
+  <li>The user could deploy multiple instances of the Receiver without changing any C++/idl source code.</li>
+</ol>
+
+<hr>
+
+<h2>Code generation</h2>
+Note that an user only need to write the IDL files. All the rest of the files can be generated.
+The following code generators are use throughout this example:
+<ul>
+  <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl</code><br/>
+    This perl script is able to generate MPC files out of a single name.
+    <a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> is a utility we use
+    to generate makefiles or VC project/solution files for all
+    <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a>,
+    <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a> and
+    <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a>
+    libraries and executables.<br/>
+  </li>
+  <li><code>$ACE_ROOT/bin/tao_idl</code>
+    Besides all the stub and skeleton code, the TAO IDL compiler is also suitable to generate the
+    so called executor files. An executor C++ code file contains the business logic
+    the user need to write. Since this should be deployable by the DAnCE framework, there're
+    some restriction to this code. The TAO IDL compiler takes care of that.
+  </li>
+  <li><code>$ACE_ROOT/bin/mwc.pl</code>
+    This script will generate VS solutions and/or GNU makefiles out of the generated
+    MPC files.
+  </li>
+</ul>
+All these generators will be handled throughout this tutorial.
 <hr>
 
 <h2>Step-By-Step</h2>
 <h3>Hello_Base</h3>
 
-<OL>
-<li>Write an IDL file (<a href="./Hello_Base/Hello_Base.idl"><code>Hello_Base.idl</code></a>) which contains all
-    the interfaces and events common to all the components. The reason
-    we do this is because the generated lib of this idl file will be
-    linked in by all the components in the system. To reduce the size
-    of the component lib we have to include only the necesary part. In
-    this example, we have an eventtype <code>timeout</code> and an
-    interface <code>ReadMessage</code>, which are used by both the
-    Sender and the Receiver, so we put both of them in <a href="Hello_Base/Hello_Base.idl">Hello_Base.idl</a>.</li>
-    <P>
-
-<li>Look at the <a href="Hello_Base/Hello_Base.mpc"><code>Hello_Base.mpc</code></a> file to get an idea how the Hello_Base_stub
-	and Hello_Base_svnt projects are organized.
-	<a href="http://downloads.ociweb.com/MPC/MakeProjectCreator.pdf">MPC</a> is a utility we used to generate makefiles or VC
-	project/solution files for all <a href="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</a>,
-	<a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a> and <a href="http://www.cs.wustl.edu/~schmidt/CIAO.html">CIAO</a>
-	libraries.</li>
-</Ol>
+<ol>
+  <li>Write an IDL file (<a href="./Hello_Base/Hello_Base.idl"><code>Hello_Base.idl</code></a>) which contains all
+      the interfaces and events common to all the components. The reason
+      we do this is because the generated lib of this idl file will be
+      linked in by all the components in the system. To reduce the size
+      of the component lib we have to include only the necesary part. In
+      this example, we have an eventtype <code>timeout</code> and an
+      interface <code>ReadMessage</code>, which are used by both the
+      Sender and the Receiver, so we put both of them in <a href="Hello_Base/Hello_Base.idl">Hello_Base.idl</a>.
+  </li>
+  <br/>
+  <li>Look at the <a href="Hello_Base/Hello_Base.mpc"><code>Hello_Base.mpc</code></a> file to get an idea how the Hello_Base_stub
+      and Hello_Base_svnt projects are organized.<br/>
+      There's a utility in $CIAO_ROOT/bin, called generate_component_mpc. This a perl script which is able to generate a complete
+      mpc file based on a given name. The commandline used to generate <code>Hello_Base.mpc</code> is:<br/>
+      <code>$CIAO_ROOT/bin/generate_component_mpc.pl -n -l../lib -o../lib Hello_Base</code><br/>
+      Use <code>$CIAO_ROOT/bin/generate_component_mpc.pl --help</code> to get more information about this tool.
+      See also the <a href="../../tutorials/Quoter/Simple/01.html">Quoter tutorial</a> for more information.
+  </li>
+</ol>
 
 <hr>
 
 <h3>For Every Components</h3>
 
 <ol>
-<li>Execute : <br>
-<ul>
-<code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Sender</code> in Sender directory<br>
-<code>$CIAO_ROOT/bin/generate_component_mpc.pl -p Hello_Base Receiver</code> in Receiver directory<br>
-</ul>
-Note:
-<ul>
-<li>I have different directories for <code>"Hello_Base", "Sender", "Receiver"</code> respectively.</li>
+  <li>Execute : <br>
+  <ul>
+    <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -l ../lib -o ../lib -c starter -p Hello_Base Sender</code> in Sender directory.
+      The <code>-c</code> option will be handled later on in the step-by-step.
+    </li>
+    <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -l ../lib -o ../lib -p Hello_Base Receiver</code> in Receiver directory
+    </li>
+  </ul>
+  <b>Note:</b>
+  <ul>
+    <li>There're different directories for <code>"Hello_Base", "Sender", "Receiver"</code> respectively.
+    </li>
+    <li>All output DLL's/executable will be stored in a separate directory, called "lib".
+    </li>
+  </ul>
 
-<li>For every <code>_stub</code> project, add:<br>
-  <code>"libs  += Hello_Base_DnC_stub"</code><br>
+  <br/>
 
-</ul>
-The output of this scripts includes an MPC file and 3 export header files
-(..._svnt_export.h, ..._exec_export.h and ..._stub_export.h).
-<P>
+  <li>Write an IDL file for every component (<a href="Sender/Sender.idl"><code>Sender.idl</code></a> and
+      <a href="Receiver/Receiver.idl"><code>Receiver.idl</code></a>). <br> Here you can put the
+      component specific IDL definitions in this file. In this example we have a interface <code>trigger</code>
+      specific to the Sender. Please note that the Sender component
+      <code>"supports"</code> (IDL keyword) this interface. This interface can be used by
+      <a href="Sender/starter.cpp"><code>starter</code></a> (an IDL 2 client) to start the application.
+  </li>
 
-<li>Write an idl file for every component (<a href="Sender/Sender.idl"><code>Sender.idl</code></a> and
-    <a href="Receiver/Receiver.idl"><code>Receiver.idl</code></a>). <br> Here you can put the
-    component specific IDL definitions in this file. In this example we have a interface <code>trigger</code>
-    specific to the Sender. Please note that the Sender component
-    <code>"supports"</code> (IDL keyword) this interface. </li> <P>
+  <br/>
 
-<li>Write the CIDL file for every component (<a href="Sender/Sender.cidl"><code>Sender.cidl</code></a> and
-    <a href="Receiver/Receiver.cidl"><code>Receiver.cidl</code></a>).
-</li><P>
+  <li>There's a possibility that the TAO IDL compiler can generate a 'template' for the executor code.
+    Steps to generate executor files:
+    <ol>
+      <li>Backup the following files to a temporary directory:<br/>
+        <ul>
+          <li>Sender/Sender_exec.cpp
+          </li>
+          <li>Sender/Sender_exec.h
+          </li>
+          <li>Receiver/Receiver_exec.cpp
+          </li>
+          <li>Receiver/Receiver_exec.h
+          </li>
+        </ul>
+      </li>
+      <li>Add -Gex or -Gexr to the <code>idlflags</code> entry in the
+        IDL generator projects in the MPC file
+      </li>
+        <ul>
+          <li>Project <code>Hello_Base_Sender_idl_gen</code> in Sender/Sender.mpc
+          </li>
+          <li>Project <code>Hello_Base_Receiver_idl_gen</code> in Receiver/Receiver.mpc
+          </li>
+        </ul>
+      <li>Generate GNUmakefiles / VS project files and build
+      </li>
+      <li>Remove -Gex(r) again
+      </li>
+      <li>Generate GNUmakefiles / VS project files (and build)
+      </li>
+    </ol>
+    <b>Mind the last step! The TAO IDL compiler does not check whether the
+      executor file already exists. It will overwrite the existing!</b><br/><br/>
+    After step 2 the following files should be overwritten:
+    <ul>
+      <li>Sender/Sender_exec.cpp
+      </li>
+      <li>Sender/Sender_exec.h
+      </li>
+      <li>Receiver/Receiver_exec.cpp
+      </li>
+      <li>Receiver/Receiver_exec.h
+      </li>
+    </ul>
+  </li>
+</ol>
 
-<li>Compile these cidl files, using <code>$CIAO_ROOT/bin/cidlc.exe Receiver.cidl --gen-exec-impl -I$CIAO_ROOT/ccm -I$CIAO_ROOT -I$TAO_ROOT</code>.
-    This'll result in ..._exec.cpp/..._exec.h and ..._svnt.cpp/..._svnt.h files.
-</li><P>
+Performing all steps could be troublesome to a new CCM user. The
+best way of learning this is to just do more than once. I'll also help to
+read the example source code. If you are familliar with CORBA programming,
+it should not take too much time before you can declare yourself as a CCM programmer.<br/>
 
-<li>Write <code>_exec.h</code> and <code>_exec.cpp</code> files which actually implement the component.</li>
-<P>
-</OL>
-
-Writing all those files could be troublesome to a new CCM user. The
-best way of learning this is to read the example source code. If you
-are familliar with CORBA programming, it should not take too much time
-before you can declare yourself as a CCM programmer. <P>
-
-<hr> <P>
+<hr>
 
 <h3>The Entry Point</h3>
 
@@ -112,24 +184,38 @@ called <code>trigger</code> on the Sender component to get the whole
 distributed application started. The <code>starter</code> will first
 obtain the Sender component object reference through the ior string
 supplied as a command argument. Please see the the last part of
-<code>Hello/Sender/Sender.mpc</code> file for details. <P>
+<code>Sender/Sender.mpc</code> file for details. <br/>
 
 <hr>
 
-<h3>Make</h3>
+<h3>Build</h3>
 
-<UL>
-<li>Go to the directory <code>$DANCE_ROOT</code> and do:<br>
-    <code>$ACE_ROOT/bin/mwc.pl</code></li>
-    <br>For example, using <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> if you are using Visual C++ 7.1 IDE
-    <br>or <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> on Linux platforms.</li><P>
-<li>Look at the generated Makefile(*unx) or Solution/workspace files(Windows) and you got it.</li>
-</UL>
-After building DAnCE, a solution or makefile should be generated for this CIAO example.
-Navigate to <code>$CIAO_ROOT/examples/Hello</code> and execute <code>$ACE_ROOT/bin/mwc.pl -type vc71</code> for
-Visual C++ 7.1 or <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code> on Linux platforms.
-Build this example using Visual Studio or make.
-<P><hr>
+This example assumes that ACE/TAO/CIAO/DANCE is build. If not, please
+follow the instructions to build these frameworks.<br/>
+<b>Tip : </b>Experienced users may want to use <code>$CIAO_ROOT/CIAO_TAO_DAnCE.mwc</code>
+to generate the needed VC project/solutions of GNU make files.<br/>
+
+Perform the following steps to build this example: <br/>
+<ol>
+  <li>Navigate to <code>$CIAO_ROOT/examples/Hello</code>
+  </li>
+  <li>For windows:<br/>
+    <ul>
+      <li>Visual C++ 2005: execute <code>$ACE_ROOT/bin/mwc.pl -type vc8</code>
+      </li>
+      <li>Visual C++ 2008: execute <code>$ACE_ROOT/bin/mwc.pl -type vc9</code>
+      </li>
+      <li>Visual C++ 2010: execute <code>$ACE_ROOT/bin/mwc.pl -type vc10</code>
+      </li>
+    </ul>
+  </li>
+  <li>For linux:<br/>
+    Execute <code>$ACE_ROOT/bin/mwc.pl -type gnuace</code>.
+  </li>
+</ol>
+Build this example using Visual Studio or make.<br/>
+
+<hr>
 
 <h3>Assemble</h3>
 
@@ -165,6 +251,7 @@ The former file can be found in $CIAO_ROOT/docs/schema directory. <P>
 </UL>
 
 <hr>
+
 <h3>Deploy with <A href="../../docs/releasenotes/dance.html">DAnCE</A></h3>
 Finally you are ready to deploy the component-based application you have developed.
 <br><br>

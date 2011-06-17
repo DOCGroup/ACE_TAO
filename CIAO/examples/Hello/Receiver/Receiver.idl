@@ -15,8 +15,5 @@ module Hello
     attribute short iterations;
   };
 
-  home ReceiverHome manages Receiver
-  {
-  };
 };
 #endif /*RECEIVER_IDL*/
