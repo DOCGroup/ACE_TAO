@@ -1,3 +1,11 @@
+Fri Jun 17 13:53:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
+          Renamed "SameProcess" to "DifferentProcess"
+
+        * examples/Hello/step-by-step.html:
+          Update. Fixed some typos.
+
 Fri Jun 17 12:47:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/step-by-step.html:
@@ -12,7 +20,7 @@ Fri Jun 17 12:47:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * examples/Null_Component/plan.h:
         * examples/Null_Component_Glfa/Null_Component_exec.h:
         * examples/Null_Component_Glfa/Null_Component_exec.cpp:
-          Removed since the TAO IDL compiler generates these files 
+          Removed since the TAO IDL compiler generates these files
           on the fly.
 
         * examples/Philosophers:
