@@ -1,3 +1,25 @@
+Fri Jun 17 12:47:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/step-by-step.html:
+          Update. Started rewriting Assemble.
+
+        * examples/Null_Component/Null_Component.mpc:
+        * examples/Null_Component_Glfa/Null_Component.mpc:
+          Let the TAO IDL compiler generate the executor files.
+
+        * examples/Null_Component/Null_Component_exec.h:
+        * examples/Null_Component/Null_Component_exec.cpp:
+        * examples/Null_Component/plan.h:
+        * examples/Null_Component_Glfa/Null_Component_exec.h:
+        * examples/Null_Component_Glfa/Null_Component_exec.cpp:
+          Removed since the TAO IDL compiler generates these files 
+          on the fly.
+
+        * examples/Philosophers:
+        * examples/Philosophers/Philosophers.idl:
+        * examples/Philosophers/README:
+          Removed these files.
+
 Fri Jun 17 12:21:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/step-by-step.html:

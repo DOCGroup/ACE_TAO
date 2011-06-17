@@ -228,31 +228,17 @@ build the simplest case only, which is 1 Receiver and 1 Sender. If you
 are interested in CIAO you could try 1 Sender with multiple
 Receivers. However, you need to change the Sender.idl to make it
 <em>publishes</em> timeout event instead of <em>emits</em> event.<br>
-Note: Creating the deployment plan descriptor is a tedious and
-    error-prone job, you can download <a
-    href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> to assist
-    you in this step. <P>
-
-<UL>
-<li>You need to create an XML descriptor file to describe your <em>deployment plan</em>, which is
-	defined in a <EM>Deployment Plan Descriptor</EM> (.cdp) (see <a href="./descriptors/DeploymentPlan.cdp">Hello deployment plan<a>).
-	In this file, you need to declaratively specify how the component assembly is constructed. Specificly, you need to specify
-	the component types, component instances, component connections, implementation artifact descriptions, and whether you
-  want to register component instances with naming service.<P>
-
-<li> Please make sure that the Modified_Deployment.xsd and XMI.xsd files are in the Hello/descriptors directory.
-The former file can be found in $CIAO_ROOT/docs/schema directory. <P>
-
-<li> Create the <em>NodeManagerMap.cdd</em> file containing the CORBALOC IIOP address of each <code>NodeManager</code>
-     where it is running. Please refer to the existing <a href="./descriptors/NodeManagerMap.cdd">
-     <code>NodeManagerMap.cdd</code></a> for details. Alwyas use for the property name "edu.vanderbilt.dre.DAnCE.StringIOR" and for the
-     resourceType "edu.vanderbilt.dre.DAnCE.NodeAddress".
-     As you can see, we only specify 2 <code>NodeManagers</code>, which means these two components
-     will be installed in the different <code>NodeApplication</code> server. Please refer to the
-     <em>flattened_deploymentplan.cdp</em> file to see how a deployer
-     could specify the mapping between components and nodes.</li>
-</li>
-</UL>
+Note: Creating the deployment plan descriptor is a tedious and error-prone job,
+you can download <a href="http://www.dre.vanderbilt.edu/cosmic">CoSMIC</a> to
+assist you in this step.
+<br/><br/>
+You need to create an XML descriptor file to describe your <em>deployment plan</em>,
+which is defined in a <em>Deployment Plan Descriptor</em> (.cdp)
+(see <a href="./descriptors/DeploymentPlan.cdp">Hello deployment plan<a>).
+In this file, you need to declaratively specify how the component assembly is
+constructed. Specificly, you need to specify the component types, component instances,
+component connections, implementation artifact descriptions, and whether you
+want to register component instances with naming service.
 
 <hr>
 
