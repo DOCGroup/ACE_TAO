@@ -20,6 +20,9 @@
   <li>This is only a <em>GENERAL</em> way of building up a CIAO application and deploying it with DAnCE.
     The user could always change the process in his own way. For example: the IDL file content, the project structure etc.
   </li>
+  <li>An CCM application may consist of several components, deployed on several (hardware) nodes, which work
+    together as one big application.
+  </li>
   <li>To download the code of this example please refer to the SVN repository at <code>$CIAO_ROOT/examples/Hello</code>.</li>
 </ul>
 <hr>
@@ -27,7 +30,7 @@
 <h2>Example Description</h2>
 This Hello example is contructed in the following ways:
 <ol>
-  <li>There are 2 components in the system: Sender and Receiver</li>
+  <li>There are 2 components in the application: Sender and Receiver</li>
   <li>The Sender will send out the timeout event to the Receiver.</li>
   <li>Upon receiving the timeout event, the Receiver will go and fetch data from the Sender. </li>
   <li>The user could deploy multiple instances of the Receiver without changing any C++/idl source code.</li>
@@ -37,7 +40,7 @@ This Hello example is contructed in the following ways:
 
 <h2>Code generation</h2>
 Note that an user only need to write the IDL files. All the rest of the files can be generated.
-The following code generators are use throughout this example:
+The following code generators are used throughout this example:
 <ul>
   <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl</code><br/>
     This perl script is able to generate MPC files out of a single name.
@@ -62,7 +65,7 @@ The following code generators are use throughout this example:
 All these generators will be handled throughout this tutorial.
 <br/><br/>
 If there's a ccm_noevent entry in your default.features (location
-<code>$ACE_ROOT/bin/MakeProjectCreator/config/</code>, make sure it's set to 0 (nil)!
+<code>$ACE_ROOT/bin/MakeProjectCreator/config/</code>), make sure it's set to 0 (nil)!
 
 <hr>
 
@@ -73,7 +76,7 @@ If there's a ccm_noevent entry in your default.features (location
   <li>Write an IDL file (<a href="./Hello_Base/Hello_Base.idl"><code>Hello_Base.idl</code></a>) which contains all
       the interfaces and events common to all the components. The reason
       we do this is because the generated lib of this idl file will be
-      linked in by all the components in the system. To reduce the size
+      linked in by all the components in the application. To reduce the size
       of the component lib we have to include only the necesary part. In
       this example, we have an eventtype <code>timeout</code> and an
       interface <code>ReadMessage</code>, which are used by both the
@@ -84,7 +87,7 @@ If there's a ccm_noevent entry in your default.features (location
       and Hello_Base_svnt projects are organized.<br/>
       There's a utility in $CIAO_ROOT/bin, called generate_component_mpc. This a perl script which is able to generate a complete
       mpc file based on a given name. The commandline used to generate <code>Hello_Base.mpc</code> is:<br/>
-      <code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -n -l../lib -o../lib Hello_Base</code><br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -n -l../lib -o../lib Hello_Base</code><br/>
       Use <code>$CIAO_ROOT/bin/generate_component_mpc.pl --help</code> to get more information about this tool.
       See also the <a href="../../tutorials/Quoter/Simple/01.html">Quoter tutorial</a> for more information.
   </li>
@@ -92,7 +95,7 @@ If there's a ccm_noevent entry in your default.features (location
 
 <hr>
 
-<h3>For Every Components</h3>
+<h3>For Every Component</h3>
 
 <ol>
   <li>Execute : <br>
@@ -123,8 +126,9 @@ If there's a ccm_noevent entry in your default.features (location
 
   <br/>
 
-  <li>There's a possibility that the TAO IDL compiler can generate a 'template' for the executor code.
-    Steps to generate executor files:
+  <li>There's a possibility that the TAO IDL compiler can generate a 'template'
+    for the executor code (=business logic).
+    Steps to generate the executor files:
     <ol>
       <li>Backup the following files to a temporary directory:<br/>
         <ul>
@@ -138,8 +142,8 @@ If there's a ccm_noevent entry in your default.features (location
           </li>
         </ul>
       </li>
-      <li>Add -Gex or -Gexr to the <code>idlflags</code> entry in the
-        IDL generator projects in the MPC file
+      <li>Add -Gex to the <code>idlflags</code> entry in the
+        IDL generator projects in the MPC file, meaning
       </li>
         <ul>
           <li>Project <code>Hello_Base_Sender_idl_gen</code> in Sender/Sender.mpc
@@ -171,7 +175,7 @@ If there's a ccm_noevent entry in your default.features (location
 </ol>
 
 Performing all steps could be troublesome to a new CCM user. The
-best way of learning this is to just do more than once. I'll also help to
+best way of learning this is to just do it more than once. I'll also help to
 read the example source code. If you are familliar with CORBA programming,
 it should not take too much time before you can declare yourself as a CCM programmer.<br/>
 
@@ -197,7 +201,7 @@ supplied as a command argument. Please see the the last part of
 This example assumes that ACE/TAO/CIAO/DANCE is build. If not, please
 follow the instructions to build these frameworks.<br/>
 <b>Tip : </b>Experienced users may want to use <code>$CIAO_ROOT/CIAO_TAO_DAnCE.mwc</code>
-to generate the needed VC project/solutions of GNU make files.<br/>
+to generate the needed VC project/solutions or GNU make files.<br/>
 
 Perform the following steps to build this example: <br/>
 <ol>
@@ -239,70 +243,71 @@ In this file, you need to declaratively specify how the component assembly is
 constructed. Specificly, you need to specify the component types, component instances,
 component connections, implementation artifact descriptions, and whether you
 want to register component instances with naming service.
+<br/><br/>
 
 <hr>
 
 <h3>Deploy with <A href="../../docs/releasenotes/dance.html">DAnCE</A></h3>
-Finally you are ready to deploy the component-based application you have developed.
+Once the DeploymentPlan is ready, the apllication can be deployed, using the newly
+created Deployment Plan.
+<br/><br/>
+
+Next figure shows how DAnCE will handle the deployment plan.<br/>
+
+<img width="70%" height="80%" src="./dance_deployment_runtime.png" />
+<br/><br/>
+
+To deploy the application, we're using perl scripts to launch the executables
+of which DAnCE consist.
+A perl script typically launches the DAnCE executables in this order:
+<ol>
+  <li>Naming service (if needed).
+  </li>
+  <li>A DAnCE Node Manager for each node.
+  </li>
+  <li>The DAnCE Execution Manager.
+  </li>
+  <li>The DAnCE Plan Launcher.
+  </li>
+</ol>
+
+See <a href=./descriptors/run_test.pl">run_test.pl</a> for an example.
+
 <br><br>
 
-<UL>
-  <LI> If you wish to register one or more of your component
-      instances with CORBA <em>naming service</em>, then please start your naming service
-      first with multicast mode first ("-m 1" option). Use <code>-o</code> to define where
-      the output ior should be saved.<P>
+The two most important variations:
+<ol>
+  <li>Deploying the application, using the naming service. See
+    <a href=./descriptors/run_test.pl">run_test.pl</a>.
+  </li>
+  <li>Deploying the application, without the use of the naming service. See
+    <a href=./descriptors/run_test_without_ns.pl">run_test_without_ns.pl</a>
+  </li>
+</ol>
+When using the first option, one will need to write a cdd-file. This file dictates
+which nodes are available in the system and which CORBA IIOP is necessary to
+contact these. Click <a href="./descriptors/NodeManagerMap.cdd">here</a> for
+an example of a CDD file.
 
-  <LI> Go into the <em> descriptors </em> directory Start NodeManagers
-      (NodeDameon) by running <code> run_NodeDaemons.pl </code> <P>
-
-  <LI> There are two ways to start the execution manager :
-    <ol>
-      <li>Using the naming service to locate the node deamons<br/>
-      Navigate to <em>$CIAO_ROOT/examples/Hello/descriptor</em> and execute
-      <code>$DANCE_ROOT/bin/dance_execution_manager -eEM.ior --domain-nc file://ns.ior</code><br/>
-      --domain-nc should point to the ior file of the naming service.
-      </li>
-
-      <li>Without using the naming service.<br/>
-      Navigate to <em>$CIAO_ROOT/examples/Hello/descriptor</em> and execute:<br/>
-      <code>$DANCE_ROOT/bin/dance_execution_manager -eEM.ior --cdd NodeManagerMap.cdd </code><br/>
-      <em>NOTE</em>: As one can see, we use the "NodeManagerMap.cdd" file to instruct the
-        Execution_Manager how to find the endpoint of each individual NodeManager (i.e., Node Daemon) where
-        component(s) will be deployed. This is non-standard.
-      </li>
-    </ol>
-  </LI>
-  </ul><P>
-
-  <LI> Start the plan launcher, with or without using the Naming Service: <br/>
-    <ol>
-      <li>Using the naming service<br/>
-        Navigate to <em>$CIAO_ROOT/examples/Hello/descriptors_naming</em> and execute:<br/>
-        <code> $DANCE_ROOT/bin/dance_plan_launcher -d deploymentplan_naming.cdp -k file://../descriptors/EM.ior </code>
-      </li>
-      <li>Without using the naming service<br/>
-        Navigate to <em>$CIAO_ROOT/examples/Hello/descriptors</em> and execute:<br/>
-        <code> $DANCE_ROOT/bin/dance_plan_launcher -x deploymentplan.cdp -k file://EM.ior </code><P>
-      </li>
-    After this, components should be deployed successfully.<P>
-    </ol>
-</LI>
-
-  <LI> You can go into the <em>$CIAO_ROOT/examples/Hello/descriptor</em> directory and
-      run execute <code>$CIAO_ROOT/examples/Hello/Sender/starter -k file://Sender.ior</code> to start the application. Please make sure that the component IOR
-      file for the Sender component (<code>Sender.ior</code>) is present when you run this client.<P>
-  </LI>
-  <LI>To stop deployment just run $DANCE_ROOT/bin/dance_plan_launcher -x DeploymentPlan.cdp -k file://EM.ior -q
-  </LI>
-</UL>
-<br/>
-<br/>
-In addition, have a look at <a href="./descriptors/run_test.pl"><code>run_test.pl</code></a> and see how this can be established.
 
 <hr>
 <h3>More Features</h3>
-Recently DAnCE is enabled with a feature called <em>Redeployment and Reconfiguration</em> (ReDaC). For more information
-about how to use this feature, please refer to the ReDaC-Usage-Example.html under $CIAO_ROOT/examples/Hello/.
+<ul>
+  <li>Running the components in the same process:
+    see <a href="./descriptors/PlanLocality_SameProcess.cdp">PlanLocality_SameProcess.cdp</a>
+    at the end of this file.
+  </li>
+  <li>Running the components in the different process:
+    see <a href="./descriptors/PlanLocality_DifferentProcesses.cdp">PlanLocality_DifferentProcesses.cdp</a>
+    at the end of this file.
+  </li>
+  <li>Using the Health and Status interceptors.
+    see <a href="./descriptors/run_test_shs.pl">run_test_shs.pl</a>,
+    <a href="./descriptors/shs.ciao.localityconfig">shs.ciao.localityconfig</a>, and
+    <a href="./descriptors/shs.localityconfig">shs.localityconfig</a>.
+  </li>
+</ul>
+
 <br><br>
 
 <hr>

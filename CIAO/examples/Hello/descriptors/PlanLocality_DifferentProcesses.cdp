@@ -214,12 +214,12 @@
   </artifact>
 
   <localityConstraint>
-    <constraint>SameProcess</constraint>
+    <constraint>DifferentProcess</constraint>
     <constrainedInstance xmi:idref="_AC04995C-2003-11DF-8000-000C2916C803"/>
   </localityConstraint>
 
   <localityConstraint>
-    <constraint>SameProcess</constraint>
+    <constraint>DifferentProcess</constraint>
     <constrainedInstance xmi:idref="_A7F51814-2003-11DF-8000-000C2916C803"/>
   </localityConstraint>
 
