@@ -25,9 +25,5 @@ module Hello
 
     attribute string local_message;
   };
-
-  home SenderHome manages Sender
-  {
-  };
 };
 #endif /*SENDER_IDL*/
