@@ -60,6 +60,10 @@ The following code generators are use throughout this example:
   </li>
 </ul>
 All these generators will be handled throughout this tutorial.
+<br/><br/>
+If there's a ccm_noevent entry in your default.features (location
+<code>$ACE_ROOT/bin/MakeProjectCreator/config/</code>, make sure it's set to 0 (nil)!
+
 <hr>
 
 <h2>Step-By-Step</h2>
@@ -94,7 +98,7 @@ All these generators will be handled throughout this tutorial.
   <li>Execute : <br>
   <ul>
     <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -l ../lib -o ../lib -c starter -p Hello_Base Sender</code> in Sender directory.
-      The <code>-c</code> option will be handled later on in the step-by-step.
+      The <code>-c</code> option will be handled <a href="#entry_point">later</a> on in the step-by-step.
     </li>
     <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -l ../lib -o ../lib -p Hello_Base Receiver</code> in Receiver directory
     </li>
@@ -173,7 +177,7 @@ it should not take too much time before you can declare yourself as a CCM progra
 
 <hr>
 
-<h3>The Entry Point</h3>
+<a name="entry_point"><h3>The Entry Point</h3></a>
 
 After both components are implemented we still need a small program to
 initialize the process. In Sender.idl there is a Sender specific
