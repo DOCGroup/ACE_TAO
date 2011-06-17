@@ -1,43 +1,67 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p Hello_Base -u Hello -c starter Sender"
+// This file is generated with "generate_component_mpc.pl -c starter -l ../lib -o ../lib -p Hello_Base Sender"
 
-project(Hello_Sender_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+project(Hello_Base_Sender_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += Hello_Base_idl_gen
-  idlflags +=  \
-              -Wb,stub_export_macro=SENDER_STUB_Export \
+
+  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
               -Wb,stub_export_include=Sender_stub_export.h \
               -Wb,skel_export_macro=SENDER_SVNT_Export \
               -Wb,skel_export_include=Sender_svnt_export.h \
-              -Wb,svnt_export_macro=SENDER_SVNT_Export \
-              -Wb,svnt_export_include=Sender_svnt_export.h \
               -Wb,exec_export_macro=SENDER_EXEC_Export \
-              -Wb,exec_export_include=Sender_exec_export.h
+              -Wb,exec_export_include=Sender_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
     Sender.idl
   }
 }
 
-project(Hello_Sender_lem_gen) : ciaoidldefaults , avoids_ccm_noevent{
-  after += Hello_Sender_idl_gen Hello_Base_lem_gen
+project(Hello_Base_Sender_lem_gen) : ciaoidldefaults {
+  after += Hello_Base_Sender_idl_gen
   custom_only = 1
-  idlflags += -Wb,export_macro=SENDER_EXEC_Export \
-              -Wb,export_include=Sender_exec_export.h \
-              -SS
+  idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \
+              -Wb,stub_export_include=Sender_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {
     SenderE.idl
   }
 }
 
-project(Hello_Sender_stub) : ccm_stub , avoids_ccm_noevent{
-  after += Hello_Sender_idl_gen Hello_Base_stub
-  libs  += Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+project(Hello_Base_Sender_lem_stub) : ccm_svnt {
+  after += Hello_Base_Sender_lem_gen Hello_Base_Sender_stub Hello_Base_stub Hello_Base_lem_stub
+  libs  += Hello_Base_stub Hello_Base_lem_stub Sender_stub
 
-  sharedname = Hello_Sender_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Sender_lem_stub
+  dynamicflags += SENDER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SenderEC.cpp
+  }
+
+  Header_Files {
+    SenderEC.h
+    Sender_lem_stub_export.h
+  }
+
+  Inline_Files {
+    SenderEC.inl
+  }
+}
+
+project(Hello_Base_Sender_stub) : ccm_stub {
+  after += Hello_Base_Sender_idl_gen Hello_Base_stub Hello_Base_lem_stub
+  libs  += Hello_Base_stub Hello_Base_lem_stub
+
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Sender_stub
   dynamicflags += SENDER_STUB_BUILD_DLL
 
   IDL_Files {
@@ -57,45 +81,42 @@ project(Hello_Sender_stub) : ccm_stub , avoids_ccm_noevent{
   }
 }
 
-project(Hello_Sender_exec) : ciao_executor, avoids_ccm_noevent {
-  after   += Hello_Sender_lem_gen Hello_Sender_stub
-  sharedname = Hello_Sender_exec
-  libs += Hello_Sender_stub Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+project(Hello_Base_Sender_exec) : ciao_executor {
+  after   += Hello_Base_lem_stub Hello_Base_Sender_lem_stub Hello_Base_Sender_stub
+  sharedname = Sender_exec
+  libs += Hello_Base_lem_stub Sender_stub Sender_lem_stub Hello_Base_stub Hello_Base_lem_stub
 
+  libpaths += ../lib
+  libout = ../lib
   dynamicflags += SENDER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    SenderEC.cpp
     Sender_exec.cpp
   }
 
   Header_Files {
-    SenderEC.h
     Sender_exec.h
     Sender_exec_export.h
   }
 
   Inline_Files {
-    SenderEC.inl
   }
 }
 
 
-project(Hello_Sender_svnt) : ciao_servant, avoids_ccm_noevent {
-  after      += Hello_Base_skel Hello_Sender_exec
-  sharedname  = Hello_Sender_svnt
-  libs       += Hello_Sender_exec \
-                Hello_Sender_stub \
+project(Hello_Base_Sender_svnt) : ciao_servant  {
+  after      += Hello_Base_skel Hello_Base_lem_stub  Hello_Base_Sender_lem_stub
+  sharedname  = Sender_svnt
+  libs       += Sender_stub Sender_lem_stub  \
                 Hello_Base_skel \
-                Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+                Hello_Base_stub \
+                Hello_Base_lem_stub
 
+  libpaths += ../lib
+  libout = ../lib
   dynamicflags += SENDER_SVNT_BUILD_DLL
 
   IDL_Files {
@@ -117,13 +138,13 @@ project(Hello_Sender_svnt) : ciao_servant, avoids_ccm_noevent {
   }
 }
 
-project (Hello_starter) : ccm_stub, valuetype, avoids_ccm_noevent {
+project (Hello_Base_starter) : ccm_stub, valuetype  {
   exename = starter
-  after += Hello_Sender_stub
-  libs  += Hello_Sender_stub Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+  after += Hello_Base_Sender_stub
+  libs  += Sender_stub Hello_Base_stub Hello_Base_lem_stub
 
+  libpaths += ../lib
+  exeout = ../lib
   IDL_Files {
   }
 

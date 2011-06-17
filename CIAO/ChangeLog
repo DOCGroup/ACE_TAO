@@ -1,3 +1,21 @@
+Fri Jun 17 11:23:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Hello_Base/Hello_Base.mpc:
+        * examples/Hello/Receiver/Receiver.idl:
+        * examples/Hello/Receiver/Receiver.mpc:
+        * examples/Hello/Receiver/Receiver_exec.h:
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/Sender/Sender.idl:
+        * examples/Hello/Sender/Sender.mpc:
+        * examples/Hello/Sender/Sender_exec.h:
+        * examples/Hello/Sender/Sender_exec.cpp:
+        * examples/Hello/descriptors/DeploymentPlan.cdp:
+        * examples/Hello/descriptors/DeploymentPlan_without_ns.cdp:
+        * examples/Hello/step-by-step.html:
+          Rewritten. Regenerated the mpc and executor code. Also
+          using unhomed components. Next step is to test and change
+          the other perl scripts.
+
 Thu Jun 16 11:05:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer_exec.cpp:

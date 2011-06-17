@@ -1,42 +1,67 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl Receiver"
+// This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -p Hello_Base Receiver"
 
-project(Hello_Receiver_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+project(Hello_Base_Receiver_idl_gen) : componentidldefaults {
   custom_only = 1
-  after += Hello_Base_idl_gen
+
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
-              -Wb,skel_export_macro=RECEIVER_SKEL_Export \
-              -Wb,skel_export_include=Receiver_skel_export.h \
-              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
-              -Wb,svnt_export_include=Receiver_svnt_export.h \
+              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=Receiver_svnt_export.h \
               -Wb,exec_export_macro=RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Receiver_exec_export.h
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
 
   IDL_Files {
     Receiver.idl
   }
 }
 
-project(Hello_Receiver_lem_gen) : ciaoidldefaults , avoids_ccm_noevent{
+project(Hello_Base_Receiver_lem_gen) : ciaoidldefaults {
+  after += Hello_Base_Receiver_idl_gen
   custom_only = 1
-  after += Hello_Receiver_idl_gen
-  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
-              -Wb,export_include=Receiver_exec_export.h \
-              -SS
+  idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=Receiver_lem_stub_export.h \
+              -SS -Gxhst
 
   IDL_Files {
     ReceiverE.idl
   }
 }
 
-project(Hello_Receiver_stub) : ccm_stub, avoids_ccm_noevent {
-  after += Hello_Receiver_idl_gen Hello_Base_stub
-  libs  += Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+project(Hello_Base_Receiver_lem_stub) : ccm_svnt {
+  after += Hello_Base_Receiver_lem_gen Hello_Base_Receiver_stub Hello_Base_stub Hello_Base_lem_stub
+  libs  += Hello_Base_stub Hello_Base_lem_stub Receiver_stub
 
-  sharedname = Hello_Receiver_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Receiver_lem_stub
+  dynamicflags += RECEIVER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverEC.cpp
+  }
+
+  Header_Files {
+    ReceiverEC.h
+    Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ReceiverEC.inl
+  }
+}
+
+project(Hello_Base_Receiver_stub) : ccm_stub {
+  after += Hello_Base_Receiver_idl_gen Hello_Base_stub Hello_Base_lem_stub
+  libs  += Hello_Base_stub Hello_Base_lem_stub
+
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Receiver_stub
   dynamicflags += RECEIVER_STUB_BUILD_DLL
 
   IDL_Files {
@@ -56,87 +81,60 @@ project(Hello_Receiver_stub) : ccm_stub, avoids_ccm_noevent {
   }
 }
 
-project(Hello_Receiver_exec) : ciao_executor, avoids_ccm_noevent {
-  after   += Hello_Receiver_lem_gen Hello_Receiver_stub
-  sharedname = Hello_Receiver_exec
-  libs += Hello_Receiver_stub Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+project(Hello_Base_Receiver_exec) : ciao_executor {
+  after   += Hello_Base_lem_stub Hello_Base_Receiver_lem_stub Hello_Base_Receiver_stub
+  sharedname = Receiver_exec
+  libs += Hello_Base_lem_stub Receiver_stub Receiver_lem_stub Hello_Base_stub Hello_Base_lem_stub
 
+  libpaths += ../lib
+  libout = ../lib
   dynamicflags += RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
-    ReceiverEC.cpp
     Receiver_exec.cpp
   }
 
   Header_Files {
-    ReceiverEC.h
     Receiver_exec.h
     Receiver_exec_export.h
   }
 
   Inline_Files {
-    ReceiverEC.inl
   }
 }
 
-project(Hello_Receiver_skel) : ccm_svnt , avoids_ccm_noevent{
-  after     += Hello_Base_skel Hello_Receiver_stub
-  sharedname = Hello_Receiver_skel
-  libs      += Hello_Receiver_stub \
-               Hello_Base_skel \
-               Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
-  dynamicflags += RECEIVER_SKEL_BUILD_DLL
 
-  IDL_Files {
-  }
-
-  Source_Files {
-    ReceiverS.cpp
-  }
-
-  Header_Files {
-    ReceiverS.h
-    Receiver_skel_export.h
-  }
-
-  Inline_Files {
-    ReceiverS.inl
-  }
-}
-
-project(Hello_Receiver_svnt) : ciao_servant, avoids_ccm_noevent {
-  after      += Hello_Receiver_skel Hello_Receiver_exec
-  sharedname  = Hello_Receiver_svnt
-  libs       += Hello_Receiver_exec \
-                Hello_Receiver_skel \
-                Hello_Receiver_stub \
+project(Hello_Base_Receiver_svnt) : ciao_servant  {
+  after      += Hello_Base_skel Hello_Base_lem_stub  Hello_Base_Receiver_lem_stub
+  sharedname  = Receiver_svnt
+  libs       += Receiver_stub Receiver_lem_stub  \
                 Hello_Base_skel \
-                Hello_Base_stub
-  libout = ../lib
-  libpaths += ../lib
+                Hello_Base_stub \
+                Hello_Base_lem_stub
 
+  libpaths += ../lib
+  libout = ../lib
   dynamicflags += RECEIVER_SVNT_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
+    ReceiverS.cpp
     Receiver_svnt.cpp
   }
 
   Header_Files {
+    ReceiverS.h
     Receiver_svnt.h
     Receiver_svnt_export.h
   }
 
   Inline_Files {
+    ReceiverS.inl
   }
 }
 

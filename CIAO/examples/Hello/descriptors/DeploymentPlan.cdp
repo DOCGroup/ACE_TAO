@@ -9,21 +9,20 @@
 
   <!-- Implementations declarations -->
 
-  <!-- Home implementation -->
-  <implementation xmi:id="Hello_ReceiverHomeImplementation">
-    <name>Hello_ReceiverHomeImplementation</name>
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
-    <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Impl</string>
+          <string>create_Hello_Receiver_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -34,7 +33,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_ReceiverHome_Servant</string>
+          <string>create_Hello_Receiver_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -45,7 +44,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Receiver_svnt</string>
+          <string>Receiver_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -56,44 +55,26 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Receiver_exec</string>
+          <string>Receiver_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="Hello_ReceiverComponentImplementation">
-    <name>Hello_ReceiverComponentImplementation</name>
+  <implementation xmi:id="SenderComponentImplementation">
+    <name>SenderComponentImplementation</name>
     <source/>
-    <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
-    <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
-    <execParameter>
-      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
-
-  <implementation xmi:id="Hello_SenderHomeImplementation">
-    <name>Hello_SenderHomeImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
     <execParameter>
       <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>home factory</name>
+      <name>component factory</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Impl</string>
+          <string>create_Hello_Sender_Impl</string>
         </value>
       </value>
     </execParameter>
@@ -104,7 +85,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>create_Hello_SenderHome_Servant</string>
+          <string>create_Hello_Sender_Servant</string>
         </value>
       </value>
     </execParameter>
@@ -115,7 +96,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Sender_svnt</string>
+          <string>Sender_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -126,77 +107,18 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Hello_Sender_exec</string>
+          <string>Sender_exec</string>
         </value>
       </value>
     </execParameter>
   </implementation>
 
-  <implementation xmi:id="Hello_SenderComponentImplementation">
-    <name>Hello_SenderComponentImplementation</name>
-    <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
-    <execParameter>
-      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
-
-  <instance xmi:id="Hello_ReceiverHomeInstance">
-    <name>Hello_ReceiverHome</name>
+  <instance xmi:id="ReceiverComponentInstance">
+    <name>ReceiverComponent</name>
     <node>ReceiverNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_ReceiverHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_ReceiverComponentInstance">
-    <name>Hello_ReceiverComponent</name>
-    <node>ReceiverNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_ReceiverComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_ReceiverHome</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
@@ -232,53 +154,12 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="Hello_SenderHomeInstance">
-    <name>Hello_SenderHome</name>
+  <instance xmi:id="SenderComponentInstance">
+    <name>SenderComponent</name>
     <node>SenderNode</node>
     <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderHomeImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome.ior</string>
-        </value>
-      </value>
-    </configProperty>
-    <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
-  </instance>
-
-  <instance xmi:id="Hello_SenderComponentInstance">
-    <name>Hello_SenderComponent</name>
-    <node>SenderNode</node>
-    <!-- hostname -->
-    <source/>
-    <implementation xmi:idref="Hello_SenderComponentImplementation" />
-    <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Hello_SenderHome</string>
-        </value>
-      </value>
-    </configProperty>
+    <implementation xmi:idref="SenderComponentImplementation" />
     <configProperty>
       <name>local_message</name>
       <value>
@@ -320,13 +201,13 @@
       <portName>read_message</portName>
       <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
+      <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_message</portName>
       <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderComponentInstance" />
+      <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
   </connection>
 
@@ -336,41 +217,41 @@
       <portName>click_out</portName>
       <provider>false</provider>
       <kind>EventPublisher</kind>
-      <instance xmi:idref="Hello_SenderComponentInstance" />
+      <instance xmi:idref="SenderComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
       <portName>click_in</portName>
       <provider>true</provider>
       <kind>EventConsumer</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
+      <instance xmi:idref="ReceiverComponentInstance" />
     </internalEndpoint>
   </connection>
 
   <!-- Artifacts declarations -->
-  <artifact xmi:id="Hello_Receiver_ExecArtifact">
-    <name>Hello_Receiver_exec</name>
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_exec</location>
+    <location>Receiver_exec</location>
   </artifact>
-  <artifact xmi:id="Hello_Receiver_SvntArtifact">
-    <name>Hello_Receiver_svnt</name>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Receiver_svnt</location>
+    <location>Receiver_svnt</location>
   </artifact>
 
-  <artifact xmi:id="Hello_Sender_ExecArtifact">
-    <name>Hello_Sender_exec</name>
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
     <source/>
     <node/>
-    <location>Hello_Sender_exec</location>
+    <location>Sender_exec</location>
   </artifact>
-  <artifact xmi:id="Hello_Sender_SvntArtifact">
-    <name>Hello_Sender_svnt</name>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
     <source/>
     <node/>
-    <location>Hello_Sender_svnt</location>
+    <location>Sender_svnt</location>
   </artifact>
 
 </Deployment:DeploymentPlan>
