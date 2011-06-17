@@ -1,36 +1,36 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -n -l../lib -o../lib Hello_Base"
+// This file is generated with "generate_component_mpc.pl -e -n -l../lib -o../lib Hello_Base"
 
-project(Hello_Base_idl_gen) : componentidldefaults {
+project(Hello_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {
   custom_only = 1
-
+  
   idlflags += -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
               -Wb,stub_export_include=Hello_Base_stub_export.h \
               -Wb,skel_export_macro=HELLO_BASE_SKEL_Export \
               -Wb,skel_export_include=Hello_Base_skel_export.h \
-              -Gxhex -Gxhsk -Gxhst
+              -Gxhex -Gxhsk -Gxhst 
 
   IDL_Files {
     Hello_Base.idl
   }
 }
 
-project(Hello_Base_lem_gen) : ciaoidldefaults {
+project(Hello_Base_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   after += Hello_Base_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=HELLO_BASE_LEM_STUB_Export \
               -Wb,stub_export_include=Hello_Base_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst 
 
   IDL_Files {
     Hello_BaseE.idl
   }
 }
 
-project(Hello_Base_lem_stub) : ccm_svnt {
-  after += Hello_Base_lem_gen Hello_Base_stub
+project(Hello_Base_lem_stub) : ccm_svnt, avoids_ccm_noevent {
+  after += Hello_Base_lem_gen Hello_Base_stub 
   libs  +=  Hello_Base_stub
-
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = Hello_Base_lem_stub
@@ -53,10 +53,10 @@ project(Hello_Base_lem_stub) : ccm_svnt {
   }
 }
 
-project(Hello_Base_stub) : ccm_stub {
-  after += Hello_Base_idl_gen
-  libs  +=
-
+project(Hello_Base_stub) : ccm_stub, avoids_ccm_noevent {
+  after += Hello_Base_idl_gen 
+  libs  += 
+  
   libpaths += ../lib
   libout = ../lib
   sharedname = Hello_Base_stub
@@ -80,16 +80,16 @@ project(Hello_Base_stub) : ccm_stub {
 }
 
 
-project(Hello_Base_skel) : ciao_executor  {
+project(Hello_Base_skel) : ciao_executor, avoids_ccm_noevent  {
   after      +=  Hello_Base_stub Hello_Base_lem_stub
   sharedname  = Hello_Base_skel
   libs       += Hello_Base_stub
-
-
+ 
+  
   libpaths += ../lib
   libout = ../lib
   dynamicflags += HELLO_BASE_SKEL_BUILD_DLL
-
+  
   IDL_Files {
   }
 

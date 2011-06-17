@@ -80,7 +80,7 @@ All these generators will be handled throughout this tutorial.
       and Hello_Base_svnt projects are organized.<br/>
       There's a utility in $CIAO_ROOT/bin, called generate_component_mpc. This a perl script which is able to generate a complete
       mpc file based on a given name. The commandline used to generate <code>Hello_Base.mpc</code> is:<br/>
-      <code>$CIAO_ROOT/bin/generate_component_mpc.pl -n -l../lib -o../lib Hello_Base</code><br/>
+      <code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -n -l../lib -o../lib Hello_Base</code><br/>
       Use <code>$CIAO_ROOT/bin/generate_component_mpc.pl --help</code> to get more information about this tool.
       See also the <a href="../../tutorials/Quoter/Simple/01.html">Quoter tutorial</a> for more information.
   </li>
@@ -93,10 +93,10 @@ All these generators will be handled throughout this tutorial.
 <ol>
   <li>Execute : <br>
   <ul>
-    <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -l ../lib -o ../lib -c starter -p Hello_Base Sender</code> in Sender directory.
+    <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -l ../lib -o ../lib -c starter -p Hello_Base Sender</code> in Sender directory.
       The <code>-c</code> option will be handled later on in the step-by-step.
     </li>
-    <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -l ../lib -o ../lib -p Hello_Base Receiver</code> in Receiver directory
+    <li><code>$CIAO_ROOT/bin/generate_component_mpc.pl -e -l ../lib -o ../lib -p Hello_Base Receiver</code> in Receiver directory
     </li>
   </ul>
   <b>Note:</b>
