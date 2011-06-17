@@ -1,3 +1,15 @@
+Fri Jun 17 12:21:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/step-by-step.html:
+          Describing ccm_noevent in default.features. Made an extra
+          link to the description of "starter".
+
+        * examples/Hello/descriptors/Domain.cdd:
+        * examples/Hello/descriptors/Hello.pcd:
+        * examples/Hello/descriptors/package.tpd:
+        * examples/Hello/descriptors/svc_em.conf:
+          Removed these files since they may confuse the user.
+
 Fri Jun 17 11:52:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/Hello_Base/Hello_Base.mpc:
