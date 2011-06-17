@@ -11,7 +11,8 @@ project(Null_Component_Glfa_idl_gen) : componentidldefaults {
               -Wb,exec_export_macro=NULL_COMPONENT_EXEC_Export \
               -Wb,exec_export_include=Null_Component_exec_export.h \
               -Wb,svnt_export_macro=NULL_COMPONENT_SVNT_Export \
-              -Wb,svnt_export_include=Null_Component_svnt_export.h
+              -Wb,svnt_export_include=Null_Component_svnt_export.h \
+              -Gex
 
   IDL_Files {
     Null_Component.idl
