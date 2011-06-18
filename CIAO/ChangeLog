@@ -1,3 +1,8 @@
+Sat Jun 18 08:14:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Hello/Receiver/Receiver_exec.cpp:
+          Fixed compiler error on windows.
+
 Fri Jun 17 13:53:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Hello/descriptors/PlanLocality_DifferentProcesses.cdp:
