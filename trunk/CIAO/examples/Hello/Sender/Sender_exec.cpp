@@ -53,9 +53,10 @@ namespace CIAO_Hello_Sender_Impl
   push_message_exec_i::get_message (void)
   {
     /* Your code here. */
+    CORBA::String_var message = this->sender_.local_message();
     ACE_DEBUG ((LM_EMERGENCY, "Sender returning message: [%C]\n",
-                this->sender_.local_message()));
-    return CORBA::string_dup (this->sender_.local_message());
+                message.in ()));
+    return CORBA::string_dup (message.in ());
   }
 
   /**
