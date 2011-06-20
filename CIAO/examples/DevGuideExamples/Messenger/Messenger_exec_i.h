@@ -42,7 +42,7 @@ namespace CIAO_Messenger_Impl
   class Publication_exec_i;
   class History_exec_i;
 
-  class MESSENGER_EXEC_Export Messenger_exec_i
+  class Messenger_exec_i
     : public virtual Messenger_Exec,
       public virtual ::CORBA::LocalObject,
       public virtual ACE_Task_Base
@@ -97,7 +97,7 @@ namespace CIAO_Messenger_Impl
   extern "C" MESSENGER_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Messenger_Impl (void);
 
-  class MESSENGER_EXEC_Export MessengerHome_exec_i
+  class MessengerHome_exec_i
     : public virtual MessengerHome_Exec,
       public virtual ::CORBA::LocalObject
   {
