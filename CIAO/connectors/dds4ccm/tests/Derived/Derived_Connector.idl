@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef NOMODULE_CONNECTOR_IDL
-#define NOMODULE_CONNECTOR_IDL
+#ifndef DERIVED_CONNECTOR_IDL
+#define DERIVED_CONNECTOR_IDL
 
 #include <Components.idl>
 #include <ccm_dds.idl>
