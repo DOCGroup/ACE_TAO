@@ -1,3 +1,17 @@
+Mon Jun 20 17:17:26 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/config-win32-mingw.h:
+        * ace/Basic_Types.h:
+
+          - Moved the definition of ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+            to the MinGW config file.
+
+          - Added #define ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE 1 to
+            the MinGW config file, so that, for generated IDL long
+            double constants, the argument will agree with the
+            print format string. MinGW doesn't support long double
+            in the print format.
+
 Fri Jun 17 16:48:29 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Basic_Types.h:
