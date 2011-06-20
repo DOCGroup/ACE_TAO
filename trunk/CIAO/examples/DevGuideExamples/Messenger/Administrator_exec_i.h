@@ -36,7 +36,7 @@
 
 namespace CIAO_Administrator_Impl
 {
-  class ADMINISTRATOR_EXEC_Export Administrator_exec_i
+  class Administrator_exec_i
     : public virtual Administrator_Exec,
       public virtual ::CORBA::LocalObject,
       public virtual ACE_Task_Base
@@ -81,7 +81,7 @@ namespace CIAO_Administrator_Impl
   extern "C" ADMINISTRATOR_EXEC_Export ::Components::EnterpriseComponent_ptr
   create_Administrator_Impl (void);
 
-  class ADMINISTRATOR_EXEC_Export AdministratorHome_exec_i
+  class AdministratorHome_exec_i
     : public virtual AdministratorHome_Exec,
       public virtual ::CORBA::LocalObject
   {
