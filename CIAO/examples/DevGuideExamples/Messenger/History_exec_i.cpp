@@ -89,7 +89,7 @@ namespace CIAO_Messenger_Impl
     // bump up the reference count; we don't own it.
     // the _var in the STL list takes ownership of the "copy"
     message->_add_ref();
-    this->messages_.push_back( message );
+    this->messages_.push_back(message);
   }
 }
 

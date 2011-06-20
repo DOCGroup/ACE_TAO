@@ -1,3 +1,14 @@
+Mon Jun 20 15:38:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/DevGuideExamples/Messenger/Administrator_exec_i.h:
+        * examples/DevGuideExamples/Messenger/History_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Messenger.mpc:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.h:
+        * examples/DevGuideExamples/Messenger/Messenger_exec_i.cpp:
+        * examples/DevGuideExamples/Messenger/Receiver_exec_i.h:
+        * examples/DevGuideExamples/Messenger/descriptors/run_test.pl:
+          Some cleanup and simplifications but this example doesn't deploy yet
+
 Mon Jun 20 13:58:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:

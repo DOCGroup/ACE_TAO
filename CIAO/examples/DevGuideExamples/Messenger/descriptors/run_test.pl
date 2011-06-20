@@ -107,7 +107,4 @@ $EM->Kill();
 $tg->DeleteFile ($embase);
 $tg->DeleteFile ($plior);
 
-# in case shutdown did not perform as expected
-$tg->KillAll ('ciao_componentserver');
-
 exit 0;

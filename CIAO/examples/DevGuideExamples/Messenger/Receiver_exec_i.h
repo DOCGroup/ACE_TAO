@@ -34,7 +34,7 @@
 
 namespace CIAO_Receiver_Impl
 {
-  class RECEIVER_EXEC_Export Receiver_exec_i
+  class Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -70,7 +70,7 @@ namespace CIAO_Receiver_Impl
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
     create_Receiver_Impl (void);
 
-  class RECEIVER_EXEC_Export ReceiverHome_exec_i
+  class ReceiverHome_exec_i
     : public virtual ReceiverHome_Exec,
       public virtual ::CORBA::LocalObject
   {
