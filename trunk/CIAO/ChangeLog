@@ -1,3 +1,16 @@
+Mon Jun 20 08:02:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/docs/TestCoverage.ods:
+          Updated.
+
+        * connectors/dds4ccm/tests/Derived/Derived.idl:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.idl:
+        * connectors/dds4ccm/tests/Derived/Derived_Connector.mpc:
+          Code alignment. Corrected some incorrect names.
+
+        * connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.h:
+          Code alignment.
+
 Sun Jun 19 18:00:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Hello/Sender/Sender_exec.cpp:
