@@ -7,6 +7,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.2 and CIAO-1.0.3
 . The display example has been upgraded to Qt4 and has been made functional
   again
 
+. The hello example has been updated to the latest implementation guidelines
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.1 and CIAO-1.0.2
 =======================================================
 
