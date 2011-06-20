@@ -119,7 +119,8 @@ namespace CIAO_Writer_Receiver_Impl
 
   Receiver_exec_i::Receiver_exec_i (void)
     : iterations_ (10)
-      , samples_received_ (0)
+    , keys_ (0)
+    , samples_received_ (0)
   {
   }
 

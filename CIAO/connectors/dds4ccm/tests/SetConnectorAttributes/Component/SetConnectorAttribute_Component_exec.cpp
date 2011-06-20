@@ -88,8 +88,8 @@ namespace CIAO_SetConnectorAttribute_SetConnectorAttributeComponent_Impl
     else
       {
         this->check_domain_id (pub);
+        this->check_profile (pub);
       }
-    this->check_profile (pub);
   }
 
   void
