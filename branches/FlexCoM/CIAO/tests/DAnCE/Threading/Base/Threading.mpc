@@ -1,0 +1,89 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n Threading"
+
+project(Threading_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=THREADING_STUB_Export \
+              -Wb,stub_export_include=Threading_stub_export.h \
+              -Wb,skel_export_macro=THREADING_SKEL_Export \
+              -Wb,skel_export_include=Threading_skel_export.h \
+              -Wb,exec_export_macro=THREADING_EXEC_Export \
+              -Wb,exec_export_include=Threading_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst
+
+  IDL_Files {
+    Threading.idl
+  }
+}
+
+project(Threading_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  after += Threading_idl_gen
+  idlflags += \
+              -Wb,export_macro=THREADING_STUB_Export \
+              -Wb,export_include=Threading_stub_export.h \
+              -I..
+
+  IDL_Files {
+    ThreadingE.idl
+  }
+}
+
+project(Threading_stub) : ccm_stub   {
+  after += Threading_lem_gen
+  libs  +=
+
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Threading_stub
+  dynamicflags += THREADING_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreadingC.cpp
+    ThreadingEC.cpp
+  }
+
+  Header_Files {
+    ThreadingC.h
+    ThreadingEC.h
+    Threading_stub_export.h
+  }
+
+  Inline_Files {
+    ThreadingC.inl
+  }
+}
+
+
+project(Threading_skel) : ciao_executor   {
+  after      +=  Threading_stub Threading_lem_stub
+  sharedname  = Threading_skel
+  libs       += Threading_stub
+
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += THREADING_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ThreadingS.cpp
+  }
+
+  Header_Files {
+    ThreadingS.h
+    Threading_skel_export.h
+  }
+
+  Inline_Files {
+    ThreadingS.inl
+  }
+}
+
+

@@ -1,0 +1,20 @@
+// $Id$
+
+The problem is described in the corresponding issue. In short tao_idl
+incorrectly generated _tao_unmarshal() function for valuetypes so that
+it returned true even when the types stored in CDR and attempted to
+extract were completely different.
+
+
+__Successful Output__
+
+$> ./run_test.pl
+Test passed.
+
+
+__Regression Output__
+
+$> ./run_test.pl
+ERROR: unmarshal shouldn't work
+ERROR: <test3941> failed:
+ERROR: test returned 255

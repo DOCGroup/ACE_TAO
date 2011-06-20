@@ -1,0 +1,42 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Counter.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): strategies, rt_server {
+  after += *idl
+  Source_Files {
+    Policy_Tester.cpp
+    Policy_Verifier.cpp
+    RT_Properties.cpp
+    server.cpp
+  }
+  Source_Files {
+    CounterC.cpp
+    CounterS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): strategies, rt_server {
+  exename = client
+  after += *idl
+  Source_Files {
+    Policy_Tester.cpp
+    Policy_Verifier.cpp
+    RT_Properties.cpp
+    client.cpp
+  }
+  Source_Files {
+    CounterC.cpp
+  }
+  IDL_Files {
+  }
+}
+

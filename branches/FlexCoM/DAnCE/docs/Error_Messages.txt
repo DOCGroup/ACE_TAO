@@ -1,0 +1,18 @@
+This file collects obscure error messages that may occur while
+deploying applications using DAnCE.
+
+
+Error Message:
+Inconsistency detected by ld.so: dl-close.c: 743: _dl_close: Assertion
+`map->l_init_called' failed!
+
+Cause:
+This error message may occur when one library which is
+explicitly loaded (e.g., a component implementation) links another
+library that is explicitly loaded (e.g., another component
+implementation or a deployment interceptor).  This error message is
+emitted from the low-level Linux libraries like ld.so. While this
+error is inoccous, and appears only on shutdown, it can be problematic
+for automatic error detection scripts.  This can be addressed by
+refactoring the code such that the shared code is in a seperate, not
+explicitly loaded library.

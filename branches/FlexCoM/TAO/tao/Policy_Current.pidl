@@ -1,0 +1,27 @@
+/**
+ * @file Policy_Current.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the CORBA::PolicyCurrent related
+ * classes.
+ *
+ */
+
+#ifndef TAO_CORBA_POLICYCURRENT_PIDL
+#define TAO_CORBA_POLICYCURRENT_PIDL
+
+#include "tao/Policy_Manager.pidl"
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  local interface PolicyCurrent : PolicyManager, Current
+  {
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_CORBA_POLICYCURRENT_PIDL */

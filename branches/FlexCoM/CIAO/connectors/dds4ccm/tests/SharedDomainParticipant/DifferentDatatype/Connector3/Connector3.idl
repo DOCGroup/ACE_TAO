@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file Connector3.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef SHARED_DP_CONNECTOR3_IDL_
+#define SHARED_DP_CONNECTOR3_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Base.idl"
+
+#pragma ciao lem "Connector3/Connector3E.idl"
+
+module SharedDP_Connector3
+{
+  module ::CCM_DDS::Typed < ::SharedDPTest3, ::SharedDPTest3Seq> SharedDPTest3Connector;
+};
+
+#endif /* SHARED_DP_CONNECTOR3_IDL_ */
