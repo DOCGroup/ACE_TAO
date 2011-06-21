@@ -1,9 +1,7 @@
+// $Id$
+
 #include "TestCompressor_Factory.h"
 #include "TestCompressor.h"
-
-ACE_RCSID (TEST,
-           TestCompressor_Factory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

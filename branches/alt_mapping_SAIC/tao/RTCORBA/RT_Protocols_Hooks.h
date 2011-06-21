@@ -44,8 +44,7 @@ public:
   virtual ~TAO_RT_Protocols_Hooks (void);
 
   /// Initialize the protocols hooks instance.
-  void init_hooks (TAO_ORB_Core *orb_core
-                  );
+  void init_hooks (TAO_ORB_Core *orb_core);
 
   CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
                                               TAO_Stub *stub);
@@ -53,23 +52,17 @@ public:
   CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
                                               CORBA::Policy *policy);
 
-  void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                               );
+  void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
-                                               );
+  void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                               );
+  void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
-                                               );
+  void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties);
 
-  void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                               );
+  void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties);
 
-  void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
-                                               );
+  void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties);
 
   void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties);
 
@@ -108,17 +101,14 @@ public:
 
   int set_thread_CORBA_priority (CORBA::Short);
 
-  int restore_thread_CORBA_and_native_priority (CORBA::Short,
-                                                CORBA::Short);
-
+  int restore_thread_CORBA_and_native_priority (CORBA::Short, CORBA::Short);
   //@}
 
 protected:
   int set_thread_native_priority (CORBA::Short);
 
   RTCORBA::ProtocolProperties_ptr server_protocol_properties (IOP::ProfileId protocol_tag,
-                                                              CORBA::Policy_ptr policy
-                                                             );
+                                                              CORBA::Policy_ptr policy);
 
   RTCORBA::ProtocolProperties_ptr client_protocol_properties (IOP::ProfileId protocol_tag,
                                                               CORBA::Policy_ptr policy);

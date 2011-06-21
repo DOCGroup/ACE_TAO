@@ -6,12 +6,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           Contained_i,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_Contained_i::tmp_name_holder_ = 0;

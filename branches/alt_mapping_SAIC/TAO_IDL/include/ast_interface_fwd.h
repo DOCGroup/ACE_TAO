@@ -89,7 +89,7 @@ public:
   virtual bool is_local (void);
   virtual bool is_valuetype (void);
   virtual bool is_abstract_valuetype (void);
-  
+
   bool full_def_seen (void);
 
   // Cleanup function.
@@ -118,7 +118,7 @@ public:
 private:
   AST_Interface *pd_full_definition;
   // The interface this is a forward declaration of.
-  
+
   bool is_defined_;
   // Checking the member above isn't good enough.
 };

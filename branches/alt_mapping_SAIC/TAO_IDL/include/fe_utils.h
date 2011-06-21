@@ -17,6 +17,7 @@ class AST_PortType;
 class AST_Enum;
 class AST_Component;
 class AST_Uses;
+class AST_Template_Module;
 
 struct TAO_IDL_FE_Export FE_Utils
 {
@@ -65,7 +66,7 @@ struct TAO_IDL_FE_Export FE_Utils
   create_uses_multiple_stuff (AST_Component *c,
                               AST_Uses *u,
                               const char *prefix = "");
-  
+
   /// For the executor IDL file, when a pragma ciao ami receptacle
   /// name is multiplex.
   static void
@@ -94,7 +95,7 @@ struct TAO_IDL_FE_Export FE_Utils
   static bool
   is_include_file_found (ACE_CString & inc_file,
                          UTL_String * idl_file_name);
-  
+
   /// Validate the included idl files, somefiles might have been
   /// ignored by the preprocessor.
   static void
@@ -107,19 +108,29 @@ struct TAO_IDL_FE_Export FE_Utils
   /// Strips _cxx_ prefix for use in port names.
   static void
   original_local_name (Identifier *local_name);
-  
+
   /// Types, constants and exceptions can be redefined in
   /// derived interfaces, modules may be reopened, forward
   /// declarations may be repeated, etc.
   static bool
   can_be_redefined (AST_Decl *prev_dec,
                     AST_Decl *curr_decl);
-  
+
+  /// Called any time there is a possible error from
+  /// referencing a decl contained in a template module,
+  /// but not via an alias.
+  static void
+  tmpl_mod_ref_check (AST_Decl *context,
+                      AST_Decl *ref);
+
 private:
   static bool
   check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                           ACE_CString &param_id,
                           size_t index);
+
+  static AST_Template_Module *
+  get_tm_container (AST_Decl *contained);
 };
 
 #endif /* FE_UTILS_H */

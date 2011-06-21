@@ -1,4 +1,6 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Refcounted_ObjectKey.h"
 #include "ace/Log_Msg.h"
 
@@ -16,21 +18,6 @@ TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (const TAO::ObjectKey &key)
 
 TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey (void)
 {
-}
-
-CORBA::ULong
-TAO::Refcounted_ObjectKey::decr_refcount (void)
-{
-  if (--this->ref_count_ > 0)
-    {
-      return this->ref_count_;
-    }
-
-  ACE_ASSERT (this->ref_count_ == 0);
-
-  delete this;
-
-  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

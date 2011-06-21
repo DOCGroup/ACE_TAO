@@ -8,21 +8,9 @@ project(*Server): messaging, taoexe, portableserver, ami {
 }
 
 project(*Client): messaging, taoexe, portableserver, ami {
+  after += *Server
   Source_Files {
     MessengerHandler.cpp
     MessengerClient.cpp
-  }
-  verbatim(gnuace, local) {
-    ## Using the -g option causes an internal compiler error with g++ 2.96
-    ## on Linux Itanium when compiling MessengerHandler.cpp.
-    ifeq ($(CXX), g++)
-      ifeq ($(findstring 2.96, $(CXX_VERSION)), 2.96)
-        ifeq ($(shell uname -s), Linux)
-          ifeq ($(shell uname -m), ia64)
-            DCFLAGS = -O0
-	  endif
-	endif
-      endif
-    endif
   }
 }

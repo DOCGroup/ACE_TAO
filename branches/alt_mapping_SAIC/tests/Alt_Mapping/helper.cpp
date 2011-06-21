@@ -1,18 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    helper.cpp
-//
-// = DESCRIPTION
-//    Defines a helper class that can generate values for the parameters used
-//    for the Alt_Mapping example
-//
-// = AUTHORS
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    helper.cpp
+ *
+ *  $Id$
+ *
+ *  Defines a helper class that can generate values for the parameters used
+ *  for the Alt_Mapping example
+ *
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ace/OS_NS_ctype.h"

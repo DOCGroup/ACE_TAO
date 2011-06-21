@@ -35,7 +35,7 @@ $ti->DeleteFile ($imriorfile);
 $imr->DeleteFile ($imrpfile);
 
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service");
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path

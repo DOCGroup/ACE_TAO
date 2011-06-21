@@ -85,7 +85,9 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_ami_conn_idl_ending_ (ACE::strnew ("A.idl")),
     ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
     ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
+    ciao_container_type_ (ACE::strnew ("Session")),
     output_dir_ (0),
+    stub_include_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
     any_support_ (true),
@@ -100,6 +102,7 @@ BE_GlobalData::BE_GlobalData (void)
     gen_corba_e_ (false),
     gen_minimum_corba_ (false),
     gen_lwccm_ (false),
+    gen_noeventccm_ (false),
     opt_tc_ (false),
     ami4ccm_call_back_ (false),
     ami_call_back_ (false),
@@ -107,12 +110,11 @@ BE_GlobalData::BE_GlobalData (void)
     gen_tie_classes_ (false),
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
-    gen_dcps_type_support_ (false),
-    gen_dcps_type_support_only_ (false),
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
-    dds_impl_ (NONE),
+    dds_impl_ (DDS_NONE),
+    opendds_sequence_suffix_ ("Seq"),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
@@ -133,7 +135,9 @@ BE_GlobalData::BE_GlobalData (void)
     gen_ciao_svnt_ (false),
     gen_ciao_exec_idl_ (false),
     gen_ciao_exec_impl_ (false),
+    gen_ciao_exec_reactor_impl_ (false),
     gen_ciao_conn_impl_ (false),
+    gen_dds_typesupport_idl_ (false),
     gen_ciao_valuefactory_reg_ (true),
     gen_stub_export_hdr_file_ (false),
     gen_skel_export_hdr_file_ (false),
@@ -142,7 +146,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_conn_export_hdr_file_ (false),
     gen_lem_force_all_ (false),
     tab_size_ (2),
-    alt_mapping_ (false)
+    alt_mapping_ (false),
+    in_facet_servant_ (false)
 {
 }
 
@@ -274,7 +279,7 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-  
+
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
     {
@@ -312,7 +317,7 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-  
+
   if (!orb_file && !be_global->gen_custom_ending ()
       && FE_Utils::validate_orb_include (idl_file_name))
     {
@@ -1438,6 +1443,19 @@ BE_GlobalData::ciao_ami_conn_impl_src_ending (void) const
 }
 
 void
+BE_GlobalData::ciao_container_type (const char* s)
+{
+  ACE::strdelete (this->ciao_container_type_);
+  this->ciao_container_type_ = ACE::strnew (s);
+}
+
+const char *
+BE_GlobalData::ciao_container_type (void) const
+{
+  return this->ciao_container_type_;
+}
+
+void
 BE_GlobalData::output_dir (const char* s)
 {
   ACE::strdelete (this->output_dir_);
@@ -1461,6 +1479,19 @@ const char*
 BE_GlobalData::skel_output_dir (void) const
 {
   return this->skel_output_dir_;
+}
+
+void
+BE_GlobalData::stub_include_dir (const char* s)
+{
+  ACE::strdelete (this->stub_include_dir_);
+  this->stub_include_dir_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::stub_include_dir (void) const
+{
+  return this->stub_include_dir_;
 }
 
 void
@@ -1609,6 +1640,18 @@ BE_GlobalData::gen_minimum_corba (void) const
 }
 
 void
+BE_GlobalData::gen_noeventccm (bool val)
+{
+  this->gen_noeventccm_ = val;
+}
+
+bool
+BE_GlobalData::gen_noeventccm (void) const
+{
+  return this->gen_noeventccm_;
+}
+
+void
 BE_GlobalData::gen_lwccm (bool val)
 {
   this->gen_lwccm_ = val;
@@ -1706,31 +1749,6 @@ BE_GlobalData::gen_inline_constants (void) const
 }
 
 void
-BE_GlobalData::gen_dcps_type_support (bool val)
-{
-  this->gen_dcps_type_support_ = val;
-}
-
-bool
-BE_GlobalData::gen_dcps_type_support (void) const
-{
-  return this->gen_dcps_type_support_;
-}
-
-void
-BE_GlobalData::gen_dcps_type_support_only (bool val)
-{
-  this->gen_dcps_type_support_only_ = val;
-}
-
-bool
-BE_GlobalData::gen_dcps_type_support_only (void) const
-{
-  return this->gen_dcps_type_support_only_;
-}
-
-
-void
 BE_GlobalData::gen_orb_h_include (bool val)
 {
   this->gen_orb_h_include_ = val;
@@ -1783,6 +1801,10 @@ BE_GlobalData::dds_impl (char const * const val)
     {
       this->dds_impl_ = OPENDDS;
     }
+  else if (tmp == "coredx")
+    {
+      this->dds_impl_ = COREDX;
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -1797,6 +1819,18 @@ BE_GlobalData::DDS_IMPL
 BE_GlobalData::dds_impl (void) const
 {
   return this->dds_impl_;
+}
+
+void
+BE_GlobalData::opendds_sequence_suffix (const char *val)
+{
+  this->opendds_sequence_suffix_ = val;
+}
+
+const char *
+BE_GlobalData::opendds_sequence_suffix (void) const
+{
+  return this->opendds_sequence_suffix_.c_str ();
 }
 
 void
@@ -1928,8 +1962,23 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->ciao_ami_conn_idl_ending_);
   this->ciao_ami_conn_idl_ending_ = 0;
 
+  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
+  this->ciao_ami_conn_impl_hdr_ending_ = 0;
+
+  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
+  this->ciao_ami_conn_impl_src_ending_ = 0;
+
+  ACE::strdelete (this->ciao_container_type_);
+  this->ciao_container_type_ = 0;
+
   ACE::strdelete (this->output_dir_);
   this->output_dir_ = 0;
+
+  ACE::strdelete (this->stub_include_dir_);
+  this->stub_include_dir_ = 0;
+
+  ACE::strdelete (this->skel_output_dir_);
+  this->skel_output_dir_ = 0;
 
   ACE::strdelete (this->anyop_output_dir_);
   this->anyop_output_dir_ = 0;
@@ -1969,7 +2018,7 @@ BE_GlobalData:: void_type (void)
       AST_Decl *d =
         idl_global->root ()->lookup_primitive_type (
           AST_Expression::EV_void);
-          
+
       this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
     }
 
@@ -2314,6 +2363,18 @@ BE_GlobalData::gen_ciao_exec_impl (bool val)
 }
 
 bool
+BE_GlobalData::gen_ciao_exec_reactor_impl (void) const
+{
+  return this->gen_ciao_exec_reactor_impl_;
+}
+
+void
+BE_GlobalData::gen_ciao_exec_reactor_impl (bool val)
+{
+  this->gen_ciao_exec_reactor_impl_ = val;
+}
+
+bool
 BE_GlobalData::gen_ciao_conn_impl (void) const
 {
   return this->gen_ciao_conn_impl_;
@@ -2323,6 +2384,18 @@ void
 BE_GlobalData::gen_ciao_conn_impl (bool val)
 {
   this->gen_ciao_conn_impl_ = val;
+}
+
+bool
+BE_GlobalData::gen_dds_typesupport_idl (void) const
+{
+  return this->gen_dds_typesupport_idl_;
+}
+
+void
+BE_GlobalData::gen_dds_typesupport_idl (bool val)
+{
+  this->gen_dds_typesupport_idl_ = val;
 }
 
 bool
@@ -2419,6 +2492,18 @@ void
 BE_GlobalData::alt_mapping (bool val)
 {
   this->alt_mapping_ = val;
+}
+
+bool
+BE_GlobalData::in_facet_servant (void) const
+{
+  return this->in_facet_servant_;
+}
+
+void
+BE_GlobalData::in_facet_servant (bool val)
+{
+  this->in_facet_servant_ = val;
 }
 
 unsigned long
@@ -2643,6 +2728,23 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             be_global->changing_standard_include_files (0);
           }
+        else if (av[i][2] == 'C')
+          {
+            if (av[i][3] == '\0')
+              {
+                be_global->stub_include_dir (av[i + 1]);
+                ++i;
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand")
+                    ACE_TEXT (" the '%C' option\n"),
+                    av[i]
+                  ));
+              }
+          }
         else
           {
             ACE_ERROR ((
@@ -2808,7 +2910,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 'M')
           {
             // AMI4CCM calls implicit option 'C': AMI with Call back.
-            be_global->ami_call_back (true); 
+            be_global->ami_call_back (true);
              // Generate tie classes and files
             be_global->ami4ccm_call_back (true);
           }
@@ -2840,11 +2942,23 @@ BE_GlobalData::parse_args (long &i, char **av)
 
             break;
           }
+        else if (av[i][2] == 't' && av[i][3] == 's')
+          {
+            // DDS type support IDL generation.
+            be_global->gen_dds_typesupport_idl (true);
+
+            break;
+          }
         else if (av[i][2] == 'e' && av[i][3] == 'x')
           {
             // CIAO executor impl code generation.
             be_global->gen_ciao_exec_impl (true);
 
+            // should the reactor code be generated?
+            if (av[i][4] == 'r')
+              {
+                be_global->gen_ciao_exec_reactor_impl (true);
+              }
             break;
           }
         else if (av[i][2] == 's')
@@ -2975,6 +3089,11 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // CORBA/e.
                 be_global->gen_lwccm (true);
               }
+            else if (av[i][3] == 'm')
+              {
+                // NOEVENTS ccm, ccm without events .
+                be_global->gen_noeventccm (true);
+              }
             else
               {
                 ACE_ERROR ((
@@ -3038,43 +3157,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'd')
           {
-            if (av[i][3] == 'c')
-              {
-                if (av[i][4] == 'p' && av[i][5] =='s')
-                  {
-                    if ('\0' == av[i][6])
-                      {
-                        // DDS DCPS type support.
-                        be_global->gen_dcps_type_support (true);
-                      }
-                    else if (av[i][6] == 'o' && av[i][7] == 'n'
-                      && av[i][8] == 'l' && av[i][9] == 'y' && '\0' == av[i][10])
-                      {
-                        // DDS DCPS type only support
-                        be_global->gen_dcps_type_support (true);
-                        be_global->gen_dcps_type_support_only (true);
-                      }
-                    else
-                      {
-                        ACE_ERROR ((
-                            LM_ERROR,
-                            ACE_TEXT ("IDL: I don't understand ")
-                            ACE_TEXT ("the '%C' option\n"),
-                            av[i]
-                          ));
-                      }
-                  }
-                else
-                  {
-                    ACE_ERROR ((
-                        LM_ERROR,
-                        ACE_TEXT ("IDL: I don't understand ")
-                        ACE_TEXT ("the '%C' option\n"),
-                        av[i]
-                      ));
-                  }
-              }
-            else if ('\0' == av[i][3])
+            if ('\0' == av[i][3])
               {
                 // Generating Direct collocated stubs.
                 be_global->gen_direct_collocation (true);

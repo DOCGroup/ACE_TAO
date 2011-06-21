@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Reactive_Connect_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "tao/ORB_Core.h"

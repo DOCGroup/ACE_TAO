@@ -2,7 +2,7 @@
 
 #include "Driver.h"
 
-ACE_RCSID(lib, TAO_Driver, "$Id$")
+
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"

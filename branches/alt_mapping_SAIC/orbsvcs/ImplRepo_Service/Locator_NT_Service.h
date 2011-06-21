@@ -24,9 +24,9 @@
 #include "ace/Synch.h"
 #include "tao/orbconf.h"
 
-static const ACE_TCHAR* IMR_LOCATOR_SERVICE_NAME = ACE_TEXT("TAOImR");
-static const ACE_TCHAR* IMR_LOCATOR_DISPLAY_NAME = ACE_TEXT("TAO Implementation Repository");
-static const ACE_TCHAR* IMR_LOCATOR_DESCRIPTION = ACE_TEXT("Implementation Repository Locator service for TAO");
+extern const ACE_TCHAR* IMR_LOCATOR_SERVICE_NAME;
+extern const ACE_TCHAR* IMR_LOCATOR_DISPLAY_NAME;
+extern const ACE_TCHAR* IMR_LOCATOR_DESCRIPTION;
 
 /**
  * @class Locator_NT_Service

@@ -35,10 +35,10 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-  
-  // If -GA is used but anyop macro isn't set, defaults to stub macro.    
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+
+  // If -GA is used but anyop macro isn't set, defaults to stub macro.
   const char *export_macro = (be_global->gen_anyop_files ()
                               ? this->ctx_->non_null_export_macro ()
                               : be_global->stub_export_macro ());

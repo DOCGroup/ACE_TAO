@@ -5,10 +5,6 @@
 #include "AMI_Manager.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (LongUpcalls,
-           AMI_Manager,
-           "$Id$")
-
 static void
 validate_connection (Test::Controller_ptr controller)
 {

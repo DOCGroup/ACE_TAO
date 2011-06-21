@@ -7,11 +7,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           UsesDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UsesDef_i::TAO_UsesDef_i (TAO_Repository_i *repo)

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #ifndef TAO_TEST_I_H
@@ -20,6 +21,8 @@ public:
   virtual void pass_ops (base_out outarg);
 
   virtual void pass_state (base_out outarg);
+
+  virtual void pass_nil (base_out outarg);
 
   virtual void shutdown (void);
 private:

@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "tao/TypeCodeFactory_Adapter.h"
 

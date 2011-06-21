@@ -1,5 +1,5 @@
 //$Id$
-=================== RT CORBA capabilities demo =================== 
+=================== RT CORBA capabilities demo ===================
 
 Table of contents
 -----------------
@@ -20,7 +20,7 @@ In this experiment we show the effect of maintaining end to end priorities.
 
 The experiment consists of the following participants:
 
-Job: A CORBA servant object that performs CPU intensive work. The ammount
+Job: A CORBA servant object that performs CPU intensive work. The amount
 of work depends on a load factor that is conveyed to the object per
 invocation as an argument.
 
@@ -41,18 +41,18 @@ To specify POA options the format is:
 -POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
 
 e.g.
--POA poa1 -PriorityModel CLIENT 10 -Bands 2 -Band 1 20 -Band 30 85 -Lanes 2 -Lane 10 1 0 -Lane 80 1 0 
+-POA poa1 -PriorityModel CLIENT 10 -Bands 2 -Band 1 20 -Band 30 85 -Lanes 2 -Lane 10 1 0 -Lane 80 1 0
 
-specifes a POA with: 
+specifes a POA with:
 
 Name - poa1
 
 Priority model - client propogated, def. priority = 10
 
 Bands - 2 Bands with Band values as follows -
-	Band 1 :  low priority = 1, high priority = 20 
+	Band 1 :  low priority = 1, high priority = 20
 	Band 2 :  low priority = 30, high priority = 85
- 
+
 Lanes - 2 Lanes with Lane values as follows -
 	Lane 1 : priority = 10, 1 static thread, 0 dynamic threads
 	Lane 2 : priority = 80, 1 static thread, 0 dynamic threads
@@ -72,7 +72,7 @@ The format for specify a Job is:
 
 where, poa_name is the POA that this object is activated in.
 
-e.g. 
+e.g.
 -Job job_10 poa1
 
 specifies a Job with,
@@ -85,12 +85,12 @@ Task Options
 
 The format for specify a Task is:
 
--ThreadTask -JobName <name> -Priority <priority> -Period <period> -ExecTime <exec_time> -Phase <phase> -Iter <iterations> -Load <load_weight>  
+-ThreadTask -JobName <name> -Priority <priority> -Period <period> -ExecTime <exec_time> -Phase <phase> -Iter <iterations> -Load <load_weight>
 
 where,
 -ThreadTask = Specifies a Thread based timer.
 -JobName <name> = Name of the Job object that this task will exec. once every period.
--Priority <priority> = The OS thread priority at which to run this task. 
+-Priority <priority> = The OS thread priority at which to run this task.
 -Period <period> = The period of execution. (in uS)
 -ExecTime <exec_time> = The offline estimate of the worst case execution time for the Job. (uS)
 -Phase <phase> = The phase to start at (uS)
@@ -98,16 +98,16 @@ where,
 -Load <load_weight> = a load factor passed to the job that varies its processing.
 
 e.g.
--ThreadTask -JobName job_10 -Priority 10 -Period 1 -ExecTime 10000 -Phase 0 -Iter 20 -Load 1000 
+-ThreadTask -JobName job_10 -Priority 10 -Period 1 -ExecTime 10000 -Phase 0 -Iter 20 -Load 1000
 
 specifes a Thread Task in which,
 JobName = job_10
 -Priority = 10
--Period = 1uS 
--ExecTime = 10000uS 
+-Period = 1uS
+-ExecTime = 10000uS
 -Phase = 0uS
 -Iter = 20 iterations
--Load = 1000 
+-Load = 1000
 
 4. Command-Line Options
 ----------------------
@@ -121,12 +121,12 @@ other instances of activity can be started.
 
 a). The activated Jobs are registered with a Naming service, so we need an NS running
 e.g. ./Naming_Service -o naming_ior
-  
+
 b). Start one or more instances of ./activity depending on the test configuration that you have designed.
 
 e.g. ./activity -ORBInitRef NameService=file://naming_ior -ORBSvcConf svc.conf.whatever -ORBDebugLevel 1
 
-c) once all the instances exit, the test will generate data files: <job_name>.dat 
+c) once all the instances exit, the test will generate data files: <job_name>.dat
 
 use gen_graph to generate a .png file to view the results in a graphical viewer.
 

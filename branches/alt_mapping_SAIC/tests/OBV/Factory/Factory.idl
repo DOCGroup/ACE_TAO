@@ -10,7 +10,7 @@ module OBV_FactoryTest
 
   //
   // Base valuetype without any ops or factories. Result should be
-  // concrete BaseConcreteValue_init class ready to use. 
+  // concrete BaseConcreteValue_init class ready to use.
   //
   valuetype BaseValue
   {
@@ -19,13 +19,13 @@ module OBV_FactoryTest
     {
       unsigned long value;
     };
-    
+
     public unsigned long some_data;
   };
-  
+
   //
   // Another valuetype w/o ops, etc. Just to check proper inheritance
-  // of OBV_ classes and RefCounter's. Value1_init should be 
+  // of OBV_ classes and RefCounter's. Value1_init should be
   // concrete as well.
   //
   valuetype Value1 : BaseValue
@@ -40,7 +40,7 @@ module OBV_FactoryTest
   {
     public unsigned long id;
     public BV_Data data;
-    
+
     factory create_default (in unsigned long id);
     factory create (in unsigned long id,
                     in BV_Data data);
@@ -53,7 +53,7 @@ module OBV_FactoryTest
   {
     BaseValue get_base_value ();
     Value1 get_value1 ();
-    Value2 get_value2 ();    
+    Value2 get_value2 ();
 
     // Shutdown the romote ORB
     oneway void shutdown ();

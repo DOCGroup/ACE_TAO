@@ -74,8 +74,8 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
     }
 
   // Now generate the class definition.
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
@@ -94,7 +94,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "PortableServer::POA_ptr poa," << be_nl
       << "::CORBA::Boolean release = true" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "/// dtor" << be_nl << be_nl
+      << "/// dtor" << be_nl_2
       << "~" << tiename << " (void);" << be_nl
       << "// TIE specific functions" << be_nl
       << "/// return the underlying object" << be_nl
@@ -105,7 +105,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "void _tied_object (T *obj, ::CORBA::Boolean release = true);" << be_nl
       << "/// do we own it" << be_nl
       << "::CORBA::Boolean _is_owner (void);" << be_nl
-      << "/// set the ownership" << be_nl << be_nl
+      << "/// set the ownership" << be_nl_2
       << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA (void);";
@@ -129,7 +129,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
-      << "::CORBA::Boolean rel_;" << be_nl << be_nl
+      << "::CORBA::Boolean rel_;" << be_nl_2
       << "// copy and assignment are not allowed" << be_nl
       << tiename << " (const " << tiename << " &);" << be_nl
       << "void operator= (const " << tiename << " &);" << be_uidt_nl

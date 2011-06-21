@@ -1,4 +1,3 @@
-
 //$Id$
 
 #include "tao/target_specification.h"

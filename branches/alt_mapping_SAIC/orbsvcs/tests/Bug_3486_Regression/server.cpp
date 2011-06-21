@@ -27,17 +27,16 @@ ACE_TCHAR const * const scpc_unloadNamingService = ACE_REMOVE_SERVICE_DIRECTIVE(
 
 void loadunloadcycle()
 {
-  int result = 0;
-
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")
   ));
 
-  result = ACE_Service_Config::process_directive(scpc_loadOrb);
+  int result = ACE_Service_Config::process_directive(scpc_loadOrb);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
+    result
   ));
 
   DllORB * p_orb =
@@ -67,7 +66,8 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_loadNamingService);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NamingService done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NamingService done. Result: <%d>\n"),
+    result
   ));
 
   TAO_Naming_Loader * p_NamingService =
@@ -87,7 +87,8 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadNamingService);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NamingService done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NamingService done. Result: <%d>\n"),
+    result
   ));
 
   ACE_DEBUG((
@@ -97,9 +98,11 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadOrb);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),
+    result
   ));
 }
+
 int ACE_TMAIN (int , ACE_TCHAR **)
 {
   ACE_DEBUG((

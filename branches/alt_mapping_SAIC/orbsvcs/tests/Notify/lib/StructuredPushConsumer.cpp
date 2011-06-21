@@ -6,7 +6,7 @@
 #include "StructuredPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(lib, TAO_StructuredPushConsumer, "$Id$")
+
 
 TAO_Notify_Tests_StructuredPushConsumer_Traits::TAO_Notify_Tests_StructuredPushConsumer_Traits (void)
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)

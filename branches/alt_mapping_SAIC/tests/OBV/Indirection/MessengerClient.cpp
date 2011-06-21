@@ -37,11 +37,11 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     bb->b1 (p1);
     bb->b2 (p1);
 
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two boxed values in one valuetype: %s\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two boxed values in one valuetype: %s\n",
       tst->receive_boxedvalue (b)));
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing one boxed values twice in one valuetype: %s\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing one boxed values twice in one valuetype: %s\n",
       tst->receive_boxedvalue (bb)));
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two integers: %s\n", 
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two integers: %s\n",
       tst->receive_long (p1, p2)));
     ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing one integer twice: %s\n",
       tst->receive_long (p1, p1)));

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Structured/StructuredEvent.h"
-
-ACE_RCSID(RT_Notify, TAO_Notify_StructuredEvent, "$Id$")
-
 #include "orbsvcs/Notify/PropertySeq.h"
 #include "orbsvcs/Notify/Consumer.h"
 #include "tao/debug.h"

@@ -37,7 +37,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // If we are defined in the outermost scope, then the value is assigned
@@ -56,7 +56,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       bnt = td->base_node_type ();
     }
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   if (! node->is_nested ())
     {
@@ -126,7 +126,16 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   if (!node->is_nested ()
       || (be_global->gen_inline_constants () && !forbidden_in_class))
     {
-      *os << " = " << node->constant_value ();
+      if (etype == AST_Expression::EV_longdouble)
+        {
+          *os << " (" << be_idt_nl
+              << "ACE_CDR::LongDoubleAssign ("
+              << node->constant_value () << "))" << be_uidt;
+        }
+      else
+        {
+          *os << " = " << node->constant_value ();
+        }
     }
 
   *os << ";";

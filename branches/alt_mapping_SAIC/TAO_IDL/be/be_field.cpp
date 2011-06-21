@@ -37,7 +37,7 @@ be_field::be_field (AST_Type *ft,
   // This covers valuetype fields as well, which is what we want.
   AST_Decl::NodeType nt =
     ft->unaliased_type ()->node_type ();
-    
+
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       idl_global->string_member_seen_ = true;
@@ -86,8 +86,8 @@ be_field::accept (be_visitor *visitor)
 void
 be_field::destroy (void)
 {
-  // AST_Field::destroy() is called by another path.
   this->be_decl::destroy ();
+  this->AST_Field::destroy ();
 }
 
 IMPL_NARROW_FROM_DECL (be_field)

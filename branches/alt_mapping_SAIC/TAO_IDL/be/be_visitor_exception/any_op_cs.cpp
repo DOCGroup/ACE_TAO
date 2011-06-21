@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    any_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the Any operators for Exceptions.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    any_op_cs.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the Any operators for Exceptions.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ***************************************************************************
 // Exception visitor for generating Any operator declarations in the client
@@ -43,7 +40,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -51,7 +48,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   if (!node->is_local ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -61,7 +58,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "TAO_InputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "::CORBA::String_var id;" << be_nl << be_nl
+          << "::CORBA::String_var id;" << be_nl_2
           << "if (!(cdr >> id.out ()))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
@@ -76,7 +73,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
           << "}" << be_uidt
-          << be_nl << be_nl
+          << be_nl_2
           << "return true;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "}";
@@ -89,7 +86,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   // type is inserted into an Any and then marshaled.
   else
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -100,7 +97,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
@@ -110,7 +107,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "}" << be_uidt_nl
           << "}";
     }
-  
+
   *os << be_global->core_versioning_end () << be_nl;
 
   be_module *module = 0;
@@ -143,7 +140,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
           // Copying insertion operator.
 
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "// Copying insertion." << be_nl
               << "void operator<<= (" << be_idt << be_idt_nl
               << "::CORBA::Any &_tao_any," << be_nl
@@ -157,7 +154,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
               << "::" << node->tc_name () << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Non-copying insertion operator."
           *os << "// Non-copying insertion." << be_nl
@@ -173,7 +170,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
               << "::" << node->tc_name () << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to non-const pointer operator.
           *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -186,7 +183,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
               << "const ::" << node->name () << " *&> (" << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to const pointer operator.
           *os << "// Extraction to const pointer." << be_nl
@@ -204,21 +201,21 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
               << "}";
-          
+
           be_util::gen_nested_namespace_end (os, module);
-          
+
           // Emit #else.
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "#else\n";
         }
     }
-  
-  
+
+
   *os << be_global->core_versioning_begin () << be_nl;
 
   // Copying insertion operator.
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
@@ -232,7 +229,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Non-copying insertion operator."
   *os << "// Non-copying insertion." << be_nl
@@ -248,7 +245,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to non-const pointer operator.
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -261,7 +258,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "const " << node->name () << " *&> (" << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to const pointer operator.
   *os << "// Extraction to const pointer." << be_nl
@@ -281,12 +278,12 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   if (module != 0)
     {
       *os << "\n\n#endif";
     }
-  
+
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
     {

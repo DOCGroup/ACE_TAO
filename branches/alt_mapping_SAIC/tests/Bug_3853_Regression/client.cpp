@@ -7,8 +7,8 @@
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/debug.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 #include <iostream>
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("client.ior");
@@ -103,7 +103,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                               argv [0]),
             -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

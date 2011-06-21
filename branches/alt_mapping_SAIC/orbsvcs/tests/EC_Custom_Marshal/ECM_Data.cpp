@@ -3,7 +3,7 @@
 #include "ECM_Data.h"
 #include "tao/CDR.h"
 
-ACE_RCSID(EC_Custom_Marshal, ECM_Data, "$Id$")
+
 
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, ECM_Data& x)

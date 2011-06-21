@@ -2,7 +2,7 @@
 
 #include "Filter.h"
 
-ACE_RCSID(Filter, Filter, "$Id$")
+
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"

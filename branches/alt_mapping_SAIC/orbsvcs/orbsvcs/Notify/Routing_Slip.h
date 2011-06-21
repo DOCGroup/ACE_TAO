@@ -65,7 +65,9 @@ class Routing_Slip_Queue;
  */
 class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 {
+// FUZZ: disable check_for_ACE_Guard
   typedef ACE_Guard< TAO_SYNCH_MUTEX > Routing_Slip_Guard;
+// FUZZ: enable check_for_ACE_Guard
 public:
   /// "Factory" method for normal use.
   static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event);
@@ -79,7 +81,7 @@ public:
 
   void reconnect (void);
 
-  /// destructor (should be private but that inspires compiler wars)
+  /// Destructor (should be private but that inspires compiler wars)
   virtual ~Routing_Slip ();
 
   //////////////////

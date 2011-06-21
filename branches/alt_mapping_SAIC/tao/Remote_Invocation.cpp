@@ -110,12 +110,12 @@ namespace TAO
 
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
-    {
-      // Marshal application data
-      if (this->details_.marshal_args (out_stream) == false)
-        {
-          throw ::CORBA::MARSHAL ();
-        }
+  {
+    // Marshal application data
+    if (this->details_.marshal_args (out_stream) == false)
+      {
+        throw ::CORBA::MARSHAL ();
+      }
   }
 
   Invocation_Status

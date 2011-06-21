@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/LF_Connect_Strategy.h"
 #include "tao/LF_Multi_Event.h"
 #include "tao/Connection_Handler.h"

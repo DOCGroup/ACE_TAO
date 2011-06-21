@@ -43,7 +43,7 @@ $client1->DeleteFile($iorfile);
 my $client2_iorfile = $client2->LocalFile ($iorfile);
 $client2->DeleteFile($iorfile);
 
-$SV = $server->CreateProcess ("../../../orbsvcs/Naming_Service/Naming_Service",
+$SV = $server->CreateProcess ("../../../orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile");
 
@@ -56,7 +56,7 @@ $CL2 = $client2->CreateProcess ("activity",
                                 "-ORBSvcConf $server_conf " .
                                 "-Started_Flag $client2_flag_file");
 
-print STDERR "Running Naming_Service\n";
+print STDERR "Running tao_cosnaming\n";
 
 $server_status = $SV->Spawn ();
 

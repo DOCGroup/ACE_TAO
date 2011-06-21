@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Test_Client_Module.h"
 #include "tao/TAO_Singleton_Manager.h"
@@ -6,11 +7,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-
-ACE_RCSID (DLL_ORB,
-           Test_Client_Module,
-           "$Id$")
-
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -34,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

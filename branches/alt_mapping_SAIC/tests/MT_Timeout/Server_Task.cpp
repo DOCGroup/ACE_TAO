@@ -4,8 +4,6 @@
 
 #include "Server_Task.h"
 
-ACE_RCSID(MT_Timeout, Server_Task, "$Id$")
-
 Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,
                           CORBA::ORB_ptr orb,
                           const ACE_Time_Value &running_time)

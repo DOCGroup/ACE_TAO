@@ -3,9 +3,6 @@
 #include "orbsvcs/Notify/RT_Factory.h"
 #include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
 
-ACE_RCSID(RT_Notify, TAO_Notify_RT_Factory, "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_Factory::TAO_Notify_RT_Factory (void)

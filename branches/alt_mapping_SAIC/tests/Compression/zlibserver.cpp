@@ -6,10 +6,6 @@
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 bool
 test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
 {
@@ -175,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (!test_compression (5, manager.in ()))
         retval = 1;
-      
+
 
       if (!test_invalid_compression_factory (manager.in ()))
         retval = 1;

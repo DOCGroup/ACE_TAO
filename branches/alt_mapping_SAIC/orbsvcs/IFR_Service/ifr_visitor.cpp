@@ -216,121 +216,121 @@ ifr_visitor::visit_structure (AST_Structure *)
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_structure_fwd (AST_StructureFwd *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_exception (AST_Exception *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_expression (AST_Expression *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_enum (AST_Enum *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_operation (AST_Operation *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_field (AST_Field *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_argument (AST_Argument *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_attribute (AST_Attribute *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_union (AST_Union *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_union_fwd (AST_UnionFwd *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_union_branch (AST_UnionBranch *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_union_label (AST_UnionLabel *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_constant (AST_Constant *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_enum_val (AST_EnumVal *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_array (AST_Array *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_sequence (AST_Sequence *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_string (AST_String *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_typedef (AST_Typedef *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_root (AST_Root *)
 {
   return 0;
 }
 
-int 
+int
 ifr_visitor::visit_native (AST_Native *)
 {
   return 0;

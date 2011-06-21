@@ -3,8 +3,6 @@
 //
 #include "Session_Control.h"
 
-ACE_RCSID(Big_Oneways, Session_Control, "$Id$")
-
 Session_Control::Session_Control (CORBA::ULong session_count)
   : session_count_ (session_count)
   , success_ (1)

@@ -1,9 +1,6 @@
+// $Id$
+
 #include "orbsvcs/Log/Iterator_i.h"
-
-ACE_RCSID (Log,
-           Iterator_i,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

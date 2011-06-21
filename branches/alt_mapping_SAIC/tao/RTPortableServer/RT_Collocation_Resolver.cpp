@@ -4,10 +4,6 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-ACE_RCSID(RTPortableServer,
-          RT_Collocation_Resolver,
-          "$Id$")
-
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Object.h"

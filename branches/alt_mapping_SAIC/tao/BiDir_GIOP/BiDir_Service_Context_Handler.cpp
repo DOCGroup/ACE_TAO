@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/BiDir_GIOP/BiDir_Service_Context_Handler.h"
-
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"

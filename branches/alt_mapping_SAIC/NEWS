@@ -1,5 +1,107 @@
+USER VISIBLE CHANGES BETWEEN TAO-2.0.2 and TAO-2.0.3
+====================================================
+
+. Added support for long double constants in IDL
+
+. Improved support for mt_noupcall but this is still experimental
+
+. Addressed several Coverity reported issues
+
+USER VISIBLE CHANGES BETWEEN TAO-2.0.1 and TAO-2.0.2
+====================================================
+
+. Remove support for already deprecated -ORBConnectionCachingStrategy
+
+. Removed -ORBObjectKeyTableLock and -ORBPOALock, very risk options and this
+  way the regular invocation path can be optimized much more
+
+. Improved support for mt_noupcall wait strategy. Upcall detection has been
+  improved and the transport is polled each 2ms to see if we can do the
+  upcall.
+
+. Improved performance of the Parallel Connect Strategy in TAO.
+
+. tao_catior does a better job with JacORB generated IORs.
+
+. tao_cosnaming can now be multithreaded.
+
+USER VISIBLE CHANGES BETWEEN TAO-2.0.0 and TAO-2.0.1
+====================================================
+
+. Fixed IDL compiler bug that caused illegal references to items
+  in the scope of a template module to be overlooked.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.8.3 and TAO-2.0.0
+====================================================
+
+. Improved support for abstract
+
+USER VISIBLE CHANGES BETWEEN TAO-1.8.2 and TAO-1.8.3
+====================================================
+
+. TAO IDL compiler now generates attribute members for generated CCM
+  executor implementation classes, as well as full implementations for
+  the associated set/get operations.
+
+. Add TAO IDL compiler command line option -iC, which overrides the
+  default include path (current directory or $TAO_ROOT/tao) for
+  *C.h files included in generated *A.h files.
+
+. Removed autoconf support for TAO, it is really not tested, unstable, and
+  unmaintainable at this moment
+
+. The TAO IDL compiler now gives the following error when anonymous
+  types are used: 'anonymous types are deprecated by OMG spec'.
+  One can changes this error into a warning. There's also a possibility
+  to silence the TAO IDL compiler about this message. One of the following
+  defines can be added to your config.h file in order to change the behavior
+  of the TAO IDL compiler:
+  * IDL_ANON_ERROR:   The TAO IDL generates an error when it encounters
+                      an anonymous type (default behavior).
+  * IDL_ANON_WARNING: The TAO IDL generates a warning when it encounters
+                      an anonymous type.
+  * ANON_TYPE_SILENT: The TAO IDL doesn't generate a warning nor an error
+                      when it encounters an anonymous type.
+
+. Renamed ALL ORB services executables. This because of
+  the fact that the TAO ORB services should be recognizable
+  between the ORB services of other CORBA vendors. There are
+  systems where ORB services of several CORBA vendors are
+  installed (mainly via the installed packages). The following
+  rename actions have been taken place:
+  * 'LifeCycle_Service'       to 'tao_coslifecycle'
+  * 'Dump_Schedule'           to 'tao_dump_schedule'
+  * 'NT_Notify_Service'       to 'tao_nt_cosnotification'
+  * 'Notify_Service'          to 'tao_cosnotification'
+  * 'FT_ReplicationManager'   to 'tao_ft_replicationmanager'
+  * 'IFR_Service'             to 'tao_ifr_service'
+  * 'TAO_Service'             to 'tao_service'
+  * 'Fault_Detector'          to 'tao_fault_detector'
+  * 'Scheduling_Service'      to 'tao_cosscheduling'
+  * 'Basic_Logging_Service'   to 'tao_tls_basic'
+  * 'Notify_Logging_Service'  to 'tao_tls_notify'
+  * 'Event_Logging_Service'   to 'tao_tls_event'
+  * 'RTEvent_Logging_Service' to 'tao_tls_rtevent'
+  * 'Naming_Service'          to 'tao_cosnaming'
+  * 'NT_Naming_Service'       to 'tao_nt_cosnaming'
+  * 'CosEvent_Service'        to 'tao_cosevent'
+  * 'Event_Service'           to 'tao_rtevent'
+  * 'LoadManager'             to 'tao_loadmanager'
+  * 'LoadMonitor'             to 'tao_loadmonitor'
+  * 'Trading_Service'         to 'tao_costrading'
+  * 'Time_Service_Server'     to 'tao_costime_server'
+  * 'Time_Service_Clerk'      to 'tao_costime_clerk'
+  * 'ImplRepo_Service'        to 'tao_imr_locator'
+  * 'ImR_Activator'           to 'tao_imr_activator'
+  * 'Fault_Notifier'          to 'tao_fault_notifier'
+  * 'Concurrency_Service'     to 'tao_cosconcurrency'
+
+. Fixed several bugs related to recursive typecodes
+
 USER VISIBLE CHANGES BETWEEN TAO-1.8.1 and TAO-1.8.2
 ====================================================
+
+. Extended logging related to the POA active object map
 
 USER VISIBLE CHANGES BETWEEN TAO-1.8.0 and TAO-1.8.1
 ====================================================
@@ -11,7 +113,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.8.0 and TAO-1.8.1
     AMI4CCM connector, triggered by the same option, -Gex,
     that generates a similar implementation for a
     component executor.
-    
+
   - Added flags that can be defined in config.h to output
     an error or warning if an anonymous IDL construct is
     seen by the IDL compiler. Also added IDL compiler

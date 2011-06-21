@@ -82,8 +82,8 @@ public:
   virtual int addr_to_string (char *buffer, size_t length);
   virtual TAO_Endpoint *duplicate (void);
 
-  /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  /// endpoints are equivalent iff their port and host are the same.
+  /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
+  /// endpoints are equivalent if their port and host are the same.
   virtual CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
@@ -98,7 +98,7 @@ public:
   /// ownership of this string.
   const char *host (void) const;
 
-  /// Copy the string <h> into <host_> and return the resulting pointer.
+  /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
@@ -130,7 +130,7 @@ private:
   /// Canonical copy constructor
   /**
    * In private section to prevent clients from invoking this
-   * accidentally. Clients should only use duplicate () to make a depp
+   * accidentally. Clients should only use duplicate () to make a deep
    * copy
    */
   TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &);

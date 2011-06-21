@@ -31,7 +31,7 @@ public:
     active_ (active)
   {
   }
-  
+
   virtual void update (void)
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
@@ -63,17 +63,17 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name (dir_name +
                              NotifyMonitoringExt::ActiveEventChannelCount);
-                             
+
       EventChannels* event_channels = 0;
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
                               Monitor_Control_Types::MC_NUMBER,
                               true));
-                              
-      event_channels->add_to_registry (); 
+
+      event_channels->add_to_registry ();
       event_channels->remove_ref ();
-          
+
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelCount;
@@ -83,12 +83,12 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
                               stat_name,
                               Monitor_Control_Types::MC_NUMBER,
                               false));
-                              
-      event_channels->add_to_registry ();     
+
+      event_channels->add_to_registry ();
       event_channels->remove_ref ();
-          
+
       this->stat_names_.push_back (stat_name);
-         
+
       stat_name = dir_name + NotifyMonitoringExt::ActiveEventChannelNames;
       event_channels = 0;
       ACE_NEW (event_channels,
@@ -96,10 +96,10 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
                               stat_name,
                               Monitor_Control_Types::MC_LIST,
                               true));
-                              
+
       event_channels->add_to_registry ();
       event_channels->remove_ref ();
-          
+
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::InactiveEventChannelNames;
@@ -109,33 +109,33 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
                               stat_name,
                               Monitor_Control_Types::MC_LIST,
                               false));
-                              
+
       event_channels->add_to_registry ();
       event_channels->remove_ref ();
-          
+
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelCreationTime;
       Monitor_Base* timestamp = 0;
       ACE_NEW (timestamp,
                Timestamp_Monitor (stat_name.c_str ()));
-                              
+
       ACE_Time_Value tv (ACE_OS::gettimeofday());
       timestamp->receive (tv.sec () + (tv.usec () / 1000000.0));
-      
+
       timestamp->add_to_registry ();
       timestamp->remove_ref ();
-          
+
       this->stat_names_.push_back (stat_name);
-      
+
       Monitor_Point_Registry* instance =
         Monitor_Point_Registry::instance ();
 
       ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
-      
+
       Monitor_Base* names =
         instance->get (NotifyMonitoringExt::EventChannelFactoryNames);
-        
+
       if (names == 0)
         {
           stat_name = NotifyMonitoringExt::EventChannelFactoryNames;
@@ -145,7 +145,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
                             CORBA::NO_MEMORY ());
           names->add_to_registry ();
         }
-        
+
       Monitor_Control_Types::NameList list = names->get_list ();
       list.push_back (this->name_);
       names->receive (list);
@@ -157,7 +157,7 @@ TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory (void)
 {
   Monitor_Point_Registry* instance = Monitor_Point_Registry::instance ();
   size_t size = this->stat_names_.size ();
-  
+
   for (size_t i = 0; i < size; ++i)
     {
       instance->remove (this->stat_names_[i].c_str ());
@@ -235,7 +235,7 @@ TAO_MonitorEventChannelFactory::create_channel (
   // Make sure we can get down to the real event channel
   TAO_MonitorEventChannel* mec =
     dynamic_cast<TAO_MonitorEventChannel*> (ec->_servant ());
-    
+
   if (mec == 0)
     {
       throw CORBA::INTERNAL ();
@@ -270,13 +270,13 @@ TAO_MonitorEventChannelFactory::remove (TAO_Notify_EventChannel* channel)
 {
   TAO_MonitorEventChannel* mec =
     dynamic_cast<TAO_MonitorEventChannel*> (channel);
-    
+
   if (mec != 0)
     {
       ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX, guard, this->mutex_);
       this->map_.unbind (mec->name ());
     }
-    
+
   this->TAO_Notify_EventChannelFactory::remove (channel);
 }
 
@@ -287,18 +287,18 @@ TAO_MonitorEventChannelFactory::get_suppliers (
   size_t count = 0;
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->get_event_channel (id);
-    
+
   if (!CORBA::is_nil (ec.in ()))
     {
       CosNotifyChannelAdmin::AdminIDSeq_var supadmin_ids =
         ec->get_all_supplieradmins ();
       CORBA::ULong length = supadmin_ids->length ();
-      
+
       for (CORBA::ULong j = 0; j < length; ++j)
         {
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             ec->get_supplieradmin (supadmin_ids[j]);
-            
+
           if (!CORBA::is_nil (admin.in ()))
             {
               CosNotifyChannelAdmin::ProxyIDSeq_var proxys =
@@ -307,7 +307,7 @@ TAO_MonitorEventChannelFactory::get_suppliers (
             }
         }
     }
-    
+
   return count;
 }
 
@@ -318,18 +318,18 @@ TAO_MonitorEventChannelFactory::get_consumers (
   size_t count = 0;
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->get_event_channel (id);
-    
+
   if (!CORBA::is_nil (ec.in ()))
     {
       CosNotifyChannelAdmin::AdminIDSeq_var conadmin_ids =
         ec->get_all_consumeradmins ();
       CORBA::ULong length = conadmin_ids->length ();
-      
+
       for (CORBA::ULong j = 0; j < length; ++j)
         {
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
             ec->get_consumeradmin (conadmin_ids[j]);
-            
+
           if (!CORBA::is_nil (admin.in ()))
             {
               CosNotifyChannelAdmin::ProxyIDSeq_var proxys =
@@ -338,7 +338,7 @@ TAO_MonitorEventChannelFactory::get_consumers (
             }
         }
     }
-    
+
   return count;
 }
 
@@ -351,7 +351,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
   CosNotifyChannelAdmin::ChannelIDSeq_var ids = this->get_all_channels ();
 
   CORBA::ULong total = ids->length ();
-  
+
   for (CORBA::ULong i = 0; i < total; ++i)
     {
       CosNotifyChannelAdmin::ChannelID id = ids[i];
@@ -359,7 +359,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
 
       // Check for connected consumers.
       size_t consumers = this->get_consumers (id);
-      
+
       if (consumers > 0)
         {
           want_event_channel = active;
@@ -370,7 +370,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
         {
           // Check for connected suppliers
           size_t suppliers = this->get_suppliers (id);
-          
+
           if (suppliers > 0)
             {
               want_event_channel = active;
@@ -380,24 +380,24 @@ TAO_MonitorEventChannelFactory::get_ecs (
       if (want_event_channel)
         {
           count++;
-          
+
           if (names != 0)
             {
               ACE_READ_GUARD_RETURN (TAO_SYNCH_RW_MUTEX,
                                      guard,
                                      this->mutex_,
                                      0);
-                                     
+
               Map::iterator itr (this->map_);
               Map::value_type* entry = 0;
-              
+
               while (itr.next (entry))
                 {
                   if (id == entry->item ())
                     {
                       names->push_back (entry->key ());
                     }
-                    
+
                   itr.advance ();
                 }
             }

@@ -4,7 +4,7 @@
 
 
 project(LoadManager): namingexe, portableserver, install, iortable, iormanip, loadbalancing {
-  exename  = LoadManager
+  exename  = tao_loadmanager
   requires += ami interceptors
   Source_Files {
     LoadManager.cpp
@@ -14,7 +14,7 @@ project(LoadManager): namingexe, portableserver, install, iortable, iormanip, lo
 
 project(LoadMonitor): namingexe, portableserver, install, loadbalancing {
   requires += ami interceptors
-  exename  = LoadMonitor
+  exename  = tao_loadmonitor
   Source_Files {
     LoadMonitor.cpp
     Push_Handler.cpp

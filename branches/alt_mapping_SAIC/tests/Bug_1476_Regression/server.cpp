@@ -5,8 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Oneways_Invoking_Twoways, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int number_of_oneways = 10;
 
@@ -34,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

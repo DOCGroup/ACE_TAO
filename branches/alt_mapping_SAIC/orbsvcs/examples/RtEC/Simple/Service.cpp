@@ -6,10 +6,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (EC_Examples,
-           Service,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ec.ior");
 
 int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -122,7 +118,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

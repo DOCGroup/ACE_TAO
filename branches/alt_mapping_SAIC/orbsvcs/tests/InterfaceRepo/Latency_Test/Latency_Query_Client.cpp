@@ -8,10 +8,6 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 
-ACE_RCSID (Latency_Test,
-           Latency_Query_Client,
-           "$Id$")
-
 const CORBA::ULong DEFAULT_NUMCALLS = 20000;
 
 Latency_Query_Client::Latency_Query_Client (void)

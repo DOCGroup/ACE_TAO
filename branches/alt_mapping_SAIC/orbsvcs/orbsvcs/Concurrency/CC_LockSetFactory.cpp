@@ -12,7 +12,7 @@
 #include "orbsvcs/Concurrency/CC_LockSetFactory.h"
 #include "orbsvcs/Concurrency/CC_LockSet.h"
 
-ACE_RCSID(Concurrency, CC_LockSetFactory, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

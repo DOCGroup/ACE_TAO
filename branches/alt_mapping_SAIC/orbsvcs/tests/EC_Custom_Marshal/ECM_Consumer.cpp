@@ -18,10 +18,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Custom_Marshal,
-           ECM_Consumer,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -250,7 +246,8 @@ Driver::push_consumer (void* /* consumer_cookie */,
       for (CORBA::ULong j = 0; j < n; ++j)
         {
           ECM_IDLData::Point& p = info.trajectory[j];
-          if (p.x != j || p.y != j*j)
+          if (static_cast<CORBA::ULong>(p.x) != j ||
+              static_cast<CORBA::ULong>(p.y) != j*j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "invalid data in trajectory[%d] = (%f,%f)\n",
@@ -411,4 +408,3 @@ void
 Test_Consumer::disconnect_push_consumer (void)
 {
 }
-

@@ -32,9 +32,9 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
         "-c $cache_size -ORBdebuglevel $debug_level -ORBListenEndpoints iiop://localhost:$port");
-$CL = $client->CreateProcess ("client", 
+$CL = $client->CreateProcess ("client",
         "-c $cache_size -p $port -ORBdebuglevel $debug_level");
 
 $server_status = $SV->Spawn ();

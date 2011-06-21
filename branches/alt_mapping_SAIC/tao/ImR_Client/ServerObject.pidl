@@ -1,19 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   ServerObject.pidl
  *
  * $Id$
- *
- * This file is used to generate the code in ServerObject{A,C,S}.{h,inl,cpp}
- *
- * The command used to generate code from this file is:
- *
- *   tao_idl -Ssi -Gp -Gd -I$(TAO_ROOT) -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=imr_client_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ServerObject.pidl
- *
  */
-//=============================================================================
 
 #ifndef TAO_IMRCLIENT_SERVEROBJECT_PIDL
 #define TAO_IMRCLIENT_SERVEROBJECT_PIDL

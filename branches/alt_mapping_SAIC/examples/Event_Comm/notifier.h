@@ -1,46 +1,45 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/example/Event_Comm
-//
-// = FILENAME
-//    notifier.h
-//
-// = DESCRIPTION
-//    This class implements notifier  driver for the Publish/Subscribe example
-//
-// = AUTHOR
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    notifier.h
+ *
+ *  $Id$
+ *
+ *  This class implements notifier  driver for the Publish/Subscribe example
+ *
+ *
+ */
+//=============================================================================
 
 
 
+
+ /**
+  * @class Notifier
+  *
+  * @brief Notifier driver for the TAO Publish/Subscribe example.
+  *
+  * The driver class for the <Event_Comm::Notifier> object.
+  */
 class Notifier : public ACE_Event_Handler
 {
-  // = TITLE
-  //   Notifier driver for the TAO Publish/Subscribe example.
-  //
-  // = DESCRIPTION
-  //    The driver class for the <Event_Comm::Notifier> object.
  public:
   // = Initialization and termination methods.
+  /// Constructor.
   Notifier (int argc, ACE_TCHAR *argv[]);
-  // Constructor.
 
+  /// Destructor.
   ~Notifier (void);
-  // Destructor.
 
+  /// Execute the notifier.
   void run (void);
-  // Execute the notifier.
 
  private:
+  /// Handle signals that shut us down.
   virtual int handle_signal (int signum,
                              siginfo_t *,
                              ucontext_t *);
-  // Handle signals that shut us down.
 
+  /// The notifier server.
   Notifier_Server ns_;
-  // The notifier server.
 };

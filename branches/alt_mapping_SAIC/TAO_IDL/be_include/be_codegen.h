@@ -18,6 +18,8 @@
 
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Unbounded_Queue.h"
+
 #include "TAO_IDL_BE_Export.h"
 
 class TAO_OutStream;
@@ -135,9 +137,6 @@ public:
       TAO_ROOT_CDR_OP_CH,
       TAO_ROOT_CDR_OP_CS,
 
-      TAO_ROOT_SERIALIZER_OP_CH,
-      TAO_ROOT_SERIALIZER_OP_CS,
-
       // Emitting code for sequence base type.
       TAO_SEQUENCE_BASE_CH,
 
@@ -175,11 +174,6 @@ public:
       TAO_CDR_INPUT,
       TAO_CDR_OUTPUT,
       TAO_CDR_SCOPE,
-
-      // DDS DCPS Serializer support methods
-      TAO_MAX_MARSHALED_SIZE,
-      TAO_IS_BOUNDED_SIZE,
-      TAO_FIND_SIZE,
 
       // These are for typecode generation.
       TAO_TC_DEFN_TYPECODE,                   // top level typecode
@@ -246,7 +240,7 @@ public:
 
   /// Set the anyop source stream.
   int start_anyop_source (const char *fname);
-  
+
   int start_ciao_svnt_header (const char *fname);
   int start_ciao_svnt_source (const char *fname);
   int start_ciao_exec_header (const char *fname);
@@ -255,8 +249,6 @@ public:
   int start_ciao_conn_header (const char *fname);
   int start_ciao_conn_source (const char *fname);
   int start_ciao_ami_conn_idl (const char *fname);
-  int start_ciao_ami_rh_impl_header (const char *fname);
-  int start_ciao_ami_rh_impl_source (const char *fname);
 
   /// Generate code at the end such as the <<= and >>= operators along
   /// with the ending #endif statement.
@@ -294,7 +286,7 @@ public:
 
   /// Make sure we end with a newline.
   int end_anyop_source (void);
-  
+
   int end_ciao_svnt_header (void);
   int end_ciao_svnt_source (void);
   int end_ciao_exec_header (void);
@@ -303,8 +295,6 @@ public:
   int end_ciao_conn_header (void);
   int end_ciao_conn_source (void);
   int end_ciao_ami_conn_idl (void);
-  int end_ciao_ami_rh_impl_header (void);
-  int end_ciao_ami_rh_impl_source (void);
 
   /// Get the client header stream.
   TAO_OutStream *client_header (void);
@@ -365,16 +355,10 @@ public:
 
   /// Get the CIAO connector impl source stream.
   TAO_OutStream *ciao_conn_source (void);
-  
+
   /// Get the CIAO AMI connector IDL stream.
   TAO_OutStream *ciao_ami_conn_idl (void);
 
-  /// Get the CIAO connector impl header stream.
-  TAO_OutStream *ciao_ami_rh_impl_header (void);
-
-  /// Get the CIAO connector impl source stream.
-  TAO_OutStream *ciao_ami_rh_impl_source (void);
-  
   /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
 
@@ -398,11 +382,11 @@ public:
 
   /// Pass along the #ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
-  
+
   /// Generates the export files selected on the command line.
   void gen_export_files (void);
 
-  /// Generate file include, with optional empty comment to 
+  /// Generate file include, with optional empty comment to
   /// short-circuit DOxygen.
   void gen_standard_include (TAO_OutStream *stream,
                              const char *included_file,
@@ -430,7 +414,7 @@ private:
                               const char *filepath,
                               TAO_OutStream *stream);
   void gen_typecode_includes (TAO_OutStream * stream);
-  
+
   /// Used if one or both of the CIAO code gen flags are set.
   void gen_svnt_hdr_includes (void);
   void gen_svnt_src_includes (void);
@@ -440,13 +424,15 @@ private:
   void gen_conn_hdr_includes (void);
   void gen_conn_src_includes (void);
   void gen_ami_conn_idl_includes (void);
-  
+
   void gen_export_file (const char *filename,
                         const char *macro,
                         const char *msg,
                         bool for_skel = false);
-                        
+
   void make_rand_extension (char * const t);
+
+  void gen_conn_ts_includes (ACE_Unbounded_Queue<char *> &ts_files);
 
 private:
   /// Client header stream.
@@ -511,12 +497,6 @@ private:
 
   /// Component connector impl source file.
   TAO_OutStream *ciao_ami_conn_idl_;
-
-  /// Component connector impl header file.
-  TAO_OutStream *ciao_ami_rh_impl_header_;
-
-  /// Component connector impl source file.
-  TAO_OutStream *ciao_ami_rh_impl_source_;
 
   /**
    * Name of the temp file used to collect the input for gperf

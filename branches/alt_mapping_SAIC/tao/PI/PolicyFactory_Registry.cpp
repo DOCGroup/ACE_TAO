@@ -1,10 +1,10 @@
+// $Id$
+
 #include "tao/PI/PolicyFactory_Registry.h"
 #include "tao/PI/PolicyFactoryC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PolicyC.h"
 #include "tao/SystemException.h"
-
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -8,7 +8,7 @@
  */
 #include "Server_Task.h"
 
-ACE_RCSID(Bug_1230_Regression, Server_Task, "$Id$")
+
 
 Server_Task::Server_Task(Test::Echo_ptr echo)
   : echo_(Test::Echo::_duplicate(echo))

@@ -3,7 +3,7 @@
 #include "AddrServer.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID(EC_Examples, AddrServer, "$Id$")
+
 
 AddrServer::AddrServer (const ACE_INET_Addr& addr)
 {

@@ -85,6 +85,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   // field.
 
   TAO_OutStream *os = this->ctx_->stream ();
+
   be_field *f =
     be_field::narrow_from_decl (this->ctx_->node ());
 
@@ -775,7 +776,7 @@ be_visitor_field_cdr_op_cs::visit_structure_fwd (
 {
   be_structure *s =
     be_structure::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_structure (s);
 }
 
@@ -869,7 +870,7 @@ be_visitor_field_cdr_op_cs::visit_union_fwd (be_union_fwd *node)
 {
   be_union *u =
     be_union::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_union (u);
 }
 

@@ -17,10 +17,6 @@
 
 #include "ami_testS.h"
 
-ACE_RCSID (AMI,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int shutdown_flag = 0;
@@ -63,7 +59,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

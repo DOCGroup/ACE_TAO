@@ -2,10 +2,6 @@
 
 #include "airplane_server_i.h"
 
-ACE_RCSID (ImplRepo,
-           airplane_server,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

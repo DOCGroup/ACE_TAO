@@ -2,7 +2,7 @@
 
 #include "Service_Type_Exporter.h"
 
-ACE_RCSID(Trading, Service_Type_Exporter, "$Id$")
+
 
 TAO_Service_Type_Exporter::
 TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,

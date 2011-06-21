@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "File_i.h"
 #include "tao/debug.h"
@@ -8,22 +9,17 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID (File_IO,
-           server,
-           "$Id$")
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static const int nthreads = 2;
 
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   Worker (CORBA::ORB_ptr orb);
   // ctor

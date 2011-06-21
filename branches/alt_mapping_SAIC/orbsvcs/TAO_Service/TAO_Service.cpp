@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    orbsvcs/TAO_Service/
-//
-// = FILENAME
-//   TAO_Service.cpp
-//
-// = DESCRIPTION
-//   This directory contains an example that illustrates how the ACE
-//   Service Configurator can dynamically configure an ORB and its
-//   servants from a svc.conf file.
-//
-// = AUTHOR
-//     Priyanka Gontla <pgontla@ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   TAO_Service.cpp
+ *
+ *  $Id$
+ *
+ * This directory contains an example that illustrates how the ACE
+ * Service Configurator can dynamically configure an ORB and its
+ * servants from a svc.conf file.
+ *
+ *
+ *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
+ */
+//=============================================================================
+
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORB.h"
@@ -25,11 +22,6 @@
 #include "ace/Signal.h"
 #include "ace/Time_Value.h"
 #include "ace/Argv_Type_Converter.h"
-
-ACE_RCSID (TAO_Service,
-           TAO_Service,
-           "$Id$")
-
 
 extern "C" void handler (int)
 {

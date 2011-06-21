@@ -8,10 +8,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID (Latency,
-           ping,
-           "$Id$")
-
 const ACE_TCHAR *ping_ior = ACE_TEXT ("file://ping.ior");
 const ACE_TCHAR *pong_ior = ACE_TEXT ("file://pong.ior");
 const ACE_TCHAR *ping_address = ACE_TEXT ("localhost:12345");
@@ -73,7 +69,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

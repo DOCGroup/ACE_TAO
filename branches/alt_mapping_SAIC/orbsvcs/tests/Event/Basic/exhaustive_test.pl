@@ -17,10 +17,10 @@ $conf_file = PerlACE::LocalFile ("exhaustive$PerlACE::svcconf_ext");
 
 @dispatching_configs   = ("-ECDispatching reactive",
                           "-ECDispatching mt -ECDispatchingThreads 4");
-@collection_strategies = ("copy_on_read", 
-                          "copy_on_write", 
+@collection_strategies = ("copy_on_read",
+                          "copy_on_write",
                           "delayed");
-@collection_types      = ("list", 
+@collection_types      = ("list",
                           "rb_tree");
 @filtering_configs     = ("-ECFiltering prefix -ECSupplierFilter per-supplier",
                           "-ECFiltering prefix -ECSupplierFilter null");
@@ -30,7 +30,7 @@ foreach $d (@dispatching_configs) {
         foreach $c (@collection_strategies) {
             foreach $t (@collection_types) {
                 my $collection = "mt:".$c.":".$t;
-                
+
                 my $config = 'static EC_Factory "'
                              .$d
                              ." -ECProxyPushConsumerCollection ".$collection

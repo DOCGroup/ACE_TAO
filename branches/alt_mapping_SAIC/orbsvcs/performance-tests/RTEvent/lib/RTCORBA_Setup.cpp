@@ -16,10 +16,6 @@
 #include "RTCORBA_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC,
-           RTCORBA_Setup,
-           "$Id$")
-
 RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
                               const RT_Class &rtclass,
                               int nthreads)

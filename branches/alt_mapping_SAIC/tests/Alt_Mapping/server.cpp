@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    server.cpp
-//
-// = AUTHOR
-//    Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "alt_mapping_i.h"
 #include "tao/Codeset/Codeset.h"
@@ -146,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       userex._tao_print_exception ("User Exception");
       return -1;
     }
-    
+
   /// Free resources.
   delete svnt;
 

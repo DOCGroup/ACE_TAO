@@ -2,5 +2,5 @@
 // $Id$
 
 project : orbsvcsexe, install, rtsched, naming, svc_utils, iortable, portableserver {
-  exename  = Dump_Schedule
+  exename  = tao_dump_schedule
 }

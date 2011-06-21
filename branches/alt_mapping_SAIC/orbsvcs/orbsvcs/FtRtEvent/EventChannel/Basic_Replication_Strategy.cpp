@@ -6,10 +6,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/Log.h"
 
-ACE_RCSID (EventChannel,
-           Basic_Replication_Strategy,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// The mutex has to be recursive; otherwise, if the second replicate_request() is

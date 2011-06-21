@@ -15,10 +15,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (TAO_PERF_RTEC,
-           RTEC_Initializer,
-           "$Id$")
-
 TAO_EC_Event_Channel *
 RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
                           PortableServer::POA_ptr supplier_poa,

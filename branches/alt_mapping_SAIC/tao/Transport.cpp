@@ -52,7 +52,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
           const ACE_TCHAR *location)
 {
-  ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
+  ACE_GUARD (ACE_Log_Msg, ace_mon, *ACE_Log_Msg::instance ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
@@ -196,6 +196,13 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
 TAO_Transport::~TAO_Transport (void)
 {
+  if (TAO_debug_level > 9)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport\n"),
+                  this->id_
+                  ));
+    }
+
   delete this->messaging_object_;
 
   delete this->ws_;
@@ -473,17 +480,15 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 int
 TAO_Transport::purge_entry (void)
 {
-  // We must store our entry in a temporary and zero out the data member.
-  // If there is only one reference count on us, we will end up causing
-  // our own destruction.  And we can not be holding a cache map entry if
-  // that happens.
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY* entry = 0;
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-    entry = this->cache_map_entry_;
-    this->cache_map_entry_ = 0;
-  }
-  return this->transport_cache_manager ().purge_entry (entry);
+  if (TAO_debug_level > 3)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
+                  ACE_TEXT ("entry is %@\n"),
+                  this->id (), this->cache_map_entry_));
+    }
+
+  return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
 }
 
 bool
@@ -511,10 +516,8 @@ TAO_Transport::update_transport (void)
   return this->transport_cache_manager ().update_entry (this->cache_map_entry_);
 }
 
-/*
- *
+/**
  *  Methods called and used in the output path of the ORB.
- *
  */
 TAO_Transport::Drain_Result
 TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
@@ -525,9 +528,9 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output")
                   ACE_TEXT (" - block_on_io=%d, timeout=%d.%06d\n"),
                   this->id (),
-              dc.block_on_io(),
-              dc.timeout() ? dc.timeout()->sec() : -1,
-              dc.timeout() ? dc.timeout()->usec() : -1 ));
+                  dc.block_on_io(),
+                  dc.timeout() ? dc.timeout()->sec() : static_cast<time_t> (-1),
+                  dc.timeout() ? dc.timeout()->usec() : -1 ));
     }
 
   // The flushing strategy (potentially via the Reactor) wants to send
@@ -703,12 +706,11 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   return 1;
 }
 
-
 int
 TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
                                      ACE_Time_Value *max_wait_time)
 {
-  // Dont clone now.. We could be sent in one shot!
+  // Don't clone now.. We could be sent in one shot!
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
@@ -1614,11 +1616,9 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
   return 0;
 }
 
-/*
- *
+/**
  * All the methods relevant to the incoming data path of the ORB are
  * defined below
- *
  */
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
@@ -1871,7 +1871,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
     }
 
   // Saving the size of the received buffer in case any one needs to
-  // get the size of the message thats received in the
+  // get the size of the message that is received in the
   // context. Obviously the value will be changed for each recv call
   // and the user is supposed to invoke the accessor only in the
   // invocation context to get meaningful information.
@@ -2798,7 +2798,7 @@ TAO_Transport::io_timeout(
 }
 
 bool
-TAO_Transport::using_blocking_io_for_synch_messages() const
+TAO_Transport::using_blocking_io_for_synch_messages (void) const
 {
   if (this->wait_strategy()->can_process_upcalls())
   {
@@ -2808,7 +2808,7 @@ TAO_Transport::using_blocking_io_for_synch_messages() const
 }
 
 bool
-TAO_Transport::using_blocking_io_for_asynch_messages() const
+TAO_Transport::using_blocking_io_for_asynch_messages (void) const
 {
   return false;
 }

@@ -73,7 +73,7 @@ public:
 
   // If the "name" parameter is malformed, then the
   // CosTrading::IllegalServiceType exception is raised.  If the type
-  // already exists, then the ServiceTypeExists exception is raised. °
+  // already exists, then the ServiceTypeExists exception is raised.
   // If the "if_name" parameter is not a sub-type of the interface
   // associated with a service type from which this service type is
   // derived, such that substitutability would be violated, then the

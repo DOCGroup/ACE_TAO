@@ -29,10 +29,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Naming,
-           Naming_Server,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Server::TAO_Naming_Server (void)
@@ -725,7 +721,8 @@ TAO_Naming_Server::fini (void)
   // the Naming Service
   try
     {
-      this->ns_poa_->destroy (1, 1);
+      if (!CORBA::is_nil (this->ns_poa_.in ()))
+        this->ns_poa_->destroy (1, 1);
 
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable");

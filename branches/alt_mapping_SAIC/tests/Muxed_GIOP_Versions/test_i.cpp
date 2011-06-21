@@ -9,8 +9,6 @@
 
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(MT_Server, test_i, "test_i.cpp,v 1.6 2002/01/29 20:21:08 okellogg Exp")
-
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x)
 {

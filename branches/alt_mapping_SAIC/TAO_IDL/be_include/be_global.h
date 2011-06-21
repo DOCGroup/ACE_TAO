@@ -51,10 +51,11 @@ public:
   /// connectors.
   enum DDS_IMPL
   {
-    NONE,
+    DDS_NONE,
     NDDS,
     OPENSPLICE,
-    OPENDDS
+    OPENDDS,
+    COREDX
   };
 
   BE_GlobalData (void);
@@ -486,25 +487,25 @@ public:
   /// impl and executor IDL files, if generated.
   void ciao_svnt_header_ending (const char* s);
   const char* ciao_svnt_header_ending (void) const;
-  
+
   void ciao_svnt_source_ending (const char* s);
   const char* ciao_svnt_source_ending (void) const;
-  
+
   void ciao_exec_header_ending (const char* s);
   const char* ciao_exec_header_ending (void) const;
-  
+
   void ciao_exec_source_ending (const char* s);
   const char* ciao_exec_source_ending (void) const;
-  
+
   void ciao_exec_stub_header_ending (const char* s);
   const char* ciao_exec_stub_header_ending (void) const;
-  
+
   void ciao_exec_idl_ending (const char* s);
   const char* ciao_exec_idl_ending (void) const;
-  
+
   void ciao_conn_header_ending (const char* s);
   const char* ciao_conn_header_ending (void) const;
-  
+
   void ciao_conn_source_ending (const char* s);
   const char* ciao_conn_source_ending (void) const;
 
@@ -525,6 +526,10 @@ public:
   /// impl source file.
   void ciao_ami_conn_impl_src_ending (const char* s);
   const char* ciao_ami_conn_impl_src_ending (void) const;
+
+  /// For optionally controlling the container type, default is Session
+  void ciao_container_type (const char* s);
+  const char* ciao_container_type (void) const;
 
   /// Set the clonable_in_args.
   void use_clonable_in_args (bool clonable);
@@ -557,6 +562,14 @@ public:
    * <tao_idl> is called.
    */
   const char* output_dir (void) const;
+
+  /// Set the path for all *C.* file includes.
+  /// Default is local directory or $TAO_ROOT/tao.
+  void stub_include_dir (const char* s);
+
+  /// Get the path for all *C.* file includes.
+  /// Default is local directory or $TAO_ROOT/tao.
+  const char* stub_include_dir (void) const;
 
   /// Set the directory where all the *S.* files are
   /// to be kept. Default is output_dir_.
@@ -640,6 +653,12 @@ public:
   /// Check if we want to generate for Minimum CORBA
   bool gen_minimum_corba (void) const;
 
+  /// Set whether we want to generate for noeventCCM
+  void gen_noeventccm (bool);
+
+  /// Check if we want to generate for noeventCCM
+  bool gen_noeventccm (void) const;
+
   /// Set whether we want to generate for LwCCM
   void gen_lwccm (bool);
 
@@ -691,18 +710,6 @@ public:
   bool gen_inline_constants (void) const;
 
   /// Set the flag.
-  void gen_dcps_type_support (bool value);
-
-  /// Return the flag.
-  bool gen_dcps_type_support (void) const;
-
-  /// Set the flag.
-  void gen_dcps_type_support_only (bool value);
-
-  /// Return the flag.
-  bool gen_dcps_type_support_only (void) const;
-
-  /// Set the flag.
   void gen_orb_h_include (bool value);
 
   /// Return the flag.
@@ -727,6 +734,12 @@ public:
   /// Return the enumerated value for the DDS implementation.
   /// Default is NDDS.
   DDS_IMPL dds_impl (void) const;
+
+  /// Set the suffix of OpenDDS-specific native sequences.
+  void opendds_sequence_suffix (const char *val);
+
+  /// Return the suffix of OpenDDS-specific native sequences.
+  const char *opendds_sequence_suffix (void) const;
 
   /// Cleanup function.
   void destroy (void);
@@ -789,20 +802,26 @@ public:
   /// Accessors for the member gen_unique_guards_.
   bool gen_unique_guards (void) const;
   void gen_unique_guards (bool val);
-  
+
   /// Accessors for the corresponding members.
-  
+
   bool gen_ciao_svnt (void) const;
   void gen_ciao_svnt (bool val);
-  
+
   bool gen_ciao_exec_idl (void) const;
   void gen_ciao_exec_idl (bool val);
-  
+
   bool gen_ciao_exec_impl (void) const;
   void gen_ciao_exec_impl (bool val);
-  
+
+  bool gen_ciao_exec_reactor_impl (void) const;
+  void gen_ciao_exec_reactor_impl (bool val);
+
   bool gen_ciao_conn_impl (void) const;
   void gen_ciao_conn_impl (bool val);
+
+  bool gen_dds_typesupport_idl (void) const;
+  void gen_dds_typesupport_idl (bool val);
 
   bool gen_ciao_valuefactory_reg (void) const;
   void gen_ciao_valuefactory_reg (bool val);
@@ -824,9 +843,12 @@ public:
 
   bool gen_lem_force_all (void) const;
   void gen_lem_force_all (bool val);
-  
+
   bool alt_mapping (void) const;
   void alt_mapping (bool val);
+
+  bool in_facet_servant (void) const;
+  void in_facet_servant (bool val);
 
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
@@ -957,7 +979,7 @@ private:
 
   /// CIAO AMI connector IDL file name ending. Default is "A.idl".
   char* ciao_ami_conn_idl_ending_;
-  
+
   /// CIAO AMI reply handler impl header file name ending.
   /// Default is "A_impl.h".
   char* ciao_ami_conn_impl_hdr_ending_;
@@ -966,12 +988,22 @@ private:
   /// Default is "A_impl.cpp".
   char* ciao_ami_conn_impl_src_ending_;
 
+  /// CIAO container type
+  /// Default is "Session".
+  char* ciao_container_type_;
+
   /**
    * Directory where all the IDL-Compiler-Generated files are to be
    * kept. Default value is 0 for this string which means the current
    * directory from which the <tao_idl> is called.
    */
   char* output_dir_;
+
+  /**
+   * Path for all *C.* includes. Default value is 0, in which case
+   * the local directory or $TAO_ROOT/tao is used.
+   */
+  char* stub_include_dir_;
 
   /**
    * Directory where all the *S.* files are to be
@@ -1023,6 +1055,9 @@ private:
   /// are we generating for LwCCM
   bool gen_lwccm_;
 
+  /// are we generating for noeventCCM
+  bool gen_noeventccm_;
+
   /// do we generate optimized typecodes?
   bool opt_tc_;
 
@@ -1052,14 +1087,6 @@ private:
   /// generation that pleases the C++ compiler better on some platforms.
   bool gen_inline_constants_;
 
-  /// Flag to indicate whether we are supporting DDS DCPS type definitions.
-  /// Includes Serializer operators (like TAO_Input/OutuptCDR).
-  bool gen_dcps_type_support_;
-
-  /// Flag to indicate whether we are supporting DDS DCPS type only definitions.
-  /// Only generate DDS Serializer operators for tao/*Seq.pidl.
-  bool gen_dcps_type_support_only_;
-
   /// Flag to indicate whether ORB.h include should be generated, needed for
   /// regenerating the pidl files.
   bool gen_orb_h_include_;
@@ -1072,6 +1099,10 @@ private:
 
   /// The enumerated value indicating the DDS implementation.
   DDS_IMPL dds_impl_;
+
+  /// Option to customize the suffix of OpenDDS-specific sequences,
+  /// for use with CIAO's dds4ccm implementation.
+  ACE_CString opendds_sequence_suffix_;
 
   /// Used for void operation return types.
   AST_PredefinedType *void_type_;
@@ -1144,10 +1175,14 @@ private:
   bool gen_ciao_svnt_;
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
+  bool gen_ciao_exec_reactor_impl_;
 
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.
   bool gen_ciao_conn_impl_;
+
+  /// Used for DDS implementations other than OpenDDS.
+  bool gen_dds_typesupport_idl_;
 
   /// Generate automatic valuetype factory registration in
   /// CIAO servants.
@@ -1166,9 +1201,12 @@ private:
 
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_;
-  
+
+  /// Are we generating STL types?
   bool alt_mapping_;
-  // Are we generating STL types?
+
+  /// Are we generating a facet servant?
+  bool in_facet_servant_;
 };
 
 #endif /* _BE_GLOBAL_H */

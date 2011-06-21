@@ -8,8 +8,6 @@
 
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Failure, test_i, "$Id$")
-
 void
 Callback_i::shutdown (CORBA::Boolean is_clean)
 {
@@ -17,10 +15,9 @@ Callback_i::shutdown (CORBA::Boolean is_clean)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
 
-// Tru64 seems to hang and not abort and dump core when abort() is called
-// here. This needs further investigation. This fix is a temporary one.
-// Likewise for OpenVMS.
-#if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
+// OpenVMS seems to hang and not abort and dump core when abort() is called
+// here. This needs further investigation.
+#if defined (DEC_CXX) || defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else
       ACE_OS::abort();
@@ -56,7 +53,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
   if (is_clean == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
-#if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
+#if defined (DEC_CXX) || defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else
       ACE_OS::abort();

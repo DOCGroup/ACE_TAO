@@ -1,13 +1,10 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"
 #include "CrashPoint.h"
-
-ACE_RCSID (Redirection,
-           Server_Request_Interceptor,
-           "$Id$")
 
 Server_Request_Interceptor::Server_Request_Interceptor (void)
   : request_count_ (0)

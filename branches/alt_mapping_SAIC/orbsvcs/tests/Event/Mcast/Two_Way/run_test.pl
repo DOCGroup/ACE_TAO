@@ -124,7 +124,7 @@ sub analyze_results {
         print STDERR "ERROR: Could not open $filename\n";
         return -1;
     }
-    
+
     my $status = 0;
     while (<TEST_OUTPUT>) {
         if (m/total of/) {
@@ -143,7 +143,7 @@ sub analyze_results {
         }
     }
     close (TEST_OUTPUT);
-    
+
     foreach $pid (keys %heartbeats) {
         my $ideal_heartbeats = $apps_number * 50;
         my $received_heartbeats = $heartbeats{$pid};
@@ -165,7 +165,7 @@ sub analyze_results {
         print STDERR "SUCCESS\n";
         return 0;
     }
- 
+
     print STDERR "ERROR - check $filename for full output.\n";
     return -1;
 }

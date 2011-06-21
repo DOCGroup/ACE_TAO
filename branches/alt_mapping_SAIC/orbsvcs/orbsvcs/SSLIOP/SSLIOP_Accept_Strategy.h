@@ -64,7 +64,7 @@ namespace TAO
      */
     class Accept_Strategy
       : public TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
-                                   ACE_SSL_SOCK_ACCEPTOR>
+                                   ACE_SSL_SOCK_Acceptor>
     {
     public:
 

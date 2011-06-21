@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Nested_Event_Loop, test_i, "$Id$")
-
 server_i::server_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

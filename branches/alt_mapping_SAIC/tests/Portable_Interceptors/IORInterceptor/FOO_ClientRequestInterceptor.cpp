@@ -1,14 +1,11 @@
+// $Id$
+
 #include "FOO_ClientRequestInterceptor.h"
 #include "testC.h"
 
 #include "ace/Log_Msg.h"
 
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
-
-ACE_RCSID (IORInterceptor,
-           FOO_ClientRequestInterceptor,
-           "$Id$")
-
 
 FOO_ClientRequestInterceptor::FOO_ClientRequestInterceptor (
   IOP::Codec_ptr codec)

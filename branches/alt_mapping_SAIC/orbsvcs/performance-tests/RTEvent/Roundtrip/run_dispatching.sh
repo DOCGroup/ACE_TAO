@@ -12,7 +12,7 @@ IOR=test.ior
 for c in $LOW_PRIORITY; do
 #   date
 #   echo reactive $c
-# 
+#
 #   /bin/rm -f $IOR
 #   ssh celegorm "cd /project/celegorm/coryan/EC_Roundtrip ; ./server -ORBSvcConf ec.dispatching_reactive.conf -o $IOR" >server.log 2>&1 </dev/null &
 #   while [ ! -f $IOR ]; do
@@ -20,10 +20,10 @@ for c in $LOW_PRIORITY; do
 #   done
 #   ./client -d -h 1000 -l 2000 -i 500 -n $c -k file://$IOR > ec_dispatching_reactive.$c.txt 2>&1
 #   wait
-# 
+#
 #   date
 #   echo threaded $c
-# 
+#
 #   /bin/rm -f $IOR
 #   ssh celegorm "cd /project/celegorm/coryan/EC_Roundtrip ; ./server -ORBSvcConf ec.dispatching_threaded.conf -o $IOR" >server.log 2>&1 </dev/null &
 #   while [ ! -f $IOR ]; do

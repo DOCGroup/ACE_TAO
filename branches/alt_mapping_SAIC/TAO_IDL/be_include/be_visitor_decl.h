@@ -33,7 +33,7 @@ public:
   be_visitor_decl (be_visitor_context *ctx);
 
   ~be_visitor_decl (void);
-  
+
   be_visitor_context *ctx (void);
 
 protected:
@@ -44,8 +44,8 @@ protected:
   /// contained by another.
   int gen_anonymous_base_type (be_type *bt,
                                TAO_CodeGen::CG_STATE cg_state);
-     
-  /// Our file stream.                             
+
+  /// Our file stream.
   TAO_OutStream &os_;
 };
 

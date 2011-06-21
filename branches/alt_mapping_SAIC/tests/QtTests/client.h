@@ -1,65 +1,63 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Xt_Stopwatch/Stopwatch_client
-//
-// = FILENAME
-//   client.h
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   client.h
+ *
+ *  $Id$
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _QT_CLIENT_H
 #define _QT_CLIENT_H
 
 #include "testC.h"
 
-#include <qapplication.h>
-#include <qvbox.h>
-#include <qslider.h>
-#include <qpushbutton.h>
+#include <QtGui/qapplication.h>
+#include <QtGui/qboxlayout.h>
+#include <QtGui/qslider.h>
+#include <QtGui/qpushbutton.h>
 
 class Client : public QObject
 {
   Q_OBJECT
 public:
 
+  /// ctor
   Client (CORBA::ORB_ptr orb,
           QApplication &app);
-  // ctor
 
+  ///Dtor..
   ~Client (void);
-  //Dtor..
 
+  /// Adds the callbacks to the GUI underneath.....
   void create_widgets (void);
-  // Adds the callbacks to the GUI underneath.....
 
   void show (void);
 
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
-  QVBox box_;
-  // A box widget..
+  /// A box widget..
+  QHBoxLayout box_;
+  QWidget mainwindow_;
 
  public slots:
+   /// Two slot handlers for the two widgets that we have
    void remote_call (int val);
    void shutdown_call (void);
-   // Two slot handlers for the two widgets that we have
 
 private:
 
+  /// A push button
   QPushButton *push_button_;
-  // A push button
 
+  /// A slider widget
   QSlider *slider_;
-  // A slider widget
 
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
   LCD_Display_var server_;
 

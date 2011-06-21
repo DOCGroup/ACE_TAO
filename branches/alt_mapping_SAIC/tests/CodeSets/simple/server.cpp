@@ -1,21 +1,17 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CodeSets/simple
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    A simple client to demonstrate the use of codeset translation
-//
-// = AUTHORS
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  A simple server to demonstrate the use of codeset translation
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
 
 // IDL generated header
 #include "simpleS.h"
@@ -50,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

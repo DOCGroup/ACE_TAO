@@ -1,8 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
-
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
-
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"

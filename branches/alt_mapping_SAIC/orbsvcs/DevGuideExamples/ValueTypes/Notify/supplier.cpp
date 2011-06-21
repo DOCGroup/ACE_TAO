@@ -207,7 +207,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
 
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
     PortableServer::POAManager_var mgr = poa->the_POAManager();
-    
+
     // "corbaloc::localhost:8888/NotifyEventChannelFactory"
     ACE_CString notify_ior ("corbaloc::");
     notify_ior += ACE_TEXT_ALWAYS_CHAR (hostname);

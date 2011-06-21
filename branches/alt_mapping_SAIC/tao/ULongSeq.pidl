@@ -2,14 +2,6 @@
 //
 // $Id$
 
-// ================================================================
-/**
- *
- * This file is used to generate the code in ULongSeq*.*
- */
-// ================================================================
-
-
 #ifndef TAO_CORBA_ULONG_SEQ_IDL
 #define TAO_CORBA_ULONG_SEQ_IDL
 

@@ -5,6 +5,8 @@
 #include "orbsvcs/FtRtEvent/Utils/Log.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_stdio.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {

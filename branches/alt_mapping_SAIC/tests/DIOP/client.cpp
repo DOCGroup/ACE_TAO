@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Basic
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    This is the client for the UDP test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  This is the client for the UDP test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "UDPC.h"
 
@@ -29,8 +26,6 @@
 // The following include file forces DIOP to be linked into the
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
-
-ACE_RCSID(AMI, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 unsigned int msec = 500;
@@ -69,7 +64,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -11,7 +11,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/OS.h"
+#include "ace/os_include/os_netdb.h"
+#include "ace/OS_NS_unistd.h"
 
 TAO_IMR_i::TAO_IMR_i (void)
 : imr_ (ImplementationRepository::Administration::_nil ())
@@ -1017,6 +1018,7 @@ TAO_IMR_Op_Register::run (void)
             ACE_DEBUG((LM_DEBUG, "Adding Server <%C> on update command.\n", this->server_name_.c_str ()));
             is_add_ = true;
           }
+          local.activation= ImplementationRepository::NORMAL;
           options = &local;
         }
 

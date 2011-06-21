@@ -21,11 +21,6 @@
 #include "orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h"
 #include "tao/debug.h"
 
-ACE_RCSID (FT_FaultConsumer,
-           FT_FaultConsumer,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Default constructor.

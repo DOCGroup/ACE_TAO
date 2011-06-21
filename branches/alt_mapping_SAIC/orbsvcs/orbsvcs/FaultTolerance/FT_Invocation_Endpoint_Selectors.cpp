@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 
@@ -10,10 +11,6 @@
 #include "tao/SystemException.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (FaultTolerance,
-           FT_Invocation_Endpoint_Selectors,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

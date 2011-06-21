@@ -28,13 +28,13 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBEndpoint diop://:$port_server " .
                               "-o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
-                              "-ORBEndpoint diop://:$port_client " . 
+                              "-ORBEndpoint diop://:$port_client " .
                               "-k file://$client_iorfile");
 
 $server_status = $SV->Spawn ();

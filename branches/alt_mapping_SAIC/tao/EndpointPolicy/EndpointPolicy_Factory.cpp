@@ -1,9 +1,7 @@
-// @(#) $Id$
-#include "tao/EndpointPolicy/EndpointPolicy_Factory.h"
+// -*- C++ -*-
+// $Id$
 
-ACE_RCSID (EndpointPolicy,
-           EndpointPolicy_Factory,
-           "$Id$")
+#include "tao/EndpointPolicy/EndpointPolicy_Factory.h"
 
 #include "tao/EndpointPolicy/EndpointPolicy_i.h"
 #include "tao/EndpointPolicy/EndpointPolicyA.h"
@@ -19,7 +17,6 @@ ACE_RCSID (EndpointPolicy,
 #include "tao/Transport_Acceptor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core * orb_core)
   : orb_core_ (orb_core)

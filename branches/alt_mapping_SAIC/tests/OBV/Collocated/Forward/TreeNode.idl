@@ -5,7 +5,7 @@
 //
 // A concrete node type
 //
-valuetype StringNode : BaseNode 
+valuetype StringNode : BaseNode
 {
   public string name;
 };

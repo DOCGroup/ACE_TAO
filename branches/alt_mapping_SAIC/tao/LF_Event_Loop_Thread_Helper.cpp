@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/LF_Event_Loop_Thread_Helper.h"

@@ -3,8 +3,6 @@
 #include "orbsvcs/Notify/Method_Request_Event.h"
 #include "orbsvcs/Notify/Delivery_Request.h"
 
-ACE_RCSID (Notify, TAO_Notify_Method_Request_Event_Queueable, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (

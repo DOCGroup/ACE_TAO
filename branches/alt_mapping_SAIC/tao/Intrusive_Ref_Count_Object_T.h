@@ -31,8 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Template class as wrapper of a non reference counted data type but provide
  *        intrusive reference-counting feature by inherited from TAO_Intrusive_Ref_Count_Base.
- *        This makes the parameterized type data be smart pointer by using a 
- *        TAO_Intrusive_Ref_Count_Handle<X> to an this wrapper object.  
+ *        This makes the parameterized type data be smart pointer by using a
+ *        TAO_Intrusive_Ref_Count_Handle<X> to an this wrapper object.
  */
 template <class OBJ, class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Object : public TAO_Intrusive_Ref_Count_Base <ACE_LOCK>

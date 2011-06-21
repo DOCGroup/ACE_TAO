@@ -27,4 +27,4 @@ class Messenger_Locator_i : public PortableServer::ServantLocator,
                            PortableServer::Servant servant);
 };
 
-#endif 
+#endif

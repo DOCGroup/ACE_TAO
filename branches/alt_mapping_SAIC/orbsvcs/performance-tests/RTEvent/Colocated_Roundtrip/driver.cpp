@@ -30,7 +30,7 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_PERF_RTEC_Colocated_Roundtrip, driver, "$Id$")
+
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

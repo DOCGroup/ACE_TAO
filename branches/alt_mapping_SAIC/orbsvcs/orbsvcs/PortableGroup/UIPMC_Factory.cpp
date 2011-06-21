@@ -6,10 +6,6 @@
 #include "ace/OS_NS_strings.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (PortableGroup,
-           UIPMC_Factory,
-           "$Id$")
-
 static const char the_prefix[] = "uipmc";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

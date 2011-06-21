@@ -8,9 +8,6 @@
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
 #include "orbsvcs/Notify/Properties.h"
 
-
-ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushSupplier, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier (void)
@@ -72,7 +69,7 @@ TAO_Notify_StructuredProxyPushSupplier::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushSupplier::validate(%d)")
                   ACE_TEXT ("disconnecting \n"), this->id ()));
     }

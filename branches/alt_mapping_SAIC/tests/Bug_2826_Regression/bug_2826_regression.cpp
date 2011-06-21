@@ -4,9 +4,6 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "fooS.h"
 
-ACE_RCSID (Bug_2826_Regression,
-           bug_2826_regression,
-           "$Id$")
 namespace
 {
 class Foo_i : public virtual POA_foo

@@ -1,8 +1,6 @@
-#include "FactoryC_impl.h"
+// $Id$
 
-ACE_RCSID (Factory,
-           FactoryC_impl,
-           "$Id$")
+#include "FactoryC_impl.h"
 
 OBV_FactoryTest::Value2*
 Value2_init_impl::create_default (CORBA::ULong id)

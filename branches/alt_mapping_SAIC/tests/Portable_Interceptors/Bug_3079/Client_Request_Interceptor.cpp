@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
@@ -6,10 +7,6 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (Redirection,
-           Client_Request_Interceptor,
-           "$Id$")
 
 Client_Request_Interceptor::Client_Request_Interceptor (
   const char *orb_id,
@@ -58,7 +55,7 @@ Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   ++this->exception_count_;
-  ACE_DEBUG ((LM_DEBUG, "received exception %d\n", 
+  ACE_DEBUG ((LM_DEBUG, "received exception %d\n",
               this->exception_count_));
   if (CORBA::is_nil (this->orb_.in ()))
   {

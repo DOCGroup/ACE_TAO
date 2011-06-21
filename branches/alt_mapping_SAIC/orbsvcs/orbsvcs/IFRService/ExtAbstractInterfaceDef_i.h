@@ -35,16 +35,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Mixes in IDL3 attribute exceptions.
+ */
 class TAO_IFRService_Export TAO_ExtAbstractInterfaceDef_i
   : public virtual TAO_AbstractInterfaceDef_i,
     public virtual TAO_InterfaceAttrExtension_i
 {
-  // = TITLE
-  //    TAO_ExtAbstractInterfaceDef_i
-  //
-  // = DESCRIPTION
-  //    Mixes in IDL3 attribute exceptions.
-  //
 public:
   /// Constructor
   TAO_ExtAbstractInterfaceDef_i (TAO_Repository_i *repo);
@@ -52,8 +49,7 @@ public:
   /// Destructor
   virtual ~TAO_ExtAbstractInterfaceDef_i (void);
 
-  virtual void destroy (
-    );
+  virtual void destroy (void);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

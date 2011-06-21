@@ -2,10 +2,6 @@
 
 #include "Supplier.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 Supplier::Supplier (void)
 {
 }

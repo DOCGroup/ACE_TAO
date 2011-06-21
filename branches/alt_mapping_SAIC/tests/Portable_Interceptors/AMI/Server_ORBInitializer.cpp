@@ -9,10 +9,6 @@
 #include "Server_ORBInitializer.h"
 #include "Server_Interceptor.h"
 
-ACE_RCSID (AMI,
-           Server_ORBInitializer,
-           "$Id$")
-
 Server_ORBInitializer::Server_ORBInitializer (void)
 {
 }

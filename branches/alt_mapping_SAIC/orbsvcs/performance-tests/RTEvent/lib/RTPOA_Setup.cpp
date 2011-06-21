@@ -17,10 +17,6 @@
 #include "RTPOA_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC,
-           RTPOA_Setup,
-           "$Id$")
-
 RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
                           const RTCORBA_Setup &rtcorba_setup)
 {

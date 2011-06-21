@@ -1,27 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    server_A.cpp
-//
-// = DESCRIPTION
-//    This class implements a simple server for the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server_A.cpp
+ *
+ *  $Id$
+ *
+ *  This class implements a simple server for the
+ *  Nested Upcalls - Triangle test.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "server_A.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID(Triangle_Test, server_A, "$Id$")
 
 Object_A_Server::Object_A_Server (void)
   : ior_output_file_ (0)

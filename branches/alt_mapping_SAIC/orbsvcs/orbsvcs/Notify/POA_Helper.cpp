@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
-
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
@@ -160,9 +158,9 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
   if (DEBUG_LEVEL > 0)
     {
       CORBA::String_var the_name = this->poa_->the_name ();
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) POA_Helper Activating object with ")
-                  ACE_TEXT ("id = %d in  POA : %C\n"), 
+                  ACE_TEXT ("id = %d in  POA : %C\n"),
                   id, the_name.in ()
                   ));
     }
@@ -181,9 +179,9 @@ TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA:
   if (DEBUG_LEVEL > 0)
     {
       CORBA::String_var the_name = this->poa_->the_name ();
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) POA_Helper Activating object with ")
-                  ACE_TEXT ("existing id = %d in  POA : %C\n"), 
+                  ACE_TEXT ("existing id = %d in  POA : %C\n"),
                   id, the_name.in ()
                   ));
     }
@@ -206,9 +204,9 @@ TAO_Notify_POA_Helper::deactivate (CORBA::Long id) const
   if (DEBUG_LEVEL > 0)
     {
       CORBA::String_var the_name = this->poa_->the_name ();
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) POA_Helper Deactivating object with")
-                  ACE_TEXT ("id = %d in  POA : %C\n"), 
+                  ACE_TEXT ("id = %d in  POA : %C\n"),
                   id, the_name.in ()));
     }
   poa_->deactivate_object (oid.in ());

@@ -6,10 +6,10 @@ printing out the information contained in it.
 Usage
 -----
 
-catior -f <filename>
+tao_catior -f <filename>
 
 Takes in a file which contains the IOR and will then output the
 encoded information to stdout.
 
 There are samples file in the test subdirectory.  You can run the
-"catior" utility against them to see what the output looks like.
+"tao_catior" utility against them to see what the output looks like.

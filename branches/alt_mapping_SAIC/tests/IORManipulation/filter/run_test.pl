@@ -26,7 +26,7 @@ $SV = $server->CreateProcess ("server",
                               "-ORBUseSharedProfiles 0 " .
                               "-ORBEndpoint iiop://localhost " .
                               "-ORBEndpoint iiop://$hostname");
-    
+
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($server_status != 0) {

@@ -46,7 +46,7 @@ namespace TAO
 {
   namespace SSLIOP
   {
-    typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+    typedef ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH> SVC_HANDLER;
 
     class Handler_Base;
     class Connection_Handler;

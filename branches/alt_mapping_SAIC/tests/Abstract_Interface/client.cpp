@@ -1,11 +1,8 @@
+// -*- C++ -*-
 // $Id$
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID (Abstract_Interface,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://test.ior");
 int debug = 0;
@@ -53,7 +50,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -65,14 +62,14 @@ dump_node (BaseNode* bn, int indent)
       return;
     }
 
-  // This is ugly I know
-  int i = indent;
-  for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
-
   StringNode* sn = StringNode::_downcast (bn);
 
   if (debug)
     {
+      // This is ugly I know
+      int i = indent;
+      for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
+
       if (sn != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %C\n",
@@ -280,8 +277,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (which_test == TEST_EXCEPTION || which_test == TEST_ALL)
         {
-          which_test = TEST_EXCEPTION;
           test_exception (package.in ());
+        }
+
+      if (which_test == TEST_ALL)
+        {
+          objref->pass_nil (package.out ());
+
+          if (!CORBA::is_nil (package.in ()))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "pass_nil() did NOT return null OUT arg\n"),
+                                -1);
+            }
         }
 
       objref->shutdown ();

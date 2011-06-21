@@ -6,6 +6,8 @@
 # include "orbsvcs/Time_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Number of nanoseconds between CORBA and POSIX epochs.

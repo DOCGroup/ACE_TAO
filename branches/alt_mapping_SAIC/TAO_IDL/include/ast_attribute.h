@@ -99,7 +99,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 
@@ -108,7 +108,7 @@ public:
   UTL_ExceptList *be_add_set_exceptions (UTL_ExceptList *t);
 
   static AST_Decl::NodeType const NT;
-  
+
 private:
   // Data.
 

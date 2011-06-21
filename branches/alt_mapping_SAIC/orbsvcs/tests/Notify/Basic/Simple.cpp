@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "Simple.h"
 
-ACE_RCSID (Notify_Tests, Simple, "$Id$")
+
 
 //***************************************************************************
 

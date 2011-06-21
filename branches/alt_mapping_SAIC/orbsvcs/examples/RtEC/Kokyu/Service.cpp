@@ -21,7 +21,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Thread.h"
 
-ACE_RCSID(EC_Examples, Service, "$Id$")
+
 
 namespace
 {
@@ -460,7 +460,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            "-s <rms|muf>"),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

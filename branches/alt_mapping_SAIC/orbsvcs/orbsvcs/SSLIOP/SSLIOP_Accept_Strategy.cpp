@@ -1,9 +1,6 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Accept_Strategy,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -11,7 +8,7 @@ TAO::SSLIOP::Accept_Strategy::Accept_Strategy (
   TAO_ORB_Core * orb_core,
   const ACE_Time_Value & timeout)
   : TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
-                        ACE_SSL_SOCK_ACCEPTOR> (orb_core),
+                        ACE_SSL_SOCK_Acceptor> (orb_core),
     timeout_ (timeout)
 {
 }
@@ -54,9 +51,10 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
       // close() method resets it.
       ACE_Errno_Guard error (errno);
 
-      // Close down handler to avoid memory leaks.
-      svc_handler->close (0);
+      // It doesn't make sense to close the handler since it didn't open.
+      svc_handler->transport ()->remove_reference ();
 
+      // #REFCOUNT# is zero at this point.
       return -1;
     }
   else

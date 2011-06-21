@@ -112,11 +112,30 @@ AST_Exception::~AST_Exception (void)
 bool
 AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
+  bool self_test = (list.size () == 0);
+
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (self_test && this->in_recursion_ != -1)
+    {
+      return (this->in_recursion_ == 1);
+    }
+
+  if (list.size () > 1)
+  {
+    if (match_names (this, list))
+      {
+        // this happens when we are not recursed ourselves but instead
+        // are part of another recursive type
+        return false;
+      }
+  }
+
+  list.enqueue_tail(this);
+
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      list.enqueue_tail (this);
-
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
@@ -148,16 +167,18 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->in_recursion (list))
             {
-              this->in_recursion_ = 1;
+              if (self_test)
+                this->in_recursion_ = 1;
               idl_global->recursive_type_seen_ = true;
-              return this->in_recursion_;
+              return true;
             }
         }
     }
 
   // Not in recursion.
-  this->in_recursion_ = 0;
-  return this->in_recursion_;
+  if (self_test)
+    this->in_recursion_ = 0;
+  return 0; //this->in_recursion_;
 }
 
 // Dump this AST_Exception node to the ostream o.

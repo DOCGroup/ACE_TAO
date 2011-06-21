@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/Key_Adapters.h"
@@ -5,8 +6,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Map_T.h"
-
-///////////////////////////////////////////////////////////////////////////////
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

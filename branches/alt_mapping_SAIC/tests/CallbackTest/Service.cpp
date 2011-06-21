@@ -3,8 +3,6 @@
 //
 #include "Service.h"
 
-ACE_RCSID(Callback, Service, "$Id$")
-
 Service::Service (CORBA::ORB_ptr orb)
   : test_count_ (0),
     orb_ (CORBA::ORB::_duplicate (orb))

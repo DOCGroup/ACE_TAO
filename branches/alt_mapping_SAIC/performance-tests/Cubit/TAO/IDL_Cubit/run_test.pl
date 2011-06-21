@@ -36,6 +36,7 @@ $client->DeleteFile($iorbase);
 $client_flags = "";
 $server_flags = "";
 $quiet_flag = " -q ";
+$shmiop = 1;
 
 ###############################################################################
 # Parse the arguments
@@ -48,6 +49,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         print "-n num              -- client uses <num> iterations\n";
         print "-debug              -- sets the debug flag for both client and "
                                       . "server\n";
+        print "-noshmiop           -- don't run SHMIOP test\n";
         exit;
     }
     elsif ($ARGV[$i] eq "-debug") {
@@ -60,6 +62,9 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "-verbose") {
         $quiet_flag = "";
+    }
+    elsif ($ARGV[$i] eq "-noshmiop") {
+        $shmiop = 0;
     }
     else {
         print STDERR "ERROR: Unknown Option: ".$ARGV[$i]."\n";
@@ -142,12 +147,14 @@ if ($OSNAME ne "MSWin32" && $OSNAME ne "VMS") {
     run_test_helper ();
 }
 
-print STDERR "============================================================\n";
-print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
+if ($shmiop) {
+    print STDERR "============================================================\n";
+    print STDERR "Running IDL_Cubit with the SHMIOP protocol.\n\n";
 
-$SV->Arguments ("$server_stdarg -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
+    $SV->Arguments ("$server_stdarg -ORBEndpoint shmiop:// -ORBSvcconf $server_shmiop_conf ");
 
-run_test_helper ();
+    run_test_helper ();
+}
 
 # Clean up SHMIOP files
 PerlACE::check_n_cleanup_files ("server_shmiop_*");

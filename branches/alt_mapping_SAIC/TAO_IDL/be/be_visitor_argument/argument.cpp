@@ -94,29 +94,29 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
 {
   TAO_CodeGen::CG_SUB_STATE ss = this->ctx_->sub_state ();
   AST_Argument::Direction d = this->direction ();
-  
+
   bool in_arg = (d == AST_Argument::dir_IN);
   bool out_arg = (d == AST_Argument::dir_OUT);
   bool out_stream = (ss == TAO_CodeGen::TAO_CDR_OUTPUT);
   bool in_stream = (ss == TAO_CodeGen::TAO_CDR_INPUT);
-  
+
   bool skip = (in_arg && for_stub && in_stream)
               || (in_arg && !for_stub && out_stream)
               || (out_arg && for_stub && out_stream)
               || (out_arg && !for_stub && in_stream);
-              
+
   if (skip)
     {
       return 0;
     }
-              
+
   TAO_OutStream *os = this->ctx_->stream ();
   const char *var_call = "";
   const char *any_deref = "";
-    
+
   AST_PredefinedType::PredefinedType pt = node->pt ();
   bool is_any = (pt == AST_PredefinedType::PT_any);
-    
+
   if (for_stub)
     {
       if (in_stream && out_arg)
@@ -128,7 +128,7 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
   else if (out_stream)
     {
       var_call = ".in ()";
-      
+
       if (is_any && !out_arg)
         {
           var_call = "";
@@ -138,17 +138,17 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
     {
       var_call = ".out ()";
     }
-    
+
   ACE_CString to_from_str = (in_stream
                              ? "::ACE_InputCDR::to_"
                              : "::ACE_OutputCDR::from_");
-                             
+
   const char *to_from = to_from_str.c_str ();
-  
+
   be_argument *arg =
     be_argument::narrow_from_decl (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
-  
+
   switch (pt)
   {
     case AST_PredefinedType::PT_any:
@@ -173,7 +173,7 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
       *os << lname;
       break;
   }
-    
+
   return 0;
 }
 

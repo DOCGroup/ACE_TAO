@@ -105,7 +105,7 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
-  
+
   // Cleanup.
   virtual void destroy (void);
 
@@ -118,9 +118,9 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   static AST_Decl::NodeType const NT;
-  
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
@@ -136,7 +136,7 @@ private:
 
   AST_Type *pd_base_type;
   // Base type of array.
-  
+
   bool owns_base_type_;
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.

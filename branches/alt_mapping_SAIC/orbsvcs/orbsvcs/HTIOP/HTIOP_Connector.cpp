@@ -17,11 +17,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "ace/Strategies_T.h"
-
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Connector,
-           "$Id$")
-
+#include "ace/OS_NS_strings.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

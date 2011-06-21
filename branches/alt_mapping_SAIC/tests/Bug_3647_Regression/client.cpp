@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "TestC.h"
@@ -6,10 +7,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID(Bug_3647_Regression,
-          client,
-          "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://middle.ior");
 bool verbose = true;
@@ -69,7 +66,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     timeout = tmp;
   }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

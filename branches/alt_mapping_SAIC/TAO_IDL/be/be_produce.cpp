@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_visitor_ami_pre_proc.h"
 #include "be_visitor_amh_pre_proc.h"
 #include "be_visitor_ccm_pre_proc.h"
+#include "be_visitor_dds_ts_idl.h"
 #include "be_visitor_context.h"
 #include "be_root.h"
 #include "be_extern.h"
@@ -115,6 +116,14 @@ TAO_IDL_BE_Export void
 BE_produce (void)
 {
   be_visitor_context ctx;
+
+  // Only generate the TypeSupport and directly bail out
+  if (be_global->gen_dds_typesupport_idl ())
+    {
+      be_visitor_dds_ts_idl root_dds_idl_visitor (&ctx);
+      BE_visit_root (root_dds_idl_visitor, "DDS type support IDL");
+      return;
+    }
 
   if (!idl_global->ignore_idl3 ())
     {
@@ -209,7 +218,7 @@ BE_produce (void)
       be_visitor_root_is root_is_visitor (&ctx);
       BE_visit_root (root_is_visitor, "implementation skeleton");
     }
-    
+
   if (be_global->gen_ciao_svnt ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
@@ -220,12 +229,12 @@ BE_produce (void)
       be_visitor_root_svs root_svs_visitor (&ctx);
       BE_visit_root (root_svs_visitor, "CIAO servant source");
     }
-      
+
   if (be_global->gen_ciao_exec_idl ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_EX_IDL);
-      be_visitor_root_ex_idl root_svs_visitor (&ctx);
-      BE_visit_root (root_svs_visitor, "CIAO executor IDL");
+      be_visitor_root_ex_idl root_ex_idl_visitor (&ctx);
+      BE_visit_root (root_ex_idl_visitor, "CIAO executor IDL");
     }
 
   if (be_global->gen_ciao_exec_impl ())
@@ -238,7 +247,7 @@ BE_produce (void)
       be_visitor_root_exs root_exs_visitor (&ctx);
       BE_visit_root (root_exs_visitor, "CIAO exec impl source");
     }
-    
+
   if (be_global->gen_ciao_conn_impl ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_CNH);
@@ -249,7 +258,7 @@ BE_produce (void)
       be_visitor_root_cns root_cns_visitor (&ctx);
       BE_visit_root (root_cns_visitor, "CIAO conn impl source");
     }
-    
+
   tao_cg->gen_export_files ();
 
   // Done with this IDL file.

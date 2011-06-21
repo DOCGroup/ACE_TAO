@@ -1,11 +1,10 @@
+// $Id$
+
 #include "Factory.h"
 #include "Simple.h"
 
 #include "TestC.h"
-
-ACE_RCSID (DeadMemberDetection_Inf_Ctrl,
-           Factory,
-           "$Id$")
+#include "ace/OS_NS_unistd.h"
 
 Factory::Factory (int id)
 : id_ (id)
@@ -60,12 +59,9 @@ Factory::create_object (
   return obj_._retn ();
 }
 
-#include <ace/OS.h>
-
 void
 Factory::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &
-      fcid)
+    const PortableGroup::GenericFactory::FactoryCreationId & fcid)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T delete_object \n"));
   ACE_OS::sleep (10);
@@ -95,7 +91,7 @@ Factory::delete_object (
 }
 
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 Factory::get_object () const
 {
   return this->obj_.in ();

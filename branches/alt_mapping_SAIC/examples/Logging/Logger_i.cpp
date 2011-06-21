@@ -8,8 +8,6 @@
 #include "ace/Log_Record.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(Log, Logger_i, "$Id$")
-
 Logger_Factory_i::Logger_Factory_i (void)
 {
 }
@@ -21,7 +19,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name)
 {
-  Logger_i *result;
+  Logger_i *result = 0;
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value
 
@@ -59,6 +57,9 @@ Logger_Factory_i::make_logger (const char *name)
   // registration attempt.
   // @@ Matt, this code doesn't seem right.  Can you please check with
   // Irfan and Carlos about whether this is the right thing to do?
+  if (!result)
+    return Logger::_nil ();
+
   return result->_this ();
 }
 

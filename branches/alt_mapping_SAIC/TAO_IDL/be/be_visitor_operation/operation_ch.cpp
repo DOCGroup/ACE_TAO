@@ -32,11 +32,8 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
 
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
   // Every operation is declared virtual in the client code.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "virtual ";
 
   // STEP I: generate the return type.
@@ -50,7 +47,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          ACE_TEXT ("Bad return type\n")),
                         -1);
     }
-    
+
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype or_visitor (&ctx);
@@ -67,7 +64,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   // STEP 2: generate the operation name. The port prefix should
   // be an empty string except for operations from attributes
   // defined in a porttype.
-  *os << be_nl << node->local_name ();
+  *os << " " << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -83,19 +80,19 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
-    
+
   be_interface *intf =
     be_interface::narrow_from_scope (node->defined_in ());
-   
+
   /// If we are in a reply handler, are not an execp_* operation,
   /// and have no native args, then generate the AMI static
-  /// reply stub declaration.  
+  /// reply stub declaration.
   if (intf != 0
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
       && !node->has_native ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "static void " << be_nl
           << node->local_name () << "_reply_stub (" << be_idt_nl
           << "TAO_InputCDR &_tao_reply_cdr," << be_nl

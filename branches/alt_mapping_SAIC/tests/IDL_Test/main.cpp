@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    main.cpp
-//
-// = DESCRIPTION
-//    We test the pragma prefixes generated in pragma.idl, and
-//    the values of some generated constants in constants.idl.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    main.cpp
+ *
+ *  $Id$
+ *
+ *  We test the pragma prefixes generated in pragma.idl, and
+ *  the values of some generated constants in constants.idl.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "pragmaS.h"
 #include "unionC.h"
@@ -88,10 +85,10 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
-  
+
   const ACE_CDR::ULongLong test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
-    
+
   if (test_ull != AAA)
     {
       ++error_count;
@@ -100,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" long long AAA in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
     }
-    
+
   const CORBA::LongLong test_nll = ACE_INT64_LITERAL (-122192928000000000);
 
   if (test_nll != NAAA)
@@ -111,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" long long NAAA in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
     }
-    
+
   const CORBA::LongLong test_pll = ACE_INT64_LITERAL (122192928000000000);
 
   if (test_pll != PAAA)
@@ -122,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" long long PAAA in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
     }
-    
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,

@@ -7,10 +7,6 @@
 #include "orbsvcs/Notify/RT_Properties.h"
 #include "ace/SString.h"
 
-ACE_RCSID (Notify,
-           TAO_Notify_RT_POA_Helper,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()

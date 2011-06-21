@@ -2,7 +2,7 @@
 
 #include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
 
-ACE_RCSID(CosEvent, CEC_MT_Dispatching, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

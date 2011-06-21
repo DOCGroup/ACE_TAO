@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Performance
-//
-// = FILENAME
-//    UDP_i.h
-//
-// = DESCRIPTION
-//    This class implements the server functionality of the UDP test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UDP_i.h
+ *
+ *  $Id$
+ *
+ *  This class implements the server functionality of the UDP test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #ifndef UDP_I_H
 #define UDP_I_H
@@ -24,20 +21,21 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
+/**
+ * @class UDP_i:
+ *
+ * @brief UDP Object Implementation
+ *
+ */
 class UDP_i: public POA_UDP
 {
-  // = TITLE
-  //    UDP Object Implementation
-  //
-  // = DESCRIPTION
-  //
 public:
   // = Initialization and termination methods.
+  /// Constructor
   UDP_i (void);
-  // Constructor
 
+  /// Destructor
   ~UDP_i (void);
-  // Destructor
 
   virtual void setResponseHandler (UDP_ptr udpHandler);
 
@@ -46,21 +44,21 @@ public:
 
   virtual void reset (const char * client_name);
 
+  /// Shutdown the server.
   virtual void shutdown (void);
-  // Shutdown the server.
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
+  /// Return the number of lost messages
   ACE_UINT32 getMessagesCount ();
-  // Return the number of lost messages
 
+  /// Return the number of lost messages
   ACE_UINT32 getWrongMessagesCount ();
-  // Return the number of lost messages
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 
   ACE_Hash_Map_Manager_Ex < CORBA::String_var,
                             CORBA::Long,

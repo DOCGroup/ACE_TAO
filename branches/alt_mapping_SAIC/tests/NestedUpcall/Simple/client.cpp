@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Simple, client, "$Id$")
-
 static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 

@@ -3,8 +3,6 @@
 #include "Loader.h"
 #include "Test_i.h"
 
-ACE_RCSID(Object_Loader, Loader, "$Id$")
-
 Loader::Loader (void)
 {
 }

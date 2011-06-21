@@ -30,12 +30,12 @@ module Stock
     /// Event source operation to establish connectivity.
     /// @param c An object reference to the consumer the distributor should notify
     /// @returns A cookie used to identify the subscription.
-    Cookie subscribe_notifier (in Stock::StockNameConsumer c, 
+    Cookie subscribe_notifier (in Stock::StockNameConsumer c,
                                in RTCORBA::Priority priority);
 
     /// Opteration to discontinue connectivity.
     /// @param ck The cookie that identifies the connection to be terminated.
-    Stock::StockNameConsumer unsubscribe_notifier (in Cookie ck) 
+    Stock::StockNameConsumer unsubscribe_notifier (in Cookie ck)
       raises (Invalid_Subscription);
 
     /// Factory operation to return StockQuoter object reference.
@@ -46,7 +46,7 @@ module Stock
 
     /// Controls rate of updates.
     attribute long notification_rate;
-    
+
     /// Shutdown the object and terminate the application
     oneway void shutdown ();
   };
@@ -59,7 +59,7 @@ module Stock
   {
     /// Create a StockDistributor object.
     StockDistributor create ();
-  }; 
+  };
 };
 
 #endif

@@ -4,8 +4,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID(Timeout, test_i, "$Id$")
-
 ACE_High_Res_Timer sleep_duration;
 
 

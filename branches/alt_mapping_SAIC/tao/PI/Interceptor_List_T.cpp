@@ -55,10 +55,8 @@ namespace TAO
           {
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
-//            CORBA::String_var name =
-//              interceptor->name ();
+            std::string name = interceptor->name ();
 
-//            if (ACE_OS::strlen (name.in ()) != 0)
             if (!interceptor->name ().empty ())
               {
                 // @@ This simple search algorithm isn't the greatest

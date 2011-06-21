@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/PI_Server/PortableServer_ORBInitializer.h"
 #include "tao/PI_Server/PortableServer_PolicyFactory.h"
@@ -7,11 +8,6 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (PI_Server,
-           PortableServer_ORBInitializer,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

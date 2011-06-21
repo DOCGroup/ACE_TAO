@@ -2,7 +2,7 @@
 
 // ===========================================================================
 //
-// = FILE  
+// = FILE
 //     Persian.idl
 //
 // = DESCRIPTION
@@ -56,7 +56,7 @@ module PersianRecursion
       // = DESCRIPTION
       // This interface specifies a single operation, used
       // to shut down the orb.  This allows the orb to
-      // be shut down cleanly, from within a synchronously 
+      // be shut down cleanly, from within a synchronously
       // servant dispatched servant, but with the request
       // originating from another thread.
   {

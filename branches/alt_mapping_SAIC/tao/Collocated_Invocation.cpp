@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Collocated_Invocation.h"
 #include "tao/Collocation_Proxy_Broker.h"
 #include "tao/ORB_Core.h"
@@ -95,7 +97,7 @@ namespace TAO
               }
           }
 
-        // Invocation completed succesfully
+        // Invocation completed successfully
         s = TAO_INVOKE_SUCCESS;
 
 #if TAO_HAS_INTERCEPTORS == 1

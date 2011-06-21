@@ -28,7 +28,7 @@ public:
   AST_Type *inherits_concrete (void) const;
   AST_Type *supports_concrete (void) const;
   bool truncatable (void) const;
-  
+
   virtual void destroy (void);
   // Destroy anything allocated for this class.
 

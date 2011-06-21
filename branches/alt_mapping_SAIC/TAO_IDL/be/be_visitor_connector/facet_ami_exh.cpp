@@ -88,7 +88,7 @@ be_visitor_facet_ami_exh::visit_operation (be_operation *node)
     {
       return  0;
     }
-    
+
   /// We're generating implementation operation declarations,
   /// so we can just use this visitor.
   be_visitor_operation_ih v (this->ctx_);
@@ -124,7 +124,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   /// by -GC, which must be applied to this IDL file.
   this->handler_str_ = this->scope_name_;
   this->handler_str_ += this->smart_scope_;
-  
+
   this->handler_str_ += (for_impl ? "" : "AMI_");
   ACE_CString tmp (this->iface_name_);
   this->handler_str_ +=
@@ -199,7 +199,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "class " << export_macro_.c_str () << " "
       << iface_name << suffix << be_idt_nl
       << ": public virtual ::" << scope_name << "::CCM_"
@@ -208,10 +208,10 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << iface_name << suffix << " (void);" << be_nl << be_nl
+      << iface_name << suffix << " (void);" << be_nl_2
       << "virtual ~" << iface_name << suffix
       << " (void);";
-      
+
   if (this->visit_scope (this->iface_) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -221,25 +221,30 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
                          ACE_TEXT ("interface failed\n")),
                         -1);
     }
-    
-  os_ << be_nl << be_nl
-      << "virtual void set_session_context (" 
-      << "::Components::SessionContext_ptr ctx);";
-      
+
+  const char *container_type = be_global->ciao_container_type ();
+
+  os_ << be_nl_2
+      << "virtual void set_"
+      << tao_cg->downcase (container_type)
+      << "_context ("
+      << "::Components::"
+      << be_global->ciao_container_type () << "Context_ptr ctx);";
+
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual ::CORBA::Object_ptr _get_component (void);";
-      
-  os_ << be_nl << be_nl
+
+  os_ << be_nl_2
       << "virtual void _set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope
       << "CCM_" << this->node_->local_name ()
       << "_ptr);" << be_uidt;
-      
+
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
       << "::" << s->name () << smart_scope

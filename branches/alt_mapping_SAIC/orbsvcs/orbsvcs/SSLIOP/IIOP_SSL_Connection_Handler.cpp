@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/IIOP_SSL_Transport.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
@@ -5,12 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/debug.h"
-
-
-ACE_RCSID (SSLIOP,
-           IIOP_SSL_Connection_Handler,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl"

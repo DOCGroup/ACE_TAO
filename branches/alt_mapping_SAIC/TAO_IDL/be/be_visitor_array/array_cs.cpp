@@ -96,8 +96,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // dup method.
   *os << fname << "_slice *" << be_nl
@@ -113,7 +113,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       << "}" << be_uidt_nl << be_nl;
   *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   // alloc method.
   *os << fname << "_slice *" << be_nl;
@@ -142,7 +142,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   *os << ", 0);" << be_nl;
   *os << "return retval;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   // free method.
   *os << "void" << be_nl
@@ -151,7 +151,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "delete [] _tao_slice;" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   // copy method.
   *os << "void " << be_nl;

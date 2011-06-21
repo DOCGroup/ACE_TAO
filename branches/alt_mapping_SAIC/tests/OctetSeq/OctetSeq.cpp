@@ -1,22 +1,19 @@
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/OctetSeq
-//
-// = FILENAME
-//    octetseq.cpp
-//
-// = DESCRIPTION
-//   TAO optimizes octet sequences, this test verifies that the
-//   optimizations do not break any code and that they effectively
-//   improve performance.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    OctetSeq.cpp
+ *
+ *  $Id$
+ *
+ * TAO optimizes octet sequences, this test verifies that the
+ * optimizations do not break any code and that they effectively
+ * improve performance.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -25,8 +22,6 @@
 #include "tao/CDR.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID(OctetSeq, OctetSeq, "$Id$")
 
 static int
 test_write_octet (TAO_OutputCDR &cdr,

@@ -49,11 +49,11 @@ $srv->DeleteFile ($srviorfile);
 $cli->DeleteFile ($srviorfile);
 $con->DeleteFile ($confile);
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
 
 
-$NotifyService = "$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Service";
+$NotifyService = "$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification";
 $NFS = $nfs->CreateProcess ($NotifyService, "-ORBInitRef NameService=file://$nfs_nsiorfile ".
                                             "-IORoutput $nfs_nfsiorfile ".
                                             "-ORBSvcConf $con_conconf");

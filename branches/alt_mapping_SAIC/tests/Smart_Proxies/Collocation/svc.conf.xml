@@ -9,7 +9,7 @@
  <static id="Resource_Factory" params="-ORBReactorType select_st -ORBInputCDRAllocator null  -ORBConnectionCacheLock null"/>
  <!--  Make sure we use RW client handler so if something goes wrong, the program will bloc, -->
  <!--  i.e., won't work. -->
- <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler RW"/>
+ <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>
  <!--  Not absolutely necessary for this test, but we add it for fun. -->
- <static id="Server_Strategy_Factory" params="-ORBConcurrency reactive -ORBPOALock null"/>
+ <static id="Server_Strategy_Factory" params="-ORBConcurrency reactive"/>
 </ACE_Svc_Conf>

@@ -17,12 +17,12 @@ public:
                  AST_Connector *base_connector);
 
   virtual ~AST_Connector (void);
-  
+
   AST_Connector *base_connector (void) const;
 
   // Cleanup function.
   virtual void destroy (void);
-  
+
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (AST_Connector);

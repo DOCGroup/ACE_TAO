@@ -608,7 +608,6 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Registration of TaggedComponentFactory failed because a factory already exists for the given id.", // 24
        "Iteration has no more elements.", // 25
        "Invocation of this operation not allowed in post_init." // 26
-
     };
 
   static const char *TRANSIENT_TABLE[] =

@@ -16,7 +16,7 @@ module Test
      * This method is used to simplify the test shutdown process
      */
     oneway void shutdown ();
-    
+
     void request_callback (in Hello call_me);
   };
 };

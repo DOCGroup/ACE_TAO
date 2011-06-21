@@ -9,7 +9,7 @@ module Test
 
   interface Roundtrip
   {
-    /// The operation simply returns its argument. 
+    /// The operation simply returns its argument.
     Timestamp test_method (in Timestamp send_time);
 
     /// Shutdown the ORB

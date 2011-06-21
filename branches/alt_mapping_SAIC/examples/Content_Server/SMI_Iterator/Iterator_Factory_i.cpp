@@ -9,8 +9,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (SMI_Iterator, Iterator_Factory_i, "$Id$")
-
 void
 Iterator_Factory_i::get_iterator (const char *pathname,
                                   Web_Server::Content_Iterator_out contents,

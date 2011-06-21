@@ -7,10 +7,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (CEC_Tests,
-           Random,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

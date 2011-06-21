@@ -187,14 +187,14 @@ be_visitor_amh_pre_proc::create_response_handler (
   response_handler->set_imported (node->imported ());
   response_handler->set_line (node->line ());
   response_handler->set_file_name (node->file_name ());
-  
+
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
   response_handler->AST_Decl::repoID (0);
   response_handler->prefix (const_cast<char*> (node->prefix ()));
-  
+
   response_handler->gen_fwd_helper_name ();
   this->add_rh_node_members (node, response_handler, exception_holder);
   return response_handler;
@@ -291,8 +291,8 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
     {
       return -1;
     }
-    
-  /// These are for the stub side only.  
+
+  /// These are for the stub side only.
   if (node->is_sendc_ami ())
     {
       return 0;
@@ -324,11 +324,11 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
     this->create_response_handler_operation (get_operation,
                                              response_handler,
                                              exception_holder);
-                                             
+
   get_operation->destroy ();
   delete get_operation;
   get_operation = 0;
-                                             
+
   if (status == -1)
     {
       return -1;
@@ -348,11 +348,11 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
     this->create_response_handler_operation (set_operation,
                                              response_handler,
                                              exception_holder);
-                                             
+
   set_operation->destroy ();
   delete set_operation;
   set_operation = 0;
-                                             
+
   return status;
 }
 
@@ -372,14 +372,14 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                                 1,
                                 0),
                   -1);
-                  
+
   node_excep->set_name (operation_name);
 
   Identifier *arg_id = 0;
   ACE_NEW_RETURN (arg_id,
                   Identifier ("holder"),
                   -1);
-                  
+
   UTL_ScopedName *arg_name = 0;
   ACE_NEW_RETURN (arg_name,
                   UTL_ScopedName (arg_id, 0),
@@ -451,7 +451,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
       ACE_NEW_RETURN (arg_id,
                       Identifier ("return_value"),
                       -1);
-                      
+
       UTL_ScopedName *arg_name = 0;
       ACE_NEW_RETURN (arg_name,
                       UTL_ScopedName (arg_id, 0),
@@ -464,9 +464,9 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                                    node->return_type (),
                                    arg_name),
                       -1);
-                      
+
       arg->set_name (arg_name);
-                      
+
       // Add the response handler to the argument list
       operation->be_add_argument (arg);
     }
@@ -575,14 +575,14 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
   excep_holder->set_name (excep_holder_name);
   excep_holder->set_defined_in (node->defined_in ());
-  
+
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
   excep_holder->AST_Decl::repoID (0);
   excep_holder->prefix (const_cast<char*> (node->prefix ()));
-  
+
   excep_holder->gen_fwd_helper_name ();
 
   // Now our customized valuetype is created, we have to
@@ -704,7 +704,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
         {
           // Copy the exceptions.
           UTL_ExceptList *exceptions = orig_op->exceptions ();
-          
+
           if (0 != exceptions)
             {
               operation->be_add_exceptions (exceptions->copy ());

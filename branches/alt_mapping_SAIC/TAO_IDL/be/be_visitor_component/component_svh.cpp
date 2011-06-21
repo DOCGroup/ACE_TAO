@@ -42,14 +42,14 @@ be_visitor_component_svh::visit_component (be_component *node)
     {
       return 0;
     }
-    
+
   /// Fills in the node's has_* members, for use in minimizing
-  /// code generation.  
+  /// code generation.
   node->scan (node);
-  
+
   // Generate the facet servant class declaration.
   be_visitor_facet_svh facet_visitor (this->ctx_);
-  
+
   if (facet_visitor.visit_component_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,7 +61,7 @@ be_visitor_component_svh::visit_component (be_component *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl
       << "{" << be_idt;
@@ -77,8 +77,8 @@ be_visitor_component_svh::visit_component (be_component *node)
                          ACE_TEXT ("context visitor failed\n")),
                         -1);
     }
-    
-  // Generate the servant class declaration.  
+
+  // Generate the servant class declaration.
   be_visitor_servant_svh servant_visitor (this->ctx_);
 
   if (servant_visitor.visit_component (node) == -1)
@@ -107,13 +107,14 @@ be_visitor_component_svh::visit_connector (be_connector *node)
 void
 be_visitor_component_svh::gen_entrypoint (be_component *node)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt;
 }
 

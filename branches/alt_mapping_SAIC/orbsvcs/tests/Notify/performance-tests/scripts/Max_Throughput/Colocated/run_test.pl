@@ -30,7 +30,7 @@ my $collocated_iorfile = $collocated->LocalFile($iorbase);
 $nm_service->DeleteFile($iorbase);
 $collocated->DeleteFile($iorbase);
 
-$NM_SV = $nm_service->CreateProcess ("../../../../../../Naming_Service/Naming_Service",
+$NM_SV = $nm_service->CreateProcess ("../../../../../../Naming_Service/tao_cosnaming",
                                      "-ORBdebuglevel $debug_level -o $nm_service_iorfile");
 
 $CL = $collocated->CreateProcess ("../../../../Driver/Notify_Tests_Driver",

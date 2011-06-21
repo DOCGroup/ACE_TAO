@@ -5,7 +5,6 @@
 #include "TestAppExceptionC.h"
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
 
 const char* ONEWAY_ARG_TEST_STR = "TEST";
 

@@ -144,17 +144,17 @@ DRV_usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -ae\t\t\tError if anonymous type is seen ")
-      ACE_TEXT ("(default is silent)\n")
+      ACE_TEXT ("(default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
-      ACE_TEXT ("(default is silent)\n")
+      ACE_TEXT ("(default is error)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
-      ACE_TEXT ("(default)\n")
+      ACE_TEXT ("(default is error)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -297,7 +297,7 @@ DRV_parse_args (long ac, char **av)
                       ACE_TEXT_CHAR_TO_TCHAR (av[i])
                     ));
                  }
-                 
+
                break;
             // Temp directory for the IDL compiler to keep its files.
             case 't':

@@ -1,8 +1,6 @@
 /* -*- C++ -*- $Id$ */
+
 #include "Validate_Client_Task.h"
-
-ACE_RCSID(Notify, Validate_Client_Task, "$Id$")
-
 #include "EventChannelFactory.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

@@ -57,11 +57,11 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the return type mapping. Return type is simply void.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "void" << be_nl;
 
   // Generate the operation name.
@@ -152,7 +152,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       // No arguments other than the reply handler, and the return
       // type is void.  No need to generate argument list.
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "TAO::Argument ** _the_tao_operation_signature = 0;";
       nargs = 0; // Don't count the reply handler.
     }
@@ -168,7 +168,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       this->gen_stub_body_arglist (ami_op, os, true);
 
       // Assemble the arg helper class pointer array.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "TAO::Argument *_the_tao_operation_signature[] =" << be_idt_nl
           << "{" << be_idt_nl
           << "&_tao_retval";
@@ -195,20 +195,20 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_interface *intf = be_interface::narrow_from_decl (parent);
 
   ACE_CString base (node->local_name ()->get_string ());
-  
+
   /// The sendc_* operation makes the invocation with the
   /// original operation name.
   ACE_CString lname_str (base.substr (ACE_OS::strlen ("sendc_")));
   const char *lname = lname_str.c_str ();
-  
+
   ACE_CString opname (node->is_attr_op () ? "_" : "");
   opname += lname;
-  
+
   /// Some compilers can't resolve the stream operator overload.
   const char *op_name = opname.c_str ();
   ACE_CDR::ULong len = opname.length ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
@@ -227,8 +227,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   *os << be_uidt_nl
       << ");" << be_uidt;
-  
-  *os << be_nl << be_nl
+
+  *os << be_nl_2
       << "_tao_call.invoke (" << be_idt << be_idt_nl
       << "ami_handler," << be_nl
       << "&";
@@ -240,7 +240,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
       *os << gparent->name () << "::";
     }
-    
+
   *os << "AMI_"  << parent->local_name () << "Handler::"
       << lname << "_reply_stub" << be_uidt_nl
       << ");" << be_uidt;

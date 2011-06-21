@@ -3,12 +3,9 @@
 #include "Echo.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
-
-ACE_RCSID(Bug_1270_Regression, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -63,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      TAO::Utils::Servant_Var<Echo> impl;
+      PortableServer::ServantBase_var impl;
       {
         Echo * tmp;
         // ACE_NEW_RETURN is the worst possible way to handle
@@ -142,6 +139,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }

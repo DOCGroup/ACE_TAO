@@ -18,7 +18,7 @@ sub count_matching_lines {
    }
    close FILE;
    return $count;
-} 
+}
 
 $status = 0;
 

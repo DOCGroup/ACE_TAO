@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    WeaponsVisComp.java
 //
@@ -57,7 +57,7 @@ public class WeaponsVisComp extends Panel implements VisComp
   public int getProperty () {
     return Properties.WEAPONS;
   }
-  
+
   public Dimension getPreferredSize () {
     return new Dimension (250, 200);
   }
@@ -65,18 +65,18 @@ public class WeaponsVisComp extends Panel implements VisComp
   public Dimension getMinimumSize () {
     return new Dimension (80, 80);
   }
-  
+
   public void update (java.util.Observable observable, java.lang.Object obj) {
     Weapons weapons_ = null;
     try {
-      weapons_ = (Weapons) obj;  
+      weapons_ = (Weapons) obj;
     }
     catch (Exception excp) {
       System.out.println (excp);
       System.out.println ("Visualization Component received wrong data type!");
     }
     if (weapons_ != null)
-    { 
+    {
       for (int i = 0; i < weapons_.number_of_weapons && i < 5; i++)
 	{
 	  String weapon = "";
@@ -85,19 +85,19 @@ public class WeaponsVisComp extends Panel implements VisComp
 	    {
 	    default:
 	      break;
-	    case 0: weapon = weapons_.weapon1_identifier;						      
+	    case 0: weapon = weapons_.weapon1_identifier;
 	      status = weapons_.weapon1_status;
 	      break;
-	    case 1: weapon = weapons_.weapon2_identifier;						      
+	    case 1: weapon = weapons_.weapon2_identifier;
 	      status = weapons_.weapon2_status;
 	      break;
-	    case 2: weapon = weapons_.weapon3_identifier;						      
+	    case 2: weapon = weapons_.weapon3_identifier;
 	      status = weapons_.weapon3_status;
 	      break;
-	    case 3: weapon = weapons_.weapon4_identifier;						      
+	    case 3: weapon = weapons_.weapon4_identifier;
 	      status = weapons_.weapon4_status;
 	      break;
-	    case 4: weapon = weapons_.weapon5_identifier;						      
+	    case 4: weapon = weapons_.weapon5_identifier;
 	      status = weapons_.weapon5_status;
 	      break;
 	    }
@@ -108,7 +108,7 @@ public class WeaponsVisComp extends Panel implements VisComp
 	  if (status_label_ != null)
 	    status_label_.setText ((status == 1) ? ONLINE : OFFLINE);
 	  else
-	    {	 
+	    {
 	      if (count_ == 0)
 		this.removeAll ();
 
@@ -119,7 +119,7 @@ public class WeaponsVisComp extends Panel implements VisComp
 	      status_label_.setFont (FONT_SMALL);
 	      weapon_label_.setFont (FONT_SMALL);
 	      weapon_label_.setForeground (BLUE);
-	      
+
 	      gbc_.gridx = 0;
 	      gbc_.anchor = GridBagConstraints.WEST;
 	      gbl_.setConstraints (weapon_label_, gbc_);
@@ -128,7 +128,7 @@ public class WeaponsVisComp extends Panel implements VisComp
 	      gbc_.anchor = GridBagConstraints.EAST;
 	      gbl_.setConstraints (status_label_, gbc_);
 	      add (status_label_);
-	      
+
 	      gbc_.gridy++;
 	      weapons_table_.put (weapon, status_label_);
 	    }

@@ -51,7 +51,7 @@ Smart_Messenger_Proxy::send_message (
   char *& message)
 {
   logger_->log_message("Before send_message()");
-  CORBA::Boolean ret_val = 
+  CORBA::Boolean ret_val =
     TAO_Messenger_Smart_Proxy_Base::send_message(user_name, subject, message);
   logger_->log_message("After send_message()");
   return ret_val;

@@ -1,12 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PI_Server/ServerInterceptorAdapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-ACE_RCSID (PI_Server,
-           ServerInterceptorAdapter,
-           "$Id$")
 
 #include "tao/PI_Server/ServerRequestInfo.h"
 #include "tao/PI_Server/PICurrent_Guard.h"

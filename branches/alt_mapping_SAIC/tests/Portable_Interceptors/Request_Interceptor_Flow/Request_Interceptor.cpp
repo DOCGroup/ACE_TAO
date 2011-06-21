@@ -1,10 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Request_Interceptor.h"
-
-ACE_RCSID (Request_Interceptor_Flow,
-           Request_Interceptor,
-           "$Id$")
 
 Request_Interceptor::Request_Interceptor (const char *name)
   : name_ (name),

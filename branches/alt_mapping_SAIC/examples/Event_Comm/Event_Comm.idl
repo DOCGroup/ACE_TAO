@@ -1,22 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    EventComm
-//
-// = FILENAME
-//    Event_Comm.idl
-//
-// = DESCRIPTION
-//    The CORBA IDL module for distributed event notification.
-//
-// = AUTHOR
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu) and
-//    Pradeep Gore (pradeep@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Event_Comm.idl
+ *
+ *  $Id$
+ *
+ *  The CORBA IDL module for distributed event notification.
+ *
+ *
+ *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #if !defined (_EVENT_COMM_IDL)
 #define _EVENT_COMM_IDL

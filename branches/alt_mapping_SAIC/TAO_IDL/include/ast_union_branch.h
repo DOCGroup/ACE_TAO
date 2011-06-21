@@ -88,15 +88,15 @@ public:
   virtual ~AST_UnionBranch (void);
 
   UTL_LabelList *labels (void) const;
-  
+
   AST_UnionLabel *label (unsigned long index = 0);
 
   unsigned long label_list_length (void);
-  
+
   // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.
   void add_labels (AST_Union *u);
-  
+
   // Integer literals create a ulonglong AST_Expression. If
   // our union's discriminator type is some other kind of
   // integer, and we have more than one label, only the first
@@ -113,7 +113,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

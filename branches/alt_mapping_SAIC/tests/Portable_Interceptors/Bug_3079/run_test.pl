@@ -36,7 +36,7 @@ $client->DeleteFile ($iorbase3);
 $SV1 = $server1->CreateProcess ("server", "-o $server1_iorfile -c 1 -n 1 -s 1");
 $SV2 = $server2->CreateProcess ("server", "-o $server2_iorfile -n 2 -s 2");
 $SV3 = $server3->CreateProcess ("server", "-o $server3_iorfile -n 3 -s 3");
-$CL  = $client->CreateProcess ("client", 
+$CL  = $client->CreateProcess ("client",
                     "-p file://$client_iorfile1 -f file://$client_iorfile2 -s file://$client_iorfile3");
 
 $status = 0;

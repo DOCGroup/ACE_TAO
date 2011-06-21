@@ -1,32 +1,24 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/RootPOA
-//
-//
-// = FILENAME
-//     RootPOA.cpp
-//
-// = DESCRIPTION
-//     This program gets the name of the Root POA and prints it out on
-//     the standard output.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     RootPOA.cpp
+ *
+ *  $Id$
+ *
+ *   This program gets the name of the Root POA and prints it out on
+ *   the standard output.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "tao/PortableServer/PortableServer.h"
 
 #include "tao/ORB.h"
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (RootPOA,
-           RootPOA,
-           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

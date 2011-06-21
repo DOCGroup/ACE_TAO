@@ -9,8 +9,6 @@ namespace
   const unsigned int timeout_in_sec= 2u;
 }
 
-ACE_RCSID(Oneway_Buffering, Oneway_Buffering_Admin, "$Id$")
-
 Oneway_Buffering_Admin::Oneway_Buffering_Admin (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , request_count_ (0)

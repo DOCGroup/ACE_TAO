@@ -1,4 +1,5 @@
-// @(#) $Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 

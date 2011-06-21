@@ -1,15 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Messaging_SyncScope_Policy.pidl
  *
  *  $Id$
- *
- * This file is used to generate the code in
- * Messaging_SyncScope_Policy{C}.{h,cpp}
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL
 #define TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL

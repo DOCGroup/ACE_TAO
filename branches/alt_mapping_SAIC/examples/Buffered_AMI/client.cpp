@@ -1,17 +1,17 @@
-// $Id$
 
-// ================================================================
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client that uses buffered AMI calls.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client that uses buffered AMI calls.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "tao/Messaging/Messaging.h"
@@ -19,10 +19,6 @@
 #include "tao/AnyTypeCode/TAOA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-
-ACE_RCSID (Buffered_AMI,
-           client,
-           "$Id$")
 
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");

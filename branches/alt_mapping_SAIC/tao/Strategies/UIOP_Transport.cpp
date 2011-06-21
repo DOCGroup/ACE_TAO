@@ -15,11 +15,6 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 
-ACE_RCSID (Strategies,
-           UIOP_Transport,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,

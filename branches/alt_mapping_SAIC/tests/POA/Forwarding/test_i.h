@@ -1,16 +1,16 @@
-// $Id$
 //=============================================================================
-//
-// = FILENAME
-//     test_i.h
-//
-// = DESCRIPTION
-//     Defines test_i class for the test interface
-//
-// = AUTHOR
-//     Irfan Pyarali and Michael Kircher
-//
+/**
+ *  @file     test_i.h
+ *
+ *  $Id$
+ *
+ *   Defines test_i class for the test interface
+ *
+ *
+ *  @author  Irfan Pyarali and Michael Kircher
+ */
 //=============================================================================
+
 
 #include "testS.h"
 
@@ -32,8 +32,8 @@ public:
 
   virtual void shutdown (void);
 
+  /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (void);
-  // Returns the default POA for this servant.
 
 protected:
   CORBA::ORB_var orb_;

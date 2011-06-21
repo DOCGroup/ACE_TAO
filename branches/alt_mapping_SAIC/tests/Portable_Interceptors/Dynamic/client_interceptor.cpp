@@ -10,10 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Dynamic,
-           client_interceptor,
-           "$Id$")
-
 Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
   : myname_ ("Echo_Client_Interceptor")
 {
@@ -36,8 +32,7 @@ Echo_Client_Request_Interceptor::destroy (void)
 
 void
 Echo_Client_Request_Interceptor::send_poll (
-    PortableInterceptor::ClientRequestInfo_ptr
-    )
+    PortableInterceptor::ClientRequestInfo_ptr)
 {
   // Do nothing
 }

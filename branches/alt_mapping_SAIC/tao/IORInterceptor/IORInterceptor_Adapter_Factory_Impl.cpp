@@ -1,13 +1,10 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
 #include "tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h"
 
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (IORInterceptor,
-           IORInterceptor_Adapter_Factory_Impl,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

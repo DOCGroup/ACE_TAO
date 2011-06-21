@@ -11,11 +11,28 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/CORBA_macros.h"
+#include "tao/debug.h"
+#include "PortableServer_Functions.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* static */
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
+
+static void
+hexstring (ACE_CString& hexstr, const char* s, size_t l)
+{
+  char buf[3] = {0};
+
+  hexstr.fast_resize (2 + l * 2);
+  hexstr.append ("0x", 2);
+  while (--l)
+    {
+      ACE_OS::sprintf (buf, "%02x", (unsigned int)(unsigned char)*s);
+      hexstr.append (buf, 2);
+      ++s;
+    }
+}
 
 void
 TAO_Active_Object_Map::set_system_id_size (
@@ -488,6 +505,22 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
         }
     }
 
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      std::string idstr (PortableServer::ObjectId_to_string (user_id));
+      std::string repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.c_str (), user_id.size ());
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Unique_Id_Strategy::"
+                  "bind_using_user_id: type=%C, id=%C\n",
+                  repository_id.c_str (),
+                  hex_idstr.c_str()
+                  ));
+    }
+
   return result;
 }
 
@@ -655,6 +688,22 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
         {
           delete entry;
         }
+    }
+
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      std::string idstr (PortableServer::ObjectId_to_string (user_id));
+      std::string repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.c_str (), user_id.size ());
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_Multiple_Id_Strategy::"
+                  "bind_using_user_id: type=%C, id=%C\n",
+                  repository_id.c_str (),
+                  hex_idstr.c_str()
+                  ));
     }
 
   return result;
@@ -925,6 +974,23 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
       delete entry;
     }
 
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      std::string idstr (
+          PortableServer::ObjectId_to_string (entry->user_id_));
+      std::string repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.c_str (), entry->user_id_.size ());
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_System_Id_With_Unique_Id_Strategy::"
+                  "bind_using_system_id: type=%C, id=%C\n",
+                  repository_id.c_str (),
+                  hex_idstr.c_str()
+                  ));
+    }
+
   return result;
 }
 
@@ -962,6 +1028,23 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
   else
     {
       delete entry;
+    }
+
+  if (result == 0 && TAO_debug_level > 7)
+    {
+      std::string idstr (
+          PortableServer::ObjectId_to_string (entry->user_id_));
+      std::string repository_id (
+          servant ? servant->_repository_id () : 0);
+      ACE_CString hex_idstr;
+      hexstring (hex_idstr, idstr.c_str (), entry->user_id_.size ());
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - TAO_System_Id_With_Multiple_Id_Strategy::"
+                  "bind_using_system_id: type=%C, id=%C\n",
+                  repository_id.c_str (),
+                  hex_idstr.c_str()
+                  ));
     }
 
   return result;

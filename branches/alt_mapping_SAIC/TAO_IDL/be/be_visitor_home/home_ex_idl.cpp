@@ -232,7 +232,7 @@ be_visitor_home_ex_idl::gen_implicit (void)
 void
 be_visitor_home_ex_idl::gen_explicit (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "local interface CCM_"
       << IdentifierHelper::try_escape (node_->original_local_name ()).c_str ()
       << "Explicit" << be_idt_nl
@@ -282,7 +282,7 @@ be_visitor_home_ex_idl::gen_derived (void)
     IdentifierHelper::try_escape (node_->original_local_name ());
   const char *lname = lname_str.c_str ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "local interface CCM_" << lname << be_nl
       << "  : CCM_" << lname << "Explicit," << be_nl
       << "    CCM_" << lname << "Implicit" << be_nl
@@ -372,7 +372,7 @@ be_visitor_home_ex_idl::gen_home_executor (void)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "module CIAO_" << comp->flat_name () << "_Impl" << be_nl
       << "{" << be_idt_nl
       << "local interface " << lname << "_Exec" << be_idt_nl

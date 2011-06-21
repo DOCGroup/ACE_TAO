@@ -6,6 +6,7 @@
 #include "HostProcess.h"
 #include "Session.h"
 #include "Thread.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "ace/Mem_Map.h"
 
@@ -69,8 +70,8 @@ Log::init (const ACE_TCHAR *filename, const char *alias)
   delete [] buffer;
 
   mapped_file.close();
-  
-  return true;  
+
+  return true;
 }
 
 bool
@@ -107,30 +108,30 @@ Log::get_host (long pid)
   size_t numprocs = this->procs_.size();
   hp = new HostProcess (this->origin_,pid);
   this->procs_.insert_tail(hp);
-  if (this->alias_.length() > 0)
+  ACE_CString &procname = this->alias_.length() > 0 ?
+    this->alias_ : this->origin_;
+  switch (numprocs)
     {
-      switch (numprocs)
-        {
-        case 0:
-          hp->proc_name(alias_);
-          break;
-        case 1:
-          {
-            ACE_CString a2 = alias_ + "_1";
-            HostProcess *first;
-            if (this->procs_.get(first) == 0)
-              first->proc_name(a2);
-          }
-          //fallthru
-        default:
-          {
-            char ext[10];
-            ACE_OS::sprintf(ext,"_%d",numprocs+1);
-            ACE_CString a2 = alias_ + ext;
-            hp->proc_name(a2);
-          }
-        }
+    case 0:
+      hp->proc_name(procname);
+      break;
+    case 1:
+      {
+        ACE_CString a2 = procname + "_1";
+        HostProcess *first;
+        if (this->procs_.get(first) == 0)
+          first->proc_name(a2);
+      }
+      //fallthru
+    default:
+      {
+        char ext[10];
+        ACE_OS::sprintf(ext,"_" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,numprocs+1);
+        ACE_CString a2 = procname + ext;
+        hp->proc_name(a2);
+      }
     }
+
   this->session_.add_process(hp);
   return hp;
 }
@@ -158,7 +159,7 @@ Log::handle_msg_dump (char *line, size_t offset)
                   new_target->transfer_from (this->dump_target_);
                   this->dump_target_ = new_target;
                   t_iter.remove();
-                  this->giop_waiters_.insert_tail (tmp_thr); 
+                  this->giop_waiters_.insert_tail (tmp_thr);
                   break;
                 }
             }
@@ -242,17 +243,16 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
   if (pp == 0)
     {
       ACE_ERROR((LM_ERROR,
-                 "%d: dump_msg, could not find pp for incoming, text = %s\n", 
+                 "%d: dump_msg, could not find pp for incoming, text = %s\n",
                  offset, line));
       return;
     }
 
-//   if (mode < 2)
-//     thr->enter_wait(pp);
   Invocation::GIOP_Buffer *target = 0;
-  switch (mode) 
+  switch (mode)
     {
     case 1: { // receiving request
+      thr->handle_request();
       Invocation *inv = pp->new_invocation (rid,thr);
       if (inv == 0)
         {
@@ -264,8 +264,10 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
       inv->init (line, offset, thr);
       target = inv->octets(true);
       break;
-    }         
+    }
     case 0: // sending request
+      thr->enter_wait(pp);
+      // fall through.
     case 3: { // receiving reply
       Invocation *inv = pp->find_invocation(rid, thr->active_handle());
       if (inv == 0)
@@ -277,6 +279,13 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
         }
       inv->init (line, offset, thr);
       target = inv->octets(mode == 0);
+      if (target == 0 && mode == 3)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%d: could not map invocation to target for req_id %d\n",
+                      offset, rid));
+          return;
+        }
 //       if (mode == 3)
 //         thr->exit_wait(pp, offset);
       break;
@@ -287,7 +296,7 @@ Log::parse_dump_msg (Log *this_, char *line, size_t offset)
     }
     default:;
     }
- 
+
   thr->set_giop_target (target);
   this_->giop_waiters_.insert_tail(thr);
   if (this_->giop_waiters_.size() > 1 && (mode == 1 || mode == 3))
@@ -311,7 +320,7 @@ Log::parse_open_listener (Log *this_, char *line, size_t )
   this_->get_pid_tid(pid,tid,line);
 
   HostProcess *hp = this_->get_host(pid);
-  char *addr = ACE_OS::strchr(line,'<') +1; 
+  char *addr = ACE_OS::strchr(line,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
   ACE_CString server_addr(addr);
@@ -451,19 +460,33 @@ Log::parse_wait_for_event (Log *this_, char *line, size_t offset)
   if (pp == 0)
     {
       ACE_ERROR((LM_ERROR,
-                 "%d: wait_for_event, could not find pp for incoming, text = %s\n", 
+                 "%d: wait_for_event, could not find pp for incoming, text = %s\n",
                  offset, line));
       return;
     }
 
-  bool done = (ACE_OS::strstr (line,"done (follower)") != 0) || 
+  bool done = (ACE_OS::strstr (line,"done (follower)") != 0) ||
     (ACE_OS::strstr(line,"(leader) exit") != 0);
 
 
   if (done)
     thr->exit_wait(pp, offset);
-  else
-    thr->enter_wait(pp);
+//   else
+//     thr->enter_wait(pp);
+}
+
+void
+Log::parse_wait_on_read (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+  PeerProcess *pp = thr->incoming();
+
+  thr->exit_wait (pp, offset);
 }
 
 void
@@ -507,7 +530,7 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
         {
           ACE_ERROR ((LM_ERROR,
                       "%d: Cleanup queue detected, "
-                      "could not find invocation for rid = %d\n", 
+                      "could not find invocation for rid = %d\n",
                       offset, rid));
           rid = target->expected_req_id();
           inv = pp->find_invocation (rid, handle);
@@ -562,7 +585,7 @@ Log::parse_handler_open (Log *this_, char *line, size_t offset)
   HostProcess *hp = this_->get_host(pid);
   Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
 
-  char *addr = ACE_OS::strchr(line,'<') +1; 
+  char *addr = ACE_OS::strchr(line,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
   c = ACE_OS::strstr(c+1,"on ");
@@ -589,7 +612,7 @@ Log::parse_handler_open (Log *this_, char *line, size_t offset)
         }
       //      trans->client_endpoint_ = addr;
     }
-  else 
+  else
     {
       trans = new Transport (addr,false,offset);
       pp->add_transport(trans);
@@ -609,7 +632,7 @@ Log::parse_begin_connection (Log *this_, char *line, size_t offset)
   HostProcess *hp = this_->get_host(pid);
   Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
 
-  char *addr = ACE_OS::strchr(line,'<') +1; 
+  char *addr = ACE_OS::strchr(line,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
   PeerProcess *pp = hp->find_peer(addr);
@@ -637,9 +660,9 @@ Log::parse_local_addr (Log *this_, char *line, size_t offset)
       ACE_ERROR((LM_ERROR, "%d: file %s, no pending client or server\n",
                  offset, this_->origin_.c_str()));
       return;
-    }      
-  
-  char *addr = ACE_OS::strchr(line,'<') +1; 
+    }
+
+  char *addr = ACE_OS::strchr(line,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
   if (peer->is_server())
@@ -668,7 +691,7 @@ Log::parse_open_as_server (Log *this_, char *line, size_t offset)
 
 }
 
-void 
+void
 Log::parse_line (char *line, size_t offset)
 {
   // first, is it a client connection to a new peer?
@@ -686,6 +709,7 @@ Log::parse_line (char *line, size_t offset)
       { "Exclusive_TMS::request_id", parse_exclusive_tms },
       { "process_parsed_messages", parse_process_parsed_msgs },
       { "wait_for_event", parse_wait_for_event },
+      { "Wait_On_Read", parse_wait_on_read },
       { "::cleanup_queue, byte_count", parse_cleanup_queue },
       { "close_connection_eh", parse_close_connection },
       { "IIOP_Connector::begin_connection, to ", parse_begin_connection },
@@ -700,7 +724,7 @@ Log::parse_line (char *line, size_t offset)
       this->handle_msg_dump (line, offset);
       return;
     }
-     
+
   for (int i = 0; exprs[i].text != 0; i++)
     {
       if (ACE_OS::strstr(line, exprs[i].text) != 0)

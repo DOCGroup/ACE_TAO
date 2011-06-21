@@ -237,7 +237,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
-        
+
       AST_Decl::NodeType nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
@@ -273,7 +273,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
   t->destroy ();
   delete t;
   t = 0;
-  
+
   return t;
 }
 

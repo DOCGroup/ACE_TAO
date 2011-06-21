@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Leader_Followers, test_i, "$Id$")
-
 test_i::test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

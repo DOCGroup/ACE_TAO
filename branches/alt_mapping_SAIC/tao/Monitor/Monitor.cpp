@@ -1,9 +1,8 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Monitor/Monitor.h"
 #include "tao/Monitor/Monitor_Impl.h"
-
-ACE_RCSID (Monitor,
-           Monitor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,7 +46,7 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
   catch (const CORBA::Exception&)
     {
     }
-  
+
   return CORBA::Object::_nil ();
 }
 

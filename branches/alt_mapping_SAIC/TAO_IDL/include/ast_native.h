@@ -6,7 +6,7 @@
 
 #include "ast_exception.h"
 
-// Representation of "native" IDL type. It may be used as a 
+// Representation of "native" IDL type. It may be used as a
 // return type, parameter type, or in an operation's
 // exception list. This last usage creates special problems
 // with both syntax checking and code generation. Letting
@@ -18,7 +18,7 @@ public:
   AST_Native (UTL_ScopedName *n);
 
   virtual ~AST_Native (void);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

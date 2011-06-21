@@ -20,9 +20,7 @@
 
 /**
  * @class be_visitor_exception_ctor_assign
- =TITLE
- * be_visitor_exception_ctor_assign
- * =DESCRIPTION
+ *
  * generation of the assignment statements in
  */
 class be_visitor_exception_ctor_assign : public be_visitor_scope

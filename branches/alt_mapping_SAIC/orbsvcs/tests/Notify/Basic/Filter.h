@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Filter.h
-//
-// = DESCRIPTION
-//   Filter test any supplier to any consumer.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Filter.h
+ *
+ *  $Id$
+ *
+ * Filter test any supplier to any consumer.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef NOTIFY_TESTS_FILTER_H
 #define NOTIFY_TESTS_FILTER_H
@@ -34,16 +34,16 @@ public:
   Filter (void);
   virtual ~Filter (void);
 
+  /// initialization.
   int init (int argc,
             ACE_TCHAR *argv []);
-  // initialization.
 
+  /// Run the test.
   void run_test (void);
-  // Run the test.
 
 protected:
+  /// Create EC
   void create_EC (void);
-  // Create EC
 
   /// Run some tests to check the filters.
   void run_filter_test (CosNotifyFilter::FilterAdmin_ptr);
@@ -60,26 +60,26 @@ protected:
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var ffact_;
 
+  /// Number of events received so far.
   ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // Number of events received so far.
 
+  /// Number of events to send
   int event_count_;
-  // Number of events to send
 
+  /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;
-  // The one channel that we create using the factory.
 
+  /// The consumer admin used by consumers.
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // The consumer admin used by consumers.
 
+  /// The supplier admin used by suppliers.
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
-  // The supplier admin used by suppliers.
 
+  /// Consumer.
   TAO_Notify_Tests_PushConsumer* consumer_;
-  // Consumer.
 
+  /// Supplier.
   TAO_Notify_Tests_PushSupplier* supplier_;
-  // Supplier.
 };
 
 /***************************************************************************/

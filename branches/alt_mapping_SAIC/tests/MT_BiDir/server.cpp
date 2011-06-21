@@ -10,12 +10,6 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Manual_Event.h"
 
-
-ACE_RCSID (MT_BirDir,
-           server,
-           "$Id$")
-
-
 const ACE_TCHAR *ior_output_file = 0;
 static int no_iterations = 10;
 static int no_clients = 2;
@@ -49,7 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

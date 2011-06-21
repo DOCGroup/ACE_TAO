@@ -65,7 +65,7 @@ sub run_server
     if ($SV->Spawn () == -1) {
         exit 1;
     }
-    
+
     if ($server->WaitForFileTimed ($iorbase,
                   $server->ProcessStartWaitInterval()) == -1) {
         check_supported_priorities ($SV);
@@ -83,7 +83,7 @@ sub zap_server
         print STDERR "ERROR: server returned $server_status\n";
         $status = 1;
     }
-    
+
     $server->DeleteFile($iorbase);
     $client->DeleteFile($iorbase);
 

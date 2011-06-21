@@ -1,12 +1,10 @@
+// $Id$
+
 #include "TX_ObjectC.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
-
-ACE_RCSID (Big_Request,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char *cert_file = "cacert.pem";
@@ -48,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -122,6 +120,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           txObject->shutdown ();
         }
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

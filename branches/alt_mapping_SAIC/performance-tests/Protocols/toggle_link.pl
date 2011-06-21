@@ -25,7 +25,7 @@ $start_seconds = timelocal ($now->sec, $now->min, $now->hour, $now->mday, $now->
 print_with_time ("L1 UP");
 system ($L1_UP);
 
-print_with_time ("L2 DOWN");    
+print_with_time ("L2 DOWN");
 system ($L2_DOWN);
 
 select undef, undef, undef, $phasetime;
@@ -57,7 +57,7 @@ for (;;)
     select undef, undef, undef, $sleeptime;
 }
 
-sub print_with_time 
+sub print_with_time
 {
     $now = localtime;
     $now_seconds = timelocal ($now->sec, $now->min, $now->hour, $now->mday, $now->mon, $now->year);

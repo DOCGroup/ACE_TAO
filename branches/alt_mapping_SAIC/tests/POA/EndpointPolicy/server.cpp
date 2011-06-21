@@ -11,10 +11,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *good_ior_file = ACE_TEXT ("good.ior");
 const ACE_TCHAR *bad_ior_file = ACE_TEXT ("bad.ior");
 const ACE_TCHAR *root_ior_file = ACE_TEXT("root.ior");
@@ -96,7 +92,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                          argv [0]),
                         -1);
   }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

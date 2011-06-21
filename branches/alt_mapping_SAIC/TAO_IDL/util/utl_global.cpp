@@ -102,7 +102,7 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
       ACE_OS::strcpy (name_buf, transName);
       transName = name_buf;
     }
-    
+
   return (transName == 0 || ((int)transName) == -1 ) ? 0 : transName;
 }
 #endif
@@ -150,10 +150,14 @@ IDL_GlobalData::IDL_GlobalData (void)
     multi_file_input_ (false),
     big_file_name_ ("PICML_IDL_file_bag"),
     current_params_ (0),
+    alias_params_ (0),
+    for_new_holder_ (0),
     included_ami_receps_done_ (false),
     corba_module_ (0),
-    anon_type_diagnostic_ (ANON_TYPE_SILENT),
-    in_typedef_ (false)
+    anon_type_diagnostic_ (ANON_TYPE_ERROR),
+    in_typedef_ (false),
+    in_tmpl_mod_no_alias_ (false),
+    in_tmpl_mod_alias_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -206,7 +210,7 @@ IDL_GlobalData::IDL_GlobalData (void)
                        ace_root);
 #endif /* ACE_GPERF */
     }
-    
+
 #if defined (IDL_ANON_ERROR)
   this->anon_type_diagnostic_ = ANON_TYPE_ERROR;
 #elif defined (IDL_ANON_WARNING)
@@ -1122,6 +1126,18 @@ IDL_GlobalData::ciao_oci_ts_file_names (void)
 }
 
 void
+IDL_GlobalData::add_ciao_coredx_ts_file_names (const char *s)
+{
+  this->ciao_coredx_ts_file_names_.enqueue_tail (ACE::strnew (s));
+}
+
+ACE_Unbounded_Queue<char *> &
+IDL_GlobalData::ciao_coredx_ts_file_names (void)
+{
+  return this->ciao_coredx_ts_file_names_;
+}
+
+void
 IDL_GlobalData::add_ciao_ami_iface_names (const char *s)
 {
   this->ciao_ami_iface_names_.enqueue_tail (ACE::strnew (s));
@@ -1191,12 +1207,6 @@ ACE_Unbounded_Queue<char *> &
 IDL_GlobalData::dds4ccm_impl_fnames (void)
 {
   return this->dds4ccm_impl_fnames_;
-}
-
-ACE_Unbounded_Queue<AST_Decl *> &
-IDL_GlobalData::masking_scopes (void)
-{
-  return this->masking_scopes_;
 }
 
 ACE_Unbounded_Queue<AST_Interface *> &
@@ -1300,7 +1310,7 @@ IDL_GlobalData::check_gperf (void)
   if (ACE_OS::strcmp (this->gperf_path_, "ace_gperf") != 0)
 #endif /* ACE_GPERF */
     {
-      // It is absolute path. Check the existance, permissions and
+      // It is absolute path. Check the existence, permissions and
       // the modes.
       if (ACE_OS::access (this->gperf_path_,
                           F_OK | X_OK) == -1)
@@ -1345,7 +1355,7 @@ IDL_GlobalData::check_gperf (void)
     }
   else
     {
-      // Wait is sucessful, we will check the exit code from the
+      // Wait is successful, we will check the exit code from the
       // spawned process.
       if (WIFEXITED (wait_status))
         {
@@ -1357,7 +1367,7 @@ IDL_GlobalData::check_gperf (void)
           // to <errno> again, so that it can be used to print error
           // messages.
           errno = WEXITSTATUS (wait_status);
-          
+
           if (errno)
             {
               // <exec> has failed.
@@ -1522,23 +1532,23 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (entry->ext_id_);
       ACE::strdelete (entry->int_id_);
     }
-    
+
   DCPS_Type_Info_Map::ENTRY *dcps_entry = 0;
-    
+
   for (DCPS_Type_Info_Map::ITERATOR dcps_iter (
          this->dcps_type_info_map_);
        !dcps_iter.done ();
        dcps_iter.advance ())
     {
       dcps_iter.next (dcps_entry);
-      
+
       dcps_entry->int_id_->name_->destroy ();
       delete dcps_entry->int_id_->name_;
       dcps_entry->int_id_->name_ = 0;
-      
+
       delete dcps_entry->int_id_;
       dcps_entry->int_id_ = 0;
-      
+
       delete [] dcps_entry->ext_id_;
       dcps_entry->ext_id_ = 0;
     }
@@ -1583,19 +1593,19 @@ void
 IDL_GlobalData::recursion_start (const char *val)
 {
   ACE::strdelete (this->recursion_start_);
-  
+
   /// Strip off any trailing slashes (not needed
   /// for further processing).
   ACE_CString tmp (val);
   ACE_CString::size_type len = tmp.length ();
   ACE_TCHAR c = tmp[len - 1];
-  
+
   while (c == '\\' || c == '/')
     {
       tmp = tmp.substr (0, --len);
       c = tmp[len - 1];
     }
-    
+
   this->recursion_start_ = ACE::strnew (tmp.c_str ());
 }
 
@@ -1624,9 +1634,36 @@ IDL_GlobalData::current_params (void) const
 }
 
 void
-IDL_GlobalData::current_params (FE_Utils::T_PARAMLIST_INFO *params)
+IDL_GlobalData::current_params (
+FE_Utils::T_PARAMLIST_INFO *params)
 {
   this->current_params_ = params;
+}
+
+UTL_StrList const *
+IDL_GlobalData::alias_params (void) const
+{
+  return this->alias_params_;
+}
+
+void
+IDL_GlobalData::alias_params (
+UTL_StrList *params)
+{
+  this->alias_params_ = params;
+}
+
+UTL_StrList const *
+IDL_GlobalData::for_new_holder (void) const
+{
+  return this->for_new_holder_;
+}
+
+void
+IDL_GlobalData::for_new_holder (
+  UTL_StrList *params)
+{
+  this->for_new_holder_ = params;
 }
 
 void
@@ -1634,7 +1671,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
 {
   // Check if the type already exists.
   DCPS_Data_Type_Info* newinfo ;
-  
+
   if (this->dcps_type_info_map_.find (id, newinfo) != 0)
     {
       // No existing entry, add one.
@@ -1645,7 +1682,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
 
       UTL_ScopedName* t1 =
         FE_Utils::string_to_scoped_name (foo_type);
-        
+
       // Chained with null Identifier required!!
       UTL_ScopedName* target =
         new UTL_ScopedName (new Identifier (""), t1);
@@ -1654,7 +1691,7 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
       newinfo->name_ = target;
 
       // Add the newly formed entry to the map.
-      if (this->dcps_type_info_map_.bind (id, newinfo) != 0)
+      if (this->dcps_type_info_map_.bind (foo_type, newinfo) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to insert type into ")
@@ -1698,7 +1735,7 @@ IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 {
   // Traverse the entire map.
   DCPS_Type_Info_Map::ENTRY* entry ;
-  
+
   for (DCPS_Type_Info_Map::ITERATOR current (
          this->dcps_type_info_map_);
        current.next (entry);
@@ -1769,4 +1806,28 @@ void
 IDL_GlobalData::in_typedef (bool val)
 {
   this->in_typedef_ = val;
+}
+
+bool
+IDL_GlobalData::in_tmpl_mod_no_alias (void) const
+{
+  return this->in_tmpl_mod_no_alias_;
+}
+
+void
+IDL_GlobalData::in_tmpl_mod_no_alias (bool val)
+{
+  this->in_tmpl_mod_no_alias_ = val;
+}
+
+bool
+IDL_GlobalData::in_tmpl_mod_alias (void) const
+{
+  return this->in_tmpl_mod_alias_;
+}
+
+void
+IDL_GlobalData::in_tmpl_mod_alias (bool val)
+{
+  this->in_tmpl_mod_alias_ = val;
 }

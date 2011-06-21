@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Performance
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Implementation of the server running the UDP object.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the server running the UDP object.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
@@ -26,7 +23,7 @@
 #include "tao/Strategies/advanced_resource.h"
 
 
-ACE_RCSID(Performance, server, "$Id$")
+
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int orb_threads = 1; // Number of threads running inside the ORB.
@@ -56,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

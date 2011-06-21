@@ -3,11 +3,9 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "ace/streams.h"
 #include "tao/Invocation_Utils.h"
-
-ACE_RCSID(ForwardOnceUponException, client, "$Id$")
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
@@ -64,7 +62,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           ACE_OS::strlen(corbaloc_prefix)) != 0)
       return 1;
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -83,7 +81,7 @@ public:
   // Return number of received exceptions.
   int num_received_ex () const;
 
-  // Is test done ? 
+  // Is test done ?
   void done ();
 
 private:
@@ -120,9 +118,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       int timeout = 30;
       int now = 0;
-      while (now < timeout 
-        && ((expect_ex_kind != TAO::FOE_NON 
-             && worker.received_ex_kind () != expect_ex_kind 
+      while (now < timeout
+        && ((expect_ex_kind != TAO::FOE_NON
+             && worker.received_ex_kind () != expect_ex_kind
              && worker.num_received_ex () != expect_num_ex)
             || expect_ex_kind == TAO::FOE_NON))
       {
@@ -152,16 +150,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.thr_mgr ()->wait ();
 
-      if (worker.received_ex_kind () != expect_ex_kind 
+      if (worker.received_ex_kind () != expect_ex_kind
         || worker.num_received_ex () != expect_num_ex)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
           ("(%P|%t)client: test failed - expected is different from received. "
-          "expected %d/%d received %d/%d.\n"), 
+          "expected %d/%d received %d/%d.\n"),
           expect_ex_kind, expect_num_ex, worker.received_ex_kind (), worker.num_received_ex()),
                           1);
       }
-            
+
       ACE_DEBUG ((LM_DEBUG, "(%P|%t)client: test passed.\n"));
     }
   catch (const CORBA::Exception& ex)
@@ -212,7 +210,7 @@ Worker::svc (void)
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) unexpected result = %d\n",
                         r));
-  
+
         }
         catch (const CORBA::OBJECT_NOT_EXIST &)
           {
@@ -257,25 +255,25 @@ Worker::svc (void)
       ex._tao_print_exception (
         "Unexpected exception caught");
     }
-   
+
   return 0;
 }
 
 
-int 
+int
 Worker::received_ex_kind () const
 {
   return received_ex_kind_;
 }
 
-int 
+int
 Worker::num_received_ex () const
 {
   return num_received_ex_;
 }
 
-void 
-Worker::done () 
+void
+Worker::done ()
 {
   done_ = true;
 }

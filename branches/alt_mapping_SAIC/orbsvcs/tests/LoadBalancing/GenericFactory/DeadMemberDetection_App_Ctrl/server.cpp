@@ -1,12 +1,9 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Basic.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
 #include "ace/Task.h"
-
-ACE_RCSID (DeadMemberDetection_App_Ctrl,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *group_file = ACE_TEXT("group.ior");
 const ACE_TCHAR *group_ior = ACE_TEXT("file://group.ior");
@@ -51,7 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -82,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       const char ** location = 0;
-      
+
       switch (server_id)
       {
         case 1:
@@ -115,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              server_id),
                       1);
       PortableServer::ServantBase_var owner_transfer(basic_servant);
-    
+
       if (lb_server.register_servant (basic_servant, *location) == -1)
         {
           (void) lb_server.destroy ();

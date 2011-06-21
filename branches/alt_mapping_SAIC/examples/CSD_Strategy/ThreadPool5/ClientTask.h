@@ -21,8 +21,8 @@ class ClientTask : public ACE_Task_Base
 {
   public:
 
-    ClientTask(CORBA::ORB_ptr orb, 
-               Foo_ptr foo, 
+    ClientTask(CORBA::ORB_ptr orb,
+               Foo_ptr foo,
                Callback_ptr callback,
                bool         collocated = false);
 

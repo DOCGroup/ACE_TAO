@@ -41,7 +41,7 @@ namespace PortableInterceptor
  *
  * @brief This class is used to transfer the information between thread context
  *        information and the request context in the portable interceptors. It
- *        encapulates the PICurrent to provide a type safe way for the transfer of
+ *        encapsulates the PICurrent to provide a type safe way for the transfer of
  *        FTEC specific information inside and outside protable interceptors.
  */
 class Request_Context_Repository

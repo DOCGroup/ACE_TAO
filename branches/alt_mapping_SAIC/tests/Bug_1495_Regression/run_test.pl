@@ -35,12 +35,12 @@ my $client_thrserverfile = $client->LocalFile ($thrserverfile);
 $server->DeleteFile($thrserverfile);
 $client->DeleteFile($thrserverfile);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorbase " .
                               "-i file://$server_thrserverfile");
 
-$CL = $client->CreateProcess ("client", 
+$CL = $client->CreateProcess ("client",
                               "-ORBdebuglevel $debug_level " .
                               "-o $client_thrserverfile " .
                               "-i $client_iorbase");

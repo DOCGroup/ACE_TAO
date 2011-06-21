@@ -41,24 +41,24 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   // These are no-ops for now, so we just generate them and return
   if (be_global->alt_mapping () && node->max_size ()->ev ()->u.ulval == 0)
     {
       be_type *bt =
         be_type::narrow_from_decl (node->base_type ());
-        
+
       if (bt->node_type () == AST_Decl::NT_typedef)
         {
           be_typedef *td = be_typedef::narrow_from_decl (bt);
           bt = td->primitive_base_type ();
         }
-        
+
       enum type_category
       {
         ANY_VALUE,
@@ -66,7 +66,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         ANY_ARRAY,
         ANY_STRING
       };
-      
+
       type_category tc = ANY_VALUE;
       AST_Decl::NodeType nt = bt->node_type ();
       
@@ -110,7 +110,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << " &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO::";
-          
+
       switch (tc)
         {
         case ANY_OBJREF:
@@ -121,7 +121,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         case ANY_ARRAY:
           *os << "insert_array_vector<"
               << bt->full_name () << "_forany> (";
-                
+
           break;
         case ANY_STRING:
           *os << "insert_value_vector<std::string> (";
@@ -132,31 +132,31 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
  ACE_DEBUG ((LM_DEBUG, "default: %s\n", bt->local_name ()->get_string ()));
           break;
         }
-          
+
       *os << be_idt_nl
           << "_tao_any," << be_nl
           << "_tao_elem);" << be_uidt << be_uidt_nl
           << "}";
-          
-      *os << be_nl << be_nl
+
+      *os << be_nl_2
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
           << "const ::CORBA::Any &_tao_any," << be_nl
           << node->name () << " &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
           << "TAO::";
-          
+
       switch (tc)
         {
         case ANY_OBJREF:
           *os << "extract_objref_vector<"
               << bt->full_name () << "_ptr> (";
-                
+
           break;
         case ANY_ARRAY:
           *os << "extract_array_vector<"
               << bt->full_name () << "_forany> (";
-                
+
           break;
         case ANY_STRING:
           *os << "extract_value_vector<std::string> (";
@@ -164,22 +164,22 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         default:
           *os << "extract_value_vector<"
               << bt->full_name () << "> (";
-                
+
           break;
         }
-          
+
       *os << be_idt_nl
           << "_tao_any," << be_nl
           << "_tao_elem);" << be_uidt << be_uidt << be_uidt_nl
           << "}";
-          
+
       *os << be_nl
           << be_global->core_versioning_end () << be_nl;
-      
+
       node->cli_stub_any_op_gen (true);
       return 0;
     }
-  
+
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -198,7 +198,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
@@ -208,14 +208,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "}" << be_uidt_nl
           << "}" << be_nl;
     }
-  
+
   *os << be_global->core_versioning_end () << be_nl;
 
   // If this is non-zero, we want to call its tc_name()
-  // for the TypeCode to pass to the Any operator impls.  
+  // for the TypeCode to pass to the Any operator impls.
   be_typedef *td = this->ctx_->tdef ();
 
-  be_module *module = 0;  
+  be_module *module = 0;
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -240,9 +240,9 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
           *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-          
+
           be_util::gen_nested_namespace_begin (os, module);
-  
+
           // Copying insertion.
           *os << be_nl
               << "// Copying insertion." << be_nl
@@ -265,7 +265,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Non-copying insertion.
           *os << "// Non-copying insertion." << be_nl
@@ -281,7 +281,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to non-const pointer (deprecated, just calls the other).
           *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -294,7 +294,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "const ::" << node->name () << " *&> (" << be_nl
               << "_tao_elem" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl << be_nl;
+              << "}" << be_nl_2;
 
           // Extraction to const pointer.
           *os << "// Extraction to const pointer." << be_nl
@@ -314,15 +314,15 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "}";
 
           be_util::gen_nested_namespace_end (os, module);
-  
+
           // Emit #else.
-          *os << be_nl << be_nl
+          *os << be_nl_2
               << "#else\n\n";
         }
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   // Copying insertion.
   *os << be_nl
       << "// Copying insertion." << be_nl
@@ -345,7 +345,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Non-copying insertion.
   *os << "// Non-copying insertion." << be_nl
@@ -361,7 +361,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to non-const pointer (deprecated, just calls the other).
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -374,7 +374,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const " << node->name () << " *&> (" << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Extraction to const pointer.
   *os << "// Extraction to const pointer." << be_nl
@@ -399,7 +399,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
     {
       *os << "\n\n#endif";
     }
-  
+
   node->cli_stub_any_op_gen (true);
   return 0;
 }

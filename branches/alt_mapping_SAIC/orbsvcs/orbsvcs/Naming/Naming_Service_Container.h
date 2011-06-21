@@ -46,10 +46,7 @@ public:
   friend class ACE_Unbounded_List<T>;
   friend class ACE_Unbounded_List_Iterator<T>;
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
-  /// This isn't necessary, but it keeps some compilers happy.
   ~ACE_NS_Node (void);
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 private:
   // = Initialization methods

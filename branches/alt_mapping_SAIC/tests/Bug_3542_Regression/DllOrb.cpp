@@ -6,7 +6,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-
 DllOrb::DllOrb (void)
  :
    ma_barrier_(),
@@ -15,11 +14,9 @@ DllOrb::DllOrb (void)
 {
 }
 
-
 DllOrb::~DllOrb (void)
 {
 }
-
 
 int
 DllOrb::init (int argc, ACE_TCHAR *argv[])
@@ -44,8 +41,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     }
 
     // Initialize the ORB
-    ACE_Argv_Type_Converter argcon (argc, argv);
-    mv_orb_ = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
+    mv_orb_ = CORBA::ORB_init (argc, argv);
     if (CORBA::is_nil (mv_orb_.in ()))
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil ORB\n")));

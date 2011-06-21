@@ -5,10 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
-ACE_RCSID(Bug_689_Regression,
-          client,
-          "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
 int
@@ -33,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -61,6 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      servant->noop ();
       servant->shutdown ();
 
       ACE_Time_Value tv (0, 500);

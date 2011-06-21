@@ -2,6 +2,6 @@
 // $Id$
 
 project : orbsvcsexe, utils, install, naming, trading_serv {
-  exename  = Trading_Service
+  exename  = tao_costrading
 }
 

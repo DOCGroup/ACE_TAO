@@ -143,10 +143,10 @@ public:
    */
   //@{
 
-  /// Marshals the list of <this->arg_> into the \a cdr.
+  /// Marshals the list of @c this->arg_ into the \a cdr.
   bool marshal_args (TAO_OutputCDR &cdr);
 
-  /// Demarshals the list of <this->arg_> into the \a cdr.
+  /// Demarshals the list of @c this->arg_ into the \a cdr.
   bool demarshal_args (TAO_InputCDR &cdr);
 
   /// Accessors for the argument list
@@ -198,7 +198,7 @@ private:
   /// valid when sending a request.
   TAO_Service_Context reply_service_info_;
 
-  /// Addressing  mode for this request.
+  /// Addressing mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_;
 
   /**

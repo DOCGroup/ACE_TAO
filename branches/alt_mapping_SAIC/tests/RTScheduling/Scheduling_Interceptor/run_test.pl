@@ -29,12 +29,12 @@ $client->DeleteFile($iorbase);
 $SV = $server->CreateProcess ("Scheduler_Interceptor_Server",
                               "-ORBdebuglevel $debug_level " .
                               "-f $server_iorfile");
-                              
+
 $CL = $client->CreateProcess ("Scheduler_Interceptor_Client",
                               "-f $client_iorfile");
-                              
+
 print STDERR "Starting Server\n";
-                              
+
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {

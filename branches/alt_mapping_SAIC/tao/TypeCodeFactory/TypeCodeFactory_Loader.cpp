@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    TypeCodeFactory_Loader.cpp
@@ -11,14 +10,9 @@
  */
 //=============================================================================
 
-
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID(TypeCodeFactory,
-          TypeCodeFactory_Loader,
-          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

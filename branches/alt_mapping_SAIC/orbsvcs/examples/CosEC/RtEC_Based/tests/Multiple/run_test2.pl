@@ -62,10 +62,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-$NS = $ns->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
 
-$ES = $es->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Event_Service/Event_Service",
+$ES = $es->CreateProcess ($ENV{"TAO_ROOT"}."/orbsvcs/Event_Service/tao_rtevent",
                           "-t new -ORBInitRef NameService=file://$es_nsiorfile");
 
 $CE = $ce->CreateProcess ("../../bin/RtEC_Based_CosEC",

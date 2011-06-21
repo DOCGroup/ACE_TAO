@@ -13,10 +13,6 @@
 #include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
 #include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
 
-ACE_RCSID (tao,
-           OC_Endpoint_Selector_Loader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

@@ -10,10 +10,10 @@ EC_Wrapper::EC_Wrapper (void)
 {
 }
 
-TAO_EC_Servant_Var<EC_Wrapper>
+PortableServer::Servant_var<EC_Wrapper>
 EC_Wrapper::create (void)
 {
-  TAO_EC_Servant_Var<EC_Wrapper> w;
+  PortableServer::Servant_var<EC_Wrapper> w;
   ACE_NEW_RETURN (w,
                   EC_Wrapper,
                   w);

@@ -63,7 +63,8 @@ public:
   virtual ~TAO_Connect_Strategy (void);
 
   /// Obtain the synch options that can be passed to ACE_Connector
-  /* Return the synch option for the connector, based on the timeout
+  /**
+   * Return the synch option for the connector, based on the timeout
    * and the strategy in place. ACE_Connectors behavior can be altered
    * by passing the right ACE_Synch_Options to the connect () call.
    */
@@ -71,7 +72,8 @@ public:
                               ACE_Synch_Options &opt) = 0;
 
   /// Wait for the connection to be completed till a timeout occurs.
-  /* If the connection establishment fails the state within the
+  /**
+   * If the connection establishment fails the state within the
    * connection handler is set appropriately.
    */
   int wait (TAO_Connection_Handler *ch, ACE_Time_Value *val);

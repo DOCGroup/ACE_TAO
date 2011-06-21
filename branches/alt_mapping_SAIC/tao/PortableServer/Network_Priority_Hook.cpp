@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "tao/PortableServer/Network_Priority_Hook.h"
 #include "tao/PortableServer/Root_POA.h"

@@ -3,7 +3,7 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Offer_Importer.h"
 
-ACE_RCSID(Trading, import_test, "$Id$")
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

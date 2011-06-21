@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
-    IIOP implementation of PP Framework Endpoint interface.
+ *  IIOP implementation of PP Framework Endpoint interface.
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
@@ -130,7 +130,7 @@ public:
   /// ownership of this string.
   const char *host (void) const;
 
-  /// Copy the string <h> into <host_> and return the resulting pointer.
+  /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 

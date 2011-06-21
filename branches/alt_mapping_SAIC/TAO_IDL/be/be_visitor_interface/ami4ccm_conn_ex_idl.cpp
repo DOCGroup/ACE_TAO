@@ -28,11 +28,11 @@ be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
 {
   Identifier *oln = node->original_local_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "module CCM_AMI::Connector_T<" << oln << ", AMI4CCM_"
       << oln << "> AMI4CCM_" << oln << "_Connector;";
 

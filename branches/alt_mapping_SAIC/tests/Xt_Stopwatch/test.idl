@@ -1,6 +1,6 @@
 // $Id$
 
-interface Stopwatch 
+interface Stopwatch
 {
    void start ();
    // Start the Stop watch

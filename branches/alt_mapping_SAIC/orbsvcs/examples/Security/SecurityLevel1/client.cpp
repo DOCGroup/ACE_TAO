@@ -2,7 +2,7 @@
 
 #include "SLevel1_TestC.h"
 
-ACE_RCSID (SecurityLevel1, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

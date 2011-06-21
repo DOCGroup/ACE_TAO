@@ -16,7 +16,7 @@
 #include "ECM_Data.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(EC_Custom_Marshal, ECM_Supplier, "$Id$")
+
 
 ECMS_Driver::ECMS_Driver (void)
   : n_suppliers_ (1),

@@ -99,7 +99,7 @@ $consumer2->DeleteFile ($ns_ior);
 $supplier1->DeleteFile ($ec1_ior);
 $supplier2->DeleteFile ($ec2_ior);
 
-$NS = $nservice->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $nservice->CreateProcess("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                "$debug -o $ns_ns_ior $end_point:$ns_port");
 my $sp1_args = "$debug -ORBInitRef NameService=file://$supplier1_ns_ior ".
                "-ORBSvcConf $supplier1_sp_conf $end_point -iorfile $supplier1_ec1_ior";

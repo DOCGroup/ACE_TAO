@@ -2,10 +2,6 @@
 
 #include "HelloS.h"
 
-ACE_RCSID (Reference_Counting,
-           test,
-           "$Id$")
-
 class Hello_impl :
   virtual public POA_Hello
 {

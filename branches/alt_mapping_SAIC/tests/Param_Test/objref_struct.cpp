@@ -1,27 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    objref_struct.cpp
-//
-// = DESCRIPTION
-//    test structures containing object references.
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    objref_struct.cpp
+ *
+ *  $Id$
+ *
+ *  test structures containing object references.
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "objref_struct.h"
-
-ACE_RCSID (Param_Test,
-           objref_struct,
-           "$Id$")
 
 // ************************************************************************
 //               Test_Objref_Struct

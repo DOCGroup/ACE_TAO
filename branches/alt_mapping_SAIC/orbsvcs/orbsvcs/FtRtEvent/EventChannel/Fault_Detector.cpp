@@ -4,10 +4,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 #include "ace/Select_Reactor.h"
 
-ACE_RCSID (EventChannel,
-           Fault_Detector,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Fault_Detector::ReactorTask::ReactorTask()

@@ -9,8 +9,6 @@
 #include "tao/MProfile.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (IORManip_IIOP_Filter, IORManip_IIOP_Filter, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORManip_IIOP_Filter::TAO_IORManip_IIOP_Filter (void)
@@ -128,10 +126,10 @@ TAO_IORManip_IIOP_Filter::filter_and_add (TAO_Profile* profile,
             else
               {
                 TAO_IIOP_Endpoint *endpoint = 0;
-                ACE_NEW (endpoint,
-                         TAO_IIOP_Endpoint (endpoints[i].host,
-                                            endpoints[i].port,
-                                            endpoints[i].priority));
+                ACE_NEW_NORETURN (endpoint,
+                                   TAO_IIOP_Endpoint (endpoints[i].host,
+                                                      endpoints[i].port,
+                                                      endpoints[i].priority));
                 if (endpoint == 0)
                   {
                     new_profile->_decr_refcnt ();

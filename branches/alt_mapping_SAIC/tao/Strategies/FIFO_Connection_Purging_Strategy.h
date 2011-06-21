@@ -44,7 +44,7 @@ public:
   TAO_FIFO_Connection_Purging_Strategy (int cache_maximum);
 
   /// Called when accessing an item from the cache
-  virtual void update_item (TAO_Transport* transport);
+  virtual void update_item (TAO_Transport& transport);
 
 private:
   /// The ordering information for each transport in the cache

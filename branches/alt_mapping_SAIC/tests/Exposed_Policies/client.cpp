@@ -9,8 +9,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(tao, client, "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

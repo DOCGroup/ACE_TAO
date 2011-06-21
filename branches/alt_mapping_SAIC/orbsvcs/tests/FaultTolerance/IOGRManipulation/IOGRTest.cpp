@@ -1,29 +1,21 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//   tests/FaultTolerance/IOGRManipulation
-//
-//
-// = FILENAME
-//     IOGRTest.cpp
-//
-// = DESCRIPTION
-//   This program tests the basic functionality FT IOGR implementation
-//
-// = AUTHOR
-//     Bala Natarajan <bala@cs.wustl.edu>
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     IOGRTest.cpp
+ *
+ *  $Id$
+ *
+ * This program tests the basic functionality FT IOGR implementation
+ *
+ *
+ *  @author  Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-
-ACE_RCSID(IOGRManipluation,
-          IOGRTest,
-          "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

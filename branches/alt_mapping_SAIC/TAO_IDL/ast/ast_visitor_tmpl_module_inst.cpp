@@ -56,6 +56,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
       ast_visitor_context *ctx,
       bool ref_only)
   : ast_visitor (),
+    tmi_ (0),
     ctx_ (ctx),
     for_eventtype_ (false),
     for_finder_ (false),
@@ -682,12 +683,23 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
     idl_global->gen ()->create_module (idl_global->scopes ().top (),
                                        &sn);
 
+  added_module->from_inst (this->tmi_);
+
   AST_Module *m =
     AST_Module::narrow_from_scope (idl_global->scopes ().top ());
-  
+
   m->fe_add_module (added_module);
 
   idl_global->scopes ().push (added_module);
+
+  AST_Template_Module_Ref *ref = node->from_ref ();
+  UTL_StrList const *old_refs = idl_global->alias_params ();
+
+  if (ref != 0)
+    {
+      added_module->from_ref (ref);
+      idl_global->alias_params (ref->param_refs ());
+    }
 
   if (this->visit_scope (node) == -1)
     {
@@ -700,6 +712,8 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
 
   // Restore scope stack.
   idl_global->scopes ().pop ();
+
+  idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
 
   return 0;
 }
@@ -729,18 +743,19 @@ ast_visitor_tmpl_module_inst::visit_template_module_inst (
   AST_Template_Module_Inst *node)
 {
   this->ctx_->template_args (node->template_args ());
+  this->tmi_ = node;
 
   AST_Module *instance =
     idl_global->gen ()->create_module (idl_global->scopes ().top (),
                                        node->name ());
-                                       
+
   instance->from_inst (node);
 
   // Add the new module to the scope containing the template
   // module instantiation.
   AST_Module *m =
     AST_Module::narrow_from_scope (idl_global->scopes ().top ());
-    
+
   m->fe_add_module (instance);
 
   // Update our scope management.
@@ -900,7 +915,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                              node->is_local (),
                              node->is_abstract (),
                              true);
-                             
+
   AST_Interface *added_iface =
     idl_global->gen ()->create_interface (header.name (),
                                           header.inherits (),
@@ -918,7 +933,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
     }
 
   idl_global->scopes ().top ()->add_to_scope (added_iface);
-  
+
   // If this interface has both abstract and concrete parents,
   // extra code needs to be generated for it, such as overrides
   // of _is_nil() and release().
@@ -1020,6 +1035,15 @@ ast_visitor_tmpl_module_inst::visit_argument (AST_Argument *node)
     AST_Type::narrow_from_decl (
       this->reify_type (node->field_type ()));
 
+  if (t == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_tmpl_module_inst::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("reify_type failed\n")),
+                        -1);
+    }
+
   AST_Argument *added_arg =
     idl_global->gen ()->create_argument (node->direction (),
                                          t,
@@ -1044,8 +1068,6 @@ ast_visitor_tmpl_module_inst::visit_typedef (AST_Typedef *node)
                                         &sn,
                                         false,
                                         false);
-
-  //AST_Decl *d = ScopeAsDecl (idl_global->scopes ().top ());
 
   idl_global->scopes ().top ()->add_to_scope (added_td);
 
@@ -1162,7 +1184,7 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
   UTL_ScopedName sn (&id, 0);
 
   AST_Factory *added_factory = 0;
-  
+
   if (this->for_finder_)
     {
       added_factory =
@@ -1198,7 +1220,7 @@ ast_visitor_tmpl_module_inst::visit_factory (AST_Factory *node)
 
   // In case it was set for this call.
   this->for_finder_ = false;
-  
+
   return 0;
 }
 
@@ -1224,7 +1246,6 @@ ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
       // owns param holders.
       if (d->node_type () == AST_Decl::NT_param_holder)
         {
-          //const char *s = d->full_name ();
           return
             idl_global->scopes ().top ()->lookup_by_name (
               d->name (),

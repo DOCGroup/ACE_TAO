@@ -9,10 +9,6 @@
 
 #include "LifeCycle.h"
 
-ACE_RCSID (Notify_Tests,
-           LifeCycle,
-           "$Id$")
-
 LifeCycle::LifeCycle (void)
   : count_ (10)
 {

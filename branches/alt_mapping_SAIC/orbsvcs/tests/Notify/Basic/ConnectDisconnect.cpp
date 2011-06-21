@@ -5,7 +5,7 @@
 #include "tao/debug.h"
 #include "ConnectDisconnect.h"
 
-ACE_RCSID (Notify_Tests, ConnectDisconnect, "$Id$")
+
 
 #define CD_IMPLEMENT_ENTITY(X)\
 \

@@ -35,13 +35,13 @@ be_visitor_root_ss::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->gen_arg_traits (node) == -1)
     {
       /// Error message already output.
       return -1;
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -67,7 +67,7 @@ be_visitor_root_ss::init (void)
   int status =
     tao_cg->start_server_skeletons (
       be_global->be_get_server_skeleton_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -81,7 +81,7 @@ be_visitor_root_ss::init (void)
       status =
         tao_cg->start_server_template_skeletons (
               be_global->be_get_server_template_skeleton_fname ());
-      
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -129,7 +129,7 @@ be_visitor_root_ss::gen_arg_traits (be_root *node)
                             -1);
         }
     }
-    
+
   return 0;
 }
 

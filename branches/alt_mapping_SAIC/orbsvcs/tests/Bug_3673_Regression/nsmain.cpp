@@ -4,7 +4,6 @@
 #include "Hello.h"
 #include "NsShutdown.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ns.ior");
@@ -58,7 +57,7 @@ TestTask::parse_args (int argc, ACE_TCHAR **argv)
         shutdown_ns_ = true;
         break;
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -80,7 +79,7 @@ int TestTask::svc()
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: ns.ior\n"),
                           1);
-    ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (namingServiceA_.ior ()));
+    ACE_OS::fprintf (output_file, "%s", namingServiceA_.ior ());
     ACE_OS::fclose (output_file);
 
     // Get reference to Root POA

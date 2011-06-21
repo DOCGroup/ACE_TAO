@@ -1,10 +1,6 @@
+// $Id$
+
 #include "Server_Request_Interceptor.h"
-
-
-ACE_RCSID (ServantLocator,
-           Server_Request_Interceptor,
-           "$Id$")
-
 
 CORBA::Boolean receive_request_service_contexts_called = 0;
 CORBA::Boolean receive_request_called = 0;

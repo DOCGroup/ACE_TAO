@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "MessageC.h"
 #include "tao/corba.h"

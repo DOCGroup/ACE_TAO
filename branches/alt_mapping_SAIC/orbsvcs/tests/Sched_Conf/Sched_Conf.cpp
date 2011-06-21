@@ -11,10 +11,6 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
-ACE_RCSID (Sched_Conf,
-           Sched_Conf,
-           "$Id$")
-
 const ACE_TCHAR *service_name = ACE_TEXT("ScheduleService");
 
 const char* format_string = " {%-12s, %d, %d, %d, %d, %8d, "

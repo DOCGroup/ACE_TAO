@@ -2,8 +2,6 @@
 
 #include "Consumer.h"
 
-ACE_RCSID(EC_Examples, Consumer, "$Id$")
-
 Consumer::Consumer (void)
 {
 }

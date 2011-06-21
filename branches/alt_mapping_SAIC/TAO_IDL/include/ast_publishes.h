@@ -13,9 +13,9 @@ class TAO_IDL_FE_Export AST_Publishes : public virtual AST_Field
 public:
   AST_Publishes (UTL_ScopedName *n,
                  AST_Type *publishes_type);
-            
+
   virtual ~AST_Publishes (void);
-  
+
   // Data Accessor.
   AST_Type *publishes_type (void) const;
 
@@ -27,7 +27,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

@@ -9,10 +9,6 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/SString.h"
 
-ACE_RCSID (IFRService,
-           ComponentContainer_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_ComponentContainer_i::tmp_name_holder_ = 0;

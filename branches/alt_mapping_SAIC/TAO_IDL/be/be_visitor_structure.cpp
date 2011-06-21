@@ -34,6 +34,3 @@
 #include "be_visitor_structure/any_op_cs.cpp"
 #include "be_visitor_structure/cdr_op_ch.cpp"
 #include "be_visitor_structure/cdr_op_cs.cpp"
-#include "be_visitor_structure/serializer_op_ch.cpp"
-#include "be_visitor_structure/serializer_op_cs.cpp"
-

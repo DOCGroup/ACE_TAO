@@ -4,8 +4,6 @@
 #include "Oneway_Receiver.h"
 #include "Shutdown_Helper.h"
 
-ACE_RCSID(Reliable_Oneways, Oneway_Receiver, "$Id$")
-
 Oneway_Receiver::Oneway_Receiver (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

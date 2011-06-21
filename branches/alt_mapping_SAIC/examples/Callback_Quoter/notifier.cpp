@@ -2,8 +2,6 @@
 
 #include "Notifier_Input_Handler.h"
 
-ACE_RCSID(notifier, Callback_Quoter, "$Id$")
-
 // This is the main driver program for the Callback Quoter Notifier.
 
 int

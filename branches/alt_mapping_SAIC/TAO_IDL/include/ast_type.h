@@ -96,7 +96,8 @@ public:
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
-  // If the parameter is 0, we are trying to determine this for ourselves.
+  // The head element of the list the possibly recursed type we are checking for.
+  // If the list is empty, we are trying to determine this for ourselves.
 
   virtual void size_type (SIZE_TYPE);
   // Set the size type.

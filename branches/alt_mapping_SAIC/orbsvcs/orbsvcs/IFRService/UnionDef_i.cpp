@@ -11,11 +11,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           UnionDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)

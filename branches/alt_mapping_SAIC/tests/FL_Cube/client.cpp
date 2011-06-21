@@ -3,8 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(FL_Cube, client, "$Id$")
-
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Roller.H>

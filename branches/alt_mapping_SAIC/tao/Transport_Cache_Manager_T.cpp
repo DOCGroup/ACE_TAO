@@ -93,7 +93,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::set_entry_state (HASH_MAP_ENTRY *entry,
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::set_entry_state (HASH_MAP_ENTRY *&entry,
                                             TAO::Cache_Entries_State state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
@@ -120,8 +120,7 @@ namespace TAO
             ACE_TEXT ("Transport[%d] @ hash:index{%d:%d}\n"),
             int_id.transport ()->id (),
             ext_id.hash (),
-            ext_id.index ()
-            ));
+            ext_id.index ()));
        }
 
     // Get the entry too
@@ -129,7 +128,7 @@ namespace TAO
 
     // Update the purging strategy information while we
     // are holding our lock
-    this->purging_strategy_->update_item (int_id.transport ());
+    this->purging_strategy_->update_item (*(int_id.transport ()));
     int retval = 0;
     bool more_to_do = true;
     while (more_to_do)
@@ -150,7 +149,7 @@ namespace TAO
             retval = this->cache_map_.bind (ext_id, int_id, entry);
             if (retval == 0)
               {
-                // The entry has been added to cache succesfully
+                // The entry has been added to cache successfully
                 // Add the cache_map_entry to the transport
                 int_id.transport ()->cache_map_entry (entry);
                 more_to_do = false;
@@ -369,7 +368,7 @@ namespace TAO
         {
           // Update the purging strategy information while we
           // are holding our lock
-          this->purging_strategy_->update_item (transport);
+          this->purging_strategy_->update_item (*transport);
         }
     }
     return found;
@@ -379,9 +378,6 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle_i (HASH_MAP_ENTRY *entry)
   {
-    if (entry == 0)
-      return -1;
-
     entry->item ().recycle_state (ENTRY_IDLE_AND_PURGABLE);
 
     return 0;
@@ -399,7 +395,7 @@ namespace TAO
       return -1;
 
     purging_strategy *st = this->purging_strategy_;
-    (void) st->update_item (entry->item ().transport ());
+    (void) st->update_item (*(entry->item ().transport ()));
 
     return 0;
   }
@@ -457,35 +453,18 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_i (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_i (HASH_MAP_ENTRY *entry)
   {
-    int retval = 0;
-
-    if (entry != 0)
-      {
-        // Remove the entry from the Map
-        retval = this->cache_map_.unbind (entry);
+    int retval = this->cache_map_.unbind (entry);//0;
 
         // Set the entry pointer to zero
-        entry = 0;
+    //    entry = 0;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
         this->size_monitor_->receive (this->current_size ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
-      }
 
     return retval;
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_invalid_i (HASH_MAP_ENTRY *entry)
-  {
-    if (entry != 0)
-      {
-        // Mark the entry as not usable
-        entry->item ().recycle_state (ENTRY_PURGABLE_BUT_NOT_IDLE);
-      }
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
@@ -505,7 +484,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_available_i[%d], %C state is %C\n"),
+                    ACE_TEXT ("is_entry_available_i[%d], %C, state is %C\n"),
                     entry.int_id_.transport () ? entry.int_id_.transport ()->id () : 0,
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));
@@ -528,7 +507,7 @@ namespace TAO
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
-                    ACE_TEXT ("is_entry_purgable_i[%d], %C state is %C\n"),
+                    ACE_TEXT ("is_entry_purgable_i[%d], %C, state is %C\n"),
                     entry.int_id_.transport ()->id (),
                     (result ? "true" : "false"),
                     Cache_IntId::state_name (entry_state)));

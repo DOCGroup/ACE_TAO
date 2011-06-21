@@ -7,8 +7,6 @@
 #include "ace/Log_Msg.h"
 #include "Callback_Handler.h"
 
-ACE_RCSID (AMI_Observer, Callback_Handler, "$Id$")
-
 Callback_Handler::Callback_Handler (const char *pathname,
                                     Web_Server::Callback_ptr client_callback)
   : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),

@@ -1113,11 +1113,11 @@ ifr_adding_visitor::visit_provides (AST_Provides *node)
   ::CORBA::ComponentIR::ComponentDef_var c =
     ::CORBA::ComponentIR::ComponentDef::_narrow (
       this->ir_current_.in ());
-      
+
   ACE_CString comp_str (c->_interface_repository_id ());
   char *local_name = node->local_name ()->get_string ();
   this->expand_id (comp_str, local_name);
-  
+
   ::CORBA::ComponentIR::ProvidesDef_var new_def =
     c->create_provides (comp_str.fast_rep (),
                         local_name,
@@ -1136,7 +1136,7 @@ ifr_adding_visitor::visit_uses (AST_Uses *node)
 
   ::CORBA::InterfaceDef_var interface_type =
     ::CORBA::InterfaceDef::_narrow (contained.in ());
-    
+
   ::CORBA::ComponentIR::ComponentDef_var c =
     ::CORBA::ComponentIR::ComponentDef::_narrow (
       this->ir_current_.in ());
@@ -1144,7 +1144,7 @@ ifr_adding_visitor::visit_uses (AST_Uses *node)
   ACE_CString comp_str (c->_interface_repository_id ());
   char *local_name = node->local_name ()->get_string ();
   this->expand_id (comp_str, local_name);
-  
+
   ::CORBA::ComponentIR::UsesDef_var new_def =
     c->create_uses (comp_str.fast_rep (),
                     local_name,
@@ -1164,7 +1164,7 @@ ifr_adding_visitor::visit_publishes (AST_Publishes *node)
 
   ::CORBA::ComponentIR::EventDef_var event_type =
     ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
-    
+
   ::CORBA::ComponentIR::ComponentDef_var c =
     ::CORBA::ComponentIR::ComponentDef::_narrow (
       this->ir_current_.in ());
@@ -1172,7 +1172,7 @@ ifr_adding_visitor::visit_publishes (AST_Publishes *node)
   ACE_CString comp_str (c->_interface_repository_id ());
   char *local_name = node->local_name ()->get_string ();
   this->expand_id (comp_str, local_name);
-  
+
   ::CORBA::ComponentIR::PublishesDef_var new_def =
     c->create_publishes (comp_str.fast_rep (),
                          local_name,
@@ -1191,7 +1191,7 @@ ifr_adding_visitor::visit_emits (AST_Emits *node)
 
   ::CORBA::ComponentIR::EventDef_var event_type =
     ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
-    
+
   ::CORBA::ComponentIR::ComponentDef_var c =
     ::CORBA::ComponentIR::ComponentDef::_narrow (
       this->ir_current_.in ());
@@ -1199,7 +1199,7 @@ ifr_adding_visitor::visit_emits (AST_Emits *node)
   ACE_CString comp_str (c->_interface_repository_id ());
   char *local_name = node->local_name ()->get_string ();
   this->expand_id (comp_str, local_name);
-  
+
   ::CORBA::ComponentIR::EmitsDef_var new_def =
     c->create_emits (comp_str.fast_rep (),
                      local_name,
@@ -1218,7 +1218,7 @@ ifr_adding_visitor::visit_consumes (AST_Consumes *node)
 
   ::CORBA::ComponentIR::EventDef_var event_type =
     ::CORBA::ComponentIR::EventDef::_narrow (contained.in ());
-    
+
   ::CORBA::ComponentIR::ComponentDef_var c =
     ::CORBA::ComponentIR::ComponentDef::_narrow (
       this->ir_current_.in ());
@@ -1226,7 +1226,7 @@ ifr_adding_visitor::visit_consumes (AST_Consumes *node)
   ACE_CString comp_str (c->_interface_repository_id ());
   char *local_name = node->local_name ()->get_string ();
   this->expand_id (comp_str, local_name);
-  
+
   ::CORBA::ComponentIR::ConsumesDef_var new_def =
     c->create_consumes (comp_str.fast_rep (),
                         local_name,
@@ -1914,7 +1914,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
   try
     {
       AST_Type *type = node->field_type ();
-      
+
       // Save to be replaced later.
       holder =
         ::CORBA::IDLType::_duplicate (this->ir_current_.in ());
@@ -1993,7 +1993,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
       return -1;
     }
-    
+
   // Restore entry of component or interface.
   this->ir_current_ =
     ::CORBA::IDLType::_duplicate (holder.in ());
@@ -2746,7 +2746,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
         {
           AST_Interface *intf =
             AST_Interface::narrow_from_decl (parents[i]);
-            
+
           if (intf == 0)
             {
               ACE_ERROR_RETURN ((
@@ -2757,7 +2757,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                  parents[i]->full_name ()),
                 -1);
             }
-        
+
           result =
             be_global->repository ()->lookup_id (intf->repoID ());
 
@@ -2808,7 +2808,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
         {
           AST_Interface *intf =
             AST_Interface::narrow_from_decl (parents[i]);
-            
+
           if (intf == 0)
             {
               ACE_ERROR_RETURN ((
@@ -2819,7 +2819,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                  parents[i]->full_name ()),
                 -1);
             }
-        
+
           result =
             be_global->repository ()->lookup_id (intf->repoID ());
 
@@ -3990,14 +3990,14 @@ ifr_adding_visitor::visit_all_factories (AST_Home *node,
     {
       AST_Decl *d = h_iter.item ();
       AST_Decl::NodeType nt = d->node_type ();
-      
+
       if (nt != AST_Decl::NT_factory)
         {
           continue;
         }
-        
+
       AST_Factory *f = AST_Factory::narrow_from_decl (d);
-      
+
       CORBA::ParDescriptionSeq params;
       this->fill_params (params, f);
 
@@ -4026,7 +4026,7 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
        h_iter.next ())
     {
       f = AST_Finder::narrow_from_decl (h_iter.item ());
-      
+
       if (f == 0)
         {
           continue;

@@ -1,21 +1,17 @@
-// $Id$
 
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/tests/Simple/chat
-//
-// = FILENAME
-//    Client_i.cpp
-//
-// = DESCRIPTION
-//    Implementation of the Client_i class.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Client_i.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the Client_i class.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Client_i.h"
 #include "tao/ORB.h"

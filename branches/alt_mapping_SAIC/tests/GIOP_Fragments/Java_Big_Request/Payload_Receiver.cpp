@@ -3,8 +3,6 @@
 //
 #include "Payload_Receiver.h"
 
-ACE_RCSID(Big_Request_Muxing, Payload_Receiver, "$Id$")
-
 Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
  : count_ (0),
    orb_(CORBA::ORB::_duplicate (orb))

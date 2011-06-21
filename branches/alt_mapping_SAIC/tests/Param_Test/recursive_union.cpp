@@ -1,26 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    recursive_union.cpp
-//
-// = DESCRIPTION
-//    test union that contains a sequence of itself
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    recursive_union.cpp
+ *
+ *  $Id$
+ *
+ *  test union that contains a sequence of itself
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "recursive_union.h"
-
-ACE_RCSID (Param_Test,
-           recursive_union,
-           "$Id$")
 
 const CORBA::ULong MAX_DEPTH = 3;
 const CORBA::ULong MAX_SEQ_LENGTH = 2;

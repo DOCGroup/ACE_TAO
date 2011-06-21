@@ -118,7 +118,7 @@ public:
 
   /// Return the Profile lock. This lock can be used at places where
   /// profiles need to be edited.
-  ACE_Lock *profile_lock (void) const;
+  const TAO_SYNCH_MUTEX& profile_lock (void) const;
 
   /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
@@ -361,15 +361,15 @@ protected:
   /// linked list of TAO_MProfile objects.
   TAO_MProfile *forward_profiles_;
 
-  // The bookmark indicating permanent forward occured,
-  // the pointer is used to indentify bottom of stack forward_profiles_
+  /// The bookmark indicating permanent forward occurred,
+  /// the pointer is used to identify bottom of stack forward_profiles_
   TAO_MProfile *forward_profiles_perm_;
 
   /// This is the profile that we are currently sending/receiving with.
   TAO_Profile *profile_in_use_;
 
   /// Mutex to protect access to the forwarding profile.
-  ACE_Lock* profile_lock_ptr_;
+  TAO_SYNCH_MUTEX profile_lock_;
 
   /// Have we successfully talked to the forward profile yet?
   CORBA::Boolean profile_success_;
@@ -399,13 +399,12 @@ protected:
   /**
    * This should be the same value as cached in the ORB_Core. The
    * reason for caching this helps our generated code, notably the
-   * stubs to be decoubled from ORB_Core. Please do not move it away.
+   * stubs to be decoupled from ORB_Core. Please do not move it away.
    */
   CORBA::Boolean const collocation_opt_;
 
-
-  // True if forwarding request upon some specific exceptions
-  // (e.g. OBJECT_NOT_EXIST) already happened.
+  /// True if forwarding request upon some specific exceptions
+  /// (e.g. OBJECT_NOT_EXIST) already happened.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
 };
 
@@ -434,7 +433,6 @@ public:
 
 protected:
   TAO_Stub *p_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

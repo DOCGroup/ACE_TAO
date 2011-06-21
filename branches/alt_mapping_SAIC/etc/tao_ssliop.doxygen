@@ -50,11 +50,11 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/orbsvcs/orbsvcs/Security.idl \
-			TAO/orbsvcs/orbsvcs/SecurityLevel1.idl \
-			TAO/orbsvcs/orbsvcs/SecurityLevel2.idl \
-			TAO/orbsvcs/orbsvcs/Security \
-			TAO/orbsvcs/orbsvcs/SSLIOP.idl \
-			TAO/orbsvcs/orbsvcs/SSLIOP
+                        TAO/orbsvcs/orbsvcs/SecurityLevel1.idl \
+                        TAO/orbsvcs/orbsvcs/SecurityLevel2.idl \
+                        TAO/orbsvcs/orbsvcs/Security \
+                        TAO/orbsvcs/orbsvcs/SSLIOP.idl \
+                        TAO/orbsvcs/orbsvcs/SSLIOP
 FILE_PATTERNS         = *.cpp *.h *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
@@ -77,7 +77,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ssliop
+HTML_OUTPUT           = html/libtao-doc/ssliop
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -131,20 +131,18 @@ PREDEFINED            = __ACE_INLINE__ \
                         TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
                         TAO_END_VERSIONED_NAMESPACE_DECL \
                         ACE_INLINE
-EXPAND_AS_DEFINED     = ACE_RCSID \
-                        ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER \
-                        ACE_THROW_SPEC
+EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER
 
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-			html/tao/TAO.tag=.. \
-			html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
-			html/tao/security/TAO_Security.tag=../security
-GENERATE_TAGFILE      = html/tao/ssliop/TAO_SSLIOP.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=.. \
+                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver \
+                        html/libtao-doc/security/TAO_Security.tag=../security
+GENERATE_TAGFILE      = html/libtao-doc/ssliop/TAO_SSLIOP.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

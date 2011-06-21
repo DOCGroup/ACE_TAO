@@ -5,7 +5,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
 
-ACE_RCSID(EC_Examples, Supplier, "$Id$")
+
 
 Supplier::Supplier (RtecEventComm::EventSourceID id,
                     const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)

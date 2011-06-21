@@ -101,7 +101,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Collocated_Invocation.cpp
     Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
-    Configurable_Refcount.cpp
     Connect_Strategy.cpp
     Connection_Handler.cpp
     Connection_Purging_Strategy.cpp
@@ -247,6 +246,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     RequestInterceptor_Adapter.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
+    Resume_handle_Deferred.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp

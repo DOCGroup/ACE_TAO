@@ -1,16 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Server_Request_Interceptor.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "testS.h"
-
-ACE_RCSID (Collocated_Forwarding,
-           Server_Request_Interceptor,
-           "$Id$")
-
-//static const CORBA::ULong expected_version = 5;
 
 Server_Request_Interceptor::Server_Request_Interceptor (CORBA::ULong request_pass_count)
   : request_pass_count_ (request_pass_count)

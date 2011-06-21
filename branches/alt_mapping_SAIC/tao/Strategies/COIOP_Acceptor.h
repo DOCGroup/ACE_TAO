@@ -33,7 +33,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO COIOP_Acceptor concrete call defination
+// TAO COIOP_Acceptor concrete call definition
 
 /**
  * @class TAO_COIOP_Acceptor

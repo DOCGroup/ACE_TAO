@@ -1,8 +1,6 @@
 //$Id$
 #include "Task_Stats.h"
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_String.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
@@ -74,7 +72,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
     }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n",msg);
+  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
   // next, compose and dump what we want to say.
   ACE_UINT32 val_1;

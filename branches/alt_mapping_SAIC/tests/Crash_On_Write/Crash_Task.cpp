@@ -5,8 +5,6 @@
 #include "Crash_Task.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Crash_On_Write, Crash_Task, "$Id$")
-
 Crash_Task::Crash_Task (ACE_Thread_Manager *thr_mgr,
                         const ACE_Time_Value &running_time)
   : ACE_Task_Base (thr_mgr)

@@ -34,11 +34,11 @@ $pong->DeleteFile ($pongiorfile);
 $ctrl->DeleteFile ($pingiorfile);
 $ctrl->DeleteFile ($pongiorfile);
 
-$PING = $ping->CreateProcess ("ping", 
+$PING = $ping->CreateProcess ("ping",
                               " -o $ping_pingiorfile");
-$PONG = $pong->CreateProcess ("pong", 
+$PONG = $pong->CreateProcess ("pong",
                               " -o $pong_pongiorfile");
-$CTRL = $ctrl->CreateProcess ("control", 
+$CTRL = $ctrl->CreateProcess ("control",
                               " -ORBDebugLevel $debug_level ".
                               " -f file://$ctrl_pingiorfile ".
                               " -g file://$ctrl_pongiorfile");

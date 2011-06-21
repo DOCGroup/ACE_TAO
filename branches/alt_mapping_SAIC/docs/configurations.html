@@ -141,7 +141,7 @@ Roadmap</h3>
 
 <ul>
   <li><a name="orb"><b>Number of ORBs</b> -- </a></li>
-      TAO can assign multiple endpoints to an ORB.  
+      TAO can assign multiple endpoints to an ORB.
       It is therefore not necessary to create multiple ORBs to accept
       requests from multiple endpoints.  However, multiple ORBs can be
       used to support different policies within the same process,
@@ -182,7 +182,7 @@ Roadmap</h3>
         <li><tt>reactive</tt>: In this approach, each thread
         in the thread pool has an ORB that accepts and processes
         requests reactively. This is also called as the
-        "ORB-per-thread" model <P>  
+        "ORB-per-thread" model <P>
 
         <li><P><tt>leader/followers</tt>: In this model, the user must
 	  create several threads, all of which invoke
@@ -193,7 +193,7 @@ Roadmap</h3>
 	  doing so the ORB will selects another thread in the pool to
 	  become the leader.
 	  In other words the threads in the pool take turns to
-	  process the events. 
+	  process the events.
 	</p>
 
 	</li>
@@ -226,23 +226,7 @@ Roadmap</h3>
       -ORBCollocation </a></code> flag as an argument of <code>
       ORB_init </code> (most often thru the command line flags.) <p>
 
-  <li> <a NAME="profile"></a><b>Forwarding Profile</b> --
-      When multiple threads using the same
-      <tt>CORBA::Object</tt> and using forwarding, it is necessary to
-      protect the forwarding <tt>Profile</tt>, which is part of the
-      CORBA::Object, against multiple access. Therefore a mutex lock
-      is used by default to ensure proper access. <P>
-
-      Using the switch <tt><a href="Options.html#-ORBProfileLock">
-      -ORBProfileLock </a></tt> this policy can be deactivated
-      specifying <tt>-ORBProfileLock null</tt>.
-      The primary reason for doing this is to improve performance
-      when no forwarding is used or no multithreading with access to
-      shared <tt>CORBA::Object</tt>'s.  Using a null mutex reduces
-      the overhead compared with using a regular mutex
-      lock.</li><P>
-
-  <li> <a NAME="orbsvcs"></a><b>orbsvcs Library</b> -- 
+  <li> <a NAME="orbsvcs"></a><b>orbsvcs Library</b> --
       By default,
       TAO's Makefiles build all the services that TAO
       supports.
@@ -329,7 +313,6 @@ The following are common ORB configurations used by TAO applications.<P>
               select_st</tt>, <tt>-ORBInputCDRAllocator null</tt>
               <br><tt>TAO_Server_Strategy_Factory</tt>:
               <tt>-ORBconcurrency reactive</tt> (default),
-              <tt>-ORBPOALock null</tt>
               <br><tt>TAO_Client_Strategy_Factory</tt>:
               <tt>-ORBConnectorLock null</tt></td>
           </td>
@@ -337,10 +320,10 @@ The following are common ORB configurations used by TAO applications.<P>
       </table>
 
       <P>Check out the <tt><a href="../examples/Simple/grid/">Grid</a></tt>
-      for an example of a default configuration and 
-      <tt><a href="../performance-tests/Latency/Single_Threaded/">this</a></tt> 
+      for an example of a default configuration and
+      <tt><a href="../performance-tests/Latency/Single_Threaded/">this</a></tt>
       for an example of settings that would provide better performance.
-      
+
       <P>
 
   <li> <a NAME="tpc"></a><B>Multiple threads, single ORB, thread-per-connection
@@ -468,7 +451,7 @@ The following are common ORB configurations used by TAO applications.<P>
 
         <td>This model implements a highly optimized <A HREF="rtcorba/">Real-time CORBA</A> thread pool that minimizes
             context switching, and thread creation costs.  In this
-            model, the application is responsible for starting up the ORB and then 
+            model, the application is responsible for starting up the ORB and then
             calling the Real-time CORBA thread pool factory methods that
             internally spawn a pool of threads.  When a request comes in, one
             of these waiting threads in the pool will handle the

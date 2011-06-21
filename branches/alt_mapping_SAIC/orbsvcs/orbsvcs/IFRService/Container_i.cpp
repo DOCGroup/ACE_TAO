@@ -14,18 +14,11 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           Container_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_Container_i::tmp_name_holder_ = 0;
 
-TAO_Container_i::TAO_Container_i (
-    TAO_Repository_i *repo
-  )
+TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
 {
 }

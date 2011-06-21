@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    interop_test/wchar
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    C++ client side for testing interoperability with wchar data.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  C++ client side for testing interoperability with wchar data.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "interop_wcharC.h"
 #include "wchar_reference.h"
@@ -290,7 +287,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   if (tests_to_run == 0)
     tests_to_run = ALL_TESTS;
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

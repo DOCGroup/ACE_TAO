@@ -148,7 +148,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << iface_name << suffix << "::~"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
@@ -215,13 +215,13 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
   const char *iface_name = this->iface_->local_name ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << iface_name << suffix << "::"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << iface_name << suffix << "::~"
       << iface_name << suffix << " (void)" << be_nl
       << "{" << be_nl
@@ -239,11 +239,16 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 
   ACE_CString scope_str (scope_name, 0, false);
 
-  os_ << be_nl << be_nl
+  const char *container_type = be_global->ciao_container_type ();
+
+  os_ << be_nl_2
       << "void" << be_nl
-      << iface_name << "_exec_i::set_session_context ("
+      << iface_name << "_exec_i::set_"
+      << tao_cg->downcase (container_type)
+      << "_context ("
       << be_idt_nl
-      << "::Components::SessionContext_ptr ctx)" << be_uidt_nl
+      << "::Components::" << be_global->ciao_container_type ()
+      << "Context_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->context_ =" << be_idt_nl
       << "::"
@@ -256,13 +261,13 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}";
-      
+
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (is_global ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
       << iface_name << "_exec_i::_get_component (void)" << be_nl
       << "{" << be_idt_nl
@@ -273,8 +278,8 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
       << "this->component_.in ());"
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
-      
-  os_ << be_nl << be_nl
+
+  os_ << be_nl_2
       << "void" << be_nl
       << iface_name << "_exec_i::_set_component (" << be_idt_nl
       << "::" << s->name () << smart_scope
@@ -294,7 +299,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 int
 be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_reply_handler::"
       << node->local_name ();
@@ -334,7 +339,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 
   os_ << "if (! ::CORBA::is_nil (this->callback_.in ()))"
       << be_idt_nl << "{" << be_idt_nl;
-      
+
   if (is_excep)
     {
       os_ << "::CCM_AMI::ExceptionHolder_i holder (excep_holder);"
@@ -366,7 +371,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
     }
 
   os_ << be_uidt_nl << "}" << be_uidt_nl;
-  
+
   os_ << be_nl
       << "::PortableServer::ObjectId_var oid =" << be_idt_nl
       << "this->poa_->servant_to_id (this);" << be_uidt_nl
@@ -379,7 +384,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
 int
 be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "void" << be_nl
       << this->iface_->local_name () << "_exec_i::"
       << node->local_name ();
@@ -395,11 +400,11 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
                          ACE_TEXT ("list failed\n")),
                         -1);
     }
-    
+
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
   const char *smart_scope = (global ? "" : "::");
-  
+
   const char *prefix = "AMI4CCM_";
   ACE_CString iface_str (this->iface_->local_name ());
   ACE_CString orig_iface_str (
@@ -412,23 +417,20 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << orig_iface_name << "_var receptacle_objref =" << be_idt_nl
       << "this->context_->get_connection_ami4ccm_port_ami4ccm_uses ();"
       << be_uidt_nl << be_nl;
-      
+
   os_ << "if (! ::CORBA::is_nil (receptacle_objref.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::" << scope->full_name () << smart_scope << "AMI_"
       << orig_iface_name << "Handler_var the_handler_var;"
-      << be_nl << be_nl;
-      
+      << be_nl_2;
+
   os_ << "if (! ::CORBA::is_nil (ami_handler))" << be_idt_nl
       << "{" << be_idt_nl
-      << "::CIAO::Context_Impl_Base *ctx_base =" << be_idt_nl
-      << "dynamic_cast <CIAO::Context_Impl_Base *> (this->context_.in ());"
-      << be_uidt_nl
-      << "::CIAO::Container_i *ctr =" << be_idt_nl
-      << "dynamic_cast <CIAO::Container_i *> (ctx_base->_ciao_the_Container ());"
-      << be_uidt_nl
-      << "::PortableServer::POA_ptr poa = ctr->the_POA ();" << be_nl
+      << "::CORBA::Object_var objvar =" << be_idt_nl
+      << "this->context_->resolve_service_reference (\"POA\");" << be_uidt_nl
+      << "::PortableServer::POA_var poa =" << be_idt_nl
+      << "::PortableServer::POA::_narrow (objvar.in ());" << be_uidt_nl
       << this->iface_->local_name () << "_reply_handler *handler = 0;"
       << be_nl
       << "ACE_NEW (handler, " << be_nl
@@ -436,8 +438,8 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "_reply_handler (ami_handler, poa));" << be_nl
       << "::PortableServer::ServantBase_var owner_transfer (handler);"
       << be_nl
-      << "::PortableServer::ObjectId_var oid =" << be_idt_nl
-      << "poa->activate_object (handler);" << be_uidt_nl
+      << "::PortableServer::ObjectId_var oid = "
+      << "poa->activate_object (handler);" << be_nl
       << "::CORBA::Object_var handler_obj = poa->id_to_reference (oid.in ());"
       << be_nl
       << "the_handler_var = ::" << scope->full_name ()
@@ -470,8 +472,17 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
     }
 
   os_ << ");" << be_uidt << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}";
+      << "}" << be_uidt << be_nl;
+
+  /// Throw an INV_OBJREF exception because there is no connection
+  /// see AMI4CCM mars/11-xx-yy , 2011
+
+  os_ << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
+
+  os_ << "}";
 
   return 0;
 }

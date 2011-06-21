@@ -68,7 +68,7 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
       leads to crash failures. <p>
   </li>
 
-      
+
 </ul>
 <!-- --------------------- -->
 <a href="#toc">Back to TOC</a>
@@ -84,7 +84,7 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
   <li><p>Improvement to connection cache on the acceptor side so that
       it will purge old connections when there are no more slots or
       sockets are available. The connection cache does good job of
-      purging things on the connector side</p> 
+      purging things on the connector side</p>
   </li>
 
   <li><p> Prevent unbounded stack growth that leads to a failure in
@@ -106,14 +106,14 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
         TAO has slowed down a bit over the past two betas. Need to
         identify the bottlenecks before improving the performance.</p>
         </li>
-        
+
         <li><p> Its a known fact that thread-per-connection is faster
         than the reactive model, even for single threaded cases. Need
         to identify portions of the reactor that slows down things and
         fix them or create a fast path in the ORB just using plain
         vanilla select for the server.</p>
         </li>
-        
+
         <li><p> In the output data path, the CDR creates the message
         block and all other associted things on TSS. If we could
         change the CDR to first create them on the stack and then move
@@ -125,7 +125,7 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
   <li>Features:</li>
       <ol>
         <li><p>Implement DP-CORBA specification</p></li>
-        
+
         <li><p>Implement TII specification.</p></li>
       </ol>
 
@@ -150,7 +150,7 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
         <code>$TAO_ROOT/tests/Connection_Timeout</code> for an example
         of how to use this feature.<p>
     </li>
-        
+
     <li><p> Implemented non-blocking connects with three different
         strategies for connection establishment. The details of the
         strategies and the related documentation can be found <A
@@ -161,11 +161,11 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
     option -ORBConnectionPurgingStrategy fills in the role of the
     deprecated strategy.</p>
     </li>
-    
+
     <li><p> Deprecated the option -ORBResources.</p></li>
 
     <li><p> The connectors have been moved to the lanes.</p> </li>
-    
+
     <li><p> Fixed stack recursion problems that occurs, when a thread
         flushing a reply by entering the reactor starts processing
         incoming requests.</p>
@@ -188,7 +188,7 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
         optimization. This is useful for RTCORBA server threads to
         avoid priority inversions. Buffering messages and sending
         notifications to the reactor, that does not know or honour
-        priority could lead to priority inversions. 
+        priority could lead to priority inversions.
         </p>
     </li>
 
@@ -210,7 +210,7 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
 	  All of the following protocols were updated: DIOP, IIOP,
           SCIOP, SHMIOP, SSLIOP, UIOP, UIPMC. </p>
     </li>
-    
+
     <li><p> Support for the ORB methods create_value_tc, create_component_tc,
             create_event_tc, create_home_tc and create_recursive_tc added. </p>
     </li>

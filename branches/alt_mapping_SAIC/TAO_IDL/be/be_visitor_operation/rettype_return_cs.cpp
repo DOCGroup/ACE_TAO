@@ -208,7 +208,7 @@ be_visitor_operation_rettype_return_cs::visit_union (
     {
       *os << "_tao_retval";
     }
-  
+
   return 0;
 }
 

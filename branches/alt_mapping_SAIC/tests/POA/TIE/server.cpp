@@ -1,26 +1,23 @@
-// $Id$
 
-// =========================================================================
-// = LIBRARY
-//    TAO/tests/POA/TIE
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    In this example,
-//
-// = AUTHOR
-//    Irfan Pyarali
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  In this example,
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/streams.h"
 #include "ace/SString.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_RCSID(TIE, server, "$Id$")
 
 const ACE_TCHAR *ior_1 = ACE_TEXT ("ior_1");
 const ACE_TCHAR *ior_2 = ACE_TEXT ("ior_2");

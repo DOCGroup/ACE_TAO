@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/Operation_Table.h"
@@ -5,7 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// destructor
 TAO_Operation_Table::~TAO_Operation_Table (void)
 {
 }

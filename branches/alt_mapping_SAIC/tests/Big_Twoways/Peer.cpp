@@ -4,8 +4,6 @@
 #include "Peer.h"
 #include "Session.h"
 
-ACE_RCSID(Big_Oneways, Peer, "$Id$")
-
 Peer::Peer (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

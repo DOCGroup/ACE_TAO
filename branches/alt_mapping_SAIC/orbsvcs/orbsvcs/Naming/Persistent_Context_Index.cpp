@@ -238,15 +238,7 @@ TAO_Persistent_Context_Index::create_index (void)
       return -1;
     }
 
-#if !defined (CHORUS)
   ACE_MMAP_Memory_Pool::OPTIONS options (base_address_);
-#else
-  // Use base address == 0, don't use a fixed address.
-  ACE_MMAP_Memory_Pool::OPTIONS options (0,
-                                         0,
-                                         0,
-                                         ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE);
-#endif /* CHORUS */
 
   // Create the allocator with the appropriate options.  The name used
   // for  the lock is the same as one used for the file.

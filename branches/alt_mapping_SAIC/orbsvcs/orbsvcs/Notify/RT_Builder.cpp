@@ -10,10 +10,6 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "orbsvcs/Notify/Object.h"
 
-ACE_RCSID (RT_Notify,
-           TAO_Notify_RT_Builder,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_Builder::TAO_Notify_RT_Builder (void)

@@ -11,7 +11,7 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_unistd.h"
 
 // Files which have the IOR
 const ACE_TCHAR *first_ior = 0;
@@ -71,7 +71,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

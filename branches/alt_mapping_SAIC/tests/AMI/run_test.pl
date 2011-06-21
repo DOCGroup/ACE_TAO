@@ -13,7 +13,8 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
 
-$debug_level = '0';
+$server_debug_level = '0';
+$client_debug_level = '0';
 $iterations = '1';
 
 foreach $i (@ARGV) {
@@ -21,7 +22,8 @@ foreach $i (@ARGV) {
         $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
     }
     elsif ($i eq '-debug') {
-        $debug_level = '1';
+        $server_debug_level = '1';
+        $client_debug_level = '1';
     }
     elsif ($i eq '-exclusive') {
         $client_conf = $client->LocalFile ("exclusive$PerlACE::svcconf_ext");
@@ -34,7 +36,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $server_debug_level -o $server_iorfile");
 
 $server_status = $SV->Spawn ();
 
@@ -62,7 +64,7 @@ if ($client->PutFile ($iorbase) == -1) {
 
 $CL = $client->CreateProcess ("simple_client",
                               "-ORBsvcconf $client_conf "
-                              . "-ORBdebuglevel $debug_level"
+                              . "-ORBdebuglevel $client_debug_level"
                               . " -k file://$client_iorfile "
                               . " -i $iterations -d");
 
@@ -77,7 +79,7 @@ if ($client_status != 0) {
 $CL2 = $client->CreateProcess ("simple_client",
                                "-ORBsvcconf $client_conf"
                                . " -ORBCollocation no"
-                               . " -ORBdebuglevel $debug_level"
+                               . " -ORBdebuglevel $client_debug_level"
                                . " -k file://$client_iorfile "
                                . " -i $iterations -x -d");
 

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    This file contains the implementation of the client-side of the
-//    Param_Test application.
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  This file contains the implementation of the client-side of the
+ *  Param_Test application.
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef CLIENT_CPP
 #define CLIENT_CPP
@@ -24,11 +21,7 @@
 #include "results.h"
 #include "client.h"
 
-ACE_RCSID (Param_Test,
-           client,
-           "$Id$")
-
-// Constructor.p
+// Constructor.
 template <class T>
 Param_Test_Client<T>::Param_Test_Client (CORBA::ORB_ptr orb,
                                          Param_Test_ptr objref,

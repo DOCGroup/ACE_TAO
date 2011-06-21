@@ -5,7 +5,6 @@
 #ifndef GATE_H
 #define GATE_H
 
-#include "ace/OS.h"
 #include "ace/INET_Addr.h"
 #include "ace/UUID.h"
 
@@ -75,11 +74,8 @@ private:
   ACE_RMCast::Socket socket_;
   CORBA::String_var id_;
 
-  typedef TAO_SYNCH_MUTEX Mutex;
-  typedef ACE_Guard<Mutex> Lock;
-
   bool stop_;
-  Mutex mutex_;
+  TAO_SYNCH_MUTEX mutex_;
   ACE_Thread_Manager thread_mgr_;
 };
 

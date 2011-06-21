@@ -35,9 +35,6 @@ class TAO_Notify_Timer;
 
 /**
  * @class TAO_Notify_SequencePushConsumer
- *
- * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_SequencePushConsumer
   : public TAO_Notify_Consumer
@@ -55,15 +52,16 @@ public:
   virtual bool enqueue_if_necessary(
     TAO_Notify_Method_Request_Event * request);
 
+// FUZZ: disable check_for_ACE_Guard
   virtual bool dispatch_from_queue (
     Request_Queue & requests,
     ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon);
+// FUZZ: enable check_for_ACE_Guard
 
-
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   virtual void push (const CORBA::Any& event);
 
-  // Push event.
+  /// Push event.
   virtual void push (const CosNotification::StructuredEvent & event);
 
   /// Push a batch of events to this consumer.

@@ -58,16 +58,20 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
+  // Also check for illegal template module scope reference,
+  // as long as we're iterating.
   for (long i = 0; i < n_supports; ++i)
     {
       if (supports[i]->node_type () == AST_Decl::NT_param_holder)
         {
           this->param_holders_.enqueue_tail (supports[i]);
         }
+
+      FE_Utils::tmpl_mod_ref_check (this, supports[i]);
     }
-   
+
   if (inherits_concrete != 0)
-    {  
+    {
       if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
         {
           this->param_holders_.enqueue_tail (inherits_concrete);
@@ -82,14 +86,50 @@ AST_ValueType::~AST_ValueType (void)
 bool
 AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
+  bool self_test = (list.size () == 0);
+
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != -1)
     {
-      return this->in_recursion_;
+      return (this->in_recursion_ == 1);
     }
 
-  list.enqueue_tail (this);
+  if (list.size ())
+  {
+    if (match_names (this, list))
+    {
+      // A valuetype may contain itself as a member (nesting == 1)
+      // which is not a problem., but we could also match ourselves when
+      // we are not recursed ourselves but instead are part of another
+      // recursive type.
+      if (list.size () == 1)
+      {
+        idl_global->recursive_type_seen_ = true;
+        return true;
+      }
+      else
+      {
+        // get the head element which is the type being tested
+        AST_Type** recursable_type = 0;
+        list.get (recursable_type, 0);
+        // Check if we are the possibly recursive type being tested
+        if (!ACE_OS::strcmp (this->full_name (),
+                                 (*recursable_type)->full_name ()))
+        {
+          // match, so we're recursive
+          idl_global->recursive_type_seen_ = true;
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      }
+    }
+  }
+
+  list.enqueue_tail(this);
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -114,34 +154,12 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
       AST_Type *type = field->field_type ();
 
-      // A valuetype may contain itself as a member. This will not
-      // cause a problem when checking if the valuetype itself is
-      // recursive, but if another valuetype contains a recursive
-      // one, the string compare below is not sufficient, and we
-      // will go into an infinite recursion of calls to in_recursion ;-).
-      // The check below will catch that use case.
-      if (this == type)
-        {
-          this->in_recursion_ = 1;
-          idl_global->recursive_type_seen_ = true;
-          return this->in_recursion_;
-        }
-
       if (type == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_valuetype::in_recursion - "
                              "bad base type\n"),
                             0);
-        }
-
-      // IDL doesn't have such a feature as name reuse so
-      // just compare fully qualified names.
-      if (this->match_names (this, list))
-        {
-          this->in_recursion_ = 1;
-          idl_global->recursive_type_seen_ = true;
-          return this->in_recursion_;
         }
 
       if (type->node_type () == AST_Decl::NT_typedef)
@@ -153,15 +171,18 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       // Now hand over to our field type.
       if (type->in_recursion (list))
         {
-          this->in_recursion_ = 1;
+          if (self_test)
+            this->in_recursion_ = 1;
           idl_global->recursive_type_seen_ = true;
-          return this->in_recursion_;
+          return true;
         }
 
     } // end of for loop
 
-  this->in_recursion_ = 0;
-  return this->in_recursion_;
+  // Not in recursion.
+  if (self_test)
+    this->in_recursion_ = 0;
+  return false;
 }
 
 void
@@ -255,12 +276,12 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
         {
           continue;
         }
-        
+
       AST_Interface *i =
         AST_Interface::narrow_from_decl (*is);
-        
+
       d = (i)->lookup_by_name_r (e, full_def_only);
-                               
+
       if (d != 0)
         {
           if (d_before == 0)
@@ -303,15 +324,16 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
 
 AST_Decl *
 AST_ValueType::special_lookup (UTL_ScopedName *e,
-                               bool full_def_only)
+                               bool full_def_only,
+                               AST_Decl *&/*final_parent_decl*/)
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
-  
+
   if (d == 0)
     {
       d = this->look_in_supported (e, full_def_only);
     }
-    
+
   return d;
 }
 
@@ -379,7 +401,7 @@ void
 AST_ValueType::destroy (void)
 {
   this->AST_Interface::destroy ();
-  
+
   delete [] this->pd_supports;
   this->pd_supports = 0;
   this->pd_n_supports = 0;

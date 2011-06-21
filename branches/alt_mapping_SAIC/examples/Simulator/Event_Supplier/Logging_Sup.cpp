@@ -1,25 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Logging_Sup.cpp
-//
-// = DESCRIPTION
-//   Event Supplier for visualizing scheduling behavior, using arrival
-//   and dispatch data logged by an event channel dispatch command object
-//
-// = AUTHOR
-//    Chris Gill (cdgill@cs.wustl.edu)
-//
-//    Adapted from the DOVE simulation event supplier
-//    originally
-//    David Levine (levine@cs.wustl.edu) and
-//    Tim Harrison (harrison@cs.wustl.edu)
-//    modified
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Logging_Sup.cpp
+ *
+ *  $Id$
+ *
+ * Event Supplier for visualizing scheduling behavior, using arrival
+ * and dispatch data logged by an event channel dispatch command object
+ *
+ *
+ *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the DOVE simulation event supplier originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Logging_Sup.h"
 #include "NavWeapC.h"
@@ -36,12 +29,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
-
-#include "ace/os_include/os_ctype.h"
-
-ACE_RCSID (Event_Supplier,
-           Logging_Sup,
-           "$Id$")
+#include "ace/OS_NS_ctype.h"
 
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS

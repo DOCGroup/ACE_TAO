@@ -3,8 +3,6 @@
 #include "tao/RTScheduling/RTScheduler.h"
 #include "tao/RTScheduling/RTScheduler_Loader.h"
 
-ACE_RCSID (RTScheduler, RTScheduler, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTScheduler_Initializer::TAO_RTScheduler_Initializer (void)

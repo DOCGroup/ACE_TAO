@@ -3,10 +3,6 @@
 #include "TestC.h"
 #include "tao/CodecFactory/CodecFactory.h"
 
-ACE_RCSID (Bug_2543_Regression,
-           bug_2543_regression,
-           "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try

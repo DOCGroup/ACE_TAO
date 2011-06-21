@@ -49,15 +49,15 @@ $c->DeleteFile ($nsiorfile);
 $s->DeleteFile ($nsiorfile);
 
 
-$IFRService = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/IFR_Service";
+$IFRService = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service";
 $IF = $ifr->CreateProcess ($IFRService,  "-ORBdebuglevel $debug_level ".
                                          "-o $ifr_ifriorfile");
 $TAO_IFR = "$ENV{ACE_ROOT}/bin/tao_ifr";
 $TI = $ti->CreateProcess ($TAO_IFR, "-ORBInitRef InterfaceRepository=file://$ti_ifriorfile ".
-                                    "$idlfile");     
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+                                    "$idlfile");
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile");
-$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/CosEvent_Service";
+$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/tao_cosevent";
 $ES = $es->CreateProcess ($EventService, " -t -o $es_esiorfile ".
                                         "-ORBInitRef NameService=file://$es_nsiorfile ".
                                         "-ORBInitRef InterfaceRepository=file://$es_ifriorfile ");

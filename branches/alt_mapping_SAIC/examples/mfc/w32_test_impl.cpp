@@ -24,10 +24,10 @@ W32_Test_Impl::getresponse (CORBA::Long respnr)
     case 1:
       myreturn = CORBA::string_dup ("Parameter 1");
       break;
-    case 2: 
+    case 2:
       myreturn = CORBA::string_dup ("Parameter 2");
       break;
-    default: 
+    default:
       myreturn = CORBA::string_dup ("Parameter unknown!");
       break;
     }

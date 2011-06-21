@@ -9,10 +9,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID (CosEvent_Service,
-           CosEvent_Service,
-           "$Id$")
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {

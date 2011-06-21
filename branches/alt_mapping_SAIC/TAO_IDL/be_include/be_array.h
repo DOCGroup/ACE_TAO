@@ -40,7 +40,7 @@ public:
   /// definition.
   int gen_dimensions (TAO_OutStream *os,
                       unsigned short slice = 0);
-  
+
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore);
@@ -51,7 +51,7 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

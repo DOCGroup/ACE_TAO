@@ -25,12 +25,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_NS_Node)
 
-# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class T>
 ACE_NS_Node<T>::~ACE_NS_Node (void)
 {
 }
-# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 template <class T>
 ACE_NS_Node<T>::ACE_NS_Node (const T &i, ACE_NS_Node<T> *n)

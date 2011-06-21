@@ -140,13 +140,13 @@ be_visitor_operation::gen_stub_operation_body (
     this->ctx_->attribute ()
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
-      
+
   be_interface *intf = be_interface::narrow_from_scope (s);
 
   if (intf == 0)
     {
       be_porttype *pt = be_porttype::narrow_from_scope (s);
-      
+
       if (pt == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -195,7 +195,7 @@ be_visitor_operation::gen_stub_operation_body (
           << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
-          
+
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
             *os << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
@@ -222,7 +222,7 @@ be_visitor_operation::gen_stub_operation_body (
   // Declare the argument helper classes.
   this->gen_stub_body_arglist (node, os);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
@@ -251,7 +251,7 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
       << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
@@ -283,11 +283,11 @@ be_visitor_operation::gen_stub_operation_body (
     }
 
   opname += node->original_local_name ()->get_string ();
-  
+
   /// Some compilers can't resolve the stream operator overload.
   const char *lname = opname.c_str ();
   ACE_CDR::ULong len = opname.length ();
-  
+
   *os << lname << "\"," << be_nl
       << len << "," << be_nl;
 
@@ -309,7 +309,7 @@ be_visitor_operation::gen_stub_operation_body (
   *os << be_uidt_nl
       << ");" << be_uidt;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   // Since oneways cannot raise user exceptions, we have that
   // case covered as well.
@@ -328,7 +328,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (!this->void_return_type (return_type))
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "return _tao_retval.retn ();";
     }
 
@@ -537,13 +537,13 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
       // without the leading double colon.
       *os << "::";
     }
-    
+
   /// For now, keep a list of system operation or arg names
   /// that may not be remapped. May decide later to regnerate
-  /// ORB code for alt mapping as well.  
+  /// ORB code for alt mapping as well.
   ACE_CString repo_id (scope->repoID ());
   bool sys_val = (repo_id == "IDL:repository_id:1.0");
-    
+
   // For types other than the 4 above, don't unalias the type name
   // in case it is a sequence or array.
   if (nt == AST_Decl::NT_string && bound == 0)

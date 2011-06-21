@@ -29,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -87,10 +87,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,                                            
-                           "Cannot open output file for writing IOR: %s",       
-                           ior_output_file),              
-                          1);  
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
+                          1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
     }

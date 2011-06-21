@@ -52,7 +52,7 @@ private:
 
 private:
   /// The seed
-  ACE_RANDR_TYPE seed_;
+  unsigned int seed_;
 
   /// The driver programs
   int n_channels_;
@@ -76,7 +76,7 @@ class EC_Observer : public EC_Driver
 public:
   /// Constructor
   EC_Observer (EC_Master *master,
-               ACE_RANDR_TYPE seed,
+               unsigned int seed,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr root_poa,
                int id);
@@ -104,7 +104,7 @@ public:
 
 private:
   EC_Master *master_;
-  ACE_RANDR_TYPE seed_;
+  unsigned int seed_;
   int id_;
 
   TAO_EC_Gateway_IIOP *gwys_;

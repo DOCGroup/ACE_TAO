@@ -57,7 +57,7 @@ public:
       TAO_NETWORK_PRIORITY_MAPPING_LINEAR
     };
 
-  /*
+  /**
    * Lifespan of the dynamic threads
    * TAO_RTCORBA_DT_INFINITIVE When the Dynamic Thread is created it will run
    * forever

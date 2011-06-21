@@ -96,7 +96,7 @@ be_union::has_duplicate_case_labels (void)
 
 void
 be_union::gen_ostream_operator (TAO_OutStream *os,
-                                bool use_underscore)
+                                bool /*use_underscore*/)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -104,23 +104,23 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       << "const " << this->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "strm << \"" << this->name () << "(\";" << be_nl << be_nl
+      << "strm << \"" << this->name () << "(\";" << be_nl_2
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
-      
+
   for (long i = 0; i < this->pd_decls_used; ++i)
     {
       be_union_branch *ub =
         be_union_branch::narrow_from_decl (this->pd_decls[i]);
-      
+
       // We don't want any decls, just members.
       if (ub == 0)
         {
           continue;
         }
-        
+
       *os << be_nl;
-        
+
       unsigned long ll_len = ub->label_list_length ();
 
       for (unsigned long j = 0; j < ll_len; ++j)
@@ -151,29 +151,34 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       ACE_CString instance_name ("_tao_union.");
       instance_name += ub->local_name ()->get_string ();
-      
+
       *os << "strm << ";
-      
+
+      be_type *ub_ft = be_type::narrow_from_decl (ub->field_type ());
+      AST_Decl::NodeType ub_nt = ub_ft->node_type ();
+      // catch anonymous Array member types
+      bool ub_use_underscore = ub_nt == AST_Decl::NT_array;
+
       ub->gen_member_ostream_operator (os,
                                        instance_name.c_str (),
-                                       use_underscore,
+                                       ub_use_underscore,
                                        true);
-      
+
       *os << ";" << be_nl
           << "break;" << be_uidt;
     }
-  
+
   // Some compilers complain unless this is present, but only
-  // if not all values are covered in case statements.  
+  // if not all values are covered in case statements.
   if (this->gen_empty_default_label ())
     {
       *os << be_nl
           << "default:" << be_idt_nl
           << "break;" << be_uidt;
     }
-    
+
   *os << be_uidt_nl
-      << "}" << be_nl << be_nl
+      << "}" << be_nl_2
       << "return strm << \")\";" << be_uidt_nl
       << "}" << be_nl;
 }

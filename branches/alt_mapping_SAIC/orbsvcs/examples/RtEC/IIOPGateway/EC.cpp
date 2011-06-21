@@ -9,10 +9,6 @@
 #include "orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 static const ACE_TCHAR *ecname = 0;
 
 int
@@ -136,7 +132,7 @@ EC::parse_args (int argc, ACE_TCHAR *argv[])
       arg_shifter.ignore_arg ();
     }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

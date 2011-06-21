@@ -13,7 +13,7 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_EventChannel, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -5,7 +5,7 @@
 #include "Client_Task.h"
 #include "MessengerC.h"
 
-ACE_RCSID(Muxing, Client_Task, "$Id$")
+
 
 Client_Task::Client_Task (
         CORBA::ORB_ptr corb,

@@ -15,21 +15,6 @@
  * directly or indirectly from CORBA::ValueBase. This separate file
  * has been created to remove the dependency from the rest of module
  * PortableInterceptor.
- *
- * This file is used to generate the code in IORInterceptorC.*
- * The command used to generate code is:
- *
- *  tao_idl
- *     -o orig -Gp -Gd -Sa -St -Sci -SS
- *          -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_IORInterceptor_Export
- *          -Wb,export_include="iorinterceptor_export.h"
- *          -Wb,pre_include="ace/pre.h"
- *          -Wb,post_include="ace/post.h"
- *          IORInterceptor.pidl
- *
- * Please apply the patch in IORInterceptor.diff to the generated stubs and
- * skeletons.
  */
 
 // File: IORInterceptor.idl

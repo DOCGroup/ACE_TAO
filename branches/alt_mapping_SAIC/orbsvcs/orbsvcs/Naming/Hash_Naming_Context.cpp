@@ -13,20 +13,11 @@
 #include "orbsvcs/Naming/nsconf.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (Naming,
-           Hash_Naming_Context,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// -------------------------------------------------
 
 TAO_Bindings_Map::~TAO_Bindings_Map (void)
 {
 }
-
-// -------------------------------------------------
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   const char *poa_id)

@@ -3,8 +3,6 @@
 #include "Hello.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Bug_1XXX_Regression, Hello, "$Id$")
-
 Hello::Hello(
     CORBA::ORB_ptr orb,
     bool simulate_crashes)

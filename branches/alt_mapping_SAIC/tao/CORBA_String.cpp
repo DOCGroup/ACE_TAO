@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/CORBA_String.h"
 #include "tao/String_Manager_T.h"
 

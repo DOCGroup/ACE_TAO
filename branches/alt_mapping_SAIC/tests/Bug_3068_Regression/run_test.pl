@@ -38,7 +38,7 @@ $SV = $server->CreateProcess ("server",
 $CL = $client->CreateProcess ("client",
                               "-ORBSvcConf $client_conf " .
                               "-k file://$client_iorfile");
-                              
+
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {

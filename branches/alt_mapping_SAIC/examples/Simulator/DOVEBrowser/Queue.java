@@ -8,11 +8,11 @@ public class Queue
   // Friendly?
   Queue_Node head_ = null;
   Queue_Node tail_ = null;
-  
+
   private int length_ = 0;
-  
+
   public Queue()
-    {     
+    {
     }
 
   public Enumeration forward_iterator()
@@ -24,7 +24,7 @@ public class Queue
     {
       return new Queue_Iterator(this, Queue_Iterator.REVERSE);
     }
-  
+
   public void enqueue_tail(Object new_data)
     {
       Queue_Node new_node = new Queue_Node(new_data);
@@ -47,7 +47,7 @@ public class Queue
   public void enqueue_head(Object new_data)
     {
       Queue_Node new_node = new Queue_Node(new_data);
-	    
+
       if (head_ == null)
 	{
 	  tail_ = new_node;
@@ -62,11 +62,11 @@ public class Queue
 
       length_++;
     }
-  
+
   public Object dequeue_head()
     {
       Object return_value = null;
-      
+
       if (head_ == null)
 	return_value = null;
       else if (tail_ == head_)
@@ -79,18 +79,18 @@ public class Queue
 	{
 	  return_value = head_.data_;
 	  head_ = head_.next_;
-	  head_.prev_ = null;	  
+	  head_.prev_ = null;
 	}
 
       length_--;
 
       return return_value;
     }
-  
+
   public Object dequeue_tail()
     {
       Object return_value = null;
-      
+
       if (tail_ == null)
 	return_value = null;
       else if (tail_ == head_)
@@ -100,10 +100,10 @@ public class Queue
 	  head_ = null;
 	}
       else
-	{	  
+	{
 	  return_value = tail_.data_;
 	  tail_ = tail_.prev_;
-	  tail_.next_ = null;	  
+	  tail_.next_ = null;
 	}
 
       length_--;
@@ -149,11 +149,11 @@ class Queue_Iterator implements Enumeration
 {
   public static final boolean FORWARD = true;
   public static final boolean REVERSE = false;
-  
+
   private Queue queue_;
   private Queue_Node queue_ptr_;
   private boolean direction_ = FORWARD;
-  
+
   public Queue_Iterator(Queue queue)
     {
       queue_ = queue;
@@ -174,7 +174,7 @@ class Queue_Iterator implements Enumeration
   public Object nextElement()
     {
       Object data = queue_ptr_.data_;
-      
+
       if (direction_)
 	queue_ptr_ = queue_ptr_.next_;
       else

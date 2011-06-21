@@ -53,12 +53,7 @@ AppShutdown::client_done()
       return;
     }
 
-  unsigned cur_shutdown;
-
-  {
-    GuardType guard(this->lock_);
-    cur_shutdown = ++this->num_clients_shutdown_;
-  }
+  unsigned cur_shutdown = ++this->num_clients_shutdown_;
 
   if (cur_shutdown == this->num_clients_)
     {

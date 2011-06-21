@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 #include "InheritedOp_i.h"
 

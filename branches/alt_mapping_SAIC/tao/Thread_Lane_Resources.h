@@ -59,7 +59,7 @@ public:
   /// Destructor.
   ~TAO_Thread_Lane_Resources (void);
 
-  // Does @a mprofile belong to us?
+  /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
@@ -81,7 +81,7 @@ public:
 
   TAO_Acceptor_Registry &acceptor_registry (void);
 
-  /*
+  /**
    * @note Returning a pointer helps to return 0 in case of
    * exceptions.
    */
@@ -92,48 +92,57 @@ public:
 
   TAO_Leader_Follower &leader_follower (void);
 
-  /* Allocator is intended for allocating the ACE_Data_Blocks used in
+  /**
+   * Allocator is intended for allocating the ACE_Data_Blocks used in
    * incoming CDR streams.  This allocator has locks.
    */
   ACE_Allocator *input_cdr_dblock_allocator (void);
 
-  /* Allocator is intended for allocating the buffers in the incoming
+  /**
+   * Allocator is intended for allocating the buffers in the incoming
    * CDR streams.  This allocator has locks.
    */
   ACE_Allocator *input_cdr_buffer_allocator (void);
 
-  /* Allocator is intended for allocating the ACE_Message_Blocks used
+  /**
+   * Allocator is intended for allocating the ACE_Message_Blocks used
    * in incoming CDR streams.  This allocator is global, and has locks.
    */
   ACE_Allocator *input_cdr_msgblock_allocator (void);
 
-  /* Allocator is intended for allocating the buffers used in the
+  /**
+   * Allocator is intended for allocating the buffers used in the
    * Transport object. This allocator has locks.
    */
   ACE_Allocator *transport_message_buffer_allocator (void);
 
-  /* Allocator is intended for allocating the ACE_Data_Blocks used in
+  /**
+   * Allocator is intended for allocating the ACE_Data_Blocks used in
    * outgoing CDR streams.  This allocator has locks.
    */
   ACE_Allocator *output_cdr_dblock_allocator (void);
 
-  /* Allocator is intended for allocating the buffers in the outgoing
+  /**
+   * Allocator is intended for allocating the buffers in the outgoing
    * CDR streams.  This allocator has locks.
    */
   ACE_Allocator *output_cdr_buffer_allocator (void);
 
-  /* Allocator is intended for allocating the ACE_Message_Blocks used
+  /**
+   * Allocator is intended for allocating the ACE_Message_Blocks used
    * in the outgoing CDR streams.  This allocator is global, and has
    * locks.
    */
   ACE_Allocator *output_cdr_msgblock_allocator (void);
 
-  /* Allocator is intended for allocating the AMH response handlers
+  /**
+   * Allocator is intended for allocating the AMH response handlers
    * This allocator is global.
    */
   ACE_Allocator *amh_response_handler_allocator (void);
 
-  /* Allocator is intended for allocating the AMI response handlers
+  /**
+   * Allocator is intended for allocating the AMI response handlers
    * This allocator is global.
    */
   ACE_Allocator *ami_response_handler_allocator (void);

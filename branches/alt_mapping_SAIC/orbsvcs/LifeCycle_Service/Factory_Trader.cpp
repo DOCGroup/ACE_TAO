@@ -1,30 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//
-// = FILENAME
-//   Factory_Trader.cpp
-//
-// = DESCRIPTION
-//   A colocated instance of the Trading Service, only part of
-//   the functionality provided is used. This class serves
-//   as Wrapper around the Trading Service and provides
-//   smaller interfaces.
-//   TRADER_AVAILABLE is defined via compiler switch in the Makefile
-//
-// = AUTHOR
-//   Michael Kircher  (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Factory_Trader.cpp
+ *
+ *  $Id$
+ *
+ * A colocated instance of the Trading Service, only part of
+ * the functionality provided is used. This class serves
+ * as Wrapper around the Trading Service and provides
+ * smaller interfaces.
+ * TRADER_AVAILABLE is defined via compiler switch in the Makefile
+ *
+ *
+ *  @author Michael Kircher  (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
-
-ACE_RCSID (LifeCycle_Service,
-           Factory_Trader,
-           "$Id$")
 
 // This const char * is used for adding a new type to the service repository
 // the added types will be subclasses of this.

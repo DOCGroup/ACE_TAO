@@ -22,17 +22,15 @@
 
 class be_visitor;
 
+/**
+ * The back end extension of the AST_Root class
+ */
 class be_root : public virtual AST_Root,
                 public virtual be_module
 {
-  // = TITLE
-  //    The back end extension of the AST_Root class
-  //
-  // = DESCRIPTION
-  //
 public:
   be_root (UTL_ScopedName *n);
-  
+
   virtual ~be_root (void);
 
   /// Cleanup method.

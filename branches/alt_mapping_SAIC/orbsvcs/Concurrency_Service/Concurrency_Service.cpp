@@ -23,10 +23,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Concurrency_Service,
-          Concurrency_Service,
-          "$Id$")
-
 // Default Constructor.
 
 Concurrency_Service::Concurrency_Service (void)
@@ -81,7 +77,7 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
                            argv[0]),
                            1);
       }
-  // Indicates sucessfull persing of command line.
+  // Indicates successful persing of command line.
   return 0;
 }
 

@@ -3,10 +3,6 @@
 
 #include "Ptest.h"
 
-ACE_RCSID (Persistence_Test,
-           test,
-           "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Ptest ptest;

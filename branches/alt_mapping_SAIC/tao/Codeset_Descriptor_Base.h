@@ -25,7 +25,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/*
+/**
  * TAO_Codeset_Descriptor_Base describes the necessary interface for
  * Objects within libTAO to be able to supply information to the codeset
  * subsystem, as required.

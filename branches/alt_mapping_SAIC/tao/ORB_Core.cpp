@@ -1262,9 +1262,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   ssf->open (this);
 
-  // Open the ObjectKey_Table
-  (void) this->object_key_table_.init (this);
-
   // Obtain the timeout value for the thread-per-connection model
   this->thread_per_connection_use_timeout_ =
     ssf->thread_per_connection_timeout (this->thread_per_connection_timeout_);
@@ -1279,7 +1276,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else
         {
           this->thread_per_connection_use_timeout_ = 1;
-          int milliseconds =
+          int const milliseconds =
             ACE_OS::atoi (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT);
           // Use a temporary to obtain automatic normalization.
           this->thread_per_connection_timeout_ =
@@ -2191,7 +2188,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
   while (this->has_shutdown () == false)
     {
-      // Every time we perform an interation we have to become the
+      // Every time we perform an interaction we have to become the
       // leader again, because it is possible that a client has
       // acquired the leader role...
       TAO_Leader_Follower &leader_follower = this->leader_follower ();
@@ -2260,9 +2257,10 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
   // wait only in the parent thread.
   if (this->has_shutdown () == true &&
       (this->server_factory_->activate_server_connections () ||
-       (this->tm_.task() == 0 && this->tm_.count_threads() > 0) ) ) {
-    this->tm_.wait ();
-  }
+       (this->tm_.task() == 0 && this->tm_.count_threads() > 0) ) )
+    {
+      this->tm_.wait ();
+    }
 
   if (TAO_debug_level > 10)
     {
@@ -2306,7 +2304,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
 
   // Cleanup transports
   this->thread_lane_resources_manager ().close_all_transports ();
-  
+
   // Grab the thread manager
   ACE_Thread_Manager *tm = this->thr_mgr ();
 
@@ -2359,7 +2357,7 @@ TAO_ORB_Core::destroy (void)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1);
+  this->shutdown (true);
 
   // Invoke Interceptor::destroy() on all registered interceptors.
   this->destroy_interceptors ();

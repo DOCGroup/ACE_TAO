@@ -86,7 +86,7 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
 
   // Force the ARGV_T to copy the elements added by the add() method
   this->task_.argv_.argv ();
-  
+
   // Rember that Monitor has been configured
   this->initialized_ = true;
   return 0;

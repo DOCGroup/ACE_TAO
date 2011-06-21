@@ -2,7 +2,7 @@
 
 #include "RT_Application_Command.h"
 
-ACE_RCSID(lib, TAO_RT_Application_Command, "$Id$")
+
 
 #include "../lib/LookupManager.h"
 #include "RT_Priority_Mapping.h"

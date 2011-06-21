@@ -14,8 +14,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Latency, client, "$Id$")
-
 class Client : public ACE_Task_Base
 {
   // = TITLE
@@ -110,7 +108,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -253,7 +251,7 @@ Client::svc (void)
       char ior[100];
       ACE_OS::sprintf (ior,
                        "%s_%d",
-                       ior_base,
+                       ACE_TEXT_ALWAYS_CHAR (ior_base),
                        priorities[this->id_]);
 
       CORBA::Object_var object =

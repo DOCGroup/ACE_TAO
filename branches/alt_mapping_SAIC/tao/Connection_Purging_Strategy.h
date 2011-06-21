@@ -51,7 +51,7 @@ public:
   virtual int cache_maximum (void) const;
 
   /// Sub-classes must implement these methods
-  virtual void update_item (TAO_Transport* transport) = 0;
+  virtual void update_item (TAO_Transport& transport) = 0;
 
 private:
   /// The maximum number of cach entries

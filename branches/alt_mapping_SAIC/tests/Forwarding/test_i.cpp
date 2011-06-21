@@ -6,8 +6,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Forwarding, test_i, "$Id$")
-
 CORBA::Boolean
 Simple_Server_i::test_is_a (const char * /* type */)
 {

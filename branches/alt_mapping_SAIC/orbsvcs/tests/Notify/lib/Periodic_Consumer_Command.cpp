@@ -1,11 +1,6 @@
 // $Id$
 
 #include "Periodic_Consumer_Command.h"
-
-ACE_RCSID (lib,
-           TAO_Periodic_Consumer_Command,
-           "$Id$")
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Periodic_Consumer.h"

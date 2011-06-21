@@ -49,9 +49,9 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-my $NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+my $NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                              "-o $ns_nsiorfile");
-my $NFS = $ns->CreateProcess ("../../../Notify_Service/Notify_Service",
+my $NFS = $ns->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                               "-ORBInitRef NameService=file://$nfs_nsiorfile " .
                               "-IORoutput $nfs_nfsiorfile -Timeout 750");
 my $SUP = $ns->CreateProcess("Structured_Supplier",
@@ -137,7 +137,7 @@ if ($con->PutFile ($supiorfile) == -1) {
 }
 
 ## Wait for the supplier to create the event channel in
-## the Notify_Service and register it with the Name Service
+## the tao_cosnotification and register it with the Name Service
 sleep(2);
 
 $CON_status = $CON->SpawnWaitKill ($con->ProcessStartWaitInterval()+5);

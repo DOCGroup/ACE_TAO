@@ -12,10 +12,10 @@ The executable is installed as $ACE_ROOT/bin/tao_logWalker.
 The command line options are:
 
   -t <version>	 	 where <version> represents a TAO minor version
-     			 number, currently only 1.5 and 1.6 are supported.
+     			 number, currently 1.5 through 2.0 are supported.
 			 As variations in logfile output bound to version
 			 are found, this option will expand and may include
-			 micro release numbers as well. Default is 1.6.
+			 micro release numbers as well. Default is 2.0.
 
   -o <filename>		 redirects the output to the named file rather than
      			 standard out.

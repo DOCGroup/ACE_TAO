@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/RTEventLogNotification.h"
@@ -16,11 +18,6 @@
 #include "ace/OS_NS_stdio.h"
 
 #include "ace/Auto_Ptr.h"
-
-ACE_RCSID (Log,
-           RTEventLogFactory_i,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

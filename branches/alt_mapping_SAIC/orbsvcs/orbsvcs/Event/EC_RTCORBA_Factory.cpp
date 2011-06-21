@@ -5,7 +5,7 @@
 
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
-ACE_RCSID(Event, EC_RTCORBA_Factory, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

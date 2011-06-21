@@ -38,7 +38,9 @@ be_attribute::be_attribute (bool ro,
                    local,
                    abstract),
     be_decl (AST_Decl::NT_attr,
-             n)
+             n),
+    be_field (ft,
+              n)
 {
   if (!this->imported () && !this->is_local ())
     {

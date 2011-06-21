@@ -1,9 +1,6 @@
+// $Id$
+
 #include "ZlibCompressor.h"
-
-ACE_RCSID (ZLIB,
-           ZlibCompressor,
-           "$Id$")
-
 #include "zlib.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -82,7 +82,7 @@ class AST_Expression;
 class TAO_IDL_FE_Export UTL_ExprList : public UTL_List
 {
 public:
-  UTL_ExprList (AST_Expression *s, 
+  UTL_ExprList (AST_Expression *s,
                 UTL_ExprList *cdr);
 
   // Get list item.

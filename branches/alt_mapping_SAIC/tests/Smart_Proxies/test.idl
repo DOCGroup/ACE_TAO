@@ -6,12 +6,12 @@ interface Test
   //    A simple test interface
   //
   // = DESCRIPTION
-  //    This test demostrates the smart proxy feature in TAO 
+  //    This test demostrates the smart proxy feature in TAO
   //    Note that though the interface has two methods just one
-  //    of them can be "smartified" if necessary, the other one 
+  //    of them can be "smartified" if necessary, the other one
   //    simply performs the same way as would the default proxy.
 
-  exception Oops 
+  exception Oops
     {
       string reason;
     };

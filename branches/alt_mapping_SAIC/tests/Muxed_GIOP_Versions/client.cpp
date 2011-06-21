@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(MT_Client, client, "client.cpp,v 1.16 2002/01/29 20:21:08 okellogg Exp")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const ACE_TCHAR *corbaloc_arg = ACE_TEXT("corbaloc:iiop:1.0@localhost:12000/ObjectName");
 int nthreads = 5;
@@ -48,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

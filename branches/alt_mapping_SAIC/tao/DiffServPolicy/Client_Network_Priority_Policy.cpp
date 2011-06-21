@@ -4,10 +4,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (DiffServPolicy,
-           Client_Network_Priority_Policy,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Client_Network_Priority_Policy::TAO_Client_Network_Priority_Policy (void)

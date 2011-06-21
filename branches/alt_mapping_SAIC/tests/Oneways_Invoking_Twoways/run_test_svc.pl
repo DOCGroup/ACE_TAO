@@ -35,7 +35,7 @@ $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level " .
                                         "-o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
-                              "-ORBSvcConf $client_conf " . 
+                              "-ORBSvcConf $client_conf " .
                               "-k file://$client_iorfile");
 
 $server_status = $SV->Spawn ();

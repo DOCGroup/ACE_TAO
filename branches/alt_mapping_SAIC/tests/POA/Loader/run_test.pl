@@ -18,8 +18,8 @@ $extra_args = "";
 
 $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
- 
-$server->AddLibPath ('../Generic_Servant/.'); 
+
+$server->AddLibPath ('../Generic_Servant/.');
 $client->AddLibPath ('../Generic_Servant/.');
 
 # Parse the arguments

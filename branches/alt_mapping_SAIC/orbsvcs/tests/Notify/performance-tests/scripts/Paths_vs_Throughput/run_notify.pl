@@ -58,18 +58,18 @@ my $nt_service = PerlACE::TestTarget::create_target (2) || die "Create target 2 
 my $nm_ior = "naming.ior";
 my $nt_ior = "notify.ior";
 
-my $nt_service_nt_conf = $nt_service->LocalFile($nt_conf); 
+my $nt_service_nt_conf = $nt_service->LocalFile($nt_conf);
 my $nm_service_nm_ior  = $nm_service->LocalFile($nm_ior);
 my $nt_service_nm_ior  = $nt_service->LocalFile($nm_ior);
-my $nt_service_nt_ior  = $nt_service->LocalFile($nt_ior); 
+my $nt_service_nt_ior  = $nt_service->LocalFile($nt_ior);
 $nm_service->DeleteFile($nm_ior);
 $nt_service->DeleteFile($nm_ior);
 $nt_service->DeleteFile($nt_ior);
 
-$NM_SV = $nm_service->CreateProcess ("../../../../../Naming_Service/Naming_Service",
+$NM_SV = $nm_service->CreateProcess ("../../../../../Naming_Service/tao_cosnaming",
                                      "-ORBDebugLevel $debug_level -o $nm_service_nm_ior");
 
-$NT_SV = $nt_service->CreateProcess ("../../../../../Notify_Service/Notify_Service",
+$NT_SV = $nt_service->CreateProcess ("../../../../../Notify_Service/tao_cosnotification",
                                      "-ORBInitRef NameService=file://$nt_service_nm_ior ".
                                      "-IORoutput $nt_service_nt_ior ".
                                      "-ORBSvcConf $nt_service_nt_conf ".

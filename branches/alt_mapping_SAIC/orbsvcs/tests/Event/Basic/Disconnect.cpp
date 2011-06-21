@@ -8,10 +8,6 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-ACE_RCSID (EC_Tests,
-           Disconnect,
-           "$Id$")
-
 static void run_test (PortableServer::POA_ptr poa,
                       int use_callbacks);
 

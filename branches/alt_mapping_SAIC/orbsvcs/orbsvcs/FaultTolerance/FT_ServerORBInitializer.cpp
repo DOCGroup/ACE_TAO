@@ -7,11 +7,6 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 
-
-ACE_RCSID (FaultTolerance,
-           FT_ServerORBInitializer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

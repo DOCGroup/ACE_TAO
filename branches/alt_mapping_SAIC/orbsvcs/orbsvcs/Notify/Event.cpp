@@ -6,10 +6,6 @@
 #include "orbsvcs/Notify/Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify,
-           TAO_Notify_Event,
-           "$Id$")
-
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "orbsvcs/CosNotificationC.h"

@@ -55,7 +55,7 @@ for (my $i = 0; $i <= $#ARGV; $i++) {
         $server_flags .= " -ORBgioplite ";
     }
     else {
-        print STDERR "ERROR: Unknown Option: ".$ARGV[$i]."\n";    
+        print STDERR "ERROR: Unknown Option: ".$ARGV[$i]."\n";
     }
 }
 

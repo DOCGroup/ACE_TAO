@@ -1,8 +1,8 @@
-// $Id$ 
+// $Id$
 
 // ============================================================================
 //
-// 
+//
 // = FILENAME
 //    NS_Resolve.java
 //
@@ -14,7 +14,7 @@
 // = DESCRIPTION
 //   Resolves the initial reference to the Naming service,
 //   the orb has to be given as a parameter to the
-//   resolve_name_service call. 
+//   resolve_name_service call.
 //
 // ============================================================================
 
@@ -79,7 +79,7 @@ public class NS_Resolve
         // Wait 3 seconds for the Naming Service to connect
         listenSocket.setSoTimeout(3000);
         replySocket = listenSocket.accept();
-      
+
         // @@ The restriction right now is that the length of the IOR cannot be longer than 4096
         char[] reply = new char[4096];
 
@@ -91,14 +91,14 @@ public class NS_Resolve
           {
             int c = in.read();
 
-            if (c == -1) 
+            if (c == -1)
               {
                 throw new IOException("Unexpected EOF.");
               }
 
             reply[ length ] = (char) c;
-	    
-            if (c == 0) 
+
+            if (c == 0)
               {
                 break;
               }
@@ -114,36 +114,36 @@ public class NS_Resolve
     catch (java.io.InterruptedIOException e)
       {
         System.err.println ("NS_Resolve: The receive lasted too long");
-      } 
-    catch(org.omg.CORBA.SystemException e) 
+      }
+    catch(org.omg.CORBA.SystemException e)
       {
         System.err.println(e);
-      }	
+      }
     catch (java.io.IOException e)
       {
         System.err.println (e);
       }
-    finally 
+    finally
       {
         // Close the sockets.
 
-        if (sendSocket != null) 
+        if (sendSocket != null)
           {
             sendSocket.close();
           }
 
-        if (listenSocket != null) 
+        if (listenSocket != null)
           {
-            try 
+            try
               {
                 listenSocket.close();
               }
             catch (IOException e) {}
           }
 
-        if (replySocket != null) 
+        if (replySocket != null)
           {
-            try 
+            try
               {
                 replySocket.close();
               }
@@ -152,5 +152,5 @@ public class NS_Resolve
       }
 
     return null;
-  } 
+  }
 }

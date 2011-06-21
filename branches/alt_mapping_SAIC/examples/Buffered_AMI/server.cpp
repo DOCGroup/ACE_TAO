@@ -4,10 +4,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 
-ACE_RCSID (Buffered_AMI,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 
 int
@@ -32,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

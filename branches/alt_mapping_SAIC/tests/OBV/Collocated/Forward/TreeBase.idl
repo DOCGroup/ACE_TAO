@@ -6,8 +6,8 @@ valuetype BaseNode;
 //@@ Dosn't work for now
 //typedef sequence<BaseNode> BaseNodeSeq;
 
-// Performance test: One may try to pass 
-// over the wire a cyclic graph and measure 
+// Performance test: One may try to pass
+// over the wire a cyclic graph and measure
 // how quickly TAO evaporates memory ;-)
 
 valuetype BaseNode

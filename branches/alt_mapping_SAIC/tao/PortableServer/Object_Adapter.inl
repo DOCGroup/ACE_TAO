@@ -13,12 +13,6 @@ TAO_Object_Adapter::validator (void)
   return this->default_validator_;
 }
 
-ACE_INLINE int
-TAO_Object_Adapter::enable_locking (void) const
-{
-  return this->enable_locking_;
-}
-
 ACE_INLINE TAO_POA_Policy_Set &
 TAO_Object_Adapter::default_poa_policies (void)
 {

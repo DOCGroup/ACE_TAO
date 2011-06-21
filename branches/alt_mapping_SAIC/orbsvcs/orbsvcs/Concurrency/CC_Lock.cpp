@@ -20,10 +20,6 @@
 #include "orbsvcs/Concurrency/CC_Lock.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Concurrency,
-           CC_Lock,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CC_Lock::CC_Lock (void)

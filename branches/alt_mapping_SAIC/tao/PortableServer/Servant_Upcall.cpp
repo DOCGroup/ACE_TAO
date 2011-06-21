@@ -361,8 +361,7 @@ namespace TAO
                   // Ignore errors from servant cleanup ....
                 }
 
-              if (this->poa_->waiting_servant_deactivation() > 0 &&
-                  this->object_adapter_->enable_locking_)
+              if (this->poa_->waiting_servant_deactivation() > 0)
                 {
                   // Wakeup all waiting threads.
                   this->poa_->servant_deactivation_condition_.broadcast ();
@@ -386,8 +385,7 @@ namespace TAO
       if (outstanding_requests == 0)
         {
           // If locking is enabled and some thread is waiting in POA::destroy.
-          if (this->object_adapter_->enable_locking_ &&
-              this->poa_->wait_for_completion_pending_)
+          if (this->poa_->wait_for_completion_pending_)
             {
               // Wakeup all waiting threads.
               this->poa_->outstanding_requests_condition_.broadcast ();

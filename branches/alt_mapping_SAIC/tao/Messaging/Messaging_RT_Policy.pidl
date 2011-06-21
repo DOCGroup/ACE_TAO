@@ -1,15 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Messaging_RT_Policy.pidl
  *
  *  $Id$
- *
- * This file is used to generate the code in
- * Messaging_RT_Policy{C}.{h,cpp}
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_RT_POLICY_PIDL
 #define TAO_MESSAGING_RT_POLICY_PIDL

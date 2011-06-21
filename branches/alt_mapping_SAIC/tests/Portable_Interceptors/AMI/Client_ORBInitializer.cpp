@@ -9,8 +9,6 @@
 #include "Client_ORBInitializer.h"
 #include "Client_Interceptor.h"
 
-ACE_RCSID(Portable_Interceptor_AMI, Client_ORBInitializer, "$Id$")
-
 Client_ORBInitializer::Client_ORBInitializer ()
 {
 }

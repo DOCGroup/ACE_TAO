@@ -42,7 +42,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../../IFR_Service/IFR_Service",
+$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
                               " $nice " .
                               " -o $server_iorfile");
 

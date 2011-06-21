@@ -2,7 +2,7 @@
 
 module MCast
 {
-  
+
   interface Server
   {
     // = TITLE
@@ -11,9 +11,9 @@ module MCast
     //     Prints out the status.
 
     boolean connect_server ();
-    // Return <true> if the server received the 
+    // Return <true> if the server received the
     // request from the client.
-    
+
   };
 
 };

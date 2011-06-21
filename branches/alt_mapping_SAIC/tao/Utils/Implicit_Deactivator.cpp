@@ -1,9 +1,7 @@
+// $Id$
+
 #include "tao/Utils/Implicit_Deactivator.h"
 #include "tao/PortableServer/Servant_Base.h"
-
-ACE_RCSID (Utils,
-           Implicit_Deactivator,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

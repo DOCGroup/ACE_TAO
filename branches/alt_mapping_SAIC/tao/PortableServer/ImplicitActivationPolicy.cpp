@@ -1,6 +1,7 @@
+// $Id$
+
 #include "tao/PortableServer/ImplicitActivationPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
-
 #include "ace/CORBA_macros.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)

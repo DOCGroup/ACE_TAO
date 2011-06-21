@@ -406,7 +406,7 @@ be_visitor_interface::visit_operation (be_operation *node)
       }
     case TAO_CodeGen::TAO_ROOT_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
-      
+
       if (node->is_sendc_ami ())
         {
           be_visitor_operation_ami_cs visitor (&ctx);
@@ -417,7 +417,7 @@ be_visitor_interface::visit_operation (be_operation *node)
           be_visitor_operation_cs visitor (&ctx);
           status = node->accept (&visitor);
         }
-        
+
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       {

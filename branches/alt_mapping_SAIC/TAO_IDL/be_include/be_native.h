@@ -20,7 +20,7 @@
 
 class be_visitor;
 
-// Representation of "native" IDL type. It may be used as a 
+// Representation of "native" IDL type. It may be used as a
 // return type, parameter type, or in an operation's
 // exception list. This last usage creates special problems
 // with both syntax checking and code generation. Letting
@@ -40,7 +40,7 @@ public:
 
   /// Return typecode size.
   virtual long tc_size (void);
-  
+
   /// Cleanup.
   virtual void destroy (void);
 

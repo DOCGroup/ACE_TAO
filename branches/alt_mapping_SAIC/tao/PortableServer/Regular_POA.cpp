@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/PortableServer/Regular_POA.h"
 
 #if !defined (__ACE_INLINE__)

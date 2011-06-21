@@ -20,10 +20,6 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
-ACE_RCSID (PortableGroup,
-           UIPMC_Transport,
-           "$Id$")
-
 // Local MIOP Definitions:
 
 // Note: We currently support packet fragmentation on transmit, but

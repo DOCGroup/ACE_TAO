@@ -1,27 +1,24 @@
-// $Id
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Concurrency
-//
-// = FILENAME
-//    CC_naming_service.cpp
-//
-// = DESCRIPTION
-//      This class implements the naming services necessary to test the
-//      concurrency service
-//
-// = AUTHORS
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_naming_service.cpp
+ *
+ *  $Id$
+ *
+ *    This class implements the naming services necessary to test the
+ *    concurrency service
+ *
+ *
+ *  @author Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "CC_naming_service.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Concurrency, CC_naming_service, "$Id$")
+
 
 CC_naming_service::CC_naming_service (CORBA::ORB_var orb)
   : cc_factory_key_ (0),

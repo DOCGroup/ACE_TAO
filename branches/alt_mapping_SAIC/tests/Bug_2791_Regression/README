@@ -1,4 +1,4 @@
-// $Id:$
+// $Id$
 
 This test confirms that the reference count for a valuetype factory is decremented when the
 valuetype factory is unregistered via ORB::unregister_value_factory().  Before, the reference

@@ -37,11 +37,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   bool has_args = node->argument_count () > 0;
 
   *os << " (";
-  
-  if (has_args)
-    {
-      *os << be_idt_nl;
-    }
 
   switch (this->ctx_->state ())
     {
@@ -74,11 +69,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     }
 
   *os << ")";
-  
-  if (has_args)
-    {
-      *os << be_uidt;
-    }
 
   switch (this->ctx_->state ())
     {
@@ -112,7 +102,7 @@ be_visitor_operation_arglist::visit_factory (be_factory *node)
   bool has_args = node->argument_count () > 0;
 
   *os << " (";
-  
+
   if (has_args)
     {
       *os << be_idt_nl;
@@ -134,12 +124,12 @@ be_visitor_operation_arglist::visit_factory (be_factory *node)
     }
 
   *os << ")";
-  
+
   if (has_args)
     {
       *os << be_uidt;
     }
-    
+
   // At present, visit_factory() is called only from the home
   // servant source visitor, so we don't need to check the state
   // for semicolon generation.
@@ -169,7 +159,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
     {
       be_factory *f =
         be_factory::narrow_from_scope (this->ctx_->scope ());
-        
+
       intf = be_interface::narrow_from_scope (f->defined_in ());
     }
   else
@@ -178,7 +168,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
         ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
         : be_interface::narrow_from_scope (op->defined_in ());
     }
-    
+
   // Set new scope.
   ctx.scope (intf);
 

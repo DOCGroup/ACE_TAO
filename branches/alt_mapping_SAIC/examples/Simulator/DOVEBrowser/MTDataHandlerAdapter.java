@@ -1,6 +1,6 @@
 // $Id$
 
-// This is an adapter class for a data handler to be used in a separate 
+// This is an adapter class for a data handler to be used in a separate
 // thread.  The adapter provides a push method that places an event
 // set into its synchronized internal MTQueue.  It runs a separate thread
 // which blocks until there is an event in the queue, then dequeues the
@@ -38,7 +38,7 @@ public class  MTDataHandlerAdapter extends Thread
         {
           for (int i = 0; i < events.length; ++i)
             {
-              if(events[i].header.type == 
+              if(events[i].header.type ==
                  PushConsumer.ACE_ES_EVENT_NOTIFICATION)
                 {
 		  //                  System.out.println ("MTDataHandlerAdapter.push updating data handler");
@@ -57,12 +57,12 @@ public class  MTDataHandlerAdapter extends Thread
           try
             {
               // Pull an event set from the head of the queue
-             RtecEventComm.Event[] events = 
+             RtecEventComm.Event[] events =
                 (RtecEventComm.Event[]) queue_.dequeue_head ();
 
               for (int i = 0; i < events.length; ++i)
                 {
-                  if(events[i].header.type == 
+                  if(events[i].header.type ==
                      PushConsumer.ACE_ES_EVENT_NOTIFICATION)
                     {
                       dataHandler_.update (events[i]);

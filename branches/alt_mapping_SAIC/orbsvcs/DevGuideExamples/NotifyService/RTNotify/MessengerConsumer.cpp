@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
       ;
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -196,7 +196,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(output_file) );
       iorFile << "Ready" << std::endl;
       iorFile.close();
-    
+
       orb->run();
     }
   catch(const CORBA::Exception& ex)

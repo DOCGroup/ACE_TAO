@@ -70,7 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_extern.h"
 #include "drv_private_ifr.h"
 
-ACE_RCSID(IFR_Service, drv_private_ifr, "$Id$")
+
 
 // Storage for file names
 

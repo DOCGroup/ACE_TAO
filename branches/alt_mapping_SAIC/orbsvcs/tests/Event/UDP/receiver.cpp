@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "Consumer.h"
 #include "AddrServer.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -13,10 +12,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "TestC.h"
-
-ACE_RCSID (EC_Examples,
-           MCast,
-           "$Id$")
 
 const ACE_TCHAR *udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
@@ -160,7 +155,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
       // To receive events we need to setup an event handler:
-      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver = TAO_ECG_UDP_Receiver::create();
+      PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
+        TAO_ECG_UDP_Receiver::create();
       TAO_ECG_Mcast_EH mcast_eh (&(*receiver));
 
       // The event handler uses the ORB reactor to wait for multicast
@@ -327,6 +323,6 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }

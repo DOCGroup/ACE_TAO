@@ -3,12 +3,9 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "tao/ZIOP/ZIOP.h"
-#include "ace/OS.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 #include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 #include "TestCompressor//TestCompressor_Factory.h"
-
-ACE_RCSID(Hello, client, "$Id$")
 
 #define DEFAULT_COMPRESSION_LEVEL 6
 ::Compression::CompressionManager_var compression_manager = 0;
@@ -43,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

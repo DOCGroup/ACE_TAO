@@ -46,17 +46,17 @@ my $middle_middleserverfile = $middle->LocalFile ($middleserverfile);
 $middle->DeleteFile($middleserverfile);
 $middle->DeleteFile($thrserverfile);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_inputfile " .
                               "-i file://$server_middleserverfile");
 
-$CL = $client->CreateProcess ("client", 
+$CL = $client->CreateProcess ("client",
                               "-ORBdebuglevel $debug_level " .
                               "-i file://$client_inputfile " .
                               "-o $client_thrserverfile");
 
-$ML = $middle->CreateProcess ("server", 
+$ML = $middle->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-i file://$middle_thrserverfile " .
                               "-o $middle_middleserverfile");

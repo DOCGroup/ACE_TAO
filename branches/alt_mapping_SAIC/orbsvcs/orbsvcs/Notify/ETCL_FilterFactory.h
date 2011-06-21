@@ -26,7 +26,7 @@
 #include "orbsvcs/Notify/ID_Factory.h"
 #include "orbsvcs/Notify/ETCL_Filter.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
-  
+
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -73,7 +73,7 @@ public:
 
   virtual TAO_Notify::Topology_Object* load_child (
           const ACE_CString &type,
-          CORBA::Long id, 
+          CORBA::Long id,
           const TAO_Notify::NVPList& attrs);
 
   virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
@@ -82,7 +82,7 @@ public:
 
 protected:
 
-  CosNotifyFilter::Filter_ptr 
+  CosNotifyFilter::Filter_ptr
     create_filter (const char *constraint_grammar,
                    const TAO_Notify_Object::ID& id,
                    TAO_Notify_ETCL_Filter*& filter);

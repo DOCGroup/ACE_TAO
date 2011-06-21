@@ -7,8 +7,6 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Bug_1476_Regression, Client_Task, "$Id$")
-
 Client_Task::Client_Task (CORBA::ORB_ptr orb,
                           Test::Sender_ptr reply_gen,
                           ACE_Thread_Manager *thr_mgr,

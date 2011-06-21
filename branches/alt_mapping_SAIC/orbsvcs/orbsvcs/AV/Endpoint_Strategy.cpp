@@ -17,7 +17,7 @@
 
 #include "ace/Process_Semaphore.h"
 
-ACE_RCSID(AV, Endpoint_Strategy, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

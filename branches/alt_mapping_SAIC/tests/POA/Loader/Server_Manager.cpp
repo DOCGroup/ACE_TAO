@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Loader, Server_Manager, "$Id$")
-
 Server_i::Server_i (void)
   : ior_output_file_ (0),
     policies_ (4)

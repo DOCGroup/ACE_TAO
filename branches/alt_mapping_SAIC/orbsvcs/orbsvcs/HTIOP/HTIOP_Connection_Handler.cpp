@@ -7,6 +7,7 @@
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
+#include "ace/os_include/os_netdb.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -20,11 +21,6 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
-
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Connection_Handler,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

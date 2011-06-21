@@ -10,8 +10,6 @@
 #include "tao/ORB_Core.h"
 #include "Server_Thread_Pool.h"
 
-ACE_RCSID(Bug_1270_Regression, Echo_Caller, "$Id$")
-
 Echo_Caller::Echo_Caller(Thread_Pool *pool)
   : pool_(pool)
 {

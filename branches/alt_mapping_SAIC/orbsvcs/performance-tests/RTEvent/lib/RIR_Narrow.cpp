@@ -31,7 +31,7 @@ RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
       if (CORBA::is_nil (intface.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "Panic - error while narrowing <%s>\n",
+                      "Panic - error while narrowing <%C>\n",
                       object_id));
           ACE_OS::exit (1);
         }

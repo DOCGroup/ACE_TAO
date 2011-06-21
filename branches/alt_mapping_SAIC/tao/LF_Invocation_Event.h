@@ -32,7 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * Concrete event types and manipulation class through which the
  * invocation data path would flow. Typically state changes of
  * interest include whether a message has arrived, or timedout waiting
- * for a message or if the cionnection is closed waiting for a
+ * for a message or if the connection is closed waiting for a
  * message. Details of the states are documented within the class.
  *
  */
@@ -57,7 +57,7 @@ public:
 protected:
 
   /// Validate and perform the state change
-  /*
+  /**
    * This concrete class uses the following states declared in the
    * class TAO_LF_Event
    *
@@ -70,7 +70,6 @@ protected:
    * LFS_TIMEOUT - The event has timed out.
    * LFS_CONNECTION_CLOSED - The connection was closed when the state
    *                         was active.
-   *
    */
   virtual void state_changed_i (int new_state);
 

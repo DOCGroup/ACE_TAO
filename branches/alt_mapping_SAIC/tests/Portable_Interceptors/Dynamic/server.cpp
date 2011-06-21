@@ -7,10 +7,6 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (Dynamic,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
@@ -34,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

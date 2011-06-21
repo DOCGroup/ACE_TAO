@@ -3,8 +3,6 @@
 //
 #include "Reply_Handler.h"
 
-ACE_RCSID(AMI_Buffering, Reply_Handler, "$Id$")
-
 Reply_Handler::Reply_Handler (void)
 {
 }

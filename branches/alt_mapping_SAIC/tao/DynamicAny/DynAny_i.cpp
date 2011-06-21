@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/TypeCode.h"
@@ -13,10 +14,6 @@
 
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (DynamicAny,
-           DynAny_i,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -316,7 +313,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         rhs_n->any_ >>= rhs_v;
         CORBA::Float lhs_v;
         this->any_ >>= lhs_v;
-        return (lhs_v == rhs_v);
+        return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_double:
       {
@@ -324,7 +321,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         rhs_n->any_ >>= rhs_v;
         CORBA::Double lhs_v;
         this->any_ >>= lhs_v;
-        return (lhs_v == rhs_v);
+        return ACE::is_equal (lhs_v, rhs_v);
       }
     case CORBA::tk_longlong:
       {

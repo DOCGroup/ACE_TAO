@@ -13,10 +13,6 @@
 #include "utl_strlist.h"
 #include "nr_extern.h"
 
-ACE_RCSID (IFR_Service,
-           ifr_adding_visitor_operation,
-           "$Id$")
-
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
   : ifr_adding_visitor (scope),
     index_ (0)

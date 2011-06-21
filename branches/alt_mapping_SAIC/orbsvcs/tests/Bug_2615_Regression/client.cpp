@@ -7,7 +7,7 @@
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
-ACE_RCSID(Hello, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://ior.ior");
 const ACE_TCHAR *iogr = ACE_TEXT("file://iogr.ior");
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

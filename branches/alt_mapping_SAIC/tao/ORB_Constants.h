@@ -108,43 +108,6 @@ namespace TAO
   const CORBA::ULong VPVID = VMCID;
 }
 
-/**
- * @name TAO-Specific System Exception Minor Code Values
- *
- * These system exception minor code values are specific to TAO.
- */
-//@{
-/// TAO VMCID assigned by the OMG.
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  /**
-   * @note This constant has historically been used in the wrong way.
-   *       It was often used as the @a location argument to the @c
-   *       CORBA::SystemException::_tao_minor_code() static method.  A
-   *       more appropriate default @a location argument/value would
-   *       have been zero since the location code resides in portion of
-   *       the lower order 12 bits, not the higher order 20 bits which
-   *       is where the VMCID resides, and what this value happens to
-   *       be.
-   *
-   * @deprecated Please use @c TAO::VMCID instead, or zero if being used
-   *             as default TAO exception location code argument.
-   *
-   * @see @c TAO::VMCID
-   */
-  const CORBA::ULong TAO_DEFAULT_MINOR_CODE = TAO::VMCID;
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-
-#if !defined (ACE_LACKS_DEPRECATED_MACROS)
-  /// Maximum allowed system exception minor code.
-  /**
-   * @deprecated Please use @c TAO::MAX_MINOR_CODE instead.
-   *
-   * @see @c TAO::MAX_MINOR_CODE
-   */
-  const CORBA::ULong TAO_MAX_MINOR_CODE = TAO::MAX_MINOR_CODE;
-#endif /* !ACE_LACKS_DEPRECATED_MACROS */
-//@}
-
 /// A dummy service context that is inserted in the service context
 /// list to preserve the alignment in DSI based gateways, so no
 /// marshaling/demarshaling is required.

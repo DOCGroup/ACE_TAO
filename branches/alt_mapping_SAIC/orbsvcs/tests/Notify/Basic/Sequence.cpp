@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 #include "Sequence.h"
 
-ACE_RCSID (Notify_Tests, Sequence, "$Id$")
+
 
 /***************************************************************************/
 

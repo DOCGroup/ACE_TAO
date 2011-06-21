@@ -52,8 +52,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   be_module *module = 0;
 
@@ -90,12 +90,12 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       be_util::gen_nested_namespace_end (os, module);
 
       // Emit #else.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "#else\n\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
-  
+
   *os << macro << " void"
       << " operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
@@ -107,7 +107,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       << node->name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
-  
+
   if (module != 0)
     {
       *os << "\n\n#endif";

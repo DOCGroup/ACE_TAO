@@ -8,8 +8,6 @@
 #include "TestC.h"
 #include "tao/Object.h"
 
-ACE_RCSID(DII_Collocation_Tests, Client_Task, "$Id$")
-
 char TEST_STR[] = "This is a DII collocation test.";
 CORBA::Long TEST_BASIC_VALUE = 12345;
 CORBA::Char TEST_SPECIAL_VALUE = 'x';

@@ -20,9 +20,7 @@
 
 /**
  * @class be_visitor_exception_ctor
- =TITLE
- * be_visitor_exception_ctor
- * =DESCRIPTION
+ *
  * generation of the special constructor
  */
 class be_visitor_exception_ctor : public be_visitor_scope

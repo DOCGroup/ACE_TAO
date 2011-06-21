@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Simple, server, "$Id$")
-
 static int quiet = 0;
 // The test is quiet...
 

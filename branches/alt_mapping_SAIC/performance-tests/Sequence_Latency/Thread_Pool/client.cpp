@@ -10,8 +10,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Thread_Pool_Latency, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 1000;
 int do_shutdown = 1;
@@ -69,7 +67,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

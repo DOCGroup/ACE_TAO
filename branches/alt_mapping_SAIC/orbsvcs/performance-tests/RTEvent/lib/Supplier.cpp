@@ -9,10 +9,6 @@
 #include "Supplier.h"
 #include "Implicit_Deactivator.h"
 
-ACE_RCSID (TAO_PERF_RTEC,
-           Supplier,
-           "$Id$")
-
 Supplier::Supplier (CORBA::Long experiment_id,
                     CORBA::Long event_type,
                     CORBA::Long event_range,

@@ -30,12 +30,12 @@ class Stock_StockBroker_i;
 
 /**
  * @class Stock_StockNameConsumer_i
- * @brief This class is used as a callback interface used by the 
+ * @brief This class is used as a callback interface used by the
  * distributor to notify brokers of updates. This class is ALSO used as a
  * signal handler to catch SIGINT and properly unsubscribe from the
  * distributor.
  */
-class  Stock_StockNameConsumer_i : 
+class  Stock_StockNameConsumer_i :
   public virtual POA_Stock::StockNameConsumer
 {
 public:
@@ -57,7 +57,7 @@ public:
    * @param the_stockname The name of the stock that will be provided to the context StockBroker object.
    */
   virtual void push_StockName (::Stock::StockNames *the_stockname);
-  
+
   /**
    * Get the cookie attribute.
    *
@@ -78,7 +78,7 @@ private:
 
   /// Name of the stock to listen to.
   CORBA::String_var stock_name_;
-  
+
   Stock::Cookie_var cookie__;
 };
 

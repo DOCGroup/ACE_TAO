@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    cos
-//
-// = FILENAME
-//    CosNaming.idl
-//
-// = AUTHOR
-//    Marina Spivak <marina@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CosNaming.idl
+ *
+ *  $Id$
+ *
+ *  @author Marina Spivak <marina@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_NAMING_IDL
 #define TAO_NAMING_IDL
@@ -187,7 +184,7 @@ module CosNaming
 
       // = Deleting contexts.
 
-      /// Delete the naming context.  NOTE: the user should <unbind>
+      /// Delete the naming context.  @note the user should <unbind>
       /// any bindings in which the given context is bound to some
       /// names before invoking <destroy> operation on it.
       void destroy ()

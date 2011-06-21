@@ -32,16 +32,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Represents a module definition that may contain Component-related
+ * types.
+ */
 class TAO_IFRService_Export TAO_ComponentModuleDef_i
   : public virtual TAO_ComponentContainer_i
 {
-  // = TITLE
-  //    TAO_ComponentModuleDef_i
-  //
-  // = DESCRIPTION
-  //    Represents a module definition that may contain Component-related
-  //    types.
-  //
 public:
   /// Constructor
   TAO_ComponentModuleDef_i (TAO_Repository_i *repo);

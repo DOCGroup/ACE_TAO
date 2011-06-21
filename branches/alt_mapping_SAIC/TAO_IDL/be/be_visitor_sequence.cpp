@@ -51,8 +51,6 @@
 #include "be_visitor_sequence/any_op_cs.cpp"
 #include "be_visitor_sequence/cdr_op_ch.cpp"
 #include "be_visitor_sequence/cdr_op_cs.cpp"
-#include "be_visitor_sequence/serializer_op_ch.cpp"
-#include "be_visitor_sequence/serializer_op_cs.cpp"
 #include "be_visitor_sequence/buffer_type.cpp"
 #include "be_visitor_sequence/sequence_base.cpp"
 #include "be_visitor_sequence/sequence_ch.cpp"

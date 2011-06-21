@@ -16,10 +16,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Throughput,
-           ECT_Supplier,
-           "$Id$")
-
 Test_Supplier::Test_Supplier (ECT_Driver *driver)
   :  driver_ (driver),
      supplier_ (this),

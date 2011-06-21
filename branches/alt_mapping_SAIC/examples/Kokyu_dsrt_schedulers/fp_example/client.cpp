@@ -8,22 +8,19 @@
 #include "testC.h"
 #include "FP_Scheduler.h"
 
-ACE_RCSID(MT_Server, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int enable_dynamic_scheduling = 0;
 int enable_yield = 1;
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   Worker (CORBA::ORB_ptr orb,
           Simple_Server_ptr server_ptr,
@@ -90,7 +87,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

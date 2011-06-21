@@ -4,8 +4,6 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(AMI_Buffering, Client_Task, "$Id$")
-
 Client_Task::Client_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , terminate_loop_ (0)

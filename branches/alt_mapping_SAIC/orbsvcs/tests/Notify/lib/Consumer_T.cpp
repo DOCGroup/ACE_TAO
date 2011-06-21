@@ -4,7 +4,7 @@
 
 #include "Consumer_T.h"
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Consumer_T, "$Id$")
+
 
 template <class Consumer_Traits>
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::TAO_Notify_Tests_Consumer_T (void)

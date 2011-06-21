@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
@@ -19,17 +21,13 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Connector,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
     connect_strategy_ (),
-    base_connector_ ()
+    base_connector_ (0)
 {
 }
 
@@ -516,8 +514,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
             }
         }
-
-      safe_handler.release ();
     }
   else
     {

@@ -35,7 +35,7 @@ be_visitor_component_ex_idl::visit_component (
   if (be_global->gen_lem_force_all ())
     {
       be_visitor_facet_ex_idl facet_visitor (this->ctx_);
-      
+
       if (facet_visitor.visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,7 +49,7 @@ be_visitor_component_ex_idl::visit_component (
   be_util::gen_nesting_open (os_, node);
 
   be_visitor_executor_ex_idl exec_visitor (this->ctx_);
-  
+
   if (exec_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,7 +60,7 @@ be_visitor_component_ex_idl::visit_component (
     }
 
   be_visitor_context_ex_idl context_visitor (this->ctx_);
-  
+
   if (context_visitor.visit_component (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -83,17 +83,15 @@ be_visitor_component_ex_idl::visit_component (
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "module CIAO_" << node->flat_name () << "_Impl" << be_nl
-      << "{" << be_idt_nl
-      << "typedef " << global << sname << "::CCM_" << lname
-      << "_Context " << lname << "_Exec_Context;";
+      << "{" << be_idt_nl;
 
-  os_ << be_nl << be_nl
-      << "local interface " << lname << "_Exec" << be_idt_nl
+  os_ << "local interface " << lname << "_Exec" << be_idt_nl
       << ": " << global << sname << "::CCM_" << lname
       << "," << be_idt_nl
-      << "::Components::SessionComponent" << be_uidt << be_uidt_nl
+      << "::Components::" << be_global->ciao_container_type ()
+      << "Component" << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
 

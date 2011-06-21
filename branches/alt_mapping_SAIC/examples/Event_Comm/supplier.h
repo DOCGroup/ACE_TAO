@@ -1,56 +1,55 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/example/Event_Comm
-//
-// = FILENAME
-//    supplier.h
-//
-// = DESCRIPTION
-//    This class implements  driver for the Publish/Subscribe example
-//
-// = AUTHOR
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    supplier.h
+ *
+ *  $Id$
+ *
+ *  This class implements  driver for the Publish/Subscribe example
+ *
+ *
+ */
+//=============================================================================
 
 
+
+/**
+ * @class Supplier
+ *
+ * @brief Supplier driver for the TAO Publish/Subscribe example.
+ *
+ * This class starts up the <Supplier_Input_Handler> and
+ * <Notifier_Handler> objects.
+ */
 class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {
-  // = TITLE
-  //   Supplier driver for the TAO Publish/Subscribe example.
-  //
-  // = DESCRIPTION
-  //    This class starts up the <Supplier_Input_Handler> and
-  //    <Notifier_Handler> objects.
 public:
   // Initialization and Termination methods.
+  /// Constructor.
   Supplier (void);
-  // Constructor.
 
+  /// Destructor.
   ~Supplier (void);
-  // Destructor.
 
+  /// Initialization method. returns 0 on success, -1 on error.
   int init (int argc, ACE_TCHAR *argv[]);
-  // Initialization method. returns 0 on success, -1 on error.
 
+  /// Execute the supplier.
   void run (void);
-  // Execute the supplier.
 
+  /// Shutdown the application.
   virtual void close (void);
-  // Shutdown the application.
 
 private:
+  /// Handle shutdown signals.
   virtual int handle_signal (int signum,
                              siginfo_t *,
                              ucontext_t *);
-  // Handle shutdown signals.
 
+  /// Handler for keyboard input.
   Supplier_Input_Handler ih_;
-  // Handler for keyboard input.
 
+  /// The notifier handler.
   Notifier_Handler nh_;
-  // The notifier handler.
 };

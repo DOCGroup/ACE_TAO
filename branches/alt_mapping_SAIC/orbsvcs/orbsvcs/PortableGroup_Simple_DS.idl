@@ -29,7 +29,7 @@ module PortableGroup
   typedef unsigned long long ObjectGroupId;
   typedef unsigned long ObjectGroupRefVersion;
 
-  struct TagGroupTaggedComponent 
+  struct TagGroupTaggedComponent
   { // tag = TAG_GROUP;
     GIOP::Version component_version;
     GroupDomainId group_domain_id;

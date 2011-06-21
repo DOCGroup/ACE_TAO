@@ -462,7 +462,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
       ACE_NEW_RETURN (any_ptr,
                       CORBA::Any,
                       -1);
-                      
+
       (*any_ptr) <<= name.c_str ();
       this->current_value_ = any_ptr;
 
@@ -473,7 +473,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
       ACE_NEW_RETURN (any_ptr,
                       CORBA::Any (any),
                       -1);
-                      
+
       this->current_value_ = any_ptr;
       return comp->accept (this);
     }
@@ -686,7 +686,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
 
           TAO_ETCL_Literal_Constraint id;
           this->queue_.dequeue_head (id);
-                          
+
           any_ptr->replace (id);
           any_ptr->impl ()->_add_ref ();
           this->current_value_ = any_ptr;
@@ -785,7 +785,7 @@ TAO_Notify_Constraint_Visitor::visit_default (ETCL_Default *def)
     TAO_ETCL_Literal_Constraint disc_value;
     this->queue_.dequeue_head (disc_value);
     TAO_ETCL_Literal_Constraint default_index_value (default_index);
-    
+
     return (disc_value == default_index_value);
   }
   catch (const CORBA::Exception&)
@@ -817,10 +817,10 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
         {
           // If the implicit id is empty, then we must default
           // it to the filterable data and set up the value pointer.
-          
+
           ETCL_Identifier* ident =
             dynamic_cast<ETCL_Identifier*> (component);
-            
+
           if (ident != 0)
             {
               this->implicit_id_ = FILTERABLE_DATA;
@@ -1045,18 +1045,15 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_LE:
-            // result = left_operand <= right_operand; // Compile error on LynxOS
-            result = left_operand.operator<= (right_operand);
+            result = left_operand <= right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_GT:
-            // result = left_operand > right_operand; // Compile error on LynxOS
-            result = left_operand.operator> (right_operand);
+            result = left_operand > right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_GE:
-            //result = left_operand >= right_operand; // Compile error on LynxOS
-            result = left_operand.operator>= (right_operand);
+            result = left_operand >= right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_EQ:
@@ -1064,8 +1061,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_NE:
-            //result = left_operand != right_operand; // Compile error on LynxOS
-            result = left_operand.operator!= (right_operand);
+            result = left_operand != right_operand;
             this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
             break;
           case ETCL_PLUS:
@@ -1142,7 +1138,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
               ACE_NEW_RETURN (any_ptr,
                               CORBA::Any,
                               -1);
-                              
+
               CORBA::Any_var component = any_ptr;
               component->replace (bag);
               component->impl ()->_add_ref ();
@@ -1451,7 +1447,7 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
   default:
     return false;
   }
-  
+
   return true;
 }
 

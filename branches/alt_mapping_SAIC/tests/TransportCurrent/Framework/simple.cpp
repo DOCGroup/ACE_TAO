@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/ORB.h"
 #include "tao/Object.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Dynamic_Service.h"
-
-ACE_RCSID (Transport_Current,
-           simple,
-           "$Id$")
 
 int
 testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])

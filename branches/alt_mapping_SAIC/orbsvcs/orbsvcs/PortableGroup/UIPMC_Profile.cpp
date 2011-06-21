@@ -12,10 +12,6 @@
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
 
-ACE_RCSID (PortableGroup,
-           UIPMC_Profile,
-           "$Id$")
-
 static const char the_prefix[] = "miop";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
@@ -554,7 +550,8 @@ TAO_UIPMC_Profile::to_string (void)
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   ACE_OS::sprintf (buf,
-                   "corbaloc:%s:%c.%c@%c.%c-%s-%llu",
+                   "corbaloc:%s:%c.%c@%c.%c-%s-"
+                   ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    ::the_prefix,
                    digits [this->version_.major],
                    digits [this->version_.minor],
@@ -566,7 +563,7 @@ TAO_UIPMC_Profile::to_string (void)
   if (this->has_ref_version_)
     {
       ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
-                       "-%lu",
+                       "-" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->ref_version_);
     }
 

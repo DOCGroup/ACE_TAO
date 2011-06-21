@@ -1,11 +1,8 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "tao/RTScheduling/RTScheduler_Initializer.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
-
-ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
 #include "tao/RTScheduling/RTScheduler.h"
 #include "tao/RTScheduling/Current.h"

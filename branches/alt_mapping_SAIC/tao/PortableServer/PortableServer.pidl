@@ -4,41 +4,6 @@
  * $Id$
  *
  * @brief Pre-compiled IDL source for the PortableServer module.
- *
- * This file is used to generate the code in
- * PortableServerC.{h,inl,cpp}, using the following command:
- *
- * tao_idl.exe \
- *     -o orig -Sci -Gp -Gd -GA -I$(TAO_ROOT)
- *          -Wb,export_macro=TAO_PortableServer_Export \
- *          -Wb,export_include="portableserver_export.h" \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          PortableServer.pidl
- *
- * After the file is generated a patch from the diffs directory must
- * be applied.  The patch:
- *
- *   - Disables parts of the code under certain configurations.
- *
- *   - Eliminates cycles in the include dependencies.
- *
- *   - Adds non-idl components of PortableServer to the namespace.
- *     This includes (a) Servant (b) ServantBase (c) RefCountServantBase
- *     (d) Cookie (e) ObjectId_to_string (f) string_to_ObjectId (g)
- *     ObjectId_to_wstring (h) wstring_to_ObjectId (i) ServantBase_var
- *     (j) DynamicImplementation (k) LocalServantBase
- *
- * Apply patches using the following command:
- *
- *   patch < diffs/PortableServer.diff
- *
- * Note: The diffs were generated using:
- *
- *   rm diffs/PortableServer.diff
- *   for i in PortableServerC.{h,i,cpp}; do
- *     diff -wub orig/$i $i >> diffs/PortableServer.diff
- *   done
  */
 
 #ifndef _PORTABLE_SERVER_IDL_

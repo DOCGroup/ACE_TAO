@@ -34,7 +34,7 @@ $server1->DeleteFile($ior1file);
 $hostname = $server1->HostName ();
 $port = $server1->RandomPort ();
 
-$SV1 = $server1->CreateProcess ("../../../Notify_Service/Notify_Service",
+$SV1 = $server1->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                               "-ORBdebuglevel $debug_level " .
                               "-NoNameSvc -IORoutput $server1_ior1file $svcconf " .
                               "-ORBEndpoint iiop://$hostname:$port");
@@ -49,7 +49,7 @@ $CL = $client->CreateProcess ("consumer",
                               "-t $consumer_runtime");
 
 
-print "\n*********** Starting the Notify_Service  ***********\n\n";
+print "\n*********** Starting the Notify Service  ***********\n\n";
 print $SV1->CommandLine ()."\n";
 
 $server_status = $SV1->Spawn ();

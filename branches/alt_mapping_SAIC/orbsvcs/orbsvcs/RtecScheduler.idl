@@ -15,7 +15,7 @@ module RtecScheduler
 
   typedef long Period_t; // 100 nanoseconds
 
-  typedef long Threads_t; 
+  typedef long Threads_t;
 
   typedef sequence<Period_t> Period_Set;
 

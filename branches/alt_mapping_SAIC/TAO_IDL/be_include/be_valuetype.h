@@ -22,16 +22,15 @@
 
 class TAO_OutStream;
 
+/**
+ * Backend-class for valuetypes
+ *
+ * Extends be_interface and overrides member functions for valuetype
+ * mapping.
+ */
 class be_valuetype : public virtual be_interface,
                      public virtual AST_ValueType
 {
-  // = TITLE
-  //    Backend-class for valuetypes
-  //
-  // = DESCRIPTION
-  //    Extends be_interface and overrides member functions for valuetype
-  //    mapping.
-  //
 public:
   be_valuetype (UTL_ScopedName *n,
                 AST_Type **inherits,
@@ -179,7 +178,7 @@ private:
 
   /// Have these been done already?
   bool var_out_seq_decls_gen_;
-  
+
   /// To differentiate from the interface skeleton name.
   char *full_obv_skel_name_;
 };

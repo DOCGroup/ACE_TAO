@@ -13,12 +13,12 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor 
+  //Constructor
   Messenger_i (void);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~Messenger_i (void);
-  
+
 virtual CORBA::Boolean send_message (
     const char * user_name,
     const char * subject,

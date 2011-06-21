@@ -1,4 +1,3 @@
-// ================================================================
 /**
  * @file IORTable.pidl
  *
@@ -7,21 +6,7 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  *
  * @brief Pre-compiled IDL source for the IORTable module.
- *
- * This file is used to generate the code in
- * IORTable{C}.{h,cpp}
- *
- *   The command used to generate code from this file is:
- *
- *     tao_idl -o orig -Sa -St -Sci \
- *          -Wb,export_macro=TAO_IORTable_Export \
- *          -Wb,export_include=iortable_export.h \
- *          -Wb,pre_include="ace/pre.h" \
- *          -Wb,post_include="ace/post.h" \
- *          IORTable.pidl
- *
  */
-// ================================================================
 
 #ifndef TAO_IORTABLE_IORTABLE_PIDL
 #define TAO_IORTABLE_IORTABLE_PIDL

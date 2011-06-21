@@ -2,7 +2,7 @@
 
 #include "Direct_Consumer.h"
 
-ACE_RCSID(lib, TAO_Direct_Consumer, "$Id$")
+
 
 #include "LookupManager.h"
 

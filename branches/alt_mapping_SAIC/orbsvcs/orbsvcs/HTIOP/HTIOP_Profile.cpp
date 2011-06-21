@@ -12,10 +12,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-ACE_RCSID(HTIOP,
-          TAO_HTIOP_Profile,
-          "$Id$")
-
 static const char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

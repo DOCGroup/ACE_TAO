@@ -55,50 +55,6 @@ PortableServer::Servant_var<T>::operator= (T * p)
   return *this;
 }
 
-/*
-  #if !defined(ACE_LACKS_MEMBER_TEMPLATES)
-  template <class T> template <class Y>
-  ACE_INLINE
-  PortableServer::Servant_var<T>::Servant_var (Y * p)
-  : ptr_ (p)
-  {
-  }
-
-  template <class T> template <class Y>
-  ACE_INLINE
-  PortableServer::Servant_var<T>::Servant_var (Servant_var<Y> const & rhs)
-  : ptr_ (Servant_var<T>::_duplicate (rhs.in ()))
-  {
-  }
-
-  template <class T> template <class Y>
-  ACE_INLINE typename PortableServer::Servant_var<T> &
-  PortableServer::Servant_var<T>::operator=(Servant_var<Y> const & rhs)
-  {
-  PortableServer::Servant_var<T> tmp (rhs);
-  this->swap (tmp);
-  return *this;
-  }
-
-  template <class T> template <class Y>
-  ACE_INLINE typename PortableServer::Servant_var<T> &
-  PortableServer::Servant_var<T>::operator= (Y * p)
-  {
-  if (this->ptr_ != p)
-  {
-  // This constructor doesn't increase the reference count, nor is
-  // it a copy constructor, so we must check for self-assignment.
-  // Otherwise the reference count would be prematurely
-  // decremented upon exiting this scope.
-  PortableServer::Servant_var<T> tmp (p);
-  this->swap (tmp);
-  }
-
-  return *this;
-  }
-  #endif / * ACE_LACKS_MEMBER_TEMPLATES * /
-*/
-
 template <class T>
 ACE_INLINE T *
 PortableServer::Servant_var<T>::operator->() const

@@ -41,7 +41,7 @@ class TAO_Export TAO_GIOP_Message_State
 {
 public:
 
-  /// Ctor
+  /// Constructor
   TAO_GIOP_Message_State (void);
 
   /// Parse the message header.
@@ -79,7 +79,7 @@ private:
   /// Parse the message header.
   int parse_message_header_i (ACE_Message_Block &incoming);
 
-  /// Checks for the magic word 'GIOP' in the start of the incoing
+  /// Checks for the magic word 'GIOP' in the start of the incoming
   /// stream
   int parse_magic_bytes (char *buf);
 

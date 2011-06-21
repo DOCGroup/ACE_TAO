@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
         $debug_opts = '-ORBDebugLevel 10 -ORBVerboseLogging 1 '
                     . '-ORBLogFile client';
         $srv_debug  = '-ORBDebugLevel 5';
-    } 
+    }
 }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";

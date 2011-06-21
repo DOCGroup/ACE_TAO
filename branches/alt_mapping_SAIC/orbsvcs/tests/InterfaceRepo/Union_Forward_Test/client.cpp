@@ -12,7 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-  TAO_IFR_Client_Adapter *ifr_client = 
+  TAO_IFR_Client_Adapter *ifr_client =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
       TAO_ORB_Core::ifr_client_adapter_name ());
 
@@ -32,11 +32,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          "get interface returned nil ref\n"),
                         1);
     }
-  
+
   CORBA::ContainedSeq_var attributes =
     intDef->contents (CORBA::dk_Attribute, 1);
   CORBA::ULong n_ats = attributes->length ();
-  
+
   CORBA::ULong index = 0UL;
   CORBA::String_var name = attributes[index]->name ();
   ACE_DEBUG ((LM_DEBUG,

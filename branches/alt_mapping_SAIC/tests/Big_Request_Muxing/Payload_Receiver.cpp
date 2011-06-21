@@ -3,8 +3,6 @@
 //
 #include "Payload_Receiver.h"
 
-ACE_RCSID(Big_Request_Muxing, Payload_Receiver, "$Id$")
-
 Payload_Receiver::Payload_Receiver (void)
   : message_count_ (0)
   , maybe_lost_count_ (0)

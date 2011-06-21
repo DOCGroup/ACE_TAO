@@ -3,7 +3,7 @@
 #include "Counting_Consumer.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(CEC_Tests, CEC_Count_Consumer, "$Id$")
+
 
 CEC_Counting_Consumer::CEC_Counting_Consumer (const char* name)
   : event_count (0),

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 
 #include "tao/IIOP_Endpoint.h"
@@ -7,11 +9,6 @@
 #include "ace/os_include/os_netdb.h"
 
 #include "tao/debug.h"
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Endpoint,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Endpoint.inl"

@@ -64,7 +64,7 @@ be_visitor_scope::visit_scope (be_scope *node)
                              "bad node in this scope\n"),
                             -1);
         }
-        
+
       be_decl *bd = be_decl::narrow_from_decl (d);
 
       // Set the scope node as "node" in which the code is being

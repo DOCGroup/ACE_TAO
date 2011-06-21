@@ -143,7 +143,7 @@ namespace TAO
         countdown.update ();
 
         // For some strategies one may want to release the transport
-        // back to  cache. If the idling is successfull let the
+        // back to  cache. If the idling is successful let the
         // resolver about that.
         if (transport->idle_after_send ())
           this->resolver_.transport_released ();
@@ -249,9 +249,9 @@ namespace TAO
      */
 
     bool const
-      expired= (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
+      expired = (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
     if (expired)
-      errno= ETIME;
+      errno = ETIME;
     int const
       reply_error = expired ? -1 :
         this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
@@ -498,7 +498,7 @@ namespace TAO
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
     // We must manage the memory allocated
-    // by the call above to alloc(). 
+    // by the call above to alloc().
     auto_ptr<CORBA::Exception> safety (exception);
 
     exception->_raise ();
@@ -564,6 +564,9 @@ namespace TAO
                         && (ACE_OS_String::strcmp (type_id.in (),
                                 "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0))))))
       {
+        // If we are here then possibly we'll need a restart.
+        mon.set_status (TAO_INVOKE_RESTART);
+
         if (do_forward)
           this->stub ()->forwarded_on_exception (true);
 
@@ -597,6 +600,7 @@ namespace TAO
           }
 
         // Fall through and raise an exception.
+        mon.set_status (TAO_INVOKE_FAILURE);
       }
 
     CORBA::SystemException *ex = TAO::create_system_exception (type_id.in ());

@@ -28,6 +28,12 @@ be_visitor_operation_is::~be_visitor_operation_is (void)
 int
 be_visitor_operation_is::visit_operation (be_operation *node)
 {
+  // Impl classes shouldn't have implied AMI operations.
+  if (node->is_sendc_ami ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
   be_interface *intf = this->ctx_->interface ();
 
@@ -48,7 +54,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
     }
 
   be_visitor_context ctx (*this->ctx_);
@@ -97,7 +103,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   *os << be_nl << "{" << be_idt_nl;
   *os << "// Add your implementation here" << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl_2;
 
   return 0;
 }

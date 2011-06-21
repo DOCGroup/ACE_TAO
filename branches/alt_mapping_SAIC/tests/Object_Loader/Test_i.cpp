@@ -2,8 +2,6 @@
 
 #include "Test_i.h"
 
-ACE_RCSID(Object_Loader, Test_i, "$Id$")
-
 CORBA::Long
 Test_i::instance_count_ = 0;
 

@@ -9,10 +9,6 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 static const ACE_TCHAR *supplierec = 0;
 static const ACE_TCHAR *consumerec = 0;
 
@@ -155,7 +151,7 @@ Gateway::parse_args (int argc, ACE_TCHAR *argv[])
 
       arg_shifter.ignore_arg ();
     }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

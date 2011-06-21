@@ -45,10 +45,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ObjectId;
 
 // TAO_IDL - Generated from

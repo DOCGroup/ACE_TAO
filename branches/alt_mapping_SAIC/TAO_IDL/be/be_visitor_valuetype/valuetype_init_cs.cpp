@@ -71,21 +71,21 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                    "%s_init",
                    node->local_name ());
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // ctor
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << fname << "::" << lname << " (void)" << be_nl
       << "{" << be_nl << "}";
 
   // dtor
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << fname << "::~" << lname << " (void)" << be_nl
       << "{" << be_nl << "}";
 
   // The _downcast method.
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << node->name () << "_init *" << be_nl << node->name ()
       << "_init::_downcast ( ::CORBA::ValueFactoryBase *v)" << be_nl
       << "{" << be_idt_nl
@@ -94,7 +94,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       << "}";
 
   // tao_repository_id
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "const char* " << be_nl
       << fname << "::tao_repository_id (void)" << be_nl
       << "{" << be_idt_nl
@@ -106,7 +106,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       // generate create_for_unmarshal()
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
           << fname << "::create_for_unmarshal (void)" << be_nl
           << "{" << be_idt_nl
@@ -121,7 +121,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 
         if (node->supports_abstract ())
           {
-            *os << be_nl << be_nl
+            *os << be_nl_2
                 << "::CORBA::AbstractBase_ptr" << be_nl
                 << fname << "::create_for_unmarshal_abstract (void)" << be_nl
                 << "{" << be_idt_nl

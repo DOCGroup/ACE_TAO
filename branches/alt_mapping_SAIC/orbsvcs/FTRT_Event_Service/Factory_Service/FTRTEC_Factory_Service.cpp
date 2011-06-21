@@ -5,10 +5,6 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Factory_Service,
-           FTRTEC_Factory_Service,
-           "$Id$")
-
 namespace {
   ACE_CString id, kind;
   ACE_TString output;

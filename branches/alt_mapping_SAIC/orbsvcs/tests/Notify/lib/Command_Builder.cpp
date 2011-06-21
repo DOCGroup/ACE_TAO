@@ -7,7 +7,7 @@
 #include "Command_Factory.h"
 #include "Name.h"
 
-ACE_RCSID(lib, TAO_Command_Builder, "$Id$")
+
 
 TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder (void)
   :start_command_ (0)

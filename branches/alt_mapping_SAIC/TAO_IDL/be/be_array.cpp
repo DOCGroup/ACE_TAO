@@ -258,14 +258,14 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       << "const " << arg_name.c_str () << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "strm << \"" << this->name () << "\";" <<  be_nl << be_nl;
+      << "strm << \"" << this->name () << "\";" <<  be_nl_2;
 
   ACE_CDR::ULong ndims = this->n_dims ();
   ACE_CDR::ULong i = 0;
 
   for (i = 0; i < ndims; ++i)
     {
-      *os << "strm << \"[\";" << be_nl << be_nl;
+      *os << "strm << \"[\";" << be_nl_2;
 
       AST_Expression *expr = this->dims ()[i];
 

@@ -10,12 +10,6 @@
 
 #include "ace/Log_Msg.h"
 
-
-ACE_RCSID (RTCORBA,
-           RT_TAO_Stub_Factory,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)

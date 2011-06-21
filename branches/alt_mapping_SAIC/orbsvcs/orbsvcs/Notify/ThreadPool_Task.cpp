@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/ThreadPool_Task.h"
-
-ACE_RCSID(Notify, TAO_Notify_ThreadPool_Task, "$Id$")
-
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Timer_Queue.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"

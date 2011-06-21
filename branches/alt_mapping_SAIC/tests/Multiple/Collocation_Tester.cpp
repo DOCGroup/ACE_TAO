@@ -3,8 +3,6 @@
 #include "Collocation_Tester.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (tests, Collocation_Tester, "$Id$")
-
 const char *Quote::top = "Ciao";
 const char *Quote::left = "Hola";
 const char *Quote::right = "Hello";

@@ -63,14 +63,14 @@ be_visitor_arg_traits::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl
       << be_global->core_versioning_begin ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "// Arg traits specializations." << be_nl
       << "namespace TAO" << be_nl
       << "{" << be_idt;
@@ -132,7 +132,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
       std::string guard_suffix =
@@ -142,7 +142,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       // guard prevents multiple declarations.
       os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "template<>" << be_nl
           << "class "
           << " " << this->S_ << "Arg_Traits<"
@@ -159,7 +159,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
               << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
-      *os << "," << be_nl << this->insert_policy() 
+      *os << "," << be_nl << this->insert_policy()
           << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
@@ -220,7 +220,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
     {
       TAO_OutStream & os = *this->ctx_->stream ();
 
-      os << be_nl << be_nl
+      os << be_nl_2
          << "// TAO_IDL - Generated from" << be_nl
          << "// " << __FILE__ << ":" << __LINE__;
 
@@ -231,7 +231,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
       // guard prevents multiple declarations.
       os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-      os << be_nl << be_nl
+      os << be_nl_2
          << "template<>" << be_nl
          << "class "
          << this->S_ << "Arg_Traits<"
@@ -274,7 +274,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
     {
       TAO_OutStream & os = *this->ctx_->stream ();
 
-      os << be_nl << be_nl
+      os << be_nl_2
          << "// TAO_IDL - Generated from" << be_nl
          << "// " << __FILE__ << ":" << __LINE__;
 
@@ -285,7 +285,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
       // guard prevents multiple declarations.
       os.gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-      os << be_nl << be_nl
+      os << be_nl_2
          << "template<>" << be_nl
          << "class "
          << this->S_ << "Arg_Traits<"
@@ -390,12 +390,12 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
         {
           TAO_OutStream *os = this->ctx_->stream ();
 
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__;
 
           bool wide = (str->width () != 1);
 
-          *os << be_nl << be_nl;
+          *os << be_nl_2;
 
           bool const skel =
             (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
@@ -407,7 +407,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               || (skel && ACE_OS::strlen (this->S_) != 0))
             {
               *os << "struct " << node->flat_name () << " {};"
-                  << be_nl << be_nl;
+                  << be_nl_2;
             }
 
           *os << "template<>" << be_nl
@@ -419,7 +419,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
               << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
               << bound << "," << be_nl
-              << this->insert_policy() 
+              << this->insert_policy()
               << ">"
               << be_uidt << be_uidt << be_uidt_nl
               << "{" << be_nl
@@ -465,7 +465,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   bool wide = (st->width () != 1);
@@ -488,7 +488,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       || (skel && ACE_OS::strlen (this->S_) != 0))
     {
       *os << "struct " << node->flat_name () << " {};"
-          << be_nl << be_nl;
+          << be_nl_2;
     }
 
   *os << "template<>" << be_nl
@@ -539,7 +539,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   bool wide = (st->width () != 1);
@@ -550,11 +550,11 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
   // the same operation, so we use the argument's flat name to
   // declare an empty struct, and use that struct as the template
   // parameter for Arg_Traits<>.
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   bool const skel =
     (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
-    
+
   AST_Decl *op = ScopeAsDecl (node->defined_in ());
   AST_Decl *intf = ScopeAsDecl (op->defined_in ());
   ACE_CString arg_flat_name (intf->flat_name ());
@@ -569,7 +569,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       || (skel && ACE_OS::strlen (this->S_) != 0))
     {
       *os << "struct " << arg_flat_name.c_str () << " {};"
-          << be_nl << be_nl;
+          << be_nl_2;
     }
 
   *os << "template<>" << be_nl
@@ -581,7 +581,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() 
+      << this->insert_policy()
       << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt_nl
@@ -603,7 +603,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_typedef *alias = this->ctx_->alias ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   std::string guard_suffix =
@@ -614,11 +614,11 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   os->gen_ifdef_macro (alias->flat_name (),
                        guard_suffix.c_str (),
                        false);
-                       
+
   bool use_vec = (node->unbounded () && be_global->alt_mapping ());
   UTL_ScopedName *sn = alias->name ();
-  
-  *os << be_nl << be_nl
+
+  *os << be_nl_2
       << "template<>" << be_nl
       << "class " << this->S_ << "Arg_Traits<" << sn << ">"
       << be_idt_nl
@@ -677,17 +677,17 @@ be_visitor_arg_traits::visit_string (be_string *node)
       // Form a unique macro name using the local name and the bound.
       ACE_CDR::ULong l = bound;
       int num_digits = 0;
-      
+
       while (l > 0)
         {
           l /= 10 ;
           ++num_digits ;
         }
-        
+
       size_t bound_length = num_digits + 1;
       char* bound_string = 0;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
-      ACE_OS::sprintf (bound_string, "%lu", bound);
+      ACE_OS::sprintf (bound_string, ACE_UINT32_FORMAT_SPECIFIER_ASCII, bound);
 
       size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
                           ACE_OS::strlen (bound_string) +
@@ -713,7 +713,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
     {
       // A workaround 'dummy' type, since bounded (w)strings are all
       // generated as typedefs of (w)char *.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "struct ";
 
       if (alias == 0)
@@ -728,7 +728,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       *os << " {};";
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<";
@@ -748,7 +748,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << be_idt << be_idt_nl
       << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
       << bound << "," << be_nl
-      << this->insert_policy() 
+      << this->insert_policy()
       << be_uidt << be_uidt_nl
       << ">"
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -777,7 +777,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
   suffix += "arg_traits";
   os->gen_ifdef_macro (node->flat_name (), suffix.c_str (), false);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"
@@ -815,7 +815,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   std::string guard_suffix =
@@ -825,7 +825,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
   // guard prevents multiple declarations.
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"
@@ -857,7 +857,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   // multiple declarations.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   std::string guard_suffix =
@@ -867,7 +867,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   // guard prevents multiple declarations.
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"
@@ -932,7 +932,7 @@ be_visitor_arg_traits::visit_field (be_field *node)
   // recursion. So we set the field node as processed (the
   // field *type* may not have been reached yet) and return.
   AST_Decl::NodeType nt = bt->base_node_type ();
-  
+
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
       node->cli_traits_gen (true);
@@ -965,7 +965,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   // multiple declarations.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   std::string guard_suffix =
@@ -975,7 +975,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   // guard prevents multiple declarations.
   os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "template<>" << be_nl
       << "class "
       << this->S_ << "Arg_Traits<"

@@ -13,7 +13,7 @@
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Naming, Transient_Naming_Context, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

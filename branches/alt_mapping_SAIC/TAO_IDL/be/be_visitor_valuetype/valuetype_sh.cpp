@@ -61,7 +61,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
     }
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Generate the skeleton class name.
   *os << "class " << class_name.c_str () << ";" << be_nl;
@@ -102,14 +102,14 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       << "public:" << be_idt_nl;
 
   *os << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_uidt_nl;
-  
+
   // No copy constructor for locality constraint interface.
   *os << "private:" << be_idt_nl
       << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_uidt_nl;
-      
 
-  *os << "};" << be_nl << be_nl;
+
+  *os << "};" << be_nl_2;
 
   return 0;
 }

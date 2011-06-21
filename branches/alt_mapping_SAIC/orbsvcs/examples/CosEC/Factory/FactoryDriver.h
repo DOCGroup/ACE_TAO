@@ -1,22 +1,19 @@
 
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/examples/CosEC/Factory
-//
-// = FILENAME
-//    FactoryDriver.h
-//
-// = DESCRIPTION
-//    This class implements the Factory driver.
-//
-// = AUTHOR
-//    Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FactoryDriver.h
+ *
+ *  $Id$
+ *
+ *  This class implements the Factory driver.
+ *
+ *
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FACTORYDRIVER_H
 #define TAO_FACTORYDRIVER_H
@@ -29,52 +26,54 @@
 //    using the -ORBInitRef mechanisms?  That way we can run this
 //    stuff without the naming service running.
 
+ /**
+  * @class FactoryDriver
+  *
+  * @brief Driver class for the CosEventChannel Factory.
+  *
+  * creates a CosEventChannel Factory and registers it with the
+  * naming service.
+  */
 class FactoryDriver
 {
-  // = TITLE
-  //   Driver class for the CosEventChannel Factory.
-  // = DESCRIPTION
-  //   creates a CosEventChannel Factory and registers it with the
-  //   naming service.
-  //
  public:
   // = Initialization and termination code.
+  /// Constructor.
   FactoryDriver (const ACE_TCHAR* factory = ACE_TEXT("CosEC_Factory"));
-  // Constructor.
 
+  /// Destructor.
   ~FactoryDriver (void);
-  // Destructor.
 
+  /// Start the driver.
   int start (int argc, ACE_TCHAR *argv []);
-  // Start the driver.
 
+  ///Stop the driver.
   int stop (void);
-  //Stop the driver.
 
  protected:
+  /// Parse the command-line arguments and set options.
   int parse_args (int argc, ACE_TCHAR *argv []);
-  // Parse the command-line arguments and set options.
 
+  /// The name of the factory registered with the naming service.
   const ACE_TCHAR *factoryName_;
-  // The name of the factory registered with the naming service.
 
+  /// The name of the Child POA.
   const char* child_poa_name_;
-  // The name of the Child POA.
 
+  /// The ORB that we use.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// The factory servant.
   TAO_CosEventChannelFactory_i *factory_servant_;
-  // The factory servant.
 
+  /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-  // Reference to the root poa.
 
+  /// The corba object after activation.
   CosEventChannelFactory::ChannelFactory_var factory_;
-  // The corba object after activation.
 
+  /// Use a naming client.
   TAO_Naming_Client naming_client_;
-  // Use a naming client.
 
 };
 #endif /*  TAO_FACTORYDRIVER_H */

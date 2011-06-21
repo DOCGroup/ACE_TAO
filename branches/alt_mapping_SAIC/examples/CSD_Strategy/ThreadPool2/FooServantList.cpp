@@ -2,8 +2,6 @@
 #include "FooServantList.h"
 #include "Foo_i.h"
 #include "OrbShutdownTask.h"
-#include "ace/OS.h"
-
 
 FooServantList::FooServantList(const ACE_TCHAR* prefix,
                                unsigned    num_servants,
@@ -74,12 +72,7 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa)
 void
 FooServantList::client_done(void)
 {
-  unsigned num_left;
-
-  {
-    GuardType guard(this->num_clients_lock_);
-    num_left = --this->num_clients_;
-  }
+  unsigned num_left = --this->num_clients_;
 
   if (num_left == 0)
     {

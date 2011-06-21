@@ -2,7 +2,7 @@
 
 #include "Counting_Consumer.h"
 
-ACE_RCSID(EC_Tests, EC_Count_Consumer, "$Id$")
+
 
 EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
   : event_count (0),

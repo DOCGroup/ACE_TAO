@@ -6,7 +6,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(BiDirectional, server, "$Id$")
+
 
 const ACE_TCHAR *ior_output_file = 0;
 int no_iterations = 10;
@@ -36,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -143,6 +143,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

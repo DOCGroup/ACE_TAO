@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    Properties.java
 //
@@ -19,4 +19,4 @@ public class Properties {
   public static final int PERSIAN = 3;
   public static final int MULTIDOUBLE = 4;
 }
-  
+

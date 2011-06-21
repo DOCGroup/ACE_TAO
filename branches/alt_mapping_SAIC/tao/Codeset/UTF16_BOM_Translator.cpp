@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -18,7 +19,6 @@
 #include "ace/Log_Msg.h"
 
 // ****************************************************************
-
 
 typedef ACE_CDR::UShort ACE_UTF16_T;
 static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
@@ -355,7 +355,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
     {
       // pre GIOP 1.2:  include null terminator in length
       ACE_CDR::ULong l = len + 1;
-      
+
       if (this->write_4 (cdr, &l))
         {
           if (x != 0)

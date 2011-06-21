@@ -29,7 +29,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       // Test registry acquisition.
       Monitor_Point_Registry* reg = Monitor_Point_Registry::instance ();
-      
+
       if (reg == 0)
         {
           error ("Monitor_Point_Registry::instance() failed");
@@ -75,7 +75,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                       Monitor_Base ("test1",
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
-                      
+
       if (reg->add (s) == false)
         {
           error ("re-addition Monitor_Point_Registry::add() failed");
@@ -85,7 +85,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                       Monitor_Base ("test2",
                                     Monitor_Control_Types::MC_NUMBER),
                       2);
-                      
+
       if (reg->add (s) == false)
         {
           error ("second Monitor_Point_Registry::add() failed");

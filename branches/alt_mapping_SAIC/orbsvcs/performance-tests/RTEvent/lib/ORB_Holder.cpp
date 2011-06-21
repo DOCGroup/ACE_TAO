@@ -12,10 +12,6 @@
 #include "ORB_Holder.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC,
-           ORB_Holder,
-           "$Id$")
-
 ORB_Holder::ORB_Holder (int &argc, ACE_TCHAR *argv[],
                         const char *orb_id)
   :  orb_ (CORBA::ORB_init (argc, argv, orb_id))

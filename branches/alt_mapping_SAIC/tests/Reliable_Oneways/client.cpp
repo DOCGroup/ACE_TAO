@@ -6,8 +6,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Reliable_Oneways, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int test_sync_with_target    = 0;
 int test_sync_with_server    = 0;

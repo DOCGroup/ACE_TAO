@@ -15,10 +15,6 @@
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-ACE_RCSID (FtRtEvent,
-           consumer,
-           "$Id$")
-
 CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 
@@ -71,7 +67,7 @@ get_event_channel(int argc, ACE_TCHAR** argv)
 
     if (use_gateway)
     {
-      ACE_AUTO_PTR_RESET (gateway, new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()), TAO_FTRTEC::FTEC_Gateway);
+      ACE_auto_ptr_reset (gateway, new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()));
       return gateway->_this();
     }
     else

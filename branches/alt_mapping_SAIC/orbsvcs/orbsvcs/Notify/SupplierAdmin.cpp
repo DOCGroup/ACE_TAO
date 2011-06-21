@@ -1,11 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/SupplierAdmin.h"
-
-ACE_RCSID (RT_Notify,
-           TAO_Notify_SupplierAdmin,
-           "$Id$")
-
 #include "orbsvcs/Notify/Builder.h"
 #include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/EventChannel.h"

@@ -1,4 +1,4 @@
-
+// $Id$
 // @author Phil Mesnier <mesnier_p@ociweb.com>
 
 // This test scenario is documented in bugzilla bug 3049. This test
@@ -12,10 +12,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
-
-ACE_RCSID (tests, server, "$Id$")
-
-
 #include "Service_Configuration_Per_ORB.h"
 
 const ACE_TCHAR argA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A");

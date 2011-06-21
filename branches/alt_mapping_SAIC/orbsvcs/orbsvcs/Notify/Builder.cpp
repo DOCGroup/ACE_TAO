@@ -1,10 +1,6 @@
 // $Id$
 #include "orbsvcs/Notify/Builder.h"
 
-ACE_RCSID (Notify,
-           Builder,
-           "$Id$")
-
 #include "ace/Dynamic_Service.h"
 
 #include "tao/PortableServer/PortableServerC.h"

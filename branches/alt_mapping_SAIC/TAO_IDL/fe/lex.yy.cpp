@@ -17,6 +17,7 @@
 
 /* begin standard C headers. */
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 /* end standard C headers. */
 
@@ -138,7 +139,15 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef TAO_YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, TAO_YY_BUF_SIZE is 2*TAO_YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define TAO_YY_BUF_SIZE 32768
+#else
 #define TAO_YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -1019,7 +1028,7 @@ static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
 static char *               idl_get_pragma_string (char *);
 static bool                 idl_valid_version (char *);
-static AST_Decl *           idl_find_node (char *);
+static AST_Decl *           idl_find_node (const char *);
 
 #define ace_tao_yytext tao_yytext
 
@@ -1108,7 +1117,12 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef TAO_YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define TAO_YY_READ_BUF_SIZE 16384
+#else
 #define TAO_YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -1727,7 +1741,7 @@ case 86:
 TAO_YY_RULE_SETUP
 {
                   // octal character constant
-                  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_tao_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
         TAO_YY_BREAK
@@ -1735,14 +1749,14 @@ case 87:
 TAO_YY_RULE_SETUP
 {
                   // hexadecimal character constant
-                  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_tao_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
         TAO_YY_BREAK
 case 88:
 TAO_YY_RULE_SETUP
 {
-                  tao_yylval.cval = idl_escape_reader(ace_tao_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_tao_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
         TAO_YY_BREAK
@@ -2976,7 +2990,18 @@ idl_parse_line_and_file (char *buf)
       // possibly produced VMS-style paths here.
       char trans_path[MAXPATHLEN] = "";
       char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h) h = temp_h;
+
+      if (temp_h)
+        {
+          h = temp_h;
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Unable to construct full file pathname\n")));
+
+          throw Bailout ();
+        }
 #endif
       ACE_NEW (tmp,
                UTL_String (h, true));
@@ -3106,13 +3131,13 @@ idl_store_pragma (char *buf)
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
-          char *int_id = 0;
+          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
           int const status =
-            idl_global->file_prefixes ().find (ext_id, int_id);
+            idl_global->file_prefixes ().find (ext_id, entry);
 
           if (status == 0)
             {
-              if (ACE_OS::strcmp (int_id, "") != 0)
+              if (ACE_OS::strcmp (entry->int_id_, "") != 0)
                 {
                   char *trash = 0;
                   idl_global->pragma_prefixes ().pop (trash);
@@ -3121,11 +3146,11 @@ idl_store_pragma (char *buf)
               else if (depth == 1)
                 {
                   // Remove the default "" and bind the new prefix.
-                  (void) idl_global->file_prefixes ().unbind (ext_id);
-                  ext_id = ACE::strnew (ext_id);
-                  int_id = ACE::strnew (new_prefix);
-                  (void) idl_global->file_prefixes ().bind (ext_id,
-                                                            int_id);
+                  ACE::strdelete (entry->ext_id_);
+                  ACE::strdelete (entry->int_id_);
+                  (void) idl_global->file_prefixes ().unbind (entry);
+                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                            ACE::strnew (new_prefix));
                 }
             }
 
@@ -3152,10 +3177,8 @@ idl_store_pragma (char *buf)
 
           if (status != 0)
             {
-              ext_id = ACE::strnew (ext_id);
-              int_id = ACE::strnew (new_prefix);
-              (void) idl_global->file_prefixes ().bind (ext_id,
-                                                        int_id);
+              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                                                        ACE::strnew (new_prefix));
             }
         }
     }
@@ -3235,7 +3258,10 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      AST_Decl *d = idl_find_node (tmp);
+      ACE_CString work (tmp);
+      work = work.substr (0, work.find (' '));
+
+      AST_Decl *d = idl_find_node (work.c_str ());
 
       if (d == 0)
         {
@@ -3261,6 +3287,9 @@ idl_store_pragma (char *buf)
     {
       char *sample_type = idl_get_pragma_string (buf);
       idl_global->add_dcps_data_type (sample_type);
+
+      // Delete sample_type since add_dcps_data_type() doesn't take its ownership.
+      delete [] sample_type;
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
@@ -3287,6 +3316,9 @@ idl_store_pragma (char *buf)
           ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%C\" not found for key \"%C\"\n",
             sample_type, key));
         }
+
+      // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
+      delete [] sample_type;
     }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
@@ -3300,21 +3332,41 @@ idl_store_pragma (char *buf)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
+
+      // Delete tmp since add_ciao_lem_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 16) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "coredx typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_coredx_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_oci_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_oci_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 18) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_spl_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0)
     {
@@ -3322,6 +3374,9 @@ idl_store_pragma (char *buf)
         {
           char *tmp = idl_get_pragma_string (buf);
           idl_global->add_ciao_ami_iface_names (tmp);
+
+          // Delete tmp since add_ciao_ami_iface_names() doesn't take its ownership.
+          delete [] tmp;
         }
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)
@@ -3339,6 +3394,9 @@ idl_store_pragma (char *buf)
           /// it will do no harm in other cases.
           idl_global->add_included_ami_recep_names (tmp);
         }
+
+      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0)
     {
@@ -3353,12 +3411,18 @@ idl_store_pragma (char *buf)
         {
           idl_global->add_ciao_ami_idl_fnames (tmp);
         }
+
+      // Delete tmp since add_ciao_ami_idl_fnames() doesn't take its ownership.
+      delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
 
       idl_global->add_dds4ccm_impl_fnames (tmp);
+
+      // Delete tmp since add_dds4ccm_impl_fnames() doesn't take its ownership.
+      delete [] tmp;
     }
 }
 
@@ -3412,10 +3476,10 @@ idl_atoi (char *s, long b)
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
 static ACE_CDR::ULongLong
-idl_atoui (char *s, long b)
+idl_atoui(char *s, long b)
 {
   ACE_CDR::ULongLong r = 0;
-  
+
   if (b == 8 && *s == '0')
     {
       ++s;
@@ -3739,7 +3803,7 @@ idl_valid_version (char *s)
 }
 
 static AST_Decl *
-idl_find_node (char *s)
+idl_find_node (const char *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
   AST_Decl * d = 0;

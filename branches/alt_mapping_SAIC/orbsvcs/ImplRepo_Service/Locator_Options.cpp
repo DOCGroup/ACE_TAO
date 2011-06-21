@@ -13,11 +13,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (ImplRepo_Service,
-           Options,
-           "$Id$")
-
-
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Locator_NT_Service.h
@@ -270,7 +265,7 @@ Options::save_registry_options ()
   LONG err = ACE_TEXT_RegCreateKeyEx (SERVICE_REG_ROOT,
                              SERVICE_REG_PATH,
                              0,
-                             ACE_TEXT(""), // class
+                             const_cast<ACE_TCHAR*> (ACE_TEXT("")), // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
                              0,

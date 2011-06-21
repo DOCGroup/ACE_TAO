@@ -3,10 +3,6 @@
 #include "tao/EndpointPolicy/EndpointPolicy_i.h"
 #include "tao/SystemException.h"
 
-ACE_RCSID (EndpointPolicy,
-           EndpointPolicy_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const EndpointPolicy::EndpointList &value)

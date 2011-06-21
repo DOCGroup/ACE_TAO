@@ -375,8 +375,7 @@ namespace TAO
 
               ++this->waiting_servant_deactivation_;
 
-              if (this->poa_->object_adapter ().enable_locking ())
-                this->poa_->servant_deactivation_condition ().wait ();
+              this->poa_->servant_deactivation_condition ().wait ();
 
               --this->waiting_servant_deactivation_;
 
@@ -423,8 +422,7 @@ namespace TAO
 
               ++this->waiting_servant_deactivation_;
 
-              if (this->poa_->object_adapter ().enable_locking ())
-                this->poa_->servant_deactivation_condition ().wait ();
+              this->poa_->servant_deactivation_condition ().wait ();
 
               --this->waiting_servant_deactivation_;
 

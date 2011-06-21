@@ -3,11 +3,6 @@
 // Implementation of the Dynamic Server Skeleton Interface.
 
 #include "tao/DynamicInterface/Server_Request.h"
-
-ACE_RCSID (DynamicInterface,
-           Server_Request,
-           "$Id$")
-
 #include "tao/DynamicInterface/DII_Arguments.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
@@ -79,36 +74,41 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
     }
 
-  // In a collocated situation there will not be an incoming CDR stream 
-  // in which case we can get the arguments from the 
+  // In a collocated situation there will not be an incoming CDR stream
+  // in which case we can get the arguments from the
   // operation_details using the 'collocated argument converter'.
   if (this->orb_server_request_.collocated ())
   {
     this->params_ = list;
-    
+
     if (this->orb_server_request_.operation_details ()->cac () != 0)
       {
         TAO_OutputCDR output;
         this->orb_server_request_.operation_details ()->cac (
                 )->dsi_convert_request (this->orb_server_request_,
                                         output);
-        
+
         TAO_InputCDR input(output);
         this->params_->_tao_decode (input, CORBA::ARG_IN | CORBA::ARG_INOUT);
-      }    
+      }
   }
   else
   {
     // Save params for later use when marshaling the reply.
     this->params_ = list;
 
-    this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
-                                      CORBA::ARG_IN | CORBA::ARG_INOUT,
-                                      this->lazy_evaluation_);
+    // in the case of a GIOP::LocateRequest there is no incoming CDR stream
+    // so skip any attempt to decode arguments (now or later)
+    if (this->orb_server_request_.incoming () != 0)
+    {
+      this->params_->_tao_incoming_cdr (*this->orb_server_request_.incoming (),
+                                        CORBA::ARG_IN | CORBA::ARG_INOUT,
+                                        this->lazy_evaluation_);
 
-    // Pass this alignment back to the TAO_ServerRequest.
-    this->orb_server_request_.dsi_nvlist_align (
-                                  this->params_->_tao_target_alignment ());
+      // Pass this alignment back to the TAO_ServerRequest.
+      this->orb_server_request_.dsi_nvlist_align (
+                                    this->params_->_tao_target_alignment ());
+    }
   }
 }
 
@@ -196,7 +196,7 @@ CORBA::ServerRequest::dsi_marshal (void)
                               output,
                               CORBA::ARG_INOUT | CORBA::ARG_OUT);
           }
-        
+
         TAO_InputCDR input (output);
         // set reply parameters
         this->orb_server_request_.operation_details ()->cac (
@@ -244,7 +244,12 @@ CORBA::ServerRequest::dsi_marshal (void)
       }
   }
 
-  this->orb_server_request_.tao_send_reply ();
+  // in case a deferred_reply is specified (like for GIOP::LocateRequest)
+  // do not send a reply here
+  if (!this->orb_server_request_.deferred_reply ())
+  {
+    this->orb_server_request_.tao_send_reply ();
+  }
 }
 
 void

@@ -8,11 +8,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           ExtValueDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ExtValueDef_i::TAO_ExtValueDef_i (TAO_Repository_i *repo)
@@ -689,7 +684,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_value",
                                               holder);
-                                              
+
   if (status == 0)
     {
       ACE_Configuration_Section_Key base_key;
@@ -698,11 +693,11 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                            base_key,
                                            0);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",    
+                                                "id",
                                                 holder);
     }
-    
-  // If status isn't 0, then holder will be empty anyway.  
+
+  // If status isn't 0, then holder will be empty anyway.
   fv_desc->base_value = holder.fast_rep ();
   fv_desc->type = this->type_i ();
 

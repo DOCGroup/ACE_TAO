@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
 #include "tao/IOPC.h"
 #include "tao/ORB_Constants.h"
@@ -7,10 +9,6 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (FaultTolerance,
-           FT_ServerRequest_Interceptor,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

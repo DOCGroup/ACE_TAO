@@ -75,8 +75,12 @@ private:
                 ::Compression::CompressorId  compressor_id,
                 ::Compression::CompressionLevel compression_level);
 
-/// Get the compression low value, returns 0 when it is not set
-  CORBA::ULong compression_policy_value (CORBA::Policy_ptr policy) const;
+  /// Get the compression low value, returns 0 when it is not set
+  CORBA::ULong compression_low_value (CORBA::Policy_ptr policy) const;
+
+    /// Get the compression min ratio value, returns 0 when it is not set
+  Compression::CompressionRatio compression_minratio_value (
+    CORBA::Policy_ptr policy) const;
 
   bool get_compressor_details (
                         ::Compression::CompressorIdLevelList *list,

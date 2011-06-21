@@ -1,24 +1,20 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/MT_Servant_Locator
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//     This program tests that multiple calls to the Servant Locator
-//     can take place simultaneously.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests that multiple calls to the Servant Locator
+ *   can take place simultaneously.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
-#include "ace/OS.h"
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/CDR.h"
 
@@ -49,19 +45,19 @@ test_i::test_i (PortableServer::POA_ptr poa)
 void
 test_i::normal (void)
 {
-    ACE_DEBUG ((LM_DEBUG, "executing normal\n"));
+  ACE_DEBUG ((LM_DEBUG, "executing normal\n"));
 }
 
 void
 test_i::exceptional (void)
 {
-    ACE_DEBUG ((LM_DEBUG, "executing exceptional\n"));
+  ACE_DEBUG ((LM_DEBUG, "executing exceptional\n"));
 }
 
 void
 test_i::notexisting (void)
 {
-    ACE_DEBUG ((LM_DEBUG, "executing notexisting\n"));
+  ACE_DEBUG ((LM_DEBUG, "executing notexisting\n"));
 }
 
 class Servant_Locator :
@@ -104,20 +100,20 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
               name.in (), op ));
 
   if (ACE_OS::strcmp (op, "normal") == 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "returning servant\n"));
-    return &this->servant_;
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "returning servant\n"));
+      return &this->servant_;
+    }
   else if (ACE_OS::strcmp (op, "exceptional") == 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "throwing exception\n"));
-      throw CORBA::INTERNAL();
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "throwing exception\n"));
+        throw CORBA::INTERNAL();
+    }
   else
-  {
-    ACE_DEBUG ((LM_DEBUG, "returning NULL\n"));
-    return 0;
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "returning NULL\n"));
+      return 0;
+    }
 }
 
 void
@@ -132,10 +128,10 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
     PortableServer::ObjectId_to_string (oid);
 
   if (!op)
-  {
-    op = "NULL";
-    ++errorCount;
-  }
+    {
+      op = "NULL";
+      ++errorCount;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "Servant_Locator::postinvoke for %C.%C\n",
@@ -146,8 +142,6 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int retval = 0;
-
   try
     {
       CORBA::ORB_var orb =
@@ -201,43 +195,43 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       bool caught = false;
       try
-      {
-        testObject->exceptional();
-      }
+        {
+          testObject->exceptional();
+        }
       catch (const CORBA::Exception&)
-      {
-        ACE_DEBUG ((LM_DEBUG, "exceptional() yielded exception\n"));
-        caught = true;
-      }
+        {
+          ACE_DEBUG ((LM_DEBUG, "exceptional() yielded exception\n"));
+          caught = true;
+        }
       if (!caught) ++errorCount;
 
       caught = false;
       try
-      {
-        testObject->notexisting();
-      }
+        {
+          testObject->notexisting();
+        }
       catch (const CORBA::Exception&)
-      {
-        ACE_DEBUG ((LM_DEBUG, "notexisting() yielded exception\n"));
-        caught = true;
-      }
+        {
+          ACE_DEBUG ((LM_DEBUG, "notexisting() yielded exception\n"));
+          caught = true;
+        }
       if (!caught) ++errorCount;
-
-      if (!errorCount)
-      {
-      ACE_DEBUG ((LM_DEBUG,"test successful\n"));
-      }
-      else
-      {
-      ACE_DEBUG ((LM_DEBUG,"unsuccessfull: %d errors\n", errorCount ));
-      }
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught");
-      retval = -1;
+      ++errorCount;
+    }
+
+  if (!errorCount)
+    {
+      ACE_DEBUG ((LM_DEBUG,"test successful\n"));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,"unsuccessfull: %d errors\n", errorCount ));
     }
 
   return errorCount;

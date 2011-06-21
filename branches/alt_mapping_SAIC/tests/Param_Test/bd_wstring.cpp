@@ -1,28 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    bd_wstring.cpp
-//
-// = DESCRIPTION
-//    tests bounded wide strings
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    bd_wstring.cpp
+ *
+ *  $Id$
+ *
+ *  tests bounded wide strings
+ *
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "bd_wstring.h"
 #include "ace/OS_NS_wchar.h"
-
-ACE_RCSID (Param_Test,
-           bd_wstring,
-           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_WString

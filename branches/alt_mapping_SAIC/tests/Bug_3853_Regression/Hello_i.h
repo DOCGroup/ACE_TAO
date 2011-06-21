@@ -15,18 +15,18 @@ class  Demo_HelloWorld_i
   : public virtual POA_Demo::HelloWorld
 {
 public:
-  // Constructor 
+  // Constructor
   Demo_HelloWorld_i (CORBA::ORB_ptr orb);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~Demo_HelloWorld_i (void);
-  
+
   virtual void sayHello (
       const char * msg
     );
-    
+
   virtual void shutdown();
-    
+
 private:
 
   CORBA::ORB_var orb_;

@@ -1,4 +1,6 @@
+// -*- C++ -*-
 // $Id$
+
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
@@ -38,7 +40,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
   details->use_stub_args (false);
 }
 
-void 
+void
 TAO_AMI_Arguments_Converter_Impl::dsi_convert_request (
     TAO_ServerRequest & server_request,
     TAO_OutputCDR & output)
@@ -76,7 +78,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     }
 }
 
-void 
+void
 TAO_AMI_Arguments_Converter_Impl::dsi_convert_reply (
     TAO_ServerRequest & server_request,
     TAO_InputCDR & input)

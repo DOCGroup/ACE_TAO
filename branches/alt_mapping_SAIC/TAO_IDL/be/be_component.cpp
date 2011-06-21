@@ -201,27 +201,27 @@ be_component::scan (UTL_Scope *s)
           case AST_Decl::NT_provides:
             ++this->n_provides_;
             p = AST_Provides::narrow_from_decl (d);
-            
+
             if (!p->provides_type ()->is_local ())
               {
                 ++this->n_remote_provides_;
               }
-              
+
             continue;
           case AST_Decl::NT_uses:
             ++this->n_uses_;
             u = AST_Uses::narrow_from_decl (d);
-            
+
             if (u->is_multiple ())
               {
                 this->has_uses_multiple_ = true;
               }
-              
+
             if (!u->uses_type ()->is_local ())
               {
                 ++this->n_remote_uses_;
               }
-              
+
             continue;
           case AST_Decl::NT_publishes:
             ++this->n_publishes_;
@@ -242,24 +242,24 @@ be_component::scan (UTL_Scope *s)
             continue;
           case AST_Decl::NT_attr:
             a = AST_Attribute::narrow_from_decl (d);;
-            
+
             if (!a->readonly ())
               {
                 my_nt = this->node_type ();
                 scope_nt =
                   ScopeAsDecl (a->defined_in ())->node_type ();
-                  
+
                 /// Attributes coming from a porttype appear
-                /// only on connectors.  
+                /// only on connectors.
                 if (my_nt == AST_Decl::NT_component
                     && scope_nt == AST_Decl::NT_porttype)
                   {
                     continue;
                   }
-              
+
                 this->has_rw_attributes_ = true;
               }
-              
+
             continue;
           default:
             continue;
@@ -297,7 +297,7 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
   if (nsupports > 0)
     {
       *os << be_idt;
-      
+
       AST_Type **supp_list = this->supports ();
 
       for (long i = 0; i < nsupports; ++i)
@@ -309,7 +309,7 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
 
       *os << be_uidt;
     }
-    
+
   *os << be_uidt;
 }
 
@@ -364,7 +364,7 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
       << "value," << be_nl
       << "\"IDL:omg.org/Components/CCMObject:1.0\"" << be_uidt_nl
       << ") == 0" << be_uidt << be_uidt_nl;
-      
+
   return 0;
 }
 
@@ -399,31 +399,31 @@ be_component::mirror_scan (AST_PortType *pt)
           case AST_Decl::NT_provides:
             ++this->n_uses_;
             p = AST_Provides::narrow_from_decl (d);
-            
+
             if (!p->provides_type ()->is_local ())
               {
                 ++this->n_remote_uses_;
               }
-              
+
             continue;
           case AST_Decl::NT_uses:
             ++this->n_provides_;
             u = AST_Uses::narrow_from_decl (d);
-            
+
             if (!u->uses_type ()->is_local ())
               {
                 ++this->n_remote_provides_;
               }
-              
+
             continue;
           case AST_Decl::NT_attr:
             a = AST_Attribute::narrow_from_decl (d);;
-            
+
             if (!a->readonly ())
               {
                 this->has_rw_attributes_ = true;
               }
-              
+
             continue;
           default:
             continue;

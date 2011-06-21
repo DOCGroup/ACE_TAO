@@ -14,9 +14,6 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/IORTable/Table_Adapter.h"
 
-ACE_RCSID (IORTable, IORTable, "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

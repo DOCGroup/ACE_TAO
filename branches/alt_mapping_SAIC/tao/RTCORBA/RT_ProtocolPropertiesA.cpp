@@ -47,7 +47,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/RTCORBA/ProtocolProperties:1.0",
     "ProtocolProperties");
-  
+
 namespace RTCORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ProtocolProperties =
@@ -87,7 +87,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   ::CORBA::Boolean
   Any_Impl_T<RTCORBA::ProtocolProperties>::demarshal_value (TAO_InputCDR &)
@@ -107,8 +107,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace RTCORBA
 {
-  
-  
+
+
   /// Copying insertion.
   void
   operator<<= (
@@ -119,7 +119,7 @@ namespace RTCORBA
       ProtocolProperties::_duplicate (_tao_elem);
     _tao_any <<= &_tao_objptr;
   }
-  
+
   /// Non-copying insertion.
   void
   operator<<= (
@@ -132,7 +132,7 @@ namespace RTCORBA
         _tc_ProtocolProperties,
         *_tao_elem);
   }
-  
+
   ::CORBA::Boolean
   operator>>= (
       const ::CORBA::Any &_tao_any,

@@ -15,10 +15,10 @@ $client_debug_level = '0';
 foreach $i (@ARGV) {
     if ($i eq '-sdebug') {
         $server_debug_level = '10';
-    } 
+    }
     if ($i eq '-cdebug') {
         $client_debug_level = '10';
-    } 
+    }
 }
 
 

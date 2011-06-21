@@ -10,11 +10,6 @@
 #include "orbsvcs/CosEvent/CEC_SupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent,
-           CEC_SupplierAdmin,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)

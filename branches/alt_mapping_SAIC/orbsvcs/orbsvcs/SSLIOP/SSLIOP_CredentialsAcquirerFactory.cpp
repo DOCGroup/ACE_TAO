@@ -3,12 +3,6 @@
 #include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h"
 #include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h"
 
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_CredentialsAcquirerFactory,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 SecurityLevel3::CredentialsAcquirer_ptr

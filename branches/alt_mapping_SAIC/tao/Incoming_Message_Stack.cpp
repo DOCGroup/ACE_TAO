@@ -1,3 +1,5 @@
+// -*- C++ -*-
+// $Id$
 
 # include "tao/Incoming_Message_Stack.h"
 

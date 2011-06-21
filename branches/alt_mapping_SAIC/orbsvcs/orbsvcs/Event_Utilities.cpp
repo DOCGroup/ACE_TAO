@@ -12,11 +12,19 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ConsumerQOS_Factory::
-    ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer)
+    ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer,
+                             CORBA::ULong qos_max_len)
   : designator_set_ (0),
     event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
+
+  // Allocate the space requested by the application....
+  qos_.dependencies.resize (qos_max_len);
+
+  // ... now reset the length, we do not want to use any elements in
+  // the sequence that have not been initialized....
+  qos_.dependencies.resize (0);
 }
 
 ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
@@ -153,7 +161,7 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 // ************************************************************
 ACE_SupplierQOS_Factory::
     ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer,
-                             int qos_max_len)
+                             CORBA::ULong qos_max_len)
   : event_initializer_ (initializer)
 {
   qos_.is_gateway = 0;
@@ -178,11 +186,15 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
       // There is not enough space for the next element, grow the
       // buffer.
       this->qos_.publications.resize (l + 1);
-
-      // @@ TODO We may want to consider more efficient growing
-      // strategies here, for example, duplicating the size of the
-      // buffer, or growing in fixed sized chunks...
     }
+
+  // @@ TODO We may want to consider more efficient growing
+  // strategies here, for example, duplicating the size of the
+  // buffer, or growing in fixed sized chunks...
+
+  // This needs to accurately reflect the used length, and should always be
+  // set
+  this->qos_.publications.resize (l + 1);
 
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.publications[l].event);

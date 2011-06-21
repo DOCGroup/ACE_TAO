@@ -46,8 +46,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Valuetype_Export TAO_ChunkInfo
 {
 public:
-  TAO_ChunkInfo (CORBA::Boolean do_chunking = 0,
-                 CORBA::Long init_level = 0);
+  TAO_ChunkInfo (CORBA::Boolean do_chunking = false,
+                 CORBA::Long init_level = false);
 
   /// Methods to support chunking.
   /// Note: These methods are called for both chunking and non-chunking
@@ -131,7 +131,7 @@ namespace CORBA
     typedef ValueBase_out _out_type;
 
     typedef ACE_Vector < ACE_CString > Repository_Id_List;
-    
+
     // Reference counting.
     /// %! virtual CORBA::ValueBase* _copy_value (void) = 0;
 
@@ -286,14 +286,6 @@ namespace CORBA
 
   private:
     ValueBase & operator= (const ValueBase &);
-
-#ifdef SUN_CC_HAS_PVFC_BUG
-    // Need ugly fix for sun cc "pure virtual function called" bug.
-  private:
-    unsigned long tao_sun_cc_pvfc_bug_fix_;
-
-#endif /* SUN_CC_HAS_PVFC_BUG */
-
   }; // ValueBase
 
   /// Valuetype-related type codes.

@@ -6,9 +6,6 @@
 # include "tao/Strategies/LF_Strategy_Null.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, LF_Strategy_Null, "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Strategy_Null::~TAO_LF_Strategy_Null (void)

@@ -67,7 +67,7 @@ $srvb->DeleteFile ($srvbiorfile);
 $cli->DeleteFile ($srvaiorfile);
 
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service",
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-ORBEndpoint "."$protocol"."://:".$port." ".
                             "-UnregisterIfAddressReused ".
                             "-d $imr_debug_level ".

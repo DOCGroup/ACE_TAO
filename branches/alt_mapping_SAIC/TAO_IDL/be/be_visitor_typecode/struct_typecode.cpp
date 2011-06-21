@@ -33,11 +33,10 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
     this->queue_lookup (this->tc_queue_, node);
 
   ACE_Unbounded_Queue<AST_Type *> recursion_queue;
-
-  if (qnode
-      && node->in_recursion (recursion_queue))
+  bool in_recursion = node->in_recursion (recursion_queue);
+  if (qnode && in_recursion)
     {
-      this->is_recursive_ = true;
+      // we're repeated and we're recursive so just leave
       return 0;
     }
   else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
@@ -53,6 +52,9 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
     {
       return 0;
     }
+
+  // as this was no nested visit mark this typecode as recursive
+  this->is_recursive_ = in_recursion;
 
   static bool const is_exception = false;
   return this->visit (node, is_exception);
@@ -79,9 +81,9 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
   this->is_nested_ = true;
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   if (this->gen_member_typecodes (node) != 0)
     {
@@ -189,6 +191,9 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
           return -1;
         }
 
+/*  MCO@20101020 - this is unnecessary since the check for recursiveness
+ *  of *this* typecode has already been done before calling this method
+
       be_structure *bs = be_structure::narrow_from_decl (node);
       if (bs)
         {
@@ -196,12 +201,14 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
             this->queue_lookup (this->tc_queue_, bs);
 
           ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+          recursion_queue.enqueue_tail(node);
           if (qnode
             && member_type->in_recursion (recursion_queue))
             {
               this->is_recursive_ = true;
             }
         }
+*/
     }
 
   return 0;

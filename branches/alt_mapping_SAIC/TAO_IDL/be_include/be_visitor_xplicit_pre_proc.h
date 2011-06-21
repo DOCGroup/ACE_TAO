@@ -32,14 +32,14 @@ public:
   be_visitor_xplicit_pre_proc (be_visitor_context *ctx);
 
   virtual ~be_visitor_xplicit_pre_proc (void);
-  
+
   virtual int visit_home (be_home *node);
 
   virtual int visit_operation (be_operation *node);
   virtual int visit_argument (be_argument *node);
   virtual int visit_factory (be_factory *node);
   virtual int visit_finder (be_finder *node);
-  
+
   virtual int visit_interface (be_interface *node);
   virtual int visit_valuebox (be_valuebox *node);
   virtual int visit_valuetype (be_valuetype *node);
@@ -65,11 +65,11 @@ public:
 
   // Member accessor
   be_interface *xplicit (void) const;
-  
+
 private:
   void check_and_store (AST_Decl *node);
   UTL_ScopedName *xplicit_iface_rel_name (AST_Decl *d);
-  
+
 private:
   be_interface *xplicit_;
   AST_Decl *type_holder_;

@@ -6,10 +6,6 @@
 
 #include "tao/debug.h"
 
-ACE_RCSID (EC_Tests,
-           EC_Consumer,
-           "$Id$")
-
 EC_Consumer::EC_Consumer (EC_Driver *driver,
                           void *cookie)
   : driver_ (driver),

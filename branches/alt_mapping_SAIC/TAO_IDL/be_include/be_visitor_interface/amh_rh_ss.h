@@ -4,7 +4,7 @@
  *
  *  $Id$
  *
- *  Specialized visitor for AMH-ResponseHandler that generates code for the 
+ *  Specialized visitor for AMH-ResponseHandler that generates code for the
  *  RH in the skeleton source file
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>

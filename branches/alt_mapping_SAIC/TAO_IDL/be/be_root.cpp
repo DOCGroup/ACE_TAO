@@ -42,7 +42,7 @@ void
 be_root::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  
+
 // The scope of the root is handled specially, since we may
 // be processing multiple IDL files and we want to keep
 // the predefined types around until we are all done.

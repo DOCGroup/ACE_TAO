@@ -31,7 +31,8 @@ be_visitor_component_scope::be_visitor_component_scope (
   : be_visitor_scope (ctx),
     node_ (0),
     os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ())
+    export_macro_ (be_global->svnt_export_macro ()),
+    in_ext_port_ (false)
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -52,6 +53,7 @@ int
 be_visitor_component_scope::visit_extended_port (
   be_extended_port *node)
 {
+  this->in_ext_port_ = true;
   this->ctx_->interface (this->node_);
 
   AST_Decl::NodeType nt =
@@ -79,6 +81,7 @@ be_visitor_component_scope::visit_extended_port (
 
   /// Reset port prefix string.
   this->ctx_->port_prefix () = "";
+  this->in_ext_port_ = false;
   return 0;
 }
 
@@ -123,7 +126,7 @@ be_visitor_component_scope::visit_component_scope (
     {
       return 0;
     }
-    
+
   this->ctx_->interface (node);
 
   if (this->visit_scope (node) == -1)
@@ -209,7 +212,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
                                    d->full_name ()),
                                   -1);
               }
-              
+
             break;
         }
     }
@@ -226,13 +229,15 @@ be_visitor_component_scope::node (be_component *c)
 void
 be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::"
+      << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "const char * ins_name);" << be_uidt;
 }
 
@@ -245,13 +250,14 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
   const char *lname = node_->local_name ();
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
       << global << sname << "::CCM_" << lname
@@ -270,7 +276,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
       << "                ins_name," << be_nl
       << "                0," << be_nl
       << "                c)," << be_uidt_nl
-      << "                0);" << be_nl << be_nl
+      << "                0);" << be_nl_2
       << "return retval;" << be_uidt_nl
       << "}";
 }
@@ -278,7 +284,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
 void
 be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
@@ -288,7 +294,7 @@ be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 void
 be_visitor_component_scope::gen_exec_entrypoint_defn (void)
 {
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
@@ -297,12 +303,11 @@ be_visitor_component_scope::gen_exec_entrypoint_defn (void)
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl
       << "::Components::EnterpriseComponent::_nil ();"
-      << be_uidt_nl << be_nl
+      << be_uidt << be_nl_2
       << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
       << node_->local_name () << "_exec_i);"
-      << be_uidt_nl << be_nl
+      << be_uidt << be_nl_2
       << "return retval;" << be_uidt_nl
       << "}";
 }
-

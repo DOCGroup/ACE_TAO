@@ -46,7 +46,7 @@ namespace TAO
      * request that was saved off during visitation.  A nil reference
      * (ie, a NULL pointer) will be returned if no dispatchable request
      * was found.
-     * 
+     *
      */
     class TAO_CSD_TP_Export TP_Dispatchable_Visitor : public TP_Queue_Visitor
     {

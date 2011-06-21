@@ -57,15 +57,13 @@ public:
       TAO_Root_POA &poa,
       CORBA::Short servant_priority,
       TAO_ServerRequest &req,
-      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-    ) = 0;
+      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) = 0;
 
   /// Pre_invoke collocated request.
   virtual void pre_invoke_collocated_request (
       TAO_Root_POA &poa,
       CORBA::Short servant_priority,
-      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-      ) = 0;
+      TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state) = 0;
 
   /// Post_invoke request.
   virtual void post_invoke (

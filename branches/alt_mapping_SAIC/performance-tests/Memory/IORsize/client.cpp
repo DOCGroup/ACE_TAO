@@ -5,8 +5,6 @@
 #include "TestS.h"
 #include "Foo_i.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 static int n = 10;
 int
@@ -35,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

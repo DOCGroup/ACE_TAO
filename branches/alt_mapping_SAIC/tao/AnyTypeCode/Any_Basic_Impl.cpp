@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any_Basic_Impl.h"
@@ -282,7 +283,7 @@ namespace TAO
         break;
       case CORBA::tk_longdouble:
         {
-          CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+          CORBA::LongDouble tmp (ACE_CDR::LongDoubleAssign (0.0L));
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
                           0);

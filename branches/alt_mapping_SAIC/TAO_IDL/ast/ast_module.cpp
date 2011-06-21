@@ -110,7 +110,8 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
     pd_has_nested_valuetype_ (0),
     previous_opening_ (previous),
     last_in_same_parent_scope_ (this),
-    from_inst_ (0)
+    from_inst_ (0),
+    from_ref_ (0)
 {
   // NOTE previous passed into this constructor should be
   // the FIRST module that is a previous opening of this same
@@ -264,7 +265,8 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
 
 AST_Decl *
 AST_Module::look_in_prev_mods (UTL_ScopedName *e,
-                               bool full_def_only)
+                               bool full_def_only,
+                               AST_Decl *&final_parent_decl)
 {
   for (AST_Module *po = this->previous_opening_;
        po;
@@ -283,6 +285,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
                 static_cast<UTL_ScopedName *> (e->tail ());
               if (!sn)
                 {
+                  final_parent_decl= static_cast<AST_Decl *> (po);
                   return d; // Nothing left in path, found wanted name
                 }
 
@@ -290,7 +293,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
               if (s)
                 {
                   // Recurse down what is left of the path
-                  return s->lookup_by_name_r (sn, full_def_only);
+                  return s->lookup_by_name_r (sn, full_def_only, final_parent_decl);
                 }
 
               // Find next match, this one didn't work out.
@@ -319,11 +322,24 @@ AST_Module::from_inst (AST_Template_Module_Inst *node)
   this->from_inst_ = node;
 }
 
+AST_Template_Module_Ref *
+AST_Module::from_ref (void) const
+{
+  return this->from_ref_;
+}
+
+void
+AST_Module::from_ref (AST_Template_Module_Ref *node)
+{
+  this->from_ref_ = node;
+}
+
 AST_Decl *
 AST_Module::special_lookup (UTL_ScopedName *e,
-                            bool full_def_only)
+                            bool full_def_only,
+                            AST_Decl *&final_parent_decl)
 {
-  return this->look_in_prev_mods (e, full_def_only);
+  return this->look_in_prev_mods (e, full_def_only, final_parent_decl);
 }
 
 //================================================
@@ -346,12 +362,14 @@ AST_Module::fe_add_module (AST_Module *t)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
           const char *prefix_holder = parent->prefix ();
+
           if (!prefix_holder)
             {
               break; // We have reached global scope.
             }
 
           t->prefix (const_cast<char *> (prefix_holder));
+
           if (ACE_OS::strcmp (t->prefix (), ""))
             {
               break;
@@ -364,7 +382,7 @@ AST_Module::fe_add_module (AST_Module *t)
   // Already defined and cannot be redefined? Or already used?
   AST_Module *m = 0;
   AST_Decl *d = this->lookup_for_add (t);
-  
+
   if (d)
     {
       if (!FE_Utils::can_be_redefined (d, t))

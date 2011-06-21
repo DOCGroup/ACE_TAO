@@ -4,7 +4,7 @@
 // The ifrservice base project inherits from minimum_corba, so it's no longer
 // necessary to add minimum_corba to 'avoids' here.
 project(IFR_Service) : orbsvcsexe, install, ifrservice, ifr_client, imr_client  {
-  exename = IFR_Service
+  exename = tao_ifr_service
 
   IDL_Files {
   }

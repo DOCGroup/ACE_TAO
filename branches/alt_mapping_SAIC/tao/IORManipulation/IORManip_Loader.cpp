@@ -1,13 +1,9 @@
+// $Id$
+
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/IORManipulation/IORManipulation.h"
 
 #include "ace/Log_Msg.h"
-
-
-ACE_RCSID (IORManipulation,
-           IORManip_Loader,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

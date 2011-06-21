@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
@@ -5,15 +7,10 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (Naming,
-           Persistent_Naming_Context,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Persistent_Bindings_Map::unbind (const char *id,
-                                     const char *kind)
+TAO_Persistent_Bindings_Map::unbind (const char *id, const char *kind)
 {
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;

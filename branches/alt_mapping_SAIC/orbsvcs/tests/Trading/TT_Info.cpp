@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Trading, TT_Info, "$Id$")
+
 
 const char* TT_Info::INTERFACE_NAMES[] =
 {

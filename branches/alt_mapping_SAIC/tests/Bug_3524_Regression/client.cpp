@@ -1,12 +1,9 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "testC.h"
-
-ACE_RCSID(Bug_3524_Regression,
-          client,
-          "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 

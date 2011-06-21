@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
@@ -10,10 +11,6 @@
 #include "tao/PI/PI.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
-
-ACE_RCSID (PICurrent,
-           server,
-           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -68,7 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                        argv[0]),
                       -1);
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

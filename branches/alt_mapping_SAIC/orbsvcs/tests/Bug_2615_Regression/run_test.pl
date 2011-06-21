@@ -33,7 +33,7 @@ my $client_iogrfile = $client->LocalFile ($iogrbase);
 $server->DeleteFile($iogrbase);
 $client->DeleteFile($iogrbase);
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile " .
                               "-p $server_iogrfile");

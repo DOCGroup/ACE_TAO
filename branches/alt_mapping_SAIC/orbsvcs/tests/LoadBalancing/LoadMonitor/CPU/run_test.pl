@@ -38,11 +38,11 @@ my $client_iorfile = $client->LocalFile ($iorfile);
 $client->DeleteFile($iorfile);
 
 
-$SV1 = $server1->CreateProcess ("../../../../LoadBalancer/LoadManager",
+$SV1 = $server1->CreateProcess ("../../../../LoadBalancer/tao_loadmanager",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server1_iorfile");
 
-$SV2 = $server2->CreateProcess ("../../../../LoadBalancer/LoadMonitor",
+$SV2 = $server2->CreateProcess ("../../../../LoadBalancer/tao_loadmonitor",
                               "-ORBdebuglevel $debug_level " .
                               "-l $location " .
                               "-t CPU -s PULL " .

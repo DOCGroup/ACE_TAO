@@ -5,8 +5,6 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (UNKNOWN_Exception, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int done = 0;
 

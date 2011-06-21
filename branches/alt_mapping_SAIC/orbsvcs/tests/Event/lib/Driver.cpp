@@ -26,7 +26,7 @@
 #include "Driver.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(EC_Tests, EC_Driver, "$Id$")
+
 
 EC_Driver::EC_Driver (void)
   :  n_consumers_ (1),

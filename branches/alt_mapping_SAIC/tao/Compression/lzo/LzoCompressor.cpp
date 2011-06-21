@@ -1,9 +1,6 @@
+// $Id$
+
 #include "LzoCompressor.h"
-
-ACE_RCSID (LZO,
-           LzoCompressor,
-           "$Id$")
-
 #include <lzo1x.h>
 #include <lzoutil.h>
 

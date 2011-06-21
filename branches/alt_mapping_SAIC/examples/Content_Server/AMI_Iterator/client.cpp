@@ -9,10 +9,6 @@
 #include "Web_ServerC.h"
 #include "Iterator_Handler.h"
 
-ACE_RCSID (AMI_Iterator,
-           client,
-           "$Id$")
-
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr
 get_iterator (CORBA::ORB_ptr orb);

@@ -14,7 +14,7 @@
 module Bug_3647_Regression
 {
   typedef sequence<octet> Payload;
-  
+
   interface Backend
   {
     /// This operation is called during the startup, to make sure all

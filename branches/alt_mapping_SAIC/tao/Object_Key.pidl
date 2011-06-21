@@ -2,19 +2,6 @@
 
 // TAO specific IDL definition of an octet sequence that we use to represent
 // Object keys inside the POA.
-//   This file is used to generate the code in Object_KeyC.*
-//   The command used to generate code is:
-//
-//     tao_idl
-//        -o orig -St -Gp -Gd -Sci
-//          -Wb,export_macro=TAO_Export
-//          -Wb,export_macro="tao/TAO_Export"
-//          -Wb,pre_include="ace/pre.h"
-//          -Wb,post_include="ace/post.h"
-//          Object_Key.pidl
-//
-// After generation the file diffs/Object_Key.diff must be used to manually
-// patch this file
 
 #ifndef TAO_OBJECTKEY_PIDL
 #define TAO_OBJECTKEY_PIDL

@@ -27,7 +27,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
+
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

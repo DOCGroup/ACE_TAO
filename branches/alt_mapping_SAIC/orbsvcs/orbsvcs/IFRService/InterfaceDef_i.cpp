@@ -9,16 +9,9 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           InterfaceDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_InterfaceDef_i::TAO_InterfaceDef_i (
-    TAO_Repository_i *repo
-  )
+TAO_InterfaceDef_i::TAO_InterfaceDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_Container_i (repo),
     TAO_Contained_i (repo),

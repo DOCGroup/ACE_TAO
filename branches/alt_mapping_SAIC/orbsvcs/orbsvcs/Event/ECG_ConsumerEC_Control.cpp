@@ -2,6 +2,8 @@
 
 #include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control (void)

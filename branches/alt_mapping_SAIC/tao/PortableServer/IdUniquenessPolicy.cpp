@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/PortableServer/IdUniquenessPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
 

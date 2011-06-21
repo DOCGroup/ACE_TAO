@@ -39,19 +39,19 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
   // Create a child POA with CLIENT_PROPAGATED policies. The name of
   // the POA will be <StockNameConsumer_POA>.  Instances of the
   // Stock_StockNameConsumer_i will be activated under this POA.
-  PortableServer::POA_var child_poa = 
-    poa->create_POA ("StockNameConsumer_POA", 
+  PortableServer::POA_var child_poa =
+    poa->create_POA ("StockNameConsumer_POA",
                      poa_mgr. in(),
                      consumer_policies);
-  
+
   // Narrow the POA to a <RTPortableServer::POA>.
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (child_poa.in ());
 
   // Create and activate the <consumer_>.
-  this->consumer_ = 
+  this->consumer_ =
     new Stock_StockNameConsumer_i (*this, stock_name);
-  PortableServer::ServantBase_var nameconsumer_owner_transfer = 
+  PortableServer::ServantBase_var nameconsumer_owner_transfer =
     this->consumer_;
   rt_poa->activate_object (this->consumer_);
 }
@@ -84,20 +84,20 @@ void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
   return Stock::StockQuoter::_duplicate (this->quoter_.in ());
 }
 
-void 
+void
 Stock_StockBroker_i::shutdown (void)
 {
   // Unsubscribe
   ACE_DEBUG ((LM_DEBUG, "Shutdown unsubscribing notifiers\n"));
   this->distributor_->unsubscribe_notifier
     (this->consumer_->cookie_ ());
-  
+
   ACE_DEBUG ((LM_DEBUG, "Shutdown deactivating object\n"));
   ::Stock::StockBroker_var broker = this->_this ();
-  PortableServer::ObjectId_var oid = 
+  PortableServer::ObjectId_var oid =
     this->_default_POA ()->reference_to_id (broker.in ());
-  
-  this->_default_POA ()->deactivate_object (oid.in ());  
+
+  this->_default_POA ()->deactivate_object (oid.in ());
 }
 
 // Implementation skeleton constructor
@@ -119,11 +119,11 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
                                cookie_factory);
 
   Stock::Priority_Mapping::register_mapping (orb);
-  
+
   // Register this class as an event handler with the ORB to catch
-  // ctrl-c from the command line. 
+  // ctrl-c from the command line.
   if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n", 
+    ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
                 "register_handler\n"));
 }
 
@@ -132,7 +132,7 @@ Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
 {
 }
 
-::Stock::StockBroker_ptr 
+::Stock::StockBroker_ptr
 Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
                                  const char *stock_name)
 {
@@ -143,7 +143,7 @@ Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
       // is the <RootPOA>.
       Stock_StockBroker_i *broker =
         new Stock_StockBroker_i (orb_.in (), dist, stock_name);
-      PortableServer::ServantBase_var owner_transfer 
+      PortableServer::ServantBase_var owner_transfer
         = broker;
       this->broker_ = broker->_this ();
     }
@@ -151,18 +151,18 @@ Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
   return Stock::StockBroker::_duplicate (this->broker_.in ());
 }
 
-int 
+int
 Stock_StockBrokerHome_i::handle_signal (int,
                                         siginfo_t *,
                                         ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "Disconnecting all brokers..\n"));
-  
+
   this->broker_->shutdown ();
-  
+
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
-  
+
   this->orb_->shutdown (0);
-  
+
   return 0;
 }

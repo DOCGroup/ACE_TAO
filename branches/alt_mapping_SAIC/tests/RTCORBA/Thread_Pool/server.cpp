@@ -8,8 +8,6 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Thread_Pool, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 int ior_count = 1;
 CORBA::ULong static_threads = 2;
@@ -54,7 +52,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -68,7 +66,7 @@ write_ior_to_file (CORBA::ORB_ptr orb,
   char filename[BUFSIZ];
   ACE_OS::sprintf (filename,
                    "%s_%d",
-                   ior_output_file,
+                   ACE_TEXT_ALWAYS_CHAR (ior_output_file),
                    ior_count++);
 
   FILE *output_file =

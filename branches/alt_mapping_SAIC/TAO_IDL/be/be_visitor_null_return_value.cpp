@@ -30,10 +30,11 @@ be_visitor_null_return_value::~be_visitor_null_return_value (void)
 }
 
 int
-be_visitor_null_return_value::visit_array (be_array *)
+be_visitor_null_return_value::visit_array (be_array *node)
 {
-  os_ << "0";
-  
+  os_ << "static_cast< ::" << node->full_name ()
+      << "_slice *> (0)";
+
   return 0;
 }
 
@@ -66,7 +67,7 @@ be_visitor_null_return_value::visit_home (be_home *node)
 int
 be_visitor_null_return_value::visit_interface (be_interface *node)
 {
-  os_ << "::" << node->full_name () << "::_nil ()";
+  os_ << " ::" << node->full_name () << "::_nil ()";
 
   return 0;
 }
@@ -104,34 +105,49 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
         os_ << "ACE_CDR_LONG_DOUBLE_INITIALIZER";
         break;
       case AST_PredefinedType::PT_object:
-        os_ << "::CORBA::Object::_nil ()";
+        os_ << " ::CORBA::Object::_nil ()";
         break;
       case AST_PredefinedType::PT_abstract:
-        os_ << "::CORBA::AbstractBase::_nil ()";
+        os_ << " ::CORBA::AbstractBase::_nil ()";
         break;
       case AST_PredefinedType::PT_pseudo:
-        os_ << "::CORBA::TypeCode::_nil ()";
+        os_ << " ::CORBA::TypeCode::_nil ()";
         break;
       default: // PT_void not handled.
         break;
     }
-    
+
   return 0;
 }
 
 int
-be_visitor_null_return_value::visit_sequence (be_sequence *)
+be_visitor_null_return_value::visit_sequence (be_sequence *node)
 {
-  os_ << "0";
-  
+  const char *fname = node->full_name ();
+  be_typedef *td = this->ctx_->tdef ();
+
+  if (td != 0)
+    {
+      fname = td->full_name ();
+    }
+
+  os_ << "static_cast< ::" << fname << " *> (0)";
+
   return 0;
 }
 
 int
-be_visitor_null_return_value::visit_string (be_string *)
+be_visitor_null_return_value::visit_string (be_string *node)
 {
-  os_ << "0";
-  
+  if (node->width () == sizeof (char))
+    {
+      os_ << "static_cast<char *> (0)";
+    }
+  else
+    {
+      os_ << "static_cast< ::CORBA::WChar *> (0)";
+    }
+
   return 0;
 }
 
@@ -140,19 +156,21 @@ be_visitor_null_return_value::visit_structure (be_structure *node)
 {
   if (node->size_type () == AST_Type::FIXED)
     {
-      os_ << "::" << node->full_name () << " ()";
+      os_ << " ::" << node->full_name () << " ()";
     }
   else
     {
-      os_ << "0";
+      os_ << "static_cast< ::" << node->full_name ()
+          << " *> (0)";
     }
-  
+
   return 0;
 }
 
 int
 be_visitor_null_return_value::visit_typedef (be_typedef *node)
 {
+  this->ctx_->tdef (node);
   return node->primitive_base_type ()->accept (this);
 }
 
@@ -161,29 +179,32 @@ be_visitor_null_return_value::visit_union (be_union *node)
 {
   if (node->size_type () == AST_Type::FIXED)
     {
-      os_ << "::" << node->full_name () << " ()";
+      os_ << " ::" << node->full_name () << " ()";
     }
   else
     {
-      os_ << "0";
+      os_ << "static_cast< ::" << node->full_name ()
+          << " *> (0)";
     }
-  
+
   return 0;
 }
 
 int
-be_visitor_null_return_value::visit_valuebox (be_valuebox *)
+be_visitor_null_return_value::visit_valuebox (be_valuebox *node)
 {
-  os_ << "0";
-  
+  os_ << "static_cast< ::" << node->full_name ()
+      << " *> (0)";
+
   return 0;
 }
 
 int
-be_visitor_null_return_value::visit_valuetype (be_valuetype *)
+be_visitor_null_return_value::visit_valuetype (be_valuetype *node)
 {
-  os_ << "0";
-  
+  os_ << "static_cast< ::" << node->full_name ()
+      << " *> (0)";
+
   return 0;
 }
 

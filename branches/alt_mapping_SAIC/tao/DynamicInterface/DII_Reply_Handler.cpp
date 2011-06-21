@@ -10,8 +10,6 @@
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 
-ACE_RCSID(DynamicInterface, Request, "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "DII_Reply_Handler.inl"
 #endif /* ! __ACE_INLINE__ */

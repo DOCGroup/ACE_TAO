@@ -6,10 +6,6 @@
 #include "ace/SString.h"
 #include "test_i.h"
 
-ACE_RCSID (Send_File,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = 0;
 const char *cert_file = "cacert.pem";
 
@@ -34,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -134,6 +130,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->destroy (1, 1);
 
       ACE_OS::sleep (1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

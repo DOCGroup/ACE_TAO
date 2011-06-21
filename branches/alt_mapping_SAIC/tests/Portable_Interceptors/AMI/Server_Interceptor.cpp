@@ -11,12 +11,6 @@
 #include "tao/OctetSeqC.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI,
-           Server_Interceptor,
-           "$Id$")
-
-
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
 {
 }

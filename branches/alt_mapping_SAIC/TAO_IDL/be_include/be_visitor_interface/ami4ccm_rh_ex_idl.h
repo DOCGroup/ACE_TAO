@@ -37,13 +37,13 @@ public:
   virtual int visit_argument (be_argument *node);
   virtual int visit_string (be_string *node);
   virtual int visit_sequence (be_sequence *node);
-  
+
   virtual int pre_process (be_decl *node);
-  
+
 private:
   void gen_attr_rh_ops (bool is_set_op,
                         be_attribute *node);
-  
+
 private:
   TAO_OutStream &os_;
   bool seen_in_or_inout_arg_;

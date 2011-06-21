@@ -1,29 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/On_Demand_Activation/Servant_Activator
-//
-// = FILENAME
-//     Servant_Activator.cpp
-//
-// = DESCRIPTION
-//     Implementation of ServantActivator, which is used by a POA with
-//     a RETAIN policy.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Activator.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of ServantActivator, which is used by a POA with
+ *   a RETAIN policy.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "Servant_Activator.h"
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (On_Demand_Activation,
-           Servant_Activator,
-           "$Id$")
 
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

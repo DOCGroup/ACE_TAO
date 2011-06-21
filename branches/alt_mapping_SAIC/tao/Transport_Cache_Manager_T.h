@@ -130,17 +130,14 @@ namespace TAO
     /// Purge the entry from the Cache Map
     int purge_entry (HASH_MAP_ENTRY *& entry);
 
-    /// Mark the entry as invalid for use but keep it in cache.
-    void mark_invalid (HASH_MAP_ENTRY * entry);
-
     /// Mark the entry as connected.
-    void mark_connected (HASH_MAP_ENTRY * entry, bool state);
+    void mark_connected (HASH_MAP_ENTRY *& entry, bool state);
 
     /// Make the entry idle and ready for use.
-    int make_idle (HASH_MAP_ENTRY *entry);
+    int make_idle (HASH_MAP_ENTRY *&entry);
 
     /// Modify the state setting on the provided entry.
-    void set_entry_state (HASH_MAP_ENTRY *entry,
+    void set_entry_state (HASH_MAP_ENTRY *&entry,
                           TAO::Cache_Entries_State state);
 
     /// Mark the entry as touched. This call updates the purging
@@ -206,10 +203,7 @@ namespace TAO
     int close_i (Connection_Handler_Set &handlers);
 
     /// Purge the entry from the Cache Map
-    int purge_entry_i (HASH_MAP_ENTRY *&entry);
-
-    /// Mark the entry as invalid for use but keep it in cache.
-    void mark_invalid_i (HASH_MAP_ENTRY *entry);
+    int purge_entry_i (HASH_MAP_ENTRY *entry);
 
   private:
     /**

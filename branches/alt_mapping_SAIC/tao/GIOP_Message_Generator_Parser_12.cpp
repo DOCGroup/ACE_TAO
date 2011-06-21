@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/GIOP_Message_Generator_Parser_12.h"
 #include "tao/GIOPC.h"
 #include "tao/GIOP_Utils.h"

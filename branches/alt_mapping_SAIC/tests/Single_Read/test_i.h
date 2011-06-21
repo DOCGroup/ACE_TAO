@@ -1,31 +1,30 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/tests/Single_Read
-//
-// = FILENAME
-//   test_i.h
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   test_i.h
+ *
+ *  $Id$
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SINGLE_READ_TEST_I_H
 #define TAO_SINGLE_READ_TEST_I_H
 
 #include "testS.h"
 
+/**
+ * @class test_i
+ *
+ * @brief Simple implementation.
+ */
 class test_i : public POA_test
 {
-  // = TITLE
-  //   Simple implementation.
-  //
 public:
+  /// ctor.
   test_i (CORBA::ORB_ptr orb, const ACE_TCHAR *file_name);
-  // ctor.
 
   // = The test interface methods.
   void method (CORBA::ULong request_number,

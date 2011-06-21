@@ -2,7 +2,7 @@
 interface test
 {
   oneway void one_way (in string message);
-  
+
   string two_way (in string message);
 
   oneway void shutdown ();

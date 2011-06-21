@@ -27,7 +27,7 @@ my $client_conf = $client->LocalFile ("oc_svc.conf");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile ".
                                         "-orbsvcconf $client_conf ".
                                         "-ORBDebugLevel $debug_level");
-                                        
+
 
 if ($client->WaitForFileTimed ($iorbase,
                            $client->ProcessStartWaitInterval()) == -1) {

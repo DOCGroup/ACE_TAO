@@ -12,6 +12,15 @@
  */
 //=============================================================================
 
+#include "global_extern.h"
+#include "utl_strlist.h"
+#include "utl_string.h"
+
+#include "ast_structure.h"
+#include "ast_union.h"
+#include "ast_template_module_ref.h"
+#include "ast_template_module.h"
+
 be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -39,12 +48,170 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       return -1;
     }
-    
-  this->gen_dds_traits ();
-  this->gen_connector_traits ();
-  
+
+  // If we have a connector within a templated module
+  if (! this->t_args_.is_empty ())
+    {
+      // Generate all needed dds_traits
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
+          !i.done ();
+          i.advance ())
+        {
+          AST_Decl **item = 0;
+          i.next (item);
+          AST_Decl *d = *item;
+
+          if (this->is_dds_type (node, d))
+            {
+              this->gen_dds_traits (d);
+            }
+        }
+
+      // Generate connector traits
+      this->gen_connector_traits ();
+
+      os_ << be_nl_2
+          << "class " << this->export_macro_.c_str () << " "
+          << this->node_->local_name () << "_exec_i" << be_idt_nl
+          << ": public " << this->base_tname_ << "_Connector_T";
+
+      os_ << " <" << be_idt << be_idt_nl;
+
+      os_ << "CCM_" << this->node_->flat_name ()
+          << "_Traits," << be_nl;
+
+      size_t slot = 1UL;
+
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
+          !i.done ();
+          i.advance (), ++slot)
+        {
+          AST_Decl **item = 0;
+          i.next (item);
+          AST_Decl *d = *item;
+
+          if (this->is_dds_type (node, d))
+            {
+              os_ << d->flat_name ()
+                  << "_DDS_Traits";
+            }
+          else
+            {
+              os_ << d->name ();
+            }
+
+          bool needs_bool = false;
+          bool is_fixed = false;
+          FE_Utils::T_Param_Info *param = 0;
+
+          if (this->t_params_->get (param, slot - 1) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_connector_dds_exh::")
+                                 ACE_TEXT ("visit_connector - ")
+                                 ACE_TEXT ("template param fetch failed\n ")),
+                                -1);
+            }
+
+          if (d->node_type () == AST_Decl::NT_typedef)
+            {
+              /// Strip away all layers of typedef before narrowing.
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              d = td->primitive_base_type ();
+            }
+
+          /// No need to check if this is 0, but must narrow
+          /// to call virtual function size_type() below.
+          AST_Type *t = AST_Type::narrow_from_decl (d);
+
+          switch (param->type_)
+            {
+              case AST_Decl::NT_type:
+              case AST_Decl::NT_struct:
+              case AST_Decl::NT_union:
+                needs_bool = true;
+                is_fixed = (t->size_type () == AST_Type::FIXED);
+                break;
+              default:
+                break;
+            }
+
+          if (needs_bool)
+            {
+              os_ << "," << be_nl
+                  << (is_fixed ? "true" : "false");
+            }
+
+          if (slot < this->t_args_.size ())
+            {
+              os_ << "," << be_nl;
+            }
+        }
+
+      os_ << ">";
+
+      os_ << be_uidt << be_uidt << be_uidt_nl
+          << "{" << be_nl
+          << "public:" << be_idt_nl
+          << this->node_->local_name () << "_exec_i (void);" << be_nl
+          << "virtual ~" << this->node_->local_name ()
+          << "_exec_i (void);" << be_uidt_nl
+          << "};";
+
+      this->gen_exec_entrypoint_decl ();
+
+    }
+
+  os_ << be_uidt_nl
+      << "}";
+
+  /// Unset the flags in the port interfaces list. This is
+  /// also done in visit_mirror_port(), but we must also do
+  /// it here to catch a port interface that didn't come to
+  /// us from an extended port or mirror port.
+  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
+        this->port_ifaces_);
+      !iter.done ();
+      iter.advance ())
+    {
+      be_interface **item = 0;
+      iter.next (item);
+
+      (*item)->dds_connector_traits_done (false);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_connector_dds_exh::visit_mirror_port (
+  be_mirror_port *node)
+{
+  os_ << be_nl
+      << "struct " << node->local_name ()->get_string ()
+      << "_traits" << be_nl
+      << "{" << be_idt;
+
+  /// Reuse the code in the base class to flip the
+  /// facet/receptacle elements in the scope. We will end up
+  /// in visit_provides() and visit_uses() below.
+  int status =
+    this->be_visitor_component_scope::visit_mirror_port (node);
+
+  if (status != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_connector_dds_exh::")
+                         ACE_TEXT ("visit_mirror_port - ")
+                         ACE_TEXT ("base class traversal failed\n ")),
+                        -1);
+    }
+
+  os_ << be_uidt_nl
+      << "};" << be_nl;
+
   /// Unset the flags in the port interfaces list so
-  /// they can be used again in another connector.
+  /// they can be used again in another port.
   for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
          this->port_ifaces_);
        !iter.done ();
@@ -52,61 +219,9 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     {
       be_interface **item = 0;
       iter.next (item);
-      
+
       (*item)->dds_connector_traits_done (false);
     }
-  
-  /// Assumes parent connector exists and is either DDS_State
-  /// or DDS_Event, so we generate inheritance from the
-  /// corresponding template. May have to generalize this logic.
-  os_ << be_nl << be_nl
-      << "class " << this->export_macro_.c_str () << " "
-      << this->node_->local_name () << "_exec_i" << be_idt_nl
-      << ": public " << this->base_tname_ << "_Connector_T";
-
-  AST_Decl **datatype = 0;
-  int status = this->t_args_->get (datatype, 0UL);
-
-  if (status != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_dds_traits - ")
-                  ACE_TEXT ("template arg not found\n ")));
-
-      return -1;
-    }
-
-  AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
-
-  os_ << " <" << be_idt << be_idt_nl
-      << this->dds_traits_name_.c_str () << "," << be_nl
-      << "DDS_" << this->node_->local_name ()
-      << "_Traits," << be_nl;
-
-  if (ut->size_type () == AST_Type::FIXED)
-    {
-      os_ << "true, ";
-    }
-  else
-    {
-      os_ << "false, ";
-    }
-
-  os_ << be_nl << "DDS4CCM_NDDS" << ">";
-
-  os_ << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "public:" << be_idt_nl
-      << this->node_->local_name () << "_exec_i (void);" << be_nl
-      << "virtual ~" << this->node_->local_name ()
-      << "_exec_i (void);" << be_uidt_nl
-      << "};";
-
-  this->gen_exec_entrypoint_decl ();
-
-  os_ << be_uidt_nl
-      << "}";
 
   return 0;
 }
@@ -116,9 +231,9 @@ be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 {
   be_interface *iface =
     be_interface::narrow_from_decl (node->provides_type ());
-  
-  this->gen_interface_connector_trait (iface, true);
-    
+
+  this->gen_interface_connector_trait (iface, node, true);
+
   return 0;
 }
 
@@ -127,37 +242,50 @@ be_visitor_connector_dds_exh::visit_uses (be_uses *node)
 {
   be_interface *iface =
     be_interface::narrow_from_decl (node->uses_type ());
-    
-  this->gen_interface_connector_trait (iface, false);
-    
+
+  this->gen_interface_connector_trait (iface, node, false);
+
+  return 0;
+}
+
+int
+be_visitor_connector_dds_exh::visit_attribute (
+  be_attribute *node)
+{
+  AST_Decl::NodeType nt =
+    ScopeAsDecl (node->defined_in ())->node_type ();
+
+  /// We are interested in attributes in extended ports
+  /// and connectors, skip all others.
+  if (nt == AST_Decl::NT_component)
+    {
+      return 0;
+    }
+
+  os_ << be_nl
+      << "typedef "
+      << node->field_type ()->full_name () << " "
+      << node->local_name ()->get_string () << "_type;";
+
   return 0;
 }
 
 void
-be_visitor_connector_dds_exh::gen_dds_traits (void)
+be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
 {
-  /// We depend on the DDS datatype being the first template
-  /// argument for now, this may change.
-  AST_Decl **datatype = 0;
-  int const status = this->t_args_->get (datatype, 0UL);
+  AST_Decl *comp_scope =
+    ScopeAsDecl (this->node_->defined_in ());
 
-  if (status != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_dds_traits - ")
-                  ACE_TEXT ("template arg not found\n ")));
+  bool const global_comp =
+    (comp_scope->node_type () == AST_Decl::NT_root);
 
-      return;
-    }
-
-  UTL_ScopedName *dt_name = (*datatype)->name ();
+  UTL_ScopedName *dt_name = datatype->name ();
   BE_GlobalData::DDS_IMPL the_dds_impl = be_global->dds_impl ();
 
-  if (the_dds_impl != BE_GlobalData::NONE)
+  if (the_dds_impl != BE_GlobalData::DDS_NONE)
     {
       os_ << be_nl
-          << "struct " << this->dds_traits_name_.c_str () << be_nl
+          << "struct " << datatype->flat_name () << "_DDS_Traits" << be_nl
           << "{" << be_idt_nl
           << "typedef ::" << dt_name << " value_type;" << be_nl
           << "typedef ::" << dt_name;
@@ -166,14 +294,53 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
         {
           os_ << "RTI";
         }
-        
-      os_ << "Seq dds_seq_type;" << be_nl
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "DDS";
+        }
+
+      os_ << "Seq dds_seq_type;" << be_nl;
+
+      if (the_dds_impl == BE_GlobalData::NDDS)
+        {
+          os_ << "typedef ::" << dt_name
+              << "TypeSupport type_support;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::COREDX)
+        {
+          os_ << "typedef ::" << dt_name
+              << "TypeSupport type_support;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "typedef ::" << dt_name
+              << "TypeSupportImpl type_support;" << be_nl;
+        }
+
+      if (the_dds_impl == BE_GlobalData::NDDS)
+        {
+          os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
+              << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::COREDX)
+        {
+          os_ << "typedef ::DDS_SampleInfoSeq sampleinfo_seq_type;" << be_nl
+              << "typedef ::DDS_SampleInfo sampleinfo_type;" << be_nl;
+        }
+      else if (the_dds_impl == BE_GlobalData::OPENDDS)
+        {
+          os_ << "typedef ::DDS::SampleInfoSeq sampleinfo_seq_type;" << be_nl
+              << "typedef ::DDS::SampleInfo sampleinfo_type;" << be_nl;
+        }
+
+      os_ << "typedef ::" << dt_name
+          << "DataWriter datawriter_type;" << be_nl
           << "typedef ::" << dt_name
-          << "TypeSupport type_support;" << be_nl
-          << "typedef ::" << dt_name
-          << "DataWriter data_writer;" << be_nl
-          << "typedef ::" << dt_name
-          << "DataReader data_reader;" << be_uidt_nl
+          << "DataReader datareader_type;" << be_nl
+          << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
+          << "::DataWriter typed_writer_type;" << be_nl
+          << "typedef " << (global_comp ? "" : "::") << comp_scope->full_name ()
+          << "::DataReader typed_reader_type;" << be_uidt_nl
           << "};";
     }
 }
@@ -181,50 +348,23 @@ be_visitor_connector_dds_exh::gen_dds_traits (void)
 void
 be_visitor_connector_dds_exh::gen_connector_traits (void)
 {
-  AST_Decl **dt = 0;
-  int status = this->t_args_->get (dt, 0UL);
-
-  if (status != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_connector_traits - ")
-                  ACE_TEXT ("first template arg not found\n ")));
-
-      return;
-    }
-
-  AST_Decl **dt_seq = 0;
-  status = this->t_args_->get (dt_seq, 1UL);
-
-  if (status != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_connector_traits - ")
-                  ACE_TEXT ("second template arg not found\n ")));
-
-      return;
-    }
-
   AST_Decl *comp_scope =
     ScopeAsDecl (this->node_->defined_in ());
 
   bool global_comp =
     (comp_scope->node_type () == AST_Decl::NT_root);
-    
-  os_ << be_nl << be_nl
-      << "struct DDS_" << this->node_->local_name () 
+
+  os_ << be_nl_2
+      << "struct CCM_" << this->node_->flat_name ()
       << "_Traits" << be_nl
       << "{" << be_idt_nl
       << "typedef ::CIAO_" << this->node_->flat_name () << "_Impl::"
       << this->node_->local_name () << "_Exec base_type;" << be_nl
-      << "typedef ::" << (*dt)->name () << " value_type;" << be_nl
-      << "typedef ::" << (*dt_seq)->name () << " seq_type;" << be_nl
       << "typedef " << (global_comp ? "" : "::")
       << comp_scope->name () << "::CCM_"
-      << this->node_->local_name () << "_Context context_type;";
-      
+      << this->node_->local_name () << "_Context context_type;"
+      << be_nl;
+
   if (this->visit_component_scope (this->node_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -234,7 +374,6 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 
       return;
     }
-      
   os_ << be_uidt_nl
       << "};";
 }
@@ -242,21 +381,23 @@ be_visitor_connector_dds_exh::gen_connector_traits (void)
 void
 be_visitor_connector_dds_exh::gen_interface_connector_trait (
   be_interface *iface,
+  be_field *port_elem,
   bool for_facet)
 {
   if (!iface->dds_connector_traits_done ())
-    {  
+    {
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
       bool global = (scope->node_type () == AST_Decl::NT_root);
       const char *smart_scope = (global ? "" : "::");
       const char *lname = iface->local_name ();
-      
+
       os_ << be_nl
           << "typedef ::" << scope->name () << smart_scope
-          << (for_facet ? "CCM_" : "") << lname
-          << " " << tao_cg->downcase (lname) << "_type;";
-          
-      iface->dds_connector_traits_done (true);  
+          << (!for_facet ? "" : "CCM_") << lname
+          << " " << port_elem->local_name ()->get_string ()
+          << "_type;";
+
+      iface->dds_connector_traits_done (true);
       this->port_ifaces_.enqueue_tail (iface);
     }
 }

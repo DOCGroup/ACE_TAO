@@ -4,10 +4,6 @@
 #include "Memory_Growth.h"
 #include "ace/Manual_Event.h"
 
-ACE_RCSID (IORSize,
-           Memory_Growth,
-           "$Id$")
-
 Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

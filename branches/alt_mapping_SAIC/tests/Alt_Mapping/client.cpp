@@ -1,18 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    This file contains the implementation of the client-side of the
-//    Alt_Mapping application.
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  This file contains the implementation of the client-side of the
+ *  Alt_Mapping application.
+ *
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #ifndef CLIENT_CPP
 #define CLIENT_CPP
@@ -145,7 +145,7 @@ Alt_Mapping_Client<T>::run_sii_test (void)
                   "********** Finished running %s SII *********\n",
                   opname));
     }
-    
+
   return this->results_.error_count () ? -1 : 0;
 }
 
