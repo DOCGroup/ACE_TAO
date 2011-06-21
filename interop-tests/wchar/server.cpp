@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    interop_test/wchar
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    C++ server side for testing interoperability with wchar data.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  C++ server side for testing interoperability with wchar data.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 #include "interop_wchar_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
@@ -52,7 +49,7 @@ parse_args (int argc, ACE_TCHAR* argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -79,7 +76,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
   try
     {
         // Initialize orb
-        CORBA::ORB_var orb = 
+        CORBA::ORB_var orb =
           CORBA::ORB_init( command_line.get_argc(),
                            command_line.get_ASCII_argv() );
         if (parse_args(command_line.get_argc(),

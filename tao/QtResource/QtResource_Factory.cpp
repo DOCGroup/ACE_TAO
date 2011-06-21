@@ -4,10 +4,6 @@
 #include "tao/debug.h"
 #include "ace/QtReactor/QtReactor.h"
 
-ACE_RCSID (TAO_QtResource,
-           QtResource_Factory,
-           "$Id$");
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

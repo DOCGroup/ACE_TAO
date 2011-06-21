@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/ARGV.h"
-#include "ace/OS.h"
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Service_Config.h"

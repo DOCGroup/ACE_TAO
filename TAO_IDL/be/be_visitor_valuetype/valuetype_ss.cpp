@@ -59,7 +59,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     this->generate_flat_name (node);
 
   *os << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -79,7 +79,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
       << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
+      << "{}" << be_nl_2;
 
 // @@@ (JP) I'm commenting out the copy constructor for now. The
 // declaration in the skeleton header file has been made private. These
@@ -112,7 +112,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     }
 
   *os << "ValueBase (rhs)" << be_uidt << be_uidt_nl
-      << "{}" << be_nl << be_nl;
+      << "{}" << be_nl_2;
 */
 
   *os << full_skel_name << "::~"

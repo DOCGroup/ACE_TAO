@@ -1,23 +1,20 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/Non_Servant_Upcalls
-//
-// = FILENAME
-//     Non_Servant_Upcalls.cpp
-//
-// = DESCRIPTION
-//     This program tests the users ability to make calls on a POA
-//     during non-servant upcalls.  In this example, a servant which
-//     is being destroyed during because of a deactivate_object()
-//     call, tries to deactivate another object in its destructor.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     Non_Servant_Upcalls.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the users ability to make calls on a POA
+ *   during non-servant upcalls.  In this example, a servant which
+ *   is being destroyed during because of a deactivate_object()
+ *   call, tries to deactivate another object in its destructor.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 

@@ -27,7 +27,6 @@
 #include "tao/Versioned_Namespace.h"
 #include "tao/orbconf.h"
 #include "ace/Message_Block.h"
-#include "ace/Synch_T.h"
 #include "ace/Containers_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -37,14 +37,14 @@ $client->DeleteFile($iorbase);
 
 $hostname = $server->HostName();
 
-$SV = $server->CreateProcess ("server", 
+$SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBEndPoint htiop://$hostname: " .
                               "-ORBSvcConf $server_conf " .
                               "-i $iterations " .
                               "-o $server_iorfile");
 
-                              
+
 $CL = $client->CreateProcess ("client",
                               "-ORBSvcConf $client_conf " .
                               "-k file://$client_iorfile");

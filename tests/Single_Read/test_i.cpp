@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Single_Read, test_i, "$Id$")
-
 test_i::test_i (CORBA::ORB_ptr orb, const ACE_TCHAR *file_name)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     client_done_ (false),

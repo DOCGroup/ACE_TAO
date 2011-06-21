@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/GIOP_Message_Base.h"
@@ -684,8 +685,12 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 #endif
   if (TAO_debug_level > 9)
-    { //due to alignment data block has an offset which needs to be corrected
-      this->dump_msg ("recv",
+    {
+      char buf[48];
+      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+                       transport->id ());
+      //due to alignment data block has an offset which needs to be corrected
+      this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
                       db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);
     }
@@ -796,7 +801,10 @@ TAO_GIOP_Message_Base::process_reply_message (
 #endif
   if (TAO_debug_level > 9)
     {
-      this->dump_msg ("recv",
+      char buf[48];
+      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+                       params.transport_->id ());
+      this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
                       db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);
     }

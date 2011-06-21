@@ -42,26 +42,26 @@ $act->DeleteFile ($actiorfile);
 $srv->DeleteFile ($srviorfile);
 $cli->DeleteFile ($srviorfile);
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/ImplRepo_Service", 
+$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-o $imr_imriorfile");
-$ACT = $act->CreateProcess ("../../../ImplRepo_Service/ImR_Activator", 
+$ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator",
                             "-o $act_actiorfile ".
                             "-ORBInitRef ImplRepoService=file://$act_imriorfile");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 $CLI = $cli->CreateProcess ("client",
-                            "-k file://$cli_srviorfile");
+                            "-k file://$cli_srviorfile -ORBDebugLevel $debug_level");
 $SRV = $srv->CreateProcess ("server");
 
 my $server_cmd = $SRV->Executable();
 my $srv_server_cmd = $imr->LocalFile ($server_cmd);
 
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ". 
+$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                 "add test_server -c \"$srv_server_cmd ".
                 "-ORBInitRef ImplRepoService=file://$imr_imriorfile ".
-                "-ORBUseIMR 1 ".
+                "-ORBUseIMR 1 -ORBDebugLevel $debug_level ".
                 "-o $srv_srviorfile\"");
-                            
-                            
+
+
 # We want the tao_imr executable to be found exactly in the path
 # given, without being modified by the value of -ExeSubDir.
 # So, we tell its Process object to ignore the setting of -ExeSubDir.

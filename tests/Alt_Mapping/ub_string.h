@@ -1,9 +1,8 @@
-// $Id$
 
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Param_Test
+//    TAO/tests/Alt_Mapping
 //
 // = FILENAME
 //    unbounded_string.h
@@ -28,37 +27,37 @@
 class Test_Unbounded_String
 {
 public:
+  /// ctor
   Test_Unbounded_String (void);
-  // ctor
 
+  /// dtor
   ~Test_Unbounded_String (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Alt_Mapping_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Alt_Mapping_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
 private:
+  /// operation name
   char *opname_;
-  // operation name
-  
+
   std::string in_;
   std::string inout_;
   std::string out_;

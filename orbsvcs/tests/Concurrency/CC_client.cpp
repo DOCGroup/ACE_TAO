@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests
-//
-// = FILENAME
-//    CC_client.h
-//
-// = DESCRIPTION
-//      This is the test class for the concurrency service. The class
-//      implements a client to the concurrency service.
-//      This file contains the main function for the test.
-//
-// = AUTHORS
-//      Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    CC_client.cpp
+ *
+ *  $Id$
+ *
+ *    This is the test class for the concurrency service. The class
+ *    implements a client to the concurrency service.
+ *    This file contains the main function for the test.
+ *
+ *
+ *  @author   Torben Worm <tworm@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "CC_client.h"
 
@@ -29,7 +26,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(Concurrency, CC_client, "$Id$")
+
 
 // Constructor.
 CC_Client::CC_Client (void)

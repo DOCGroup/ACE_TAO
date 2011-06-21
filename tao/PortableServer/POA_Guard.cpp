@@ -27,12 +27,14 @@ namespace TAO
       poa.object_adapter ().wait_for_non_servant_upcalls_to_complete ();
 
       if (check_for_destruction && poa.cleanup_in_progress ())
-        throw
-          CORBA::BAD_INV_ORDER (
-            CORBA::SystemException::_tao_minor_code (
-              TAO_POA_BEING_DESTROYED,
-              0),
-            CORBA::COMPLETED_NO);
+        {
+          throw
+            CORBA::BAD_INV_ORDER (
+              CORBA::SystemException::_tao_minor_code (
+                TAO_POA_BEING_DESTROYED,
+                0),
+              CORBA::COMPLETED_NO);
+        }
     }
   }
 }

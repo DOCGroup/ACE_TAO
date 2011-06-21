@@ -9,6 +9,7 @@ project(*idl): taoidldefaults {
 }
 
 project(*test): taoclient {
+  after += *idl
   Source_Files {
     test.cpp
     testC.cpp

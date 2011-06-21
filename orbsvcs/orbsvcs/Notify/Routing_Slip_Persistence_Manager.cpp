@@ -580,7 +580,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     mblk = mblk->cont();
     remainder = this->fill_block(*first_block, pos, mblk, 0);
   }
-  first_header.data_size = 
+  first_header.data_size =
     static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (data_size - remainder);
   first_header.next_overflow = 0;
 
@@ -598,7 +598,7 @@ Routing_Slip_Persistence_Manager::build_chain(
     prevhdr->next_overflow = ACE_Utils::truncate_cast<Block_Number> (curblk->block_number());
     prevhdr->put_header(*prevblk);
     pos = hdr->put_header(*curblk);
-    hdr->data_size = 
+    hdr->data_size =
       static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (remainder);
 
     size_t offset_into_msg = mblk->length() - remainder;
@@ -610,7 +610,7 @@ Routing_Slip_Persistence_Manager::build_chain(
       remainder = this->fill_block(*curblk, pos, mblk, 0);
     }
 
-    hdr->data_size = hdr->data_size - 
+    hdr->data_size = hdr->data_size -
       static_cast<TAO_Notify::Routing_Slip_Persistence_Manager::Block_Size> (remainder);
     if (prevblk != first_block)
     {

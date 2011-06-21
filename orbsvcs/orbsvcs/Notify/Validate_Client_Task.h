@@ -41,7 +41,7 @@ class TAO_Notify_EventChannelFactory;
  * = LOCKING
  * = TODO
  */
-class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task 
+class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
   : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
@@ -65,7 +65,7 @@ private:
   /// The delay of first time validate.
   ACE_Time_Value delay_;
 
-  /// The validate interval 
+  /// The validate interval
   ACE_Time_Value interval_;
 
   /// The event channel

@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    interface.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    interface.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 // Used to be a problem in the get() and set()
 // generated code.
@@ -126,8 +123,10 @@ interface Client
 // attributes.
 interface AttributeTester
 {
+  typedef string string_1[1];
+
   attribute string a_su;
-  attribute string<1> a_sb;
+  attribute string_1 a_sb;
 };
 
 // All of the 'recursion' below is legal.
@@ -218,12 +217,12 @@ module redefs
   interface base
   {
     const long lconst = -5;
-    
+
     exception ex
     {
       string info;
     };
-    
+
     struct foo
     {
       short index;
@@ -233,12 +232,12 @@ module redefs
   interface derived : base
   {
     const long lconst = 44;
-    
+
     exception ex
     {
       long serial;
     };
-    
+
     struct foo
     {
       string str;

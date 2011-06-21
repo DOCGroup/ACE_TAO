@@ -145,7 +145,7 @@ protected:
 
   virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
   // Moved out of private section so it can be called from subclass.
-  
+
 private:
   // Data.
 
@@ -174,7 +174,7 @@ private:
 
   friend int tao_yyparse (void);
   friend class ast_visitor_tmpl_module_inst;
-  
+
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);

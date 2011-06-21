@@ -1,11 +1,6 @@
 // $Id$
 
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
-
-ACE_RCSID (CSD_ThreadPool,
-           TP_Collocated_Synch_With_Server_Request,
-           "$Id$")
-
 #include "tao/Exception.h"
 
 #if !defined (__ACE_INLINE__)

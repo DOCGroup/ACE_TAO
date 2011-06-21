@@ -1,6 +1,6 @@
-#include "Receiver_i.h"
+// $Id$
 
-ACE_RCSID(Oneways_Invoking_Twoways, Receiver_i, "$Id$")
+#include "Receiver_i.h"
 
 Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
                         Test::Sender_ptr sender,
@@ -15,8 +15,6 @@ Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
 Receiver_i::~Receiver_i (void)
 {
 }
-
-
 
 CORBA::Long
 Receiver_i::receive_call (void)

@@ -37,8 +37,8 @@ for my $p (@nslist_paths) {
     $nslist_path = $use_path . '/tao_nslist';
     last;
   }
-  if ($exec_extn ne "" && -e $p . '/tao_nslist' . $exec_extn) {
-    $nslist_path = $use_path . '/tao_nslist' . $exec_extn;
+  if ($exec_extn ne "" && -e $p->[0] . '/tao_nslist' . $exec_extn) {
+    $nslist_path = $use_path . '/tao_nslist';
     last;
   }
 }
@@ -48,8 +48,16 @@ if ($nslist_path eq "") {
     exit 1;
 }
 
+## The two test targets will communicate over shared memory (SHMIOP) so they
+## can't be 32-bit and 64-bit executables on the same host.
+my $target_ns_list = 2;
+if (exists $ENV{'DOC_TEST_2_EXE_SUBDIR'} && $ENV{'DOC_TEST_2_OS'} eq 'local' &&
+    $ENV{'DOC_TEST_2_EXE_SUBDIR'} ne $PerlACE::Process::ExeSubDir) {
+  $target_ns_list = 1;
+}
+
 my $ns_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $ns_list = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+my $ns_list = PerlACE::TestTarget::create_target ($target_ns_list) || die "Create target $target_ns_list failed\n";
 
 my $iorbase = "ns.ior";
 my $ns_service_iorfile = $ns_service->LocalFile ($iorbase);
@@ -57,7 +65,7 @@ my $ns_list_iorfile = $ns_list->LocalFile ($iorbase);
 $ns_service->DeleteFile($iorbase);
 $ns_list->DeleteFile($iorbase);
 
-$NS = $ns_service->CreateProcess ("../../../../TAO/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns_service->CreateProcess ("../../../../TAO/orbsvcs/Naming_Service/tao_cosnaming",
                                   "-ORBdebuglevel $debug_level -o $ns_service_iorfile ".
                                   "-ORBObjRefStyle URL -ORBEndpoint shmiop:// -ORBSvcConfDirective ".
                                   "\"dynamic SHMIOP_Factory Service_Object ".

@@ -3,7 +3,7 @@
 interface LCD_Display
 {
   void send_val (in long val);
-  // Remote method through which the 
+  // Remote method through which the
   // slider sets the value of the lcd display
 
   void shutdown ();

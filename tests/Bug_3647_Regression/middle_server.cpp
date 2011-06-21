@@ -1,19 +1,15 @@
+// -*- C++ -*-
 // $Id$
 
 #include "Middle_Impl.h"
 
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/Utils/RIR_Narrow.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Bug_3647_Regression,
-           middle_server,
-           "$Id$")
 
 bool verbose = false;
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
@@ -101,7 +97,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       timeout = tmp;
     }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -172,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       using namespace Bug_3647_Regression;
-      TAO::Utils::Servant_Var<Middle_Impl> impl(
+      PortableServer::ServantBase_var impl(
           new Middle_Impl(backend.in(), orb.in(), verbose,
                           timeout));
 

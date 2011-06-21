@@ -9,8 +9,6 @@
 #include "ace/Synch.h"
 #include "ace/Auto_Event.h"
 
-ACE_RCSID(Test, First_i, "$Id$")
-
 First_i::First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     two_way_done_(two_way_done)

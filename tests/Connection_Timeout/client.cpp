@@ -6,8 +6,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(Connection_Timeout, client, "$Id$")
-
 const ACE_TCHAR *ior =
   ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject");
 
@@ -36,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

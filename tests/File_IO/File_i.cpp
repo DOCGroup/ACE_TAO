@@ -1,25 +1,23 @@
-// $Id$
 
-//===================================================================
-//
-// = FILENAME
-//     File_i.cpp
-//
-// = DESCRIPTION
-//      Implementation of the File IDL module and the interfaces
-//      Descriptor and System in it.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file     File_i.cpp
+ *
+ *  $Id$
+ *
+ *    Implementation of the File IDL module and the interfaces
+ *    Descriptor and System in it.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "File_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Default_Servant, File_i, "File_i.cpp,v 1.14 2001/03/04 19:27:53 irfan Exp")
 
 // IDL File::System constructor
 FileImpl::System::System (PortableServer::POA_ptr poa)

@@ -1,14 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Messaging.pidl
  *
  *  $Id$
- *
- * This file is used to generate the code in Messaging{C,S}.{h,cpp}
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_PIDL
 #define TAO_MESSAGING_PIDL

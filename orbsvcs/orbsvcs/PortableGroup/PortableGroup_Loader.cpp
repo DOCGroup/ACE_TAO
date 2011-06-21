@@ -7,11 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (PortableGroup,
-           PortableGroup_Loader,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)

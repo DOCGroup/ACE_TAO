@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/LocateRequest_Invocation_Adapter.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"

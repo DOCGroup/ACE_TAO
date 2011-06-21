@@ -69,7 +69,7 @@ public:
   void set_upcall_thread (void);
 
   /// Is there any thread running as a leader?
-  int leader_available (void) const;
+  bool leader_available (void) const;
 
   /// A server thread is making a request.
   void set_client_thread (void);
@@ -80,7 +80,7 @@ public:
   /// Wait on the Leader/Followers loop until one event happens.
   /**
    * @param event The event we wait for, the loop iterates until the
-   * event is sucessful, or it fails due to timeout, and error or a
+   * event is successful, or it fails due to timeout, and error or a
    * connection closed.
    * @param transport The transport attached to the event
    * @param max_wait_time Limit the time spent on the loop
@@ -103,12 +103,12 @@ public:
   /// side leader-follower set.
   void reset_client_leader_thread (void) ;
 
-  /// sets the thread ID of the leader thread in the leader-follower
+  /// Sets the thread ID of the leader thread in the leader-follower
   /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
 
-  /// checks if we are a leader thread
-  int is_client_leader_thread (void) const;
+  /// Checks if we are a leader thread
+  bool is_client_leader_thread (void) const;
 
   /**
    * A leader thread is relinquishing its role, unless there are more
@@ -117,7 +117,7 @@ public:
    */
   int elect_new_leader (void);
 
-  /** @name Follower creation/destructions
+  /** @name Follower creation/destruction
    *
    * The Leader/Followers set acts as a factory for the Follower
    * objects.  Followers are used to represent a thread blocked
@@ -157,9 +157,9 @@ public:
 
   /// Checks if there are any followers available
   /**
-   * @return 1 if there follower set is not empty
+   * @return true if there follower set is not empty
    */
-  int follower_available (void) const;
+  bool follower_available (void) const;
 
   //@}
 
@@ -176,7 +176,7 @@ public:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
 
   /// Check if there are any client threads running
-  int has_clients (void) const;
+  bool has_clients (void) const;
 
   /// Accesor to the reactor
   ACE_Reactor *reactor (void);
@@ -205,7 +205,7 @@ private:
    *
    */
   //@{
-  /// Remote a follower from the Followers set and promote it to the
+  /// Remove a follower from the Followers set and promote it to the
   /// leader role.
   /**
    * This is a helper routine for elect_new_leader(), after verifying

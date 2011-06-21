@@ -4,8 +4,6 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Muxing, Client_Task, "Client_Task.cpp,v 1.1 2001/03/10 23:37:42 coryan Exp")
-
 Client_Task::Client_Task (CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)

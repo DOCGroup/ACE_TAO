@@ -1,9 +1,6 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
-
-
-ACE_RCSID (LoadBalancer,
-           LB_LoadAlert,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"

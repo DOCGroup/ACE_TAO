@@ -39,6 +39,8 @@
 #include "orbsvcs/Event/EC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Default_Factory::~TAO_EC_Default_Factory (void)

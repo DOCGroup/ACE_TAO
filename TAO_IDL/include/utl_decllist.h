@@ -86,7 +86,7 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_DeclList (FE_Declarator *s, 
+  UTL_DeclList (FE_Declarator *s,
                 UTL_DeclList *cdr);
 
   // Get element

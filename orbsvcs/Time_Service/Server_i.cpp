@@ -9,7 +9,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID(Time_Service, Server_i, "$Id$")
+
 
 // Constructor.
 Server_i::Server_i (void)

@@ -2,10 +2,6 @@
 
 #include "tao/RTCORBA/RT_Service_Context_Handler.h"
 
-ACE_RCSID (RTCORBA,
-           RT_Service_Context_Handler,
-           "$Id$")
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/RTCORBA/RT_Policy_i.h"
@@ -68,7 +64,7 @@ TAO_RT_Service_Context_Handler::generate_service_context (
               else
                 {
                   if (TAO_debug_level > 0)
-                    ACE_DEBUG ((LM_DEBUG, "ERROR: TAO_RT_Protocols_Hooks::rt_service_context. "
+                    ACE_ERROR ((LM_ERROR, "ERROR: TAO_RT_Protocols_Hooks::rt_service_context. "
                                 "Unable to access RT CORBA Priority in client thread "
                                 "accessing object with CLIENT_PROPAGATED priority model.\n"));
                   throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);

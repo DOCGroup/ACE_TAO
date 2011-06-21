@@ -8,7 +8,7 @@
  */
 #include "Echo_Callback.h"
 
-ACE_RCSID(Notify_Crash, Echo_Callback, "$Id$")
+
 
 Echo_Callback::Echo_Callback()
 {

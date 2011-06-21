@@ -1,14 +1,11 @@
+// $Id$
+
 #include "RTEvent_Logging_Service.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/OS_main.h"
 
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
-
-ACE_RCSID (RTEvent_Logging_Service,
-           RTEvent_Logging_Server,
-           "$Id$")
-
 
 class Logging_Svc_Shutdown
   : public Shutdown_Functor

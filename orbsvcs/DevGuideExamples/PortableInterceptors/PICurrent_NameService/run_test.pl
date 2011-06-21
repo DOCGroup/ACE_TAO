@@ -28,7 +28,7 @@ $ns->DeleteFile ($nsiorfile);
 $hostname = $ns->HostName ();
 $PORT=9876;
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, " -o $ns_nsiorfile ".
                                         "-ORBListenEndpoints iiop://$hostname:$PORT");
 
@@ -69,7 +69,7 @@ if ($CLI_status != 0) {
     $status = 1;
 }
 
-# clean-up 
+# clean-up
 $SRV_status = $SRV->TerminateWaitKill ($srv->ProcessStopWaitInterval());
 
 if ($SRV_status != 0) {

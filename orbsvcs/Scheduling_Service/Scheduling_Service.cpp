@@ -9,12 +9,7 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
-
-ACE_RCSID (Scheduling_Service,
-           Scheduling_Service,
-           "$Id$")
-
-// Default Constructor.
+#include "ace/OS_NS_unistd.h"
 
 TAO_Scheduling_Service::TAO_Scheduling_Service (void)
   : scheduler_impl_ (0),
@@ -23,9 +18,7 @@ TAO_Scheduling_Service::TAO_Scheduling_Service (void)
 {
 }
 
-
 // Constructor taking the command-line arguments.
-
 TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[])
   : scheduler_impl_ (0),
     service_name_ ("ScheduleService"),
@@ -34,15 +27,11 @@ TAO_Scheduling_Service::TAO_Scheduling_Service (int argc, ACE_TCHAR* argv[])
   this->init (argc, argv);
 }
 
-// Destructor.
-
 TAO_Scheduling_Service::~TAO_Scheduling_Service (void)
 {
 }
 
-
 // Initialize the Scheduling Service with the arguments.
-
 int
 TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
 {

@@ -4,8 +4,6 @@
 #include "Roundtrip_Handler.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(AMI_Latency, Roundtrip, "$Id$")
-
 Roundtrip_Handler::Roundtrip_Handler (int expected_callbacks)
   : pending_callbacks_ (expected_callbacks)
 {

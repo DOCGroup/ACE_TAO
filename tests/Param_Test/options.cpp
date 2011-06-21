@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    options.cpp
-//
-// = DESCRIPTION
-//    Options for the Param_Test application
-//
-// = AUTHORS
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    options.cpp
+ *
+ *  $Id$
+ *
+ *  Options for the Param_Test application
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "options.h"
 #include "tao/debug.h"
@@ -24,11 +21,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Param_Test,
-           options,
-           "$Id$")
-
-// Constructor.p
+// Constructor.
 Options::Options (void)
   : ior_ (CORBA::string_dup ("file://test.ior")),
     test_type_ (Options::NO_TEST),

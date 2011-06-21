@@ -1,4 +1,5 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/Messaging/Asynch_Invocation.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"

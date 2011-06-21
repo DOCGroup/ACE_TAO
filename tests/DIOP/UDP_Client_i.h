@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Simple/UDP
-//
-// = FILENAME
-//    UDP_Client_i.h
-//
-// = DESCRIPTION
-//    This class implements the client functionality of the UDP test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    UDP_Client_i.h
+ *
+ *  $Id$
+ *
+ *  This class implements the client functionality of the UDP test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 #ifndef UDP_CLIENT_I_H
 #define UDP_CLIENT_I_H
@@ -36,15 +33,15 @@ class UDP_Client_i
   //
 public:
   // = Initialization and termination methods.
+  /// Constructor
   UDP_Client_i (CORBA::ORB_ptr orb,
                 UDP_ptr udp,
                 UDP_ptr udpHandler,
                 ACE_UINT32 msec,
                 ACE_UINT32 iterations);
-  // Constructor
 
+  /// Destructor
   virtual ~UDP_Client_i (void);
-  // Destructor
 
 private:
   // Runs in a separate thread.

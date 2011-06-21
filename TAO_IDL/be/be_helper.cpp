@@ -56,6 +56,11 @@ TAO_NL::TAO_NL (void)
   ACE_UNUSED_ARG (copyright);
 }
 
+TAO_NL_2::TAO_NL_2 (void)
+{
+  ACE_UNUSED_ARG (copyright);
+}
+
 TAO_INDENT::TAO_INDENT (int do_now)
   :  do_now_ (do_now)
 {
@@ -67,6 +72,7 @@ TAO_UNINDENT::TAO_UNINDENT (int do_now)
 }
 
 const TAO_NL be_nl;
+const TAO_NL_2 be_nl_2;
 const TAO_INDENT be_idt;
 const TAO_INDENT be_idt_nl (1);
 const TAO_UNINDENT be_uidt;
@@ -82,8 +88,6 @@ TAO_OutStream::TAO_OutStream (void)
     {
       this->tab_unit_str_ += ' ';
     }
-    
-  this->tab_unit_ = this->tab_unit_str_.c_str ();
 }
 
 TAO_OutStream::~TAO_OutStream (void)
@@ -208,7 +212,7 @@ TAO_OutStream::indent (void)
     {
       for (int i = 0; i < this->indent_level_; i++)
         {
-          ACE_OS::fprintf (this->fp_, this->tab_unit_);
+          ACE_OS::fprintf (this->fp_, "%s", this->tab_unit_str_.c_str ());
         }
     }
 
@@ -320,6 +324,13 @@ TAO_OutStream::operator<< (const char *str)
 }
 
 TAO_OutStream &
+TAO_OutStream::operator<< (const ACE_CString &str)
+{
+  ACE_OS::fprintf (this->fp_, "%s", str.c_str ());
+  return *this;
+}
+
+TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
   ACE_OS::fprintf (this->fp_,
@@ -390,6 +401,17 @@ TAO_OutStream::operator<< (const TAO_NL&)
 }
 
 TAO_OutStream &
+TAO_OutStream::operator<< (const TAO_NL_2&)
+{
+  ACE_OS::fprintf (this->fp_ ,
+                   "\n");
+  ACE_OS::fprintf (this->fp_ ,
+                   "\n");
+  this->indent ();
+  return *this;
+}
+
+TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_INDENT& i)
 {
   this->incr_indent (0);
@@ -436,8 +458,7 @@ TAO_OutStream::operator<< (AST_Expression *expr)
 TAO_OutStream &
 TAO_OutStream::print (Identifier *id)
 {
-  ACE_OS::fprintf (this->fp_,
-                   id->get_string ());
+  ACE_OS::fprintf (this->fp_, "%s", id->get_string ());
 
   return *this;
 }
@@ -486,14 +507,14 @@ TAO_OutStream&
 TAO_OutStream::print (AST_Expression *expr)
 {
   AST_Expression::AST_ExprValue *ev = expr->ev ();
-  
+
   /// Never happens as far as I know, but just in case...
   if (ev == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_OutStream::print() - ")
                   ACE_TEXT ("expression not evaluated\n")));
-                  
+
       return *this;
     }
 
@@ -527,12 +548,13 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_float:
-      this->TAO_OutStream::print ("%f%c", ev->u.fval, 'F');
+      this->TAO_OutStream::print ("%#gF", ev->u.fval);
       break;
     case AST_Expression::EV_double:
-      this->TAO_OutStream::print ("%24.16G", ev->u.dval);
+      this->TAO_OutStream::print ("%#24.16G", ev->u.dval);
       break;
     case AST_Expression::EV_longdouble:
+      this->TAO_OutStream::print ("%#24.16LGL", ev->u.ldval);
       break;
     case AST_Expression::EV_char:
       // isprint() sees \ and ' as printable characters

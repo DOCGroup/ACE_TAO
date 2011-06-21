@@ -198,7 +198,7 @@ DRV_drive (const char *s)
   UTL_String *utl_string = 0;
   ACE_NEW (utl_string,
            UTL_String (s, true));
-           
+
   idl_global->idl_src_file (utl_string);
 
   // Pass through CPP.
@@ -376,7 +376,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Does various things in various backends.
       BE_post_init (DRV_files, DRV_nfiles);
-      
+
       FILE *output_file = 0;
 
       if (idl_global->multi_file_input ())
@@ -400,7 +400,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               DRV_drive (DRV_files[DRV_file_index]);
             }
         }
-        
+
       if (idl_global->multi_file_input ())
         {
           ACE_OS::fclose (output_file);

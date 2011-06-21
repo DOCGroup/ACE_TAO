@@ -1,7 +1,7 @@
-// @(#) $Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
-
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"

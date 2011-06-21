@@ -48,7 +48,7 @@ public:
   virtual ACE_CString get_ior (void) const;
 
 protected:
-  
+
   virtual CORBA::Object_ptr get_supplier (void);
 
   /// The Supplier

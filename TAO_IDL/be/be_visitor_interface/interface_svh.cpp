@@ -35,13 +35,13 @@ be_visitor_interface_svh::visit_interface (be_interface *node)
     {
       return 0;
     }
-    
-  // Skip implied IDL nodes.  
+
+  // Skip implied IDL nodes.
   if (node->original_interface () != 0)
     {
       return 0;
     }
-    
+
   if (node->is_local () || node->imported () || node->is_abstract ())
     {
       return 0;

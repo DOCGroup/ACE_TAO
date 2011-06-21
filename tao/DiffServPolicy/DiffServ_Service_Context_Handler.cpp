@@ -2,10 +2,6 @@
 
 #include "tao/DiffServPolicy/DiffServ_Service_Context_Handler.h"
 
-ACE_RCSID (DiffServPolicy,
-           DiffServ_Service_Context_Handler,
-           "$Id$")
-
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"

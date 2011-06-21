@@ -37,12 +37,12 @@ namespace TAO
      * @brief Used to extract/cancel request(s) from the queue.
      *
      * This visitor is used to cancel certain requests in the queue
-     * as they are visited.  
+     * as they are visited.
      *
      * Note that this is currently implemented to cancel *all*
      * requests in the queue, or requests that are targeted for a specific
-     * servant. This could be extended in the future to perhaps 
-     * cancel all requests that have the same operation name, or something 
+     * servant. This could be extended in the future to perhaps
+     * cancel all requests that have the same operation name, or something
      * else.
      *
      */

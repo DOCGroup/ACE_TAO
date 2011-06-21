@@ -8,10 +8,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (EC_Tests_Performance,
-           Connect,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

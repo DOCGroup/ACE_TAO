@@ -1,4 +1,5 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 # include "tao/Cache_Entries_T.h"
 

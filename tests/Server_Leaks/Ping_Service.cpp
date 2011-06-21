@@ -3,8 +3,6 @@
 //
 #include "Ping_Service.h"
 
-ACE_RCSID(Server_Leaks, Ping_Service, "$Id$")
-
 Ping_Service::Ping_Service (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

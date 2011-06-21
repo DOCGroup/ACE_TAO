@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Service_Context_Handler_Registry.h"
-
 #include "tao/TAO_Server_Request.h"
 #include "tao/Service_Context_Handler.h"
 

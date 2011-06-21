@@ -96,20 +96,22 @@ AST_Field::AST_Field (AST_Type *ft,
     visibility_ (vis),
     owns_base_type_ (false)
 {
+  FE_Utils::tmpl_mod_ref_check (this, ft);
+
   AST_Decl::NodeType fnt = ft->node_type ();
-  
+
   // In each of these cases, we are responsible for destroying
   // our ref_type_ member.
   this->owns_base_type_ =
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
     || fnt == AST_Decl::NT_param_holder;
-    
+
   if (fnt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
         AST_Param_Holder::narrow_from_decl (ft);
-        
+
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
           idl_global->err ()->not_a_type (ft);
@@ -130,19 +132,19 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     owns_base_type_ (false)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
-  
+
   // In each of these cases, we are responsible for destroying
   // our ref_type_ member.
   this->owns_base_type_ =
     fnt == AST_Decl::NT_array
     || fnt == AST_Decl::NT_sequence
     || fnt == AST_Decl::NT_param_holder;
-    
+
   if (fnt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
         AST_Param_Holder::narrow_from_decl (ft);
-        
+
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
           idl_global->err ()->not_a_type (ft);
@@ -188,7 +190,7 @@ AST_Field::ast_accept (ast_visitor *visitor)
 void
 AST_Field::destroy (void)
 {
-  if (this->owns_base_type_)
+  if (this->owns_base_type_ && this->ref_type_)
     {
       this->ref_type_->destroy ();
       delete this->ref_type_;

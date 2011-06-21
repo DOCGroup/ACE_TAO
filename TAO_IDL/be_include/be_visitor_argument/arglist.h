@@ -101,13 +101,13 @@ public:
 
   /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);
-  
+
   /// Set the member.
   void unused (bool val);
 
 private:
   int emit_common (be_type *node);
-  
+
 private:
   bool unused_;
 };

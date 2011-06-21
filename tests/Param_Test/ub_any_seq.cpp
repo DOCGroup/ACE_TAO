@@ -1,28 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_any_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded Any sequences
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_any_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded Any sequences
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_any_seq.h"
 #include "tao/debug.h"
-
-ACE_RCSID (Param_Test,
-           ub_any_seq,
-           "$Id$")
 
 const CORBA::ULong TEST_SEQ_LENGTH = 5;
 const CORBA::ULong NUM_TEST_TYPES = 4;

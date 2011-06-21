@@ -55,8 +55,8 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream& os = *(this->ctx_->stream ());
 
-  os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
@@ -85,7 +85,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate _downcast method.
-  os << be_nl << be_nl
+  os << be_nl_2
      << "static " << node->local_name () << "_init* "
      << "_downcast ( ::CORBA::ValueFactoryBase *);";
 
@@ -93,19 +93,19 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     {
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
-      os << be_nl << be_nl
+      os << be_nl_2
          << "virtual ::CORBA::ValueBase *" << be_nl
          << "create_for_unmarshal (void);";
 
       if (node->supports_abstract ())
         {
-          os << be_nl << be_nl
+          os << be_nl_2
              << "virtual ::CORBA::AbstractBase_ptr" << be_nl
              << "create_for_unmarshal_abstract (void);" << be_uidt;
         }
     }
 
-  os << be_nl << be_nl;
+  os << be_nl_2;
 
     // Proprietary extensions.
   os << "// TAO-specific extensions"
@@ -148,7 +148,7 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 
 
   // STEP I: Generate preambule.
-  os << be_nl << be_nl
+  os << be_nl_2
      << "virtual " << vt->local_name () << "* ";
 
   // STEP 2: Generate the operation name.

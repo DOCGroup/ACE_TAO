@@ -146,10 +146,10 @@ namespace TAO
       class Reset
       {
       public:
-        Reset (bool & flag) : flag_ (flag) { }
-        ~Reset (void) { this->flag_ = false; }
+        Reset (CORBA::ULong & flag) : flag_ (flag) { }
+        ~Reset (void) { this->flag_ = 0; }
       private:
-        bool & flag_;
+        CORBA::ULong & flag_;
       };
 
     private:
@@ -163,7 +163,7 @@ namespace TAO
        * This flag is used to prevent @c TypeCode equality and
        * equivalence operations from recursing indefinitely.
        */
-      mutable bool in_recursion_;
+      mutable CORBA::ULong recursion_start_offset_;
 
       /// Track whether data has been initialized.
       bool data_initialized_;

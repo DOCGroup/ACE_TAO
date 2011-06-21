@@ -33,9 +33,9 @@ $n_service->DeleteFile($iorbase);
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level ".
                                         "-ORBInitRef NameService=file://$server_iorfile");
 $CL = $client->CreateProcess ("client", "-ORBInitRef NameService=file://$client_iorfile");
-$NS = $n_service->CreateProcess ("../../Naming_Service/Naming_Service", "-o $n_service_iorfile");
+$NS = $n_service->CreateProcess ("../../Naming_Service/tao_cosnaming", "-o $n_service_iorfile");
 
-print STDERR "Starting Naming_Service\n";
+print STDERR "Starting tao_cosnaming\n";
 
 $n_service_status = $NS->Spawn ();
 

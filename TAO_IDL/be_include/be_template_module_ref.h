@@ -18,7 +18,7 @@ public:
                            UTL_StrList *param_refs);
 
   virtual ~be_template_module_ref (void);
-  
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (be_template_module_ref);
 

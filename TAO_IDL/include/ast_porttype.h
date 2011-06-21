@@ -37,12 +37,12 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   static AST_Decl::NodeType const NT;
-  
+
 protected:
   virtual AST_Provides *fe_add_provides (AST_Provides *p);
 
   virtual AST_Uses *fe_add_uses (AST_Uses *p);
-  
+
   virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
 };
 

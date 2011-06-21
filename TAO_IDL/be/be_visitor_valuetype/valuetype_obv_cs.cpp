@@ -44,8 +44,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Default constructor.
   *os << node->full_obv_skel_name () << "::";
@@ -57,7 +57,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   *os << node->local_name () << " (void)" << be_nl;
   *os << ": require_truncation_ (false)" << be_nl
-      << "{}" << be_nl << be_nl;
+      << "{}" << be_nl_2;
 
   // Initializing constructor.
   if (node->has_member ())
@@ -82,7 +82,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       this->gen_obv_init_constructor_inits (node);
 
       *os << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
     }
 
   // Destructor.
@@ -101,13 +101,13 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // or the valuetype is abstract.
   if (!node->opt_accessor ())
     {
-      *os << be_nl << be_nl << "::CORBA::Boolean" << be_nl
+      *os << be_nl_2 << "::CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()
           <<    " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
           << "{" << be_idt_nl
           << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}" << be_nl_2;
 
       *os << "::CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
@@ -131,7 +131,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
-          *os << be_nl << be_nl << "void" << be_nl
+          *os << be_nl_2 << "void" << be_nl
               << node->full_obv_skel_name ()
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
@@ -198,11 +198,13 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
        !si.is_done ();
        si.next())
     {
-      // be_attribute doesn't inherit from be_field (unlike the
-      // AST_* counterparts, so this screens attributes and operations.
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (si.item ());
 
-      if (f == 0)
+      if (f == 0 || attr != 0)
         {
           continue;
         }
@@ -231,11 +233,13 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
        !si.is_done ();
        si.next())
     {
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (si.item ());
 
-      // be_attribute doesn't inherit from be_field (unlike the
-      // AST_* counterparts, so this screens attributes and operations.
-      if (f == 0)
+      if (f == 0 || attr != 0)
         {
           continue;
         }

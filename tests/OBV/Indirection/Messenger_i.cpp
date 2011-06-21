@@ -19,9 +19,9 @@ char * Messenger_i::receive_boxedvalue (::demo::value::idl::boxedValue * b)
   std::ostringstream os;
   if (b == 0)
     os << "null boxed values";
-  else 
+  else
     os << "boxed values: " << b->b1 ()->_value() << ", " << b->b2 ()->_value();
-    
+
   return CORBA::string_dup (os.str().c_str());
 }
 
@@ -36,7 +36,7 @@ char * Messenger_i::receive_long (
     os << "shared long: " << p1->_value ();
   else
     os << "two longs: " << p1->_value () << ", " << p2->_value ();
-    
+
   return CORBA::string_dup (os.str().c_str());
 }
 
@@ -71,7 +71,7 @@ char * Messenger_i::receive_list (::demo::value::idl::Node * node)
       if (l[i] == x)
         break;
     }
-    
+
     if (l[i] == x)
       break;
 
@@ -92,18 +92,18 @@ char * Messenger_i::receive_list (::demo::value::idl::Node * node)
   return CORBA::string_dup (os.str().c_str());
 }
 
-char * 
+char *
 Messenger_i::receive_truncatable (::demo::value::idl::TValue *& v)
 {
-  v->data (v->data () + 1); 
-  v->basic_data (v->basic_data () + 1); 
+  v->data (v->data () + 1);
+  v->basic_data (v->basic_data () + 1);
 
   std::ostringstream os;
   os << "truncatable basic_data " << v->basic_data () << " data " << v->data ();
   return CORBA::string_dup (os.str().c_str());
 }
 
-char *  
+char *
 Messenger_i::receive_sequence (const ::demo::value::idl::ConfigValues & v)
 {
   std::ostringstream os;

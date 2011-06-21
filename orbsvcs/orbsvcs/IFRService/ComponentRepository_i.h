@@ -47,18 +47,15 @@ class TAO_UsesDef_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * Provides global access to the Interface Repository,
+ * including access to information related to
+ * CORBA Components.
+ */
 class TAO_IFRService_Export TAO_ComponentRepository_i
   : public virtual TAO_Repository_i,
     public virtual TAO_ComponentContainer_i
 {
-  // = TITLE
-  //    TAO_ComponentRepository_i
-  //
-  // = DESCRIPTION
-  //    Provides global access to the Interface Repository,
-  //    including access to information related to
-  //    CORBA Components.
-  //
 public:
   /// Constructor.
   TAO_ComponentRepository_i (CORBA::ORB_ptr orb,

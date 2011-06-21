@@ -33,12 +33,12 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "virtual ";
 
@@ -88,7 +88,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   // if there was no "native" type.
   if (!node->has_native ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "static void ";
 
       // Check if we are an attribute node in disguise.

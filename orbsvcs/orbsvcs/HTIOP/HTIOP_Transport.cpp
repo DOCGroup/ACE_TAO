@@ -21,10 +21,6 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Transport,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,

@@ -4,8 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_RCSID(Forwarding, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 1;
 int do_shutdown = 0;
@@ -49,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           ACE_OS::strlen (corbaloc_prefix)) != 0)
       return 1;
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -190,7 +188,7 @@ Worker::run_test (void)
                 r));
 }
 
-int 
+int
 Worker::got_object_not_exist () const
 {
   return got_object_not_exist_;

@@ -40,7 +40,7 @@ public:
   CORBA::Object_var     m_objref1,    m_objref2;
   CORBA::ShortSeq       m_shortseq1;
   CORBA::ShortSeq_var   m_shortseq2;
-  CORBA::LongDouble     m_longdouble1, m_longdouble2; 
+  CORBA::LongDouble     m_longdouble1, m_longdouble2;
 
 const char* labels[20];
 

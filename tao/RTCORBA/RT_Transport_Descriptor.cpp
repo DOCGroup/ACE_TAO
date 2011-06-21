@@ -7,8 +7,6 @@
 #include "tao/RTCORBA/RT_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor, "$Id$")
-
 #include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 #include "tao/Endpoint.h"
 

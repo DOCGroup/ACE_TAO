@@ -36,7 +36,7 @@ be_visitor_module_ih::visit_module (be_module *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_module_ih::"
                              "visit_module - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
     }

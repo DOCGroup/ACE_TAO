@@ -48,7 +48,7 @@ public:
 private:
   bool for_facets_;
   be_decl *op_scope_;
-  
+
   /// Defaults to "exec_i" but in special cases we want to
   /// modify it.
   ACE_CString exec_class_extension_;

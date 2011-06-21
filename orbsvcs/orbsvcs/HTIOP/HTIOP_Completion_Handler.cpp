@@ -16,11 +16,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Impl.h"
 
-ACE_RCSID (HTIOP,
-           TAO_HTIOP_Completion_Handler,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)

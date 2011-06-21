@@ -12,10 +12,6 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (RTScheduling,
-           Request_Interceptor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const IOP::ServiceId

@@ -65,7 +65,7 @@ module Supports_Test
     long size ();
     void add_node (in string name);
     void print ();
-    
+
   };
 
   valuetype vt_graph supports graph

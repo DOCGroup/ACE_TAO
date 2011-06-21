@@ -7,8 +7,6 @@
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(Collocation, main, "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try

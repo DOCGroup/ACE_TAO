@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/RTCORBA/RT_Protocols_Hooks.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -23,10 +25,6 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (RTCORBA,
-           RT_Protocols_Hooks,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

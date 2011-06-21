@@ -6,7 +6,7 @@
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Application_Test, server, "$Id$")
+
 
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("iorfile");
 

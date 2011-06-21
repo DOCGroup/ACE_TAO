@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "ast_template_module.h"
 #include "ast_template_module_inst.h"
 #include "ast_uses.h"
 #include "ast_module.h"
@@ -22,10 +23,12 @@
 #include "nr_extern.h"
 
 #include "be_connector.h"
+#include "be_mirror_port.h"
 #include "be_provides.h"
 #include "be_uses.h"
 #include "be_operation.h"
 #include "be_argument.h"
+#include "be_attribute.h"
 
 #include "be_visitor_connector.h"
 #include "be_visitor_operation.h"
@@ -42,5 +45,3 @@
 #include "be_visitor_connector/facet_ami_exs.cpp"
 #include "be_visitor_connector/executor_ami_exh.cpp"
 #include "be_visitor_connector/executor_ami_exs.cpp"
-#include "be_visitor_connector/connector_ami_rh_exh.cpp"
-#include "be_visitor_connector/connector_ami_rh_exs.cpp"

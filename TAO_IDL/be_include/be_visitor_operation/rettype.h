@@ -93,10 +93,10 @@ public:
 
   /// visit a valuebox node
   int visit_valuebox (be_valuebox *node);
-  
+
 private:
   const char *type_name (be_type *node);
-  
+
 private:
   TAO_OutStream *os;
 };

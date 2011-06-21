@@ -39,7 +39,7 @@ TAO_Reply_Dispatcher::intrusive_remove_ref (TAO_Reply_Dispatcher* rd)
   if (rd != 0)
     {
       long tmp = --rd->refcnt_;
-      if (tmp <= 0)  
+      if (tmp <= 0)
         {
           if (rd->allocator_)
             {
@@ -51,7 +51,7 @@ TAO_Reply_Dispatcher::intrusive_remove_ref (TAO_Reply_Dispatcher* rd)
             {
               delete rd;
             }
-        }        
+        }
     }
 }
 

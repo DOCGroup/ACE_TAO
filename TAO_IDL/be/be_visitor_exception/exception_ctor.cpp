@@ -52,10 +52,10 @@ be_visitor_exception_ctor::visit_exception (be_exception *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     {
@@ -397,7 +397,7 @@ be_visitor_exception_ctor::visit_structure_fwd (
 {
   be_structure *s =
     be_structure::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_structure (s);
 }
 
@@ -435,7 +435,7 @@ be_visitor_exception_ctor::visit_union_fwd (be_union_fwd *node)
 {
   be_union *u =
     be_union::narrow_from_decl (node->full_definition ());
-    
+
   return this->visit_union (u);
 }
 

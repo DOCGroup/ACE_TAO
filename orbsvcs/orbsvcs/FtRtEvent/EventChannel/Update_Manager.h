@@ -13,9 +13,9 @@
 #ifndef UPDATE_MANAGER_H
 #define UPDATE_MANAGER_H
 
-#include "ace/Synch_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
 #include "tao/orbconf.h"
+#include "ace/Auto_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

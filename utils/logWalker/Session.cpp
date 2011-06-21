@@ -8,7 +8,7 @@
 #include "ace/OS_NS_sys_stat.h"
 
 long
-Session::tao_version_ = 160;
+Session::tao_version_ = 200;
 
 Session::Session (void)
 {
@@ -27,13 +27,22 @@ Session::~Session (void)
     }
 }
 
-void
+bool
 Session::set_tao_version (ACE_TCHAR *str)
 {
   if (ACE_OS::strncmp(str, ACE_TEXT("1.5"), 3)== 0)
     tao_version_ = 150;
   else if (ACE_OS::strncmp (str, ACE_TEXT("1.6"), 3) == 0)
     tao_version_ = 160;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("1.7"), 3) == 0)
+    tao_version_ = 170;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("1.8"), 3) == 0)
+    tao_version_ = 180;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("2.0"), 3) == 0)
+    tao_version_ = 200;
+  else
+    return false;
+  return true;
 }
 
 long
@@ -87,10 +96,10 @@ Session::default_service (const char *addrspec)
 HostProcess *
 Session::find_process (long pid)
 {
-  Processes::ENTRY *entry;
+  Processes::ENTRY *entry = 0;
   if (this->processes_.find(pid,entry) == 0)
     return entry->item();
-  else 
+  else
     return 0;
 }
 
@@ -145,7 +154,7 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
   if (this->has_dir())
     {
       ACE_CString outname = this->base_dir_;
-      
+
       if (oldstream == 0)
         {
           ACE_OS::mkdir(this->base_dir_.c_str());
@@ -170,13 +179,13 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
     return &cout;
 }
 
-void 
+void
 Session::dump ()
 {
   bool single = !this->has_dir();
   ostream *strm = this->stream_for(0);
-  
-  // report session metrics 
+
+  // report session metrics
 
   if (single)
     *strm << "Session summary report: "
@@ -250,7 +259,7 @@ Session::dump ()
 
 
 // iterate over the collection of host processes to associate peer
-// processes via endpoints. 
+// processes via endpoints.
 void
 Session::reconcile (void)
 {

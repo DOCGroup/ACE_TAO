@@ -2,11 +2,8 @@
 
 #include "Hello.h"
 #include "Server_Task.h"
-#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-
-ACE_RCSID (Bug_1XXX_Regression, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -46,7 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                               argv [0]),
             -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -83,7 +80,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      TAO::Utils::Servant_Var<Hello> hello_impl(
+      PortableServer::ServantBase_var hello_impl(
           new Hello(orb.in(), simulate_crashes));
 
       PortableServer::ObjectId_var id =

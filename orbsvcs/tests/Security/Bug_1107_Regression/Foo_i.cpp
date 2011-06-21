@@ -1,13 +1,8 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Foo_i.h"
-
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (Bug_1107_Regression,
-           Foo_i,
-           "$Id$")
 
 
 Foo_i::Foo_i (CORBA::ORB_ptr orb,

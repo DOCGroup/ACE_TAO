@@ -111,7 +111,7 @@ ReplicaController (CORBA::ORB_ptr orb)
   ACE_DEBUG ((LM_DEBUG, "Becoming a member with id %s\n",
               uuid.to_string ()->c_str ()));
 
-  ACE_AUTO_PTR_RESET (group_, new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()), ACE_TMCast::Group);
+  ACE_auto_ptr_reset (group_, new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()));
 
   int r = ACE_Thread_Manager::instance ()->spawn (
     &ReplicaController::listener_thunk, this);

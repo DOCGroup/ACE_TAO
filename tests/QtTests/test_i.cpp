@@ -2,10 +2,6 @@
 
 #include "test_i.h"
 
-ACE_RCSID( QtTests,
-           test_i,
-           "$Id$")
-
 LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)
 
   : orb_ (CORBA::ORB::_duplicate (orb))

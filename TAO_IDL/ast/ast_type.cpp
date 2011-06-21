@@ -138,7 +138,7 @@ AST_Type::compute_size_type (void)
 }
 
 bool
-AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
+AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> & /*list*/)
 {
   // By default we are not involved in recursion.
   return 0;
@@ -298,14 +298,14 @@ AST_Type::nested_name (const char* local_name,
   // generations of "::" here and there, which have now been removed.
   UTL_Scope *s = this->defined_in ();
   AST_Decl *def_scope = s != 0 ? ScopeAsDecl (s) : 0;
-  
+
   // TypeCode is a special case for predefined types, since it's
   // defined in the CORBA module.
   bool in_root =
     (def_scope != 0 && def_scope->node_type () == AST_Decl::NT_root)
     || ((this->node_type () == AST_Decl::NT_pre_defined
         && ACE_OS::strcmp (this->flat_name (), "CORBA_TypeCode") == 0));
-        
+
   ACE_CString fname (this->full_name ());
   bool corba_type = fname.find ("CORBA::") == 0;
 
@@ -543,7 +543,5 @@ AST_Type::destroy (void)
 
   this->AST_Decl::destroy ();
 }
-
-
 
 IMPL_NARROW_FROM_DECL(AST_Type)

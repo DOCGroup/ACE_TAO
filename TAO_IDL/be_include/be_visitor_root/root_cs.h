@@ -46,7 +46,6 @@ private:
   int gen_obv_defns (be_root *node);
   int gen_any_ops (be_root *node);
   int gen_cdr_ops (be_root *node);
-  int gen_dds_serializer_ops (be_root *node);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CS_H_ */

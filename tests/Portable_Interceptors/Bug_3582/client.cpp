@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
-
-ACE_RCSID (Redirection,
-           client,
-           "$Id$")
 
 const ACE_TCHAR *ior1 = 0;
 bool interceptor_invoked = false;

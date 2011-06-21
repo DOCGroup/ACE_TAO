@@ -1,12 +1,8 @@
+// $Id$
+
 #include "Server_ORBInitializer.h"
-
-ACE_RCSID (Request_Interceptor_Flow,
-           Server_ORBInitializer,
-           "$Id$")
-
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
-
 #include "Server_Request_Interceptor.h"
 
 void

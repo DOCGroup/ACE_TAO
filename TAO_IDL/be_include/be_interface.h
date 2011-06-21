@@ -31,15 +31,13 @@ class be_visitor;
 
 class UTL_ExceptList;
 
+/**
+ * The back end extension of the AST_Interface class
+ */
 class be_interface : public virtual AST_Interface,
                      public virtual be_scope,
                      public virtual be_type
 {
-  // = TITLE
-  //   The back end extension of the AST_Interface class
-  //
-  // = DESCRIPTION
-  //
 public:
   // Used to pass functions to the template method.
   typedef int (*tao_code_emitter) (be_interface *,
@@ -85,10 +83,10 @@ public:
   /// proxy implementation.
   virtual const char *full_remote_proxy_impl_name (void);
 
-  /// retrieve the name of the Directx  proxy implementation.
+  /// retrieve the name of the direct proxy implementation.
   virtual const char *direct_proxy_impl_name (void);
 
-  /// retrieve the fully qualified name of the Directx  proxy
+  /// retrieve the fully qualified name of the direct proxy
   /// implementation.
   virtual const char *full_direct_proxy_impl_name (void);
 
@@ -141,7 +139,7 @@ public:
   virtual void gen_def_ctors (TAO_OutStream* os);
 
   /// Generated the global hooks used for non-defined forward
-  /// declared interfaces, and the contructor from stub object.
+  /// declared interfaces, and the constructor from stub object.
   virtual void gen_stub_ctor (TAO_OutStream* os);
 
   /// Generate the declarations used by the template _var, _out
@@ -310,9 +308,6 @@ public:
   /// applies only to implied IDL
   be_interface *original_interface (void);
 
-  /// Is Components::SessionComponent an immediate parent?
-  int session_component_child (void);
-
   /// Is EventConsumerBase our parent?
   bool is_event_consumer (void);
 
@@ -326,7 +321,7 @@ public:
                           TAO_OutStream &os);
   int gen_facet_svnt_src (be_visitor *visitor,
                           TAO_OutStream &os);
-                
+
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);
 
@@ -335,23 +330,23 @@ public:
 
   bool is_ami4ccm_rh (void) const;
   void is_ami4ccm_rh (bool val);
-  
+
   /// Accessors for the member.
   bool dds_connector_traits_done (void) const;
   void dds_connector_traits_done (bool val);
-  
+
   /// Generate the "public virtual" entries in the stub header.
   virtual void gen_stub_inheritance (TAO_OutStream *os);
-  
+
   /// Generate the "public virtual" entries in the skel header.
   virtual void gen_skel_inheritance (TAO_OutStream *os);
-  
+
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
-  
+
   /// Generate setup_collocation() for base component, if any.
   virtual void gen_parent_collocation (TAO_OutStream *os);
-  
+
 protected:
   /**
    * CDreate a new string made by the concatenation
@@ -454,7 +449,7 @@ private:
    */
   void enqueue_base_component_r (AST_Component *node);
   void enqueue_base_home_r (AST_Home *node);
-  
+
 protected:
   /// Have these been done already?
   bool var_out_seq_decls_gen_;
@@ -471,9 +466,6 @@ protected:
   /// applies only to implied IDL
   be_interface *original_interface_;
 
-  /// Are we a direct child of Components::SessionComponent?
-  int session_component_child_;
-  
   /// Are we an AMI reply handler?
   bool is_ami_rh_;
 
@@ -493,8 +485,8 @@ protected:
 
   /// Used to suppress generation of some CCM servant methods/
   bool has_rw_attributes_;
-  
-  /// Flags to ensure that DDS connector impl traits members
+
+  /// Flag to ensure that DDS connector impl traits members
   /// are generated only once per port interface.
   bool dds_connector_traits_done_;
 };

@@ -29,7 +29,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 {
   node_ = node;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "local interface CCM_"
       << node->original_local_name ()->get_string ()
       << "_Context" << be_idt_nl
@@ -39,7 +39,8 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 
   if (base == 0)
     {
-      os_ << "::Components::SessionContext";
+      os_ << "::Components::"
+          << be_global->ciao_container_type () << "Context";
     }
   else
     {

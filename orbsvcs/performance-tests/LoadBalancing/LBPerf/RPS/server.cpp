@@ -12,10 +12,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID (LoadBalancing,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 CORBA::Float reject_threshold = 0;
@@ -68,7 +64,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -135,16 +131,16 @@ join_object_group (CORBA::ORB_ptr orb,
           strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(strategy));
 
           if (ACE_OS::strcasecmp (strategy, ACE_TEXT("LeastLoaded")) == 0
-              && (reject_threshold != 0
-                  || critical_threshold != 0
-                  || dampening != 0))
+              && (!ACE::is_equal (reject_threshold, (CORBA::Float)0.0)
+                  || !ACE::is_equal (critical_threshold, (CORBA::Float)0.0)
+                  || !ACE::is_equal (dampening, (CORBA::Float)0.0)))
             {
               CORBA::ULong len = 1;
 
               PortableGroup::Properties & props =
                 strategy_info.props;
 
-              if (reject_threshold != 0)
+              if (!ACE::is_equal (reject_threshold, (CORBA::Float)0.0))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -156,7 +152,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= reject_threshold;
                 }
 
-              if (critical_threshold != 0)
+              if (!ACE::is_equal (critical_threshold, (CORBA::Float)0.0))
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -168,7 +164,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= critical_threshold;
                 }
 
-              if (dampening != 0)
+              if (!ACE::is_equal (dampening, (CORBA::Float)0.0))
                 {
                   const CORBA::ULong i = len - 1;
 

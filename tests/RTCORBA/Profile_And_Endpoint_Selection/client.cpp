@@ -1,18 +1,17 @@
-// $Id$
 
-// ================================================================
-//
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client implementation.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client implementation.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -23,8 +22,6 @@
 #include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
 #include "testC.h"
-
-ACE_RCSID(Profile_And_Endpoint_Selection, client, "$Id$")
 
 static int iterations = 1;
 static int debug = 1;

@@ -1,16 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Messaging_No_Impl.pidl
  *
  *  $Id$
- *
- * This file is used to generate the code in
- * Messaging_No_Impl{C}.{h,cpp} and as the name implies is not
- * implemented in TAO, yet.
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_NO_IMPL_PIDL
 #define TAO_MESSAGING_NO_IMPL_PIDL

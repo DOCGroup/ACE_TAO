@@ -1,6 +1,5 @@
 //$Id$
 
-#include "ace/OS.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "Kokyu_qosC.h"
 #include "tao/RTScheduling/RTScheduler.h"

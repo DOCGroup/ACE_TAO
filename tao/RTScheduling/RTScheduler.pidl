@@ -9,19 +9,6 @@
 //
 // = DESCRIPTION
 //   Some new data types included for GIOP 1.2
-//   This file is used to generate the code in
-//   RTScheduler*.* The command used to generate code
-//   is:
-//
-//     tao_idl
-//        -o orig -GA -Sa -Gp -Gd -Sci
-//          -Wb,export_macro=TAO_RTScheduler_Export
-//          -Wb,export_include="rtscheduler_export.h"
-//          -Wb,pre_include="ace/pre.h"
-//          -Wb,post_include="ace/post.h"
-//          -I$(TAO_ROOT)
-//          RTScheduler.pidl
-//
 // ================================================================
 #ifndef TAO_RTSCHEDULER_PIDL
 #define TAO_RTSCHEDULER_PIDL

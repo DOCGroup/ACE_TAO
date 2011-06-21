@@ -9,11 +9,6 @@
 
 #include "ace/SString.h"
 
-
-ACE_RCSID (IFRService,
-           ValueDef_i,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueDef_i::TAO_ValueDef_i (TAO_Repository_i *repo)
@@ -741,7 +736,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_value",
                                               holder);
-                                            
+
   if (status == 0)
     {
       ACE_Configuration_Section_Key base_key;
@@ -1276,7 +1271,7 @@ TAO_ValueDef_i::describe_value_i (void)
   status = this->repo_->config ()->get_string_value (this->section_key_,
                                                      "base_value",
                                                      holder);
-                                                     
+
   if (status == 0)
     {
       ACE_Configuration_Section_Key base_key;
@@ -1288,8 +1283,8 @@ TAO_ValueDef_i::describe_value_i (void)
                                                 "id",
                                             holder);
     }
-  
-  // If status isn't 0, then holder will contain empty string anyway.  
+
+  // If status isn't 0, then holder will contain empty string anyway.
   fv_desc->base_value = holder.fast_rep ();
   fv_desc->type = this->type_i ();
 
@@ -1692,7 +1687,7 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
     this->repo_->config ()->get_string_value (this->section_key_,
                                               "base_value",
                                               holder);
-                                              
+
   if (status == 0)
     {
       ACE_Configuration_Section_Key base_key;
@@ -1704,8 +1699,8 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
                                                 "id",
                                                 holder);
     }
-    
-  // If status isn't 0, then holder will be empty anyway.  
+
+  // If status isn't 0, then holder will be empty anyway.
   desc.base_value = holder.fast_rep ();
 }
 

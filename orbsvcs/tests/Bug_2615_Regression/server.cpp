@@ -11,10 +11,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "Hello.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior.ior");
 const ACE_TCHAR *iogr_output_file = ACE_TEXT("iogr.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
@@ -44,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -49,7 +49,7 @@ public:
   /// Dtor
   ~TAO_Fault_Tolerance_Service (void);
 
-  /// Initialise the internal data structures
+  /// Initialize the internal data structures
   void init (TAO_ORB_Core *orb_core);
 
   /// Return the underlying callback object

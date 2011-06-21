@@ -6,10 +6,6 @@
 
 #include "client.h"
 
-ACE_RCSID (Quoter,
-           client,
-           "$Id$")
-
 Quoter_Task::Quoter_Task (int argc, ACE_TCHAR **argv)
   : argc_ (argc), argv_ (argv)
 {

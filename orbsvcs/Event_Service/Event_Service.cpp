@@ -6,6 +6,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "orbsvcs/Daemon_Utilities.h"
 
@@ -73,17 +74,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
       TAO_Daemon_Utility::check_for_daemon (argc, argv);
 
-      // Make a copy of command line parameter.
-      ACE_Argv_Type_Converter command (argc, argv);
-
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (command.get_argc (), command.get_ASCII_argv ());
+        CORBA::ORB_init (argc, argv);
 
-      if (this->parse_args (command.get_argc (), command.get_TCHAR_argv ()) == -1)
-        {
-          return 1;
-        }
+      if (this->parse_args (argc, argv) == -1)
+        return 1;
 
       CORBA::Object_var root_poa_object =
         this->orb_->resolve_initial_references("RootPOA");
@@ -130,7 +126,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // This is the name we (potentially) register the Scheduling
       // Service in the Naming Service.
       CosNaming::Name schedule_name (1);
-      schedule_name.length (1);
+      schedule_name.resize (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       // The old EC always needs a scheduler. If none is
@@ -293,7 +289,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       if (bind_to_naming_service_ && !CORBA::is_nil (naming_context.in ()))
         {
           CosNaming::Name channel_name (1);
-          channel_name.length (1);
+          channel_name.resize (1);
           channel_name[0].id =
             CORBA::string_dup (this->service_name_.c_str());
           naming_context->rebind (channel_name, ec.in ());
@@ -308,7 +304,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       if (bind_to_naming_service_ && !CORBA::is_nil (naming_context.in ()))
         {
           CosNaming::Name channel_name (1);
-          channel_name.length (1);
+          channel_name.resize (1);
           channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
           naming_context->unbind (channel_name);
         }

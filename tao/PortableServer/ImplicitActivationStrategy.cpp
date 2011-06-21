@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/ImplicitActivationStrategy.h"
 

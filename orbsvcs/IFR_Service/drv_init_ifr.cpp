@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -71,7 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_private_ifr.h"
 #include "be_extern.h"
 
-ACE_RCSID(IFR_Service, drv_init_ifr, "$Id$")
+
 
 const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
@@ -107,8 +107,8 @@ DRV_init (void)
 #endif /* TAO_IDL_PREPROCESSOR */
 
   char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
-  ACE_OS::memset (&local_escapes, 
-                  0, 
+  ACE_OS::memset (&local_escapes,
+                  0,
                   LOCAL_ESCAPES_BUFFER_SIZE);
 
   idl_global->set_local_escapes (local_escapes);
@@ -125,6 +125,6 @@ DRV_init (void)
 
   // Initialize driver private data.
   DRV_nfiles = 0;
-  DRV_file_index = 0;  
+  DRV_file_index = 0;
 }
 

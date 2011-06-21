@@ -6,7 +6,7 @@
 
 #include "orbsvcs/CosNotifyCommS.h"
 
-class StructuredEventConsumer_i : 
+class StructuredEventConsumer_i :
   public virtual POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
@@ -30,4 +30,4 @@ private:
     int count_;
 };
 
-#endif 
+#endif

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h"
-
-ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushSupplier, "$Id$")
-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Any/PushConsumer.h"
 
@@ -60,7 +57,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushSupplier::validate(%d)")
                   ACE_TEXT ("disconnecting \n"), this->id ()));
     }

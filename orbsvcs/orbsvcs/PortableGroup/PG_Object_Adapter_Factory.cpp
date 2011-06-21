@@ -6,10 +6,6 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (TAO_PortableGroup,
-           PG_Object_Adapter_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_Object_Adapter_Factory::TAO_PG_Object_Adapter_Factory (void)

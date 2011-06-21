@@ -50,6 +50,7 @@ AST_ValueTypeFwd::ast_accept (ast_visitor *visitor)
 void
 AST_ValueTypeFwd::destroy (void)
 {
+  this->AST_InterfaceFwd::destroy ();
 }
 
 

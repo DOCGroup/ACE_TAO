@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-// ==========================================================================
-//
-// = FILENAME
-//   Supplier.h
-//
-// = DESCRIPTION
-//   Test Supplier reconnect to existing channel/admin/proxy Notification Service
-//
-// = AUTHOR
-//    Dale Wilson <wilson_d@ociweb.com>
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file   Supplier.h
+ *
+ *  $Id$
+ *
+ * Test Supplier reconnect to existing channel/admin/proxy Notification Service
+ *
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+
 
 #ifndef RECONNECTNG_SUPPLIER_H
 #define RECONNECTNG_SUPPLIER_H

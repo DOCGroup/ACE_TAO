@@ -6,8 +6,6 @@
 #include "orbsvcs/Notify/Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Property_Boolean, "$Id$")
-
 #include "orbsvcs/Notify/PropertySeq.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

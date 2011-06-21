@@ -2,5 +2,5 @@
 // $Id$
 
 project : orbsvcsexe, install, concurrency_serv, naming, utils, svc_utils {
-  exename  = Concurrency_Service
+  exename  = tao_cosconcurrency
 }

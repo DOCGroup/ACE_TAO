@@ -31,35 +31,39 @@ struct TAO_NL
   TAO_NL (void);
 };
 
+struct TAO_NL_2
+{
+  TAO_NL_2 (void);
+};
+
+/**
+ * Operates like a manipulator, increasing the indentation level.
+ *
+ * Increase the indentation level, if the "do_now" parameter is
+ * not zero then the <indent> method is called on the stream.
+ */
 struct TAO_INDENT
 {
-  // = TITLE
-  //   Operates like a manipulator, increasing the indentation level.
-  //
-  // = DESCRIPTION
-  //   Increase the indentation level, if the "do_now" parameter is
-  //   not zero then the <indent> method is called on the stream.
-  //
   TAO_INDENT (int do_now = 0);
 
   const int do_now_;
 };
 
+/**
+ * Operates like a manipulator, decreasing the indentation level.
+ *
+ * Decrease the indentation level, if the "do_now" parameter is
+ * not zero then the <indent> method is called on the stream.
+ */
 struct TAO_UNINDENT
 {
-  // = TITLE
-  //   Operates like a manipulator, decreasing the indentation level.
-  //
-  // = DESCRIPTION
-  //   Decrease the indentation level, if the "do_now" parameter is
-  //   not zero then the <indent> method is called on the stream.
-  //
   TAO_UNINDENT (int do_now = 0);
 
   const int do_now_;
 };
 
 extern const TAO_NL be_nl;
+extern const TAO_NL_2 be_nl_2;
 extern const TAO_INDENT be_idt;
 extern const TAO_INDENT be_idt_nl;
 extern const TAO_UNINDENT be_uidt;
@@ -78,9 +82,7 @@ struct TAO_ACE_CHECK
 
 /**
  * @class TAO_OutStream
- =TITLE
- * TAO_OutStream
- * =DESCRIPTION
+ *
  * Defines an interface by which the backend code generator can
  * print its output to the underlying I/O handle. This is a
  * helper class that will be used by the TAO_CodeGen
@@ -91,7 +93,7 @@ class TAO_OutStream
 {
 public:
 
-  // Enumerated type to indicate the stream type
+  /// Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {
       TAO_CLI_HDR,
@@ -153,7 +155,8 @@ public:
   int nl (void);
 
   /// "printf" style variable argument print
-  int print (const char *format, ...);
+  int print (const char *format, ...)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a #if !defined, #defined macro
   int gen_ifdef_macro (const char *flat_name,
@@ -166,6 +169,7 @@ public:
   // =overloaded operators
 
   TAO_OutStream &operator<< (const char *str);
+  TAO_OutStream &operator<< (const ACE_CString &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
@@ -176,6 +180,7 @@ public:
   // = MANIPULATORS
 
   TAO_OutStream &operator<< (const TAO_NL& nl);
+  TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
   TAO_OutStream &operator<< (const TAO_INDENT& i);
   TAO_OutStream &operator<< (const TAO_UNINDENT& i);
 
@@ -205,10 +210,9 @@ protected:
 
   /// Indentation level
   int indent_level_;
-  
+
   /// Used to set tab spaces.
   ACE_CString tab_unit_str_;
-  const char *tab_unit_;
 };
 
 #endif // if !defined

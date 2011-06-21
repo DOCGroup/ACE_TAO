@@ -320,7 +320,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
                   << (wide ? "w" : "" ) << "string ("
                   << lname << ".out (), " << bound << ")";
             }
-            
+
           break;
         case AST_Argument::dir_OUT:
           break;
@@ -354,7 +354,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
                   << (wide ? "w" : "" ) << "string (("
                   << (wide ? "CORBA::WChar" : "char") << " *)"
                   << lname << ".in (), " << bound << ")";
-              
+
               break;
             }
         }
@@ -517,7 +517,7 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
         case AST_Argument::dir_OUT:
           *os << lname
               << (st == AST_Type::VARIABLE ? ".in ()" : "");
-              
+
           break;
         }
     }

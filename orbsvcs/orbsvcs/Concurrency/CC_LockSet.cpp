@@ -12,11 +12,6 @@
 
 #include "orbsvcs/Concurrency/CC_LockSet.h"
 
-ACE_RCSID (Concurrency,
-           CC_LockSet,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor.

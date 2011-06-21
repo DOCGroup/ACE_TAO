@@ -1,26 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Quoter
-//
-// = FILENAME
-//    Quoter_i.cpp
-//
-// = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Quoter_i.cpp
+ *
+ *  $Id$
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Quoter_i.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-
-ACE_RCSID (Quoter,
-           Quoter_i,
-           "$Id$")
 
 // Constructor.  Create all the quoter factories.
 

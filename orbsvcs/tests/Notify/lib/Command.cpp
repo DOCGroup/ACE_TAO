@@ -7,7 +7,7 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(lib, TAO_Command, "$Id$")
+
 
 TAO_Notify_Tests_Command::TAO_Notify_Tests_Command (void)
   :next_ (0), command_ (INVALID)

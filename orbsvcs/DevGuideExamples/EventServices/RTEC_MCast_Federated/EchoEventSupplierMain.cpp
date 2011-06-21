@@ -144,7 +144,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RtecUDPAdmin::AddrServer::_narrow(addr_srv_obj.in());
 
     // Create and initialize the sender object
-    TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
+    PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
                                 TAO_ECG_UDP_Sender::create();
     TAO_ECG_UDP_Out_Endpoint endpoint;
     if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) {
@@ -166,7 +166,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     sender->connect (sub);
 
     // Create and initialize the receiver
-    TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver =
+    PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
                                       TAO_ECG_UDP_Receiver::create();
 
     // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
@@ -187,7 +187,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       auto_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
       mcast_eh->reactor (orb->orb_core ()->reactor ());
       mcast_eh->open (ec.in());
-      ACE_AUTO_PTR_RESET(eh,mcast_eh.release(),ACE_Event_Handler);
+      ACE_auto_ptr_reset(eh,mcast_eh.release());
       //eh.reset(mcast_eh.release());
     } else {
       auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
@@ -196,7 +196,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (udp_eh->open (local_addr) == -1) {
         std::cerr << "Cannot open EH" << std::endl;
       }
-      ACE_AUTO_PTR_RESET(eh,udp_eh.release(),ACE_Event_Handler);
+      ACE_auto_ptr_reset(eh,udp_eh.release());
       //eh.reset(udp_eh.release());
     }
 

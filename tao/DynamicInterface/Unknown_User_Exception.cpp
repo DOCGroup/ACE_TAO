@@ -12,10 +12,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID (DynamicInterface,
-           Unknown_User_Exception,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UnknownUserException::UnknownUserException (void)

@@ -89,10 +89,10 @@ public class WChar_PasserImpl
                 System.out.println ("wstructseq_to_server FAILED entry " + i);
                 result = false;
             }
-        }            
+        }
         return result;
     }
-    
+
     public wstruct[] wstructseq_from_server (short key)
     {
         wstruct[] wsList = new wstruct[5];
@@ -174,10 +174,10 @@ public class WChar_PasserImpl
         result.st_array = ref.get_warray(key);
         result.st_any = orb.create_any();
         result.st_any.insert_wstring(ref.get_wstring(key));
-          
+
         return result;
     }
-      
+
     // TODO: this should have a home where it's accessable to both
     // client & server, but it doesn't belong in WCharReference
     public boolean match_wstruct (short key, wstruct test )

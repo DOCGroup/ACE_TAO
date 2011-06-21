@@ -3,8 +3,6 @@
 #include "TruncatableS_impl.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Truncatable, TruncatableS_impl, "$Id$")
-
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {

@@ -1,7 +1,6 @@
+// $Id$
 #include "Policy_Verifier.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (tao, Policy_Verifier, "$Id$")
 
 Policy_Verifier::Policy_Verifier (void)
   : rt_object_properties_ (0)

@@ -1,22 +1,5 @@
 // $Id$
 
-/**
- * This file is used to generate the code in
- * BiDirPolicy*.* The command used to generate code
- * is:
- *
- * tao_idl -o orig -Sa -St -Sci \
- *           -Wb,export_macro=TAO_BiDirGIOP_Export \
- *           -Wb,export_include="bidirgiop_export.h" \
- *           -Wb,pre_include="ace/pre.h" \
- *           -Wb,post_include="ace/post.h" \
- *           -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
- *           -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL \
- *           BiDirPolicy.pidl
- *
- *  This is from the GIOP 1.2 spec for Bi Dir IIOP.
- */
-
 #ifndef TAO_BIDIR_POLICY_PIDL
 #define TAO_BIDIR_POLICY_PIDL
 

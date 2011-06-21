@@ -53,7 +53,7 @@ public:
   virtual int visit_home (be_home *node);
   virtual int visit_eventtype (be_eventtype *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
-  
+
 protected:
   // Utility methods to handle the corresponding IDL declarations.
   int gen_implicit_ops (be_home *node,
@@ -103,7 +103,7 @@ protected:
                                       const char *suffix,
                                       AST_Decl *parent);
   UTL_NameList *compute_inheritance (be_home *node);
-  
+
 protected:
   /// These are created for operations implied by 'uses multiple' declarations.
   Identifier module_id_;
@@ -120,18 +120,18 @@ protected:
   be_exception *invalid_key_;
   be_exception *unknown_key_value_;
   be_exception *duplicate_key_value_;
-  
+
   /// Working nodes.
   be_component *comp_;
   be_home *home_;
-  
+
   /// So we can look up Cookie and the CCM exceptions
   /// once when the first component is seen (then we
   /// know that Components.idl is included and the
   /// lookups will succeed).
   bool ccm_lookups_done_;
-  
-private:                                  
+
+private:
   /// Generate a sendc_* receptacle for AMI4CCM.
   int generate_ami4ccm_uses (void);
 };

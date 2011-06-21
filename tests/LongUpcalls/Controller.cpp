@@ -3,8 +3,6 @@
 //
 #include "Controller.h"
 
-ACE_RCSID(LongUpcalls, Controller, "$Id$")
-
 Controller::Controller (void)
   :  start_count_ (0)
   ,  finish_count_ (0)

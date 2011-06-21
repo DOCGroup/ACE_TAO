@@ -1,14 +1,10 @@
 // -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file   Pollable.pidl
  *
  *  $Id$
- *
- * This file is used to generate the code in Pollable{C,S}.{h,cpp}
  */
-//=============================================================================
 
 #ifndef TAO_POLLABLE_PIDL
 #define TAO_POLLABLE_PIDL

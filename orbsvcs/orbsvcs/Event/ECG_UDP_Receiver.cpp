@@ -8,7 +8,6 @@
 #include "orbsvcs/Event/ECG_UDP_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

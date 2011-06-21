@@ -5,7 +5,6 @@
 #include "AppShutdown.h"
 #include "TestAppExceptionC.h"
 #include "Foo_A_ClientEngine.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 // To force static load the service.
 #include "tao/PI/PI.h"

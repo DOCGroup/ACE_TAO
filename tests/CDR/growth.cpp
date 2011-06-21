@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    growth.cpp
-//
-// = DESCRIPTION
-//   Helps in measuring how the growth strategy affects the
-//   performance of CDR streams.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    growth.cpp
+ *
+ *  $Id$
+ *
+ * Helps in measuring how the growth strategy affects the
+ * performance of CDR streams.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
@@ -25,8 +22,6 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID(CDR, growth, "$Id$")
 
 static int
 test_write (TAO_OutputCDR &cdr, int n)

@@ -36,7 +36,7 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   this->gen_fwd_decls ();
 
   if (this->visit_scope (node) == -1)
@@ -46,11 +46,11 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("codegen for scope failed\n")),
                         -1);
     }
-    
+
   this->gen_proxy_broker_factory_pointers ();
-  
+
   this->gen_ref_counting_overrides ();
-  
+
   this->gen_static_corba_overrides ();
 
   if (this->gen_obv_decls (node) == -1)
@@ -80,7 +80,7 @@ be_visitor_root_ch::visit_root (be_root *node)
                          ACE_TEXT ("failed to export templates\n")),
                         -1);
     }
-    
+
   if (this->gen_any_ops (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -101,15 +101,6 @@ be_visitor_root_ch::visit_root (be_root *node)
     }
 
 
-  if (this->gen_dds_serializer_ops (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ch::")
-                         ACE_TEXT ("visit_root - failed to ")
-                         ACE_TEXT ("generate DDS serialization\n")),
-                        -1);
-    }
-
   (void) tao_cg->end_client_header ();
 
   return 0;
@@ -122,7 +113,7 @@ be_visitor_root_ch::init (void)
   int status =
     tao_cg->start_client_header (
       be_global->be_get_client_hdr_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -133,9 +124,9 @@ be_visitor_root_ch::init (void)
 
   /// Initialize the stream.
   this->ctx_->stream (tao_cg->client_header ());
-  
+
   this->o_ = this->ctx_->stream ();
-  
+
   return 0;
 }
 
@@ -146,13 +137,13 @@ be_visitor_root_ch::gen_fwd_decls (void)
   // forward declaration of the proxy broker for a possible collocated call.
   if (idl_global->non_local_iface_seen_)
     {
-      *o_ << be_nl << be_nl
+      *o_ << be_nl_2
           << "// TAO_IDL - Generated from " << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
       *o_ << be_global->core_versioning_begin () << be_nl;
 
-      *o_ << be_nl << be_nl
+      *o_ << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl;
 
@@ -177,18 +168,18 @@ void
 be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
 {
   size_t size = be_global->non_local_interfaces.size ();
-  
+
   if (size == 0)
     {
       return;
     }
-    
+
   size_t index = 0;
   be_interface *i = 0;
-  
-  *o_ << be_nl << be_nl
+
+  *o_ << be_nl_2
       << "// Proxy Broker Factory function pointer declarations."
-      << be_nl << be_nl
+      << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -198,7 +189,7 @@ be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
 
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
-          *o_ << be_nl << be_nl
+          *o_ << be_nl_2
               << "extern " << be_global->stub_export_macro () << be_nl
               << "TAO::Collocation_Proxy_Broker *" << be_nl
               << "(*" << i->flat_client_enclosing_scope ()
@@ -214,16 +205,16 @@ void
 be_visitor_root_ch::gen_ref_counting_overrides (void)
 {
   size_t size = be_global->non_defined_interfaces.size ();
-  
+
   if (size == 0)
     {
       return;
     }
-    
+
   size_t index = 0;
   be_interface_fwd *ifwd = 0;
 
-  *o_ << be_nl << be_nl
+  *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -231,12 +222,12 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
     {
       be_global->non_defined_interfaces.dequeue_head (ifwd);
 
-      *o_ << be_nl << be_nl;
+      *o_ << be_nl_2;
 
       if (ifwd->is_valuetype ())
         {
           *o_ << "// External declarations for undefined valuetype"
-              << be_nl << be_nl
+              << be_nl_2
               << "// " << ifwd->full_name () << be_nl;
 
           *o_ << be_global->stub_export_macro () << be_nl
@@ -260,16 +251,16 @@ void
 be_visitor_root_ch::gen_static_corba_overrides (void)
 {
   size_t size = idl_global->mixed_parentage_interfaces ().size ();
-  
+
   if (size == 0)
     {
       return;
     }
-    
+
   size_t index = 0;
   AST_Interface *i = 0;
 
-  *o_ << be_nl << be_nl
+  *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__
       << be_nl;
@@ -280,7 +271,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
       << "// Overrides of CORBA::release and CORBA::is_nil for"
       << be_nl
       << "// interfaces that inherit from both CORBA::Object" << be_nl
-      << "// and CORBA::AbstractBase." << be_nl << be_nl
+      << "// and CORBA::AbstractBase." << be_nl_2
       << "namespace CORBA" << be_nl
       << "{" << be_idt;
 
@@ -327,8 +318,8 @@ be_visitor_root_ch::gen_template_exports (be_root *node)
     {
       return 0;
     }
-    
-  be_visitor_context ctx = *this->ctx_;  
+
+  be_visitor_context ctx = *this->ctx_;
   be_visitor_template_export export_visitor (&ctx);
   return node->accept (&export_visitor);
 }
@@ -361,20 +352,6 @@ be_visitor_root_ch::gen_cdr_ops (be_root *node)
 {
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CH);
-  be_visitor_root_cdr_op visitor (&ctx);
-  return node->accept (&visitor);
-}
-
-int
-be_visitor_root_ch::gen_dds_serializer_ops (be_root *node)
-{
-  if (! be_global->gen_dcps_type_support ())
-    {
-      return 0;
-    }
-    
-  be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH);
   be_visitor_root_cdr_op visitor (&ctx);
   return node->accept (&visitor);
 }

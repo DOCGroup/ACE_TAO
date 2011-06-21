@@ -1,7 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/PortableServer/LifespanStrategyTransient.h"
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
 #include "tao/PortableServer/POAManager.h"

@@ -14,9 +14,6 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 
-ACE_RCSID (DynamicInterface, AMH_DSI_Response_Handler,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "AMH_DSI_Response_Handler.inl"
 #endif /* ! __ACE_INLINE__ */

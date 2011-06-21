@@ -35,7 +35,7 @@ be_visitor_root_sh::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   /// The SI and SS cases are caught in BE_produce(). We
   /// want to generate an empty skeleton header file, which
   /// has been done, so -SS can flag a skip of the scope
@@ -64,7 +64,7 @@ be_visitor_root_sh::init (void)
   int status =
     tao_cg->start_server_header (
       be_global->be_get_server_hdr_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

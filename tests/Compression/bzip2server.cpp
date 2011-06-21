@@ -6,10 +6,6 @@
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 bool
 test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
 {

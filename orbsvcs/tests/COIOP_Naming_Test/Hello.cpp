@@ -6,7 +6,7 @@
 #include "tao/ORB_Table.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
+
 
   Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)

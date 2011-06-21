@@ -10,7 +10,7 @@ interface Test
   //    which has a method which can be 'smartified'
   //    to provide extra functionality.
 
-  exception Oops 
+  exception Oops
     {
       string reason;
     };

@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h"
-
-ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushSupplier, "$Id$")
-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Sequence/SequencePushConsumer.h"
 #include "orbsvcs/Notify/Properties.h"
@@ -69,7 +66,7 @@ TAO_Notify_SequenceProxyPushSupplier::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) TAO_Notify_SequenceProxyPushSupplier::validate(%d)")
                   ACE_TEXT ("disconnecting \n"), this->id ()));
     }

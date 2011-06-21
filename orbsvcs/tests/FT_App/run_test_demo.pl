@@ -262,7 +262,7 @@ $hostname = $rp_manager->HostName ();
 $port = $rp_manager->RandomPort ();
 
 $RM = $rp_manager->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager" .
-                                  "$build_directory/FT_ReplicationManager",
+                                  "$build_directory/tao_ft_replicationmanager",
                                   "-o $rp_manager_ior " .
                                   "-ORBEndpoint iiop://$hostname:$port");
 
@@ -271,18 +271,18 @@ $RMC = $rp_manager_controller->CreateProcess (".$build_directory/replmgr_control
                                  "-x");
 
 $NOT = $fault_notifier->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier" .
-                                       "$build_directory/Fault_Notifier" ,
+                                       "$build_directory/tao_fault_notifier" ,
                                         "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
                                         "-o $fault_notifier_ior -q");
 
 $DET1 = $fault_detector1->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector" .
-                                       "$build_directory/Fault_Detector" ,
+                                       "$build_directory/tao_fault_detector" ,
                                        "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
                                        "-o $fault_detector1_ior " .
                                        "-l $location1 -q");
 
 $DET2 = $fault_detector2->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector" .
-                                       "$build_directory/Fault_Detector" ,
+                                       "$build_directory/tao_fault_detector" ,
                                        "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
                                        "-o $fault_detector1_ior " .
                                        "-l $location2 -q");

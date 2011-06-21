@@ -12,9 +12,9 @@ public:
   AST_Uses (UTL_ScopedName *n,
             AST_Type *uses_type,
             bool is_multiple);
-            
+
   virtual ~AST_Uses (void);
-  
+
   // Data Accessors.
   AST_Type *uses_type (void) const;
   bool is_multiple (void) const;
@@ -27,12 +27,12 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 
   static AST_Decl::NodeType const NT;
-  
+
 private:
   bool is_multiple_;
 };

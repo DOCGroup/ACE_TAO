@@ -10,11 +10,6 @@
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 #include "tao/RTPortableServer/RT_Collocation_Resolver.h"
 
-ACE_RCSID (RTPortableServer,
-           RT_Object_Adapter_Factory,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Adapter*

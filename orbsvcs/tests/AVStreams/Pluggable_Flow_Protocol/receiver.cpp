@@ -2,7 +2,6 @@
 
 #include "receiver.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_String.h"
 #include "ace/High_Res_Timer.h"
 
 static FILE *output_file = 0;

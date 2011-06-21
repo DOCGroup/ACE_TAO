@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(Reliable, test_i, "$Id$")
-
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */

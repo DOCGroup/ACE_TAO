@@ -1,16 +1,10 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Server_Request_Interceptor.h"
-
-ACE_RCSID (Request_Interceptor_Flow,
-           Server_Request_Interceptor,
-           "$Id$")
-
 #include "testC.h"
-
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
-
 #include "ace/OS_NS_string.h"
 
 Server_Request_Interceptor::Server_Request_Interceptor (const char *name)

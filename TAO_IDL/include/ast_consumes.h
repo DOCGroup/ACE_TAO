@@ -13,9 +13,9 @@ class TAO_IDL_FE_Export AST_Consumes : public virtual AST_Field
 public:
   AST_Consumes (UTL_ScopedName *n,
                 AST_Type *consumes_type);
-            
+
   virtual ~AST_Consumes (void);
-  
+
   // Data Accessor.
   AST_Type *consumes_type (void) const;
 
@@ -27,7 +27,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 

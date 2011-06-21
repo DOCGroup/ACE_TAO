@@ -6,10 +6,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Send_File,
-           test_i,
-           "$Id$")
-
 void
 Simple_Server_i::send_line (const char *)
 {

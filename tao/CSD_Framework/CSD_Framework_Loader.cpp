@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_Framework_Loader.h"
@@ -6,11 +7,6 @@
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
-
-ACE_RCSID (CSD_Framework,
-           CSD_Framework_Loader,
-           "$Id$")
-
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

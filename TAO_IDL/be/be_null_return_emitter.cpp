@@ -37,9 +37,9 @@ int
 be_null_return_emitter::emit (be_type *node)
 {
   os_ << "return ";
-  
+
   be_visitor_null_return_value visitor (this->ctx_);
-  
+
   if (node->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -49,8 +49,8 @@ be_null_return_emitter::emit (be_type *node)
                          node->full_name ()),
                         -1);
     }
-    
+
   os_ << ";";
-  
+
   return 0;
 }

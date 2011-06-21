@@ -118,7 +118,7 @@ sub run_test
         print STDERR "ERROR: supplier returned $process_status\n";
         $status = 1;
         kill_processes ();
-        return $status; 
+        return $status;
     }
 
     # Shutdown.
@@ -197,7 +197,7 @@ sub analyze_results {
         }
         close (TEST_OUTPUT);
     }
-    
+
     my $all_received = 1;
     if ($a_events != 100 || $b_events != 100 || $c_events != 100) {
         $all_received = 0;
@@ -206,7 +206,7 @@ sub analyze_results {
                 ."\t$b_events B events, expected 100\n"
                     ."\t$c_events C events, expected 100\n";
     }
-    
+
     if ($all_received && $status == 0) {
         print STDERR "SUCCESS\n";
         return 0;

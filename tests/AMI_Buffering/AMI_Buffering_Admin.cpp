@@ -3,8 +3,6 @@
 //
 #include "AMI_Buffering_Admin.h"
 
-ACE_RCSID(AMI_Buffering, AMI_Buffering_Admin, "$Id$")
-
 AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , request_count_ (0)

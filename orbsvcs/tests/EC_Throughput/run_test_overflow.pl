@@ -31,7 +31,7 @@ my $es_nsiorfile = $es->LocalFile ($nsiorfile);
 my $con_nsiorfile = $con->LocalFile ($nsiorfile);
 my $sup_nsiorfile = $sup->LocalFile ($nsiorfile);
 my $sup2_nsiorfile = $sup2->LocalFile ($nsiorfile);
-my $es_ecmtconffile = $es->LocalFile ($ecmtconffile); 
+my $es_ecmtconffile = $es->LocalFile ($ecmtconffile);
 $ns->DeleteFile ($nsiorfile);
 $es->DeleteFile ($nsiorfile);
 $con->DeleteFile ($nsiorfile);
@@ -41,10 +41,10 @@ $sup2->DeleteFile ($nsiorfile);
 
 print STDERR "================ Overflow test\n";
 
-$NS = $ns->CreateProcess ("../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
 
-$ES = $es->CreateProcess ("../../Event_Service/Event_Service",
+$ES = $es->CreateProcess ("../../Event_Service/tao_rtevent",
                           "-ORBInitRef NameService=file://$es_nsiorfile ".
                           " -ORBSvcConf $es_ecmtconffile ".
                           " -s local");
@@ -57,7 +57,7 @@ $CON = $con->CreateProcess ("ECT_Consumer",
 $SUP = $sup->CreateProcess ("ECT_Supplier",
                             "-ORBInitRef NameService=file://$sup_nsiorfile ".
                             " -s 3 -u 10000 -n 1 -t 0 -b 8");
-                            
+
 $SUP2 = $sup2->CreateProcess ("ECT_Supplier",
                               "-ORBInitRef NameService=file://$sup2_nsiorfile ".
                               " -s 1 -u 10 -n 1 -t 0");

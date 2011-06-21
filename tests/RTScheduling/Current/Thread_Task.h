@@ -15,7 +15,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int activate_task (int thr_count);
 
   ~Thread_Task (void);
-  
+
  protected:
   /// task svc
   virtual int svc (void);

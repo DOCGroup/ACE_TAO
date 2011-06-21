@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 #include "tao/PortableInterceptorC.h"
@@ -11,8 +13,6 @@
 #include "ace/Static_Object_Lock.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
-
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

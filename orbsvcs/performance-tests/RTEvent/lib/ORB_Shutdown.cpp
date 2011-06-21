@@ -11,6 +11,3 @@
 #include "ORB_Shutdown.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           ORB_Shutdown, 
-           "$Id$")

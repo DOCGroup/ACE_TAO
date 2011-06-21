@@ -37,7 +37,7 @@ $server4->DeleteFile ($naming_ior);
 $client->DeleteFile ($naming_ior);
 
 
-$NS = $server1->CreateProcess ("../../orbsvcs/Naming_Service/Naming_Service", "");
+$NS = $server1->CreateProcess ("../../orbsvcs/Naming_Service/tao_cosnaming", "");
 $LS = $server2->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist", "");
 $AD = $server3->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd", "");
 $DL = $server4->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel", "");

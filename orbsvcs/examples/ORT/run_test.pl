@@ -73,7 +73,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 }
 
 $TI = $ti->CreateProcess ($tao_ifr);
-$IFR = $ifr->CreateProcess ("../../IFR_Service/IFR_Service",
+$IFR = $ifr->CreateProcess ("../../IFR_Service/tao_ifr_service",
                             "-o $ifr_ifriorfile");
 $GWS = $gws->CreateProcess ("gateway_server",
                             "-o $gws_gwsiorfile ".

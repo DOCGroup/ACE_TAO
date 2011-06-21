@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "ace/Sched_Params.h"
@@ -8,10 +7,6 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
-
-ACE_RCSID (Dump_Schedule,
-           Dump_Schedule,
-           "$Id$")
 
 // This program dumps the results of one scheduling in a C++ file.
 
@@ -25,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (command_line.get_argc(), command_line.get_TCHAR_argv(), "internet");
+        CORBA::ORB_init (argc, argv, "internet");
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");

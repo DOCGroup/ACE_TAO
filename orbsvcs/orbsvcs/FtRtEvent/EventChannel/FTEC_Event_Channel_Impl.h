@@ -12,7 +12,6 @@
 #ifndef TAO_FTEC_EVENT_CHANNEL_H
 #define TAO_FTEC_EVENT_CHANNEL_H
 
-#include "ace/Synch_T.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"

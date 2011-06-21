@@ -1,10 +1,7 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/DynamicAny/DynValueCommon_i.h"
-
-ACE_RCSID (DynamicAny,
-           DynValueCommon_i,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

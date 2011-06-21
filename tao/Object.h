@@ -32,17 +32,13 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#include "tao/Configurable_Refcount.h"
+#include "ace/Atomic_Op.h"
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
       and we don't want that definition.  See IOP_IORC.h. */
 # undef IOR
 #endif /* HPUX && IOR */
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Lock;
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -88,10 +84,10 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
-  
+
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
-  
+
   template<>
   TAO_Export Boolean
   is_nil (Object_ptr);
@@ -228,7 +224,7 @@ namespace CORBA
     virtual CORBA::ORB_ptr _get_orb (void);
 
     /**
-     * @name Reference Count Managment
+     * @name Reference Count Management
      *
      * These are the standard CORBA object reference count manipulations
      * methods.
@@ -347,9 +343,9 @@ namespace CORBA
     /// implement Smart Proxies and no others.
     virtual char* convert_to_ior (bool use_omg_ior_format,
                                   const char* ior_prefix) const;
-            
+
     /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.                              
+    /// templatizing.
     void _decr_refcount (void);
 
   protected:
@@ -361,7 +357,7 @@ namespace CORBA
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
     /// Number of outstanding references to this object.
-    TAO_Configurable_Refcount refcount_;
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
   private:
 
@@ -410,7 +406,7 @@ namespace CORBA
      * not require reference counting (the default) may be
      * instantiated in the critical path.
      */
-    ACE_Lock * object_init_lock_;
+    TAO_SYNCH_MUTEX object_init_lock_;
   };
 }   // End CORBA namespace.
 

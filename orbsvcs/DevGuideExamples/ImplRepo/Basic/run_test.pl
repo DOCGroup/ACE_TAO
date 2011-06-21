@@ -24,7 +24,7 @@ my $WAIT_TIMEOUT = 2;
 my $DEBUG_LEVEL = 1;
 my $OBJ_REF_STYLE = "-orbobjrefstyle url";
 
-my $implrepo_server = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/ImplRepo_Service";
+my $implrepo_server = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator";
 
 my $implrepo_ior = "imr.ior";
 my $messenger_ior = "messenger.ior";

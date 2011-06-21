@@ -7,10 +7,6 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
-ACE_RCSID (CEC_Tests,
-           Disconnect,
-           "$Id$")
-
 static void run_test (PortableServer::POA_ptr poa,
                       int use_callbacks);
 

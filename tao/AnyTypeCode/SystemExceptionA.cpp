@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/SystemExceptionA.h"
@@ -162,8 +163,9 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::Boolean operator>>= (const CORBA::Any &any, \
-                            const CORBA::name *&ex) \
+CORBA::Boolean \
+CORBA::operator>>= (const CORBA::Any &any, \
+                    const CORBA::name *&ex) \
 { \
   return \
     TAO::Any_SystemException::extract ( \

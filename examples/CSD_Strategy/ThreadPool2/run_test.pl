@@ -45,7 +45,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 my @CLS = ();
 my @clients_iorfile = ();
 $count = 0;
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         $clients_iorfile[$count] = $clients[$count]->LocalFile($iorfiles[$i]);
         $clients[$count]->DeleteFile($iorfiles[$i]);
@@ -81,7 +81,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 }
 
 $count = 0;
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         if ($clients[$count]->PutFile ($iorfiles[$i]) == -1) {
             print STDERR "ERROR: client $count cannot set file <$clients_iorfile[$count]>\n";
@@ -94,7 +94,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 
 $count = 0;
 
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         my $client_status = $CLS[$count]->Spawn();
         if ($client_status != 0) {
@@ -128,7 +128,7 @@ for ($i = 0; $i < $num_servants; $i++) {
 }
 
 $count = 0;
-for ($i = 0; $i < $num_servants; $i++) { 
+for ($i = 0; $i < $num_servants; $i++) {
     for ($j = 0; $j < $num_clients_per_servant; $j++) {
         $clients[$count]->DeleteFile($iorfiles[$i]);
         $count++;

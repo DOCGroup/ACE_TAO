@@ -1,18 +1,18 @@
-// $Id$
 
-//===========================================================================
-//
-// = FILENAME
-//     server.cpp
-//
-// = DESCRIPTION
-//     In this example,
-//        - Example showing the working of implementation repository.
-//
-// = AUTHOR
-//     Priyanka Gontla
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file     server.cpp
+ *
+ *  $Id$
+ *
+ *   In this example,
+ *      - Example showing the working of implementation repository.
+ *
+ *
+ *  @author  Priyanka Gontla
+ */
+//=============================================================================
+
 
 #include "Stock_Factory_i.h"
 #include "tao/IORTable/IORTable.h"

@@ -8,7 +8,7 @@ project(*idl) : taoidldefaults {
   custom_only = 1
 }
 
-project(*security server): taoserver, orbsvcslib, security, ssliop, pi_server, codecfactory, interceptors {
+project(*security server): taoserver, security {
   after += *idl
   Source_Files {
     Foo_i.cpp
@@ -20,7 +20,7 @@ project(*security server): taoserver, orbsvcslib, security, ssliop, pi_server, c
   }
 }
 
-project(*security client): taoexe, orbsvcslib, security, pi, codecfactory, interceptors {
+project(*security client): taoclient, security {
   after += *idl
   exename = client
   Source_Files {

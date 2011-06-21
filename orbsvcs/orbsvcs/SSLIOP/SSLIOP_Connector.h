@@ -124,11 +124,11 @@ namespace TAO
           CONNECT_CREATION_STRATEGY;
 
       typedef ACE_Connect_Strategy<Connection_Handler,
-                                   ACE_SSL_SOCK_CONNECTOR>
+                                   ACE_SSL_SOCK_Connector>
           CONNECT_STRATEGY;
 
       typedef ACE_Strategy_Connector<Connection_Handler,
-                                     ACE_SSL_SOCK_CONNECTOR>
+                                     ACE_SSL_SOCK_Connector>
           BASE_CONNECTOR;
 
     private:

@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   TAO/performance-tests/Anyop
-//
-// = FILENAME
-//   anyop.cpp
-//
-// = DESCRIPTION
-//   Modified from anyop.cpp in Param_Test to benchmark Any insertion and
-//   extraction operators for various IDL types.
-//
-// = AUTHORS
-//   Carlos O'Ryan
-//   Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   anyop.cpp
+ *
+ *  $Id$
+ *
+ * Modified from anyop.cpp in Param_Test to benchmark Any insertion and
+ * extraction operators for various IDL types.
+ *
+ *
+ *  @author Carlos O'RyanJeff Parsons
+ */
+//=============================================================================
+
 
 #include "testC.h"
 #include "tao/debug.h"
@@ -29,10 +25,6 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
-
-ACE_RCSID (Anyop,
-           anyop,
-           "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

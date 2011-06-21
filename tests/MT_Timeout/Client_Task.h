@@ -40,7 +40,7 @@ public:
                CORBA::ULong sleep_time,
                CORBA::ULong timeout);
 
-  /// Return the total number of sucessful calls
+  /// Return the total number of successful calls
   int successful_calls (void) const;
 
   /// Return the total number of timed out calls

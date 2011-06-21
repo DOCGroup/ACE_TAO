@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include <GL/gl.h>
 
-ACE_RCSID(FL_Cube, test_i, "$Id$")
-
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
                                   Simple_Window *window)
   :  orb_ (CORBA::ORB::_duplicate (orb)),

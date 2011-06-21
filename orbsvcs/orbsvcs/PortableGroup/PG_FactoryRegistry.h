@@ -175,17 +175,6 @@ namespace TAO
     ACE_CString identity_;
 
     /**
-     * Protect internal state.
-     * Mutex should be locked by corba methods, or by
-     * external (public) methods before calling implementation
-     * methods.
-     * Implementation methods should assume the mutex is
-     * locked if necessary.
-     */
-    TAO_SYNCH_MUTEX internals_;
-    typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
-
-    /**
      * The orb
      */
     CORBA::ORB_var orb_;

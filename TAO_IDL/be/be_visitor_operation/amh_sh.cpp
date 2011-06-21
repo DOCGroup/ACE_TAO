@@ -36,8 +36,8 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     {
       return 0;
     }
-    
-  /// These are not for the server side.  
+
+  /// These are not for the server side.
   if (node->is_sendc_ami ())
     {
       return 0;
@@ -130,8 +130,8 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
     const char *skel_prefix
   )
 {
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "static void " << skel_prefix
       << this->ctx_->port_prefix ().c_str ()

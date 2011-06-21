@@ -1,11 +1,8 @@
+// $Id$
+
 #include "tao/RTCORBA/RT_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
-ACE_RCSID (RTCORBA,
-           RT_ORBInitializer,
-           "$Id$")
-
 
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "tao/RTCORBA/RTCORBAC.h"

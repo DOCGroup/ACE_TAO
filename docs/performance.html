@@ -254,25 +254,6 @@
 	<ul>
 	  <li>
 	    <p>
-	      A single-threaded client application may not require
-	      the internal thread synchronization performed by TAO.
-	      It may therefore be useful to add the following line to your
-	      <code>svc.conf</code> file:
-	    </p>
-
-	    <blockquote>
-	      <code>static <a href = "Options.html#DefaultClient">Client_Strategy_Factory</a> "<a href="Options.html#-ORBProfileLock">-ORBProfileLock</a> null"</code>
-	    </blockquote>
-
-	    <p>
-	      If such an entry already exists in your
-	      <code>svc.conf</code> file, then just add
-	      <code>-ORBProfileLock null</code> to the list options
-	      between the quotes found after
-	      <code>Client_Strategy_Factory</code>.
-	    </p>
-
-	    <p>
 	      Other options include disabling synchronization in the
 	      components of TAO responsible for constructing and sending
 	      requests to the target and for receiving replies.  These
@@ -608,7 +589,7 @@ CC 5.x compiler gives a big footprint reduction of the order of 40%.</P>
 <P>Also footprint can be saved by specifying the following in your
 platform_macros.GNU file: </P>
 <P>
-<code> 
+<code>
 <pre>
 optimize=1
 debug=0
@@ -618,8 +599,8 @@ CPPFLAGS += -DACE_USE_RCSID=0 -DACE_NLOGGING=1
 
 <P>
 If portable interceptors aren't needed, code around line 729 in
-<code>$TAO_ROOT/tao/orbconf.h</code> can be modified to hard-code 
-<code>TAO_HAS_INTERCEPTORS</code> as <code>0</code>, and all interceptor 
+<code>$TAO_ROOT/tao/orbconf.h</code> can be modified to hard-code
+<code>TAO_HAS_INTERCEPTORS</code> as <code>0</code>, and all interceptor
 code will be skipped by the preprocessor.
 
 <P>
@@ -630,7 +611,7 @@ code will be skipped by the preprocessor.
   <TR>
     <TD><code>-Sc</code>
     <TD>Suppresses generation of the TIE classes (template classes used
-    to delegate request dispatching when IDL interface inheritance 
+    to delegate request dispatching when IDL interface inheritance
     would cause a 'ladder' of inheritance if the servant classe had
     corresponding inheritance). This option can be used almost all the
     time.

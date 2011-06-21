@@ -137,6 +137,7 @@ protected:
 
   DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
 
+// FUZZ: disable check_for_ACE_Guard
   /**
    * \brief Attempt to dispatch event from a queue.
    *
@@ -150,6 +151,7 @@ protected:
   virtual bool dispatch_from_queue (
     Request_Queue & requests,
     ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon);
+// FUZZ: enable check_for_ACE_Guard
 
   void enqueue_request(TAO_Notify_Method_Request_Event * request);
 

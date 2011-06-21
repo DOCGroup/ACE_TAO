@@ -1,12 +1,9 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/CodecFactory/CodecFactory.h"
 #include "testC.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (Codec,
-           client,
-           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

@@ -1,27 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    var_struct.cpp
-//
-// = DESCRIPTION
-//    test variable sized structures
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    var_struct.cpp
+ *
+ *  $Id$
+ *
+ *  test variable sized structures
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "var_struct.h"
-
-ACE_RCSID (Param_Test,
-           var_struct,
-           "$Id$")
 
 // ************************************************************************
 //               Test_Var_Struct
@@ -153,9 +146,9 @@ CORBA::Boolean
 Test_Var_Struct::check_validity (void)
 {
   CORBA::Boolean flag = 0;
-  if (this->in_.dbl == this->inout_->dbl &&
-      this->in_.dbl == this->out_->dbl &&
-      this->in_.dbl == this->ret_->dbl &&
+  if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
+      ACE::is_equal (this->in_.dbl, this->out_->dbl) &&
+      ACE::is_equal (this->in_.dbl, this->ret_->dbl) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&

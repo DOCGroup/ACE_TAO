@@ -8,8 +8,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(MT_Timeout, Client_Task, "$Id$")
-
 Client_Task::Client_Task (CORBA::ORB_ptr orb,
                           Test::Sleep_Service_ptr sleep_service,
                           int iterations,

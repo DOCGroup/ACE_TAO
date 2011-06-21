@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
 #define BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
 
@@ -34,7 +33,7 @@ class be_visitor_any_extracted_type_decl : public be_visitor_decl
 public:
   be_visitor_any_extracted_type_decl (be_visitor_context *ctx);
   virtual ~be_visitor_any_extracted_type_decl (void);
-  
+
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);
   virtual int visit_enum (be_enum *);
@@ -49,9 +48,8 @@ public:
   virtual int visit_union (be_union *);
   virtual int visit_valuebox (be_valuebox *);
   virtual int visit_valuetype (be_valuetype *);
-  
+
 protected:
-  TAO_OutStream & os_;
   const char * var_name_;
   const char * tmp_name_;
 };

@@ -1,9 +1,6 @@
+// $Id$
+
 #include "tao/Strategies/Strategies_ORBInitializer.h"
-
-ACE_RCSID (Strategies,
-           Strategies_ORBInitializer,
-           "$Id$")
-
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"

@@ -5,10 +5,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (DiffServPolicy,
-           Server_Network_Priority_Policy,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (void)

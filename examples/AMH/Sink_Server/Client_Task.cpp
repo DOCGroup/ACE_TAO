@@ -53,7 +53,7 @@ Client_Task::parse_args (void)
             break;
           }
       }
-    // Indicates sucessful parsing of the command line
+    // Indicates successful parsing of the command line
     return 1;
 }
 

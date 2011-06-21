@@ -192,7 +192,8 @@ int FTAPP::FT_Creator::run (void)
       CORBA::String_var iogr = this->orb_->object_to_string (group.in ());
 
       char iogr_filename[1000];
-      ACE_OS::snprintf (iogr_filename, sizeof(iogr_filename), "%s%s_%d.iogr",
+      ACE_OS::snprintf (iogr_filename, sizeof(iogr_filename),
+        "%s%s_" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII ".iogr",
         this->prefix_.c_str (),
         role,
         this->iogr_seq_);
@@ -213,7 +214,8 @@ int FTAPP::FT_Creator::run (void)
     if(this->ns_register_)
     {
       char iogr_name[1000];
-      ACE_OS::snprintf (iogr_name, sizeof(iogr_name), "%s_%s_%d",
+      ACE_OS::snprintf (iogr_name, sizeof(iogr_name),
+        "%s_%s_" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
         this->prefix_.c_str (),
         role,
         this->iogr_seq_);

@@ -1,14 +1,11 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
 #include "ace/Log_Msg.h"
 
 extern bool interceptor_invoked;
-
-ACE_RCSID (Redirection,
-           Client_Request_Interceptor,
-           "$Id$")
 
 Client_Request_Interceptor::Client_Request_Interceptor (
   const char *orb_id,
@@ -63,8 +60,8 @@ Client_Request_Interceptor::receive_exception (
                                   this->orb_id_.in ());
   }
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "Client_Request_Interceptor::receive_exception (%s)\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "Client_Request_Interceptor::receive_exception (%s)\n",
               ri->received_exception_id ()));
 
   if (ACE_OS::strcmp (ri->received_exception_id (),

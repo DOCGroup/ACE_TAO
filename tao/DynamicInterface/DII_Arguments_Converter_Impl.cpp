@@ -7,10 +7,6 @@
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
 
-ACE_RCSID (DynamicInterface,
-           DII_Arguments_Converter_Impl,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -75,7 +71,7 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
   details->use_stub_args (false);
 }
 
-void 
+void
 TAO_DII_Arguments_Converter_Impl::dsi_convert_request (
     TAO_ServerRequest & server_request,
     TAO_OutputCDR & output)
@@ -109,7 +105,7 @@ TAO_DII_Arguments_Converter_Impl::convert_reply (
   this->dsi_convert_reply (server_request, input);
 }
 
-void 
+void
 TAO_DII_Arguments_Converter_Impl::dsi_convert_reply (
     TAO_ServerRequest & server_request,
     TAO_InputCDR & input)
@@ -117,14 +113,14 @@ TAO_DII_Arguments_Converter_Impl::dsi_convert_reply (
   TAO::NamedValue_Argument * _ret_val
     = static_cast<TAO::NamedValue_Argument *> (
         server_request.operation_details ()->args()[0]);
-  
+
   _ret_val->demarshal (input);
-  
+
   CORBA::NVList_ptr lst
     = static_cast<TAO::NVList_Argument *> (
         server_request.operation_details ()->args()[1])->arg ();
 
-  lst->_tao_decode (input, 
+  lst->_tao_decode (input,
                     CORBA::ARG_INOUT | CORBA::ARG_OUT);
 }
 

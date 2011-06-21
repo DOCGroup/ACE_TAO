@@ -88,7 +88,7 @@ else {
     @test_configs = @ARGV;
 }
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                               "-o $ns_nsiorfile");
 
 $NS_status = $NS->Spawn ();
@@ -130,7 +130,7 @@ for $config (@test_configs) {
 
     my $nfs_config = $nfs->LocalFile ($config);
 
-    $NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service",
+    $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                                 ' '.$dispatch_opt.' '.
                                 "-ORBInitRef NameService=file://$nfs_nsiorfile " .
                                 "-IORoutput $nfs_nfsiorfile " .

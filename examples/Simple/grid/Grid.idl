@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-interface Grid 
+interface Grid
 {
   // = TITLE
   //   Create a <Grid> of type <name>
@@ -12,7 +12,7 @@ interface Grid
   attribute short width;
   // Width of the grid.
 
-  exception RANGE_ERROR 
+  exception RANGE_ERROR
     {
       // = TITLE
       // The range of parameter values do not fall in the expected
@@ -27,7 +27,7 @@ interface Grid
     raises (RANGE_ERROR);
   // Set the element [n,m] of the grid, to value.
 
-  long get (in short n, in short m) 
+  long get (in short n, in short m)
     raises (RANGE_ERROR);
   // Return element [n,m] of the grid.
 
@@ -45,7 +45,7 @@ interface Grid_Factory
   const short DEFAULT_WIDTH = 10;
 
   Grid make_grid (in short height, in short width);
-  // Returns a new <Grid> instance.  
+  // Returns a new <Grid> instance.
 
   oneway void shutdown ();
   // Shutdown the application.

@@ -15,15 +15,15 @@ $number_of_clients = 4;
 $status = 0;
 $continuous = ($^O eq 'hpux');
 
-@configurations = 
+@configurations =
     ({
-        file => "ior_1", 
+        file => "ior_1",
         description => "Invoking methods on servant in default thread pool",
      },{
-        file => "ior_2", 
+        file => "ior_2",
         description => "Invoking methods on servant in first RT thread pool (without lanes)",
      },{
-        file => "ior_3", 
+        file => "ior_3",
         description => "Invoking methods on servant in second RT thread pool (with lanes)",
      },
      );
@@ -38,7 +38,7 @@ sub run_clients
     my @parms = @_;
     $arg = $parms[0];
     $clients = $parms[1];
-    
+
 
     for ($i = 0; $i < $clients; $i++) {
         $CL[$i] = $client->CreateProcess ("client", $arg);
@@ -72,7 +72,7 @@ for $test (@configurations) {
             # Mark as no longer running to avoid errors on exit.
             $SV->{RUNNING} = 0;
             exit $status;
-        } 
+        }
         else {
             print STDERR "ERROR: cannot find ior file: $test->{file}\n";
             $status = 1;
@@ -85,7 +85,7 @@ for $test (@configurations) {
     print STDERR "\n*************************************************************\n";
     print STDERR "$test->{description}\n";
     print STDERR "*************************************************************\n\n";
-      
+
     $iorfile = $client->LocalFile ($test->{file});
     run_clients ("-k file://$iorfile", $number_of_clients);
     print STDERR "Prepare next cycle";

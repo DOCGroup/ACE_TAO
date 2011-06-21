@@ -9,12 +9,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI_Observer,
-           Push_Iterator_Factory_i,
-           "$Id$")
-
-
 Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
   (const char *pathname,

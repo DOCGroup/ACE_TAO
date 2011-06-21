@@ -23,14 +23,9 @@ class CSD_TP_Test_Export AppShutdown
     static AppShutdown* instance ();
 
   private:
-
-    typedef TAO_SYNCH_MUTEX LockType;
-    typedef ACE_Guard<LockType> GuardType;
-
-    LockType lock_;
     CORBA::ORB_var orb_;
     unsigned num_clients_;
-    unsigned num_clients_shutdown_;
+    ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients_shutdown_;
 
     OrbShutdownTask orb_shutdown_task_;
 };

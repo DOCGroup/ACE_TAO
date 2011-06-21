@@ -48,7 +48,7 @@ be_factory::destroy (void)
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
   this->be_decl::destroy ();
-  
+
   this->AST_Factory::destroy ();
 }
 

@@ -42,14 +42,14 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_cdr_op_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -73,12 +73,12 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_cdr_op_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
   *os << ";" << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -91,14 +91,14 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       *os << "strm";
     }
 
-  *os << "," << be_nl 
+  *os << "," << be_nl
       << node->name () << " &";
-      
+
   if (! node->is_local ())
     {
       *os << "_tao_aggregate";
     }
-    
+
   *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -116,9 +116,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_cdr_op_cs::"
                              "visit_structure - "
-                             "codegen for field decl scope failed\n"), 
+                             "codegen for field decl scope failed\n"),
                             -1);
-        }        
+        }
 
       *os << "return" << be_idt_nl;
 
@@ -127,7 +127,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_cdr_op_cs"
                              "::visit_structure - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
 

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Strategies/SCIOP_Connection_Handler.h"
 
 #if TAO_HAS_SCIOP == 1
@@ -28,10 +30,6 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/os_include/os_netdb.h"
-
-ACE_RCSID (tao,
-           SCIOP_Connection_Handler,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

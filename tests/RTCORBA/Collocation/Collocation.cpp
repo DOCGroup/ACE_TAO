@@ -9,8 +9,6 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Collocations, Collocations, "$Id$")
-
 RTCORBA::Priority default_thread_priority;
 
 class test_i;

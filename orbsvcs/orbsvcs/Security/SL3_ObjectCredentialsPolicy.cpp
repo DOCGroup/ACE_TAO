@@ -2,12 +2,6 @@
 
 #include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
 
-
-ACE_RCSID (Security,
-           SL3_ObjectCredentialsPolicy,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (

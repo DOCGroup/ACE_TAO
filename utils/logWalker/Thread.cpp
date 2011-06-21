@@ -33,7 +33,15 @@ Thread::pending_peer (void) const
   return this->new_connection_;
 }
 
-void 
+void
+Thread::handle_request (void)
+{
+  this->encounters_++;
+  if (this->pending_.size() > 1)
+    this->nested_++;
+}
+
+void
 Thread::enter_wait (PeerProcess *pp)
 {
   this->pending_.push (pp);
@@ -44,7 +52,7 @@ Thread::enter_wait (PeerProcess *pp)
     this->nested_++;
 }
 
-void 
+void
 Thread::exit_wait (PeerProcess *pp, size_t linenum)
 {
   PeerProcess *old;
@@ -52,7 +60,7 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
     return;
   while (old != pp)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "Line %d, Ending an invocation to peer %s, but most recent started"
                   " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
@@ -61,19 +69,19 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
     }
 }
 
-long 
+long
 Thread::max_depth (void) const
 {
   return this->max_depth_;
 }
 
-long 
+long
 Thread::encounters (void) const
 {
   return this->encounters_;
 }
 
-long 
+long
 Thread::id (void) const
 {
   return this->id_;
@@ -103,7 +111,7 @@ Thread::active_handle (long handle)
   this->active_handle_ = handle;
 }
 
-long 
+long
 Thread::active_handle (void) const
 {
   return this->active_handle_;
@@ -115,7 +123,7 @@ Thread::giop_target (void)
   return this->giop_target_;
 }
 
-void 
+void
 Thread::set_giop_target (Invocation::GIOP_Buffer *buffer)
 {
   this->giop_target_ = buffer;
@@ -130,12 +138,12 @@ Thread::add_invocation (Invocation *inv)
 void
 Thread::dump_detail (ostream &strm)
 {
-  strm << "   " << this->alias_ << " tid = " << this->id_ 
+  strm << "   " << this->alias_ << " tid = " << this->id_
        << "\t" << this->encounters_ << " encounters";
   if (nested_ > 0)
-    strm <<", with " << this->nested_ << " nested upcalls, max depth " 
+    strm <<", with " << this->nested_ << " nested upcalls, max depth "
          << this->max_depth_;
-  strm << endl; 
+  strm << endl;
 }
 
 void

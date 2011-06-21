@@ -13,6 +13,7 @@
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
+#include "fe_extern.h"
 
 AST_Decl::NodeType const
 AST_Component::NT = AST_Decl::NT_component;
@@ -39,6 +40,8 @@ AST_Component::AST_Component (UTL_ScopedName *n,
                    false),
     pd_base_component (base_component)
 {
+  FE_Utils::tmpl_mod_ref_check (this, base_component);
+
   if (!this->imported ())
     {
       idl_global->component_seen_ = true;
@@ -72,7 +75,7 @@ AST_Component::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
   AST_Decl *d = 0;
-  
+
   if (this->pd_base_component != 0)
     {
       d =
@@ -145,18 +148,19 @@ AST_Component::n_supports (void) const
 
 AST_Decl *
 AST_Component::special_lookup (UTL_ScopedName *e,
-                               bool full_def_only)
+                               bool full_def_only,
+                               AST_Decl *&/*final_parent_decl*/)
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
-  
+
   if (d == 0)
     {
       d = this->look_in_supported (e, full_def_only);
     }
-    
+
   return d;
 }
-                                    
+
 void
 AST_Component::destroy (void)
 {

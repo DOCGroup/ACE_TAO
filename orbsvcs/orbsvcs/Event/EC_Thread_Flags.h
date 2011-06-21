@@ -27,7 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   \class TAO_EC_Thread_Flags
 
   \brief Parse thread flags from string to a long.
- 
+
   Encapsulate flags used for creating threads with \a
   ACE_OS::thr_create and \a ACE_Task::activate.
 
@@ -76,7 +76,7 @@ public:
     \brief Returns value of THR_SCOPE_* used, or zero if unknown.
   */
   long scope() const { return this->scope_; }
- 
+
   /*!
     \brief Returns value of THR_SCHED_* used, or zero if unknown.
   */
@@ -90,7 +90,7 @@ public:
     \return the priority, or ACE_DEFAULT_THREAD_PRIORITY if the scheduler is unknown.
   */
   long default_priority () const;
- 
+
 
 
   struct Supported_Flag

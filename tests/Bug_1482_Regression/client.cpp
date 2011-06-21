@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -31,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -70,7 +68,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
-
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent");

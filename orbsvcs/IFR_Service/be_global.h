@@ -1,21 +1,18 @@
 /* -*- c++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_IFR_BE_DLL
-//
-// = FILENAME
-//    be_global.h
-//
-// = DESCRIPTION
-//    Header file for class containing compiler back end global data.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    be_global.h
+ *
+ *  $Id$
+ *
+ *  Header file for class containing compiler back end global data.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_IFR_BE_GLOBAL_H
 #define TAO_IFR_BE_GLOBAL_H
@@ -43,11 +40,11 @@ public:
   // = DESCRIPTION
   //    Storage of global data specific to the compiler back end
   //
+  /// Constructor.
   BE_GlobalData (void);
-  // Constructor.
 
+  /// Destructor.
   virtual ~BE_GlobalData (void);
-  // Destructor.
 
   // Data accessors.
 
@@ -62,8 +59,8 @@ public:
 
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
 
+  /// Cleanup function.
   void destroy (void);
-  // Cleanup function.
 
   const char *filename (void) const;
   void filename (char *fname);
@@ -80,43 +77,43 @@ public:
   ACE_CString orb_args (void) const;
   void orb_args (const ACE_CString& args);
 
+  /// Command line passed to ACE_Process::spawn. Different
+  /// implementations in IDL and IFR backends.
   ACE_CString spawn_options (void);
-  // Command line passed to ACE_Process::spawn. Different
-  // implementations in IDL and IFR backends.
 
+  /// Parse args that affect the backend.
   void parse_args (long &i, char **av);
-  // Parse args that affect the backend.
 
 private:
+  /// Are we removing IR objects from the repository?
   bool removing_;
-  // Are we removing IR objects from the repository?
 
+  /// Reference to our ORB.
   CORBA::ORB_var orb_;
-  // Reference to our ORB.
 
+  /// Reference to the interface repository.
   CORBA::Repository_var repository_;
-  // Reference to the interface repository.
 
+  /// Must be something unlikely to clash.
   CORBA::String_var holding_scope_name_;
-  // Must be something unlikely to clash.
 
+  /// IR object scope stack.
   ACE_Unbounded_Stack<CORBA::Container_ptr> ifr_scopes_;
-  // IR object scope stack.
 
+  /// Name of the IDL file we are processing.
   char *filename_;
-  // Name of the IDL file we are processing.
 
+  /// Option to lock at the IDL file level.
   bool enable_locking_;
-  // Option to lock at the IDL file level.
 
+  /// Option to process included IDL files.
   bool do_included_files_;
-  // Option to process included IDL files.
 
+  /// Option to enable duplicate typedefs in parsed IDL.
   bool allow_duplicate_typedefs_;
-  // Option to enable duplicate typedefs in parsed IDL.
 
+  /// Holder for -ORB args saved and passed to DRV_fork.
   ACE_CString orb_args_;
-  // Holder for -ORB args saved and passed to DRV_fork.
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */

@@ -3,8 +3,6 @@
 //
 #include "Memory_Growth.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
-
 Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

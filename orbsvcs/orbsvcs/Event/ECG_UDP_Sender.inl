@@ -6,10 +6,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
+ACE_INLINE PortableServer::Servant_var<TAO_ECG_UDP_Sender>
 TAO_ECG_UDP_Sender::create (CORBA::Boolean crc)
 {
-  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> s;
+  PortableServer::Servant_var<TAO_ECG_UDP_Sender> s;
   ACE_NEW_RETURN (s,
                   TAO_ECG_UDP_Sender (crc),
                   s);

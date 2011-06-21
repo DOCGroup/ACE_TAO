@@ -5,8 +5,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
-
 PP_Test_Server::PP_Test_Server (void)
   : ior_output_file_ (0)
 {

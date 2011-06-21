@@ -5,8 +5,6 @@
 
 #include "test_i.h"
 
-ACE_RCSID(Failure, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 10;
 int do_shutdown = 0;
@@ -63,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -137,9 +135,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               server->shutdown_now (0);
             }
-          catch (const CORBA::COMM_FAILURE& comm_failure)
+          catch (const CORBA::COMM_FAILURE&)
             {
-              ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
         }
@@ -149,9 +146,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               server->shutdown_now (1);
             }
-          catch (const CORBA::COMM_FAILURE& comm_failure)
+          catch (const CORBA::COMM_FAILURE&)
             {
-              ACE_UNUSED_ARG (comm_failure);
               // Expected exception, continue....
             }
         }
@@ -187,7 +183,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
-      return 1;
+      return -1;
     }
 
   return 0;

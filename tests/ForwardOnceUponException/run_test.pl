@@ -18,74 +18,74 @@ foreach $i (@ARGV) {
 }
 
 # Current supported forward once exceptions:
-#      EF_OBJECT_NOT_EXIST = 0x1,  
-#      EF_COMM_FAILURE     = 0x2,   
-#      EF_TRANSIENT        = 0x4,   
-#      EF_INV_OBJREF       = 0x8,   
+#      EF_OBJECT_NOT_EXIST = 0x1,
+#      EF_COMM_FAILURE     = 0x2,
+#      EF_TRANSIENT        = 0x4,
+#      EF_INV_OBJREF       = 0x8,
 @configurations = ({
-         description => "case 1: not forward upon OBJECT_NOT_EXIST exception", 
+         description => "case 1: not forward upon OBJECT_NOT_EXIST exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnObjectNotExist 0",
          num_requests => "1",
          client_expect_num_ex => "1",
-         client_expect_ex_kind => "1", 
-         server_raise_ex_kind => "1", 
+         client_expect_ex_kind => "1",
+         server_raise_ex_kind => "1",
          servant_calls => "1",
      },{
-         description => "case 2: default Fault Tolerant always forward upon COMM_FAILURE exception", 
+         description => "case 2: default Fault Tolerant always forward upon COMM_FAILURE exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnCommFailure 0",
          num_requests => "1",
          client_expect_num_ex => "0",
-         client_expect_ex_kind => "0", 
-         server_raise_ex_kind => "2", 
+         client_expect_ex_kind => "0",
+         server_raise_ex_kind => "2",
          servant_calls => "0",  # use 0 to indicate request looping case
      },{
-         description => "case 3: default Fault Tolerant always forward upon TRANSIENT exception", 
+         description => "case 3: default Fault Tolerant always forward upon TRANSIENT exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnTransient 0",
          num_requests => "1",
          client_expect_num_ex => "0",
-         client_expect_ex_kind => "0", 
-         server_raise_ex_kind => "4", 
+         client_expect_ex_kind => "0",
+         server_raise_ex_kind => "4",
          servant_calls => "0",  # use 0 to indicate request looping case
      },{
-         description => "case 4: not forward upon INV_OBJREF exception", 
+         description => "case 4: not forward upon INV_OBJREF exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnInvObjref 0",
          num_requests => "1",
-         client_expect_num_ex => "1", 
-         client_expect_ex_kind => "8", 
-         server_raise_ex_kind => "8", 
+         client_expect_num_ex => "1",
+         client_expect_ex_kind => "8",
+         server_raise_ex_kind => "8",
          servant_calls => "1",
      },{
-         description => "case 5: forward once upon OBJECT_NOT_EXIST exception", 
+         description => "case 5: forward once upon OBJECT_NOT_EXIST exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnObjectNotExist 1",
          num_requests => "4",
-         client_expect_num_ex => "4", 
-         client_expect_ex_kind => "1", 
-         server_raise_ex_kind => "1", 
-         servant_calls => "5", # 4 requests + 1 forward 
+         client_expect_num_ex => "4",
+         client_expect_ex_kind => "1",
+         server_raise_ex_kind => "1",
+         servant_calls => "5", # 4 requests + 1 forward
      },{
-         description => "case 6: forward once upon COMM_FAILURE exception", 
+         description => "case 6: forward once upon COMM_FAILURE exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnCommFailure 1",
-         num_requests => "4", 
-         client_expect_num_ex => "4", 
-         client_expect_ex_kind => "2", 
-         server_raise_ex_kind => "2", 
-         servant_calls => "5", # 4 requests + 1 forward 
+         num_requests => "4",
+         client_expect_num_ex => "4",
+         client_expect_ex_kind => "2",
+         server_raise_ex_kind => "2",
+         servant_calls => "5", # 4 requests + 1 forward
      },{
-         description => "case 7: forward once upon TRANSIENT exception", 
+         description => "case 7: forward once upon TRANSIENT exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnTransient 1",
          num_requests => "4",
-         client_expect_num_ex => "4", 
-         client_expect_ex_kind => "4", 
-         server_raise_ex_kind => "4", 
-         servant_calls => "5", # 4 requests + 1 forward 
+         client_expect_num_ex => "4",
+         client_expect_ex_kind => "4",
+         server_raise_ex_kind => "4",
+         servant_calls => "5", # 4 requests + 1 forward
      },{
-         description => "case 8: forward once upon INV_OBJREF exception", 
+         description => "case 8: forward once upon INV_OBJREF exception",
          orb_exception_forward_opt => "-ORBForwardOnceOnInvObjref 1",
          num_requests => "4",
-         client_expect_num_ex => "4", 
-         client_expect_ex_kind => "8", 
-         server_raise_ex_kind => "8", 
-         servant_calls => "5", # 4 requests + 1 forward 
+         client_expect_num_ex => "4",
+         client_expect_ex_kind => "8",
+         server_raise_ex_kind => "8",
+         servant_calls => "5", # 4 requests + 1 forward
      },
     );
 
@@ -114,7 +114,7 @@ for $test (@configurations) {
                                             "-e $test->{client_expect_ex_kind} " .
                                             "-n $test->{client_expect_num_ex} ".
                                             "-i $test->{num_requests} $test->{orb_exception_forward_opt}");
-                               
+
     print STDERR $SV->CommandLine () . "\n";
     print STDERR $CL->CommandLine () . "\n";
 

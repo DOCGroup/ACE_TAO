@@ -106,7 +106,7 @@ public:
   TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &p);
   TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &p);
 
-  // Cast operator.
+  /// Cast operator.
   operator T *& ();
 
   T *& ptr (void);

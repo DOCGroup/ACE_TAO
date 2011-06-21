@@ -1,10 +1,5 @@
 // -*- IDL -*-
-//
 // $Id$
-
-/**
- *   This file is used to generate the code in ULongLongSeqC.*
- */
 
 #ifndef TAO_CORBA_ULONGLONG_SEQ_IDL
 #define TAO_CORBA_ULONGLONG_SEQ_IDL

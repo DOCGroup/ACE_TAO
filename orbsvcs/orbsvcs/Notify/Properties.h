@@ -169,10 +169,10 @@ protected:
 
   /// The default PC QoS Properties.
   CosNotification::QoSProperties pc_qos_;
-  
+
   /// The default consumer admin filter operator.
   CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp_;
-  
+
   /// The default supplier admin filter operator.
   CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp_;
 };

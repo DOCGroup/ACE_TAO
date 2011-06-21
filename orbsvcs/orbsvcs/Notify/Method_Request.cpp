@@ -5,9 +5,6 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(Notify, TAO_Notify_Method_Request_Queueable, "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request::~TAO_Notify_Method_Request (void)

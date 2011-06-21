@@ -18,8 +18,6 @@
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 #include "ace/Event.h"
 
-ACE_RCSID(Thread_Pool, client, "$Id$")
-
 enum Priority_Setting
 {
   AT_THREAD_CREATION = 0,

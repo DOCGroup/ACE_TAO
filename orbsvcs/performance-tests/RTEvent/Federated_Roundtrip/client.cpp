@@ -28,7 +28,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int nthreads   = 0;
@@ -120,7 +120,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

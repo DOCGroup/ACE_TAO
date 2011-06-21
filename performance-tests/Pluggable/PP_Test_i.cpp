@@ -1,23 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Pluggable
-//
-// = FILENAME
-//    PP_Test_i.cpp
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PP_Test_i.cpp
+ *
+ *  $Id$
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Constants.h"
 #include "PP_Test_i.h"
-
-ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

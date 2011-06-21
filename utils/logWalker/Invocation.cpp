@@ -139,8 +139,6 @@ Invocation::GIOP_Buffer::GIOP_Buffer(const char *text,
       timebuf[time_tok - text] = 0;
       char *hms = ACE_OS::strchr (timebuf,' ');
       if (hms != 0)
-        hms = ACE_OS::strchr (hms + 1, ' ');
-      if (hms != 0)
         {
           int hr, min, sec, msec;
           ::sscanf (hms+1,"%d:%d:%d.%d", &hr, &min, &sec, &msec);
@@ -530,7 +528,7 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
   if (size_str == 0 || id == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Not a request preamble:\n '%s'\n",
+                  "Not a request preamble line %d:\n '%s'\n",offset,
                   text));
       return false;
   }
@@ -729,11 +727,11 @@ Invocation::dump_detail (ostream &strm, int indent, Dump_Mode mode, bool show_ha
           strm << " " << this->repl_octets_->thread()->alias();
 #endif
           char rstat = this->repl_octets_->reply_status();
-          switch (rstat) 
+          switch (rstat)
             {
             case 0:
               break;
-            case 1: 
+            case 1:
               strm << " User Exception";
               break;
             case 2:

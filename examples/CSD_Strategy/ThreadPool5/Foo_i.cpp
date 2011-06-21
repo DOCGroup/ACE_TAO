@@ -1,7 +1,6 @@
 // $Id$
 #include "Foo_i.h"
 #include "FooServantList.h"
-#include "ace/OS.h"
 
 Foo_i::Foo_i(const char* servant_name,FooServantList* mgr)
   : value_(0),

@@ -134,18 +134,5 @@ TAO_MAJOR_VERSION := $(shell awk '/TAO_MAJOR_VERSION/ { print $$3}' ${TAO_ROOT}/
 TAO_MINOR_VERSION := $(shell awk '/TAO_MINOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 TAO_BETA_VERSION := $(shell awk '/TAO_BETA_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 endif
-# Version number of the libraries
-#
-ifeq ($(versioned_so),1)
-  # Only set SOVERSION for TAO if versioning is turned on and SOVERION is
-  # blank, which gives users to ability to override it.
-  ifeq ($(SOVERSION),)
-    SOVERSION = .$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
-  endif # SOVERSION
 
-  # Name that will be written into the dynamic library
-  #
-  ifneq ($(SONAME),)
-    SONAME = $(SHLIB).$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
-  endif # SONAME
-endif # versioned_so
+GNUACE_PROJECT_VERSION ?= $(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)

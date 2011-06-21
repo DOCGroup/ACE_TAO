@@ -18,10 +18,6 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_RTEC_Perf,
-           Control,
-           "$Id$")
-
 Control::Control (size_t peers_expected,
                   size_t iterations,
                   int do_dump_history,
@@ -118,22 +114,18 @@ Control::join (Federated_Test::Peer_ptr peer)
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type);
 
-              ACE_AUTO_PTR_RESET (disconnects[lcount],
+              ACE_auto_ptr_reset (disconnects[lcount],
                                   new Loopback_Disconnect (
-                                        loopbacks[lcount].in ()),
-                                  Loopback_Disconnect
-                                 );
+                                        loopbacks[lcount].in ()));
               lcount++;
 
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type + 2);
 
-              ACE_AUTO_PTR_RESET (disconnects[lcount],
+              ACE_auto_ptr_reset (disconnects[lcount],
                                   new Loopback_Disconnect (
-                                        loopbacks[lcount].in ()),
-                                  Loopback_Disconnect
-                                 );
+                                        loopbacks[lcount].in ()));
               lcount++;
             }
         }

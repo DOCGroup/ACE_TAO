@@ -9,8 +9,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Oneway_Buffering, client, "$Id$")
-
 const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
 const ACE_TCHAR *admin_ior = ACE_TEXT("file://admin.ior");
 int iterations = 20;
@@ -87,7 +85,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 #include "utl_string.h"
+#include "utl_strlist.h"
 #include "ast_valuebox.h"
 #include "ast_valuetype.h"
 #include "ast_valuetype_fwd.h"
@@ -480,7 +481,7 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
 {
   // Already defined and cannot be redefined? Or already used?
   AST_Decl *d = this->lookup_for_add (t);
-  
+
   if (d)
     {
       if (!FE_Utils::can_be_redefined (d, t))
@@ -576,7 +577,7 @@ AST_Structure *
 UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
   AST_Decl *predef = this->lookup_for_add (t);
-  
+
   if (predef)
     {
       if (!FE_Utils::can_be_redefined (predef, t))
@@ -587,7 +588,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
                                       predef);
           return 0;
         }
-        
+
       if (referenced (predef, t->local_name ()) && !t->is_defined ())
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
@@ -953,7 +954,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   bool *seen = 0;
   char *name_string = e->get_string ();
   UTL_Scope *start_scope = idl_global->corba_module ();
-  
+
   if (ACE_OS::strcasecmp (name_string, "TypeCode") == 0
       || ACE_OS::strcasecmp (name_string, "TCKind") == 0)
     {
@@ -980,13 +981,13 @@ UTL_Scope::lookup_pseudo (Identifier *e)
     {
       return 0;
     }
-  
+
   for (UTL_ScopeActiveIterator i (start_scope, IK_decls);
        !i.is_done ();
        i.next ())
     {
       AST_Decl *d = i.item ();
-      
+
       if (e->case_compare (d->local_name ()))
         {
           // These have to be located here because we are just looking
@@ -1003,7 +1004,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   if (this->which_pseudo_ == PSEUDO_TYPECODE)
     {
       AST_Decl *d = this->look_in_prev_mods_local (e);
-      
+
       if (d != 0)
         {
           // Generation of #includes for Typecode.h
@@ -1025,7 +1026,8 @@ UTL_Scope::look_in_prev_mods_local (Identifier *,
 
 AST_Decl *
 UTL_Scope::special_lookup (UTL_ScopedName *,
-                           bool /* full_def_only */)
+                           bool /* full_def_only */,
+                           AST_Decl *&/*final_parent_decl*/)
 {
   return 0;
 }
@@ -1035,17 +1037,17 @@ AST_Decl *
 UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 {
   UTL_Scope *search = idl_global->corba_module ();
-  
+
   AST_PredefinedType::PredefinedType pdt =
     FE_Utils::ExprTypeToPredefinedType (et);
-    
+
   /// This return value means there was no PredefinedType match
-  /// for the ExprType.  
+  /// for the ExprType.
   if (pdt == AST_PredefinedType::PT_pseudo)
     {
       return 0;
     }
-  
+
   /// The only 'predefined type' not in the CORBA module.
   if (pdt == AST_PredefinedType::PT_void)
     {
@@ -1057,12 +1059,12 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
        i.next ())
     {
       AST_Decl *as_decl = i.item ();
-      
+
       if (as_decl->node_type () == AST_Decl::NT_pre_defined)
         {
           AST_PredefinedType *t =
             AST_PredefinedType::narrow_from_decl (as_decl);
-            
+
           if (t->pt () == pdt)
             {
               if (idl_global->in_main_file ())
@@ -1211,7 +1213,6 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   // scope-expanding iteration below.
   Identifier *name = e->head ();
   const bool global_scope_name = work->is_global_name (name);
-  
   if (global_scope_name)
     {
       // Remove the preceeding "::" or "" from the scopename
@@ -1222,8 +1223,11 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       work = idl_global->root ();
     }
 
-  AST_Decl *d = work->lookup_by_name_r (e, full_def_only);
-  
+  AST_Decl *first_found_final_parent_decl= 0;
+  const bool searching_module_path= (e->length () != 1);
+  AST_Decl *d = searching_module_path ?
+    work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
+    work->lookup_by_name_r (e, full_def_only);
   if (d == 0)
     {
       // If all else fails, look though each outer scope.
@@ -1231,46 +1235,27 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
            outer;
            outer = ScopeAsDecl (outer)->defined_in ())
         {
-          d = outer->lookup_by_name_r (e, full_def_only);
-          
+          AST_Decl *next_found_final_parent_decl= 0;
+          d = outer->lookup_by_name_r (e, full_def_only, next_found_final_parent_decl);
           if (d != 0)
             {
               work = outer;
-              break; // Ok found it, stop searching.
-            }
-        }
-    }
-
-  ACE_Unbounded_Queue<AST_Decl *> &masks =
-    idl_global->masking_scopes ();
-    
-  if (d != 0 && !global_scope_name)
-    {
-      ACE_Unbounded_Queue<AST_Decl *>::CONST_ITERATOR i (masks);
-      AST_Decl **item = 0;
-      
-      if (i.next (item))
-        {
-          // The first queue item (last enqueued) will always
-          // match "name", but does not indicate an error.
-          AST_Decl *outer_decl = *item;
-
-          // Now check that the rest of the names don't collide
-          const char *const name_str = name->get_string ();
-          
-          while (i.advance ())
-            {
-              i.next (item);
-              const char *const item_name_str =
-                (*item)->local_name ()->get_string ();
-                
-              if (!ACE_OS::strcmp (item_name_str, name_str)
-                  && !(*item)->masking_checks (outer_decl))
+              if (first_found_final_parent_decl)
                 {
-                  idl_global->err ()->scope_masking_error (d, *item);
-                  d = 0; // Hidden scopes can't be used indirectly.
-                  break;
+                  // Hidden scopes can't be used indirectly, therefore we didn't actually
+                  // find this one because the "first_found_final_parent_decl" was found and
+                  // this one just found is hidden by it.
+                  idl_global->err ()->scope_masking_error (d, first_found_final_parent_decl);
+                  d = 0; // Ignore this one; continue searching to report other ambiguous matches.
                 }
+              else
+                {
+                  break; // Ok found it, stop searching.
+                }
+            }
+          else if (searching_module_path && !first_found_final_parent_decl)
+            {
+              first_found_final_parent_decl = next_found_final_parent_decl;
             }
         }
     }
@@ -1280,8 +1265,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       /// Doesn't add if d == 0.
       work->add_to_referenced (d, false, name);
     }
-    
-  masks.reset ();
+
   return d;
 }
 
@@ -1289,9 +1273,19 @@ AST_Decl *
 UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
                              bool full_def_only)
 {
+  AST_Decl *ignored= 0;
+  return UTL_Scope::lookup_by_name_r (e, full_def_only, ignored);
+}
+
+AST_Decl *
+UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
+                             bool full_def_only,
+                             AST_Decl *&final_parent_decl)
+{
   bool work_another_level;
   UTL_Scope *work = this;
-  
+  final_parent_decl= (e->length () == 1) ? ScopeAsDecl (work) : 0;
+
   do
     {
       // Will catch Object, TypeCode, TCKind, ValueBase and
@@ -1299,7 +1293,6 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // generation of some #includes and, whether successful or not,
       // incurs no extra overhead.
       AST_Decl *d = work->lookup_pseudo (e->head ());
-      
       if (d)
         {
           return d;
@@ -1314,7 +1307,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       // matches a template module parameter. If so, the return
       // value is created on the heap and is owned by the caller
       // of this lookup.
-      if (e->length () == 1)
+      if (final_parent_decl)
         {
           // Since we are inside the scope of a template module, any
           // single-segment scoped name that matches a template
@@ -1324,7 +1317,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
           // lookup.
           AST_Param_Holder *param_holder =
             UTL_Scope::match_param (e);
-            
+
           if (param_holder)
             {
               return param_holder;
@@ -1334,7 +1327,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
       work_another_level = false; // Until we find something.
       bool in_corba =
         (ACE_OS::strcmp (e->head ()->get_string (), "CORBA") == 0);
-        
+
       for (UTL_ScopeActiveIterator i (work, IK_decls);
            !i.is_done ();
            i.next ())
@@ -1350,19 +1343,19 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
               && d->local_name ()->case_compare (e->head ()))
             {
               // Ok we found a match, is there any more to find?
-              if (e->length () == 1)
+              if (final_parent_decl)
                 {
                   return d; // Last scope name matched
                 }
 
               UTL_Scope *next = DeclAsScope (d); // The next scope to search
-              
+
               if (next)
                 {
                   work = next;
                   work_another_level = true;
-                  idl_global->masking_scopes ().enqueue_head (d);
                   e = static_cast<UTL_ScopedName *> (e->tail ());
+                  final_parent_decl= (e->length () == 1) ? d : 0;
                   break;
                 }
 
@@ -1375,14 +1368,14 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
   // A rare enough case that it's worth it to separate it and
   // do it as a last resort. Catches anonymnous types, enums
   // and members with their types defined all in one statement.
-  if (e->length () == 1)
+  if (final_parent_decl)
     {
       for (UTL_ScopeActiveIterator i (work, IK_localtypes);
            !i.is_done ();
            i.next ())
         {
           AST_Decl *d = i.item ();
-          
+
           if (d->local_name ()->case_compare (e->head ()))
             {
               return d;
@@ -1391,7 +1384,7 @@ UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
     }
 
   // Last resort, check other module openings of working scope.
-  return work->special_lookup (e, full_def_only);
+  return work->special_lookup (e, full_def_only, final_parent_decl);
 }
 
 // Add a node to set of nodes referenced in this scope.
@@ -1830,7 +1823,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
            i.next ())
         {
           AST_Decl *d = i.item ();
-          
+
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
@@ -1849,7 +1842,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
            j.next ())
         {
           AST_Decl *d = j.item ();
-          
+
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
@@ -1882,20 +1875,66 @@ UTL_Scope::match_param (UTL_ScopedName *e)
   // of a template module.
   FE_Utils::T_PARAMLIST_INFO const *params =
     idl_global->current_params ();
-  if (!params)
+
+  if (params == 0)
     {
       return 0;
     }
 
   const char *name = e->first_component ()->get_string ();
   FE_Utils::T_Param_Info *param = 0;
+  unsigned long index = 0;
+
+  UTL_StrList *alias_params =
+    const_cast<UTL_StrList *> (idl_global->for_new_holder ());
+
+  if (alias_params == 0)
+    {
+      alias_params =
+        const_cast<UTL_StrList *> (idl_global->alias_params ());
+    }
+
+  UTL_String *alias_param = 0;
+
   for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (*params);
        i.next (param);
-       i.advance ())
+       i.advance (), ++index)
     {
       if (param->name_ == name)
         {
-          return idl_global->gen ()->create_param_holder (e, param);
+          /// If we are parsing this template module as a
+          /// reference, the param holder we create must have
+          /// the name of the corresponding aliased param.
+          if (alias_params != 0)
+            {
+              unsigned long slot = 0;
+
+              for (UTL_StrlistActiveIterator iter (alias_params);
+                   !iter.is_done ();
+                   iter.next (), ++slot)
+                {
+                  if (slot == index)
+                    {
+                      alias_param = iter.item ();
+                      break;
+                    }
+                }
+
+              Identifier id (alias_param->get_string ());
+              UTL_ScopedName sn (&id, 0);
+
+              return
+                idl_global->gen ()->create_param_holder (
+                  &sn,
+                  param);
+            }
+          else
+            {
+              return
+                idl_global->gen ()->create_param_holder (
+                  e,
+                  param);
+            }
         }
     }
 

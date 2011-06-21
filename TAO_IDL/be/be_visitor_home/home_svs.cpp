@@ -51,7 +51,7 @@ be_visitor_home_svs::visit_home (be_home *node)
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
 
@@ -111,7 +111,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
 
   AST_Component *c = h->managed_component ();
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "::" << c->name () << "_ptr" << be_nl
       << node_->original_local_name ()->get_string ()
       << "_Servant::" << node->local_name ();
@@ -145,9 +145,23 @@ be_visitor_home_svs::visit_factory (be_factory *node)
       const char *comp_lname = comp_->local_name ()->get_string ();
       const char *global = (comp_sname_str == "" ? "" : "::");
 
+      ACE_CString sname_str (ScopeAsDecl (node_->defined_in ())->full_name ());
+
+      os_ << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+          << "_var executor = " << be_idt_nl
+          << "::" << sname_str << global << "CCM_" << node_->original_local_name ()
+          << "::_duplicate (this->executor_.in ());" << be_uidt
+          << be_nl_2;
+
+      os_ << "if ( ::CORBA::is_nil (executor.in ()))"
+          << be_idt_nl
+          << "{"<< be_idt_nl
+          << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
       os_ << "::Components::EnterpriseComponent_var _ciao_ec ="
           << be_idt_nl
-          << "this->executor_->" << node->local_name () << " (";
+          << "executor->" << node->local_name () << " (";
 
       if (node->argument_count () > 0)
         {
@@ -209,18 +223,20 @@ be_visitor_home_svs::gen_servant_class (void)
       << lname << "_Servant (" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
       << "const char * ins_name," << be_nl
-      << "::CIAO::Container_ptr c)" << be_uidt_nl
-      << ": ::CIAO::Home_Servant_Impl_Base (c)," << be_idt_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c)" << be_uidt_nl
+      << ": ::CIAO::Home_Servant_Impl_Base ()," << be_idt_nl
       << "::CIAO::"
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
-      << clname << "_Servant> (exe, c, ins_name)"
+      << clname << "_Servant," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type () << "_Container> (exe, c, ins_name)"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}";
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << lname << "_Servant::~" << lname << "_Servant (void)"
       << be_nl
       << "{" << be_nl
@@ -228,7 +244,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   if (this->node_->has_rw_attributes ())
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_Servant::set_attributes (" << be_idt_nl
           << "const ::Components::ConfigValues & descr)"
@@ -262,7 +278,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   if (pk != 0)
     {
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "::" << comp_->name () << "_ptr" << be_nl
           << lname << "_Servant::create (" << be_idt_nl
           << "::" << pk->name () << " * /* key */)" << be_uidt_nl
@@ -275,7 +291,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
       if (!be_global->gen_lwccm ())
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "::" << comp_->name () << "_ptr" << be_nl
               << lname << "_Servant::find_by_primary_key (" << be_idt_nl
               << "::" << pk->name () << " * /* key */)" << be_uidt_nl
@@ -287,7 +303,7 @@ be_visitor_home_svs::gen_servant_class (void)
               << "}";
         }
 
-      os_ << be_nl << be_nl
+      os_ << be_nl_2
           << "void" << be_nl
           << lname << "_Servant::remove (" << be_idt_nl
           << "::" << pk->name () << " * /* key */)" << be_uidt_nl
@@ -300,7 +316,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
       if (!be_global->gen_lwccm ())
         {
-          os_ << be_nl << be_nl
+          os_ << be_nl_2
               << "::" << pk->name () << " *" << be_nl
               << lname << "_Servant::get_primary_key (" << be_idt_nl
               << "::" << comp_->name () << "_ptr /* comp */)" << be_uidt_nl
@@ -377,13 +393,14 @@ be_visitor_home_svs::gen_entrypoint (void)
 
   const char *global = (sname_str == "" ? "" : "::");
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
       << "::PortableServer::Servant retval = 0;" << be_nl
@@ -444,7 +461,7 @@ be_visitor_home_attr_set::visit_home (be_home *node)
        i.next ())
     {
       be_decl *d = be_decl::narrow_from_decl (i.item ());
-      
+
       if (d->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -454,9 +471,9 @@ be_visitor_home_attr_set::visit_home (be_home *node)
                             -1);
         }
     }
-    
+
   be_home *h = be_home::narrow_from_decl (node->base_home ());
-  
+
   return this->visit_home (h);
 }
 

@@ -8,10 +8,6 @@
 
 #include "bug_689_regression_i.h"
 
-ACE_RCSID (Bug_689_Regression,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 int
@@ -36,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

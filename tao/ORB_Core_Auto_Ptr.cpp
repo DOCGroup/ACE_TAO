@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/ORB_Core_Auto_Ptr.h"
 #include "tao/ORB_Core.h"
 

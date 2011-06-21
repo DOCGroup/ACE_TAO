@@ -28,7 +28,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (Trader, Trading_Loader, "$Id$")
+
 
 TAO_Trading_Loader::TAO_Trading_Loader (void)
   : federate_ (0),

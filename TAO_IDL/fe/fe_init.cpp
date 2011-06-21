@@ -92,25 +92,25 @@ fe_populate_global_scope (void)
 
   Identifier void_id ("void");
   UTL_ScopedName void_name (&void_id, 0);
-  
+
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_void,
       &void_name);
-      
+
   root->fe_add_predefined_type (pdt);
-  
+
   /// Put this prefix in force while we're creating the
   /// CORBA module and its contents.
   char *prefix = ACE::strnew ("omg.org");
   idl_global->pragma_prefixes ().push (prefix);
-  
+
   Identifier corba_id ("CORBA");
   UTL_ScopedName sn (&corba_id, 0);
-  
+
   AST_Module *m =
     idl_global->gen ()->create_module (root, &sn);
-    
+
   root->fe_add_module (m);
   idl_global->corba_module (m);
 
@@ -118,142 +118,142 @@ fe_populate_global_scope (void)
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_long,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_ulong,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_longlong,
       0);
-      
+
   m->fe_add_predefined_type(pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_ulonglong,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_short,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_ushort,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_float,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_double,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_longdouble,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_char,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_wchar,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_octet,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_any,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_boolean,
       0);
-      
+
   m->fe_add_predefined_type (pdt);
 
   Identifier Object_id ("Object");
   UTL_ScopedName Object_name (&Object_id, 0);
-  
+
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_object,
       &Object_name);
-      
+
   m->fe_add_predefined_type (pdt);
 
 // Add these to make all keywords protected even in different spellings
 
   Identifier ValueBase_id ("ValueBase");
   UTL_ScopedName ValueBase_name (&ValueBase_id, 0);
-  
+
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_value,
       &ValueBase_name);
-      
+
   m->fe_add_predefined_type (pdt);
 
   Identifier AbstractBase_id ("AbstractBase");
   UTL_ScopedName AbstractBase_name (&AbstractBase_id, 0);
-  
+
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_abstract,
       &AbstractBase_name);
-      
+
   m->fe_add_predefined_type (pdt);
 
   Identifier TypeCode_id ("TypeCode");
   UTL_ScopedName TypeCode_name (&TypeCode_id, 0);
-  
+
   pdt =
     idl_global->gen ()->create_predefined_type (
       AST_PredefinedType::PT_pseudo,
       &TypeCode_name);
-      
+
   m->fe_add_predefined_type (pdt);
-  
+
   char *trash = 0;
   idl_global->pragma_prefixes ().pop (trash);
   ACE::strdelete (trash);

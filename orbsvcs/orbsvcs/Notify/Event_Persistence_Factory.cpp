@@ -1,8 +1,6 @@
-#include "orbsvcs/Notify/Event_Persistence_Factory.h"
+// $Id$
 
-ACE_RCSID (Notify,
-           Event_Persistence_Factory,
-           "$Id$")
+#include "orbsvcs/Notify/Event_Persistence_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

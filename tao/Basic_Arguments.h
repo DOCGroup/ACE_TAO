@@ -131,7 +131,7 @@ namespace TAO
           TAO::Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
-  
+
   template<>
   class TAO_Export Arg_Traits<std::string>
     : public

@@ -29,13 +29,6 @@
 
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
-//#include "HTIOP/HTIOPC.h"
-
-# if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-#   define ACE_HTBP_STREAM ACE::HTBP::Stream
-# else /* If TEMPLATES are broken in some form or another */
-#   define ACE_HTBP_STREAM ACE::HTBP::Stream, ACE::HTBP::Addr
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,7 +45,7 @@ namespace TAO
     class Connection_Handler;
 
     // Service Handler for this transport
-    typedef ACE_Svc_Handler<ACE_HTBP_STREAM, ACE_NULL_SYNCH>
+    typedef ACE_Svc_Handler<ACE::HTBP::Stream, ACE_NULL_SYNCH>
     SVC_HANDLER;
 
     /**

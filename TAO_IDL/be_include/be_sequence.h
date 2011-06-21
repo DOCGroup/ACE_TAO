@@ -58,7 +58,7 @@ public:
 
     // Non-virtual override of frontend method.
   be_type *base_type (void) const;
-  
+
   /// Create a name for ourselves. If we are typedefed, then we get the name of
   /// the typedef node, else we generate a name for ourselves.
   virtual int create_name (be_typedef *node);
@@ -71,7 +71,7 @@ public:
 
   /// Overridden method on the be_scope class.
   virtual be_decl *decl (void);
-  
+
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore);

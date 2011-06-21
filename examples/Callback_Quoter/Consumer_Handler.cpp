@@ -1,21 +1,17 @@
-// $Id$
 
-// ===========================================================
-//
-//
-// = LIBRARY
-//    TAO/examples/Callback_Quoter
-//
-// = FILENAME
-//    Consumer_Input_Handler.cpp
-//
-// = DESCRIPTION
-//    Implementation of the Consumer_Handler class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ===========================================================
+//=============================================================================
+/**
+ *  @file    Consumer_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the Consumer_Handler class.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Consumer_Handler.h"
 
@@ -26,9 +22,9 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
+#include "ace/OS_NS_fcntl.h"
 
 Consumer_Handler::Consumer_Handler (void)
   : stock_name_ ("Unknown"),

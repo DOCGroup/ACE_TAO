@@ -1,26 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Object_A_i.cpp
-//
-// = DESCRIPTION
-//    This class implements the Object A  of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Initiator_i.cpp
+ *
+ *  $Id$
+ *
+ *  This class implements the Object A  of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
 
 #include "tao/Exception.h"
 #include "Initiator_i.h"
-
-ACE_RCSID(Triangle_Test, Initiator_i, "$Id$")
 
 // CTOR
 Initiator_i::Initiator_i (Object_A_ptr object_A_ptr,

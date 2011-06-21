@@ -1,11 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/EventChannelFactory.h"
-
-ACE_RCSID(Notify,
-          TAO_Notify_EventChannelFactory,
-          "$Id$")
-
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Factory.h"
 #include "orbsvcs/Notify/Builder.h"

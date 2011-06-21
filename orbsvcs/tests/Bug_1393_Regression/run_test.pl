@@ -24,7 +24,7 @@ my $tao_idl_bin = "$ENV{ACE_ROOT}/bin";
 my $service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $taoifr  = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
- 
+
 # The idl file to be used for the test
 my $test_idl = "test.idl";
 my $ifr_ior  = "ifr.ior";
@@ -38,7 +38,7 @@ $client->DeleteFile ($ifr_ior);
 $taoifr->DeleteFile ($ifr_ior);
 
 $TAO_IDL     = $service->CreateProcess("$tao_idl_bin/tao_idl", "$service_test_idl");
-$IFR_SERVICE = $service->CreateProcess("$ifr_service_bin/IFR_Service", "-o $service_ifr_ior");
+$IFR_SERVICE = $service->CreateProcess("$ifr_service_bin/tao_ifr_service", "-o $service_ifr_ior");
 $TAO_IFR     = $service->CreateProcess("$tao_ifr_bin/tao_ifr",
                                        "-ORBInitRef InterfaceRepository=file://$taoifr_ifr_ior ".
                                        "$taoifr_test_idl");
@@ -65,7 +65,7 @@ if ($result == 0) {
             last;
         }
     }
-    close (HANDLE);  
+    close (HANDLE);
 }
 
 # Check result of idl compiler test
@@ -90,7 +90,7 @@ if ($result != 0) {
 if ($service->WaitForFileTimed ($ifr_ior, $service->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find $service_ifr_ior\n";
     $IFR_SERVICE->Kill (); $IFR_SERVICE->TimedWait (1);
-    $status = 1; 
+    $status = 1;
 }
 
 if ($service->GetFile ($test_idl) == -1) {
@@ -123,7 +123,7 @@ if ($client->PutFile ($ifr_ior) == -1) {
     exit 1;
 }
 
-# Use the iao_ifr utility to add our test IDL 
+# Use the iao_ifr utility to add our test IDL
 $result = $TAO_IFR->SpawnWaitKill ($taoifr->ProcessStartWaitInterval() + 15);
 
 if ($result != 0) {
@@ -131,7 +131,7 @@ if ($result != 0) {
    $status = 1;
 }
 
-# Invoke the client code that retrieves the interface and checks it's not munged   
+# Invoke the client code that retrieves the interface and checks it's not munged
 $result = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 15);
 
 if ($result != 0) {

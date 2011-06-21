@@ -39,7 +39,7 @@ public:
   static void
   gen_nesting_open (TAO_OutStream &os,
                     AST_Decl *node);
-  
+
   static void
   gen_nesting_close (TAO_OutStream &os,
                      AST_Decl *node);

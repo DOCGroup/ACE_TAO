@@ -4,10 +4,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 Supplier::Supplier (bool valuetype) : valuetype_ (valuetype), event_count_ (0)
 {
 }

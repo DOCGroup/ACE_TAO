@@ -571,7 +571,7 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We may want this to be alive beyond the next block.
-  TAO_EC_Servant_Var<Heartbeat_Application> app;
+  PortableServer::Servant_var<Heartbeat_Application> app;
 
   try
     {

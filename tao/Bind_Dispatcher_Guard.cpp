@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 // $Id$
 
 #include "tao/Bind_Dispatcher_Guard.h"

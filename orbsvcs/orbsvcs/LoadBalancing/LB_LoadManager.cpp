@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 #include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
@@ -21,11 +23,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (LoadBalancing,
-           LB_LoadManager,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -171,7 +168,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry;
+  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -225,7 +222,7 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry;
+  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -308,7 +305,7 @@ TAO_LB_LoadManager::get_load_alert (
                     this->load_alert_lock_,
                     CosLoadBalancing::LoadAlert::_nil ());
 
-  TAO_LB_LoadAlertMap::ENTRY * entry;
+  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -408,7 +405,7 @@ TAO_LB_LoadManager::get_load_monitor (
                     this->monitor_lock_,
                     CosLoadBalancing::LoadMonitor::_nil ());
 
-  TAO_LB_MonitorMap::ENTRY * entry;
+  TAO_LB_MonitorMap::ENTRY * entry = 0;
   if (this->monitor_map_.find (the_location, entry) == 0)
     {
       return

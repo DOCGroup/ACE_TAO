@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "tao/CodecFactory/CodecFactory_impl.h"

@@ -63,7 +63,12 @@ be_type::compute_tc_name (void)
   static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = this->name ();
 
-  this->tc_name_ = 0;
+  if (this->tc_name_ != 0)
+    {
+      this->tc_name_->destroy ();
+      delete this->tc_name_;
+      this->tc_name_ = 0;
+    }
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -251,17 +256,17 @@ be_type::gen_common_varout (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   AST_Type::SIZE_TYPE st = this->size_type ();
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << (this->node_type () == AST_Decl::NT_struct ? "struct "
                                                     : "class ")
       << this->local_name () << ";";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "typedef" << be_idt_nl
       << (st == AST_Type::FIXED ? "::TAO_Fixed_Var_T<"
                                 : "::TAO_Var_Var_T<")
@@ -295,26 +300,26 @@ be_type::gen_stub_decls (TAO_OutStream *os)
     {
       return;
     }
-    
-  *os << be_nl << be_nl
+
+  *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
-      
+
   *os << be_nl;
-      
+
   AST_Interface *i = AST_Interface::narrow_from_decl (this);
   AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
-  
+
   if (i != 0)
     {
       *os << be_nl
           << "typedef " << this->local_name ()
           << (v == 0 ? "_ptr" : " *") << " _ptr_type;";
     }
-    
+
   bool skip_varout = false;
   AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
-  
+
   if (s != 0)
     {
       // _vars and _outs not supported yet by alt mapping.
@@ -323,16 +328,16 @@ be_type::gen_stub_decls (TAO_OutStream *os)
           skip_varout = true;
         }
     }
-  
+
   if (!skip_varout)
-    {  
+    {
       *os << be_nl
           << "typedef " << this->local_name ()
           << "_var _var_type;" << be_nl
           << "typedef " << this->local_name ()
           << "_out _out_type;";
     }
-      
+
   bool gen_any_destructor =
     be_global->any_support ()
     && (!this->is_local ()
@@ -340,7 +345,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 
   if (gen_any_destructor)
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "static void _tao_any_destructor (void *);";
     }
 }

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+// $Id$
 
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/Codeset/Codeset.h"
@@ -6,10 +7,6 @@
 #include "ace/OS_NS_string.h"
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (Codec,
-           client,
-           "$Id$")
 
 CORBA::WChar *
 gen_wstring (CORBA::ULong max_length)
@@ -81,7 +78,7 @@ test_codec (IOP::Codec_ptr codec)
   const CORBA::Long B = -3427;
   const CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
   const CORBA::Char D[] = "I'm Batman.";
-  const CORBA::WChar* E = gen_wstring (25);
+  CORBA::WChar* E = gen_wstring (25);
 
   // Create the structure to be encoded.
   Foo::Bar value;
@@ -90,6 +87,8 @@ test_codec (IOP::Codec_ptr codec)
   value.C = C;
   value.D = CORBA::string_dup (D);
   value.E = CORBA::wstring_dup (E);
+
+  CORBA::wstring_free (E);
 
   CORBA::Any data;
   data <<= value;

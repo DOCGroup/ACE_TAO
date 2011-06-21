@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //     PersianVisComp.java
 //
@@ -113,7 +113,7 @@ public class PersianVisComp extends Canvas implements VisComp
       return new Dimension (PIXELS_WIDE + 2 * DRAW_OFFSET,
                             PIXELS_WIDE + 2 * DRAW_OFFSET);
     }
-  
+
   public String getName () {
     return title_;
   }
@@ -122,7 +122,7 @@ public class PersianVisComp extends Canvas implements VisComp
   {
     PersianRecursion.Data data_temp_;
     try {
-      data_temp_ = (PersianRecursion.Data) obj;  
+      data_temp_ = (PersianRecursion.Data) obj;
     }
     catch (Exception excp) {
       data_temp_ = null;
@@ -170,7 +170,7 @@ public class PersianVisComp extends Canvas implements VisComp
     FontMetrics fm = g.getFontMetrics ();
     int x1 = d.width - 8, y1, x2, y2, fheight = fm.getHeight (), i;
     PersianRecursion.Data data_temp_;
-    
+
     if ((offscreen_ == null) ||
 	(offscreensize_.width != d.width - 8) ||
 	(offscreensize_.height != d.height - 8))
@@ -185,10 +185,10 @@ public class PersianVisComp extends Canvas implements VisComp
     g.draw3DRect (0, 0, d.width - 1, d.height - 1, true);
     g.draw3DRect (1, 1, d.width - 3, d.height - 3, true);
     g.draw3DRect (2, 2, d.width - 5, d.height - 5, true);
-    
+
     offgraphics_.setColor (getBackground ());
     offgraphics_.fillRect (0, 0, offscreensize_.width, offscreensize_.height);
-    offgraphics_.setColor (getForeground ());    
+    offgraphics_.setColor (getForeground ());
     offgraphics_.drawString (title_, 5, fheight);
 
     Image img = createImage (image_source_);
@@ -198,7 +198,7 @@ public class PersianVisComp extends Canvas implements VisComp
 
     //    System.out.println ("updated.");
   }
-  
+
   public void paint (Graphics g)
   {
     update (g);

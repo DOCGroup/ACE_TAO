@@ -52,7 +52,7 @@ my @CLS = ();
 for($i = 0; $i < $num_clients - 1; $i++) {
     $CLS[$i] = $clients[$i]->CreateProcess ("client", "-k file://$clients_iorfile[$i]");
 }
-$CLS[$num_clients - 1] = $clients[$i]->CreateProcess ("client", 
+$CLS[$num_clients - 1] = $clients[$i]->CreateProcess ("client",
                                     "-k file://$clients_iorfile[$num_clients - 1] -x");
 
 # start server and wait for file

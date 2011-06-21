@@ -2,7 +2,7 @@
 
 #include "UDP_i.h"
 
-ACE_RCSID(UDP, UDP_i, "")
+
 
 // Constructor
 UDP_i::UDP_i (void)

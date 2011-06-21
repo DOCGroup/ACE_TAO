@@ -10,12 +10,6 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI_Observer,
-           Callback_i,
-           "$Id$")
-
-
 Callback_i::Callback_i (int *request_count)
   : file_ (ACE_sap_any_cast (ACE_FILE_Addr &)),
     file_io_ (),

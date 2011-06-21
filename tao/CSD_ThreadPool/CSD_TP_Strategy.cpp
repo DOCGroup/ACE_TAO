@@ -10,10 +10,6 @@
 #include "ace/Trace.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (CSD_ThreadPool,
-           TP_Strategy,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Strategy.inl"
 #endif /* ! __ACE_INLINE__ */

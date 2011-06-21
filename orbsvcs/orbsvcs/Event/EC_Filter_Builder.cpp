@@ -7,6 +7,8 @@
 #include "orbsvcs/Event/EC_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Filter_Builder::~TAO_EC_Filter_Builder (void)

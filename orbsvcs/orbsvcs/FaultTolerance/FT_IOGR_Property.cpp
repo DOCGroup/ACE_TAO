@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 #include "tao/MProfile.h"
@@ -9,11 +11,6 @@
 
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-
-
-ACE_RCSID (FaultTolerance,
-           TAO_FT_IOGR_Property,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/FaultTolerance/FT_IOGR_Property.inl"

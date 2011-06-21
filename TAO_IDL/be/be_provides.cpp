@@ -70,7 +70,7 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
       suffix = ACE_CString ("_") + suffix;
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
@@ -105,31 +105,36 @@ be_provides::gen_facet_svnt_decl (TAO_OutStream &os)
       be_interface *intf =
         be_interface::narrow_from_decl (impl);
 
+      be_global->in_facet_servant (true);
+
       int status =
         intf->traverse_inheritance_graph (
           be_interface::op_attr_decl_helper,
           &os);
 
+      be_global->in_facet_servant (false);
+
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_provides::gen_facet - ")
-                             ACE_TEXT ("traverse_inheritance_graph() failed\n")),
+                             ACE_TEXT ("traverse_inheritance_graph()")
+                             ACE_TEXT (" failed\n")),
                             -1);
         }
     }
 
-  os << be_nl << be_nl << "// Get component implementation." << be_nl
+  os << be_nl_2 << "/// Get component implementation." << be_nl
      << "virtual CORBA::Object_ptr _get_component (void);"
      << be_uidt_nl << be_nl;
 
   os << "protected:" << be_idt_nl;
 
-  os << "// Facet executor." << be_nl
+  os << "/// Facet executor." << be_nl
      << global << sname << "::CCM_"
-     << lname << "_var executor_;" << be_nl << be_nl;
+     << lname << "_var executor_;" << be_nl_2;
 
-  os << "// Context object." << be_nl
+  os << "/// Context object." << be_nl
      << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
 
   os << "};" << be_nl << be_uidt_nl;
@@ -170,7 +175,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
       suffix = ACE_CString ("_") + suffix;
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
      << "{" << be_idt_nl;
 
@@ -187,7 +192,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
      << "{" << be_nl
      << "}";
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << lname << "_Servant::~"
      << lname << "_Servant (void)" << be_nl
      << "{" << be_nl
@@ -200,7 +205,7 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
       be_interface *op_scope =
         be_interface::narrow_from_decl (impl);
 
-      os << be_nl << be_nl
+      os << be_nl_2
          << "// All facet operations and attributes.";
 
       /// The overload of traverse_inheritance_graph() used here
@@ -228,29 +233,29 @@ be_provides::gen_facet_svnt_defn (TAO_OutStream &os)
         }
     }
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "::CORBA::Object_ptr" << be_nl
      << lname << "_Servant::_get_component (void)"
      << be_nl
      << "{" << be_idt_nl
-     << "::Components::SessionContext_var sc =" << be_idt_nl
-     << "::Components::SessionContext::_narrow (this->ctx_.in ());"
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context_var sc =" << be_idt_nl
+     << "::Components::" << be_global->ciao_container_type ()
+     << "Context::_narrow (this->ctx_.in ());"
      << be_uidt_nl << be_nl
      << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-     << "{" << be_idt_nl
-     << "return sc->get_CCM_object ();" << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl;
+     << "{" << be_idt_nl;
 
-  if (!be_global->gen_lwccm ())
+  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
     {
-      os << "::Components::EntityContext_var ec =" << be_idt_nl
-         << "::Components::EntityContext::_narrow (this->ctx_.in ());"
-         << be_uidt_nl << be_nl
-         << "if (! ::CORBA::is_nil (ec.in ()))" << be_idt_nl
-         << "{" << be_idt_nl
-         << "return ec->get_CCM_object ();" << be_uidt_nl
-         << "}" << be_uidt_nl << be_nl;
+      os << "return sc->get_CCM_object ();";
     }
+  else
+    {
+      os << "return ::CORBA::Object::_nil ();";
+    }
+
+  os << be_uidt_nl << "}" << be_uidt_nl << be_nl;
 
   os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
      << "}";
@@ -314,6 +319,14 @@ be_facet_op_attr_defn_helper::emit (be_interface * /* derived_interface */,
             {
               be_operation *op =
                 be_operation::narrow_from_decl (d);
+
+              /// If AMI implied IDL was generated for the
+              /// original interface, we don't want those
+              /// extra operations in the facet servant.
+              if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
 
               be_visitor_operation_svs v (&ctx);
               v.scope (op_scope_);

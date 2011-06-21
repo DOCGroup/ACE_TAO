@@ -1,14 +1,8 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
-
 #include "tao/ORB_Constants.h"
-
-
-ACE_RCSID (Security,
-           SL2_EstablishTrustPolicy,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

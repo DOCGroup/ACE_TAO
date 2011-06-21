@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    ObservablesDialog.java
 //
@@ -21,7 +21,7 @@ public class ObservablesDialog extends Dialog {
   AnswerListener listener_;
 
   ObservablesDialog (DemoCore parent,java.util.Enumeration enumeration) {
-    
+
     super ((Frame)parent, "Select Observables", true);
     parent_ = parent;
     this.setSize(400, 300);
@@ -32,7 +32,7 @@ public class ObservablesDialog extends Dialog {
     list_.setSize (200,200);
 
     for (; enumeration.hasMoreElements();) {
-      list_.add ((String)enumeration.nextElement());      
+      list_.add ((String)enumeration.nextElement());
     }
 
 
@@ -46,17 +46,17 @@ public class ObservablesDialog extends Dialog {
 
     constraints_.fill = GridBagConstraints.BOTH;
     this.setLayout (gridbag_);
-    
+
     constraints_.weightx = 1.0;
     constraints_.weighty = 1.0;
     constraints_.gridwidth = GridBagConstraints.REMAINDER;
     gridbag_.setConstraints (list_, constraints_);
     this.add (list_);
-    
+
     constraints_.weightx = 1.0;
     constraints_.weighty = 1.0;
     constraints_.gridwidth = GridBagConstraints.RELATIVE;
-    constraints_.fill = GridBagConstraints.NONE; 
+    constraints_.fill = GridBagConstraints.NONE;
     gridbag_.setConstraints (ok_button_, constraints_);
     gridbag_.setConstraints (cancel_button_, constraints_);
     this.add (ok_button_);
@@ -68,7 +68,7 @@ public class ObservablesDialog extends Dialog {
 	String selected_ = ObservablesDialog.this.list_.getSelectedItem ();
 	  if (selected_ != null) {
 	    System.out.println (">>>>> " + selected_);
-	    if (listener_ != null) {	  
+	    if (listener_ != null) {
 	      AnswerEvent ev = new AnswerEvent (ObservablesDialog.this, selected_);
 	      listener_.ok (ev);
 	    }
@@ -76,7 +76,7 @@ public class ObservablesDialog extends Dialog {
 	  }
       }
     });
-  
+
      cancel_button_.addActionListener (new ActionListener () {
       public void actionPerformed (ActionEvent e) {
 	ObservablesDialog.this.setVisible (false);

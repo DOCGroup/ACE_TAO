@@ -353,7 +353,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa.in ());
 
       PortableServer::ServantBase_var safe_servant (servant);
-      ACE_UNUSED_ARG (safe_servant);
 
       test_var test =
         servant->_this ();

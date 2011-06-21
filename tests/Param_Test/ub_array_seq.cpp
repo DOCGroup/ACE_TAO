@@ -1,27 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_array_seq.cpp
-//
-// = DESCRIPTION
-//    tests unbounded array sequences
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_array_seq.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded array sequences
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_array_seq.h"
-
-ACE_RCSID (Param_Test,
-           ub_array_seq,
-           "$Id$")
 
 // ************************************************************************
 //               Test_Array_Sequence

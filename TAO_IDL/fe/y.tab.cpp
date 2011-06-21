@@ -357,8 +357,8 @@ typedef union TAO_YYSTYPE
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
   ACE_CDR::Boolean              bval;           /* Boolean value        */
-  ACE_CDR::LongLong             ival;           /* Long value           */
-  ACE_CDR::ULongLong            uival;          /* Unsigned long value  */
+  ACE_CDR::LongLong             ival;           /* Long Long value      */
+  ACE_CDR::ULongLong            uival;          /* Unsigned long long   */
   ACE_CDR::Double               dval;           /* Double value         */
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
@@ -2057,7 +2057,7 @@ int tao_yydebug;
 # define TAO_YYMAXDEPTH 10000
 #endif
 
-
+
 
 #if TAO_YYERROR_VERBOSE
 
@@ -2268,7 +2268,7 @@ tao_yysyntax_error (char *tao_yyresult, int tao_yystate, int tao_yychar)
     }
 }
 #endif /* TAO_YYERROR_VERBOSE */
-
+
 
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
@@ -2293,7 +2293,7 @@ tao_yydestruct (tao_yymsg, tao_yytype, tao_yyvaluep)
     tao_yymsg = "Deleting";
   TAO_YY_SYMBOL_PRINT (tao_yymsg, tao_yytype, tao_yyvaluep, tao_yylocationp);
 }
-
+
 
 /* Prevent warnings from -Wmissing-prototypes.  */
 
@@ -2883,6 +2883,10 @@ tao_yyreduce:
               (void) s->fe_add_module (m);
             }
 
+          (tao_yyvsp[(1) - (1)].idlist)->destroy ();
+          delete (tao_yyvsp[(1) - (1)].idlist);
+          (tao_yyvsp[(1) - (1)].idlist) = 0;
+
           /*
            * Push it on the stack
            */
@@ -2914,6 +2918,7 @@ tao_yyreduce:
           /*
            * Finished with this module - pop it from the scope stack.
            */
+
           idl_global->scopes ().pop ();
         }
     break;
@@ -2967,13 +2972,22 @@ tao_yyreduce:
                                                         (tao_yyvsp[(3) - (5)].plval));
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Module *m = s->fe_add_module (tm);
 
-          (void) s->fe_add_module (tm);
+          // We've probably tried to reopen a template module,
+          // going further will cause a crash.
+          if (m == 0)
+            {
+              return 1;
+            }
 
           /*
            * Push it on the stack
            */
           idl_global->scopes ().push (tm);
+
+          // Contained items not part of an alias will get flag set.
+          idl_global->in_tmpl_mod_no_alias (true);
 
           // Store these for reference as we parse the scope
           // of the template module.
@@ -3004,6 +3018,10 @@ tao_yyreduce:
            * Finished with this module - pop it from the scope stack.
            */
           idl_global->scopes ().pop ();
+
+          // Unset the flag, the no_alias version because any scope
+          // traversal triggered by an alias would have ended by now.
+          idl_global->in_tmpl_mod_no_alias (false);
 
           // Clear the pointer so scoped name lookup will know
           // that we are no longer in a template module scope.
@@ -3080,6 +3098,11 @@ tao_yyreduce:
           delete (tao_yyvsp[(2) - (8)].idlist);
           (tao_yyvsp[(2) - (8)].idlist) = 0;
 
+          // Save the current flag value to be restored below.
+          bool itmna_flag = idl_global->in_tmpl_mod_no_alias ();
+          idl_global->in_tmpl_mod_no_alias (false);
+          idl_global->in_tmpl_mod_alias (true);
+
           ast_visitor_context ctx;
           ctx.template_params (ref->template_params ());
           ast_visitor_tmpl_module_ref v (&ctx);
@@ -3100,6 +3123,9 @@ tao_yyreduce:
 
               idl_global->set_err_count (idl_global->err_count () + 1);
             }
+
+          idl_global->in_tmpl_mod_no_alias (itmna_flag);
+          idl_global->in_tmpl_mod_alias (false);
         }
     break;
 
@@ -3539,6 +3565,11 @@ tao_yyreduce:
                */
               v = AST_ValueType::narrow_from_decl (i);
               (void) s->fe_add_valuetype (v);
+
+              // FE_OBVHeader is not automatically destroyed in the AST
+              (tao_yyvsp[(2) - (2)].vhval)->destroy ();
+              delete (tao_yyvsp[(2) - (2)].vhval);
+              (tao_yyvsp[(2) - (2)].vhval) = 0;
             }
 
           /*
@@ -5452,7 +5483,38 @@ tao_yyreduce:
 
     {
 //      '('
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          UTL_ScopedName n ((tao_yyvsp[(1) - (4)].idval),
+                            0);
+          AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
+
+          /*
+           * Create a node representing an empty union. Add it to its enclosing
+           * scope.
+           */
+          if (s != 0)
+            {
+              u = idl_global->gen ()->create_union (0,
+                                                    &n,
+                                                    s->is_local (),
+                                                    s->is_abstract ());
+
+              AST_Structure *st = AST_Structure::narrow_from_decl (u);
+              AST_Structure::fwd_redefinition_helper (st,
+                                                      s);
+              u = AST_Union::narrow_from_decl (st);
+              (void) s->fe_add_union (u);
+            }
+
+          /*
+           * Push the scope of the union on the scopes stack
+           */
+          idl_global->scopes ().push (u);
+
+          /*
+           * Don't delete $1 yet; we'll need it a bit later.
+           */
         }
     break;
 
@@ -5468,15 +5530,22 @@ tao_yyreduce:
 
     {
 //      ')'
+          /*
+           * The top of the scopes must an empty union we added after we
+           * encountered 'union <id> switch ('. Now we are ready to add a
+           * correct one. Temporarily remove the top so that we setup the
+           * correct union in a right scope.
+           */
+          UTL_Scope *top = idl_global->scopes ().top_non_null ();
+          idl_global->scopes ().pop ();
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ((tao_yyvsp[(1) - (8)].idval),
                             0);
-          AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
 
           /*
-           * Create a node representing a union. Add it to its enclosing
-           * scope.
+           * Create a node representing a union.
            */
           if ((tao_yyvsp[(6) - (8)].dcval) != 0
               && s != 0)
@@ -5490,23 +5559,26 @@ tao_yyreduce:
                 }
               else
                 {
+                  /* Create a union with a correct discriminator. */
+                  AST_Union *u = 0;
                   u = idl_global->gen ()->create_union (tp,
                                                         &n,
                                                         s->is_local (),
                                                         s->is_abstract ());
-                }
+                  /* Narrow the enclosing scope. */
+                  AST_Union *e = AST_Union::narrow_from_scope (top);
 
-              AST_Structure *st = AST_Structure::narrow_from_decl (u);
-              AST_Structure::fwd_redefinition_helper (st,
-                                                      s);
-              u = AST_Union::narrow_from_decl (st);
-              (void) s->fe_add_union (u);
+                  e->redefine (u);
+
+                  u->destroy ();
+                  delete u;
+                }
             }
 
           /*
-           * Push the scope of the union on the scopes stack
+           * Restore the top.
            */
-          idl_global->scopes ().push (u);
+          idl_global->scopes ().push (top);
 
           (tao_yyvsp[(1) - (8)].idval)->destroy ();
           delete (tao_yyvsp[(1) - (8)].idval);
@@ -6180,7 +6252,7 @@ tao_yyreduce:
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
-              
+
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
                     {
@@ -6242,7 +6314,7 @@ tao_yyreduce:
                         s->is_local (),
                         s->is_abstract ()
                       );
-              
+
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
                     {
@@ -6332,7 +6404,7 @@ tao_yyreduce:
                                                   (tao_yyval.dcval)
                                                 )
                                             );
-                      
+
               if (!idl_global->in_typedef ()
                   && !idl_global->anon_silent ())
                 {
@@ -6420,6 +6492,12 @@ tao_yyreduce:
               (void) idl_global->root ()->fe_add_string (
                                               AST_String::narrow_from_decl ((tao_yyval.dcval))
                                             );
+
+              if (!idl_global->in_typedef ()
+                  && !idl_global->anon_silent ())
+                {
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
             }
         }
     break;
@@ -6492,7 +6570,7 @@ tao_yyreduce:
               (tao_yyvsp[(3) - (3)].elval) = 0;
 
               sn.destroy ();
-              
+
               if (!idl_global->in_typedef ()
                   && !idl_global->anon_silent ())
                 {
@@ -8141,7 +8219,7 @@ tao_yyreduce:
 
           AST_Decl *d =
             s->lookup_by_name ((tao_yyvsp[(2) - (3)].idlist), true, false);
-            
+
           if (d == 0)
             {
               idl_global->err ()->lookup_error ((tao_yyvsp[(2) - (3)].idlist));
@@ -9317,6 +9395,8 @@ tao_yyreduce:
 
           (tao_yyval.pival)->type_ = nt;
           (tao_yyval.pival)->name_ = (tao_yyvsp[(2) - (2)].strval);
+          ACE::strdelete ((tao_yyvsp[(2) - (2)].strval));
+          (tao_yyvsp[(2) - (2)].strval) = 0;
 
           if (nt == AST_Decl::NT_const)
             {

@@ -8,7 +8,9 @@
 #include "ace/Thread.h"
 
 ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor (void)
-  : myname_ ("ForwardTest_Interceptor")
+  : myname_ ("ForwardTest_Interceptor"),
+    forward_location_ (CORBA::Object::_nil ()),
+    forward_location_done_ (false)
 {
 }
 

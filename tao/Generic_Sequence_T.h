@@ -1,7 +1,7 @@
 #ifndef guard_generic_sequence_hpp
 #define guard_generic_sequence_hpp
 /**
- * @file
+ * @file Generic_Sequence_T.h
  *
  * @brief Implement the generic version of CORBA sequences.
  *

@@ -54,7 +54,7 @@ protected:
   /// Register a cleanup function.  The number of slot the cleanup
   /// function is placed is in will match the one reserved for the
   /// corresponding thread specific object in the ORB Core TSS
-  /// resources.  The slot_id is returned via the second reference
+  /// resources.  The @a slot_id is returned via the second reference
   /// argument.  This method returns 0 on failure, and -1 on failure.
   int register_cleanup_function (ACE_CLEANUP_FUNC func, size_t &slot_id);
 

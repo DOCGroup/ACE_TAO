@@ -20,8 +20,6 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_RCSID(Hello, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 class Callback_i : public POA_Test::CallBack
@@ -71,12 +69,12 @@ int
 Worker::svc()
 {
   {
-    ACE_Guard<ACE_Mutex> g(this->lock_);
+    ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->lock_, 0);
     if (this->orb_threads_ > 0)
       {
         --this->orb_threads_;
         hello_->set_callback(this->callback_.in());
-        g.release();
+        ace_mon.release();
         this->orb_->run();
         return 0;
       }
@@ -91,7 +89,7 @@ Worker::svc()
         {
           CORBA::Short n = 0;
           {
-            ACE_Guard<ACE_Mutex> g(this->lock_);
+            ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->lock_, 0);
             n = ++this->message_counter_;
           }
           this->asynch_hello_->method (n);
@@ -114,7 +112,7 @@ Worker::svc()
     ACE_DEBUG ((LM_DEBUG, "(%t) Did all iterations\n"));
 
   {
-    ACE_Guard<ACE_Mutex> g(this->lock_);
+    ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->lock_, 0);
     --this->busy_threads_;
     if (this->busy_threads_)
       return 0;
@@ -210,7 +208,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

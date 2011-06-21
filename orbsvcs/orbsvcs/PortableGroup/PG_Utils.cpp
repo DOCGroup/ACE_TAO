@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/MProfile.h"
@@ -7,11 +9,6 @@
 #include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (PortableGroup,
-           PG_Utils,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

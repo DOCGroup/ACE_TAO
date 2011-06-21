@@ -2,7 +2,7 @@
 
 #include "orbsvcs/CosEvent/CEC_SupplierControl.h"
 
-ACE_RCSID(CosEvent, CEC_SupplierControl, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

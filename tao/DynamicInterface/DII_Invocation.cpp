@@ -24,10 +24,6 @@
 # include "tao/PI/RequestInfo_Util.h"
 #endif
 
-ACE_RCSID (DynamicInterface,
-           DII_Invocation,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

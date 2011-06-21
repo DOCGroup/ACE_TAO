@@ -1,12 +1,8 @@
 // -*- C++ -*-
-//
 // $Id$
-//
 
 #include "Client_ORBInitializer.h"
 #include "client_interceptor.h"
-
-ACE_RCSID (Bug_2510_Regression, Client_ORBInitializer, "$Id$")
 
 Client_ORBInitializer::Client_ORBInitializer (void)
 {

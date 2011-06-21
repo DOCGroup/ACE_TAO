@@ -1,14 +1,12 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/IORInterceptor/IORInfo.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/PolicyC.h"
 #include "tao/IOPC.h"
 #include "tao/ORB_Constants.h"
-
-
-ACE_RCSID (IORInterceptor,
-           IORInfo,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IORInterceptor/IORInfo.inl"

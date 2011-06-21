@@ -1,11 +1,9 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
+
 #include "tao/FlResource/FlResource_Loader.h"
 #include "tao/ORB_Core.h"
 #include "tao/FlResource/FlResource_Factory.h"
-
-ACE_RCSID( TAO_FlResource,
-           FlResource_Loader,
-           "$Id$");
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

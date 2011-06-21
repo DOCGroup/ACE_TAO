@@ -74,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     mgr->activate();
 
     // Register an AMI handler for the Messenger interface
-    PortableServer::Servant_var<MessengerHandler> servant = 
+    PortableServer::Servant_var<MessengerHandler> servant =
       new MessengerHandler(orb.in());
     PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
     obj = poa->id_to_reference(oid.in());

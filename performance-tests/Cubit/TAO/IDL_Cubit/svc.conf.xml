@@ -6,6 +6,6 @@
  <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
  <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st -ORBInputCDRAllocator null -ORBConnectionCacheLock null -ORBFlushingStrategy blocking"/>
- <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler RW"/>
- <static id="Server_Strategy_Factory" params="-ORBConcurrency thread-per-connection -ORBPOALock thread -ORBAllowReactivationOfSystemids 0"/>
+ <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>
+ <static id="Server_Strategy_Factory" params="-ORBConcurrency thread-per-connection -ORBAllowReactivationOfSystemids 0"/>
 </ACE_Svc_Conf>

@@ -9,10 +9,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Examples,
-           Supplier,
-           "$Id$")
-
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
@@ -165,7 +161,7 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv[])
       arg_shifter.ignore_arg ();
     }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -10,6 +10,8 @@
 #include "orbsvcs/Event/ECG_CDR_Message_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

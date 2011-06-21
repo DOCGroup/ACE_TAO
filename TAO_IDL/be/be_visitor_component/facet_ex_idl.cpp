@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 be_visitor_facet_ex_idl::be_visitor_facet_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -49,7 +48,8 @@ be_visitor_facet_ex_idl::visit_provides (be_provides *node)
   be_util::gen_nesting_close (os_, impl);
 
   impl->ex_idl_facet_gen (true);
-  
+
   return 0;
 }
+
 

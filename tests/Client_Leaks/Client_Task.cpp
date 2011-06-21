@@ -4,8 +4,6 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Client_Leaks, Client_Task, "$Id$")
-
 Client_Task::Client_Task (Test::Process_Factory_ptr process_factory,
                           int iterations)
   : process_factory_ (Test::Process_Factory::_duplicate (process_factory))

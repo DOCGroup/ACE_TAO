@@ -1,9 +1,6 @@
 // $Id$
 
 #include "orbsvcs/Notify/RT_Notify_Service.h"
-
-ACE_RCSID(RT_Notify, TAO_Notify_RT_Notify_Service, "$Id$")
-
 #include "ace/Dynamic_Service.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/RT_Properties.h"

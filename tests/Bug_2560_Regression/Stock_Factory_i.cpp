@@ -3,15 +3,14 @@
 //
 
 #include "Stock_Factory_i.h"
-#include "tao/Utils/Servant_Var.h"
 
 #include <iostream>
 
 Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 {
-  TAO::Utils::Servant_Var<Quoter_Stock_i> servant1 =
+  PortableServer::Servant_var<Quoter_Stock_i> servant1 =
     new Quoter_Stock_i ("RHAT", "RedHat, Inc.", 210);
-  TAO::Utils::Servant_Var<Quoter_Stock_i> servant2 =
+  PortableServer::Servant_var<Quoter_Stock_i> servant2 =
     new Quoter_Stock_i ("MSFT", "Microsoft, Inc.", 91);
 
   PortableServer::POA_var poa1 = servant1->_default_POA ();

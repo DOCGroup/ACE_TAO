@@ -1,12 +1,10 @@
+// $Id$
+
 #include "LB_server.h"
 #include "Basic.h"
 
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Application_Controlled,
-           LB_server,
-           "$Id$")
 
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
@@ -93,7 +91,7 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -20,11 +20,6 @@
 #include "tao/ORB.h"
 #include "tao/debug.h"
 
-ACE_RCSID (PI_Server,
-           PolicyFactory_Loader,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::ServerRequestInterceptor_Adapter*

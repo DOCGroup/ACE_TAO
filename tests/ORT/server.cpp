@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ORT_test_i.h"
 #include "ServerORBInitializer.h"
 
@@ -5,11 +7,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (ORT,
-           server,
-           "$Id$")
-
 
 const ACE_TCHAR *ior_output_file = 0;
 
@@ -35,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -185,7 +185,7 @@ public:
    */
   void generic_factory (TAO_PG_GenericFactory * generic_factory);
 
-  /// Get active or inactive member count in a group. 
+  /// Get active or inactive member count in a group.
   size_t member_count (
     const PortableServer::ObjectId & oid, bool is_active);
 
@@ -193,7 +193,7 @@ public:
   bool is_alive (
     const PortableServer::ObjectId & oid,
     CORBA::Object_ptr member);
- 
+
   /// Remove the inactive members.
   void remove_inactive_members ();
 
@@ -246,10 +246,10 @@ private:
 
   /// Help function to get active or inactive member infos.
   TAO_PG_MemberInfo_Set get_members (bool is_alive);
-  
+
   /// Ping the remote to verify the connections.
-  bool ping (CORBA::ORB_ptr orb, 
-             CORBA::Object_var& obj, 
+  bool ping (CORBA::ORB_ptr orb,
+             CORBA::Object_var& obj,
              const TimeBase::TimeT& tt);
 
   /// Reference to the POA that created the object group references.

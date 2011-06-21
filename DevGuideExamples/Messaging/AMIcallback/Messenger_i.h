@@ -20,13 +20,13 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor 
+  //Constructor
   Messenger_i (unsigned int seconds_to_wait = 0,
                CORBA::Boolean throw_exception = 0);
-  
-  //Destructor 
+
+  //Destructor
   virtual ~Messenger_i (void);
-  
+
 virtual CORBA::Boolean send_message (
     const char * user_name,
     const char * subject,
@@ -42,7 +42,7 @@ private:
   // Force an exception to be thrown to test client-side
   // exception handling
   CORBA::Boolean throw_exception_;
-  
+
 };
 
 

@@ -83,7 +83,7 @@ public:
   /// version specific parsing of the incoming Request header
   virtual int parse_request_header (TAO_ServerRequest &) = 0;
 
-  /// Parse the Loacte Request Header from the incoming stream. This will do a
+  /// Parse the Locate Request Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &) = 0;
 

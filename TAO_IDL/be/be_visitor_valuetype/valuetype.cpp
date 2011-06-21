@@ -110,7 +110,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          "codegen for get_attribute failed\n"),
                         -1);
     }
-    
+
   get_op.destroy ();
 
   if (node->readonly ())
@@ -153,7 +153,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          "codegen for set_attribute failed\n"),
                         -1);
     }
-    
+
   set_op.destroy ();
   rt.destroy ();
 
@@ -685,8 +685,9 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         }
 
       be_field *field = be_field::narrow_from_decl (d);
+      be_attribute *attr = be_attribute::narrow_from_decl (d);
 
-      if (!field)
+      if (field == 0 || attr != 0)
         {
           continue;
         }
@@ -780,9 +781,13 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
        !si.is_done ();
        si.next())
     {
+      // be_attribute inherits from be_field
+      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
+      be_attribute *attr =
+        be_attribute::narrow_from_decl (si.item ());
 
-      if (f == 0)
+      if (f == 0 || attr != 0)
         {
           continue;
         }
@@ -803,7 +808,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                        &sn);
       ft->seen_in_operation (seen);
       visitor.visit_argument (&arg);
-      
+
       // AST_Argument inherits from AST_Field, which will destroy
       // its field type if it is anonymous - we don't want that.
       arg.be_decl::destroy ();
@@ -823,8 +828,8 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ()
@@ -904,14 +909,14 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to override _add_ref()
-  // and _remove_ref() by calling the one in DefaultValueRefCountBase 
+  // and _remove_ref() by calling the one in DefaultValueRefCountBase
   // to avoid ambiguity.
   if (node->n_supports () > 0)
     {
       return true;
     }
 
-  // VT needs RefCounter if it has concrete factory. 
+  // VT needs RefCounter if it has concrete factory.
   if (be_valuetype::FS_CONCRETE_FACTORY == node->determine_factory_style ())
     {
       return true;

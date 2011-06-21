@@ -11,7 +11,7 @@ StructuredEventConsumer_i::StructuredEventConsumer_i(CORBA::ORB_ptr orb)
 {
 }
 
-void 
+void
 StructuredEventConsumer_i::push_structured_event(
        const CosNotification::StructuredEvent &event
       )
@@ -20,10 +20,10 @@ StructuredEventConsumer_i::push_structured_event(
   std::cout << "event received " << std::endl;
 
   const char *value;
-  
+
   for (unsigned int i=0; i<event.filterable_data.length(); i++) {
     event.filterable_data[i].value >>= value;
-    std::cout << event.filterable_data[i].name.in() << "\t" << value << std::endl; 
+    std::cout << event.filterable_data[i].name.in() << "\t" << value << std::endl;
   }
   count_++;
   if ( count_ >= 3 )
@@ -33,7 +33,7 @@ StructuredEventConsumer_i::push_structured_event(
 
 }
 
-void 
+void
 StructuredEventConsumer_i::disconnect_structured_push_consumer()
 {
 
@@ -48,11 +48,11 @@ StructuredEventConsumer_i::disconnect_structured_push_consumer()
 
 void
 StructuredEventConsumer_i::offer_change(
-        const CosNotification::EventTypeSeq &, 
+        const CosNotification::EventTypeSeq &,
         const CosNotification::EventTypeSeq &
       )
 {
-} 
+}
 
 int
 StructuredEventConsumer_i::nummsgs()

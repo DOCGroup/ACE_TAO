@@ -1,11 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
-//
 
 #include "Client_ORBInitializer.h"
-
-ACE_RCSID (Bug_2088, Client_ORBInitializer, "$Id$")
 
 Client_ORBInitializer::Client_ORBInitializer (void) :
   pre_init_called (false),

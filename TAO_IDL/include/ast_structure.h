@@ -137,7 +137,7 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
-  
+
   // Accessors for the member.
   AST_StructureFwd *fwd_decl (void) const;
   void fwd_decl (AST_StructureFwd *node);
@@ -150,7 +150,7 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-  
+
   // Accessor for the member.
   ACE_Unbounded_Queue<AST_Field *> &fields (void);
 
@@ -188,7 +188,7 @@ private:
 
   int local_struct_;
   // We also need to determine whether we contain any local type.
-  
+
   AST_StructureFwd *fwd_decl_;
   // The forward declaration we may have been created from.
 };

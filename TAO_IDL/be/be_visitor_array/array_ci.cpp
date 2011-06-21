@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    array_ci.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Arrays in the client inline.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    array_ci.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for Arrays in the client inline.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // ************************************************************************
 //  visitor for array declaration in client inline
@@ -152,7 +149,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the array traits specialization definitions,
@@ -179,14 +176,14 @@ int be_visitor_array_ci::visit_array (be_array *node)
                       '\0',
                       NAMEBUFSIZE);
       ACE_OS::sprintf (buf,
-                       "_%ld",
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        node->dims ()[i]->ev ()->u.ulval);
       unique += buf;
     }
 
   unique += "_traits";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::free ("
@@ -197,7 +194,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_free (_tao_slice);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::dup ("
@@ -208,7 +205,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "return " << fname << "_dup (_tao_slice);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::copy ("
@@ -220,7 +217,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_copy (_tao_to, _tao_from);" << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::zero ("
@@ -348,7 +345,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
     }
   *os << be_uidt_nl << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
      << "TAO::Array_Traits<" << fname << "_forany>::alloc (void)"

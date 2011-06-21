@@ -437,13 +437,13 @@ public:
 
   // = Types & methods supporting DDS DCPS data type/key definition (from #pragma)
   typedef ACE_Unbounded_Queue<ACE_TString> DCPS_Key_List;
-  
+
   struct DCPS_Data_Type_Info
   {
     UTL_ScopedName *name_;
     DCPS_Key_List   key_list_;
   };
-  
+
   typedef ACE_Unbounded_Queue_Iterator<ACE_TString> DCPS_Data_Type_Info_Iter;
 
   typedef ACE_Hash_Map_Manager_Ex< const char*,
@@ -455,22 +455,22 @@ public:
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
   void add_dcps_data_type (const char* id);
-  
+
   // FE calls when #pragma DCPS_DATA_KEY is processed
   bool add_dcps_data_key (const char* id, const char* key);
-  
+
   // returns null if not matching; otherwise pointer to the info
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
-  
+
   // FE calls when #pragma DCPS_SUPPORT_ZERO_COPY_READ is processed
   void dcps_support_zero_copy_read (bool value);
-  
+
   // BE calls to check the status of zero-copy read support
   bool dcps_support_zero_copy_read (void) const;
-  
+
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
-  
+
   // BE calls to check the status of zero-copy read support
   bool dcps_gen_zero_copy_read (void) const;
 
@@ -607,7 +607,11 @@ public:
   void add_ciao_oci_ts_file_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_oci_ts_file_names (void);
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
-  
+
+    void add_ciao_coredx_ts_file_names (const char *s);
+  ACE_Unbounded_Queue<char *> & ciao_coredx_ts_file_names (void);
+  // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
+
   void add_ciao_ami_iface_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_iface_names (void);
   // Accessor/mutator for the ciao_ami_iface_names_ member.
@@ -615,25 +619,22 @@ public:
   void add_ciao_ami_recep_names (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_recep_names (void);
   // Accessor/mutator for the ciao_ami_recep_names_ member.
-  
+
   void add_included_ami_recep_names (const char *s);
   ACE_Unbounded_Queue<char *> & included_ami_recep_names (void);
   // Accessor/mutator for the included_ami_recep_names_ member.
-  
+
   bool included_ami_receps_done (void) const;
   void included_ami_receps_done (bool val);
-  
+
   void add_ciao_ami_idl_fnames (const char *s);
   ACE_Unbounded_Queue<char *> & ciao_ami_idl_fnames (void);
   // Accessor/mutator for the included_ami_idl_fnames_ member.
-  
+
   void add_dds4ccm_impl_fnames (const char *s);
   ACE_Unbounded_Queue<char *> & dds4ccm_impl_fnames (void);
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
-  
-  ACE_Unbounded_Queue<AST_Decl *> & masking_scopes (void);
-  // Accessor for the member
-  
+
   ACE_Unbounded_Queue<AST_Interface *> & mixed_parentage_interfaces (void);
   // Accessor for the member
 
@@ -688,6 +689,20 @@ public:
   // referenced template parameter of the eclosing template
   // module.
 
+  UTL_StrList const *alias_params (void) const;
+  void alias_params (UTL_StrList *params);
+  // Accessors for the member. If we are parsing a template
+  // module reference, we traverse the scope of the referenced
+  // template module, but create param holders with the
+  // alias names.
+
+  UTL_StrList const *for_new_holder (void) const;
+  void for_new_holder (UTL_StrList *params);
+  // Accessors for the member. If a lookup matches something
+  // from current_params(), the actual created param holder must
+  // match the corresponding element on this list, if it is
+  // non-zero.
+
 #if defined (ACE_OPENVMS)
   static char* translateName (const char* name, char *name_buf);
 #endif
@@ -706,10 +721,10 @@ public:
     Unbounded_Paths_Queue;
   typedef ACE_Unbounded_Queue_Iterator<Include_Path_Info>
     Unbounded_Paths_Queue_Iterator;
-    
+
   Unbounded_Paths_Queue &include_paths (void);
   // Accessor for the member.
-  
+
   enum ANON_TYPE_DIAGNOSTIC
   {
     ANON_TYPE_ERROR,
@@ -718,17 +733,25 @@ public:
   };
   // Determines which type of diagnostic to emit, if any, upon
   // detecting the presence of an anonymous IDL construct.
-  
+
   void anon_type_diagnostic (ANON_TYPE_DIAGNOSTIC val);
   // Mutator for the member.
-  
-  bool anon_error (void) const; 
+
+  bool anon_error (void) const;
   bool anon_warning (void) const;
   bool anon_silent (void) const;
   // Simple checks for the value of anon_type_diagnostic_.
-  
+
   bool in_typedef (void) const;
   void in_typedef (bool val);
+  // Accessors for the member.
+
+  bool in_tmpl_mod_no_alias (void) const;
+  void in_tmpl_mod_no_alias (bool val);
+  // Accessors for the member.
+
+  bool in_tmpl_mod_alias (void) const;
+  void in_tmpl_mod_alias (bool val);
   // Accessors for the member.
 
 private:
@@ -850,7 +873,20 @@ private:
 
   FE_Utils::T_PARAMLIST_INFO *current_params_;
   // Stored if we are parsing the scope of a template module,
-  // 0 otherwise.
+  // 0 otherwise. Contains the params of the referenced
+  // template module if we are traversing an alias.
+
+  UTL_StrList *alias_params_;
+  // Stored if we are parsing a template module reference. The
+  // scope traversed will be that of the referenced template
+  // module, but the param holder(s) created will use the
+  // aliased names.
+
+  UTL_StrList *for_new_holder_;
+  // Stored if we are traversing an alias, this is a list of
+  // the enclosing template module's params. When we create
+  // a param holder, it will need this name rather than the
+  // name of the alias's referenced param.
 
   ACE_Unbounded_Queue<char *> ciao_lem_file_names_;
   // Files parsed with ciao lem pragma
@@ -863,44 +899,52 @@ private:
 
   ACE_Unbounded_Queue<char *> ciao_oci_ts_file_names_;
   // Files parsed with OpenDDS typesupport pragma
-  
+
+  ACE_Unbounded_Queue<char *> ciao_coredx_ts_file_names_;
+  // Files parsed with CoreDX typesupport pragma
+
   ACE_Unbounded_Queue<char *> ciao_ami_iface_names_;
   // Interfaces that get a reply handler generated for AMI4CCM.
-  
+
   ACE_Unbounded_Queue<char *> ciao_ami_recep_names_;
   // Receptacles that get a sendc_ version added for AMI4CCM.
-  
+
   ACE_Unbounded_Queue<char *> included_ami_recep_names_;
   // We need to do something different with these...
-  
+
   bool included_ami_receps_done_;
   // ...but we need to do it only once.
-  
+
   ACE_Unbounded_Queue<char *> ciao_ami_idl_fnames_;
   // Stores directives from #pragma ciao ami4ccm idl "xxx".
-  
+
   ACE_Unbounded_Queue<char *> dds4ccm_impl_fnames_;
   // Stores directives from #pragma dds4ccm impl "xxx".
-  
-  ACE_Unbounded_Queue<AST_Decl *> masking_scopes_;
-  // Used to check for an incorrect lookup success that should
-  // have been masked by an inner scope of the same name.
-  
+
   /**
    * Used in the generation of overrides for CORBA::release and
    * CORBA::is_nil, needed when the interface inherits versions from
    * both CORBA::Object and CORBA::AbstractBase.
    */
   ACE_Unbounded_Queue<AST_Interface *> mixed_parentage_interfaces_;
-  
+
   /// For quick access.
   AST_Module *corba_module_;
-  
+
   ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_;
-  
+
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.
   bool in_typedef_;
+
+  /// Used during AST creation, corresponding flag in each
+  /// AST_Decl created is set to this flag's value.
+  bool in_tmpl_mod_no_alias_;
+
+  /// Disables the error check faciliated by the above flag.
+  /// No errors are possible because created nodes are all
+  /// implied IDL.
+  bool in_tmpl_mod_alias_;
 };
 
 #endif  //_IDL_IDL_GLOBAL_HH

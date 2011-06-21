@@ -6,7 +6,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(ImplRepo, airplane_client_i, "$Id$")
+
 
 // Constructor.
 Airplane_Client_i::Airplane_Client_i (void)

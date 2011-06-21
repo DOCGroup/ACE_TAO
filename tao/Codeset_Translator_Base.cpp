@@ -5,11 +5,9 @@
  *  @file    Codeset_Translator_Base.cpp
  *
  *  $Id$
-
  *
  * factories are responsible for supplying the proper translator on
  * demand.
- *
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */

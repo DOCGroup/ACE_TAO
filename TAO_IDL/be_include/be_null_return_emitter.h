@@ -27,9 +27,9 @@ class be_null_return_emitter
 public:
   be_null_return_emitter (be_visitor_context *ctx);
   ~be_null_return_emitter (void);
-  
+
   int emit (be_type *node);
-  
+
 private:
   be_visitor_context *ctx_;
   TAO_OutStream &os_;

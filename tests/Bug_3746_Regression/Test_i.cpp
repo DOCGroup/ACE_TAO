@@ -3,10 +3,6 @@
 //
 #include "Test_i.h"
 
-ACE_RCSID(TestLargeSequence,
-          TestLargeSequence,
-          "$Id$")
-
 BoundSequences::BoundSequences (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

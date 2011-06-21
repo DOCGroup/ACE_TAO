@@ -13,7 +13,7 @@ interface test
   oneway void oneway_sync ();
 
   void twoway_sync ();
-  
+
   void shutdown ();
 
   typedef sequence<octet> octets;
@@ -21,8 +21,8 @@ interface test
   oneway void oneway_method (in long session_id,
            in unsigned long iteration,
            in octets payload);
-  
+
   void twoway_method (inout long session_id,
           inout unsigned long iteration,
-          inout octets payload);  
+          inout octets payload);
 };

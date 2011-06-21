@@ -2,10 +2,6 @@
 
 #include "tao/CSD_ThreadPool/CSD_TP_Servant_State.h"
 
-ACE_RCSID (CSD_TP,
-           Servant_State,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Servant_State.inl"
 #endif /* ! __ACE_INLINE__ */

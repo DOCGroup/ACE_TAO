@@ -5,10 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (CPU,
-           client,
-           "$Id$")
-
 const ACE_TCHAR *location = ACE_TEXT("MyLocation");
 
 const int MAX_RETRIES = 10;

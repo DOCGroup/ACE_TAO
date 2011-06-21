@@ -14,7 +14,7 @@ $debug_level = '0';
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-    } 
+    }
  }
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";

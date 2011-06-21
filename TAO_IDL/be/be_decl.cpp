@@ -64,10 +64,6 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_stub_cdr_op_gen_ (false),
     cli_inline_cdr_op_gen_ (false),
     cli_inline_cdr_decl_gen_ (false),
-    cli_hdr_serializer_op_gen_ (false),
-    cli_stub_serializer_op_gen_ (false),
-    cli_inline_serializer_op_gen_ (false),
-    cli_inline_serializer_decl_gen_ (false),
     cli_traits_gen_ (false),
     cli_arg_traits_gen_ (false),
     srv_arg_traits_gen_ (false),
@@ -351,30 +347,6 @@ be_decl::cli_inline_cdr_decl_gen (void)
 }
 
 bool
-be_decl::cli_hdr_serializer_op_gen (void)
-{
-  return this->cli_hdr_serializer_op_gen_;
-}
-
-bool
-be_decl::cli_stub_serializer_op_gen (void)
-{
-  return this->cli_stub_serializer_op_gen_;
-}
-
-bool
-be_decl::cli_inline_serializer_op_gen (void)
-{
-  return this->cli_inline_serializer_op_gen_;
-}
-
-bool
-be_decl::cli_inline_serializer_decl_gen (void)
-{
-  return this->cli_inline_cdr_decl_gen_;
-}
-
-bool
 be_decl::cli_traits_gen (void)
 {
   return this->cli_traits_gen_;
@@ -643,30 +615,6 @@ void
 be_decl::cli_inline_cdr_decl_gen (bool val)
 {
   this->cli_inline_cdr_decl_gen_ = val;
-}
-
-void
-be_decl::cli_hdr_serializer_op_gen (bool val)
-{
-  this->cli_hdr_serializer_op_gen_ = val;
-}
-
-void
-be_decl::cli_stub_serializer_op_gen (bool val)
-{
-  this->cli_stub_serializer_op_gen_ = val;
-}
-
-void
-be_decl::cli_inline_serializer_op_gen (bool val)
-{
-  this->cli_inline_serializer_op_gen_ = val;
-}
-
-void
-be_decl::cli_inline_serializer_decl_gen (bool val)
-{
-  this->cli_inline_serializer_decl_gen_ = val;
 }
 
 void

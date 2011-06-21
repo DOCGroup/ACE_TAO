@@ -47,10 +47,10 @@ $nfs->DeleteFile ($nfsiorfile);
 $nfs->DeleteFile ($persistent_xml);
 $nfs->DeleteFile ($persistent_000);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/Naming_Service",
+$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
                                 "-o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/Notify_Service");
+$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBSvcConf $nfs_svc_conf -ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile ";
 
 $SUP = $sup->CreateProcess ("supplier");
@@ -93,9 +93,9 @@ if ($con->PutFile ($nsiorfile) == -1) {
 sub run_test
 {
     my $client_args = shift;
-    
+
     $nfs->DeleteFile ($nfsiorfile);
-    
+
     $NFS->Arguments ($NFS_Args);
     $args = $NFS->Arguments ();
     print STDERR "Running Notification with arguments: $args\n";
@@ -133,7 +133,7 @@ sub run_test
         $NFS->Kill (); $NFS->TimedWait (1);
         exit 1;
     }
-    
+
     $CON_status = $CON->WaitKill ($con->ProcessStartWaitInterval()+$experiment_timeout);
     if ($CON_status != 0) {
         print STDERR "ERROR: Consumer returned $CON_status\n";

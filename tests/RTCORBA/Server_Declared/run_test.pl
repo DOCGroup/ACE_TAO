@@ -64,15 +64,15 @@ if ($server_status != 0) {
 
 if ($server->WaitForFileTimed ($iorbase2,
                                $server->ProcessStartWaitInterval ()) == -1) {
-    $server_status = $SV->TimedWait (1);   
-    if ($server_status == 2) {   
+    $server_status = $SV->TimedWait (1);
+    if ($server_status == 2) {
         # Mark as no longer running to avoid errors on exit.
-        $SV->{RUNNING} = 0;   
-        exit $status;   
-    }   
-    else {   
-        print STDERR "ERROR: cannot find file <$server_iorfile2>\n";   
-        $SV->Kill ();   
+        $SV->{RUNNING} = 0;
+        exit $status;
+    }
+    else {
+        print STDERR "ERROR: cannot find file <$server_iorfile2>\n";
+        $SV->Kill ();
         exit 1;
     }
 }

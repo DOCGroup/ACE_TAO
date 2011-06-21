@@ -4,11 +4,6 @@
 #include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 #include "tao/SystemException.h"
 
-
-ACE_RCSID (FaultTolerance,
-           FT_Endpoint_Selector_Factory,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory (void)

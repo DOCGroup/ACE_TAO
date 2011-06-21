@@ -15,8 +15,6 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Callback, client, "$Id$")
-
 int iterations = 1000;
 int do_dump_history = 0;
 const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
@@ -221,7 +219,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

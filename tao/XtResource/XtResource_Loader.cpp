@@ -3,10 +3,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/XtResource/XtResource_Factory.h"
 
-ACE_RCSID( TAO_XtResource,
-           XtResource_Loader,
-           "$Id$");
-
 namespace TAO
 {
 

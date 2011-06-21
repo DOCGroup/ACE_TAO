@@ -47,7 +47,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0",
     "ServerRequestInterceptor");
-  
+
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ServerRequestInterceptor =

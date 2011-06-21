@@ -1,16 +1,10 @@
 // -*- C++ -*-
+// $Id$
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"
 
-ACE_RCSID (Security,
-           Security_ORBInitializer,
-           "$Id$")
-
-
-#if 1
 #include "orbsvcs/Security/Security_Current.h"
 #include "orbsvcs/Security/SL2_SecurityManager.h"
-#endif
 #include "orbsvcs/Security/SL3_SecurityCurrent.h"
 #include "orbsvcs/Security/SL3_CredentialsCurator.h"
 #include "orbsvcs/Security/SL3_SecurityManager.h"

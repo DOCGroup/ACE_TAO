@@ -4,8 +4,6 @@
 #include "Hello.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
-
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

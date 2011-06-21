@@ -2,7 +2,6 @@
 
 #include "sink_i.h"
 #include "ace/OS_NS_unistd.h"
-ACE_RCSID(Sink, Sink_i, "$Id$")
 
 // Constructor
 Sink_i::Sink_i (CORBA::ORB_ptr orb)

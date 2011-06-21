@@ -10,10 +10,6 @@
 #include "tao/AnyTypeCode/IOPA.h"
 #include "ace/TSS_T.h"
 
-ACE_RCSID (EventChannel,
-           Request_Context_Repository,
-           "$Id$")
-
 namespace {
 PortableInterceptor::SlotId object_id_slot;
 PortableInterceptor::SlotId cached_result_slot;

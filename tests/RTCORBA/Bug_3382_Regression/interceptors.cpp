@@ -4,10 +4,6 @@
 #include "tao/OctetSeqC.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (Client_Propagated,
-           interceptors,
-           "$Id$")
-
 Client_Request_Interceptor::
 Client_Request_Interceptor (const char *id)
   : myname_ ("Client_Request_Interceptor"),

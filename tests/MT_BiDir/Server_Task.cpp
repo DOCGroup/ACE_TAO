@@ -9,12 +9,6 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Manual_Event.h"
 
-
-ACE_RCSID (MT_BiDir,
-           Server_Task,
-           "Server_Task.cpp,v 1.1 2001/03/10 23:37:42 coryan Exp")
-
-
 Server_Task::Server_Task (Sender_i *sender,
                           ACE_Manual_Event &event,
                           int no_iterations,

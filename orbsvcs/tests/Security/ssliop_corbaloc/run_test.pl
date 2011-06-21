@@ -66,7 +66,7 @@ $cli->DeleteFile ($nsiorfile);
 sub name_server
 {
     my $args = "-ORBNameServicePort $ns_multicast_port -o $ns_nsiorfile -m 1 @_";
-    my $prog = "../../../Naming_Service/Naming_Service";
+    my $prog = "../../../Naming_Service/tao_cosnaming";
     $NS = $ns->CreateProcess ($prog, $args);
 
     $ns->DeleteFile ($nsiorfile);
@@ -119,7 +119,7 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
 
 # Options for all simple tests recognized by the 'client' program.
 @opts = (
-         "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService" 
+         "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-t -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
@@ -129,7 +129,7 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-y -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
-         
+
          );
 
 @server_opts = (
@@ -137,13 +137,13 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port" 
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port" 
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port" 
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-                
+
                 );
 
 @comments = (
@@ -165,7 +165,7 @@ foreach $o (@opts) {
         print STDERR " - Skipping, use -s to run the SSL tests";
         next;
     }
-    
+
     print STDERR "\n";
     name_server ($server_opts[$test_number]);
     client ($o);
@@ -178,7 +178,7 @@ foreach $o (@opts) {
     }
 
     ## For some reason, only on Windows XP, we need to
-    ## wait before starting another Naming_Service when
+    ## wait before starting another tao_cosnaming when
     ## the mmap persistence option is used
     if ($^O eq "MSWin32") {
       sleep(1);

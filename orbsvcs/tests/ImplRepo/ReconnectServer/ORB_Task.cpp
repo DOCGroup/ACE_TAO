@@ -9,9 +9,6 @@
 #include "ORB_Task.h"
 #include "tao/Environment.h"
 
-ACE_RCSID (ReconnectServer,
-           ORB_Task, "$Id$")
-
 ORB_Task::ORB_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

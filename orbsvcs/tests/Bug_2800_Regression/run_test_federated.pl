@@ -50,9 +50,9 @@ $ns2->DeleteFile ($ns2_ior);
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "");
 
-$NS1 = $ns1->CreateProcess("../../Naming_Service/Naming_Service",
+$NS1 = $ns1->CreateProcess("../../Naming_Service/tao_cosnaming",
                            "-ORBEndPoint $ns_endpoint1 -o $ns1_iorfile -m 0");
-$NS2 = $ns2->CreateProcess("../../Naming_Service/Naming_Service",
+$NS2 = $ns2->CreateProcess("../../Naming_Service/tao_cosnaming",
                            "-ORBEndPoint $ns_endpoint2 -o $ns2_iorfile -m 0");
 
 # Run two Naming Servers

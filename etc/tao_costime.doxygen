@@ -50,7 +50,7 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/orbsvcs/orbsvcs/TimeService.idl \
-                TAO/orbsvcs/orbsvcs/Time
+                        TAO/orbsvcs/orbsvcs/Time
 FILE_PATTERNS         = *.cpp *.h *.inl *.pidl *.idl
 RECURSIVE             =
 EXCLUDE               =
@@ -73,7 +73,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/costime
+HTML_OUTPUT           = html/libtao-doc/costime
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -127,19 +127,17 @@ PREDEFINED            = __ACE_INLINE__ \
                         TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
                         TAO_END_VERSIONED_NAMESPACE_DECL \
                         ACE_INLINE
-EXPAND_AS_DEFINED     = ACE_RCSID \
-                        ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER \
-                        ACE_THROW_SPEC
+EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER
 
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=../../ace \
-                        html/tao/TAO.tag=.. \
-                        html/tao/portableserver/TAO_PortableServer.tag=../portableserver
-GENERATE_TAGFILE      = html/tao/costime/TAO_CosTime.tag
+TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
+                        html/libtao-doc/TAO.tag=.. \
+                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver
+GENERATE_TAGFILE      = html/libtao-doc/costime/TAO_CosTime.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 

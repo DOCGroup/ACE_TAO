@@ -1,12 +1,9 @@
+// $Id$
+
 #include "FOO_IORInterceptor.h"
 #include "testS.h"
 
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (IORInterceptor,
-           FOO_IORInterceptor,
-           "$Id$")
-
 
 FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
   : codec_ (IOP::Codec::_duplicate (codec))

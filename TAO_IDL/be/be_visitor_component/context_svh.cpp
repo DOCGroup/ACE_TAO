@@ -28,7 +28,6 @@ be_visitor_context_svh::visit_component (be_component *node)
   // This visitor is spawned by be_visitor_component_svh,
   // which already does a check for imported node, so none
   // is needed here.
-
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
@@ -43,25 +42,27 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << be_nl
       << "class " << lname << "_Servant;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "class " << export_macro_.c_str () << " " << lname
       << "_Context" << be_idt_nl
       << ": public virtual ::CIAO::"
-      << "Context_Impl<" << be_idt << be_idt_nl
+      << be_global->ciao_container_type ()
+      << "_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << "// Allow the servant to access our state." << be_nl
+  os_ << "/// Allow the servant to access our state." << be_nl
       << "friend class " << lname << "_Servant;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
-  os_ << "// Some useful typedefs." << be_nl<< be_nl
+  os_ << "/// Some useful typedefs." << be_nl
       << "typedef" << be_nl
-      << "::CIAO::Context_Impl<" << be_idt << be_idt_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Context_Impl<" << be_idt << be_idt_nl
       << global << sname << "::CCM_"
       << lname << "_Context," << be_nl
       << "::" << node->name () << ">" << be_uidt_nl
@@ -87,27 +88,25 @@ be_visitor_context_svh::visit_component (be_component *node)
 
   os_ << "typedef ::CIAO::"
       << (de_facto ? "Connector_" : "")
-      << "Servant_Impl_Base svnt_base_type;" << be_nl << be_nl;
+      << "Servant_Impl_Base svnt_base_type;" << be_nl_2;
 
   os_ << lname << "_Context (" << be_idt_nl
       << "::Components::CCMHome_ptr h," << be_nl
-      << "::CIAO::Container_ptr c," << be_nl
+      << "::CIAO::" << be_global->ciao_container_type ()
+      << "_Container_ptr c," << be_nl
       << "PortableServer::Servant sv," << be_nl
       << "const char *id);" << be_uidt_nl << be_nl;
 
   os_ << "virtual ~" << lname << "_Context (void);";
 
-  os_ << be_nl << be_nl
-      << "// CIAO-specific." << be_nl
-      << "static " << lname << "_Context *" << be_nl
-      << "_narrow ( ::Components::SessionContext_ptr p);";
-
-  os_ << be_nl << be_nl
-      << "// Operations for " << lname
+  os_ << be_nl_2
+      << "/** @name Operations and members for " << lname
       << " receptacles and event sources,"
       << be_nl
-      << "// defined in " << global << sname
-      << "::CCM_" << lname << "_Context.";
+      << " * defined in " << global << sname
+      << "::CCM_" << lname << "_Context." << be_nl << " */"
+      << be_nl
+      << "//@{";
 
   if (this->visit_component_scope (node) == -1)
     {
@@ -119,7 +118,9 @@ be_visitor_context_svh::visit_component (be_component *node)
                         -1);
     }
 
-  os_ << be_uidt_nl
+  os_ << be_nl
+      << "//@}"
+      << be_uidt_nl
       << "};";
 
   return 0;
@@ -162,9 +163,9 @@ be_visitor_context_svh::visit_uses (be_uses *node)
       << "virtual "
       << (is_multiple ? "::Components::Cookie *" : "void")
       << be_nl
-      << "connect_" << port_name << " (" 
+      << "connect_" << port_name << " ("
       << "::" << obj_name << "_ptr);"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   os_ << "virtual ::" << obj_name << "_ptr" << be_nl
       << "disconnect_" << port_name << " (";
@@ -179,13 +180,13 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     }
 
   os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
+      << "private:" << be_idt_nl;
 
   if (is_multiple)
     {
-      os_ << "// Multiplex " << port_name << " connection." << be_nl
-          << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
-          << "                      ::"
+      os_ << "/// Multiplex " << port_name << " connection." << be_nl
+          << "typedef std::map<ptrdiff_t," << be_nl
+          << "                 ::"
           << obj_name << "_var>" << be_idt_nl
           << tao_cg->upcase (port_name)
           << "_TABLE;" << be_uidt_nl
@@ -195,7 +196,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
     }
   else
     {
-      os_ << "// Simplex " << port_name << " connection." << be_nl
+      os_ << "/// Simplex " << port_name << " connection." << be_nl
           << "::" << obj_name << "_var" << be_nl
           << "ciao_uses_" << port_name << "_;";
     }
@@ -228,16 +229,16 @@ be_visitor_context_svh::visit_publishes (be_publishes *node)
       << "::Components::Cookie * ck);" << be_uidt;
 
   os_ << be_uidt_nl << be_nl
-      << "protected:" << be_idt_nl;
+      << "private:" << be_idt_nl;
 
-  os_ << "typedef ACE_Array_Map<ptrdiff_t," << be_nl
-      << "                      ::" << obj_name
+  os_ << "typedef std::map<ptrdiff_t," << be_nl
+      << "                 ::" << obj_name
       << "Consumer_var>" << be_idt_nl
       << tao_cg->upcase (port_name) << "_TABLE;" << be_uidt_nl
       << tao_cg->upcase (port_name) << "_TABLE ciao_publishes_"
       << port_name << "_;" << be_nl
       << "TAO_SYNCH_MUTEX " << port_name << "_lock_;"
-      << be_nl << be_nl;
+      << be_nl_2;
 
   return 0;
 }
@@ -262,7 +263,7 @@ be_visitor_context_svh::visit_emits (be_emits *node)
       << "connect_" << port_name << " (" << be_idt_nl
       << "::" << obj_name << "Consumer_ptr c);" << be_uidt;
 
-  os_ << be_nl << be_nl
+  os_ << be_nl_2
       << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
       << "disconnect_" << port_name << " (void);";
 

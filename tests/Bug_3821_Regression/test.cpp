@@ -3,10 +3,6 @@
 #include "testC.h"
 #include "tao/CDR.h"
 
-ACE_RCSID(Test,
-          test,
-          "$Id$")
-
 namespace
 {
   template<typename T>

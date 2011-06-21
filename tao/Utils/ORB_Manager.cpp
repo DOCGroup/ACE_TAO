@@ -1,14 +1,7 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tao
-//
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
-//
-// ============================================================================
 
 #include "tao/Utils/ORB_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
@@ -21,11 +14,6 @@
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (PortableServer,
-           ORB_Manager,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

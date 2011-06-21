@@ -4,8 +4,6 @@
 #include "Factory.h"
 #include "Simple.h"
 
-ACE_RCSID(Activation, Factory, "$Id$")
-
 Factory::Factory (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

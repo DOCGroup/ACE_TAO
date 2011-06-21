@@ -119,7 +119,7 @@ namespace TAO
             CORBA::Repository_ptr,
             CORBA::Repository_var,
             CORBA::Repository_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -139,7 +139,7 @@ namespace TAO
             CORBA::Container_ptr,
             CORBA::Container_var,
             CORBA::Container_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -159,7 +159,7 @@ namespace TAO
             CORBA::IDLType_ptr,
             CORBA::IDLType_var,
             CORBA::IDLType_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -177,7 +177,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::InterfaceDefSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -195,7 +195,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ValueDefSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -213,7 +213,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::InitializerSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -231,7 +231,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ExtInitializerSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -249,7 +249,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ExceptionDefSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -267,7 +267,7 @@ namespace TAO
     : public
         Basic_SArg_Traits_T<
             CORBA::OperationMode,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -285,7 +285,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ParDescriptionSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -303,7 +303,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::ContextIdSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -323,7 +323,7 @@ namespace TAO
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -343,7 +343,7 @@ namespace TAO
             CORBA::ValueDef_ptr,
             CORBA::ValueDef_var,
             CORBA::ValueDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -363,7 +363,7 @@ namespace TAO
             CORBA::ComponentIR::ComponentDef_ptr,
             CORBA::ComponentIR::ComponentDef_var,
             CORBA::ComponentIR::ComponentDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -383,7 +383,7 @@ namespace TAO
             CORBA::ComponentIR::HomeDef_ptr,
             CORBA::ComponentIR::HomeDef_var,
             CORBA::ComponentIR::HomeDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -403,7 +403,7 @@ namespace TAO
             CORBA::ComponentIR::EventDef_ptr,
             CORBA::ComponentIR::EventDef_var,
             CORBA::ComponentIR::EventDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -423,7 +423,7 @@ namespace TAO
             CORBA::ComponentIR::ProvidesDef_ptr,
             CORBA::ComponentIR::ProvidesDef_var,
             CORBA::ComponentIR::ProvidesDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -443,7 +443,7 @@ namespace TAO
             CORBA::ComponentIR::UsesDef_ptr,
             CORBA::ComponentIR::UsesDef_var,
             CORBA::ComponentIR::UsesDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -463,7 +463,7 @@ namespace TAO
             CORBA::ComponentIR::EmitsDef_ptr,
             CORBA::ComponentIR::EmitsDef_var,
             CORBA::ComponentIR::EmitsDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -483,7 +483,7 @@ namespace TAO
             CORBA::ComponentIR::PublishesDef_ptr,
             CORBA::ComponentIR::PublishesDef_var,
             CORBA::ComponentIR::PublishesDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -503,7 +503,7 @@ namespace TAO
             CORBA::ComponentIR::ConsumesDef_ptr,
             CORBA::ComponentIR::ConsumesDef_var,
             CORBA::ComponentIR::ConsumesDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -523,7 +523,7 @@ namespace TAO
             CORBA::ComponentIR::FactoryDef_ptr,
             CORBA::ComponentIR::FactoryDef_var,
             CORBA::ComponentIR::FactoryDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -543,7 +543,7 @@ namespace TAO
             CORBA::ComponentIR::FinderDef_ptr,
             CORBA::ComponentIR::FinderDef_var,
             CORBA::ComponentIR::FinderDef_out,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -584,7 +584,7 @@ namespace TAO
     : public
         Basic_Arg_Traits_T<
             CORBA::DefinitionKind,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -605,7 +605,7 @@ namespace TAO
             CORBA::Repository_var,
             CORBA::Repository_out,
             TAO::Objref_Traits<CORBA::Repository>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -626,7 +626,7 @@ namespace TAO
             CORBA::Container_var,
             CORBA::Container_out,
             TAO::Objref_Traits<CORBA::Container>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -647,7 +647,7 @@ namespace TAO
             CORBA::IDLType_var,
             CORBA::IDLType_out,
             TAO::Objref_Traits<CORBA::IDLType>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -665,7 +665,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::InterfaceDefSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -683,7 +683,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ValueDefSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -701,7 +701,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::InitializerSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -719,7 +719,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ExtInitializerSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -737,7 +737,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ExceptionDefSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -755,7 +755,7 @@ namespace TAO
     : public
         Basic_Arg_Traits_T<
             CORBA::OperationMode,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -773,7 +773,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ParDescriptionSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -791,7 +791,7 @@ namespace TAO
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ContextIdSeq,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -812,7 +812,7 @@ namespace TAO
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
             TAO::Objref_Traits<CORBA::InterfaceDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -833,7 +833,7 @@ namespace TAO
             CORBA::ValueDef_var,
             CORBA::ValueDef_out,
             TAO::Objref_Traits<CORBA::ValueDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -854,7 +854,7 @@ namespace TAO
             CORBA::ComponentIR::ComponentDef_var,
             CORBA::ComponentIR::ComponentDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -875,7 +875,7 @@ namespace TAO
             CORBA::ComponentIR::HomeDef_var,
             CORBA::ComponentIR::HomeDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -896,7 +896,7 @@ namespace TAO
             CORBA::ComponentIR::EventDef_var,
             CORBA::ComponentIR::EventDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::EventDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -917,7 +917,7 @@ namespace TAO
             CORBA::ComponentIR::ProvidesDef_var,
             CORBA::ComponentIR::ProvidesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -938,7 +938,7 @@ namespace TAO
             CORBA::ComponentIR::UsesDef_var,
             CORBA::ComponentIR::UsesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -959,7 +959,7 @@ namespace TAO
             CORBA::ComponentIR::EmitsDef_var,
             CORBA::ComponentIR::EmitsDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -980,7 +980,7 @@ namespace TAO
             CORBA::ComponentIR::PublishesDef_var,
             CORBA::ComponentIR::PublishesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1001,7 +1001,7 @@ namespace TAO
             CORBA::ComponentIR::ConsumesDef_var,
             CORBA::ComponentIR::ConsumesDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1022,7 +1022,7 @@ namespace TAO
             CORBA::ComponentIR::FactoryDef_var,
             CORBA::ComponentIR::FactoryDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };
@@ -1043,7 +1043,7 @@ namespace TAO
             CORBA::ComponentIR::FinderDef_var,
             CORBA::ComponentIR::FinderDef_out,
             TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>,
-            TAO::Any_Insert_Policy_Stream 
+            TAO::Any_Insert_Policy_Stream
           >
   {
   };

@@ -110,7 +110,7 @@ public:
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
-  /// destructor
+  /// Destructor
   virtual ~TAO_Protocols_Hooks (void);
 
   /// Initialize the protocols hooks instance.

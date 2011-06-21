@@ -8,7 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Notify_Tests, Supplier_Main, "$Id$")
+
 
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
@@ -232,7 +232,8 @@ Supplier_Main::parse_args (int argc, ACE_TCHAR *argv[])
     }
     else
     {
-      ACE_OS::fprintf(stderr, "Unrecognized argument: %s\n", argv[narg]);
+      ACE_OS::fprintf(stderr, "Unrecognized argument: %s\n",
+                      ACE_TEXT_ALWAYS_CHAR (argv[narg]));
       usage (stderr);
       result = -1;
     }

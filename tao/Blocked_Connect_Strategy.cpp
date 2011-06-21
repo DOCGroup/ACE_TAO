@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Connection_Handler.h"
 
@@ -18,14 +20,12 @@ TAO_Blocked_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
   if (timeout != 0)
     {
       // Blocking with a timeout
-      options.set (ACE_Synch_Options::USE_TIMEOUT,
-                   *timeout);
+      options.set (ACE_Synch_Options::USE_TIMEOUT, *timeout);
     }
   else
     {
       // Making it sure it is blocking.
-      options.set (0,
-                   ACE_Time_Value::zero);
+      options.set (0, ACE_Time_Value::zero);
     }
 }
 

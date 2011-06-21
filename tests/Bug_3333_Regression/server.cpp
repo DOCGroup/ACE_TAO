@@ -6,10 +6,6 @@
 #include "ace/SString.h"
 #include "tao/IORTable/IORTable.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 const ACE_TCHAR *ior_output_file2 = ACE_TEXT ("forward_forever.ior");
 
@@ -37,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

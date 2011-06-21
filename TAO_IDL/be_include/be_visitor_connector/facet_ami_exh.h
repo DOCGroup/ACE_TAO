@@ -30,17 +30,17 @@ class be_visitor_facet_ami_exh
   //
 public:
   be_visitor_facet_ami_exh (be_visitor_context *ctx);
-  
+
   ~be_visitor_facet_ami_exh (void);
-  
+
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
   virtual int visit_operation (be_operation *node);
-  
+
 protected:
   /// Common the this class and derived class.
   void init (bool for_impl);
-  
+
 protected:
   be_interface *iface_;
   be_interface *callback_iface_;
@@ -48,7 +48,7 @@ protected:
   const char *scope_name_;
   const char *iface_name_;
   const char *smart_scope_;
-  
+
 private:
   int gen_reply_handler_class (void);
   int gen_facet_executor_class (void);

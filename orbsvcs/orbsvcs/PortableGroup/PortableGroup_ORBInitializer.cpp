@@ -8,10 +8,6 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 
-ACE_RCSID (PortableGroup,
-           PortableGroup_ORBInitializer,
-           "$Id$")
-
 static const char pg_poa_factory_name[] = "TAO_GOA";
 static const ACE_TCHAR pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "TAO_GOA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");

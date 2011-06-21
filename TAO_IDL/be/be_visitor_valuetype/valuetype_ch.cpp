@@ -47,19 +47,19 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   int status = 0;
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   if (node->node_type () == AST_Decl::NT_eventtype)
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "class " << node->local_name () << "Consumer;" << be_nl
           << "typedef " << node->local_name () << "Consumer *"
           << node->local_name () << "Consumer_ptr;";
     }
 
   // Now generate the class definition.
-  *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
+  *os << be_nl_2 << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ();
 
   // Node valuetype inherits from other valuetypes (OMG 20.17.9)
@@ -167,40 +167,40 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt;
-      
+
   node->gen_stub_decls (os);
 
   if (is_an_amh_exception_holder)
     {
       // Generate the constructor and destructor.
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
-          << "{}" << be_nl << be_nl
+          << "{}" << be_nl_2
           << "virtual ~" << node->local_name () << " (void);";
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "static " << node->local_name () << "* "
       << "_downcast ( ::CORBA::ValueBase *v);" << be_nl
       << be_nl
-      << "// (TAO extensions or internals)" << be_nl
+      << "/// TAO extensions or internals" << be_nl
       << "static ::CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->local_name () << " *&new_object" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl
+      << node->local_name () << " *&new_object);" << be_uidt
+      << be_uidt_nl << be_nl
       << "virtual const char* "
       << "_tao_obv_repository_id (void) const;"
-      << be_nl << be_nl
+      << be_nl_2
       << "virtual void "
       << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
-      << be_nl << be_nl
+      << be_nl_2
       << "static const char* "
       << "_tao_obv_static_repository_id (void);";
 
   if (be_global->tc_support ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
     }
 
@@ -234,7 +234,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
@@ -257,7 +257,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (!is_an_amh_exception_holder)
     {
       *os << "virtual ~" << node->local_name () << " (void);"
-          << be_nl << be_nl;
+          << be_nl_2;
     }
 
   // Support for marshalling.
@@ -270,7 +270,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "virtual ::CORBA::Boolean "
           << "_tao_match_formal_type (ptrdiff_t ) const;" << be_nl;
     }
-    
+
   if (be_global->gen_ostream_operators ())
     {
       *os << "virtual std::ostream &_tao_stream_v (std::ostream &) const;"
@@ -324,7 +324,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
                   << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
-                  << be_nl << be_nl;
+                  << be_nl_2;
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &, TAO_ChunkInfo &);";
@@ -334,7 +334,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
                   << " (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;"
-                  << be_nl << be_nl;
+                  << be_nl_2;
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &, TAO_ChunkInfo &) = 0;";
@@ -392,7 +392,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   // Every operation is declared public and virtual in the client code.

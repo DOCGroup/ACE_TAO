@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
-ACE_RCSID (UNKNOWN_Exception, client, "$Id$")
-
 static const ACE_TCHAR *ior = ACE_TEXT("file://ior");
 static int shutdown_server = 1;
 

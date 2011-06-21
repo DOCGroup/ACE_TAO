@@ -19,10 +19,6 @@
 
 #include "ace/SString.h"
 
-ACE_RCSID (FT_FaultEventDescriptor,
-           FT_FaultEventDescriptor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor.

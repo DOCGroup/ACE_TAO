@@ -7,12 +7,6 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "ace/Auto_Event.h"
 
-
-ACE_RCSID (Two_Objects,
-           Second_i,
-           "$Id$")
-
-
 Second_i::Second_i (CORBA::ORB_ptr orb,
                     CORBA::ULong len, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),

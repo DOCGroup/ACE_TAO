@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Subclass of TAO_Default_Acceptor_Filter that populates mprofile and filters 
+ *  Subclass of TAO_Default_Acceptor_Filter that populates mprofile and filters
  *  mprofile with the endpoint policy in TAO_POA_Manager.
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
@@ -48,7 +48,7 @@ class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter
 public:
   TAO_Endpoint_Acceptor_Filter (const EndpointPolicy::EndpointList & eps);
 
-  /// Populate @a mprofile with endpoints match the POAManager endpoint 
+  /// Populate @a mprofile with endpoints match the POAManager endpoint
   /// policy.
   int fill_profile (const TAO::ObjectKey &object_key,
                     TAO_MProfile &mprofile,

@@ -10,12 +10,6 @@
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/TSS_Resources.h"
 
-
-ACE_RCSID (IFR_Service,
-           IRObject_i,
-           "$Id$")
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)

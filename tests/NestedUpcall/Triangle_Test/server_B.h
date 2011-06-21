@@ -1,22 +1,18 @@
-// -*- c++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    server_B.h
-//
-// = DESCRIPTION
-//      This class implements a simple server for the
-//      Nested Upcalls - Triangle test
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server_B.h
+ *
+ *  $Id$
+ *
+ *    This class implements a simple server for the
+ *    Nested Upcalls - Triangle test
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #ifndef _TRIANGLE_TEST_OBJECT_B_SERVER_H
 #define _TRIANGLE_TEST_OBJECT_B_SERVER_H
@@ -31,47 +27,49 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Object_B_i.h"
 
+/**
+ * @class Object_B_Server
+ *
+ * @brief This is the server for the object A in the test.
+ *
+ * See the README file for more information.
+ */
 class Object_B_Server
 {
-  // = TITLE
-  //   This is the server for the object A in the test.
-  //
-  // = DESCRIPTION
-  //   See the README file for more information.
 
 public:
 
+  /// Default constructor
   Object_B_Server (void);
-  // Default constructor
 
+  /// Destructor
   ~Object_B_Server (void);
-  // Destructor
 
+  /// Initialize the NestedUpCalls_Server state - parsing arguments and ...
   int init (int argc,
             ACE_TCHAR **argv);
-  // Initialize the NestedUpCalls_Server state - parsing arguments and ...
 
+  /// Run the orb
   int run (void);
-  // Run the orb
 
 private:
+  /// Parses the commandline arguments.
   int parse_args (void);
-  // Parses the commandline arguments.
 
+  /// File to output the IOR of the object A.
   FILE* ior_output_file_;
-  // File to output the IOR of the object A.
 
+  /// The ORB manager
   TAO_ORB_Manager orb_manager_;
-  // The ORB manager
 
+  /// Implementation object of the NestedUpCalls reactor.
   Object_B_i object_B_i_;
-  // Implementation object of the NestedUpCalls reactor.
 
+  /// Number of commandline arguments.
   int argc_;
-  // Number of commandline arguments.
 
+  /// commandline arguments.
   ACE_TCHAR **argv_;
-  // commandline arguments.
 };
 
 #endif /* _TRIANGLE_TEST_OBJECT_B_SERVER_H */

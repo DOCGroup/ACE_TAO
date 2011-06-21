@@ -4,9 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(ConnectionSpinning,
-          client, "$Id$")
-
 static const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
 int
@@ -31,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    root.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for the Root node. This is a generic visitor.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    root.cpp
+ *
+ *  $Id$
+ *
+ *  Visitor generating code for the Root node. This is a generic visitor.
+ *
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 // Generic Root visitor
 be_visitor_root::be_visitor_root (be_visitor_context *ctx)
@@ -66,13 +63,6 @@ be_visitor_root::visit_module (be_module *node)
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_module_cdr_op visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
-    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
-      {
-        be_visitor_module_serializer_op visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

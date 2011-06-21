@@ -5,8 +5,6 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Nested_Event_Loop, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 
 int
@@ -31,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

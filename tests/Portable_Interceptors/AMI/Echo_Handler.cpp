@@ -7,12 +7,6 @@
  */
 #include "Echo_Handler.h"
 
-
-ACE_RCSID (AMI,
-           Echo_Handler,
-           "$Id$")
-
-
 Echo_Handler::Echo_Handler(void)
   : replies_ (0)
 {

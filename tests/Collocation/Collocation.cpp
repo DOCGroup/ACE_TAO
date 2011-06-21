@@ -3,8 +3,6 @@
 #include "Collocation_Tester.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Collocation, main, "$Id$")
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try

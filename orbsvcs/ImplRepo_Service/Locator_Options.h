@@ -145,7 +145,7 @@ private:
   /// The persistent XML file name.
   ACE_TString persist_file_name_;
 
-  /// Should check the server address and remove previous server if 
+  /// Should check the server address and remove previous server if
   /// the address is reused.
   bool unregister_if_address_reused_;
 };

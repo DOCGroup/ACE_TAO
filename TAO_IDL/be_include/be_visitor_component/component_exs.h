@@ -17,23 +17,18 @@
 #ifndef _BE_COMPONENT_COMPONENT_EXS_H_
 #define _BE_COMPONENT_COMPONENT_EXS_H_
 
+/**
+ * This is a concrete visitor to generate the exec
+ * impl for component.
+ */
 class be_visitor_component_exs
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_component_exs
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate the exec
-  //   impl for component.
-  //
-  //
 public:
   be_visitor_component_exs (be_visitor_context *ctx);
-  
+
   ~be_visitor_component_exs (void);
-  
+
   virtual int visit_component (be_component *node);
 };
 
@@ -48,7 +43,7 @@ class Component_Exec_Op_Attr_Generator
 {
 public:
   Component_Exec_Op_Attr_Generator (be_visitor_scope * visitor);
-  
+
   virtual int emit (be_interface * derived_interface,
                     TAO_OutStream * os,
                     be_interface * base_interface);
@@ -56,6 +51,6 @@ public:
 private:
   be_visitor_scope * visitor_;
 };
-                     
+
 #endif /* _BE_COMPONENT_COMPONENT_EXS_H_ */
 

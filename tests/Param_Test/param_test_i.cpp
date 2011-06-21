@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    param_test_i.cpp
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    param_test_i.cpp
+ *
+ *  $Id$
+ *
+ *  @author Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #include "param_test_i.h"
 
@@ -19,10 +16,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (Param_Test,
-           param_test_i,
-           "$Id$")
 
 // ********* class Coffee_i ****************
 // Constructor

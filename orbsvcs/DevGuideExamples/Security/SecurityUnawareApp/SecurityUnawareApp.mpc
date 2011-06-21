@@ -8,6 +8,8 @@ project(*Server): taoexe, portableserver, security, ssl {
 }
 
 project(*Client): taoexe, security, ssl {
+  after += *Server
+
   Source_Files {
     MessengerC.cpp
     MessengerClient.cpp

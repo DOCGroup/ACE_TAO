@@ -2,8 +2,6 @@
 
 #include "UDP_i.h"
 
-ACE_RCSID(UDP, UDP_i, "")
-
 // Constructor
 UDP_i::UDP_i (CORBA::ORB_ptr o) :
   orb_(CORBA::ORB::_duplicate (o))

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Bug_1495_Regression
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//   Simple IDL file to test regression of bug 1495
-//
-// = AUTHORS
-//   Will Otte <wotte@dre.vanderbilt.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  $Id$
+ *
+ * Simple IDL file to test regression of bug 1495
+ *
+ *
+ *  @author Will Otte <wotte@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 module Bug1495_Regression
 {

@@ -45,7 +45,7 @@ public:
   /// TAO_GIOP_OBJECT_FORWARD
   CORBA::Object_var forward_location_var;
 
-  /// Stype of Locate status message
+  /// Type of Locate status message
   GIOP::LocateStatusType status;
 };
 

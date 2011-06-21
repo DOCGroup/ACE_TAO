@@ -4,11 +4,6 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "test_i.h"
 
-ACE_RCSID(Recursive_ORBInitializer,
-          server,
-          "$Id$")
-
-
 int test_orb (CORBA::ORB_ptr orb)
 {
   int errors = 0;

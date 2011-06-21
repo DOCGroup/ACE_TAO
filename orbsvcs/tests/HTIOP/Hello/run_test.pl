@@ -49,7 +49,7 @@ foreach $i (@ARGV) {
     }
 }
 
-$NS = $ns_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service",
+$NS = $ns_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                   "-ORBSvcConf $ns_service_srv_conf -ORBEndpoint \"iiop://;".
                                   "htiop://$host:$name_port\" -o $ns_service_ns_ior");
 

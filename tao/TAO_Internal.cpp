@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "tao/TAO_Internal.h"
@@ -272,7 +273,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
   ACE_ARGV copyargv (argc, argv, true, true);
 
   // Adjust to proper type
-  int tmpargc = argc;
+  int tmpargc = copyargv.argc (); // use copied count, not original
   ACE_Argv_Type_Converter cvtargv (tmpargc, copyargv.argv());
 
   tmpargc = cvtargv.get_argc ();
@@ -353,7 +354,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
                       ACE_TEXT ("TAO (%P|%t) - process-wide service ")
                       ACE_TEXT ("configuration context had %d failed ")
                       ACE_TEXT ("directives\n"), status));
-        }          
+        }
     }
 
   if (TAO_debug_level > 2)
@@ -515,7 +516,7 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
                       ACE_TEXT ("TAO (%P|%t) - ORB-specific service ")
                       ACE_TEXT ("configuration context had %d failed ")
                       ACE_TEXT ("directives\n"), status));
-        }          
+        }
     }
 
 
@@ -959,12 +960,8 @@ namespace
       {
         TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
 
-        char * const value = ACE_OS::getenv ("TAO_ORB_DEBUG");
-
-        if (value != 0)
+        if (TAO_debug_level != 0)
           {
-            TAO_debug_level = ACE_OS::atoi (value);
-
             if (TAO_debug_level <= 0)
               {
                 TAO_debug_level = 1;

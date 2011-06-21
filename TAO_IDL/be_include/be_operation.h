@@ -51,10 +51,10 @@ public:
 
   /// Insert an exception at the head of the list.
   int be_insert_exception (AST_Exception *ex);
-  
+
   bool is_sendc_ami (void) const;
   void is_sendc_ami (bool val);
-  
+
   bool is_excep_ami (void) const;
   void is_excep_ami (bool val);
 

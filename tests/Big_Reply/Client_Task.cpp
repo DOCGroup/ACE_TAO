@@ -4,7 +4,7 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Muxing, Client_Task, "$Id$")
+
 
 Client_Task::Client_Task (Test::Big_Reply_ptr reply_gen,
                           int event_count,

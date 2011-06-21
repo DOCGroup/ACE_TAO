@@ -7,8 +7,6 @@
 #include "ace/Task.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Priority_Inversion_With_Bands, client, "$Id$")
-
 static const ACE_TCHAR *ior = ACE_TEXT("file://ior_1");
 static int iterations = 12;
 static CORBA::ULong work = 2;
@@ -56,7 +54,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

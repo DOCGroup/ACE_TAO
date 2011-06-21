@@ -1,13 +1,10 @@
 // $Id$
 
 #include "Echo_Caller.h"
-#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "Server_Thread_Pool.h"
 #include "ORB_Task.h"
-
-ACE_RCSID(Bug_1270_Regression, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -42,9 +39,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager mymanager;
       Thread_Pool callback_pool (orb.in (), &mymanager, 10);
 
-      TAO::Utils::Servant_Var<Echo_Caller> impl;
+      PortableServer::ServantBase_var impl;
       {
-        Echo_Caller * tmp;
+        Echo_Caller * tmp = 0;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -125,6 +122,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }

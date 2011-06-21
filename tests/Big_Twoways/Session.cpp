@@ -4,8 +4,6 @@
 #include "Session.h"
 #include "tao/debug.h"
 
-ACE_RCSID(Big_Oneways, Session, "$Id$")
-
 Session::Session (Test::Session_Control_ptr control,
                   CORBA::ULong payload_size,
                   CORBA::ULong thread_count,

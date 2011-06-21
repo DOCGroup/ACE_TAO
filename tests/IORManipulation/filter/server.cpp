@@ -4,10 +4,6 @@
 #include "tao/IORManipulation/IORManip_IIOP_Filter.h"
 #include "tao/Stub.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 class Filter_Localhost: public TAO_IORManip_IIOP_Filter
 {
 public:

@@ -9,10 +9,6 @@
 #include "tao/Stub.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 
-ACE_RCSID (FtRtEvent,
-           PushSupplier,
-           "$Id$")
-
 int
 PushSupplier_impl::ReactorTask::svc (void)
 {

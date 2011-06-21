@@ -94,16 +94,16 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       this->ctx_->tdef (tmp);
     }
 
-  *os << be_nl << be_nl;
-  
+  *os << be_nl_2;
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
 
   os->gen_ifdef_macro (node->flat_name ());
 
-  *os << be_nl << be_nl;
-  
+  *os << be_nl_2;
+
   /// If we are using std::vector, we won't be using _vars
   /// and _outs. They may get redefined and reinstated later.
   if (!be_global->alt_mapping () || !node->unbounded ())
@@ -135,19 +135,19 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                              ACE_TEXT ("buffer type visit failed\n")),
                             -1);
         }
-        
+
       *os << "> " << node->local_name () << ";";
-      
+
       os->gen_endif ();
       node->cli_hdr_gen (true);
       return 0;
     }
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "class " << be_global->stub_export_macro () << " "
       << node->local_name () << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
-      
+
   int status =
     node->gen_base_class_name (os,
                                "",
@@ -211,7 +211,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       *os << "* buffer, " << be_nl
           << "::CORBA::Boolean release = false);" << be_uidt;
   }
-  
+
   *os << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
@@ -219,14 +219,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   if (be_global->alt_mapping () && node->unbounded ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "virtual ::CORBA::ULong length (void) const;"
           << be_nl
           << "virtual void length ( ::CORBA::ULong);"
-          << be_nl << be_nl
+          << be_nl_2
           << "virtual ::CORBA::ULong maximum (void) const;";
     }
-    
+
   *os << be_nl;
 
   node->gen_stub_decls (os);
@@ -259,7 +259,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       && node->unbounded ()
       && !be_global->alt_mapping ())
     {
-      *os << be_nl << be_nl
+      *os << be_nl_2
           << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
           << node->local_name () << " (" << be_idt << be_idt_nl
           << "::CORBA::ULong length," << be_nl
@@ -285,7 +285,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl << be_nl;
+  *os << be_nl_2;
 
     AST_Type::SIZE_TYPE st = elem->size_type ();
 
@@ -299,7 +299,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
         << ">" << be_uidt_nl
         << node->local_name () << "_var;" << be_uidt;
 
-    *os << be_nl << be_nl
+    *os << be_nl_2
         << "typedef" << be_idt_nl
         << "::TAO_Seq_Out_T<" << be_idt << be_idt_nl
         << node->local_name () << be_uidt_nl

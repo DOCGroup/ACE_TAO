@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "tao/Messaging/Messaging_Loader.h"

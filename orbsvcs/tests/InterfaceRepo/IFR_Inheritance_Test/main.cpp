@@ -6,10 +6,6 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 
-ACE_RCSID (IFR_Inheritance_Test,
-           main,
-           "$Id$")
-
 void printContents (const CORBA::ContainedSeq& cont)
 {
   try

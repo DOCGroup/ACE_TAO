@@ -6,8 +6,6 @@
 #include "Server_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Callback, Server_i, "$Id$")
-
 void
 Server_i::set_callback (Test::Callback_ptr callback)
 {

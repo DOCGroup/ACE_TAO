@@ -37,7 +37,7 @@ Quoter_Stock_i::get_price_and_names (CORBA::String_out symbol,
 {
   symbol = CORBA::string_dup (this->symbol_.c_str ());
   full_name = CORBA::string_dup (this->full_name_.c_str ());
-  
+
   return this->price_;
 }
 

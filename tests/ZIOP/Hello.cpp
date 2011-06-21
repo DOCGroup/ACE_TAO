@@ -3,8 +3,6 @@
 //
 #include "Hello.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
-
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -36,17 +34,17 @@ Hello::get_big_reply ()
   return reply_mesg._retn ();
 }
 
-void 
+void
 Hello::big_request (const ::Test::Octet_Seq & octet_in)
 {
   if (octet_in.length () > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("Server side BLOB received\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_ERROR, 
+      ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT("Error recieving BLOB on server\n")));
     }
 }

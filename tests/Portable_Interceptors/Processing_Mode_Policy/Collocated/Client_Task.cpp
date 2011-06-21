@@ -1,12 +1,8 @@
-//
 // $Id$
-//
 
 #include "Client_Task.h"
 #include "testC.h"
 #include "interceptors.h"
-
-ACE_RCSID(Muxing, Client_Task, "$Id$")
 
 Client_Task::Client_Task (const ACE_TCHAR *ior,
                           CORBA::ORB_ptr corb,

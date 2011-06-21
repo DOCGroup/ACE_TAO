@@ -107,7 +107,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
                              ACE_TEXT ("Error parsing nested name\n")),
                             -1);
         }
-        
+
       be_util::gen_nested_namespace_begin (&os, module);
 
       os << "::CORBA::TypeCode_ptr const _tc_"
@@ -197,7 +197,7 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
                              ACE_TEXT ("Error parsing nested name\n")),
                             -1);
         }
-        
+
       be_util::gen_nested_namespace_begin (&os, module);
 
       os << "extern ::CORBA::TypeCode_ptr const _tc_"
@@ -211,7 +211,7 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
       os << "extern ::CORBA::TypeCode_ptr const "
          << node->tc_name () << ";" << be_uidt;
     }
-    
+
   os << be_nl;
 
   return 0;
@@ -292,9 +292,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -402,7 +402,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
       if (i < ndims - 1)
         {
-          os << be_nl << be_nl;
+          os << be_nl_2;
         }
     }
 
@@ -455,9 +455,9 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -528,7 +528,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   os << be_global->core_versioning_end ();
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
-     << be_nl << be_nl;
+     << be_nl_2;
 
   return 0; // this->gen_typecode_ptr (node);
 }
@@ -550,9 +550,9 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl << be_nl
+  os << be_nl_2
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
@@ -587,7 +587,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
   os << be_global->core_versioning_end ();
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
-     << be_nl << be_nl;
+     << be_nl_2;
 
   return 0;
 }

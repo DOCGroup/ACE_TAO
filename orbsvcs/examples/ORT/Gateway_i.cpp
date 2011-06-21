@@ -15,10 +15,6 @@
 #include "tao/ORB.h"
 #include "tao/LocalObject.h"
 
-ACE_RCSID (ORT,
-           Gateway_i,
-           "$Id$")
-
 Gateway_i::
 Gateway_i (CORBA::ORB_ptr orb,
            PortableServer::Current_ptr poa_current)

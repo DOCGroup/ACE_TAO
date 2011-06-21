@@ -8,10 +8,6 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
-ACE_RCSID (EC_Tests,
-           Gateway,
-           "$Id$")
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

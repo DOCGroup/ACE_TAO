@@ -83,7 +83,7 @@ class UTL_String;
 class TAO_IDL_FE_Export UTL_StrList : public UTL_List
 {
 public:
-  UTL_StrList (UTL_String *s, 
+  UTL_StrList (UTL_String *s,
                UTL_StrList *cdr);
 
   virtual ~UTL_StrList (void);

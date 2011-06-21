@@ -8,10 +8,6 @@
 
 #include "testS.h"
 
-ACE_RCSID (PICurrent,
-           test,
-           "test.cpp,v 1.7 2003/11/01 11:15:11 dhinton Exp")
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)

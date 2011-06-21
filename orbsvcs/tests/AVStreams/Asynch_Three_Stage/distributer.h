@@ -1,39 +1,38 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage
-//
-// = FILENAME
-//    distributer.h
-//
-// = DESCRIPTION
-//    Process to receive data from the sender and send it to the
-//    receiver.
-//
-// = AUTHOR
-//    Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    distributer.h
+ *
+ *  $Id$
+ *
+ *  Process to receive data from the sender and send it to the
+ *  receiver.
+ *
+ *
+ *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Connection_Manager.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
+/**
+ * @class Distributer_Receiver_Callback
+ *
+ * @brief Application defined callback object.
+ *
+ * AVStreams calls this class when data shows up from a sender.
+ */
 class Distributer_Receiver_Callback : public TAO_AV_Callback
 {
-  // = TITLE
-  //    Application defined callback object.
-  //
-  // = DESCRIPTION
-  //    AVStreams calls this class when data shows up from a sender.
 public:
 
+  /// Constructor.
   Distributer_Receiver_Callback (void);
-  // Constructor.
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -46,45 +45,50 @@ public:
   int handle_destroy (void);
 
 private:
+  /// Count of the frames passing through us.
   int frame_count_;
-  // Count of the frames passing through us.
 };
 
+/**
+ * @class Distributer_Receiver_StreamEndPoint
+ *
+ * @brief Application defined stream endpoint object.
+ *
+ * AVStreams calls this class during connection setup.
+ */
 class Distributer_Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
-  // = TITLE
-  //    Application defined stream endpoint object.
-  //
-  // = DESCRIPTION
-  //    AVStreams calls this class during connection setup.
 public:
   // Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 
 private:
+  /// Receiver application callback.
   Distributer_Receiver_Callback callback_;
-  // Receiver application callback.
 };
 
+/**
+ * @class Distributer_Sender_StreamEndPoint
+ *
+ * @brief Defines a sender stream endpoint.
+ */
 class Distributer_Sender_StreamEndPoint : public TAO_Client_StreamEndPoint
 {
-  // = TITLE
-  //    Defines a sender stream endpoint.
 public:
+  /// Create the application callback and return its handle to
+  /// AVStreams for further application callbacks.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-  // Create the application callback and return its handle to
-  // AVStreams for further application callbacks.
 
+  /// Set protocol object corresponding to the transport protocol
+  /// chosen.
   int set_protocol_object (const char *flowname,
                            TAO_AV_Protocol_Object *object);
-  // Set protocol object corresponding to the transport protocol
-  // chosen.
 
 protected:
+  /// Application callback.
   TAO_AV_Callback callback_;
-  // Application callback.
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A
@@ -99,58 +103,60 @@ typedef TAO_AV_Endpoint_Reactive_Strategy_B
            AV_Null_MediaCtrl>
         RECEIVER_ENDPOINT_STRATEGY;
 
+/**
+ * @class Distributer
+ *
+ * @brief Distributer Application.
+ *
+ * The distributer is the intermediate receiver that receives
+ * data from the sender and forwards to a receiver.
+ */
 class Distributer
 {
-  // = TITLE
-  //    Distributer Application.
-  //
-  // = DESCRIPTION
-  //    The distributer is the intermediate receiver that receives
-  //    data from the sender and forwards to a receiver.
 public:
+  /// Constructor
   Distributer (void);
-  // Constructor
 
+  /// Destructor.
   ~Distributer (void);
-  // Destructor.
 
+  /// Initialize data components.
   int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize data components.
 
+  /// Parse args.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse args.
 
   // Flag to know when we are done.
   int done (void) const;
   void done (int);
 
+  /// Accessor to connection manager.
   Connection_Manager &connection_manager (void);
-  // Accessor to connection manager.
 
 protected:
+  /// Connection manager.
   Connection_Manager connection_manager_;
-  // Connection manager.
 
+  /// The sender endpoint strategy.
   SENDER_ENDPOINT_STRATEGY sender_endpoint_strategy_;
-  // The sender endpoint strategy.
 
+  /// The receiver endpoint strategy.
   RECEIVER_ENDPOINT_STRATEGY receiver_endpoint_strategy_;
-  // The receiver endpoint strategy.
 
+  /// The distributer receiver multimedia device
   TAO_MMDevice* distributer_receiver_mmdevice_;
-  // The distributer receiver multimedia device
 
+  /// The distributer receiver multimedia device
   TAO_MMDevice* distributer_sender_mmdevice_;
-  // The distributer receiver multimedia device
 
+  /// The name of the sender to connect to.
   ACE_CString sender_name_;
-  // The name of the sender to connect to.
 
+  /// Our name.
   ACE_CString distributer_name_;
-  // Our name.
 
+  /// Flag to know when we are done.
   int done_;
-  // Flag to know when we are done.
 
   ACE_TString addr_file_;
 };

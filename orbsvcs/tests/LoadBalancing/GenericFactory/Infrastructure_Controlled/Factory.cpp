@@ -1,11 +1,9 @@
+// $Id$
+
 #include "Factory.h"
 #include "Simple.h"
 
 #include "TestC.h"
-
-ACE_RCSID (Infrastructure_Controlled,
-           Factory,
-           "$Id$")
 
 Factory::Factory (void)
 {

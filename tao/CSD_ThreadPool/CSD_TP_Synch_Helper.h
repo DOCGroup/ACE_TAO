@@ -79,9 +79,6 @@ namespace TAO
       /// Thread lock type
       typedef TAO_SYNCH_MUTEX LockType;
 
-      /// Thread guard type
-      typedef ACE_Guard<LockType> GuardType;
-
       /// Thread condition type
       typedef TAO_Condition<LockType> ConditionType;
 

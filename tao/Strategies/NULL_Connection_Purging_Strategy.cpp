@@ -3,8 +3,6 @@
 #include "tao/Strategies/NULL_Connection_Purging_Strategy.h"
 #include "tao/Transport.h"
 
-ACE_RCSID(tao, NULL_Connection_Purging_Strategy, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_NULL_Connection_Purging_Strategy::TAO_NULL_Connection_Purging_Strategy (
@@ -14,7 +12,7 @@ TAO_NULL_Connection_Purging_Strategy::TAO_NULL_Connection_Purging_Strategy (
 }
 
 void
-TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Transport*)
+TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Transport&)
 {
 }
 

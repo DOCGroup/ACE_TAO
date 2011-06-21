@@ -43,18 +43,18 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
   // Generate the _var and _out typedefs.
   node->gen_common_varout (os);
 
-  *os << be_nl << be_nl;
-  
+  *os << be_nl_2;
+
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl
+  *os << be_nl_2
       << "struct " << be_global->stub_export_macro () << " "
       << node->local_name () << be_nl
       << "{" << be_idt;
 
   node->gen_stub_decls (os);
-  
+
   *os << be_nl;
 
   // Generate code for field members.

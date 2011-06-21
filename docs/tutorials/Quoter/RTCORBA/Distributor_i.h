@@ -48,20 +48,20 @@ public:
   virtual ~StockDistributor_i (void);
 
   /**
-   * Insert StockNameConsumer object and its priority into the StockDistributor 
+   * Insert StockNameConsumer object and its priority into the StockDistributor
    * object's subscribers' map.
    *
-   * @param c The StockNameConsumer object to be inserted into the StockDistributor 
+   * @param c The StockNameConsumer object to be inserted into the StockDistributor
    * object's subscribers' map.
    * @param priority The priority of the StockNameConsumer object.
    * @return A Cookie object that records this subscription.
    */
-  virtual ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c, 
+  virtual ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c,
                                                 ::RTCORBA::Priority priority);
 
   /**
    * Erase the StockNameConsumer object from the StockDistributor object's subscribers' map.
-   * 
+   *
    * @param ck The Cookie object that records the subscription.
    * @param The reference of the StockNameConsumer object that has been erased.
    */
@@ -89,7 +89,7 @@ public:
   virtual void notification_rate (::CORBA::Long notification_rate);
 
   /**
-   * Set the active state of the StockDistributor object to true and create a thread 
+   * Set the active state of the StockDistributor object to true and create a thread
    * to publish the stock information to the Stock Broker clients.
    */
   virtual void start (void);
@@ -98,14 +98,14 @@ public:
    * Set the active state of StockDistributor object to false.
    */
   virtual void stop (void);
-  
+
   virtual void shutdown ();
-  
+
   /// Callback for stock database.
   void operator () (std::vector <std::string> &stocks);
-  
+
   int svn (void);
-  
+
   /// The map that stores the subscribed StockNameConsumer object.
   typedef std::map <std::string,
                     std::pair <Stock::StockNameConsumer_var,
@@ -122,7 +122,7 @@ private:
 
   /// The active state of the  StockDistributor object.
   bool active_;
-  
+
   /// Cache a copy of the RTCORBA::POA.
   RTPortableServer::POA_var rt_poa_;
 
@@ -164,7 +164,7 @@ class  StockDistributorHome_i
 public:
   /**
    * Constructor.
-   * Register the necessary factories and mappings with the specified orb and 
+   * Register the necessary factories and mappings with the specified orb and
    * Create a new instance of the StockDistributor object.
    *
    * @param orb
@@ -176,23 +176,23 @@ public:
 
   /**
    * Return the StockDistributor object created by the Constructor.
-   * 
+   *
    * @return The StockDistributor object created by the Constructor.
    */
   virtual ::Stock::StockDistributor_ptr create ();
-  
+
   virtual int handle_signal (int signum,
                              siginfo_t * = 0,
                              ucontext_t * = 0);
 private:
   void create_distributor (void);
-  
+
   /// Cached ORB used to shut down the system
   CORBA::ORB_var orb_;
-  
+
   /// Cached POA created during object construction
   RTPortableServer::POA_var rt_poa_;
-  
+
   /// The StockDistributor servant created by its home.
   PortableServer::ObjectId_var dist_id_;
 };

@@ -34,7 +34,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO UIPMC_Acceptor concrete call defination
+// TAO UIPMC_Acceptor concrete call definition
 
 /**
  * @class TAO_UIPMC_Acceptor

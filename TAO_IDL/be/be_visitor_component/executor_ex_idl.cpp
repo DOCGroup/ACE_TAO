@@ -29,7 +29,7 @@ be_visitor_executor_ex_idl::visit_component (
   be_component *node)
 {
   node_ = node;
-  
+
   AST_Component *base = node->base_component ();
 
   os_ << be_nl
@@ -71,7 +71,7 @@ be_visitor_executor_ex_idl::visit_component (
 
   os_ << be_uidt_nl
       << "};";
-      
+
   return 0;
 }
 
@@ -87,7 +87,7 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
   AST_Decl::NodeType snt = this->node_->node_type ();
   AST_Decl::NodeType ant =
     ScopeAsDecl (node->defined_in ())->node_type ();
-    
+
   /// For now, we want porttype attributes generated only for
   /// connectors.
   if (snt == AST_Decl::NT_component
@@ -95,7 +95,7 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
     {
       return 0;
     }
-  
+
   bool rd_only = node->readonly ();
 
   // Keep output statements separate because of side effects.
@@ -181,11 +181,11 @@ be_visitor_executor_ex_idl::visit_provides (
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  
+
   os_ << be_nl
       << global << sname << "::CCM_" << lname << " get_"
       << port_name << " ();";
-      
+
   return 0;
 }
 
@@ -200,7 +200,7 @@ be_visitor_executor_ex_idl::visit_consumes (
       << " (in ::"
       << IdentifierHelper::orig_sn (impl->name ()).c_str ()
       << " e);";
-      
+
   return 0;
 }
 

@@ -7,10 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
-ACE_RCSID (EndpointPolicy,
-           EndpointPolicy_ORBInitializer,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

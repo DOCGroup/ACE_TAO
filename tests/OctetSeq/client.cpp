@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 #include "ace/Get_Opt.h"
@@ -7,11 +8,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(OctetSeq, client, "$Id$")
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
-ACE_RANDR_TYPE seed = 0;
+unsigned int seed = 0;
 int verbose = 0;
 
 int
@@ -51,7 +50,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -95,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (seed == 0)
         {
-          seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0));
+          seed = static_cast<unsigned int> (ACE_OS::time (0));
           ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", seed));
         }
 
@@ -105,20 +104,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for (int i = 0; i != niterations; ++i)
         {
-          CORBA::ULong r = ACE_OS::rand_r (seed);
+          CORBA::ULong r = ACE_OS::rand_r (&seed);
           Test::Index idx = (r % nelements);
 
           if (i % 100 == 0)
             {
               for (int j = 0; j != nelements; ++j)
                 {
-                  CORBA::ULong r = ACE_OS::rand_r (seed);
+                  CORBA::ULong r = ACE_OS::rand_r (&seed);
                   CORBA::ULong l = r % maxsize;
                   elements[j].length (l);
                   CORBA::Double token = 0;
                   for (CORBA::ULong k = 0; k != l; ++k)
                     {
-                      r = ACE_OS::rand_r (seed);
+                      r = ACE_OS::rand_r (&seed);
                       elements[j][k] = (r % 128);
                       token += r;
                     }
@@ -128,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                token,
                                returned_token);
 
-                  if (token != returned_token)
+                  if (!ACE::is_equal (token, returned_token))
                     {
                       ACE_ERROR ((LM_ERROR,
                                   "ERROR - invalid token <%f> returned,"

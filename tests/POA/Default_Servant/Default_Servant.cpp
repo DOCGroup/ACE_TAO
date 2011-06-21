@@ -1,21 +1,18 @@
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/Default_Servant
-//
-// = FILENAME
-//     Default_Servant.cpp
-//
-// = DESCRIPTION
-//     This program tests the behavior of POA::id_to_servant() and
-//     POA::reference_to_servant() with the use of default servants.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//=========================================================================
+//=============================================================================
+/**
+ *  @file     Default_Servant.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the behavior of POA::id_to_servant() and
+ *   POA::reference_to_servant() with the use of default servants.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "ace/SString.h"
@@ -121,10 +118,10 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa)
 
   PortableServer::ServantBase_var servant =
     root_poa->reference_to_servant (object.in ());
-  expected_refcount++;
+  ++expected_refcount;
 
   root_poa->deactivate_object (id.in ());
-  expected_refcount--;
+  --expected_refcount;
 
   CORBA::ULong refcount =
     test._refcount_value ();

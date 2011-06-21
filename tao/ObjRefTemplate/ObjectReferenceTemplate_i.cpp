@@ -1,12 +1,10 @@
+// $Id$
+
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (ORT,
-           ObjectReferenceTemplate_i,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

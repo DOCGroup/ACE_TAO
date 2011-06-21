@@ -89,10 +89,10 @@ $cltarget->DeleteFile($nsiorbase);
 # Programs that are run
 
 $NS = $nstarget->CreateProcess (
-    "../../orbsvcs/Naming_Service/Naming_Service",
+    "../../orbsvcs/Naming_Service/tao_cosnaming",
     "-o $nstarget_nsiorfile");
 $LC = $lctarget->CreateProcess (
-    "../../orbsvcs/LifeCycle_Service/LifeCycle_Service",
+    "../../orbsvcs/LifeCycle_Service/tao_coslifecycle",
     "$debug -ORBInitRef NameService=file://$lctarget_nsiorfile");
 
 $SV = $svtarget->CreateProcess (
@@ -112,7 +112,7 @@ $CL = $cltarget->CreateProcess (
 $ns_status = $NS->Spawn ();
 
 if ($ns_status != 0) {
-    print STDERR "ERROR: Naming_Service returned $ns_status\n";
+    print STDERR "ERROR: tao_cosnaming returned $ns_status\n";
     exit 1;
 }
 
@@ -156,7 +156,7 @@ if ($cltarget->PutFile ($nsiorbase) == -1) {
 $lc_status = $LC->Spawn ();
 
 if ($lc_status != 0) {
-    print STDERR "ERROR: LifeCycle_Service returned $lc_status\n";
+    print STDERR "ERROR: tao_coslifecycle returned $lc_status\n";
     $NS->Kill (); $NS->TimedWait (1);
     exit 1;
 }
@@ -234,14 +234,14 @@ if ($sv_status != 0) {
 $lc_status = $LC->TerminateWaitKill ($lctarget->ProcessStopWaitInterval());
 
 if ($lc_status != 0) {
-    print STDERR "ERROR: LifeCycle_Service returned $lc_status\n";
+    print STDERR "ERROR: tao_coslifecycle returned $lc_status\n";
     $status = 1;
 }
 
 $ns_status = $NS->TerminateWaitKill ($nstarget->ProcessStopWaitInterval());
 
 if ($ns_status != 0) {
-    print STDERR "ERROR: Naming_Service returned $ns_status\n";
+    print STDERR "ERROR: tao_cosnaming returned $ns_status\n";
     $status = 1;
 }
 

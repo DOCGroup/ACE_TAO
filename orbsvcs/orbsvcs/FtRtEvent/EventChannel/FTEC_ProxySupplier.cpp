@@ -5,10 +5,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 
-ACE_RCSID (EventChannel,
-           TAO_FTEC_ProxyPushSupplier,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const TAO_FTEC_ProxyPushSupplier::RollbackOperation
@@ -66,7 +62,7 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
   try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
 
-    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
+    ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
     svc->replicate_request(update,
       &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_supplier);
@@ -88,7 +84,7 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier (void)
   Inherited::disconnect_push_supplier();
   FTRTEC::Replication_Service *svc = FTRTEC::Replication_Service::instance();
 
-  ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
+  ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
   svc->replicate_request(update, 0);
 }
@@ -108,7 +104,7 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection (void)
   try
   {
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
+    ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
     svc->replicate_request(update,
       &FtRtecEventChannelAdmin::EventChannelFacade::resume_push_supplier);
@@ -134,7 +130,7 @@ void TAO_FTEC_ProxyPushSupplier::resume_connection (void)
   try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
 
-    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
+    ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
 
     svc->replicate_request(update,
       &FtRtecEventChannelAdmin::EventChannelFacade::suspend_push_supplier);

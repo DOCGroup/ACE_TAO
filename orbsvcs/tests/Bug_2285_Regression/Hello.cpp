@@ -3,7 +3,7 @@
 //
 #include "Hello.h"
 
-ACE_RCSID(Hello, Hello, "$Id$")
+
 
 CORBA::Boolean
 Hello::ids_differ_ = 1;

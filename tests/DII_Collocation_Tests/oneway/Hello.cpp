@@ -8,8 +8,6 @@
 // Force static build to load the DII_Arguments_Converter service.
 #include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
 
-ACE_RCSID(DII_Collocation_Tests, Hello, "$Id$")
-
 extern CORBA::Boolean debug;
 extern char TEST_STR[];
 extern CORBA::Long TEST_BASIC_VALUE;

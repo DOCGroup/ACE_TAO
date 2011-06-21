@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 // $Id$
-// 
+//
 
 #ifndef LOG_WALKER_THREAD_H
 #define LOG_WALKER_THREAD_H
@@ -27,6 +27,7 @@ public:
   void add_invocation (Invocation *);
 
   PeerProcess *incoming (void) const;
+  void handle_request (void);
   void enter_wait (PeerProcess *);
   void exit_wait (PeerProcess *, size_t linenum);
   Invocation::GIOP_Buffer *giop_target (void);

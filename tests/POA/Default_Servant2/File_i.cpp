@@ -1,26 +1,24 @@
-// $Id$
 
-//===================================================================
-//
-// = FILENAME
-//     File_i.cpp
-//
-// = DESCRIPTION
-//      Implementation of the File IDL module and the interfaces
-//      Descriptor and System in it.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
+//=============================================================================
+/**
+ *  @file     File_i.cpp
+ *
+ *  $Id$
+ *
+ *    Implementation of the File IDL module and the interfaces
+ *    Descriptor and System in it.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "File_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/PortableServer/PortableServer.h"
-
-ACE_RCSID(Default_Servant, File_i, "$Id$")
 
 // IDL File::System constructor
 FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)

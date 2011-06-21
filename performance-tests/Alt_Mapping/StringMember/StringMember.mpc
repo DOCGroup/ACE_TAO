@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
                 -Wb,stub_export_include=string_member_stub_export.h \
                 -Wb,skel_export_macro=STRING_MEMBER_SKEL_Export \
                 -Wb,skel_export_include=string_member_skel_export.h \
-                -Gxhst -Gxhsk -Gstl
+                -Gxhst -Gxhsk
 
     StringMember.idl
   }

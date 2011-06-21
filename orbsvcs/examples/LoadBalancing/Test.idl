@@ -22,7 +22,7 @@ module Test
       raises (Invalid_Stock_Symbol);
 
     oneway void shutdown ();
-    
+
   };
 
   interface Stock

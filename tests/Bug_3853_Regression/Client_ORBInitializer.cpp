@@ -3,9 +3,6 @@
 #include "Client_ORBInitializer.h"
 #include "client_interceptor.h"
 
-
-ACE_RCSID (Service_Context_Manipulation, Client_ORBInitializer, "$Id$")
-
 Client_ORBInitializer::Client_ORBInitializer ()
 {
 

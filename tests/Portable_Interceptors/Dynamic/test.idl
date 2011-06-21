@@ -46,7 +46,7 @@ module Test_Interceptors
 
     /// Normal operation with a return val.
     long calculate (in long one, in long two);
-    
+
     readonly attribute VarLenStruct the_structure;
 
     /// Throws a user exception.

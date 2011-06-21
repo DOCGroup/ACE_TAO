@@ -11,7 +11,7 @@ class Messenger_i : public virtual POA_demo::value::idl::ValueServer
 {
 public:
   Messenger_i();
-  
+
   virtual char * receive_boxedvalue (
     ::demo::value::idl::boxedValue * b);
 

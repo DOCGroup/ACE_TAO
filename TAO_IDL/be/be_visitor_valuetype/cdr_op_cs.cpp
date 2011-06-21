@@ -58,8 +58,8 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -81,7 +81,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << node->full_name () << "::_downcast)"
       << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator>> (" << be_idt << be_idt_nl
@@ -93,7 +93,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   *os << "return " << node->full_name ()
       << "::_tao_unmarshal (strm, _tao_valuetype);"
       << be_uidt_nl
-      << "}" << be_nl << be_nl;
+      << "}" << be_nl_2;
 
   if (be_global->gen_ostream_operators ())
     {

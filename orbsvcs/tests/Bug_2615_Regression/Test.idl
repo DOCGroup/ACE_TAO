@@ -13,11 +13,11 @@ module Test
      */
     oneway void shutdown ();
 
-    // Lets make sure things are working
+    /// Lets make sure things are working
     void ping ();
 
-    // Calling this method returns true iff a FT request
-    // service context was received in the server
+    /// Calling this method returns true if a FT request
+    /// service context was received in the server
     boolean has_ft_request_service_context ();
   };
 };

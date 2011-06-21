@@ -10,16 +10,9 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (SMI_Iterator,
-           client,
-           "$Id$")
-
-
 // Retrieve the data from the server
 int retrieve_data (const char *content_type,
                    Web_Server::Content_Iterator_ptr contents);
-
 
 // Map content type to viewer.
 int external_viewer (const char *content_type,
@@ -41,9 +34,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           -1);
 
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Mighty ORB");
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "Mighty ORB");
 
       // Get a reference to the Name Service.
       CORBA::Object_var obj =

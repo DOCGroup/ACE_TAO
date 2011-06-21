@@ -1,11 +1,7 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 #include "tao/debug.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Current,
-           "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Current.inl"

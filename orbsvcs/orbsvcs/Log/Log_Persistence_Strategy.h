@@ -43,12 +43,12 @@ namespace CORBA
  * @brief Base Strategy for Log / Log Record Storage
  *
  */
-class TAO_Log_Serv_Export TAO_Log_Persistence_Strategy 
+class TAO_Log_Serv_Export TAO_Log_Persistence_Strategy
   : public ACE_Service_Object
 {
 public:
   /// @brief Log Store Factory
-  virtual TAO_LogStore* 
+  virtual TAO_LogStore*
     create_log_store (TAO_LogMgr_i* logmgr_i)     = 0;
 
 private:

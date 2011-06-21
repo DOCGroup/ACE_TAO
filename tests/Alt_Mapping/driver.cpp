@@ -1,17 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    driver.cpp
-//
-// = DESCRIPTION
-//    Driver program
-//
-// = AUTHORS
-//      Jeff Parsons
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    driver.cpp
+ *
+ *  $Id$
+ *
+ *  Driver program
+ *
+ *
+ *  @author   Jeff Parsons
+ */
+//=============================================================================
+
 
 #include "client.h"
 #include "driver.h"
@@ -130,7 +130,7 @@ Driver::run (void)
               new Test_Unbounded_String);
               
         retstatus = client->run_sii_test ();
-        
+
         delete client;
       }
       break;
@@ -142,9 +142,9 @@ Driver::run (void)
               this->orb_.in (),
               this->objref_.in (),
               new Test_Unbounded_Struct_Sequence);
-                                                   
+
         retstatus = client->run_sii_test ();
-        
+
         delete client;
       }
       break;

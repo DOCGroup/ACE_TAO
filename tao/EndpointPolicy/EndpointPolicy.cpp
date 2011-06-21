@@ -1,4 +1,5 @@
-// @(#) $Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/EndpointPolicy/EndpointPolicy.h"
 #include "tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h"
@@ -8,8 +9,6 @@
 #include "tao/ORBInitializer_Registry.h"
 
 #include "tao/PI/PI.h"
-
-ACE_RCSID (EndpointPolicy, EndpointPolicy, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

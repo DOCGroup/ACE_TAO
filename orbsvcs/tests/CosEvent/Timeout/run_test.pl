@@ -39,11 +39,11 @@ my $client_ior1file = $client->LocalFile ($ior1file);
 $client->DeleteFile($ior1file);
 
 
-$SV1 = $server1->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/Naming_Service",
+$SV1 = $server1->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server1_ior1file");
 
-$SV2 = $server2->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service",
+$SV2 = $server2->CreateProcess ("$PerlACE::TAO_ROOT/orbsvcs/CosEvent_Service/tao_cosevent",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBSvcConf cosevent.conf " .
                               "-b -o $server2_ior2file " .
@@ -104,7 +104,7 @@ if ($server2->WaitForFileTimed ($ior2file,
     exit 1;
 }
 
-sleep(10); 
+sleep(10);
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 

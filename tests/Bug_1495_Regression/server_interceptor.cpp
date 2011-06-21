@@ -7,11 +7,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Thread.h"
 
-ACE_RCSID (Bug_1495_Regression_Test,
-           server_interceptor,
-           "$Id$")
-
-
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
   : myname_ ("Echo_Server_Interceptor")
 {

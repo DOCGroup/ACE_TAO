@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/PluggableUDP/tests/Basic
-//
-// = FILENAME
-//    client.cpp
-//
-// = DESCRIPTION
-//    This is the client for the UDP performance test.
-//
-// = AUTHOR
-//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    client.cpp
+ *
+ *  $Id$
+ *
+ *  This is the client for the UDP performance test.
+ *
+ *
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
 
 
 #include "ace/Get_Opt.h"
@@ -29,7 +26,7 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_RCSID(Performance, client, "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 ACE_UINT32 burst_messages = 1000;
@@ -61,7 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

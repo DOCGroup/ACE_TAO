@@ -9,6 +9,7 @@
 
 #include "orbsvcs/Sched/Config_Scheduler.h"
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)

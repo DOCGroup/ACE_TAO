@@ -1,11 +1,8 @@
 // -*- C++ -*-
+// $Id$
 
 #include "Server_ORBInitializer.h"
 #include "tao/ORB_Constants.h"
-
-ACE_RCSID (Collocated_Forwarding,
-           Server_ORBInitializer,
-           "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 

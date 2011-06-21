@@ -8,7 +8,7 @@ project(*idl): taoidldefaults {
                 -Wb,stub_export_include=alt_mapping_stub_export.h \
                 -Wb,skel_export_macro=ALT_MAPPING_SKEL_Export \
                 -Wb,skel_export_include=alt_mapping_skel_export.h \
-                -Gxhst -Gxhsk -Gstl
+                -Gxhst -Gxhsk
     alt_mapping.idl
   }
   custom_only = 1

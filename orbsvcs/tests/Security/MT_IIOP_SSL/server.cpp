@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -100,6 +100,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       worker.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

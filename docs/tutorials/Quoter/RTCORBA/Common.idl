@@ -16,7 +16,7 @@
 
 module Stock
 {
-  exception Invalid_Stock 
+  exception Invalid_Stock
   {
   };
 
@@ -53,7 +53,7 @@ module Stock
   interface StockNameConsumer
   {
     void push_StockName (in StockNames the_stocknames);
-    
+
     attribute Cookie cookie_;
   };
 
@@ -61,7 +61,7 @@ module Stock
    * @class StockQuoter
    * @brief Provides an interface for brokers to get detailed stock information.
    */
-  interface StockQuoter 
+  interface StockQuoter
   {
     /// Returns detailed stock information to brokers.
     /// @param stockname A valid name for a stock.
@@ -70,4 +70,4 @@ module Stock
   };
 };
 
-#endif  
+#endif

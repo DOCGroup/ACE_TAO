@@ -1,27 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpCalls/Triangle_Test
-//
-// = FILENAME
-//    Object_B_i.cpp
-//
-// = DESCRIPTION
-//    This class implements the Object B  of the
-//    Nested Upcalls - Triangle test.
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_B_i.cpp
+ *
+ *  $Id$
+ *
+ *  This class implements the Object B  of the
+ *  Nested Upcalls - Triangle test.
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 #include "tao/Exception.h"
 #include "Object_B_i.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Triangle_Test, Object_B_i, "$Id$")
 
 // CTOR
 Object_B_i::Object_B_i (void)
@@ -59,4 +54,14 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr)
       ex._tao_print_exception ("calling the initiator");
     }
 
+}
+
+void
+Object_B_i::shutdown (void)
+{
+  int argc = 0;
+  ACE_TCHAR **argv = 0;
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+  orb->shutdown ();
 }

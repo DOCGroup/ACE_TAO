@@ -17,12 +17,12 @@ class  Test_interfaceOne_i
   : public virtual POA_Test::interfaceOne
 {
 public:
-  // Constructor 
+  // Constructor
   Test_interfaceOne_i (void);
-  
-  // Destructor 
+
+  // Destructor
   virtual ~Test_interfaceOne_i (void);
-  
+
   virtual void getstruct (::Test::structOne_out tester);
 };
 

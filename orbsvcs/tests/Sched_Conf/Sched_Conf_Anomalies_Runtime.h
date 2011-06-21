@@ -53,7 +53,7 @@ static int configs_size = sizeof(configs)/sizeof(configs[0]);
 
 
 // This sets up Scheduler_Factory to use the runtime version.
-int scheduler_factory_setup = 
+int scheduler_factory_setup =
   ACE_Scheduler_Factory::use_runtime (configs_size, configs, infos_size, infos);
 
 // EOF

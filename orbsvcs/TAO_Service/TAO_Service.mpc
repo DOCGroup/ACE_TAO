@@ -2,5 +2,5 @@
 // $Id$
 
 project : taoexe, install {
-  exename = TAO_Service
+  exename = tao_service
 }

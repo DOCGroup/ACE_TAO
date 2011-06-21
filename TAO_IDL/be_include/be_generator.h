@@ -276,24 +276,24 @@ public:
 
   virtual
   AST_PortType *create_porttype (UTL_ScopedName *n);
-    
+
   virtual
   AST_Provides *create_provides (UTL_ScopedName *n,
                                  AST_Type *provides_type);
-                                 
+
   virtual
   AST_Uses *create_uses (UTL_ScopedName *n,
                          AST_Type *uses_type,
                          bool is_multiple);
-    
+
   virtual
   AST_Publishes *create_publishes (UTL_ScopedName *n,
                                    AST_Type *publishes_type);
-    
+
   virtual
   AST_Emits *create_emits (UTL_ScopedName *n,
                            AST_Type *emits_type);
-    
+
   virtual
   AST_Consumes *create_consumes (UTL_ScopedName *n,
                                  AST_Type *consumes_type);
@@ -301,34 +301,34 @@ public:
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
-    
+
   virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
-    
+
   virtual
   AST_Connector *create_connector (
     UTL_ScopedName *n,
     AST_Connector *base_connector);
-    
+
   virtual
   AST_Template_Module *create_template_module (
     UTL_ScopedName *n,
     FE_Utils::T_PARAMLIST_INFO *template_params);
-    
+
   virtual
   AST_Template_Module_Inst *create_template_module_inst (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
     FE_Utils::T_ARGLIST *template_args);
-    
+
   virtual
   AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
     UTL_StrList *param_refs);
-    
+
   virtual
   AST_Param_Holder *create_param_holder (
     UTL_ScopedName *parameter_name,

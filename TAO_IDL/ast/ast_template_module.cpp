@@ -50,9 +50,9 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
                                   this);
       return false;
     }
-    
+
   size_t slot = 0UL;
-  
+
   for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*args);
        !i.done ();
        i.advance (), ++slot)
@@ -60,41 +60,41 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       AST_Decl **item = 0;
       i.next (item);
       AST_Decl *d = *item;
-      
+
       if (d->node_type () == AST_Decl::NT_typedef)
         {
           AST_Typedef *td =
             AST_Typedef::narrow_from_decl (d);
-            
+
           d = td->primitive_base_type ();
         }
-        
+
       FE_Utils::T_Param_Info *param = 0;
       (void) this->template_params_->get (param, slot);
       const char *s = 0;
-      
+
       if (! this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
-          
+
           if (n == 0)
             {
               AST_Constant *c =
                 AST_Constant::narrow_from_decl (d);
-                
+
               s = c->exprtype_to_string ();
             }
           else
             {
               s = d->full_name ();
             }
-        
+
           idl_global->err ()->mismatched_template_param (s);
-            
+
           return false;
         }
     }
-    
+
   return true;
 }
 
@@ -104,7 +104,7 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
 {
   UTL_Scope *s = decl_scope;
   AST_Template_Module *enclosing = 0;
-  
+
   while (enclosing == 0 && s != 0)
     {
       enclosing = AST_Template_Module::narrow_from_scope (s);
@@ -117,20 +117,20 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
     {
       FE_Utils::T_Param_Info *enclosing_param =
         enclosing->find_param (i.item ());
-        
+
       if (enclosing_param == 0)
         {
           // Enclosing param not found
           return false;
         }
-        
+
       if (!this->match_param_by_type (enclosing_param))
         {
           // Referenced param type not matched to enclosiong param.
           return false;
         }
     }
-    
+
   return true;
 }
 
@@ -171,35 +171,35 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
     {
       return true;
     }
-    
+
   if (d->node_type () == AST_Decl::NT_typedef)
     {
       AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
       d = td->primitive_base_type ();
     }
-    
+
   AST_Decl::NodeType other_type = d->node_type ();
-    
+
   if (other_type == AST_Decl::NT_const)
     {
       AST_Constant *c =
         AST_Constant::narrow_from_decl (d);
-        
+
       AST_Expression *ex = c->constant_value ();
-       
+
       AST_Expression::AST_ExprValue *ev =
         ex->check_and_coerce (param->const_type_,
                               param->enum_const_type_decl_);
-        
+
       if (ev == 0)
         {
           idl_global->err ()->coercion_error (ex,
                                               param->const_type_);
         }
-        
+
       return (ev != 0);
     }
-    
+
   return (param->type_ == other_type);
 }
 
@@ -213,13 +213,13 @@ AST_Template_Module::find_param (UTL_String *name)
     {
       FE_Utils::T_Param_Info *param = 0;
       i.next (param);
-      
+
       if (param->name_ == name->get_string ())
         {
           return param;
         }
     }
-    
+
   return 0;
 }
 
@@ -234,7 +234,7 @@ AST_Template_Module::match_param_by_type (
     {
       FE_Utils::T_Param_Info *my_param = 0;
       i.next (my_param);
-      
+
       if (param->type_ == my_param->type_)
         {
           if (param->type_ == AST_Decl::NT_const)
@@ -261,10 +261,10 @@ AST_Template_Module::match_param_by_type (
             }
         }
     }
-    
+
   idl_global->err ()->mismatched_template_param (
     param->name_.c_str ());
-    
+
   return false;
 }
 

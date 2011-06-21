@@ -10,11 +10,11 @@
 
 set -e
 
-for protocol in iiop uiop; do 
+for protocol in iiop uiop; do
    for test in void octet short long struct union \
                small_octet_seq small_long_seq small_struct_seq \
                large_octet_seq large_long_seq large_struct_seq \
-               mixin rti_data one_way; do 
+               mixin rti_data one_way; do
 	echo "Running IDL_Cubit $test test for $protocol..."
 	./server -f ior -ORBEndpoint $protocol:// \
 		> $test.$protocol.server 2>&1 &

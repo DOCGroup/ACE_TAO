@@ -1,16 +1,10 @@
+// -*- C++ -*-
 // $Id$
 
 #include "Backend_Impl.h"
-
 #include "tao/Strategies/advanced_resource.h"
-
-#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (Bug_3647_Regression,
-           backend_server,
-           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("backend.ior");
 bool verbose = false;
@@ -41,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -72,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       using namespace Bug_3647_Regression;
-      TAO::Utils::Servant_Var<Backend_Impl> impl(
+      PortableServer::ServantBase_var impl(
           new Backend_Impl(orb.in(), verbose));
 
       PortableServer::ObjectId_var id =

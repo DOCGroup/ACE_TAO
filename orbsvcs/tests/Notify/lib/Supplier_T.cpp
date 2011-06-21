@@ -4,7 +4,7 @@
 
 #include "Supplier_T.h"
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Supplier_T, "$Id$")
+
 
 template <class Supplier_Traits>
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T (void)

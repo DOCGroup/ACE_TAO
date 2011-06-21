@@ -1,15 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    DsLogNotification.idl
-//
-// = DESCRIPTION
-//    This module defines the Log Generated Events module
-//    for the OMG's Telecom Event Log Service
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DsLogNotification.idl
+ *
+ *  $Id$
+ *
+ *  This module defines the Log Generated Events module
+ *  for the OMG's Telecom Event Log Service
+ *
+ *
+ */
+//=============================================================================
+
 
 #ifndef DS_LOG_NOTIFICATION_IDL
 #define DS_LOG_NOTIFICATION_IDL

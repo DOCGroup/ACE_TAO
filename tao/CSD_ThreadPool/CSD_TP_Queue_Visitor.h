@@ -43,7 +43,7 @@ namespace TAO
      *
      * This also provides a means to encapsulate each distinct algorithm
      * within a distinct subclass of TP_Queue_Visitor.
-     * 
+     *
      */
     class TAO_CSD_TP_Export TP_Queue_Visitor
     {

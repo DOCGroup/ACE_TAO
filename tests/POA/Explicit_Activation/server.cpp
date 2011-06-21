@@ -1,27 +1,22 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    TAO/tests/POA/Explicit_Activation
-//
-// = FILENAME
-//    server.cpp
-//
-// = DESCRIPTION
-//    Explicit creation of servants.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ *  Explicit creation of servants.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID(Explicit_Activation, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 

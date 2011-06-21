@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/CDR
-//
-// = FILENAME
-//    basic_types.cpp
-//
-// = DESCRIPTION
-//   Test the basic funcionality of a CDR stream by encoding some
-//   basic types and then decoding them again.
-//
-// = AUTHORS
-//    Carlos O'Ryan
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    basic_types.cpp
+ *
+ *  $Id$
+ *
+ * Test the basic funcionality of a CDR stream by encoding some
+ * basic types and then decoding them again.
+ *
+ *
+ *  @author Carlos O'Ryan
+ */
+//=============================================================================
+
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
@@ -24,10 +21,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (CDR,
-           basic_types,
-           "$Id$")
 
 static int n = 4096;
 static int nloops = 100;

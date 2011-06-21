@@ -11,8 +11,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(MT_Server, test_i, "$Id$")
-
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long exec_duration)
 {

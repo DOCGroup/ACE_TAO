@@ -45,7 +45,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/PortableServer/ObjectId:2.3",
     "ObjectId",
     &CORBA::_tc_OctetSeq);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ObjectId =

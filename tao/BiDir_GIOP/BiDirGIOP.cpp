@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"

@@ -8,7 +8,7 @@
 
 const char *ior = "file://ecf.ior";
 
-CosNotifyChannelAdmin::EventChannel_var 
+CosNotifyChannelAdmin::EventChannel_var
 get_event_channel(CORBA::ORB_ptr orb)
 
 {
@@ -25,7 +25,7 @@ get_event_channel(CORBA::ORB_ptr orb)
 
   if (CORBA::is_nil(obj.in ()))
   {
-    std::cerr << "Bad ec_fact.ior " << std::endl; 
+    std::cerr << "Bad ec_fact.ior " << std::endl;
     exit(1);
   }
 
@@ -46,7 +46,7 @@ get_event_channel(CORBA::ORB_ptr orb)
   }
   catch (CORBA::SystemException& se )
   {
-    std::cerr << "System exception occurred during get_all_channels: " 
+    std::cerr << "System exception occurred during get_all_channels: "
       << se << std::endl;
     exit(1);
   }
@@ -54,13 +54,13 @@ get_event_channel(CORBA::ORB_ptr orb)
   if( channelIdSeq->length() == 0 )
   {
 
-    try 
+    try
     {
       ec = factory->create_channel( init_qos, init_admin, id);
     }
     catch (CORBA::SystemException& se )
     {
-      std::cerr << "System exception occurred during find_channel: " 
+      std::cerr << "System exception occurred during find_channel: "
         << se << std::endl;
       exit(1);
     }
@@ -72,14 +72,14 @@ get_event_channel(CORBA::ORB_ptr orb)
     }
     catch (CosNotifyChannelAdmin::ChannelNotFound&)
     {
-      std::cerr << "ChannelNotFound: " 
+      std::cerr << "ChannelNotFound: "
         << channelIdSeq[0] << std::endl;
       exit(1);
     }
 
     catch (CORBA::SystemException& se )
     {
-      std::cerr << "System exception occurred during get_event_channel: " 
+      std::cerr << "System exception occurred during get_event_channel: "
         << se << std::endl;
       exit(1);
     }
@@ -89,9 +89,9 @@ get_event_channel(CORBA::ORB_ptr orb)
   return ec._retn();
 }
 
-   
-void match_structure_test (const CosNotifyFilter::Filter_var& filter, 
-                           const CosNotification::StructuredEvent& event, 
+
+void match_structure_test (const CosNotifyFilter::Filter_var& filter,
+                           const CosNotification::StructuredEvent& event,
                            bool & expected_result)
 {
   bool bResult = false;
@@ -104,7 +104,7 @@ void match_structure_test (const CosNotifyFilter::Filter_var& filter,
   }
   catch (CORBA::SystemException& se )
   {
-    std::cerr << "System exception occurred during match_structured: " 
+    std::cerr << "System exception occurred during match_structured: "
       << se << std::endl;
     exit(1);
   }
@@ -141,22 +141,22 @@ void update_constraints (const CosNotifyFilter::Filter_var& filter,
     constraints[0].event_types = event_types;
     constraints[0].constraint_expr = CORBA::string_dup("");
 
-    CosNotifyFilter::ConstraintInfoSeq_var cons_info 
-      = filter->add_constraints(constraints);                                   
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info
+      = filter->add_constraints(constraints);
 
     std::cout << "Constructing a filter..." << std::endl;
 
     for (CORBA::ULong i = 0; i < event_types.length(); ++i)
     {
-      std::cout << "\tevent_types[" << i << "].domain_name=" 
+      std::cout << "\tevent_types[" << i << "].domain_name="
         << event_types[i].domain_name
         << std::endl;
-      std::cout << "\tevent_types[" << i << "].type_name=" 
+      std::cout << "\tevent_types[" << i << "].type_name="
         << event_types[i].type_name
         << std::endl;
     }
 
-    std::cout << "\tIts constraint =" 
+    std::cout << "\tIts constraint ="
       << constraints[0].constraint_expr.in ()
       << std::endl;
 }
@@ -182,7 +182,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CosNotifyChannelAdmin::EventChannel_var ec = get_event_channel(orb.in());
 
     //Attaching a filter to pps
-    CosNotifyFilter::FilterFactory_var dff = 
+    CosNotifyFilter::FilterFactory_var dff =
       ec->default_filter_factory();
 
     ACE_ASSERT(!CORBA::is_nil(dff.in()));
@@ -201,10 +201,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     event.remainder_of_body <<= "";
 
     std::cout << "Constructing a test event" << std::endl;
-    std::cout << "\tIts header.fixed_header.event_type.domain_name=" 
+    std::cout << "\tIts header.fixed_header.event_type.domain_name="
       << event.header.fixed_header.event_type.domain_name
       << std::endl;
-    std::cout << "\tIts header.fixed_header.event_type.type_name=" 
+    std::cout << "\tIts header.fixed_header.event_type.type_name="
       << event.header.fixed_header.event_type.type_name
       << std::endl;
 

@@ -61,7 +61,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     return -1;      // fail to create
   }
 
-  if (!m_wndStatusBar.Create(this) || 
+  if (!m_wndStatusBar.Create(this) ||
       !m_wndStatusBar.SetIndicators(indicators,
                                     sizeof(indicators)/sizeof(UINT)))
   {

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "Basic_Log_Test.h"
 
 #include "tao/debug.h"
@@ -8,14 +10,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Basic_Log_Test,
-           Basic_Log_Test,
-           "$Id$")
-
-
 const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
 const char* BasicLog_Test::naming_sevice_name_ = "NameService";
-
 
 BasicLog_Test::BasicLog_Test(void)
   : logServiceIor_ (0)
@@ -305,6 +301,8 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
         CORBA::String_var t(str.c_str ());
         record[0] <<= t.in ();
         basicLog_->write_records(record);
+        if (l == 0)
+          break; // silence an 'infinite loop' warning
     }
   }
   else

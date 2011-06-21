@@ -43,10 +43,6 @@ namespace TAO_PG
    */
   class TAO_PortableGroup_Export Properties_Encoder
   {
-    // Originally NamedValue was an ACE_Pair, but ACE_Pair allows operator ==
-    // (delegating to the member's operators ==.)  Since CORBA::Any does
-    // not support operator ==, this confused gcc version 2.9-gnupro-98r2
-    // on LynxOS pfadev04 3.0.1 110298-G PowerPC
     struct NamedValue
     {
     public:

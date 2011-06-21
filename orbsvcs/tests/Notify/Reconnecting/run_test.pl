@@ -127,7 +127,7 @@ my $ns_args = "-ORBSvcConf $nfs_svcconf $ns_base_args";
 # Delete the all of the files used in the test
 
 # Define the processes first
-my $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/Notify_Service");
+my $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification");
 my $CON = $con->CreateProcess ("Consumer");
 my $SUP = $sup->CreateProcess ("Supplier");
 
@@ -597,7 +597,7 @@ $nfs->DeleteFile ($save_001);
 $nfs->DeleteFile ($eventpersist);
 $sup->DeleteFile ($supplier_pause);
 
-## Wait a bit to avoid lingering sockets from the previous Notify_Service
+## Wait a bit to avoid lingering sockets from the previous tao_cosnotification
 sleep(3);
 
 $NFS->Arguments("-ORBSvcConf $nfs_st_both $ns_base_args");

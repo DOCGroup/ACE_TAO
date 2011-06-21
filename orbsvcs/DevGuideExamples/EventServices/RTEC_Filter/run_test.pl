@@ -35,10 +35,10 @@ $s->DeleteFile ($nsiorfile);
 $c->DeleteFile ($nsiorfile);
 $es->DeleteFile ($esiorfile);
 
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 $NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level ".
                                         " -o $ns_nsiorfile");
-$EventService = "$ENV{TAO_ROOT}/orbsvcs/Event_Service/Event_Service";
+$EventService = "$ENV{TAO_ROOT}/orbsvcs/Event_Service/tao_rtevent";
 $ES = $es->CreateProcess ($EventService, "-ORBdebuglevel $debug_level ".
                                         " -o $es_esiorfile ".
                                         "-ORBInitRef NameService=file://$es_nsiorfile");
@@ -95,7 +95,7 @@ if ($es->WaitForFileTimed ($esiorfile,$es->ProcessStartWaitInterval()) == -1) {
     exit 1;
 }
 
-# start EchoEventSupplier  
+# start EchoEventSupplier
 $S_status = $S->Spawn ();
 
 if ($S_status != 0) {
@@ -103,7 +103,7 @@ if ($S_status != 0) {
     exit 1;
 }
 
-# start EchoEventConsumer  
+# start EchoEventConsumer
 $C_status = $C->Spawn ();
 
 if ($C_status != 0) {

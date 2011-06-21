@@ -10,10 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Dynamic,
-           server_interceptor,
-           "$Id$")
-
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
   : myname_ ("Echo_Server_Interceptor")
 {

@@ -1,9 +1,6 @@
+// $Id$
+
 #include "tao/Utils/ORB_Destroyer.h"
-
-
-ACE_RCSID (Utils,
-           ORB_Destroyer,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

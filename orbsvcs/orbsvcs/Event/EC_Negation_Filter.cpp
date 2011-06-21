@@ -2,6 +2,8 @@
 
 #include "orbsvcs/Event/EC_Negation_Filter.h"
 
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Negation_Filter::TAO_EC_Negation_Filter (TAO_EC_Filter* child)

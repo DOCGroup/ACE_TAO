@@ -22,5 +22,5 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
   }
   catch (PortableServer::POA::ObjectNotActive &) {
     throw Quoter::Invalid_Stock_Symbol ();
-  } 
+  }
 }

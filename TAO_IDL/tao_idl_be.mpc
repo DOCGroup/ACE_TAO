@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   includes    += $(TAO_ROOT)
@@ -15,7 +15,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile, tao_vc8warning
   specific {
     // Override the template value for optimize.  Building the backend
     // with optimization turned on doesn't seem to work (at least not with
-    // vc6 or vc71).  This is due to the use of addresses of static objecs
+    // vc6 or vc71).  This is due to the use of addresses of static objects
     // within the code.
     optimize =
   }

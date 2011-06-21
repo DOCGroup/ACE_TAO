@@ -322,9 +322,9 @@ be_visitor_component::visit_extended_port (
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
-  
+
   be_porttype *pt = node->port_type ();
-  
+
   if (this->visit_scope (pt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -333,9 +333,9 @@ be_visitor_component::visit_extended_port (
                          ACE_TEXT ("visit_scope () failed\n")),
                         -1);
     }
-    
+
   this->ctx_->port_prefix () = "";
-  
+
   return 0;
 }
 
@@ -351,9 +351,9 @@ be_visitor_component::visit_mirror_port (be_mirror_port *node)
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
     be_interface::narrow_from_scope (node->defined_in ()));
-  
+
   be_porttype *pt = node->port_type ();
-  
+
   if (this->visit_scope (pt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -362,9 +362,9 @@ be_visitor_component::visit_mirror_port (be_mirror_port *node)
                          ACE_TEXT ("visit_scope () failed\n")),
                         -1);
     }
-    
+
   this->ctx_->port_prefix () = "";
-  
+
   return 0;
 }
 

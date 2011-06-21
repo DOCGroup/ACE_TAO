@@ -39,58 +39,103 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     {
       return -1;
     }
-    
-  os_ << be_nl
-      << this->node_->local_name () << "_exec_i::"
-      << this->node_->local_name () << "_exec_i (void)"
-      << be_idt_nl
-      << ": " << this->base_tname_ << "_Connector_T";
 
-  AST_Decl **datatype = 0;
-  int const status = this->t_args_->get (datatype, 0UL);
-
-  if (status != 0)
+  // If we have a connector within a templated module
+  if (! this->t_args_.is_empty ())
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("be_visitor_connector_dds_exh::")
-                  ACE_TEXT ("gen_dds_traits - ")
-                  ACE_TEXT ("template arg not found\n ")));
+      os_ << be_nl
+          << this->node_->local_name () << "_exec_i::"
+          << this->node_->local_name () << "_exec_i (void)"
+          << be_idt_nl
+          << ": " << this->base_tname_ << "_Connector_T";
 
-      return -1;
+      os_ << " <" << be_idt << be_idt_nl;
+
+      os_ << "CCM_" << this->node_->flat_name ()
+          << "_Traits," << be_nl;
+
+      size_t slot = 1UL;
+
+      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
+          !i.done ();
+          i.advance (), ++slot)
+        {
+          AST_Decl **item = 0;
+          i.next (item);
+          AST_Decl *d = *item;
+
+          if (this->is_dds_type (node, d))
+            {
+              os_ << d->flat_name ()
+                  << "_DDS_Traits";
+            }
+          else
+            {
+              os_ << d->name ();
+            }
+
+          bool needs_bool = false;
+          bool is_fixed = false;
+          FE_Utils::T_Param_Info *param = 0;
+
+          if (this->t_params_->get (param, slot - 1) != 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_connector_dds_exh::")
+                                 ACE_TEXT ("visit_connector - ")
+                                 ACE_TEXT ("template param fetch failed\n ")),
+                                -1);
+            }
+
+          if (d->node_type () == AST_Decl::NT_typedef)
+            {
+              /// Strip away all layers of typedef before narrowing.
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              d = td->primitive_base_type ();
+            }
+
+          /// No need to check if this is 0, but must narrow
+          /// to call virtual function size_type() below.
+          AST_Type *t = AST_Type::narrow_from_decl (d);
+
+          switch (param->type_)
+            {
+              case AST_Decl::NT_type:
+              case AST_Decl::NT_struct:
+              case AST_Decl::NT_union:
+                needs_bool = true;
+                is_fixed = (t->size_type () == AST_Type::FIXED);
+                break;
+              default:
+                break;
+            }
+
+          if (needs_bool)
+            {
+              os_ << "," << be_nl
+                  << (is_fixed ? "true" : "false");
+            }
+
+          if (slot < this->t_args_.size ())
+            {
+              os_ << "," << be_nl;
+            }
+        }
+
+      os_ << "> ()"
+          << be_uidt << be_uidt << be_uidt_nl
+          << "{" << be_nl
+          << "}";
+
+      os_ << be_nl_2
+          << this->node_->local_name () << "_exec_i::~"
+          << this->node_->local_name () << "_exec_i (void)" << be_nl
+          << "{" << be_nl
+          << "}";
+
+      this->gen_exec_entrypoint_defn ();
+
     }
-
-  AST_Type *ut = AST_Type::narrow_from_decl (*datatype);
-
-  /// Assumes parent connector exists and is either DDS_State
-  /// or DDS_Event, so we generate inheritance from the
-  /// corresponding template. May have to generalize this logic.
-  os_ << " <" << be_idt << be_idt_nl
-      << this->dds_traits_name_.c_str () << "," << be_nl
-      << "DDS_" << this->node_->local_name () << "_Traits," << be_nl;
-
-  if (ut->size_type () == AST_Type::FIXED)
-    {
-      os_ << "true, ";
-    }
-  else
-    {
-      os_ << "false, ";
-    }
-
-  os_ << "DDS4CCM_NDDS" << ">";
-  
-  os_ << "()"
-      << be_uidt << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "}";
-
-  os_ << be_nl << be_nl
-      << this->node_->local_name () << "_exec_i::~"
-      << this->node_->local_name () << "_exec_i (void)" << be_nl
-      << "{" << be_nl
-      << "}";
-
-  this->gen_exec_entrypoint_defn ();
 
   os_ << be_uidt_nl
       << "}";

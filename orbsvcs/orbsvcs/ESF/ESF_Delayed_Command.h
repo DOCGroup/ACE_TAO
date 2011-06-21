@@ -104,7 +104,7 @@ private:
  *
  * @brief Implements a Command object that invokes the
  * disconnected_i() method on the target, passing an argument of type
- * Object. 
+ * Object.
  *
  * <H2>Memory Managment</H2>
  * It does not assume ownership of Object nor the Target

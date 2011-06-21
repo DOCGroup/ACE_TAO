@@ -16,7 +16,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(EC_Examples, Service, "$Id$")
+
 
 int config_run = 0;
 
@@ -362,7 +362,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

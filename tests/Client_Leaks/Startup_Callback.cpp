@@ -3,8 +3,6 @@
 //
 #include "Startup_Callback.h"
 
-ACE_RCSID(Client_Leaks, Startup_Callback, "$Id$")
-
 Startup_Callback::Startup_Callback (void)
 {
 }

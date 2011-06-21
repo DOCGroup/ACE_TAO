@@ -6,11 +6,9 @@
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Environment.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_sys_stat.h"
 #include "tao/IOPC.h"
-
-ACE_RCSID (HTIOP,
-           TAOHTIOP_Factory,
-           "$Id$")
 
 static const char the_prefix[] = "htiop";
 

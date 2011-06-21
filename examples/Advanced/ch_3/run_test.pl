@@ -42,7 +42,7 @@ if ($client->TimedWait (60) == -1) {
 
 
 
-$server->Terminate (); 
+$server->Terminate ();
 if ($server->TimedWait (5) == -1) {
   print STDERR "ERROR: cannot terminate the server\n";
   $server->Kill (); $server->TimedWait (1);

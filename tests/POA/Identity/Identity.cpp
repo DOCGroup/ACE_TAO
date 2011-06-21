@@ -1,25 +1,22 @@
-// $Id$
 
-// ==================================================
-// = LIBRARY
-//    TAO/test/POA/Identity
-//
-// = FILENAME
-//    Identity.cpp
-//
-// = DESCRIPTION
-//    This program demonstrates and tests how to move between id,
-//    reference, and servants.
-//
-// = AUTHOR
-//    Irfan Pyarali
-// ==================================================
+//=============================================================================
+/**
+ *  @file    Identity.cpp
+ *
+ *  $Id$
+ *
+ *  This program demonstrates and tests how to move between id,
+ *  reference, and servants.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testS.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
-
-ACE_RCSID(Identity, Identity, "$Id$")
 
 class test_i : public POA_test
 {

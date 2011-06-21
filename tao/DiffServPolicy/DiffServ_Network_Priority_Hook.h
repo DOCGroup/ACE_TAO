@@ -38,7 +38,7 @@ public:
   /// priority policy, so that it can be used for sending replies with the
   /// policy-specified DiffServ codepoint.
   ///
-  void update_network_priority (TAO_Root_POA &poa, 
+  void update_network_priority (TAO_Root_POA &poa,
                                 TAO_POA_Policy_Set &poa_policy_set);
 
   /// This function is a hook, that is used by the POA's servant dispatcher

@@ -4,8 +4,6 @@
 #include "Blocking_Sync_None.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Blocking_Sync_None, Blocking_Sync_None, "$Id$")
-
 Blocking_Sync_None::Blocking_Sync_None (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

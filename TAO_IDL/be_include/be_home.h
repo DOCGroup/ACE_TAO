@@ -39,7 +39,7 @@ public:
            long n_supports_flat);
 
   virtual ~be_home (void);
-  
+
   void scan (UTL_Scope *s);
 
   // Cleanup function.

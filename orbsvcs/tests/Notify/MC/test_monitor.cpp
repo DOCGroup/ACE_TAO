@@ -76,7 +76,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
 
-      if (num.dlist[0].value != 0)
+      if (!ACE::is_equal (num.dlist[0].value, 0.0))
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: There should be no active Event "
@@ -87,7 +87,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
 
-      if (num.dlist[0].value != 0)
+      if (!ACE::is_equal (num.dlist[0].value, 0.0))
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: There should be no inactive Event "
@@ -116,20 +116,20 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       str = this->base_ + NotifyMonitoringExt::EventChannelConsumerCount;
       data = this->nsm_->get_statistic (str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 1)
+      if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Consumer\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 1)
+      if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR,
                         "Monitor: ERROR: There should be only one ConsumerAdmin\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 0)
+      if (!ACE::is_equal (num.dlist[0].value, 0.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
 
         brain_dump ("Running Consumer");
@@ -142,13 +142,13 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
 
-      if (num.dlist[0].value != 1)
+      if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be only one Supplier\n"));
 
       str = this->base_ + NotifyMonitoringExt::EventChannelSupplierAdminCount;
       data = nsm_->get_statistic(str.c_str ());
       num = data->data_union.num ();
-      if (num.dlist[0].value != 1)
+      if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR,
               "Monitor: ERROR: There should be only one SupplierAdmin\n"));
         brain_dump ("Running Supplier");
@@ -313,18 +313,18 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
         nsm_->get_statistic(consumerCountName.c_str ());
       Monitor::Numeric consumerCountNum =
         consumerCountData->data_union.num ();
-      if (consumerCountNum.last != 1)
+      if (!ACE::is_equal (consumerCountNum.last, 1.0))
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should still be one Consumer\n"));
-  
+
       ACE_CString queueElementName = this->base_ + NotifyMonitoringExt::EventChannelQueueElementCount;
       Monitor::Data_var queueElementData =
         nsm_->get_statistic(queueElementName.c_str ());
       Monitor::Numeric queueElementNum =
         queueElementData->data_union.num ();
-      if (queueElementNum.last == 0)
+      if (ACE::is_equal (queueElementNum.last, 0.0))
       ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be at least one "
                             "event queued\n"));
-  
+
       ACE_CString adminNamesName  = this->base_ + NotifyMonitoringExt::EventChannelConsumerAdminNames;
       Monitor::Data_var adminNamesData =
         nsm_->get_statistic(adminNamesName.c_str ());
@@ -348,9 +348,9 @@ MonitorTestInterface_i::finished (MonitorTestInterface::Which proc)
             ACE_ERROR ((LM_ERROR, "Monitor: ERROR: The most recent queue size [%f] should not be greater than 2000.\n",
               queueSizeNum.last));
       }
-  
+
       consumer_stats_check();
-  
+
       brain_dump ("Finished Supplier");
       break;
       }

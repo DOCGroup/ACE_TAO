@@ -16,7 +16,7 @@
 #include "orbsvcs/Concurrency/Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (Concurrency, Concurrency_Loader, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

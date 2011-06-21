@@ -22,10 +22,6 @@
 
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (Strategies,
-           DIOP_Acceptor,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)

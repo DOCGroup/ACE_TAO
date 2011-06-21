@@ -83,7 +83,7 @@ for($i = 0; $i < $number_of_servers; $i++) {
 # Loops are cheap.
 for ($i = 0; $i < $number_of_servers; $i++) {
     $result = wait_get_send_ior($i);
- 
+
     if ($result != 0) {
         for ($j = 0; $j < $i + 1; $j++) {
             $SV[$j]->Kill (); $SV[$j]->TimedWait (1);

@@ -32,7 +32,7 @@ public:
       {
         CosNotifyChannelAdmin::ConsumerAdmin_var admin =
           this->ec_->get_consumeradmin (this->id_);
-          
+
         if (!CORBA::is_nil (admin.in ()))
           {
             admin->destroy ();
@@ -80,7 +80,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
                     Monitor_Base (this->queue_size_stat_name_.c_str (),
                                   Monitor_Control_Types::MC_NUMBER),
                     CORBA::NO_MEMORY ());
-                    
+
   if (!mec->register_statistic (this->queue_size_stat_name_, this->queue_size_))
     {
       // The constructor sets the refcount to 1 so this call will
@@ -111,13 +111,13 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
                                           this->id ()),
                     CORBA::NO_MEMORY ());
   TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
-  
+
   if (!cinstance->add (control))
     {
       delete control;
       ACE_ERROR ((LM_ERROR,
                   "Unable to add control: %s\n",
-                  this->control_name_.c_str ()));                 
+                  this->control_name_.c_str ()));
     }
 }
 
@@ -130,7 +130,7 @@ TAO_MonitorConsumerAdmin::obtain_named_notification_push_supplier (
   // First, make sure we can get down to the real ec type.
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-    
+
   if (ec == 0)
     {
       throw CORBA::INTERNAL ();
@@ -155,7 +155,7 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
   // First, make sure we can get down to the real ec type.
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-    
+
   if (ec == 0)
     {
       throw CORBA::INTERNAL ();
@@ -219,14 +219,14 @@ TAO_MonitorConsumerAdmin::stat_name (void)const
 }
 
 
-void 
+void
 TAO_MonitorConsumerAdmin::destroy (void)
 {
   this->remove ();
   this->TAO_Notify_ConsumerAdmin::destroy ();
 }
 
-void 
+void
 TAO_MonitorConsumerAdmin::remove (void)
 {
   // First, make sure we can get down to the real ec type

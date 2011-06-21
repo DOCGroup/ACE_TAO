@@ -62,11 +62,10 @@ namespace CORBA
     // private: %!
     /// In a derived class T use return type TAO_OBV_CREATE_RETURN_TYPE (T)
     /// (see at definition below)
-    virtual CORBA::ValueBase * create_for_unmarshal (
-      void) = 0;
+    virtual CORBA::ValueBase * create_for_unmarshal (void) = 0;
 
-    // Not pure virtual because this will be overridden only by valuetypes
-    // that support an abstract interface.
+    /// Not pure virtual because this will be overridden only by valuetypes
+    /// that support an abstract interface.
     virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract (void);
 
   private:

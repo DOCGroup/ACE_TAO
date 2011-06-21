@@ -1,11 +1,6 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Util.h"
-
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Util,
-           "$Id$")
-
-
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 

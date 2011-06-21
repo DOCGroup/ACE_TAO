@@ -8,7 +8,7 @@
 #include "Receiver_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Receiver_Stats, "$Id$")
+
 
 void
 Receiver_Stats::accumulate (const Receiver_Stats &rhs)

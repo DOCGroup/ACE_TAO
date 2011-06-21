@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 
@@ -17,11 +16,6 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
-
-
-ACE_RCSID(PortableGroup,
-          UIPMC_Connection_Handler,
-          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

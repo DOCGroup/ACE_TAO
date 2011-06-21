@@ -34,7 +34,7 @@ be_visitor_root_is::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -53,7 +53,7 @@ be_visitor_root_is::init (void)
   int status =
     tao_cg->start_implementation_skeleton (
       be_global->be_get_implementation_skel_fname ());
-  
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

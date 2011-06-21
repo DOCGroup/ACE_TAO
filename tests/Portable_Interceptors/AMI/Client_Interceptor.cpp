@@ -13,12 +13,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-
-ACE_RCSID (AMI,
-           Client_Interceptor,
-           "$Id$")
-
-
 unsigned long Echo_Client_Request_Interceptor::request_count = 0;
 unsigned long Echo_Client_Request_Interceptor::reply_count = 0;
 unsigned long Echo_Client_Request_Interceptor::other_count = 0;

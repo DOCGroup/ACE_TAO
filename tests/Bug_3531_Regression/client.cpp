@@ -2,22 +2,19 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS.h"
 #include "testS.h"
-
-ACE_RCSID(Bug_2494_Regression, client, "$Id$")
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
 
+/**
+ * Simpler Server Client implementation
+ *
+ * Implements the Simple_Server interface in test.idl
+ */
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server Client implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
   Simple_Server_i (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
@@ -80,18 +77,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
+/**
+ * Run a server thread
+ *
+ * Use the ACE_Task_Base class to run server threads
+ */
 class Worker : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run a server thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run server threads
-  //
 public:
   Worker (CORBA::ORB_ptr orb);
   // ctor

@@ -28,10 +28,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 
-ACE_RCSID (CosEvent,
-           CEC_Event_Loader,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void) :

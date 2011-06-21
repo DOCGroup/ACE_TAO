@@ -1,30 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO/tests/POA/Forwarding/Servant_Locator
-//
-// = FILENAME
-//     Servant_Locator.cpp
-//
-// = DESCRIPTION
-//     Implementation of MyFooServantLocator class , used with a POA
-//     having a NON_RETAIN policy.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//     Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file     Servant_Locator.cpp
+ *
+ *  $Id$
+ *
+ *   Implementation of MyFooServantLocator class , used with a POA
+ *   having a NON_RETAIN policy.
+ *
+ *
+ *  @author  Irfan Pyarali  Michael Kircher
+ */
+//=============================================================================
+
 
 #include "Servant_Locator.h"
 #include "ace/Log_Msg.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID(Forwarding, Servant_Locator, "$Id$")
 
 Servant_Locator::Servant_Locator (CORBA::ORB_ptr orb_ptr)
 

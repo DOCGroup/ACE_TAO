@@ -3,8 +3,6 @@
 #include "test_i.h"
 #include "Servant_Activator.h"
 
-ACE_RCSID(Forwarding, test_i, "$Id$")
-
 // Constructor
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,

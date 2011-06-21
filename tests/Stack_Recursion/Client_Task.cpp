@@ -4,10 +4,6 @@
 
 #include "Client_Task.h"
 
-ACE_RCSID(Stack_Recursion,
-          Client_Task,
-          "$Id$")
-
 Client_Task::Client_Task (Test::Sender_ptr sender,
                           CORBA::Long event_count,
                           CORBA::ULong event_size,

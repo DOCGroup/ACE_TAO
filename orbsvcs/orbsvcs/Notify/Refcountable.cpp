@@ -3,10 +3,7 @@
 #include "orbsvcs/Notify/Refcountable.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
-
 #include "ace/Guard_T.h"
-
-ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")
 
 #if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
 
@@ -79,7 +76,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   {
     ACE_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d destroyed incorrectly.\n",
         e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.value() ));
- 
+
     if ( e.obj != this || e.obj->ref_id_ != this->ref_id_ )
     {
       ACE_DEBUG ((LM_DEBUG, "  with an ID mismatch %x->%d != %x->%d!\n",
@@ -156,10 +153,10 @@ TAO_Notify_Tracker::~TAO_Notify_Tracker()
 void
 TAO_Notify_Tracker::dump( const char* title )
 {
-  ACE_Guard<TAO_SYNCH_MUTEX> grd(this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   ACE_DEBUG ((LM_DEBUG,"\nTAO_Notify_Tracker: %s\n", (title ? title : "dump")));
- 
+
   EntityMap::const_iterator iter( map_.begin() );
   while ( iter != map_.end() )
   {
@@ -191,9 +188,9 @@ TAO_Notify_Tracker::add( TAO_Notify_Refcountable* p )
 {
   if ( p == 0 ) return;
 
-  ACE_Guard<TAO_SYNCH_MUTEX> grd(this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int id = ++id_counter_;
- 
+
   Entry e = { p, typeid(*p).name() };
   std::pair< EntityMap::iterator, bool > result =
     map_.insert( std::make_pair( id, e ) );
@@ -215,7 +212,7 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
 {
   if ( p == 0 ) return;
 
-  ACE_Guard<TAO_SYNCH_MUTEX> grd(this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int ref_id = p->ref_id_;
   EntityMap::iterator iter( map_.find( ref_id ) );
   if ( iter == map_.end() )
@@ -237,7 +234,7 @@ TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p ) const
   Entry e = { 0, "" };
   if ( p == 0 ) return e;
 
-  ACE_Guard<TAO_SYNCH_MUTEX> grd(this->lock_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int ref_id = p->ref_id_;
   EntityMap::const_iterator iter( map_.find( ref_id ) );
   if ( iter != map_.end() )

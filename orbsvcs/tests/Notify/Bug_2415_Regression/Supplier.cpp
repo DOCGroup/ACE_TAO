@@ -91,7 +91,7 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
     case 'o':
       ior_output_file = get_opts.optarg;
       break;
- 
+
     case 'd':
       domain = get_opts.optarg;
       break;
@@ -105,7 +105,7 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
         -1);
   }
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

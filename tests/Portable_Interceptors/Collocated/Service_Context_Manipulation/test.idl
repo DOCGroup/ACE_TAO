@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//    Simple IDL file to test collocated portable interceptor support.
-//
-// = AUTHORS
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  $Id$
+ *
+ *  Simple IDL file to test collocated portable interceptor support.
+ *
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 module Test_Interceptors
 {

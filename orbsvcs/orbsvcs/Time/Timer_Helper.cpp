@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
@@ -5,11 +7,6 @@
 
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_time.h"
-
-ACE_RCSID (Time,
-           Timer_Helper,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

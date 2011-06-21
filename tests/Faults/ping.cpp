@@ -4,8 +4,6 @@
 #include "ping_i.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(Faults, server, "$Id$")
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ping.ior");
 
 int
@@ -30,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

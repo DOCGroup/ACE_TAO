@@ -1,13 +1,11 @@
+// $Id$
+
 #include "tao/ZIOP/ZIOP_PolicyFactory.h"
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
-
-ACE_RCSID (ZIOP_GIOP,
-           ZIOP_PolicyFactory,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

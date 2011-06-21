@@ -235,12 +235,31 @@ AST_Union::default_index (void)
 bool
 AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
+  bool self_test = (list.size () == 0);
+
+  // We should calculate this only once. If it has already been
+  // done, just return it.
+  if (self_test && this->in_recursion_ != -1)
+    {
+      return (this->in_recursion_ == 1);
+    }
+
+  if (list.size () > 1)
+  {
+    if (match_names (this, list))
+      {
+        // We've found ourselves outside of a sequence.
+        // This happens when we are not recursed ourselves but instead
+        // are part of another recursive type
+        return false;
+      }
+  }
+
+  list.enqueue_tail(this);
+
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
-      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
-      scope_list.enqueue_tail (this);
-
       // Initialize an iterator to iterate thru our scope.
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -274,18 +293,20 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                                 0);
             }
 
-          if (type->in_recursion (scope_list))
+          if (type->in_recursion (list))
             {
-              this->in_recursion_ = 1;
+              if (self_test)
+                this->in_recursion_ = 1;
               idl_global->recursive_type_seen_ = true;
-              return this->in_recursion_;
+              return true;
             }
         }
     }
 
   // Not in recursion.
-  this->in_recursion_ = 0;
-  return this->in_recursion_;
+  if (self_test)
+    this->in_recursion_ = 0;
+  return 0;
 }
 
 // Look up the default branch in union.

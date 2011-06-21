@@ -32,7 +32,7 @@ public:
   /// Create a new EC_Wrapper object.
   /// (Constructor access is restricted to insure that all
   /// EC_Wrapper objects are heap-allocated.)
-  static TAO_EC_Servant_Var<EC_Wrapper> create (void);
+  static PortableServer::Servant_var<EC_Wrapper> create (void);
 
   /// Destructor.  Destroys the Event Channel implementation.
   virtual ~EC_Wrapper (void);
@@ -72,7 +72,7 @@ private:
   /// Event Channel implementation.
   /*
    * Once Event Channel implementation is made reference-counted, this
-   * pointer should turn into a Servant_Var.
+   * pointer should turn into a Servant_var.
    */
   TAO_EC_Event_Channel *ec_impl_;
 

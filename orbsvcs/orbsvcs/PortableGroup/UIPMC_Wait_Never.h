@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_UIPMC_WAIT_NEVER_H
 #define TAO_UIPMC_WAIT_NEVER_H
 #include /**/ "ace/pre.h"

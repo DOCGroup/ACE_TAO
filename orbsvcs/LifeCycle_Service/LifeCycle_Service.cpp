@@ -1,26 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    Life_Cycle_Service.cpp
-//
-// = DESCRIPTION
-//    The server for the LifeCycleService of the quoter example.
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    LifeCycle_Service.cpp
+ *
+ *  $Id$
+ *
+ *  The server for the LifeCycleService of the quoter example.
+ *
+ *
+ *  @author Michael Kircher (mk1@cs.wustl.edu)
+ */
+//=============================================================================
+
 
 #include "LifeCycle_Service.h"
 
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
-
-ACE_RCSID (LifeCycle_Service,
-           LifeCycle_Service,
-           "$Id$")
 
 Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
 :   debug_level_ (1)

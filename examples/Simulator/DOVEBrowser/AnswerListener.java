@@ -1,5 +1,5 @@
 // $Id$
-// 
+//
 // = FILENAME
 //    AnswerListener.java
 //

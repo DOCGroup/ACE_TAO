@@ -21,8 +21,6 @@
 #include "tao/Profile.inl"
 #endif /* __ACE_INLINE__ */
 
-// ****************************************************************
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
@@ -37,8 +35,7 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
-    , refcount_ (this->orb_core_->
-                   client_factory ()->create_profile_refcount ())
+    , refcount_ (1)
     , tagged_profile_lock_ ()
     , tagged_profile_created_ (false)
 {
@@ -57,8 +54,7 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
     , tag_ (tag)
     , orb_core_ (orb_core)
     , forward_to_ (0)
-    , refcount_ (this->orb_core_->
-                   client_factory ()->create_profile_refcount ())
+    , refcount_ (1)
     , tagged_profile_lock_ ()
     , tagged_profile_created_ (false)
 {

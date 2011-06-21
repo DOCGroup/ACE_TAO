@@ -1,15 +1,12 @@
+// -*- C++ -*-
 // $Id$
+
 #include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
-
-
-ACE_RCSID (CSD_Framework,
-           FW_Server_Request_Wrapper,
-           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.inl"

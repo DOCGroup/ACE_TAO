@@ -108,7 +108,7 @@ public:
   // Accessor needs to get overridden for a few types.
   virtual bool is_local (void);
   void is_local (bool val);
-  
+
   bool is_abstract (void) const;
   void is_abstract (bool val);
 
@@ -299,12 +299,16 @@ public:
   // Useful for GIOP to know if a wstring is being marshaled.
   virtual int contains_wstring (void);
   void contains_wstring (int val);
-  
+
   // Additional checks when we think we have caught an IDL
   // masking scope error in a lookup, which starts simply with
   // a comparison of names in a scope masking queue.
   bool masking_checks (AST_Decl *mod);
-  
+
+  // Accessors for the member.
+  bool in_tmpl_mod_not_aliased (void) const;
+  void in_tmpl_mod_not_aliased (bool val);
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
@@ -384,6 +388,9 @@ private:
 
   // The scope in which our prefix, if any, was assigned.
   UTL_Scope *prefix_scope_;
+
+  bool in_tmpl_mod_not_aliased_;
+  // false by default - if true, we can't be referenced.
 
 private:
   void compute_full_name (UTL_ScopedName *n);

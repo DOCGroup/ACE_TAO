@@ -61,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     }
   while (true);
 
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -121,7 +121,7 @@ public:
           {
             int c = 0;
             {
-              ACE_Guard<ACE_Mutex> guard (this->mutex_);
+              ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->mutex_, 0);
               c = this->count_++;
             }
 

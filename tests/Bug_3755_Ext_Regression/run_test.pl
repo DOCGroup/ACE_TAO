@@ -10,6 +10,10 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
+$rt = 0;
+$rtsched = 0;
+$endpoint = 0;
+$diffserv = 0;
 $bidir = 0;
 $messaging = 0;
 $csd = 0;
@@ -18,6 +22,14 @@ $ziop = 0;
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    } elsif ($i eq '-rt') {
+        $rt = 1;
+    } elsif ($i eq '-rtsched') {
+        $rtsched = 1;
+    } elsif ($i eq '-endpoint') {
+        $endpoint = 1;
+    } elsif ($i eq '-diffserv') {
+        $diffserv = 1;
     } elsif ($i eq '-bidir') {
         $bidir = 1;
     } elsif ($i eq '-messaging') {
@@ -59,13 +71,25 @@ sub run_one_test {
 # Common tests.
 my @svcs = (
     ["PI_Server", "pi_server_svc.conf", "pi_server_svc.conf"],
-    ["RTCORBA", "rt_svc.conf", "rt_svc.conf"],
-    ["RTScheduler", "rt_scheduler_svc.conf", "rt_scheduler_svc.conf"],
-    ["EndpointPolicy", "ep_svc.conf", "ep_svc.conf"],
-    ["DiffservPolicy", "dp_svc.conf", "dp_svc.conf"]
 );
 
-if ($bidir) {
+if ($rt) {
+    @svcs = (
+        ["RTCORBA", "rt_svc.conf", "rt_svc.conf"],
+    );
+} elsif ($rtsched) {
+    @svcs = (
+        ["RTScheduler", "rt_scheduler_svc.conf", "rt_scheduler_svc.conf"],
+    );
+} elsif ($endpoint) {
+    @svcs = (
+        ["EndpointPolicy", "ep_svc.conf", "ep_svc.conf"],
+    );
+} elsif ($diffserv) {
+    @svcs = (
+        ["DiffServPolicy", "dp_svc.conf", "dp_svc.conf"]
+    );
+} elsif ($bidir) {
     @svcs = (
         ["BiDir_GIOP", "bidir_svc.conf", "bidir_svc.conf"],
     );

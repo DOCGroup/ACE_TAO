@@ -69,8 +69,8 @@ my $status = 0;
 sub print_output
 {
     my $output_file = $_[0];
-    open( TEST_OUTPUT, "< $output_file" ) or return -1;
-    while( <TEST_OUTPUT> ) {
+    open (TEST_OUTPUT, "< $output_file" ) or return -1;
+    while (<TEST_OUTPUT>) {
         print;
     }
     close (TEST_OUTPUT);
@@ -92,8 +92,8 @@ sub cleanup
         if (m/ImR Activator: Successfully started/) {
             chomp $_;
             my @words = split (/=/, $_);
-            push(@pids, $words[1]); 
-            ++ $i;         
+            push(@pids, $words[1]);
+            ++ $i;
         }
     }
     close (TEST_OUTPUT);
@@ -125,7 +125,7 @@ sub do_test
     }
 
     ## Wait a little bit for everything to get started
-    sleep(2);
+    sleep(10);
     print STDERR "Starting test_server -orbuseimr 1 $imr_initref\n";
 
     $SERV->Arguments ("-ORBLogFile $output_files[$id_serv_log] -orbuseimr 1 $imr_initref");
@@ -136,7 +136,7 @@ sub do_test
     }
 
     ## Wait a little bit for everything to get started
-    sleep(2);
+    sleep(10);
     print STDERR "Starting client\n";
 
     # The client should pass the simple test
@@ -183,7 +183,7 @@ sub do_test
         print "ERROR : Shutting down test server.\n";
         return $ret;
     }
-       
+
     # Both TestObject1 and TestObject2 should now show up as "not running"
     $IMRUTIL->Arguments ("-ORBLogFile $output_files[$id_imru_log] $imr_initref list -v");
     $ret = $IMRUTIL->SpawnWaitKill ($test->ProcessStartWaitInterval());

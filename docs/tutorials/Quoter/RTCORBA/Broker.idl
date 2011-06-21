@@ -16,7 +16,7 @@
 
 module Stock
 {
-  /** 
+  /**
    * @class StockBroker
    * @brief Provides interfaces for stock broker clients.
    */
@@ -33,7 +33,7 @@ module Stock
 
     /// Gets the current quoter connection.
     StockQuoter get_connection_quoter_info ();
-    
+
     /// Shutdown the object and terminate the application
     oneway void shutdown ();
   };
@@ -42,12 +42,12 @@ module Stock
    * @class StockBrokerHome
    * @brief Interface that aids in managing StockBroker lifecycles.
    */
-  interface StockBrokerHome 
+  interface StockBrokerHome
   {
     /// Create a StockBroker object.
     StockBroker create (in StockDistributor dist,
                         in string stock_name);
-  }; 
+  };
 };
 
 #endif

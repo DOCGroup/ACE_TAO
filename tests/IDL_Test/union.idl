@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    union.idl
-//
-// = DESCRIPTION
-//    This file contains examples of IDL code that has
-//    caused problems in the past for the TAO IDL
-//    compiler. This test is to make sure the problems
-//    stay fixed.
-//
-// = AUTHORS
-//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    union.idl
+ *
+ *  $Id$
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
 
 // Implicit default case
 
@@ -85,17 +82,6 @@ module UnionDiscTest
       case 'a': string value;
     };
 };
-
-// AnyUnion
-enum AnyUnionEnum {
-  ANYUNIONENUM2
-};
-
-union MyAnyUnion switch (AnyUnionEnum) {
-  case ANYUNIONENUM2:
-    any my_any;
-};
-
 
 // Nested unions
 
@@ -263,6 +249,8 @@ union TestUnion switch (short)
 // Test for various kinds of declarations inside a union,
 // similar to the example in enum_in_struct.idl.
 
+typedef long NamedLongArray[10];
+
 union decl_heavy_union switch (short)
 {
   case 1:
@@ -291,5 +279,18 @@ union decl_heavy_union switch (short)
       case 1: long a;
       case 2: char b;
     } m_un_arr[10];
+  // The following caused compile problems once
+  // when generating ostream ops
+  case 5:
+    NamedLongArray m_named_long_array;
+  case 6:
+    long m_anon_long_array[10];
+};
+
+// Tests CORBA::LongDouble implementation on platforms
+// without a native 16-byte long double.
+union ld_test switch (long)
+{
+  case 1: long double ld_mem;
 };
 

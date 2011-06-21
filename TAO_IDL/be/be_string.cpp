@@ -58,17 +58,17 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
   if (this->width () == 1)
     {
       *os << "\"\\\"\" << ";
-      
+
       this->be_type::gen_member_ostream_operator (os,
                                                   instance_name,
                                                   use_underscore,
                                                   accessor);
-      
+
       *os << " << \"\\\"\"";
     }
   else
     {
-      *os << "\"[\";" << be_nl << be_nl
+      *os << "\"[\";" << be_nl_2
           << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
           << instance_name
           << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl
@@ -142,7 +142,7 @@ be_string::compute_tc_name (void)
       ACE_NEW (id,
                Identifier (local_tc_name.c_str ()));
     }
-    
+
   zero.destroy ();
 
   UTL_ScopedName *conc_name = 0;

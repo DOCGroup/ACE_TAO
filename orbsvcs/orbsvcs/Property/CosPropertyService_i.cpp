@@ -14,7 +14,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(Property, CosPropertyService_i, "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

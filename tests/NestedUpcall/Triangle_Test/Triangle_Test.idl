@@ -1,20 +1,16 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/NestedUpcall/Triangle_Test
-//
-// = FILENAME
-//    Triangle_Test.idl
-//
-// = DESCRIPTION
-//    An example of how nested upcalls work/fail?
-//
-// = AUTHORS
-//    Michael Kircher
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Triangle_Test.idl
+ *
+ *  $Id$
+ *
+ *  An example of how nested upcalls work/fail?
+ *
+ *
+ *  @author Michael Kircher
+ */
+//=============================================================================
+
 
 
 interface Initiator {
@@ -26,13 +22,17 @@ interface Initiator {
 interface Object_A {
 
   void foo (in Initiator theInitiator);
-  
+
   oneway void finish ();
+
+  oneway void shutdown ();
 
 };
 
 interface Object_B {
 
   void foo (in Object_A theObject_A);
+
+  oneway void shutdown ();
 
 };

@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/RTScheduling/Current.h"
 #include "tao/RTScheduling/Distributable_Thread.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
@@ -7,11 +10,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
-
-
-ACE_RCSID (RTScheduling,
-           Current,
-           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

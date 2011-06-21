@@ -1,24 +1,21 @@
-// $Id$
 
-// ================================================================
-//
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client implementation.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client implementation.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID(Generic_Servant, client, "$Id$")
 
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 static int shutdown_server = 0;

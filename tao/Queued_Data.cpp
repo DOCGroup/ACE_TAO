@@ -1,3 +1,6 @@
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Queued_Data.h"
 #include "tao/debug.h"
 

@@ -3,7 +3,7 @@
 #include "Clerk_i.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(TimeService, Time_Service_Clerk, "$Id$")
+
 
 // This is the main driver program for the Time Service clerk.
 

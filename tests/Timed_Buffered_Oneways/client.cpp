@@ -1,18 +1,18 @@
-// $Id$
 
-// ================================================================
-//
-// = FILENAME
-//     client.cpp
-//
-// = DESCRIPTION
-//     This is a client that uses oneways with buffering constraints
-//     and roundtrip timeout constraints.
-//
-// = AUTHOR
-//     Irfan Pyarali
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file     client.cpp
+ *
+ *  $Id$
+ *
+ *   This is a client that uses oneways with buffering constraints
+ *   and roundtrip timeout constraints.
+ *
+ *
+ *  @author  Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "testC.h"
 
@@ -24,8 +24,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
-
-ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 
 // Eager buffering option.
 static int eager_buffering = 0;

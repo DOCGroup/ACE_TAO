@@ -149,7 +149,7 @@ run_service_command (Options& opts)
       int ret = SERVICE::instance ()->remove ();
       ACE_DEBUG ((LM_DEBUG, "ImR: Service removed.\n"));
       if (ret == 0)
-        return 1; // If successfull, then we don't want to continue.
+        return 1; // If successful, then we don't want to continue.
     }
   else
     {

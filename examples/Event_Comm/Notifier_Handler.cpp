@@ -3,8 +3,6 @@
 #include "Notifier_Handler.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID(Supplier, Notifier_Handler, "$Id$")
-
 Notifier_Handler::Notifier_Handler (void)
 {
   // No-Op.

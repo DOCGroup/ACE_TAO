@@ -6,8 +6,6 @@
 
 #include "tao/RTCORBA/RT_ORB_Loader.h"
 
-ACE_RCSID (RTCORBA, RTCORBA, "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RTCORBA_Initializer::TAO_RTCORBA_Initializer (void)

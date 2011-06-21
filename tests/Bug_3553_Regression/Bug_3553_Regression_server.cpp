@@ -4,10 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
 
-ACE_RCSID (Hello,
-           server,
-           "$Id$")
-
 int cache_size = 512;
 
 int

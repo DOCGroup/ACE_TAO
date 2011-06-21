@@ -28,7 +28,7 @@ private:
   /// Use an ORB reference to conver strings to objects and shutdown
   /// the application.
   CORBA::ULong length_;
-  
+
   CORBA::ORB_var orb_;
 };
 

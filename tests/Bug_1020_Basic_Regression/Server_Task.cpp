@@ -1,10 +1,6 @@
+// $Id$
+
 #include "Server_Task.h"
-
-
-ACE_RCSID (Bug_1020_Basic_Regression,
-           Server_Task,
-           "$Id$")
-
 
 Server_Task::Server_Task (Test::Echo_ptr echo,
                           size_t sz)

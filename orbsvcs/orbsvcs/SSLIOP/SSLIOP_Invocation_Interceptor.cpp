@@ -1,3 +1,5 @@
+// $Id$
+
 #include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 
@@ -11,11 +13,6 @@
 #if defined (SSLIOP_DEBUG_PEER_CERTIFICATE)
 #include <openssl/x509.h>   // @@ For debugging code below
 #endif /* SSLIOP_DEBUG_PEER_CERTIFICATE */
-
-ACE_RCSID (SSLIOP,
-           SSLIOP_Invocation_Interceptor,
-           "$Id$")
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

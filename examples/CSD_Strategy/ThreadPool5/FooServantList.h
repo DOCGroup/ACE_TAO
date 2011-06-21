@@ -32,16 +32,12 @@ class FooServantList
     void deactivate_servant (void);
 
   private:
-
-    typedef TAO_SYNCH_MUTEX     LockType;
-    typedef ACE_Guard<LockType> GuardType;
-
     Foo_i** servants_;
     PortableServer::ServantBase_var* safe_servants_;
     ACE_TString prefix_;
     unsigned num_servants_;
 
-    LockType num_clients_lock_;
+    TAO_SYNCH_MUTEX num_clients_lock_;
     unsigned num_clients_;
     unsigned init_num_clients_;
     int      collocated_test_;

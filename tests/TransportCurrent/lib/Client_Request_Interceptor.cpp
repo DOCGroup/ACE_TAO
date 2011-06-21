@@ -1,10 +1,7 @@
 // -*- C++ -*-
+// $Id$
 
 #include "ace/Log_Msg.h"
-
-ACE_RCSID (ForwardRequest,
-           Client_Request_Interceptor,
-           "$Id$")
 
 #include "Current_TestC.h"
 #include "Client_Request_Interceptor.h"

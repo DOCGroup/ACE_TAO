@@ -1,4 +1,6 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
+
 #include "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
 #include "tao/Valuetype/AbstractBase.h"
 

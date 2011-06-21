@@ -19,7 +19,7 @@ foreach $i (@ARGV) {
 
 $synch_with_server_option = "";
 
-if ($ARGV[0] eq 'synch_with_server') { 
+if ($ARGV[0] eq 'synch_with_server') {
     $synch_with_server_option = "-s";
 }
 elsif ($ARGV[0] eq '') {

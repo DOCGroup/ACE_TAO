@@ -17,18 +17,18 @@ class be_emits : public virtual AST_Emits,
 public:
   be_emits (UTL_ScopedName *n,
             AST_Type *emits_type);
-            
+
   virtual ~be_emits (void);
-  
+
   // Non-virtual override of frontend method.
   be_eventtype *emits_type (void) const;
-  
+
   // Narrowing.
   DEF_NARROW_FROM_DECL (be_emits);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-  
+
   // Cleanup.
   virtual void destroy (void);
 };

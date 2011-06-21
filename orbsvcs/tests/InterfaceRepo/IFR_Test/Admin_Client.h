@@ -1,23 +1,20 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/tests/InterfaceRepo
-//
-// = FILENAME
-//    Admin_Client.h
-//
-// = DESCRIPTION
-//    This class tests the functionality of the IFR methods by inserting
-//    IR objects into the repository by hand, querying them, moving them,
-//    and destroying them.
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Admin_Client.h
+ *
+ *  $Id$
+ *
+ *  This class tests the functionality of the IFR methods by inserting
+ *  IR objects into the repository by hand, querying them, moving them,
+ *  and destroying them.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #if !defined (ADMIN_CLIENT_H)
 #define ADMIN_CLIENT_H
@@ -27,29 +24,32 @@
 
 const CORBA::ULong NUMBER_OF_TESTS = 11;
 
+/**
+ * @class Admin_Client
+ *
+ * @brief Administrating IFR Client Implementation
+ *
+ * Class wrapper for a client which puts the Interface Repository
+ * methods through their paces.
+ */
 class Admin_Client
 {
-  // = TITLE
-  //     Administrating IFR Client Implementation
-  //
-  // = DESCRIPTION
-  //     Class wrapper for a client which puts the Interface Repository
-  //     methods through their paces.
 public:
+  /// Constructor
   Admin_Client (void);
-  // Constructor
 
+  /// Destructor
   ~Admin_Client (void);
-  // Destructor
 
+  /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
-  // Initialize the ORB and get the IFR object reference.
 
+  /// Execute test code.
   int run (void);
-  // Execute test code.
 
 private:
+  /// The various IFR tests.
   void array_test (void);
   void enum_test (void);
   void alias_test (void);
@@ -61,35 +61,34 @@ private:
   void interface_test (void);
   void move_test (void);
   void module_test (void);
-  // The various IFR tests.
 
+  /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
-  // Process the command line arguments.
 
+  /// Array of pointers to the test functions.
   void (Admin_Client::*test_array_[NUMBER_OF_TESTS])(void);
-  // Array of pointers to the test functions.
 
+  /// Array of test names used in selection of one test.
   static const char *test_names_[];
-  // Array of test names used in selection of one test.
 
+  /// Flag to output results of IFR queries.
   CORBA::Boolean debug_;
-  // Flag to output results of IFR queries.
 
+  /// Are we running all the tests or just one?
   CORBA::Boolean all_tests_;
-  // Are we running all the tests or just one?
 
+  /// Array index of the selected test function.
   CORBA::ULong which_test_;
-  // Array index of the selected test function.
 
+  /// # of times to run each test.
   CORBA::ULong iterations_;
-  // # of times to run each test.
 
+  /// Storage of the ORB reference.
   CORBA::ORB_var orb_;
-  // Storage of the ORB reference.
 
+  /// Storage of the IFR reference.
   CORBA::Repository_var repo_;
-  // Storage of the IFR reference.
 };
 
 #endif /* ADMIN_CLIENT_H */

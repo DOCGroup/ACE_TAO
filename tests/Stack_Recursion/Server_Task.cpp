@@ -5,10 +5,6 @@
 #include "Server_Task.h"
 #include "Sender.h"
 
-ACE_RCSID(Stack_Recusrion,
-          Server_Task,
-          "$Id$")
-
 Server_Task::Server_Task (CORBA::ORB_ptr orb,
                           const Sender *sender,
                           ACE_Thread_Manager *thr_mgr)

@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/OctetSeq
-//
-// = FILENAME
-//    test.idl
-//
-// = DESCRIPTION
-//   Simple IDL file to test octet sequences.
-//
-// = AUTHORS
-//   Carlos O'Ryan <coryan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  $Id$
+ *
+ * Simple IDL file to test octet sequences.
+ *
+ *
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 module Test
 {

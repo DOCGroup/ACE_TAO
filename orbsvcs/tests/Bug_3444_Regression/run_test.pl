@@ -40,7 +40,7 @@ sub run_test {
 
     $test->DeleteFile($iorbase);
     $test->DeleteFile($log);
-    
+
     my($svc_conf);
     if ($test_conf ne ''){
         $tmp_test_conf = $test->LocalFile ($test_conf);

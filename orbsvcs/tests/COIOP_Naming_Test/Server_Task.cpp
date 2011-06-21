@@ -1,16 +1,10 @@
-//
 // $Id$
-//
+
 #include "Server_Task.h"
 #include "TestS.h"
 #include "Hello.h"
 
 #include "ace/Manual_Event.h"
-
-ACE_RCSID(Collocated_Test,
-          Server_Task,
-          "$Id$")
-
 
 Server_Task::Server_Task (CosNaming::NamingContext_ptr root_context,
                           CORBA::ORB_ptr sorb,

@@ -8,6 +8,8 @@
 #include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
+
+
 // ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

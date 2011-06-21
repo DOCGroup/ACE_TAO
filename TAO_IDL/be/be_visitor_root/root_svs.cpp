@@ -35,7 +35,7 @@ be_visitor_root_svs::visit_root (be_root *node)
                          ACE_TEXT ("failed to initialize\n")),
                         -1);
     }
-    
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -56,7 +56,7 @@ be_visitor_root_svs::init (void)
   int status =
     tao_cg->start_ciao_svnt_source (
       be_global->be_get_ciao_svnt_src_fname ());
-      
+
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

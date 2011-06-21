@@ -11,10 +11,6 @@
 #include "orbsvcs/AV/UDP.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (AV,
-           UDP,
-           "$Id$")
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------

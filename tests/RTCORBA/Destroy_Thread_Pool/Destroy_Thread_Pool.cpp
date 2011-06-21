@@ -5,8 +5,6 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../check_supported_priorities.cpp"
 
-ACE_RCSID(Destroy_Thread_Pools, Destroy_Thread_Pools, "$Id$")
-
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;

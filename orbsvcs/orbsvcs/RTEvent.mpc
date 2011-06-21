@@ -3,7 +3,7 @@
 
 project(RTEvent) : orbsvcslib, orbsvcs_output, install, svc_utils, tao_versioning_idl_defaults {
   sharedname   = TAO_RTEvent
-  idlflags    += -GT -Gstl \
+  idlflags    += -GT \
                  -Wb,stub_export_macro=TAO_RTEvent_Export \
                  -Wb,stub_export_include=orbsvcs/Event/event_export.h \
                  -Wb,skel_export_macro=TAO_RTEvent_Skel_Export \

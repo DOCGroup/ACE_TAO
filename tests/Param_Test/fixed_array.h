@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    fixed_array.h
-//
-// = DESCRIPTION
-//     Tests fixed size array
-//
-// = AUTHORS
-//      Aniruddha Gokhale
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    fixed_array.h
+ *
+ *  $Id$
+ *
+ *   Tests fixed size array
+ *
+ *
+ *  @author   Aniruddha Gokhale
+ */
+//=============================================================================
+
 
 #ifndef PARAM_TEST_FIXED_ARRAY_H
 #define PARAM_TEST_FIXED_ARRAY_H
@@ -27,58 +24,58 @@
 class Test_Fixed_Array
 {
 public:
+  /// ctor
   Test_Fixed_Array (void);
-  // ctor
 
+  /// dtor
   ~Test_Fixed_Array (void);
-  // dtor
 
+  /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
-  // run the SII test
 
+  /// return operation name
   const char *opname (void) const;
-  // return operation name
 
+  /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
-  // set values for parameters
 
+  /// reset values for CORBA
   int reset_parameters (void);
-  // reset values for CORBA
 
+  /// check if results are valid
   CORBA::Boolean check_validity (void);
-  // check if results are valid
 
+  /// check if results are valid. This is used for DII results
   CORBA::Boolean check_validity (CORBA::Request_ptr req);
-  // check if results are valid. This is used for DII results
 
+  /// print all the values
   void print_values (void);
-  // print all the values
 
+  /// invoke DII request with appropriate exception handling.
   void dii_req_invoke (CORBA::Request *);
-  // invoke DII request with appropriate exception handling.
 
 private:
+  /// compare arrays
   CORBA::Boolean compare (const Param_Test::Fixed_Array_slice *a1,
                           const Param_Test::Fixed_Array_slice *a2);
-  // compare arrays
 
+  /// print an array
   void print (const Param_Test::Fixed_Array_slice *a);
-  // print an array
 
+  /// operation name
   char *opname_;
-  // operation name
 
+  /// in parameter
   Param_Test::Fixed_Array in_;
-  // in parameter
 
+  /// inout parameter
   Param_Test::Fixed_Array inout_;
-  // inout parameter
 
+  /// out parameter
   Param_Test::Fixed_Array out_;
-  // out parameter
 
+  /// return value
   Param_Test::Fixed_Array_var ret_;
-  // return value
 };
 
 #endif /* PARAM_TEST_FIXED_ARRAY_H */

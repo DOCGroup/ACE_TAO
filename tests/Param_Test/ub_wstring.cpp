@@ -1,28 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    ub_wstring.cpp
-//
-// = DESCRIPTION
-//    tests unbounded wide strings
-//
-// = AUTHORS
-//      Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ub_wstring.cpp
+ *
+ *  $Id$
+ *
+ *  tests unbounded wide strings
+ *
+ *
+ *  @author   Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "helper.h"
 #include "ub_wstring.h"
 #include "ace/OS_NS_wchar.h"
-
-ACE_RCSID (Param_Test,
-           ub_wstring,
-           "$Id$")
 
 // ************************************************************************
 //               Test_Unbounded_WString

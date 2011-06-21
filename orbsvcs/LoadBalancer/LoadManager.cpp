@@ -1,9 +1,8 @@
+// $Id$
+
 #include "Signal_Handler.h"
-
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
-
 #include "tao/ORB_Core.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
@@ -14,15 +13,9 @@
 # include "ace/Signal.h"
 #endif /* linux && ACE_HAS_THREADS */
 
-
-ACE_RCSID (LoadBalancer,
-           LoadBalancer,
-           "$Id$")
-
-
 static const ACE_TCHAR *lm_ior_file = ACE_TEXT("lm.ior");
 static int ping_timeout_milliseconds = 2000;
-static int ping_interval_seconds = 0; 
+static int ping_interval_seconds = 0;
 
 void
 usage (const ACE_TCHAR * cmd)

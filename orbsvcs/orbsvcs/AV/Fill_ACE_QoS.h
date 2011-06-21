@@ -30,7 +30,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class Fill_ACE_QoS
- * 
+ *
  * This class helps users to add new flow specs and provides
  * utility functions for filling up the flow specs for simplex/duplex
  * sessions.

@@ -5,7 +5,7 @@
  *
  *  $Id$
  *
- *  @author Sumedh Mungee <sumedh@cs.wustl.edu> 
+ *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================
@@ -18,14 +18,14 @@
 
 #pragma prefix "omg.org"
 
-/** 
+/**
   * @brief  IDL for Control and Management of Audio/Video Streams
   *         Revised Submission.
-  */ 
+  */
 module AVStreams
 {
 
-  /** 
+  /**
    *  @struct QoS
    *  @brief  This structure represents QoS for a given type.
    *           E.g. {"video_qos", <"video_framerate", 26>,
@@ -40,7 +40,7 @@ module AVStreams
     /// Sequence of name value pairs, see e.g. above.
   };
 
-  /// The QoS of a stream is a sequence of QoS structs (defined above)  
+  /// The QoS of a stream is a sequence of QoS structs (defined above)
   typedef sequence<QoS> streamQoS;
 
   /// flowSpec is used to keep transport protocol information Each
@@ -72,7 +72,7 @@ module AVStreams
    *  @enum flowState
    *  @brief Represents the state of a flow
    */
-  enum flowState 
+  enum flowState
   {
     stopped,
     started,
@@ -83,13 +83,13 @@ module AVStreams
    *  @enum dirType
    *  @brief The direction of a flow.
    */
-  enum dirType 
+  enum dirType
   {
     dir_in,
     dir_out
   };
 
-  /** 
+  /**
    *  @struct flowStatus
    *  @brief Used to store the status of a flow.
    */
@@ -106,24 +106,24 @@ module AVStreams
   /// Used to convey events, in Basic_StreamCtrl::push_event.
   typedef CosPropertyService::Property streamEvent;
 
-  
-  exception notSupported 
+
+  exception notSupported
     {
       /// Used to indicate that an operation is not supported.
     };
 
-  exception PropertyException 
+  exception PropertyException
     {
       /// Property exception: raised by VDev::configure ().
     };
 
-  exception FPError 
-    { 
+  exception FPError
+    {
       /// An flow protocol related error.
-      string flow_name; 
+      string flow_name;
     };
 
-  
+
   exception streamOpFailed
     {
       /// Raised by operations on streams.
@@ -136,7 +136,7 @@ module AVStreams
       string reason;
     };
 
-  exception noSuchFlow 
+  exception noSuchFlow
     {
       /// Used to indicate that an invalid flow name was used for the
       /// operation.
@@ -163,41 +163,41 @@ module AVStreams
       /// Start the transfer of data in the stream. Empty the_spec
       /// means apply operation to all flows.
       void start (in flowSpec the_spec) raises (noSuchFlow);
-      
+
       /// Tears down the stream. This will close the connection, and
       /// delete the streamendpoint and vdev associated with this
       /// stream Empty the_spec means apply operation to all flows.
       void destroy (in flowSpec the_spec) raises (noSuchFlow);
-      
+
       /// Changes the QoS associated with the stream Empty the_spec
       /// means apply operation to all flows.
       boolean modify_QoS (inout streamQoS new_qos,
                           in flowSpec the_spec)
-        raises (noSuchFlow, 
+        raises (noSuchFlow,
                 QoSRequestFailed);
 
       /// Called by StreamEndPoint when something goes wrong with a
       /// flow.
       oneway void push_event (in streamEvent the_event);
-      
+
       /// Used to control the flow protocol parameters.
       void set_FPStatus (in flowSpec the_spec,
-                         in string fp_name,             
-                         in any fp_settings)            
-        raises (noSuchFlow, 
+                         in string fp_name,
+                         in any fp_settings)
+        raises (noSuchFlow,
                 FPError);
-      
+
       /// Not implemented in the light profile, will raise the
       /// notsupported exception.
-      Object get_flow_connection (in string flow_name) 
-        raises (noSuchFlow, 
+      Object get_flow_connection (in string flow_name)
+        raises (noSuchFlow,
                 notSupported);
-      
+
       /// Not implemented in the light profile, will raise the
       /// notsupported exception.
       void set_flow_connection (in string flow_name,
                                 in Object flow_connection)
-        raises (noSuchFlow, 
+        raises (noSuchFlow,
                 notSupported);
     };
 
@@ -226,33 +226,33 @@ module AVStreams
    *          is used to control the stream. It should be subclassed
    *          by applications that want to provide more control features.
    */
-  interface StreamCtrl : Basic_StreamCtrl 
+  interface StreamCtrl : Basic_StreamCtrl
     {
-      
+
       boolean bind_devs (in MMDevice a_party, in MMDevice b_party,
                          inout streamQoS the_qos,
                          in flowSpec the_flows)
-        raises (streamOpFailed, 
-                noSuchFlow, 
+        raises (streamOpFailed,
+                noSuchFlow,
                 QoSRequestFailed);
       /// Establish a stream between a_party and b_party, with qos
       /// the_qos, and for the flows in the_flows if the_flows is
       /// empty, bind all the flows Causes a connection to be
       /// established between the StreamEndpoints.  Returns
       /// success/failure
-      
+
       boolean bind (in StreamEndPoint_A a_party,
                     in StreamEndPoint_B b_party,
                     inout streamQoS the_qos,
                     in flowSpec the_flows)
-        raises (streamOpFailed, 
-                noSuchFlow, 
+        raises (streamOpFailed,
+                noSuchFlow,
                 QoSRequestFailed);
       /// Establish a connection between two streamendpoints. This can
       /// be used if the streamendpoints have been created independent
       /// of a MMDevice
-      
-      void unbind_dev(in MMDevice dev, in flowSpec the_spec) 
+
+      void unbind_dev(in MMDevice dev, in flowSpec the_spec)
         raises (streamOpFailed, noSuchFlow);
 
       /// Unbind the_ep from the stream. Empty the_spec means apply to
@@ -265,8 +265,8 @@ module AVStreams
       void unbind ()
         raises (streamOpFailed);
 
-      VDev get_related_vdev(in MMDevice adev, 
-                            out StreamEndPoint sep) 
+      VDev get_related_vdev(in MMDevice adev,
+                            out StreamEndPoint sep)
         raises (streamOpFailed);
 
     };
@@ -276,27 +276,27 @@ module AVStreams
    *  @brief Interface for multicasting operations.
    */
   interface MCastConfigIf : CosPropertyService::PropertySet{
-      /// Set a peer in the multicast tree.     
+      /// Set a peer in the multicast tree.
       boolean set_peer (in Object peer,
                         inout streamQoS the_qos,
                         in flowSpec the_spec)
-        raises (QoSRequestFailed, 
+        raises (QoSRequestFailed,
                 streamOpFailed);
 
-      /// Configure the multicast stream.      
+      /// Configure the multicast stream.
       void configure (in CosPropertyService::Property a_configuration);
 
-      /// Sets the initial configuration to be used for all added peers.     
+      /// Sets the initial configuration to be used for all added peers.
       void set_initial_configuration (in CosPropertyService::Properties initial);
 
-      
+
       /// Uses <format_name> standardised by OMG and IETF
       /// Multicasting operations are not supported yet.
-      void set_format (in string flowName, 
+      void set_format (in string flowName,
                        in string format_name)
         raises (notSupported);
 
-      
+
       /// Note, some of these device params are standardised by OMG
       /// Multicasting operations are not supported yet.
       void set_dev_params (in string flowName,
@@ -316,25 +316,25 @@ module AVStreams
   interface StreamEndPoint : CosPropertyService::PropertySet{
 
       /// Stop the stream. Empty the_spec means, for all the flows.
-      void stop (in flowSpec the_spec) 
+      void stop (in flowSpec the_spec)
         raises (noSuchFlow);
 
-      /// Start the stream, Empty the_spec means, for all the flows.      
-      void start (in flowSpec the_spec) 
+      /// Start the stream, Empty the_spec means, for all the flows.
+      void start (in flowSpec the_spec)
         raises (noSuchFlow);
 
-      /// Destroy the stream, Empty the_spec means, for all the flows.      
-      void destroy (in flowSpec the_spec) 
+      /// Destroy the stream, Empty the_spec means, for all the flows.
+      void destroy (in flowSpec the_spec)
         raises (noSuchFlow);
-      
+
       /// Called by StreamCtrl. responder is the peer to connect with.
       boolean connect (in StreamEndPoint responder,
                        inout streamQoS qos_spec,
                        in flowSpec the_spec)
-        raises (noSuchFlow, 
-                QoSRequestFailed, 
+        raises (noSuchFlow,
+                QoSRequestFailed,
                 streamOpFailed);
-      
+
       /// Called by the peer StreamEndPoint. The flow_spec indicates
       /// the flows (which contain transport addresses etc.).
       boolean request_connection (in StreamEndPoint initiator,
@@ -343,51 +343,51 @@ module AVStreams
                                   inout flowSpec the_spec)
         raises (streamOpDenied, noSuchFlow,
                 QoSRequestFailed, FPError);
-      
+
       /// Change the transport qos on a stream.
       boolean modify_QoS (inout streamQoS new_qos,
                           in flowSpec the_flows)
-        raises (noSuchFlow, 
+        raises (noSuchFlow,
                 QoSRequestFailed);
-      
+
       /// Used to restrict the set of protocols.
       boolean set_protocol_restriction (in protocolSpec the_pspec);
-      
+
       /// Disconnect the flows.
       void disconnect(in flowSpec the_spec)
-        raises (noSuchFlow, 
+        raises (noSuchFlow,
                 streamOpFailed);
-      
+
       /// Used to control the SFP parameters.
       void set_FPStatus (in flowSpec the_spec,
                          in string fp_name,
                          in any fp_settings)
-        raises (noSuchFlow, 
+        raises (noSuchFlow,
                 FPError);
 
       /// Not implemented in the light profile, throws notsupported.
       Object get_fep (in string flow_name)
-        raises (notSupported, 
+        raises (notSupported,
                 noSuchFlow);
-      
+
       /// Not implemented in the light profile, throws notsupported.
       string add_fep (in Object the_fep)
         /// Can fail for reasons {duplicateFepName, duplicateRef}
-        raises (notSupported, 
+        raises (notSupported,
                 streamOpFailed);
-      
+
       /// Not implemented in the light profile, throws notsupported.
       void remove_fep (in string fep_name)
-        raises (notSupported, 
+        raises (notSupported,
                 streamOpFailed);
-      
+
       /// Used to "attach" a negotiator to the endpoint.
       void set_negotiator (in Negotiator new_negotiator);
 
       /// Used for public key encryption.
-      void set_key (in string flow_name, 
+      void set_key (in string flow_name,
                     in key the_key);
-    
+
       /// Used to set a unique id for packets sent by this
       /// streamendpoint.
       void set_source_id (in long source_id);
@@ -421,7 +421,7 @@ module AVStreams
    *  @interface StreamEndPoint_B
    *  @brief The "B" side of a streamendpoint.
    */
-  interface StreamEndPoint_B : StreamEndPoint 
+  interface StreamEndPoint_B : StreamEndPoint
     {
       /// Used for ATM-style multicast.
       boolean multiconnect (inout streamQoS the_qos,
@@ -443,8 +443,8 @@ module AVStreams
                         in VDev the_peer_dev,
                         inout streamQoS the_qos,
                         in flowSpec the_spec)
-        raises (noSuchFlow, 
-                QoSRequestFailed, 
+        raises (noSuchFlow,
+                QoSRequestFailed,
                 streamOpFailed);
 
       /// Used to set the streamctrl and multicast device.
@@ -452,18 +452,18 @@ module AVStreams
                               in MCastConfigIf a_mcastconfigif,
                               inout streamQoS the_qos,
                               in flowSpec the_spec)
-        raises (noSuchFlow, 
-                QoSRequestFailed, 
+        raises (noSuchFlow,
+                QoSRequestFailed,
                 streamOpFailed);
 
       /// Called by the peer VDev to configure the device (catch all).
       void configure (in CosPropertyService::Property the_config_mesg)
-        raises (PropertyException, 
+        raises (PropertyException,
                 streamOpFailed);
 
       /// Uses <formatName> standardised by OMG and IETF
       /// Used to set a format on a flowname.
-      void set_format (in string flowName, 
+      void set_format (in string flowName,
                        in string format_name)
         raises (notSupported);
 
@@ -471,23 +471,23 @@ module AVStreams
       /// Used to set device parameters.
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)
-        raises (PropertyException, 
+        raises (PropertyException,
                 streamOpFailed);
 
       /// Called to change QoS of the device.
       boolean modify_QoS (inout streamQoS the_qos,
                           in flowSpec the_spec)
-        raises (noSuchFlow, 
+        raises (noSuchFlow,
                 QoSRequestFailed);
 
 
     };
 
-  /** 
+  /**
    *  @interface MMDevice
    *  @brief Implements a factory to create Endpoints and VDevs.
    */
-  interface MMDevice : CosPropertyService::PropertySet 
+  interface MMDevice : CosPropertyService::PropertySet
     {
       /// Called by StreamCtrl to create a "A" type streamendpoint and
       /// vdev.
@@ -497,10 +497,10 @@ module AVStreams
                                  out boolean met_qos,
                                  inout string named_vdev,
                                  in flowSpec the_spec)
-        raises (streamOpFailed, 
-                streamOpDenied, 
+        raises (streamOpFailed,
+                streamOpDenied,
                 notSupported,
-                QoSRequestFailed, 
+                QoSRequestFailed,
                 noSuchFlow);
 
       /// Called by StreamCtrl to create a "B" type streamendpoint and
@@ -511,50 +511,50 @@ module AVStreams
                                 out boolean met_qos,
                                 inout string named_vdev,
                                 in flowSpec the_spec)
-        raises (streamOpFailed, 
-                streamOpDenied, 
+        raises (streamOpFailed,
+                streamOpDenied,
                 notSupported,
-                QoSRequestFailed, 
+                QoSRequestFailed,
                 noSuchFlow);
-    
+
       /// Can be used to request the MMDevice to create a new
       /// StreamCtrl, and call bind_devs on it.
       StreamCtrl bind (in MMDevice peer_device,
                        inout streamQoS the_qos,
                        out boolean is_met,
                        in flowSpec the_spec)
-        raises (streamOpFailed, 
-                noSuchFlow, 
+        raises (streamOpFailed,
+                noSuchFlow,
                 QoSRequestFailed);
-    
+
       /// Multicast bind.
       StreamCtrl bind_mcast (in MMDevice first_peer,
                              inout streamQoS the_qos,
                              out boolean is_met,
                              in flowSpec the_spec)
-        raises (streamOpFailed, 
-                noSuchFlow, 
+        raises (streamOpFailed,
+                noSuchFlow,
                 QoSRequestFailed);
 
       /// Remove the StreamEndPoint and the related vdev.
-      void destroy (in StreamEndPoint the_ep, 
+      void destroy (in StreamEndPoint the_ep,
                     in string vdev_name)
         // ie VDev not found
         raises (notSupported);
-     
+
       /// Not supported in the light profile, raises notsupported.
       string add_fdev (in Object the_fdev)
-        raises (notSupported, 
+        raises (notSupported,
                 streamOpFailed);
 
       /// Not supported in the light profile, raises notsupported.
       Object get_fdev (in string flow_name)
-        raises (notSupported, 
+        raises (notSupported,
                 noSuchFlow);
 
       /// Not supported in the light profile, raises notsupported.
       void remove_fdev (in string flow_name)
-        raises (notSupported, 
+        raises (notSupported,
                 noSuchFlow,
                 streamOpFailed);
     };
@@ -593,8 +593,8 @@ module AVStreams
 
     boolean connect_devs(in FDev a_party, in FDev b_party,
                          inout AVStreams::QoS the_qos)
-      raises (AVStreams::streamOpFailed, 
-              AVStreams::streamOpDenied, 
+      raises (AVStreams::streamOpFailed,
+              AVStreams::streamOpDenied,
               AVStreams::QoSRequestFailed);
 
     boolean connect(in FlowProducer flow_producer,
@@ -639,7 +639,7 @@ module AVStreams
                                 in any fp_settings)
         raises (AVStreams::FPError, AVStreams::notSupported);
 
-      /// set_format() initializes ÅÎformatÅÌ 
+      /// set_format() initializes ÅÎformatÅÌ
       /// as current media format e.g. MPEG.
       void set_format(in string format)
         raises (AVStreams::notSupported);
@@ -647,11 +647,11 @@ module AVStreams
       void set_dev_params(in CosPropertyService::Properties new_settings)
         //      raises (CosPropertyService::PropertyException, AVStreams::streamOpFailed);
         raises (PropertyException, AVStreams::streamOpFailed);
-      
+
       void set_protocol_restriction(in AVStreams::protocolSpec the_spec)
         raises (AVStreams::notSupported);
 
-      boolean is_fep_compatible(in FlowEndPoint fep) 
+      boolean is_fep_compatible(in FlowEndPoint fep)
         raises (formatMismatch, deviceQosMismatch);
 
       boolean set_peer(in FlowConnection the_fc,
@@ -679,7 +679,7 @@ module AVStreams
                           inout string flowProtocol)// syntax <flowProtocol>
         // The out value of flowProtocol contains SFP version
         // supported and all options including "Credit".
-        raises(failedToListen, AVStreams::FPError, 
+        raises(failedToListen, AVStreams::FPError,
                AVStreams::QoSRequestFailed);
     };
 
@@ -758,7 +758,7 @@ module AVStreams
 
   /**
    *  @interface MediaControl
-   *  @brief MediaControl interface is similar to ControlledStream 
+   *  @brief MediaControl interface is similar to ControlledStream
    *         interface in MSS.  It can be inherited by flow endpoints or
    *         FlowConnection interfaces.
    */

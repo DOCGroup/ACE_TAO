@@ -1,4 +1,5 @@
-//$Id$
+// -*- C++ -*-
+// $Id$
 
 #include "tao/Invocation_Adapter.h"
 #include "tao/Profile_Transport_Resolver.h"
@@ -351,8 +352,7 @@ namespace TAO
       nil_forward_ref = true;
     else
       {
-        stubobj =
-          effective_target->_stubobj ();
+        stubobj = effective_target->_stubobj ();
 
         if (stubobj && stubobj->base_profiles ().size () == 0)
           nil_forward_ref = true;

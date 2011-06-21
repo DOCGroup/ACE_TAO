@@ -3,8 +3,6 @@
 //
 #include "Server_Task.h"
 
-ACE_RCSID(AMI_Latency, Server_Task, "$Id$")
-
 Server_Task::Server_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "be_enum.h"
 #include "be_type.h"
 #include "be_typedef.h"
@@ -47,6 +46,4 @@
 #include "be_visitor_array/any_op_cs.cpp"
 #include "be_visitor_array/cdr_op_ch.cpp"
 #include "be_visitor_array/cdr_op_cs.cpp"
-#include "be_visitor_array/serializer_op_ch.cpp"
-#include "be_visitor_array/serializer_op_cs.cpp"
 

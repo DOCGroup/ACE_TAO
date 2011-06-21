@@ -10,7 +10,6 @@
 
 #include "tao/RTScheduling/RTScheduler.h"
 #include "orbsvcs/CosNamingC.h"
-#include "tao/Utils/Servant_Var.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
@@ -106,7 +105,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   ACE_TString file_name_;
   ACE_TString log_file_name_;
   ACE_UINT32 gsf_;
-  TAO::Utils::Servant_Var<Synch_i> synch_;
+  PortableServer::Servant_var<Synch_i> synch_;
 };
 
 

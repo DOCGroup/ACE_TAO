@@ -1,59 +1,58 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Simple/time
-//
-// = FILENAME
-//    Time_i.h
-//
-// = DESCRIPTION
-//    This class implements the Time IDL interface.
-//
-// = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Time_i.h
+ *
+ *  $Id$
+ *
+ *  This class implements the Time IDL interface.
+ *
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TIME_I_H
 #define TIME_I_H
 
 #include "TimeS.h"
 
+/**
+ * @class Time_i:
+ *
+ * @brief Time Object Implementation
+ *
+ * Implementation of a simple object that has two methods, one that
+ * return the current time/date on the server and the other that
+ * shuts down the server.
+ */
 class Time_i: public POA_Time
 {
-  // = TITLE
-  //    Time Object Implementation
-  //
-  // = DESCRIPTION
-  //    Implementation of a simple object that has two methods, one that
-  //    return the current time/date on the server and the other that
-  //    shuts down the server.
 public:
   // = Initialization and termination methods.
+  /// Constructor
   Time_i (void);
-  // Constructor
 
+  /// Destructor
   virtual ~Time_i (void);
-  // Destructor
 
+  /// Return the current time/date on the server
   virtual CORBA::Long current_time (void);
-  // Return the current time/date on the server
 
+  /// Shutdown the server.
   virtual void shutdown (void);
-  // Shutdown the server.
 
+  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
-  // Set the ORB pointer.
 
 private:
+  /// ORB pointer.
   CORBA::ORB_var orb_;
-  // ORB pointer.
 
+  /// Keeping g++2.7.2
   ACE_UNIMPLEMENTED_FUNC (void operator= (const Time_i &))
-  // Keeping g++2.7.2
 };
 
 #endif /* TIME_I_H */

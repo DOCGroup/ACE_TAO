@@ -52,7 +52,7 @@ $tao_ifr_result_file     = $ifr_service->LocalFile ($result_files[1]);
 $ifr_service->DeleteFile ($result_files[0]);
 $tao_ifr->DeleteFile ($result_files[1]);
 
-$IFRSERVICE = $ifr_service->CreateProcess("$ifr_bin_path/IFR_Service", "-ORBdebuglevel $debug_level ".
+$IFRSERVICE = $ifr_service->CreateProcess("$ifr_bin_path/tao_ifr_service", "-ORBdebuglevel $debug_level ".
                                          "-ORBLogFile $ifr_service_result_file ".
                                          "-o $ifr_service_iorfile");
 $TAOIFR = $tao_ifr->CreateProcess("$tao_ifr_bin_path/tao_ifr", "-ORBLogFile $tao_ifr_result_file ".
