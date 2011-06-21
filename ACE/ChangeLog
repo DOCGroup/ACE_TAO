@@ -1,3 +1,11 @@
+Tue Jun 21 18:14:46 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Basic_Types.h:
+
+          Fixed typo in ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          decision tree. Thanks to Phil Mesnier <mesnier_p@ociweb.com>
+          for his help in connecting it to scoreboard warnings.
+
 Mon Jun 20 17:39:01 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Basic_Types.h:
