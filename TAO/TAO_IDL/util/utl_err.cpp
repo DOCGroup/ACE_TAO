@@ -185,7 +185,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_ANONYMOUS_ERROR:
       return "Error: anonymous types are deprecated by OMG spec";
     case UTL_Error::EIDL_ANONYMOUS_WARNING:
-      return "Warning - anonymous tyes are deprecated by OMG spec";
+      return "Warning - anonymous types are deprecated by OMG spec";
     case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
       return "enumerator expected: ";
     case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:

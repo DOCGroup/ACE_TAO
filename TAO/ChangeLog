@@ -1,3 +1,8 @@
+Tue Jun 21 13:07:15 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Fixed typo.
+
 Thu Jun 16 15:30:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/constants.idl:
