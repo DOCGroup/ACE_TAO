@@ -1,0 +1,41 @@
+// -*- IDL -*-
+// $Id$
+
+#include "LWFTDataStructures.idl"
+#include "StateSynchronizationAgent.idl"
+#include "FaultNotification.idl"
+
+typedef sequence<string> HostList;
+
+struct RankListConstraint
+{
+  string object_id;
+  HostList hosts;
+};
+
+typedef sequence<RankListConstraint> RankListConstraints;
+
+interface ReplicationManager : ReplicatedApplication, FLARE::FaultNotifier
+{
+  RankList register_agent (in Object agent_reference);
+  
+  void register_application (in string object_id,
+                             in double load,
+                             in string host_id,
+                             in string process_id, 
+                             in short role,
+                             in Object server_reference);
+
+  void set_ranklist_constraints (in RankListConstraints constraints);
+
+  RankList register_state_synchronization_agent (
+    in string host_id,
+    in string process_id,
+    in StateSynchronizationAgent agent);
+    
+  void util_update (in string host_id, in double utilization);
+  
+  void proc_failure (in string process_id);
+  
+  Object get_next (in string object_id);
+};
