@@ -527,13 +527,10 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.usval, 'U');
       break;
     case AST_Expression::EV_long:
-      this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII,
-                                  ev->u.lval);
+      this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.lval);
       break;
     case AST_Expression::EV_ulong:
-      this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c",
-                                  ev->u.ulval,
-                                  'U');
+      this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
       break;
     // The ACE_LACKS_LONGLONG_T guards have been removed around
     // the next 2 cases since the macros now used should work
@@ -551,14 +548,12 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_float:
-      this->TAO_OutStream::print ("%#gF", ev->u.fval);
+      this->TAO_OutStream::print ("%f%c", ev->u.fval, 'F');
       break;
     case AST_Expression::EV_double:
-      this->TAO_OutStream::print ("%#24.16G", ev->u.dval);
+      this->TAO_OutStream::print ("%24.16G", ev->u.dval);
       break;
     case AST_Expression::EV_longdouble:
-      this->TAO_OutStream::print (ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII,
-                                  ev->u.ldval);
       break;
     case AST_Expression::EV_char:
       // isprint() sees \ and ' as printable characters

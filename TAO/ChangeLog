@@ -1,3 +1,21 @@
+Wed Jun 22 18:25:21 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+        * tests/LongDouble/client.cpp:
+        * tests/IDL_Test/constants.idl:
+        * tests/IDL_Test/union.idl:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * NEWS:
+
+          Reverted all changes related to support for long double
+          constants in IDL.
+
 Wed Jun 22 15:15:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
