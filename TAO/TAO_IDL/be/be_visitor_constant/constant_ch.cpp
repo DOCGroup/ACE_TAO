@@ -126,16 +126,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   if (!node->is_nested ()
       || (be_global->gen_inline_constants () && !forbidden_in_class))
     {
-      if (etype == AST_Expression::EV_longdouble)
-        {
-          *os << " (" << be_idt_nl
-              << "ACE_CDR::LongDoubleAssign ("
-              << node->constant_value () << "))" << be_uidt;
-        }
-      else
-        {
-          *os << " = " << node->constant_value ();
-        }
+      *os << " = " << node->constant_value ();
     }
 
   *os << ";";

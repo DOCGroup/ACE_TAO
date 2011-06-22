@@ -283,7 +283,7 @@ namespace TAO
         break;
       case CORBA::tk_longdouble:
         {
-          CORBA::LongDouble tmp (ACE_CDR::LongDoubleAssign (0.0L));
+          CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
                           0);

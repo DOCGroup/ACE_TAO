@@ -287,10 +287,3 @@ union decl_heavy_union switch (short)
     long m_anon_long_array[10];
 };
 
-// Tests CORBA::LongDouble implementation on platforms
-// without a native 16-byte long double.
-union ld_test switch (long)
-{
-  case 1: long double ld_mem;
-};
-

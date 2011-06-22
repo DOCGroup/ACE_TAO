@@ -119,9 +119,7 @@ public:
       , EK_longlong
       , EK_ulonglong
       , EK_octet
-      , EK_float
-      , EK_double
-      , EK_longdouble
+      , EK_floating_point
     };
 
   // Enum to define expression type.
@@ -170,11 +168,11 @@ public:
           ACE_CDR::Long       lval;     // Contains long expression value.
           ACE_CDR::ULong      ulval;    // Contains unsigned long expr value.
           ACE_CDR::Boolean    bval;     // Contains boolean expression value.
-          ACE_CDR::LongLong   llval;    // Contains long long expr value.
+          ACE_CDR::LongLong   llval;   // Contains long long expr value.
 #if  defined (ACE_LACKS_UNSIGNEDLONGLONG_T) && ! defined (ACE_LACKS_LONGLONG_T)
-          ACE_CDR::LongLong   ullval;   // Contains unsigned long long expr value
+          ACE_CDR::LongLong   ullval; // Contains unsigned long long expr value
 #elif ! defined (ACE_LACKS_LONGLONG_T)
-          ACE_CDR::ULongLong  ullval;   // Contains unsigned long long expr value.
+          ACE_CDR::ULongLong  ullval;  // Contains unsigned long long expr value.
 #endif /* defined (ACE_LACKS_UNSIGNEDLONGLONG_T) && ! defined (ACE_LACKS_LONGLONG_T) */
           ACE_CDR::Float      fval;     // Contains 32-bit float expr value.
           ACE_CDR::Double     dval;     // Contains 64-bit float expr value.
@@ -184,17 +182,12 @@ public:
           UTL_String          *strval;  // Contains String * expr value.
           char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
-#if defined (NONNATIVE_LONGDOUBLE)
-          ACE_CDR::LongDouble::NativeImpl ldval; // Contains long double value.
-#else
-          ACE_CDR::LongDouble ldval;    // Contains long double value.
-#endif // defined (NONNATIVE_LONGDOUBLE)
         } u;
 
       ExprType et;
     };
 
-  // Operations.
+ // Operations.
 
   // Constructor(s).
   AST_Expression (AST_Expression *v,
