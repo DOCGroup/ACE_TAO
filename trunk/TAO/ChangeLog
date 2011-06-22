@@ -1,3 +1,20 @@
+Wed Jun 22 15:15:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Ensure the naming service can use the CSD_TP strategy if necessary.
+          Since the naming service is single threaded, it can become a
+          bottleneck when there is very heavy use.
+
+          The need for this change may also indicate a problem with the
+          CSD strategy implementation. It appears that the thread pool at
+          least is only initialized when the POA Manager is activated. If
+          A POA is created with using a POA Manager already in the active
+          state, the TP is not initialized. Alternatively this might be a
+          problem with the POA creation, that create_POA can be supplied a
+          POA Manager that is already been activated, and the new POA is
+          itself instantly active.
+
 Wed Jun 22 14:49:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/BiDirectional/run_test.pl:
