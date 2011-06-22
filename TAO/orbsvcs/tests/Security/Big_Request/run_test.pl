@@ -7,21 +7,91 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use Getopt::Long;
 
 $status = 0;
+$opt = "";
 $debug_level = '0';
 $svc_conf = $PerlACE::svcconf_ext;
+$conf_client = "";
+$conf_server = "";
+
+sub options () {
+    my $help = 0;     # handled locally
+    my $man = 0;      # handled locally
+    my $ssl = 1;      # handled locally
+    my $dotdec = 0;   # handled locally
+    my $debug;        # handled locally
+    my $shost;        # handled locally
+    my $chost;        # handled locally
+    my $clog;         # handled locally
+    my $slog;         # handled locally
+
+    # Process options.
+    if ( @ARGV > 0 ) {
+        GetOptions ('help|?' => \$help,
+                'manual' => \$man,
+                'ssl' => \$ssl,
+                'dd=s' => \$dotdec,
+                'shost=s' => \$shost,
+                'chost=s' => \$chost,
+                'slog=s' => \$slog,
+                'clog=s' => \$clog,
+                'debug=i' => \$debug) or pod2usage(2);
+    }
+
+    if ($ssl) {
+        $conf_client = " -ORBSvcConf client$svc_conf";
+        $conf_server = " -ORBSvcConf server$svc_conf";
+    }
+
+    if ($debug) {
+        $opt = "$opt -ORBDebugLevel $debug";
+    }
+
+    if ($dotdec) {
+        if ($dotdec =~ /client/) {
+            $conf_client = "$conf_client -ORBDottedDecimalAddresses 1";
+        }
+        if ($dotdec =~ /server/) {
+            $conf_server = "$conf_server -ORBDottedDecimalAddresses 1";
+        }
+    }
+
+    if ($slog) {
+        $conf_server = "$conf_server -ORBLogFile $slog";
+    }
+
+    if ($clog) {
+        $conf_client = "$conf_client -ORBLogFile $clog";
+    }
+
+    if ($shost) {
+        $conf_server = "$conf_server -ORBListenEndpoints iiop:///hostname_in_ior=$shost";
+    }
+
+    if ($chost) {
+       $conf_client = "$conf_client -ORBListenEndpoints iiop:///hostname_in_ior=$chost";
+    }
+
+    if ( $man or $help ) {
+        # Load Pod::Usage only if needed.
+        require "Pod/Usage.pm";
+        import Pod::Usage;
+        pod2usage(1) if $help;
+        pod2usage(VERBOSE => 2) if $man;
+        return 0;
+    }
+    return 1;
+}
+
+options () or die "Error: Nothing executed";
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
     }
 }
-
-# Set the SSL environment
-# This doesn't work on Windows.  For some reason,
-# environment variables aren't propagated to child processes.
-#$ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -34,16 +104,19 @@ $client->DeleteFile($iorbase);
 
 
 $SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf server$svc_conf " .
+                              "$conf_server " .
+                              "$opt " .
                               "-o $server_iorfile ");
 
 $CL = $client->CreateProcess ("client",
-                              "-ORBSvcConf client$svc_conf " .
+                              "$conf_client " .
+                              "$opt " .
                               "-k file://$client_iorfile " .
                               "-x");
 
 print STDERR "\n\n==== Running SSLIOP Big_Request test\n";
+
+print STDERR "Executing: server $conf_server $opt -o $iorbase\n";
 
 $server_status = $SV->Spawn ();
 
@@ -69,6 +142,8 @@ if ($client->PutFile ($iorbase) == -1) {
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
+
+print STDERR "Executing: client $conf_client $opt\n";
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 165);
 
