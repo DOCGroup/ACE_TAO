@@ -1,3 +1,10 @@
+Wed Jun 22 14:49:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/run_test.pl:
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+          Added -clog and -slog to write a separate client and server log file
+          to disk
+
 Tue Jun 21 13:07:15 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * TAO_IDL/util/utl_err.cpp:
