@@ -1,3 +1,13 @@
+Wed Jun 22 18:01:15 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Basic_Types.h:
+        * CDR_Base.cpp:
+        * CDR_Base.h:
+        * config-win32-mingw.h:
+
+          Reverted all changes made related to support for long double
+          constants in IDL.
+
 Tue Jun 21 18:14:46 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Basic_Types.h:

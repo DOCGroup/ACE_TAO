@@ -92,16 +92,6 @@
 
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
-#define ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII "%24.16G"
-
-// MinGW as supplied doesn't support the long double format
-// in printf out of the box. So for long double constants,
-// generated from IDL, we must print the literal as a double.
-// The directive below will make the argument to printf agree
-// with the format string defined above. It will not affect
-// marshaling (see CDR_Base.h, near the top of the workaround
-// struct LongDouble).
-#define ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE 1
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
