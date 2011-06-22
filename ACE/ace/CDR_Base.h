@@ -291,16 +291,10 @@ public:
        typedef long double      LongDouble;
 #      define   ACE_CDR_LONG_DOUBLE_INITIALIZER 0
 #      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS = RHS
-
-       // Trivial alternative to the derived class of the same name below,
-       // so the same code will work whether or not a native long double
-       // is used.
-       inline static LongDouble LongDoubleAssign (const LongDouble &ld) {return ld;}
 #    else
 #      define NONNATIVE_LONGDOUBLE
-#      define ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
-#      define ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
-
+#      define   ACE_CDR_LONG_DOUBLE_INITIALIZER {{0}}
+#      define   ACE_CDR_LONG_DOUBLE_ASSIGNMENT(LHS, RHS) LHS.assign (RHS)
        struct ACE_Export LongDouble
        {
        // VxWorks' compiler (gcc 2.96) gets confused by the operator long
@@ -316,7 +310,7 @@ public:
          typedef double NativeImpl;
 #      else
          typedef long double NativeImpl;
-#      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE == 1 */
+#      endif /* ACE_CDR_IMPLEMENT_WITH_NATIVE_DOUBLE==1 */
 
          char ld[16];
 
@@ -357,17 +351,6 @@ public:
 
          operator NativeImpl () const;
        };
-
-       struct ACE_Export LongDoubleAssign : LongDouble
-       {
-         LongDoubleAssign (void);
-         explicit LongDoubleAssign (const long double &val);
-
-         LongDoubleAssign& operator= (const LongDouble::NativeImpl& rhs);
-
-         operator LongDouble (void);
-       };
-
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
   //@}
