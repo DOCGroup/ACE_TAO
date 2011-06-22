@@ -1,3 +1,82 @@
+Wed Jun 22 18:36:14 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * ciao/Containers/Generic:
+
+        * ciao/Containers/Generic/ClientContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Generic/ClientContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Generic/Generic_Container.h:
+        * ciao/Containers/Generic/Generic_Container.idl:
+        * ciao/Containers/Generic/Generic_Container.mpc:
+        * ciao/Containers/Generic/Generic_Container.cpp:
+        * ciao/Containers/Generic/Generic_Container_export.h:
+        * ciao/Containers/Generic/Generic_Container_stub_export.h:
+        * ciao/Containers/Generic/Interceptor_Registration_T.h:
+        * ciao/Containers/Generic/Interceptor_Registration_T.cpp:
+        * ciao/Containers/Generic/ServantContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Generic/ServantContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Generic/ServerContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Generic/ServerContainerInterceptorRegistration_Impl.cpp:
+        * ciao/Containers/Generic/StubContainerInterceptorRegistration_Impl.h:
+        * ciao/Containers/Generic/StubContainerInterceptorRegistration_Impl.cpp:
+
+        * ciao/FTComponentServer:
+
+        * ciao/FTComponentServer/CIAO_CS_Client.idl:
+        * ciao/FTComponentServer/CIAO_CS_Client_svnt_export.h:
+        * ciao/FTComponentServer/CIAO_ComponentInstallation_Impl.h:
+        * ciao/FTComponentServer/CIAO_ComponentInstallation_Impl.cpp:
+        * ciao/FTComponentServer/CIAO_ComponentServer.idl:
+        * ciao/FTComponentServer/CIAO_ComponentServer.mpc:
+        * ciao/FTComponentServer/CIAO_Container_Impl.h:
+        * ciao/FTComponentServer/CIAO_Container_Impl.cpp:
+        * ciao/FTComponentServer/CIAO_FTComponentServer.h:
+        * ciao/FTComponentServer/CIAO_FTComponentServer.cpp:
+        * ciao/FTComponentServer/CIAO_FTComponentServer_Impl.h:
+        * ciao/FTComponentServer/CIAO_FTComponentServer_Impl.cpp:
+        * ciao/FTComponentServer/CIAO_FTComponentServer_stub_export.h:
+        * ciao/FTComponentServer/CIAO_FTComponentServer_svnt_export.h:
+        * ciao/FTComponentServer/CIAO_Properties.idl:
+        * ciao/FTComponentServer/CIAO_ServerActivator_Impl.h:
+        * ciao/FTComponentServer/CIAO_ServerActivator_Impl.cpp:
+        * ciao/FTComponentServer/CIAO_ServerResources.idl:
+        * ciao/FTComponentServer/Configurator_Factory.h:
+        * ciao/FTComponentServer/Configurator_Factory.cpp:
+        * ciao/FTComponentServer/Configurators:
+
+        * ciao/FTComponentServer/Configurators/Basic_Config_Manager.h:
+        * ciao/FTComponentServer/Configurators/Basic_Config_Manager.inl:
+        * ciao/FTComponentServer/Configurators/Basic_Config_Manager.cpp:
+        * ciao/FTComponentServer/Configurators/Basic_Config_Manager_export.h:
+        * ciao/FTComponentServer/Configurators/Basic_Configurator_export.h:
+        * ciao/FTComponentServer/Configurators/ComponentServer_Configurator_export.h:
+        * ciao/FTComponentServer/Configurators/Config_Manager.h:
+        * ciao/FTComponentServer/Configurators/Config_Manager.cpp:
+        * ciao/FTComponentServer/Configurators/Configurators.mpc:
+        * ciao/FTComponentServer/Configurators/NA_Configurator_Export.h:
+        * ciao/FTComponentServer/Configurators/NoOp:
+
+        * ciao/FTComponentServer/Configurators/NoOp/CIAO_FT_NoOp_Configurator.vcproj:
+        * ciao/FTComponentServer/Configurators/NoOp/FT_NoOp_Configurator.mpc:
+        * ciao/FTComponentServer/Configurators/NoOp/NoOp_Configurator.h:
+        * ciao/FTComponentServer/Configurators/NoOp/NoOp_Configurator.cpp:
+        * ciao/FTComponentServer/Configurators/NoOp/NoOp_Configurator_export.h:
+
+        * ciao/FTComponentServer/Configurators/RT:
+
+        * ciao/FTComponentServer/Configurators/RT/RTConfig_Manager.h:
+        * ciao/FTComponentServer/Configurators/RT/RTConfig_Manager.inl:
+        * ciao/FTComponentServer/Configurators/RT/RTConfig_Manager.cpp:
+        * ciao/FTComponentServer/Configurators/RT/RTNA_Configurator_Export.h:
+
+        * ciao/FTComponentServer/Configurators/RTNodeApp_Configurator.h:
+        * ciao/FTComponentServer/Configurators/RTNodeApp_Configurator.cpp:
+        * ciao/FTComponentServer/Configurators/Server_Configurator.h:
+        * ciao/FTComponentServer/Configurators/Server_Configurator.cpp:
+
+        * ciao/FTComponentServer/Name_Helper_T.h:
+
+        CORFU merger
+
 Mon Jun 20 15:38:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DevGuideExamples/Messenger/Administrator_exec_i.h:

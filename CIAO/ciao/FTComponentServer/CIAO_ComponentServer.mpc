@@ -1,0 +1,94 @@
+project(CIAO_FTComponentServer_IDL) : ciaoidldefaults, anytypecode {
+  idlflags     += -Wb,stub_export_macro=CIAO_FTComponentServer_stub_Export
+  idlflags     += -Wb,stub_export_include=CIAO_FTComponentServer_stub_export.h
+  idlflags     += -Wb,skel_export_macro=CIAO_FTComponentServer_svnt_Export
+  idlflags     += -Wb,skel_export_include=CIAO_FTComponentServer_svnt_export.h
+
+  custom_only=1
+
+  IDL_Files {
+    CIAO_ComponentServer.idl
+    CIAO_ServerResources.idl
+  }
+}
+
+project(CIAO_FTCS_Client_IDL) : ciaoidldefaults, anytypecode {
+  idlflags     += -Wb,stub_export_macro=CIAO_FTComponentServer_stub_Export
+  idlflags     += -Wb,stub_export_include=CIAO_FTComponentServer_stub_export.h
+  idlflags     += -Wb,skel_export_macro=CIAO_CS_Client_svnt_Export
+  idlflags     += -Wb,skel_export_include=CIAO_CS_Client_svnt_export.h
+
+  custom_only=1
+
+  IDL_Files {
+    CIAO_CS_Client.idl
+    CIAO_Properties.idl
+  }
+}
+
+project(CIAO_FTComponentServer_stub) : ccm_componentserver_stub, ciaolib_with_idl, ciao_output, \
+				     messaging,  anytypecode, ciao_lib  {
+  after += CIAO_FTComponentServer_IDL CIAO_FTCS_Client_IDL
+  dynamicflags = CIAO_FTCOMPONENTSERVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+  Source_Files {
+    CIAO_ComponentServerC.cpp
+    CIAO_CS_ClientC.cpp
+    CIAO_ServerResourcesC.cpp
+    CIAO_PropertiesC.cpp
+  }
+  Header_Files {
+    CIAO_FTComponentServer_stub_export.h
+  }
+}
+
+project(CIAO_FTCS_Client_svnt) : ccm_svnt, ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_client, ciao_lib {
+  dynamicflags = CIAO_CS_CLIENT_SVNT_BUILD_DLL
+  after += CIAO_FTCS_Client_IDL CIAO_FTComponentServer_stub
+
+  IDL_Files {
+  }
+  Source_Files {
+    CIAO_ServerActivator_Impl.cpp
+    CIAO_CS_ClientS.cpp
+  }
+  Header_Files {
+    CIAO_ServerActivator_Impl.h
+    CIAO_CS_ClientS.h
+    CIAO_CS_Client_svnt_export.h
+  }
+}
+
+project(CIAO_FTComponentServer_svnt) : ccm_componentserver_svnt, ciao_ft_componentserver_stub, portableserver, ciao_ft_componentserver_configurator, ciao_ft_session_container, naming, ciao_server {
+
+  dynamicflags = CIAO_FTCOMPONENTSERVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+  Source_Files {
+     CIAO_FTComponentServer_Impl.cpp
+     CIAO_ComponentServerS.cpp
+     CIAO_ServerResourcesS.cpp
+     CIAO_Container_Impl.cpp
+     Configurator_Factory.cpp
+  }
+  Header_Files {
+    CIAO_FTComponentServer_svnt_export.h
+  }
+}
+
+project(CIAO_FTComponentServer_exe) : ccm_componentserver_svnt, portableserver, ciao_ft_componentserver_svnt, messaging, anytypecode, ciao_server, ciaoexe, ciao_ft_session_container, pi_server, iorinterceptor {// , rtcorba
+  exename = ciao_ft_componentserver
+  libs += CIAO_FT_Basic_Configurator CIAO_Logger LWFT_StateSyncAgent LWFT_ReplicationManager LWFT_Client LWFT_Server
+  after += CIAO_FT_Basic_Configurator CIAO_Logger
+  macros += CIAO_BUILD_COMPONENTSERVER_EXE
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  Source_Files {
+    CIAO_FTComponentServer.cpp
+  }
+  IDL_Files {
+  }
+}
