@@ -144,7 +144,6 @@ project (Hello_Base_starter) : ccm_stub, valuetype, avoids_ccm_noevent  {
   libs  += Sender_stub Hello_Base_stub Hello_Base_lem_stub
   
   libpaths += ../lib
-  exeout = ../lib
   IDL_Files {
   }
 
