@@ -1,4 +1,13 @@
-Thu Jun 23 12:39:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Jun 23 14:29:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          libtool
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+          Make x.0.3 available
+
+Thu Jun 23 12:39:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen
           Disable html help, seems doxygen now disables the search option
