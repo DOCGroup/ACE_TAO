@@ -1,0 +1,1947 @@
+USER VISIBLE CHANGES BETWEEN TAO-2.0.2 and TAO-2.0.3
+====================================================
+
+. Improved support for mt_noupcall but this is still not optimal due to a 2ms
+  wait delay
+
+. Addressed several Coverity reported issues
+
+USER VISIBLE CHANGES BETWEEN TAO-2.0.1 and TAO-2.0.2
+====================================================
+
+. Remove support for already deprecated -ORBConnectionCachingStrategy
+
+. Removed -ORBObjectKeyTableLock and -ORBPOALock, very risk options and this
+  way the regular invocation path can be optimized much more
+
+. Improved support for mt_noupcall wait strategy. Upcall detection has been
+  improved and the transport is polled each 2ms to see if we can do the
+  upcall.
+
+. Improved performance of the Parallel Connect Strategy in TAO.
+
+. tao_catior does a better job with JacORB generated IORs.
+
+. tao_cosnaming can now be multithreaded.
+
+USER VISIBLE CHANGES BETWEEN TAO-2.0.0 and TAO-2.0.1
+====================================================
+
+. Fixed IDL compiler bug that caused illegal references to items
+  in the scope of a template module to be overlooked.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.8.3 and TAO-2.0.0
+====================================================
+
+. Improved support for abstract
+
+USER VISIBLE CHANGES BETWEEN TAO-1.8.2 and TAO-1.8.3
+====================================================
+
+. TAO IDL compiler now generates attribute members for generated CCM
+  executor implementation classes, as well as full implementations for
+  the associated set/get operations.
+
+. Add TAO IDL compiler command line option -iC, which overrides the
+  default include path (current directory or $TAO_ROOT/tao) for
+  *C.h files included in generated *A.h files.
+
+. Removed autoconf support for TAO, it is really not tested, unstable, and
+  unmaintainable at this moment
+
+. The TAO IDL compiler now gives the following error when anonymous
+  types are used: 'anonymous types are deprecated by OMG spec'.
+  One can changes this error into a warning. There's also a possibility
+  to silence the TAO IDL compiler about this message. One of the following
+  defines can be added to your config.h file in order to change the behavior
+  of the TAO IDL compiler:
+  * IDL_ANON_ERROR:   The TAO IDL generates an error when it encounters
+                      an anonymous type (default behavior).
+  * IDL_ANON_WARNING: The TAO IDL generates a warning when it encounters
+                      an anonymous type.
+  * ANON_TYPE_SILENT: The TAO IDL doesn't generate a warning nor an error
+                      when it encounters an anonymous type.
+
+. Renamed ALL ORB services executables. This because of
+  the fact that the TAO ORB services should be recognizable
+  between the ORB services of other CORBA vendors. There are
+  systems where ORB services of several CORBA vendors are
+  installed (mainly via the installed packages). The following
+  rename actions have been taken place:
+  * 'LifeCycle_Service'       to 'tao_coslifecycle'
+  * 'Dump_Schedule'           to 'tao_dump_schedule'
+  * 'NT_Notify_Service'       to 'tao_nt_cosnotification'
+  * 'Notify_Service'          to 'tao_cosnotification'
+  * 'FT_ReplicationManager'   to 'tao_ft_replicationmanager'
+  * 'IFR_Service'             to 'tao_ifr_service'
+  * 'TAO_Service'             to 'tao_service'
+  * 'Fault_Detector'          to 'tao_fault_detector'
+  * 'Scheduling_Service'      to 'tao_cosscheduling'
+  * 'Basic_Logging_Service'   to 'tao_tls_basic'
+  * 'Notify_Logging_Service'  to 'tao_tls_notify'
+  * 'Event_Logging_Service'   to 'tao_tls_event'
+  * 'RTEvent_Logging_Service' to 'tao_tls_rtevent'
+  * 'Naming_Service'          to 'tao_cosnaming'
+  * 'NT_Naming_Service'       to 'tao_nt_cosnaming'
+  * 'CosEvent_Service'        to 'tao_cosevent'
+  * 'Event_Service'           to 'tao_rtevent'
+  * 'LoadManager'             to 'tao_loadmanager'
+  * 'LoadMonitor'             to 'tao_loadmonitor'
+  * 'Trading_Service'         to 'tao_costrading'
+  * 'Time_Service_Server'     to 'tao_costime_server'
+  * 'Time_Service_Clerk'      to 'tao_costime_clerk'
+  * 'ImplRepo_Service'        to 'tao_imr_locator'
+  * 'ImR_Activator'           to 'tao_imr_activator'
+  * 'Fault_Notifier'          to 'tao_fault_notifier'
+  * 'Concurrency_Service'     to 'tao_cosconcurrency'
+
+. Fixed several bugs related to recursive typecodes
+
+USER VISIBLE CHANGES BETWEEN TAO-1.8.1 and TAO-1.8.2
+====================================================
+
+. Extended logging related to the POA active object map
+
+USER VISIBLE CHANGES BETWEEN TAO-1.8.0 and TAO-1.8.1
+====================================================
+
+. IDL compiler
+
+  - Added code generation for an empty implementation of
+    the reply handler interface generated as part of an
+    AMI4CCM connector, triggered by the same option, -Gex,
+    that generates a similar implementation for a
+    component executor.
+
+  - Added flags that can be defined in config.h to output
+    an error or warning if an anonymous IDL construct is
+    seen by the IDL compiler. Also added IDL compiler
+    options to do the same (or override a global flag)
+    for individual IDL files.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.9 and TAO-1.8.0
+====================================================
+
+. Added minimal exploratory support for alternate IDL->C++
+  mapping: IDL string->std::string and IDL sequence->std:vectors.
+  We are talking with sponsors to see if we can raise funds
+  to make a full new IDL to C++ mapping proposal that uses
+  all new C++0x features
+
+. Fixed bugzilla #3853.
+
+. Improved the speed of tao_idl when processing
+  large input files with many module re-openings.
+
+. Removed MCPP support from TAO_IDL.
+
+. Extended support for CIAO DDS4CCM and AMI4CCM in TAO_IDL
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.8 and TAO-1.7.9
+====================================================
+
+. TAO's default makefiles (traditional ACE/GNU, not autoconf/automake)
+  now support installation with "make install".
+  Please see the ACE-INSTALL.html file for instructions.
+
+. Refactored several parts of TAO_IDL
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.7 and TAO-1.7.8
+====================================================
+
+. Added -ORBHandleLoggingStrategyEvents option. Given
+  that ORB is run in user application this option allows
+  to easily add log file rotation.
+
+. Added a new option -ORBIgnoreDefaultSvcConfFile.
+  This allows TAO to ignore only svc.conf file while
+  processing normally other user provided configuration
+  files or directives.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.6 and TAO-1.7.7
+====================================================
+
+. Add IDL3+ support to TAO_IDL
+
+. Cleanup in TAO_IDL. Part of this cleanup closes
+  (Bugzilla 2200).
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.5 and TAO-1.7.6
+====================================================
+
+. Added support for iPhone/iPod Touch/iPad. The following
+  environment variables are needed:
+
+  IPHONE_TARGET, should be set to either SIMULATOR or
+  HARDWARE. Set to HARDWARE if you want to deploy
+  on the iPhone/iPod Touch/iPad device.
+
+  IPHONE_VERSION, should be set to 3.1.2 or 3.2. One can
+  set the version to any future or past versions, but
+  only 3.1.2 and 3.2 have been tried.
+
+  Note that one has to compile ACE/TAO statically as
+  it is believed that the iPhone OS does not support
+  dynamic loading of external libraries. The usual
+  procedure of cross compiling ACE/TAO applies
+  (such as setting HOST_ROOT environment variable).
+
+. Added support for IDL template modules in the IDL
+  compiler front end. This is partly tested, some
+  parts do work, some not yet
+
+. Fixed bug in optional ostream operator generation
+  for IDL arrays.
+
+. Added member validation feature to LoadBalancer.
+
+. Add support for valuetype repository id and value
+  on both input and output streams.
+
+. Added support for Embarcadero C++ Builder 2010
+
+. Added method TAO_Leader_Follower::set_new_leader_generator().
+
+. Fixed missing request id in logging of LocateRequest/LocateReply &
+  CancelRequest.
+
+. Fixed problems with ORB shutdown in combination with active
+  requests.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.4 and TAO-1.7.5
+====================================================
+
+. Converted a lot of TAO tests to use the new test framework
+
+. Fix problem in the IDL compiler where set/get methods for
+  attributes in a local interface derived from a non local interface
+  where not regenerated as pure virtual
+
+. Fixed some bugs concerning spaces within roots, to allow TAO_IDL
+  to be used by user projects that are installed on windows paths
+  such as "c:\Project Files\..." or "c:\Documents and Settings\.."
+  etc.
+
+. The IDL3+ keywords porttype/port/mirrorport are now fully
+  implemented and tested
+
+. Fixed bug in code generation for components, where a derived
+  component or home with more than one generation of ancestors
+  was missing inherited operations in its operation table
+
+. Merged in changes from OCI's distribution which originate from
+  OCI request ticket [RT 13596, RT 13704].
+
+  - Added queue-overflow statistics to the Notification Service MC.
+  - Modified Notification Service MC to work in static builds.
+  - Corrected an error that caused Notification Service MC statistics
+    to fail when -AllocateTaskPerProxy is used.
+  - QueueDepth have been changed to measure the number of entries
+    rather than attempting unsuccessfully to estimate the amount of
+    memory used by the queue.
+  - Added TAO_EXPLICIT_NEGOTIATE_CODESETS macro to improve the ease
+    of including optional codeset support to Notify_Service in static
+    builds.
+  - Added new MPC features (notify_monitor_control and
+    negotiate_codesets).
+  - fixed ACE_Logging_Stragey service loading issue in static builds.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.3 and TAO-1.7.4
+====================================================
+
+. Initial support for IDL3+ in the TAO_IDL compiler front end.
+  IDL3+ is an extension to IDL3 driven by the DDS4CCM draft
+  standard. IDL3+ adds a porttype which is a logical grouping
+  of CCM ports and a concept of templates (like C++)
+
+. Changed behaviour of -Glem and -Glfa
+
+. Ported a large set of TAO tests to the new test framework
+
+. Added a capability to throw BAD_PARAM exception in case
+  there is an attempt to access sequence elements above
+  sequence length. By default this capability is turned on
+  in debug builds with defining TAO_CHECKED_SEQUENCE_INDEXING.
+  BAD_PARAM exception is also thrown in case a new sequence
+  length for bounded sequence is greater than the bound
+  defined in IDL.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.2 and TAO-1.7.3
+====================================================
+
+. Merged in changes from OCI's distribution which
+  originate from OCI request ticket [RT 12994]. Added
+  following ORB options.
+
+    -ORBForwardOnceOnObjectNotExist [0|1]
+    -ORBForwardOnceOnCommFailure [0|1]
+    -ORBForwardOnceOnTransient [0|1]
+    -ORBForwardOnceOnInvObjref [0|1]
+
+  The -ORBForwardOnceOnObjectNotExist ORB option is added
+  to avoid side effect from
+  -ORBForwardInvocationOnObjectNotExist that could cause
+  the request fall into forward loop in some use cases
+  (e.g. client sends request while servant is deactivated).
+  The other options are added for the same purpose to avoid
+  possible forward loop upon specified exceptions.
+
+. Corrected TAO_IDL dds code generation to count WChar size for wstring
+  marshal size.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.1 and TAO-1.7.2
+====================================================
+
+. Extended IDL compiler to take over all code generation from
+  the CIAO CIDL compiler, which has been eliminated.
+  See $TAO_ROOT/docs/compiler.html for details.
+
+. Added code generation for export header files. See
+  $TAO_ROOT/docs/compiler.html for details.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.7.0 and TAO-1.7.1
+====================================================
+
+. Improved Unicode compatibility.
+
+. Improved service configuration processing.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.9 and TAO-1.7.0
+====================================================
+
+. Merged in changes from OCI's distribution which originate from
+  OCI request ticket [RT 12912]. In their totality, the changes
+  added new features for IMR to support the capability of client
+  automatically reconnects servers within same port range upon
+  server restart. The ServerId is added to ServerInfo in IMR to
+  help identify server process. The -UnregisterIfAddressReused
+  option is added to IMR to enable the address reuse checking
+  upon server registering. The servers that address is reused
+  are unregistered from IMR. The -ORBForwardInvocationOnObjectNotExist
+  option is added to forward request to next available profile
+  upon receiving OBJECT_NOT_EXIST exception reply.
+
+. The -ORBRunThreads of the notification service has been renamed
+  to -RunThreads and the notification service can now be loaded
+  as dll.
+
+. Updated ZIOP to match the OMG Beta 2 specification
+
+. Added a new utility, tao_logWalker, see utils/logWalker for details.
+  This tool analises a collection of log files containing output of
+  TAO running with -ORBDebuglevel 10, and generates a report showing
+  process, thread and invocation summaries.
+
+. Fixed bug in Notification Service that the filter constraint expressions
+  are ignored when event type domain_name or type_name is specified
+  (see bug 3688).
+
+. The MCPP version optionally used by TAO_IDL has been updated to 2.7.2.
+  Efforts have been taken to port this to as many platforms as possible,
+  however, since it is not currently the default configuration it may
+  not work across all platforms.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.8 and TAO-1.6.9
+====================================================
+
+. Reply Dispatchers are refactored. No deadlock occurs when an
+  (a)synchronous CORBA call is made during dispatching a reply.
+
+. Fixed IDL compiler bug that in some cases caused code generation for
+  inherited operations to be skipped.
+
+. The Transport Cache Size maximum is now a hard maximum.
+
+. Fixed several bugs related to the purging of transports when the cache
+  is almost full.
+
+. New TAO-specific feature of Notification service improves management
+  of proxies when peer goes away without disconnecting from proxy.  See
+  orbsvcs/Notify_Service/README for details in the svc.conf section.
+
+. Improved Notification topology persistence, now persists filters.
+
+. Updated ZIOP to match the beta 1 OMG specification.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.7 and TAO-1.6.8
+====================================================
+
+. Fixed race condition when multiple threads make a connection to the
+  same server (bugzilla 3543)
+
+. Updated several tests to the new test framework
+
+. Fixed several memory leaks and make sure the TAO singletons are
+  destructed when the TAO DLL gets unloaded
+
+. Improved WinCE unicode support and extended the number of tests that
+  can be run with WinCE
+
+. Fixed some race conditions in the transport cache. There are several
+  known issues resolved in the transport cache when it starts purging.
+
+. Fixed memory leak in string and object reference sequences.
+
+. Bugs fixed: 3078, 3499, 3524, 3543, 3549, 3557, 3559.
+
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.6 and TAO-1.6.7
+====================================================
+
+. Added a fix for bug 2415.  Added -DefaultConsumerAdminFilterOp and
+  -DefaultSupplierAdminFilterOp TAO_CosNotify_Service options for setting
+  the default filter operators.
+
+. The full TAO distribution compiles with unicode enabled. Work is ongoing
+  to make the TAO runtime results comparable with the ascii builds.
+
+. Added two new ORB parameters, -ORBIPHopLimit and -ORBIPMulticastLoop. The
+  first one controls number of hops an IPv4/IPv6 packet can outlive. The
+  second one is related to MIOP only and it takes boolean value which
+  directs whether to loop multicast packets to the originating host or not.
+
+. Added the "TAO" and "TAO/orbsvcs" OCI Development Guide Examples under the
+  directories /DevGuideExamples and /orbsvcs/DevGuideExamples.  NOTE this is
+  an ongoing port of the original version x.5.x examples and some are not yet
+  100% compatiable with the current version of TAO.
+
+. Split CosLifeCycle library into separate client stub and server
+  skeleton libraries.  Fixes bugzilla issue #2409.
+
+. Split CosTime library into separate client stub, server skeleton,
+  and server implementation libraries.  Fixes bugzilla issue #3433.
+
+. Avoid core dumps when evaluating TCL and ETCL expressions containing
+  divisions by zero.  Partial fix for bugzilla issue #3429.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.5 and TAO-1.6.6
+====================================================
+
+. Added a new text based monitor to the Notify_Service to keep track of
+  consumers that were removed due to a timeout.
+
+. Repaired the -ORBMuxedConnectionMax <limit> option on the resource factory.
+  This service configurator option defines an upper limit to the number of
+  connections an orb will open to the same endpoint.
+
+. Repaired a problem that caused the ORB to open too many connections to
+  an endpoint.
+
+. Added a -Timeout option to the Notify_Service to allow the user to apply a
+  relative round-trip timeout to the ORB.  This option requires that the
+  'corba_messaging' MPC feature be enabled during building of the
+  Notify_Service, which it is by default.
+
+. Added ZIOP support to TAO. ZIOP adds the ability to compress the
+  application data on the wire. This is a join effort of Remedy IT, Telefonica,
+  and IONA. We are working on getting this standardized through the OMG.
+  Until this has been formally standardized we don't guarantee
+  interoperability with other ORBs and between different versions of
+  TAO that support ZIOP, this is done after this has been accepted
+  by the OMG. If you want to experiment with ZIOP you need to add
+  TAO_HAS_ZIOP 1 as define to your config.h file. See TAO/tests/ZIOP
+  for an example how to use it. All policies are not checked on all
+  places so it can happen that the ORB sends uncompressed data when
+  it could have compressed it. This is because of limitations in the
+  policy mechanism in the ORB which will take a few weeks to rework.
+  Also note that ZIOP doesn't work together with RTCORBA
+
+. Added a -m option to the ImplRepo (ImR, Implementation Repository) Activator,
+  which specifies the maximum number of environment variables which will be
+  passed to the child process.  The default (and previous behavior) is 512.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.4 and TAO-1.6.5
+====================================================
+
+. Updated TAO to comply with the IDL to C++ mapping v1.2. As a result
+  CORBA::LocalObject is now refcounted by default
+
+. Added a new ORB parameter, -ORBAcceptErrorDelay, that controls the amount
+  of time to wait before attempting to accept new connections when a
+  possibly transient error occurs during accepting a new connection.
+
+. Fixed a bug which could lead to an ACE_ASSERT at runtime when a TAO
+  is used from a thread that is not spawned using ACE
+
+. Added new Monitoring lib that can be used to retrieve values from
+  the new Monitoring framework in ACE. This is disabled by default
+  because it is not 100% finished yet, with the next release it
+  will be enabled by default
+
+. Extended the -ORBLaneListenEndpoints commandline option to support
+  *, for details see docs/Options.html
+
+. VxWorks 6.x kernel mode with shared library support
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.3 and TAO-1.6.4
+====================================================
+
+. Service Context Handling has been made pluggable
+
+. Improved CORBA/e support and as result the footprint decreased when
+  CORBA/e has been enabled
+
+. Added the ability to remove consumer and supplier proxies and consumer and
+  supplier admins through the Notify Monitor and Control interface.
+
+. Changed Interface Repository's IOR output file from being
+  world writable to using ACE_DEFAULT_FILE_PERMS.
+
+. Add support for a location forward with a nil object reference.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.2 and TAO-1.6.3
+====================================================
+
+. Fixed send side logic (both synchronous and asynchronous) to honor
+  timeouts. An RTT enabled two-way invocation could earlier hang
+  indefinately if tcp buffers were flooded.
+
+. Bug fix for cases where the IDL compiler would abort but with an
+  exit value of 0.
+
+. Bug fix in IDL compiler's handling of typedef'd constants having
+  a bitwise integer expression as the value.
+
+. Bug fix that ensures valuetypes and their corresponding supported
+  interfaces have parallel inheritance hierarchies.
+
+. Fix for possible out-of-order destruction of Unknown_IDL_Type's
+  static local lock object (bugzilla 3214).
+
+. Added list() iterator functionality for the Naming Service when
+  using the -u persistence option.
+
+. Various bug fixes to the IFR service and compiler.
+
+. New option (-T) to IFR compiler that permits duplicate typedefs with
+  warning.  Although not encouraged, this allows IDL that used to pass
+  through the IFR compiler to still pass through rather than having to
+  be changed.
+
+. Fix crashing of _validate_connection on an invalid object reference
+
+. Add support for TAO on VxWorks 5.5.1
+
+. _get_implementation has been removed from CORBA::Object, it was
+  deprecated in CORBA 2.2
+
+. Improved CORBA/e support
+
+. Fixed SSLIOP memory leaks
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6.1 and TAO-1.6.2
+====================================================
+
+. Added support for handling Location Forward exceptions caught when using
+  AMI with DSI. These exceptions may also be raised from within DSI servants
+  using AMH.
+
+. Added -RTORBDynamicThreadRunTime which controls the lifetime of dynamic
+  RTCORBA threads
+
+. Changed the PI code so that send_request is also called at the moment
+  we don't have a transport (bugzilla 2133)
+
+. Fixed memory leak that occured for each thread that was making CORBA
+  invocations
+
+. Updated several tests to work correctly on VxWorks
+
+. Removed support for pluggable messaging. As a result the code in the
+  core of TAO is much cleaner and we are about 5 to 10% faster
+
+. Improved CORBA/e support
+
+. Added gperf's exit code to the error message output if it exits
+  unsuccessfully when spawned by the IDL compiler to generate an
+  interface's operation table
+
+. Fixed bug in Interface Repository's handling of base valuetypes
+  and base components (Bugzilla 3155)
+
+. Fixed code generation bug that occurs when there is both a C++
+  keyword clash in the IDL and AMI 'implied IDL' code generation
+
+. Fixed IDL compiler bug wherein some cases of illegal use of a
+  forward declared struct or union wasn't caught
+
+. Improved support for VxWorks 6.4 kernel and rtp mode
+
+USER VISIBLE CHANGES BETWEEN TAO-1.6 and TAO-1.6.1
+====================================================
+
+. Made TAO more compliant to CORBA/e micro
+
+. Fixed invalid code generation by the IDL compiler when the options -Sa -St
+  and -GA are combined
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.10 and TAO-1.6
+=====================================================
+
+. Added a new interface that allows monitoring of activities within the
+  Notification Service.  Completely configurable through the Service
+  Configurator, the monitoring capabilities are only in effect when chosen
+  by the user.  When the monitoring capabilities are enabled, an outside
+  user can connect to a service that allows querying statistics gathered by
+  the Notification Service.
+
+. Moved the BufferingConstraintPolicy to the Messaging lib
+
+. Made it possible to disable not needed IOR parsers to reduce footprint
+
+. Reworked several files to get a smaller footprint with CORBA/e and
+  Minimum CORBA. This could lead to a reduction of more then 20% then
+  with previous releases
+
+. Removed the Domain library, it was not used at all and only
+  contained generated files without implementation
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.9 and TAO-1.5.10
+=====================================================
+
+. Added support for forward declared IDL structs and unions to the
+  Interface Repository loader
+
+. A new securty option is available using the Access_Decision interface
+  defined by the CORBA Security Level 2 specification. This enables the
+  implementation of servers using mixed security levels, allowing some
+  objects to grant unrestricted access while others require secure
+  connections. See orbsvcs/tests/Security/mixed_security_test for
+  details on using this feature.
+
+. Removed GIOP_Messaging_Lite support for all protocols
+
+. Fixed a hanging issue in persistent Notify Service during disconnection.
+
+. Added IPv6 support to DIOP
+
+. Added -Gos option to the IDL compiler to generate ostream
+  operators for IDL declarations
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.8 and TAO-1.5.9
+====================================================
+
+. When using AMI collocated in case of exceptions they are deliverd
+  to the reply handler instead of passed back to the caller
+
+. Added support for IPv6 multicast addresses when federating RTEvent
+  channels.
+
+. Fixed a bug in the IDL compiler's handling of octet constants where
+  the rhs consists of integer literals and infix operators (Bugzilla 2944).
+
+. TAO_IDL enhancements for built in sequence support in TAO DDS.
+
+. Provide support for TAO DDS zero-copy read native types.
+
+. TAO_IDL fix for lock-up and incorrect error message generation for
+  missing definitions within local modules. This fix also stops the
+  erronious look-up in a parent scoped module (with the same name as
+  a locally scoped module) that should have been hidden by the local
+  scope definition.
+
+. The TAO_IORManip library now has a filter class that allows users to
+  create new object references based on existing multi-profile object
+  references by filtering out profiles using user defined criteria.  The
+  use of -ORBUseSharedProfile 0 is required for this to function.
+
+. A problem in TAO_Profile::create_tagged_profile was fixed. This problem
+  triggered only when MIOP in multi-threaded application was used.
+
+. Added IPv6 support in MIOP so that IPv6 multicast addresses can be used in
+  addition to those IPv4 class D addresses. DSCP support is implemented in
+  MIOP as well. However, since MIOP only allows one way communication then it
+  makes sense to use DSCP on the client side only.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.7 and TAO-1.5.8
+====================================================
+
+. Fixed bug in IDL compiler related to abstract interfaces
+
+. Fixed several issues in the AMI support
+
+. Added new -ORBAMICollocation 0 which disables AMI collocated calls
+
+. Improved a lot of test scripts to work with a cross host test
+  environment where client and server are run on different hosts.
+  This is used for automated testing with VxWorks
+
+. Fixed handled of a forward request when doing a locate
+  request call
+
+. Added an option, -a, to the Event_Service to use the thread-per-consumer
+  dispatching strategy instead of the default dispatching strategy.
+
+. Improved wide character compilation support.
+
+. Fixed IDL compiler to run on both OpenVMS Alpha and OpenVMS IA64.
+
+. Fixed memory leaks in the ImpleRepo_Service.
+
+. Fixed a bug in the IDL compiler relating to include paths.
+
+. Fixed Trader Service issues related to CORBA::Long and CORBA::ULong.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.6 and TAO-1.5.7
+====================================================
+
+. Removed ACE_THROW_RETURN.
+
+. Fixed a memory crash problem when using ETCL IN operator with
+  Notify Service filter.
+
+. Remove exception specifications from ORB mediated operations (C++
+  mapping requirement)
+
+. New diffserv library to specify diffserv priorities
+  independent of RTCORBA
+
+. Addressed Coverity errors in core TAO libraries, TAO_IDL compiler,
+  stubs and skeletons generated by TAO_IDL and the TAO Notification
+  Service.
+
+. Extended current DynamicInterface to allow DII+AMI+DSI+AMH.
+  (Thanks to OMC <www.omesc.com> for the sponsorship.)
+
+. Fixed bug in IDL compiler code generation for a comma-separated list of
+  sequence typedefs.
+
+. TAO no longer sets the unexpected exception handler.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.5 and TAO-1.5.6
+====================================================
+
+. Removed all exception environment macros except ACE_THROW_RETURN
+  and ACE_THROW_SPEC
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.4 and TAO-1.5.5
+====================================================
+
+. Added an IDL compiler option to generate an explicit instantiation
+  and export of template base classes generated for IDL sequences,
+  sometimes necessary as a workaround for a Visual Studio compiler bug
+  (Bugzilla 2703).
+
+. Beefed up error checking in the IDL compiler when processing
+  #pragma version directives.
+
+. Modified IDL compiler's handling of a syntax error to eliminate
+  the chance of a crash (Bugzilla 2688).
+
+. Fixed a bug in code generation for a valuetype when it inherits
+  an anonymous sequence member from a valuetype in another IDL file.
+
+. Extended tests in tests/IDL_Test to cover generated code for
+  tie classes.
+
+. Modified tao_idl to emit code to set the exception data in the
+  Messaging::ExceptionHolder in the AMI _excep operation.  This has the
+  effect of allowing user defined exceptions to be recognized when
+  raising an exception without collocation.  This fixes Bug 2350.
+
+. Added hooks to enable custom Object to IOR conversion or allowing local
+  objects (such as Smart Proxies) to be converted to an IOR string.
+
+. Removed warning issued when using corbaloc with a default object key.
+
+. Added implementation of Dynamic Any methods insert_*_seq() and
+  get_*_seq() (spec-defined for sequences of IDL basic types),
+  as well as implementation of insert and get methods for abstract
+  interfaces.
+
+. Added support for CORBA/e compact
+
+. Added support for CORBA/e micro
+
+. Fixed issues relating to the CosTrading Server library.  The constraint
+  language lexer now allow negative floating point values, 64-bit signed and
+  unsigned integers (which can currently be represented as octal or decimal).
+  Also, fixed a bug where negative integers were being stored and compared as
+  unsigned integers which resulted in -3 > 0 evaluating to true.
+
+. Added Compression module that delivers the infrastructure
+  classes with which data can be compressed. This can be used
+  by regular applications but then also by the ORB in the future.
+
+. Removed support for -Ge 0 and -Ge 1 from the IDL compiler. In practice
+  this means that the IDL compiler doesn't generate any environment macros
+  anymore.
+
+. Fixed a problem where TAO mistakenly considered ALL messages
+  with zero-length payload to be errors and was thus not properly
+  parsing and handling the GIOP CloseConnection message.  This is
+  tested via Bug_2702_Regression.
+
+. Added an optimization to servant activation to eliminate calls to
+  check_bounds() on the object key sequence.  This has been observed
+  to yield a 30% decrease in activation time for debug builds on VC71
+  and linux gcc.
+
+. Merged in changes from OCI's distribution which originate from
+  OCI request tickets [RT 8449] and [RT 8881]. In their totality,
+  these changes add a feature whereby the notification service
+  implementation can utilize a separate ORB for dispatching events to
+  consumers.
+
+. Contributed the Transport::Current support - a TAO-specific
+  feature providing IDL interfaces which enables users to obtain
+  information about the Transports used to send or receive a
+  message.  The basic intent is to provide (typically) a
+  read-only interface to obtaining data like the number of bytes
+  transferred or the number of messages sent and received.
+  Since specific Transports may have very different
+  characteristics, a simple generic implementation for
+  Transport::Current is insufficient.  This implementation also
+  provides support for specific Transport implementations. See
+  the TC_IIOP implementation, which is an IIOP-specific
+  Transport::Current. It extends the generic interface with
+  operations providing information about IIOP endpoints, like
+  host and port.  By default, TAO builds with support for this feature.
+  Define "transport_current=0" in your default.features file to disable
+  it. For more details of how the feature is intended
+  to be used, see docs/transport_current/index.html
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.3 and TAO-1.5.4
+====================================================
+
+. Added support for ACE_Dev_Poll_Reactor to Advanced_Resource_Factory.
+
+. Improved tao_idl performance, particularly over networked
+  filesystems.
+
+. Added new option for the RTEC, -ECDispatchingThreadsFlags, that
+  allows the user to pass in a list of thread creation flags and
+  priority for dispatching threads.  These can be used for either the
+  MT dispatching strategy or the TPC dispatching strategy.  See
+  docs/ec_options.html for usage information.
+
+  Also added -ECDebug option to enable debugging output from the RTEC.
+  Only the option and variable was added, but no messages.  Therefore,
+  at the moment, this does not generate much output.
+
+. Resolved Bugzilla #2651 to eliminate incompatibility with the new
+  mechanism, allowing per-ORB configurations.
+
+. Fixed Bugzilla #2686, which involved correctly managing memory during
+  exceptional situations.  Throwing an exception during the creation of the
+  Root POA would cause a leak of a TAO_Adapter and POA manager related
+  objects.
+
+. Fixed Bugzilla #2699, by uninlining generated code for the
+  TIE template classes. Inlining of virtual functions in this
+  code was causing problems with RTTI on some compilers. As a side
+  result, the idl compiler doesn't generate a S_T.inl file anymore.
+
+. Fixed a bug where calling _set_policy_overrides() on a collocated servant
+  would return an unusable object reference.
+
+. Addressed a number of Coverity errors (CHECKED_RETURN, DEADCODE, LOCK,
+  USE_AFTER_FREE, RESOURCE_LEAK, FORWARD_NULL).  In particular, missing
+  return value checks and unreachable code in the ACE CDR stream
+  implementation were addressed.  Memory and resource management in the ACE
+  Configuration classes was corrected.  A potential deadlock upon error was
+  fixed in ACE_OS::rw_unlock().  Missing return value checks were addressed
+  in ACE_OS::open() on Windows and ACE_Thread_Manager::wait().  A potential
+  dereference of a null pointer in ACE_OS::scandir_emulation() was
+  corrected.  Lastly, the ACE_UUID::lock() accessor interface and
+  implementation was cleaned up so that it would not return a lock whose
+  memory had been freed.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.2 and TAO-1.5.3
+====================================================
+
+. Added new options, -CECConsumerOperationTimeout and
+  -CECSupplierOperationTimeout, to the CosEvent service.  See Bugzilla #2594
+  and $TAO_ROOT/docs/cec_options.html for details.  The purpose of these
+  options is to use the relative round-trip timeout feature from the TAO
+  Messaging library to detect clients that are "hung" in push() or pull()
+  operations but would otherwise not be detetcted as "bad" by the
+  -CECReactive*Control options (since they have a thread available in
+  orb->run()).
+
+. The Tk/Fl/Qt/Xt resource factories have been moved to subdirectories
+  to make maintenance easier. If you are using these you have to update
+  your include paths.
+
+. Fixed a compatibility problem between TAO and ORBs using Valuetype ID
+  indirection, such as JacORB. This problem was inadvertently introduced
+  in 1.5.2.
+
+. Oneway requests when using SYNC_NONE, SYNC_DELAYED_BUFFERING, or
+  SYNC_EAGER_BUFFERING will be queued until the connection is completed.
+  Connection completion occurs when one of the following occurs:
+   a) A one-way request that does NOT use one of the sync-scopes mentioned
+        above is sent via the same transport
+   b) A two-way request is sent via the same transport
+   c) orb->run() is called
+  Applications that do not currently do one of the above will no longer
+  establish a connection and therefore no data will be sent.
+
+. Fixed a problem with location forward objects being raised by colocal
+  ServerInterceptors. This problem did not occure interacting with remote
+  servers.  Now the raised object-reference will take effect on the object
+  reference being held by client.
+
+. Fixed a problem with properly shutting down socket connections by
+  explicitly calling release_os_resources from the destructor of protocol
+  specific connection handlers. Maintainers of third-party (non-DOC)
+  pluggable protocols must verify they are releasing any resources they
+  acquired. The base Connection_Handler destructor can't do it for them.
+
+. Added COIOP as pluggable protocol. This stands for Collocated Only IOP
+  and it only allows collocated calls. Can be used for embedded systems that
+  do use corba but don't make any remote calls.
+
+. Notication service works with Microsoft Visual C++ 8.
+
+. Fixed Bugzilla #2582, related to IDL compiler generation of arg traits
+  template specialization for typedefs.
+
+. Fixed Bugzilla #2583, a bug in the recursive check for local type
+  containment that controls CDR operator generation in the IDL compiler.
+
+. Addressed Bugzilla #2603, which called for a -oS option for the IDL
+  compiler to set the output directory for skeleton files.
+
+. Fixed Bugzilla #2634, which reported a bug in code generation for some
+  escaped IDL identifiers.
+
+. Eliminated the dependency of the TAO Interface Repository IDL3 test on
+  CIAO libraries.
+
+. Added output message to the IDL compiler, containing the name of the IDL
+  file being processed.
+
+. Fixed IDL compiler to recognize CORBA::AbstractBase as a pseudo object.
+
+. Fixed a regression on Bugzilla #2074 caused by a reference
+  counting problem on the Connection Handler.  This change
+  affects all pluggable transport protocol implementations.
+  Maintainers of third-party (non-DOC) pluggable protocols will
+  need to make similar changes to their *_Connection_Handler
+  implementations.
+
+. Fixed parsing of explicitly wildcarded IIOP endpoints.
+  These might be iiop://[::]:, iiop://[]: or iiop://0.0.0.0:
+  The first two examples are useful only when IPv6 is supported.
+  The last example forces only IPv4 endpoints even when IPv6 is
+  supported. Use iiop://: to get both IPv4 and IPv6 endpoints.
+
+. Fixed Bugzilla #2651 to properly handle order of destruction
+  of Codeset Manager instances owned by the Default Resource
+  Factory.  The ORB_Core is now responsible for managing the
+  lifecycle of the Codeset Manager instance instead of the
+  Resource Factory.  The Resource Factory now gives up ownership
+  of the objects it creates.
+
+. Fixed Bugzilla #2545 so collocated DII oneway requests do not
+  crash in get_in_arg().
+
+. Added a new "-b" option to the IDL compiler to control whether
+  or not arguments on oneway invocations are "cloneable".  If the
+  arguments are cloneable, and Custom Servant Dispatching (CSD)
+  strategy is in use, the arguments for collocated oneways can be
+  cloned during the copy of the TAO_Server_Request, which gives a
+  performance improvement over the old method of copying the
+  arguments using marshaling.
+
+. Fixed Bugzilla #2604 so the Implementation Repository can
+  properly keep track of servers it launched in PER_CLIENT
+  activation mode.
+
+. Fixed build warnings from some 64-bit compilers in code in which
+  unsigned long and ACE_CDR::ULong were mixed.
+
+. Added various performance enhancements.  Many thread mutex/integer
+  reference counts were replaced with ACE_Atomic_Op<unsigned long>.  Some
+  buffers are allocated on the stack instead of the heap where possible.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5.1 and TAO-1.5.2
+====================================================
+
+. To be able to support CORBA/e the pidl files within the core libs are
+  now compiled during the building of the core libs. This means that gperf
+  and TAO_IDL must be build before you can build the core libs!
+
+. Changed NT_Naming_Service project to require new MPC feature variable
+  "winnt".  Avoids building and installing this on non-Windows systems.
+  Fixes bugzilla bug #2412.
+
+. Changed NT_Notify_Service project to require new MPC feature variable
+  "winnt".  Avoids building and installing this on non-Windows systems.
+  Fixes bugzilla bug #2411.
+
+. Changed Telecom Log Service plug-in Strategy Interface.
+
+  Added get_record_attribute(), set_record_attribute(), and
+  set_records_attribute(); removed remove(), retrieve(), and update().
+  This will allow plug-in Strategies to handle these high-level
+  operations more efficiently.
+
+  Added get_gauge() and reset_gauge(), to maintain "gauge" used for
+  capacity threshold alarms when log channel's LogFullActionType is
+  DsLogAdmin::wrap.  This resolves bugzilla 2420.
+
+. Allow different ORB instances to use a different sets of Service
+  Objects in their own Service Repository instances. This resolves
+  bugzilla #2486.
+
+. Integrate new sequence implementation made by Carlos O'Ryan. This
+  also includes a rework of the TAO_String_Managers and CORBA::(W)String
+  implementations.
+
+. Store Value Factories per orb instead of per process and made the
+  storage thread safe.
+
+. Add on demand write functionality that writes out GIOP fragments to
+  reduce the memory usage
+
+. The TIE files (_S.*) are not generated by default anymore by the
+  IDL compiler. If you need these for your project, add -GT to the
+  idl compiler flags.
+
+. Added optional support for implicitly typed values. When the Valuetype
+  library is compiled with TAO_HAS_OPTIMIZED_VALUETYPE_MARSHALING defined
+  TAO will skip the marshaling of the value's type when it is allowed to
+  do so. It is allowed by the spec to do so when the value's actual type
+  matches the formal type for the parameter through which the value is
+  passed. As older versions of TAO did not correctly unmarshal implicitly
+  typed values, the default behavior is for TAO to always marshal the
+  type id for values.
+
+. Added support for CORBA specified truncatable valuetypes.
+
+. Added support for CORBA specified POAManagerFactory.
+
+. Added TAO-proprietary EndpointPolicy. This is used as a filter to limit
+  which of an ORBs endpoints are inserted into an object reference. The
+  endpoint policy is applied to POAManagers created via the POAManagerFactory
+  and affect all POAs associated with that POAManager.
+
+. Added a client-side connection optimization, the Parallel Connect Strategy
+  This strategy makes the client evaluate all endpoints in profile at the same
+  time when trying to connect to the server. For this to work the server must
+  be run with -ORBUseSharedProfile 1 and the client must be run with
+  -ORBUseParallelConnect 1.
+
+. Fixed several bugs related to asynchronous connection establishment. These
+  are represented by the AMI_Buffering tests and bug 2417's regression test.
+
+. Refactored PICurrent, removing PICurrent_Copy_Callback classes, subsuming
+  this functionality inside PICurrent_Impl where it can be controlled
+  correctly. The copying of PICurrent objects still performs lazy/deferred
+  copying where possible, only taking a real physical copy when modifications
+  are attempted. Interest in PICurrent objects where lazy copies have been
+  taken can now be correctly reversed when the lazy copy is destroyed fixing
+  a range of call-back bugs that were performed on already destroyed objects.
+  (For detail see bugzilla 2552.)
+
+. Updated/Enhanced TAO/utils/nslist utilities nslist,nsadd and nsdel.
+  These tools now allow for full ID.Kind processing (the separating character
+  is user controlled, defaulting to .) and sub-context path processing (the
+  separating character is also user controlled, defaulting to /).
+  nsadd allows for (re)binding naming contexts in addition to final objects
+  nsdel allows for destroying naming contexts when unbinding.
+  nslist output has been prittyfide with user controlled character drawing
+  of the naming context tree or sub-tree of full or limited depth.
+  For full usage details execute these utilities with a ? parameter.
+
+. Add the ability to use the sendfile API to send out data
+  on the transport
+
+
+USER VISIBLE CHANGES BETWEEN TAO-1.5 and TAO-1.5.1
+====================================================
+
+. Fixed LOCATION_FORWARD_PERM handling. See bugzilla #1777 for full details.
+
+. Fixed bug in detecting name clashes between existing identifiers and
+  extra code generated for AMI and AMH.
+
+. Fixed bug in connection closure. See bugzilla # 2391
+
+. Added support for the --enable-fl-reactor configure option to the
+  autoconf build infrastructure to build the TAO_FlResource library.
+
+. Added support for the --enable-qt-reactor configure option to the
+  autoconf build infrastructure to build the TAO_QtResource library.
+
+. Added support for the --enable-xt-reactor configure option to the
+  autoconf build infrastructure to build the TAO_XtResource library.
+
+. Fixed a race condition involving two threads active in the same
+  connection handler at the same time. See bug# 1647 for details.
+
+. Changed #include "..." preprocessor directives to use fully
+  qualified (from $(ACE_ROOT), $(TAO_ROOT), or $(TAO_ROOT)/orbsvcs)
+  paths.  We had been depending on non-standard behavior where files
+  #included with "..." are first looked for in the current directory
+  and then in the same directories used by #include <...>.  See bug
+  #2448 for details.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.10 and TAO-1.5.0
+====================================================
+
+. Fixed Transport to handle incoming fragmented messages propperly, abstract
+  interfaces TAO_Pluggable_Messaging and TAO_Transport have been
+  modified. Custom transport/messaging implementations require
+  interface modification.
+
+. Fix collocation optimisation when a location forward is received directing a
+  client to a collocated object.
+
+. Prevent an OBJ_ADAPTER exception when using an object reference containing
+  an ObjectID that corresponds to a collocated IORTable entry.
+
+. Reverted solution that allowed POA-level control over access to
+  security-enabled objects due to conflicts with the specification,
+  i.e. the  Security::SecQoP* are not server-side policies.
+
+. When suppressing any and typecodes during IDL compilation this will not
+  trigger compile errors due to missing any insert operations
+
+. Bug fix in IFR when creating typecodes for nested structs and unions.
+
+. Added support for the --enable-tk-reactor configure option to the
+  autoconf build infrastructure to build the TAO_TkResource library.
+
+IDL COMPILER
+------------
+
+. Fix problem with missing includes in the skeleton files for imported arg
+  trait declarations.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.9 and TAO-1.4.10
+====================================================
+
+. Fixed a bug, which allowed security unaware clients to make
+  invocations on secure objects, when the ORB was configured with
+  support for Security::SecQoPNoProtection.
+
+. Fixed Bugzilla #2145, which was preventing the building of
+  the IDL compiler on HPUX.
+
+. Added boxed valuetype support to the Interface Repository
+  loader.
+
+. Fixed several bugs in the PICurrent implementation
+
+. Fixed GOA factory name
+
+. Fixed -ORBConnectionHandlerCleanup arguments to accept 0 and 1.
+
+. Improved Portable Interceptor implementation.
+
+. Autoconfig improvements.
+
+. Improved Real-time CORBA support for dynamic threads.
+
+IDL COMPILER:
+-------------
+
+. Some bug fixes. See bug #2375 and #2390.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
+====================================================
+
+. Added new endpoint selector implementation - Optimized
+  Connection Endpoint Selector. A member of the tao/Strategies library,
+  use svc.conf file to load the OC_Endpoint_Factory object. See
+  tests/AlternateIIOP/svc.conf for an example.
+
+. Continued splitting ORB Services into stub, skeleton, and
+  implementation libraries.  Changes to the Concurrency Service,
+  Property Service, and RTEventLog Admin Service (TAO's RTEvent
+  varient of the OMG Telecom Log Service) have been committed.
+
+. Added a new ORB run-time option "-ORBUseLocalMemoryPool [0|1]" which
+  controls an individual application's use of TAO's Local Memory Pool.
+  TAO can use a local memory pool to satisfy some of its needs for
+  heap storage, as it is often more efficient than using the
+  platform's default memory allocator. The pool will always grow as
+  large as necessary to satisfy memory allocations, but it will never
+  shrink. This means that sometimes a process can retain memory that
+  it no longer needs. If the default allocator is used then TAO gives
+  memory back as soon as it is not needed.
+  The UseLocalMemoryPool option selects between using the local memory
+  pool or using the default allocator, where 0 means don't use the pool,
+  1 means use the pool. The default is still controlled by the original
+  compile-time option controlled by the #define TAO_USE_LOCAL_MEMORY_POOL
+  which defaults to 1 if not specified.
+
+. Add a property -ORBKeepalive to allow a user to specify that
+  SO_KEEPALIVE is set on IIOP connections. See docs/Options.html
+  and Bugzilla #2374.
+
+. Add support for RTCORBA::TCPPrototocolProperties::keep_alive, when
+  RTCORBA is used, and the application is using a Server or Client
+  ProtocolPolicy.
+
+. Refined the Telecom Log Service Strategy Interface.  Added methods
+  to fetch/store capacity alarm thresholds, log QoS, and "week mask".
+  Rework locking to avoid race conditions and to improve performance.
+
+IDL COMPILER:
+-------------
+
+. Fixed bug in computation of repository ids for predefined types.
+
+. Fixed bug in the handling of TAO_IDL_INCLUDE_DIR.
+
+Interface Repository:
+---------------------
+
+. Fixed bug in the lookup of a valuetype member's type using its
+  repository id.
+
+. Fixed bug in IFR loader in checking for pre-existence before
+  creating an entry corresponding to an IDL typedef.
+
+. Fixed bug in lookup when checking for a local name clash.
+
+. Fixed bug in the describe_interface() operation when the IDL
+  interface being described has multiple parents.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
+====================================================
+
+. Fixed bugs in code generation for interfaces that inherit from both
+  concrete and abstract interfaces.
+
+. Subset Anys and TypeCodes to a separate library. If you use Any/TypeCode
+  or one of the core TAO libs uses it you should link the AnyTypeCode
+  library with your application
+
+. PICurrent is moved to the PI library
+
+. POACurrent has been moved back from PI_Server to PortableServer
+
+. Added IPv6 support for IIOP
+
+. When Any and TypeCode generation is suppressed when compiling IDL
+  no typecodes are generated anymore for user exceptions, they are not
+  needed for the operation of the ORB
+
+. When making AMI invocation and the send blocks we buffer the message
+  and send it out when the transport is available again
+
+. Emulated C++ exceptions are not maintained anymore. We are keeping
+  the macros in the TAO code until x.5.1 is out, if nobody sponsors
+  maintenance at that moment the macros will be removed from TAO.
+  See also http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2256
+
+. Support the latest AMI mapping, the old mapping will be kept working
+  until 1.5.1 has been released. If you need the old mapping add
+  the define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER to your config.h
+  file before you build TAO and the TAO_IDL compiler
+
+. Added CodecFactory::create_codec_with_codesets to create a codec with
+  a specific codeset. See OMG issue 6050 for the background.
+
+. PortableInterceptor::IORInterceptor has been splitted in IORInterceptor
+  and IORInterceptor_3_0. If you use IORInterceptors read the ChangeLog for
+  the details, maybe you have to update your code!
+
+. Added the new Custom Servant Dispatching (CSD) feature to provide user
+  applications with the ability to implement and "plug-in" custom strategies
+  to handle the dispatching of requests to servants. This new feature is not
+  currently tested for VxWorks. See TAO release notes for more information.
+
+. Added support for an TAO "versioned" namespace.  When enabled, TAO
+  library sources will be placed within a namespace of the user's
+  choice or a namespace of the form TAO_1_4_7 by default, where
+  "1_4_7" is the TAO major, minor and beta versions.  The default may
+  be overridden by defining the TAO_VERSIONED_NAMESPACE_NAME
+  preprocessor symbol.  Enable overall versioned namespace support by
+  adding "versioned_namespace=1" to your MPC default.features file.
+
+. Changed generated signatures of some valuetype member
+  accessor/mutator pairs to be consistent with IN
+  parameter semantics.
+
+. Added spec-required generation of member-initializing
+  constructor for valuetypes. See C++ mapping (03-06-03)
+  section 1.17.2. Closes Bugzilla #2270.
+
+. Added default include paths $TAO_ROOT, $TAO_ROOT/tao,
+  $TAO_ROOT/orbsvcs, and $CIAO_ROOT/ciao to IDL compiler
+  execution, eliminating the need to add them explicitly
+  to the command line.
+
+. Added immediate exits to IDL compiler when some name clash
+  errors are encountered, avoiding a crash if parsing is
+  continued. Closes Bugzilla #2281.
+
+. Changed the behavior of the _default() method (generated
+  for IDL unions that have an explicit or implicit default
+  case label) to clean up memory used by the freed member,
+  if necessary.
+
+. Fixed bug in IDL compiler when handling a native exception
+  in an operation declared in Messaging::ExceptionHolder.
+
+. Although not presently supported by CIAO, added error
+  checking to the IDL compiler's parsing of IDL home
+  primary keys, which constrain the basic valuetype
+  syntax in several ways.
+
+. Fixed order of generated base class stub constructor calls
+  when the IDL interface has both concrete and abstract parents.
+
+. Fixed a bug in the handling of forward declared interfaces
+  that have both concrete and abstract parents.
+
+. Fixed the command line parsing to preserve the literal
+  quotes if they are used in an include path that has a space.
+  Closes Bugzilla #2219.
+
+. Many changes related to refactoring of Anys and Typecodes
+  into a separate library (POC is Johnny Willemsen
+  <jwillemsen@remedy.nl>).
+
+. Merging of many Notification Service changes/fixes from OCITAO to
+  the DOC version.  These generally addressed stability issues such as
+  memory leaks, thread leaks, etc.
+
+. Introduction of the versioned namespaces changed the name of the
+  factory function used for dynamically loading the Notification
+  Service persistence mechanisms.  See the service configurator file
+  in orbsvcs/tests/Notify/XML_Persistence for an example.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
+====================================================
+
+. The Telecom Logging Service now supports dynamically loaded Strategies
+  which can be used to implement a persistent log record store.  If none
+  are specified, a default in-memory hash table implementation is used.
+
+. The CodecFactory is moved to its own library. If you use this in your
+  application include tao/CodecFactory/CodecFactory.h and link the
+  TAO_CodecFactory with your app
+
+. The ORBInitializer registry, PolicyFactory registry and ORBInitInfo
+  are moved to the new PI library. If you use these clases include
+  tao/PI/PI.h in your application code and link the new TAO_PI
+  library with your application.
+
+. All server side PortableInterceptor support is moved to the new
+  TAO_PI_Server library. If you use this, include tao/PI_Server/PI_Server.h
+  in your application code and link the new TAO_PI_Server lib
+
+. A new set of examples and support code that show how to set up a
+  multicast-based federation of  Notification Services is now available
+  in $TAO_ROOT/orbsvcs/examples/Notify/Federation.
+
+. Hard coded loading of services with Service Configurator now uses the
+  ACE_DYNAMIC_SERVICE_DIRECTIVE macro which also works when the xml
+  version of service config is enabled.
+
+. The Codeset negotiation support is in its own library. The hooks are
+  still present in the ORB Core to dynamically load the codeset support
+  if needed. This behavior is overridden by the new ORB_init option
+  -ORBNegotiateCodesets 0.
+
+. The Boxed Value Type as specified by the OMG is now accepted by the
+  TAO_IDL compiler.
+
+. TAO clients now parse the OMG specified TAG_ALTERNATE_IIOP_ADDRESS
+  profile component. To generate IORs using that component, add the
+  new ORB_init option, -ORBUseSharedProfiles 1.
+
+. Refactored TAO's codeset negotiation feature to be optionally loadable.
+  The implementation is now in a separate library, TAO_Codeset. Applications
+  not wishing to use codeset support may pass -ORBNegotiateCodesets 0 to
+  ORB_init() to avoid loading the library. When building dynamic applications
+  codeset negotiation is available by default. For static applications, the
+  default is to *not* include codeset negotiation. Staticly linked apps
+  needing codeset negotiation support must do two things:
+  - Define the new MPC feature "negotiate_codesets=1" in default.features
+    and regenerate makefiles
+  - Add "#include <tao/Codeset/Codeset.h>" somewhere in their application
+    source. Placing this in the source file that includes calling ORB_init()
+    is probably the best place.
+
+. Added CORBA::Object::_repository_id() and CORBA::Object::_get_orb()
+  as described by the spec.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.5 and TAO-1.4.6
+====================================================
+
+. The RTOldEvent library has been removed. The RTEvent library has been
+  split in a stub/skel and serv library.
+
+. Support for bi-directional communication over SSLIOP.
+
+. Servants are now always reference counted, in accordance with changes
+  to the CORBA specification.
+
+. Added a -x option to catior that works like -f except that it reads
+  the IOR from standard input rather than from a file. This makes catior
+  much more like the unix "cat" command, and enables it to be used in a
+  pipeline.
+
+. Changed the precedence rules for the -ORBListenEndpoints (aka
+  -ORBEndpoint) so that the host identifier (either hostname or IP
+  address) that appears in IIOP profiles is determined thus:
+
+    1. value from hostname_in_ior (if specified);
+    2. setting of -ORBDottedDecimalAddresses option;
+    3. value for hostname in -ORBListenEndpoints specification;
+    4. whatever TAO magically comes up with based on system
+       configuration
+
+  A new test (TAO/tests/IOR_Endpoint_Hostnames) verifies the
+  operation of this feature.
+
+. Changed the way that Bidirectional endpoint processing happens when
+  -ORBDottedDecimalAddresses 1 is in effect. The previous behavior
+  always used the setting of the receiver, but that caused problems when
+  the sender and receiver were not using the same dotted decimal
+  addresses setting.  Bidirectional endpoint processing now uses
+  whatever the sender provides as the hostname since that's also what
+  will be in that sender's IORs.
+
+. Added a configuration property -ORBIMREndpointsInIOR [0|1] that
+  controls whether ImR endpoints are written into persistent IORs. See
+  $(TAO_ROOT)/docs/Options.html and bugzilla #2123 for usage.
+
+. Increment the refcount on the servant in the id_to_servant and
+  reference_to_servant methods of the POA.
+
+. Improved g++ 4.0 support.  A number of RTTI related problems have been
+  fixed, in addition to removal of duplicate internal ORB related
+  singleton instances.
+
+. Fixed assertion that occured in some thru-POA collocated calls.
+
+. Fixed CORBA::UnknownUserException Any insertion problem.
+
+. Fixed TypeCode equivalence failure when comparing aliased and
+  unaliased TypeCodes of the same type.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.4 and TAO-1.4.5
+====================================================
+
+. The POA is rewritten so that it uses strategies for its implementation.
+
+. The ImR handling is moved to the new ImR_Client library. If your server
+  needs to register itself to the ImR you have to link the new ImR_Client
+  library
+
+. The MIOP part of the POA is moved to the GOA. See the latest version of the
+  MIOP specification. You have to link now with the PortableGroup
+  library and retrieve a GOA instead of the RootPOA.
+
+. Implemented several missing parts of POA functionality as described
+  by the latest corba specification. Missing functionality, incorrect
+  exceptions, incorrect minor codes and much more.
+
+. Splitted the huge PortableServer.pidl file in several smaller files
+  and regenerated all the generated files in the repository.
+
+. Move TAO_ORB_Manager from PortableServer to Utils library, this is a
+  helper class.
+
+. The POA has been split in Root_POA and Regular_POA, on this we will more
+  in the future so that the Root_POA just pulls in the minimal set of things
+  needed.
+
+. The RootPOA now has "RootPOA" as its adapter name, previously it had
+  an empty string.  This is required by the CORBA specification, you can
+  overrule this by defining TAO_DEFAULT_ROOTPOA_NAME if you want to
+  reduce the "RootPOA" string to be shorter, e.g., "".
+
+. Added support for GNU G++ 4.0.  Additional details in ACE `NEWS' file.
+
+. Explicit template support has been dropped for TAO and it is not possible
+  to use it anymore.
+
+. CORBALOC/CORBANAME patched a memory leak and fixed performance related
+  to the use of defaulted object keys.
+
+. Added support for Visual Age on AIX
+
+. Made it possible to run most ORB core test with VxWorks in a cross host
+  scenario where one part of the test runs on the host and the other part
+  of the test runs on the VxWorks target
+
+. The skeletons generated by the TAO_IDL compiler have been refactored
+  to significantly reduce the size of server applications.  Please see
+
+  http://www.dre.vanderbilt.edu/Stats/
+
+  for metrics that illustrate the magnitude of the reduction.
+
+. New TypeCode implementation that reduces the size of TypeCodes in
+  memory at run-time.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.3 and TAO-1.4.4
+====================================================
+
+. Reimplemented the way that TAO_Transport deals with GIOP headers.  In
+  some cases partial GIOP message headers were read and used as if a full
+  GIOP header were received. [Bug 1681]
+
+. GIOP fragment handling has changed where a single large allocation and
+  copy occurs at the end of a fragment chain instead of an allocation and
+  copy for every fragment received.
+
+. The tao-config script has been replaced by pkg-config metadata files
+  which are installed in ${prefix}/lib/pkgconfig by the automake build.
+
+. SHMIOP respects now the dotted decimal addresses setting. When this is
+  set it uses ip addresses instead of hostnames.
+
+. Removed the usage of the ACE_x_cast macros, we are using the C++ casts
+  from now on.  The TAO core libraries will be updated before the x.4.5
+  release.
+
+. Removed MPC code that creates unused and unnecessary subfolders in
+  Visual Studio projects and makefiles.
+
+. Fixed unclosed temporary file created by the IDL compiler on platforms that
+  lack mkstemp. [BUGID:2026]
+
+. Fixed IDL compiler bug related to handling null object references in a
+  sequence. [BUGID:2027]
+
+. Made behavior when marshaling null value of an abstract interface similar
+  to the behavior of CORBA::Object.
+
+. Made use of 'true' and 'false' with CORBA::Boolean more consistent in TAO
+  source code and generated code.
+
+. Fixed bug in code generation for typedefs of IDL arrays that are not declared
+  at global scope or in a module (i.e., in an interface, valuetype, eventtype
+  or home).
+
+. Fixed bug in code generation of parent operations in AMI ReplyHandler
+  interfaces.
+
+. Changed remaining instances of C-style casts in generated code to the
+  appropriate C++-style cast.
+
+. Fixed typo in code generation of bounded sequences of CORBA::Object.
+
+. Fixed bug in code generation for attributes which are unaliased bounded
+  (w)strings.
+
+. Changed implementation of TAO::Unknown_IDL_Type (a subclass of TAO::Any_Impl
+  used when an Any is first decoded from the wire or created from a Dynamic
+  Any) to contain its value in a TAO_InputCDR stream rather than an
+  ACE_Message_Block*, thus cleaning up alignment and memory management code
+  related to this type.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.2 and TAO-1.4.3
+====================================================
+
+. New pluggable protocol for GIOP over HTBP, known as HTIOP.  Source in
+  orbsvcs/orbsvcs/HTIOP.
+
+. All TAO-specific vendor IDs are now found in the "TAO" namespace.
+  Documentation for these constants has also been improved in a number
+  of cases.
+
+. Further reduced inter-header dependencies, which should improve
+  compilation times for TAO and TAO applications.
+
+. Fixed memory leak in CDR encapsulation Codec's encode_value() method.
+
+. Modified PerlACE scripts for Tests/test environment to allow
+  per-platform customization of process startup delay.  Used the changes
+  in various run_test scripts.
+
+. SyncScope::NONE blocks during connects [Bug 1476].
+
+. Improved compatibility with JDK orb.
+
+. Added Wait on LF No Upcalls (MT_NOUPCALLS) wait strategy.  However,
+  recent experiences with it indicate there may be problems in scenarios
+  other than its original motivating case (see ChangeLog).  This feature
+  should be considered EXPERIMENTAL, and use it at your own risk.
+
+. New CORBALOC parsing is available. This feature allows TAO clients to
+  use any third-party pluggable protocol in corbaloc strings.
+
+. Fixed bug that caused memory fault when incoming object reference
+  contains an unknown profile.
+
+. Fixed problem in some modules when platform lacks unsigned long long
+  support.
+
+. Modified catior to allow decoding of additional protocols.
+
+. The PortableServer library isn't depended anymore on the
+  ObjRefTemplate and IORInterceptor libraries.  ObjRefTemplate and
+  IORInterceptor are loaded on demand and depend on PortableServer.
+
+. IDL compiler can be built for environments that lack unsigned long
+  long.
+
+. Reduced the amount of code generated by the TAO_IDL compiler when
+  using forward declarations.
+
+. Naming Service implementation memory leak fixes.
+
+. Split ORB Services into stub, skeleton, and implementation libraries.
+  Changes to the Naming, Trading, Event, Notification, and Logging
+  Services have been committed.
+
+. Common utilities (tao_imr, tao_ifr, nslist, nsadd, nsdel,
+  NamingViewer) now installed in $ACE_ROOT/bin.
+
+. Changed #includes of orbsvcs header files to be consistent.  The
+  pathname now always contains a "orbsvcs/" prefix.
+
+. Notification Service EventReliability and ConnectionReliability QoS
+  have been added to bring the DOC version of Notification Service
+  into feature parity (in this area) with OCITAO's 1.3a version of the
+  Notification Service.  Note that due to changes between 1.3a's
+  source base and DOC's 1.4.3 source base, this is a re-implementation
+  of the changes and not a simple port.
+
+  In addition to the changes made directly to the Notification Service
+  a number of test and example programs have been created for the
+  reliable notification service. These programs may be found in
+  subdirectories of $TAO_ROOT/orbsvcs/tests/Notify. A README file
+  in each directory provides more detailed information, and a run_test.pl
+  script is included to run the example or test.
+
+. A change has been made to the Notification Service IDL to improve build
+  times and reduce the Notification Service footprint. The change suppresses
+  the generation proxy and stub code for the many interfaces that are
+  specified by the OMG, but are not implemented in TAO.
+
+. Implementation Repository refactored to allow the locator and
+  activator to be used as services in the ACE Service Configurator
+  framework.  The locator and activator services have been split into
+  separate libraries and executables.  There have also been
+  miscellaneous bugs fixed and performance enhancements made.
+
+. Fixed Load Balancer binary generation problem.  Libraries were being
+  created rather than executables.
+
+. Work around MSVC++ 6 namespace brain damage in new Security/SSLIOP
+  code.
+
+. Fixed memory management problem in SecurityLevel3 code.
+
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
+====================================================
+
+. Overall
+  - Support for g++ 3.4.1.
+  - Support added for latest HP aCC compiler.
+  - Improved Doxygen documentation.
+  - Reduced header file dependencies, which should speedup compilation
+    and help minimize static footprint.
+
+. ORB
+  - Fixed memory leak in DII exception handling.
+  - Fixed insertion of label values when creating a union type code
+    with create_union_tc().
+  - Support for retrieving AMI and AMH reply handlers from a local
+    memory pool.
+  - Fixed location forwarding to collocated objects.
+
+. POA
+   It is now possible to pass user-defined policies unknown to the
+    POA with corresponding registered policy factories to the
+    POA::create_POA() method via its policy list parameter, as
+    required by the CORBA specification.
+
+. TAO_IDL
+  - Closed security hole on platforms that support mkstemp() function.
+  - Fixed potential buffer overrun problem.
+  - A number of scoped name bugs have been fixed, including some
+    workarounds for MSVC++ 6 scope resolution problems.
+  - Fixed mixing of *Implicit and *Explicit inheritance lines when the
+    there is a chain of inheritance in component homes.
+  - Improved error checking of component and home declarations.
+  - Code generation for valuetypes that support one or more abstract
+    interfaces.
+  - Added new "-GA" option that causes CORBA::Any operators and
+    TypeCode bodies to be generated in a separate "fooA.cpp" file.
+    Helps reduce footprint for applications that do not use Anys or
+    TypeCodes.
+  - Added required _downcast() method to generated value factories.
+  - Disabled generation of implementation class for abstract
+    interfaces.
+  - Removed support for reading an IDL file from stdin.  This feature
+    is legacy code used for debugging the IDL compiler in the early
+    days of its implementation, and is not useful in application
+    situations.
+  - Generated stub/skeleton inline files now end in ".inl" instead of
+    ".i".  The latter is generally used as the extension for
+    pre-processed C sources.
+  - Process multiple IDL files in a single execution by iteration
+    in a single process, rather than spawning a process for each
+    file as before.
+  - Added the remaining spec-defined sequences of predefined types
+    to the CORBA namespace in TAO.
+
+. Added CPU utilization load monitor to TAO's Cygnus load balancer.
+
+. Added basic CSIv2 support, which is the latest CORBA Security
+  architecture specification.
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4 and TAO-1.4.1
+==================================================
+
+ORB
+---
+.  Changed the name of a parameter to the TAO type code
+   internal method to avoid a name clash with STL.
+
+. Added the spec-required ostream insertion operator for
+  CORBA::Exception* to go with the existing ostream
+  insertion operator for CORBA::Exception&.
+
+. Moved the above ostream insertion operators into the
+  CORBA namespace, so they cannot be accidentally hidden by an
+  application.
+
+. Moved the declaration of Any operators for some ORB
+  types so that the corresponding definitions may
+  remain unlinked if the Any operators are not used in
+  an application.
+
+. Fixed typo in type code factory code that is compiled
+  only when ACE_SWAP_ON_WRITE is defined.
+
+. Several fixes to MakeProjectCreator (MPC) files, which
+  generate GNU makefiles, Borland makefiles, and Microsoft
+  Visual Studio project files.
+
+. Fixed Any insertion and extraction operators for bounded
+  strings and wstrings to prevent an error if they are
+  inserted as bounded with bound 0 and extracted as
+  unbounded, or vice versa.
+
+. Deprecated the TAO-specific _type() method for exceptions.
+  which is no longer used anywhere in TAO, and is retained
+  solely for backward compatibility.
+
+. Fixed bug in TAO_SSLIOP pluggable protocol that prevented large
+  requests from being sent.  [Bug 1429]
+
+. Cleaned up interceptor memory leaks that occurred when
+  CORBA::ORB::destroy() was called.
+
+. Fixed problem where a ServerRequestInterceptor could be called after
+  the ORB was shutdown.  [Bug 1642]
+
+. Overhauled PICurrent support to fix several problems. [Bug 1215, 1738]
+
+. SSLIOP documentation is now available.
+
+. Fixed memory leaks in servers when the ORB is operating in a
+  thread-per-connection  mode. This problem showed up when clients
+  keep connecting and disconnecting from the servers.
+
+. Fixed memory leaks in AMI clients that connect to a servers over
+  unreliable connections that keeps getting dropped.
+
+. Fixed a race connection in Any_Impl implementation.
+
+. Fixed a byte order problem with DSI gateways
+
+. Added support for OVATION to work with this BFO of TAO.
+
+IDL COMPILER
+-------------
+
+. Changed the names of some local variables in generated
+  operation code, to reduce that chance of a name clash.
+
+. Fixed bug where a #pragma version directive is sometimes
+  not reflected in the generated repository id.
+
+. Disambiguated generated template instantiations for array
+  _var, _out and _forany classes, when two or more arrays
+  have the same element type and bound.
+
+. Added check for a name clash between a valuetype member
+  and the first segment of a scoped name referenced in
+  the valuetype.
+
+. Fixed incorrect code generation for the CDR operator of a
+  struct/union/exception with an undefined forward declared
+  interface member.
+
+. Fixed incorrect code generation for operation arguments
+  that are typedefs of char, octet and boolean.
+
+. Fixed bug in handling complex recursive types.
+
+. Added -GId command line option to generate line and
+  file debug info in *I.* files, similar to what is
+  already generated in *C.* and *S.* files. This debug
+  info generation is now off by default in *I.* files.
+
+. Fixed the handling of included orb.idl file to generate
+  corresponding C++ includes for the files orb.idl
+  itself includes, which contain spec-required declarations
+  of sequences of basic CORBA types.
+
+. Fixed generation of ORB file includes triggered by the
+  presence of one or more abstract interfaces in an IDL file.
+
+. Added check to the generation of _setup_collocation()
+  method for abstract interfaces, to make it more robust.
+
+. Added a version of the realpath() system function that
+  can be used with LynxOS, which does not have a native
+  version.
+
+. Fixed code generation for bounded strings and wstrings
+  when they appear anonymously (without a typedef) as operation
+  parameters.
+
+. Fixed code generation of flat names for AMI-related types.
+
+. Fixed errors in code generation of sequences of components
+  and eventtypes.
+
+. Fixed code generation of CDR operators for aggregate types
+  that contain one or more abstract interfaces.
+
+. Fixed bogus errors produced when there are repeated forward
+  declarations of an interface.
+
+. Fixed errors in some use cases of the propagation of a #pragma
+  prefix directive to nested scopes in generated repository ids.
+
+. Fixed errors in code generation for attributes in Asynchronous
+  Method Handler (AMH) classes.
+
+. Fixed a bug that caused the IDL compiler to crash when it sees
+  certain kinds of illegal IDL.
+
+. Fixed problems in the interaction of checks for local interface
+  and for null object reference when marshaling an interface
+  member of an aggregate type.
+
+. Fixed generation of operations inherited by a local interface
+  from a non-local one - these operations must be regenerated
+  as pure virtual.
+
+. Added a space between some generated template parameter
+  opening brackets and a leading double colon of a fully
+  scoped name, since some compilers would read "<:" as
+  the digraph character for ']'.
+
+. Fixed bug in code generation for an array of typedef of
+  string and wstring.
+
+. Fixed a bug in the generation of repository ids for
+  explicit, implicit and equivalent interfaces for component
+  homes.
+
+. Fixed bugs in the generation of marshaling and demarshaling
+  code for aggregate types with component or eventtype members.
+
+ORB SERVICES:
+-------------
+
+IFR:
+---
+
+. Fixed bug in creating entries for attributes, which in CORBA 3.x may
+  have separate get- and set- exceptions lists.
+
+. Added some method overrides to disambiguate multiple inheritance
+  problems some compilers would have in classes added to support CORBA
+  3.0 extensions.
+
+. Fixed bugs in entering attributes of abstract and local interfaces,
+  and in querying for attributes of components.
+
+. Added a "-m" option to IFR_Service to enable multicast discovery of
+  the service.
+
+LOAD BALANCING
+--------------
+
+. Added two new strategies, namely LoadAverage and LoadMinimum.
+
+NOTIFICATION SERVICE:
+---------------------
+. Corrected the implementation to add the caller's <subscribed_types>
+  to the Admin Object's types. This solves the problem that if a
+  proxy's connect_structured_push_consumer() is called *AFTER* the
+  proxy's subscription_change(), then the subscriptions do not work.
+
+. Added the -NoUpdates option to the Notification svc.conf
+  options. If this option is specified, the
+  subscription_change/offer_change messages are NOT sent to proxy
+  objects.  This option is useful to turn off entire updates for
+  applications that do not reply on subscription_change/offer_change
+  messages.
+
+
+USER VISIBLE CHANGES BETWEEN TAO-1.3.6 and TAO-1.4
+==================================================
+
+IDL COMPILER:
+-------------
+. Fixed bug related to the order of #pragma prefix and #include
+  directives
+
+. Fixed bug in generation of copy constructor for AMH interface
+  classes.
+
+. Fixed incorrect handling of a parameter name in an AMI sendc_xxx
+  operation that clashes with a C++ keyword.
+
+. Readded the generation of _unchecked_narrow () back into the stub
+  code since it is required by the latest OMG CORBA specification.
+
+CORE ORB
+-------
+
+. SCIOP endpoints are not created by default. They need explicit
+  specification of -ORBEndpoint sciop:// at startup.
+
+. Fixed a bug that caused the ORB to dump a core when server side
+  interceptors returns an exception and if the operation parameters
+  contains a sequence an out parameter.
+
+. Fixed a bug that caused extraction of basic data types that are
+  aliased from an Any.
+
+. Added a couple of regressions tests for some of AMH features.
+
+. Lots of other bug fixes (see the bottom of this message for a
+  complete list of bugzilla bugids fixed in this beta).
+
+. Fixed a problem with dynamic loading of the ORB. This was introduced
+  by "magic" static constructors in the TAO PortableServer headers
+  where dynamic loading/unloading of the ORB failed.
+
+. Added an option, -ORBDisableRTCollocation which allows users to
+  disable the RT collocation technique used by TAO and fall back on the
+  default collocation technique used for the vanilla ORB.
+
+. Prevent the TP_Reactor used within TAO from exiting when it receives
+  a EINTR during select ().
+
+ORB SERVICES
+------------
+
+. Added new security variable so that libTAO_Security could be built
+  independently of libTAO_SSLIOP, and set the default to true.
+
+. An initial implementation of the FTCORBA spec has been added to
+  TAO. This release features an initial cut of ReplicationManager,
+  FaultNotifier, and a FaultDetector. Please see
+
+  $TAO_ROOT/orbsvcs/tests/FT_App/README
+
+  for a simple example that uses the different FTCORBA features that
+  have been implemented in TAO.
+
+. Fixed a bug, in PG_ObjectGroupManager::remove_member () methods
+  which caused the group entry to be available in the location_map
+  when a member of the object group is removed.

@@ -1,0 +1,40 @@
+// $Id$
+
+Normally when a DDS4CCM connector starts, it prepares DDS by creating
+several DDS entities, like a domain participant and topic.
+LateBinding means that a DDS4CCM connector is started but doesn't prepare
+DDS (apart from a domain participant). The only thing the user has to do
+is leave the topic_name in the deployment plan blank.
+When a topic name is provided later on, the DDS4CCM connector will start
+to prepare DDS.
+
+There're two test created:
+1. ReadGet
+In this test, the topic name for the sender DDS4CCM connector is provided by
+the deployment plan. Therefor the sender is allowed to write samples a
+little while after the component is activated. After the sender has written
+its samples, it informs the receiver about this via the ReaderStarter interface
+(see Base/ReaderStarter.idl). ReaderStarter is a 'normal' interface (no DDS4CCM
+connector). The connection is listed in the deployment plan.
+
+The deployment plan doens't provide a topic name for the DDS4CCM connector
+on the receiver side. This means that the receiver need to set the topic name
+programmatically.
+When the receiver is signaled by the sender that is allowed to read the samples, it
+first tests whether an BAD_INV exception is thrown when a component starts reading
+without having set the topic name.
+After that the topic name is set programmatically (see RG_LateBinding_Receiver_impl.cpp,
+set_topic_name_reader ()).
+After that, the receiver starts to check whether the latest expected sample is
+available in DDS. If so, the receiver starts to read the data.
+The receiver also checks whether a NonChangeable exception is thrown when the topic
+name is set a second time.
+
+In this test, the executor code on the receiver side (RG_LateBinding_Receiver_exec.cpp)
+works as a proxy between CIAO and the actual implementation (RG_LateBinding_Receiver_impl.cpp).
+This is the best way since the executor code is separeted from the business logic.
+
+2. WriteUpdate
+
+
+

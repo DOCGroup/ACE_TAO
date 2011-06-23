@@ -1,0 +1,12 @@
+// $Id$
+#ifndef B_IDL
+#define B_IDL
+#include <Components.idl>
+#include "A.idl"
+
+component B
+{
+  provides A a_port;
+};
+
+#endif

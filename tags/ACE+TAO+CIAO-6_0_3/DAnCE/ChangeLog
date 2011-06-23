@@ -1,0 +1,77 @@
+Thu Jun 23 13:46:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.3 released.
+
+Tue Jun  7 21:18:05 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * tests/Plan_Launcher/EM-Delay/run_test_ns.pl:
+
+          Rework the plan launcher options a bit.  --em-ior is back to requiring an
+          argument, if no --{em,nm,lm}-ior option is specified, we default to
+          name service lookup.
+
+Fri Jun  3 12:07:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/dance_tests.lst:
+          Fixed location of tests
+
+Thu Jun  2 19:49:24 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          compile fix.
+
+Wed Jun  1 11:14:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+
+          New option --manager-timeout which allows the user to indicate
+          to the plan_launcher that it should wait a specified number of
+          seconds for a manager (e.g., execution_manager) reference to
+          become valid before proceeding with deployment.
+
+        * tests/Plan_Launcher:
+        * tests/Plan_Launcher/EM-Delay:
+        * tests/Plan_Launcher/EM-Delay/run_test.pl:
+        * tests/Plan_Launcher/EM-Delay/run_test_ns.pl:
+        * bin/dance_tests.lst:
+
+          New test to excercise the new delay on manager reference functionality.
+
+Wed Jun  1 11:10:40 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+
+          Emit the IOR/register with the naming service closer to ORB
+          activation to reduce the possibility of a race condition with
+          the plan_launcher.
+
+Wed Jun  1 10:14:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/Error_Messages.txt:
+
+          Beginning of error message documentation.
+
+Thu May 26 20:29:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/NodeManager/Node_Manager_Module.cpp:
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+        * tools/Config_Handlers/SatisfierProperty_Handler.cpp:
+          Resolved gcc 4.6 warnings. Some variables were declared and assigned
+          a value but weren't used after that.
+
+Fri Apr 22 12:41:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tools/Logger_Backend/ndds/svc.conf:
+          Fuzz: Added $Id string
+
+Wed Apr 20 09:52:52 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.2 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

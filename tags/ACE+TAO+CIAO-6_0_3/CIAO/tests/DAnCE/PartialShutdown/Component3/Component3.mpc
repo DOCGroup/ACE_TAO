@@ -1,0 +1,149 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p PartialShutdown Component3"
+
+project(PartialShutdown_Component3_idl_gen) : componentidldefaults   {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=COMPONENT3_STUB_Export \
+              -Wb,stub_export_include=Component3_stub_export.h \
+              -Wb,skel_export_macro=COMPONENT3_SVNT_Export \
+              -Wb,skel_export_include=Component3_svnt_export.h \
+              -Wb,exec_export_macro=COMPONENT3_EXEC_Export \
+              -Wb,exec_export_include=Component3_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst -I..
+
+  IDL_Files {
+    Component3.idl
+  }
+}
+
+project(PartialShutdown_Component3_lem_gen) : ciaoidldefaults   {
+  after += PartialShutdown_Component3_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=COMPONENT3_LEM_STUB_Export \
+              -Wb,stub_export_include=Component3_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Component3E.idl
+  }
+}
+
+project(PartialShutdown_Component3_lem_stub) : ccm_svnt   {
+  after += PartialShutdown_Component3_lem_gen PartialShutdown_Component3_stub PartialShutdown_stub
+  libs  += PartialShutdown_stub Component3_stub
+
+  libout = ../lib
+  libpaths += ../lib
+
+  includes += ..
+
+  sharedname = Component3_lem_stub
+  dynamicflags += COMPONENT3_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component3EC.cpp
+  }
+
+  Header_Files {
+    Component3EC.h
+    Component3_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Component3EC.inl
+  }
+}
+
+project(PartialShutdown_Component3_stub) : ccm_stub   {
+  after += PartialShutdown_Component3_idl_gen PartialShutdown_stub
+  libs  += PartialShutdown_stub
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = Component3_stub
+  dynamicflags += COMPONENT3_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component3C.cpp
+  }
+
+  Header_Files {
+    Component3C.h
+    Component3_stub_export.h
+  }
+
+  Inline_Files {
+    Component3C.inl
+  }
+}
+
+project(PartialShutdown_Component3_exec) : ciao_executor   {
+  after   += PartialShutdown_Component3_lem_stub PartialShutdown_Component3_stub
+  sharedname = Component3_exec
+  libs += Component3_stub Component3_lem_stub PartialShutdown_stub
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += COMPONENT3_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component3_exec.cpp
+  }
+
+  Header_Files {
+    Component3_exec.h
+    Component3_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(PartialShutdown_Component3_svnt) : ciao_servant   {
+  after      += PartialShutdown_Component3_lem_stub
+  sharedname  = Component3_svnt
+  libs       += Component3_stub Component3_lem_stub PartialShutdown_stub
+
+  includes += ..
+
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += COMPONENT3_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Component3S.cpp
+    Component3_svnt.cpp
+  }
+
+  Header_Files {
+    Component3S.h
+    Component3_svnt.h
+    Component3_svnt_export.h
+  }
+
+  Inline_Files {
+    Component3S.inl
+  }
+}
+
+

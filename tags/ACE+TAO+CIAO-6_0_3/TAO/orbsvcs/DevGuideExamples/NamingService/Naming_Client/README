@@ -1,0 +1,47 @@
+// $Id$
+
+OMG Naming Service
+
+File: DevGuideExamples/NamingService/Naming_Client/README
+
+
+The example in this directory is a modification of the code given
+in the NamingService/Messenger example.  It illustrates how to use the 
+TAO_Naming_Client class for accessing the Naming Service.  This class 
+simplifies the interface for accessing and using the Naming Service.
+The TAO_Naming_Client class is used by both the Client and
+Server to access the Naming Service.
+
+The Client code is stored in:
+
+DevGuideExamples/NamingService/Naming_Client/MessengerClient.cpp
+
+The Server code is stored in:
+
+DevGuideExamples/NamingService/Naming_Client/MessengerServer.cpp
+
+
+How to Run
+----------
+
+To start the Naming_Service:
+----------------------------
+$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ns.ior
+
+To start the server:
+------------------
+./MessengerServer  -ORBInitRef NameService=file://ns.ior
+
+To start the client:
+------------------
+./MessengerClient  -ORBInitRef NameService=file://ns.ior
+
+
+Exeuction via Perl Script
+-------------------------
+
+A Perl script has been created to automate the three steps shown
+above.  This script can be run via the following command:
+
+./run_test.pl
+

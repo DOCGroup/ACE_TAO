@@ -1,0 +1,261 @@
+/**
+@page run_test_howto How to write a run_test.pl
+
+ACE/TAO's auto_builds expect run_test.pl's to follow some guidelines
+that are needed to keep the auto_builds from hanging and to make
+sure the run_test.pl works on all platforms
+
+- The run_test must not hang or block.
+- The run_test must clean up any temporary files when it is done.
+- The run_test must not require any user input
+- The run_test should return a non-zero value if the test failed
+- When an executable can't be spawned the test should directly exit and
+  not wait for a fail to be created by that executable
+- The processes should support that files names are passed through
+  the commandline
+
+Following is an example
+
+@subsection example Example
+
+@verbatim
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+# -*- perl -*-
+
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
+
+$status = 0;
+
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+
+$plain_server_ior = "server.ior";
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
+
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
+}
+
+$server->GetStderrLog();
+$client->GetStderrLog();
+
+$server->DeleteFile($server_iorfile);
+$client->DeleteFile($client_iorfile);
+
+exit $status;
+
+@endverbatim
+
+@subsection details Example Details
+
+@verbatim
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+@endverbatim
+
+This is the standard header stuff.  The eval is a trick used
+to get the perl script to run if it a unix shell treats it as
+a shell script.
+
+The SVN ID string is the usual one we put in.
+
+@verbatim
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
+@endverbatim
+
+The use lib line is used to tell Perl where the PerlACE modules are.
+It should NOT be a relative path to the bin directory.  This is how
+it used to be done, but doing so would be incompatible with the "flat"
+directory layout of ACE+TAO.  The correct way is demonstrated above.
+After the "use lib" line, always use $PerlACE::TAO_ROOT to reference
+the location of TAO.  Use either $ENV{ACE_ROOT} or $PerlACE::ACE_ROOT
+to reference the location of ACE.
+
+And PerlACE::Run_Test is a module to be used by all run_test.pl's.
+It does a couple of things, including parsing some common command
+line arguments (like -Config and -ExeSubDir) and also brings in
+the PerlACE::Process module.
+
+@verbatim
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+@endverbatim
+
+We need to have two targets to run the tst on
+
+@verbatim
+my $iorbase = "server.ior";
+my $server_iorfile = $server->LocalFile ($iorbase);
+my $client_iorfile = $client->LocalFile ($iorbase);
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+@endverbatim
+
+Because of the way tests work on chorus, we need to have a fully
+qualified path to all *.ior and *.conf files.  We unlink the file
+immediately because we use WaitForFileTimed later.
+
+@verbatim
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+@endverbatim
+
+The server we have to spawn
+
+@verbatim
+$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+
+$server_status = $SV->Spawn ();
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    exit 1;
+}
+@endverbatim
+
+The PerlACE::Process is created with an executable and
+arguments.  @note Unlike the old Process module, the process
+isn't started until one of the Spawn methods is used. We check
+the result of the spawn, if we couldn't spawn the process
+we directly exit the script.
+
+@verbatim
+if ($server->WaitForFileTimed ($iorbase,
+                               $server->ProcessStartWaitInterval()) == -1) {
+    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+@endverbatim
+
+The WaitForFileTimed method waits until the file is
+created.  In this way, we know when to start the client.  If
+no IOR file is used, then you'd need to use Perl's sleep
+method.
+
+@verbatim
+if ($server->GetFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+@endverbatim
+
+This transfers the file from the server to the client in
+case that is needed with the used test targets.
+
+@verbatim
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+
+if ($client_status != 0) {
+    print STDERR "ERROR: client returned $client_status\n";
+    $status = 1;
+}
+@endverbatim
+
+Here is an example of starting the client.  SpawnWaitKill will start
+the process and wait for the specified number of seconds for the
+process to end.  If the time limit is reached, it will kill the
+process and return -1.
+
+The return value of SpawnWaitKill is the return value of the
+process, unless it timed out.  You don't need to check for the
+timeout, since SpawnWaitKill will print out a timeout error.
+Instead, just check for != 0.
+
+@verbatim
+$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+
+if ($server_status != 0) {
+    print STDERR "ERROR: server returned $server_status\n";
+    $status = 1;
+}
+@endverbatim
+
+Here is the termination of the server.  Servers are usually terminated
+either by TerminateWaitKill or just WaitKill.  TerminateWaitKill is
+used when the server doesn't shut down itself.  WaitKill is used when
+it does (such as when the client calls a shutdown method).  Once
+again, we check the return status.
+
+@verbatim
+$server->GetStderrLog();
+$client->GetStderrLog();
+
+$server->DeleteFile($server_iorfile);
+$client->DeleteFile($client_iorfile);
+
+exit $status;
+@endverbatim
+
+This example illustrates how to get the host name within the cross
+platform test. In your test program add functionality to handle a
+command line argument to pass the host name of the target. In the
+run_test.pl script you can use the following code as example.
+
+@verbatim
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $hostname = $server->HostName();
+$SV = $server->CreateProcess ("server", "-ORBEndpoint iiop://$hostname:43210");
+$CL = $server->CreateProcess ("client", " -p 43210 -h $hostname");
+@endverbatim
+
+And finally, we unlink any files that were created and then just
+exit with $status.
+
+*/
