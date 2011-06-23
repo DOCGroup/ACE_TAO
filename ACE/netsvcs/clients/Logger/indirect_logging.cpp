@@ -10,8 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 
-
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

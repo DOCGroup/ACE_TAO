@@ -11,8 +11,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
 
-
-
 static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
 static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
 static const ACE_TCHAR *const DATA = ACE_TEXT ("hello world\n");

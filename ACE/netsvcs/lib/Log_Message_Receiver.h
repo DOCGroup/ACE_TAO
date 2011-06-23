@@ -79,7 +79,7 @@
 //  be possible to write more complex LMRs, like one that creates
 //  a new log file each day or keeps a fixed size, round robin,
 //  log file. It should also be possible to have separate LMRs
-//  of the same type that uses differnt log files.
+//  of the same type that uses different log files.
 //
 // ==========================================================================//
 

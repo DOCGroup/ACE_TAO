@@ -10,8 +10,6 @@
 #include "Server_Logging_Handler_T.h"
 #include "ace/Signal.h"
 
-
-
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
