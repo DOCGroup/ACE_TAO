@@ -77,7 +77,7 @@ HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = YES
+GENERATE_HTMLHELP     = NO
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
