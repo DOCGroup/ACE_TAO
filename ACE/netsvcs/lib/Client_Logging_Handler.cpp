@@ -31,7 +31,6 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
 }
 
 // This is called when a <send> to the logging server fails...
-
 int
 ACE_Client_Logging_Handler::handle_signal (int signum,
                                            siginfo_t *,
@@ -44,7 +43,6 @@ ACE_Client_Logging_Handler::handle_signal (int signum,
 }
 
 // This function is called every time a client connects to us.
-
 int
 ACE_Client_Logging_Handler::open (void *)
 {
@@ -87,7 +85,6 @@ ACE_Client_Logging_Handler::get_handle (void) const
 }
 
 // Receive a logging record from an application.
-
 int
 ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
@@ -303,7 +300,6 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
 // Receive a logging record from an application send via a non-0
 // MSG_BAND...  This just calls handle_input().
-
 int
 ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
 {
@@ -311,7 +307,6 @@ ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
 }
 
 // Called when object is removed from the ACE_Reactor
-
 int
 ACE_Client_Logging_Handler::close (u_long)
 {

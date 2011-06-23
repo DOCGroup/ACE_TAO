@@ -9,17 +9,13 @@
 
 #include "Time_Request_Reply.h"
 
-
-
 // Default "do nothing" constructor.
-
 ACE_Time_Request::ACE_Time_Request (void)
 {
   ACE_TRACE ("ACE_Time_Request::ACE_Time_Request");
 }
 
 // Create a ACE_Time_Request message.
-
 ACE_Time_Request::ACE_Time_Request (ACE_INT32 t, // Type of request.
                                     const time_t time,
                                     ACE_Time_Value *timeout) // Max time waiting for request.

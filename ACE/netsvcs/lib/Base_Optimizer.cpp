@@ -5,8 +5,6 @@
 
 #include "Base_Optimizer.h"
 
-
-
 template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (void)
 {

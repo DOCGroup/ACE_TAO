@@ -1,3 +1,24 @@
+Thu Jun 23 14:51:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CE_Screen_Output.h:
+        * ace/Log_Msg.cpp:
+        * netsvcs/clients/Logger/direct_logging.cpp:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/lib/Base_Optimizer.h:
+        * netsvcs/lib/Base_Optimizer.cpp:
+        * netsvcs/lib/Client_Logging_Handler.cpp:
+        * netsvcs/lib/Log_Message_Receiver.h:
+        * netsvcs/lib/Log_Message_Receiver.cpp:
+        * netsvcs/lib/Server_Logging_Handler.cpp:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * netsvcs/lib/Time_Request_Reply.cpp:
+        * netsvcs/lib/lib.mpc:
+        * netsvcs/servers/README:
+        * netsvcs/servers/main.cpp:
+          Layout and typo fixes
+
 Thu Jun 23 14:29:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
