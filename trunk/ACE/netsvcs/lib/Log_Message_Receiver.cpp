@@ -6,8 +6,6 @@
 #include "ace/Log_Msg.h"
 #include "Log_Message_Receiver.h"
 
-
-
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
 Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,

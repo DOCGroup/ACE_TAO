@@ -1751,7 +1751,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   else
                     this_len = ACE_OS::sprintf
                       (bp, format, (unsigned long)t_id);
-#  endif /* ACE_MWS || ACE_TANDEM_T1248_PTHREADS */
+#  endif /* ACE_TANDEM_T1248_PTHREADS */
 
 #endif /* ACE_WIN32 */
                   ACE_UPDATE_COUNT (bspace, this_len);

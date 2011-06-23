@@ -10,8 +10,6 @@
 #include "Token_Handler.h"
 #include "Server_Logging_Handler.h"
 
-
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -164,8 +162,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Register ourselves to receive signals so we can shut down
       // gracefully.
-      if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                      &sa) == -1)
+      if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("register signals2")));

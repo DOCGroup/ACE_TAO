@@ -7,8 +7,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Signal.h"
 
-
-
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
