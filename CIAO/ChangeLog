@@ -1,3 +1,9 @@
+Thu Jun 23 12:39:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Disable html help, seems doxygen now disables the search option
+          when html help is enabled
+
 Thu Jun 23 13:46:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.0.3 released.
