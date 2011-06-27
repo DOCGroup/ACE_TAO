@@ -1,3 +1,10 @@
+Mon Jun 27 10:28:15 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/CDR.h:
+        * tao/CDR.inl:
+          Added CDR streaming ops for std::wstring and helper classes
+          and streaming ops to extract bounded strings into std strings.
+
 Thu Jun 23 12:39:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:

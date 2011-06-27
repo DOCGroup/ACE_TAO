@@ -329,6 +329,23 @@ TAO_InputCDR::reset_vt_indirect_maps ()
   }
 }
 
+ACE_INLINE
+TAO_InputCDR::to_std_string::to_std_string (std::string &s,
+                                            ACE_CDR::ULong b)
+  : val_ (s),
+    bound_ (b)
+{
+}
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_INLINE
+TAO_InputCDR::to_std_wstring::to_std_wstring (std::wstring &s,
+                                              ACE_CDR::ULong b)
+  : val_ (s),
+    bound_ (b)
+{
+}
+#endif /* ACE_LACKS_STD_WSTRING */
 
 // ****************************************************************
 
@@ -461,6 +478,14 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
   return os << x.c_str ();
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::wstring &x)
+{
+  return os << x.c_str ();
+}
+#endif /* ACE_LACKS_STD_WSTRING */
+
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -564,5 +589,41 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
   ACE::strdelete (buf);
   return marshal_flag;
 }
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      TAO_InputCDR::to_std_string x)
+{
+  CORBA::Boolean const marshal_flag =
+    is >> x.val_;
+  if (marshal_flag && x.bound_ != 0 && x.val_.size () > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return marshal_flag;
+}
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      std::wstring &x)
+{
+  CORBA::WChar *buf = 0;
+  CORBA::Boolean const marshal_flag = is >> buf;
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
+                                      TAO_InputCDR::to_std_wstring x)
+{
+  CORBA::Boolean const marshal_flag =
+    is >> x.val_;
+  if (marshal_flag && x.bound_ != 0 && x.val_.size () > x.bound_)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+  return marshal_flag;
+}
+#endif /* ACE_LACKS_STD_WSTRING */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
