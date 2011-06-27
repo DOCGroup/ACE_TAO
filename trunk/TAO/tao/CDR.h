@@ -445,6 +445,25 @@ public:
   /// Called after demarshalling.
   void reset_vt_indirect_maps ();
 
+  /// Helper classes for extracting bounded strings into std::string/wstring.
+  struct TAO_Export to_std_string
+  {
+    to_std_string (std::string &s,
+                   ACE_CDR::ULong b);
+    std::string &val_;
+    ACE_CDR::ULong bound_;
+  };
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  struct TAO_Export to_std_wstring
+  {
+    to_std_wstring (std::wstring &ws,
+                    ACE_CDR::ULong b);
+    std::wstring &val_;
+    ACE_CDR::ULong bound_;
+  };
+#endif /* ACE_LACKS_STD_WSTRING */
+
 private:
   /// The ORB_Core, required to extract object references.
   TAO_ORB_Core* orb_core_;
@@ -493,6 +512,10 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x);
+#if !defined(ACE_LACKS_STD_WSTRING)
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::wstring &x);
+#endif /* ACE_LACKS_STD_WSTRING */
 
 // CDR input operators for CORBA types
 
@@ -524,6 +547,14 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
                                       ACE_InputCDR::to_wstring x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
                                       std::string &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
+                                      TAO_InputCDR::to_std_string x);
+#if !defined(ACE_LACKS_STD_WSTRING)
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
+                                      std::wstring &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
+                                      TAO_InputCDR::to_std_wstring x);
+#endif /* ACE_LACKS_STD_WSTRING */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
