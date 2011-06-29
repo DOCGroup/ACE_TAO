@@ -141,7 +141,6 @@ namespace TAO
     S x_;
   };
 
-
   /**
    * @struct Basic_Arg_Traits_T
    *
