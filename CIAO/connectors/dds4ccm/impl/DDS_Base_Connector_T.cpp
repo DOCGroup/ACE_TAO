@@ -30,6 +30,11 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
     {
       this->dlf_->init ();
     }
+#if (CIAO_DDS4CCM_OPENDDS==1)
+  int argc = 0 ;
+  ACE_TCHAR** argv = 0;
+  participant_factory_ = TheParticipantFactoryWithArgs (argc, argv);
+#endif
 }
 
 template <typename CCM_TYPE>
@@ -122,7 +127,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
 #endif
     {
       ::DDS::DomainParticipantQos qos;
-      participant = this->participant_factory_.create_participant (
+      participant = this->participant_factory_->create_participant (
                                       this->domain_id_,
                                       qos,
                                       ::DDS::DomainParticipantListener::_nil (),
@@ -580,7 +585,12 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
 
-  ::DDS::ReturnCode_t const retcode = this->participant_factory_.delete_participant (participant);
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+#if (CIAO_DDS4CCM_NDDS==1)
+  retcode = this->participant_factory_.delete_participant (participant);
+#else
+  retcode = this->participant_factory_->delete_participant (participant);
+#endif
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);
