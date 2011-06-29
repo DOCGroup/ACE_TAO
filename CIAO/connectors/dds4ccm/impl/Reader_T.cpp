@@ -326,6 +326,13 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("Reader_T::set_dds_reader");
       this->dds_reader_ = TYPED_DDS_READER::_narrow (dr);
+      if (!::CORBA::is_nil (dr) && ::CORBA::is_nil (this->dds_reader_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Reader_T::set_dds_reader - "
+                        "narrow failed.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
       this->condition_manager_ = condition_manager;
     }
 
@@ -348,8 +355,8 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                        "CIAO::DDS4CCM::Reader_T - "
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Reader_T::dds_reader - "
                         "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }

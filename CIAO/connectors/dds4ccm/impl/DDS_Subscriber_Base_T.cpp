@@ -3,6 +3,10 @@
 
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds/DCPS/Marked_Default_Qos.h"
+#endif
+
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::DDS_Subscriber_Base_T (void)
   : configuration_complete_ (false)
@@ -70,14 +74,32 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::c
         ACE_UNUSED_ARG (qos_profile);
 #endif
         {
-          ::DDS::DataReaderQos_var drqos;
+          ::DDS::DataReaderQos drqos;
+          DDS::ReturnCode_t const retcode =
+            subscriber->get_default_datareader_qos (drqos);
+
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Subscriber_Base_T::configuration_complete - "
+                  "Error: Unable to retrieve get_default_datareader_qos: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CCM_DDS::InternalError (retcode, 0);
+            }
           dr = subscriber->create_datareader (
                                           td.in (),
-                                          drqos.in (),
+                                          drqos,
                                           ::DDS::DataReaderListener::_nil (),
                                           0);
         }
-      ::DDS::ReturnCode_t retcode = dr->enable ();
+      if (::CORBA::is_nil (dr.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
+                        "DDS_Subscriber_Base_T::configuration_complete - "
+                        "Error: Proxy returned a nil datareader.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
+      ::DDS::ReturnCode_t const retcode = dr->enable ();
       if (retcode != ::DDS::RETCODE_OK)
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO

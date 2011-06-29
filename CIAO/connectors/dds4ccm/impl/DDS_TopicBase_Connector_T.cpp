@@ -195,7 +195,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::register_type");
 
-  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_DomainParticipant_i *part =
     dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (participant);
@@ -225,8 +225,8 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
   retcode = DDS_TYPE::type_support::register_type(
     part->get_rti_entity (), typesupport_name);
 #else
-  ACE_UNUSED_ARG (participant);
-  ACE_UNUSED_ARG (typesupport_name);
+  typename DDS_TYPE::type_support::_var_type ts = new typename DDS_TYPE::type_support;
+  retcode = ts->register_type (participant, typesupport_name);
 #endif
   if (retcode != ::DDS::RETCODE_OK)
     {
