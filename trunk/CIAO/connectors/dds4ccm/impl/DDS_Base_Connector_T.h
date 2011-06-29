@@ -10,7 +10,7 @@
 #if (CIAO_DDS4CCM_NDDS==1)
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #elif (CIAO_DDS4CCM_OPENDDS==1)
-#include "dds/DCPS/DomainParticipantFactoryImpl.h"
+#include "dds/DCPS/Service_Participant.h"
 #endif
 #include "dds4ccm/impl/logger/Logger_Service.h"
 #include "ace/Copy_Disabled.h"
@@ -25,7 +25,7 @@ class DDS_Base_Connector_T
   typedef ::CIAO::NDDS::DDS_DomainParticipantFactory_i
     DomainParticipantFactory;
 #elif (CIAO_DDS4CCM_OPENDDS==1)
-  typedef ::OpenDDS::DCPS::DomainParticipantFactoryImpl DomainParticipantFactory;
+  typedef ::DDS::DomainParticipantFactory_var DomainParticipantFactory;
 #endif
 public:
   DDS_Base_Connector_T (void);
