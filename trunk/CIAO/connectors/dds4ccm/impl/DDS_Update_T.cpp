@@ -5,6 +5,10 @@
 #include "dds4ccm/impl/Updater_T.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds/DCPS/Marked_Default_Qos.h"
+#endif
+
 template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::DDS_Update_T (void)
 {
@@ -49,6 +53,17 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_
 #endif
         {
           ::DDS::DataWriterQos dwqos;
+          DDS::ReturnCode_t const retcode =
+            publisher->get_default_datawriter_qos (dwqos);
+
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Update_T::configuration_complete - "
+                  "Error: Unable to retrieve get_default_datawriter_qos: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CCM_DDS::InternalError (retcode, 0);
+            }
           dwv_tmp = publisher->create_datawriter (
               topic,
               dwqos,

@@ -29,8 +29,8 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                        "CIAO::DDS4CCM::InstanceHandleManager_T::dds_writer - "
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Reader_T::dds_writer - "
                         "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }
@@ -60,6 +60,14 @@ namespace CIAO
       DDS4CCM_TRACE ("CIAO::DDS4CCM::InstanceHandleManager_T::set_dds_writer");
 
       this->dds_writer_ = WRITER_TYPE::_narrow (dds_writer);
+
+      if (!::CORBA::is_nil (dds_writer) && ::CORBA::is_nil (this->dds_writer_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "InstanceHandleManager_T::set_dds_writer - "
+                        "narrow failed.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
     }
 
     template <typename BASE_TYPE, typename WRITER_TYPE, typename VALUE_TYPE>

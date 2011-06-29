@@ -260,6 +260,13 @@ namespace CIAO
       DDS4CCM_TRACE ("Getter_Base_T::set_dds_reader");
 
       this->dds_reader_ = TYPED_DDS_READER::_narrow (dr);
+      if (!::CORBA::is_nil (dr) && ::CORBA::is_nil (this->dds_reader_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Getter_Base_T::set_dds_reader - "
+                        "narrow failed.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
       this->condition_manager_ = condition_manager;
       this->condition_manager_->set_dds_entity (dr);
       this->condition_manager_->init_readcondition ();

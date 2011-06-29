@@ -15,6 +15,10 @@
 # include "dds4ccm/impl/ndds/DomainParticipant.h"
 #endif
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds/DCPS/Marked_Default_Qos.h"
+#endif
+
 template <typename CCM_TYPE>
 DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
@@ -33,7 +37,22 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
 #if (CIAO_DDS4CCM_OPENDDS==1)
   int argc = 0 ;
   ACE_TCHAR** argv = 0;
-  participant_factory_ = TheParticipantFactoryWithArgs (argc, argv);
+  this->participant_factory_ = TheParticipantFactoryWithArgs (argc, argv);
+  OpenDDS::DCPS::set_DCPS_debug_level  (10);
+#ifndef ACE_AS_STATIC_LIBS
+  if (ACE_Service_Config::current()->find(ACE_TEXT("DCPS_SimpleTcpLoader"))
+        < 0 /* not found (-1) or suspended (-2) */)
+    {
+      static const ACE_TCHAR directive[] =
+        ACE_TEXT("dynamic DCPS_SimpleTcpLoader Service_Object * ")
+        ACE_TEXT("SimpleTcp:_make_DCPS_SimpleTcpLoader() \"-type SimpleTcp\"");
+      ACE_Service_Config::process_directive(directive);
+    }
+#endif
+  OpenDDS::DCPS::TransportIdType transport_impl_id = 1;
+  this->transport_impl_ =
+    TheTransportFactory->create_transport_impl (
+    transport_impl_id, "SimpleTcp", OpenDDS::DCPS::AUTO_CONFIG);
 #endif
 }
 
@@ -127,7 +146,27 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
 #endif
     {
       ::DDS::DomainParticipantQos qos;
+      DDS::ReturnCode_t const retcode =
+#if (CIAO_DDS4CCM_NDDS==1)
+        this->participant_factory_.get_default_participant_qos (qos);
+#else
+        this->participant_factory_->get_default_participant_qos (qos);
+#endif
+
+      if (retcode != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              "DDS_Base_Connector_T::init_domain - "
+              "Error: Unable to retrieve default_participant_qos: <%C>\n",
+              ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CCM_DDS::InternalError (retcode, 0);
+        }
+
+#if (CIAO_DDS4CCM_NDDS==1)
+      participant = thcis->participant_factory_.create_participant (
+#else
       participant = this->participant_factory_->create_participant (
+#endif
                                       this->domain_id_,
                                       qos,
                                       ::DDS::DomainParticipantListener::_nil (),
@@ -254,19 +293,32 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
 #endif
     {
       ::DDS::TopicQos tqos;
+      DDS::ReturnCode_t const retcode =
+        participant->get_default_topic_qos (tqos);
+
+      if (retcode != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              "DDS_Base_Connector_T::init_topic - "
+              "Error: Unable to retrieve default_topic_qos: <%C>\n",
+              ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CCM_DDS::InternalError (retcode, 0);
+        }
+
       tp = participant->create_topic (topic_name,
                              typesupport_name,
                              tqos,
                              ::DDS::TopicListener::_nil (),
                              0);
     }
-  if (::CORBA::is_nil (tp))
+  if (::CORBA::is_nil (tp.in ()))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                     "DDS_Base_Connector_T::init_topic - "
                     "Error: Proxy returned a nil topic\n"));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
+
   topic = tp._retn ();
 }
 
@@ -292,6 +344,17 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
 #endif
         {
           ::DDS::PublisherQos pqos;
+          DDS::ReturnCode_t const retcode =
+            participant->get_default_publisher_qos (pqos);
+
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_publisher - "
+                  "Error: Unable to retrieve get_default_publisher_qos: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CCM_DDS::InternalError (retcode, 0);
+            }
           publisher = participant->create_publisher (pqos,
                                             ::DDS::PublisherListener::_nil (),
                                             0);
@@ -304,6 +367,17 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }
+#if (CIAO_DDS4CCM_OPENDDS==1)
+  OpenDDS::DCPS::AttachStatus const status =
+    this->transport_impl_->attach (publisher);
+  if (status != OpenDDS::DCPS::ATTACH_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_Base_Connector_T::init_publisher - "
+                    "Error: Unable to attach publisher.\n"));
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+    }
+#endif
 }
 
 template <typename CCM_TYPE>
@@ -328,6 +402,17 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
 #endif
         {
           ::DDS::SubscriberQos sqos;
+          DDS::ReturnCode_t const retcode =
+            participant->get_default_subscriber_qos (sqos);
+
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_publisher - "
+                  "Error: Unable to retrieve get_default_subscriber_qos: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CCM_DDS::InternalError (retcode, 0);
+            }
           subscriber = participant->create_subscriber (sqos,
                                               ::DDS::SubscriberListener::_nil (),
                                               0);
@@ -340,6 +425,18 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+  OpenDDS::DCPS::AttachStatus const status =
+    this->transport_impl_->attach (subscriber);
+  if (status != OpenDDS::DCPS::ATTACH_OK)
+    {
+      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
+                    "DDS_Base_Connector_T::init_subscriber - "
+                    "Error: Unable to attach subscriber.\n"));
+      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
+    }
+#endif
 }
 
 /**
