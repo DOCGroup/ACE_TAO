@@ -41,7 +41,7 @@ project(CIAO_Generic_Container_stub) : install, ccm_stub, ciao_lib, ciao_contain
 project(CIAO_Generic_Container) : install, ccm_svnt, ciao_lib, ciao_generic_container_stub, utils, \
                                   ciao_base, ciao_servant_activator, \
                                   ciao_servant, ccm_generic_stub, portableserver {
-  after += CIAO_Generic_Container_idl
+  after += CIAO_Generic_Container_stub
   dynamicflags += GENERIC_CONTAINER_BUILD_DLL
 
   IDL_Files {

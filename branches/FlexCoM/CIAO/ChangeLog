@@ -1,3 +1,45 @@
+Wed Jun 29 21:56:17 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * MPC/config/ccm_generic_stub.mpb:
+        * MPC/config/ciao_generic_container.mpb:
+        * MPC/config/ciao_generic_container_stub.mpb:
+
+        * ccm/Generic:
+
+        * ccm/Generic/CCM_ClientContainerInterceptor.idl:
+        * ccm/Generic/CCM_ClientContainerInterceptorRegistration.idl:
+        * ccm/Generic/CCM_ContainerClientRequestInfo.idl:
+        * ccm/Generic/CCM_ContainerInterceptor.idl:
+        * ccm/Generic/CCM_ContainerRequestInfo.idl:
+        * ccm/Generic/CCM_ContainerServantRequestInfo.idl:
+        * ccm/Generic/CCM_ContainerServerRequestInfo.idl:
+        * ccm/Generic/CCM_ContainerStubRequestInfo.idl:
+        * ccm/Generic/CCM_Generic.mpc:
+        * ccm/Generic/CCM_GenericComponent.idl:
+        * ccm/Generic/CCM_GenericContext.idl:
+        * ccm/Generic/CCM_InvalidRegistration.idl:
+        * ccm/Generic/CCM_QoS.idl:
+        * ccm/Generic/CCM_ServantContainerInterceptor.idl:
+        * ccm/Generic/CCM_ServantContainerInterceptorRegistration.idl:
+        * ccm/Generic/CCM_ServerContainerInterceptor.idl:
+        * ccm/Generic/CCM_ServerContainerInterceptorRegistration.idl:
+        * ccm/Generic/CCM_StubContainerInterceptor.idl:
+        * ccm/Generic/CCM_StubContainerInterceptorRegistration.idl:
+
+        * ciao/Containers/Generic/Generic_Container.mpc:
+
+        * ciao/Contexts/Generic:
+
+        * ciao/Contexts/Generic/Generic_Context_T.h:
+        * ciao/Contexts/Generic/Generic_Context_T.cpp:
+
+        * ciao/Servants/Generic:
+
+        * ciao/Servants/Generic/Servant_Impl_T.h:
+        * ciao/Servants/Generic/Servant_Impl_T.cpp:
+
+        Fixed Compilations issues
+
 Wed Jun 29 19:19:02 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
 
         * MPC/config/ccm_generic_stub.mpb:
