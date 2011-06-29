@@ -1,3 +1,11 @@
+Wed Jun 29 12:44:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/TO-DO:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Simple/bank/README:
+          Cleanup
+
 Wed Jun 29 11:27:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/Simple/Client_i.h:
