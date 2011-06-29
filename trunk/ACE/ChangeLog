@@ -1,3 +1,9 @@
+Wed Jun 29 07:56:54 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-lynxos.h:
+          Added ACE_LACKS_STD_WSTRING to remedy compile problems with new
+          CDR stream ops in TAO.
+
 Thu Jun 23 14:51:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CE_Screen_Output.h:
