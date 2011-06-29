@@ -1,28 +1,26 @@
 $Id$
 ______________________________________________________________________________
 
-This is a 'To Do' list for the TAO versions of the Henning and Vinoski 
+This is a 'To Do' list for the TAO versions of the Henning and Vinoski
 examples ($TAO_ROOT/examples/Advanced).   It is an ongoing effort to get
-these examples working with TAO, 'out of the box' with as few changes as 
-possible.  If you'd like to help or have additional problems to report 
+these examples working with TAO, 'out of the box' with as few changes as
+possible.  If you'd like to help or have additional problems to report
 please coordinate with Mike Moran <mm4@cs.wustl.edu>.
 
-All changes which have been made over the original code distribution have 
-been documented in CHANGES files in each examples directory.  Please keep 
+All changes which have been made over the original code distribution have
+been documented in CHANGES files in each examples directory.  Please keep
 these files up-to-date.
 ______________________________________________________________________________
 
 - Chapter 19's example throws exceptions at runtime.
 
-- run_tests.pl in ch_3/, ch8_and_10/, ch_12/, and ch_21 do not work on Win32.  
-  These tests need to redirect stdout of the server to a file, and maintain a 
-  reference to the process so that the server can killed at the end of the 
+- run_tests.pl in ch_3/, ch8_and_10/, ch_12/, and ch_21 do not work on Win32.
+  These tests need to redirect stdout of the server to a file, and maintain a
+  reference to the process so that the server can killed at the end of the
   script.
 
-- Some examples need .dsw files
-
-- Instances of fstream.close() and related error detection have been 
-  commented-out in all examples 12 and higher.  This code needs to be 
+- Instances of fstream.close() and related error detection have been
+  commented-out in all examples 12 and higher.  This code needs to be
   reinstated.
 
 - Chapters 8 and above do not work with MS Visual Studio. possibly due to
@@ -30,7 +28,7 @@ ______________________________________________________________________________
 
 - We could use a better test for the multitheraded server in ch_21.
 
-- Do more testing on various platforms and compilers.  These so far only 
+- Do more testing on various platforms and compilers.  These so far only
   Solaris 7, Linux and Windows NT have been used.
 
 
