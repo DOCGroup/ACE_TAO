@@ -161,7 +161,10 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
   // After getting the lock just just for deactivation..
   if (this->deactivated_)
-    return -1;
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
 
   // Update the countdown to reflect time waiting for the token.
   countdown.update ();

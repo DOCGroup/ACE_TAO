@@ -1683,7 +1683,10 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
 
   // Make sure we are not closed
   if (!this->open_for_business_ || this->deactivated_)
-    return -1;
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
 
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
