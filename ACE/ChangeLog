@@ -1,3 +1,18 @@
+Wed Jun 29 20:47:33 UTC 2011  Steve Huston  <shuston@riverace.com>
+
+        * ace/Select_Reactor_T.cpp:
+        * ace/TP_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/WFMO_Reactor.cpp:
+          In handle_events(), if returning -1 because the reactor isn't
+          ready to handle events, also set errno to ESHUTDOWN to tell the
+          caller why. Fixes Bugzilla #3974.
+
+        * tests/Bug_3974_Regression_Test.cpp:
+        * tests/tests.mpc:
+        * tests/run_test.lst:
+          New test for the above problem/fix.
+
 Wed Jun 29 10:38:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Thread_Manager.cpp:
