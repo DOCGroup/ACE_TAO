@@ -742,7 +742,14 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
           TAO_Profile *pfile = connector_registry->create_profile (cdr);
 
           if (pfile != 0)
-            mp.give_profile (pfile);
+            {
+              if (mp.give_profile (pfile) == -1)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("TAO (%P|%t) ERROR: give_profile\n")
+                            ACE_TEXT (" returned -1\n")));
+              }
+            }
         }
 
       // Make sure we got some profiles!
@@ -863,7 +870,12 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               TAO_Profile *pfile = connector_registry->create_profile (cdr);
               if (pfile != 0)
                 {
-                  mp.give_profile (pfile);
+                  if (mp.give_profile (pfile) == -1)
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("TAO (%P|%t) ERROR: give_profile\n")
+                                  ACE_TEXT (" returned -1\n")));
+                    }
                 }
             }
 

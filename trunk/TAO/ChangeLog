@@ -1,3 +1,18 @@
+Wed Jun 29 11:13:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_Case_T.h:
+        * tao/Basic_Argument_T.h:
+        * tao/Invocation_Adapter.h:
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Generic_Sequence_T.h:
+          Layout changes
+
+        * tao/Object.cpp:
+          Fixed coverity errors
+
+        * tao/Incoming_Message_Stack.h:
+          Removed borland workaround
+
 Wed Jun 29 10:47:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
