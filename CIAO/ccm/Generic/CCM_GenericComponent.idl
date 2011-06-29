@@ -1,0 +1,20 @@
+// $Id$
+
+#if !defined (CCM_GENERICCOMPONENT_IDL)
+#define CCM_GENERICCOMPONENT_IDL
+
+#include "ccm/CCM_EnterpriseComponent.idl"
+#include "ccm/Generic/CCM_GenericContext.idl"
+
+module Components
+{
+  local interface GenericComponent : EnterpriseComponent
+  {
+    void set_generic_context (in GenericContext ctx)
+      raises (CCMException);
+    void ccm_remove ()
+      raises (CCMException);
+  };
+};
+
+#endif /* CCM_GENERICCOMPONENT_IDL */
