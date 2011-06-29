@@ -2,14 +2,14 @@
  * @file Generic_Container.idl
  * @author Johnny Willemsen
  * $Id$
- * Extends the basic container interface for extension capabilities.
+ * Extends the basic container interface for generic capabilities.
  */
 
 #include "ciao/Containers/Container_Base.idl"
-#include "ccm/Extension/CCM_ClientContainerInterceptorRegistration.idl"
-#include "ccm/Extension/CCM_ServantContainerInterceptorRegistration.idl"
-#include "ccm/Extension/CCM_ServerContainerInterceptorRegistration.idl"
-#include "ccm/Extension/CCM_StubContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_ClientContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_ServantContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_ServerContainerInterceptorRegistration.idl"
+#include "ccm/Generic/CCM_StubContainerInterceptorRegistration.idl"
 
 module CIAO
 {
@@ -33,55 +33,4 @@ module CIAO
       get_servant_interceptor_registration()
         raises (Components::CCMException);
   };
-
-  local interface InstanceManager
-  {
-    readonly attribute string instance_type;
-
-    readonly attribute ::CORBA::StringSeq dependencies;
-
-    void configure (/*in ::Deployment::Properties config*/);
-
-    void install_instance (/*in ::Deployment::DeploymentPlan plan,*/
-                           in unsigned long instanceRef,
-                           out any instance_reference);
-      /*raises (Deployment::StartError,
-              Deployment::InvalidProperty,
-              Deployment::InvalidNodeExecParameter,
-              Deployment::InvalidComponentExecParameter);*/
-
-
-    void connect_instance (/*in ::Deployment::DeploymentPlan plan,*/
-                           in unsigned long connectionRef,
-                           in any provided_reference);
-      //raises (Deployment::StartError,
-      //        Deployment::InvalidConnection);
-
-    void disconnect_instance (/*in ::Deployment::DeploymentPlan plan,*/
-                              in unsigned long connectionRef);
-      //raises (::Deployment::StopError);
-
-    void instance_configured (/*in ::Deployment::DeploymentPlan plan,*/
-                              in unsigned long instanceRef);
-      //raises (Deployment::StartError);
-
-    void activate_instance (/*in ::Deployment::DeploymentPlan plan,*/
-                            in unsigned long instanceRef,
-                            in any instance_re:Dference);
-      //raises (Deployment::StartError);
-
-    void passivate_instance (/*in ::Deployment::DeploymentPlan plan,*/
-                             in unsigned long instanceRef,
-                             in any instance_reference);
-      //raises (Deployment::StopError);
-
-    void remove_instance (/*in ::Deployment::DeploymentPlan plan,*/
-                          in unsigned long instanceRef,
-                          in any instance_reference);
-      //raises (::Deployment::StopError);
-
-    /// Instruct the handler to release any resources prior to deallocation.
-    void close ();
-  };
-
 };

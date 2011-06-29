@@ -118,7 +118,7 @@ namespace CIAO
                                                          const char *name);
 
     // @{
-    /// Inherited from extension context.
+    /// Inherited from generic context.
     Components::Cookie * install_service_reference (const char * service_id,
                                                     CORBA::Object_ptr objref);
 
