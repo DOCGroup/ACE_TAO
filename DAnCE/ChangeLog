@@ -1,3 +1,27 @@
+Thu Jun 30 10:36:59 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/Error_Documentation:
+        * docs/Error_Documentation/Checked.png:
+        * docs/Error_Documentation/Collapsed.png:
+        * docs/Error_Documentation/Expanded.png:
+        * docs/Error_Documentation/LeafRowHandle.png:
+        * docs/Error_Documentation/Mixed.png:
+        * docs/Error_Documentation/Unchecked.png:
+        * docs/Error_Documentation/blank.png:
+        * docs/Error_Documentation/index.html:
+        * docs/Error_Documentation/outliner.js:
+
+          Updated error documentation.
+        
+        * docs/sources/Error_Documentation.oo3:
+        * docs/sources/Error_Documentation.oo3/contents.xml:
+        
+          Source document for the error documentation. 
+
+        * docs/Error_Messages.txt:
+
+          Removed this file.
+
 Thu Jun 23 12:39:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
