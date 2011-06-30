@@ -163,7 +163,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
         }
 
 #if (CIAO_DDS4CCM_NDDS==1)
-      participant = thcis->participant_factory_.create_participant (
+      participant = this->participant_factory_.create_participant (
 #else
       participant = this->participant_factory_->create_participant (
 #endif
