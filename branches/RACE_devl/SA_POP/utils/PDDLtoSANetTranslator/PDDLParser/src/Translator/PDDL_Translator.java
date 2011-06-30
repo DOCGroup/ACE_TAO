@@ -334,12 +334,12 @@ public class PDDL_Translator {
 			for(SimpleNode sn: simple_graph.values()){
 				double connected = 0;
 				
-				for(SimpleNode sn_child: sn.neigbors){
-					for(SimpleNode sn_child_check: sn.neigbors){
+				for(SimpleNode sn_child: sn.neighbors){
+					for(SimpleNode sn_child_check: sn.neighbors){
 						if(sn_child == sn_child_check){
 							continue;
 						}
-						if(sn_child.neigbors.contains(sn_child_check)){
+						if(sn_child.neighbors.contains(sn_child_check)){
 							connected++;
 						}
 					}
@@ -347,7 +347,7 @@ public class PDDL_Translator {
 			//	System.out.println("Connected: "+connected);
 			//	System.out.println("Neighbors: "+sn.neigbors.size());
 			//	if(sn.neigbors.size() > 1)
-				connectednesses.add((connected)/(sn.neigbors.size()*(sn.neigbors.size()-1)));
+				connectednesses.add((connected)/(sn.neighbors.size()*(sn.neighbors.size()-1)));
 			//	System.out.println((connected)/(sn.neigbors.size()*(sn.neigbors.size()-1)));
 			}
 			
