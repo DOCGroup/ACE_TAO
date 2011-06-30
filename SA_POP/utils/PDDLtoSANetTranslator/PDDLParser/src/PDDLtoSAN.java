@@ -11,7 +11,6 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import Translator.PDDL_Translator;
-import Translator.StatisticsCompilation;
 import Translator.StatisticsReport;
 
 import pddl4j.Domain;
@@ -115,8 +114,8 @@ public class PDDLtoSAN
 					System.out.println("  SAN number of conditions: "+ n.getConditonNodeCount());
 					System.out.println("  SAN number of actions: " + n.getActionNodeCount());
 
-			//		stat_compl.all_reports.add(n.getStatReport());
-			//		all_stat_compl.all_reports.add(n.getStatReport());
+					stat_compl.all_reports.add(n.getStatReport());
+					all_stat_compl.all_reports.add(n.getStatReport());
 					
 			//		n.printSAN();
 					
