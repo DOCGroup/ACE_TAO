@@ -1,3 +1,225 @@
+Fri Jul  1 17:44:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+  
+        * Merged the main trunk of TAO into this branch again.
+
+  Wed Jun 29 12:44:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * examples/Advanced/TO-DO:
+          * examples/Advanced/ch_21/client.cpp:
+          * examples/Quoter/Quoter_i.cpp:
+          * examples/Simple/bank/README:
+            Cleanup
+
+  Wed Jun 29 11:27:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tests/OBV/Simple/Client_i.h:
+          * tests/OBV/Simple/OBV_impl.h:
+          * tests/OBV/Simple/Server_i.h:
+          * tests/OBV/Simple/Server_i.cpp:
+          * tests/OBV/Simple/server.cpp:
+            Cleanup
+
+  Wed Jun 29 11:13:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tao/AnyTypeCode/TypeCode_Case_T.h:
+          * tao/Basic_Argument_T.h:
+          * tao/Invocation_Adapter.h:
+          * tao/Bounded_Basic_String_Sequence_T.h:
+          * tao/Generic_Sequence_T.h:
+            Layout changes
+
+          * tao/Object.cpp:
+            Fixed coverity errors
+
+          * tao/Incoming_Message_Stack.h:
+            Removed borland workaround
+
+  Wed Jun 29 10:47:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * tao/ORB_Core.cpp:
+            Fixed coverity errors
+
+  Mon Jun 27 10:28:15 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+          * tao/CDR.h:
+          * tao/CDR.inl:
+            Added CDR streaming ops for std::wstring and helper classes
+            and streaming ops to extract bounded strings into std strings.
+
+  Thu Jun 23 12:39:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * etc/*.doxygen:
+            Disable html help, seems doxygen now disables the search option
+            when html help is enabled
+
+  Thu Jun 23 13:46:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * TAO version 2.0.3 released.
+
+  Wed Jun 22 18:25:21 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+          * tao/AnyTypeCode/Any_Basic_Impl.h:
+          * tests/LongDouble/client.cpp:
+          * tests/IDL_Test/constants.idl:
+          * tests/IDL_Test/union.idl:
+          * TAO_IDL/include/ast_expression.h:
+          * TAO_IDL/be/be_helper.cpp:
+          * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+          * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+          * TAO_IDL/ast/ast_constant.cpp:
+          * TAO_IDL/ast/ast_expression.cpp:
+          * NEWS:
+
+            Reverted all changes related to support for long double
+            constants in IDL.
+
+  Wed Jun 22 15:15:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+          * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+            Ensure the naming service can use the CSD_TP strategy if necessary.
+            Since the naming service is single threaded, it can become a
+            bottleneck when there is very heavy use.
+
+            The need for this change may also indicate a problem with the
+            CSD strategy implementation. It appears that the thread pool at
+            least is only initialized when the POA Manager is activated. If
+            A POA is created with using a POA Manager already in the active
+            state, the TP is not initialized. Alternatively this might be a
+            problem with the POA creation, that create_POA can be supplied a
+            POA Manager that is already been activated, and the new POA is
+            itself instantly active.
+
+  Wed Jun 22 14:49:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * orbsvcs/tests/Security/BiDirectional/run_test.pl:
+          * orbsvcs/tests/Security/Big_Request/run_test.pl:
+          Added -clog and -slog to write a separate client and server log file
+          to disk
+
+  Tue Jun 21 13:07:15 UTC 2011  Olli Savia  <ops@iki.fi>
+
+          * TAO_IDL/util/utl_err.cpp:
+          Fixed typo.
+
+  Thu Jun 16 15:30:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          * tests/IDL_Test/constants.idl:
+
+            Guarded out the long double constant set to the double max
+            value, for MinGW, which outputs a floating point error
+            for this value.
+
+  Thu Jun 16 14:00:53 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          * tests/LongDouble/client.cpp:
+
+            Replaced '==' with equivalent '<' and '>' expressions for
+            a long double, some platoforms warn that '==' shouldn't
+            be used with floating point types.
+
+  Thu Jun 16 07:56:54 UTC 2011  Simon Massey  <sma at prismtech dot com>
+
+          * orbsvcs/tests/Security/Big_Request/cacert.pem:
+          * orbsvcs/tests/Security/Big_Request/client_cert.pem:
+          * orbsvcs/tests/Security/Big_Request/client_key.pem:
+          * orbsvcs/tests/Security/Big_Request/server_cert.pem:
+          * orbsvcs/tests/Security/Big_Request/server_key.pem:
+
+            Updated certificates - Missed one.
+
+  Wed Jun 15 14:36:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+          * orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
+          * orbsvcs/tests/Security/Bug_1107_Regression/client_cert.pem:
+          * orbsvcs/tests/Security/Bug_1107_Regression/client_key.pem:
+          * orbsvcs/tests/Security/Bug_1107_Regression/server_cert.pem:
+          * orbsvcs/tests/Security/Bug_1107_Regression/server_key.pem:
+          * orbsvcs/tests/Security/Callback/cacert.pem:
+          * orbsvcs/tests/Security/Callback/client_cert.pem:
+          * orbsvcs/tests/Security/Callback/client_key.pem:
+          * orbsvcs/tests/Security/Callback/server_cert.pem:
+          * orbsvcs/tests/Security/Callback/server_key.pem:
+          * orbsvcs/tests/Security/Crash_Test/cacert.pem:
+          * orbsvcs/tests/Security/Crash_Test/client_cert.pem:
+          * orbsvcs/tests/Security/Crash_Test/client_key.pem:
+          * orbsvcs/tests/Security/Crash_Test/server_cert.pem:
+          * orbsvcs/tests/Security/Crash_Test/server_key.pem:
+          * orbsvcs/tests/Security/Null_Cipher/cacert.pem:
+          * orbsvcs/tests/Security/Null_Cipher/client_cert.pem:
+          * orbsvcs/tests/Security/Null_Cipher/client_key.pem:
+          * orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
+          * orbsvcs/tests/Security/Null_Cipher/server_key.pem:
+          * orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+          * orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+          * orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+          * orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+          * orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+          * orbsvcs/tests/Security/mixed_security_test/cacert.pem:
+          * orbsvcs/tests/Security/mixed_security_test/client_cert.pem:
+          * orbsvcs/tests/Security/mixed_security_test/client_key.pem:
+          * orbsvcs/tests/Security/mixed_security_test/server_cert.pem:
+          * orbsvcs/tests/Security/mixed_security_test/server_key.pem:
+
+            Updated certificates.
+
+          * orbsvcs/tests/Security/cert:
+          * orbsvcs/tests/Security/cert/DOCCA:
+          * orbsvcs/tests/Security/cert/DOCCA/cacert.pem:
+          * orbsvcs/tests/Security/cert/DOCCA/certs:
+          * orbsvcs/tests/Security/cert/DOCCA/index.txt:
+          * orbsvcs/tests/Security/cert/DOCCA/index.txt.attr:
+          * orbsvcs/tests/Security/cert/DOCCA/index.txt.attr.old:
+          * orbsvcs/tests/Security/cert/DOCCA/index.txt.old:
+          * orbsvcs/tests/Security/cert/DOCCA/newcerts:
+          * orbsvcs/tests/Security/cert/DOCCA/newcerts/1000.pem:
+          * orbsvcs/tests/Security/cert/DOCCA/newcerts/1001.pem:
+          * orbsvcs/tests/Security/cert/DOCCA/private:
+          * orbsvcs/tests/Security/cert/DOCCA/private/cakey.pem:
+          * orbsvcs/tests/Security/cert/DOCCA/serial:
+          * orbsvcs/tests/Security/cert/DOCCA/serial.old:
+          * orbsvcs/tests/Security/cert/README:
+          * orbsvcs/tests/Security/cert/cacert.pem:
+          * orbsvcs/tests/Security/cert/client_cert.pem:
+          * orbsvcs/tests/Security/cert/client_key.pem:
+          * orbsvcs/tests/Security/cert/openssl.cnf:
+          * orbsvcs/tests/Security/cert/server_cert.pem:
+          * orbsvcs/tests/Security/cert/server_key.pem:
+
+            Added the full CA information used to sign the above certs.  These certs
+            are good for the next 20 years.
+
+          * orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
+          * orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
+          * orbsvcs/tests/Security/mixed_security_test/client_key_nopasswd.pem:
+          * orbsvcs/tests/Security/mixed_security_test/server_key_nopasswd.pem:
+
+            Removed these files.
+
+  Wed Jun 15 08:54:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+            Reverted 3971 change, broke some CCM tests
+
+  Tue Jun 14 13:12:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          * TAO_IDL/be/be_valuetype.cpp:
+          * TAO_IDL/be/be_valuetype.h:
+          * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+          * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+
+            Added code generation for AMH exception holder's default
+            constructor to initialize the CORBA::Exception* member
+            to 0. This fix closes [BUGID:3970].
+
+  Tue Jun 14 12:18:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+            Only the methods for operations in local interfaces need to be
+            virtual. This reduces footprint and improves performance, this
+            fixes bugzilla 3971
+
 Mon Jun 13 18:00:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Merged main trunk into this branch, resolved all conflicts.

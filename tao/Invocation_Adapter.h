@@ -149,7 +149,7 @@ namespace TAO
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
-    /*
+    /**
      * This method does the following essential activities needed for
      * a remote invocation.
      *
@@ -237,7 +237,6 @@ namespace TAO
     Invocation_Adapter & operator= (const Invocation_Adapter &);
 
   protected:
-
     /// The target object on which this invocation is carried out.
     CORBA::Object_ptr target_;
 

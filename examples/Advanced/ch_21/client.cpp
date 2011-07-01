@@ -5,13 +5,12 @@
  *
  *  $Id$
  *
- *  @author Source code used in TAO has been modified and adapted from the codeprovided in the book
+ *  @author Source code used in TAO has been modified and adapted from the code provided in the book
  *  @author "Advanced CORBA Programming with C++" by MichiHenning and Steve Vinoski. Copyright 1999. Addison-Wesley
  *  @author Reading
  *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "CCSC.h"        // ORB-specific
 #include <ace/streams.h>

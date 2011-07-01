@@ -172,6 +172,10 @@ public:
   /// Decides whether to generate the initializing contstructor or not.
   bool has_member (void);
 
+  /// Accessors for the member
+  bool is_amh_excep_holder (void) const;
+  void is_amh_excep_holder (bool val);
+
 private:
   /// Do we support at least one abstract interface?
   bool supports_abstract_;
@@ -181,6 +185,9 @@ private:
 
   /// To differentiate from the interface skeleton name.
   char *full_obv_skel_name_;
+
+  /// Flag used by default constructor generator.
+  bool is_amh_excep_holder_;
 };
 
 #endif  // if !defined

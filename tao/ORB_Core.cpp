@@ -2109,19 +2109,22 @@ TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
   TAO_Profile* profile = 0;
   if (this->service_profile_selection(mp, profile) && profile)
   {
-    mp_temp.add_profile(profile);
+    if (mp_temp.add_profile(profile) == -1)
+      {
+        return false;
+      }
   }
 
   if (!orb_core->optimize_collocation_objects ())
-    return 0;
+    return false;
 
   if (!orb_core->use_global_collocation () && orb_core != this)
-    return 0;
+    return false;
 
   if (!orb_core->is_collocated (profile ? mp_temp : mp))
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
 int

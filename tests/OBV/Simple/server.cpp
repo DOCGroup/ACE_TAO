@@ -12,12 +12,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tCheckpoint Event_Types server\n\n"));
 
-
   try
     {
-      if (server.init ("Event_Types_Checkpoint",
-                       argc,
-                       argv) == -1)
+      if (server.init ("Event_Types_Checkpoint", argc, argv) == -1)
         return 1;
       else
         {

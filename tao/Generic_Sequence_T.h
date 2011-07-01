@@ -107,7 +107,7 @@ public:
   typedef range_checking<value_type,true> range;
 
   /// Default constructor.
-  generic_sequence()
+  generic_sequence(void)
     : maximum_(allocation_traits::default_maximum())
     , length_(0)
     , buffer_(allocation_traits::default_buffer_allocation())
