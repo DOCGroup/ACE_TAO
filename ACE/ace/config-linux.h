@@ -13,6 +13,10 @@
 #  define ACE_MT_SAFE 1
 #endif
 
+#if !defined (__ACE_INLINE__)
+#  define __ACE_INLINE__
+#endif /* ! __ACE_INLINE__ */
+
 #define ACE_PLATFORM_CONFIG config-linux.h
 
 #define ACE_HAS_BYTESEX_H
