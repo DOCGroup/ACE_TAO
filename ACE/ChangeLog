@@ -1,3 +1,8 @@
+Fri Jul  1 09:31:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-openvms.h:
+          Readded OpenVMS socket buffer size limit
+
 Fri Jul  1 08:46:30 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-qnx.h:
