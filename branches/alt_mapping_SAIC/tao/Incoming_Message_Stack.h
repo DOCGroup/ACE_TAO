@@ -21,10 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x630)
-#include /**/ "tao/TAO_Export.h"
-#endif
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -41,11 +37,7 @@ namespace TAO
  * Internal class, providing stack functionality for TAO_Queued_Data
  * objects.  Stack operations don't require memory allocation.
 */
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x630)
-class TAO_Export Incoming_Message_Stack
-#else
 class Incoming_Message_Stack
-#endif
 {
 public:
   /// default constructor, initiliazes empty stack.

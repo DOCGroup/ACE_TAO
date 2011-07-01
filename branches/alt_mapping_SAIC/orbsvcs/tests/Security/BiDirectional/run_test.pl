@@ -16,15 +16,18 @@ $opt = "";
 $conf_client = "";
 $conf_server = "";
 $iter = 10;
+$svc_conf = $PerlACE::svcconf_ext;
 
 sub options () {
-    my $help = 0;       # handled locally
-    my $man = 0;        # handled locally
-    my $ssl = 1;        # handled locally
-    my $dotdec = 0;     # handled locally
+    my $help = 0;     # handled locally
+    my $man = 0;      # handled locally
+    my $ssl = 1;      # handled locally
+    my $dotdec = 0;   # handled locally
     my $debug;        # handled locally
     my $shost;        # handled locally
     my $chost;        # handled locally
+    my $clog;         # handled locally
+    my $slog;         # handled locally
 
     # Process options.
     if ( @ARGV > 0 ) {
@@ -35,12 +38,14 @@ sub options () {
                 'dd=s' => \$dotdec,
                 'shost=s' => \$shost,
                 'chost=s' => \$chost,
+                'slog=s' => \$slog,
+                'clog=s' => \$clog,
                 'debug=i' => \$debug) or pod2usage(2);
     }
 
     if ($ssl) {
-        $conf_client = " -ORBSvcConf client.conf";
-        $conf_server = " -ORBSvcConf server.conf";
+        $conf_client = " -ORBSvcConf client$svc_conf";
+        $conf_server = " -ORBSvcConf server$svc_conf";
     }
 
     if ($debug) {
@@ -54,6 +59,14 @@ sub options () {
         if ($dotdec =~ /server/) {
             $conf_server = "$conf_server -ORBDottedDecimalAddresses 1";
         }
+    }
+
+    if ($slog) {
+        $conf_server = "$conf_server -ORBLogFile $slog";
+    }
+
+    if ($clog) {
+        $conf_client = "$conf_client -ORBLogFile $clog";
     }
 
     if ($shost) {
@@ -158,7 +171,8 @@ run_test.pl - A driver to run the test
 
 B<run_test.pl> [B<-help|?>] [B<-iter iterations>] [B<-chost host>]
                [B<-dd who>] [B<-shost host>] [B<-man>] [B<-ssl>]
-               [B<-debug level>]
+               [B<-debug level>] [B<-clog client logfile>]
+               [B<-slog server logfile>]
 
 
 =head1 DESCRIPTION
@@ -180,7 +194,7 @@ callback. The server then callsback the client on the same connection
 <no_iterations> times. If the server creates a new connection the server
 would crash itself.
 
-Basicaly, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
+Basically, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
 added support for SSLIOP.
 
 =head1 OPTIONS
@@ -190,6 +204,12 @@ added support for SSLIOP.
 
 [B<-iter iterations>]
     The number of iterations to make. Default is 10.
+
+[B<-clog logfile>]
+    The logfile for the client. Used only if specified.
+
+[B<-slog logfile>]
+    The logfile for the server. Used only if specified
 
 [B<-chost hostname>]
     The hostname_in_ior for the client. Used only if specified.

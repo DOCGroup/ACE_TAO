@@ -14,11 +14,11 @@ www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/Smart_Proxies.html
 Smart Proxy Example
 -------------------
 
-This directory contains a simple example that demostrats how the TAO
+This directory contains a simple example that demonstrates how the TAO
 Smart Proxy feature can be used.  In this example, just a single
 method has been "smartified" to illustrate how you just implement the
 methods you wish to customize since the rest will be taken care of the
-genearated Smart Proxy base class.
+generated Smart Proxy base class.
 
 All you need to define in the client application is a new factory that
 will produce the kind of proxy desired by the user.  This factory must

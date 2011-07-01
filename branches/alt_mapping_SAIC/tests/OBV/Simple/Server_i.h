@@ -30,12 +30,9 @@ public:
   /// Destructor.
   ~Checkpoint_i (void);
 
-  virtual void put_event (
-        Event * e
-  );
+  virtual void put_event (Event * e);
 
-  virtual void shutdown (
-    );
+  virtual void shutdown (void);
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

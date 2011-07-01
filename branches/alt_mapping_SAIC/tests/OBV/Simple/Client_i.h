@@ -38,7 +38,7 @@ public:
   Checkpoint_Client_i (void);
 
   /// Destructor
-  virtual  ~Checkpoint_Client_i (void);
+  virtual ~Checkpoint_Client_i (void);
 
   /// Execute the methods
   virtual int run (const char *,int, ACE_TCHAR** );
