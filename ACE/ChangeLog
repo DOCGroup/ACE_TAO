@@ -1,3 +1,9 @@
+Fri Jul  1 10:28:10 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-freebsd.h:
+          Added missing ACE_HAS_XPG4_MULTIBYTE_CHAR. Should also resolve
+          CDR stream op compile problems.
+
 Fri Jul  1 10:01:54 UTC 2011  Olli Savia  <ops@iki.fi>
 
         * ace/config-linux.h:
