@@ -111,6 +111,10 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
+# if (__GNUC__ < 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ <= 3))
+#   define ACE_LACKS_STD_WSTRING  1
+# endif
+
 #else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-sunos5.5.h
