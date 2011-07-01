@@ -79,6 +79,6 @@ run_main (int, ACE_TCHAR *[])
 #endif /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
   ACE_END_TEST;
-  return 0;
+  return result;
 }
 
