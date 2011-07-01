@@ -1,3 +1,10 @@
+Fri Jul  1 08:46:30 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/config-qnx.h:
+        * ace/config-sunos5.5.h:
+          Added ACE_LACKS_STD_WSTRING to remedy compile problems with new
+          CDR stream ops in TAO.
+
 Wed Jun 29 20:47:33 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_T.cpp:

@@ -174,6 +174,7 @@
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSDUP
+#define ACE_LACKS_STD_WSTRING
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # define ACE_HAS_THREADS
