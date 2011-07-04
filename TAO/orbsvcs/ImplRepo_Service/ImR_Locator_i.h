@@ -98,7 +98,7 @@ private:
 
   char* activate_server_i (Server_Info& info, bool manual_start);
 
-  char* activate_perclient_server_i (const Server_Info& info, bool manual_start);
+  char* activate_perclient_server_i (Server_Info info, bool manual_start);
 
   ImplementationRepository::StartupInfo*
     start_server(Server_Info& info, bool manual_start, int& waiting_clients);
