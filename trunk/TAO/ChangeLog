@@ -1,3 +1,12 @@
+Mon Jul  4 11:02:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Fixed Coverity error
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+          Fixed mismatched delete as reported by Coverity
+
 Wed Jun 29 12:44:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/TO-DO:
