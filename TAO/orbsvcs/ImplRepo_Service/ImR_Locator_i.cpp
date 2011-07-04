@@ -547,7 +547,7 @@ ImR_Locator_i::activate_server_i (Server_Info& info, bool manual_start)
 }
 
 char*
-ImR_Locator_i::activate_perclient_server_i (const Server_Info& info, bool manual_start)
+ImR_Locator_i::activate_perclient_server_i (Server_Info info, bool manual_start)
 {
   Server_Info_Ptr shared_info = this->repository_.get_server (info.name);
   do
