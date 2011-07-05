@@ -1,3 +1,8 @@
+Tue Jul  5 10:30:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed cidlc, that got removed years ago
+
 Fri Jul  1 11:08:06 UTC 2011  Steve Huston  <shuston@riverace.com>
 
         * tests/bug_3974_Regression_Test.cpp: Return the correct value from

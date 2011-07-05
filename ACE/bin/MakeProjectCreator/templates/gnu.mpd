@@ -92,15 +92,6 @@ TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%><%if(!compares(vms_old_make, 1))%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))<%endif%>
 <%endif%>
-<%if(cidlc)%>
-CIDLC = <%cidlc%>
-<%endif%>
-<%if(cidlc_dep)%>
-CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
-<%endif%>
-<%if(cidlc_flags)%>
-CIDLC_FLAGS = <%cidlc_flags%>
-<%endif%>
 <%if(xsc_bin)%>
 XSC_BIN = <%xsc_bin%>
 <%endif%>
