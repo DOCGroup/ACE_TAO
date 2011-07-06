@@ -1,0 +1,13 @@
+module DeCoRAM
+{
+  interface Worker
+  {
+    /**
+     * @param execution_time indicates how long the method will run in
+     *        ms.
+     * @return time in ms that has elapsed since the method started.
+     */
+    long run_task (in double execution_time);
+    void stop ();
+  };
+};

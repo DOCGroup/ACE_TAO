@@ -1,0 +1,20 @@
+// $Id$
+
+#include <Components.idl>
+#include <ReplicatedApplication.idl>
+#include "Worker.idl"
+
+module DeCoRAM
+{
+  component FTTask supports Worker, ReplicatedApplication
+  {
+    attribute Object COMPONENT_REFERENCE;
+    attribute short  role;
+    attribute double load;
+    attribute long   failure_count;
+  };
+
+  home FTTaskHome manages FTTask
+  {
+  };
+};
