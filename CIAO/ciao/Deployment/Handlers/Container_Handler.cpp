@@ -3,6 +3,7 @@
 #include "Container_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Logger/Logger_Service.h"
+/// TODO Make use of a container type generic
 #ifdef DANCE_DEPLOYS_EXTENSION_CONTAINER
   #include "ciao/Containers/Extension/Extension_Container.h"
 #else
@@ -94,6 +95,7 @@ namespace CIAO
                       CORBA::NO_MEMORY ());
 
     const char *name (plan.instance[instanceRef].name.in ());
+    /// TODO Make use of a container type generic
 #ifdef DANCE_DEPLOYS_EXTENSION_CONTAINER
     CIAO::Extension_Container *cont (0);
 
