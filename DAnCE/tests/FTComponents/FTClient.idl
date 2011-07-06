@@ -1,0 +1,23 @@
+
+// $Id$
+
+#include <Components.idl>
+#include "Trigger.idl"
+
+module DeCoRAM
+{
+  component FTClient supports Trigger
+  {
+    attribute Object COMPONENT_REFERENCE;
+    attribute double period;
+    attribute double execution_time;
+    attribute unsigned long iterations;
+    attribute unsigned long logstart;
+    attribute string server_ior;
+    attribute string name;
+   };
+
+  home FTClientHome manages FTClient
+  {
+  };
+};

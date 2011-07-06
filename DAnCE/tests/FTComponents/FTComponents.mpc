@@ -1,0 +1,317 @@
+// $Id$
+
+project(Worker) : ciaoidldefaults, anytypecode, ciao_lib, portableserver {
+  idlflags += -Wb,stub_export_macro=FTWORKER_Export \
+              -Wb,stub_export_include=FTWorker_export.h \
+              -Wb,skel_export_macro=FTWORKER_Export \
+              -Wb,skel_export_include=FTWorker_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
+  macros += FTWORKER_BUILD_DLL
+
+  IDL_Files {
+    Worker.idl
+  }
+  Source_Files{
+    WorkerC.cpp
+    WorkerS.cpp
+  }
+}
+
+project(Trigger) : ciaoidldefaults, anytypecode, ciao_lib, portableserver {
+  idlflags += -Wb,stub_export_macro=FTTRIGGER_Export \
+              -Wb,stub_export_include=FTTrigger_export.h \
+              -Wb,skel_export_macro=FTTRIGGER_Export \
+              -Wb,skel_export_include=FTTrigger_export.h
+
+  verbatim(gnuace, macros) {
+    override no_hidden_visibility = 1
+  }
+
+  macros += FTTRIGGER_BUILD_DLL
+
+  IDL_Files {
+    Trigger.idl
+  }
+  Source_Files{
+    TriggerC.cpp
+    TriggerS.cpp
+  }
+}
+
+project(FTClient_idl_gen) : ciaoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=FTCLIENT_STUB_Export \
+              -Wb,stub_export_include=FTClient_stub_export.h \
+              -Wb,skel_export_macro=FTCLIENT_SVNT_Export \
+              -Wb,skel_export_include=FTClient_svnt_export.h
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  IDL_Files {
+    FTClient.idl
+  }
+}
+
+project(FTClient_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro FTCLIENT_SVNT_Export \
+               --svnt-export-include FTClient_svnt_export.h
+  idlflags += -Wb,export_macro=FTCLIENT_EXEC_Export \
+              -Wb,export_include=FTClient_exec_export.h \
+              -SS
+
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  CIDL_Files {
+    FTClient.cidl
+  }
+
+  IDL_Files {
+    FTClientE.idl
+  }
+}
+
+project(FTClient_stub) : ccm_stub, ciao_lib {
+  avoids += ace_for_tao
+  after += FTClient_idl_gen Worker Trigger
+  libs += Worker Trigger
+
+  sharedname = FTClient_stub
+  dynamicflags   = FTCLIENT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTClientC.cpp
+  }
+
+  Header_Files {
+    FTClientC.h
+    FTClient_stub_export.h
+  }
+
+  Inline_Files {
+    FTClientC.inl
+  }
+}
+
+project(FTClient_exec) : ciao_executor, ciao_container_base_stub, naming, orbsvcslib, ciao_lib {
+  avoids += ace_for_tao
+  after   += FTClient_cidl_gen FTClient_stub
+  sharedname = FTClient_exec
+  libs += FTClient_stub
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  dynamicflags   = FTCLIENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTClientEC.cpp
+    FTClient_exec.cpp
+    FTClient_Timer_Handler.cpp
+  }
+
+  Header_Files {
+    FTClientEC.h
+    FTClient_exec.h
+    FTClient_exec_export.h
+    FTClient_Timer_Handler.h
+  }
+
+  Inline_Files {
+    FTClientEC.inl
+  }
+}
+
+
+project(FTClient_svnt) : ciao_servant, naming, ciao_lib {
+  avoids += ace_for_tao
+  after      +=  FTClient_exec
+  sharedname  = FTClient_svnt
+  libs       += FTClient_exec \
+                FTClient_stub
+
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  dynamicflags = FTCLIENT_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTClientS.cpp
+    FTClient_svnt.cpp
+  }
+
+  Header_Files {
+    FTClientS.h
+    FTClient_svnt.h
+    FTClient_svnt_export.h
+  }
+
+  Inline_Files {
+    FTClientS.inl
+  }
+}
+
+project(FTTask_idl_gen) : ciaoidldefaults, anytypecode {
+  avoids += ace_for_tao
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=FTTASK_STUB_Export \
+              -Wb,stub_export_include=FTTask_stub_export.h \
+              -Wb,skel_export_macro=FTTASK_SVNT_Export \
+              -Wb,skel_export_include=FTTask_svnt_export.h
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  IDL_Files {
+    FTTask.idl
+  }
+}
+
+project(FTTask_cidl_gen) : ciaocidldefaults, ciaoidldefaults {
+  avoids += ace_for_tao
+  custom_only = 1
+  cidlflags += --svnt-export-macro FTTASK_SVNT_Export \
+               --svnt-export-include FTTask_svnt_export.h
+  idlflags += -Wb,export_macro=FTTASK_EXEC_Export \
+              -Wb,export_include=FTTask_exec_export.h \
+              -SS
+
+  idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  cidlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  CIDL_Files {
+    FTTask.cidl
+  }
+
+  IDL_Files {
+    FTTaskE.idl
+  }
+}
+
+project(FTTask_stub) : ccm_stub, ciao_lib {
+  avoids += ace_for_tao
+  after += FTTask_idl_gen Worker
+  libs += Worker
+
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+
+  sharedname = FTTask_stub
+  dynamicflags   = FTTASK_STUB_BUILD_DLL
+  libs +=  LWFT_StateSyncAgent
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTTaskC.cpp
+  }
+
+  Header_Files {
+    FTTaskC.h
+    FTTask_stub_export.h
+  }
+
+  Inline_Files {
+    FTTaskC.inl
+  }
+}
+
+project(FTTask_exec) : ciao_executor, ciao_container_base_stub, naming, orbsvcslib, ciao_lib {
+  avoids += ace_for_tao
+  after   += FTTask_cidl_gen FTTask_stub
+  sharedname = FTTask_exec
+  libs += FTTask_stub CUTS CUTS_CPU_Worker Worker
+  libpaths += $(CUTS_ROOT)/lib
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT $(CUTS_ROOT) $(CUTS_ROOT)/cuts/workers
+  dynamicflags   = FTTASK_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTTaskEC.cpp
+    FTTask_exec.cpp
+    Failure_Task.cpp
+  }
+
+  Header_Files {
+    FTTaskEC.h
+    FTTask_exec.h
+    Failure_Task.h
+    FTTask_exec_export.h
+  }
+
+  Inline_Files {
+    FTTaskEC.inl
+  }
+}
+
+
+project(FTTask_svnt) : ciao_servant, naming, ciao_lib {
+  avoids += ace_for_tao
+  after      += FTTask_exec
+  sharedname  = FTTask_svnt
+  libs       += FTTask_exec \
+                FTTask_stub
+
+  includes += $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT
+  dynamicflags = FTTASK_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    FTTaskS.cpp
+    FTTask_svnt.cpp
+  }
+
+  Header_Files {
+    FTTaskS.h
+    FTTask_svnt.h
+    FTTask_svnt_export.h
+  }
+
+  Inline_Files {
+    FTTaskS.inl
+  }
+}
+
+project(killtask) : naming, ciao {
+
+  after += Worker
+  libs += Worker
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    killtask.cpp
+  }
+}
+
+project(client_trigger) : naming, ciao {
+
+  after += Trigger
+  libs += Trigger
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client_trigger.cpp
+  }
+}

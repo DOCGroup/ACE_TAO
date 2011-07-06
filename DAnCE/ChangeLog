@@ -1,3 +1,42 @@
+Wed Jul  6 21:48:20 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * tests/FTComponents:
+
+        * tests/FTComponents/FTClient.cidl:
+        * tests/FTComponents/FTClient.idl:
+        * tests/FTComponents/FTClient_Task.h:
+        * tests/FTComponents/FTClient_Task.cpp:
+        * tests/FTComponents/FTClient_Timer_Handler.h:
+        * tests/FTComponents/FTClient_Timer_Handler.cpp:
+        * tests/FTComponents/FTClient_exec.h:
+        * tests/FTComponents/FTClient_exec.cpp:
+        * tests/FTComponents/FTClient_exec_export.h:
+        * tests/FTComponents/FTClient_stub_export.h:
+        * tests/FTComponents/FTClient_svnt_export.h:
+        * tests/FTComponents/FTComponents.mpc:
+        * tests/FTComponents/FTTask.cidl:
+        * tests/FTComponents/FTTask.idl:
+        * tests/FTComponents/FTTask_exec.h:
+        * tests/FTComponents/FTTask_exec.cpp:
+        * tests/FTComponents/FTTask_exec_export.h:
+        * tests/FTComponents/FTTask_stub_export.h:
+        * tests/FTComponents/FTTask_svnt_export.h:
+        * tests/FTComponents/FTTrigger_export.h:
+        * tests/FTComponents/FTWorker_export.h:
+        * tests/FTComponents/Failure_Task.h:
+        * tests/FTComponents/Failure_Task.cpp:
+        * tests/FTComponents/Trigger.idl:
+        * tests/FTComponents/Worker.idl:
+        * tests/FTComponents/client_trigger.cpp:
+        * tests/FTComponents/killtask.cpp:
+
+        * tests/FaultCorrelation:
+
+        * tests/FaultCorrelation/proc_failure.mpc:
+        * tests/FaultCorrelation/proc_failure.cpp:
+
+        Added CORFU Tests
+
 Tue Jun  7 21:18:05 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Plan_Launcher/Plan_Launcher.cpp:
