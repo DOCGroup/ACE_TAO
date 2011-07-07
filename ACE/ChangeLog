@@ -1,3 +1,13 @@
+Thu Jul  7 15:24:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Unbounded_Set_Ex.cpp:
+          Fixed compile error when ACE_HAS_DUMP is defined. This fixes bugzilla
+          3977, thanks to Ben Bronk <benjamin dot j dot bronk at lmco dot com>
+          for reporting this
+
+        * docs/bczar/bczar.html:
+          Added git
+
 Tue Jul  5 10:30:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
