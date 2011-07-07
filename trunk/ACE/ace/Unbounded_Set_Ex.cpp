@@ -76,7 +76,7 @@ ACE_Unbounded_Set_Ex<T, C>::dump (void) const
 
   const_iterator const the_end = this->end ();
   for (const_iterator i (this->begin ());
-       i != end;
+       i != the_end;
        ++i)
     ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %u\n"), count++));
 
