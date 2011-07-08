@@ -244,3 +244,21 @@ module redefs
     };
   };
 };
+
+// Had to relocate the spot where the typedef is marked as
+// having its arg traits instantiation already generated.
+// Otherwise, when the scope of the base interface is visited
+// as part of this process, we had infinite recursion and a
+// stack overflow.
+module Rec_Arg_Traits
+{
+  interface base
+  {
+    typedef Rec_Arg_Traits::base plan_stub_type;
+  };
+
+  interface derived : Rec_Arg_Traits::base
+  {
+    void remove_task (in plan_stub_type listener);
+  };
+};
