@@ -62,6 +62,10 @@ class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
 {
 public:
+  /// Useful for template programming.
+  typedef ::CORBA::Object               _stub_type;
+  typedef ::CORBA::Object_ptr           _stub_ptr_type;
+  typedef ::CORBA::Object_var           _stub_var_type;
 
   /// Destructor.
   virtual ~TAO_ServantBase (void);
