@@ -1059,6 +1059,16 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
       return 0;
     }
 
+  // Had to move up the spot where the typedef is marked as
+  // having its arg traits instantiation already generated.
+  // Consider the case where the base type is an interface,
+  // the typedef occurs inside the interface, and the typdef
+  // is used as an arg in an operation of a derived interface.
+  // When the scope of the base interface is visited
+  // as part of the arg traits visitation, we had infinite
+  // recursion and a stack overflow.
+  this->generated (node, true);
+
   this->ctx_->alias (node);
 
   // Make a decision based on the primitive base type.
@@ -1091,7 +1101,6 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
     }
 
   this->ctx_->alias (0);
-  this->generated (node, true);
   return 0;
 }
 
