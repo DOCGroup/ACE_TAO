@@ -1,3 +1,18 @@
+Fri Jul  8 14:57:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          Relocated the spot where a typedef node is marked as having
+          its arg traits instantiation generated. There is a use case
+          where the old location gave rise to infinite recursion and
+          a stack overflow. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for uncovering the bug and submitting
+          example IDL.
+
+        * tests/IDL_Test/interface.cpp:
+
+          Added the example IDL above to the test.
+
 Fri Jul  8 06:39:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.h:
