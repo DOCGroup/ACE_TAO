@@ -1,3 +1,8 @@
+Fri Jul  8 06:39:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.h:
+          Added some typedefs useful for template meta programming
+
 Mon Jul  4 11:02:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
