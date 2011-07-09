@@ -37,7 +37,7 @@ class LongWork : public ACE_Method_Request
 public:
   virtual int call (void)
   {
-    ACE_TRACE (ACE_TEXT ("LongWork::call"));
+    ACE_TRACE ("LongWork::call");
     ACE_DEBUG
       ((LM_INFO, ACE_TEXT ("(%t) Attempting long work task\n")));
     ACE_OS::sleep (1);
@@ -53,7 +53,7 @@ public:
 
   ACE_Future<ACE_CString*> &future (void)
   {
-    ACE_TRACE (ACE_TEXT ("LongWork::future"));
+    ACE_TRACE ("LongWork::future");
     return result_;
   }
 
@@ -72,7 +72,7 @@ class Exit : public ACE_Method_Request
 public:
   virtual int call (void)
   {
-    ACE_TRACE (ACE_TEXT ("Exit::call"));
+    ACE_TRACE ("Exit::call");
     return -1;
   }
 };
@@ -97,7 +97,7 @@ public:
 
   int perform (ACE_Method_Request *req)
   {
-    ACE_TRACE (ACE_TEXT ("Worker::perform"));
+    ACE_TRACE ("Worker::perform");
     return this->queue_.enqueue (req);
   }
 
@@ -145,18 +145,18 @@ public:
   Manager ()
     : shutdown_(0), workers_lock_(), workers_cond_(workers_lock_)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::TP"));
+    ACE_TRACE ("Manager::TP");
   }
 
   int perform (ACE_Method_Request *req)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::perform"));
+    ACE_TRACE ("Manager::perform");
     return this->queue_.enqueue (req);
   }
 
   int svc (void)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::svc"));
+    ACE_TRACE ("Manager::svc");
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Manager started\n")));
 
@@ -251,7 +251,7 @@ private:
 int
 Manager::shut_down (void)
 {
-  ACE_TRACE (ACE_TEXT ("Manager::shut_down"));
+  ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin ();
   Worker **worker_ptr = 0;
   do

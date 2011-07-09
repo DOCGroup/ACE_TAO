@@ -32,11 +32,11 @@
 
 ReadHandler::ReadHandler() : ACE_Event_Handler(), mStream(), mDataSize(0),
         mData(0), mCallCounter(0), mInvocationCounter(0) {
-    ACE_TRACE(ACE_TEXT("ReadHandler::ReadHandler()"));
+    ACE_TRACE("ReadHandler::ReadHandler()");
 }
 
 ReadHandler::~ReadHandler() {
-    ACE_TRACE(ACE_TEXT("ReadHandler::~ReadHandler()"));
+    ACE_TRACE("ReadHandler::~ReadHandler()");
 
     if (mStream.close() == -1)
       ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
@@ -46,17 +46,17 @@ ReadHandler::~ReadHandler() {
 }
 
 ACE_SOCK_Stream &ReadHandler::getStream(void) {
-    ACE_TRACE(ACE_TEXT("ReadHandler::getStream(void)"));
+    ACE_TRACE("ReadHandler::getStream(void)");
     return mStream;
 }
 
 ACE_HANDLE ReadHandler::get_handle(void) const {
-    ACE_TRACE(ACE_TEXT("ReadHandler::get_handle(void)"));
+    ACE_TRACE("ReadHandler::get_handle(void)");
     return mStream.get_handle();
 }
 
 int ReadHandler::handle_input(ACE_HANDLE) {
-    ACE_TRACE(ACE_TEXT("ReadHandler::handle_input(ACE_HANDLE)"));
+    ACE_TRACE("ReadHandler::handle_input(ACE_HANDLE)");
 
     INVOCATION_ENTER();
 

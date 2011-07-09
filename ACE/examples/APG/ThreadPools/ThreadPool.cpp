@@ -65,7 +65,7 @@ public:
 private:
   void process_message (ACE_Message_Block *mb)
   {
-    ACE_TRACE (ACE_TEXT ("Worker::process_message"));
+    ACE_TRACE ("Worker::process_message");
     int msgId;
     ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
     mb->release ();
@@ -92,12 +92,12 @@ public:
   Manager ()
     : shutdown_(0), workers_lock_(), workers_cond_(workers_lock_)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::Manager"));
+    ACE_TRACE ("Manager::Manager");
   }
 
   int svc (void)
   {
-    ACE_TRACE (ACE_TEXT ("Manager::svc"));
+    ACE_TRACE ("Manager::svc");
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Manager started\n")));
 
@@ -188,7 +188,7 @@ int Manager::done (void)
 int
 Manager::shut_down (void)
 {
-  ACE_TRACE (ACE_TEXT ("Manager::shut_down"));
+  ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
     this->workers_.begin ();
   Worker **worker_ptr = 0;

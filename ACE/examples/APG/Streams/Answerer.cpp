@@ -24,7 +24,7 @@ class AnswerIncomingCall : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("AnswerIncomingCall::process()"));
+    ACE_TRACE ("AnswerIncomingCall::process()");
 
     if (message->recorder ()->answer_call () < 0)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,7 +42,7 @@ class GetCallerId : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("GetCallerId::process()"));
+    ACE_TRACE ("GetCallerId::process()");
 
     CallerId *id;
     id = message->recorder ()->retrieve_callerId ();
@@ -64,7 +64,7 @@ class PlayOutgoingMessage : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("PlayOutgoingMessage::process()"));
+    ACE_TRACE ("PlayOutgoingMessage::process()");
 
     ACE_FILE_Addr outgoing_message =
       this->get_outgoing_message (message);
@@ -94,7 +94,7 @@ class RecordIncomingMessage : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("RecordIncomingMessage::process()"));
+    ACE_TRACE ("RecordIncomingMessage::process()");
 
     ACE_FILE_Addr incoming_message =
       this->get_incoming_message_queue ();
@@ -125,7 +125,7 @@ class ReleaseDevice : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("ReleaseDevice::process()"));
+    ACE_TRACE ("ReleaseDevice::process()");
     message->recorder ()->release ();
     return 0;
   }
@@ -138,7 +138,7 @@ class EncodeMessage : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("ReleaseDevice::process()"));
+    ACE_TRACE ("ReleaseDevice::process()");
 
     ACE_FILE_Addr &incoming = message->addr ();
     ACE_FILE_Addr addr = this->get_message_destination (message);
@@ -169,7 +169,7 @@ class SaveMetaData : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("SaveMetaData::process()"));
+    ACE_TRACE ("SaveMetaData::process()");
 
     ACE_TString path (message->addr ().get_path_name ());
     path += ACE_TEXT (".xml");
@@ -207,7 +207,7 @@ class NotifySomeone : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE (ACE_TEXT ("NotifySomeone::process()"));
+    ACE_TRACE ("NotifySomeone::process()");
 
     // Format an email to tell someone about the
     // newly received message.

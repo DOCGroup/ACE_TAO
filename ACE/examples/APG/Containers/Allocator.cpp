@@ -20,7 +20,7 @@ private:
 // Listing 1 code/ch05
 int StackExample::run (void)
 {
-  ACE_TRACE (ACE_TEXT ("StackUser::run"));
+  ACE_TRACE ("StackUser::run");
 
   ACE_Allocator *allocator = 0;
   size_t block_size = sizeof(ACE_Node<DataElement>);
@@ -45,7 +45,7 @@ int StackExample::run (void)
 // Listing 2 code/ch05
 int StackExample::runUnboundedStack (ACE_Allocator* allocator)
 {
-  ACE_TRACE (ACE_TEXT ("StackExample::runUnboundedStack"));
+  ACE_TRACE ("StackExample::runUnboundedStack");
 
   // Pass in an allocator during construction.
   ACE_Unbounded_Stack<DataElement> ustack (allocator);
