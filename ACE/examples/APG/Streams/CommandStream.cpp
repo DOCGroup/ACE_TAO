@@ -15,7 +15,7 @@ int CommandStream::open (void *arg,
                          ACE_Module<ACE_MT_SYNCH> *head,
                          ACE_Module<ACE_MT_SYNCH> *tail)
 {
-  ACE_TRACE (ACE_TEXT ("CommandStream::open(peer)"));
+  ACE_TRACE ("CommandStream::open(peer)");
 
   if (this->inherited::open (arg, head, tail) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),

@@ -6,7 +6,7 @@
 
 PCB::PCB() : count_(0)
 {
-  ACE_TRACE (ACE_TEXT ("PCB::PCB"));
+  ACE_TRACE ("PCB::PCB");
 }
 
 PCB::~PCB()
@@ -15,7 +15,7 @@ PCB::~PCB()
 
 int PCB::handleEvent (const void *arg)
 {
-  ACE_TRACE (ACE_TEXT ("PCB::handle_timeout"));
+  ACE_TRACE ("PCB::handle_timeout");
 
   const int *val = static_cast<const int*> (arg);
   ACE_ASSERT ((*val) == timerID_);
@@ -53,27 +53,27 @@ int PCB::handleEvent (const void *arg)
 void
 PCB::setID (long timerID)
 {
-  ACE_TRACE (ACE_TEXT ("PCB::setID"));
+  ACE_TRACE ("PCB::setID");
   timerID_ = timerID;
 }
 
 long
 PCB::getID (void) const
 {
-  ACE_TRACE (ACE_TEXT ("PCB::getID"));
+  ACE_TRACE ("PCB::getID");
   return timerID_;
 }
 
 int
 PCB::handleClose (void)
 {
-  ACE_TRACE (ACE_TEXT ("PCB::handle_close"));
+  ACE_TRACE ("PCB::handle_close");
   return 0;
 }
 
 int
 PCB::handleCancel (void)
 {
-  ACE_TRACE (ACE_TEXT ("PCB::handleCancel"));
+  ACE_TRACE ("PCB::handleCancel");
   return 0;
 }
