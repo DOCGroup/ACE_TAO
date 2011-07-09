@@ -19,7 +19,7 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &,
                               const void *arg)
   {
-    ACE_TRACE (ACE_TEXT ("CB::handle_timeout"));
+    ACE_TRACE ("CB::handle_timeout");
 
     const int *val = static_cast<const int*> (arg);
     ACE_ASSERT((*val) == id_);

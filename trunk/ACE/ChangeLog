@@ -1,3 +1,64 @@
+Sat Jul  9 19:07:20 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * ace/RB_Tree.inl,
+          ace/Svc_Handler.cpp,
+          examples/APG/Active_Objects/AO.cpp,
+          examples/APG/Active_Objects/AO2.cpp,
+          examples/APG/Containers/Allocator.cpp,
+          examples/APG/Containers/DLList.cpp,
+          examples/APG/Containers/Hash_Map.cpp,
+          examples/APG/Containers/Hash_Map_Hash.cpp,
+          examples/APG/Containers/Map_Manager.cpp,
+          examples/APG/Containers/Map_Manager_Specialization.cpp,
+          examples/APG/Containers/Queues.cpp,
+          examples/APG/Containers/RB_Tree.cpp,
+          examples/APG/Containers/RB_Tree_Functors.cpp,
+          examples/APG/Containers/Sets.cpp,
+          examples/APG/Containers/Stacks.cpp,
+          examples/APG/Processes/Process_Manager_Death.cpp,
+          examples/APG/Processes/Process_Mutex.cpp,
+          examples/APG/Signals/SigAction.cpp,
+          examples/APG/Signals/SigHandler.cpp,
+          examples/APG/Signals/SigHandlers.cpp,
+          examples/APG/Streams/Answerer.cpp,
+          examples/APG/Streams/CommandStream.cpp,
+          examples/APG/Streams/CommandTask.cpp,
+          examples/APG/Streams/EndTask.h,
+          examples/APG/ThreadPools/Futures.cpp,
+          examples/APG/ThreadPools/LF_ThreadPool.cpp,
+          examples/APG/ThreadPools/Task_ThreadPool.cpp,
+          examples/APG/ThreadPools/ThreadPool.cpp,
+          examples/APG/Timers/Alarm.cpp,
+          examples/APG/Timers/CB.cpp,
+          examples/APG/Timers/PCB.cpp,
+          examples/APG/Timers/PTimerDispatcher.cpp,
+          examples/APG/Timers/Task.cpp,
+          examples/APG/Timers/TimerDispatcher.cpp,
+          examples/APG/Timers/Upcall.cpp,
+          examples/Reactor/TP_Reactor/ReadHandler.cpp,
+          examples/Timer_Queue/Custom_Handler.cpp,
+          netsvcs/lib/Name_Handler.cpp,
+          netsvcs/lib/Server_Logging_Handler_T.cpp,
+          netsvcs/lib/TS_Clerk_Handler.cpp,
+          netsvcs/lib/TS_Server_Handler.cpp,
+          tests/Bug_3878_Regression_Test.cpp,
+          tests/Thread_Timer_Queue_Adapter_Test.cpp: Fixed all the 
+          ACE_TRACE statements similar to
+  
+          ACE_TRACE( ACE_TEXT( "sometext" ) ); 
+  
+          and
+  
+          ACE_TRACE( "some"
+                     "text" ); 
+  
+          to
+  
+          ACE_TRACE( "sometext" );
+  
+          Thanks to Espen Harlinn <espen at harlinn dot no> for this fix,
+          which fixes bugid 3976.
+
 Thu Jul  7 15:24:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Unbounded_Set_Ex.cpp:

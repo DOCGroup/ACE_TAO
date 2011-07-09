@@ -75,7 +75,7 @@ class CCustomEventHandlerUpcall
                      int /*recurring_timer*/,
                      const ACE_Time_Value& /*cur_time*/)
         {
-            ACE_TRACE(ACE_TEXT ("timeout"));
+            ACE_TRACE("timeout");
 
             return (*p_Handler)(const_cast<void*> (p_vParameter));
         }
@@ -97,7 +97,7 @@ class CCustomEventHandlerUpcall
         /// This method is called when a timer is canceled
         int cancel_timer(TTimerQueue&, ICustomEventHandler* p_Handler, int, int)
         {
-            ACE_TRACE(ACE_TEXT ("cancel_timer"));
+            ACE_TRACE("cancel_timer");
             delete p_Handler;
             return 0;
         }
@@ -106,7 +106,7 @@ class CCustomEventHandlerUpcall
         /// the timer is still contained in it
         int deletion(TTimerQueue&, ICustomEventHandler* p_Handler, const void*)
         {
-            ACE_TRACE(ACE_TEXT ("deletion"));
+            ACE_TRACE("deletion");
             delete p_Handler;
             return 0;
         }

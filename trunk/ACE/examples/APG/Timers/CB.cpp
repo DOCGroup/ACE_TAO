@@ -6,14 +6,14 @@
 
 CB::CB () : count_(0)
 {
-  ACE_TRACE (ACE_TEXT ("CB::CB"));
+  ACE_TRACE ("CB::CB");
 }
 
 // Listing 1 code/ch20
 int CB::handle_timeout (const ACE_Time_Value &,
                         const void *arg)
 {
-  ACE_TRACE (ACE_TEXT ("CB::handle_timeout"));
+  ACE_TRACE ("CB::handle_timeout");
 
   const int *val = static_cast<const int*> (arg);
   ACE_ASSERT ((*val) == timerID_);
@@ -51,20 +51,20 @@ int CB::handle_timeout (const ACE_Time_Value &,
 void
 CB::setID (long timerID)
 {
-  ACE_TRACE (ACE_TEXT ("CB::setID"));
+  ACE_TRACE ("CB::setID");
   timerID_ = timerID;
 }
 
 long
 CB::getID (void)
 {
-  ACE_TRACE (ACE_TEXT ("CB::getID"));
+  ACE_TRACE ("CB::getID");
   return timerID_;
 }
 
 int
 CB::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  ACE_TRACE (ACE_TEXT ("CB::handle_close"));
+  ACE_TRACE ("CB::handle_close");
   return 0;
 }
