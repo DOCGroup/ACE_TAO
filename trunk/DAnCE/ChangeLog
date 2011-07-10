@@ -1,8 +1,14 @@
+Sun Jul 10 16:21:29 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * docs/Error_Documentation/index.html:
+
+          Fuzz.
+
 Thu Jul  7 20:38:10 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Configuration/Process_Name.cpp:
 
-          Updated to address a glibc error in some Linux distributions. 
+          Updated to address a glibc error in some Linux distributions.
 
 Thu Jun 30 10:36:59 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
