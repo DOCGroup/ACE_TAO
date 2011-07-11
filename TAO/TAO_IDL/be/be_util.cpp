@@ -544,17 +544,7 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type ")
-      ACE_TEXT ("definitions.\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -Gos \t\t\tGenerate std::ostream insertion operators.\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Gdcpsonly \t\tGenerate code only supporting DDS DCPS ")
-      ACE_TEXT ("type serializer definitions.\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
