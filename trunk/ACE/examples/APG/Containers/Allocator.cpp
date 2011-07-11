@@ -20,7 +20,7 @@ private:
 // Listing 1 code/ch05
 int StackExample::run (void)
 {
-  ACE_TRACE ("StackUser::run");
+  ACE_TRACE ("StackExample::run");
 
   ACE_Allocator *allocator = 0;
   size_t block_size = sizeof(ACE_Node<DataElement>);
