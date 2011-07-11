@@ -1,3 +1,10 @@
+Mon Jul 11 14:55:57 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_util.cpp:
+
+          Removed usage text for command line options that were
+          removed a long time ago.
+
 Fri Jul  8 14:57:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
