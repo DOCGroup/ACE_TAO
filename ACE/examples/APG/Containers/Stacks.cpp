@@ -30,7 +30,7 @@ private:
 
 int StackExample::run (void)
 {
-  ACE_TRACE ("StackUser::run");
+  ACE_TRACE ("StackExample::run");
 
   ACE_ASSERT(!this->runBoundedStack());
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),

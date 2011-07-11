@@ -145,18 +145,18 @@ public:
   Manager ()
     : shutdown_(0), workers_lock_(), workers_cond_(workers_lock_)
   {
-    ACE_TRACE ("Manager::TP");
+    ACE_TRACE ("Manager");
   }
 
   int perform (ACE_Method_Request *req)
   {
-    ACE_TRACE ("Manager::perform");
+    ACE_TRACE ("perform");
     return this->queue_.enqueue (req);
   }
 
   int svc (void)
   {
-    ACE_TRACE ("Manager::svc");
+    ACE_TRACE ("svc");
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Manager started\n")));
 
