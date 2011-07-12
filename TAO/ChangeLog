@@ -1,3 +1,12 @@
+Tue Jul 12 13:15:24 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added code generation of a preprocessor version check that
+          will output an error message if the generated file's version
+          doesn't match the IDL compiler's (TAO's) version. This fix
+          closes [BUGID:3979].
+
 Mon Jul 11 14:55:57 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * TAO_IDL/be/be_util.cpp:
@@ -14,7 +23,7 @@ Fri Jul  8 14:57:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
           where the old location gave rise to infinite recursion and
           a stack overflow. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for uncovering the bug and submitting
-          example IDL.
+          example IDL. This fix closes [BUGID:3978].
 
         * tests/IDL_Test/interface.cpp:
 
