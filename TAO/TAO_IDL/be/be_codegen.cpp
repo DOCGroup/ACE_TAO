@@ -22,6 +22,10 @@
 #include "utl_string.h"
 #include "idl_defines.h"
 
+// This one TAO include is needed to generate the
+// version check code.
+#include "../../tao/Version.h"
+
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
@@ -321,7 +325,15 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
     }
 
-  // Generate the TAO_EXPORT_MACRO macro.
+   // Generate the regeneration check.
+  *this->client_header_ << "\n\n#if TAO_MAJOR_VERSION != " << TAO_MAJOR_VERSION
+                        << " || TAO_MINOR_VERSION != " << TAO_MINOR_VERSION
+                        << " || TAO_BETA_VERSION != " << TAO_BETA_VERSION
+                        << "\n#error This file should be regenerated with TAO_IDL from version "
+                        << TAO_VERSION
+                        << "\n#endif";
+
+ // Generate the TAO_EXPORT_MACRO macro.
   *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
   *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
   *this->client_header_ << "#endif\n";
@@ -2486,6 +2498,11 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // _vars and _outs are typedefs of template class instantiations.
   this->gen_var_file_includes ();
+
+  // Version file, for code that checks needs for regeneration.
+  this->gen_standard_include (this->client_header_,
+                              "tao/Version.h",
+                              true);
 
   // Versioned namespace support.
   this->gen_standard_include (this->client_header_,
