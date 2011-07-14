@@ -147,7 +147,8 @@ BE_GlobalData::BE_GlobalData (void)
     gen_lem_force_all_ (false),
     tab_size_ (2),
     alt_mapping_ (false),
-    in_facet_servant_ (false)
+    in_facet_servant_ (false),
+    gen_arg_traits_ (true)
 {
 }
 
@@ -2506,6 +2507,18 @@ BE_GlobalData::in_facet_servant (bool val)
   this->in_facet_servant_ = val;
 }
 
+bool
+BE_GlobalData::gen_arg_traits (void) const
+{
+  return this->gen_arg_traits_;
+}
+
+void
+BE_GlobalData::gen_arg_traits (bool val)
+{
+  this->gen_arg_traits_ = val;
+}
+
 unsigned long
 BE_GlobalData::tab_size (void) const
 {
@@ -3269,6 +3282,10 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Suppress Any support for local interfaces.
                 be_global->gen_local_iface_anyops (false);
+              }
+            else if (av[i][3] == 't')
+              {
+                be_global->gen_arg_traits (false);
               }
             else
               {

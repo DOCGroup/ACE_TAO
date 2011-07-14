@@ -309,9 +309,8 @@ public:
   bool array_seen_;
   bool array_seq_seen_;
   bool base_object_seen_;
-  bool basic_arg_seen_;
   bool basic_type_seen_;
-  bool bd_string_arg_seen_;
+  bool bd_string_seen_;
   bool boolean_seq_seen_;
   bool char_seq_seen_;
   bool component_seen_;
@@ -319,8 +318,8 @@ public:
   bool double_seq_seen_;
   bool enum_seen_;
   bool exception_seen_;
-  bool fixed_array_arg_seen_;
-  bool fixed_size_arg_seen_;
+  bool fixed_array_decl_seen_;
+  bool fixed_size_decl_seen_;
   bool float_seq_seen_;
   bool fwd_iface_seen_;
   bool fwd_valuetype_seen_;
@@ -330,6 +329,7 @@ public:
   bool long_seq_seen_;
   bool longdouble_seq_seen_;
   bool longlong_seq_seen_;
+  bool non_local_fwd_iface_seen_;
   bool non_local_iface_seen_;
   bool non_local_op_seen_;
   bool object_arg_seen_;
@@ -339,12 +339,12 @@ public:
   bool recursive_type_seen_;
   bool seq_seen_;
   bool short_seq_seen_;
-  bool special_basic_arg_seen_;
+  bool special_basic_decl_seen_;
   bool string_seen_;
   bool string_member_seen_;
   bool string_seq_seen_;
   bool typecode_seen_;
-  bool ub_string_arg_seen_;
+  bool ub_string_seen_;
   bool ulong_seq_seen_;
   bool ulonglong_seq_seen_;
   bool union_seen_;
@@ -352,8 +352,8 @@ public:
   bool valuebase_seen_;
   bool valuefactory_seen_;
   bool valuetype_seen_;
-  bool var_array_arg_seen_;
-  bool var_size_arg_seen_;
+  bool var_array_decl_seen_;
+  bool var_size_decl_seen_;
   bool vt_seq_seen_;
   bool wchar_seq_seen_;
   bool wstring_seq_seen_;

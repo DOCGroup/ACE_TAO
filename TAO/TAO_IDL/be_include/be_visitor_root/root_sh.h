@@ -34,8 +34,14 @@ public:
 
   virtual int visit_root (be_root *node);
 
+private:
   /// Open file and initialize stream.
   int init (void);
+
+  /// Generate arg template trait specializations in
+  /// the skeleton header file, done before the main
+  /// scope traversal.
+  int gen_arg_traits (be_root *node);
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_SH_H_ */

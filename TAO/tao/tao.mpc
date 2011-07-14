@@ -24,8 +24,6 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
     Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
     ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp
     orb_types.pidl >> AnyTypeCode/orb_typesA.h AnyTypeCode/orb_typesA.cpp
-    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
-    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
     Policy_Manager.pidl >> AnyTypeCode/Policy_ManagerA.h AnyTypeCode/Policy_ManagerA.cpp
     Policy_Current.pidl >> AnyTypeCode/Policy_CurrentA.h AnyTypeCode/Policy_CurrentA.cpp
     PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
@@ -33,6 +31,16 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
     Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp
     TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
     TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
+  }
+
+  IDL_Files {
+    idlflags += -Sci -Sa
+    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
+  }
+
+  IDL_Files {
+    idlflags += -Sci -Sat
+    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
   }
 
   IDL_Files {

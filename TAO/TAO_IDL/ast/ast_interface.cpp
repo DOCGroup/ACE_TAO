@@ -131,6 +131,12 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
 
+  // Check for non-local and not a dummy for a fwd decl.
+  if (! local && nih != -1)
+    {
+      idl_global->non_local_iface_seen_ = true;
+    }
+
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
