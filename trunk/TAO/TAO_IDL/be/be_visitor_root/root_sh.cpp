@@ -36,6 +36,12 @@ be_visitor_root_sh::visit_root (be_root *node)
                         -1);
     }
 
+  if (this->gen_arg_traits (node) == -1)
+    {
+      /// Error message already output.
+      return -1;
+    }
+
   /// The SI and SS cases are caught in BE_produce(). We
   /// want to generate an empty skeleton header file, which
   /// has been done, so -SS can flag a skip of the scope
@@ -77,3 +83,23 @@ be_visitor_root_sh::init (void)
   this->ctx_->stream (tao_cg->server_header ());
   return 0;
 }
+
+int
+be_visitor_root_sh::gen_arg_traits (be_root *node)
+{
+  be_visitor_context ctx = *this->ctx_;
+  be_visitor_arg_traits arg_visitor ("S", &ctx);
+  int status = node->accept (&arg_visitor);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_root_sh::")
+                         ACE_TEXT ("gen_arg_traits - failed to ")
+                         ACE_TEXT ("generate skeleton arg traits\n")),
+                        -1);
+    }
+
+  return 0;
+}
+

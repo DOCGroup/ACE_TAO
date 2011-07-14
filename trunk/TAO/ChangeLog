@@ -1,3 +1,81 @@
+Thu Jul 14 19:49:02 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+
+          Removed arg traits instantiations and #includes from these
+          hand_crafted files.
+
+        * tao/tao.mpc:
+
+          - Added IDL compiler option to suppress Any operator
+            generation for Policy_Forward.pidl.
+
+          - Added new IDL compiler option (see below) to
+            suppress arg traits generation for ParameterMode.pidl.
+
+        * tests/Param_Test/Param_Test.mpc:
+
+          Added header and inline file lists.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_valuebox.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_valuebox.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ss.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_util.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Moved arg traits generation targets from the stub
+            and skeleton source files to the corresponding
+            header files. This checking addresses [BUGID:3969].
+
+          - Many changes to #include file generation logic,
+            since arg traits generation is now triggered from the IDL
+            declaration and not from its use as an operation argument.
+
+          - Added a new command line option -Sat to suppress
+            the generation of arg tratis altogether.
+
+        * tao/docs/compiler.html:
+
+          Added the new IDL compiler command line option to the table.
+
 Tue Jul 12 13:15:24 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:

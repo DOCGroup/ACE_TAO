@@ -121,6 +121,8 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
       return;
     }
 
+  idl_global->var_size_decl_seen_ = true;
+
   // Set the flag that says we have a valuetype in this IDL file.
   if (this->is_defined ())
     {

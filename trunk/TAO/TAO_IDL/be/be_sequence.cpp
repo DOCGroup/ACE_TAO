@@ -72,6 +72,7 @@ be_sequence::be_sequence (AST_Expression *v,
   // This one gets set for all sequences, in addition to any specialized
   // one that may get set below.
   idl_global->seq_seen_ = true;
+  idl_global->var_size_decl_seen_ = true;
 
   // Don't need the return value - just set the member.
   (void) this->managed_type ();

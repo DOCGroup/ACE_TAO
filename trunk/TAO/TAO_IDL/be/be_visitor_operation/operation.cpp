@@ -557,9 +557,15 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
           *os << "char *";
         }
     }
+  else if (nt == AST_Decl::NT_sequence)
+    {
+      // In some cases (e.g., if the node is imported)
+      // the underlying sequence is still named 'sequence'.
+      *os << bt->name ();
+    }
   else
     {
-      *os << bt->name ();
+      *os << ut->name ();
     }
 
   if (nt == AST_Decl::NT_array)

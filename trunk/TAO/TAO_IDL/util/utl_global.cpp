@@ -243,9 +243,8 @@ IDL_GlobalData::reset_flag_seen (void)
   array_seen_ = false;
   array_seq_seen_ = false;
   base_object_seen_ = false;
-  basic_arg_seen_ = false;
 //basic_type_seen_
-  bd_string_arg_seen_ = false;
+  bd_string_seen_ = false;
   boolean_seq_seen_ = false;
   char_seq_seen_ = false;
   component_seen_ = false;
@@ -253,8 +252,8 @@ IDL_GlobalData::reset_flag_seen (void)
   double_seq_seen_ = false;
   enum_seen_ = false;
   exception_seen_ = false;
-  fixed_array_arg_seen_ = false;
-  fixed_size_arg_seen_ = false;
+  fixed_array_decl_seen_ = false;
+  fixed_size_decl_seen_ = false;
   float_seq_seen_ = false;
   fwd_iface_seen_ = false;
   fwd_valuetype_seen_ = false;
@@ -264,6 +263,7 @@ IDL_GlobalData::reset_flag_seen (void)
   long_seq_seen_ = false;
   longdouble_seq_seen_ = false;
   longlong_seq_seen_ = false;
+  non_local_fwd_iface_seen_ = false;
   non_local_iface_seen_ = false;
   non_local_op_seen_ = false;
   object_arg_seen_ = false;
@@ -273,12 +273,12 @@ IDL_GlobalData::reset_flag_seen (void)
   recursive_type_seen_ = false;
   seq_seen_ = false;
   short_seq_seen_ = false;
-  special_basic_arg_seen_ = false;
+  special_basic_decl_seen_ = false;
   string_seen_ = false;
   string_member_seen_ = false;
   string_seq_seen_ = false;
   typecode_seen_ = false;
-  ub_string_arg_seen_ = false;
+  ub_string_seen_ = false;
   ulong_seq_seen_ = false;
   ulonglong_seq_seen_ = false;
   union_seen_ = false;
@@ -286,8 +286,8 @@ IDL_GlobalData::reset_flag_seen (void)
   valuebase_seen_ = false;
   valuefactory_seen_ = false;
   valuetype_seen_ = false;
-  var_array_arg_seen_ = false;
-  var_size_arg_seen_ = false;
+  var_array_decl_seen_ = false;
+  var_size_decl_seen_ = false;
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
