@@ -36,7 +36,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   bool has_args = node->argument_count () > 0;
 
-  *os << " (";
+  *os << " (" << be_idt_nl;
 
   switch (this->ctx_->state ())
     {
@@ -68,7 +68,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       *os << "void";
     }
 
-  *os << ")";
+  *os << ")" << be_uidt;
 
   switch (this->ctx_->state ())
     {

@@ -18,6 +18,7 @@
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "be_visitor.h"
+#include "be_util.h"
 
 #include "ast_exception.h"
 
@@ -59,7 +60,7 @@ be_operation::be_operation (AST_Type *rt,
     {
       be_type *bt = be_type::narrow_from_decl (rt);
       bt->seen_in_operation (true);
-      this->set_arg_seen_bit (bt);
+      be_util::set_arg_seen_bit (bt);
       idl_global->non_local_op_seen_ = true;
     }
 }

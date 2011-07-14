@@ -169,7 +169,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                   '\0',
                   2);
 
-  if (this->ctx_->tdef ())
+  if (this->ctx_->tdef () != 0)
     {
       anon_p[0] = '\0';
     }
@@ -184,9 +184,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
   if (node->gen_dimensions (os, 1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_array_ch::"
-                         "visit_array - "
-                         "gen slice dimensions failed\n"),
+                         ACE_TEXT ("be_visitor_array_ch::")
+                         ACE_TEXT ("visit_array - ")
+                         ACE_TEXT ("gen slice dimensions failed\n")),
                         -1);
     }
 
@@ -299,7 +299,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_from);" << be_uidt
-          << be_uidt << be_nl;
+          << be_uidt;
     }
   else
     {

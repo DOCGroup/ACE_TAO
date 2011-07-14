@@ -17,6 +17,8 @@
 #include "be_argument.h"
 #include "be_type.h"
 #include "be_visitor.h"
+#include "be_util.h"
+
 #include "nr_extern.h"
 #include "global_extern.h"
 
@@ -49,7 +51,7 @@ be_argument::be_argument (AST_Argument::Direction d,
     {
       be_type *bt = be_type::narrow_from_decl (ft);
       bt->seen_in_operation (true);
-      this->set_arg_seen_bit (bt);
+      be_util::set_arg_seen_bit (bt);
       idl_global->need_skeleton_includes_ = true;
     }
 }

@@ -105,8 +105,10 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuebox_ch::visit_valuebox - "
-                         "type-specific valuebox code generation failed\n"),
+                         ACE_TEXT ("be_visitor_valuebox_ch::")
+                         ACE_TEXT ("visit_valuebox - ")
+                         ACE_TEXT ("type-specific valuebox")
+                         ACE_TEXT (" code generation failed\n")),
                         -1);
     }
 
@@ -144,9 +146,9 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuebox_ch::"
-                             "visit_valuebox - "
-                             "TypeCode declaration failed\n"),
+                             ACE_TEXT ("be_visitor_valuebox_ch::")
+                             ACE_TEXT ("visit_valuebox - ")
+                             ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }
     }

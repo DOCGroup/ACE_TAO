@@ -325,7 +325,7 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
     }
 
-   // Generate the regeneration check.
+  // Generate the regeneration check.
   *this->client_header_ << "\n\n#if TAO_MAJOR_VERSION != " << TAO_MAJOR_VERSION
                         << " || TAO_MINOR_VERSION != " << TAO_MINOR_VERSION
                         << " || TAO_BETA_VERSION != " << TAO_BETA_VERSION
@@ -333,7 +333,7 @@ TAO_CodeGen::start_client_header (const char *fname)
                         << TAO_VERSION
                         << "\n#endif";
 
- // Generate the TAO_EXPORT_MACRO macro.
+  // Generate the TAO_EXPORT_MACRO macro.
   *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
   *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
   *this->client_header_ << "#endif\n";
@@ -515,6 +515,13 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
+  /// These are generated regardless, so we put it before the 
+  /// check below.
+  if (be_global->gen_arg_traits ())
+    {
+      this->gen_skel_arg_file_includes (this->server_header_);
+    }
+
   // If we are suppressing skel file generation, bail after generating the
   // copyright text and an informative message.
   if (!be_global->gen_skel_files ())
@@ -532,34 +539,7 @@ TAO_CodeGen::start_server_header (const char *fname)
                         << "# pragma once\n"
                         << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
-  // Include the definitions for the PortableServer namespace,
-  // this forces the application to link the POA library, a good
-  // thing, because we need the definitions there, it also
-  // registers the POA factory with the Service_Configurator, so
-  // the ORB can automatically find it.
-  if (idl_global->non_local_iface_seen_)
-    {
-      // Include the Messaging files if AMI is enabled.
-      if (be_global->ami_call_back () == true)
-        {
-          // Include Messaging skeleton file.
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/MessagingS.h");
-        }
-
-      this->gen_standard_include (this->server_header_,
-                                  "tao/Collocation_Proxy_Broker.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/PortableServer.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/Servant_Base.h");
-
-      if (be_global->gen_amh_classes ())
-        {
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/AMH_Response_Handler.h");
-        }
-    }
+  this->gen_skel_hdr_includes ();
 
   if (be_global->skel_export_include () != 0)
     {
@@ -2499,6 +2479,12 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // _vars and _outs are typedefs of template class instantiations.
   this->gen_var_file_includes ();
 
+  if (be_global->gen_arg_traits ())
+    {
+      // Includes whatever arg helper template classes that may be needed.
+      this->gen_stub_arg_file_includes (this->client_header_);
+    }
+
   // Version file, for code that checks needs for regeneration.
   this->gen_standard_include (this->client_header_,
                               "tao/Version.h",
@@ -2648,9 +2634,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
         }
     }
 
-  // Includes whatever arg helper template classes that may be needed.
-  this->gen_stub_arg_file_includes (this->client_stubs_);
-
   // strcmp() is used with interfaces and exceptions.
   if (idl_global->interface_seen_
       || idl_global->exception_seen_
@@ -2666,6 +2649,39 @@ TAO_CodeGen::gen_stub_src_includes (void)
       // Necessary for the AIX compiler.
       this->gen_standard_include (this->client_stubs_,
                                   "ace/Auto_Ptr.h");
+    }
+}
+
+void
+TAO_CodeGen::gen_skel_hdr_includes (void)
+{
+  // Include the definitions for the PortableServer namespace,
+  // this forces the application to link the POA library, a good
+  // thing, because we need the definitions there, it also
+  // registers the POA factory with the Service_Configurator, so
+  // the ORB can automatically find it.
+  if (idl_global->non_local_iface_seen_)
+    {
+      // Include the Messaging files if AMI is enabled.
+      if (be_global->ami_call_back () == true)
+        {
+          // Include Messaging skeleton file.
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Messaging/MessagingS.h");
+        }
+
+      this->gen_standard_include (this->server_header_,
+                                  "tao/Collocation_Proxy_Broker.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/PortableServer.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/Servant_Base.h");
+
+      if (be_global->gen_amh_classes ())
+        {
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Messaging/AMH_Response_Handler.h");
+        }
     }
 }
 
@@ -2754,15 +2770,6 @@ TAO_CodeGen::gen_skel_src_includes (void)
                               "tao/operation_details.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableInterceptor.h");
-
-  this->gen_skel_arg_file_includes (this->server_skeletons_);
-
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
-    {
-      // Collocation skeleton code doesn't use "SArg" variants.
-      this->gen_stub_arg_file_includes (this->server_skeletons_);
-    }
 
   // The following header must always be included.
   if (be_global->gen_amh_classes ())
@@ -2892,14 +2899,38 @@ TAO_CodeGen::gen_var_file_includes (void)
 void
 TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 {
+  this->gen_standard_include (
+    stream,
+    "tao/Arg_Traits_T.h");
+
+  this->gen_standard_include (
+    stream,
+    "tao/Basic_Arguments.h");
+
+  this->gen_standard_include (
+    stream,
+    "tao/Special_Basic_Arguments.h");
+
+  this->gen_standard_include (
+    stream,
+    "tao/Any_Insert_Policy_T.h");
+
   this->gen_cond_file_include (
-      idl_global->basic_arg_seen_,
-      "tao/Basic_Arguments.h",
+      idl_global->enum_seen_,
+      "tao/Basic_Argument_T.h",
       stream
     );
 
+  this->gen_standard_include (
+      stream,
+      "tao/Fixed_Size_Argument_T.h");
+
+  this->gen_standard_include (
+      stream,
+      "tao/Var_Size_Argument_T.h");
+
   this->gen_cond_file_include (
-      idl_global->bd_string_arg_seen_,
+      idl_global->bd_string_seen_,
       "tao/BD_String_Argument_T.h",
       stream
     );
@@ -2907,50 +2938,42 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
   // If we have a bound string and we have any generation enabled we must
   // include Any.h to get the <<= operator for BD_String
   this->gen_cond_file_include (
-      idl_global->bd_string_arg_seen_ && be_global->any_support (),
+      idl_global->bd_string_seen_ && be_global->any_support (),
       "tao/AnyTypeCode/Any.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->fixed_array_arg_seen_,
-      "tao/Fixed_Array_Argument_T.h",
-      stream
-    );
-
-  this->gen_cond_file_include (
-      idl_global->fixed_size_arg_seen_,
-      "tao/Fixed_Size_Argument_T.h",
-      stream
-    );
-
-  this->gen_cond_file_include (
-      idl_global->object_arg_seen_,
+      idl_global->non_local_iface_seen_
+        || idl_global->non_local_fwd_iface_seen_
+        || be_global->ami_call_back ()
+        || be_global->gen_amh_classes ()
+        || be_global->ami4ccm_call_back (),
       "tao/Object_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->special_basic_arg_seen_,
+      idl_global->special_basic_decl_seen_,
       "tao/Special_Basic_Arguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->ub_string_arg_seen_,
+      idl_global->ub_string_seen_,
       "tao/UB_String_Arguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->var_array_arg_seen_,
-      "tao/Var_Array_Argument_T.h",
+      idl_global->array_seen_,
+      "tao/Fixed_Array_Argument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->var_size_arg_seen_,
-      "tao/Var_Size_Argument_T.h",
+      idl_global->array_seen_,
+      "tao/Var_Array_Argument_T.h",
       stream
     );
 
@@ -2967,56 +2990,54 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
     );
 }
 
-
 void
 TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 {
-  this->gen_cond_file_include (
-      idl_global->basic_arg_seen_,
-      "tao/PortableServer/Basic_SArguments.h",
-      stream
-    );
+  this->gen_standard_include (
+      stream,
+      "tao/PortableServer/Basic_SArguments.h");
+
+  this->gen_standard_include (
+      stream,
+      "tao/PortableServer/Special_Basic_SArguments.h");
 
   this->gen_cond_file_include (
-      idl_global->bd_string_arg_seen_,
+      idl_global->bd_string_seen_,
       "tao/PortableServer/BD_String_SArgument_T.h",
       stream
     );
 
+  this->gen_standard_include (
+      stream,
+      "tao/PortableServer/Fixed_Size_SArgument_T.h");
+
+  this->gen_standard_include (
+      stream,
+      "tao/PortableServer/Var_Size_SArgument_T.h");
+
   // If we have a bound string and we have any generation enabled we must
   // include Any.h to get the <<= operator for BD_String
   this->gen_cond_file_include (
-      idl_global->bd_string_arg_seen_ && be_global->any_support (),
+      idl_global->bd_string_seen_ && be_global->any_support (),
       "tao/AnyTypeCode/Any.h",
-      stream
-    );
-
-  this->gen_cond_file_include (
-      idl_global->fixed_array_arg_seen_,
-      "tao/PortableServer/Fixed_Array_SArgument_T.h",
-      stream
-    );
-
-  this->gen_cond_file_include (
-      idl_global->fixed_size_arg_seen_,
-      "tao/PortableServer/Fixed_Size_SArgument_T.h",
       stream
     );
 
   // Always needed for CORBA::Object handling in _component() skeleton
   // code when an unconstrained (non-local) IDL interface is defined.
   this->gen_cond_file_include (
-      idl_global->non_local_iface_seen_
-      || idl_global->object_arg_seen_,
-      "tao/PortableServer/Object_SArgument_T.h",
-      stream
-    );
+    idl_global->non_local_iface_seen_
+      || idl_global->non_local_fwd_iface_seen_
+      || be_global->ami_call_back ()
+      || be_global->gen_amh_classes ()
+      || be_global->ami4ccm_call_back (),
+    "tao/PortableServer/Object_SArg_Traits.h",
+     stream);
 
   // Always needed for CORBA::Boolean handling in _is_a() skeleton
   // code when an unconstrained (non-local) IDL interface is defined.
   this->gen_cond_file_include (
-      idl_global->non_local_iface_seen_
-      || idl_global->special_basic_arg_seen_,
+      idl_global->special_basic_decl_seen_,
       "tao/PortableServer/Special_Basic_SArguments.h",
       stream
     );
@@ -3024,21 +3045,21 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
   // Always needed for string argument handling in _is_a() skeleton
   // code when an unconstrained (non-local) IDL interface is defined.
   this->gen_cond_file_include (
-      idl_global->non_local_iface_seen_
-      || idl_global->ub_string_arg_seen_,
+      idl_global->ub_string_seen_
+      || idl_global->non_local_iface_seen_,
       "tao/PortableServer/UB_String_SArguments.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->var_array_arg_seen_,
-      "tao/PortableServer/Var_Array_SArgument_T.h",
+      idl_global->array_seen_,
+      "tao/PortableServer/Fixed_Array_SArgument_T.h",
       stream
     );
 
   this->gen_cond_file_include (
-      idl_global->var_size_arg_seen_,
-      "tao/PortableServer/Var_Size_SArgument_T.h",
+      idl_global->array_seen_,
+      "tao/PortableServer/Var_Array_SArgument_T.h",
       stream
     );
 
@@ -3054,13 +3075,18 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
       stream
     );
 
-  this->gen_standard_include (
-    stream,
-    "tao/PortableServer/TypeCode_SArg_Traits.h");
+  // Non-abstract interface or keyword 'Object'.
+  this->gen_cond_file_include (
+    idl_global->object_arg_seen_,
+    "tao/PortableServer/Object_SArg_Traits.h",
+    stream);
 
-  this->gen_standard_include (
-    stream,
-    "tao/PortableServer/Object_SArg_Traits.h");
+  // This is true if we have a typecode or TCKind in the IDL file.
+  // If not included here, it will appear in *C.cpp, if TCs not suppressed.
+  this->gen_cond_file_include (
+    idl_global->typecode_seen_,
+    "tao/PortableServer/TypeCode_SArg_Traits.h",
+    stream);
 
   if (be_global->gen_thru_poa_collocation ())
     {
@@ -3069,10 +3095,6 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
         idl_global->non_local_iface_seen_,
         "tao/PortableServer/get_arg.h",
         stream);
-
-      // We need the stub side argument templates when thru-POA
-      // collocation is enabled for type resolution.
-      // this->gen_stub_arg_file_includes (stream);
 
       // Always needed for CORBA::Boolean
       // handling in _is_a() skeleton

@@ -42,6 +42,7 @@ private:
   /// Encapsulating various bits of code generation peculiar
   /// to the client header file, done either before or after
   /// the main scope traversal.
+  int gen_arg_traits (be_root *node);
   void gen_fwd_decls (void);
   void gen_proxy_broker_factory_pointers (void);
   void gen_ref_counting_overrides (void);

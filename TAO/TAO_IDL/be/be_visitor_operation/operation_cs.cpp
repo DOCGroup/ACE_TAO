@@ -85,9 +85,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "Bad return type\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("bad return type\n")),
                         -1);
     }
 
@@ -98,9 +98,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (bt->accept (&rt_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for return type failed\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for return type failed\n")),
                         -1);
     }
 
@@ -116,18 +116,18 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   if (node->accept (&al_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for argument list failed\n")),
                         -1);
     }
 
   if (this->gen_stub_operation_body (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for stub body failed\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_operation - ")
+                         ACE_TEXT ("codegen for stub body failed\n")),
                         -1);
     }
 
@@ -147,9 +147,9 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       if (status == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for AMI reply stub failed\n"),
+                             ACE_TEXT ("be_visitor_operation_cs::")
+                             ACE_TEXT ("visit_operation - ")
+                             ACE_TEXT ("codegen for AMI reply stub failed\n")),
                             -1);
         }
     }
@@ -168,9 +168,9 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_argument - "
-                         "Bad argument type\n"),
+                         ACE_TEXT ("be_visitor_operation_cs::")
+                         ACE_TEXT ("visit_argument - ")
+                         ACE_TEXT ("bad argument type\n")),
                         -1);
     }
 

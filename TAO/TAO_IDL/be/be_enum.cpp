@@ -44,6 +44,7 @@ be_enum::be_enum (UTL_ScopedName *n,
   if (!this->imported ())
     {
       idl_global->enum_seen_ = true;
+      idl_global->fixed_size_decl_seen_ = true;
     }
 }
 
