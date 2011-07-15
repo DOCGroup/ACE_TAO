@@ -63,6 +63,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #define TAO_MONITOR_SAFE_INCLUDE
+#include "tao/Monitor/Monitor_TypesC.h"
+#include "tao/Monitor/Monitor_TypesA.h"
 #include "tao/Monitor/MonitorC.h"
 #undef TAO_MONITOR_SAFE_INCLUDE
 
