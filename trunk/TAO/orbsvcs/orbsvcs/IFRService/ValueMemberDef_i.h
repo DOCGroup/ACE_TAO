@@ -49,50 +49,33 @@ public:
   virtual ~TAO_ValueMemberDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ()
-;
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ()
-;
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
-  CORBA::TypeCode_ptr type_i ()
-;
+  CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::IDLType_ptr type_def ()
-;
+  virtual CORBA::IDLType_ptr type_def ();
 
-  CORBA::IDLType_ptr type_def_i ()
-;
+  CORBA::IDLType_ptr type_def_i ();
 
-  virtual void type_def (
-      CORBA::IDLType_ptr type_def)
-;
+  virtual void type_def (CORBA::IDLType_ptr type_def);
 
-  void type_def_i (
-      CORBA::IDLType_ptr type_def)
-;
+  void type_def_i (CORBA::IDLType_ptr type_def);
 
-  virtual CORBA::Visibility access ()
-;
+  virtual CORBA::Visibility access ();
 
-  CORBA::Visibility access_i ()
-;
+  CORBA::Visibility access_i ();
 
-  virtual void access (
-      CORBA::Visibility access)
-;
+  virtual void access (CORBA::Visibility access);
 
-  void access_i (
-      CORBA::Visibility access)
-;
+  void access_i (CORBA::Visibility access);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

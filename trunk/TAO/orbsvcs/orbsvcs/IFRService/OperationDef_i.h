@@ -66,51 +66,41 @@ public:
 
   CORBA::IDLType_ptr result_def_i ();
 
-  virtual void result_def (
-      CORBA::IDLType_ptr result_def);
+  virtual void result_def (CORBA::IDLType_ptr result_def);
 
-  void result_def_i (
-      CORBA::IDLType_ptr result_def);
+  void result_def_i (CORBA::IDLType_ptr result_def);
 
   virtual CORBA::ParDescriptionSeq *params ();
 
   CORBA::ParDescriptionSeq *params_i ();
 
-  virtual void params (
-      const CORBA::ParDescriptionSeq &params);
+  virtual void params (const CORBA::ParDescriptionSeq &params);
 
-  void params_i (
-      const CORBA::ParDescriptionSeq &params);
+  void params_i (const CORBA::ParDescriptionSeq &params);
 
   virtual CORBA::OperationMode mode ();
 
   CORBA::OperationMode mode_i ();
 
-  virtual void mode (
-      CORBA::OperationMode mode);
+  virtual void mode (CORBA::OperationMode mode);
 
-  void mode_i (
-      CORBA::OperationMode mode);
+  void mode_i (CORBA::OperationMode mode);
 
   virtual CORBA::ContextIdSeq *contexts ();
 
   CORBA::ContextIdSeq *contexts_i ();
 
-  virtual void contexts (
-      const CORBA::ContextIdSeq &contexts);
+  virtual void contexts (const CORBA::ContextIdSeq &contexts);
 
-  void contexts_i (
-      const CORBA::ContextIdSeq &contexts);
+  void contexts_i (const CORBA::ContextIdSeq &contexts);
 
   virtual CORBA::ExceptionDefSeq *exceptions ();
 
   CORBA::ExceptionDefSeq *exceptions_i ();
 
-  virtual void exceptions (
-      const CORBA::ExceptionDefSeq &exceptions);
+  virtual void exceptions (const CORBA::ExceptionDefSeq &exceptions);
 
-  void exceptions_i (
-      const CORBA::ExceptionDefSeq &exceptions);
+  void exceptions_i (const CORBA::ExceptionDefSeq &exceptions);
 
   // Common code for containers to call in
   // making descriptions.

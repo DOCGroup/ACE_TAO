@@ -82,80 +82,54 @@ public:
   virtual ~TAO_Repository_i (void);
 
   /// Accessor for the readonly attribute.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// May not be called on a repository - raises BAD_INV_ORDER.
-  virtual void destroy (
-    );
+  virtual void destroy ();
 
-  virtual CORBA::Contained_ptr lookup_id (
-      const char *search_id
-    );
+  virtual CORBA::Contained_ptr lookup_id (const char *search_id);
 
-  CORBA::Contained_ptr lookup_id_i (
-      const char *search_id
-    );
+  CORBA::Contained_ptr lookup_id_i (const char *search_id);
 
-  virtual CORBA::TypeCode_ptr get_canonical_typecode (
-      CORBA::TypeCode_ptr tc
-    );
+  virtual CORBA::TypeCode_ptr get_canonical_typecode (CORBA::TypeCode_ptr tc);
 
-  CORBA::TypeCode_ptr get_canonical_typecode_i (
-      CORBA::TypeCode_ptr tc
-    );
+  CORBA::TypeCode_ptr get_canonical_typecode_i (CORBA::TypeCode_ptr tc);
 
   /// No locking necessary because the database is not
   /// accessed.
-  virtual CORBA::PrimitiveDef_ptr get_primitive (
-      CORBA::PrimitiveKind kind
-    );
+  virtual CORBA::PrimitiveDef_ptr get_primitive (CORBA::PrimitiveKind kind);
 
-  virtual CORBA::StringDef_ptr create_string (
-      CORBA::ULong bound
-    );
+  virtual CORBA::StringDef_ptr create_string (CORBA::ULong bound);
 
-  CORBA::StringDef_ptr create_string_i (
-      CORBA::ULong bound)
-;
+  CORBA::StringDef_ptr create_string_i (CORBA::ULong bound);
 
-  virtual CORBA::WstringDef_ptr create_wstring (
-      CORBA::ULong bound
-    );
+  virtual CORBA::WstringDef_ptr create_wstring (CORBA::ULong bound);
 
-  CORBA::WstringDef_ptr create_wstring_i (
-      CORBA::ULong bound
-    );
+  CORBA::WstringDef_ptr create_wstring_i (CORBA::ULong bound);
 
   virtual CORBA::SequenceDef_ptr create_sequence (
       CORBA::ULong bound,
-      CORBA::IDLType_ptr element_type
-    );
+      CORBA::IDLType_ptr element_type);
 
   CORBA::SequenceDef_ptr create_sequence_i (
       CORBA::ULong bound,
-      CORBA::IDLType_ptr element_type
-    );
+      CORBA::IDLType_ptr element_type);
 
   virtual CORBA::ArrayDef_ptr create_array (
       CORBA::ULong length,
-      CORBA::IDLType_ptr element_type
-    );
+      CORBA::IDLType_ptr element_type);
 
   CORBA::ArrayDef_ptr create_array_i (
       CORBA::ULong length,
-      CORBA::IDLType_ptr element_type
-    );
+      CORBA::IDLType_ptr element_type);
 
   virtual CORBA::FixedDef_ptr create_fixed (
       CORBA::UShort digits,
-      CORBA::Short scale
-    );
+      CORBA::Short scale);
 
   CORBA::FixedDef_ptr create_fixed_i (
       CORBA::UShort digits,
-      CORBA::Short scale
-    );
+      CORBA::Short scale);
 
   /// Called at startup to get everything initialized.
   int repo_init (CORBA::Repository_ptr repo_ref,
@@ -170,19 +144,15 @@ public:
 
   /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (
-      CORBA::DefinitionKind def_kind
-    ) const;
+      CORBA::DefinitionKind def_kind) const;
   virtual TAO_Container_i *select_container (
-      CORBA::DefinitionKind def_kind
-    ) const;
+      CORBA::DefinitionKind def_kind) const;
   virtual TAO_Contained_i *select_contained (
-      CORBA::DefinitionKind def_kind
-    ) const;
+      CORBA::DefinitionKind def_kind) const;
 
   /// Select the right POA for object creation.
   virtual PortableServer::POA_ptr select_poa (
-      CORBA::DefinitionKind def_kind
-    ) const;
+      CORBA::DefinitionKind def_kind) const;
 
   /// Accessor for the POA that is dispatching the current call.
   PortableServer::Current_ptr poa_current (void) const;

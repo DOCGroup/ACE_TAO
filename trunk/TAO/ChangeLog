@@ -1,3 +1,24 @@
+Fri Jul 15 07:29:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.h:
+        * orbsvcs/orbsvcs/IFRService/LocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.h:
+          Layout changes
+
 Fri Jul 15 07:11:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/IFR_Client_Adapter_Impl.h:

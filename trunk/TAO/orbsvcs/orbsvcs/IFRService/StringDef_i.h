@@ -50,37 +50,26 @@ public:
   virtual ~TAO_StringDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry.
-  virtual void destroy ()
-;
+  virtual void destroy ();
 
-  virtual void destroy_i ()
-;
+  virtual void destroy_i ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ()
-;
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::ULong bound ()
-;
+  virtual CORBA::ULong bound ();
 
-  CORBA::ULong bound_i ()
-;
+  CORBA::ULong bound_i ();
 
-  virtual void bound (
-      CORBA::ULong bound)
-;
+  virtual void bound (CORBA::ULong bound);
 
-  void bound_i (
-      CORBA::ULong bound)
-;
+  void bound_i (CORBA::ULong bound);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
