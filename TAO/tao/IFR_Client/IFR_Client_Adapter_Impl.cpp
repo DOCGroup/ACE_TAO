@@ -13,22 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  template<>
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDef>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::InterfaceDef_ptr,
-            CORBA::InterfaceDef_var,
-            CORBA::InterfaceDef_out,
-            TAO::Objref_Traits<CORBA::InterfaceDef>,
-            TAO::Any_Insert_Policy_Stream
-          >
-  {
-  };
-}
-
 TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl (void)
 {
 }
@@ -36,8 +20,7 @@ TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl (void)
 CORBA::Boolean
 TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (
     TAO_OutputCDR &cdr,
-    CORBA::InterfaceDef_ptr object_type
-  )
+    CORBA::InterfaceDef_ptr object_type)
 {
   return cdr << object_type;
 }
@@ -45,16 +28,13 @@ TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (
 void
 TAO_IFR_Client_Adapter_Impl::interfacedef_any_insert (
     CORBA::Any *any,
-    CORBA::InterfaceDef_ptr object_type
-  )
+    CORBA::InterfaceDef_ptr object_type)
 {
   (*any) <<= object_type;
 }
 
 void
-TAO_IFR_Client_Adapter_Impl::dispose (
-    CORBA::InterfaceDef_ptr orphan
-  )
+TAO_IFR_Client_Adapter_Impl::dispose (CORBA::InterfaceDef_ptr orphan)
 {
   ::CORBA::release (orphan);
 }
@@ -62,13 +42,10 @@ TAO_IFR_Client_Adapter_Impl::dispose (
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
-    const char *repo_id
-
-  )
+    const char *repo_id)
 {
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("InterfaceRepository"
-                                    );
+    orb->resolve_initial_references ("InterfaceRepository");
 
   if (CORBA::is_nil (obj.in ()))
     {
@@ -84,8 +61,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::Contained_var result = repo->lookup_id (repo_id
-                                                );
+  CORBA::Contained_var result = repo->lookup_id (repo_id);
 
   if (CORBA::is_nil (result.in ()))
     {
@@ -93,16 +69,13 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
     }
   else
     {
-      return CORBA::InterfaceDef::_narrow (result.in ()
-                                          );
+      return CORBA::InterfaceDef::_narrow (result.in ());
     }
 }
 
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface_remote (
-    CORBA::Object_ptr target
-
-  )
+    CORBA::Object_ptr target)
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
 
@@ -117,8 +90,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
       1,
       "_interface",
       10,
-      0
-    );
+      0);
 
   try
     {
@@ -137,19 +109,14 @@ void
 TAO_IFR_Client_Adapter_Impl::create_operation_list (
     CORBA::ORB_ptr orb,
     CORBA::OperationDef_ptr opDef,
-    CORBA::NVList_ptr &result
-
-  )
+    CORBA::NVList_ptr &result)
 {
   // Create an empty NVList.
-  orb->create_list (0,
-                    result
-                   );
+  orb->create_list (0, result);
 
   // Get the parameters (if any) from the OperationDef, and for each
   // parameter add a corresponding entry to the result.
-  CORBA::ParDescriptionSeq_var params =
-    opDef->params ();
+  CORBA::ParDescriptionSeq_var params = opDef->params ();
 
   CORBA::ULong paramCount = params->length ();
 
@@ -180,9 +147,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
         }
 
       // Add an argument to the NVList.
-      result->add_value (params[i].name.in (),
-                         value,
-                         flags);
+      result->add_value (params[i].name.in (), value, flags);
    }
 }
 
