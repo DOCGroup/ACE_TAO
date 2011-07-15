@@ -52,24 +52,19 @@ public:
   virtual ~TAO_ModuleDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry.
-  virtual void destroy ()
-;
+  virtual void destroy ();
 
   /// Remove the repository entry.
-  virtual void destroy_i ()
-;
+  virtual void destroy_i ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ()
-;
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ()
-;
+  virtual CORBA::Contained::Description *describe_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

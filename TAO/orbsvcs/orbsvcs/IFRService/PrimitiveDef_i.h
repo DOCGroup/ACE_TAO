@@ -49,30 +49,23 @@ public:
   virtual ~TAO_PrimitiveDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// May not be called on a primitive kind - raises BAD_INV_ORDER.
-  virtual void destroy ()
-;
+  virtual void destroy ();
 
   /// Must implement this here because it's pure virtual in the
   /// base class.
-  virtual void destroy_i ()
-;
+  virtual void destroy_i ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual CORBA::TypeCode_ptr type_i ()
-;
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::PrimitiveKind kind ()
-;
+  virtual CORBA::PrimitiveKind kind ();
 
-  CORBA::PrimitiveKind kind_i ()
-;
+  CORBA::PrimitiveKind kind_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
