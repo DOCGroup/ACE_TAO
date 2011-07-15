@@ -27,7 +27,7 @@ project(IFR_Client) : taolib, tao_output, install, anytypecode, taoidldefaults {
   dynamicflags += TAO_IFR_CLIENT_BUILD_DLL
 
   Source_Files {
-    *.cpp
+    IFR_Client_Adapter_Impl.cpp
     IFR_BaseC.cpp
     IFR_BasicC.cpp
     IFR_ComponentsC.cpp
