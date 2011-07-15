@@ -1,3 +1,9 @@
+Fri Jul 15 07:11:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+          Layout changes, removed hardcrafted arg_trait
+
 Thu Jul 14 19:49:02 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PolicyC.cpp:
