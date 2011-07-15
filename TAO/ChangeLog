@@ -1,3 +1,49 @@
+Fri Jul 15 08:33:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ifr_client_skel.mpb:
+        * MPC/config/ifrservice.mpb:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IFR_Client/ifr_client_skel_export.h:
+          Generate a new IFR_Client_skel library that contains all
+          skeletons for the IFR_Client. This is generated under TAO/tao/IFR_Client
+          and than used by the IFRService
+
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.cpp:
+          Removed these files, it are generated files that shouldn't be in
+          the repository
+
 Fri Jul 15 07:29:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:

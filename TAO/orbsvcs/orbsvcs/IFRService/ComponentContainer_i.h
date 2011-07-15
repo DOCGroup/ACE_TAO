@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "tao/IFR_Client/IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
