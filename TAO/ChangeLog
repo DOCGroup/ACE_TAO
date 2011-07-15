@@ -1,3 +1,12 @@
+Fri Jul 15 12:46:14 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+
+          Added missing check for suppress option before generating
+          skeleton arg traits, and made layout changes to both stub
+          and skeleton root visitors.
+
 Fri Jul 15 11:59:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Monitor/Monitor.h:
