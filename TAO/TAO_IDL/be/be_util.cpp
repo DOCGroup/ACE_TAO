@@ -746,7 +746,7 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -iC <path>\tInclude path for the generated stub files")
+      ACE_TEXT (" -iC <path>\t\tInclude path for the generated stub files ")
       ACE_TEXT ("in *A.h. Can be relative to $TAO_ROOT or $CIAO_ROOT. ")
       ACE_TEXT ("Default is $TAO_ROOT/tao or current directory\n")
     ));
