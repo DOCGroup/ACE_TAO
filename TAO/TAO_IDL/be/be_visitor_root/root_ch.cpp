@@ -47,13 +47,16 @@ be_visitor_root_ch::visit_root (be_root *node)
                         -1);
     }
 
-  if (be_global->gen_arg_traits () && this->gen_arg_traits (node) == -1)
+  if (be_global->gen_arg_traits ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ch::")
-                         ACE_TEXT ("visit_root - failed to ")
-                         ACE_TEXT ("generate stub arg traits\n")),
-                        -1);
+      if (this->gen_arg_traits (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("be_visitor_root_ch::")
+                             ACE_TEXT ("visit_root - failed to ")
+                             ACE_TEXT ("generate stub arg traits\n")),
+                            -1);
+        }
     }
 
   this->gen_proxy_broker_factory_pointers ();

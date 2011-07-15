@@ -36,10 +36,13 @@ be_visitor_root_sh::visit_root (be_root *node)
                         -1);
     }
 
-  if (this->gen_arg_traits (node) == -1)
+  if (be_global->gen_arg_traits ())
     {
-      /// Error message already output.
-      return -1;
+      if (this->gen_arg_traits (node) == -1)
+        {
+          /// Error message already output.
+          return -1;
+        }
     }
 
   /// The SI and SS cases are caught in BE_produce(). We
