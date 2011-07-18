@@ -3,6 +3,8 @@
 #include "AnyC.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Any, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -27,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -115,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              "(%P|%t) client - base extraction test failed.\n"),
                             1);
         }
-      dst = OBV_AnyTest::VA::_downcast(target.in());
+      dst = OBV_AnyTest::VA::_downcast(target._retn());
       if (dst == 0 || dst->id() != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
@@ -134,7 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (test.in ()))
       {
-        ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "Nil OBV_AnyTest::Test reference <%s>\n",
                          ior),
                         1);
@@ -166,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // STEP 3. A sanity check demonstrating base-type pointer to
       // derived type allowed.
-      OBV_AnyTest::VA_var dst_va = test->get_vb();
+      OBV_AnyTest::VA* dst_va = test->get_vb();
       if (dst_va->id () != magic)
         {
           ACE_ERROR_RETURN ((LM_DEBUG,

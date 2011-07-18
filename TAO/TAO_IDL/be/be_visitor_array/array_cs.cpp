@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    array_cs.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    array_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_array,
+           array_cs,
+           "$Id$")
 
 // ************************************************************************
 //  visitor for array declaration in client stubs
@@ -96,8 +105,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // dup method.
   *os << fname << "_slice *" << be_nl
@@ -113,7 +122,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       << "}" << be_uidt_nl << be_nl;
   *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // alloc method.
   *os << fname << "_slice *" << be_nl;
@@ -142,7 +151,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   *os << ", 0);" << be_nl;
   *os << "return retval;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // free method.
   *os << "void" << be_nl
@@ -151,7 +160,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "delete [] _tao_slice;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // copy method.
   *os << "void " << be_nl;
@@ -304,7 +313,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // is a declaration (not a reference), we must generate code for
   // the declaration.
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && bt->is_child (this->ctx_->scope ()->decl ()))
+      && bt->is_child (this->ctx_->scope ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);

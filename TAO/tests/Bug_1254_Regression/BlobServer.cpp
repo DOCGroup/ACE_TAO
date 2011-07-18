@@ -3,6 +3,8 @@
 //
 #include "BlobServer.h"
 
+ACE_RCSID(BlobServerImpl, BlobServerImpl, "$Id$")
+
 BlobServerImpl::BlobServerImpl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

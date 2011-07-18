@@ -4,6 +4,8 @@
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Client_Leaks, server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
@@ -27,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -56,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Process_Factory *process_factory_impl = 0;
+      Process_Factory *process_factory_impl;
       ACE_NEW_RETURN (process_factory_impl,
                       Process_Factory (orb.in ()),
                       1);

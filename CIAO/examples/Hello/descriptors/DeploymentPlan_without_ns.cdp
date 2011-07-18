@@ -1,126 +1,31 @@
-<!-- $Id$ -->
-<Deployment:DeploymentPlan
- xmlns:Deployment="http://www.omg.org/Deployment"
- xmlns:xmi="http://www.omg.org/XMI"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
-  <label>Hello_Deployment_1</label>
-  <UUID>Hello_Deployment_1</UUID>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
-  <!-- Implementations declarations -->
+  <UUID>7A745844-C5AB-4402-8D3C-55B68A26B099</UUID>
 
-  <implementation xmi:id="Hello_ReceiverComponentImplementation">
-    <name>Hello_ReceiverComponentImplementation</name>
+  <implementation id="_E91CFCB0-66F0-41A3-99CE-12AEDFACAC8E">
+    <name>Hello.ComponentImplementations.ReceiverImplementation.ReceiverMonolithicImpl</name>
     <source/>
-    <artifact xmi:idref="Hello_Receiver_ExecArtifact" />
-    <artifact xmi:idref="Hello_Receiver_SvntArtifact" />
-    <execParameter>
-      <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>component factory</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_Hello_Receiver_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_Hello_Receiver_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Receiver_svnt</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Receiver_exec</string>
-        </value>
-      </value>
-    </execParameter>
+    <artifact>_3D49EF00-0613-471E-A251-84263431CE61</artifact>
+    <artifact>_B1AD305F-9124-4C36-8502-C5878C6841C7</artifact>
+    <artifact>_6A3DCF45-7624-4AB1-95CA-A0DDF99053BB</artifact>
   </implementation>
 
-  <implementation xmi:id="Hello_SenderComponentImplementation">
-    <name>Hello_SenderComponentImplementation</name>
+  <implementation id="_CE2EE8B8-BCF7-4E25-B3DB-0BFE5CED3A1C">
+    <name>Hello.ComponentImplementations.SenderImplementation.SenderMonolithicImpl</name>
     <source/>
-    <artifact xmi:idref="Hello_Sender_ExecArtifact" />
-    <artifact xmi:idref="Hello_Sender_SvntArtifact" />
-    <execParameter>
-      <!-- entrypoint as exec parameter (see 10.6.1) -->
-      <name>component factory</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_Hello_Sender_Impl</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_Hello_Sender_Servant</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Sender_svnt</string>
-        </value>
-      </value>
-    </execParameter>
-    <execParameter>
-      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>Sender_exec</string>
-        </value>
-      </value>
-    </execParameter>
+    <artifact>_887DACE6-A0CD-4E0D-B84A-407B4FDB2D4A</artifact>
+    <artifact>_CB2D05F4-48C0-4567-9D59-534F461A81E7</artifact>
+    <artifact>_E2E0B980-BA79-43FB-AFC3-788B979E0413</artifact>
   </implementation>
 
-  <instance xmi:id="Hello_ReceiverComponentInstance">
-    <name>Hello_ReceiverComponent</name>
+  <instance id="Hello.ComponentImplementations.Hello.Hello.Receiver">
+    <name>Hello.ComponentImplementations.Hello.Hello.Receiver</name>
     <node>ReceiverNode</node>
-    <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_ReceiverComponentImplementation" />
+    <implementation>_E91CFCB0-66F0-41A3-99CE-12AEDFACAC8E</implementation>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <name>ComponentIOR</name>
       <value>
         <type>
           <kind>tk_string</kind>
@@ -132,12 +37,22 @@
     </configProperty>
   </instance>
 
-  <instance xmi:id="Hello_SenderComponentInstance">
-    <name>Hello_SenderComponent</name>
+  <instance id="Hello.ComponentImplementations.Hello.Hello.Sender">
+    <name>Hello.ComponentImplementations.Hello.Hello.Sender</name>
     <node>SenderNode</node>
-    <!-- hostname -->
     <source/>
-    <implementation xmi:idref="Hello_SenderComponentImplementation" />
+    <implementation>_CE2EE8B8-BCF7-4E25-B3DB-0BFE5CED3A1C</implementation>
+    <configProperty>
+      <name>ComponentIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender.ior</string>
+        </value>
+      </value>
+    </configProperty>
     <configProperty>
       <name>local_message</name>
       <value>
@@ -150,75 +65,138 @@
       </value>
     </configProperty>
     <configProperty>
-      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <name>color</name>
       <value>
         <type>
-          <kind>tk_string</kind>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>COLOR_SELECTION</name>
+            <typeId>IDL:Hello/COLOR_SELECTION:1.0</typeId>
+            <member>empty</member>
+            <member>white</member>
+            <member>red</member>
+            <member>yellow</member>
+          </enum>
         </type>
         <value>
-          <string>Sender.ior</string>
+          <enum>yellow</enum>
         </value>
       </value>
     </configProperty>
   </instance>
 
   <connection>
-    <name>MessageConnection</name>
+    <name>read_message_push_messageHello.ComponentImplementations.Hello.Hello.ReceiverHello.ComponentImplementations.Hello.Hello.Sender</name>
     <internalEndpoint>
       <portName>read_message</portName>
-      <provider>false</provider>
       <kind>SimplexReceptacle</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
+      <instance>Hello.ComponentImplementations.Hello.Hello.Receiver</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>push_message</portName>
-      <provider>true</provider>
       <kind>Facet</kind>
-      <instance xmi:idref="Hello_SenderComponentInstance" />
+      <instance>Hello.ComponentImplementations.Hello.Hello.Sender</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>EventConnection</name>
+    <name>click_out_click_inHello.ComponentImplementations.Hello.Hello.SenderHello.ComponentImplementations.Hello.Hello.Receiver</name>
     <internalEndpoint>
       <portName>click_out</portName>
-      <provider>false</provider>
       <kind>EventPublisher</kind>
-      <instance xmi:idref="Hello_SenderComponentInstance" />
+      <instance>Hello.ComponentImplementations.Hello.Hello.Sender</instance>
     </internalEndpoint>
     <internalEndpoint>
       <portName>click_in</portName>
-      <provider>true</provider>
       <kind>EventConsumer</kind>
-      <instance xmi:idref="Hello_ReceiverComponentInstance" />
+      <instance>Hello.ComponentImplementations.Hello.Hello.Receiver</instance>
     </internalEndpoint>
   </connection>
 
-  <!-- Artifacts declarations -->
-  <artifact xmi:id="Hello_Receiver_ExecArtifact">
-    <name>Receiver_exec</name>
+  <artifact id="_3D49EF00-0613-471E-A251-84263431CE61">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_stub</name>
     <source/>
     <node/>
-    <location>Receiver_exec</location>
-  </artifact>
-  <artifact xmi:id="Hello_Receiver_SvntArtifact">
-    <name>Receiver_svnt</name>
-    <source/>
-    <node/>
-    <location>Receiver_svnt</location>
+    <location>Hello_Receiver_stub</location>
   </artifact>
 
-  <artifact xmi:id="Hello_Sender_ExecArtifact">
-    <name>Sender_exec</name>
+  <artifact id="_B1AD305F-9124-4C36-8502-C5878C6841C7">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_svnt</name>
     <source/>
     <node/>
-    <location>Sender_exec</location>
-  </artifact>
-  <artifact xmi:id="Hello_Sender_SvntArtifact">
-    <name>Sender_svnt</name>
-    <source/>
-    <node/>
-    <location>Sender_svnt</location>
+    <location>Hello_Receiver_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_ReceiverHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
   </artifact>
 
-</Deployment:DeploymentPlan>
+  <artifact id="_6A3DCF45-7624-4AB1-95CA-A0DDF99053BB">
+    <name>Hello.ImplementationArtifacts.ReceiverArtifacts.Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Hello_Receiver_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_ReceiverHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_887DACE6-A0CD-4E0D-B84A-407B4FDB2D4A">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Hello_Sender_stub</location>
+  </artifact>
+
+  <artifact id="_CB2D05F4-48C0-4567-9D59-534F461A81E7">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Hello_Sender_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_SenderHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact id="_E2E0B980-BA79-43FB-AFC3-788B979E0413">
+    <name>Hello.ImplementationArtifacts.SenderArtifacts.Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Hello_Sender_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Hello_SenderHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:deploymentPlan>

@@ -77,7 +77,7 @@ TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 {
   //scope the guard
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
+    InternalGuard guard (this->internals_);
 
     // be sure all detectors are gone
     // before this object disappears
@@ -90,7 +90,7 @@ TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 ////////////////////////////////////////////
 // FT_FaultDetectorFactory_i private methods
 
-void TAO::FT_FaultDetectorFactory_i::shutdown_i(void)
+void TAO::FT_FaultDetectorFactory_i::shutdown_i()
 {
   // assume mutex is locked
   for (size_t nDetector = 0; nDetector < this->detectors_.size(); ++nDetector)
@@ -103,7 +103,7 @@ void TAO::FT_FaultDetectorFactory_i::shutdown_i(void)
   }
 }
 
-int TAO::FT_FaultDetectorFactory_i::write_ior(void)
+int TAO::FT_FaultDetectorFactory_i::write_ior()
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
@@ -177,7 +177,7 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       break;
     }
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -340,7 +340,8 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-    this->naming_context_->rebind (this->this_name_, this_obj.in());
+    this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
+                            );
   }
 
   return result;
@@ -393,8 +394,7 @@ CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id()
 
 void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault_Detector_i * detector)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
-
+  InternalGuard guard (this->internals_);
   if (id < this->detectors_.size())
   {
     if(this->detectors_[id] == detector)
@@ -431,7 +431,8 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
 // FT_FaultDetectorFactory_i CORBA methods
 
 void TAO::FT_FaultDetectorFactory_i::change_properties (
-    const PortableGroup::Properties & property_set)
+    const PortableGroup::Properties & property_set
+  )
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::change_properties);
 
@@ -468,7 +469,7 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
 void TAO::FT_FaultDetectorFactory_i::shutdown (void)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::shutdown);
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
+  InternalGuard guard (this->internals_);
   shutdown_i ();
   this->quit_requested_ = 1;
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::shutdown);
@@ -477,12 +478,13 @@ void TAO::FT_FaultDetectorFactory_i::shutdown (void)
 CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
+  )
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
 
   ACE_UNUSED_ARG (type_id); //@@ use it
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->internals_, CORBA::Object::_nil ());
+  InternalGuard guard (this->internals_);
 
   ::TAO::PG_Property_Set decoder (the_criteria);
 
@@ -628,11 +630,12 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 }
 
 void TAO::FT_FaultDetectorFactory_i::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
+  )
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::delete_object);
 
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
+  InternalGuard guard (this->internals_);
 
   CORBA::ULong detectorId;
   factory_creation_id >>= detectorId;

@@ -1,27 +1,30 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file   FlReactor_Test.cpp
- *
- *  $Id$
- *
- * A simple test that ilustrates the integration of the fast-light
- * toolkit (http://fltk.easysw.org/) with ACE, it uses FL to create
- * an OpenGL window and display a polygon, it uses ACE to open an
- * acceptor. Every time there is a connection the number of polygons
- * is increased, a little widget can be used to change the number of
- * polygons too.
- *
- *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   tests
+//
+// = FILENAME
+//   FlReactor_Test.cpp
+//
+// = DESCRIPTION
+//   A simple test that ilustrates the integration of the fast-light
+//   toolkit (http://fltk.easysw.org/) with ACE, it uses FL to create
+//   an OpenGL window and display a polygon, it uses ACE to open an
+//   acceptor. Every time there is a connection the number of polygons
+//   is increased, a little widget can be used to change the number of
+//   polygons too.
+//
+// = AUTHOR
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 
-
+ACE_RCSID(tests, FlReactor_Test, "$Id$")
 
 
 #include "ace/FlReactor/FlReactor.h"
@@ -43,17 +46,17 @@
 class Test_Window : public Fl_Gl_Window
 {
 public:
-  /// Constructor
   Test_Window (int x, int y, int w, int h,
                const char * l = 0);
+  // Constructor
 
   int sides (void) const;
   void sides (int s);
   void incr_sides (void);
 
 private:
-  /// from the Fl_Gl_Window...
   virtual void draw (void);
+  // from the Fl_Gl_Window...
 
   int sides_;
 };
@@ -268,10 +271,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
   window.show (argc, argv);
   tw.show ();
 
-  int const retval = Fl::run ();
+  return Fl::run ();
 
   ACE_END_TEST;
-
-  return retval;
 }
 

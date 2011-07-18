@@ -1,5 +1,6 @@
-// $Id$
+// file      : ace/RMCast/Flow.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
+// cvs-id    : $Id$
 
 #ifndef ACE_RMCAST_FLOW_H
 #define ACE_RMCAST_FLOW_H

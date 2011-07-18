@@ -1,8 +1,12 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+
+
+ACE_RCSID (LoadBalancing,
+           client,
+           "$Id$")
+
 
 const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");
 
@@ -40,7 +44,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

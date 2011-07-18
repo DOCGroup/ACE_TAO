@@ -6,6 +6,8 @@
 #include "tao/Policy_Current.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(TransportCache, client, "$Id$")
+
 int cache_size = 512;
 int port_nr = 27530;
 
@@ -35,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

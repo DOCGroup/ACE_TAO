@@ -1,6 +1,6 @@
 // $Id$
 
-project(EventAny_local): ccm_stub, avoids_ccm_noevent {
+project(EventAny_local): ccm_stub {
   exename = EventAny
   idlflags += -SS
 

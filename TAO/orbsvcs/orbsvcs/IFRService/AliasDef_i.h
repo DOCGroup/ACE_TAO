@@ -32,11 +32,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * Represents an OMG IDL typedef that aliases another definition.
- */
 class TAO_IFRService_Export TAO_AliasDef_i : public virtual TAO_TypedefDef_i
 {
+public:
+  // = TITLE
+  //    TAO_AliasDef_i
+  //
+  // = DESCRIPTION
+  //    Represents an OMG IDL typedef that aliases another definition.
+  //
 public:
   /// Constructor
   TAO_AliasDef_i (TAO_Repository_i *repo);
@@ -45,21 +49,30 @@ public:
   virtual ~TAO_AliasDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  virtual CORBA::DefinitionKind def_kind ()
+;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  virtual CORBA::TypeCode_ptr type ()
+;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ();
+  virtual CORBA::TypeCode_ptr type_i ()
+;
 
-  virtual CORBA::IDLType_ptr original_type_def ();
+  virtual CORBA::IDLType_ptr original_type_def ()
+;
 
-  CORBA::IDLType_ptr original_type_def_i ();
+  CORBA::IDLType_ptr original_type_def_i ()
+;
 
-  virtual void original_type_def (CORBA::IDLType_ptr original_type_def);
+  virtual void original_type_def (
+      CORBA::IDLType_ptr original_type_def)
+;
 
-  void original_type_def_i (CORBA::IDLType_ptr original_type_def);
+  void original_type_def_i (
+      CORBA::IDLType_ptr original_type_def)
+;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -18,7 +18,7 @@ ACEXML_Print_Handler::~ACEXML_Print_Handler (void)
 void
 ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
                                   size_t start,
-                                  size_t length)
+                                  size_t length ACEXML_ENV_ARG_DECL_NOT_USED)
 {
 
 
@@ -28,7 +28,7 @@ ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
 }
 
 void
-ACEXML_Print_Handler::endDocument (void)
+ACEXML_Print_Handler::endDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 
 
@@ -39,7 +39,8 @@ ACEXML_Print_Handler::endDocument (void)
 void
 ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
                                   const ACEXML_Char *name,
-                                  const ACEXML_Char *qName)
+                                  const ACEXML_Char *qName
+                                  ACEXML_ENV_ARG_DECL_NOT_USED)
 {
 
 
@@ -49,7 +50,8 @@ ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
 }
 
 void
-ACEXML_Print_Handler::endPrefixMapping (const ACEXML_Char *prefix)
+ACEXML_Print_Handler::endPrefixMapping (const ACEXML_Char *prefix
+                                        ACEXML_ENV_ARG_DECL_NOT_USED)
 {
 
 
@@ -61,7 +63,8 @@ ACEXML_Print_Handler::endPrefixMapping (const ACEXML_Char *prefix)
 void
 ACEXML_Print_Handler::ignorableWhitespace (const ACEXML_Char *,
                                            int,
-                                           int)
+                                           int
+                                           ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   //   ACE_DEBUG ((LM_DEBUG,
   //               ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
@@ -69,7 +72,8 @@ ACEXML_Print_Handler::ignorableWhitespace (const ACEXML_Char *,
 
 void
 ACEXML_Print_Handler::processingInstruction (const ACEXML_Char *target,
-                                             const ACEXML_Char *data)
+                                             const ACEXML_Char *data
+                                             ACEXML_ENV_ARG_DECL_NOT_USED)
 {
 
 
@@ -87,7 +91,8 @@ ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator * locator)
 }
 
 void
-ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name)
+ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name
+                                     ACEXML_ENV_ARG_DECL_NOT_USED)
 {
 
 
@@ -97,7 +102,7 @@ ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name)
 }
 
 void
-ACEXML_Print_Handler::startDocument (void)
+ACEXML_Print_Handler::startDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 
 
@@ -109,7 +114,8 @@ void
 ACEXML_Print_Handler::startElement (const ACEXML_Char *uri,
                                     const ACEXML_Char *name,
                                     const ACEXML_Char *qName,
-                                    ACEXML_Attributes *alist)
+                                    ACEXML_Attributes *alist
+                                    ACEXML_ENV_ARG_DECL_NOT_USED)
 {
 
 
@@ -128,7 +134,7 @@ ACEXML_Print_Handler::startElement (const ACEXML_Char *uri,
 
 void
 ACEXML_Print_Handler::startPrefixMapping (const ACEXML_Char * prefix,
-                                          const ACEXML_Char * uri)
+                                          const ACEXML_Char * uri ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
@@ -141,7 +147,7 @@ ACEXML_Print_Handler::startPrefixMapping (const ACEXML_Char * prefix,
 void
 ACEXML_Print_Handler::notationDecl (const ACEXML_Char *name,
                                     const ACEXML_Char *publicID,
-                                    const ACEXML_Char *systemID)
+                                    const ACEXML_Char *systemID ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event notationDecl: (%s) "),
@@ -165,7 +171,7 @@ void
 ACEXML_Print_Handler::unparsedEntityDecl (const ACEXML_Char *name,
                                           const ACEXML_Char *publicID,
                                           const ACEXML_Char *systemID,
-                                          const ACEXML_Char *notationName)
+                                          const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Unparsed Entity: %s"),
@@ -189,7 +195,7 @@ ACEXML_Print_Handler::unparsedEntityDecl (const ACEXML_Char *name,
 
 ACEXML_InputSource *
 ACEXML_Print_Handler::resolveEntity (const ACEXML_Char *,
-                                     const ACEXML_Char *)
+                                     const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   // No-op.
   return 0;
@@ -201,7 +207,7 @@ ACEXML_Print_Handler::resolveEntity (const ACEXML_Char *,
  * Receive notification of a recoverable error.
  */
 void
-ACEXML_Print_Handler::error (ACEXML_SAXParseException & ex)
+ACEXML_Print_Handler::error (ACEXML_SAXParseException & ex ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
@@ -211,7 +217,7 @@ ACEXML_Print_Handler::error (ACEXML_SAXParseException & ex)
 }
 
 void
-ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex)
+ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
@@ -222,7 +228,7 @@ ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex)
 }
 
 void
-ACEXML_Print_Handler::warning (ACEXML_SAXParseException & ex)
+ACEXML_Print_Handler::warning (ACEXML_SAXParseException & ex ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),

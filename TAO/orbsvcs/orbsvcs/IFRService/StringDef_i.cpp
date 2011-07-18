@@ -5,6 +5,11 @@
 
 #include "ace/SString.h"
 
+
+ACE_RCSID (IFRService,
+           StringDef_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_StringDef_i::TAO_StringDef_i (TAO_Repository_i *repo)

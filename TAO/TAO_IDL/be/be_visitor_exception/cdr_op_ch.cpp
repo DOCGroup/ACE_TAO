@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for exceptions. This uses
- *  compiled marshaling.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for exceptions. This uses
+//    compiled marshaling.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_exception, 
+           cdr_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Exception visitor for generating CDR operator declarations in the client header
@@ -39,12 +48,12 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
@@ -69,7 +78,7 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_cdr_op_ch::"
                          "visit_exception - "
-                         "codegen for scope failed\n"),
+                         "codegen for scope failed\n"), 
                         -1);
     }
 

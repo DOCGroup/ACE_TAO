@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   ex2.cpp
- *
- *  $Id$
- *
- *  Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
- *  intra-process communication.
- *
- *
- *  @author Gerhard Lenzer and Douglas C. Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   examples
+//
+// = FILENAME
+//   ex2.cpp
+//
+// = DESCRIPTION
+//    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
+//    intra-process communication.
+//
+// = AUTHOR
+//    Gerhard Lenzer and Douglas C. Schmidt
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/UPIPE_Connector.h"
@@ -20,7 +23,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_time.h"
 
-
+ACE_RCSID(UPIPE_SAP, ex2, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

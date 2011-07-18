@@ -6,6 +6,10 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (Bug_1559,
+           server_interceptor,
+           "$Id$")
+
 const IOP::ServiceId service_id = 0xdeadbeef;
 const char *request_msg = "REQUEST message";
 const char *reply_msg = "REPLY message";
@@ -83,7 +87,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   if (ACE_OS::strcmp (buf, request_msg) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD\n"));
-      throw PortableInterceptor::ForwardRequest (this->forward_location_.in ());
+      throw PortableInterceptor::ForwardRequest (this->forward_location_);
     }
   else if (ACE_OS::strcmp (buf, forward_msg) == 0)
     {

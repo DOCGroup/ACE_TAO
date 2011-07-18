@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    client.cpp
- *
- *  $Id$
- *
- *  Start one server thread calling a distant MT Object serveral times,
- *  also starting serveral client threads which call the MT Object too.
- *  The server does nested upcalls.
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/NestedUpCalls/MT_Client_Test
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//    Start one server thread calling a distant MT Object serveral times,
+//    also starting serveral client threads which call the MT Object too.
+//    The server does nested upcalls.
+//
+// = AUTHORS
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "client.h"
 #include "local_server.h"
@@ -23,6 +26,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Malloc_Base.h"
+
+ACE_RCSID(MT_Client_Test, client, "$Id$")
 
 MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
                                 int client_number)

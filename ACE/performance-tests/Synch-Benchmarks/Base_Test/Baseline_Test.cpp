@@ -15,6 +15,10 @@
 #include "Baseline_Test.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (Base_Test,
+           Baseline_Test,
+           "$Id$")
+
 Baseline_Test_Options baseline_options;
 // Static Baseline Options holds the test configuration information
 // and the test statistics.
@@ -36,15 +40,17 @@ Baseline_Test_Base::init (int argc, ACE_TCHAR *argv[])
 int
 Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:ylrw"), 0);
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("i:ylrw"), 0);
   int c;
 
-  while ((c = get_opt ()) != -1)
+  while ((c = getopt ()) != -1)
+  //FUZZ: enable check_for_lack_ACE_OS
     switch (c)
       {
       case 'i':                 // Total iterations
         {
-          int tmp = ACE_OS::atoi (get_opt.opt_arg ());
+          int tmp = ACE_OS::atoi (getopt.opt_arg ());
           if (tmp <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%d is not a valid value for iteration\n",

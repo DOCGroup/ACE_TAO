@@ -3,6 +3,10 @@
 #include "orbsvcs/Event/EC_UDP_Admin.h"
 #include "ace/INET_Addr.h"
 
+ACE_RCSID (Event,
+           EC_UDP_Admin,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Simple_AddrServer::TAO_EC_Simple_AddrServer (CORBA::UShort port)

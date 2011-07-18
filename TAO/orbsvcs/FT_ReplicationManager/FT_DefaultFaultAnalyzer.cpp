@@ -20,6 +20,11 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (FT_DefaultFaultAnalyzer,
+           FT_DefaultFaultAnalyzer,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Default constructor.
@@ -83,7 +88,7 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
   //
   //   The filterable_data part of the event body contains the
   //   identity of the crashed object as four name-value pairs: the
-  //   fault tolerance domain identifier, the member's location
+  //   fault tolerance domain identifier, the member’s location
   //   identifier, the repository identifier and the object group
   //   identifier. The Fault Notifier filters events based on the
   //   domain_name, the type_name, and the four identifiers.  All

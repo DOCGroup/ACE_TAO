@@ -1,9 +1,8 @@
 // $Id$
 
 ACE_INLINE
-Callback_i::Callback_i (CORBA::ORB_ptr orb, Simple_Server_ptr srv)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
-     server_ (Simple_Server::_duplicate (srv))
+Callback_i::Callback_i (CORBA::ORB_ptr orb)
+  :  orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

@@ -36,7 +36,8 @@ ACE_INLINE
 void
 ACE::HTBP::Channel::filter (ACE::HTBP::Filter *f)
 {
-  delete this->filter_;
+  if (this->filter_)
+    delete this->filter_;
   this->filter_ = f;
 }
 

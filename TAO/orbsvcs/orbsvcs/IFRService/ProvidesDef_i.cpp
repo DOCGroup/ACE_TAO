@@ -2,13 +2,21 @@
 
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/ProvidesDef_i.h"
-#include "tao/IFR_Client/IFR_ComponentsS.h"
+#include "orbsvcs/IFRService/IFR_ComponentsS.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 
-TAO_ProvidesDef_i::TAO_ProvidesDef_i (TAO_Repository_i *repo)
+
+ACE_RCSID (IFRService,
+           ProvidesDef_i,
+           "$Id$")
+
+
+TAO_ProvidesDef_i::TAO_ProvidesDef_i (
+    TAO_Repository_i *repo
+  )
   : TAO_IRObject_i (repo),
     TAO_Contained_i (repo)
 {

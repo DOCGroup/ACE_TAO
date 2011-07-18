@@ -2,6 +2,10 @@
 
 #include "orbsvcs/Event/EC_Gateway.h"
 
+ACE_RCSID (Event, 
+           EC_Gateway, 
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway::TAO_EC_Gateway (void)

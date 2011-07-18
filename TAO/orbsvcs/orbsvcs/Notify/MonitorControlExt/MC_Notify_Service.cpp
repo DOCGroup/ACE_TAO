@@ -80,12 +80,6 @@ TAO_MC_Notify_Service::finalize_service (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-ACE_STATIC_SVC_DEFINE (TAO_MC_Notify_Service,
-                       ACE_TEXT (TAO_NOTIFY_MONITOR_CONTROL_EXTENSION),
-                       ACE_Service_Type::SERVICE_OBJECT,
-                       &ACE_SVC_NAME (TAO_MC_Notify_Service),
-                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-                       0)
 ACE_FACTORY_DEFINE (TAO_Notify_MC_Ext, TAO_MC_Notify_Service)
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */

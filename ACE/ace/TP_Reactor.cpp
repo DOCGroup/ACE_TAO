@@ -11,6 +11,10 @@
 #include "ace/TP_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (ace,
+           TP_Reactor,
+           "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
@@ -50,7 +54,7 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = true;
+  this->owner_ = 1;
 
   return result;
 }
@@ -88,7 +92,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = true;
+  this->owner_ = 1;
 
   return result;
 }
@@ -161,10 +165,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
   // After getting the lock just just for deactivation..
   if (this->deactivated_)
-    {
-      errno = ESHUTDOWN;
-      return -1;
-    }
+    return -1;
 
   // Update the countdown to reflect time waiting for the token.
   countdown.update ();

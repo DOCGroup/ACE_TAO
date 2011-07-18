@@ -9,7 +9,7 @@ class TheEndTask : public BasicTask {
 protected:
   virtual int process (Message *)
   {
-    ACE_TRACE ("EndTask::process()");
+    ACE_TRACE (ACE_TEXT ("EndTask::process()"));
     return 0;
   }
 

@@ -4,6 +4,7 @@
 #include "Supplier_Input_Handler.h"
 #include "supplier.h"
 
+ACE_RCSID(Supplier, supplier, "$Id$")
 Supplier::Supplier (void)
 {
   // No-Op.

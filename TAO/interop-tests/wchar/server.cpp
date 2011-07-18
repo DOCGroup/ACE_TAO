@@ -1,24 +1,24 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  C++ server side for testing interoperability with wchar data.
- *
- *
- *  @author Phil Mesnier <mesnier_p@ociweb.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    interop_test/wchar
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    C++ server side for testing interoperability with wchar data.
+//
+// = AUTHOR
+//    Phil Mesnier <mesnier_p@ociweb.com>
+//
+// ============================================================================
 #include "interop_wchar_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#if defined (TAO_EXPLICIT_NEGOTIATE_CODESETS)
-#include "tao/Codeset/Codeset.h"
-#endif /* TAO_EXPLICIT_NEGOTIATE_CODESETS */
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("IOR");
 int verbose = 0;
@@ -49,7 +49,7 @@ parse_args (int argc, ACE_TCHAR* argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -57,6 +57,13 @@ int
 ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
 {
   ACE_Argv_Type_Converter command_line(argc, argv);
+
+  if (parse_args(command_line.get_argc(), command_line.get_TCHAR_argv()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("failed to parse args")),
+                        1);
+    }
 
 #if (!defined ACE_HAS_WCHAR) && (!defined ACE_HAS_XPG4_MULTIBYTE_CHAR)
   // the run_test script looks for the ior file. By touching it here, the
@@ -76,14 +83,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
   try
     {
         // Initialize orb
-        CORBA::ORB_var orb =
-          CORBA::ORB_init(argc, argv);
-        if (parse_args(argc, argv))
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("failed to parse args")),
-                              1);
-          }
+        CORBA::ORB_var orb = CORBA::ORB_init( command_line.get_argc(), command_line.get_ASCII_argv() );
 
         //Get reference to Root POA
         CORBA::Object_var obj =

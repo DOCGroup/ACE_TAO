@@ -48,7 +48,6 @@ namespace TAO
      * session, or to a newly created one.
      */
 
-    typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY2;
     typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY2;
 
     typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> COMPLETION_BASE;
@@ -79,11 +78,16 @@ namespace TAO
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
       //@}
 
+      // this does nothing, but satisfies a requirement for the TAO_Accept_stratgy.
+      int add_transport_to_cache (void);
+
     private:
+      int make_svc_handler (Connection_Handler *&sh);
+      int activate_svc_handler (Connection_Handler *sh);
+
       TAO_ORB_Core *orb_core_;
       ACE::HTBP::Channel *channel_;
 
-      CREATION_STRATEGY2 *creation_strategy_;
       CONCURRENCY_STRATEGY2 *concurrency_strategy_;
     };
   }

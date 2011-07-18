@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     test_i.cpp
- *
- *  $Id$
- *
- *   This is a simple test servant implementation
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===========================================================================
+//
+//
+// = FILENAME
+//     test_i.cpp
+//
+// = DESCRIPTION
+//     This is a simple test servant implementation
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//===========================================================================
 
 #include "test_i.h"
+
+ACE_RCSID(TIE, test_i, "$Id$")
 
 // Constructor
 Tie_i::Tie_i (CORBA::Long value)

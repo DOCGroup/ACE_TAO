@@ -13,7 +13,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int activate_task (CORBA::ORB_ptr orb);
 
   RTScheduling::Current::IdType* guids (void);
-
+  
  protected:
   /// task svc
   virtual int svc (void);
@@ -21,7 +21,8 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;
   RTScheduling::Current::IdType guid_ [4];
-  TAO_SYNCH_MUTEX mutex_;
+  ACE_Lock* shutdown_lock_;
+  ACE_Lock* lock_;
   int active_thread_count_;
 };
 

@@ -9,7 +9,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
 #include "ace/Min_Max.h"
 #include "ace/OS_Memory.h"
 #include "ace/Recyclable.h"
@@ -20,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                 bool delete_cleanup_strategy)
+                                                                                                 int delete_cleanup_strategy)
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
@@ -28,7 +27,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->delete_cleanup_strategy_ = 1;
     }
 }
 
@@ -44,7 +43,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
                                                                                     double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (ACE::is_equal (purge_percent, 0.0))
+  if (purge_percent == 0)
     return 0;
 
   // Get the number of entries in the container.
@@ -95,7 +94,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
   // Starting values.
   ITERATOR iter = container.begin ();
   ITERATOR end = container.end ();
-  ATTRIBUTES min = (*iter).int_id_.second;
+  ATTRIBUTES min = (*iter).int_id_.second ();
   key_to_remove = &(*iter).ext_id_;
   value_to_remove = &(*iter).int_id_;
 
@@ -105,10 +104,10 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
        iter != end;
        ++iter)
     {
-      if (min > (*iter).int_id_.second)
+      if (min > (*iter).int_id_.second ())
         {
           // Ah! an item with lower ATTTRIBUTES...
-          min = (*iter).int_id_.second;
+          min = (*iter).int_id_.second ();
           key_to_remove = &(*iter).ext_id_;
           value_to_remove = &(*iter).int_id_;
         }
@@ -119,7 +118,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                                             bool delete_cleanup_strategy)
+                                                                                                                             int delete_cleanup_strategy)
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
@@ -127,7 +126,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->delete_cleanup_strategy_ = 1;
     }
 }
 
@@ -143,7 +142,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
                                                                                                   double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (ACE::is_equal (purge_percent, 0.0))
+  if (purge_percent == 0)
     return 0;
 
   // Get the number of entries in the container.
@@ -195,7 +194,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   // Starting values.
   ITERATOR end = container.end ();
   ITERATOR iter = container.begin ();
-  ATTRIBUTES min = (*iter).int_id_.second;
+  ATTRIBUTES min = (*iter).int_id_.second ();
   key_to_remove = 0;
   value_to_remove = 0;
   // Found the minimum entry to be purged?
@@ -215,7 +214,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
         {
           if (found == 0)
             {
-              min = (*iter).int_id_.second;
+              min = (*iter).int_id_.second ();
               key_to_remove = &(*iter).ext_id_;
               value_to_remove = &(*iter).int_id_;
               found = 1;
@@ -223,9 +222,9 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
           else
             {
               // Ah! an entry with lower ATTTRIBUTES...
-              if (min > (*iter).int_id_.second)
+              if (min > (*iter).int_id_.second ())
                 {
-                  min = (*iter).int_id_.second;
+                  min = (*iter).int_id_.second ();
                   key_to_remove = &(*iter).ext_id_;
                   value_to_remove = &(*iter).int_id_;
                 }
@@ -238,7 +237,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                                                                   bool delete_cleanup_strategy)
+                                                                                                                                                   int delete_cleanup_strategy)
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy),
     marked_as_closed_entries_ (0)
@@ -247,7 +246,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->delete_cleanup_strategy_ = 1;
     }
 }
 
@@ -263,7 +262,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
                                                                                                              double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (ACE::is_equal (purge_percent, 0.0))
+  if (purge_percent == 0)
     return 0;
 
   // Get the number of entries in the container which can be considered for purging.
@@ -363,7 +362,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                       bool delete_cleanup_strategy)
+                                                                                                       int delete_cleanup_strategy)
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
@@ -371,7 +370,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Ha
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->delete_cleanup_strategy_ = 1;
     }
 }
 
@@ -387,7 +386,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
                                                                                        double purge_percent)
 {
   // Check that the purge_percent is non-zero.
-  if (ACE::is_equal (purge_percent, 0.0))
+  if (purge_percent == 0)
     return 0;
 
   // Get the number of entries in the container.
@@ -456,7 +455,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimu
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
-                                                                                                 bool delete_cleanup_strategy)
+                                                                                                 int delete_cleanup_strategy)
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
@@ -464,7 +463,7 @@ ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Null_
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
-      this->delete_cleanup_strategy_ = true;
+      this->delete_cleanup_strategy_ = 1;
     }
 }
 

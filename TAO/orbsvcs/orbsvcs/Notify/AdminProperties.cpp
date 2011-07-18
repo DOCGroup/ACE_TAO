@@ -6,6 +6,10 @@
 #include "orbsvcs/Notify/AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (Notify,
+           TAO_Notify_AdminProperties,
+           "$Id$")
+
 #include "orbsvcs/CosNotificationC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -36,7 +40,7 @@ TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
   this->reject_new_events_.set (*this);
 
   //@@ check if unsupported property was set.
-  // This will happen when number of successful inits != numbers of items bound in map_.
+  // This will happen when number of successfull inits != numbers of items bound in map_.
 
   return 0;
 }

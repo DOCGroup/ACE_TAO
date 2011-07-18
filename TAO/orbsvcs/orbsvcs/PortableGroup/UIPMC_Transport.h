@@ -39,7 +39,7 @@ class TAO_Acceptor;
  *  MIOP protocol.
  */
 template<typename CONNECTION_HANDLER>
-class TAO_UIPMC_Transport : public TAO_Transport
+class TAO_PortableGroup_Export TAO_UIPMC_Transport : public TAO_Transport
 {
 public:
 

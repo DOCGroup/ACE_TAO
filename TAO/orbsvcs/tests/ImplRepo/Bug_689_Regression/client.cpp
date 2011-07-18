@@ -5,6 +5,10 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Argv_Type_Converter.h"
 
+ACE_RCSID(Bug_689_Regression,
+          client,
+          "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
 int
@@ -29,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -45,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var tmp = orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
       bug_689_regression_var servant = bug_689_regression::_narrow(tmp.in ());
 
@@ -57,7 +61,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      servant->noop ();
       servant->shutdown ();
 
       ACE_Time_Value tv (0, 500);

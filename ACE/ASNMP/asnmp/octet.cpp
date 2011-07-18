@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    octet.cpp
- *
- *  $Id$
- *
- *  Implements the SMI Octet datatype (RFC 1155)
- *  This class is fully contained and does not rely on or any other
- *  SNMP libraries. Ported to ACE by Michael MacFaden mrm@cisco.com
- *
- *
- *  @author Peter E Mellquist
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//    octet.cpp
+//
+// = DESCRIPTION
+//    Implements the SMI Octet datatype (RFC 1155)
+//    This class is fully contained and does not rely on or any other
+//    SNMP libraries. Ported to ACE by Michael MacFaden mrm@cisco.com
+//
+// = AUTHOR
+//   Peter E Mellquist
+//
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -36,6 +39,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/os_ctype.h"
+
+ACE_RCSID(asnmp, octet, "$Id$")
 
 //============[ syntax type ]=========================================
 SmiUINT32 OctetStr::get_syntax()

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined (__ACE_INLINE__)
@@ -7,6 +5,11 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Endpoint.h"
+
+ACE_RCSID (tao,
+           Transport_Descriptor_Interface,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

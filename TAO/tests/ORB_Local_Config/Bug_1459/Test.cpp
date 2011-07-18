@@ -1,4 +1,4 @@
-// $Id$
+
 // @author Jeff Mirwaisi <jeff_mirwaisi@yahoo.com>
 // @author Iliyan Jeliazkov <iliyan2ociweb.com>
 
@@ -14,6 +14,8 @@
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
 #include "Service_Configuration_Per_ORB.h"
+
+ACE_RCSID (tests, server, "$Id$")
 
 // Currently there is no way to test SSLIOP in this test due to a problem
 // described in bug 3418.

@@ -239,12 +239,12 @@ private:
   PortableServer::ServantBase *
         init_address_server (void);
 
-  PortableServer::Servant_var<TAO_ECG_UDP_Sender>
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
         init_sender (RtecEventChannelAdmin::EventChannel_ptr ec,
                      RtecUDPAdmin::AddrServer_ptr address_server,
                      TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
-  PortableServer::Servant_var<TAO_ECG_UDP_Receiver>
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver>
         init_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                        RtecUDPAdmin::AddrServer_ptr address_server,
                        TAO_ECG_Refcounted_Endpoint endpoint_rptr);

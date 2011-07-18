@@ -3,14 +3,16 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID (QtTests, server, "$Id$")
+
 // who defines index macro?
 #ifdef index
 #undef index
 #endif
 #include "tao/QtResource/QtResource_Loader.h"
-#include <QtGui/qlcdnumber.h>
-#include <QtGui/qboxlayout.h>
-#include <QtGui/qslider.h>
+#include <qlcdnumber.h>
+#include <qvbox.h>
+#include <qslider.h>
 #include "ace/OS_NS_stdio.h"
 
 
@@ -40,7 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 //                            argv [0]),
 //                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -87,13 +89,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         LCD_Display::_narrow (object.in ());
 
       // Create the LCD after the QVbox is created.
-      QWidget mainwindow_;
-      mainwindow_.resize (145, 100);
-      mainwindow_.setWindowTitle("QtServer");
+      QVBox box;
 
-      QVBoxLayout *box = new QVBoxLayout();
-      QLCDNumber lcd (2);
-      box->addWidget(&lcd);
+      box.resize (145, 100);
+      QLCDNumber lcd (2, &box, "lcd_display");
 
       // Connect the signal from the hosted servant with the public
       // SLOT method display () for the LCD Widget.
@@ -103,9 +102,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                         &lcd,
                         SLOT (display (int)));
 
-      mainwindow_.setLayout(box);
-      app.setActiveWindow(&(mainwindow_));
-      mainwindow_.show ();
+      app.setMainWidget(&box);
+      box.show ();
 
       // End of QT specific stuff..
 

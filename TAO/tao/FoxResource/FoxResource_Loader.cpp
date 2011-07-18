@@ -1,8 +1,12 @@
 //$Id$
-
 #include "tao/FoxResource/FoxResource_Loader.h"
 #include "tao/ORB_Core.h"
 #include "tao/FoxResource/FoxResource_Factory.h"
+
+ACE_RCSID( TAO_FoxResource,
+           FoxResource_Loader,
+           "$Id$");
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

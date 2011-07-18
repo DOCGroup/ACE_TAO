@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_IO.h"
@@ -34,7 +35,7 @@ TeraSS_State_WRITE::service (JAWS_Event_Completer *ec, void *data)
       return 0;
     }
 
-
+  
   JAWS_IO::instance ()->transmit ( tdata->peer ().get_handle ()
                                  , tdata->file_io ().get_handle ()
                                  , ec

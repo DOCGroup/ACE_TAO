@@ -89,7 +89,7 @@ public:
   // Accessors.
   bool truncatable (void) const;
   void truncatable (bool val);
-
+  
   // Cleanup.
   virtual void destroy (void);
 
@@ -97,7 +97,7 @@ private:
   // List item.
   UTL_ScopedName *pd_car_data;
 
-  // Used only with valuetye inheritance list. Defualts to false.
+  // Used only with valuetye inheritance list. Defualts to 0.
   bool pd_truncatable;
 };
 

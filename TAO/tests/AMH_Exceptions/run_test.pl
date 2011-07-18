@@ -55,7 +55,7 @@ if ($host->PutFile ($iorbase) == -1) {
 }
 
 # Run client.
-$client_status = $CL->SpawnWaitKill ($host->ProcessStartWaitInterval() + 15);
+$client_status = $CL->SpawnWaitKill (30);
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -63,7 +63,7 @@ if ($client_status != 0) {
 }
 
 # Clean up.
-$amhserver= $AMH->WaitKill ($target->ProcessStopWaitInterval());
+$amhserver= $AMH->WaitKill (15);
 
 if ($amhserver != 0) {
     print STDERR "ERROR: AMH Server returned $amhserver\n";

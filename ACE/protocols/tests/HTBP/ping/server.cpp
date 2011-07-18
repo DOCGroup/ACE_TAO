@@ -14,8 +14,6 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_netdb.h"
 
 unsigned port = 8088;
 const ACE_TCHAR *notifier_file = 0;
@@ -43,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -117,7 +115,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Server: ")
-              ACE_TEXT ("using streams %d, %d. Got session = %@\n"),
+              ACE_TEXT ("using streams %d, %d. Got sesssion = %@\n"),
               sock[0].get_handle(),
               sock[1].get_handle(),
               session));

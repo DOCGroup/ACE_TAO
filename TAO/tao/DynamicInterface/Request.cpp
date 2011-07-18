@@ -1,6 +1,11 @@
 // $Id$
 
 #include "tao/DynamicInterface/Request.h"
+
+ACE_RCSID (DynamicInterface,
+           Request,
+           "$Id$")
+
 #include "tao/DynamicInterface/DII_Invocation_Adapter.h"
 #include "tao/DynamicInterface/DII_Arguments.h"
 #include "tao/DynamicInterface/Context.h"
@@ -28,13 +33,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Reference counting for DII Request object.
 
 CORBA::ULong
-CORBA::Request::_incr_refcount (void)
+CORBA::Request::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::Request::_decr_refcount (void)
+CORBA::Request::_decr_refcnt (void)
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -151,7 +156,7 @@ CORBA::Request::invoke (void)
   // If we returned without an exception being thrown the response
   // (if any) is assumed to be received.
   this->response_received_ = true;
-
+  
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
   // reply must be in the same byte order as the reply we are

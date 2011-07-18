@@ -6,19 +6,20 @@
 
 #include "ast_interface.h"
 
-class TAO_IDL_FE_Export AST_ValueType
-  : public virtual AST_Interface
+class TAO_IDL_FE_Export AST_ValueType : public virtual AST_Interface
 {
 public:
+  AST_ValueType (void);
+
   AST_ValueType (UTL_ScopedName *n,
-                 AST_Type **inherits,
+                 AST_Interface **inherits,
                  long n_inherits,
-                 AST_Type *inherits_concrete,
+                 AST_ValueType *inherits_concrete,
                  AST_Interface **inherits_flat,
                  long n_inherits_flat,
-                 AST_Type **supports,
+                 AST_Interface **supports,
                  long n_supports,
-                 AST_Type *supports_concrete,
+                 AST_Interface *supports_concrete,
                  bool abstract,
                  bool truncatable,
                  bool custom);
@@ -31,13 +32,13 @@ public:
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
 
-  AST_Type **supports (void) const;
+  AST_Interface **supports (void) const;
 
   long n_supports (void) const;
 
-  AST_Type *inherits_concrete (void) const;
+  AST_ValueType *inherits_concrete (void) const;
 
-  AST_Type *supports_concrete (void) const;
+  AST_Interface *supports_concrete (void) const;
 
   bool truncatable (void) const;
   bool custom (void) const;
@@ -47,12 +48,7 @@ public:
 
   // Look up a scoped name in the supported interface list.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *,
-                                       bool full_def_only);
-
-  // Overridden for valuetype from UTL_Scope method.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *,
-                                    bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+                                       bool treat_as_ref);
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
@@ -73,22 +69,17 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  static AST_Decl::NodeType const NT;
-  typedef AST_ValueTypeFwd FWD_TYPE;
-
 protected:
-  AST_Type **pd_supports;
+  AST_Interface **pd_supports;
   long pd_n_supports;
-  AST_Type *pd_inherits_concrete;
-  AST_Type *pd_supports_concrete;
+  AST_ValueType *pd_inherits_concrete;
+  AST_Interface *pd_supports_concrete;
 
   bool pd_truncatable;
   bool pd_custom;
 
 protected:
   virtual AST_Factory *fe_add_factory (AST_Factory *f);
-  virtual AST_Field *fe_add_field (AST_Field *o);
-
   bool derived_from_primary_key_base (const AST_ValueType *node,
                                       const AST_ValueType *pk_base) const;
   AST_ValueType *lookup_primary_key_base (void) const;

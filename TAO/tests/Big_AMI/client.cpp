@@ -7,6 +7,7 @@
  *
  *  A very simple client which uses the AMI callback model.
  *
+ *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -16,6 +17,10 @@
 #include "ace/Task.h"
 
 #include "ami_testS.h"
+
+ACE_RCSID (AMI,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
@@ -59,7 +64,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -116,6 +121,8 @@ private:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+
+
   try
     {
       CORBA::ORB_var orb =
@@ -182,6 +189,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    "Let's talk AMI.",
                                    payload);
         }
+
+      // We are just sending all requests, but we shouldn't get any replies
+      // until we run the orb or do a real synchronous call, so check whether
+      // we didn't get any reply until this moment
+      if (handler.reply_count () > 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "ERROR: Got a reply during sending asynchronous calls\n"),
+                            1);
 
       if (debug)
         {

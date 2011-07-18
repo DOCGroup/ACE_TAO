@@ -33,11 +33,14 @@ class ACE_Allocator;
 #define ACE_CACHE_MAP_MANAGER \
         ACE_Cache_Map_Manager<KEY, \
                               VALUE, \
-                              ACE_Hash_Map_Manager_Ex<KEY, std::pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              ACE_Hash_Map_Iterator_Ex<KEY, std::pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
-                              ACE_Hash_Map_Reverse_Iterator_Ex<KEY, std::pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
+                              ACE_Hash_Map_Manager_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
+                              ACE_Hash_Map_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
+                              ACE_Hash_Map_Reverse_Iterator_Ex<KEY, ACE_Pair<VALUE, ATTRIBUTES>, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>, \
                               CACHING_STRATEGY, \
                               ATTRIBUTES>
+
+// For linkers that cant grok long names.
+#define ACE_Hash_Cache_Map_Manager AHCMM
 
  /**
   * @class ACE_Hash_Cache_Map_Manager
@@ -55,7 +58,7 @@ class ACE_Allocator;
   * Hash_Cache_Map_Manager provides extra functionality on top
   * of the Cache_Map_Manager.
   * No locking mechanism provided since locking at this level
-  * isn't efficient.  Locking has to be provided by the
+  * isnt efficient.  Locking has to be provided by the
   * application.
   */
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
@@ -68,7 +71,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
    * are used by the strategy and is transparent to the user of this
    * class.
    */
-  typedef std::pair<VALUE, ATTRIBUTES> CACHE_VALUE;
+  typedef ACE_Pair<VALUE, ATTRIBUTES> CACHE_VALUE;
   typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> HASH_MAP;
   typedef ACE_Hash_Map_Entry<KEY, CACHE_VALUE> CACHE_ENTRY;
   typedef KEY key_type;
@@ -186,6 +189,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   int unbind (CACHE_ENTRY *entry);
 
 protected:
+
   /// Base class.
   typedef ACE_CACHE_MAP_MANAGER ACE_HCMM_BASE;
 };

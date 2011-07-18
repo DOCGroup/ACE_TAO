@@ -19,6 +19,10 @@
 #include "ami_testS.h"
 #include "tao/Codeset/Codeset.h"
 
+ACE_RCSID (AMI,
+           simple_client,
+           "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int shutdown_flag = 1;
@@ -49,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -87,10 +91,10 @@ public:
                         ACE_OS::strlen(ex.whatDidTheRightThing.in()) * sizeof(CORBA::WChar)
                         ));
 
-          CORBA::WChar const* wstring = L"Hello world";
+          CORBA::WChar* wstring = CORBA::wstring_dup(L"Hello world");
 #else
-          CORBA::WChar const empty[] = { 0 };
-          CORBA::WChar const* wstring = empty;
+          CORBA::WChar empty[] = { 0 };
+          CORBA::WChar* wstring = CORBA::wstring_dup(empty);
 #endif
           if (ACE_OS::strcmp (wstring, ex.whatDidTheRightThing.in()) != 0)
             {

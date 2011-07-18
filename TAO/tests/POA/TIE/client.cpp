@@ -1,23 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *   This is a simple client implementation.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===========================================================================
+//
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is a simple client implementation.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//===========================================================================
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(TIE, client, "$Id$")
 
 static ACE_TCHAR *IOR[7] = { 0, 0, 0, 0, 0, 0, 0 };
 static int iterations = 1;

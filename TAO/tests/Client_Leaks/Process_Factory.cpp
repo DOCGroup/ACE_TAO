@@ -5,6 +5,8 @@
 #include "Startup_Callback.h"
 #include "ace/Process.h"
 
+ACE_RCSID(Client_Leaks, Process_Factory, "$Id$")
+
 Process_Factory::Process_Factory (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , shutdown_received_ (0)
@@ -64,7 +66,7 @@ Process_Factory::create_new_process (void)
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Process_Factory::create_new_process, "
                   " spawn call failed (%d)\n",
-                  ACE_ERRNO_GET));
+                  errno));
       throw Test::Spawn_Failed ();
     }
 

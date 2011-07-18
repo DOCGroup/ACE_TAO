@@ -22,12 +22,7 @@ $status = 0;
 $SV = $server->CreateProcess ("server", "-f $server_iorfile");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile -x");
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
+$SV->Spawn ();
 
 if ($server->WaitForFileTimed ($iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {

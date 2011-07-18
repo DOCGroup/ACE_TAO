@@ -1,6 +1,9 @@
-// $Id$
-
 #include "ServerRequestInterceptor.h"
+
+ACE_RCSID (LoadBalancing,
+           ServerRequestInterceptor,
+           "$Id$")
+
 
 ServerRequestInterceptor::ServerRequestInterceptor (void)
   : request_count_ (0)

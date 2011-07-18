@@ -29,6 +29,10 @@
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 #endif
 
+ACE_RCSID (Permanent_Forward,
+           StubTest,
+           "$Id$")
+
 static bool
 is_endpoint (TAO_Profile *profile, const char *host, unsigned short port)
   {

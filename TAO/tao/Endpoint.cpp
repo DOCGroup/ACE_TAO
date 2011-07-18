@@ -7,6 +7,10 @@
 #include "tao/Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (tao,
+           Endpoint,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Endpoint::~TAO_Endpoint (void)

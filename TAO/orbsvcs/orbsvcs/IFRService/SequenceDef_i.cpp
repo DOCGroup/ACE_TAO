@@ -7,9 +7,16 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
+
+ACE_RCSID (IFRService,
+           SequenceDef_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SequenceDef_i::TAO_SequenceDef_i (TAO_Repository_i *repo)
+TAO_SequenceDef_i::TAO_SequenceDef_i (
+    TAO_Repository_i *repo
+  )
   : TAO_IRObject_i (repo),
     TAO_IDLType_i (repo)
 {

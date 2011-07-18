@@ -35,7 +35,7 @@ Notify_Service_Shutdown_Functor::operator() (int which_signal)
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "shutting down on signal %d\n", which_signal));
-  (void) this->svc_.fini ();
+  (void) this->svc_.shutdown ();
 }
 
 // Driver function for the TAO Notify Service.

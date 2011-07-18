@@ -2,6 +2,8 @@
 
 #include "ace/OS_NS_time.h"
 
+ACE_RCSID(ace, OS_NS_time, "$Id$")
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_time.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -223,9 +225,28 @@ struct tm *
 ACE_OS::localtime_r (const time_t *t, struct tm *res)
 {
   ACE_OS_TRACE ("ACE_OS::localtime_r");
-#if defined (ACE_HAS_TR24731_2005_CRT)
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+# if defined (DIGITAL_UNIX)
+  ACE_OSCALL_RETURN (::_Plocaltime_r (t, res), struct tm *, 0);
+# else
+  ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
+# endif /* DIGITAL_UNIX */
+#elif defined (ACE_HAS_TR24731_2005_CRT)
   ACE_SECURECRTCALL (localtime_s (res, t), struct tm *, 0, res);
   return res;
+#elif !defined (ACE_HAS_WINCE)
+  ACE_OS_GUARD
+
+  ACE_UNUSED_ARG (res);
+  struct tm * res_ptr = 0;
+  ACE_OSCALL (::localtime (t), struct tm *, 0, res_ptr);
+  if (res_ptr == 0)
+    return 0;
+  else
+    {
+      *res = *res_ptr;
+      return res;
+    }
 #elif defined (ACE_HAS_WINCE)
   // This is really stupid, converting FILETIME to timeval back and
   // forth.  It assumes FILETIME and DWORDLONG are the same structure
@@ -275,22 +296,13 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
    res->tm_year = res->tm_year - 1900;
 
    return res;
-#elif defined (ACE_LACKS_LOCALTIME_R)
-  ACE_OS_GUARD
-
-  ACE_UNUSED_ARG (res);
-  struct tm * res_ptr = 0;
-  ACE_OSCALL (::localtime (t), struct tm *, 0, res_ptr);
-  if (res_ptr == 0)
-    return 0;
-  else
-    {
-      *res = *res_ptr;
-      return res;
-    }
 #else
-  ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
-#endif /* ACE_HAS_TR24731_2005_CRT */
+  // @@ Same as ACE_OS::localtime (), you need to implement it
+  //    yourself.
+  ACE_UNUSED_ARG (t);
+  ACE_UNUSED_ARG (res);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 time_t
@@ -307,7 +319,6 @@ ACE_OS::mktime (struct tm *t)
   t_sys.wMonth = t->tm_mon + 1;  // SYSTEMTIME is 1-indexed, tm is 0-indexed
   t_sys.wYear = t->tm_year + 1900; // SYSTEMTIME is real; tm is since 1900
   t_sys.wDayOfWeek = t->tm_wday;  // Ignored in below function call.
-  t_sys.wMilliseconds = 0;
   if (SystemTimeToFileTime (&t_sys, &t_file) == 0)
     return -1;
   ACE_Time_Value tv (t_file);
@@ -320,6 +331,28 @@ ACE_OS::mktime (struct tm *t)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::mktime (t), time_t, (time_t) -1);
 #   endif /* ACE_HAS_WINCE */
 }
+
+#if defined (ACE_HAS_POWERPC_TIMER) && defined (ghs)
+void
+ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
+{
+  ACE_OS_TRACE ("ACE_OS::readPPCTimeBase");
+
+  // This function can't be inline because it depends on the arguments
+  // being in particular registers (r3 and r4), in conformance with the
+  // EABI standard.  It would be nice if we knew how to put the variable
+  // names directly into the assembler instructions . . .
+  asm("aclock:");
+  asm("mftb  r5,TBU");
+  asm("mftb  r6,TBL");
+  asm("mftb  r7,TBU");
+  asm("cmpw  r5,r7");
+  asm("bne   aclock");
+
+  asm("stw r5, 0(r3)");
+  asm("stw r6, 0(r4)");
+}
+#endif /* ACE_HAS_POWERPC_TIMER && ghs */
 
 #if defined (ACE_LACKS_STRPTIME)
 char *

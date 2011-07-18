@@ -17,6 +17,10 @@
 #include "orbsvcs/Event/EC_ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (Event,
+           EC_ProxySupplier,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
@@ -49,7 +53,8 @@ TAO_EC_ProxyPushSupplier::connected (TAO_EC_ProxyPushConsumer* consumer)
   TAO_EC_Scheduling_Strategy *s =
     this->event_channel_->scheduling_strategy ();
 
-  s->add_proxy_supplier_dependencies (this, consumer);
+  s->add_proxy_supplier_dependencies (this,
+                                      consumer);
 }
 
 void
@@ -58,7 +63,8 @@ TAO_EC_ProxyPushSupplier::reconnected (TAO_EC_ProxyPushConsumer* consumer)
   TAO_EC_Scheduling_Strategy *s =
     this->event_channel_->scheduling_strategy ();
 
-  s->add_proxy_supplier_dependencies (this, consumer);
+  s->add_proxy_supplier_dependencies (this,
+                                      consumer);
 }
 
 void
@@ -140,7 +146,7 @@ TAO_EC_ProxyPushSupplier::deactivate (void) throw ()
   catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
-      // indicate that an object is being disconnected twice, or some
+      // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }

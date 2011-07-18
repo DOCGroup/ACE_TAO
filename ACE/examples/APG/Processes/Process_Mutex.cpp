@@ -11,12 +11,12 @@ class GResourceUser
 public:
   GResourceUser (ACE_Process_Mutex &mutex) : gmutex_(mutex)
   {
-    ACE_TRACE ("GResourceUser::GResourceUser");
+    ACE_TRACE (ACE_TEXT ("GResourceUser::GResourceUser"));
   }
 
   void run (void)
   {
-    ACE_TRACE ("GResourceUser::run");
+    ACE_TRACE (ACE_TEXT ("GResourceUser::run"));
 
     int count = 0;
     while (count++ < 10)

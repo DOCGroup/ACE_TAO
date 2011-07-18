@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
 $debug_level = '0';
@@ -14,60 +14,51 @@ $debug_level = '0';
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
-    }
+    } 
 }
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-# used in server
 $iorbaseA = "iorA.ior";
 $iorbaseB = "iorB.ior";
+$iorfileA = PerlACE::LocalFile ("$iorbaseA");
+$iorfileB = PerlACE::LocalFile ("$iorbaseB");
+unlink $iorfileA;
+unlink $iorfileB;
 
-my $server_iorfileA = $server->LocalFile ($iorbaseA);
-my $server_iorfileB = $server->LocalFile ($iorbaseB);
-my $client_iorfileA = $client->LocalFile ($iorbaseA);
-my $client_iorfileB = $client->LocalFile ($iorbaseB);
-$server->DeleteFile($iorbaseA);
-$server->DeleteFile($iorbaseB);
-$client->DeleteFile($iorbaseA);
-$client->DeleteFile($iorbaseB);
+my $class = (PerlACE::is_vxworks_test() ? 'PerlACE::ProcessVX' :
+                                          'PerlACE::Process');
+$SV = new $class ("server", "-ORBDebuglevel $debug_level");
 
-$SV = $server->CreateProcess ("server", "-ORBDebuglevel $debug_level  -a $server_iorfileA  -b $server_iorfileB");
+$CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
-$CL = $client->CreateProcess ("client", "-a file://$client_iorfileA -b file://$client_iorfileB");
+$server = $SV->Spawn ();
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbaseA,
-                        $server->ProcessStartWaitInterval ()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfileA>\n";
+if (PerlACE::waitforfile_timed ($iorfileA,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfileA>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-}
+} 
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+$client = $CL->SpawnWaitKill (300);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+$server = $SV->WaitKill (15);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbaseA);
-$server->DeleteFile($iorbaseB);
-$client->DeleteFile($iorbaseA);
-$client->DeleteFile($iorbaseB);
+unlink $iorfileA;
+unlink $iorfileB;
 
 exit $status;

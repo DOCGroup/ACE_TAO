@@ -20,7 +20,7 @@
 static TAO_Notify_Tests_StructuredPushSupplier* supplier_1 = 0;
 static int max_events = 2000;
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
+static const char* ior = "file://test_monitor.ior";
 
 // ******************************************************************
 // Subroutine Section
@@ -35,16 +35,12 @@ public:
 int
 Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:e:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
   {
-    case 'k':
-      ior = get_opts.optarg;
-      break;
-
     case 'e':
       max_events = ACE_OS::atoi (get_opts.optarg);
       break;
@@ -56,14 +52,13 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s "
-        "-k <ior> "
-        "-o <iorfile> -e <# of events> "
+        "-o <iorfile> -e <# of events> -d"
         "\n",
         argv [0]),
         -1);
   }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -152,7 +147,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             MonitorTestInterface::_narrow (object.in ());
 
           if (CORBA::is_nil (sig.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR, "Error: Structured Supplier: Narrow to MonitorTestInterface failed.\n"),1);
+            ACE_ERROR_RETURN ((LM_ERROR, "Error: Narrow failed.\n"),1);
+
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
             create_supplieradmin (ec.in ());
           if (!CORBA::is_nil (admin.in ()))
@@ -160,6 +156,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               create_suppliers (admin.in (), client.root_poa ());
 
               sig->running (MonitorTestInterface::Supplier);
+
               ACE_DEBUG ((LM_DEBUG,
                           "1 supplier sending %d events...\n", max_events));
               for (int i = 0; i < max_events; ++i)
@@ -169,7 +166,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
               ACE_DEBUG ((LM_DEBUG,
                           "\nSupplier sent %d events.\n", max_events));
+
               sig->finished (MonitorTestInterface::Supplier);
+
               supplier_1->disconnect ();
             }
         }

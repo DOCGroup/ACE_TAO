@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/RTCORBA/RT_ORB_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -13,12 +11,11 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Arg_Shifter.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (RTCORBA,
+           RT_ORB_Loader,
+           "$Id$")
 
-TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
-  : initialized_ (false)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
 {
@@ -29,24 +26,13 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_RT_ORB_Loader::init");
 
+  static bool initialized = false;
+
   // Only allow initialization once.
-  if (this->initialized_)
+  if (initialized)
     return 0;
 
-  this->initialized_ = true;
-
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
-
-  ACE_Service_Object * const rt_loader =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (
-      gestalt,
-      "RT_ORB_Loader",
-      true);
-
-  if (rt_loader != 0 && rt_loader != this)
-    {
-      return rt_loader->init (argc, argv);
-    }
+  initialized = true;
 
   // Set defaults.
   int priority_mapping_type =

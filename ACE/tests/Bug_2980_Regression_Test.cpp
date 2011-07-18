@@ -4,8 +4,6 @@
 #include <iostream>
 #include <assert.h>
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 #include "ace/config-lite.h"
 
@@ -67,23 +65,7 @@ void* loadDll(void*)
   PRINTF ("loadDll - entered\n");
 
 #if defined (CAN_RUN_TEST)
-
-  const char *subdir_env = getenv ("ACE_EXE_SUB_DIR");
-  if (subdir_env)
-    {
-      char *dllFile =
-        (char *) malloc (2 + strlen (subdir_env) + strlen (DllTestName));
-      strcpy (dllFile, subdir_env);
-      strcat (dllFile, "/");
-      strcat (dllFile, DllTestName);
-      dllHandle = dlopen (dllFile, RTLD_NOW);
-      free (dllFile);
-    }
-  else
-    {
-      dllHandle = dlopen (DllTestName, RTLD_NOW);
-    }
-
+  dllHandle = dlopen(DllTestName, RTLD_NOW);
   if (dllHandle == 0)
   {
     PRINTF ("unable to load library: %s\n", dlerror());

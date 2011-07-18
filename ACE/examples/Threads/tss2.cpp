@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    tss2.cpp
- *
- *  $Id$
- *
- *   This program tests various features of ACE_Thread and the
- *   thread-specific storage variant of <ACE_Singleton>.
- *
- *
- *  @author Prashant Jain and Doug Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    TSS_Test.cpp
+//
+// = DESCRIPTION
+//     This program tests various features of ACE_Thread and the
+//     thread-specific storage variant of <ACE_Singleton>.
+//
+// = AUTHOR
+//    Prashant Jain and Doug Schmidt
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/Thread.h"
@@ -22,7 +25,7 @@
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
 
-
+ACE_RCSID(Threads, tss2, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

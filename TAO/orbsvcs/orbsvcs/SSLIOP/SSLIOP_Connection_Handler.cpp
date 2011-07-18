@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Util.h"
@@ -19,6 +17,12 @@
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (SSLIOP,
+           SSLIOP_Connection_Handler,
+           "$Id$")
+
+// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,8 +91,6 @@ TAO::SSLIOP::Connection_Handler::open (void *)
     this->orb_core ()->orb_params ()->sock_rcvbuf_size ();
   protocol_properties.no_delay_ =
     this->orb_core ()->orb_params ()->nodelay ();
-  protocol_properties.keep_alive_ =
-    this->orb_core ()->orb_params ()->sock_keepalive ();
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
@@ -123,20 +125,6 @@ TAO::SSLIOP::Connection_Handler::open (void *)
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
-
-  //support ORBKeepalive in SSL mode
-  if (protocol_properties.keep_alive_)
-    {
-      if (this->peer ().
-          set_option (SOL_SOCKET,
-                      SO_KEEPALIVE,
-                      (void *) &protocol_properties.keep_alive_,
-                      sizeof (protocol_properties.keep_alive_)) == -1
-          && errno != ENOTSUP)
-        {
-          return -1;
-        }
-    }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
@@ -450,12 +438,6 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
   bool &setup_done)
 {
   this->current_->teardown (previous_current_impl, setup_done);
-}
-
-int
-TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance, ccm_stub {
+  after += dance_mocks, dummy_ccm_container
+  libs   += DAnCE_Mocks Dummy_CCM_Container
+  libpaths += $(ACE_ROOT)/prism/tests/DAnCE/ciao $(ACE_ROOT)/prism/tests/DAnCE/Mocks
+  includes += $(ACE_ROOT)/prism/tests/DAnCE $(ACE_ROOT)/prism/tests/DAnCE/Mocks
+}

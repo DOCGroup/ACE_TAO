@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_argument.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Argument
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_args.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Argument
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_argument.h"
 #include "be_visitor_context.h"
@@ -37,18 +43,19 @@
 #include "be_home.h"
 #include "be_operation.h"
 #include "be_helper.h"
-#include "be_extern.h"
-
 #include "utl_identifier.h"
-
 #include "nr_extern.h"
-
 #include "ace/Log_Msg.h"
 
 #include "be_visitor_argument/arglist.cpp"
 #include "be_visitor_argument/argument.cpp"
 #include "be_visitor_argument/marshal_ss.cpp"
+#include "be_visitor_argument/post_upcall_ss.cpp"
 #include "be_visitor_argument/upcall_ss.cpp"
 #include "be_visitor_argument/vardecl_ss.cpp"
 #include "be_visitor_argument/invoke_cs.cpp"
+#include "be_visitor_argument/paramlist.cpp"
 
+ACE_RCSID (be,
+           be_visitor_argument,
+           "$Id$")

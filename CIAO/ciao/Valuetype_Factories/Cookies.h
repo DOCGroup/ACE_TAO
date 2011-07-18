@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ccm/CCM_CookieC.h"
+
 #include "ace/Active_Map_Manager.h"
 
 namespace CIAO
@@ -31,8 +32,7 @@ namespace CIAO
    *  big enough to hold an address, even on a 64-bit machine.
    */
   class Cookie_Factory_Export Cookie_Impl
-    : public virtual OBV_Components::Cookie,
-      public virtual CORBA::DefaultValueRefCountBase
+    : public virtual OBV_Components::Cookie
   {
   public:
     Cookie_Impl (void);
@@ -42,7 +42,8 @@ namespace CIAO
     Cookie_Impl (ptrdiff_t const &key);
 
     /// Extract the @c CORBA::ULong
-    static bool extract (Components::Cookie const * const c, ptrdiff_t &key);
+    static bool extract (Components::Cookie const * const c,
+                         ptrdiff_t &key);
   };
 
   /**

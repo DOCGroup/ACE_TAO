@@ -1,33 +1,35 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   FactoryS_impl.h
- *
- *  $Id$
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/OBV/Factory
+//
+// = FILENAME
+//   FactoryS_impl.h
+//
+// = AUTHOR
+//   Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
 
 #ifndef TAO_FACTORY_S_IMPL_H
 #define TAO_FACTORY_S_IMPL_H
 
 #include "FactoryS.h"
 
-/**
- * @class Test_impl
- *
- * @brief Implementation of Test interface
- *
- * This interface is provided to produce valuetypes and test
- * marshaling
- */
 class Test_impl : public POA_OBV_FactoryTest::Test
 {
+  // = TITLE
+  //   Implementation of Test interface
+  //
+  // = DESCRIPTION
+  //   This interface is provided to produce valuetypes and test
+  //   marshaling
+  //
 public:
-  /// ctor
   Test_impl (CORBA::ORB_ptr orb);
+  // ctor
 
   virtual OBV_FactoryTest::BaseValue * get_base_value (void);
 
@@ -38,8 +40,8 @@ public:
   virtual void shutdown (void);
 
 private:
-  /// The ORB
   CORBA::ORB_var orb_;
+  // The ORB
 };
 
 #endif /* TAO_FACTORY_S_IMPL_H */

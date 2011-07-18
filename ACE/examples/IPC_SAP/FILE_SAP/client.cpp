@@ -8,7 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
-
+ACE_RCSID(FILE_SAP, client, "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -81,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_OS::printf ("read back :%s\n",
-                  ACE_TEXT_ALWAYS_CHAR (readback));
+                  readback);
 
   if (cli_file.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

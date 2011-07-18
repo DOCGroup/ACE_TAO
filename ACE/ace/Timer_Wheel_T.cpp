@@ -148,7 +148,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::open_i
 
   this->free_list_->resize (prealloc + this->spoke_count_);
 
-  this->wheel_time_.msec (1 << (this->res_bits_));
+  this->wheel_time_.msec (1 << (this->res_bits_ + this->spoke_bits_));
 
   ACE_NEW (this->spokes_, ACE_Timer_Node_T<TYPE>* [this->spoke_count_]);
 
@@ -834,7 +834,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
         {
           // Make sure that we skip past values that have already
           // "expired".
-          this->recompute_next_abs_interval_time (n, cur_time);
+          do
+            n->set_timer_value (n->get_timer_value () +
+                                n->get_interval ());
+          while (n->get_timer_value () <= cur_time);
 
           this->reschedule (n);
         }

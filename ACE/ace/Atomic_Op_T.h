@@ -220,12 +220,11 @@ public:
   ACE_Atomic_Op_Ex (ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> const &);
 
   /**
-   * Returns a reference to the underlying ACE_LOCK.  This makes it
+   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
-   * some cases if you instantiate the ACE_Atomic_Op_Ex with an
-   * ACE_Recursive_Mutex or ACE_Process_Mutex.
-   *
-   * @note The right name would be lock_, but HP/C++ will choke on that!
+   * some cases if you instantiate the <ACE_Atomic_Op_Ex> with an
+   * ACE_Recursive_Mutex or ACE_Process_Mutex.  @note the right
+   * name would be lock_, but HP/C++ will choke on that!
    */
   ACE_LOCK & mutex (void);
 
@@ -275,10 +274,10 @@ public:
   /// Manage copying...
   ACE_Atomic_Op (ACE_Atomic_Op<ACE_LOCK, TYPE> const & c);
 
-  /// Atomically assign @a rhs to @c value_.
+  /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op<ACE_LOCK, TYPE> & operator= (arg_type rhs);
 
-  /// Atomically assign @a rhs to @c value_.
+  /// Atomically assign <rhs> to @c value_.
   ACE_Atomic_Op<ACE_LOCK, TYPE> & operator= (
     ACE_Atomic_Op<ACE_LOCK, TYPE> const & rhs);
 
@@ -297,25 +296,25 @@ public:
   /// Atomically post-decrement @c value_.
   TYPE operator-- (int);
 
-  /// Atomically decrement @c value_ by @a rhs.
+  /// Atomically decrement @c value_ by rhs.
   TYPE operator-= (arg_type rhs);
 
-  /// Atomically compare @c value_ with @a rhs.
+  /// Atomically compare @c value_ with rhs.
   bool operator== (arg_type rhs) const;
 
-  /// Atomically compare @c value_ with @a rhs.
+  /// Atomically compare @c value_ with rhs.
   bool operator!= (arg_type rhs) const;
 
-  /// Atomically check if @c value_ greater than or equal to @a rhs.
+  /// Atomically check if @c value_ greater than or equal to rhs.
   bool operator>= (arg_type rhs) const;
 
-  /// Atomically check if @c value_ greater than @a rhs.
+  /// Atomically check if @c value_ greater than rhs.
   bool operator> (arg_type rhs) const;
 
-  /// Atomically check if @c value_ less than or equal to @a rhs.
+  /// Atomically check if @c value_ less than or equal to rhs.
   bool operator<= (arg_type rhs) const;
 
-  /// Atomically check if @c value_ less than @a rhs.
+  /// Atomically check if @c value_ less than rhs.
   bool operator< (arg_type rhs) const;
 
   /// Explicitly return @c value_.
@@ -323,6 +322,18 @@ public:
 
   /// Dump the state of an object.
   void dump (void) const;
+
+  /**
+   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
+   * possible to acquire the lock explicitly, which can be useful in
+   * some cases if you instantiate the ACE_Atomic_Op with an
+   * ACE_Recursive_Mutex or ACE_Process_Mutex.
+   *
+   * @deprecated This member function is deprecated and so may go away in
+   * the future. If you need access to the underlying mutex, consider
+   * using the ACE_Atomic_Op_Ex template instead.
+   */
+  ACE_LOCK & mutex (void);
 
   /**
    * Explicitly return @c value_ (by reference).  This gives the user

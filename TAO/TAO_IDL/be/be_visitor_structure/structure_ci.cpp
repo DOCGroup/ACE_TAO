@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Structure in the inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Structure in the inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           structure_ci,
+           "$Id$")
 
 // ******************************************************
 // for client inline

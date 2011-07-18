@@ -13,11 +13,10 @@
 #define NAVDISPLAY_EXEC_H
 
 #include "NavDisplayEC.h"
-#include "NavDisplay_exec_export.h"
+#include "NavDisplayGUI_exec_export.h"
 #include "ace/Synch.h"
 #include "tao/LocalObject.h"
 #include "NavUnit.h"
-#include <vector>
 
 class Worker;
 
@@ -28,9 +27,8 @@ namespace MyImpl
    *
    * RateGen executor implementation class.
    */
-
   class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl
-    : public virtual ::CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_Exec,
+    : public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -61,19 +59,13 @@ namespace MyImpl
 
     virtual void
     ccm_remove (void);
-
-    //attribute operations
-    virtual CORBA::Long number_of_GPS ();
-    virtual void number_of_GPS (CORBA::Long number_of_GPS);
-
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
     Worker *worker_;
-    CORBA::Long number_of_GPS_;
+    NavUnit unit_;
     UnitLocation loc_;
-    std::vector<NavUnit*> navunitarr;
-    TAO_SYNCH_RECURSIVE_MUTEX mutex_;
+    TAO_SYNCH_MUTEX mutex_;
   };
 
   /**

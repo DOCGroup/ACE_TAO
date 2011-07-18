@@ -10,6 +10,8 @@
 #include "ace/OS_Memory.h"
 #include "Options.h"
 
+ACE_RCSID(Peer, Options, "$Id$")
+
 // Static initialization.
 Options *Options::instance_ = 0;
 

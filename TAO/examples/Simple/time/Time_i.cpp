@@ -3,6 +3,8 @@
 #include "Time_i.h"
 #include "ace/OS_NS_time.h"
 
+ACE_RCSID(Time, Time_i, "$Id$")
+
 // Constructor
 Time_i::Time_i (void)
 {

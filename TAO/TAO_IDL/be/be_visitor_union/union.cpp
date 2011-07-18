@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union.cpp
- *
- *  $Id$
- *
- *  Generic visitor generating code for Unions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union.cpp
+//
+// = DESCRIPTION
+//    Generic visitor generating code for Unions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union, 
+           union, 
+           "$Id$")
 
 be_visitor_union::be_visitor_union (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -87,12 +96,24 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_union_branch_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_union_branch_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_union::"
                            "visit_union_branch - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -102,7 +123,7 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union::"
                          "visit_union_branch - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 
@@ -129,12 +150,6 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 
   be_union_branch* b =
     be_union_branch::narrow_from_decl (bd);
-
-  // Could be a type decl.
-  if (b == 0)
-    {
-      return 0;
-    }
 
   *os << be_nl;
 

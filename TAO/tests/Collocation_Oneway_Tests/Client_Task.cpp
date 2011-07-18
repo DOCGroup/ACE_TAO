@@ -7,6 +7,8 @@
 #include "Client_Task.h"
 #include "TestC.h"
 
+ACE_RCSID(Collocation_Oneway_Tests, Client_Task, "$Id$")
+
 Client_Task::Client_Task (const ACE_TCHAR *ior,
                           CORBA::ORB_ptr corb,
                           Client_Task::ClientSyncModeEnum syncMode,

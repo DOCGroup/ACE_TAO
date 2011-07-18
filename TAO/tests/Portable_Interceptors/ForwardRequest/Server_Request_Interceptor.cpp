@@ -1,10 +1,13 @@
 // -*- C++ -*-
-// $Id$
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (ForwardRequest,
+           Server_Request_Interceptor,
+           "$Id$")
 
 Server_Request_Interceptor::Server_Request_Interceptor (void)
   : request_count_ (0)
@@ -122,7 +125,7 @@ Server_Request_Interceptor::receive_request (
                   "SERVER (%P|%t) OBJ_NOT_EXIST exception thrown for request %d\n"
                   "SERVER (%P|%t) via receive_request().\n",
                   this->request_count_ - 2));
-
+      
       throw CORBA::OBJECT_NOT_EXIST (
         CORBA::SystemException::_tao_minor_code (
           TAO::VMCID,

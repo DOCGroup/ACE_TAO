@@ -44,7 +44,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -175,18 +175,18 @@ Manager::make_iors_register (void)
 {
   // First  server
   CORBA::Object_var object_primary =
-    this->orb_->string_to_object (first_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
 
   //Second server
   CORBA::Object_var object_secondary =
-    this->orb_->string_to_object (second_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
 
   if (third_ior == 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Here is the culprit\n"));
   // Third Server
   CORBA::Object_var object_tertiary =
-    this->orb_->string_to_object (third_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (third_ior));
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_ptr IORM =

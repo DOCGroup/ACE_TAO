@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode {
+project: ipv6, vc_warnings, build_files, test_files, svc_conf_files {
   staticflags += ACE_AS_STATIC_LIBS
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
@@ -19,34 +19,7 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
     libpaths -= $(ACE_ROOT)/lib
   }
 
-  specific(prop:microsoft) {
+  specific(vc7,vc71,vc8,vc9,vc10,nmake) {
     macro_for_lib_modifier=1
-  }
-
-  specific(cdt6) {
-    win32::platform_libs += ws2_32 mswsock netapi32
-    release::macros += ACE_NDEBUG ACE_USE_RCSID=0
-  }
-
-}
-
-feature(ace_inline) {
-  specific(cdt6,cdt7) {
-    macros += __ACE_INLINE__
-  }
-}
-
-feature(!ace_inline) {
-  specific(cdt6,cdt7) {
-    macros += ACE_NO_INLINE
-  }
-}
-
-feature(!threads) {
-  specific(cdt6,cdt7) {
-    macros += ACE_MT_SAFE=0
-    // and without threads we must remove support for AIO.
-    macros -= ACE_HAS_AIO_CALLS
-    platform_libs -= rt
   }
 }

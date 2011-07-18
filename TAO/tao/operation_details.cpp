@@ -7,13 +7,16 @@
 #include "tao/SystemException.h"
 #include "tao/Argument.h"
 #include "tao/CDR.h"
-#include "tao/debug.h"
 
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           operation_details,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,46 +62,29 @@ TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
 bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
-  try {
-    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-      {
+  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+    {
       if (!((*this->args_[i]).marshal (cdr)))
         return false;
-      }
-
-    // Nothing else to fragment.  We're also guaranteed to have
-    // data in the CDR stream since the operation was a marshaling
-    // operation, not a fragmentation operation.
-    cdr.more_fragments (false);
-#ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
-    cdr.reset_vt_indirect_maps ();
-#endif
     }
-  catch (...) {
-#ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
-    cdr.reset_vt_indirect_maps ();
-#endif
-    throw;
-  }
+
+  // Nothing else to fragment.  We're also guaranteed to have
+  // data in the CDR stream since the operation was a marshaling
+  // operation, not a fragmentation operation.
+  cdr.more_fragments (false);
+
   return true;
 }
 
 bool
 TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 {
-  try {
-    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-      {
-        if (!((*this->args_[i]).demarshal (cdr)))
-          return false;
-      }
+  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+    {
+      if (!((*this->args_[i]).demarshal (cdr)))
+        return false;
+    }
 
-    cdr.reset_vt_indirect_maps ();
-  }
-  catch (...) {
-    cdr.reset_vt_indirect_maps ();
-    throw;
-  }
   return true;
 }
 

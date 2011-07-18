@@ -70,9 +70,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL_FE_Export.h"
 #include "idl_global.h"
 
-// global_extern.h - Global data for the IDL compiler
+
+class AST_Decl;
+
+// global_extern.hh - Global data for the IDL compiler
 
 extern TAO_IDL_FE_Export IDL_GlobalData *idl_global;
-// Contains all "global" data for the frontend.
+// Contains all "global" data
+
+// Global functions for the IDL compiler
+
+// Return TRUE when the name of this AST_Decl can be reused in
+// a definition in this scope
+extern bool can_be_redefined (AST_Decl *);
 
 #endif           // _GLOBAL_EXTERN_GLOBAL_EXTERN_HH

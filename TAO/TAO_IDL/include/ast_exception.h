@@ -80,6 +80,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
+  AST_Exception (void);
+
   AST_Exception (UTL_ScopedName *n,
                  bool local,
                  bool abstract);
@@ -99,11 +101,19 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
+  
   // Cleanup.
   virtual void destroy (void);
 
-  static AST_Decl::NodeType const NT;
+private:
+  friend int tao_yyparse (void);
+
+  // Scope Management Protocol.
+  virtual AST_Field *fe_add_field (AST_Field *f);
+  virtual AST_Union *fe_add_union (AST_Union *u);
+  virtual AST_Structure *fe_add_structure (AST_Structure *s);
+  virtual AST_Enum *fe_add_enum (AST_Enum *e);
+  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 };
 
 #endif           // _AST_EXCEPTION_AST_EXCEPTION_HH

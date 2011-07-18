@@ -15,9 +15,7 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 my $goodiorbase = "good.ior";
 my $badiorbase = "bad.ior";
-my $svcconf = "multi_prot.conf";
 
-my $server_svcconf_file = $server->LocalFile ($svcconf);
 my $server_good_iorfile = $server->LocalFile ($goodiorbase);
 my $server_bad_iorfile = $server->LocalFile ($badiorbase);
 my $client_good_iorfile = $client->LocalFile ($goodiorbase);
@@ -30,7 +28,7 @@ $client->DeleteFile($badiorbase);
 
 $port = 12345;
 
-$sharedSV = $server->CreateProcess ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $server_good_iorfile -b $server_bad_iorfile -p $port -c $server_svcconf_file");
+$sharedSV = $server->CreateProcess ("server", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -g $server_good_iorfile -b $server_bad_iorfile -p $port");
 $goodCL = $client->CreateProcess ("client", "-k file://$client_good_iorfile");
 $badCL  = $client->CreateProcess ("client", "-b -k file://$client_bad_iorfile");
 

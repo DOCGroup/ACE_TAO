@@ -21,7 +21,6 @@ TestClient::TestClient (CORBA::ORB_ptr orb, int argc, ACE_TCHAR *argv[])
 , shutdownOrb_(false)
 , expectHolding_(false)
 , expectNoProfile_(false)
-, iorFile_(ACE_TEXT("imr_test.ior"))
 {
   parseCommands (argc, argv);
 }
@@ -32,7 +31,7 @@ TestClient::~TestClient()
 
 int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:t:i:r:x:e:z:k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:t:i:r:x:e:z:"));
   int c;
   while ((c = get_opts()) != -1)
   {
@@ -79,10 +78,6 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
 
     case 'z':
       pauseType_ = get_opts.opt_arg()[0];
-      break;
-
-    case 'k':
-      iorFile_ = get_opts.opt_arg();
       break;
 
     case '?':
@@ -142,9 +137,9 @@ void TestClient::run()
 // Warning: The file may contain many separate IORs separated by linefeeds.
 void TestClient::buildIORList()
 {
-  FILE* iorFile = ACE_OS::fopen (iorFile_, "r");
+  FILE* iorFile = ACE_OS::fopen ("imr_test.ior", "r");
   if ( iorFile == 0 )
-    ACE_ERROR ((LM_ERROR, "Fail to open %s\n", iorFile_));
+    ACE_ERROR ((LM_ERROR, "Fail to open imr_test.ior\n"));
 
   ACE_TString ior;
   while (getline(iorFile, ior) != EOF )
@@ -199,13 +194,13 @@ int TestClient::svc()
             // Calculate the number of requests
             int newReqCount (randomRequests_ == false ? requestCount_ :
             (int)((((double)ACE_OS::rand() / (double)RAND_MAX) * (double)(requestCount_ - 1)) + .5) + 1);
+            int serverInstance = 0;
             // For each request
             for (requestIter = 1; requestIter <= newReqCount;  requestIter++)
             {
               try
               {
-                ::CORBA::Long instance = test->send_message(threadNum, i, objIter, requestIter);
-                ACE_UNUSED_ARG (instance);
+                serverInstance = test->send_message(threadNum, i, objIter, requestIter);
               }
               catch (CORBA::SystemException& ex)
               {

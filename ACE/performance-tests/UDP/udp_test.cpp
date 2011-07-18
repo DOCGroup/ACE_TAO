@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    udp_test.cpp
- *
- *  $Id$
- *
- *  Measures UDP round-trip performance.
- *
- *
- *  @author Fred Kuhns and David L. Levine
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    performance-tests/UDP
+//
+// = FILENAME
+//    udp_test.cpp
+//
+// = DESCRIPTION
+//    Measures UDP round-trip performance.
+//
+// = AUTHORS
+//    Fred Kuhns and David L. Levine
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/Reactor.h"
@@ -30,6 +33,8 @@
 
 // FUZZ: disable check_for_math_include
 #include <math.h>
+
+ACE_RCSID(UDP, udp_test, "$Id$")
 
 // Global variables (evil).
 static const u_short DEFPORT = 5050;
@@ -98,27 +103,27 @@ public:
                             ACE_Reactor_Mask close_mask);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send the <buf> to the server.
   int send (const char *buf, size_t len);
+  // Send the <buf> to the server.
   //FUZZ: enable check_for_lack_ACE_OS
 
-  /// Wait for the response.
   int get_response (char *buf, size_t len);
+  // Wait for the response.
 
-  /// Send messages to server and record statistics.
   int run (void);
+  // Send messages to server and record statistics.
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send shutdown message to server.
   int shutdown (void);
+  // Send shutdown message to server.
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  /// To send messages and receive responses.
   ACE_SOCK_Dgram endpoint_;
+  // To send messages and receive responses.
 
-  /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
+  // The address to send messages to.
 
   ACE_UNIMPLEMENTED_FUNC (Client (void))
   ACE_UNIMPLEMENTED_FUNC (Client (const Client &))
@@ -434,7 +439,7 @@ Client::run (void)
       for (; *cmd; cmd++)
         ACE_OS::fprintf (sumfp,
                          "%s ",
-                         ACE_TEXT_ALWAYS_CHAR (*cmd));
+                         *cmd);
       ACE_OS::fprintf (sumfp,
                        "\n");
 
@@ -490,8 +495,8 @@ public:
                             ACE_Reactor_Mask close_mask);
 
 private:
-  /// Receives datagrams.
   ACE_SOCK_Dgram endpoint_;
+  // Receives datagrams.
 
   ACE_UNIMPLEMENTED_FUNC (Server (void))
   ACE_UNIMPLEMENTED_FUNC (Server (const Server &))

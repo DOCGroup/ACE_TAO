@@ -4,6 +4,11 @@
 #include "tao/debug.h"
 #include "ace/FoxReactor/FoxReactor.h"
 
+ACE_RCSID( TAO_FoxResource,
+           FoxResource_Factory,
+           "$Id$");
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

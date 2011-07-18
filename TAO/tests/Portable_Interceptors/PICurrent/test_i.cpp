@@ -1,7 +1,10 @@
 // -*- C++ -*-
-// $Id$
 
 #include "test_i.h"
+
+ACE_RCSID (PICurrent,
+           test_i,
+           "$Id$")
 
 test_i::test_i (PortableInterceptor::Current_ptr current,
                 PortableInterceptor::SlotId id,

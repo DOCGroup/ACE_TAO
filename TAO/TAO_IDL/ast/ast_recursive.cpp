@@ -84,6 +84,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
+ACE_RCSID (ast,
+           ast_recursive,
+           "$Id$")
+
 bool
 AST_illegal_interface_recursion (AST_Decl *t)
 {

@@ -1,21 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Based_Pointer_Test.cpp
- *
- *  $Id$
- *
- *  This test check the Based_Pointer and Based_Pointer_repository classes.
- *
- *
- *  @author Steve Williams  <steve@telxio>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Based_Pointer_Test.cpp
+//
+// = DESCRIPTION
+//    This test check the Based_Pointer and Based_Pointer_repository classes.
+//
+// = AUTHOR
+//    Steve Williams  <steve@telxio>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"
+#include "ace/OS.h"
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
@@ -24,8 +28,10 @@
 #include "ace/PI_Malloc.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Based_Pointer_T.h"
-#include "ace/SString.h"
-#include "ace/OS_NS_unistd.h"
+
+ACE_RCSID (tests,
+           Based_Pointer_Repository_Test,
+           "$Id$")
 
 class Foo
 {
@@ -84,23 +90,16 @@ int singleton_test (void)
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined(ACE_HAS_DYNAMIC_LINKING)
 
-    ACE_TString dll_file;
-    const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
-    if (subdir_env)
-      {
-        dll_file = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
-        dll_file += ACE_DIRECTORY_SEPARATOR_STR;
-      }
-
-    dll_file += OBJ_PREFIX ACE_TEXT ("Based_Pointer_Test_Lib") OBJ_SUFFIX;
+    ACE_DLL dll;
 
     // If DLL causes multiple instances of singleton
     // then the ACE_Cleanup object registered
     // with the ACE_Object_manager will no longer be valid,
     // at exit time if the library is unloaded. Override
     // the default close on destruct.
-    ACE_DLL dll;
-    int retval = dll.open (dll_file.c_str (),
+    int retval = dll.open (OBJ_PREFIX
+                           ACE_TEXT ("Based_Pointer_Test_Lib")
+                           OBJ_SUFFIX,
                            ACE_DEFAULT_SHLIB_MODE,
                            0);
 
@@ -138,7 +137,7 @@ int singleton_test (void)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("ACE_Based_Pointer_Repository is not a ")
-                           ACE_TEXT ("singleton in DLL <%@> <%@>\n"),
+                           ACE_TEXT ("singleton in DLL %@ %@\n"),
                            baddr_dll,
                            baddr1),
                           -1);

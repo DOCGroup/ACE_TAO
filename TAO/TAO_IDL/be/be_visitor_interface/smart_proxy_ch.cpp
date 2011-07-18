@@ -1,16 +1,26 @@
-//=============================================================================
-/**
- *  @file    smart_proxy_ch.cpp
- *
- *  $Id$
- *
- *  This provides code generation for smart proxy classes for an
- *  interface in the client header.
- *
- *
- *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
- */
-//=============================================================================
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    smart_proxy_ch.cpp
+//
+// = DESCRIPTION
+//    This provides code generation for smart proxy classes for an
+//    interface in the client header.
+//
+// = AUTHOR
+//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           smart_proxy_ch,
+           "$Id$")
 
 
 // ************************************************************
@@ -31,7 +41,7 @@ be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -42,8 +52,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "class " << be_global->stub_export_macro ()<< " "
       << "TAO_" << node->flat_name ()
@@ -61,7 +71,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "// flexibility of having a different smart proxy per object "<<be_nl
       <<"// instead of per interface."<<be_nl<< be_nl
       << "virtual ~TAO_" << node->flat_name ()
-      << "_Default_Proxy_Factory (void);" << be_nl_2
+      << "_Default_Proxy_Factory (void);" << be_nl << be_nl
       << "virtual "<< node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
       << node->local_name ()
@@ -75,12 +85,12 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "{" << be_nl
       << "public:" << be_idt_nl << be_nl
       << "friend class TAO_Singleton<TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl_2
+      << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
       << "void register_proxy_factory (" << be_idt << be_idt_nl
       << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
       << "bool one_shot_factory = true" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
-      << "void unregister_proxy_factory (void);" << be_nl_2
+      << "void unregister_proxy_factory (void);" << be_nl << be_nl
       << node->local_name ()
       << "_ptr create_proxy (" << be_idt << be_idt_nl
       << node->local_name () << "_ptr proxy" << be_uidt_nl
@@ -102,16 +112,16 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "TAO_SYNCH_RECURSIVE_MUTEX lock_;" << be_uidt_nl
       << "};";
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "typedef TAO_Singleton<TAO_"<<node->flat_name ()
       << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX> TAO_"
-      << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl_2;
+      << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 
   *os << "class " << be_global->stub_export_macro ()<< " "
       << "TAO_"<< node->flat_name ()
       << "_Smart_Proxy_Base" << be_idt_nl
       << ": public virtual "
-      << bt->nested_type_name (this->ctx_->scope ()->decl ());
+      << bt->nested_type_name (this->ctx_->scope ());
 
 
   if (node->n_inherits () > 0)

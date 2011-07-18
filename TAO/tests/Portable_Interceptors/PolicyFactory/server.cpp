@@ -1,11 +1,16 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Server_ORBInitializer.h"
+
 #include "tao/ORBInitializer_Registry.h"
 #include "testC.h"
+
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (PolicyFactory,
+           server,
+           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

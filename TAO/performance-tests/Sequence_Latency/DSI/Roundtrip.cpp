@@ -9,6 +9,8 @@
 #include "Roundtrip.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
+ACE_RCSID(DSI_Latency, Roundtrip, "$Id$")
+
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

@@ -70,18 +70,29 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of AST_Type) and a boolean indicating whether the attribute is
 // readonly.
 
+#include "ast_attribute.h"
+#include "ast_exception.h"
+#include "ast_visitor.h"
 #include "utl_namelist.h"
 #include "utl_exceptlist.h"
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "global_extern.h"
 
-#include "ast_attribute.h"
-#include "ast_exception.h"
-#include "ast_visitor.h"
+ACE_RCSID (ast,
+           ast_attribute,
+           "$Id$")
 
-AST_Decl::NodeType const
-AST_Attribute::NT = AST_Decl::NT_attr;
+// Constructor(s) and destructor.
+AST_Attribute::AST_Attribute (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    pd_readonly (true),
+    pd_get_exceptions (0),
+    pd_set_exceptions (0)
+{
+}
 
 AST_Attribute::AST_Attribute (bool ro,
                               AST_Type *ft,
@@ -111,11 +122,9 @@ AST_Attribute::~AST_Attribute (void)
 void
 AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, (this->pd_readonly == true
-                    ? "readonly attribute "
-                    : "attribute "));
-
-  this->AST_Field::dump (o);
+  this->dump_i (o, (this->pd_readonly == true ?
+                    "readonly attribute " : "attribute "));
+  AST_Field::dump (o);
 }
 
 int
@@ -137,7 +146,7 @@ AST_Attribute::destroy (void)
       this->pd_get_exceptions->destroy ();
       this->pd_get_exceptions = 0;
     }
-
+  
   if (this->pd_set_exceptions != 0)
     {
       this->pd_set_exceptions->destroy ();
@@ -205,48 +214,48 @@ UTL_NameList *
 AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 {
   UTL_ScopedName *nl_n = 0;
-  AST_Type *fe = 0;
+  AST_Exception *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_get_exceptions = 0;
 
-  for (UTL_NamelistActiveIterator nl_i (t);
-       !nl_i.is_done ();
-       nl_i.next ())
+  for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
       nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n, true);
+      d = this->defined_in ()->lookup_by_name (nl_n,
+                                               true);
 
-      if (d == 0)
+      if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      fe = AST_Exception::narrow_from_decl (d);
 
-      if (nt != AST_Decl::NT_except
-          && nt != AST_Decl::NT_param_holder)
+      if (fe == 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                      this);
+                                       this);
           return 0;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
-
-      UTL_ExceptList *el = 0;
-      ACE_NEW_RETURN (el,
-                      UTL_ExceptList (fe, 0),
-                      0);
-
       if (this->pd_get_exceptions == 0)
         {
-          this->pd_get_exceptions = el;
+          ACE_NEW_RETURN (this->pd_get_exceptions,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
         }
       else
         {
+          UTL_ExceptList *el = 0;
+          ACE_NEW_RETURN (el,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
+
           this->pd_get_exceptions->nconc (el);
         }
     }
@@ -260,7 +269,7 @@ UTL_NameList *
 AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 {
   UTL_ScopedName *nl_n = 0;
-  AST_Type *fe = 0;
+  AST_Exception *fe = 0;
   AST_Decl *d = 0;
 
   this->pd_set_exceptions = 0;
@@ -269,42 +278,46 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
     {
       nl_n = nl_i.item ();
 
-      d = this->defined_in ()->lookup_by_name (nl_n, true);
+      d = this->defined_in ()->lookup_by_name (nl_n,
+                                               true);
 
-      if (d == 0)
+      if (d == 0 || d->node_type() != AST_Decl::NT_except)
         {
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      fe = AST_Exception::narrow_from_decl (d);
 
-      if (nt != AST_Decl::NT_except
-          && nt != AST_Decl::NT_param_holder)
+      if (fe == 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
-                                      this);
+                                       this);
           return 0;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
-
-      UTL_ExceptList *el = 0;
-      ACE_NEW_RETURN (el,
-                      UTL_ExceptList (fe, 0),
-                      0);
-
       if (this->pd_set_exceptions == 0)
         {
-          this->pd_set_exceptions = el;
+          ACE_NEW_RETURN (this->pd_set_exceptions,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
         }
       else
         {
+          UTL_ExceptList *el = 0;
+          ACE_NEW_RETURN (el,
+                          UTL_ExceptList (fe,
+                                          0),
+                          0);
+
           this->pd_set_exceptions->nconc (el);
         }
     }
 
   return t;
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Attribute)

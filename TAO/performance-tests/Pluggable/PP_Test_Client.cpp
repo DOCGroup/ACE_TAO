@@ -13,6 +13,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
   static const char *PP_Test_Client_Timeprobe_Description[] =

@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  IIOP implementation of PP Framework Endpoint interface.
+    IIOP implementation of PP Framework Endpoint interface.
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
@@ -34,7 +34,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Connection_Handler;
-class TAO_IIOP_Profile;
 
 /**
  * @class TAO_IIOP_Endpoint
@@ -130,7 +129,7 @@ public:
   /// ownership of this string.
   const char *host (void) const;
 
-  /// Copy the string @a h into <host_> and return the resulting pointer.
+  /// Copy the string <h> into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
@@ -176,20 +175,16 @@ private:
 
   /// Generate preferred interfaces from the options passed in by the
   /// user.
-  CORBA::ULong preferred_interfaces (const char *csvPreferred,
-                                     bool enforce,
-                                     TAO_IIOP_Profile &profile);
+  CORBA::ULong preferred_interfaces (const char* csvPreferred, bool enforce);
 
   /// Chain a new duplicate of ourself with the specified
   /// local preferred interface.
-  TAO_IIOP_Endpoint *add_local_endpoint (TAO_IIOP_Endpoint *ep,
-                                         const char *local,
-                                         TAO_IIOP_Profile &profile);
+  TAO_IIOP_Endpoint* add_local_endpoint(TAO_IIOP_Endpoint* ep, const char* local);
 
   /// Canonical copy constructor
   /**
    * In private section to prevent clients from invoking this
-   * accidentally. Clients should only use duplicate () to make a deep
+   * accidentally. Clients should only use duplicate () to make a depp
    * copy
    */
   TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &);

@@ -1,29 +1,43 @@
 //$Id$
 
-#ifndef SENDER_IDL
-#define SENDER_IDL
+#ifndef CIAO_SENDER_IDL
+#define CIAO_SENDER_IDL
 
 
 #include "../Hello_Base/Hello_Base.idl"
-#include "tao/StringSeq.pidl"
 
 module Hello
 {
   /* This is a Sender specific interface which will be used to get the
    * process start.
    */
-
+  
   interface trigger
   {
     void start ();
   };
 
+  enum COLOR_SELECTION 
+    {
+      empty,
+      white, 
+      red, 
+      yellow
+    };
+
   component Sender supports trigger
   {
     provides ReadMessage push_message;
     publishes TimeOut click_out;
-
     attribute string local_message;
+    readonly attribute long hertz;
+
+    // A test attribute to test setting attributes through XML
+    attribute COLOR_SELECTION color;
+  };
+
+  home SenderHome manages Sender
+  {
   };
 };
-#endif /*SENDER_IDL*/
+#endif /*CIAO_SENDER_IDL*/

@@ -74,7 +74,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__SARG_TRAITS_SS_)
 #define _CORBA_POLICY__SARG_TRAITS_SS_
-/*
+
   template<>
   class  SArg_Traits<CORBA::Policy>
     : public
@@ -82,13 +82,41 @@ namespace TAO
             CORBA::Policy_ptr,
             CORBA::Policy_var,
             CORBA::Policy_out,
-            TAO::Any_Insert_Policy_Stream
+            TAO::Any_Insert_Policy_Stream <CORBA::Policy_ptr>
           >
   {
   };
-  */
+
 #endif /* end #if !defined */
 }
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_arg_traits.cpp:69
+
+// Arg traits specializations.
+namespace TAO
+{
+
+#if !defined (_CORBA_POLICY__ARG_TRAITS_SS_)
+#define _CORBA_POLICY__ARG_TRAITS_SS_
+
+  template<>
+  class  Arg_Traits<CORBA::Policy>
+    : public
+        Object_Arg_Traits_T<
+            CORBA::Policy_ptr,
+            CORBA::Policy_var,
+            CORBA::Policy_out,
+            TAO::Objref_Traits<CORBA::Policy>,
+            TAO::Any_Insert_Policy_Stream <CORBA::Policy_ptr>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
+}
+
 
 // TAO_IDL - Generated from
 // be\be_interface.cpp:1455

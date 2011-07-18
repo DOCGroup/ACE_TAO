@@ -29,6 +29,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID (Naming,
+           Naming_Server,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Server::TAO_Naming_Server (void)
@@ -324,11 +328,13 @@ TAO_Naming_Server::init_with_orb (int argc,
       PortableServer::POAManager_var poa_manager =
         this->root_poa_->the_POAManager ();
 
+      poa_manager->activate ();
+
 #if defined (CORBA_E_MICRO)
       this->ns_poa_ = PortableServer::POA::_duplicate (this->root_poa_);
 #else
       int numPolicies = 2;
-# if (TAO_HAS_MINIMUM_POA == 0)
+#if (TAO_HAS_MINIMUM_POA == 0)
       if (this->use_storable_context_)
         {
           this->use_servant_activator_ = true;
@@ -337,7 +343,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       if (this->use_servant_activator_) {
         numPolicies += 2;
       }
-# endif /* TAO_HAS_MINIMUM_POA */
+#endif /* TAO_HAS_MINIMUM_POA */
 
       CORBA::PolicyList policies (numPolicies);
       policies.length (numPolicies);
@@ -350,7 +356,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       policies[1] =
         this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
-# if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       if (this->use_servant_activator_)
         {
           // Request Processing Policy
@@ -361,7 +367,7 @@ TAO_Naming_Server::init_with_orb (int argc,
           policies[3] =
             this->root_poa_->create_servant_retention_policy (PortableServer::RETAIN);
         }
-# endif /* TAO_HAS_MINIMUM_POA */
+#endif /* TAO_HAS_MINIMUM_POA */
 
       // We use a different POA, otherwise the user would have to change
       // the object key each time it invokes the server.
@@ -380,8 +386,6 @@ TAO_Naming_Server::init_with_orb (int argc,
           policy->destroy ();
         }
 #endif /* CORBA_E_MICRO */
-
-      poa_manager->activate ();
 
 #if defined (CORBA_E_MICRO)
       result = this->init (orb,
@@ -427,7 +431,7 @@ TAO_Naming_Server::init_with_orb (int argc,
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
                              this->ior_file_name_,
-                             ACE_ERRNO_GET,
+                             errno,
                              ACE_TEXT("TAO_Naming_Server::init_with_orb")),
                             -1);
         }
@@ -708,21 +712,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::fini (void)
 {
-  // First get rid of the multi cast handler
-  if (this->ior_multicast_)
-    {
-      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
-         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
-      delete this->ior_multicast_;
-      this->ior_multicast_ = 0;
-    }
-
   // Destroy the child POA ns_poa that is created when initializing
   // the Naming Service
   try
     {
-      if (!CORBA::is_nil (this->ns_poa_.in ()))
-        this->ns_poa_->destroy (1, 1);
+      this->ns_poa_->destroy (1, 1);
 
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable");
@@ -753,6 +747,13 @@ TAO_Naming_Server::fini (void)
   ns_poa_ = PortableServer::POA::_nil ();
   root_poa_ = PortableServer::POA::_nil ();
   orb_ = CORBA::ORB::_nil ();
+
+  if (this->ior_multicast_ != 0)
+    {
+      orb_->orb_core()->reactor ()->remove_handler (this->ior_multicast_,
+         ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      delete this->ior_multicast_;
+    }
 
 #if !defined (CORBA_E_MICRO)
   delete this->context_index_;

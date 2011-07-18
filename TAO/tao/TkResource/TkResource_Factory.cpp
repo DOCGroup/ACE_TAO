@@ -4,6 +4,11 @@
 #include "tao/debug.h"
 #include "ace/TkReactor/TkReactor.h"
 
+ACE_RCSID( TAO_TkResource,
+           TkResource_Factory,
+           "$Id$");
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

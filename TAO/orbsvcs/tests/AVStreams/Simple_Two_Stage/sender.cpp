@@ -190,7 +190,7 @@ Sender::init (int argc,
   // Open file to read.
   this->input_file_ =
     ACE_OS::fopen (this->filename_.c_str (),
-                   "rb");
+                   "r");
 
   if (this->input_file_ == 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
@@ -332,9 +332,9 @@ Sender::pace_data (void)
             {
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,"End of file\n"));
+                ACE_DEBUG ((LM_DEBUG,"End of file - Rewinding\n"));
 
-              // ACE_OS::rewind (this->input_file_);
+              ACE_OS::rewind (this->input_file_);
             }
 
           this->mb_.wr_ptr (n);

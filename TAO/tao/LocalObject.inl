@@ -42,4 +42,11 @@ CORBA::LocalObject::LocalObject (void)
 {
 }
 
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+ACE_INLINE
+TAO_Local_RefCounted_Object::TAO_Local_RefCounted_Object (void)
+{
+}
+#endif
+
 TAO_END_VERSIONED_NAMESPACE_DECL

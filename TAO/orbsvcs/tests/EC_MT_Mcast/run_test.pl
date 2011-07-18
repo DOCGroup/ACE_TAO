@@ -1,63 +1,53 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+$svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
 
-my $test1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $test2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $svc_conf = "svc$PerlACE::svcconf_ext";
-my $test1_svc_conf = $test1->LocalFile ($svc_conf);
-my $test2_svc_conf = $test2->LocalFile ($svc_conf);
-
-my $mcast_address = (int(rand(16)) + 224) . '.' . int(rand(256)) . '.' .
-                     int(rand(256)) . '.' . int(rand(256)) . ':' .
-                    (10001 + $test1->RandomPort());
+$mcast_address = (int(rand(16)) + 224) . '.' . int(rand(256)) . '.' .
+                 int(rand(256)) . '.' . int(rand(256)) . ':' .
+                 (10001 + PerlACE::uniqueid());
 
 # Run two copies of the same test...
-$T1 = $test1->CreateProcess ("MCast", "-m $mcast_address -ORBSvcConf $test1_svc_conf");
-$T2 = $test2->CreateProcess ("MCast", "-m $mcast_address -ORBSvcConf $test2_svc_conf");
+$T1 = new PerlACE::Process ("MCast",
+                            "-m $mcast_address -ORBSvcConf $svc_conf");
+$T2 = new PerlACE::Process ("MCast",
+                            "-m $mcast_address -ORBSvcConf $svc_conf");
 
-$test_status = $T1->Spawn ();
+$sp1 = $T1->Spawn ();
 
-if ($test_status != 0) {
-    print STDERR "ERROR: could not spawn MCast 1, returned $test_status\n";
+if ($sp1 != 0) {
+    print STDERR "ERROR: could not spawn MCast, returned $sp1\n";
     exit 1;
 }
 
-$test_status = $T2->Spawn ();
+@sp2 = $T2->Spawn ();
 
-if ($test_status != 0) {
-    print STDERR "ERROR: could not spawn MCast 2, returned $test_status\n";
+if ($sp2 != 0) {
+    print STDERR "ERROR: could not spawn MCast, returned $sp2\n";
     $T1->Kill ();
     exit 1;
 }
 
-$test_status = $T1->WaitKill ($test1->ProcessStopWaitInterval() + 285);
+$test1 = $T1->WaitKill (300);
 
-if ($test_status != 0) {
-    print STDERR "ERROR: test 1 returned $test_status\n";
+if ($test1 != 0) {
+    print STDERR "ERROR: test 1 returned $test1\n";
     $status = 1;
 }
 
-$test_status = $T2->WaitKill ($test2->ProcessStopWaitInterval() + 285);
+$test2 = $T2->WaitKill (30);
 
-if ($test_status != 0) {
-    print STDERR "ERROR: test 2 returned $test_status\n";
+if ($test2 != 0) {
+    print STDERR "ERROR: test 2 returned $test2\n";
     $status = 1;
 }
 

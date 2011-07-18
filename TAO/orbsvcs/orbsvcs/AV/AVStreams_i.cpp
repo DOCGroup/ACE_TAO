@@ -1,3 +1,4 @@
+
 //=============================================================================
 /**
  *  @file   AVStreams_i.cpp
@@ -22,6 +23,10 @@
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (AV,
+           AVStreams_i,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -103,18 +108,10 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
             }
         }
     }
-  catch (const AVStreams::noSuchFlow&)
-    {
-      throw;
-    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_Basic_StreamCtrl::stop");
-      throw;
-    }
-  catch(...)
-    {
-      printf ("TAO_Basic_StreamCtrl::stop - unknown exception\n");
+      return;
     }
 }
 
@@ -154,18 +151,10 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
             }
         }
     }
-  catch (const AVStreams::noSuchFlow&)
-    {
-      throw;
-    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_Basic_StreamCtrl::start");
-      throw;
-    }
-  catch(...)
-    {
-      printf ("TAO_Basic_StreamCtrl::start - unknown exception\n");
+      return;
     }
 }
 
@@ -446,18 +435,10 @@ TAO_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec)
           entry->int_id_.sep_->stop (flow_spec);
         }
     }
-  catch (const AVStreams::noSuchFlow&)
-    {
-      throw;
-    }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("TAO_StreamCtrl::stop");
-      throw;
-    }
-  catch(...)
-    {
-      printf ("TAO_StreamCtrl::stop - unknow exception\n");
+      ex._tao_print_exception ("TAO_Basic_StreamCtrl::stop");
+      return;
     }
 }
 
@@ -484,18 +465,10 @@ TAO_StreamCtrl::start (const AVStreams::flowSpec &flow_spec)
           entry->int_id_.sep_->start (flow_spec);
         }
     }
-  catch (const AVStreams::noSuchFlow&)
-    {
-      throw;
-    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_StreamCtrl::start");
-      throw;
-    }
-  catch(...)
-    {
-      printf ("TAO_StreamCtrl::start - unknow exception\n");
+      return;
     }
 }
 
@@ -2109,7 +2082,7 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (the_flows [i]);
       ACE_CString flow_name_key (entry.flowname ());
-      Flow_Handler_Map_Entry *handler_entry = 0;
+      Flow_Handler_Map_Entry *handler_entry;
       if (this->flow_handler_map_.find (flow_name_key,
                                         handler_entry) == 0)
         {
@@ -2300,7 +2273,6 @@ TAO_StreamEndPoint::remove_fep (const char *flow_name)
         throw AVStreams::streamOpFailed ();
       // redefine the "Flows" property
       AVStreams::flowSpec new_flows (this->flows_.length ());
-      new_flows.length(this->flows_.length ());
       for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
         if (ACE_OS::strcmp (flow_name, this->flows_[i]) != 0)
           new_flows[j++] = this->flows_[i];
@@ -3395,18 +3367,10 @@ TAO_FlowConnection::stop (void)
           (*consumer_begin)->stop ();
         }
     }
-  catch (const AVStreams::noSuchFlow&)
-    {
-      throw;
-    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_FlowConnection::stop");
-      throw;
-    }
-  catch(...)
-    {
-      printf ("TAO_FlowConnection::stop - unknown exception\n");
+      return;
     }
 }
 
@@ -3433,18 +3397,10 @@ TAO_FlowConnection::start (void)
           (*producer_begin)->start ();
         }
     }
-  catch (const AVStreams::noSuchFlow&)
-    {
-      throw;
-    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("TAO_FlowConnection::start");
-      throw;
-    }
-  catch(...)
-    {
-      printf ("TAO_FlowConnection::start - unknown exception\n");
+      return;
     }
 }
 
@@ -3667,8 +3623,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
 
               ACE_TCHAR buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
-              ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (),
-                               ACE_TEXT_ALWAYS_CHAR (buf));
+              ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (), buf);
             }
           else
             {
@@ -4153,7 +4108,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
       break;
     }
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-  AVStreams::protocolSpec *temp_protocols = 0;
+  AVStreams::protocolSpec *temp_protocols;
   CORBA::Any_var AvailableProtocols_ptr =
     peer_fep->get_property_value ("AvailableProtocols");
   AvailableProtocols_ptr.in () >>= temp_protocols;

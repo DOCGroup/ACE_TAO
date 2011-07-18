@@ -81,22 +81,26 @@ class AST_Union;
 class TAO_IDL_FE_Export AST_UnionBranch : public virtual AST_Field
 {
 public:
+  // Operations.
+
+  // Constructor(s) and destructor.
+  AST_UnionBranch (void);
+
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);
 
   virtual ~AST_UnionBranch (void);
 
-  UTL_LabelList *labels (void) const;
-
+  // Data Accessors.
   AST_UnionLabel *label (unsigned long index = 0);
 
   unsigned long label_list_length (void);
-
-  // Called if our labels are enum values - adds them to the
+  
+  // Called if our labels are enum values - adds them the
   // enclosing scope's name_referenced list.
   void add_labels (AST_Union *u);
-
+  
   // Integer literals create a ulonglong AST_Expression. If
   // our union's discriminator type is some other kind of
   // integer, and we have more than one label, only the first
@@ -113,15 +117,15 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
+  
   // Cleanup.
   virtual void destroy (void);
 
-  static AST_Decl::NodeType const NT;
-
 private:
-  // list of labels.
+  // Data.
+
   UTL_LabelList *pd_ll;
+  // list of labels.
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

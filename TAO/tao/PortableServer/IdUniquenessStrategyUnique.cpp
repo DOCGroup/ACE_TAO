@@ -3,6 +3,11 @@
 #include "tao/PortableServer/IdUniquenessStrategyUnique.h"
 #include "tao/PortableServer/Root_POA.h"
 
+ACE_RCSID (PortableServer,
+           Id_Uniqueness_Strategy,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

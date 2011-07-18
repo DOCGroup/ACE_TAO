@@ -9,6 +9,7 @@
 #define TAO_PERF_RTEC_LOOPBACK_CONSUMER_H
 
 #include "Loopback_Supplier.h"
+#include "tao/Utils/Servant_Var.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
@@ -58,7 +59,7 @@ private:
   CORBA::Long event_type_;
 
   /// The supplier used to close the loopback
-  PortableServer::Servant_var<Loopback_Supplier> supplier_;
+  TAO::Utils::Servant_Var<Loopback_Supplier> supplier_;
 
   /// The proxy this object is connected to
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

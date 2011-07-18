@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 /*
 
@@ -91,6 +91,11 @@ public:
       vis_PRIVATE
     };
 
+  // Operations.
+
+  // Constructor(s).
+  AST_Field (void);
+
   AST_Field (AST_Type *field_type,
              UTL_ScopedName *n,
              Visibility vis = vis_NA);
@@ -104,11 +109,12 @@ public:
 
   // Data Accessors.
   AST_Type *field_type (void) const;
-  Visibility visibility (void) const;
+
+  Visibility visibility (void);
 
   // Are we or do we contain a wstring?
   virtual int contains_wstring (void);
-
+  
   // Determine this bit of state after we have
   // be added to our aggregate type and before
   // we are destroyed.
@@ -116,29 +122,27 @@ public:
 
   // Narrowing.
 
-  DEF_NARROW_FROM_DECL (AST_Field);
+  DEF_NARROW_FROM_DECL(AST_Field);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
+  
   // Cleanup.
   virtual void destroy (void);
 
-  static AST_Decl::NodeType const NT;
-
-protected:
+private:
   // Data.
 
-  AST_Type *ref_type_;
+  AST_Type *pd_field_type;
   // Base type for field.
 
-  Visibility visibility_;
+  Visibility pd_visibility;
   // Used with valuetype and eventtype fields.
-
-  bool owns_base_type_;
+  
+  bool anonymous_type_;
   // If our field type is anonymous array or sequence, we're
   // responsible for destroying it.
 };

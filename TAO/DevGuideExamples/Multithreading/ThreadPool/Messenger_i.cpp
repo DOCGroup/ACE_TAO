@@ -34,6 +34,6 @@ CORBA::Boolean Messenger_i::send_message (
   std::ostringstream ostr;
   ostr << "Message handled on thread " << ACE_Thread::self();
   message = CORBA::string_dup(ostr.str().c_str());
-  return true;
+  return 1;
 }
 

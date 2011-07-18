@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/iosfwd.h"
   /* Basic_Types.h are needed in QNX for size_t type. */
 #include "ace/Basic_Types.h"
-#include "ace/SStringfwd.h"
 
 class TAO_IDL_FE_Export UTL_String
 {
@@ -83,19 +82,16 @@ class TAO_IDL_FE_Export UTL_String
 public:
   UTL_String (void);
 
-  UTL_String (const char *str, bool take_copy= false);
+  UTL_String (const char *str);
 
-  UTL_String (UTL_String *s, bool force_copy= false);
+  UTL_String (UTL_String *s);
 
   virtual ~UTL_String (void);
-
-  virtual void destroy (void);
-  // Cleanup function.
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  char *get_string (void) {return this->p_str;}
+  char *get_string (void);
   // Get contents of utl_string.
 
   char *get_canonical_rep (void);
@@ -108,37 +104,22 @@ public:
   bool compare_quiet (UTL_String *s);
   // Like the above but without error or warning message output.
 
-  static bool strcmp_caseless (
-    const char *lhs,
-    const char *rhs,
-    bool &mixed_case);
-  // Caseless string compare returns true if match, mixed_case is
-  // true if match only true due to ignoring case differences.
-
-  static bool compare (const char *lhs, const char *rhs);
-  // Compare two const char * (like the UTL_String compare)
-
-  static bool compare_quiet (const char *lhs, const char *rhs);
-  // Like the above but without error or warning message output.
-
-  static void get_canonical_rep (const char *src, char *dest);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-  static void get_canonical_rep (ACE_CString &cstr);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
+  virtual void destroy (void);
+  // Cleanup function.
 
 private:
   // Data
-  bool copy_taken;
-  // If delete needs to be called on destroy/delete
-
   char *p_str;
   // Storage for characters.
 
   char *c_str;
-  // Storage for canonicalized string.
+  // Canonicalized string
+
+  size_t len;
+  // How long is string.
+
+  void canonicalize (void);
+  // Compute canonical representation.
 };
 
 #endif           // _STRING_STRING_HH

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "orbsvcs/LoadBalancing/LB_Random.h"
 
@@ -7,9 +6,13 @@
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
 
-#ifdef ACE_HAS_PTHREADS
+ACE_RCSID (LoadBalancing,
+           LB_Random,
+           "$Id$")
+
+#ifdef ACE_HAS_PTHREADS_STD
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
-#endif  /* ACE_HAS_PTHREADS */
+#endif  /* ACE_HAS_PTHREADS_STD */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -141,12 +144,12 @@ TAO_LB_Random::_tao_next_member (
 void
 TAO_LB_Random::init (void)
 {
-#ifdef ACE_HAS_PTHREADS
+#ifdef ACE_HAS_PTHREADS_STD
   (void) ::pthread_once (&::tao_lb_once_control,
                          ::tao_lb_random_init_routine);
 #else
   ::tao_lb_random_init_routine ();
-#endif  /* ACE_HAS_PTHREADS */
+#endif  /* ACE_HAS_PTHREADS_STD */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -5,6 +5,8 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID (UNKNOWN_Exception, server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 static int done = 0;
 
@@ -248,10 +250,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ASSERT (outstanding_requests == 0);
 
           orb->perform_work ();
-
-          // On some systems this loop must yield or else the other threads
-          // will not get a chance to run.
-          ACE_OS::thr_yield ();
         }
     }
   catch (...)

@@ -14,6 +14,12 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
+
+ACE_RCSID (Reliable,
+           client,
+           "$Id$")
+
+
 #define USING_TIMERS
 //#define USING_QUANTIFY
 
@@ -356,7 +362,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                        argv [0]),
                       -1);
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

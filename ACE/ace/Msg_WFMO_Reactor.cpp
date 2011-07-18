@@ -2,7 +2,7 @@
 
 #include "ace/Msg_WFMO_Reactor.h"
 
-
+ACE_RCSID(ace, Msg_WFMO_Reactor, "$Id$")
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 

@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    public_reset_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Union Branch in the client inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    public_reset_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Union Branch in the client inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_union_branch,
+           public_reset_cs,
+           "$Id$")
 
 // *****************************************************
 //  visitor for union_branch in the client
@@ -84,10 +94,10 @@ int
 be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+    this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -98,7 +108,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
       bt = node;
     }
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -154,11 +164,11 @@ int
 be_visitor_union_branch_public_reset_cs::visit_enum (be_enum *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -177,11 +187,11 @@ int
 be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -205,11 +215,11 @@ int
 be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -230,15 +240,14 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_valuebox (
-  be_valuebox *)
+be_visitor_union_branch_public_reset_cs::visit_valuebox (be_valuebox *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -259,15 +268,14 @@ be_visitor_union_branch_public_reset_cs::visit_valuebox (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_valuetype (
-  be_valuetype *)
+be_visitor_union_branch_public_reset_cs::visit_valuetype (be_valuetype *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -288,15 +296,14 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (
-  be_valuetype_fwd *)
+be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -322,11 +329,11 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
   )
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -375,15 +382,14 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_sequence (
-  be_sequence *)
+be_visitor_union_branch_public_reset_cs::visit_sequence (be_sequence *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -405,15 +411,14 @@ be_visitor_union_branch_public_reset_cs::visit_sequence (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_string (
-  be_string *node)
+be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -443,14 +448,13 @@ be_visitor_union_branch_public_reset_cs::visit_string (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_structure (
-  be_structure *node)
+be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+    this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -461,7 +465,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (
       bt = node;
     }
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -488,16 +492,6 @@ be_visitor_union_branch_public_reset_cs::visit_structure (
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_structure_fwd (
-  be_structure_fwd *node)
-{
-  be_structure *s =
-    be_structure::narrow_from_decl (node->full_definition ());
-
-  return this->visit_structure (s);
-}
-
-int
 be_visitor_union_branch_public_reset_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
@@ -519,15 +513,14 @@ be_visitor_union_branch_public_reset_cs::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_union_branch_public_reset_cs::visit_union (
-  be_union *)
+be_visitor_union_branch_public_reset_cs::visit_union (be_union *)
 {
   be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union_branch ();
   be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+    this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_reset_cs::"
@@ -546,14 +539,3 @@ be_visitor_union_branch_public_reset_cs::visit_union (
 
   return 0;
 }
-
-int
-be_visitor_union_branch_public_reset_cs::visit_union_fwd (
-  be_union_fwd *node)
-{
-  be_union *u =
-    be_union::narrow_from_decl (node->full_definition ());
-
-  return this->visit_union (u);
-}
-

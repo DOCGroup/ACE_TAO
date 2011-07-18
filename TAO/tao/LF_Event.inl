@@ -49,7 +49,7 @@ TAO_LF_Event::state_name (int st)
       TAO_LF_EVENT_ENTRY (LFS_CONNECTION_CLOSED);
     }
   return "***Unknown enum value, update TAO_LF_Event::state_name()";
-#undef TAO_LF_EVENT_ENTRY
+#undef TAO_CACHE_INTID_ENTRY
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

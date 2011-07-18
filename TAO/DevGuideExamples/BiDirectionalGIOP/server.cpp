@@ -34,7 +34,7 @@ parse_args(int argc, ACE_TCHAR *argv[])
         return -1;
         break;
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -70,10 +70,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
     poa_manager->activate ();
 
-    PortableServer::Servant_var<Simple_i> svt = new Simple_i(orb.in(), callback_count);
+    Simple_i svt(orb.in(), callback_count);
 
     // Register and activate Simple servant
-    PortableServer::ObjectId_var id = poa->activate_object(svt.in());
+    PortableServer::ObjectId_var id = poa->activate_object(&svt);
     obj = poa->id_to_reference(id.in());
     Simple_var server = Simple::_narrow(obj.in());
 
@@ -88,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     while (true) {
 
       // returns 1 as soon as it has successfully called back.
-      if (svt->call_client()) {
+      if (svt.call_client()) {
         break;
       }
 
@@ -100,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     std::cout << "Event loop finished." << std::endl;
 
-    CORBA::Boolean etherealize = true, wait = true;
+    int etherealize = 1, wait = 1;
     poa->destroy(etherealize, wait);
     orb->destroy();
 

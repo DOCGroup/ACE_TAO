@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    marshal_cs.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for valuetypes.
- *  This one provides code generation for marshalling.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    marshal_cs.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for valuetypes.
+//    This one provides code generation for marshalling.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           marshal_cs,
+           "$Id$")
 
 be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
     be_visitor_context *ctx
@@ -32,7 +41,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "::CORBA::Boolean" << be_nl;
 
@@ -96,7 +105,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_marshal_cs::"
                          "visit_valuetype - "
-                         "codegen for field out cdr scope failed\n"),
+                         "codegen for field out cdr scope failed\n"), 
                         -1);
     }
 
@@ -125,7 +134,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     }
 
   *os << "return true;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -205,7 +214,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
     }
     else
       *os << "return true;";
-  *os << be_uidt_nl << "}" << be_nl_2;
+  *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl;
 
@@ -214,7 +223,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << "::truncation_hook (void)" << be_nl
       << "{" << be_idt_nl
       << "this->require_truncation_ = true;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -267,13 +276,9 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                             -1);
         }
 
-      // (JP) 2010-10-21
-      // be_attribute now inherits from be_field, so we need this check.
-      be_attribute *attr = be_attribute::narrow_from_decl (d);
-
       be_field *field = be_field::narrow_from_decl (d);
 
-      if (field != 0 && attr == 0)
+      if (field)
         {
           if (n_processed > 0)
             {

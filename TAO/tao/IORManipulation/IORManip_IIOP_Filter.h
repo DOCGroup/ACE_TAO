@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    IORManip_IIOP_Filter.h
- *
- *  $Id$
- *
- *  @author Chad Elliott <elliott_c@ociweb.com>
- */
-//=============================================================================
-
+// =========================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    IORManip_IIOP_Filter.h
+//
+// = AUTHOR
+//    Chad Elliott <elliott_c@ociweb.com>
+//
+// =========================================================================
 
 #ifndef TAO_IORMANIP_IIOP_FILTER_H
 #define TAO_IORMANIP_IIOP_FILTER_H

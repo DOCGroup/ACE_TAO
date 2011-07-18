@@ -1,6 +1,6 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
@@ -10,54 +10,46 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # It starts all the servers and clients as necessary.
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+# Variables for command-line arguments to client and server
+# executables.
+$ns_orb_port = 12002 + PerlACE::uniqueid ();
+
+$ior_file = "test.ior";
+
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+my $args = "-ORBEndpoint iiop://127.0.0.1:$ns_orb_port -o $ior_file";
+my $prog = "../../Naming_Service/Naming_Service";
+$NS = new PerlACE::Process ($prog, $args);
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$NS->Spawn ();
 
-my $orb_port = $server->RandomPort();
-my $host = $server->HostName();
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("../../Naming_Service/tao_cosnaming",
-                              "-ORBEndpoint iiop://$host:$orb_port -o $server_iorfile");
-$CL = $client->CreateProcess ("TimeServer",
-                              "-ORBInitRef NameService=corbaloc:iiop:$host:$orb_port/NameService");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($ior_file,
+                                $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$ior_file>\n";
+    $NS->Kill (); $NS->TimedWait (1);
     exit 1;
-}
+} 
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+my $new_args = "-ORBInitRef NameService=corbaloc:iiop:127.0.0.1:$ns_orb_port/NameService";
+my $new_prog = "TimeServer";
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
+print " ARGS are == $new_args \n";
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+$CL = new PerlACE::Process ($new_prog, $new_args);
+
+$client = $CL->SpawnWaitKill (300);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$SV->Kill ();
 
-$server->DeleteFile($iorbase);
+$NS->Kill ();
+unlink $ior_file;
 
 exit $status;

@@ -13,6 +13,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (tao,
+           FILE_Parser,
+           "$Id$")
+
 static const char file_prefix[] = "file:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

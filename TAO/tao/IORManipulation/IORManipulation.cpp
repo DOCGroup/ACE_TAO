@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/IORManipulation/IORManipulation.h"
 
 #include "tao/MProfile.h"
@@ -10,6 +7,11 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (IORManipulation,
+           IORManipulation,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,8 +60,9 @@ TAO_IOR_Manipulation_impl::merge_iors (
     {
       // this gets a copy of the MProfile, hense the auto_ptr;
 
-      ACE_auto_ptr_reset (tmp_pfiles,
-                          iors[i]->_stubobj ()->make_profiles ());
+      ACE_AUTO_PTR_RESET (tmp_pfiles,
+                          iors[i]->_stubobj ()->make_profiles (),
+                          TAO_MProfile);
 
       // check to see if any of the profile in tmp_pfiles are already
       // in Merged_Profiles.  If so raise exception.
@@ -190,10 +193,11 @@ TAO_IOR_Manipulation_impl::remove_profiles (
       throw TAO_IOP::Invalid_IOR ();
     }
 
-  // Now we can remove the profiles which we want to eliminate from
+  // Now we can remove the profiles which we want to elimitate from
   // the Object.
-  ACE_auto_ptr_reset (tmp_pfiles,
-                      ior2->_stubobj ()->make_profiles ());
+  ACE_AUTO_PTR_RESET (tmp_pfiles,
+                      ior2->_stubobj ()->make_profiles (),
+                      TAO_MProfile);
 
   TAO_MProfile& mp = stub -> base_profiles();
   if (mp.remove_profiles (tmp_pfiles.get ()) < 0)

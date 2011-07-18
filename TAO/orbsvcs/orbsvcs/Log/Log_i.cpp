@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -8,6 +6,11 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_RCSID (Log,
+           Log_i,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,10 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Service_Context_Handler.h"
+
+ACE_RCSID (tao,
+           Service_Context_Handler,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

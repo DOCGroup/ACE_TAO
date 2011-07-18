@@ -1,18 +1,21 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    client.cpp
- *
- *  $Id$
- *
- * A simple client to demonstrate the use of codeset translation
- *
- *
- *  @author   Phil Mesnier <mesnier_p@ociweb.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/CodeSets/simple
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//   A simple client to demonstrate the use of codeset translation
+//
+// = AUTHORS
+//      Phil Mesnier <mesnier_p@ociweb.com>
+//
+// ============================================================================
 // IDL generated headers
 #include "simpleC.h"
 #include "ace/ace_wchar.h"
@@ -22,35 +25,6 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 wchar_t *
 make_wstring (const char *str)
@@ -78,6 +52,7 @@ make_wstring (const char *str)
 // ------------------------------------------------------------
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  char buf[1000];
   int error_count = 0;
 
   try
@@ -86,12 +61,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb= CORBA::ORB_init (argc, argv);
 
       // Get IOR from command line (or file)
-      if (parse_args (argc, argv) != 0)
-        return 1;
+      if (argc != 2)
+        {
+          ACE_OS::strcpy (buf, "file://server.ior");
+        }
+      else
+        {
+          ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (argv[1]));
+        }
 
       // The first arg should be the IOR
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (buf);
 
       // Get the server
       simple_var server = simple::_narrow (object.in ());

@@ -78,7 +78,7 @@ public:
   int acquire (ACE_Time_Value &tv);
 
   /**
-   * If @a tv == 0 the call acquire() directly.  Otherwise, Block the
+   * If @a tv == 0 the call <acquire()> directly.  Otherwise, Block the
    * thread until we acquire the mutex or until @a tv times out, in
    * which case -1 is returned with @c errno == @c ETIME.  Note that
    * @a tv is assumed to be in "absolute" rather than "relative" time.
@@ -130,16 +130,15 @@ public:
   int tryacquire_write (void);
 
   /**
-   * This is only here to make the ACE_Thread_Mutex interface
-   * consistent with the other synchronization APIs.  Assumes the
-   * caller has already acquired the mutex using one of the above
-   * calls, and returns 0 (success) always.
+   * This is only here to make the ACE_Thread_Mutex
+   * interface consistent with the other synchronization APIs.
+   * Assumes the caller has already acquired the mutex using one of
+   * the above calls, and returns 0 (success) always.
    */
   int tryacquire_write_upgrade (void);
 
   /// Return the underlying mutex.
   const ACE_thread_mutex_t &lock (void) const;
-  ACE_thread_mutex_t &lock (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -147,7 +146,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-protected:
+  // protected:
   /// Mutex type that supports single-process locking efficiently.
   ACE_thread_mutex_t lock_;
 

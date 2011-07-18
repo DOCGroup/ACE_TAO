@@ -1,3 +1,4 @@
+
 // $Id$
 
 #include "tao/orbconf.h"
@@ -9,6 +10,10 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (RTCORBA,
+           Linear_Network_Priority_Mapping,
+           "$Id$")
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08

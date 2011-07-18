@@ -1,7 +1,10 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Client_ORBInitializer.h"
+
+ACE_RCSID (Redirection,
+           Client_ORBInitializer,
+           "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 

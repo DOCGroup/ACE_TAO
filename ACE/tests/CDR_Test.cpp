@@ -1,17 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    CDR_Test.cpp
- *
- *  $Id$
- *
- *  Checks the functionality of the ACE CDR streams.
- *
- *
- *  @author Istvan Buki <istvan.buki@euronet.be> and Jeff Parsons <parsons@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    CDR_Test.cpp
+//
+// = DESCRIPTION
+//    Checks the functionality of the ACE CDR streams.
+//
+// = AUTHORS
+//    Istvan Buki <istvan.buki@euronet.be> and
+//    Jeff Parsons <parsons@cs.wustl.edu> and
+//    Carlos O'Ryan <coryan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
@@ -24,7 +29,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 
-
+ACE_RCSID(tests, CDR_Test, "$Id$")
 
 static int n = 4096;
 static int nloops = 100;
@@ -260,13 +265,13 @@ short_stream (void)
                        ACE_TEXT ("ulong transfer error")),
                       1);
 
-  if (!ACE::is_equal (f1, f))
+  if (f1 != f)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("float transfer error")),
                       1);
 
-  if (!ACE::is_equal (d1, d))
+  if (d1 != d)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("double transfer error")),
@@ -287,14 +292,14 @@ short_stream (void)
                         1);
 
   for (i = 0 ; i < 3; i++)
-    if (!ACE::is_equal (f_array1[i], f_array[i]))
+    if (f_array1[i] != f_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("float array transfer error")),
                         1);
 
   for (i = 0 ; i < 3; i++)
-    if (!ACE::is_equal (d_array1[i], d_array[i]))
+    if (d_array1[i] != d_array[i])
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("double array transfer error")),
@@ -548,15 +553,15 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Sanity checks.
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::Boolean)    >= 1);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::Octet)      == 1);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::WChar)      >= 2);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::Short)      == 2);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::Long)       == 4);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::LongLong)   == 8);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::Float)      == 4);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::Double)     == 8);
-  ACE_TEST_ASSERT (sizeof (ACE_CDR::LongDouble) == 16);
+  ACE_ASSERT (sizeof (ACE_CDR::Boolean)    >= 1);
+  ACE_ASSERT (sizeof (ACE_CDR::Octet)      == 1);
+  ACE_ASSERT (sizeof (ACE_CDR::WChar)      >= 2);
+  ACE_ASSERT (sizeof (ACE_CDR::Short)      == 2);
+  ACE_ASSERT (sizeof (ACE_CDR::Long)       == 4);
+  ACE_ASSERT (sizeof (ACE_CDR::LongLong)   == 8);
+  ACE_ASSERT (sizeof (ACE_CDR::Float)      == 4);
+  ACE_ASSERT (sizeof (ACE_CDR::Double)     == 8);
+  ACE_ASSERT (sizeof (ACE_CDR::LongDouble) == 16);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ACE CDR functions - short stream\n\n")));

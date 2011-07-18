@@ -18,6 +18,10 @@
 #include "ace/Task.h"
 #include "ami_test_i.h"
 
+ACE_RCSID (AMI,
+           client,
+           "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
@@ -61,7 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -264,7 +268,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       root_poa->destroy (1,  // ethernalize objects
-                         0);  // wait for completion
+                         0  // wait for completion
+                        );
 
       orb->destroy ();
     }

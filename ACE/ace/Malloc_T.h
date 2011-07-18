@@ -213,7 +213,14 @@ class ACE_Allocator_Adapter : public ACE_Allocator
 public:
   // Trait.
   typedef MALLOC ALLOCATOR;
+
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+  // The following code will break C++ compilers that don't support
+  // template typedefs correctly.
   typedef const typename MALLOC::MEMORY_POOL_OPTIONS *MEMORY_POOL_OPTIONS;
+#else
+  typedef const void *MEMORY_POOL_OPTIONS;
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
   // = Initialization.
   /**
@@ -226,10 +233,17 @@ public:
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
-   */
+   * This constructor must be inline to avoid bugs with some C++
+   * compilers. */
   ACE_Allocator_Adapter (const char *pool_name,
                          const char *lock_name,
-                         MEMORY_POOL_OPTIONS options = 0);
+                         MEMORY_POOL_OPTIONS options = 0)
+      : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name),
+                    ACE_TEXT_CHAR_TO_TCHAR (lock_name),
+                    options)
+    {
+      ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
+    }
 
 #if defined (ACE_HAS_WCHAR)
   /**
@@ -242,10 +256,17 @@ public:
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
-   */
+   * This constructor must be inline to avoid bugs with some C++
+   * compilers. */
   ACE_Allocator_Adapter (const wchar_t *pool_name,
                          const wchar_t *lock_name,
-                         MEMORY_POOL_OPTIONS options = 0);
+                         MEMORY_POOL_OPTIONS options = 0)
+      : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name),
+                    ACE_TEXT_WCHAR_TO_TCHAR (lock_name),
+                    options)
+    {
+      ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
+    }
 #endif /* ACE_HAS_WCHAR */
 
   /// Destructor.
@@ -277,7 +298,7 @@ public:
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
    * not allow duplicate @a name/pointer associations, else if
    * @a duplicates != 0 then allow duplicate @a name/pointer
-   * associations.  Returns 0 if successfully binds (1) a previously
+   * assocations.  Returns 0 if successfully binds (1) a previously
    * unbound @a name or (2) @a duplicates != 0, returns 1 if trying to
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
@@ -476,6 +497,14 @@ public:
                 const ACE_MEM_POOL_OPTIONS *options,
                 ACE_LOCK *lock);
 
+#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+  /// This is necessary to work around template bugs with certain C++
+  /// compilers.
+  ACE_Malloc_T (const ACE_TCHAR *pool_name,
+                const ACE_TCHAR *lock_name,
+                const void *options = 0);
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
   /// Destructor
   ~ACE_Malloc_T (void);
 
@@ -515,7 +544,7 @@ public:
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
    * not allow duplicate name/pointer associations, else if
    * @a duplicates != 0 then allow duplicate name/pointer
-   * associations.  Returns 0 if successfully binds (1) a previously
+   * assocations.  Returns 0 if successfully binds (1) a previously
    * unbound @a name or (2) @a duplicates != 0, returns 1 if trying to
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
@@ -718,7 +747,8 @@ public:
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
-  int next (void *&next_entry, const char *&name);
+  int next (void *&next_entry,
+            const char *&name);
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -737,10 +767,8 @@ private:
   /// Keeps track of how far we've advanced...
   NAME_NODE *curr_;
 
-// FUZZ: disable check_for_ACE_Guard
   /// Lock Malloc for the lifetime of the iterator.
   ACE_Read_Guard<ACE_LOCK> guard_;
-// FUZZ: enable check_for_ACE_Guard
 
   /// Name that we are searching for.
   const char *name_;
@@ -764,6 +792,7 @@ public:
   typedef typename ACE_CB::ACE_Name_Node NAME_NODE;
   typedef typename ACE_CB::ACE_Malloc_Header MALLOC_HEADER;
 
+  // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
@@ -786,7 +815,8 @@ public:
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
-  int next (void *&next_entry, const char *&name);
+  int next (void *&next_entry,
+            const char *&name);
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -809,10 +839,8 @@ private:
   /// Keeps track of how far we've advanced...
   NAME_NODE *curr_;
 
-// FUZZ: disable check_for_ACE_Guard
   /// Lock Malloc for the lifetime of the iterator.
   ACE_Read_Guard<ACE_LOCK> guard_;
-// FUZZ: enable check_for_ACE_Guard
 
   /// Name that we are searching for.
   const char *name_;
@@ -846,12 +874,21 @@ public:
   ACE_Malloc (const ACE_TCHAR *pool_name,
               const ACE_TCHAR *lock_name,
               const ACE_MEM_POOL_OPTIONS *options = 0);
+
+#if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+  /// This is necessary to work around template bugs with certain C++
+  /// compilers.
+  ACE_Malloc (const ACE_TCHAR *pool_name,
+              const ACE_TCHAR *lock_name,
+              const void *options = 0);
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_LIFO_Iterator : public ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
 {
 public:
+  // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
@@ -862,6 +899,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Malloc_FIFO_Iterator : public ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block>
 {
 public:
+  // = Initialization method.
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,

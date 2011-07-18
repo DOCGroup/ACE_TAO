@@ -1,6 +1,9 @@
 // $Id$
 
 #include "orbsvcs/Notify/Method_Request_Lookup.h"
+
+ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
+
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/ProxyConsumer.h"
@@ -67,12 +70,10 @@ int TAO_Notify_Method_Request_Lookup::execute_i (void)
                                                              parent.filter_operator ());
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Notify (%P|%t) Proxyconsumer %x filter ")
-                          ACE_TEXT("eval result = %d\n"),
-                          &this->proxy_consumer_ , val));
+    ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",&this->proxy_consumer_ , val));
 
   // Filter failed - do nothing.
-  if (!val)
+  if (val == 0)
     return 0;
 
   // The map of subscriptions.

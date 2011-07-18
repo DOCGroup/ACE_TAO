@@ -3,6 +3,10 @@
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
 
+ACE_RCSID (ClientORB,
+           FTRT_ClientORB_Initializer,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 FTRT_ClientORB_Initializer::FTRT_ClientORB_Initializer (int transaction_depth)

@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -43,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
 
     CORBA::Object_var object_temp =
-      orb->string_to_object (ior);
+      orb->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
     SimpleMessenger::Messenger_var messenger =
       SimpleMessenger::Messenger::_unchecked_narrow( object_temp.in ());

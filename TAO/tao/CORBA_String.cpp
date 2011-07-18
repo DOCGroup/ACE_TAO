@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CORBA_String.h"
 #include "tao/String_Manager_T.h"
 
@@ -13,6 +11,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           CORBA_String,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

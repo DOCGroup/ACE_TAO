@@ -1,7 +1,11 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
+
 #include "testC.h"
+
+ACE_RCSID (ServantLocator,
+           client,
+           "$Id$")
+
 
 const ACE_TCHAR * ior = 0;
 

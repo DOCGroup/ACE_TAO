@@ -5,8 +5,6 @@
 
 #include "orbsvcs/ESF/ESF_Copy_On_Read.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
-#include "tao/Exception.h"
-#include "ace/Guard_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

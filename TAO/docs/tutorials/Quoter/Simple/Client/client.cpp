@@ -26,7 +26,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     // in real applications we use the naming service, but let's do
     // the easy part first!
     CORBA::Object_var factory_object =
-      orb->string_to_object (argv[1]);
+      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv[1]));
 
     // Now downcast the object reference to the appropriate type
     Quoter::Stock_Factory_var factory =

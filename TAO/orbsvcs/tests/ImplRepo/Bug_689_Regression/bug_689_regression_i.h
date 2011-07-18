@@ -12,8 +12,6 @@ public:
 
   virtual void shutdown (void);
 
-  virtual void noop (void);
-
 private:
   CORBA::ORB_var orb_;
 };

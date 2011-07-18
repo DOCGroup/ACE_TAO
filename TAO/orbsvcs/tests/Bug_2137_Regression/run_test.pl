@@ -1,33 +1,34 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
-# $Id$
 # -*- perl -*-
+# $Id$
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 print STDERR "\n\n==== Running Bug_2137_Regression (FT ::is_equivalent) test\n";
 
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+if (PerlACE::is_vxworks_test())
+{
+    $T = new PerlACE::ProcessVX ("client");
+}
+else
+{
+    $T = new PerlACE::Process ("client");
 }
 
-my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+$test = $T->SpawnWaitKill (15);
 
-$CL = $client->CreateProcess ("client");
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
+if ($test != 0)
+{
+    print STDERR "ERROR: Bug_2137_Regression test returned $test\n";
+    exit 1;
+}
+else
+{
+    print STDERR "SUCCESS: Bug_2137_Regression test returned $test\n";
 }
 
-exit $status;
+exit 0;

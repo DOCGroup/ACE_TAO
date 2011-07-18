@@ -1,18 +1,23 @@
 // -*- C++ -*-
 
-//=============================================================================
-/**
- *  @file    Network_Adapters_Test.h
- *
- *  $Id$
- *
- *  Definitions for Network_Adapters_Test.cpp.
- *
- *
- *  @author Robert S. Iakobashvili <roberti@go-WLAN.com> <coroberti@walla.co.il> Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> made aceing
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Network_Adapters_Test.h
+//
+// = DESCRIPTION
+//    Definitions for Network_Adapters_Test.cpp.
+//
+// = AUTHOR
+//    Robert S. Iakobashvili <roberti@go-WLAN.com> <coroberti@walla.co.il>
+//    Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> made aceing
+//
+// ============================================================================
 
 #ifndef ACE_NETWORK_ADAPTERS_TEST_H
 #define ACE_NETWORK_ADAPTERS_TEST_H
@@ -166,11 +171,7 @@ private:
 class Stop_Handler : public ACE_Event_Handler
 {
 public:
-#ifdef ACE_HAS_THREADS
   typedef ACE_Atomic_Op<ACE_Mutex, long> counter_sig;
-#else
-  typedef long counter_sig;
-#endif
 
   // Constructor.
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());

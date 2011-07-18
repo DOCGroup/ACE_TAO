@@ -1,137 +1,88 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
+$iorfile    = PerlACE::LocalFile ("test.ior");
+$svcconf    = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
+$advsvcconf = PerlACE::LocalFile ("advanced_svc$PerlACE::svcconf_ext");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+print "$svcconf\n";
+unlink $iorfile;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-my $iorbase = "server.ior";
-my $svcconf = "svc$PerlACE::svcconf_ext";
-my $advsvcconf = "advanced_svc$PerlACE::svcconf_ext";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-my $server_svcconf = $server->LocalFile ($svcconf);
-my $client_svcconf = $client->LocalFile ($svcconf);
-my $server_advsvcconf = $server->LocalFile ($advsvcconf);
-my $client_advsvcconf = $client->LocalFile ($advsvcconf);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+# Run with a static configuration
 
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level ".
-                              "-ORBSvcConf $server_svcconf ".
-                              "-o $server_iorfile");
-$CL = $client->CreateProcess ("client",
-                              "-ORBSvcConf $client_svcconf ".
-                              "-k file://$client_iorfile -x");
+$SV = new PerlACE::Process ("server", "-o $iorfile -ORBSvcConf $svcconf");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x -ORBSvcConf $svcconf");
 
 print STDERR "\nrunning Strategies test with static config\n\n";
 
-$server_status = $SV->Spawn ();
+$SV->Spawn ();
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$client = $CL->SpawnWaitKill (60);
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
+
+
+# Run using dynamic configuration (and the Advanced_Resource_Factory)
+# This will fail for builds lacking dynamic libraries.
+
+$SV2 = new PerlACE::Process ("server",
+                             "-o $iorfile -ORBSvcConf $advsvcconf");
+$CL2 = new PerlACE::Process ("client",
+                             "-k file://$iorfile -x -ORBSvcConf $advsvcconf");
 
 print STDERR "\nrunning Strategies test with dynamic config\n\n";
 
-$SV->Arguments ("-ORBdebuglevel $debug_level ".
-                "-ORBSvcConf $server_advsvcconf ".
-                "-o $server_iorfile");
-$CL->Arguments ("-ORBSvcConf $client_advsvcconf ".
-                "-k file://$client_iorfile -x");
+$SV2->Spawn ();
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV2->Kill ();
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$client = $CL2->SpawnWaitKill (60);
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV2->WaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 exit $status;

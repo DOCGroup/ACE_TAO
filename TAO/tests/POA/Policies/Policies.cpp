@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Policies.cpp
- *
- *  $Id$
- *
- *   This program tests the construction of POA policies, both
- *   through the generic ORB::create_policy interface and the
- *   PortableServer specific interfaces.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/Policies
+//
+// = FILENAME
+//     Policies.cpp
+//
+// = DESCRIPTION
+//     This program tests the construction of POA policies, both
+//     through the generic ORB::create_policy interface and the
+//     PortableServer specific interfaces.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "tao/ORB.h"
 #include "tao/AnyTypeCode/Any.h"

@@ -7,6 +7,8 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
+ACE_RCSID(Bug_2510_Regression, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -98,8 +100,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_Thread::join (threadHandle);
 
         server->shutdown ();
-
-        orb->destroy ();
     }
 
     catch (const CORBA::Exception& ex)

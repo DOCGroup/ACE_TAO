@@ -1,24 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Cached_Allocator_Test.cpp
- *
- *  $Id$
- *
- *  Simple test of ACE_Dynamic_Cached_Allocator and ACE_Cached_Allocator.
- *
- *
- *  @author Jaroslaw Nozderko <jareknz@polbox.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Cached_Allocator_Test.cpp
+//
+// = DESCRIPTION
+//    Simple test of ACE_Dynamic_Cached_Allocator and ACE_Cached_Allocator.
+//
+// = AUTHOR
+//    Jaroslaw Nozderko <jareknz@polbox.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Malloc_T.h"
 #include "ace/High_Res_Timer.h"
 
-
+ACE_RCSID(tests, Cached_Allocator_Test, "$Id$")
 
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"

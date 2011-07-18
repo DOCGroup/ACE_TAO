@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Token.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
@@ -25,7 +25,7 @@
 #include "ace/ACE.h"
 #include "ace/Barrier.h"
 
-
+ACE_RCSID(tests, Token_Strategy_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

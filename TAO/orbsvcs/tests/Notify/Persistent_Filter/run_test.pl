@@ -6,179 +6,127 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $sup = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
 $experiment_timeout = 60;
 $startup_timeout = 60;
 
-$nfsiorfile = "notify.ior";
-$nsiorfile = "naming.ior";
-$svc_conf = "NS.conf";
-$persistent_xml = "persistency.notif.xml";
-$persistent_000 = "persistency.notif.000";
+$notify_ior = PerlACE::LocalFile ("notify.ior");
 
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $nfs_nsiorfile = $nfs->LocalFile ($nsiorfile);
-my $sup_nsiorfile = $sup->LocalFile ($nsiorfile);
-my $con_nsiorfile = $con->LocalFile ($nsiorfile);
-my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
-my $nfs_svc_conf = $nfs->LocalFile ($svc_conf);
-my $nfs_persistent_xml = $nfs->LocalFile ($persistent_xml);
-my $nfs_persistent_000 = $nfs->LocalFile ($persistent_000);
-$ns->DeleteFile ($nsiorfile);
-$nfs->DeleteFile ($nsiorfile);
-$sup->DeleteFile ($nsiorfile);
-$con->DeleteFile ($nsiorfile);
-$nfs->DeleteFile ($nfsiorfile);
-$nfs->DeleteFile ($persistent_xml);
-$nfs->DeleteFile ($persistent_000);
+$naming_ior = PerlACE::LocalFile ("naming.ior");
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
-                                "-o $ns_nsiorfile");
+$svc_conf = PerlACE::LocalFile ("NS.conf");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
-$NFS_Args = "-ORBSvcConf $nfs_svc_conf -ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile ";
+$persistent_prefix = "persistency.notif";
 
-$SUP = $sup->CreateProcess ("supplier");
-$SUP_Args = "-ORBInitRef NameService=file://$sup_nsiorfile -ORBDebugLevel $debug_level";
+$status = 0;
 
-$CON = $con->CreateProcess ("consumer");
-$CON_Args = "-ORBInitRef NameService=file://$con_nsiorfile";
+$Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                                "-o $naming_ior");
 
-$NS_status = $NS->Spawn ();
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    exit 1;
-}
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()+$startup_timeout) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($nfs->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$nfs_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($sup->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$sup_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($con->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$con_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+$Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service");
+#-ORBDebugLevel 10 -ORBVerboseLogging 1 
+$Notify_Args = "-ORBSvcConf $svc_conf -ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior ";
+
+$Supplier = new PerlACE::Process ("supplier");
+
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior";
+
+$Consumer = new PerlACE::Process ("consumer");
+
+$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior";
+
+unlink $naming_ior;
+$Naming->Spawn ();
+
+if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the naming service to start\n";
+  $Naming->Kill ();
+  exit 1;
 }
 
 sub run_test
 {
-    my $client_args = shift;
+  my $client_args = shift;
 
-    $nfs->DeleteFile ($nfsiorfile);
+  unlink $notify_ior;
+  $Notification->Arguments ($Notify_Args);
+  $args = $Notification->Arguments ();
+  print STDERR "Running Notification with arguments: $args\n";
+  $Notification->Spawn ();
 
-    $NFS->Arguments ($NFS_Args);
-    $args = $NFS->Arguments ();
-    print STDERR "Running Notification with arguments: $args\n";
-    $NFS_status = $NFS->Spawn ();
-    if ($NFS_status != 0) {
-        print STDERR "ERROR: Notify Service returned $NFS_status\n";
-        exit 1;
-    }
-    if ($nfs->WaitForFileTimed ($nfsiorfile,$nfs->ProcessStartWaitInterval()+$startup_timeout) == -1) {
-        print STDERR "ERROR: cannot find file <$nfs_nfsiorfile>\n";
-        $NS->Kill (); $NS->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
-    }
-    sleep (5);
+  if (PerlACE::waitforfile_timed ($notify_ior, $startup_timeout) == -1) {
+    print STDERR "ERROR: waiting for the notify service to start\n";
+    $Notification->Kill ();
+    $Naming->Kill ();
+    exit 1;
+  }
 
-    $SUP->Arguments ($client_args . $SUP_Args);
-    $CON->Arguments ($client_args . $CON_Args);
-    $args = $SUP->Arguments ();
-    print STDERR "Running Supplier with arguments: $args\n";
-    $args = $CON->Arguments ();
-    print STDERR "Running Consumer with arguments: $args\n";
-    $SUP_status = $SUP->Spawn ();
-    if ($SUP_status != 0) {
-        print STDERR "ERROR: Supplier returned $SUP_status\n";
-        $NS->Kill (); $NS->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
-    }
-    $CON_status = $CON->Spawn ();
-    if ($CON_status != 0) {
-        print STDERR "ERROR: Consumer returned $CON_status\n";
-        $SUP->Kill (); $SUP->TimedWait (1);
-        $NS->Kill (); $NS->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
-    }
+  sleep (5);
+  
+  $Supplier->Arguments ($client_args . $Supplier_Args);
+  $Consumer->Arguments ($client_args . $Consumer_Args);
+  $args = $Supplier->Arguments ();
+  print STDERR "Running Supplier with arguments: $args\n";
+  $args = $Consumer->Arguments ();
+  print STDERR "Running Consumer with arguments: $args\n";
 
-    $CON_status = $CON->WaitKill ($con->ProcessStartWaitInterval()+$experiment_timeout);
-    if ($CON_status != 0) {
-        print STDERR "ERROR: Consumer returned $CON_status\n";
-        $CON->Kill (); $CON->TimedWait (1);
-        $SUP->Kill (); $SUP->TimedWait (1);
-        $NS->Kill (); $NS->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
+  $status = $Supplier->Spawn ();
+
+  if ($status != 0)
+    {
+      print STDERR "ERROR: Supplier Spawn returned $status\n";
+      $Notification->Kill ();
+      $Naming->Kill ();
+      exit 1;
+    }
+    
+  $status = $Consumer->Spawn ();
+
+  if ($status != 0)
+    {
+      print STDERR "ERROR: Consumer returned $status\n";
+      $Supplier->Kill ();
+      $Notification->Kill ();
+      $Naming->Kill ();
+      exit 1;
     }
 
-    $SUP_status = $SUP->WaitKill ($sup->ProcessStartWaitInterval()+$experiment_timeout);
-    if ($SUP_status != 0) {
-        print STDERR "ERROR: Supplier returned $SUP_status\n";
-        $SUP->Kill (); $SUP->TimedWait (1);
-        $NS->Kill (); $NS->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
+  $status = $Consumer->WaitKill ($experiment_timeout);
+
+  if ($status != 0)
+    {
+      print STDERR "ERROR: Consumer WaitKill returned $status\n";
+      $Consumer->Kill ();    
+      $Supplier->Kill ();
+      $Notification->Kill ();
+      $Naming->Kill ();
+      exit 1;
     }
 
+  $status = $Supplier->WaitKill ($experiment_timeout);
 
-    $NFS_status = $NFS->Kill ($nfs->ProcessStopWaitInterval());
-    if ($NFS_status != 0) {
-        print STDERR "ERROR: Notify Service returned $NFS_status\n";
-        $NS->Kill (); $NS->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
+  if ($status != 0)
+    {
+      print STDERR "ERROR: Supplier WaitKill returned $status\n";
+      $Supplier->Kill ();
+      $Notification->Kill ();
+      $Naming->Kill ();
+      exit 1;
     }
+
+  $Notification->Kill ();
+  unlink $notify_ior;
 }
+
+unlink <$persistent_prefix.*>;
 
 run_test ();
 run_test ("-m -p ");
 
 
-$NS_status = $NS->Kill ($ns->ProcessStopWaitInterval());
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NFS_status\n";
-    $status = 1;
-}
-
-$ns->DeleteFile ($nsiorfile);
-$nfs->DeleteFile ($nsiorfile);
-$sup->DeleteFile ($nsiorfile);
-$con->DeleteFile ($nsiorfile);
-$nfs->DeleteFile ($nfsiorfile);
-$nfs->DeleteFile ($persistent_xml);
-$nfs->DeleteFile ($persistent_000);
+$Naming->Kill ();
+unlink $naming_ior;
 
 exit $status;

@@ -1,25 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Lazy_Map_Manager_Test.cpp
- *
- *  $Id$
- *
- *   This is a simple test of the <ACE_Map_Manager> and
- *   <ACE_Active_Map_Manager> that illustrates how lazy map managers
- *   allow the deletion of entries while iterating over the map.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Lazy_Map_Manager_Test.cpp
+//
+// = DESCRIPTION
+//     This is a simple test of the <ACE_Map_Manager> and
+//     <ACE_Active_Map_Manager> that illustrates how lazy map managers
+//     allow the deletion of entries while iterating over the map.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>,
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
 
-
+ACE_RCSID(tests, Map_Manager_Test, "$Id$")
 
 // Simple map manager.
 typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> LAZY_MAP;

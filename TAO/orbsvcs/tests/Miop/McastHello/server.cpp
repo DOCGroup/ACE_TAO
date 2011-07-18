@@ -6,6 +6,10 @@
 #include "orbsvcs/PortableGroup/MIOP.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
+ACE_RCSID (McastHello,
+           server,
+           "$Id$")
+
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 // Use a multicast address in the administrative "site local" range, 239.255.0.0 to
@@ -41,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -80,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
                            1);
-      ACE_OS::fprintf (output_file, "%s", ACE_TEXT_ALWAYS_CHAR (group_ior));
+      ACE_OS::fprintf (output_file, "%s", group_ior);
       ACE_OS::fclose (output_file);
 
       PortableServer::ObjectId_var id =

@@ -54,7 +54,7 @@ extern "C"
 */
 #if defined (ACE_LACKS_WCHAR_T)
 #  if !defined (ACE_WCHAR_T_TYPE)
-#    define ACE_WCHAR_T_TYPE long
+#    define ACE_WCHAR_T_TYPE long;
 #  endif /* !ACE_WCHAR_T_TYPE */
    typedef ACE_WCHAR_T_TYPE wchar_t;
 #endif /* ACE_LACKS_WCHAR_T */
@@ -62,7 +62,7 @@ extern "C"
 //  Unsigned integer type of the result of the sizeof operator.
 #if defined (ACE_LACKS_SIZE_T)
 #  if !defined (ACE_SIZE_T_TYPE)
-#    define ACE_SIZE_T_TYPE unsigned int
+#    define ACE_SIZE_T_TYPE unsigned int;
 #  endif /* !ACE_SIZE_T_TYPE */
    typedef ACE_SIZE_T_TYPE size_t;
 #endif /* ACE_LACKS_SIZE_T */

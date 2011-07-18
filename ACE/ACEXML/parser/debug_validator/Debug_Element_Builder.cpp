@@ -17,14 +17,14 @@ ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder ()
 int
 ACEXML_Debug_Element_Builder::setElementName (const ACEXML_Char *,
                                               const ACEXML_Char *,
-                                              const ACEXML_Char *qName)
+                                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   this->element_.set (qName, 0);
   return 0;
 }
 
 int
-ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type)
+ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
 {
   if (this->type_ == UNDEFINED)
     {
@@ -38,9 +38,9 @@ ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type)
 int
 ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
                                                   const ACEXML_Char *,
-                                                  const ACEXML_Char *qName)
+                                                  const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
 {
-  ACEXML_Element_Tree_Name_Node *node = 0;
+  ACEXML_Element_Tree_Name_Node *node;
 
   // @@ We should "throw" an exception here instead of returning -1.
   ACE_NEW_RETURN (node,
@@ -60,7 +60,7 @@ ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
 int
 ACEXML_Debug_Element_Builder::startChildGroup ()
 {
-  ACEXML_Element_Tree_List_Node *lnode = 0;
+  ACEXML_Element_Tree_List_Node *lnode;
 
   ACE_NEW_RETURN (lnode,
                   ACEXML_Element_Tree_List_Node (),
@@ -81,7 +81,7 @@ ACEXML_Debug_Element_Builder::startChildGroup ()
 }
 
 int
-ACEXML_Debug_Element_Builder::endChildGroup (CARDINALITY )
+ACEXML_Debug_Element_Builder::endChildGroup (CARDINALITY  ACEXML_ENV_ARG_DECL_NOT_USED)
 {
   this->active_list_.pop ();
   return 0;
@@ -104,9 +104,9 @@ ACEXML_Debug_Element_Builder::setSequence ()
 int
 ACEXML_Debug_Element_Builder::insertElement  (const ACEXML_Char *,
                                               const ACEXML_Char *,
-                                              const ACEXML_Char *qName)
+                                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL_NOT_USED)
 {
-  ACEXML_Element_Tree_Name_Node *node = 0;
+  ACEXML_Element_Tree_Name_Node *node;
 
   // @@ We should "throw" an exception here instead of returning -1.
   ACE_NEW_RETURN (node,

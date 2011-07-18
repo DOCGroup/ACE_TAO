@@ -1,23 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Object_Manager_Flipping_Test.cpp
- *
- *  $Id$
- *
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Object_Manager_Flipping_Test.cpp
+//
+// = DESCRIPTION
 
- *  Tests the basic function of the ACE_Service_Config in scenarios
- *  where the ACE_Object_Manager is being
- *  flipped. i.e. ACE::init/ACE::fini() are called in sequence
- *  (which can occur with loading DLLs).  More specifically we test
- *  that the OM correctly controlls the lifecycle of the default SC
- *  instance, which is pointed to by a TSS pointer.
- *
- *
- *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
- */
-//=============================================================================
-
+//    Tests the basic function of the ACE_Service_Config in scenarios
+//    where the ACE_Object_Manager is being
+//    flipped. i.e. ACE::init/ACE::fini() are called in sequence
+//    (which can occur with loading DLLs).  More specifically we test
+//    that the OM correctly controlls the lifecycle of the default SC
+//    instance, which is pointed to by a TSS pointer.
+//
+// = AUTHOR
+//    Iliyan Jeliazkov <iliyan@ociweb.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
@@ -26,7 +29,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 
-
+ACE_RCSID(tests, Object_Manager_Flipping_Test, "$Id$")
 
 static u_int *ip;
 
@@ -78,14 +81,14 @@ int run_main (int, ACE_TCHAR *[])
     // Obtain a SC instance which will be later used to compare with others.
     p1 = ACE_Service_Config::instance ();
 
-    // ACE_TEST_ASSERT uses Log_Msg::instance() and needs to be done only
+    // ACE_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST
 
     // Additional ACE::init() should not have changed  the context
-    ACE_TEST_ASSERT (p0 == p1);
+    ACE_ASSERT (p0 == p1);
 
     // It should appear open
-    ACE_TEST_ASSERT (!p0->is_opened ());
+    ACE_ASSERT (!p0->is_opened ());
 
     ACE_END_TEST;
 
@@ -103,7 +106,7 @@ int run_main (int, ACE_TCHAR *[])
   if (ACE_Service_Config::instance ()->is_opened ())
       ++errors;
 
-  // Not using ACE_TEST_ASSERT because ACE is not initialized yet.
+  // Not using ACE_ASSERT because ACE is not initialized yet.
 
   {
     ACE::init();
@@ -111,10 +114,10 @@ int run_main (int, ACE_TCHAR *[])
 
     ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> p2 (ACE_Service_Config::instance ());
 
-    // ACE_TEST_ASSERT uses Log_Msg::instance() and needs to be done only
+    // ACE_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST
     // An attempt to dereference should be fine.
-    ACE_TEST_ASSERT (!p2->is_opened ());
+    ACE_ASSERT (!p2->is_opened ());
 
     ACE_END_TEST;
     ACE::fini();   // Flipped twice

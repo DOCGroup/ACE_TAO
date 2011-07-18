@@ -10,6 +10,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
+ACE_RCSID(TPP, server, "$Id$")
+
 class Server : public ACE_Task_Base
 {
   // = TITLE
@@ -76,7 +78,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -238,7 +240,7 @@ Server::svc (void)
       char file_name[100];
       ACE_OS::sprintf (file_name,
                        "%s_%d",
-                       ACE_TEXT_ALWAYS_CHAR (ior_output_file_base),
+                       ior_output_file_base,
                        this->priority_);
 
       // Output the ior to a file.

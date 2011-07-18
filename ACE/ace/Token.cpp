@@ -6,7 +6,7 @@
 # include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(ace, Token, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

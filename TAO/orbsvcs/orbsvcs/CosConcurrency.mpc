@@ -12,7 +12,7 @@ project(CosConcurrency_IDL): orbsvcslib, orbsvcs_output, install, tao_versioning
 
 project(CosConcurrency) : orbsvcslib, orbsvcs_output, install {
   sharedname   = TAO_CosConcurrency
-  dynamicflags += TAO_CONCURRENCY_BUILD_DLL
+  dynamicflags = TAO_CONCURRENCY_BUILD_DLL
   tagchecks   += Concurrency
   after       += CosConcurrency_IDL
 
@@ -46,7 +46,7 @@ project(CosConcurrency) : orbsvcslib, orbsvcs_output, install {
 
 project(CosConcurrency_Skel): orbsvcslib, orbsvcs_output, install, concurrency, portableserver {
   sharedname   = TAO_CosConcurrency_Skel
-  dynamicflags += TAO_CONCURRENCY_SKEL_BUILD_DLL
+  dynamicflags = TAO_CONCURRENCY_SKEL_BUILD_DLL
   tagchecks   += Concurrency
   after       += CosConcurrency_IDL
 
@@ -76,7 +76,7 @@ project(CosConcurrency_Skel): orbsvcslib, orbsvcs_output, install, concurrency, 
 
 project(CosConcurrency_Serv) : orbsvcslib, orbsvcs_output, install, concurrency_skel, avoids_corba_e_micro {
   sharedname   = TAO_CosConcurrency_Serv
-  dynamicflags += TAO_CONCURRENCY_SERV_BUILD_DLL
+  dynamicflags = TAO_CONCURRENCY_SERV_BUILD_DLL
   tagchecks   += Concurrency
 
   IDL_Files {

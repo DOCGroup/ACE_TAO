@@ -5,7 +5,7 @@
 #include "Stock_i.h"
 #include "ace/OS_NS_unistd.h"
 
-PortableServer::POA_var Quoter_Stock_i::_poa ;
+PortableServer::POA_ptr Quoter_Stock_i::_poa ;
 
 Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
                                 const char *full_name,

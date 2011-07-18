@@ -1,27 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   test_i.h
- *
- *  $Id$
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/Leader_Followers/
+//
+// = FILENAME
+//   test_i.h
+//
+// = AUTHOR
+//   Irfan Pyarali
+//
+// ============================================================================
 
 #include "testS.h"
 
-/**
- * @class test_i
- *
- * @brief Simple test implementation.
- */
 class test_i : public POA_test
 {
+  // = TITLE
+  //   Simple test implementation.
+  //
 public:
-  /// ctor.
   test_i (CORBA::ORB_ptr orb);
+  // ctor.
 
   // = The test interface methods.
   CORBA::ULong method (CORBA::ULong work);
@@ -29,6 +30,6 @@ public:
   void shutdown (void);
 
 private:
-  /// The ORB.
   CORBA::ORB_var orb_;
+  // The ORB.
 };

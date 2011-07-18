@@ -1,29 +1,32 @@
 // -*- C++ -*-
 
-/**
- * $Id$
- *
- * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
- *
- * This file is part of GNU GPERF.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
+// $Id$
+
+// Copyright (C) 1989 Free Software Foundation, Inc.
+// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+
+// This file is part of GNU GPERF.
+
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "Key_List.h"
+
+ACE_RCSID(src, Key_List, "$Id$")
+
+#if defined (ACE_HAS_GPERF)
+
 #include "Hash_Table.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Auto_Ptr.h"
@@ -31,10 +34,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-/// Default type for generated code.
+// Default type for generated code.
 const char *const Key_List::default_array_type = "char *";
 
-/// in_word_set return type, by default.
+// in_word_set return type, by default.
 const char *const Key_List::default_return_type = "char *";
 
 namespace
@@ -54,12 +57,13 @@ dup_string (const char *const str)
 
 } // unnamed namespace
 
-/// How wide the printed field width must be to contain the maximum
-/// hash value.
+// How wide the printed field width must be to contain the maximum
+// hash value.
 int Key_List::field_width = 0;
 int Key_List::determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
 
-/// Destructor dumps diagnostics during debugging.
+// Destructor dumps diagnostics during debugging.
+
 Key_List::~Key_List (void)
 {
   if (option[DEBUGGING])
@@ -68,7 +72,7 @@ Key_List::~Key_List (void)
   // Free up all the nodes in the list.
   while (this->head != 0)
     {
-      List_Node *temp = 0;
+      List_Node *temp;
 
       // Make sure to delete the linked nodes, as well.
       for (List_Node *ptr = this->head->link;
@@ -89,20 +93,21 @@ Key_List::~Key_List (void)
   delete [] this->struct_tag;
 }
 
-/// Gathers the input stream into a buffer until one of two things occur:
-///
-/// 1. We read a '%' followed by a '%'
-/// 2. We read a '%' followed by a '}'
-///
-/// The first symbolizes the beginning of the keyword list proper, The
-/// second symbolizes the end of the C source code to be generated
-/// verbatim in the output file.
-///
-/// I assume that the keys are separated from the optional preceding
-/// struct declaration by a consecutive % followed by either % or }
-/// starting in the first column. The code below uses an expandible
-/// buffer to scan off and return a pointer to all the code (if any)
-/// appearing before the delimiter.
+// Gathers the input stream into a buffer until one of two things occur:
+//
+// 1. We read a '%' followed by a '%'
+// 2. We read a '%' followed by a '}'
+//
+// The first symbolizes the beginning of the keyword list proper, The
+// second symbolizes the end of the C source code to be generated
+// verbatim in the output file.
+//
+// I assume that the keys are separated from the optional preceding
+// struct declaration by a consecutive % followed by either % or }
+// starting in the first column. The code below uses an expandible
+// buffer to scan off and return a pointer to all the code (if any)
+// appearing before the delimiter.
+
 char *
 Key_List::special_input (char delimiter)
 {
@@ -161,8 +166,9 @@ Key_List::special_input (char delimiter)
   return 0;
 }
 
-/// Stores any C/C++ source code that must be included verbatim into
-/// the generated code output.
+// Stores any C/C++ source code that must be included verbatim into
+// the generated code output.
+
 char *
 Key_List::save_include_src (void)
 {
@@ -180,17 +186,19 @@ Key_List::save_include_src (void)
   return (char *) "";
 }
 
-/// Determines from the input file whether the user wants to build a
-/// table from a user-defined struct, or whether the user is content to
-/// simply use the default array of keys.
+// Determines from the input file whether the user wants to build a
+// table from a user-defined struct, or whether the user is content to
+// simply use the default array of keys.
+
 char *
 Key_List::array_type (void)
 {
   return special_input ('%');
 }
 
-/// Sets up the Return_Type, the Struct_Tag type and the Array_Type
-/// based upon various user Options.
+// Sets up the Return_Type, the Struct_Tag type and the Array_Type
+// based upon various user Options.
+
 int
 Key_List::output_types (void)
 {
@@ -226,10 +234,10 @@ Key_List::output_types (void)
           ACE_OS::strncpy (struct_tag,
                            array_type_,
                            struct_tag_length);
-          if (struct_tag[struct_tag_length - 1] != ' ')
+          if (struct_tag[struct_tag_length] != ' ')
             {
               struct_tag[struct_tag_length] = ' ';
-              ++struct_tag_length;
+              struct_tag_length++;
             }
           struct_tag[struct_tag_length] = '\0';
         }
@@ -242,10 +250,11 @@ Key_List::output_types (void)
   return 0;
 }
 
-/// Reads in all keys from standard input and creates a linked list
-/// pointed to by Head.  This list is then quickly checked for
-/// ``links,'' i.e., unhashable elements possessing identical key sets
-/// and lengths.
+// Reads in all keys from standard input and creates a linked list
+// pointed to by Head.  This list is then quickly checked for
+// ``links,'' i.e., unhashable elements possessing identical key sets
+// and lengths.
+
 int
 Key_List::read_keys (void)
 {
@@ -285,7 +294,7 @@ Key_List::read_keys (void)
                                          static_cast<int> (ACE_OS::strcspn (buffer,
                                                             delimiter))),
                               -1);
-              ++this->total_keys;
+              this->total_keys++;
             }
 
           // See if any additional source code is included at end of
@@ -319,8 +328,8 @@ Key_List::read_keys (void)
                 trail = temp;
               else
                 {
-                  ++total_duplicates;
-                  --list_len;
+                  total_duplicates++;
+                  list_len--;
                   trail->next = temp->next;
                   temp->link = ptr->link;
                   ptr->link = temp;
@@ -329,7 +338,7 @@ Key_List::read_keys (void)
                   // option.
                   if (!option[DUP] || option[DEBUGGING])
                     ACE_ERROR ((LM_ERROR,
-                                "Static key link: \"%C\" = \"%C\", with key set \"%C\".\n",
+                                "Static key link: \"%s\" = \"%s\", with key set \"%s\".\n",
                                 temp->key,
                                 ptr->key,
                                 temp->keysig));
@@ -368,11 +377,12 @@ Key_List::read_keys (void)
   return 0;
 }
 
-/// Recursively merges two sorted lists together to form one sorted
-/// list. The ordering criteria is by frequency of occurrence of
-/// elements in the key set or by the hash value.  This is a kludge,
-/// but permits nice sharing of almost identical code without incurring
-/// the overhead of a function call comparison.
+// Recursively merges two sorted lists together to form one sorted
+// list. The ordering criteria is by frequency of occurrence of
+// elements in the key set or by the hash value.  This is a kludge,
+// but permits nice sharing of almost identical code without incurring
+// the overhead of a function call comparison.
+
 List_Node *
 Key_List::merge (List_Node *list1, List_Node *list2)
 {
@@ -400,6 +410,7 @@ Key_List::merge (List_Node *list1, List_Node *list2)
 
 // Applies the merge sort algorithm to recursively sort the key list
 // by frequency of occurrence of elements in the key set.
+
 List_Node *
 Key_List::merge_sort (List_Node *a_head)
 {
@@ -425,6 +436,7 @@ Key_List::merge_sort (List_Node *a_head)
 }
 
 // Returns the frequency of occurrence of elements in the key set.
+
 inline int
 Key_List::occurrence (List_Node *ptr)
 {
@@ -438,6 +450,7 @@ Key_List::occurrence (List_Node *ptr)
 
 // Sets the index location for all keysig characters that are now
 // determined.
+
 inline void
 Key_List::determined (List_Node *ptr)
 {
@@ -446,6 +459,7 @@ Key_List::determined (List_Node *ptr)
 }
 
 // Returns TRUE if PTR's key set is already completely determined.
+
 inline int
 Key_List::already_determined (List_Node *ptr)
 {
@@ -456,6 +470,7 @@ Key_List::already_determined (List_Node *ptr)
 
   return is_determined;
 }
+
 // Reorders the table by first sorting the list so that frequently
 // occuring keys appear first, and then the list is reorded so that
 // keys whose values are already determined will be placed towards the
@@ -466,7 +481,7 @@ Key_List::already_determined (List_Node *ptr)
 void
 Key_List::reorder (void)
 {
-  List_Node *ptr = 0;
+  List_Node *ptr;
 
   for (ptr = head; ptr; ptr = ptr->next)
     ptr->occurrence = occurrence (ptr);
@@ -509,7 +524,7 @@ Key_List::reorder (void)
 void
 Key_List::output_min_max (void)
 {
-  List_Node *temp = 0;
+  List_Node *temp;
   for (temp = head; temp->next; temp = temp->next)
     continue;
 
@@ -1102,7 +1117,6 @@ Key_List::output_hash_function (void)
   const int max_column = 10;
   int count = max_hash_value;
 
-#if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
   // Lookup table for converting ASCII to EBCDIC.
   static const int ascii_to_ebcdic[ACE_ASCII_SIZE] =
   {
@@ -1128,7 +1142,6 @@ Key_List::output_hash_function (void)
 
    int ebcdic_to_ascii[ACE_EBCDIC_SIZE];
    int target;
-#endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
 
   // Calculate maximum number of digits required for MAX_HASH_VALUE.
 
@@ -1156,8 +1169,22 @@ Key_List::output_hash_function (void)
                   option[CONSTANT] ? "const " : "",
                   max_hash_value < ((int) UCHAR_MAX) ? "char" : (max_hash_value < ((int) USHRT_MAX) ? "short" : "int"));
 
+  ACE_OS::printf ("\n#if defined (ACE_MVS)");
 #if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
     {
+      // We are running in EBCDIC environment.
+      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
+        {
+          if (!(count % max_column))
+            ACE_OS::printf ("\n    ");
+
+          ACE_OS::printf ("%*d,",
+                          Key_List::field_width,
+                          Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
+        }
+
+      ACE_OS::printf ("\n#else");
+
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
@@ -1171,6 +1198,28 @@ Key_List::output_hash_function (void)
     }
 #  else
     {
+      // We are running in ASCII environment.
+      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
+        ebcdic_to_ascii[count] = 0;
+
+      for (count = 0; count < ACE_ASCII_SIZE; ++count)
+        {
+          target = ascii_to_ebcdic[count];
+          ebcdic_to_ascii[target] = count;
+        }
+
+      for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
+        {
+          if (!(count % max_column))
+            ACE_OS::printf ("\n    ");
+
+          target = ebcdic_to_ascii[count];
+          ACE_OS::printf ("%*d,",
+                          Key_List::field_width,
+                          Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
+        }
+      ACE_OS::printf ("\n#else");
+
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
@@ -1182,6 +1231,7 @@ Key_List::output_hash_function (void)
         }
     }
 #endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
+   ACE_OS::printf ("\n#endif /* ACE_MVS */");
 
   // Optimize special case of ``-k 1,$''
   if (option[DEFAULTCHARS])
@@ -1432,9 +1482,6 @@ Key_List::output_lookup_array (void)
                   // Since we've already generated the keyword table
                   // we need to use it!
                   this->output_switch (1);
-
-                  delete [] duplicates;
-                  delete [] lookup_array;
                   return 1; // 1 indicates that we've changed our mind...
                 }
             }
@@ -1691,7 +1738,7 @@ Key_List::output (void)
                 {
                   output_keylength_table ();
                 }
-
+                
               if (option[POINTER] && option[TYPE])
                 {
                   output_keyword_table ();
@@ -1703,9 +1750,9 @@ Key_List::output (void)
                 {
                   output_keylength_table ();
                 }
-
+                
               output_keyword_table ();
-
+              
               if (output_lookup_array () == -1)
                 {
                   ACE_ERROR_RETURN ((LM_DEBUG,
@@ -1954,3 +2001,4 @@ Key_List::max_key_length (void)
   return max_key_len;
 }
 
+#endif /* ACE_HAS_GPERF */

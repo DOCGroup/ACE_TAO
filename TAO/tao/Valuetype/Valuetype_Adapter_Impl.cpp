@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
@@ -9,6 +8,11 @@
 
 #include "tao/ORB_Core.h"
 
+
+ACE_RCSID (Valuetype,
+           Valuetype_Adapter_Impl,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
@@ -17,7 +21,8 @@ TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
 
 CORBA::Object_ptr
 TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
-    CORBA::AbstractBase_ptr p)
+    CORBA::AbstractBase_ptr p
+  )
 {
   return p->_to_object ();
 }
@@ -32,7 +37,8 @@ TAO_Valuetype_Adapter_Impl::stream_to_value (TAO_InputCDR &cdr,
 CORBA::Boolean
 TAO_Valuetype_Adapter_Impl::stream_to_abstract_base (
     TAO_InputCDR &cdr,
-    CORBA::AbstractBase_ptr & obj)
+    CORBA::AbstractBase_ptr & obj
+  )
 {
   return cdr >> obj;
 }
@@ -80,8 +86,8 @@ TAO_Valuetype_Adapter_Impl::vf_map_unbind (const char *repo_id)
 
 {
   CORBA::ValueFactory factory = 0;
-  int const result = map_.unbind (repo_id, factory);
-  if (!result)
+  int result = map_.unbind (repo_id, factory);
+  if (! result)
     {
       factory->_remove_ref ();
     }

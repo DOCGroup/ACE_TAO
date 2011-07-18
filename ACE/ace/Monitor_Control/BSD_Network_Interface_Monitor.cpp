@@ -2,7 +2,7 @@
 
 #include "ace/Monitor_Control/BSD_Network_Interface_Monitor.h"
 
-#if defined (__NetBSD__) || defined (__OpenBSD__)
+#if defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
@@ -53,16 +53,16 @@ namespace ACE
     {
       ACE_UINT64 count = 0;
       int fd = socket (AF_INET, SOCK_DGRAM, 0);
-
-      if (fd == -1)
+      
+      if (fd == -1) 
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("socket failed\n")));
           return;
         }
 
       struct ifaddrs *ifa, *ifap;
-
-      if (getifaddrs (&ifap) < 0)
+      
+      if (getifaddrs (&ifap) < 0) 
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("getifaddrs failed\n")));
           close (fd);
@@ -70,40 +70,26 @@ namespace ACE
         }
 
       char *p = 0;
-
-      for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next)
+      
+      for (ifa = ifap; ifa != 0; ifa = ifa->ifa_next) 
         {
           if (p && strcmp (p, ifa->ifa_name) == 0)
             {
               continue;
             }
+            
+          p = ifa->ifa_name; 
 
-          p = ifa->ifa_name;
-
-#if defined (__OpenBSD__)
-          struct ifreq ifdr;
-#else
           struct ifdatareq ifdr;
-#endif
           memset (&ifdr, 0, sizeof (ifdr));
-
-#if defined (__OpenBSD__)
-          struct if_data if_data;
-          ifdr.ifr_data = reinterpret_cast<caddr_t> (&if_data);
-          strncpy (ifdr.ifr_name, ifa->ifa_name, IFNAMSIZ-1);
-#else
           strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
-#endif
-          if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
+
+          if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1) 
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("SIOCGIFDATA failed\n")));
             }
 
-#if defined (__OpenBSD__)
-          struct if_data * const ifi = &if_data;
-#else
           struct if_data * const ifi = &ifdr.ifdr_data;
-#endif
 
           if (this->lookup_str_ == "ibytes")
             {
@@ -125,7 +111,7 @@ namespace ACE
 
       freeifaddrs (ifap);
       close (fd);
-
+      
       value = count;
     }
   }
@@ -133,4 +119,4 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (__NetBSD__) || defined (__OpenBSD__) */
+#endif /* defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) */

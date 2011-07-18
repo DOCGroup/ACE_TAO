@@ -33,17 +33,7 @@ if ($sv != 0) {
 if ($server->WaitForFileTimed ($iorbase,
                                $server->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $AMH->Kill (); $AMH->TimedWait (1);
-    exit 1;
-}
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot get file <$server_iorfile>\n";
-    $AMH->Kill (); $AMH->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $AMH->Kill (); $AMH->TimedWait (1);
+    $sv->Kill (); $sv->TimedWait (1);
     exit 1;
 }
 
@@ -56,13 +46,13 @@ if ($client_status != 0) {
 
 # Clean up.
 
-$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval() + 15);
+$client_status = $CL->WaitKill (30);
 if ($client_status != 0) {
     print STDERR "ERROR: Client returned $client_status\n";
     $status = 1;
 }
 
-$amhserver= $AMH->WaitKill ($server->ProcessStopWaitInterval());
+$amhserver= $AMH->WaitKill (60);
 if ($amhserver != 0) {
     print STDERR "ERROR: AMH Server returned $amhserver\n";
     $status = 1;

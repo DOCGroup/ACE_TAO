@@ -1,17 +1,19 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *    A client program for the Database IDL module
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===================================================================
+//  = LIBRARY
+//      TAO/tests/POA/DSI/client
+//
+//  = FILENAME
+//     client.cpp
+//
+//  = DESCRIPTION
+//      A client program for the Database IDL module
+//
+//  = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -19,6 +21,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(DSI, client, "$Id$")
 
 static char *IOR = 0;
 static const ACE_TCHAR *IOR_file = 0;

@@ -9,6 +9,8 @@
 #include "ace/Truncate.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(Threads, thread_specific, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 #include "thread_specific.h"
@@ -22,6 +24,12 @@ static ACE_TSS<Errno> tss_error;
 
 // Serializes output via cout.
 static ACE_SYNCH_MUTEX printf_lock;
+
+#if defined (ACE_HAS_THREADS)
+typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
+#else
+typedef ACE_Guard<ACE_Null_Mutex> GUARD;
+#endif /* ACE_HAS_THREADS */
 
 extern "C" void
 cleanup (void *ptr)
@@ -75,27 +83,27 @@ worker (void *c)
                   "(%t) in worker 1, key = %d, ip = %x\n",
                   key,
                   ip));
-
+      
       {
         // tmp is workaround for gcc strict aliasing warning.
         void *tmp = reinterpret_cast <void *> (ip);
-
+        
         if (ACE_Thread::setspecific (key, tmp) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-
+        
         if (ACE_Thread::getspecific (key, &tmp) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-
+        
         if (ACE_Thread::setspecific (key, (void *) 0) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
       }
-
+      
       delete ip;
 
       if (ACE_Thread::keyfree (key) == -1)
@@ -115,15 +123,19 @@ worker (void *c)
       tss_error->flags (ACE_Utils::truncate_cast<int> (count));
 
       {
+        ACE_hthread_t handle;
+        ACE_Thread::self (handle);
+
         // Use the guard to serialize access to printf...
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
         // Print the thread id portably.
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) errno = %d, lineno = %d, flags = %d\n",
-                    tss_error->error (),
-                    tss_error->line (),
-                    tss_error->flags ()));
+        ACE_OS::printf ("(%t)", handle);
+
+        ACE_OS::printf (" errno = %d, lineno = %d, flags = %d\n",
+                        tss_error->error (),
+                        tss_error->line (),
+                        tss_error->flags ());
       }
       key = ACE_OS::NULL_key;
 
@@ -140,7 +152,7 @@ worker (void *c)
                   "(%t) in worker 2, key = %d, ip = %x\n",
                   key,
                   ip));
-
+      
       {
         // Tmp is workaround for GCC strict aliasing warning.
         void *tmp (reinterpret_cast <void *> (ip));
@@ -149,20 +161,20 @@ worker (void *c)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-
+        
         if (ACE_Thread::getspecific (key, &tmp) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
-
+        
         if (ACE_Thread::setspecific (key, (void *) 0) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
       }
-
+      
       delete ip;
-
+        
       if (ACE_Thread::keyfree (key) == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",

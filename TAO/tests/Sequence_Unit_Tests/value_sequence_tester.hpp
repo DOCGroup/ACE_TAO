@@ -12,7 +12,6 @@
 #include "tao/Basic_Types.h"
 
 #include "test_macros.h"
-#include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,22 +68,12 @@ struct value_sequence_tester
 
   int test_index_accessor()
   {
-    try
-      {
-        tested_sequence x;
-        x.length(8);
-        // Set x[4] to any value just for suppressing valgrind complains.
-        x[4] = 1;
+    tested_sequence x;
+    x.length(8);
 
-        tested_sequence const & y = x;
-        const_value_type & z = y[4];
-        CHECK_EQUAL(z, y[4]);
-      }
-    catch (const ::CORBA::BAD_PARAM &)
-      {
-        ACE_ERROR ((LM_ERROR, "Error: test_index_accessor: BAD_PARAM exception caught\n"));
-        return 1;
-      }
+    tested_sequence const & y = x;
+    const_value_type & z = y[4];
+    CHECK_EQUAL(z, y[4]);
     return 0;
   }
 

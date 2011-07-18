@@ -41,7 +41,8 @@ public:
 // only do this for static builds, it causes a circular
 // dependency for dynamic builds.
 static int
-TAO_Requires_PI_Initializer = TAO_PI_Init::Initializer ();
+TAO_Requires_PI_Initializer =
+  TAO_PI_Init::Initializer ();
 #endif /* TAO_AS_STATIC_LIBS */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

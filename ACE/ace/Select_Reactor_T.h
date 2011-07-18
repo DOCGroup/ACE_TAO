@@ -60,7 +60,7 @@ public:
 
   /// If @a disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
-  /// but will elide the notify() feature.  If @a mask_signals is
+  /// but will elide the <notify()> feature.  If @a mask_signals is
   /// true the reactor is "signal-safe" when dispatching handlers to
   /// signal events, whereas if @a mask_signals is false the reactor will
   /// be more efficient, but not signal-safe (which may be perfectly
@@ -106,7 +106,7 @@ public:
    * timer queue, respectively.  If @arg disable_notify_pipe is non-0 the
    * notification pipe is not created, thereby saving two I/O handles.
    *
-   * @note On Unix platforms, the @a maximum_number_of_handles parameter
+   * @note On Unix platforms, the maximum_number_of_handles parameter
    *       should be as large as the maximum number of file
    *       descriptors allowed for a given process.  This is necessary
    *       since a file descriptor is used to directly index the array
@@ -148,7 +148,6 @@ public:
    */
   virtual int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
-  //@{
   /**
    * This event loop driver that blocks for @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
@@ -166,14 +165,12 @@ public:
    * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if something goes wrong.
    *
-   * Current alertable_handle_events() is identical to
-   * handle_events().
+   * Current <alertable_handle_events> is identical to
+   * <handle_events>.
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
   virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
-  //@}
 
-  //@{
   /**
    * This method is just like the one above, except the
    * @a max_wait_time value is a reference and can therefore never be
@@ -184,7 +181,6 @@ public:
    */
   virtual int handle_events (ACE_Time_Value &max_wait_time);
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
-  //@}
 
   // = Event handling control.
 
@@ -603,7 +599,7 @@ protected:
   virtual int any_ready (ACE_Select_Reactor_Handle_Set &handle_set);
 
   /// Implement the <any_ready> method, assuming that the Sig_Guard is
-  /// being held
+  /// beign held
   virtual int any_ready_i (ACE_Select_Reactor_Handle_Set &handle_set);
 
   /// Take corrective action when errors occur.
@@ -646,8 +642,8 @@ protected:
 
   /**
    * Dispatch all the input/output/except handlers that are enabled in
-   * the @a dispatch_set.  Updates @a number_of_active_handles and
-   * @a number_of_handlers_dispatched according to the behavior of the
+   * the <dispatch_set>.  Updates <number_of_active_handles> and
+   * <number_of_handlers_dispatched> according to the behavior of the
    * number Returns -1 if the state of the <wait_set_> has changed,
    * else 0.
    */
@@ -658,9 +654,9 @@ protected:
   /**
    * Factors the dispatching of an io handle set (each WRITE, EXCEPT
    * or READ set of handles).  It updates the
-   * @a number_of_handlers_dispatched and invokes this->notify_handle
+   * <number_of_handlers_dispatched> and invokes this->notify_handle
    * for all the handles in <dispatch_set> using the @a mask,
-   * <ready_set> and @a callback parameters.  Must return -1 if
+   * <ready_set> and <callback> parameters.  Must return -1 if
    * this->state_changed otherwise it must return 0.
    */
   virtual int dispatch_io_set (int number_of_active_handles,
@@ -670,7 +666,7 @@ protected:
                                ACE_Handle_Set& ready_mask,
                                ACE_EH_PTMF callback);
 
-  /// Notify the appropriate @a callback in the context of the @a eh
+  /// Notify the appropriate <callback> in the context of the @a eh
   /// associated with @a handle that a particular event has occurred.
   virtual void notify_handle (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask,

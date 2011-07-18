@@ -14,6 +14,7 @@
 
 #include "orbsvcs/FtRtEvent/Utils/ftrtevent_export.h"
 #include "tao/Versioned_Namespace.h"
+#include "ace/OS.h"
 #include "ace/SString.h"
 
 #if defined(TAO_EXPORT_MACRO)

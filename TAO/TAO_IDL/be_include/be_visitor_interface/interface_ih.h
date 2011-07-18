@@ -1,41 +1,45 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_ih.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Interface node.
- *  This provides for code generation in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_ih.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Interface node.
+//    This provides for code generation in the implementation header
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_IH_H_
 #define _BE_INTERFACE_INTERFACE_IH_H_
 
-/**
- * @class be_visitor_interface_ih
- *
- * @brief be_visitor_interface_ih
- *
- * This is a concrete visitor to generate the implementation header for interface
- */
 class be_visitor_interface_ih : public be_visitor_interface
 {
+  //
+  // = TITLE
+  //   be_visitor_interface_ih
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the implementation header for interface
+  //
+  //
 public:
-  /// constructor
   be_visitor_interface_ih (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_interface_ih (void);
+  // destructor
 
-  /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);
+  // set the right context and make a visitor
 
   static int method_helper (be_interface *derived,
                             be_interface *node,

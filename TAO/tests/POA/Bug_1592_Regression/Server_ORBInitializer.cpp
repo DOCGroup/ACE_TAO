@@ -1,6 +1,9 @@
-// $Id$
-
 #include "Server_ORBInitializer.h"
+
+ACE_RCSID (ServantLocator,
+           Server_ORBInitializer,
+           "$Id$")
+
 #include "tao/ORB_Constants.h"
 #include "Server_Request_Interceptor.h"
 

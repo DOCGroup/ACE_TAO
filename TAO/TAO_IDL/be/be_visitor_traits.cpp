@@ -24,7 +24,7 @@
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_field.h"
 #include "be_union_branch.h"
@@ -41,6 +41,10 @@
 
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (be,
+           be_visitor_traits,
+           "$Id$")
+
 be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
@@ -55,7 +59,7 @@ be_visitor_traits::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
@@ -105,10 +109,6 @@ be_visitor_traits::visit_interface (be_interface *node)
       return 0;
     }
 
-  /// Some type of recursion can cause fprintf problems,
-  /// easily avoided by setting the flag before visit_scope().
-  node->cli_traits_gen (true);
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Since the three blocks below generate specialized (i.e., non-template)
@@ -119,22 +119,23 @@ be_visitor_traits::visit_interface (be_interface *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      const char *fname = node->full_name ();
-
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
-          << " ::" << fname << ">" << be_nl
+          << " ::" << node->name () << ">" << be_nl
           << "{" << be_idt_nl
-          << "static ::" << fname << "_ptr duplicate ("
+          << "static ::" << node->name () << "_ptr duplicate ("
           << be_idt << be_idt_nl
-          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
+          << ");" << be_uidt_nl
           << "static void release (" << be_idt << be_idt_nl
-          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
-          << "static ::" << fname << "_ptr nil (void);" << be_nl
+          << "::" << node->name () << "_ptr p" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "static ::" << node->name () << "_ptr nil (void);" << be_nl
           << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
-          << "const ::" << fname << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr);" << be_uidt  << be_uidt << be_uidt_nl
+          << "const ::" << node->name () << "_ptr p," << be_nl
+          << "TAO_OutputCDR & cdr" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "};";
 
       os->gen_endif ();
@@ -148,6 +149,7 @@ be_visitor_traits::visit_interface (be_interface *node)
                         -1);
     }
 
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -184,10 +186,6 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
-  /// Some type of recursion can cause fprintf problems,
-  /// easily avoided by setting the flag before visit_scope().
-  node->cli_traits_gen (true);
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   // I think we need to generate this only for non-defined forward
@@ -196,7 +194,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl
@@ -221,6 +219,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
+  node->cli_traits_gen (true);
   return 0;
 }
 
@@ -267,7 +266,7 @@ be_visitor_traits::visit_valuebox (be_valuebox *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "template<>" << be_nl
           << "struct " << be_global->stub_export_macro () << " Value_Traits<"
           << node->name () << ">" << be_nl
@@ -293,12 +292,6 @@ be_visitor_traits::visit_component (be_component *node)
 }
 
 int
-be_visitor_traits::visit_connector (be_connector *node)
-{
-  return this->visit_component (node);
-}
-
-int
 be_visitor_traits::visit_component_fwd (be_component_fwd *node)
 {
   return this->visit_interface_fwd (node);
@@ -320,6 +313,13 @@ int
 be_visitor_traits::visit_field (be_field *node)
 {
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  AST_Decl::NodeType nt = ft->node_type ();
+
+  // All we are trying to catch in here are anonymous array members.
+  if (nt != AST_Decl::NT_array)
+    {
+      return 0;
+    }
 
   if (ft->accept (this) == -1)
     {
@@ -440,25 +440,25 @@ be_visitor_traits::visit_array (be_array *node)
       << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void free (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice);"
-      << be_uidt
+      << name << "_slice * _tao_slice"
       << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static " << name << "_slice * dup ("
       << be_idt << be_idt_nl
-      << "const " << name << "_slice * _tao_slice);"
-      << be_uidt
+      << "const " << name << "_slice * _tao_slice"
       << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static void copy (" << be_idt << be_idt_nl
       << name << "_slice * _tao_to," << be_nl
-      << "const " << name << "_slice * _tao_from);"
-      << be_uidt
+      << "const " << name << "_slice * _tao_from"
       << be_uidt_nl
+      << ");" << be_uidt_nl
       << "static " << name << "_slice * alloc (void);"
       << be_nl
       << "static void zero (" << be_idt << be_idt_nl
-      << name << "_slice * _tao_slice);"
-      << be_uidt
-      << be_uidt
+      << name << "_slice * _tao_slice"
+      << be_uidt_nl
+      << ");" << be_uidt
       << be_uidt_nl
       << "};";
   //FUZZ: enable check_for_lack_ACE_OS

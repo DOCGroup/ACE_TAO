@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    local_server.cpp
- *
- *  $Id$
- *
- *  This server will run the ORB briefly and then make
- *  several calls on the distant MT Object.
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/NestedUpCalls/MT_Client_Test
+//
+// = FILENAME
+//    local_server.cpp
+//
+// = DESCRIPTION
+//    This server will run the ORB briefly and then make
+//    several calls on the distant MT Object.
+//
+// = AUTHORS
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "local_server.h"
 #include "tao/debug.h"
@@ -20,6 +23,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "tao/Utils/ORB_Manager.h"
+
+ACE_RCSID(MT_Client_Test, local_server, "$Id$")
 
 MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
                                 int argc,

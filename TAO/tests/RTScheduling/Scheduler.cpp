@@ -95,14 +95,13 @@ TAO_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
 void
 TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
 {
-  IOP::ServiceContext srv_con;
-  srv_con.context_id = Client_Interceptor::SchedulingInfo;
-  srv_con.context_data.length (sizeof (size_t));
-  RTScheduling::Current::IdType_var id = this->current_->id ();
-  ACE_OS::memcpy (srv_con.context_data.get_buffer (),
-                  id->get_buffer (),
+  IOP::ServiceContext* srv_con = new IOP::ServiceContext;
+  srv_con->context_id = Client_Interceptor::SchedulingInfo;
+  srv_con->context_data.length (sizeof (size_t));
+  ACE_OS::memcpy (srv_con->context_data.get_buffer (),
+                  current_->id ()->get_buffer (),
                   sizeof (size_t));
-  request_info->add_request_service_context (srv_con,
+  request_info->add_request_service_context (*srv_con,
                                              0);
 }
 
@@ -137,7 +136,7 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                       serv_cxt->context_data.get_buffer (),
                       sizeof (size_t));
 
-      guid_out = guid;
+      guid_out.ptr () = guid;
     }
   catch (const CORBA::Exception&)
     {

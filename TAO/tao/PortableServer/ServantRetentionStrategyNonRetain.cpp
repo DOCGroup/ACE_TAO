@@ -17,6 +17,10 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 
+ACE_RCSID (PortableServer,
+           ServantRetentionStrategyNonRetain,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -160,6 +164,7 @@ namespace TAO
       throw PortableServer::POA::WrongPolicy ();
     }
 
+#if !defined (CORBA_E_MICRO)
     void
     ServantRetentionStrategyNonRetain::activate_object_with_id (
       const PortableServer::ObjectId &/*id*/,
@@ -169,6 +174,7 @@ namespace TAO
     {
       throw PortableServer::POA::WrongPolicy ();
     }
+#endif
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference (
@@ -279,11 +285,6 @@ namespace TAO
       return ::PortableServer::NON_RETAIN;
     }
 
-    TAO_Active_Object_Map *
-    ServantRetentionStrategyNonRetain::get_active_object_map() const
-    {
-      return 0;
-    }
   }
 }
 

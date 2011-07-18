@@ -11,6 +11,10 @@
 #include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (CosEvent,
+           CEC_ProxyPushConsumer,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
@@ -68,7 +72,7 @@ TAO_CEC_ProxyPushConsumer::deactivate (void)
   catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
-      // indicate that an object is being disconnected twice, or some
+      // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }
@@ -320,7 +324,7 @@ TAO_CEC_ProxyPushConsumer_Guard::
      proxy_ (proxy),
      locked_ (false)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
   // If the guard fails there is not much we can do, raising an
   // exception is wrong, the client has *no* way to handle that kind
   // of error.  Even worse, there is no exception to raise in that
@@ -344,7 +348,7 @@ TAO_CEC_ProxyPushConsumer_Guard::
     return;
 
   {
-    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
     // If the guard fails there is not much we can do, raising an
     // exception is wrong, the client has *no* way to handle that kind
     // of error.  Even worse, there is no exception to raise in that

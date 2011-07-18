@@ -1,6 +1,9 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/GOA.h"
+
+ACE_RCSID (PortableGroup,
+           GOA,
+           "$Id$")
+
 #include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
 #include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
 

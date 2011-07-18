@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    old_sequence.idl
- *
- *  $Id$
- *
- *  Tests of sequence IDL constructs
- *
- *
- *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    old_struct.idl
+//
+// = DESCRIPTION
+//    Tests of sequence IDL constructs
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
 
 #include "simple.idl"
 
@@ -20,12 +23,11 @@ typedef sequence<c20,23> cc23;
 typedef sequence<char,24> c24;
 typedef sequence< sequence<long,10>, 10> c30;
 
-typedef sequence<string> cstring;
 struct TProgram
 {
-  string  path;
-  cstring argv;
-  cstring envp;
+  string           path;
+  sequence<string> argv;
+  sequence<string> envp;
 };
 
 struct sfoo

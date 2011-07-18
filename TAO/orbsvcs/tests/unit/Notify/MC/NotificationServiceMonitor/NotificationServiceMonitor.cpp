@@ -5,7 +5,7 @@
 
 #include "tao/TAO_Singleton_Manager.h"
 
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -128,7 +128,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       index = start_size + 1;
       num = data[index].data_union.num ();
 
-      if (!ACE::is_equal (num.average, 4.5))
+      if (num.average != 4.5)
         {
           error ("get_statistics() return the wrong data");
         }

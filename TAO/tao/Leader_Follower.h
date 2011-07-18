@@ -69,7 +69,7 @@ public:
   void set_upcall_thread (void);
 
   /// Is there any thread running as a leader?
-  bool leader_available (void) const;
+  int leader_available (void) const;
 
   /// A server thread is making a request.
   void set_client_thread (void);
@@ -80,11 +80,11 @@ public:
   /// Wait on the Leader/Followers loop until one event happens.
   /**
    * @param event The event we wait for, the loop iterates until the
-   * event is successful, or it fails due to timeout, and error or a
+   * event is sucessful, or it fails due to timeout, and error or a
    * connection closed.
    * @param transport The transport attached to the event
    * @param max_wait_time Limit the time spent on the loop
-   * @return Returns -1 on error, 0 or non-zero value
+   * @param return Returns -1 on error, 0 or non-zero value
    *  otherwise.
    *
    * @todo Document this better, split the Follower code to the
@@ -103,12 +103,12 @@ public:
   /// side leader-follower set.
   void reset_client_leader_thread (void) ;
 
-  /// Sets the thread ID of the leader thread in the leader-follower
+  /// sets the thread ID of the leader thread in the leader-follower
   /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
 
-  /// Checks if we are a leader thread
-  bool is_client_leader_thread (void) const;
+  /// checks if we are a leader thread
+  int is_client_leader_thread (void) const;
 
   /**
    * A leader thread is relinquishing its role, unless there are more
@@ -117,7 +117,7 @@ public:
    */
   int elect_new_leader (void);
 
-  /** @name Follower creation/destruction
+  /** @name Follower creation/destructions
    *
    * The Leader/Followers set acts as a factory for the Follower
    * objects.  Followers are used to represent a thread blocked
@@ -157,9 +157,9 @@ public:
 
   /// Checks if there are any followers available
   /**
-   * @return true if there follower set is not empty
+   * @return 1 if there follower set is not empty
    */
-  bool follower_available (void) const;
+  int follower_available (void) const;
 
   //@}
 
@@ -176,16 +176,13 @@ public:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
 
   /// Check if there are any client threads running
-  bool has_clients (void) const;
+  int has_clients (void) const;
 
   /// Accesor to the reactor
   ACE_Reactor *reactor (void);
 
   /// Called when we are out of leaders.
   void no_leaders_available (void);
-
-  /// Set the new leader generator.
-  void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
 
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
@@ -205,7 +202,7 @@ private:
    *
    */
   //@{
-  /// Remove a follower from the Followers set and promote it to the
+  /// Remote a follower from the Followers set and promote it to the
   /// leader role.
   /**
    * This is a helper routine for elect_new_leader(), after verifying

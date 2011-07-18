@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID(Bug_2174_Regression, server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = 0;
 bool remove_object = false;
 
@@ -34,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

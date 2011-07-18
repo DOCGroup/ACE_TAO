@@ -1,9 +1,12 @@
-// $Id$
-
 #include "ORT_test_IORInterceptor.h"
 #include "ObjectReferenceFactory.h"
 
 #include "tao/ORB_Constants.h"
+
+ACE_RCSID (ORT,
+           ORT_test_IORInterceptor,
+           "$Id$")
+
 
 ORT_test_IORInterceptor::ORT_test_IORInterceptor (void)
   : establish_count_ (0),

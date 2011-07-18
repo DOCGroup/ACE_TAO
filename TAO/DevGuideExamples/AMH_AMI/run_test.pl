@@ -1,120 +1,60 @@
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
-
 # $Id$
-# -*- perl -*-
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
-$status = 0;
-$debug_level = '0';
+use Env (ACE_ROOT);
+use lib "$ACE_ROOT/bin";
+use PerlACE::Run_Test;
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+$inner_ior = PerlACE::LocalFile ("inner.ior");
+$middle_ior =  PerlACE::LocalFile ("middle.ior");
+unlink $inner_ior;
+unlink $middle_ior;
 
-my $in_server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $md_server = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+# start inner_server
 
-my $inner_ior = "inner.ior";
-my $middle_ior =  "middle.ior";
+$IS = new PerlACE::Process("inner_server");
+$IS->Spawn();
 
-# Files which used by inner_server
-my $in_server_inner_ior = $in_server->LocalFile ($inner_ior);
-$in_server->DeleteFile($inner_ior);
-
-# Files which used by middle server
-my $md_server_inner_ior = $md_server->LocalFile ($inner_ior);
-my $md_server_middle_ior = $md_server->LocalFile ($middle_ior);
-$md_server->DeleteFile($inner_ior);
-$md_server->DeleteFile($middle_ior);
-
-# Files which used by inner_server
-my $client_iorfile = $client->LocalFile ($middle_ior);
-$client->DeleteFile($middle_ior);
-
-$IS = $in_server->CreateProcess ("inner_server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $in_server_inner_ior");
-
-$MD = $md_server->CreateProcess ("middle_server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $md_server_middle_ior " .
-                              "-i file://$md_server_inner_ior");
-
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
-
-$server_status = $IS->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($inner_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$inner_ior>\n";
+    $IS->Kill();
+    unlink $inner_ior;
     exit 1;
 }
 
-if ($in_server->WaitForFileTimed ($inner_ior,
-                               $in_server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$in_server_inner_ior>\n";
-    $IS->Kill (); $IS->TimedWait (1);
+
+# start middle_server
+
+$MS = new PerlACE::Process("middle_server");
+$MS->Spawn();
+
+if (PerlACE::waitforfile_timed ($middle_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$middle_ior>\n";
+    $MS->Kill();
+    unlink $middle_ior;
     exit 1;
 }
 
-if ($in_server->GetFile ($inner_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$in_server_inner_ior>\n";
-    $IS->Kill (); $IS->TimedWait (1);
-    exit 1;
-}
-if ($md_server->PutFile ($inner_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$md_server_inner_ior>\n";
-    $IS->Kill (); $IS->TimedWait (1);
-    exit 1;
-}
+# start client
 
-$server_status = $MD->Spawn ();
+$C = new PerlACE::Process("client");
+$C->Spawn();
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
+$CRET = $C->WaitKill(45);
+$IS->Kill();
+$MS->Kill();
 
-if ($md_server->WaitForFileTimed ($middle_ior,
-                               $md_server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$md_server_middle_ior>\n";
-    $MD->Kill (); $MD->TimedWait (1);
-    $IS->Kill (); $IS->TimedWait (1);
-    exit 1;
+# clean-up
+
+unlink $inner_ior;
+unlink $middle_ior;
+
+if ($CRET != 0) {
+    print STDERR "ERROR: Client returned <$CRET>\n";
+    exit 1 ;
 }
 
-if ($md_server->GetFile ($middle_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$md_server_middle_ior>\n";
-    $MD->Kill (); $MD->TimedWait (1);
-    $IS->Kill (); $IS->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($middle_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $MD->Kill (); $MD->TimedWait (1);
-    $IS->Kill (); $IS->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 30);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$IS->Kill ();
-$MD->Kill ();
-
-$in_server->DeleteFile($inner_ior);
-$md_server->DeleteFile($inner_ior);
-$md_server->DeleteFile($middle_ior);
-$client->DeleteFile($middle_ior);
-
-exit $status;
+exit 0;

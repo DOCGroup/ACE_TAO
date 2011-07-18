@@ -2,6 +2,8 @@
 
 #include "ace/OS_NS_signal.h"
 
+ACE_RCSID(ace, OS_NS_signal, "$Id$")
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_signal.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

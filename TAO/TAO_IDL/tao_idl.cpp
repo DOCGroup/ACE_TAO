@@ -64,31 +64,26 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "be_extern.h"
-#include "be_util.h"
-
 #include "idl_defines.h"
+#include "be_extern.h"
 #include "global_extern.h"
-
 #include "fe_extern.h"
-
 #include "ast_root.h"
 #include "ast_extern.h"
-
 #include "utl_string.h"
 #include "utl_identifier.h"
-
 #include "drv_extern.h"
-
 #include "tao/Version.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
 #  include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_RCSID (TAO_IDL,
+           tao_idl,
+           "$Id$")
 
 extern const ACE_TCHAR *DRV_arglist[];
 extern unsigned long DRV_argcount;
@@ -195,19 +190,15 @@ DRV_drive (const char *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  UTL_String *utl_string = 0;
-  ACE_NEW (utl_string,
-           UTL_String (s, true));
-
-  idl_global->idl_src_file (utl_string);
+  idl_global->idl_src_file (idl_global->utl_string_factory (s));
 
   // Pass through CPP.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C: preprocessing %C\n"),
-                  idl_global->prog_name (),
-                  s));
+                  "%s: preprocessing %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   DRV_pre_proc (s);
@@ -223,24 +214,19 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C: parsing %C\n"),
-                  idl_global->prog_name (),
-                  s));
+                  "%s: parsing %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   // Return value not used - error count stored in idl_global
   // and checked below.
   (void) FE_yyparse ();
 
-  // This option creates a single IDL file that includes all
-  // input files. The backend outputs their names individually.
-  if (!idl_global->multi_file_input ())
-    {
-      // Filename set by FE_yyparse(), so we output it immediately after.
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("processing %C\n"),
-                  idl_global->filename ()->get_string ()));
-    }
+  // Filename set by FE_yyparse(), so we output it immediately after.
+  ACE_DEBUG ((LM_DEBUG,
+              "processing %s\n",
+              ACE_TEXT_CHAR_TO_TCHAR (idl_global->filename ()->get_string ())));
 
   // We must do this as late as possible to make sure any
   // forward declared structs or unions contained in a
@@ -251,9 +237,9 @@ DRV_drive (const char *s)
   if (idl_global->err_count () > 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("%C: %C: found %d error%s\n"),
-                  idl_global->prog_name (),
-                  s,
+                  "%s: %s: found %d error%s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s),
                   idl_global->err_count (),
                   (idl_global->err_count () > 1
                     ? ACE_TEXT ("s")
@@ -268,9 +254,9 @@ DRV_drive (const char *s)
       && (idl_global->compile_flags () & IDL_CF_DUMP_AST))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C: dump %C\n"),
-                  idl_global->prog_name (),
-                  s));
+                  "%s: dump %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
@@ -285,9 +271,9 @@ DRV_drive (const char *s)
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C: BE processing on %C\n"),
-                  idl_global->prog_name (),
-                  s));
+                  "%s: BE processing on %s\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+                  ACE_TEXT_CHAR_TO_TCHAR (s)));
     }
 
   // Make sure all forward declared structs and unions are defined
@@ -354,7 +340,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      AST_Generator *gen = be_util::generator_init ();
+      AST_Generator *gen = be_global->generator_init ();
 
       if (0 == gen)
         {
@@ -377,35 +363,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Does various things in various backends.
       BE_post_init (DRV_files, DRV_nfiles);
 
-      FILE *output_file = 0;
-
-      if (idl_global->multi_file_input ())
-        {
-          output_file =
-            ACE_OS::fopen (idl_global->big_file_name (), "w");
-        }
-
       for (DRV_file_index = 0;
            DRV_file_index < DRV_nfiles;
            ++DRV_file_index)
         {
-          if (idl_global->multi_file_input ())
-            {
-              ACE_OS::fprintf (output_file,
-                               "#include \"%s\"\n",
-                               DRV_files[DRV_file_index]);
-            }
-          else
-            {
-              DRV_drive (DRV_files[DRV_file_index]);
-            }
-        }
-
-      if (idl_global->multi_file_input ())
-        {
-          ACE_OS::fclose (output_file);
-          DRV_drive (idl_global->big_file_name ());
-          ACE_OS::unlink (idl_global->big_file_name ());
+          DRV_drive (DRV_files[DRV_file_index]);
         }
     }
   catch (Bailout)

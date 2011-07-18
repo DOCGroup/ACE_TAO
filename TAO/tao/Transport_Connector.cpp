@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/Transport_Connector.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
@@ -25,6 +22,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           Connector,
+           "$Id$")
 
 namespace
 {
@@ -369,7 +370,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
             ACE_TEXT ("transport [%d], Connection failed. (%d)\n"),
-                      transport->id (), ACE_ERRNO_GET));
+                      transport->id (), errno));
         }
 
       // purge from the connection cache.  If we are not in the
@@ -439,7 +440,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
                     ACE_TEXT("TAO (%P|%t) - TAO_Connector::wait_for_transport, ")
                     ACE_TEXT(" unknown error waiting on transport [%d] (%d)\n"),
                     transport->id (),
-                    ACE_ERRNO_GET));
+                    errno));
                 }
             }
           // purge from the connection cache.  If we are not in the
@@ -733,14 +734,7 @@ TAO_Connector::wait_for_connection_completion (
       result = tcm.cache_transport (&desc, transport);
       if (result == -1)
       {
-        if (TAO_debug_level > 2)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
-                      ACE_TEXT("wait_for_connection_completion, ")
-                      ACE_TEXT("transport [%d], Failed to cache transport.\n"),
-                      transport->id ()));
-        }
+
       }
     }
   else if (transport->connection_handler ()->is_timeout ())
@@ -764,7 +758,7 @@ TAO_Connector::wait_for_connection_completion (
                       ACE_TEXT("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT("wait_for_connection_completion, ")
                       ACE_TEXT("transport [%d], Connection failed. (%d) %p\n"),
-                      transport->id (), ACE_ERRNO_GET, ACE_TEXT("")));
+                      transport->id (), errno, ACE_TEXT("")));
         }
       result = -1;
     }
@@ -849,7 +843,7 @@ TAO_Connector::wait_for_connection_completion (
                                       ACE_TEXT("wait_for_connection_completion, ")
                                       ACE_TEXT("transport [%d], wait for completion failed")
                                       ACE_TEXT(" (%d) %p\n"),
-                                      transport->id (), ACE_ERRNO_GET, ACE_TEXT("")));
+                                      transport->id (), errno, ACE_TEXT("")));
                         }
                       TAO_Connection_Handler *con =
                         transport->connection_handler ();
@@ -886,23 +880,6 @@ TAO_Connector::wait_for_connection_completion (
   // we need a connected one we will block later to make sure
   // it is connected
   return true;
-}
-
-void
-TAO_Connector::cleanup_pending (TAO_Transport *&the_winner,
-                                TAO_Transport **transport,
-                                unsigned int count)
-{
-  // It is possible that we have more than one connection that happened
-  // to complete, or that none completed. Therefore we need to traverse
-  // the list and ensure that all of the losers are closed.
-  for (unsigned int i = 0; i < count; i++)
-    {
-      if (transport[i] != the_winner)
-        this->check_connection_closure (transport[i]->connection_handler());
-      // since we are doing this on may connections, the result isn't
-      // particularly important.
-    }
 }
 
 bool
@@ -966,7 +943,16 @@ TAO_Connector::wait_for_connection_completion (
           }
     }
 
-  this->cleanup_pending (the_winner, transport, count);
+  // It is possible that we have more than one connection that happened
+  // to complete, or that none completed. Therefore we need to traverse
+  // the list and ensure that all of the losers are closed.
+  for (unsigned int i = 0; i < count; i++)
+    {
+      if (transport[i] != the_winner)
+        this->check_connection_closure (transport[i]->connection_handler());
+      // since we are doing this on may connections, the result isn't
+      // particularly important.
+    }
 
   // In case of errors.
   if (the_winner == 0)

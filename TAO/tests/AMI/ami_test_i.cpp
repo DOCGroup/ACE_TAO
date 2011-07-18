@@ -13,8 +13,11 @@
  */
 //=============================================================================
 
+
 #include "ami_test_i.h"
 #include "tao/debug.h"
+
+ACE_RCSID(AMI, ami_test_i, "$Id$")
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb,
                         CORBA::Long in_l,
@@ -69,6 +72,7 @@ AMI_Test_i::shutdown (void)
   this->orb_->shutdown (0);
 }
 
+
 CORBA::Long
 AMI_Test_i::yadda (void)
 {
@@ -76,6 +80,7 @@ AMI_Test_i::yadda (void)
               "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
   return yadda_;
 }
+
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda)

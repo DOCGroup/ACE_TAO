@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_LoadAverage.h"
 #include "orbsvcs/LoadBalancing/LB_LoadMap.h"
 #include "orbsvcs/LoadBalancing/LB_Random.h"
@@ -11,6 +9,12 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (LoadBalancing,
+           LB_LoadAverage,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadAverage.inl"
@@ -29,7 +33,7 @@ TAO_LB_LoadAverage::TAO_LB_LoadAverage (PortableServer::POA_ptr poa)
 {
   // A load map that retains previous load values at a given location
   // and lock are only needed if dampening is enabled, i.e. non-zero.
-  if (!ACE::is_equal (this->dampening_, 0.0f))
+  if (this->dampening_ != 0)
     {
       ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
 
@@ -99,7 +103,7 @@ TAO_LB_LoadAverage::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = 0;
+      TAO_LB_LoadMap::ENTRY * entry;
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -273,7 +277,7 @@ TAO_LB_LoadAverage::analyze_loads (
               CORBA::Float percent_diff =
                   (tmp[j].value / avg_load.value) - 1;
 
-              if (ACE::is_equal (tmp[j].value, avg_load.value))
+              if (tmp[j].value == avg_load.value)
               {
                 percent_diff = 0;
               }

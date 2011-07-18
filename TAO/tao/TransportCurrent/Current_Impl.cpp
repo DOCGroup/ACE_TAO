@@ -19,6 +19,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
 namespace TAO
 {
   namespace Transport

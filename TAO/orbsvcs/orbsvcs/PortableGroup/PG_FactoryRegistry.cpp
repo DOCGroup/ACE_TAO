@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define METHOD_ENTRY(name)            \
   if (TAO_debug_level <= 6){} else    \
     ACE_DEBUG (( LM_DEBUG,            \
-    "Enter %C\n", #name               \
+    "Enter %s\n", #name               \
       ))
 
 // Use this macro to return from CORBA methods
@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define METHOD_RETURN(name)           \
   if (TAO_debug_level <= 6){} else    \
     ACE_DEBUG (( LM_DEBUG,            \
-      "Leave %C\n", #name             \
+      "Leave %s\n", #name             \
       ));                             \
   return /* value goes here */
 
@@ -103,7 +103,7 @@ int TAO::PG_FactoryRegistry::parse_args (int argc, ACE_TCHAR * argv[])
       break;
     }
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -244,7 +244,8 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
-    this->naming_context_->rebind (this->this_name_, this->this_obj_.in());
+    this->naming_context_->rebind (this->this_name_, this->this_obj_.in()  //CORBA::Object::_duplicate(this_obj)
+                            );
   }
 
   return result;
@@ -277,10 +278,12 @@ TAO::PG_FactoryRegistry::RoleInfo::RoleInfo(size_t estimated_number_entries)
 {
 }
 
+
 void TAO::PG_FactoryRegistry::register_factory (
     const char * role,
     const char * type_id,
-    const PortableGroup::FactoryInfo & factory_info)
+    const PortableGroup::FactoryInfo & factory_info
+  )
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
@@ -299,7 +302,7 @@ void TAO::PG_FactoryRegistry::register_factory (
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
 
-      ACE_auto_ptr_reset (safe_entry, role_info);
+      ACE_AUTO_PTR_RESET (safe_entry, role_info, RoleInfo);
       role_info->type_id_ = type_id;
     }
   else
@@ -347,7 +350,8 @@ void TAO::PG_FactoryRegistry::register_factory (
 
 void TAO::PG_FactoryRegistry::unregister_factory (
     const char * role,
-    const PortableGroup::Location & location)
+    const PortableGroup::Location & location
+  )
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory);
 
@@ -479,7 +483,8 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_role (
 }
 
 void TAO::PG_FactoryRegistry::unregister_factory_by_location (
-    const PortableGroup::Location & location)
+    const PortableGroup::Location & location
+  )
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::unregister_factory_by_location);
 
@@ -591,7 +596,8 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 
 ::PortableGroup::FactoryInfos * TAO::PG_FactoryRegistry::list_factories_by_role (
     const char * role,
-    CORBA::String_out type_id)
+    CORBA::String_out type_id
+  )
 {
   METHOD_ENTRY(TAO::PG_FactoryRegistry::list_factories_by_role);
 

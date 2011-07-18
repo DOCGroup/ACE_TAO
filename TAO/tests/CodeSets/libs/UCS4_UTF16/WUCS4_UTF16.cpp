@@ -1,22 +1,27 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    WUCS4_UTF16.cpp
- *
- *  $Id$
- *
- *  Defines the arrays required to convert between UCS-4 a 4 byte wide char
- *  codeset, and UCS-16, aka unicode, a 2-byte codeset.
- *
- *
- *  @author Phil Mesnier <mesnier_p@ociweb.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+//
+// = FILENAME
+//    WUCS4_UTF16.cpp
+//
+// = DESCRIPTION
+//    Defines the arrays required to convert between UCS-4 a 4 byte wide char
+//    codeset, and UCS-16, aka unicode, a 2-byte codeset.
+//
+// = AUTHOR
+//    Phil Mesnier <mesnier_p@ociweb.com>
+//
+// ============================================================================
 
 #include "WUCS4_UTF16.h"
-#include "ace/OS_Memory.h"
+#include "ace/OS.h"
+
+ACE_RCSID(UCS4_UTF16, WUCS4_UTF16, "$Id$")
 
 // ****************************************************************
 
@@ -495,7 +500,7 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
       ACE_UTF16_T bom = ACE_UNICODE_BOM_CORRECT;
       ACE_CDR::ULong length = len + count_potential_surrogates (x, len);
       ACE_CDR::ULong l = length * ACE_UTF16_CODEPOINT_SIZE;
-
+      
       if (this->write_4 (cdr, &l) && x != 0)
         {
           this->write_2 (cdr, &bom);
@@ -505,21 +510,21 @@ WUCS4_UTF16::write_wstring (ACE_OutputCDR & cdr,
   else
     {
       ACE_CDR::ULong l = len + 1;
-
+      
       if (this->write_4 (cdr, &l))
         {
           if (x != 0)
             {
               return this->write_wchar_array (cdr, x, len + 1);
             }
-          else
+          else 
             {
               ACE_UTF16_T s = 0;
               return this->write_2 (cdr, &s);
             }
         }
     }
-
+    
   return 0;
 }
 
@@ -577,7 +582,7 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
       sbpos += encode_utf16 (& sb[sbpos], x[i]);
     }
 #if defined (ACE_ENABLE_SWAP_ON_WRITE)
-  // @note this will rarely be enabled.
+  // NOTE this will rarely be enabled.  See the comments in ace/OS.h
   if (cdr.do_byte_swap())
     {
       // note can't use swap_2_array because in-place swaps are not safe :-<

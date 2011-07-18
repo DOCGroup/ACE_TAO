@@ -1,21 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ub_any_seq.cpp
- *
- *  $Id$
- *
- *  tests unbounded Any sequences
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    ub_any_seq.cpp
+//
+// = DESCRIPTION
+//    tests unbounded Any sequences
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "ub_any_seq.h"
 #include "tao/debug.h"
+
+ACE_RCSID (Param_Test,
+           ub_any_seq,
+           "$Id$")
 
 const CORBA::ULong TEST_SEQ_LENGTH = 5;
 const CORBA::ULong NUM_TEST_TYPES = 4;
@@ -78,7 +85,6 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
 
   // Must be set explicitly (CORBA spec)
   this->in_->length (TEST_SEQ_LENGTH);
-  this->inout_->length (TEST_SEQ_LENGTH);
 
   for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
@@ -133,8 +139,8 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "setting constant string\n" ));
-          this->in_[i] <<= "Const string";
-          this->inout_[i] <<= 0; // different from in_
+                this->in_[i] <<= "Const string";
+                this->inout_[i] <<= 0; // different from in_
           break;
         }
     }

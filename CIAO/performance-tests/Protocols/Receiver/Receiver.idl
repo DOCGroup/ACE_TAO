@@ -3,8 +3,6 @@
 #include <Components.idl>
 #include "../common/Protocols.idl"
 
-#pragma ciao lem "ReceiverE.idl"
-
 module Protocols
 {
   interface Receiver_Controller

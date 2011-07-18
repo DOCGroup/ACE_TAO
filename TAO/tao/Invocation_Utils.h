@@ -70,16 +70,6 @@ namespace TAO
     TAO_DII_DEFERRED_INVOCATION,
     TAO_DII_ASYNCH_INVOCATION
   };
-
-  enum Forward_Once_Exception
-    {
-      FOE_NON              = 0x0,
-      FOE_OBJECT_NOT_EXIST = 0x1,
-      FOE_COMM_FAILURE     = 0x2,
-      FOE_TRANSIENT        = 0x4,
-      FOE_INV_OBJREF       = 0x8,
-      FOE_ALL              = 0xFFFFFFFF
-    };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

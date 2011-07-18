@@ -14,11 +14,9 @@ Thread_Pool::close (u_long)
   return 0;
 }
 
-Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
-                          ACE_Thread_Manager *thr_mgr,
+Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
                           int n_threads)
   : ACE_Task<ACE_SYNCH> (thr_mgr),
-  orb_(CORBA::ORB::_duplicate(orb)),
   nt_(n_threads)
 {
   if (this->activate (THR_NEW_LWP,
@@ -37,15 +35,14 @@ Thread_Pool::shutdown (void)
 {
   thr_mgr_->cancel_grp (grp_id_);
 
-  int n_threads = nt_.value ();
-  for (int i = 0; i < n_threads; ++i)
+  for (int i = 0; i < nt_; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) eof, sending block for thread=%d\n",
                   i + 1));
       ACE_Message_Block *mb1;
       ACE_NEW_RETURN (mb1,
-                      ACE_Message_Block ((char*) Test::Echo::_nil ()),
+                      ACE_Message_Block ((char*)0),
                       -1);
       mb1->length (0);
 
@@ -65,9 +62,9 @@ Thread_Pool::shutdown (void)
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
-  char * charData = (char *) Test::Echo::_duplicate (echoptr);
+  char * charData = (char *)echoptr;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
   ACE_NEW_RETURN(mb, ACE_Message_Block(charData), -1);
   return this->put (mb);
 }
@@ -95,7 +92,7 @@ Thread_Pool::svc (void)
 
   for (;; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -125,7 +122,8 @@ Thread_Pool::svc (void)
 
       Test::Echo_var echo = (Test::Echo_ptr)mb->base();
 
-      mb->release ();
+      // Echo_var is responsible for deallocating this.
+      // mb->release ();
 
       if (CORBA::is_nil(echo.in()))
         {
@@ -170,12 +168,6 @@ Thread_Pool::svc (void)
             }
         }
 
-    }
-
-  --nt_;
-  if (nt_ == 0)
-    {
-      orb_->shutdown (0);
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us

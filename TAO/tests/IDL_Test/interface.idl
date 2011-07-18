@@ -1,19 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface.idl
- *
- *  $Id$
- *
- *  This file contains examples of IDL code that has
- *  caused problems in the past for the TAO IDL
- *  compiler. This test is to make sure the problems
- *  stay fixed.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    interface.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
 
 
 // Used to be a problem in the get() and set()
@@ -123,10 +128,8 @@ interface Client
 // attributes.
 interface AttributeTester
 {
-  typedef string string_1[1];
-
   attribute string a_su;
-  attribute string_1 a_sb;
+  attribute string<1> a_sb;
 };
 
 // All of the 'recursion' below is legal.
@@ -207,58 +210,4 @@ module i2
     {
       string getstr3();
     };
-};
-
-/// Tests acceptance of legal redefinitions (of
-/// constants, exceptions and types) in a derived
-/// interface.
-module redefs
-{
-  interface base
-  {
-    const long lconst = -5;
-
-    exception ex
-    {
-      string info;
-    };
-
-    struct foo
-    {
-      short index;
-    };
-  };
-
-  interface derived : base
-  {
-    const long lconst = 44;
-
-    exception ex
-    {
-      long serial;
-    };
-
-    struct foo
-    {
-      string str;
-    };
-  };
-};
-
-// Had to relocate the spot where the typedef is marked as
-// having its arg traits instantiation already generated.
-// Otherwise, when the scope of the base interface is visited
-// as part of this process, we had infinite recursion and a
-// stack overflow.
-module Rec_Arg_Traits
-{
-  interface base
-  {
-    typedef Rec_Arg_Traits::base plan_stub_type;
-  };
-
-  interface derived : Rec_Arg_Traits::base
-  {
-    void remove_task (in plan_stub_type listener);
-  };
 };

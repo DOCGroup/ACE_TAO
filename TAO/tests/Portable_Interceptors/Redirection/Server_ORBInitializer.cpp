@@ -1,7 +1,10 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Server_ORBInitializer.h"
+
+ACE_RCSID (Redirection,
+           Server_ORBInitializer,
+           "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -30,9 +33,6 @@ Server_ORBInitializer::post_init (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-
-  PortableInterceptor::ServerRequestInterceptor_var
-    server_interceptor = interceptor;
 
   info->add_server_request_interceptor (interceptor);
 }

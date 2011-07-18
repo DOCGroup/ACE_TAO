@@ -5,6 +5,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 
+ACE_RCSID(ace, XtReactor, "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_XtReactor)
@@ -201,18 +203,74 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
   // Make sure we have a valid context
   ACE_ASSERT (this->context_ != 0);
 
-#if defined ACE_WIN32
-  // Let's handle this special case before we do any real work.
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_NOTSUP_RETURN(-1);
-#endif /* ACE_WIN32 */
-
   int result = ACE_Select_Reactor::register_handler_i (handle,
                                                        handler, mask);
   if (result == -1)
     return -1;
 
-  synchronize_XtInput (handle);
+  int condition = 0;
+
+#if !defined ACE_WIN32
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
+    ACE_SET_BITS (condition, XtInputReadMask);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+    ACE_SET_BITS (condition, XtInputWriteMask);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+    ACE_SET_BITS (condition, XtInputExceptMask);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+    ACE_SET_BITS (condition, XtInputReadMask);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
+      ACE_SET_BITS (condition, XtInputWriteMask); // connected, you may write
+      ACE_SET_BITS (condition, XtInputReadMask);  // connected, you have data/err
+  }
+#else
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
+    ACE_SET_BITS (condition, XtInputReadWinsock);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+    ACE_SET_BITS (condition, XtInputWriteWinsock);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+    ACE_NOTSUP_RETURN(-1);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+    ACE_SET_BITS (condition, XtInputReadWinsock);
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
+      ACE_SET_BITS (condition, XtInputWriteWinsock); // connected, you may write
+      ACE_SET_BITS (condition, XtInputReadWinsock);  // connected, you have data/err
+  }
+#endif /* !ACE_WIN32 */
+
+  if (condition != 0)
+    {
+      ACE_XtReactorID *XtID = this->ids_;
+
+      while(XtID)
+        {
+          if (XtID->handle_ == handle)
+            {
+              ::XtRemoveInput (XtID->id_);
+
+              XtID->id_ = ::XtAppAddInput (this->context_,
+                                           (int) handle,
+                                           (XtPointer) condition,
+                                           InputCallbackProc,
+                                           (XtPointer) this);
+              return 0;
+            }
+          else
+            XtID = XtID->next_;
+        }
+
+      ACE_NEW_RETURN (XtID,
+                      ACE_XtReactorID,
+                      -1);
+      XtID->next_ = this->ids_;
+      XtID->handle_ = handle;
+      XtID->id_ = ::XtAppAddInput (this->context_,
+                                  (int) handle,
+                                  (XtPointer) condition,
+                                  InputCallbackProc,
+                                  (XtPointer) this);
+      this->ids_ = XtID;
+    }
   return 0;
 }
 
@@ -232,13 +290,53 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_XtReactor::remove_handler_i");
 
-  int result  = ACE_Select_Reactor::remove_handler_i (handle,
-                                                      mask);
-  if (result == -1)
-    return -1;
+  // In the registration phase we registered first with
+  // ACE_Select_Reactor and then with X.  Now we are now doing things
+  // in reverse order.
 
-  synchronize_XtInput (handle);
-  return 0;
+  // First clean up the corresponding X11Input.
+  this->remove_XtInput (handle);
+
+  // Now let the reactor do its work.
+  return ACE_Select_Reactor::remove_handler_i (handle,
+                                               mask);
+}
+
+void
+ACE_XtReactor::remove_XtInput (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_XtReactor::remove_XtInput");
+
+  ACE_XtReactorID *XtID = this->ids_;
+
+  if (XtID)
+    {
+      if (XtID->handle_ == handle)
+        {
+          ::XtRemoveInput (XtID->id_);
+          this->ids_ = XtID->next_;
+          delete XtID;
+          return;
+        }
+
+      ACE_XtReactorID *NextID = XtID->next_;
+
+      while (NextID)
+        {
+          if (NextID->handle_ == handle)
+            {
+              ::XtRemoveInput(NextID->id_);
+              XtID->next_ = NextID->next_;
+              delete NextID;
+              return;
+            }
+          else
+            {
+              XtID = NextID;
+              NextID = NextID->next_;
+            }
+        }
+    }
 }
 
 int
@@ -247,122 +345,6 @@ ACE_XtReactor::remove_handler_i (const ACE_Handle_Set &handles,
 {
   return ACE_Select_Reactor::remove_handler_i (handles,
                                                mask);
-}
-
-int
-ACE_XtReactor::suspend_i (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_XtReactor::suspend_i");
-
-  int result  = ACE_Select_Reactor::suspend_i (handle);
-
-  if (result == -1)
-    return -1;
-
-  synchronize_XtInput (handle);
-  return 0;
-}
-
-int
-ACE_XtReactor::resume_i (ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_XtReactor::resume_i");
-
-  int result  =  ACE_Select_Reactor::resume_i (handle);
-
-  if (result == -1)
-    return -1;
-
-  synchronize_XtInput (handle);
-  return 0;
-}
-
-void
-ACE_XtReactor::synchronize_XtInput(ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_XtReactor::synchronize_XtInput");
-
-  // The idea here is to call this function after the base class has
-  // processed the register/remove/suspend/resume_handler request. The
-  // resulting mask is used to find out which XtInput mask we need.
-
-  // Find existing handler in linked list.
-  ACE_XtReactorID **XtID = &(this->ids_);
-
-  while (*XtID && (*XtID)->handle_ != handle)
-    XtID = &((*XtID)->next_);
-
-  // Remove existing input handler.
-  if (*XtID)
-    ::XtRemoveInput ((*XtID)->id_);
-
-  int condition = compute_Xt_condition (handle);
-
-  if (condition == 0) // No input handler needed.
-    {
-      if (*XtID)
-        {
-          // Remove linked list entry.
-          ACE_XtReactorID *toDelete  = *XtID;
-          *XtID = (*XtID)->next_;
-          delete toDelete;
-        }
-      return;
-    }
-
-  if (*XtID == 0)
-    {
-      // Create new node.
-      ACE_XtReactorID *tmp = new ACE_XtReactorID;
-      tmp->next_ = this->ids_;
-      tmp->handle_ = handle;
-      this->ids_ = tmp;
-      XtID = &(this->ids_);
-    }
-
-  // Finally, add input handler.
-  (*XtID)->id_ = ::XtAppAddInput (this->context_,
-                                  (int) handle,
-                                  (XtPointer) condition,
-                                  InputCallbackProc,
-                                  (XtPointer) this);
-}
-
-int
-ACE_XtReactor::compute_Xt_condition(ACE_HANDLE handle)
-{
-  ACE_TRACE ("ACE_XtReactor::compute_Xt_condition");
-
-  // Retrieve current wait mask from base class.
-  // The returned value is either a combination of READ/WRITE/EXCEPT_MASK
-  // or -1.
-  int mask =this->bit_ops(handle,
-                          0,
-                          this->wait_set_,
-                          ACE_Reactor::GET_MASK);
-
-  if (mask == -1) // No active mask.
-    return 0;
-
- int condition = 0;
-
-#if !defined ACE_WIN32
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, XtInputReadMask);
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, XtInputWriteMask);
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (condition, XtInputExceptMask);
-#else
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (condition, XtInputReadWinsock);
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (condition, XtInputWriteWinsock);
-  // EXCEPT_MASK is not supported for WIN32. As this was
-  // already handled in register_handler_i, no check here.
-#endif /* !ACE_WIN32 */
-
-  return condition;
 }
 
 // The following functions ensure that there is an Xt timeout for the

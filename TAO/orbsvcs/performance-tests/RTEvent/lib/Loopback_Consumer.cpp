@@ -10,6 +10,10 @@
 #include "Implicit_Deactivator.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
+ACE_RCSID (PERF_RTEC,
+           Loopback_Consumer,
+           "$Id$")
+
 Loopback_Consumer::
 Loopback_Consumer (CORBA::Long experiment_id,
                    CORBA::Long event_type,
@@ -17,7 +21,7 @@ Loopback_Consumer (CORBA::Long experiment_id,
                    PortableServer::POA_ptr poa)
   : experiment_id_ (experiment_id)
   , event_type_ (event_type)
-  , supplier_ (PortableServer::Servant_var<Loopback_Supplier>::_duplicate (supplier))
+  , supplier_ (TAO::Utils::Servant_Var<Loopback_Supplier>::_duplicate (supplier))
   , default_POA_ (PortableServer::POA::_duplicate (poa))
 {
 }

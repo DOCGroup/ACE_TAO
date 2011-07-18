@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/ClientRequestDetails.h"
 #include "tao/SystemException.h"
 
@@ -8,6 +6,10 @@
 #if !defined (__ACE_INLINE__)
 #include "tao/PI/ClientRequestDetails.inl"
 #endif /* defined INLINE */
+
+ACE_RCSID (PI,
+           ClientRequestDetails,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

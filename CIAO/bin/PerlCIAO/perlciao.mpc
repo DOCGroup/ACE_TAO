@@ -1,0 +1,10 @@
+
+// $Id$
+
+project(PerlCIAO) : script {
+  Script_Files {
+    TestUtils.pm
+    TestUtils_Base.pm
+  }
+  custom_only=1
+}

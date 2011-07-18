@@ -74,10 +74,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 {
 public:
+  AST_Root (void);
+
   AST_Root (UTL_ScopedName *n);
 
   virtual ~AST_Root (void);
-
+  
   virtual unsigned long nmembers (void);
 
   // Narrowing.
@@ -93,11 +95,9 @@ public:
 
   // Cleanup.
   virtual void destroy ();
-
+  
   // Final cleanup.
   void fini (void);
-
-  static AST_Decl::NodeType const NT;
 
 private:
   friend class FE_Declarator;

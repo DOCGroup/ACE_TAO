@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
 #include "ace/Auto_Ptr.h"
@@ -8,6 +6,10 @@
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (ace,
+           CDR_Stream,
+           "$Id$")
 
 // ****************************************************************
 
@@ -531,7 +533,7 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
 
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
-#if defined (__arm__) && !defined (ACE_HAS_IPHONE)
+#if defined (__arm__)
       // Convert to Intel format (12345678 => 56781234)
       const char *orig = reinterpret_cast<const char *> (x);
       char *target = buf;
@@ -1610,7 +1612,7 @@ ACE_InputCDR::read_8 (ACE_CDR::ULongLong *x)
   if (this->adjust (ACE_CDR::LONGLONG_SIZE, buf) == 0)
     {
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-#  if defined (__arm__) && !defined (ACE_HAS_IPHONE)
+#  if defined (__arm__)
       if (!this->do_byte_swap_)
         {
           // Convert from Intel format (12345678 => 56781234)

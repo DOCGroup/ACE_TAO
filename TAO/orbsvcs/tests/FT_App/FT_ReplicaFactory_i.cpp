@@ -72,7 +72,6 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , replicas_ ()
   , empty_slots_(0)
   , quit_requested_(0)
-  , name_persistent_file_(ACE_TEXT(""))
 {
   char const * repo_id =
     FT_TEST::_tc_TestReplica->id ();
@@ -89,8 +88,9 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
 
 FT_ReplicaFactory_i::~FT_ReplicaFactory_i ()
 {
+  //scope the guard
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+    InternalGuard guard (this->internals_);
 
     // be sure all replicas are gone
     // before this object disappears
@@ -160,7 +160,7 @@ int FT_ReplicaFactory_i::write_ior(const ACE_TCHAR * outputFile, const char * io
 
 int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:f:i:l:t:p:qu"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:f:i:l:t:qu"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -208,11 +208,6 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
         this->test_output_file_ = get_opts.opt_arg ();
         break;
       }
-      case 'p':
-      {
-       this->name_persistent_file_ = get_opts.opt_arg ();
-       break;
-      }
 
       case '?':
         // fall thru
@@ -225,7 +220,6 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
                            " -i <registration: role>\n"
                            " -l <registration: location>\n"
                            " -t <test replica ior file>\n"
-                           " -p <name presistent file>\n"
                            " -u{nregister by location}\n"
                            " -q{uit on idle}\n",
                            argv [0]),
@@ -233,7 +227,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       break;
     }
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -481,14 +475,15 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
     this->this_name_.length (1);
     this->this_name_[0].id = CORBA::string_dup (this->ns_name_.c_str ());
 
-    this->naming_context_->rebind (this->this_name_, this_obj.in());
+    this->naming_context_->rebind (this->this_name_, this_obj.in()  // CORBA::Object::_duplicate(this_obj)
+                            );
   }
 
   // if we're testing.  Create a replica at startup time
   if (this->test_output_file_ != 0)
   {
     // shouldn't be necessary, but create_replica assumes this
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 1);
+    InternalGuard guard (this->internals_);
     FT_TestReplica_i * replica = create_replica ("test");
 
     PortableServer::POA_var poa = replica->_default_POA ();
@@ -559,7 +554,7 @@ int FT_ReplicaFactory_i::fini (void)
 
 void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * replica)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+  InternalGuard guard (this->internals_);
   if (id < this->replicas_.size())
   {
     if(this->replicas_[id] == replica)
@@ -593,11 +588,12 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
 CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
+  )
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::create_object);
   ACE_UNUSED_ARG (type_id);
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, CORBA::Object::_nil ());
+  InternalGuard guard (this->internals_);
 
   ::TAO::PG_Property_Set decoder (the_criteria);
 
@@ -674,16 +670,17 @@ FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
   this->replicas_[factoryId] = pFTReplica;
   this->empty_slots_ -= 1;
 
-  pFTReplica->init (this->orb_, this->name_persistent_file_);
+  pFTReplica->init (this->orb_);
   return pFTReplica;
 }
 
 void FT_ReplicaFactory_i::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
+  )
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::delete_object);
 
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+  InternalGuard guard (this->internals_);
 
   CORBA::ULong factoryId;
   factory_creation_id >>= factoryId;
@@ -708,13 +705,13 @@ void FT_ReplicaFactory_i::delete_object (
 CORBA::Boolean FT_ReplicaFactory_i::is_alive (void)
 {
   METHOD_RETURN(FT_ReplicaFactory_i::is_alive)
-    true;
+    1;
 }
 
 void FT_ReplicaFactory_i::shutdown (void)
 {
   METHOD_ENTRY(FT_FaultDetectorFactory_i::shutdown);
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+  InternalGuard guard (this->internals_);
   shutdown_i ();
   this->quit_requested_ = 1;
   METHOD_RETURN(FT_FaultDetectorFactory_i::shutdown);

@@ -3,6 +3,7 @@
 // This supplier requires that the Notify_Service is started with
 // -IOROutput notify.ior -channel -nonamesvc
 // at minimum.
+const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
 
 #include "Event_i.h"
 
@@ -15,39 +16,8 @@
 
 #include <iostream>
 #include <stdexcept>
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ec_ior_output_file = ACE_TEXT ("ec.ior");
-const ACE_TCHAR *hostname = ACE_TEXT ("localhost");
-const ACE_TCHAR *port = ACE_TEXT("8888");
-//const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:h:p:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ec_ior_output_file = get_opts.opt_arg ();
-        break;
-      case 'h':
-        hostname = get_opts.opt_arg ();
-        break;
-      case 'p':
-        port = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-      ;
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+const char* ec_ior_output_file = "ec.ior";
 
 class TestConsumer : public POA_CosEventComm::PushConsumer
 {
@@ -165,9 +135,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(ac, av);
 
-    if (parse_args (ac, av) != 0)
-      return 1;
-
     CORBA::ValueFactoryBase_var factory = new MyEventFactory;
     CORBA::String_var id = _tc_MyEvent->id();
     orb->register_value_factory(id.in(), factory.in());
@@ -177,14 +144,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
       PortableServer::POA::_unchecked_narrow(obj.in());
     PortableServer::POAManager_var mgr = poa->the_POAManager();
 
-    // "corbaloc::localhost:8888/NotifyEventChannelFactory"
-    ACE_CString notify_ior ("corbaloc::");
-    notify_ior += ACE_TEXT_ALWAYS_CHAR (hostname);
-    notify_ior += ":";
-    notify_ior += ACE_TEXT_ALWAYS_CHAR (port);
-    notify_ior += "/NotifyEventChannelFactory";
-
-    obj = orb->string_to_object(notify_ior.c_str());
+    obj = orb->string_to_object(notify_ior);
     CosNotifyChannelAdmin::EventChannelFactory_var ecf
       = CosNotifyChannelAdmin::EventChannelFactory::_unchecked_narrow(obj.in());
 

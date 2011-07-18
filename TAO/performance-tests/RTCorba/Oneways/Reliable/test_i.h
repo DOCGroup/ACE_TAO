@@ -1,32 +1,34 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   test_i.h
- *
- *  $Id$
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/performance-tests/RTCorba/Oneways/Reliable
+//
+// = FILENAME
+//   test_i.h
+//
+// = AUTHOR
+//   Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_RELIABLE_TEST_I_H
 #define TAO_RELIABLE_TEST_I_H
 
 #include "testS.h"
 
-/**
- * @class Test_i
- *
- * @brief An implementation for the Test interface
- *
- * Implements the Test interface in test.idl
- */
 class Test_i : public POA_Test
 {
+  // = TITLE
+  //   An implementation for the Test interface
+  //
+  // = DESCRIPTION
+  //   Implements the Test interface in test.idl
+  //
 public:
-  /// ctor
   Test_i (CORBA::ORB_ptr orb);
+  // ctor
 
   // = The Test methods.
   void oneway_payload_test (const Test::data &d);
@@ -38,8 +40,8 @@ public:
   void shutdown (void);
 
 private:
-  /// The ORB
   CORBA::ORB_var orb_;
+  // The ORB
 };
 
 #if defined(__ACE_INLINE__)

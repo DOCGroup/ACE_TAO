@@ -64,7 +64,7 @@ namespace TAO
      */
     class Accept_Strategy
       : public TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
-                                   ACE_SSL_SOCK_Acceptor>
+                                   ACE_SSL_SOCK_ACCEPTOR>
     {
     public:
 
@@ -85,6 +85,7 @@ namespace TAO
        * handshake.
        */
       const ACE_Time_Value timeout_;
+
     };
 
   }  // End SSLIOP namespace

@@ -11,6 +11,8 @@
 #include "tests/RTCORBA/common_args.cpp"
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 
+ACE_RCSID(Thread_Pools, server, "$Id$")
+
 class test_i :
   public POA_test
 {

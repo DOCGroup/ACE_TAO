@@ -1,9 +1,12 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/PG_Group_Guard.h"
 
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+
+
+ACE_RCSID (PortableGroup,
+           PG_Group_Guard,
+           "$Id$")
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
+
+ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
+
 #include "tao/debug.h"
 #include "orbsvcs/Notify/AdminProperties.h"
 #include "orbsvcs/Notify/Method_Request_Lookup.h"
@@ -80,7 +83,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG, 
                   ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushConsumer::validate(%d)")
                   ACE_TEXT ("disconnecting \n"), this->id ()));
     }
@@ -88,15 +91,5 @@ TAO_Notify_CosEC_ProxyPushConsumer::validate ()
     this->disconnect_push_consumer ();
   }
 }
-
-void
-TAO_Notify_CosEC_ProxyPushConsumer::configure(
-  TAO_Notify_SupplierAdmin & /*admin*/,
-  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-{
-  // Nothing to do.
-  // This virtual method was added to support Notification MC
-}
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

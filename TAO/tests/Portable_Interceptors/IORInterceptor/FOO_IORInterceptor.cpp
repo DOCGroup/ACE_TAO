@@ -1,9 +1,12 @@
-// $Id$
-
 #include "FOO_IORInterceptor.h"
 #include "testS.h"
 
 #include "tao/ORB_Constants.h"
+
+ACE_RCSID (IORInterceptor,
+           FOO_IORInterceptor,
+           "$Id$")
+
 
 FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
   : codec_ (IOP::Codec::_duplicate (codec))
@@ -80,7 +83,7 @@ FOO_IORInterceptor::establish_components (
       // Verify that policy retrieval internals work, and do not cause
       // memory access violations.
       CORBA::Policy_var policy =
-        info->get_effective_policy (PortableServer::LIFESPAN_POLICY_ID);
+        info->get_effective_policy (PortableServer::THREAD_POLICY_ID);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Successfully retrieved effective policy.\n"));

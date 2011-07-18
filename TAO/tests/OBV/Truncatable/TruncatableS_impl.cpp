@@ -3,6 +3,8 @@
 #include "TruncatableS_impl.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID(Truncatable, TruncatableS_impl, "$Id$")
+
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -22,8 +24,8 @@ Test_impl::op1 (
                ACE_TEXT(" id=%s basic_data=%u desc=%s\n"),
                id, iv->basic_data (), desc));
 
-   char *tmp = CORBA::string_alloc (
-     static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
+   char *tmp =
+     CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);
    ACE_OS::sprintf (tmp, "%s: %s", id, desc);
    CORBA::string_free (desc);
    desc = tmp;
@@ -46,8 +48,8 @@ Test_impl::op2 (
                ACE_TEXT("(%P|%t)Test_impl::op2")
                ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                id, iv->basic_data (), iv->data1 (), desc));
-  char *tmp = CORBA::string_alloc (
-    static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
+  char *tmp =
+    CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);
   ACE_OS::sprintf (tmp, "%s: %s", id, desc);
   CORBA::string_free (desc);
   desc = tmp;
@@ -72,8 +74,8 @@ Test_impl::op3 (
                ACE_TEXT(" id=%s basic_data=%u data=%u data4=%u desc=%s\n"),
                id, iv->basic_data (), iv->nv4()->data (), iv->data4 (), desc));
 
-  char *tmp = CORBA::string_alloc (
-    static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
+  char *tmp =
+    CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);
   ACE_OS::sprintf (tmp, "%s: %s", id, desc);
   CORBA::string_free (desc);
   desc = tmp;
@@ -122,8 +124,8 @@ Test_impl::op4 (
                id, iv4->basic_data (), iv4->data1 (), desc));
   }
 
-  char *tmp = CORBA::string_alloc (
-    static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
+  char *tmp =
+    CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);
   ACE_OS::sprintf (tmp, "%s: %s", id, desc);
   CORBA::string_free (desc);
   desc = tmp;
@@ -148,7 +150,7 @@ Test_impl::op5 (const CORBA::Any& val,
  )
 {
   ov = new ::OBV_OBV_TruncatableTest::TValue1();
-  ::OBV_TruncatableTest::TValue1_var iv;
+  ::OBV_TruncatableTest::TValue1 *iv = 0;
   CORBA::ValueBase_var target;
   if (!(val >>= CORBA::Any::to_value(target.inout())))
     {
@@ -165,8 +167,8 @@ Test_impl::op5 (const CORBA::Any& val,
                    ACE_TEXT("(%P|%t)Test_impl::op5")
                    ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                    id, iv->basic_data (), iv->data1 (), desc));
-      char *tmp = CORBA::string_alloc (
-        static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
+      char *tmp =
+        CORBA::string_alloc (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2);
       ACE_OS::sprintf (tmp, "%s: %s", id, desc);
       CORBA::string_free (desc);
       desc = tmp;

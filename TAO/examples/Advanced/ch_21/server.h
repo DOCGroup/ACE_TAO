@@ -1,16 +1,21 @@
-//=============================================================================
-/**
- *  @file    server.h
- *
- *  $Id$
- *
- *  @author Source code used in TAO has been modified and adapted from the codeprovided in the book
- *  @author "Advanced CORBA Programming with C++" by MichiHenning and Steve Vinoski. Copyright 1999. Addison-Wesley
- *  @author Reading
- *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/examples/Advanced/ch_21
+//
+// = FILENAME
+//    server.h
+//
+// = AUTHORS
+//   Source code used in TAO has been modified and adapted from the code
+//   provided in the book, "Advanced CORBA Programming with C++" by Michi
+//   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
+//   MA.
+//
+//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+//
+// ============================================================================
 
 
 
@@ -20,6 +25,7 @@
 
 #include "CCSS.h"
 #include "icp.h"
+#include <ace/Synch_T.h>
 #include <set>
 #include <list>
 #include <map>
@@ -174,7 +180,7 @@ public:
                     const PortableServer::ObjectId & oid,
                     PortableServer::POA_ptr          /* poa */ ,
                     const char *                     operation,
-                    void * &                         /* cookie */
+                    void * &                         /* cookie */ 
                 );
 
     virtual void

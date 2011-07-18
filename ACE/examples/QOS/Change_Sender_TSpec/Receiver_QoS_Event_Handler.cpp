@@ -1,15 +1,18 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Receiver_QoS_Event_Handler.cpp
- *
- *  $Id$
- *
- *  @author Vishal Kachroo <vishal@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ACE_wrappers/examples/QOS
+//
+// = FILENAME
+//    Receiver_QoS_Event_Handler.cpp
+//
+// = AUTHOR
+//    Vishal Kachroo <vishal@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Receiver_QoS_Event_Handler.h"
 #include "ace/Log_Msg.h"
@@ -130,7 +133,7 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
               ace_get_qos.receiving_flowspec ()->minimum_policed_size (),
               ace_get_qos.sending_flowspec ()->minimum_policed_size ()));
 
-
+  
 return 0;
 
 }

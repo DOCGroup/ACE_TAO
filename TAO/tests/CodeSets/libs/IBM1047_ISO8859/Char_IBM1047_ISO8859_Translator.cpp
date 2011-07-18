@@ -1,23 +1,30 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Char_IBM1047_ISO8859_Translator.cpp
- *
- *  $Id$
- *
- *  Defines the arrays required to convert between ISO8859 (aka
- *  Latin/1) and IBM1047 (aka EBCDIC).
- *
- *
- *  @author Jim Rogers (jrogers@viasoft.com)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+//
+// = FILENAME
+//    Char_IBM1047_ISO8859_Translator.cpp
+//
+// = DESCRIPTION
+//    Defines the arrays required to convert between ISO8859 (aka
+//    Latin/1) and IBM1047 (aka EBCDIC).
+//
+// = AUTHOR
+//    Jim Rogers (jrogers@viasoft.com)
+//
+// ============================================================================
 
 #include "Char_IBM1047_ISO8859_Translator.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID (IBM1047_ISO8859, 
+           Char_IBM1047_ISO8859_Translator, 
+           "$Id$")
 
 // ****************************************************************
 
@@ -77,7 +84,7 @@ IBM1047_ISO8859::read_char_array (ACE_InputCDR& in,
                         ACE_CDR::OCTET_ALIGN,
                         len))
     {
-      for (ACE_CDR::ULong i = 0; i != len; ++i)
+      for (ACE_CDR::ULong i = 0; i != len; ++i) 
         {
           x[i] = (unsigned char)to_IBM1047[(unsigned char)x[i]];
         }
@@ -120,7 +127,7 @@ IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
     {
       ACE_OS::memcpy (buf, x, len);
 
-      for (ACE_CDR::ULong i = 0; i != len; ++i)
+      for (ACE_CDR::ULong i = 0; i != len; ++i) 
         {
           buf[i] = (unsigned char)from_IBM1047[(unsigned char)buf[i]];
         }

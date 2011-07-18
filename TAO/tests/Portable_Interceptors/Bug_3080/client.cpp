@@ -1,11 +1,14 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "Client_Request_Interceptor.h"
 #include "tao/ORBInitializer_Registry.h"
+
+ACE_RCSID (Redirection,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior1 = 0;
 
@@ -101,8 +104,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -1,3 +1,4 @@
+// ACE_HTBP_Outside_Squid_Filter.cpp
 // $Id$
 
 #include "ace/Log_Msg.h"
@@ -8,6 +9,10 @@
 #if !defined (__ACE_INLINE__)
 #include "HTBP_Outside_Squid_Filter.inl"
 #endif
+
+ACE_RCSID(HTBP,
+          ACE_HTBP_Outside_Squid_Filter,
+          "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

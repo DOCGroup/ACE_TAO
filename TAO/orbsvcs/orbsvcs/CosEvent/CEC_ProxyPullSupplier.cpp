@@ -10,6 +10,10 @@
 #include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (CosEvent,
+           CEC_ProxyPullSupplier,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
@@ -67,7 +71,7 @@ TAO_CEC_ProxyPullSupplier::deactivate (void)
   catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
-      // indicate that an object is being disconnected twice, or some
+      // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }

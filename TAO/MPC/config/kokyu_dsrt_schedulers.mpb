@@ -4,8 +4,8 @@
 project: codecfactory, rtcorba, kokyu, rtscheduling {
   after   += Kokyu_DSRT_Schedulers
   libs    += Kokyu_DSRT_Schedulers
-  includes += ..
-  libpaths += ..
+  includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  libpaths += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
 
   specific(automake) {
    includes += $(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers

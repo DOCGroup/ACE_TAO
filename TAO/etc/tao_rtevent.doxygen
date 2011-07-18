@@ -50,15 +50,15 @@ WARN_FORMAT           = "$file:$line: $text"
 #---------------------------------------------------------------------------
 
 INPUT                 = TAO/orbsvcs/orbsvcs/RtecEventComm.idl \
-                        TAO/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl \
-                        TAO/orbsvcs/orbsvcs/RtecBase.idl \
-                        TAO/orbsvcs/orbsvcs/RtecDefaultEventData.idl \
-                        TAO/orbsvcs/orbsvcs/RtecUDPAdmin.idl \
-                        TAO/orbsvcs/orbsvcs/Event_Utilities.h \
-                        TAO/orbsvcs/orbsvcs/Event_Utilities.inl \
-                        TAO/orbsvcs/orbsvcs/Event_Utilities.cpp \
-                        TAO/orbsvcs/orbsvcs/Event_Service_Constants.h \
-                        TAO/orbsvcs/orbsvcs/Event
+	TAO/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl \
+	TAO/orbsvcs/orbsvcs/RtecBase.idl \
+	TAO/orbsvcs/orbsvcs/RtecDefaultEventData.idl \
+	TAO/orbsvcs/orbsvcs/RtecUDPAdmin.idl \
+	TAO/orbsvcs/orbsvcs/Event_Utilities.h \
+        TAO/orbsvcs/orbsvcs/Event_Utilities.inl \
+	TAO/orbsvcs/orbsvcs/Event_Utilities.cpp \
+	TAO/orbsvcs/orbsvcs/Event_Service_Constants.h \
+	TAO/orbsvcs/orbsvcs/Event
 FILE_PATTERNS         = EC_*.cpp EC_*.h EC_*.inl EC_*.pidl ECG_*.cpp ECG_*.h *.idl
 RECURSIVE             =
 EXCLUDE               =
@@ -81,12 +81,12 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/libtao-doc/rtevent
+HTML_OUTPUT           = html/tao/rtevent
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = NO
+GENERATE_HTMLHELP     = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -135,18 +135,20 @@ PREDEFINED            = __ACE_INLINE__ \
                         TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
                         TAO_END_VERSIONED_NAMESPACE_DECL \
                         ACE_INLINE
-EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER
+EXPAND_AS_DEFINED     = ACE_RCSID \
+                        ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER \
+                        ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to external references
+# Configuration::addtions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
-                        html/libtao-doc/TAO.tag=.. \
-                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../portableserver \
-                        html/libtao-doc/esf/TAO_ESF.tag=../esf
-GENERATE_TAGFILE      = html/libtao-doc/rtevent/TAO_RTEvent.tag
+TAGFILES              = html/ace/ACE.tag=../../ace \
+	html/tao/TAO.tag=.. \
+	html/tao/portableserver/TAO_PortableServer.tag=../portableserver \
+	html/tao/esf/TAO_ESF.tag=../esf
+GENERATE_TAGFILE      = html/tao/rtevent/TAO_RTEvent.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -160,17 +162,16 @@ PERL_PATH             = /usr/bin/perl
 HAVE_DOT              = YES
 CLASS_GRAPH           = YES
 COLLABORATION_GRAPH   = YES
-INCLUDE_GRAPH         = NO
-INCLUDED_BY_GRAPH     = NO
+INCLUDE_GRAPH         = YES
+INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 DOT_MULTI_TARGETS     = YES
-MAX_DOT_GRAPH_DEPTH   = 3
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to the search engine
+# Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
 SEARCHENGINE          = YES

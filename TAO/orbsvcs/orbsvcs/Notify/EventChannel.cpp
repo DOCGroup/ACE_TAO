@@ -25,6 +25,8 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+ACE_RCSID(Notify, TAO_Notify_EventChannel, "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin
@@ -110,7 +112,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
   this->set_admin (initial_admin);
 
-  PortableServer::POA_var default_poa =
+  PortableServer::POA_var default_poa = 
     TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
   this->default_filter_factory_ =
@@ -454,7 +456,7 @@ TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver)
 
     bool want_all_children = saver.begin_object(
       this->id(), "channel", attrs, changed);
-
+  
     this->default_filter_factory_servant_->save_persistent (saver);
 
     TAO_Notify::Save_Persist_Worker<TAO_Notify_ConsumerAdmin> ca_wrk(saver, want_all_children);
@@ -511,7 +513,7 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   }
   else if (type == "consumer_admin")
   {
-    if (DEBUG_LEVEL)
+    if (DEBUG_LEVEL) 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) EventChannel reload consumer_admin %d\n")
                   , static_cast<int> (id)
@@ -534,7 +536,7 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   }
   else if (type == "supplier_admin")
   {
-    if (DEBUG_LEVEL)
+    if (DEBUG_LEVEL) 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) EventChannel reload supplier_admin %d\n")
                   , static_cast<int> (id)

@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_BASIC_ARGUMENT_T_H
 #define TAO_BASIC_ARGUMENT_T_H
 
@@ -31,7 +32,7 @@ namespace TAO
    * @brief Template class for IN stub argument of basic IDL types.
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_Basic_Argument_T : public InArgument
   {
   public:
@@ -54,7 +55,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_Basic_Clonable_Argument_T :
                       public In_Basic_Argument_T<S, Insert_Policy>
   {
@@ -75,7 +76,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Inout_Basic_Argument_T : public InoutArgument
   {
   public:
@@ -99,7 +100,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Out_Basic_Argument_T : public OutArgument
   {
   public:
@@ -122,7 +123,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Ret_Basic_Argument_T : public RetArgument
   {
   public:
@@ -141,13 +142,14 @@ namespace TAO
     S x_;
   };
 
+
   /**
    * @struct Basic_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of basic IDL types.
    *
    */
-  template<typename T, template <typename> class Insert_Policy>
+  template<typename T, class Insert_Policy>
   struct Basic_Arg_Traits_T
   {
     typedef T                                          ret_type;

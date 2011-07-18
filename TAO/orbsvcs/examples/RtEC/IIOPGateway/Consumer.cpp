@@ -8,6 +8,10 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (EC_Examples,
+           Consumer,
+           "$Id$")
+
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
 const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
@@ -170,7 +174,7 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv[])
       arg_shifter.ignore_arg ();
     }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

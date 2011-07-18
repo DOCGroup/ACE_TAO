@@ -9,25 +9,21 @@ const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'o':
-          ior_output_file = get_opts.opt_arg ();
-          break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <ior_output_file>"
                            "\n",
                            argv [0]),
                            -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

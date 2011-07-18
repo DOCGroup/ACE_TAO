@@ -1,23 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  Server that receives requests.  The server can be asked to
- *  forward new requests to another server.
- *
- *
- *  @author Irfan Pyarali Michael Kircher
- */
-//=============================================================================
-
+// ========================================================================
+// = LIBRARY
+//    TAO/examples/POA/Forwarding
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    Server that receives requests.  The server can be asked to
+//    forward new requests to another server.
+//
+// = AUTHOR
+//    Irfan Pyarali
+//    Michael Kircher
+//
+// ========================================================================
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "Servant_Activator.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID(Forwarding, server, "$Id$")
 
 static const ACE_TCHAR *ior_output_file = 0;
 static const ACE_TCHAR *forward_to_ior = 0;

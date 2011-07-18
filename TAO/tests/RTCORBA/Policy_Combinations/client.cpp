@@ -88,7 +88,7 @@ Task::svc (void)
         get_implicit_thread_CORBA_priority (this->orb_.in ());
 
       object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());

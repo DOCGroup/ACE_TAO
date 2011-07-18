@@ -112,7 +112,7 @@ public:
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
-  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
+  static TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
 
   ~TAO_ECG_UDP_Sender (void);
 
@@ -140,7 +140,7 @@ public:
 
   /// Connect or reconnect to the EC with the given subscriptions.
   /**
-   * @note if we are already connected to EC and a reconnection is
+   * NOTE: if we are already connected to EC and a reconnection is
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */

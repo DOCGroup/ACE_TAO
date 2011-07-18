@@ -72,348 +72,177 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       Delete temp files.
 #
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+#use lib '$ENV{ACE_ROOT}/bin';
+use PerlACE::Run_Test;
 
 ########################
 #command line options
 #set defaults:
-
-my($status) = 0;
 my($verbose) = 0;         # 1: report perl actions before executing them
 my($debug_builds) = 0;    # 0: use exes from Release directories
-my($simulated) = 1;       # 1: use "client simulated" fault tolerance
-
-
-# List of the proccess which must be killed before exit with error
-@kill_list = ();
-
-sub add_to_kills{
-    $goal = shift;
-    @kill_list = (@kill_list, $goal);
-}
-sub exit_and_kill{
-    $status = shift;
-    foreach $goal (@kill_list){
-        $goal->Kill (); $goal->TimedWait (1);
-    }
-    exit $status;
-}
 
 foreach $i (@ARGV) {
-    if ($i eq "--debug_build"){
-        $debug_builds = 1;
-    }
-    elsif ($i eq "--no_simulate"){  # reverse this once we have FT ORB support
-        $simulated = 0;
-    }
-    elsif ($i eq "-v"){
-        $verbose += 1;
-    }
+  if ($i eq "--debug_build")
+  {
+    $debug_builds = 1;
+  }
+  elsif ($i eq "-v")
+  {
+    $verbose += 1;
+  }
 }
-
 
 my($build_directory) = "/Release";
 if ( $debug_builds ) {
-    $build_directory = "";
+  $build_directory = "";
 }
 
 if ( $verbose > 1) {
-    print "verbose: $verbose\n";
-    print "debug_builds: $debug_builds -> $build_directory\n";
-    print "simulated: $simulated\n";
+  print "verbose: $verbose\n";
+  print "debug_builds: $debug_builds -> $build_directory\n";
 }
 
-my $ft_replica1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $ft_replica2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $fault_detector = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $fault_notifier = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-my $fault_analyzer = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
-my $client = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
 
 #define temp files
+my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
+my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
+my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
+my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
+my($detector_ior) = PerlACE::LocalFile ("detector.ior");
+my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
+my($ready_file) = PerlACE::LocalFile ("ready.file");
+my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
-my($factory1_ior) = "factory1.ior";
-my($factory2_ior) = "factory2.ior";
-my($replica1_ior) = "replica1.ior";
-my($replica2_ior) = "replica2.ior";
-my($detector_ior) = "detector.ior";
-my($notifier_ior) = "notifier.ior";
-my($client_data) = "persistent.dat";
-my($ready_file) = "ready.file";
+#discard junk from previous tests
+unlink $factory1_ior;
+unlink $factory2_ior;
+unlink $replica1_ior;
+unlink $replica2_ior;
+unlink $detector_ior;
+unlink $notifier_ior;
+unlink $ready_file;
+unlink $client_data;
 
-# Files for ft_replica1
-my $ft_replica1_factory1_ior = $ft_replica1->LocalFile ($factory1_ior);
-my $ft_replica1_replica1_ior = $ft_replica1->LocalFile ($replica1_ior);
-my $ft_replica1_client_data = $ft_replica1->LocalFile ($client_data);
+my($status) = 0;
 
-$ft_replica1->DeleteFile ($factory1_ior);
-$ft_replica1->DeleteFile ($replica1_ior);
-$ft_replica1->DeleteFile ($client_data);
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -f none -t $replica1_ior -l loc1 -i type1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -f none -t $replica2_ior -l loc2 -i type1 -q");
+my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-r -o $detector_ior -q");
+my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-r -o $notifier_ior -q");
+my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n file://$notifier_ior -d file://$detector_ior -r file://$replica1_ior -r file://$replica2_ior -q");
+my($CL) = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
 
-# Files for ft_replica2
-my $ft_replica2_factory2_ior = $ft_replica2->LocalFile ($factory2_ior);
-my $ft_replica2_replica2_ior = $ft_replica2->LocalFile ($replica2_ior);
-my $ft_replica2_client_data = $ft_replica2->LocalFile ($client_data);
-
-$ft_replica2->DeleteFile ($factory2_ior);
-$ft_replica2->DeleteFile ($replica2_ior);
-$ft_replica2->DeleteFile ($client_data);
-
-# Files for fault_detector
-my $fault_detector_ior = $fault_detector->LocalFile ($detector_ior);
-$fault_detector->DeleteFile ($detector_ior);
-
-# Files for fault_notifier
-my $fault_notifier_ior = $fault_notifier->LocalFile ($notifier_ior);
-$fault_notifier->DeleteFile ($notifier_ior);
-
-# Files for fault_analyzer
-my $analyzer_replica1_ior = $fault_analyzer->LocalFile ($replica1_ior);
-my $analyzer_replica2_ior = $fault_analyzer->LocalFile ($replica2_ior);
-my $analyzer_notifier_ior = $fault_analyzer->LocalFile ($notifier_ior);
-my $analyzer_detector_ior = $fault_analyzer->LocalFile ($detector_ior);
-my $analyzer_ready_file = $fault_analyzer->LocalFile ($ready_file);
-
-$fault_analyzer->DeleteFile ($replica1_ior);
-$fault_analyzer->DeleteFile ($replica2_ior);
-$fault_analyzer->DeleteFile ($notifier_ior);
-$fault_analyzer->DeleteFile ($detector_ior);
-$fault_analyzer->DeleteFile ($ready_file);
-
-# Files for client
-my $client_replica1_ior = $client->LocalFile ($replica1_ior);
-my $client_replica2_ior = $client->LocalFile ($replica2_ior);
-
-$client->DeleteFile ($replica1_ior);
-$client->DeleteFile ($replica2_ior);
-
-
-### Create process
-$REP1 = $ft_replica1->CreateProcess (".$build_directory/ft_replica" ,
-                                 "-o $ft_replica1_factory1_ior ".
-                                 "-f none -t $ft_replica1_replica1_ior " .
-                                 "-l loc1 -i type1 -q -p $ft_replica1_client_data");
-
-$REP2 = $ft_replica2->CreateProcess (".$build_directory/ft_replica" ,
-                                     "-o $ft_replica2_factory2_ior ".
-                                     "-f none -t $ft_replica2_replica2_ior " .
-                                     "-l loc2 -i type1 -q -p $ft_replica2_client_data");
-
-$DET = $fault_detector->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector" .
-                                       "$build_directory/tao_fault_detector" ,
-                                       "-r " .
-                                       "-o $fault_detector_ior -q");
-
-$NOT = $fault_notifier->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier" .
-                                       "$build_directory/tao_fault_notifier" ,
-                                        "-r " .
-                                        "-o $fault_notifier_ior -q");
-
-$ANA = $fault_analyzer->CreateProcess (".$build_directory/ft_analyzer",
-                                        "-o $analyzer_ready_file " .
-                                        "-n file://$analyzer_notifier_ior " .
-                                        "-d file://$analyzer_detector_ior " .
-                                        "-r file://$analyzer_replica1_ior " .
-                                        "-r file://$analyzer_replica2_ior -q");
-
-$CL = $client->CreateProcess (".$build_directory/ft_client",
-                                  "-f file://$client_replica1_ior " .
-                                  "-f file://$client_replica2_ior " .
-                                  "-c testscript");
-
-###########
-# Replica 1
-print "\nTEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
-
+print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
 $REP1->Spawn ();
 
-add_to_kills ($REP1);
-
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
-if ($ft_replica1->WaitForFileTimed ($replica1_ior,
-                               $ft_replica1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ft_replica1_replica1_ior>\n";
-    exit_and_kill (1);
-}
-# Get/Put $replica1_ior: analyzer_replica1_ior $client_replica1_ior
-if ($ft_replica1->GetFile ($replica1_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ft_replica1_replica1_ior>\n";
-    exit_and_kill (1);
-}
-if ($fault_analyzer->PutFile ($replica1_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$analyzer_replica1_ior>\n";
-    exit_and_kill (1);
-}
-if ($client->PutFile ($replica1_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client_replica1_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($replica1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$replica1_ior>\n";
+    $REP1->Kill (); $REP1->TimedWait (1);
+    exit 1;
 }
 
-###########
-# Replica 2
 print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
 $REP2->Spawn ();
 
-add_to_kills ($REP2);
-
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
-if ($ft_replica2->WaitForFileTimed ($replica2_ior,
-                               $ft_replica2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "TEST ERROR: cannot find file <$ft_replica2_replica2_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($replica2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$replica2_ior>\n";
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
+    exit 1;
 }
 
-# Get/Put $replica2_ior: analyzer_replica2_ior $client_replica2_ior
-if ($ft_replica2->GetFile ($replica2_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ft_replica2_replica2_ior>\n";
-    exit_and_kill (1);
-}
-if ($fault_analyzer->PutFile ($replica2_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$analyzer_replica2_ior>\n";
-    exit_and_kill (1);
-}
-if ($client->PutFile ($replica2_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client_replica2_ior>\n";
-    exit_and_kill (1);
-}
-
-##########
-# Detector
 print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
-
 $DET->Spawn ();
 
-add_to_kills ($DET);
-
 print "TEST: waiting for detector's IOR\n" if ($verbose);
-if ($fault_detector->WaitForFileTimed ($detector_ior,
-                               $fault_detector->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$fault_detector_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($detector_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$detector_ior>\n";
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
+    $DET->Kill (); $DET2->TimedWait(1);
+    exit 1;
 }
 
-# Get/Put $detector_ior: $analyzer_detector_ior
-if ($fault_detector->GetFile ($detector_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$fault_detector_ior>\n";
-    exit_and_kill (1);
-}
-if ($fault_analyzer->PutFile ($detector_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$analyzer_detector_ior>\n";
-    exit_and_kill (1);
-}
-
-##########
-# Notifier
 print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
 $NOT->Spawn ();
 
-add_to_kills ($NOT);
-
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
-if ($fault_notifier->WaitForFileTimed ($notifier_ior,
-                               $fault_notifier->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$fault_notifier_ior>\n";
-    exit_and_kill (1);
-}
-# Get/Put $notifier_ior: $analyzer_notifier_ior
-if ($fault_notifier->GetFile ($notifier_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$fault_notifier_ior>\n";
-    exit_and_kill (1);
-}
-if ($fault_analyzer->PutFile ($notifier_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$analyzer_notifier_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($notifier_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
+    $DET->Kill (); $DET2->TimedWait(1);
+    $ANA->Kill (); $ANA->TimedWait(1);
+    exit 1;
 }
 
-##########
-# Analyzer
 print "\nTEST: starting analyzer " . $ANA->CommandLine . "\n" if ($verbose);
 $ANA->Spawn ();
 
-add_to_kills ($ANA);
-
 print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
-
-if ($fault_analyzer->WaitForFileTimed ($ready_file,
-                               $fault_analyzer->ProcessStartWaitInterval()) == -1) {
-    print STDERR "TEST ERROR: cannot find file <$analyzer_ready_file>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($ready_file, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$ready_file>\n";
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
+    $DET->Kill (); $DET2->TimedWait(1);
+    $NOT->Kill (); $NOT->TimedWait(1);
+    $ANA->Kill (); $ANA->TimedWait(1);
+    exit 1;
 }
 
-########
-# Client
 print "\nTEST: starting client " . $CL->CommandLine . "\n" if ($verbose);
+$client = $CL->SpawnWaitKill (60);
 
-$status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($status != 0) {
-    print STDERR "TEST ERROR: client returned $status\n";
+if ($client != 0) {
+    print STDERR "TEST ERROR: client returned $client\n";
     $status = 1;
 }
 
 print "\nTEST: wait for replica 1.\n" if ($verbose);
-
-$status = $REP1->WaitKill ($ft_replica1->ProcessStopWaitInterval());
-if ($status != 0) {
-    print STDERR "TEST ERROR: replica returned $status\n";
+$replica1 = $REP1->WaitKill (5);
+if ($replica1 != 0) {
+    print STDERR "TEST ERROR: replica returned $replica1\n";
     $status = 1;
 }
-print "\nTEST: wait for replica 2.\n" if ($verbose);
 
-$status = $REP2->WaitKill ($ft_replica2->ProcessStopWaitInterval());
-if ($status != 0) {
-    print STDERR "TEST ERROR: replica returned $status\n";
+print "\nTEST: wait for replica 2.\n" if ($verbose);
+$replica2 = $REP2->WaitKill (5);
+if ($replica2 != 0) {
+    print STDERR "TEST ERROR: replica returned $replica2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for detector factory to leave.\n" if ($verbose);
-$status = $DET->WaitKill ($fault_detector->ProcessStopWaitInterval());
-if ($status != 0) {
-    print STDERR "TEST ERROR: detector returned $status\n";
-    $status = 1;
-}
-
-print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
-$status = $ANA->WaitKill ($fault_analyzer->ProcessStopWaitInterval());
-if ($status != 0) {
-    print STDERR "TEST ERROR: analyzer returned $status\n";
+$detector = $DET->WaitKill (20);
+if ($detector != 0) {
+    print STDERR "TEST ERROR: detector returned $detector\n";
     $status = 1;
 }
 
 print "\nTEST: wait for notifier to leave.\n" if ($verbose);
-$status = $NOT->WaitKill ($fault_notifier->ProcessStopWaitInterval());
-if ($status != 0) {
-    print STDERR "TEST ERROR: notifier returned $status\n";
+$notifier = $NOT->WaitKill (20);
+if ($notifier != 0) {
+    print STDERR "TEST ERROR: notifier returned $notifier\n";
+    $status = 1;
+}
+
+print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
+$analyzer = $ANA->WaitKill (20);
+if ($analyzer != 0) {
+    print STDERR "TEST ERROR: analyzer returned $analyzer\n";
     $status = 1;
 }
 
 print "\nTEST: releasing scratch files.\n" if ($verbose);
+unlink $replica1_ior;
+unlink $replica2_ior;
+unlink $detector_ior;
+unlink $notifier_ior;
+unlink $ready_file;
 
-# Files for ft_replica1
-$ft_replica1->DeleteFile ($factory1_ior);
-$ft_replica1->DeleteFile ($replica1_ior);
-$ft_replica1->DeleteFile ($client_data);
-
-# Files for ft_replica2
-$ft_replica2->DeleteFile ($factory2_ior);
-$ft_replica2->DeleteFile ($replica2_ior);
-$ft_replica2->DeleteFile ($client_data);
-
-# Files for fault_detector
-$fault_detector->DeleteFile ($detector_ior);
-
-# Files for fault_notifier
-$fault_notifier->DeleteFile ($notifier_ior);
-
-# Files for fault_analyzer
-$fault_analyzer->DeleteFile ($replica1_ior);
-$fault_analyzer->DeleteFile ($replica2_ior);
-$fault_analyzer->DeleteFile ($notifier_ior);
-$fault_analyzer->DeleteFile ($detector_ior);
-$fault_analyzer->DeleteFile ($ready_file);
-
-# Files for client
-$client->DeleteFile ($replica1_ior);
-$client->DeleteFile ($replica2_ior);
+#client's work file
+unlink $client_data;
 
 exit $status;

@@ -517,7 +517,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
     status += ntester.test_all ();
   }
 
-#if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
+#if defined(ACE_HAS_WCHAR)
   {
     typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
     wTester wtester;

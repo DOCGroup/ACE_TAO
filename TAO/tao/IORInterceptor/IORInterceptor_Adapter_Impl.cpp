@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
@@ -8,6 +7,11 @@
 #include "tao/PI/PI.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
+
+ACE_RCSID (IORInterceptor,
+           IORInterceptor_Adapter_Impl,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,10 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Test_i.h"
+
+ACE_RCSID (DLL_ORB,
+           Test_i,
+           "$Id$")
 
 Test_i::Test_i (void)
   : orb_ ()

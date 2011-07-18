@@ -1,12 +1,11 @@
 // $Id$
 
 #include "Worker.h"
-#include <QtGui/qapplication.h>
-#include <QtGui/qmotifstyle.h>
-#include <QtGui/qcdestyle.h>
-#include <QtGui/qwindowsstyle.h>
-#include <QtGui/qdesktopwidget.h>
-#include <QtGui/qgraphicsscene.h>
+#include <Qt/qapplication.h>
+#include <Qt/qmotifstyle.h>
+#include <Qt/qcdestyle.h>
+#include <Qt/qwindowsstyle.h>
+#include <Qt/qdesktopwidget.h>
 
 int
 Worker::svc (void)
@@ -14,12 +13,18 @@ Worker::svc (void)
   ACE_DEBUG((LM_DEBUG, "ENTER: Worker::svc()\n"));
 
   QApplication a(argc_, argv_);
-  QGraphicsScene canvas(1,1,650, 410);
+//  a.setStyle(new QPlatinumStyle);
+  Q3Canvas canvas(600, 387);
+  //QCanvas canvas(566, 679);
+  //QCanvas canvas(550, 723);
+  canvas.setAdvancePeriod(30);
   RootPanel root_panel(canvas);
-  root_panel.resize(620, 460);
-  root_panel.setWindowTitle("NavDisplay");
+  root_panel.resize(root_panel.sizeHint());
 
-  a.setActiveWindow(&root_panel);
+  root_panel.resize(600, 650);
+  root_panel.setCaption("NavDisplay");
+
+  a.setMainWidget(&root_panel);
 
   QObject::connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
 

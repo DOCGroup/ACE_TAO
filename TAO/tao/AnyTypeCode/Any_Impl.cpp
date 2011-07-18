@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any_Impl.h"
@@ -9,6 +8,11 @@
 #include "tao/SystemException.h"
 
 #include "ace/Guard_T.h"
+
+ACE_RCSID (AnyTypeCode,
+           Any_Impl,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -37,7 +37,7 @@ if ($server->WaitForFileTimed ($iorbase,
 }
 
 ## Slower hardware can require much more time to complete.
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 75);
+$server_status = $SV->WaitKill (90);
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";

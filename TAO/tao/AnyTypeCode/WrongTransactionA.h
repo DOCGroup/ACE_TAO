@@ -83,19 +83,11 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_ch.cpp:52
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
-
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::WrongTransaction &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::WrongTransaction*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WrongTransaction *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WrongTransaction *&);
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
 

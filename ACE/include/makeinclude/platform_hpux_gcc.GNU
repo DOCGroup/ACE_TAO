@@ -4,6 +4,7 @@
 buildbits ?= 64
 debug ?= 1
 distrib ?= 0
+exceptions ?= 1
 optimize ?= 1
 stdcpplib ?= 1
 threads ?= 1
@@ -102,4 +103,4 @@ endif
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS		+= -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
+CCFLAGS		+= $(CFLAGS) $(TEMPLATES_FLAG) -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)

@@ -8,6 +8,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (ace,
+           DEV_Addr,
+           "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Addr)

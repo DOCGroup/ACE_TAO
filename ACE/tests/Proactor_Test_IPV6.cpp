@@ -16,6 +16,10 @@
 
 #include "test_config.h"
 
+ACE_RCSID (tests,
+           Proactor_Test,
+           "$Id$")
+
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
@@ -118,7 +122,8 @@ public:
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
+#ifndef ACE_WIN32
+
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -128,24 +133,17 @@ disable_signal (int sigmin, int sigmax)
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
 
-  // Put the <signal_set>.
-# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-  // In multi-threaded application this is not POSIX compliant
-  // but let's leave it just in case.
-  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
-# else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
-# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+  //  Put the <signal_set>.
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("pthread_sigmask failed")));
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
-#endif /* ACE_LACKS_UNIX_SIGNALS */
+#endif /* ACE_WIN32 */
 
-  return 0;
+  return 1;
 }
 
 
@@ -205,7 +203,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     this->lock_,
                     -1);
 
-  ACE_TEST_ASSERT (this->proactor_ == 0);
+  ACE_ASSERT (this->proactor_ == 0);
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
@@ -350,7 +348,6 @@ MyTask::svc (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask started\n")));
 
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
-  disable_signal (SIGPIPE, SIGPIPE);
 
   // signal that we are ready
   sem_.release (1);
@@ -948,7 +945,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else
       mb.release ();
 
-    --this->io_count_;
+    this->io_count_--;
     if (this->io_count_ > 0)
       return;
   }
@@ -1044,7 +1041,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
           this->initiate_read_stream ();
       }
 
-    --this->io_count_;
+    this->io_count_--;
     if (this->io_count_ > 0)
       return;
   }
@@ -1630,7 +1627,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
           this->initiate_read_stream ();
       }
 
-    --this->io_count_;
+    this->io_count_--;
     if (this->io_count_ > 0)
       return;
   }
@@ -1747,7 +1744,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
           this->initiate_write_stream ();
       }
 
-    --this->io_count_;
+    this->io_count_--;
     if (this->io_count_ > 0)
       return;
   }

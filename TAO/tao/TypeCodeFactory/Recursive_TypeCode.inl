@@ -16,7 +16,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::Recursive_TypeCode (char const * id)
 ACE_INLINE void
 TAO::TypeCodeFactory::Recursive_TypeCode::the_typecode (CORBA::TypeCode_ptr tc)
 {
-  this->the_typecode_ = tc;
+  this->the_typecode_ = CORBA::TypeCode::_duplicate (tc);
 
   // @@ Lazy, I know.  :(
   CORBA::TCKind & mutable_kind = const_cast<CORBA::TCKind &> (this->kind_);

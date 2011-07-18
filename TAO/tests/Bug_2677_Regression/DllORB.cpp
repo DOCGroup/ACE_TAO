@@ -5,6 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
+
 DllORB::DllORB (void)
  : failPrePostInit_ (3),
    mv_orb_ (),
@@ -12,15 +13,34 @@ DllORB::DllORB (void)
 {
 }
 
+
 DllORB::~DllORB (void)
 {
 }
 
+
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
 {
+  int threadCnt = 1;
+
   try
     {
+      ACE_Arg_Shifter as (argc, argv);
+      const ACE_TCHAR *currentArg = 0;
+      while (as.is_anything_left ())
+        {
+          if (0 != (currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+            {
+              int num = ACE_OS::atoi (currentArg);
+              if (num >= 1)
+                threadCnt = num;
+              as.consume_arg ();
+            }
+        else
+          as.ignore_arg ();
+        }
+
       if (failPrePostInit_ < 3)
         {
           ACE_DEBUG ((LM_INFO,
@@ -67,7 +87,8 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
         }
 
       // Initialize the ORB
-      mv_orb_ = CORBA::ORB_init (argc, argv);
+      ACE_Argv_Type_Converter argcon (argc, argv);
+      mv_orb_ = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
       if (CORBA::is_nil (mv_orb_.in ()))
         {
           ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil ORB\n")));

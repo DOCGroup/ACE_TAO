@@ -4,6 +4,10 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
+ACE_RCSID (EC_Examples,
+           Supplier,
+           "$Id$")
+
 Supplier::Supplier (void)
 {
 }

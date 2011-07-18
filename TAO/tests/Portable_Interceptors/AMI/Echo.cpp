@@ -7,6 +7,8 @@
  */
 #include "Echo.h"
 
+ACE_RCSID(Portable_Interceptors_AMI, Echo, "$Id$")
+
 Echo::Echo(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {

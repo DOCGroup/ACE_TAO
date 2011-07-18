@@ -7,6 +7,10 @@
 
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (ORB_init,
+           ORB_init,
+           "$Id$")
+
 // Valid test IOR.
 // Do not attempt to narrow the object represented by this IOR, nor
 // should you modify the IOR unless you replace it with another

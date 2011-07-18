@@ -1,6 +1,8 @@
-// $Id$
-
 #include "server_i.h"
+
+ACE_RCSID (Callback,
+           server_i,
+           "$Id$")
 
 server_i::server_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),

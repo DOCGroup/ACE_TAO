@@ -4,7 +4,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 
-
+ACE_RCSID(Hello, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://shutdown.ior");
 bool shutdown_nsmain = false;
@@ -12,14 +12,13 @@ bool shutdown_nsmain = false;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
         shutdown_nsmain = true;
         break;
       default:
@@ -29,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

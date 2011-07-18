@@ -1,4 +1,4 @@
-// -*- C++ -*-
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "tao/Bind_Dispatcher_Guard.h"
@@ -6,6 +6,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Bind_Dispatcher_Guard.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           Bind_Dispatcher_Guard,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

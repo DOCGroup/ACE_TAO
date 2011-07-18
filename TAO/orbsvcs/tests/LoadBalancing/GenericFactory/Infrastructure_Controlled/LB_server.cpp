@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LB_server.h"
 #include "Simple.h"
 #include "Factory.h"
@@ -7,10 +5,13 @@
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID (Infrastructure_Controlled,
+           LB_server,
+           "$Id$")
+
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_(ACE_TEXT("obj.ior"))
 {
 }
 
@@ -66,7 +67,7 @@ int
 LB_server::write_ior_to_file (const char *ior)
 {
   FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+    ACE_OS::fopen ("obj.ior", "w");
 
   if (output_file == 0)
     {
@@ -79,32 +80,6 @@ LB_server::write_ior_to_file (const char *ior)
   ACE_OS::fclose (output_file);
   return 0;
 }
-
-int
-LB_server::parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        this->ior_output_file_ = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
-
 
 int
 LB_server::start_orb_and_poa (void)
@@ -160,9 +135,6 @@ LB_server::create_object_group (const char *loc_1, const char *loc_2)
 
       Factory factory_object1;
       Factory factory_object2;
-
-      if (this->parse_args (argc_, argv_) != 0)
-              return -1;
 
       PortableGroup::GenericFactory_var factory_obj1 =
         factory_object1._this ();

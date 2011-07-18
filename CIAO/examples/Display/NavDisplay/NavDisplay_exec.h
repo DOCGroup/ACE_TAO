@@ -24,7 +24,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class NAVDISPLAY_EXEC_Export NavDisplay_exec_impl
-    : public virtual ::CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_Exec,
+    : public virtual CIDL_NavDisplay_Impl::NavDisplay_exec,
       public virtual ::CORBA::LocalObject
   {
   public:
@@ -55,18 +55,9 @@ namespace MyImpl
 
     virtual void
     ccm_remove (void);
-
-    //attribute operations
-
-    virtual CORBA::Long number_of_GPS ();
-    virtual void number_of_GPS (CORBA::Long number_of_GPS);
-
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
-    // Needed for compatability with NavDisplayGUI
-    CORBA::Long number_of_GPS_;
-
   };
 
   /**

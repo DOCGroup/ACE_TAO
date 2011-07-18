@@ -73,17 +73,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "fe_extern.h"
-#include "idl_defines.h"
-
 #include "ast_interface.h"
 #include "ast_enum.h"
 #include "ast_union.h"
 #include "ast_union_label.h"
+#include "idl_defines.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (util,
+           utl_err,
+           "$Id$")
 
 // Convert an error code into a const char *
 static const char *
@@ -126,7 +129,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_LABEL_TYPE:
       return "label type incompatible with union discriminator type, ";
     case UTL_Error::EIDL_ILLEGAL_ADD:
-      return "illegal use of incomplete type, ";
+      return "forward declared type may be used only as a sequence element, ";
     case UTL_Error::EIDL_ILLEGAL_USE:
       return "illegal type used in expression, ";
     case UTL_Error::EIDL_ILLEGAL_RAISES:
@@ -162,14 +165,6 @@ error_string (UTL_Error::ErrorCode c)
       return "abstract type expected: ";
     case UTL_Error::EIDL_EVENTTYPE_EXPECTED:
       return "event type expected: ";
-    case UTL_Error::EIDL_TMPL_MODULE_EXPECTED:
-      return "template module expected: ";
-    case UTL_Error::EIDL_PORTTYPE_EXPECTED:
-      return "porttype expected: ";
-    case UTL_Error::EIDL_CONNECTOR_EXPECTED:
-      return "connector expected: ";
-    case UTL_Error::EIDL_TYPEDEF_EXPECTED:
-      return "typedef expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_INCOMPATIBLE_TYPE:
@@ -182,10 +177,6 @@ error_string (UTL_Error::ErrorCode c)
       return "spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_KEYWORD_WARNING:
       return "Warning - spelling differs from IDL keyword only in case: ";
-    case UTL_Error::EIDL_ANONYMOUS_ERROR:
-      return "Error: anonymous types are deprecated by OMG spec";
-    case UTL_Error::EIDL_ANONYMOUS_WARNING:
-      return "Warning - anonymous types are deprecated by OMG spec";
     case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
       return "enumerator expected: ";
     case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
@@ -224,16 +215,6 @@ error_string (UTL_Error::ErrorCode c)
       return "valuetype not allowed as type of boxed value type";
     case UTL_Error::EIDL_ILLEGAL_PRIMARY_KEY:
       return "illegal primary key";
-    case UTL_Error::EIDL_MISMATCHED_T_PARAM:
-      return "mismatched template parameter";
-    case UTL_Error::EIDL_DUPLICATE_T_PARAM:
-      return "duplicate template parameter id";
-    case UTL_Error::EIDL_T_ARG_LENGTH:
-      return "wrong # of template args";
-    case UTL_Error::EIDL_MISMATCHED_SEQ_PARAM:
-      return "no match for identifier";
-    case UTL_Error::EIDL_TEMPLATE_NOT_ALIASED:
-      return "ref to template module scope must be via alias";
   }
 
   return 0;
@@ -246,7 +227,7 @@ idl_error_header (UTL_Error::ErrorCode c,
                   ACE_CString s)
 {
   ACE_ERROR ((LM_ERROR,
-              "Error - %C: \"%C\", line %d: %C",
+              "%s: \"%s\", line %d: %s",
               idl_global->prog_name (),
               s.c_str (),
               lineno == -1 ? idl_global->lineno () : lineno,
@@ -325,10 +306,6 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed home declaration";
   case IDL_GlobalData::PS_EventDeclSeen:
     return "Malformed event type declaration";
-  case IDL_GlobalData::PS_PorttypeDeclSeen:
-    return "Malformed port type declaration";
-  case IDL_GlobalData::PS_ConnectorDeclSeen:
-    return "Malformed connector declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
   case IDL_GlobalData::PS_AttrDeclSeen:
@@ -336,23 +313,15 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_OpDeclSeen:
     return "Malformed operation declaration";
   case IDL_GlobalData::PS_ProvidesDeclSeen:
-    return "Malformed simple provides declaration";
-  case IDL_GlobalData::PS_ExtProvidesDeclSeen:
-    return "Malformed extended provides declaration";
+    return "Malformed provides declaration";
   case IDL_GlobalData::PS_UsesDeclSeen:
-    return "Malformed simple uses declaration";
-  case IDL_GlobalData::PS_ExtUsesDeclSeen:
-    return "Malformed extended uses declaration";
+    return "Malformed uses declaration";
   case IDL_GlobalData::PS_EmitsDeclSeen:
     return "Malformed emits declaration";
   case IDL_GlobalData::PS_PublishesDeclSeen:
     return "Malformed publishes declaration";
   case IDL_GlobalData::PS_ConsumesDeclSeen:
     return "Malformed consumes declaration";
-  case IDL_GlobalData::PS_ExtendedPortDeclSeen:
-    return "Malformed extended port declaration";
-  case IDL_GlobalData::PS_MirrorPortDeclSeen:
-    return "Malformed mirror port declaration";
   case IDL_GlobalData::PS_FactoryDeclSeen:
     return "Malformed factory declaration";
   case IDL_GlobalData::PS_FinderDeclSeen:
@@ -391,28 +360,6 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following interface '}' closer";
   case IDL_GlobalData::PS_InterfaceBodySeen:
     return "Illegal syntax following interface body statement(s)";
-  case IDL_GlobalData::PS_TmplModuleIDSeen:
-    return "Illegal syntax following '<' in template module";
-  case IDL_GlobalData::PS_TmplModuleParamsSeen:
-    return "Illegal syntax following '>' in template module";
-  case IDL_GlobalData::PS_TmplModuleSqSeen:
-    return "Illegal syntax or missing type following '{' in template module";
-  case IDL_GlobalData::PS_TmplModuleQsSeen:
-    return "Illegal syntax or missing type following '}' in template module";
-  case IDL_GlobalData::PS_TmplModuleBodySeen:
-    return "Illegal syntax following template module body statement(s)";
-  case IDL_GlobalData::PS_InstModuleSeen:
-    return "Illegal syntax following following '<' of module instantiation";
-  case IDL_GlobalData::PS_InstModuleArgsSeen:
-    return "Illegal syntax following following template args";
-  case IDL_GlobalData::PS_InstModuleIDSeen:
-    return "Illegal syntax following following instantiated module identifier";
-  case IDL_GlobalData::PS_ModuleRefSeen:
-    return "Mising '<' or illegal syntax in template module alias";
-  case IDL_GlobalData::PS_ModuleRefParamsSeen:
-    return "Illegal syntax following module alias param names";
-  case IDL_GlobalData::PS_ModuleRefIDSeen:
-    return "Illegal syntax following module alias identifier";
   case IDL_GlobalData::PS_ValueTypeSeen:
     return "Missing interface identifier following VALUETYPE keyword";
   case IDL_GlobalData::PS_ValueTypeForwardSeen:
@@ -459,16 +406,6 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following home '}' closer";
   case IDL_GlobalData::PS_HomeBodySeen:
     return "Illegal syntax following home body statement(s)";
-  case IDL_GlobalData::PS_ConnectorSeen:
-    return "Missing connector identifier following CONNECTOR keyword";
-  case IDL_GlobalData::PS_ConnectorIDSeen:
-    return "Missing '{' or illegal syntax following connector identifier";
-  case IDL_GlobalData::PS_ConnectorSqSeen:
-    return "Illegal syntax following connector '{' opener";
-  case IDL_GlobalData::PS_ConnectorQsSeen:
-    return "Illegal syntax following connector '}' closer";
-  case IDL_GlobalData::PS_ConnectorBodySeen:
-    return "Illegal syntax following connector body statement(s)";
   case IDL_GlobalData::PS_StructForwardSeen:
     return "Missing ';' following forward struct declaration";
   case IDL_GlobalData::PS_UnionForwardSeen:
@@ -676,16 +613,6 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax for #pragma prefix";
   case IDL_GlobalData::PS_ValueBoxDeclSeen:
     return "Missing boxed valuetype identifier following VALUETYPE keyword";
-  case IDL_GlobalData::PS_PorttypeSeen:
-    return "Illegal syntax or missing identifier after PORTTYPE keyword";
-  case IDL_GlobalData::PS_PorttypeIDSeen:
-    return "Illegal syntax or missing '{' after porttype identifier";
-  case IDL_GlobalData::PS_PorttypeSqSeen:
-    return "Illegal syntax after porttype '{' opener";
-  case IDL_GlobalData::PS_PorttypeQsSeen:
-    return "Illegal syntax after porttype '}' closer";
-  case IDL_GlobalData::PS_PorttypeBodySeen:
-    return "Illegal syntax after porttype body statement(s)";
   default:
     return "Some syntax error";
   }
@@ -702,7 +629,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "%C\n",
+              "%s\n",
               parse_state_to_error_message (ps)));
 
   // Better to bail here than to increment the error count and
@@ -729,7 +656,6 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
   idl_error_header (c,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR, " - "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -854,7 +780,7 @@ UTL_Error::coercion_error (AST_Expression *v,
                     v->file_name ()->get_string ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
-              " to %C\n",
+              " to %s\n",
               exprtype_to_string (t)));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -880,7 +806,7 @@ UTL_Error::version_number_error (char *n)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "%C\n",
+              "%s\n",
               n));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -892,7 +818,7 @@ UTL_Error::version_syntax_error (const char *msg)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "%C\n",
+              "%s\n",
               msg));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -1101,23 +1027,6 @@ UTL_Error::incompatible_type_error (AST_Expression *v)
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
-void
-UTL_Error::incompatible_disc_error (AST_Decl *d,
-                                    AST_Expression *e)
-{
-  idl_error_header (EIDL_LABEL_TYPE,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR, " does not contain "));
-  UTL_ScopedName *sn = e->n ();
-  (sn != 0
-    ? sn->dump (*ACE_DEFAULT_LOG_STREAM)
-    : e->dump (*ACE_DEFAULT_LOG_STREAM));
-  ACE_ERROR ((LM_ERROR, "\n"));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
 // Report a situation where a constant was expected but we
 // got something else. This may occur in a union when a label
 // evaluates to a non-constant.
@@ -1144,18 +1053,6 @@ void
 UTL_Error::interface_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_INTERFACE_EXPECTED,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-void
-UTL_Error::template_module_expected (AST_Decl *d)
-{
-  idl_error_header (EIDL_TMPL_MODULE_EXPECTED,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1255,7 +1152,7 @@ UTL_Error::enum_val_expected (AST_Union *u,
                     u->line (),
                     u->file_name ());
   ACE_ERROR ((LM_ERROR,
-              " union %C, ",
+              " union %s, ",
               u->local_name ()->get_string ()));
   l->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
@@ -1277,7 +1174,7 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
                     u->line (),
                     u->file_name ());
   ACE_ERROR ((LM_ERROR,
-              " union %C,  enum %C,  enumerator ",
+              " union %s,  enum %s,  enumerator ",
               u->local_name ()->get_string (),
               e->local_name ()->get_string ()));
   n->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1302,13 +1199,14 @@ UTL_Error::redef_error (const char *b, const char *n)
 
 // Report two or more spellings for an identifier.
 void
-UTL_Error::name_case_error (char *b, char *n)
+UTL_Error::name_case_error (char *b,
+                            char *n)
 {
   idl_error_header (EIDL_NAME_CASE_ERROR,
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "\"%C\" and \"%C\"\n",
+              "\"%s\" and \"%s\"\n",
               b,
               n));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -1324,7 +1222,7 @@ UTL_Error::name_case_warning (char *b,
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       ACE_ERROR ((LM_ERROR,
-                  "\"%C\" and \"%C\"\n",
+                  "\"%s\" and \"%s\"\n",
                   b,
                   n));
     }
@@ -1337,7 +1235,7 @@ UTL_Error::idl_keyword_error (char *n)
                     idl_global->lineno (),
                     idl_global->filename ()->get_string ());
   ACE_ERROR ((LM_ERROR,
-              "\"%C\"\n",
+              "\"%s\"\n",
               n));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -1351,7 +1249,7 @@ UTL_Error::idl_keyword_warning (char *n)
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       ACE_ERROR ((LM_ERROR,
-                  "\"%C\"\n",
+                  "\"%s\"\n",
                   n));
     }
 }
@@ -1366,12 +1264,12 @@ UTL_Error::ambiguous (UTL_Scope *s,
                     d->line (),
                     d->file_name ());
   ACE_ERROR ((LM_ERROR,
-              " scope: %C,  collision: ",
+              " scope: %s,  collision: ",
               (ScopeAsDecl (s))->local_name ()->get_string ()));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               " vs. "));
-  l->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  l->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
@@ -1508,138 +1406,6 @@ UTL_Error::illegal_primary_key (AST_Decl *d)
   idl_error_header (EIDL_ILLEGAL_PRIMARY_KEY,
                     d->line (),
                     d->file_name ());
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR, "\n"));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-void
-UTL_Error::duplicate_param_id (UTL_ScopedName *n)
-{
-  idl_error_header (EIDL_DUPLICATE_T_PARAM,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR, " - "));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR, "\n"));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-void
-UTL_Error::mismatched_template_param (const char *name)
-{
-  idl_error_header (EIDL_MISMATCHED_T_PARAM,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR, " - %s\n", name));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-void
-UTL_Error::mismatch_seq_of_param (const char *param_id)
-{
-  idl_error_header (EIDL_MISMATCHED_SEQ_PARAM,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-  ACE_ERROR ((LM_ERROR, " - %s\n", param_id));
-  idl_global->set_err_count (idl_global->err_count () + 1);
-}
-
-void
-UTL_Error::scope_masking_error (AST_Decl *masked,
-                                AST_Decl *masking)
-{
-  const char *this_file = idl_global->filename ()->get_string ();
-  const char *masked_file = masked->file_name ().c_str ();
-  const char *masking_file = masking->file_name ().c_str ();
-
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("Error - %C: \"%C\", line %d: ")
-              ACE_TEXT ("Did you mean \"::%C\"\n")
-              ACE_TEXT ("   declared at "),
-              idl_global->prog_name (),
-              this_file,
-              idl_global->lineno (),
-              masked->full_name () ));
-
-  const bool same_file =
-    (0 == ACE_OS::strcmp (this_file, masked_file));
-
-  if (!same_file)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%C "),
-                  masked_file));
-    }
-
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("line %d but hidden by local \""),
-              masked->line ()));
-
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("::%C\""),
-              masking->full_name ()));
-
-  const bool same_file_again =
-    (same_file
-     && 0 == ACE_OS::strcmp (this_file, masking_file));
-
-  if (!same_file_again)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("\n")
-                  ACE_TEXT ("   declared at %C "),
-                  masking_file));
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT (" at ")));
-    }
-
-  ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("line %d ?\n"),
-              masking->line () ));
-}
-
-void
-UTL_Error::anonymous_type_diagnostic (void)
-{
-  if (idl_global->anon_silent ())
-    {
-      return;
-    }
-
-  bool aw = idl_global->anon_warning ();
-  bool nw = (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
-
-  if (aw && nw)
-    {
-      return;
-    }
-
-  ErrorCode ec =
-    (aw ? EIDL_ANONYMOUS_WARNING : EIDL_ANONYMOUS_ERROR);
-
-  idl_error_header (ec,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-
-  ACE_ERROR ((LM_ERROR, "\n"));
-
-  if (ec == EIDL_ANONYMOUS_ERROR)
-    {
-      idl_global->set_err_count (idl_global->err_count () + 1);
-    }
-}
-
-void
-UTL_Error::template_scope_ref_not_aliased (AST_Decl *d)
-{
-  idl_error_header (EIDL_TEMPLATE_NOT_ALIASED,
-                    idl_global->lineno (),
-                    d->file_name ());
-  ACE_ERROR ((LM_ERROR, " - "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

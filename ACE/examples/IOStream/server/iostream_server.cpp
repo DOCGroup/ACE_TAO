@@ -13,6 +13,8 @@
 #include "iostream_server.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID(server, iostream_server, "$Id$")
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 int

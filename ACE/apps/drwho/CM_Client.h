@@ -1,19 +1,22 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    CM_Client.h
- *
- *  $Id$
- *
- *  Provides a virtual communcations layer for the client in the
- *  drwho program.
- *
- *
- *  @author Douglas C. Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    CM_Client.h
+//
+// = DESCRIPTION
+//    Provides a virtual communcations layer for the client in the
+//    drwho program.
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
 #ifndef _CM_CLIENT_H
 #define _CM_CLIENT_H
@@ -21,21 +24,18 @@
 #include "Comm_Manager.h"
 #include "ace/Time_Value.h"
 
-/**
- * @class CM_Client
- *
- * @brief Provides a virtual communcations layer for the client in the
- * drwho program.
- */
 class CM_Client : public Comm_Manager
 {
+  // = TITLE
+  //   Provides a virtual communcations layer for the client in the
+  //   drwho program.
 public:
   // = Initialization and termination.
-  /// Constructor.
   CM_Client (void);
+  // Constructor.
 
-  /// Destructor.
   virtual ~CM_Client (void);
+  // Destructor.
 
   virtual int mux (char *packet, int &packet_length)   = 0;
   virtual int demux (char *packet, int &packet_length) = 0;

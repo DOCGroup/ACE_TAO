@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    small_union.cpp
- *
- *  $Id$
- *
- *  tests Small_Unions
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    small_union.cpp
+//
+// = DESCRIPTION
+//    tests Small_Unions
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "small_union.h"
+
+ACE_RCSID (Param_Test,
+           small_union,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Small_Union

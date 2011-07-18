@@ -1,18 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    main.cpp
- *
- *  $Id$
- *
- *  We test the pragma prefixes generated in pragma.idl, and
- *  the values of some generated constants in constants.idl.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    main.cpp
+//
+// = DESCRIPTION
+//    The only things that needs to be tested in execution
+//    are the pragma prefixes generated in pragma.idl, so
+//    we check them here. The rest needs only to build cleanly
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "pragmaS.h"
 #include "unionC.h"
@@ -76,8 +80,7 @@ class schmegegging_i : public virtual gleep::schmegegging
 {
 };
 
-struct something_handler
-  : public POA_bug_1985_c::d::AMI_somethingHandler
+struct something_handler : public POA_bug_1985_c::d::AMI_somethingHandler
 {
 };
 
@@ -85,40 +88,6 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
-
-  const ACE_CDR::ULongLong test_ull =
-    ACE_UINT64_LITERAL (122192928000000000);
-
-  if (test_ull != AAA)
-    {
-      ++error_count;
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Generated value of unsigned")
-                  ACE_TEXT (" long long AAA in constants.idl")
-                  ACE_TEXT (" is incorrect\n")));
-    }
-
-  const CORBA::LongLong test_nll = ACE_INT64_LITERAL (-122192928000000000);
-
-  if (test_nll != NAAA)
-    {
-      ++error_count;
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Generated value of signed")
-                  ACE_TEXT (" long long NAAA in constants.idl")
-                  ACE_TEXT (" is incorrect\n")));
-    }
-
-  const CORBA::LongLong test_pll = ACE_INT64_LITERAL (122192928000000000);
-
-  if (test_pll != PAAA)
-    {
-      ++error_count;
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Generated value of signed")
-                  ACE_TEXT (" long long PAAA in constants.idl")
-                  ACE_TEXT (" is incorrect\n")));
-    }
 
   try
     {

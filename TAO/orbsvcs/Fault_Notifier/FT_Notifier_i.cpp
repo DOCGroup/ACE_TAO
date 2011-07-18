@@ -24,7 +24,7 @@
   if (TAO_debug_level > 6)    \
   {                           \
     ACE_DEBUG (( LM_DEBUG,    \
-    "Enter %C\n", #name       \
+    "Enter %s\n", #name       \
       ));                     \
   }
 
@@ -43,7 +43,7 @@
   if (TAO_debug_level > 6)    \
   {                           \
     ACE_DEBUG (( LM_DEBUG,    \
-      "Leave %C\n", #name     \
+      "Leave %s\n", #name     \
       ));                     \
   }                           \
   return /* value goes here */
@@ -185,7 +185,7 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
     }
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

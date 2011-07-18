@@ -16,7 +16,7 @@
 #include "ace/OS_QoS.h"
 #endif  // ACE_HAS_WINCE
 
-
+ACE_RCSID(ace, SOCK_Acceptor, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

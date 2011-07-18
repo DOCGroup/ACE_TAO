@@ -1,21 +1,22 @@
 
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_valuebox.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuebox class
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
-#include "ace/Log_Msg.h"
-
-#include "utl_identifier.h"
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_valuebox.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuebox class
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_enum.h"
@@ -34,12 +35,14 @@
 #include "be_union_branch.h"
 #include "be_util.h"
 #include "be_valuebox.h"
+#include "utl_identifier.h"
 
 #include "be_visitor_context.h"
 #include "be_visitor_sequence.h"
 #include "be_visitor_typecode.h"
 #include "be_visitor_union.h"
 #include "be_visitor_valuebox.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_valuebox/valuebox.cpp"
 #include "be_visitor_valuebox/valuebox_ch.cpp"

@@ -88,6 +88,10 @@ public:
   // Indicates if we are fixed size or variable. Most useful for structs,
   // unions, and arrays.
 
+  // Operations.
+
+  AST_Type (void);
+
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
@@ -96,8 +100,11 @@ public:
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
-  // The head element of the list the possibly recursed type we are checking for.
-  // If the list is empty, we are trying to determine this for ourselves.
+  // If the parameter is 0, we are trying to determine this for ourselves.
+
+  // To be overridden by the subclasses interface, struct, union, and
+  // the corresponding forward declaration classes.
+  virtual bool is_defined (void);
 
   virtual void size_type (SIZE_TYPE);
   // Set the size type.

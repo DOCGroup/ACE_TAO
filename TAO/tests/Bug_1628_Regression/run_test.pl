@@ -8,65 +8,55 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status =0;
 
 # The location of the tao_idl utility - depends on O/S
-if ($^O eq "MSWin32"){
+if ($^O eq "MSWin32")
+{
    $tao_idl = "../../../bin/tao_idl";
 }
-else{
+else
+{
    $tao_idl = "../../../TAO/TAO_IDL/tao_idl";
 }
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
 # Generated code file names
-$TestCaseC_i = "TestCaseC.i";
+$TestCaseC_i     = PerlACE::LocalFile("TestCaseC.i");
+unlink $TestCaseC_i;
 
-$server_TestCaseC_i = $server->LocalFile($TestCaseC_i);
-$server->DeleteFile($TestCaseC_i);
-
-$input_file = $server->LocalFile ("TestCase.idl");
 
 # Compile the IDL
 #
-
-$SV = $server->CreateProcess ("$tao_idl", "-Ge 1 -Sc $input_file");
-
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-if ($server->WaitForFileTimed ($TestCaseC_i,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_TestCaseC_i\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$TAO_IDL    = new PerlACE::Process("$tao_idl");
+$TAO_IDL->Arguments( "-Ge 1 -Sc TestCase.idl" ) ;
+if( $TAO_IDL->SpawnWaitKill(10) != 0 )
+{
+   print STDERR "ERROR: can't compile IDL\n";
+   $TAO_IDL->Kill ();
+   $status = 1;
+   exit $status;
 }
 
 # Test for the presence of Body_dup etc. Crude test assumes that if
 # Body_dup is there, then all the Body_* methods are also there.
 #
 $found = 0 ;
-open (I_FILE, "$server_TestCaseC_i") ;
-while( <I_FILE> ){
+open (I_FILE, "$TestCaseC_i") ;
+while( <I_FILE> )
+{
    chomp ;
-   if( $_ =~ /Body_dup/ ){
+   if( $_ =~ /Body_dup/ )
+   {
        $found = 1 ;
        last ;
    }
 }
-if( $found != 1 ){
+if( $found != 1 )
+{
     print STDERR "ERROR: Body_* methods not found\n" ;
     $status = 1 ;
 }
-
-$server->DeleteFile($TestCaseC_i);
-
 
 exit $status;

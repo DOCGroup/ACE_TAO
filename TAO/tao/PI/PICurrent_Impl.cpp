@@ -1,10 +1,11 @@
-// $Id$
-
 #include "tao/PI/PICurrent_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/ORB_Core.h"
+ACE_RCSID (tao,
+           PICurrent,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PI/PICurrent_Impl.inl"
@@ -125,94 +126,6 @@ TAO::PICurrent_Impl::take_lazy_copy (
           this->lazy_copy_->set_callback_for_impending_change (this);
         }
     }
-}
-
-TAO::PICurrent_Impl::~PICurrent_Impl ()
-{
-  if (this->push_)
-    {
-      // We have YOUNGER stack members to REMOVE as well. HOWEVER we
-      // don't want the entry above us coming back down and trying
-      // to delete us again. (As we are currently doing just that.)
-      this->push_->pop_= 0;
-
-      delete this->push_;
-    }
-  else if (this->orb_core_)
-    {
-      // Since there are no entries above us, we must be the top of
-      // the stack and since all are being deleted, the stack will
-      // be empty.
-      this->orb_core_->set_tss_resource (this->tss_slot_, 0);
-    }
-
-  // Break any existing ties that another PICurrent has with our table
-  // since our table will no longer exists once this destructor completes.
-  if (0 != this->impending_change_callback_)
-    this->impending_change_callback_->convert_from_lazy_to_real_copy ();
-
-  // If we have logically copied another table, ensure it is told about our
-  // demise so that it will not call our non-existant
-  // convert_from_lazy_to_real_copy() when it changes/destructs.
-  if (0 != this->lazy_copy_)
-    this->lazy_copy_->set_callback_for_impending_change (0);
-
-  if (this->pop_)
-    {
-      // We have OLDER stack members to REMOVE as well. HOWEVER we
-      // don't want multiple adjustments of the stack head pointer from
-      // every older entry as they delete, as this requires multiple
-      // set_tss_resource updates which would be slow and unnecessary.
-      this->pop_->orb_core_= 0;
-
-      // We also don't want double deletions of what used to be above these
-      // since we have just completed the deletion of these ourselves.
-      this->pop_->push_= 0;
-      delete this->pop_;
-    }
-}
-
-void
-TAO::PICurrent_Impl::push (void)
-{
-  if (this->orb_core_) // We have a stack to adjust
-    {
-      TAO::PICurrent_Impl *const currentHead =
-        static_cast<TAO::PICurrent_Impl *> (
-          this->orb_core_->get_tss_resource (this->tss_slot_));
-      if (!currentHead->push_)
-        {
-          // Since there is nothing younger above us, we need to create
-          // a new entry.
-          ACE_NEW_THROW_EX (currentHead->push_,
-                            PICurrent_Impl (this->orb_core_, this->tss_slot_, currentHead),
-                            CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                0,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-        }
-      this->orb_core_->set_tss_resource (this->tss_slot_, currentHead->push_);
-    }
-  else
-    throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
-}
-
-void
-TAO::PICurrent_Impl::pop (void)
-{
-  if (this->orb_core_) // We have a stack to adjust
-    {
-      TAO::PICurrent_Impl *const currentHead =
-        static_cast<TAO::PICurrent_Impl *> (
-          this->orb_core_->get_tss_resource (this->tss_slot_));
-      if (currentHead->pop_)
-        orb_core_->set_tss_resource (tss_slot_, currentHead->pop_);
-      else
-        throw ::CORBA::INTERNAL (); // Too many pop's
-    }
-  else
-    throw ::CORBA::INTERNAL (); // Should only call push if we have a stack
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

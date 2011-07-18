@@ -17,7 +17,7 @@ project(*Test_Stub): taolib_with_idl {
   after += *idl
 
   sharedname   = Collocation_Test_Stub
-  dynamicflags += MY_STUB_BUILD_DLL
+  dynamicflags = MY_STUB_BUILD_DLL
 
   Source_Files {
     DiamondC.cpp
@@ -31,7 +31,7 @@ project(*Diamond) : taolib_with_idl, portableserver {
   after       += Collocation_Test_Stub
 
   sharedname   = Collocation_Diamond
-  dynamicflags += DIAMOND_BUILD_DLL
+  dynamicflags = DIAMOND_BUILD_DLL
 
   libs        += Collocation_Test_Stub
 

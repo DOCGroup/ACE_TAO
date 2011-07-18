@@ -1,8 +1,10 @@
 // $Id$
 
 #include "ace/Init_ACE.h"
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 #include "test_config.h"
+
 
 extern "C"
 {

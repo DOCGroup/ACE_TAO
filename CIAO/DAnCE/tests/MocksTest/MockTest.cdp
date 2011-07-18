@@ -1,0 +1,196 @@
+<Deployment:DeploymentPlan
+  xmlns:Deployment="http://www.omg.org/Deployment"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>MockTest</label>
+  <UUID>MockTest</UUID>
+
+  <realizes></realizes>
+
+  <!-- Implementations declarations -->
+
+  <!-- Mock object implementation-->
+  <!-- Home implementation -->
+  <implementation id="MockObjectHomeImplementation">
+    <name>MockObjectHomeImplementation</name>
+    <source/>
+    <artifact>MockObjectArtifact</artifact>
+
+    <execParameter>
+      <!-- entrypoint as exec parameter (see §10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_MockHome</string>
+        </value>
+      </value>
+    </execParameter>
+
+    <execParameter>
+      <!-- COMPONENT_KIND -->
+      <name>cdmw.config.ComponentKind</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>ComponentKindValue</name>
+            <typeId>IDL:thalesgroup.com/CdmwDeployment/ComponentKindValue:1.0</typeId>
+            <member>SERVICE</member>
+            <member>SESSION</member>
+            <member>PROCESS</member>
+            <member>ENTITY</member>
+            <member>UNCLASSIFIED</member>
+          </enum>
+        </type>
+        <value>
+          <enum>SESSION</enum>
+        </value>
+      </value>
+    </execParameter>
+
+    <execParameter>
+      <!-- SERVANT_LIFETIME -->
+      <name>cdmw.config.ServantLifeTime</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>ServantLifeTimeValue</name>
+            <typeId>IDL:thalesgroup.com/CdmwDeployment/ServantLifetimeValue:1.0</typeId>
+            <member>COMPONENT_LIFETIME</member>
+            <member>METHOD_LIFETIME</member>
+            <member>TRANSACTION_LIFETIME</member>
+            <member>CONTAINER_LIFETIME</member>
+          </enum>
+        </type>
+        <value>
+          <enum>CONTAINER_LIFETIME</enum>
+        </value>
+      </value>
+    </execParameter>
+
+    <execParameter>
+      <!-- THREADING_POLICY -->
+      <name>cdmw.config.ThreadingPolicy</name>
+      <value>
+        <type>
+          <kind>tk_enum</kind>
+          <enum>
+            <name>ThreadingPolicyValue</name>
+            <typeId>IDL:thalesgroup.com/CdmwDeployment/ThreadingPolicyValue:1.0</typeId>
+            <member>SERIALIZE</member>
+            <member>MULTITHREAD</member>
+          </enum>
+        </type>
+        <value>
+          <enum>MULTITHREAD</enum>
+        </value>
+      </value>
+    </execParameter>
+
+    <execParameter>
+      <!-- HOME_REPOSITORY_ID -->
+      <name>cdmw.config.HomeRepositoryId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>IDL:acme.com/CcmDance1Test/ServerModule/ServerDanceHome:1.0</string>
+        </value>
+      </value>
+    </execParameter>
+
+    <execParameter>
+      <!-- HOME_SERVANT_CLASSNAME -->
+      <name>cdmw.config.HomeServantClassName</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Cdmw.CCM.CIF.CdmwCcmDance1Test.ServerModule.SessionServerDanceHome_impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <!-- Component implementation -->
+  <implementation id="MockObjectImplementation">
+    <name>MockObjectImplementation</name>
+    <source/>
+    <artifact>MockObjectArtifact</artifact>
+  </implementation>
+
+
+
+
+  <!-- Instances declarations -->
+
+  <!-- MockObjectHome instances-->
+  <instance id="MockObjectHome">
+    <name>MockObjectHome</name>
+    <node>MyHost</node>
+    <!-- hostname -->
+    <source/>
+    <implementation>MockObjectHomeImplementation</implementation>
+    <configProperty>
+      <!-- PROCESS_DESTINATION -->
+      <name>cdmw.config.ProcessDestination</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MockTest</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance id="MockObject">
+    <name>MockObject</name>
+    <node>MyHost</node>    
+    <source/>
+    <implementation>MockObjectImplementation</implementation>
+
+    <configProperty>
+      <!-- HOME -->
+      <name>cdmw.component_home</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MockObjectHome</string>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <!-- COMPONENT_NAME -->
+      <name>cdmw.config.ComponentName</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>MockObject</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <!-- Artifacts declarations -->
+  <artifact id="MockObjectArtifact">
+    <name>MockObjectArtifact</name>
+    <source/>
+    <node/>
+    <location>./libMockObject.so</location>
+  </artifact>
+  
+  </Deployment:DeploymentPlan>

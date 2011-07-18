@@ -1,4 +1,12 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+     & eval 'exec perl -S $0 $argv:q'
+     if 0;
+
+# $Id$
+# -*- perl -*-
+
+use lib "$ENV{ACE_ROOT}/bin";
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
@@ -9,60 +17,58 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # all the servers and clients as necessary.
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+$iorfile = PerlACE::LocalFile ("test.ior");
+unlink $iorfile;
 
 $debug = "";
 
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
-        print "Run_Test Perl script for TAO Param Test\n\n";
-        print "run_test [-d>]\n";
-        print "-d                  -- runs test in debug mode\n";
-        exit 0;
+      print "Run_Test Perl script for TAO Param Test\n\n";
+      print "run_test [-d>]\n";
+      print "-d                  -- runs test in debug mode\n";
+      exit 0;
     }
     elsif ($ARGV[$i] eq "-d") {
-        $debug = " -d";
+      $debug = " -d";
     }
 }
 
-$SV = $server->CreateProcess ("server", " -ORBDottedDecimalAddresses 1  -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile -x $debug");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", " -ORBDottedDecimalAddresses 1");
+}
+else {
+    $SV = new PerlACE::Process ("server", " -ORBDottedDecimalAddresses 1");
+}
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -x $debug");
 
 $SV->Spawn ();
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-}
+} 
 
 print STDERR $CL->CommandLine(), "\n";
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
+$client = $CL->SpawnWaitKill (15);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval ());
+$server = $SV->WaitKill (30);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 exit $status;

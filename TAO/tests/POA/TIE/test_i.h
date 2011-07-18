@@ -1,18 +1,19 @@
 // -*- C++ -*-
+//
+// $Id$
 
 //=============================================================================
-/**
- *  @file     test_i.h
- *
- *  $Id$
- *
- *   Defines implementation classes for the interfaces
- *
- *
- *  @author  Irfan Pyarali
- */
+//
+// = FILENAME
+//     test_i.h
+//
+// = DESCRIPTION
+//     Defines implementation classes for the interfaces
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
 //=============================================================================
-
 
 #include "testS.h"
 
@@ -50,8 +51,8 @@ protected:
 
   CORBA::Long value_;
 
-  /// Default poa associated with this servant
   PortableServer::POA_var poa_;
+  // Default poa associated with this servant
 };
 
 class Outer_i
@@ -75,8 +76,8 @@ public:
 
     CORBA::Long value_;
 
-    /// Default poa associated with this servant
     PortableServer::POA_var poa_;
+    // Default poa associated with this servant
   };
 
   class Inner_i
@@ -100,8 +101,8 @@ public:
 
       CORBA::Long value_;
 
-      /// Default poa associated with this servant
       PortableServer::POA_var poa_;
+      // Default poa associated with this servant
     };
   };
 };

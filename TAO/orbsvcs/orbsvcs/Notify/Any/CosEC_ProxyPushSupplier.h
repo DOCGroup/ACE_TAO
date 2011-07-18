@@ -64,7 +64,6 @@ public:
   );
 
   virtual void validate ();
-  virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 private:
   /// Release

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -20,6 +18,10 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
+
+ACE_RCSID (RTCORBA,
+           RT_Invocation_Endpoint_Selectors,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,13 +47,8 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
         }
       while (r->stub ()->next_profile_retry () != 0);
 
-      // If we get here, we completely failed to find an endpoint
-      // that we know how to use. We used to throw an exception
-      // but that would prevent any request interception points
-      // being called. They may know how to fix the problem so
-      // we wait to throw the exception in
-      // Synch_Twoway_Invocation::remote_twoway and
-      // Synch_Oneway_Invocation::remote_oneway instead.
+      // If we get here, we completely failed to find an endpoint selector
+      // that we know how to use, so throw an exception.
     }
   else
     {
@@ -132,13 +129,8 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
       throw ::CORBA::INV_POLICY ();
     }
 
-  // If we get here, we completely failed to find an endpoint
-  // that we know how to use. We used to throw an exception
-  // but that would prevent any request interception points
-  // being called. They may know how to fix the problem so
-  // we wait to throw the exception in
-  // Synch_Twoway_Invocation::remote_twoway and
-  // Synch_Oneway_Invocation::remote_oneway instead.
+  // If we get here, we found at least one pertinent profile, but no
+  // usable endpoints.
 }
 
 int

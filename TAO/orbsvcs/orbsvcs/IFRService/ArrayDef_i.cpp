@@ -6,6 +6,11 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
+
+ACE_RCSID (IFRService,
+           ArrayDef_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
@@ -212,7 +217,7 @@ TAO_ArrayDef_i::destroy_element_type (
 
   u_int kind = 0;
   this->repo_->config ()->get_integer_value (element_key,
-                                             ACE_TEXT("def_kind"),
+                                             "def_kind",
                                              kind);
 
   CORBA::DefinitionKind def_kind =

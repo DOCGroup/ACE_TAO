@@ -35,6 +35,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_strings.h"
 
+ACE_RCSID(Strategies, advanced_resource, "$Id$")
+
 #if !defined (TAO_DEFAULT_REACTOR_TYPE)
 #define TAO_DEFAULT_REACTOR_TYPE TAO_REACTOR_TP
 #endif /* !TAO_DEFAULT_REACTOR_TYPE */

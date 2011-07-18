@@ -12,13 +12,12 @@
 
 #include "be_helper.h"
 
-/**
- * @class TAO_SunSoft_OutStream
- *
- * Backend specific to SunSoft AST nodes
- */
 class TAO_SunSoft_OutStream : public TAO_OutStream
 {
+  // =TITLE
+  //  TAO_SunSoft_OutStream
+  // =DESCRIPTION
+  //  Backend specific to SunSoft AST nodes
 public:
   TAO_SunSoft_OutStream (void);
   // constructor

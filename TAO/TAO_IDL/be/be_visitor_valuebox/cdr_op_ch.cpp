@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for valueboxes.
- *  This one provides code generation for the CDR operators.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for valueboxes.
+//    This one provides code generation for the CDR operators.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuebox,
+           cdr_op_ch,
+           "$Id$")
 
 be_visitor_valuebox_cdr_op_ch::be_visitor_valuebox_cdr_op_ch (
     be_visitor_context *ctx
@@ -36,9 +45,9 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 

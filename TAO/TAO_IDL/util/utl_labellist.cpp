@@ -74,17 +74,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_labellist.h"
 #include "ast_union_label.h"
-#include "ast_expression.h"
-#include "ast_generator.h"
 
-#include "global_extern.h"
-
-#include "ace/OS_Memory.h"
+ACE_RCSID (util,
+           utl_labellist,
+           "$Id$")
 
 UTL_LabelList::UTL_LabelList (AST_UnionLabel *s,
                               UTL_LabelList *cdr)
-  : UTL_List (cdr),
-    pd_car_data (s)
+  : UTL_List(cdr),
+    pd_car_data(s)
 {
 }
 
@@ -93,35 +91,6 @@ AST_UnionLabel *
 UTL_LabelList::head (void)
 {
   return this->pd_car_data;
-}
-
-// Copy a label list.
-UTL_LabelList *
-UTL_LabelList::copy (void)
-{
-  AST_Expression *val = this->pd_car_data->label_val ();
-
-  AST_Expression *val_copy = 0;
-  ACE_NEW_RETURN (val_copy,
-                  AST_Expression (val, val->ev ()->et),
-                  0);
-
-  AST_UnionLabel *label_copy =
-    idl_global->gen ()->create_union_label (this->pd_car_data->label_kind (),
-                                            val_copy);
-
-  UTL_LabelList *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  UTL_LabelList (label_copy,
-                                 0),
-                  0);
-
-  if (this->tail () != 0)
-    {
-      retval->nconc ((UTL_LabelList *) this->tail ()->copy ());
-    }
-
-  return retval;
 }
 
 void
@@ -139,15 +108,16 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
 {
 }
 
+
 // Get current item.
 AST_UnionLabel *
 UTL_LabellistActiveIterator::item (void)
 {
-  if (this->source == 0)
+  if (source == 0)
     {
       return 0;
     }
 
-  return (dynamic_cast<UTL_LabelList *> (this->source))->head ();
+  return ((UTL_LabelList *) source)->head ();
 }
 

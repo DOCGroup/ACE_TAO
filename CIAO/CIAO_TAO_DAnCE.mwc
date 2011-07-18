@@ -4,21 +4,27 @@
 workspace {
   $(ACE_ROOT)/ace
   $(ACE_ROOT)/apps/gperf/src
-  $(ACE_ROOT)/apps/JAWS/server
-  $(ACE_ROOT)/protocols/ace/INet
+  $(ACE_ROOT)/ACEXML/common
+  $(ACE_ROOT)/ACEXML/parser/parser
+  $(ACE_ROOT)/ACEXML/apps/svcconf
   $(ACE_ROOT)/contrib
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/tao
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
-  $(TAO_ROOT)/orbsvcs/Naming_Service
+  $(TAO_ROOT)/orbsvcs/Naming_Service/Naming_Service.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Serv.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RTEvent_Skel.mpc
   ccm
+  CIDLC/CIDLC.mwc
   ciao
-  $(DANCE_ROOT)/dance
-  $(DANCE_ROOT)/tools
-  connectors/ami4ccm/ami4ccm
-  connectors/dds4ccm/idl
-  connectors/dds4ccm/impl
+  DAnCE
+  tools/Config_Handlers
+  tools/XML
+  exclude {
+    DAnCE/tests
+  }
 }

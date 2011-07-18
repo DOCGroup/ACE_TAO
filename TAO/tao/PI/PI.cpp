@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/PI.h"
 #include "tao/PI/ORBInitializer_Registry_Impl.h"
 #include "tao/PI/PolicyFactory_Loader.h"
@@ -9,6 +7,10 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
 #include "ace/CORBA_macros.h"
+
+ACE_RCSID (PI,
+           PI,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -16,7 +16,7 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
-
+ACE_RCSID(Threads, barrier2, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -197,7 +197,7 @@ Worker_Task<BARRIER>::producer (void)
   for (;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ),

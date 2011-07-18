@@ -16,6 +16,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
+ACE_RCSID (tao,
+           HTTP_Parser,
+           "$Id$")
+
 static const ACE_TCHAR file_prefix[] = ACE_TEXT ("http:");
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

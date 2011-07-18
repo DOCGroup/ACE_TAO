@@ -2,6 +2,9 @@
 
 #include "orbsvcs/Notify/Notify_Default_POA_Factory.h"
 
+ACE_RCSID(Notify, Notify_Default_POA_Factory, "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

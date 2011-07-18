@@ -16,13 +16,14 @@ class Thread_Pool;
 class Echo_Caller : public POA_Test::Echo_Caller
 {
 public:
-  Echo_Caller(Thread_Pool *pool_);
+  Echo_Caller(CORBA::ORB_ptr orb, Thread_Pool *pool_);
 
   virtual void start_task(Test::Echo_ptr client);
 
   virtual void shutdown(void);
 
 private:
+  CORBA::ORB_var orb_;
   Thread_Pool *pool_;
 };
 

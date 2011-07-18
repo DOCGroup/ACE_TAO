@@ -1,24 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *
- *   This is a simple test client implementation.  Also looks out
- *   for forwarding exceptions
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//==========================================================================
+//
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//
+//     This is a simple test client implementation.  Also looks out
+//     for forwarding exceptions
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//==========================================================================
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "testC.h"
+
+ACE_RCSID(Forwarding, client, "$Id$")
 
 static ACE_TCHAR *IOR = 0;
 static int servers = 2;

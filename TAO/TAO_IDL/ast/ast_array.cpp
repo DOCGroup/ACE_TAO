@@ -72,16 +72,29 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_array.h"
 #include "ast_expression.h"
-#include "ast_param_holder.h"
 #include "ast_visitor.h"
-
 #include "utl_exprlist.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-AST_Decl::NodeType const
-AST_Array::NT = AST_Decl::NT_array;
+ACE_RCSID (ast,
+           ast_array,
+           "$Id$")
+
+// Constructor(s) and destructor.
+
+AST_Array::AST_Array (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    pd_n_dims (0),
+    pd_dims (0),
+    pd_base_type (0),
+    owns_base_type_ (false)
+{
+}
 
 AST_Array::AST_Array (UTL_ScopedName *n,
                       ACE_CDR::ULong nd,
@@ -134,17 +147,11 @@ AST_Array::compute_dims (UTL_ExprList *ds,
        iter.next (), i++)
     {
       AST_Expression *orig = iter.item ();
-      AST_Param_Holder *ph = orig->param_holder ();
-
-      AST_Expression::ExprType ex_type =
-        (ph == 0 ? orig->ev ()->et : ph->info ()->const_type_);
-
       AST_Expression *copy = 0;
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
-                                      ex_type),
+                                      orig->ev ()->et),
                       0);
-
       result[i] = copy;
     }
 
@@ -224,11 +231,10 @@ void
 AST_Array::set_base_type (AST_Type *nbt)
 {
   this->pd_base_type = nbt;
-  this->is_local_ = nbt->is_local ();
-  AST_Decl::NodeType bnt = nbt->node_type ();
 
-  if (bnt == AST_Decl::NT_sequence
-      || bnt == AST_Decl::NT_param_holder)
+  this->is_local_ = nbt->is_local ();
+
+  if (AST_Decl::NT_sequence == nbt->node_type ())
     {
       this->owns_base_type_ = true;
     }
@@ -256,11 +262,11 @@ AST_Array::destroy (void)
       delete this->pd_dims[i];
       this->pd_dims[i] = 0;
     }
-
+    
   delete [] this->pd_dims;
   this->pd_dims = 0;
   this->pd_n_dims = 0;
-
+  
   this->AST_ConcreteType::destroy ();
 }
 
@@ -271,5 +277,7 @@ AST_Array::set_dims (AST_Expression **ds,
   this->pd_dims = ds;
   this->pd_n_dims = nds;
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Array)

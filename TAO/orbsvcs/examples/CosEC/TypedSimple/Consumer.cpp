@@ -4,35 +4,10 @@
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 #include "Country_i.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("Consumer.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <ior_output_file> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+ACE_RCSID (CosEC_Examples,
+           Consumer,
+           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -43,9 +18,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ORB initialization...
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) != 0)
-        return 1;
 
       CORBA::Object_var poa_obj =
         orb->resolve_initial_references ("RootPOA");
@@ -89,12 +61,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var str =
          orb->object_to_string (typed_consumer.in ());
 
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file),
+      const ACE_TCHAR* ior_file_name = ACE_TEXT("Consumer.ior");
+      FILE *output_file= ACE_OS::fopen (ior_file_name,
                                         ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ior_file_name),
                           1);
 
       ACE_OS::fprintf (output_file, "%s", str.in ());

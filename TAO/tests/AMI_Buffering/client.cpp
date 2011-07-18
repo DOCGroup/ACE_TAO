@@ -8,6 +8,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(AMI_Buffering, client, "$Id$")
+
 const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
 const ACE_TCHAR *admin_ior = ACE_TEXT("file://admin.ior");
 int iterations = 20;
@@ -84,7 +86,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -403,7 +405,7 @@ run_message_count (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = 0;
+  Reply_Handler *reply_handler_impl;
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -514,7 +516,7 @@ run_timeout (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = 0;
+  Reply_Handler *reply_handler_impl;
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -550,7 +552,7 @@ run_timeout (CORBA::ORB_ptr orb,
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
-          ++send_count;
+          send_count++;
 
           CORBA::ULong receive_count =
             ami_buffering_admin->request_count ();
@@ -633,7 +635,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = 0;
+  Reply_Handler *reply_handler_impl;
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);

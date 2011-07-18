@@ -1,4 +1,4 @@
-// -*- C++ -*-
+
 // $Id$
 
 #include "tao/PI_Server/PI_Server_Loader.h"
@@ -8,10 +8,13 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
+ACE_RCSID (PI_Server,
+           PI_Server_Loader,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PI_Server_Loader::TAO_PI_Server_Loader (void)
-  : initialized_ (false)
 {
 }
 
@@ -24,11 +27,13 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_PI_Server_Loader::init");
 
+  static bool initialized = false;
+
   // Only allow initialization once.
-  if (this->initialized_)
+  if (initialized)
     return 0;
 
-  this->initialized_ = true;
+  initialized = true;
 
   // Register the ORB initializer.
   try

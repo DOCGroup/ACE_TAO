@@ -25,11 +25,15 @@ class FooServantList
 
   private:
 
+    typedef TAO_SYNCH_MUTEX     LockType;
+    typedef ACE_Guard<LockType> GuardType;
+
     PortableServer::ServantBase_var* servants_;
     ACE_TString prefix_;
     unsigned num_servants_;
 
-    ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients_;
+    LockType num_clients_lock_;
+    unsigned num_clients_;
 
     CORBA::ORB_var  orb_;
 };

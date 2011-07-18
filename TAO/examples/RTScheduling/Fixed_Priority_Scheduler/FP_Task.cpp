@@ -32,11 +32,11 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "FP_Task::activate %d\n",
+                "Thread_Task::activate %d\n",
                 importance_));
 
   char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "FP_Task::activate task\n");
+  ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
   dt_creator_->log_msg (msg);
 
   base_time_ = base_time;
@@ -64,29 +64,35 @@ FP_Task::activate_task (RTScheduling::Current_ptr current,
 void
 FP_Task::pre_activate (void)
 {
-  CORBA::Object_var object =
-    DT_TEST::instance ()->orb ()->resolve_initial_references ("PriorityMappingManager");
+  try
+    {
+      CORBA::Object_var object = DT_TEST::instance ()->orb ()->resolve_initial_references ("PriorityMappingManager");
 
-  RTCORBA::PriorityMappingManager_var mapping_manager =
-    RTCORBA::PriorityMappingManager::_narrow (object.in ());
+      RTCORBA::PriorityMappingManager_var mapping_manager =
+        RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
-  RTCORBA::PriorityMapping *pm = mapping_manager->mapping ();
+      RTCORBA::PriorityMapping *pm = mapping_manager->mapping ();
 
-  CORBA::Short native_priority;
-  if (pm->to_native (this->importance_, native_priority) == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Cannot convert native priority %d to corba priority\n",
-                native_priority));
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Native Priority = %d\n",
-                 native_priority));
-  char msg [BUFSIZ];
-  ACE_OS::sprintf (msg, "Native Priority %d\n",
-                   native_priority);
-  dt_creator_->log_msg (msg);
+      CORBA::Short native_priority;
+      if (pm->to_native (this->importance_, native_priority) == 0)
+        ACE_ERROR ((LM_ERROR,
+                    "Cannot convert native priority %d to corba priority\n",
+                    native_priority));
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Native Priority = %d\n",
+                    native_priority));
+      char msg [BUFSIZ];
+      ACE_OS::sprintf (msg, "Native Priority %d\n",
+                       native_priority);
+      dt_creator_->log_msg (msg);
 
-  this->importance_ = native_priority;
+      this->importance_ = native_priority;
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Caught exception:");
+    }
 }
 
 int

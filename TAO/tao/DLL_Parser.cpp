@@ -14,6 +14,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (tao,
+           DLL_Parser,
+           "$Id$")
+
 static const char dll_prefix[] = "DLL:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -67,6 +71,7 @@ ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                        ACE_Service_Type::DELETE_THIS |
                                   ACE_Service_Type::DELETE_OBJ,
                        0)
+
 
 ACE_FACTORY_DEFINE (TAO, TAO_DLL_Parser)
 

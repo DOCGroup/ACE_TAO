@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Structures. This is a generic visitor.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Structures. This is a generic visitor.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_structure, 
+           structure, 
+           "$Id$")
 
 be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -73,12 +83,24 @@ be_visitor_structure::visit_field (be_field *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_field_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_field_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_structure::"
                            "visit_field - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -88,7 +110,7 @@ be_visitor_structure::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure::"
                          "visit_field - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 

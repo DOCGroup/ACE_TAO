@@ -14,12 +14,12 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {
 }
-
+  
 // Implementation skeleton destructor
 Messenger_i::~Messenger_i (void)
 {
 }
-
+  
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,
@@ -31,10 +31,10 @@ CORBA::Boolean Messenger_i::send_message (
   std::cout << "Message:      " << message << std::endl;
   CORBA::string_free(message);
   message = CORBA::string_dup("Thanks for the message.");
-  return true;
+  return 1;
 }
 
 void Messenger_i::shutdown ()
 {
-  orb_->shutdown(false);
+  orb_->shutdown(0);
 }

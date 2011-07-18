@@ -4,194 +4,93 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use Env (ACE_ROOT);
+use lib "$ACE_ROOT/bin";
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
+$iorfile = PerlACE::LocalFile ("ns.ior");
+$ec1iorfile = PerlACE::LocalFile ("ec1.ior");
+$ec2iorfile = PerlACE::LocalFile ("ec2.ior");
+$arg_ns_ref = "-ORBInitRef NameService=file://$iorfile";
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+unlink $iorfile;
+unlink $ec1iorfile;
+unlink $ec2iorfile;
+
+# start Naming Service
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NS = new PerlACE::Process($NameService, "-o $iorfile");
+$NS->Spawn();
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $NS->Kill(); 
+    exit 1;
 }
 
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $s1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $s2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $c1 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-my $c2 = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
-
-my $nsiorfile = "ns.ior";
-my $ec1iorfile = "ec1.ior";
-my $ec2iorfile = "ec2.ior";
-my $supplier_conf_file = "";
-if ( -e "supplier.conf" ) {
+# start Supplier  
+if ( -e "supplier.conf" ) 
+{
    $supplier_conf_file = "supplier.conf";
 }
 else{
-   $supplier_conf_file = "../supplier.conf";
+   $supplier_conf_file = "../supplier.conf";   
+}
+$args1 = "-ORBSvcConf $supplier_conf_file -ecname ec1 -gateway ec2 -iorfile $ec1iorfile";
+$S1 = new PerlACE::Process("EchoEventSupplier", "$arg_ns_ref $args1");
+$S1->Spawn();
+
+$args2 = "-ORBSvcConf $supplier_conf_file -ecname ec2 -gateway ec1 -iorfile $ec2iorfile";
+$S2 = new PerlACE::Process("EchoEventSupplier", "$arg_ns_ref $args2");
+$S2->Spawn();
+
+if ((PerlACE::waitforfile_timed ($ec1iorfile, 15) == -1) ||
+    (PerlACE::waitforfile_timed ($ec2iorfile, 2) == -1)) {
+    print STDERR "ERROR: cannot find files <$ec1iorfile> and <$ec2iorfile>\n";
+    $NS->Kill(); 
+    $S1->Kill();
+    $S2->Kill();
+    exit 1;
 }
 
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $s1_ec1iorfile = $s1->LocalFile ($ec1iorfile);
-my $s2_ec2iorfile = $s2->LocalFile ($ec2iorfile);
-my $s1_nsiorfile = $s1->LocalFile ($nsiorfile);
-my $s2_nsiorfile = $s2->LocalFile ($nsiorfile);
-my $c1_nsiorfile = $c1->LocalFile ($nsiorfile);
-my $c2_nsiorfile = $c2->LocalFile ($nsiorfile);
-$ns->DeleteFile ($nsiorfile);
-$s1->DeleteFile ($ec1iorfile);
-$s2->DeleteFile ($ec2iorfile);
-$s1->DeleteFile ($nsiorfile);
-$s2->DeleteFile ($nsiorfile);
-$c1->DeleteFile ($nsiorfile);
-$c2->DeleteFile ($nsiorfile);
-
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
-$NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level ".
-                                        " -o $ns_nsiorfile");
-$args1 = "-ORBSvcConf $supplier_conf_file -ecname ec1 -gateway ec2";
-$S1 = $s1->CreateProcess ("EchoEventSupplier", "-ORBInitRef NameService=file://$s1_nsiorfile ".
-                                               "$args1 ".
-                                               "-iorfile $s1_ec1iorfile");
-$args2 = "-ORBSvcConf $supplier_conf_file -ecname ec2 -gateway ec1";
-$S2 = $s2->CreateProcess ("EchoEventSupplier", "-ORBInitRef NameService=file://$s2_nsiorfile ".
-                                               "$args2 ".
-                                               "-iorfile $s2_ec2iorfile");
 $args3 = "-ecname ec1";
-$C1 = $c1->CreateProcess ("EchoEventConsumer", "-ORBInitRef NameService=file://$c1_nsiorfile ".
-                                               "$args3");
+$C1 = new PerlACE::Process("EchoEventConsumer", "$arg_ns_ref $args3");
+$C1->Spawn();
+
 $args4 = "-ecname ec2";
-$C2 = $c2->CreateProcess ("EchoEventConsumer", "-ORBInitRef NameService=file://$c2_nsiorfile ".
-                                               "$args4");
+$C2 = new PerlACE::Process("EchoEventConsumer", "$arg_ns_ref $args4");
+$C2->Spawn();
 
+if ($C1->WaitKill(60) == -1) {
+   print STDERR "consumer1 timedout \n";
 
-# start Naming Service
-$NS_status = $NS->Spawn ();
+   $C2->Kill();
+   $S1->Kill();
+   $S2->Kill();
+   $NS->Kill();
 
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    exit 1;
+   unlink $iorfile;
+
+   exit 1;
 }
 
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+if ($C2->WaitKill(10) == -1) {
+   print STDERR "consumer2 timedout \n";
+
+   $S1->Kill();
+   $S2->Kill();
+   $NS->Kill();
+
+   unlink $iorfile;
+
+   exit 1;
 }
+  
+$NS->Kill();
+$S1->Kill();
+$S2->Kill();
 
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($s1->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$s1_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($s2->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$s2_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($c1->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$c1_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($c2->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$c2_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
+unlink $iorfile;
+unlink $ec1iorfile;
+unlink $ec2iorfile;
 
-# start Supplier
-$S1_status = $S1->Spawn ();
-
-if ($S1_status != 0) {
-    print STDERR "ERROR: Supplier1 returned $S1_status\n";
-    exit 1;
-}
-
-$S2_status = $S2->Spawn ();
-
-if ($S2_status != 0) {
-    print STDERR "ERROR: Supplier2 returned $S2_status\n";
-    exit 1;
-}
-
-if ($s1->WaitForFileTimed ($ec1iorfile, $s1->ProcessStartWaitInterval()+60) == -1) {
-    print STDERR "ERROR: cannot find file <$s1_ec1iorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $S1->Kill (); $S1->TimedWait (1);
-    exit 1;
-}
-
-if ($s2->WaitForFileTimed ($ec2iorfile, $s2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$s2_ec2iorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $S1->Kill (); $S1->TimedWait (1);
-    $S2->Kill (); $S2->TimedWait (1);
-    exit 1;
-}
-
-$C1_status = $C1->Spawn ();
-
-if ($C1_status != 0) {
-    print STDERR "ERROR: Consumer returned $C1_status\n";
-    exit 1;
-}
-
-$C2_status = $C2->Spawn ();
-
-if ($C2_status != 0) {
-    print STDERR "ERROR: Consumer returned $C2_status\n";
-    exit 1;
-}
-
-$C1_status = $C1->WaitKill ($c1->ProcessStopWaitInterval()+45);
-
-if ($C1_status != 0) {
-    print STDERR "ERROR: Consumer1 returned $C1_status\n";
-    $status = 1;
-}
-
-$C2_status = $C2->WaitKill ($c2->ProcessStopWaitInterval());
-
-if ($C2_status != 0) {
-    print STDERR "ERROR: Consumer2 returned $C2_status\n";
-    $status = 1;
-}
-
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    $status = 1;
-}
-
-$S1_status = $S1->TerminateWaitKill ($s1->ProcessStopWaitInterval());
-
-if ($S1_status != 0) {
-    print STDERR "ERROR: Supplier1 returned $S1_status\n";
-    $status = 1;
-}
-
-$S2_status = $S2->TerminateWaitKill ($s2->ProcessStopWaitInterval());
-
-if ($S2_status != 0) {
-    print STDERR "ERROR: Supplier2 returned $S2_status\n";
-    $status = 1;
-}
-
-$ns->DeleteFile ($nsiorfile);
-$s1->DeleteFile ($ec1iorfile);
-$s2->DeleteFile ($ec2iorfile);
-$s1->DeleteFile ($nsiorfile);
-$s2->DeleteFile ($nsiorfile);
-$c1->DeleteFile ($nsiorfile);
-$c2->DeleteFile ($nsiorfile);
-
-exit $status;
+exit 0;

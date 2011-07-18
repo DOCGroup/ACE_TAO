@@ -5,6 +5,8 @@
 #include "Client_Task.h"
 #include "tao/AnyTypeCode/Any.h"
 
+ACE_RCSID(Big_Request_Muxing, Client_Task, "$Id$")
+
 namespace
 {
   const ACE_Time_Value TRANSIENT_HOLDOFF (0, 2000); // 2ms delay

@@ -1,24 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Codecs_Test.cpp
- *
- *  $Id$
- *
- *  Checks the functionality of the ACE Codecs class.
- *
- *
- *  @author Krishnakumar B <kitty@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Codecs_Test.cpp
+//
+// = DESCRIPTION
+//    Checks the functionality of the ACE Codecs class.
+//
+// = AUTHORS
+//    Krishnakumar B <kitty@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Codecs.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/ACE.h"
 
-
+ACE_RCSID(tests, Codecs_Test, "$Id$")
 
 // Don't change the strings thinking that they are typos
 

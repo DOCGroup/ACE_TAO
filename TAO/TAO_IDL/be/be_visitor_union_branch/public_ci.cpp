@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    public_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Union Branch in the client inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    public_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Union Branch in the client inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_union_branch,
+           public_ci,
+           "$Id$")
 
 // *****************************************************
 //  Visitor for union_branch in the client inline file.
@@ -63,11 +73,9 @@ be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
 int
 be_visitor_union_branch_public_ci::visit_array (be_array *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -154,8 +162,8 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
     }
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -181,7 +189,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
       << "// Set the value." << be_nl
       << "this->u_." << ub->local_name () << "_ = "
       << fname << "_dup (val);" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Get method.
   *os << "/// Retrieve the member." << be_nl
@@ -198,11 +206,9 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
 int
 be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // heck if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -226,8 +232,8 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -252,7 +258,7 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
   *os << ";" << be_nl
       << "// Set the value." << be_nl
       << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Get method.
   *os << "/// Retrieve the member." << be_nl
@@ -269,11 +275,9 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -297,8 +301,8 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -342,7 +346,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 
   *os << "duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Get method.
   *os << "/// Retrieve the member." << be_nl
@@ -359,11 +363,9 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -387,8 +389,8 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -432,7 +434,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 
   *os << "duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Get method.
   *os << "/// Retrieve the member." << be_nl
@@ -467,11 +469,9 @@ be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -495,8 +495,8 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -527,7 +527,7 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
       << "this->u_." << ub->local_name () << "_," << be_nl
       << "OBJECT_FIELD (val)" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Get method.
   *os << "/// Retrieve the member." << be_nl
@@ -546,11 +546,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -574,8 +572,8 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Set method.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -671,7 +669,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         break;
     }
 
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   switch (pt)
     {
@@ -724,7 +722,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
             << " (void) const" << be_nl
             << "{" << be_idt_nl
             << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-            << "}" << be_nl_2;
+            << "}" << be_nl << be_nl;
 
         // Get method with read/write access
         *os << "/// Retrieve the member." << be_nl
@@ -758,11 +756,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
 int
 be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -785,8 +781,8 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // (1) Set from a const.
   *os << "/// Accessor to set the member." << be_nl
@@ -814,7 +810,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << "this->u_." << ub->local_name () << "_," << be_nl
       << bt->name () << " (val)" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Readonly get method.
   *os << "/// Readonly get method." << be_nl
@@ -823,7 +819,7 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Read/write get method.
   *os << "/// Read/write get method." << be_nl
@@ -840,12 +836,10 @@ be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_public_ci::visit_string (be_string *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
 
-  if (ub == 0 || bu == 0)
+  if (!ub || !bu)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ci::"
@@ -859,8 +853,8 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   // Three methods to set the string value.
 
   // (1) Set method from char* or wchar*.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "/// Accessor to set the member." << be_nl
       << "ACE_INLINE" << be_nl
@@ -894,7 +888,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   *os << ";" << be_nl
       << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // (2) Set method from const char * or const wchar *.
   *os << "// Accessor to set the member." << be_nl
@@ -932,12 +926,12 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   if (node->width () == (long) sizeof (char))
     {
       *os << "::CORBA::string_dup (val);" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
   else
     {
       *os << "::CORBA::wstring_dup (val);" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
 
   // (3) Set from const String_var& or WString_var&
@@ -985,7 +979,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   *os << "_var = val;" << be_nl
       << "this->u_." << ub->local_name () << "_ = "
       << ub->local_name () << "_var._retn ();" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
 
@@ -1011,11 +1005,9 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 int
 be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -1062,8 +1054,8 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // (1) Set from a const.
   *os << "/// Accessor to set the member." << be_nl
@@ -1101,7 +1093,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       *os << "this->u_." << ub->local_name () << "_ = val;" << be_uidt_nl;
     }
 
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Readonly get method.
   *os << "// Readonly get method." << be_nl
@@ -1120,7 +1112,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
       *os << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
     }
 
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Read/write get method.
   *os << "// Read/write get method." << be_nl
@@ -1142,15 +1134,6 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
   *os << "}";
 
   return 0;
-}
-
-int
-be_visitor_union_branch_public_ci::visit_structure_fwd (be_structure_fwd *node)
-{
-  be_structure *s =
-    be_structure::narrow_from_decl (node->full_definition ());
-
-  return this->visit_structure (s);
 }
 
 int
@@ -1178,11 +1161,9 @@ be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_public_ci::visit_union (be_union *node)
 {
-  be_union_branch *ub =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
-  be_union *bu =
-    be_union::narrow_from_scope (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_union_branch *ub = this->ctx_->be_node_as_union_branch ();
+  be_union *bu = this->ctx_->be_scope_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -1229,8 +1210,8 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // (1) Set from a const.
   *os << "// Accessor to set the member." << be_nl
@@ -1258,7 +1239,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << "this->u_." << ub->local_name () << "_," << be_nl
       << bt->name () << " (val)" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Readonly get method.
   *os << "// Readonly get method." << be_nl
@@ -1267,7 +1248,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return *this->u_." << ub->local_name () << "_;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Read/write get method.
   *os << "// Read/write get method." << be_nl
@@ -1280,13 +1261,3 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
 
   return 0;
 }
-
-int
-be_visitor_union_branch_public_ci::visit_union_fwd (be_union_fwd *node)
-{
-  be_union *u =
-    be_union::narrow_from_decl (node->full_definition ());
-
-  return this->visit_union (u);
-}
-

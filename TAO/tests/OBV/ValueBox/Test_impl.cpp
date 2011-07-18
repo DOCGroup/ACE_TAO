@@ -2,6 +2,10 @@
 
 #include "Test_impl.h"
 
+ACE_RCSID(Forward,
+          Test_impl,
+          "$Id$")
+
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {

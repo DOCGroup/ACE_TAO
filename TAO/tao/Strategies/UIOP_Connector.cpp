@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/UIOP_Connector.h"
 
 #if TAO_HAS_UIOP == 1
@@ -18,12 +16,17 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+
+ACE_RCSID(Strategies,
+          UIOP_Connector,
+          "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connector::TAO_UIOP_Connector (void)
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ ()
 {
 }
 
@@ -83,7 +86,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
     {
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - TAO_UIOP_CONNECTOR::corbaloc_scan error: "
+                    "(%P|%t) TAO_UIOP_CONNECTOR::corbaloc_scan error: "
                     "explicit terminating charactor '|' is missing from <%C>",
                     str));
       return 0;
@@ -112,8 +115,8 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO (%P|%t) - UIOP failure.\n")
-                       ACE_TEXT ("TAO (%P|%t) - This is most likely ")
+                       ACE_TEXT ("TAO (%P|%t) UIOP failure.\n")
+                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
                        ACE_TEXT ("due to a hostname lookup ")
                        ACE_TEXT ("failure.\n")));
          }
@@ -131,7 +134,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
+                ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
                 ACE_TEXT ("looking for UIOP connection.\n")));
 
   TAO_UIOP_Endpoint *uiop_endpoint =
@@ -145,7 +148,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - UIUP_Connector::make_connection, ")
+                ACE_TEXT ("TAO (%P|%t) UIUP_Connector::make_connection, ")
                 ACE_TEXT ("making a new connection\n")));
 
   // Get the right synch options
@@ -165,6 +168,23 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     this->base_connector_.connect (svc_handler,
                                    remote_address,
                                    synch_options);
+
+  // This call creates the service handler and bumps the #REFCOUNT# up
+  // one extra.  There are three possibilities: (a) connection
+  // succeeds immediately - in this case, the #REFCOUNT# on the
+  // handler is two; (b) connection completion is pending - in this
+  // case, the #REFCOUNT# on the handler is also two; (c) connection
+  // fails immediately - in this case, the #REFCOUNT# on the handler
+  // is one since close() gets called on the handler.
+  //
+  // The extra reference count in
+  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+  // the case when connection completion is pending and we are going
+  // to wait on a variable in the handler to changes, signifying
+  // success or failure.  Note, that this increment cannot be done
+  // once the connect() returns since this might be too late if
+  // another thread pick up the completion and potentially deletes the
+  // handler before we get a chance to increment the reference count.
 
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
@@ -245,7 +265,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       if (TAO_debug_level > 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - UIOP_Connector::make_connection, ")
+                      ACE_TEXT ("TAO (%P|%t) UIOP_Connector::make_connection, ")
                       ACE_TEXT ("could not add the new connection to Cache\n")));
         }
 
@@ -281,7 +301,6 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  svc_handler_auto_ptr.release ();
   return transport;
 }
 

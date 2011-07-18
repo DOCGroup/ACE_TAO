@@ -3,9 +3,28 @@
 
 project(TAO_ETCL) : anytypecode, ace_etcl, install, tao_output {
   sharedname   = TAO_ETCL
-  dynamicflags += TAO_ETCL_BUILD_DLL
+  dynamicflags = TAO_ETCL_BUILD_DLL
 
-  specific {
-    install_dir = tao/ETCL
+  IDL_Files {
+  }
+
+  Source_Files {
+    TAO_ETCL_Constraint.cpp
+  }
+
+  Header_Files {
+    TAO_ETCL_Constraint.h
+    tao_etcl_export.h
+  }
+
+  Inline_Files {
+    TAO_ETCL_Constraint.inl
+  }
+
+  Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_ETCL.pc.in
   }
 }

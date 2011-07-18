@@ -1,21 +1,39 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_enum_val.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_EnumVal that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_enum_val.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_EnumVal that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_enum_val.h"
 #include "be_visitor.h"
+
+ACE_RCSID (be, 
+           be_enum_val, 
+           "$Id$")
+
+be_enum_val::be_enum_val (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Constant (),
+    AST_EnumVal (),
+    be_decl ()
+{
+}
 
 be_enum_val::be_enum_val (ACE_CDR::ULong v,
                           UTL_ScopedName *n)
@@ -46,5 +64,6 @@ be_enum_val::destroy (void)
   this->be_decl::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL (be_enum_val)
 
+
+IMPL_NARROW_FROM_DECL (be_enum_val)

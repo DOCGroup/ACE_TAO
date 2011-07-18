@@ -80,7 +80,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
-#include "ast_typedef.h"
 #include "ast_visitor.h"
 #include "utl_err.h"
 #include "utl_identifier.h"
@@ -89,6 +88,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
+ACE_RCSID (ast,
+           ast_union,
+           "$Id$")
+
+AST_Union::AST_Union (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    default_index_ (-2)
+{
+}
 
 AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_ScopedName *n,
@@ -235,31 +249,12 @@ AST_Union::default_index (void)
 bool
 AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
-
-  // We should calculate this only once. If it has already been
-  // done, just return it.
-  if (self_test && this->in_recursion_ != -1)
-    {
-      return (this->in_recursion_ == 1);
-    }
-
-  if (list.size () > 1)
-  {
-    if (match_names (this, list))
-      {
-        // We've found ourselves outside of a sequence.
-        // This happens when we are not recursed ourselves but instead
-        // are part of another recursive type
-        return false;
-      }
-  }
-
-  list.enqueue_tail(this);
-
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
     {
+      ACE_Unbounded_Queue<AST_Type *> scope_list = list;
+      scope_list.enqueue_tail (this);
+
       // Initialize an iterator to iterate thru our scope.
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -293,20 +288,18 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                                 0);
             }
 
-          if (type->in_recursion (list))
+          if (type->in_recursion (scope_list))
             {
-              if (self_test)
-                this->in_recursion_ = 1;
+              this->in_recursion_ = 1;
               idl_global->recursive_type_seen_ = true;
-              return true;
+              return this->in_recursion_;
             }
         }
     }
 
   // Not in recursion.
-  if (self_test)
-    this->in_recursion_ = 0;
-  return 0;
+  this->in_recursion_ = 0;
+  return this->in_recursion_;
 }
 
 // Look up the default branch in union.
@@ -577,7 +570,7 @@ AST_Union::compute_default_value (void)
     {
     case AST_Expression::EV_short:
     case AST_Expression::EV_ushort:
-      if (total_case_members > ACE_UINT16_MAX)
+      if (total_case_members == ACE_UINT16_MAX + 1)
         {
           this->default_value_.computed_ = 0;
         }
@@ -585,10 +578,6 @@ AST_Union::compute_default_value (void)
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
-    case AST_Expression::EV_enum:
-      // Enums in CORBA are always 32bits in size, so unless
-      // there are that many enum labels in the set, it is
-      // incomplete (reguardless as to the actual member_count).
       if (total_case_members > ACE_UINT32_MAX)
         {
           this->default_value_.computed_ = 0;
@@ -607,7 +596,7 @@ AST_Union::compute_default_value (void)
 
       break;
     case AST_Expression::EV_char:
-      if (total_case_members > ACE_OCTET_MAX)
+      if (total_case_members == ACE_OCTET_MAX + 1)
         {
           this->default_value_.computed_ = 0;
         }
@@ -626,6 +615,38 @@ AST_Union::compute_default_value (void)
           this->default_value_.computed_ = 0;
         }
 
+      break;
+    case AST_Expression::EV_enum:
+      // Has to be enum.
+      {
+        AST_Decl *d = AST_Decl::narrow_from_decl (this->disc_type ());
+
+        if (d->node_type () == AST_Decl::NT_typedef)
+          {
+            AST_Typedef *bt = AST_Typedef::narrow_from_decl (d);
+            d = bt->primitive_base_type ();
+          }
+
+        AST_Enum *en = AST_Enum::narrow_from_decl (d);
+
+        if (en != 0)
+          {
+            if (total_case_members == (ACE_UINT64) en->member_count ())
+              {
+                this->default_value_.computed_ = 0;
+              }
+          }
+        else
+          {
+            // Error.
+            this->default_value_.computed_ = -1;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%N:%l) AST_Union::")
+                               ACE_TEXT ("compute_default_value ")
+                               ACE_TEXT ("- disc type not an ENUM\n")),
+                              -1);
+          }
+      }
       break;
     default:
       // Error.
@@ -906,7 +927,7 @@ AST_Union::compute_default_index (void)
               for (unsigned long j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
-                  AST_UnionLabel::UnionLabel ulk = ub->label (j)->label_kind ();
+                  AST_UnionLabel::UnionLabel ulk = ub->label ()->label_kind ();
                   if (ulk == AST_UnionLabel::UL_default)
                     {
                       // Zero based indexing.
@@ -927,34 +948,228 @@ AST_Union::compute_default_index (void)
 
 // Redefinition of inherited virtual operations
 
+// Add this AST_UnionBranch node (a node representing one branch in a
+// union declaration) to this scope
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  return
-    AST_UnionBranch::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  AST_Decl *d = 0;
+
+  // If this is a malformed branch, don't do anything with it.
+  if (t == 0 || t->label() == 0)
+    {
+      return 0;
+    }
+
+  // If branch with that label already exists, complain.
+  if (lookup_branch (t) != 0)
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                  this,
+                                  t);
+      return 0;
+    }
+
+  // If branch with same field name exists, complain.
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // If we have an enum discriminator, add the label names to
+  // the name_referenced list before we add the union branch,
+  // so a branch name clash with a label name will be caught.
+  if (this->pd_udisc_type == AST_Expression::EV_enum)
+    {
+      t->add_labels (this);
+    }
+  else
+    {
+      t->coerce_labels (this);
+    }
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               false,
+                               mru->first_component ());
+    }
+
+  this->fields_.enqueue_tail (t);
+
+  return t;
 }
 
+// Add this AST_Union (manifest union type) to this scope.
 AST_Union *
 AST_Union::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  return t;
 }
 
+// Add this AST_Structure node (manifest struct type) to this scope.
 AST_Structure *
 AST_Union::fe_add_structure (AST_Structure *t)
 {
-  return this->fe_add_full_struct_type (t);
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  return t;
 }
 
+// Add this AST_Enum node (manifest enum type) to this scope.
 AST_Enum *
 AST_Union::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to local types.
+  this->add_to_local_types (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  return t;
 }
 
 // Add this AST_EnumVal node (enumerator declaration) to this scope.
@@ -964,9 +1179,46 @@ AST_Union::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Union::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    AST_EnumVal::narrow_from_decl (
-      this->fe_add_decl (t));
+  AST_Decl *d = 0;
+
+  // Already defined and cannot be redefined? Or already used?
+  if ((d = this->lookup_for_add (t, false)) != 0)
+    {
+      if (!can_be_redefined (d))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (this->referenced (d, t->local_name ()))
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_DEF_USE,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+
+      if (t->has_ancestor (d))
+        {
+          idl_global->err ()->redefinition_in_scope (t,
+                                                     d);
+          return 0;
+        }
+    }
+
+  // Add it to scope.
+  this->add_to_scope (t);
+
+  // Add it to set of locally referenced symbols.
+  this->add_to_referenced (t,
+                           false,
+                           t->local_name ());
+
+  return t;
 }
 
 // Dump this AST_Union node to the ostream o.
@@ -1040,6 +1292,8 @@ AST_Union::udisc_type (void)
 {
   return this->pd_udisc_type;
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Union)
 IMPL_NARROW_FROM_SCOPE(AST_Union)

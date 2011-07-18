@@ -4,7 +4,8 @@
 #include "Callback_i.h"
 #include "ClientTask.h"
 #include "OrbShutdownTask.h"
-#include "ace/OS_NS_unistd.h"
+#include "ace/OS.h"
+
 
 FooServantList::FooServantList(const ACE_TCHAR* prefix,
                                unsigned    num_servants,
@@ -136,7 +137,7 @@ FooServantList::client_done(void)
   unsigned num_left;
 
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->num_clients_lock_);
+    GuardType guard(this->num_clients_lock_);
     num_left = --this->num_clients_;
   }
 
@@ -198,7 +199,7 @@ FooServantList::deactivate_servant (void)
                 }
               else
                 {
-                  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->num_clients_lock_);
+                  GuardType guard(this->num_clients_lock_);
                   // The clients that requests this deactivated servant
                   // will catch exception due to the deactivated servant.
                   // We need descrease the num_clients so the alived

@@ -33,10 +33,11 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
     this->queue_lookup (this->tc_queue_, node);
 
   ACE_Unbounded_Queue<AST_Type *> recursion_queue;
-  bool in_recursion = node->in_recursion (recursion_queue);
-  if (qnode && in_recursion)
+  if (qnode
+      && node->in_recursion (recursion_queue))
     {
-      // we're repeated and we're recursive so just leave
+      this->is_recursive_ = true;
+
       return 0;
     }
   else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
@@ -53,16 +54,13 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       return 0;
     }
 
-  // as this was no nested visit mark this typecode as recursive
-  this->is_recursive_ = in_recursion;
-
   this->is_nested_ = true;
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
+  os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (this->gen_member_typecodes (node) != 0)
     {
@@ -147,7 +145,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
      << (node->is_abstract () ? "VM_ABSTRACT" : "VM_NONE") << "," << be_nl;
 
   // Concrete base type.
-  AST_Type * const concrete_base =
+  AST_ValueType * const concrete_base =
     node->inherits_concrete ();
 
   if (concrete_base)
@@ -213,20 +211,15 @@ TAO::be_visitor_value_typecode::gen_member_typecodes (be_valuetype * node)
           return -1;
         }
 
-/*  MCO@20101020 - this is unnecessary since the check for recursiveness
- *  of *this* typecode has already been done before calling this method
-
       be_visitor_typecode_defn::QNode const * const qnode =
         this->queue_lookup (this->tc_queue_, node);
 
       ACE_Unbounded_Queue<AST_Type *> recursion_queue;
-      recursion_queue.enqueue_tail (node);
       if (qnode
         && member_type->in_recursion (recursion_queue))
         {
           this->is_recursive_ = true;
         }
-*/
     }
 
   return 0;

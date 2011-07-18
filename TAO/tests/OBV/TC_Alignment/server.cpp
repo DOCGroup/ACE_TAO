@@ -2,35 +2,12 @@
 
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/Get_Opt.h"
+
+ACE_RCSID (TC_Alignment,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.optarg;
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -56,9 +33,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
-
-      if (parse_args (argc, argv) != 0)
-        return 1;
 
       test_i servant (orb.in ());
 

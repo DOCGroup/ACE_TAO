@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for structures
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for structures
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           any_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client
@@ -19,8 +28,8 @@
 // ***************************************************************************
 
 be_visitor_structure_any_op_cs::be_visitor_structure_any_op_cs (
-                                                                be_visitor_context *ctx
-                                                                )
+    be_visitor_context *ctx
+  )
   : be_visitor_structure (ctx)
 {
 }
@@ -40,10 +49,12 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -52,9 +63,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
-      *os << be_global->core_versioning_begin () << be_nl;
-
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -65,7 +74,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
@@ -74,116 +83,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "}";
-
-      *os << be_global->core_versioning_end () << be_nl;
     }
-
-
-  be_module *module = 0;
-  if (node->is_nested ())
-    {
-      AST_Decl *d = node;
-      AST_Decl::NodeType nt = d->node_type ();
-
-      while (nt != AST_Decl::NT_root)
-        {
-          if (nt == AST_Decl::NT_module)
-            {
-              module = be_module::narrow_from_decl (d);
-              break;
-            }
-          else
-            {
-              d = ScopeAsDecl (d->defined_in ());
-              nt = d->node_type ();
-            }
-        }
-
-      if (module != 0)
-        {
-          // Some compilers handle "any" operators in a namespace corresponding
-          // to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-
-          be_util::gen_nested_namespace_begin (os, module);
-
-          // Copying insertion.
-          *os << "// Copying insertion." << be_nl
-              << "void operator<<= (" << be_idt << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " &_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "{" << be_idt_nl
-
-              << "if (0 == &_tao_elem) // Trying to de-reference NULL object" << be_idt_nl
-              << "_tao_any <<= static_cast< ::" << node->name () << " *>( 0 ); "
-              << "// Use non-copying insertion of a NULL" << be_uidt_nl
-              << "else" << be_idt_nl
-
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
-              << be_idt << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem" << be_uidt_nl
-              << ");" << be_uidt << be_uidt << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Non-copying insertion.
-          *os << "// Non-copying insertion." << be_nl
-              << "void operator<<= (" << be_idt << be_idt_nl
-              << "::CORBA::Any &_tao_any, ::" << be_nl
-              << node->name () << " *_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "{" << be_idt_nl
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
-              << be_idt << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Extraction to non-const pointer (deprecated, just calls the other).
-          *os << "// Extraction to non-const pointer (deprecated)." << be_nl
-              << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-              << "const ::CORBA::Any &_tao_any," << be_nl
-              << "::" << node->name () << " *&_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "{" << be_idt_nl
-              << "return _tao_any >>= const_cast<" << be_idt << be_idt_nl
-              << "const ::" << node->name () << " *&> (" << be_nl
-              << "_tao_elem" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Extraction to const pointer.
-          *os << "// Extraction to const pointer." << be_nl
-              << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-              << "const ::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " *&_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "{" << be_idt_nl
-              << "return" << be_idt_nl
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
-              << be_idt << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem" << be_uidt_nl
-              << ");" << be_uidt << be_uidt << be_uidt_nl
-              << "}";
-
-          be_util::gen_nested_namespace_end (os, module);
-
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n";
-        }
-    }
-
-  *os << be_global->core_versioning_begin () << be_nl;
 
   // Copying insertion.
   *os << "// Copying insertion." << be_nl
@@ -204,7 +104,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Non-copying insertion.
   *os << "// Non-copying insertion." << be_nl
@@ -220,7 +120,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Extraction to non-const pointer (deprecated, just calls the other).
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
@@ -233,7 +133,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "const " << node->name () << " *&> (" << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Extraction to const pointer.
   *os << "// Extraction to const pointer." << be_nl
@@ -253,11 +153,6 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
-
-  if (module != 0)
-    {
-      *os << "\n\n#endif";
-    }
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)

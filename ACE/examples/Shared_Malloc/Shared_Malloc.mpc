@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : aceexe, avoids_ace_for_tao {
+project : aceexe {
+  avoids += ace_for_tao
   exename = malloc
   Source_Files {
     Malloc.cpp
@@ -9,7 +10,8 @@ project : aceexe, avoids_ace_for_tao {
     test_malloc.cpp
   }
 }
-project(*multiple) : aceexe, avoids_ace_for_tao {
+project(*multiple) : aceexe {
+  avoids += ace_for_tao
   exename = multiple
   Source_Files {
     Malloc.cpp
@@ -17,13 +19,15 @@ project(*multiple) : aceexe, avoids_ace_for_tao {
     test_multiple_mallocs.cpp
   }
 }
-project(*persistence) : aceexe, avoids_ace_for_tao {
+project(*persistence) : aceexe {
+  avoids += ace_for_tao
   exename = persistence
   Source_Files {
     test_persistence.cpp
   }
 }
-project(*posind) : aceexe, avoids_ace_for_tao {
+project(*posind) : aceexe {
+  avoids += ace_for_tao
   exename = posind
   Source_Files {
     Malloc.cpp

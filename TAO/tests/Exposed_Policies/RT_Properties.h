@@ -1,17 +1,21 @@
-//=============================================================================
-/**
- *  @file    RT_Properties.h
- *
- *  $Id$
- *
- *   Defines a series of "real time" property that an Object
- *   or a POA created on a RT-ORB can have.
- *
- *
- *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
- */
-//=============================================================================
-
+//$Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    RT_Properties.h
+//
+// = DESCRIPTION
+//     Defines a series of "real time" property that an Object
+//     or a POA created on a RT-ORB can have.
+//
+// = AUTHOR
+//     Angelo Corsaro <corsaro@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef RT_PROPERTIES_H_
 #define RT_PROPERTIES_H_
@@ -41,7 +45,7 @@ private:
 
   RTCORBA::Priority priority_;
   RTCORBA::PriorityBands priority_bands_;
-  ACE_TString ior_source_;
+  ACE_TCHAR ior_source_[256];
 };
 
 #endif /* RT_PROPERTIES_H_ */

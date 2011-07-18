@@ -1,38 +1,51 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Dirent_Test.cpp
- *
- *  $Id$
- *
- *   This is a test of the opendir and readdir emulation provided by the
- *   class ACE_Dirent.  It is used to ensure that the emulation code
- *   works properly on platforms that don't support this capability
- *   natively.  As the emulation code is not compiled in other
- *   platforms, this test also ensures that there is no impact to
- *   platforms that natively support directory scanning operations.
- *
- *
- *  @author Phil Mesnier <mesnier_p@ociweb.com>
- *  @author Zvika Ashani <zvika@aspectusvi.com>
- *  @author Rich Newman <RNewman@directv.com>
- *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Dirent_Test.cpp
+//
+// = DESCRIPTION
+//     This is a test of the opendir and readdir emulation provided by the
+//     class ACE_Dirent.  It is used to ensure that the emulation code
+//     works properly on platforms that don't support this capability
+//     natively.  As the emulation code is not compiled in other
+//     platforms, this test also ensures that there is no impact to
+//     platforms that natively support directory scanning operations.
+//
+// = AUTHOR
+//    Phil Mesnier <mesnier_p@ociweb.com>,
+//    Zvika Ashani <zvika@aspectusvi.com>,
+//    Rich Newman <RNewman@directv.com>, and
+//    Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Dirent.h"
 #include "ace/Dirent_Selector.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_String.h"
 #include "ace/SString.h"
 
-#if defined (ACE_HAS_TCHAR_DIRENT)
-#  define TEST_ENTRY ACE_TEXT ("run_test.lst")
+ACE_RCSID (tests,
+           Dirent_Test,
+           "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
+
+#if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
+#  define TEST_DIR "log"
+#  define TEST_ENTRY ".."
 #else
-#  define TEST_ENTRY "run_test.lst"
-#endif /* ACE_HAS_TCHAR_DIRENT */
+#  if defined (ACE_HAS_TCHAR_DIRENT)
+#    define TEST_ENTRY ACE_TEXT ("run_test.lst")
+#  else
+#    define TEST_ENTRY "run_test.lst"
+#  endif /* ACE_HAS_TCHAR_DIRENT */
+#endif /* ACE_VXWORKS < 0x600 */
 
 // Directory to scan - we need to figure it out based on environment.
 static ACE_TString TestDir;
@@ -167,7 +180,7 @@ dirent_test (void)
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
 
-  for (ACE_DIRENT *directory = 0;
+  for (ACE_DIRENT *directory;
        (directory = dir.read ()) != 0;
        entrycount++)
     {
@@ -211,13 +224,31 @@ dirent_count (const ACE_TCHAR *dir_path,
               int recursion_level)
 {
 #if !defined (ACE_LACKS_CHDIR)
+
+# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
+  // VxWorks only allows full paths (incl. device spec if applicable) to be specified
+  ACE_TCHAR full_path[MAXPATHLEN];
+  if (ACE_OS::getcwd (full_path, sizeof(full_path)) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("getcwd: failed\n")),
+                      -1);
+  if ((ACE_OS::strlen (full_path) + 1 + ACE_OS::strlen (dir_path)) >= sizeof(full_path))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("getcwd: too long\n")),
+                      -1);
+  ACE_OS::strcat (ACE_OS::strcat (full_path, "/"), dir_path);
+  if (ACE_OS::chdir (full_path) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("chdir: %p\n"),
+                       full_path),
+                      -1);
+# else
   if (ACE_OS::chdir (dir_path) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("chdir: %p\n"),
                        dir_path),
                       -1);
-#else
-  ACE_UNUSED_ARG (dir_path);
+# endif
 #endif /* !ACE_LACKS_CHDIR */
 
   ACE_Dirent dir;
@@ -298,12 +329,21 @@ dirent_count (const ACE_TCHAR *dir_path,
               ++dir_count;
 
 #if !defined (ACE_LACKS_CHDIR)
+# if (defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x600))
+              // Move back to parent directory.
+              if (ACE_OS::chdir (full_path) == -1)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("chdir: %p\n"),
+                                   full_path),
+                                  -1);
+# else
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("chdir: %p\n"),
                                    dir_path),
                                   -1);
+# endif
 #endif /* !ACE_LACKS_CHDIR */
             }
           break;

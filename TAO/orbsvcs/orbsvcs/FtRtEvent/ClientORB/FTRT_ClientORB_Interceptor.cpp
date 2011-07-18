@@ -6,6 +6,10 @@
 #include "tao/CDR.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (ClientORB,
+           FTRT_ClientORB_Interceptor,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRT {

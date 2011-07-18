@@ -26,8 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Dumpable_Adapter
  *
- * @brief
- * This class inherits the interface of the abstract ACE_Dumpable
+ * @brief This class inherits the interface of the abstract ACE_Dumpable
  * class and is instantiated with the implementation of the
  * concrete component class <class Concrete>.
  *
@@ -44,7 +43,7 @@ public:
   ACE_Dumpable_Adapter (const Concrete *t);
   ~ACE_Dumpable_Adapter (void);
 
-  /// Concrete dump method (simply delegates to the dump() method of
+  /// Concrete dump method (simply delegates to the <dump> method of
   /// <class Concrete>).
   virtual void dump (void) const;
 

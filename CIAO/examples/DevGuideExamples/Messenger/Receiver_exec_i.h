@@ -32,9 +32,9 @@
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"
 
-namespace CIAO_Receiver_Impl
+namespace CIDL_Receiver_Impl
 {
-  class Receiver_exec_i
+  class RECEIVER_EXEC_Export Receiver_exec_i
     : public virtual Receiver_Exec,
       public virtual ::CORBA::LocalObject
   {
@@ -70,7 +70,7 @@ namespace CIAO_Receiver_Impl
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
     create_Receiver_Impl (void);
 
-  class ReceiverHome_exec_i
+  class RECEIVER_EXEC_Export ReceiverHome_exec_i
     : public virtual ReceiverHome_Exec,
       public virtual ::CORBA::LocalObject
   {

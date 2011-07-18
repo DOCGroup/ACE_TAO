@@ -1,18 +1,27 @@
 
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating CDR operator declarator for union_branch in the client header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating CDR operator declarator for union_branch in the client header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union_branch, 
+           cdr_op_ch, 
+           "$Id$")
 
 // **********************************************
 //  Visitor for union_branch in the client header file.
@@ -39,7 +48,7 @@ be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                          "visit_union_branch - "
-                         "Bad union_branch type\n"),
+                         "Bad union_branch type\n"), 
                         -1);
     }
 
@@ -50,7 +59,7 @@ be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"),
+                         "codegen for union_branch type failed\n"), 
                         -1);
     }
 
@@ -65,7 +74,7 @@ be_visitor_union_branch_cdr_op_ch::visit_array (be_array *node)
   // If not a typedef and we are defined in the use scope, we must be defined.
 
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       // This is the case for anonymous arrays.
 
@@ -79,7 +88,7 @@ be_visitor_union_branch_cdr_op_ch::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                              "visit_array - "
-                             "codegen failed\n"),
+                             "codegen failed\n"), 
                             -1);
         }
     }
@@ -92,7 +101,7 @@ be_visitor_union_branch_cdr_op_ch::visit_enum (be_enum *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -104,7 +113,7 @@ be_visitor_union_branch_cdr_op_ch::visit_enum (be_enum *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                              "visit_enum - "
-                             "codegen failed\n"),
+                             "codegen failed\n"), 
                             -1);
         }
     }
@@ -117,7 +126,7 @@ be_visitor_union_branch_cdr_op_ch::visit_sequence (be_sequence *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -128,7 +137,7 @@ be_visitor_union_branch_cdr_op_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                              "visit_sequence - "
-                             "codegen failed\n"),
+                             "codegen failed\n"), 
                             -1);
         }
     }
@@ -141,7 +150,7 @@ be_visitor_union_branch_cdr_op_ch::visit_structure (be_structure *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -152,7 +161,7 @@ be_visitor_union_branch_cdr_op_ch::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                              "visit_struct - "
-                             "codegen failed\n"),
+                             "codegen failed\n"), 
                             -1);
         }
     }
@@ -172,7 +181,7 @@ be_visitor_union_branch_cdr_op_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"),
+                         "Bad primitive type\n"), 
                         -1);
     }
 
@@ -185,7 +194,7 @@ be_visitor_union_branch_cdr_op_ch::visit_union (be_union *node)
 {
   // If not a typedef and we are defined in the use scope, we must be defined.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -196,7 +205,7 @@ be_visitor_union_branch_cdr_op_ch::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_cdr_op_ch::"
                              "visit_enum - "
-                             "codegen failed\n"),
+                             "codegen failed\n"), 
                             -1);
         }
     }

@@ -11,7 +11,7 @@ project(RTCORBA_Quoter_Common): negotiate_codesets, rtportableserver, rtcorba, t
    idlflags += -Wb,stub_export_macro=RTCORBA_Quoter_Common_Export \
                -Wb,stub_export_include=Common_Export.h \
 
-   dynamicflags += RTCORBA_QUOTER_COMMON_BUILD_DLL
+   dynamicflags = RTCORBA_QUOTER_COMMON_BUILD_DLL
 
    IDL_Files {
       Distributor.idl

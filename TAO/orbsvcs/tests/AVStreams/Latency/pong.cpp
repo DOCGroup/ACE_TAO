@@ -11,6 +11,10 @@
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 
+ACE_RCSID (Latency,
+           ping,
+           "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("pong.ior");
 const char *protocol = "RTP/UDP";
 int milliseconds = 100;
@@ -102,7 +106,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       ping_protocols[0] = CORBA::string_dup ("UDP=localhost:12345");
     }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

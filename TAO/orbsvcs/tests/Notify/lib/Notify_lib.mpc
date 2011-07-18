@@ -3,6 +3,6 @@
 
 project(NotifyTests_Lib): orbsvcslib, notification_skel, notify_serv, naming, svc_utils {
   sharedname = TAO_NotifyTests
-  dynamicflags += TAO_NOTIFY_TEST_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_TEST_BUILD_DLL
 }
 

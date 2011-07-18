@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    including.idl
- *
- *  $Id$
- *
- *  This file contains examples of IDL code that has
- *  caused problems in the past for the TAO IDL
- *  compiler. This test is to make sure the problems
- *  stay fixed.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    including.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
 
 #ifndef IDL_TEST_INCLUDING_IDL
 #define IDL_TEST_INCLUDING_IDL
@@ -63,37 +66,6 @@ interface iface
 module VT_Test
 {
   typedef sequence<VT_Def::VT> VTSeq;
-};
-
-// References to A::MyStructA from included.idl get the
-// forward declaration from lookup, and we were
-// getting empty typename generation in various places,
-// before overriding the visit methods for forward
-// declared structs and unions in the relevant visitors.
-module A
-{
-  const long smth = 6;
-};
-
-exception MyException
-{
-  A::MyStructA exField;
-};
-
-struct TestStr
-{
-  A::MyStructA field;
-};
-
-union TestUn switch (long)
-{
-  case 0: A::MyStructA  value1;
-  case 1: string value2;
-};
-
-interface MyInt
-{
-  A::MyStructA op (in A::MyStructA ab);
 };
 
 #endif /* IDL_TEST_INCLUDING_IDL */

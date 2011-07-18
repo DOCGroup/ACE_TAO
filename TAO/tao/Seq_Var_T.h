@@ -21,8 +21,6 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "tao/Basic_Types.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

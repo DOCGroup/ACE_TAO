@@ -1,16 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    operation_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the implementation header
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           operation_ih, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for implementation header.
@@ -28,21 +36,15 @@ be_visitor_operation_ih::~be_visitor_operation_ih (void)
 int
 be_visitor_operation_ih::visit_operation (be_operation *node)
 {
-  // Impl classes shouldn't have implied AMI operations.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
-
-  *os << be_nl_2;
+  
+  *os << be_nl << be_nl;
 
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
     }
 
   // every operation is declared virtual in the client code
@@ -54,7 +56,7 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ih::"
+                         "(%N:%l) be_visitor_operation_sh::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);

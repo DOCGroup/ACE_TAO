@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO {
   template <typename stream>
-  bool demarshal_sequence(stream & strm, unbounded_value_sequence <CORBA::Short> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Short> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Short> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {

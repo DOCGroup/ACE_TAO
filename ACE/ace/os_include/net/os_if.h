@@ -26,9 +26,6 @@
 
 #if !defined (ACE_LACKS_NET_IF_H)
 #  include /**/ <net/if.h>
-#  if defined (ACE_HAS_NET_IF_DL_H)
-#    include /**/ <net/if_dl.h>
-#  endif /* ACE_HAS_NET_IF_DL_H */
 #  if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
       and we don't want that definition.  See IOP_IORC.h.
@@ -46,6 +43,10 @@
 extern "C"
 {
 #endif /* __cplusplus */
+
+#if defined (ACE_HAS_BROKEN_IF_HEADER)
+   struct ifafilt;
+#endif /* ACE_HAS_BROKEN_IF_HEADER */
 
 #if defined (ACE_LACKS_IFREQ)
 struct  ifreq {

@@ -14,7 +14,7 @@ $status = 0;
 $debug_level = '0';
 $test_port = 12345;
 $management_port = 12346;
-$client_conf = $target->LocalFile ("lf_flush.conf");
+$client_conf = "lf_flush.conf";
 $flush_strategy = "LF";
 
 foreach $i (@ARGV) {
@@ -51,8 +51,7 @@ if ($test != 0) {
     exit 1;
 }
 
-$test = $TV->WaitKill ($target->ProcessStartWaitInterval() +
-                       $target->ProcessStopWaitInterval());
+$test = $TV->WaitKill ($target->ProcessStartWaitInterval());
 
 if ($test != 0) {
     print STDERR "ERROR 2: test returned $test\n";

@@ -5,7 +5,8 @@
 #include "tid_to_int.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
-#include "tao/ORB_Core_Auto_Ptr.h"
+
+ACE_RCSID(Hello, Hello, "$Id$")
 
 Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
@@ -19,6 +20,10 @@ Hello::get_string (::Test::ThreadId caller_threadid)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
+
+  // Use portable thread IDs
+  ACE_Thread_ID this_ID;
+  this_ID.id (this->thr_id_);
 
   if (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()) != caller_threadid)
     {
@@ -38,8 +43,7 @@ Hello::get_string (::Test::ThreadId caller_threadid)
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
-          if (tmp.get () == 0)
+          if (orb_table->find ("server_orb") == 0)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,

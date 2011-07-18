@@ -63,7 +63,7 @@ extern "C"
 // The following are #defines and #includes that are specific to
 // WIN32.
 #  if defined (ACE_HAS_WINCE)
-#    define ACE_STDIN _fileno (stdin)
+#    define ACE_STDIN  _fileno (stdin)
 #    define ACE_STDOUT _fileno (stdout)
 #    define ACE_STDERR _fileno (stderr)
 #  else
@@ -129,6 +129,21 @@ extern "C"
 #if defined (ACE_LACKS_UALARM_PROTOTYPE)
    u_int ualarm (u_int usecs, u_int interval);
 #endif /* ACE_LACKS_UALARM_PROTOTYPE */
+
+#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) < 500
+   // _XOPEN_SOURCE == 500    Single Unix conformance
+   // It seems that _XOPEN_SOURCE == 500 means that the prototypes are
+   // already defined in the system headers.
+   ssize_t pread (int fd,
+                  void *buf,
+                  size_t nbytes,
+                  ACE_OFF_T offset);
+
+   ssize_t pwrite (int fd,
+                   const void *buf,
+                   size_t n,
+                   ACE_OFF_T offset);
+#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
 
 #if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \
     !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)

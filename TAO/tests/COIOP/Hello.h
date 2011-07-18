@@ -8,6 +8,8 @@
 
 #include "TestS.h"
 
+#include "ace/OS.h"
+
 /// Implement the Test::Hello interface
 class Hello
   : public virtual POA_Test::Hello

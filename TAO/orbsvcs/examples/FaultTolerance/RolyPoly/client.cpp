@@ -160,7 +160,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                     object_primary.in (),
                                     object.in ());
 
-        ACE_UNUSED_ARG (retval);
       }
       else
       {

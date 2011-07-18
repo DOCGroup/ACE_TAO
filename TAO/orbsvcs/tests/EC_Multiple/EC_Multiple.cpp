@@ -27,6 +27,10 @@
 # include <sys/lwp.h> /* for _lwp_self */
 #endif /* sun */
 
+ACE_RCSID (EC_Multiple,
+           EC_Multiple,
+           "$Id$")
+
 Test_ECG::Test_ECG (void)
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (""),
@@ -62,8 +66,8 @@ Test_ECG::Test_ECG (void)
 void
 print_priority_info (const char *const name)
 {
-#if defined (ACE_HAS_PTHREADS) || defined (sun)
-#if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS_STD) || defined (sun)
+#if defined (ACE_HAS_PTHREADS_STD)
   struct sched_param param;
   int policy, status;
 
@@ -91,7 +95,7 @@ print_priority_info (const char *const name)
   }
 #else
   ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_PTHREADS_STD */
 
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
@@ -121,7 +125,7 @@ print_priority_info (const char *const name)
 #endif /* sun */
 #else
   ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS || sun */
+#endif /* ACE_HAS_PTHREADS_STD */
 }
 
 int

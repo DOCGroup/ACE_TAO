@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/RTScheduling/RTScheduler_Manager.h"
@@ -6,6 +5,8 @@
 #if ! defined (__ACE_INLINE__)
 #include "tao/RTScheduling/RTScheduler_Manager.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(TAO, RT_ORB, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

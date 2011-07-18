@@ -84,7 +84,7 @@ protected:
                             iovec * iov,
                             int iovcnt,
                             size_t &bytes_transferred,
-                            TAO::Transport::Drain_Constraints const & dc);
+                            ACE_Time_Value const * timeout = 0);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
 

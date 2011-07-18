@@ -6,133 +6,77 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $iorfname_prefix = "server";
-my $num_servants = 10;
-my $num_clients_per_servant = 4;
-my $num_clients = $num_servants * $num_clients_per_servant;
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-$SV  = $server->CreateProcess("server_main", "-p $iorfname_prefix ".
-                                             "-s $num_servants -c $num_clients");
-
-my @clients = ();
-for ($i = 0; $i < $num_clients; $i++) {
-    $clients[$i] = PerlACE::TestTarget::create_target ($i+1) || die "Create target $i+1 failed\n";
-}
+$iorfname_prefix = "server";
+$num_servants=10;
+$num_clients_per_servant=4;
+$num_clients=$num_servants * $num_clients_per_servant;
 
 #Delete old ior files.
-my @iorfiles = ();
-my @server_iorfiles = ();
-for ($i = 0; $i < $num_servants; $i++) {
-    $servant_id = sprintf("%02d", ($i + 1));
-    $iorfiles[$i] = $iorfname_prefix . "_$servant_id.ior";
-    $server_iorfiles[$i] = $server->LocalFile($iorfiles[$i]);
-    $server->DeleteFile($iorfiles[$i]);
+for (my $i = 0; $i < $num_servants; $i++) {
+  $servant_id = sprintf("%02d", ($i + 1));
+  $iorfile[$i] = PerlACE::LocalFile($iorfname_prefix . "_$servant_id.ior");
+    
+  unlink $iorfile[$i];
 }
 
-my @CLS = ();
-my @clients_iorfile = ();
-$count = 0;
-for ($i = 0; $i < $num_servants; $i++) {
-    for ($j = 0; $j < $num_clients_per_servant; $j++) {
-        $clients_iorfile[$count] = $clients[$count]->LocalFile($iorfiles[$i]);
-        $clients[$count]->DeleteFile($iorfiles[$i]);
-        $CLS[$count] = $clients[$count]->CreateProcess ("client_main",
-                                                        " -i file://$clients_iorfile[$count]");
-        $count ++;
-    }
+if (PerlACE::is_vxworks_test()) {
+    $SV  = new PerlACE::ProcessVX ("server_main", "-p $iorfname_prefix -s $num_servants -c $num_clients");
+}
+else {
+    $SV  = new PerlACE::Process ("server_main", "-p $iorfname_prefix -s $num_servants -c $num_clients");
 }
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
+$SV->Spawn ();
 
 # Wait for the servant ior files created by server.
-for ($i = 0; $i < $num_servants; $i++) {
-    if ($server->WaitForFileTimed ($iorfiles[$i],
-                                   $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfiles[$i]>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-}
-
-for ($i = 0; $i < $num_servants; $i++) {
-    if ($server->GetFile ($iorfiles[$i]) == -1) {
-        print STDERR "ERROR: cannot retrieve $i-th file <$server_iorfiles[$i]>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-}
-
-$count = 0;
-for ($i = 0; $i < $num_servants; $i++) {
-    for ($j = 0; $j < $num_clients_per_servant; $j++) {
-        if ($clients[$count]->PutFile ($iorfiles[$i]) == -1) {
-            print STDERR "ERROR: client $count cannot set file <$clients_iorfile[$count]>\n";
-            $SV->Kill (); $SV->TimedWait (1);
-            exit 1;
-        }
-        $count ++;
-    }
+for (my $i = 0; $i < $num_servants; $i++) {
+  $servant_id = sprintf("%02d", ($i + 1));
+  $iorfile[$i] = PerlACE::LocalFile($iorfname_prefix . "_$servant_id.ior");
+    
+  if (PerlACE::waitforfile_timed ($iorfile[$i],
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile[$i]>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+  }
 }
 
 $count = 0;
 
-for ($i = 0; $i < $num_servants; $i++) {
-    for ($j = 0; $j < $num_clients_per_servant; $j++) {
-        my $client_status = $CLS[$count]->Spawn();
-        if ($client_status != 0) {
-            print STDERR "ERROR: client $count Spawn returned $client_status\n";
-            $status = 1;
-        }
-        $count ++;
-    }
+for (my $i = 0; $i < $num_servants; $i++) { 
+  for ($j = 0; $j < $num_clients_per_servant; $j++) {
+    $CLS[$count] = new PerlACE::Process ("client_main", " -i file://$iorfile[$i]");
+    $CLS[$count]->Spawn ();
+    $count ++;
+  }
 }
 
-for ($i = 0; $i < $num_clients; $i++) {
-    my $client_status = $CLS[$i]->WaitKill ($clients[$i]->ProcessStartWaitInterval() + 45);
+for (my $i = 0; $i < $num_clients; $i++) {
+  $client = $CLS[$i]->WaitKill (60);
 
-    if ($client_status != 0) {
-        print STDERR "ERROR: client $i WaitKill returned $client_status\n";
-        $status = 1;
-    }
+  if ($client != 0) {
+    print STDERR "ERROR: client $i returned $client\n";
+    $status = 1;
+  }
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 45);
+$server = $SV->WaitKill (60);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-
 #Delete ior files generated by this run.
-for ($i = 0; $i < $num_servants; $i++) {
-    $server->DeleteFile($iorfiles[$i]);
-}
-
-$count = 0;
-for ($i = 0; $i < $num_servants; $i++) {
-    for ($j = 0; $j < $num_clients_per_servant; $j++) {
-        $clients[$count]->DeleteFile($iorfiles[$i]);
-        $count++;
-    }
+for (my $i = 0; $i < $num_servants; $i++) {
+  $servant_id = sprintf("%02d", ($i + 1));
+  $iorfile[$i] = PerlACE::LocalFile($iorfname_prefix . "_$servant_id.ior");
+  
+  unlink $iorfile[$i];
 }
 
 exit $status;

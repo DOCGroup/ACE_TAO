@@ -9,6 +9,7 @@
 #ifndef TAO_PERF_RTEC_SEND_TASK_H
 #define TAO_PERF_RTEC_SEND_TASK_H
 
+#include "tao/Utils/Servant_Var.h"
 #include "Supplier.h"
 #include "ace/Task.h"
 #include "ace/Synch_Traits.h"
@@ -33,9 +34,9 @@ public:
   /// Constructor
   Send_Task (void);
 
-  /// This is for compilers that are a PITA complaining that we are
-  /// hiding something.
-  virtual int init (int argc, ACE_TCHAR *argv[])
+  /// This is for compilers that are a PITA complaining that we are 
+  /// hiding something. 
+  virtual int init (int argc, ACE_TCHAR *argv[]) 
   {
     return ACE_Task_Base::init (argc, argv);
   }
@@ -65,7 +66,7 @@ private:
 
   int event_source_;
 
-  PortableServer::Servant_var<Supplier> supplier_;
+  TAO::Utils::Servant_Var<Supplier> supplier_;
 
   ACE_Barrier *barrier_;
 

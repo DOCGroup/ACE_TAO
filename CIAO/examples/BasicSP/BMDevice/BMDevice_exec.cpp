@@ -1,57 +1,34 @@
 // $Id$
 
+#include "ciao/CIAO_common.h"
 #include "BMDevice_exec.h"
 
 #define DISPLACEMENT 256
 
-MyImpl::ReadData_Impl::ReadData_Impl (const char* name)
-  : str_ (name)
-{
-}
-
-MyImpl::ReadData_Impl::~ReadData_Impl (void)
-{
-}
-
-void
-MyImpl::ReadData_Impl::set_name (const char* name)
-{
-  this->str_ = name;
-}
-
-char *
-MyImpl::ReadData_Impl::get_data (void)
-{
-  return CORBA::string_dup (this->str_.in());
-}
-
-//=================================================
-
 /// Default constructor.
 MyImpl::BMDevice_exec_i::BMDevice_exec_i (void)
-  : data_read_ (new ReadData_Impl ("BM DEVICE DATA"))
+  : data_read_ (new ReadData_Impl("BM DEVICE DATA"))
 {
+
 }
 
 /// Default destructor.
-MyImpl::BMDevice_exec_i::~BMDevice_exec_i (void)
+MyImpl::BMDevice_exec_i::~BMDevice_exec_i ()
 {
   delete this->data_read_;
 }
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMDevice_exec_i::get_data_read (void)
+MyImpl::BMDevice_exec_i::get_data_read ()
 {
-  return
-    BasicSP::CCM_ReadData::_duplicate (this->data_read_);
+  return BasicSP::CCM_ReadData::_duplicate (this->data_read_);
 }
 
 void
-MyImpl::BMDevice_exec_i::push_timeout_value (BasicSP::TimeOut *)
+MyImpl::BMDevice_exec_i::push_timeout (BasicSP::TimeOut *)
 {
   // Notify others
-  BasicSP::DataAvailable_var event =
-    new OBV_BasicSP::DataAvailable;
+  BasicSP::DataAvailable_var event = new OBV_BasicSP::DataAvailable;
 
   ACE_DEBUG ((LM_EMERGENCY,
               "BMDevice, received a timeout from EC\n"));
@@ -61,8 +38,7 @@ MyImpl::BMDevice_exec_i::push_timeout_value (BasicSP::TimeOut *)
 
 // Operations from Components::SessionComponent
 void
-MyImpl::BMDevice_exec_i:: set_session_context (
-  Components::SessionContext_ptr ctx)
+MyImpl::BMDevice_exec_i:: set_session_context (Components::SessionContext_ptr ctx)
 {
   ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::set_session_context\n"));
@@ -78,26 +54,26 @@ MyImpl::BMDevice_exec_i:: set_session_context (
 }
 
 void
-MyImpl::BMDevice_exec_i::configuration_complete (void)
+MyImpl::BMDevice_exec_i::configuration_complete ()
 {
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_activate (void)
+MyImpl::BMDevice_exec_i::ccm_activate ()
 {
   ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::ccm_activate\n"));
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_passivate (void)
+MyImpl::BMDevice_exec_i::ccm_passivate ()
 {
   ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::ccm_passivate\n"));
 }
 
 void
-MyImpl::BMDevice_exec_i::ccm_remove (void)
+MyImpl::BMDevice_exec_i::ccm_remove ()
 {
   ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMDevice_exec_i::ccm_remove\n"));
@@ -117,12 +93,12 @@ create_BasicSP_BMDevice_Impl (void)
 }
 
 /// Default ctor.
-MyImpl::BMDeviceHome_exec_i::BMDeviceHome_exec_i (void)
+MyImpl::BMDeviceHome_exec_i::BMDeviceHome_exec_i ()
 {
 }
 
 /// Default dtor.
-MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i (void)
+MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i ()
 {
 }
 
@@ -131,12 +107,13 @@ MyImpl::BMDeviceHome_exec_i::~BMDeviceHome_exec_i (void)
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMDeviceHome_exec_i::create (void)
+MyImpl::BMDeviceHome_exec_i::create ()
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();
 
-  ACE_NEW_THROW_EX (retval,
+  ACE_NEW_THROW_EX (
+                    retval,
                     MyImpl::BMDevice_exec_i,
                     ::CORBA::NO_MEMORY ());
 
@@ -150,7 +127,8 @@ create_BasicSP_BMDeviceHome_Impl (void)
   ::Components::HomeExecutorBase_ptr retval =
     ::Components::HomeExecutorBase::_nil ();
 
-  ACE_NEW_RETURN (retval,
+  ACE_NEW_RETURN (
+                  retval,
                   MyImpl::BMDeviceHome_exec_i,
                   ::Components::HomeExecutorBase::_nil ());
 

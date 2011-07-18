@@ -60,7 +60,7 @@ namespace ACE
     {
       return Memory_Usage_Monitor::default_name_;
     }
-
+    
     void
     Memory_Usage_Monitor::clear_i (void)
     {
@@ -76,3 +76,4 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+

@@ -1,28 +1,31 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *    A client program for the File IDL module
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===================================================================
+//  = LIBRARY
+//      TAO/tests/POA/Default_Servant/client
+//
+//  = FILENAME
+//     client.cpp
+//
+//  = DESCRIPTION
+//      A client program for the File IDL module
+//
+//  = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
 
 #include "FileC.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "ace/SString.h"
 #include "ace/Thread_Manager.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
 
-static const ACE_TCHAR *iorfile = ACE_TEXT("ior");
+ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan Exp")
+
+  static const ACE_TCHAR *iorfile = ACE_TEXT("ior");
 static const ACE_TCHAR *filename = ACE_TEXT("big.txt");
 
 static int NUM_THREADS = 4;

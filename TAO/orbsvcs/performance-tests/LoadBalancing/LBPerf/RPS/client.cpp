@@ -11,6 +11,10 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
+ACE_RCSID(LoadBalancing,
+          client,
+          "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 100;
 int do_dump_history = 0;
@@ -64,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

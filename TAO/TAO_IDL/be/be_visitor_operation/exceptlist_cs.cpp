@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exceptlist_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the list of exceptions that an operation
- *  raises.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exceptlist_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the list of exceptions that an operation
+//    raises.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           exceptlist_cs,
+           "$Id$")
 
 // ****************************************************************************
 // visitor to generate the exception list for operations
@@ -37,7 +46,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "static TAO::Exception_Data" << be_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata [] = " << be_idt_nl;
@@ -51,8 +60,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          AST_Decl *d = ei.item ();
-          ex = be_exception::narrow_from_decl (d);
+          ex = be_exception::narrow_from_decl (ei.item ());
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl
@@ -75,7 +83,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
 
           if (!ei.is_done ())
             {
-              *os << "," << be_nl_2;
+              *os << "," << be_nl << be_nl;
             }
         }
 

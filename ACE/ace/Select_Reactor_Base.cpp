@@ -18,6 +18,11 @@
 # include <algorithm>
 #endif  /* !ACE_WIN32 */
 
+ACE_RCSID (ace,
+           Select_Reactor_Base,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename iterator>
@@ -78,7 +83,7 @@ ACE_Select_Reactor_Handler_Repository::handle_in_range (ACE_HANDLE handle)
 }
 
 int
-ACE_Select_Reactor_Handler_Repository::open (size_type size)
+ACE_Select_Reactor_Handler_Repository::open (size_t size)
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::open");
 
@@ -686,9 +691,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
   ACE_Event_Handler_var safe_handler (event_handler);
 
   if (event_handler)
-    {
-      event_handler->add_reference ();
-    }
+    event_handler->add_reference ();
 
   ACE_Notification_Buffer buffer (event_handler, mask);
 
@@ -715,9 +718,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
                                sizeof buffer,
                                timeout);
   if (n == -1)
-    {
-      return -1;
-    }
+    return -1;
 
   // No failures.
   safe_handler.release ();
@@ -799,9 +800,14 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
                                                      more_messages_queued,
                                                      next);
 
-  if (result == 0 || result == -1)
+  if (result == 0)
     {
-      return result;
+      return 0;
+    }
+
+  if (result == -1)
+    {
+      return -1;
     }
 
   if(more_messages_queued)
@@ -868,25 +874,6 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::read_notify_pipe");
 
-  // This is kind of a weird, fragile beast.  We first read with a
-  // regular read.  The read side of this socket is non-blocking, so
-  // the read may end up being short.
-  //
-  // If the read is short, then we do a recv_n to insure that we block
-  // and read the rest of the buffer.
-  //
-  // Now, you might be tempted to say, "why don't we just replace the
-  // first recv with a recv_n?"  I was, too.  But that doesn't work
-  // because of how the calling code in handle_input() works.  In
-  // handle_input, the event will only be dispatched if the return
-  // value from read_notify_pipe() is > 0.  That means that we can't
-  // return zero from this func unless it's an EOF condition.
-  //
-  // Thus, the return value semantics for this are:
-  // -1: nothing read, fatal, unrecoverable error
-  // 0: nothing read at all
-  // 1: complete buffer read
-
   ssize_t const n = ACE::recv (handle, (char *) &buffer, sizeof buffer);
 
   if (n > 0)
@@ -900,9 +887,9 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // doesn't work we're in big trouble since the input stream
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
-          if (ACE::recv_n (handle,
-                           ((char *) &buffer) + n,
-                           remainder) != remainder)
+          if (ACE::recv (handle,
+                         ((char *) &buffer) + n,
+                         remainder) != remainder)
             return -1;
         }
 
@@ -929,9 +916,6 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
   int result = 0;
   ACE_Notification_Buffer buffer;
 
-  // If there is only one buffer in the pipe, this will loop and call
-  // read_notify_pipe() twice.  The first time will read the buffer, and
-  // the second will read the fact that the pipe is empty.
   while ((result = this->read_notify_pipe (handle, buffer)) > 0)
     {
       // Dispatch the buffer

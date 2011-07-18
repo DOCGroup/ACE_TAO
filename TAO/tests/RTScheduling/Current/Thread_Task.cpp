@@ -100,10 +100,9 @@ Thread_Task::svc (void)
                                                 implicit_sched_param);
 
       size_t count = 0;
-      RTScheduling::Current::IdType_var id = this->current_->id ();
       ACE_OS::memcpy (&count,
-                      id->get_buffer (),
-                      id->length ());
+                      this->current_->id ()->get_buffer (),
+                      this->current_->id ()->length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Starting Distributable Thread %d with 3 nested scheduling segments....\n",
@@ -132,7 +131,7 @@ Thread_Task::svc (void)
         for (unsigned int i = 0; i < segment_name_list->length (); i ++)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "%C\n",
+                        "%s\n",
                         (*segment_name_list)[i].in ()));
           }
       }

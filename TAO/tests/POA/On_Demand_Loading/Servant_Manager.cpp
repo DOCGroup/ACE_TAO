@@ -1,25 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Servant_Manager.cpp
- *
- *  $Id$
- *
- *   Implementation of the helper class for the ServantActivator_i
- *   and the ServantLocator_i.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//     TAO/examples/POA/On_Demand_Loading
+//
+// = FILENAME
+//     Servant_Manager.cpp
+//
+// = DESCRIPTION
+//     Implementation of the helper class for the ServantActivator_i
+//     and the ServantLocator_i.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Servant_Manager.h"
 #include "tao/debug.h"
 
-// Initialization.
-ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+ACE_RCSID(On_Demand_Activation, Servant_Manager, "$Id$")
+
+  // Initialization.
+  ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

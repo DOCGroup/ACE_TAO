@@ -2,7 +2,7 @@
 
 #include "ace/UNIX_Addr.h"
 
-
+ACE_RCSID(ace, UNIX_Addr, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Auto_Event_Test.cpp
- *
- *  $Id$
- *
- *  This test verifies the functionality of the <ACE_Auto_Event>
- *  implementation.
- *
- *
- *  @author Martin Corino <mcorino@remedy.nl>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Auto_Event Test
+//
+// = DESCRIPTION
+//    This test verifies the functionality of the <ACE_Auto_Event>
+//    implementation.
+//
+// = AUTHOR
+//    Martin Corino <mcorino@remedy.nl>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Auto_Event.h"
@@ -23,7 +26,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-
+ACE_RCSID(tests, Auto_Event_Test, "$Id$")
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \

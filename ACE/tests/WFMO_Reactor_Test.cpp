@@ -1,25 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    WFMO_Reactor_Test.cpp
- *
- *  $Id$
- *
- *  This is a simple test of the WFMO_Reactor.  It makes sure that
- *  removals and suspensions work correctly.
- *
- *
- *  @author Irfan Pyarali <irfan@oomworks.com>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    WFMO_Reactor_Test.cpp
+//
+// = DESCRIPTION
+//    This is a simple test of the WFMO_Reactor.  It makes sure that
+//    removals and suspensions work correctly.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@oomworks.com>
+//
+// ============================================================================
 
-
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pipe.h"
 
-
+ACE_RCSID(tests, WFMO_Reactor_Test, "$Id$")
 
 #if defined (ACE_WIN32)
 
@@ -52,18 +55,18 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
   int result =
     this->pipe_.open ();
 
-  ACE_TEST_ASSERT (result == 0);
+  ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   this->reactor ()->register_handler (this->pipe_.read_handle (),
                                       this,
                                       ACE_Event_Handler::READ_MASK);
-  ACE_TEST_ASSERT (result == 0);
+  ACE_ASSERT (result == 0);
 
   this->reactor ()->register_handler (this->pipe_.write_handle (),
                                       this,
                                       ACE_Event_Handler::READ_MASK);
-  ACE_TEST_ASSERT (result == 0);
+  ACE_ASSERT (result == 0);
 }
 
 Event_Handler::~Event_Handler (void)
@@ -101,7 +104,7 @@ test (void)
   ACE_Time_Value timeout (0, 500 * 1000);
 
   result = reactor.run_reactor_event_loop (timeout);
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   for (i = 0; i < number_of_handlers; ++i)
     {
@@ -109,14 +112,14 @@ test (void)
         continue;
 
       result = reactor.suspend_handler (event_handlers[i]->pipe_.read_handle ());
-      ACE_TEST_ASSERT (result == 0);
+      ACE_ASSERT (result == 0);
 
       result = reactor.suspend_handler (event_handlers[i]->pipe_.write_handle ());
-      ACE_TEST_ASSERT (result == 0);
+      ACE_ASSERT (result == 0);
     }
 
   result = reactor.run_reactor_event_loop (timeout);
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   delete[] safe_event_handlers;
   delete[] event_handlers;
@@ -129,7 +132,7 @@ run_main (int, ACE_TCHAR *[])
 
   test ();
 
-  ACE_TEST_ASSERT (number_of_closes == number_of_handlers);
+  ACE_ASSERT (number_of_closes == number_of_handlers);
 
   ACE_END_TEST;
 

@@ -25,7 +25,7 @@ namespace MyImpl
    * RateGen executor implementation class.
    */
   class BMDISPLAY_EXEC_Export BMDisplay_exec_i :
-    public virtual CIAO_BasicSP_BMDisplay_Impl::BMDisplay_Exec,
+    public virtual CIDL_BMDisplay_Impl::BMDisplay_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -70,7 +70,7 @@ namespace MyImpl
    * BMDisplay home executor implementation class.
    */
   class BMDISPLAY_EXEC_Export BMDisplayHome_exec_impl :
-    public virtual CIAO_BasicSP_BMDisplay_Impl::BMDisplayHome_Exec,
+    public virtual CIDL_BMDisplay_Impl::BMDisplayHome_Exec,
     public virtual ::CORBA::LocalObject
   {
   public:

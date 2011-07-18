@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "Supplier.h"
 #include "AddrServer.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -11,6 +12,10 @@
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+
+ACE_RCSID (EC_Examples,
+           MCast,
+           "$Id$")
 
 const ACE_TCHAR *udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
@@ -139,8 +144,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Now we setup the sender:
-      PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
-        TAO_ECG_UDP_Sender::create();
+      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
       sender->init (event_channel.in (),
                     address_server.in (),
                     endpoint);
@@ -274,6 +278,6 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

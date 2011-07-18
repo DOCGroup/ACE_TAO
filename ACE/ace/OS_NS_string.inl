@@ -259,7 +259,12 @@ ACE_OS::strlen (const ACE_WCHAR_T *s)
 ACE_INLINE char *
 ACE_OS::strncat (char *s, const char *t, size_t len)
 {
+#if 0 /* defined (ACE_HAS_TR24731_2005_CRT) */
+  strncat_s (s, len + 1, t, _TRUNCATE);
+  return s;
+#else
   return ::strncat (s, t, len);
+#endif /* ACE_HAS_TR24731_2005_CRT */
 }
 
 ACE_INLINE ACE_WCHAR_T *
@@ -526,11 +531,11 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 {
 #if defined (ACE_HAS_TR24731_2005_CRT)
   return strtok_s (s, tokens, lasts);
-#elif defined (ACE_LACKS_STRTOK_R)
-  return ACE_OS::strtok_r_emulation (s, tokens, lasts);
-#else
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (ACE_LACKS_STRTOK_R)
   return ::strtok_r (s, tokens, lasts);
-#endif /* ACE_HAS_TR24731_2005_CRT */
+#else
+  return ACE_OS::strtok_r_emulation (s, tokens, lasts);
+#endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
 #if defined (ACE_HAS_WCHAR)

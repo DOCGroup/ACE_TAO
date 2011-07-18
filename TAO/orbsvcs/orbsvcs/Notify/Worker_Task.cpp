@@ -2,6 +2,8 @@
 
 #include "orbsvcs/Notify/Worker_Task.h"
 
+ACE_RCSID(Notify, TAO_Notify_Worker_Task, "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Worker_Task::TAO_Notify_Worker_Task (void)

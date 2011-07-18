@@ -3,6 +3,11 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/EventDef_i.h"
 
+ACE_RCSID (IFRService,
+           EventDef_i,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventDef_i::TAO_EventDef_i (TAO_Repository_i *repo)

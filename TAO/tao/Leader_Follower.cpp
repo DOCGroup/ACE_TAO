@@ -17,13 +17,19 @@
 # include "tao/Leader_Follower.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (tao,
+           Leader_Follower,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
-  while (!this->follower_free_list_.is_empty ())
+  while (!this->follower_free_list_.empty ())
     {
-      TAO_LF_Follower *follower = this->follower_free_list_.pop_front ();
+      TAO_LF_Follower *follower =
+        this->follower_free_list_.pop_front ();
       delete follower;
     }
   // Hand the reactor back to the resource factory.
@@ -39,7 +45,7 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
 TAO_LF_Follower *
 TAO_Leader_Follower::allocate_follower (void)
 {
-  if (!this->follower_free_list_.is_empty ())
+  if (!this->follower_free_list_.empty ())
     return this->follower_free_list_.pop_front ();
 
   TAO_LF_Follower* ptr = 0;
@@ -58,12 +64,13 @@ TAO_Leader_Follower::release_follower (TAO_LF_Follower *follower)
 int
 TAO_Leader_Follower::elect_new_leader_i (void)
 {
-  TAO_LF_Follower* const follower = this->follower_set_.head ();
+  TAO_LF_Follower* const follower =
+    this->follower_set_.head ();
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - TAO_Leader_Follower::elect_new_leader_i - "
-              "follower is %@\n",
+              "TAO (%P|%t) LF::elect_new_leader_i - "
+              "follower is %x\n",
               follower));
 #endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
@@ -86,8 +93,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           if (this->event_loop_threads_condition_.wait () == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::")
-                          ACE_TEXT ("wait_for_client_leader_to_complete - ")
+                          ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
                           ACE_TEXT ("Condition variable wait failed\n")));
 
               result = -1;
@@ -102,8 +108,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
             {
               if (errno != ETIME)
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::")
-                            ACE_TEXT ("wait_for_client_leader_to_complete - ")
+                            ACE_TEXT ("TAO (%P|%t): TAO_Leader_Follower::wait_for_client_leader_to_complete - ")
                             ACE_TEXT ("Condition variable wait failed\n")));
 
               result = -1;
@@ -194,13 +199,13 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
   ACE_Countdown_Time countdown (max_wait_time);
 
-  // Optimize the first iteration [no access to errno]
+  // Optmize the first iteration [no access to errno]
   int result = 1;
 
-  // For some cases the transport may disappear like when waiting for
+  // For some cases the transport may dissappear like when waiting for
   // connection to be initiated or closed. So cache the id.
   // @@ NOTE: This is not completely safe either. We will be fine for
-  // cases that don't access the id ie. when debug level is off but
+  // cases that dont access the id ie. when debug level is off but
   // with debugging level on we are on a sticky wicket. Hopefully none
   // of our users should run TAO with debugging enabled like they did
   // in PathFinder
@@ -231,7 +236,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         if (TAO_debug_level >= 5)
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
-                      " (follower), cond <%@>\n",
+                      " (follower), cond <%x>\n",
                       t_id, follower.get ()));
 
         // Bound the follower and the LF_Event, this is important to
@@ -265,6 +270,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
             //
             // but only the first one has any effect, so the leader is
             // lost.
+            //
+
             TAO_LF_Follower_Auto_Adder auto_adder (*this, follower);
 
             if (max_wait_time == 0)
@@ -389,6 +396,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       reactor->owner (ACE_Thread::self ());
 
       // Run the reactor event loop.
+
       if (TAO_debug_level >= 5)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
@@ -470,7 +478,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       /**
        * There should be no reason to reset the value of result
        * here. If there was an error in handle_events () that the
-       * leader saw, I (Bala) believe it should be propagated to the
+       * leader saw, I (Bala) beleave it should be propogated to the
        * clients.
        * result = 0;
        */

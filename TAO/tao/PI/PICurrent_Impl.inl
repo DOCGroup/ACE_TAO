@@ -5,18 +5,26 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::PICurrent_Impl::PICurrent_Impl (
-    TAO_ORB_Core   *orb_core,
-    size_t         tss_slot,
-    PICurrent_Impl *pop)
-  : orb_core_ (orb_core),
-    tss_slot_ (tss_slot),
-    pop_ (pop),
-    push_ (0),
-    slot_table_ (),
+TAO::PICurrent_Impl::PICurrent_Impl ()
+  : slot_table_ (),
     lazy_copy_ (0),
     impending_change_callback_ (0)
 {
+}
+
+ACE_INLINE
+TAO::PICurrent_Impl::~PICurrent_Impl ()
+{
+  // Break any existing ties that another PICurrent has with our table
+  // since our table will no longer exist once this destructor completes.
+  if (0 != this->impending_change_callback_)
+    this->impending_change_callback_->convert_from_lazy_to_real_copy ();
+
+  // If we have logically copied another table, ensure it is told about our
+  // demise so that it will not call our non-existant
+  // convert_from_lazy_to_real_copy() when it changes/destructs.
+  if (0 != this->lazy_copy_)
+    this->lazy_copy_->set_callback_for_impending_change (0);
 }
 
 ACE_INLINE void

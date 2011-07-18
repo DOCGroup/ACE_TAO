@@ -6,7 +6,11 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
-#include "ace/OS_NS_sys_time.h"
+
+ACE_RCSID (Factory_Service,
+           EventChannelFactory_i,
+           "$Id$")
+
 
 const int WAIT_FOR_REGISTRATION_TIME = 10; //sec
 const int MAX_ID_STRING = 10;

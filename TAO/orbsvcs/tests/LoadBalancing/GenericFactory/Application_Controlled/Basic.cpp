@@ -1,7 +1,11 @@
-// $Id$
-
 #include "Basic.h"
 #include "LB_server.h"
+
+
+ACE_RCSID (Application_Controlled,
+           Basic,
+           "$Id$")
+
 
 Basic::Basic (CORBA::Object_ptr object_group,
               CosLoadBalancing::LoadManager_ptr lm,

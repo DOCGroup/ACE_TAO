@@ -6,6 +6,8 @@
 #include "orbsvcs/Notify/ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Notify, TAO_Notify_ProxyConsumer, "$Id$")
+
 #include "tao/debug.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/Notify/Supplier.h"
@@ -186,14 +188,14 @@ TAO_Notify_ProxyConsumer::destroy (void)
 }
 
 
-ACE_Time_Value
+ACE_Time_Value 
 TAO_Notify_ProxyConsumer::last_ping() const
 {
   return this->last_ping_.value ();
 }
 
 
-void
+void 
 TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
 {
   this->last_ping_ = tv;

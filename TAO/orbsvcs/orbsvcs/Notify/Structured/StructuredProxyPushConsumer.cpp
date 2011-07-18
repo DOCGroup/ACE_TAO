@@ -1,6 +1,9 @@
 // $Id$
 
 #include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
+
+ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushConsumer, "$Id$")
+
 #include "ace/Bound_Ptr.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
@@ -85,7 +88,7 @@ TAO_Notify_StructuredProxyPushConsumer::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG, 
                   ACE_TEXT ("(%P|%t) TAO_Notify_StructuredProxyPushConsumer::validate(%d)")
                   ACE_TEXT("disconnecting \n"), this->id ()));
     }
@@ -122,16 +125,5 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
     }
   }
 }
-
-void
-TAO_Notify_StructuredProxyPushConsumer::configure(
-  TAO_Notify_SupplierAdmin & /*admin*/,
-  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-{
-  // Nothing to do.
-  // This virtual method was added to support Notification MC
-}
-
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

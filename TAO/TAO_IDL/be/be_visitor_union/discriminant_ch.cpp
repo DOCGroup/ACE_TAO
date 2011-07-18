@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    discriminant_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for discriminant of the Union
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    discriminant_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for discriminant of the Union
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           discriminant_ch,
+           "$Id$")
 
 // *************************************************************************
 // Visitor for discriminant in client header file.
@@ -32,9 +41,8 @@ int
 be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
 {
   // Get the enclosing union backend.
-  be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+  be_union *bu = this->ctx_->be_node_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -70,11 +78,11 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // The set method.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
   *os << bt->nested_type_name (bu) << " _d (void) const;";
@@ -87,9 +95,8 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
                                                          *node)
 {
   // get the enclosing union backend.
-  be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+  be_union *bu = this->ctx_->be_node_as_union ();
+  be_type *bt;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -103,11 +110,11 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // The set method.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "void _d ( " << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
   *os << bt->nested_type_name (bu) << " _d (void) const;";

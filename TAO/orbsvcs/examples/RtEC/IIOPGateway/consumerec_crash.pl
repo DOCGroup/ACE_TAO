@@ -6,253 +6,145 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+$ns_ior   = PerlACE::LocalFile ("ns.ior");
+$conffile = PerlACE::LocalFile ("ec" . "$PerlACE::svcconf_ext");
+$gatewayconffile = PerlACE::LocalFile ("gateway" . "$PerlACE::svcconf_ext");
 
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $t1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $t2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $g = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-my $c = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
-my $s = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
+unlink $ns_ior;
 
-$nsiorfile = "ns.ior";
-$conffile = "ec" . "$PerlACE::svcconf_ext";
-$gconffile = "gateway" . "$PerlACE::svcconf_ext";
+$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                           "-o $ns_ior");
 
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $t1_nsiorfile = $t1->LocalFile ($nsiorfile);
-my $t2_nsiorfile = $t2->LocalFile ($nsiorfile);
-my $g_nsiorfile = $g->LocalFile ($nsiorfile);
-my $c_nsiorfile = $c->LocalFile ($nsiorfile);
-my $s_nsiorfile = $s->LocalFile ($nsiorfile);
-my $t1_conffile = $t1->LocalFile ($conffile);
-my $t2_conffile = $t2->LocalFile ($conffile);
-my $g_gconffile = $g->LocalFile ($gconffile);
-$ns->DeleteFile ($nsiorfile);
-$t1->DeleteFile ($nsiorfile);
-$t2->DeleteFile ($nsiorfile);
-$g->DeleteFile ($nsiorfile);
-$c->DeleteFile ($nsiorfile);
-$s->DeleteFile ($nsiorfile);
+$T1 = new PerlACE::Process ("EC",
+                            "-ORBInitRef NameService=file://$ns_ior "
+                            . "-ORBsvcconf $conffile "
+#                            . "-ORBDebug -ORBDebugLevel 10 -ORBLogFile supplierec.log "
+                            . "-e channel1 ");
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
-                          " -o $ns_nsiorfile");
+$T2 = new PerlACE::Process ("EC",
+                            "-ORBInitRef NameService=file://$ns_ior -ORBEndpoint iiop://localhost:6000 "
+                            . "-ORBsvcconf $conffile "
+#                            . "-ORBDebug -ORBDebugLevel 10 -ORBLogFile consumerec.log "
+                            . "-e channel2 ");
 
-$T1 = $t1->CreateProcess ("EC",
-                          " -ORBInitRef NameService=file://$t1_nsiorfile ".
-                          "-ORBsvcconf $t1_conffile ".
-                          "-e channel1");
+$G = new PerlACE::Process ("Gateway",
+                           "-ORBInitRef NameService=file://$ns_ior "
+                           . "-ORBSvcconf $gatewayconffile "
+                           . "-c channel2 "
+#                           . "-ORBDebug -ORBDebugLevel 10 -ORBLogFile gateway.log "
+                           . "-s channel1 ");
 
-$T2 = $t2->CreateProcess ("EC",
-                          " -ORBInitRef NameService=file://$t2_nsiorfile ".
-                          "-ORBsvcconf $t2_conffile ".
-                          "-e channel2");
+$C = new PerlACE::Process ("Consumer",
+                           "-ORBInitRef NameService=file://$ns_ior "
+#                              . "-ORBDebug -ORBDebugLevel 10 -ORBLogFile consumer.log "
+                           . "-e channel2 ");
 
-$G = $g->CreateProcess ("Gateway",
-                        " -ORBInitRef NameService=file://$g_nsiorfile ".
-                        "-ORBSvcconf $g_gconffile ".
-                        "-c channel2 ".
-                        "-s channel1");
-
-$C = $c->CreateProcess ("Consumer",
-                        " -ORBInitRef NameService=file://$c_nsiorfile ".
-                        "-ORBDebugLevel $debug_level ".
-                        "-e channel2");
-
-$S = $s->CreateProcess ("Supplier",
-                        " -ORBInitRef NameService=file://$s_nsiorfile ".
-                        "-e channel1");
+$S = new PerlACE::Process ("Supplier",
+                           "-ORBInitRef NameService=file://$ns_ior "
+#                           . "-ORBDebug -ORBDebugLevel 10 -ORBLogFile supplier.log "
+                           . "-e channel1 ");
 
 print STDOUT "Starting name server\n";
-$NS_status = $NS->Spawn ();
+$NS->Spawn ();
 
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    exit 1;
-}
-
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($t1->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$t1_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($t2->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$t2_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($g->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$g_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($c->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$c_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($s->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$s_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
+if (PerlACE::waitforfile_timed ($ns_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_ior>\n";
+    $NS->Kill (); 
     exit 1;
 }
 
 print STDOUT "Starting event channel 1\n";
-$T1_status = $T1->Spawn ();
-
-if ($T1_status != 0) {
-    print STDERR "ERROR: T1 returned $T1_status\n";
-    exit 1;
-}
+$T1->Spawn ();
 
 sleep 2;
 
 print STDOUT "Starting event channel 2\n";
-$T2_status = $T2->Spawn ();
-
-if ($T2_status != 0) {
-    print STDERR "ERROR: T2 returned $T2_status\n";
-    exit 1;
-}
+$T2->Spawn ();
 
 sleep 2;
 
 print STDOUT "Starting gateway\n";
-$G_status = $G->Spawn ();
-
-if ($G_status != 0) {
-    print STDERR "ERROR: Gateway returned $G_status\n";
-    exit 1;
-}
+$G->Spawn ();
 
 sleep 2;
 
 print STDOUT "Starting consumer\n";
-$C_status = $C->Spawn ();
-
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
-    exit 1;
-}
+$C->Spawn ();
 
 sleep 1;
 
 print STDOUT "Starting supplier\n";
-$S_status = $S->Spawn ();
-
-if ($S_status != 0) {
-    print STDERR "ERROR: Supplier returned $S_status\n";
-    exit 1;
-}
+#$supplier = $S->SpawnWaitKill (12000);
+$S->Spawn();
 
 sleep 1;
-
 
 if ($supplier != 0) {
     print STDERR "ERROR: supplier returned $supplier\n";
     $status = 1;
 }
 
+#$consumer = $C->WaitKill (10);
+#
+#if ($consumer != 0) {
+#    print STDERR "ERROR: consumer returned $consumer\n";
+#    $status = 1;
+#}
+
 print STDOUT "Terminating event channel 2  and consumer in 10 seconds...\n";
-$T2_status = $T2->WaitKill ($t2->ProcessStopWaitInterval());
-if ($T2_status != 0) {
-    print STDERR "ERROR: service returned $T2_status\n";
+#$service = $T2->TerminateWaitKill (5);
+$service = $T2->WaitKill (10);
+$C->Kill();
+
+if ($service != 0) {
+    print STDERR "ERROR: service returned $service\n";
     $status = 1;
 }
-$C->Kill();
 
 sleep 10;
 
 print STDOUT "Starting event channel 2 again...\n";
-$T2_status = $T2->Spawn ();
-
-if ($T2_status != 0) {
-    print STDERR "ERROR: T2 returned $T2_status\n";
-    exit 1;
-}
+$T2->Spawn ();
 
 sleep 2;
 
 print STDOUT "Starting consumer again...\n";
-$C_status = $C->Spawn ();
+$C->Spawn ();
 
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
-    exit 1;
-}
+#$supplier = $C->WaitKill (15);
+#
+#if ($supplier != 0) {
+#    print STDERR "ERROR: supplier returned $supplier\n";
+#    $status = 1;
+#}
 
 print STDOUT "1500 seconds before termination...\n";
 sleep 1500;
 
 print STDOUT "Terminating supplier...\n";
-$S_status = $S->WaitKill ($s->ProcessStopWaitInterval());
-if ($S_status != 0) {
-    print STDERR "ERROR: Supplier returned $S_status\n";
-    $status = 1;
-}
+$S->TerminateWaitKill (5);
 
 print STDOUT "Terminating consumer...\n";
-$C_status = $C->WaitKill ($c->ProcessStopWaitInterval());
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
-    $status = 1;
-}
+$C->TerminateWaitKill (5);
 
 print STDOUT "Terminating gateway...\n";
-$G_status = $G->TerminateWaitKill ($g->ProcessStopWaitInterval());
-
-if ($G_status != 0) {
-    print STDERR "ERROR: Gateway returned $G_status\n";
-    $status = 1;
-}
+$G->TerminateWaitKill (5);
 
 print STDOUT "Terminating event channels...\n";
-$T1_status = $T1->TerminateWaitKill ($t1->ProcessStopWaitInterval());
+$T1->TerminateWaitKill (5);
+$T2->TerminateWaitKill (5);
 
-if ($T1_status != 0) {
-    print STDERR "ERROR: service returned $T1_status\n";
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: name server returned $nserver\n";
     $status = 1;
 }
 
-$T2_status = $T2->TerminateWaitKill ($t2->ProcessStopWaitInterval());
-
-if ($T2_status != 0) {
-    print STDERR "ERROR: service returned $T2_status\n";
-    $status = 1;
-}
-
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    $status = 1;
-}
-
-$ns->DeleteFile ($nsiorfile);
-$t1->DeleteFile ($nsiorfile);
-$t2->DeleteFile ($nsiorfile);
-$g->DeleteFile ($nsiorfile);
-$c->DeleteFile ($nsiorfile);
-$s->DeleteFile ($nsiorfile);
+unlink $ns_ior;
 
 exit $status;

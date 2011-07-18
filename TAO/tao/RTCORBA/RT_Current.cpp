@@ -1,4 +1,6 @@
+//
 // $Id$
+//
 
 #include "tao/RTCORBA/RT_Current.h"
 
@@ -12,6 +14,10 @@
 #include "tao/SystemException.h"
 
 #include "ace/Thread.h"
+
+ACE_RCSID (RTCORBA,
+           RT_Current,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

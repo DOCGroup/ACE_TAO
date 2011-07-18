@@ -75,12 +75,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
-
 #include "utl_labellist.h"
-#include "fe_extern.h"
 
-AST_Decl::NodeType const
-AST_UnionBranch::NT = AST_Decl::NT_union_branch;
+ACE_RCSID(ast, ast_union_branch, "$Id$")
+
+AST_UnionBranch::AST_UnionBranch (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    pd_ll (0)
+{
+}
 
 AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
                                   AST_Type *ft,
@@ -134,11 +139,7 @@ AST_UnionBranch::destroy (void)
   this->AST_Field::destroy ();
 }
 
-UTL_LabelList *
-AST_UnionBranch::labels (void) const
-{
-  return this->pd_ll;
-}
+// Data accessors.
 
 AST_UnionLabel *
 AST_UnionBranch::label (unsigned long index)
@@ -176,28 +177,28 @@ AST_UnionBranch::label_list_length (void)
 void
 AST_UnionBranch::add_labels (AST_Union *u)
 {
+  AST_UnionLabel *ul = 0;
+  AST_Expression *ex = 0;
+
+  bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
+
   for (UTL_LabellistActiveIterator i (this->pd_ll);
        !i.is_done ();
        i.next ())
     {
-      if (AST_UnionLabel::UL_default == i.item ()->label_kind ())
+      ul = i.item ();
+
+      if (ul->label_kind () == AST_UnionLabel::UL_default)
         {
           return;
         }
-    }
 
-  const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
-
-  for (UTL_LabellistActiveIterator i (this->pd_ll);
-       !i.is_done ();
-       i.next ())
-    {
-      AST_Expression *ex = i.item ()->label_val ();
+      ex = ul->label_val ();
       UTL_ScopedName *n = ex->n ();
 
-      if (n)
+      if (n != 0)
         {
-          u->add_to_name_referenced (n->first_component ());
+          u->add_to_name_referenced (ex->n ()->first_component ());
         }
 
       // If we have enum val labels, we need to set the type and
@@ -208,13 +209,6 @@ AST_UnionBranch::add_labels (AST_Union *u)
           ex->ev ()->et = AST_Expression::EV_enum;
           AST_Enum *disc = AST_Enum::narrow_from_decl (u->disc_type ());
           AST_EnumVal *dval = disc->lookup_by_value (ex);
-
-          if (dval == 0)
-            {
-              idl_global->err ()->incompatible_disc_error (disc, ex);
-              throw Bailout ();
-            }
-
           ex->ev ()->u.eval = dval->constant_value ()->ev ()->u.ulval;
         }
     }
@@ -236,5 +230,7 @@ AST_UnionBranch::coerce_labels (AST_Union *u)
       lv->set_ev (lv->coerce (u->udisc_type ()));
     }
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_UnionBranch)

@@ -35,22 +35,21 @@ union Union1 switch(long)
 };
 
 typedef sequence<long> LongSeq;
-typedef octet oct_array[10];
-typedef sequence <Pet> PetSeq;
+
 // Use all possible types inside a struct
 struct Variable_Struct2
 {
     long len;              // predefined type
     any  whatever;         // predefined type
     Pet  apet;             // enum
-    oct_array octet_array; // array
+    octet octet_array[10]; // array
     short_array td_array;  // typedefed array
     Interface1 intf1;      // interface
     InterfaceFwd intf2;    // interface fwd
     string str;            // string
     wstring wstr;          // string
     LongSeq ls;            // typedef sequence
-    PetSeq sqq;    // sequence
+    sequence <Pet> sqq;    // sequence
     struct NestedStruct1 { short s; string str2; } ns1; // structure
     Variable_Struct1 NestedStruct2;
     TDvariable_struct1 NestedStruct3;

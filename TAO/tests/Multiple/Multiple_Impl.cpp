@@ -3,6 +3,8 @@
 #include "Multiple_Impl.h"
 #include "Collocation_Tester.h"
 
+ACE_RCSID (tests, Multiple_Impl, "$Id$")
+
 ///////////////////////////////////////////////////////////
 //     Bottom_Impl Implementation
 //

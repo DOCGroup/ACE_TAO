@@ -42,6 +42,11 @@
 #include "tao/PortableServer/LifespanStrategyPersistentFactoryImpl.h"
 #include "tao/PortableServer/LifespanStrategyTransientFactoryImpl.h"
 
+ACE_RCSID (PortableServer,
+           PortableServer,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

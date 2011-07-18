@@ -36,7 +36,7 @@
 #include <string>
 #include "ace/Thread_Mutex.h"
 
-namespace CIAO_Messenger_Impl
+namespace CIDL_Messenger_Impl
 {
   class MESSENGER_EXEC_Export Publication_exec_i
   : public virtual ::CCM_Publication,

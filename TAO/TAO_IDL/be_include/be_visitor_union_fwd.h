@@ -1,18 +1,23 @@
 /* -*- C++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_union_fwd.h
- *
- *  $Id$
- *
- *  Concrete visitor for the be_union_fwd class
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_union_fwd.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the be_union_fwd class
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_UNION_FWD_H
 #define TAO_BE_VISITOR_UNION_FWD_H

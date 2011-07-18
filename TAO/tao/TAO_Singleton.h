@@ -86,8 +86,7 @@ protected:
  * unloaded.
  */
 template <class TYPE, class ACE_LOCK>
-class TAO_TSS_Singleton : public ACE_Cleanup,
-                          private ACE_Copy_Disabled
+class TAO_TSS_Singleton : public ACE_Cleanup
 {
 
 public:
@@ -115,6 +114,10 @@ protected:
 
   /// Get pointer to the TAO TSS Singleton instance.
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Singleton (const TAO_TSS_Singleton<TYPE,ACE_LOCK> &))
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -8,6 +8,8 @@
 
 #include "ace/OS_NS_time.h"
 
+ACE_RCSID(Callback, Callback_i, "$Id$")
+
 int
 Callback_i::done (void)
 {

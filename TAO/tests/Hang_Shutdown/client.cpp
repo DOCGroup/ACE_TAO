@@ -2,9 +2,11 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS.h"
 #include "ace/Task.h"
 #include "ace/Profile_Timer.h"
-#include "ace/OS_NS_unistd.h"
+
+ACE_RCSID(Hello, client, "$Id$")
 
 namespace Test
 {
@@ -48,7 +50,7 @@ namespace Test
                             false);
         }
 
-    // Indicates successful parsing of the command line
+    // Indicates sucessful parsing of the command line
     return true;
   }
 

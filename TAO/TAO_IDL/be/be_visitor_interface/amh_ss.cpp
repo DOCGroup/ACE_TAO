@@ -10,6 +10,10 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           amh_ss,
+           "$Id$")
+
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
     be_visitor_context *ctx
   )
@@ -62,14 +66,14 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
       << "::_this (void)" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ();" << be_nl_2;
+      << "TAO_Stub *stub = this->_create_stub ();" << be_nl << be_nl;
 
   *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
       << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();" << be_nl
@@ -84,7 +88,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << ");" << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl_2;
+      << "(void) safe_stub.release ();" << be_nl << be_nl;
 
   *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
       << "return" << be_idt_nl;
@@ -125,8 +129,8 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
@@ -145,7 +149,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 void
 be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
 {
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "server_request.tao_send_reply ();";
 }
 
@@ -241,7 +245,7 @@ emit (be_interface *derived,
 
   if (base->is_nested ())
     {
-      be_decl *scope = 0;
+      be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::AMH_"

@@ -34,7 +34,7 @@
  *  the following methods:
  *      Xyzzy_i (); // null constructor
  *      ~Xyzzy_i (); // destructor
- *      int parse_args (int argc, ACE_TCHAR * argv[]);
+ *      int parse_args (int argc, char * argv[]);
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
  *      int fini (void);
@@ -59,7 +59,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-#include "ace/Copy_Disabled.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,13 +67,17 @@ namespace TAO
   namespace Utils
   {
     template <typename SERVANT>
-    class Server_Main : private ACE_Copy_Disabled
+    class Server_Main
     {
     public:
       Server_Main(const char * name);
       ~Server_Main();
 
       int run (int argc, ACE_TCHAR *argv[]);
+
+    private:
+      Server_Main( const Server_Main &);
+      Server_Main & operator = (const Server_Main &);
 
     private:
       const char * name_;

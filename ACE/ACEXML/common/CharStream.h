@@ -35,7 +35,7 @@ public:
   /**
    * Virtual destructor, must have.
    */
-  virtual ~ACEXML_CharStream (void) = 0;
+  virtual ~ACEXML_CharStream () = 0;
 
   /**
    * Returns the available ACEXML_Char in the buffer.  -1

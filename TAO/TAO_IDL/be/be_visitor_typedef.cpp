@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_typedef.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Typedef
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_typedef.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Typedef
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_enum.h"
@@ -49,3 +54,9 @@
 #include "be_visitor_typedef/any_op_cs.cpp"
 #include "be_visitor_typedef/cdr_op_ch.cpp"
 #include "be_visitor_typedef/cdr_op_cs.cpp"
+#include "be_visitor_typedef/serializer_op_ch.cpp"
+#include "be_visitor_typedef/serializer_op_cs.cpp"
+
+ACE_RCSID (be, 
+           be_visitor_typedef, 
+           "$Id$")

@@ -1,6 +1,8 @@
-// $Id$
-
 #include "orbsvcs/Log/LogActivator.h"
+
+ACE_RCSID (Log,
+           LogActivator,
+           "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 #include "orbsvcs/Log/LogMgr_i.h"

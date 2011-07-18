@@ -48,8 +48,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       consumerAdmin->obtain_typed_push_supplier(::_tc_Messenger->id());
 
     // Instantiate an Messenger_i servant.
-    PortableServer::Servant_var<Messenger_i> servant =
-      new Messenger_i(orb.in(), supplier.in(), EVENTS_TILL_SHUTDOWN);
+    Messenger_i servant(orb.in(), supplier.in(), EVENTS_TILL_SHUTDOWN);
 
     // Register it with the RootPOA.
     // Activate the POA here before we connect our consumer.
@@ -58,12 +57,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POAManager_var poa_manager = poa->the_POAManager();
     poa_manager->activate();
 
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
+    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     CORBA::Object_var messenger_obj = poa->id_to_reference(oid.in());
-    PortableServer::Servant_var<Consumer_i> consumer_servant =
-      new Consumer_i(orb.in(), messenger_obj.in());
+    Consumer_i consumer_servant(orb.in(), messenger_obj.in());
     PortableServer::ObjectId_var cons_oid =
-      poa->activate_object(consumer_servant.in());
+      poa->activate_object(&consumer_servant);
     CORBA::Object_var consumer_obj = poa->id_to_reference(cons_oid.in());
     CosTypedEventComm::TypedPushConsumer_var consumer =
       CosTypedEventComm::TypedPushConsumer::_narrow(consumer_obj.in());

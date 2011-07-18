@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_global.cpp
- *
- *  $Id$
- *
- *  Stores global data specific to the compiler back end.
- *
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+//
+// = LIBRARY
+//    TAO_IDL3_TO_IDL2L_BE_DLL
+//
+// = FILENAME
+//    be_global.cpp
+//
+// = DESCRIPTION
+//    Stores global data specific to the compiler back end.
+//
+// = AUTHOR
+//    Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 #include "be_global.h"
 #include "ast_generator.h"
@@ -166,6 +170,55 @@ BE_GlobalData::parse_args (long &i, char **av)
       break;
     }
 }
+
+// Prepare an argument for a BE
+void
+BE_GlobalData::prep_be_arg (char *)
+{
+}
+
+void
+BE_GlobalData::arg_post_proc (void)
+{
+}
+
+void
+BE_GlobalData::usage (void) const
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("-f \t\t Simulates IFR type filtering on included types.\n")
+              ));
+  ACE_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT (" -od <dir>\t\tOutput directory for the generated file.")
+              ACE_TEXT (" Default is current directory\n")
+              ));
+  ACE_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT (" -of <dir>\t\tOutput file for the generated XMI.")
+              ACE_TEXT (" Default for example.idl is example.xmi\n")
+              ));
+  ACE_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT (" -xd <dtd_file>\t\tFull path to XMI dtd file to include in generated file..")
+              ACE_TEXT (" Default is XMI.dtd.\n")
+              ));
+  ACE_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT (" -n \t\t\t. Exports XMI for non-local entities.\n")
+              ));
+}
+
+AST_Generator *
+BE_GlobalData::generator_init (void)
+{
+  AST_Generator *gen = 0;
+  ACE_NEW_RETURN (gen,
+                  AST_Generator,
+                  0);
+  return gen;
+}
+
 
 void
 BE_GlobalData::destroy (void)

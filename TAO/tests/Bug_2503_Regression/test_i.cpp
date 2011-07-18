@@ -2,6 +2,8 @@
 
 #include "test_i.h"
 
+#include "tao/Utils/Servant_Var.h"
+
 test_i::
 test_i(CORBA::ORB_ptr orb)
 {
@@ -18,7 +20,7 @@ char *
 test_i::
 create_and_activate_server()
 {
-  PortableServer::Servant_var<test_i> impl(
+  TAO::Utils::Servant_Var<test_i> impl(
       new test_i (this->orb_.in ()));
 
   CORBA::Object_var poa_object =

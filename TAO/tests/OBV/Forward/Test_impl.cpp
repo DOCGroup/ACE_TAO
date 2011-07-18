@@ -3,6 +3,8 @@
 #include "Test_impl.h"
 #include "TreeBaseC.h"
 
+ACE_RCSID(Forward, Test_impl, "$Id$")
+
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -17,14 +19,14 @@ reflect_node (BaseNode* bn)
   reflect_node (bn->left ());
   reflect_node (bn->right ());
 
-  BaseNode_var old_right = bn->right ();
-  BaseNode_var old_left = bn->left ();
+  BaseNode *old_right = bn->right ();
+  BaseNode *old_left = bn->left ();
 
-  CORBA::add_ref (old_right.in ());
-  CORBA::add_ref (old_left.in ());
+  CORBA::add_ref (old_right);
+  CORBA::add_ref (old_left);
 
-  bn->right (old_left.in ());
-  bn->left (old_right.in ());
+  bn->right (old_left);
+  bn->left (old_right);
 }
 
 TreeController *

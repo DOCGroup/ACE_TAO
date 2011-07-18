@@ -3,8 +3,10 @@
 #include "Servant_Activator.h"
 #include "test_i.h"
 
-ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
-                                    CORBA::Object_ptr forward_to)
+ACE_RCSID(Forwarding, Servant_Activator, "$Id$")
+
+  ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
+                                      CORBA::Object_ptr forward_to)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       forward_to_ (CORBA::Object::_duplicate (forward_to))
 {

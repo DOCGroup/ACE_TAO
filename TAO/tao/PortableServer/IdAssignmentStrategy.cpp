@@ -2,6 +2,11 @@
 
 #include "tao/PortableServer/IdAssignmentStrategy.h"
 
+ACE_RCSID (PortableServer,
+           IdAssignmentStrategy,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

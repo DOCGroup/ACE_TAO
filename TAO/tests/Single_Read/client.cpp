@@ -1,8 +1,11 @@
 // $Id$
 
+
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "testC.h"
+
+ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
@@ -82,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (object.in ());

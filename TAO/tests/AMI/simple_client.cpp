@@ -16,7 +16,12 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+
 #include "ami_testS.h"
+
+ACE_RCSID (AMI,
+           simple_client,
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
@@ -56,7 +61,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -158,7 +163,9 @@ public:
                   "Callback method <set_yadda_excep> called:\n"));
     };
 
-  void inout_arg_test (const char *)
+  void inout_arg_test (
+      const char *
+      )
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Callback method <set_yadda_excep> called:\n"));
@@ -172,6 +179,8 @@ public:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+
+
   try
     {
       CORBA::ORB_var orb =
@@ -217,7 +226,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Try out sending asynchronous messages without a reply handler
       // registered. Things fail if we get an exception.
-      ami_test_var->sendc_foo (A::AMI_AMI_TestHandler::_nil (), 0, "");
+
+      ami_test_var->sendc_foo (A::AMI_AMI_TestHandler::_nil (),
+                               0,
+                               "");
 
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
@@ -284,7 +296,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       poa_var->destroy (1,  // ethernalize objects
-                        0); // wait for completion
+                        0  // wait for completion
+                       );
 
       orb->destroy ();
     }

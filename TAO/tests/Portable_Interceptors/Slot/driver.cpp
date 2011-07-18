@@ -1,5 +1,6 @@
+// file      : Slot/driver.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
+// cvs-id    : $Id$
 
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
@@ -52,19 +53,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "ERROR: Slot value was not preserved.\n"));
       return 1;
     }
-
-    orb->destroy ();
   }
   catch (PortableInterceptor::InvalidSlot const&)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: Caught InvalidSlot exception.\n"));
-      return 1;
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception ("Exception caught:");
-      return 1;
-    }
+  {
+    ACE_ERROR ((LM_ERROR, "ERROR: Caught InvalidSlot exception.\n"));
+    return 1;
+  }
 
   return 0;
 }

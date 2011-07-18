@@ -7,6 +7,10 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "IdAssignment.h"
 
+ACE_RCSID (Notify_Tests,
+           IdAssignment,
+           "$Id$")
+
 IdAssignment::IdAssignment (void)
   : iter_ (3),
     ec_count_ (3),

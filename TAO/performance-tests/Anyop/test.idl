@@ -1,20 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    test.idl
- *
- *  $Id$
- *
- *  The basis for this file is the IDL file in TAO/tests/Param_Test
- *  but modified slightly for testing the performance of Any
- *  insertion and extraction operators. Not every IDL type in this
- *  file is tested yet.
- *
- *
- *  @author Aniruddha Gokhale Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/Anyop
+//
+// = FILENAME
+//    test.idl
+//
+// = DESCRIPTION
+//    The basis for this file is the IDL file in TAO/tests/Param_Test
+//    but modified slightly for testing the performance of Any
+//    insertion and extraction operators. Not every IDL type in this
+//    file is tested yet.
+//
+// = AUTHORS
+//    Aniruddha Gokhale
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include <orb.idl>
 
@@ -269,7 +273,6 @@ interface Param_Test
                                 out unsigned long s3)
     raises (Ooops);
 
-  typedef short short32[32];
   union Big_Union switch (short)
     {
     case 0:
@@ -279,7 +282,7 @@ interface Param_Test
     case 2:
       long the_long;
     case 3:
-      short32 another_array;
+      short another_array[32];
     case 4:
       string the_string;
     case 5:
@@ -339,18 +342,11 @@ interface Param_Test
                         out any ca3);
 
   // Recursive structs. Contains a sequence of itself.
-  // Use of forward due to deprecation of anonymous types
-  // Test used to use anon type to define the children value.
-
-
-  struct Recursive_Struct;
-  typedef sequence<Recursive_Struct> Recursive_Seq;
-
   struct Recursive_Struct
     {
       long x;
 
-      Recursive_Seq children;
+      sequence<Recursive_Struct> children;
     };
 
   Recursive_Struct test_recursive_struct (in Recursive_Struct rs1,
@@ -359,22 +355,16 @@ interface Param_Test
 
   // Recursive unions. We have one recursive union nested in a different
   // recursive union.
-  union nested_rec_union;
-  typedef sequence<nested_rec_union> Nested_Rec_Seq;
 
   union nested_rec_union switch (short)
     {
       case 0: long value;
-      case 1: Nested_Rec_Seq nested_rec_member;
+      case 1: sequence<nested_rec_union> nested_rec_member;
     };
-
-  union Recursive_Union;
-  typedef sequence<Recursive_Union> Recursive_Union_Seq;
-
 
   union Recursive_Union switch (short)
     {
-      case 0: Recursive_Union_Seq rec_member;
+      case 0: sequence<Recursive_Union> rec_member;
       case 1: nested_rec_union nested_member;
     };
 

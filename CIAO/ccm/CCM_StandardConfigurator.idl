@@ -1,5 +1,4 @@
 // $Id$
-/// Compliant with OMG 06-04-01 Section 6.10.1.2
 
 #if !defined (CCM_STANDARDCONFIGURATOR_IDL)
 #define CCM_STANDARDCONFIGURATOR_IDL
@@ -19,12 +18,10 @@ module Components
 
   typedef sequence<ConfigValue> ConfigValues;
 
-#if !defined (CCM_LW)
   interface StandardConfigurator : Configurator
   {
     void set_configuration (in ConfigValues descr);
   };
-#endif
 
 };
 #endif /* CCM_STANDARDCONFIGURATOR_IDL */

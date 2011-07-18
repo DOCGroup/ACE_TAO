@@ -32,11 +32,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * Represents an OMG IDL native definition.
- */
 class TAO_IFRService_Export TAO_NativeDef_i : public virtual TAO_TypedefDef_i
 {
+public:
+  // = TITLE
+  //    TAO_NativeDef_i
+  //
+  // = DESCRIPTION
+  //    Represents an OMG IDL native definition.
+  //
 public:
   /// Constructor
   TAO_NativeDef_i (TAO_Repository_i *repo);
@@ -45,13 +49,16 @@ public:
   virtual ~TAO_NativeDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  virtual CORBA::DefinitionKind def_kind ()
+;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ();
+  virtual CORBA::TypeCode_ptr type ()
+;
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ();
+  virtual CORBA::TypeCode_ptr type_i ()
+;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

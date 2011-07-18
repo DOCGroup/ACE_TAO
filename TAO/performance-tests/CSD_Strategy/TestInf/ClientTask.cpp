@@ -1,9 +1,9 @@
 // $Id$
 // This may look like C, but it's really -*- C++ -*-
-
 #include "ClientTask.h"
 #include "tao/Exception.h"
 #include "ace/SString.h"
+
 
 ClientTask::ClientTask()
   : failure_count_(0),
@@ -11,9 +11,11 @@ ClientTask::ClientTask()
 {
 }
 
+
 ClientTask::~ClientTask()
 {
 }
+
 
 void
 ClientTask::add_engine(ClientEngine* engine)
@@ -23,16 +25,18 @@ ClientTask::add_engine(ClientEngine* engine)
   this->engines_.push_back(engine_handle);
 }
 
+
 void
 ClientTask::num_loops(unsigned num_loops)
 {
   this->num_loops_ = num_loops;
 }
 
+
 int
 ClientTask::open(void*)
 {
-  size_t const num_threads = this->engines_.size();
+  size_t num_threads = this->engines_.size();
 
   if (num_threads == 0)
     {
@@ -62,7 +66,7 @@ ClientTask::svc()
   unsigned num_loops;
 
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    GuardType guard(this->lock_);
     this->engines_.get(engine, this->engines_.size() - 1);
     this->engines_.pop_back();
     num_loops = this->num_loops_;
@@ -72,8 +76,8 @@ ClientTask::svc()
   {
     if (engine->execute(num_loops) == false)
       {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-        ++this->failure_count_;
+        GuardType guard(this->lock_);
+        this->failure_count_++;
       }
   }
   catch (const CORBA::Exception& ex)
@@ -81,16 +85,16 @@ ClientTask::svc()
     ex._tao_print_exception (
       "ClientTask::svc Caught exception from execute():");
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-    ++this->failure_count_ ;
+    GuardType guard(this->lock_);
+    this->failure_count_ ++;
   }
   catch (...)
   {
     ACE_ERROR((LM_ERROR,
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
                "in execute() " ));
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-    ++this->failure_count_;
+    GuardType guard(this->lock_);
+    this->failure_count_++;
   }
 
   return 0;

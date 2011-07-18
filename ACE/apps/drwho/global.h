@@ -1,17 +1,21 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    global.h
- *
- *  $Id$
- *
- *  Here are all the declarations that are needed throughout the program.
- *
- *  @author Douglas C. Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    global.h
+//
+// = DESCRIPTION
+//    Here are all the declarations that are needed throughout the program. */
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
 #ifndef _GLOBAL_H
 #define _GLOBAL_H

@@ -76,17 +76,16 @@ struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
   const char *mapping_;
 };
 
-/**
- * Define a table that provides the lookup for the C++
- * keyword. The lookup uses a perfect hash function
- */
 class TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Table
 {
+  // = TITLE
+  //   Define a table that provides the lookup for the C++
+  //   keyword. The lookup uses a perfect hash function
 private:
-  unsigned int hash (const char *str,
+  unsigned int hash (const char *str, 
                      unsigned int len);
 public:
-  const TAO_IDL_CPP_Keyword_Entry *lookup (const char *str,
+  const TAO_IDL_CPP_Keyword_Entry *lookup (const char *str, 
                                            unsigned int len);
 };
 

@@ -7,6 +7,10 @@
 
 #include "tao/ORBInitializer_Registry.h"
 
+ACE_RCSID (Dynamic,
+           client,
+           "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -121,8 +125,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       run_test (server.in ());
 
       server->shutdown ();
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

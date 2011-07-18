@@ -1,6 +1,9 @@
 // $Id$
 
 #include "orbsvcs/Notify/Method_Request_Updates.h"
+
+ACE_RCSID(Notify, TAO_Notify_Method_Request_Updates, "$Id$")
+
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Proxy.h"
 #include "orbsvcs/Notify/Peer.h"

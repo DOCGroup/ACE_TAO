@@ -4,7 +4,7 @@
 //
 //  @author Don Busch <busch_d@ociweb.com>
 
-project(Administrator_Client_IDL3): ccm_stub, valuetype, avoids_ccm_noevent {
+project(Administrator_Client_IDL3): ccm_stub, valuetype, avoids_ace_for_tao {
   after += Messenger_stub
   libs += Messenger_stub
   after += Administrator_Client_IDL2_Compile
@@ -24,9 +24,6 @@ project(Administrator_Client_IDL3): ccm_stub, valuetype, avoids_ccm_noevent {
 
   Source_Files {
     Administrator_Client_IDL3.cpp
-  }
-
-  Inline_Files {
   }
 }
 

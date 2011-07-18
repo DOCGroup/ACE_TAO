@@ -87,10 +87,7 @@ namespace CORBA
 
 } // module CORBA
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
+
 // TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_ch.cpp:52
 
@@ -113,10 +110,6 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const COR
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr); // copying
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Policy_ptr *); // non-copying
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Policy_ptr &);
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

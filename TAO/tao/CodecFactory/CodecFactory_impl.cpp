@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "tao/CodecFactory/CodecFactory_impl.h"
@@ -9,6 +10,10 @@
 #include "tao/Codeset_Manager.h"
 #include "ace/Codeset_Symbols.h"
 #include "ace/CORBA_macros.h"
+
+ACE_RCSID (CodecFactory_impl,
+           CodecFactory,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

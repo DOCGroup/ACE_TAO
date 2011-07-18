@@ -1,6 +1,8 @@
-// $Id$
-
 #include "tao/orbconf.h"
+
+ACE_RCSID (PortableServer,
+           Request_Processing,
+           "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -172,14 +174,7 @@ namespace TAO
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          try
-            {
-              servant->_remove_ref ();
-            }
-          catch (...)
-            {
-              // Ignore exceptions from servant cleanup.
-            }
+          servant->_remove_ref ();
         }
 
       // This operation causes the association of the Object Id specified

@@ -64,10 +64,10 @@ public:
   /// IOP protocol tag accessor.
   CORBA::ULong tag (void) const;
 
-  /// @c priority_ attribute setter.
+  /// <priority_> attribute setter.
   void priority (CORBA::Short priority);
 
-  /// @c priority_ attribute getter.
+  /// <priority_> attribute getter.
   CORBA::Short priority (void) const;
 
   /**

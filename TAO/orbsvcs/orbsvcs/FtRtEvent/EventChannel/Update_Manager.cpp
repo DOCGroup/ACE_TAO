@@ -1,7 +1,10 @@
 // $Id$
 
 #include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
-#include "ace/Guard_T.h"
+
+ACE_RCSID (EventChannel,
+           Update_Manager,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +30,7 @@ Update_Manager::~Update_Manager()
 
 void Update_Manager::handle_reply(int id)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex_);
   replied_[id] = true;
 
   if ((replied_ & signal_condition_) == signal_condition_) {
@@ -40,7 +43,7 @@ void Update_Manager::handle_reply(int id)
 
 void Update_Manager::handle_exception(int id)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_Guard<TAO_SYNCH_MUTEX> guard(mutex_);
   replied_[id] = true;
   ++transaction_level_;
 

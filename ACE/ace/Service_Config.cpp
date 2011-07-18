@@ -24,23 +24,26 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
+ACE_RCSID (ace,
+           Service_Config,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper (void)
+ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper ()
 {
-  ACE_OS::thr_key_detach (this->key_);
+  ACE_OS::thr_key_detach (this->key_, 0);
   ACE_OS::thr_keyfree (this->key_);
 }
 
-ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper (void)
+ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper ()
   :  key_ (ACE_OS::NULL_key)
 {
 # if defined (ACE_HAS_TSS_EMULATION)
   ACE_Object_Manager::init_tss ();
 # endif
 
-  if (ACE_Thread::keycreate (&key_, 0) == -1)
+  if (ACE_Thread::keycreate (&key_, 0, 0) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) Failed to create thread key: %p\n"),

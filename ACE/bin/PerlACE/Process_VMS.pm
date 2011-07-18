@@ -356,13 +356,4 @@ sub TimedWait ($)
     return -1;
 }
 
-###
-
-sub kill_all
-{
-  my $procmask = shift;
-  my $target = shift;
-  ## NOT IMPLEMENTED YET
-}
-
 1;

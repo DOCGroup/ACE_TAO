@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ctor_assign.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the special CTOR and assignment operator for
- *  Exceptions.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    ctor_assign.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the special CTOR and assignment operator for
+//    Exceptions.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_exception,
+           ctor_assign,
+           "$Id$")
 
 // ************************************************************************
 // Used for the body of the assignment operator and the copy constructor.
@@ -147,22 +157,22 @@ be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
   if (this->ctx_->exception ()) // Special constructor.
     {
       *os << "this->" << bd->local_name () << " = TAO::Objref_Traits<"
-          << node->name () << ">::duplicate (_tao_"
+          << node->name () << ">::duplicate (_tao_" 
           << bd->local_name () << ");";
     }
   else
     {
       *os << "this->" << bd->local_name () << " = TAO::Objref_Traits<"
-          << node->name () << ">::duplicate (_tao_excp."
+          << node->name () << ">::duplicate (_tao_excp." 
           << bd->local_name () << ".in ());";
     }
 
   return 0;
 }
 
-int
-be_visitor_exception_ctor_assign::visit_interface_fwd (
-  be_interface_fwd *node)
+int be_visitor_exception_ctor_assign::visit_interface_fwd (
+    be_interface_fwd *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
@@ -201,9 +211,9 @@ int be_visitor_exception_ctor_assign::visit_valuetype_fwd (
   return this->emit_valuetype_common (node);
 }
 
-int
-be_visitor_exception_ctor_assign::visit_predefined_type (
-  be_predefined_type *node)
+int be_visitor_exception_ctor_assign::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
@@ -258,8 +268,7 @@ be_visitor_exception_ctor_assign::visit_predefined_type (
   return 0;
 }
 
-int
-be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
+int be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
@@ -280,8 +289,7 @@ be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
   return 0;
 }
 
-int
-be_visitor_exception_ctor_assign::visit_string (be_string *node)
+int be_visitor_exception_ctor_assign::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
@@ -322,8 +330,7 @@ be_visitor_exception_ctor_assign::visit_string (be_string *node)
   return 0;
 }
 
-int
-be_visitor_exception_ctor_assign::visit_structure (be_structure *)
+int be_visitor_exception_ctor_assign::visit_structure (be_structure *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
@@ -344,18 +351,7 @@ be_visitor_exception_ctor_assign::visit_structure (be_structure *)
   return 0;
 }
 
-int
-be_visitor_exception_ctor_assign::visit_structure_fwd (
-  be_structure_fwd *node)
-{
-  be_structure *s =
-    be_structure::narrow_from_decl (node->full_definition ());
-
-  return this->visit_structure (s);
-}
-
-int
-be_visitor_exception_ctor_assign::visit_union (be_union *)
+int be_visitor_exception_ctor_assign::visit_union (be_union *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
@@ -376,17 +372,7 @@ be_visitor_exception_ctor_assign::visit_union (be_union *)
   return 0;
 }
 
-int
-be_visitor_exception_ctor_assign::visit_union_fwd (be_union_fwd *node)
-{
-  be_union *u =
-    be_union::narrow_from_decl (node->full_definition ());
-
-  return this->visit_union (u);
-}
-
-int
-be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
+int be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
 

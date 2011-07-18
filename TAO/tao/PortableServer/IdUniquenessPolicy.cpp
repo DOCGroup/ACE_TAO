@@ -1,8 +1,9 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/IdUniquenessPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
+
+ACE_RCSID (PortableServer,
+           IdUniquenessPolicy,
+           "$Id$")
 
 #include "ace/CORBA_macros.h"
 

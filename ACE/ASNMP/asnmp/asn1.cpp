@@ -1,22 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     asn1.cpp
- *
- *  $Id$
- *
- *  The Vb class is an encapsulation of the snmp variable binding.
- * This module contains the class definition for the variable binding (VB)
- * class. The VB class is an encapsulation of a SNMP VB. A VB object is
- * composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
- * objects and thus requires the Oid class. To use this class,
- * set oid, value then call valid() to be sure object was constructed correctly.
- *
- *
- *  @author S. Waldbusser (assumed)Michael R MacFaden  mrm@cisco.com - rework & ACE port
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     asn1.cpp
+//
+// = DESCRIPTION
+//  The Vb class is an encapsulation of the snmp variable binding.
+// This module contains the class definition for the variable binding (VB)
+// class. The VB class is an encapsulation of a SNMP VB. A VB object is
+// composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
+// objects and thus requires the Oid class. To use this class,
+// set oid, value then call valid() to be sure object was constructed correctly.
+//
+// = AUTHOR
+//   S. Waldbusser (assumed)
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
+// ============================================================================
 /**********************************************************************
 // *
    * Abstract Syntax Notation One, ASN.1
@@ -50,6 +53,8 @@
 #include "asnmp/asn1.h"
 #include "asnmp/snmp.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(asnmp, asn1, "$Id$")
 
 /*
  * parse_int - pulls a long out of an ASN int type.
@@ -1026,7 +1031,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
         {
           // Do nothing.
         }
-
+        
       // create one
       ACE_NEW(vars->next_variable, variable_list);
       // bump ptr
@@ -1365,7 +1370,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                           sizeof(pdu->agent_addr.sin_addr.s_addr));
     if (cp == 0)
       return -1;
-
+    
     long tmp (static_cast <long> (pdu->trap_type));
     // generic trap
     cp = asn1::build_int(cp,
@@ -1375,7 +1380,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                          sizeof(pdu->trap_type));
     if (cp == 0)
       return -1;
-
+    
     tmp = static_cast <long> (pdu->specific_type);
     // specific trap
     cp = asn1::build_int( cp,
@@ -1623,9 +1628,9 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                             &four);
     if (data == 0)
       return -1;
-
+    
     long tmp (static_cast <long> (pdu->trap_type));
-
+    
     // get trap type
     data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->trap_type));

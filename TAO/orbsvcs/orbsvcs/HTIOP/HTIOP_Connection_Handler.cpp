@@ -7,7 +7,6 @@
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
-#include "ace/os_include/os_netdb.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -21,6 +20,11 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
+
+ACE_RCSID (HTIOP,
+           TAO_HTIOP_Connection_Handler,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -298,12 +302,6 @@ TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
   CORBA::Boolean /*enable_network_priority*/)
 {
   return 0;
-}
-
-int
-TAO::HTIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

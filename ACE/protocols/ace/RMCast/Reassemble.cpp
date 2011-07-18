@@ -1,8 +1,15 @@
+// file      : ace/RMCast/Reassemble.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
+// cvs-id    : $Id$
 
 #include "Reassemble.h"
 #include "ace/OS_NS_stdlib.h"
+
+/*
+#include <iostream>
+using std::cerr;
+using std::endl;
+*/
 
 namespace ACE_RMCast
 {
@@ -14,7 +21,7 @@ namespace ACE_RMCast
 
   void Reassemble::recv (Message_ptr m)
   {
-    Map::ENTRY* e = 0;
+    Map::ENTRY* e;
     Address from (
       static_cast<From const*> (m->find (From::id))->address ());
 

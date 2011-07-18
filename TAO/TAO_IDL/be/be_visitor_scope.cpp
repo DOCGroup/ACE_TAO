@@ -1,24 +1,33 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_scope.cpp
- *
- *  $Id$
- *
- *  Visitor for the base be_scope node. This serves to maintain the current
- *  state (context) of code generation for the derived visitor.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_scope.cpp
+//
+// = DESCRIPTION
+//    Visitor for the base be_scope node. This serves to maintain the current
+//    state (context) of code generation for the derived visitor.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_scope.h"
 #include "be_visitor_scope.h"
 #include "be_visitor_context.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_visitor_scope,
+           "$Id$")
 
 // ******************************************************
 //  Generic visitor for a scope.
@@ -40,14 +49,6 @@ be_visitor_scope::~be_visitor_scope (void)
 int
 be_visitor_scope::visit_scope (be_scope *node)
 {
-  if (node == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_scope::visit_scope - "
-                         "nill node passed\n"),
-                        -1);
-    }
-
   // Proceed if the number of members in our scope is greater than 0.
   this->elem_number_ = 0;
 
@@ -70,11 +71,11 @@ be_visitor_scope::visit_scope (be_scope *node)
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
-      this->ctx_->scope (node);
+      this->ctx_->scope (node->decl ());
 
       // Set the node to be visited.
       this->ctx_->node (bd);
-      ++this->elem_number_;
+      this->elem_number_++;
 
       // Do any pre processing using the next item info.
       if (this->pre_process (bd) == -1)
@@ -131,7 +132,7 @@ int
 be_visitor_scope::next_elem (be_decl *elem,
                              be_decl *&successor)
 {
-  be_decl *ctx_scope = this->ctx_->scope ()->decl ();
+  be_decl *ctx_scope = this->ctx_->scope ();
   be_scope *node = 0;
 
   if (ctx_scope != 0)
@@ -202,7 +203,14 @@ be_visitor_scope::last_node (be_decl *bd)
   (void) this->next_elem (bd,
                           next);
 
-  return (next == 0);
+  if (next != 0)
+    {
+      // Not the last.
+      return 0;
+    }
+
+  // I am the last one.
+  return 1;
 }
 
 bool
@@ -221,7 +229,7 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
           || arg->direction () == AST_Argument::dir_OUT)
         {
           // Not the last.
-          return false;
+          return 0;
         }
 
       be_decl *next_next = 0;
@@ -232,5 +240,5 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
     }
 
   // I am the last one.
-  return true;
+  return 1;
 }

@@ -1,8 +1,8 @@
 #!/bin/sh
 # This is the UNIX version of the one-button ACE tests.
 # Contributed by Michael Rueger <m_rueger@SYSCOMP.DE>
-# mrm@cisco.com - Change to for loop  script could be more generic if we put
-# this in the bin dir and fed it a file to read from
+# mrm@cisco.com - Change to for loop  script could be more generic if we put 
+# this in the bin dir and fed it a file to read from 
 
 IFS="|"
 tmp=/tmp

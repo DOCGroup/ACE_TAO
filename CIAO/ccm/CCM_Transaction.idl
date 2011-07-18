@@ -1,10 +1,7 @@
 // $Id$
-/// Compliant with OMG 06-04-01 Section 9.3.2.3
 
 #if !defined (CCM_TRANSACTION_IDL)
 #define CCM_TRANSACTION_IDL
-
-#if !defined (CCM_LW)
 
 module Components
 {
@@ -76,7 +73,4 @@ module Components
     };
   };
 };
-
-#endif
-
 #endif /* CCM_TRANSACTION_IDL */

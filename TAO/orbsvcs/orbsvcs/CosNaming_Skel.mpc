@@ -3,7 +3,7 @@
 
 project(CosNaming_Skel) : orbsvcslib, orbsvcs_output, install, naming, portableserver {
   sharedname   = TAO_CosNaming_Skel
-  dynamicflags += TAO_NAMING_SKEL_BUILD_DLL
+  dynamicflags = TAO_NAMING_SKEL_BUILD_DLL
   tagchecks   += Naming
 
   IDL_Files {

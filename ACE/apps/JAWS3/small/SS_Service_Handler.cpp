@@ -2,6 +2,7 @@
 
 #define ACE_BUILD_SVC_DLL
 
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
 #include "jaws3/Concurrency.h"

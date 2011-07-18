@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
@@ -6,6 +5,10 @@
 #include "tao/AnyTypeCode/WrongTransactionA.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Any.h"
+
+ACE_RCSID (AnyTypeCode,
+           TAO_AnyTypeCode_Adapter,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -74,12 +77,6 @@ void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar)
 {
   (*any) <<= mywchar;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const std::string & value)
-{
-  (*any) <<= value.c_str ();
 }
 
 void
@@ -176,8 +173,10 @@ int
 TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
 {
   return ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_AnyTypeCode_Adapter_Impl);
+        ace_svc_desc_TAO_AnyTypeCode_Adapter_Impl
+      );
 }
+
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AnyTypeCode_Adapter_Impl,

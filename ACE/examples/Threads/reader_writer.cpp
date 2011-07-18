@@ -9,7 +9,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Atomic_Op.h"
 
-
+ACE_RCSID(Threads, reader_writer, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -89,7 +89,7 @@ reader (void *)
   for (int iterations = 1;
        iterations <= n_iterations; iterations++)
     {
-      ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, 0);
+      ACE_Read_Guard<ACE_RW_Mutex> g(rw_mutex);
 
       ++current_readers;
 
@@ -127,7 +127,7 @@ writer (void *)
        iterations <= n_iterations;
        iterations++)
     {
-      ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, 0);
+      ACE_Write_Guard<ACE_RW_Mutex> g(rw_mutex);
 
       ++current_writers;
 

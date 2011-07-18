@@ -235,6 +235,9 @@ namespace ACE
 
     private:
 
+      /// Get the filter from the Filter_Factory
+      Filter * get_filter ();
+
       /// The filter_ is a pluggable component used to manage the
       /// wrapping of data in a way suitable for the proxy to
       /// manage. The actual filter instance is owned by the

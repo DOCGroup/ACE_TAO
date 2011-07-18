@@ -10,6 +10,8 @@
 #include "Server_Timer.h"
 #include "tao/ORB_Core.h"
 
+ACE_RCSID(Bug_1269_Regression, Echo_Caller, "$Id$")
+
 Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {

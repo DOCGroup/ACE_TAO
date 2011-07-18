@@ -63,7 +63,7 @@ namespace TAO
    *
    * This adapter class serves as the base class for various types of
    * invocations like AMI, DII, DSI etc. Adapter classes for AMI, DII,
-   * DSI inherit from this class and their local behavioral
+   * DSI inherit from this class and their local behavioural
    * information before kicking off an invocation.
    *
    * @@ More info..
@@ -90,7 +90,7 @@ namespace TAO
      *
      * @param operation The name of the operation being invoked.
      *
-     * @param op_len Number of characters in the operation name. This
+     * @param op_len Number of charecters in the operation name. This
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
@@ -142,14 +142,14 @@ namespace TAO
      *
      * These methods useful for various types of invocations like
      * SII, AMI, DII and DSI. All the subclasses implement these
-     * methods to get the right behavior at their level.
+     * methods to get the right behaviour at their level.
      */
     //@{
 
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
-    /**
+    /*
      * This method does the following essential activities needed for
      * a remote invocation.
      *
@@ -229,7 +229,7 @@ namespace TAO
                              TAO_Operation_Details &details);
 
   private:
-    /// Don't allow default initializations
+    /// Dont allow default initializations
     Invocation_Adapter (void);
 
     // Prevent copying
@@ -237,6 +237,7 @@ namespace TAO
     Invocation_Adapter & operator= (const Invocation_Adapter &);
 
   protected:
+
     /// The target object on which this invocation is carried out.
     CORBA::Object_ptr target_;
 

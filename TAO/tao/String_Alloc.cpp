@@ -1,10 +1,15 @@
-// -*- C++ -*-
-// $Id$
+#include "String_Alloc.h"
 
-#include "tao/String_Alloc.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
+
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
+ACE_RCSID (tao,
+           String_Alloc,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

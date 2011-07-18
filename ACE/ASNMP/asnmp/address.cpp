@@ -1,22 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     address.cpp
- *
- *  $Id$
- *
- *  The Vb class is an encapsulation of the snmp variable binding.
- * This module contains the class definition for the variable binding (VB)
- * class. The VB class is an encapsulation of a SNMP VB. A VB object is
- * composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
- * objects and thus requires the Oid class. To use this class,
- * set oid, value then call valid() to be sure object was constructed correctly.
- *
- *
- *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     address.cpp
+//
+// = DESCRIPTION
+//  The Vb class is an encapsulation of the snmp variable binding.
+// This module contains the class definition for the variable binding (VB)
+// class. The VB class is an encapsulation of a SNMP VB. A VB object is
+// composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
+// objects and thus requires the Oid class. To use this class,
+// set oid, value then call valid() to be sure object was constructed correctly.
+//
+// = AUTHOR
+//   Peter E Mellquist
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -41,6 +44,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
+
+ACE_RCSID(asnmp, address, "$Id$")
 
 //=================================================================
 //======== Abstract Address Class Implementation ==================
@@ -307,8 +312,7 @@ IpAddress::~IpAddress()
 int IpAddress::is_loopback() const
 {
  if (valid()) {
-   u_long *pl = (u_long *)&address_buffer;
-   return (*pl == INADDR_LOOPBACK);
+   return (*(u_long *)&address_buffer == INADDR_LOOPBACK);
  }
   return 0;
 }
@@ -316,8 +320,7 @@ int IpAddress::is_loopback() const
 int IpAddress::is_multicast() const
 {
  if (valid()) {
-   u_long *pl = (u_long *)&address_buffer;
-   return (IN_MULTICAST(*pl));
+   return (IN_MULTICAST(*(u_long *)&address_buffer));
  }
   return 0;
 }
@@ -355,8 +358,7 @@ void IpAddress::to_octet(OctetStr& octet) const
 int IpAddress::is_broadcast() const
 {
  if (valid()) {
-   u_long *pl = (u_long *)&address_buffer;
-   return ( (*pl) & INADDR_BROADCAST);
+   return ( (*(u_long *)&address_buffer) & INADDR_BROADCAST);
  }
   return 0;
 }
@@ -667,7 +669,7 @@ Address_Iter::Address_Iter (const char *hostname)
 {
   ACE_OS::memset (&buffer_, 0, sizeof (ACE_HOSTENT_DATA));
   ACE_OS::memset (&lookupResult_, 0, sizeof (struct hostent));
-
+  
   if (ACE_OS::inet_addr (hostname) == (unsigned long) -1)
     {
       valid_ = query_dns (hostname);

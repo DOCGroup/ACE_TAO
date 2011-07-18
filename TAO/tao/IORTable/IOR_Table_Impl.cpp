@@ -10,6 +10,11 @@
 #include "tao/IORTable/IOR_Table_Impl.h"
 #include "ace/Guard_T.h"
 
+ACE_RCSID (IORTable,
+           IOR_Table_Impl,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IOR_Table_Impl_ptr

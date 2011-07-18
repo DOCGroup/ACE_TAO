@@ -4,7 +4,7 @@
 project(Test_Output) : acelib, script {
   libout       = .
   sharedname = Test_Output
-  dynamicflags += TEST_OUTPUT_BUILD_DLL
+  dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
     Test_Output.cpp
   }
@@ -29,7 +29,7 @@ TESTS_ENVIRONMENT = $(srcdir)/run_test.pl -t
 project(Framework Component DLL) : acelib {
   libout       = .
   sharedname   = Framework_Component_DLL
-  dynamicflags += FRAMEWORK_COMPONENT_DLL_BUILD_DLL
+  dynamicflags = FRAMEWORK_COMPONENT_DLL_BUILD_DLL
 
   Source_Files {
     Framework_Component_DLL.cpp
@@ -46,7 +46,7 @@ project(Framework Component DLL) : acelib {
 project(DLL Test Parent Lib) : acelib {
   libout       = .
   sharedname   = DLL_Test_Parent
-  dynamicflags += DLL_TEST_PARENT_BUILD_DLL
+  dynamicflags = DLL_TEST_PARENT_BUILD_DLL
 
   Source_Files {
     DLL_Test_Parent.cpp
@@ -62,7 +62,7 @@ project(DLL Test Parent Lib) : acelib {
 project(DLL Test Lib) : acelib, dll_test_parent_lib {
   libout       = .
   sharedname   = DLL_Test_Lib
-  dynamicflags += ACE_SVC_BUILD_DLL
+  dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
     DLL_Test_Impl.cpp
@@ -78,7 +78,7 @@ project(Based Pointer Test Lib) : acelib {
   libout       = .
   avoids      += ace_for_tao
   sharedname   = Based_Pointer_Test_Lib
-  dynamicflags += ACE_SVC_BUILD_DLL
+  dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
     Based_Pointer_Test_Lib.cpp
@@ -93,7 +93,7 @@ project(Based Pointer Test Lib) : acelib {
 project(Service Config DLL) : acelib {
   libout       = .
   sharedname   = Service_Config_DLL
-  dynamicflags += SERVICE_CONFIG_DLL_BUILD_DLL
+  dynamicflags = SERVICE_CONFIG_DLL_BUILD_DLL
 
   Source_Files {
     Service_Config_DLL.cpp
@@ -106,31 +106,13 @@ project(Service Config DLL) : acelib {
   }
 }
 
-project(ACE Init Test) : acemfcexe {
-  requires += mfc
-  macros += _AFXDLL
-
-  after += Test_Output
-  libs  += Test_Output
-
+project(ACE Init Test) : acetest {
   exename = ACE_Init_Test
   Source_Files {
     ACE_Init_Test.cpp
-    ACE_Init_TestDlg.cpp
-  }
-  Header_Files {
-    ACE_Init_Test.h
-    ACE_Init_Test_Resource.h
-    ACE_Init_TestDlg.h
-    ACE_Init_TestStdAfx.h
   }
   Resource_Files {
-    ACE_Init_Test.ico
     ACE_Init_Test.rc
-  }
-  Build_Files {
-    tests.mpc
-    tests.mwc
   }
 }
 
@@ -247,13 +229,6 @@ project(Bug_2368_Regression_Test) : acetest {
   }
 }
 
-project(Bug_2434_Regression_Test) : acetest {
-  exename = Bug_2434_Regression_Test
-  Source_Files {
-    Bug_2434_Regression_Test.cpp
-  }
-}
-
 project(Bug_2497_Regression_Test) : acetest {
   exename = Bug_2497_Regression_Test
   Source_Files {
@@ -272,13 +247,6 @@ project(Bug_2653_Regression_Test) : acetest {
   exename = Bug_2653_Regression_Test
   Source_Files {
     Bug_2653_Regression_Test.cpp
-  }
-}
-
-project(Bug_2740_Regression_Test) : acetest, threads {
-  exename = Bug_2740_Regression_Test
-  Source_Files {
-    Bug_2740_Regression_Test.cpp
   }
 }
 
@@ -329,12 +297,10 @@ project (Bug_2980_Regression_Test) {
 project (Bug_2980_Regression_Dll): acelib {
   libout       = .
   sharedname = Bug_2980_Regression
-  dynamicflags += TEST_OUTPUT_BUILD_DLL
+  dynamicflags = TEST_OUTPUT_BUILD_DLL
   Source_Files {
     Test_Output.cpp
     Bug_2980_Regression_Dll.cpp
-  }
-  Resource_Files {
   }
 }
 
@@ -380,89 +346,10 @@ project(Bug_3532_Regression_Test) : acetest {
   }
 }
 
-project(Bug_3539_Regression_Test) : acetest {
-  exename = Bug_3539_Regression_Test
-  Source_Files {
-    Bug_3539_Regression_Test.cpp
-  }
-}
-
 project(Bug_3541_Regression_Test) : acetest {
   exename = Bug_3541_Regression_Test
   Source_Files {
     Bug_3541_Regression_Test.cpp
-  }
-}
-
-project(Bug_3673_Regression_Test) : acetest {
-  exename = Bug_3673_Regression_Test
-  Source_Files {
-    Bug_3673_Regression_Test.cpp
-  }
-}
-
-project(Bug_3709_Regression_Test) : acetest {
-  exename = Bug_3709_Regression_Test
-  Source_Files {
-    Bug_3709_Regression_Test.cpp
-  }
-}
-
-project(Bug_3710_Regression_Test) : acetest {
-  exename = Bug_3710_Regression_Test
-  Source_Files {
-    Bug_3710_Regression_Test.cpp
-  }
-}
-
-project(Bug_3729_Regression_Test) : acetest {
-  exename = Bug_3729_Regression_Test
-  Source_Files {
-    Bug_3729_Regression_Test.cpp
-  }
-}
-
-project(Bug_3744_Regression_Test) : acetest {
-  exename = Bug_3744_Regression_Test
-  Source_Files {
-    Bug_3744_Regression_Test.cpp
-  }
-}
-
-project(Bug_3758_Regression_Test) : acetest {
-  exename = Bug_3758_Regression_Test
-  Source_Files {
-    Bug_3758_Regression_Test.cpp
-  }
-}
-
-project(Bug_3878_Regression_Test) : acetest {
-  exename = Bug_3878_Regression_Test
-  Source_Files {
-    Bug_3878_Regression_Test.cpp
-  }
-}
-
-project(Bug_3911_Regression_Test) : acetest {
-  avoids += ace_for_tao
-  exename = Bug_3911_Regression_Test
-  Source_Files {
-    Bug_3911_Regression_Test.cpp
-  }
-}
-
-project(Bug_3943_Regression_Test) : acetest {
-  avoids      += ace_for_tao
-  exename = Bug_3943_Regression_Test
-  Source_Files {
-    Bug_3943_Regression_Test.cpp
-  }
-}
-
-project(Bug_3974_Regression_Test) : acetest {
-  exename = Bug_3974_Regression_Test
-  Source_Files {
-    Bug_3974_Regression_Test.cpp
   }
 }
 
@@ -532,106 +419,6 @@ project(Collection Test) : acetest {
   exename = Collection_Test
   Source_Files {
     Collection_Test.cpp
-  }
-}
-
-project(Compiler_Features_01_Test) : acetest {
-  exename = Compiler_Features_01_Test
-  Source_Files {
-    Compiler_Features_01_Test.cpp
-  }
-}
-
-project(Compiler_Features_02_Test) : acetest {
-  exename = Compiler_Features_02_Test
-  Source_Files {
-    Compiler_Features_02_Test.cpp
-  }
-}
-
-project(Compiler_Features_03_Test) : acetest {
-  exename = Compiler_Features_03_Test
-  Source_Files {
-    Compiler_Features_03_Test.cpp
-  }
-}
-
-project(Compiler_Features_04_Test) : acetest {
-  exename = Compiler_Features_04_Test
-  Source_Files {
-    Compiler_Features_04_Test.cpp
-  }
-}
-
-project(Compiler_Features_05_Test) : acetest {
-  exename = Compiler_Features_05_Test
-  Source_Files {
-    Compiler_Features_05_Test.cpp
-  }
-}
-
-project(Compiler_Features_06_Test) : acetest {
-  exename = Compiler_Features_06_Test
-  Source_Files {
-    Compiler_Features_06_Test.cpp
-  }
-}
-
-project(Compiler_Features_07_Test) : acetest {
-  exename = Compiler_Features_07_Test
-  Source_Files {
-    Compiler_Features_07_Test.cpp
-  }
-}
-
-// This compiler feature is not supported on all compilers
-project(Compiler_Features_08_Test) : acetest {
-  requires += dummy_label
-  exename = Compiler_Features_08_Test
-  Source_Files {
-    Compiler_Features_08_Test.cpp
-  }
-}
-
-project(Compiler_Features_09_Test) : acetest {
-  exename = Compiler_Features_09_Test
-  Source_Files {
-    Compiler_Features_09_Test.cpp
-  }
-}
-
-project(Compiler_Features_10_Test) : acetest {
-  exename = Compiler_Features_10_Test
-  Source_Files {
-    Compiler_Features_10_Test.cpp
-  }
-}
-
-project(Compiler_Features_11_Test) : acetest {
-  exename = Compiler_Features_11_Test
-  Source_Files {
-    Compiler_Features_11_Test.cpp
-  }
-}
-
-project(Compiler_Features_12_Test) : acetest {
-  exename = Compiler_Features_12_Test
-  Source_Files {
-    Compiler_Features_12_Test.cpp
-  }
-}
-
-project(Compiler_Features_13_Test) : acetest {
-  exename = Compiler_Features_13_Test
-  Source_Files {
-    Compiler_Features_13_Test.cpp
-  }
-}
-
-project(Compiler_Features_14_Test) : acetest {
-  exename = Compiler_Features_14_Test
-  Source_Files {
-    Compiler_Features_14_Test.cpp
   }
 }
 
@@ -752,13 +539,6 @@ project(High Res Timer Test) : acetest {
   exename = High_Res_Timer_Test
   Source_Files {
     High_Res_Timer_Test.cpp
-  }
-}
-
-project(NDDS Timer Test) : acetest, nddsexe {
-  exename = NDDS_Timer_Test
-  Source_Files {
-    NDDS_Timer_Test.cpp
   }
 }
 
@@ -940,13 +720,6 @@ project(Message Queue Test) : acetest {
   exename = Message_Queue_Test
   Source_Files {
     Message_Queue_Test.cpp
-  }
-  verbatim(gnuace,local) {
-    # Needs a larger heap on AIX to avoid overwriting stacks in the counting
-    # part of the test.
-    ifdef AIX_VERS
-      LDFLAGS += -bmaxdata:0x20000000
-    endif
   }
 }
 
@@ -1217,13 +990,6 @@ project(Reactor_Dispatch_Order_Test_Dev_Poll) : acetest {
   }
 }
 
-project(Reactor Fairness Test) : acetest {
-  exename = Reactor_Fairness_Test
-  Source_Files {
-    Reactor_Fairness_Test.cpp
-  }
-}
-
 project(Reactor Performance Test) : acetest {
   avoids += ace_for_tao
   exename = Reactor_Performance_Test
@@ -1443,13 +1209,6 @@ project(Thread Manager Test) : acetest {
   }
 }
 
-project(Thread Attrs Test) : acetest {
-  exename = Thread_Attrs_Test
-  Source_Files {
-    Thread_Attrs_Test.cpp
-  }
-}
-
 project(Thread Mutex Test) : acetest {
   exename = Thread_Mutex_Test
   Source_Files {
@@ -1461,13 +1220,6 @@ project(Thread Pool Test) : acetest {
   exename = Thread_Pool_Test
   Source_Files {
     Thread_Pool_Test.cpp
-  }
-}
-
-project(Thread_Timer_Queue_Adapter_Test) : acetest {
-  exename = Thread_Timer_Queue_Adapter_Test
-  Source_Files {
-    Thread_Timer_Queue_Adapter_Test.cpp
   }
 }
 
@@ -1701,15 +1453,6 @@ project(NonBlocking Conn Test) : acetest {
   }
 }
 
-project(MT NonBlocking Connect Test) : acetest {
-  exename = MT_NonBlocking_Connect_Test
-  Source_Files {
-    MT_NonBlocking_Connect_Test.cpp
-  }
-  Header_Files {
-  }
-}
-
 project(Reference Counted Event Handler Test) : acetest {
   exename = Reference_Counted_Event_Handler_Test
   Source_Files {
@@ -1856,7 +1599,7 @@ project(SOCK_SEQPACK_SCTP_Test) : acetest {
   }
 }
 
-project(QtReactor Test) : acetest, ace_qt4reactor {
+project(QtReactor Test) : acetest, ace_qtreactor {
   exename   = QtReactor_Test
   MOC_Files {
     QtReactor_Test.h
@@ -1928,52 +1671,5 @@ project(Wild_Match_Test) : acetest {
   exename = Wild_Match_Test
   Source_Files {
     Wild_Match_Test.cpp
-  }
-}
-
-project(Service Config Stream DLL) : acelib {
-  libout       = .
-  sharedname   = Service_Config_Stream_DLL
-  dynamicflags += SERVICE_CONFIG_STREAM_DLL_BUILD_DLL
-
-  Source_Files {
-    Service_Config_Stream_DLL.cpp
-  }
-  Header_Files {
-    Service_Config_Stream_DLL.h
-    Service_Config_Stream_DLL_Export.h
-  }
-  Resource_Files {
-  }
-}
-
-project(Service Config Stream Test) : acetest {
-  after  += Service_Config_Stream_DLL
-  exename = Service_Config_Stream_Test
-  Source_Files {
-    Service_Config_Stream_Test.cpp
-  }
-}
-
-project(Bug_3334_Regression_Test) : acetest {
-  after  += Service_Config_Stream_DLL
-  exename = Bug_3334_Regression_Test
-  Source_Files {
-    Bug_3334_Regression_Test.cpp
-  }
-}
-
-project(Bug_3912_Regression_Test) : acetest {
-  after  += Service_Config_Stream_DLL
-  exename = Bug_3912_Regression_Test
-  Source_Files {
-    Bug_3912_Regression_Test.cpp
-  }
-}
-
-project(Missing_Svc_Conf_Test) : acetest {
-  exename = Missing_Svc_Conf_Test
-  Source_Files {
-    Missing_Svc_Conf_Test.cpp
   }
 }

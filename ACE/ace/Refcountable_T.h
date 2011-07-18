@@ -22,7 +22,6 @@
 
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,10 +32,8 @@ public:
   /// Destructor.
   virtual ~ACE_Refcountable_T (void);
 
-  /// Increment refcount
+  // = Increment/Decrement refcount
   long increment (void);
-
-  /// Decrement refcount
   long decrement (void);
 
   /// Returns the current refcount.
@@ -49,6 +46,8 @@ protected:
   /// Current refcount.
   ACE_Atomic_Op <ACE_LOCK, long> refcount_;
 };
+
+typedef ACE_Refcountable_T<ACE_Null_Mutex> ACE_Refcountable;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

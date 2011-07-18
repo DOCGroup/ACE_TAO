@@ -8,6 +8,8 @@
 #include "Kokyu.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Kokyu, Kokyu, "$Id$")
+
 namespace Kokyu
 {
 

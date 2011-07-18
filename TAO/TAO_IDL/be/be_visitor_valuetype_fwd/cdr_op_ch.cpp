@@ -1,18 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for forward
- *  declarations of valuetypes. This uses compiled marshaling.
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru> base on code from Torsten Kuepper based on code from  Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
- */
-//=============================================================================
+// ================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_fwd_cdr_op_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for forward
+//    declarations of valuetypes. This uses compiled marshaling.
+//
+// = AUTHOR
+//    Boris Kolpackov <bosk@ipmce.ru>
+//    base on code from Torsten Kuepper
+//    based on code from  Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
+//
+// ================================================================
 
+ACE_RCSID (be_visitor_valuetype_fwd,
+           cdr_op_ch,
+           "$Id$")
 
 be_visitor_valuetype_fwd_cdr_op_ch::be_visitor_valuetype_fwd_cdr_op_ch (
     be_visitor_context *ctx
@@ -65,7 +76,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   // generate the CDR << and >> operator declarations (prototypes)
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 

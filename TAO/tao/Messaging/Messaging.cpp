@@ -6,6 +6,10 @@
 
 #include "tao/debug.h"
 
+ACE_RCSID (Messaging,
+           Messaging,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

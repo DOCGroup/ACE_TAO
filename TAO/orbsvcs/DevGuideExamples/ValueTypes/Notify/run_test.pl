@@ -6,58 +6,28 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # $Id$
 # -*- perl -*-
+use Env(ACE_ROOT);
+use Env (TAO_ROOT);
+use lib "$ACE_ROOT/bin";
+use PerlACE::Run_Test;
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+my $ec_ior = PerlACE::LocalFile ("ec.ior");
+my $notifyior = PerlACE::LocalFile ("notify.ior");
+my $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 
-$status = 0;
-$debug_level = '0';
+my $TS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Notify_Service/Notify_Service",
+                            "-boot -orbendpoint iiop://:8888 -NoNameSvc -IORoutput $notifyior -ORBSvcConf " .
+                            "$notify_conf");
+my $SUP = new PerlACE::Process ("supplier");
+my $CONS = new PerlACE::Process ("consumer");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+unlink $ec_ior;
+unlink $notifyior;
 
-my $nfs = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $sup = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $con = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+$TS->Spawn ();
 
-$conf = $PerlACE::svcconf_ext;
-$hostname = $nfs->HostName();
-$port = "8888";
-
-my $eciorfile = "ec.ior";
-my $nfsiorfile = "notify.ior";
-my $nfsconf = "notify$conf";
-
-my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
-my $con_eciorfile = $con->LocalFile ($eciorfile);
-my $sup_eciorfile = $sup->LocalFile ($eciorfile);
-my $nfs_nfsconf = $nfs->LocalFile ($nfsconf);
-$nfs->DeleteFile ($nfsiorfile);
-$con->DeleteFile ($eciorfile);
-$sup->DeleteFile ($eciorfile);
-
-$NotifyService = "$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification";
-$NFS = $nfs->CreateProcess ($NotifyService, " -boot ".
-                                            "-orblistenendpoints iiop://:$port ".
-                                            "-NoNameSvc ".
-                                            "-IORoutput $nfs_nfsiorfile ".
-                                            "-ORBSvcConf $nfs_nfsconf");
-$SUP = $sup->CreateProcess ("supplier", "-k $sup_eciorfile -h $hostname -p $port");
-$CON = $con->CreateProcess ("consumer", "-o $con_eciorfile -h $hostname -p $port");
-
-$NFS_status = $NFS->Spawn ();
-
-if ($NFS_status != 0) {
-    print STDERR "ERROR: Notify Service returned $NFS_status\n";
-    exit 1;
-}
-
-if ($nfs->WaitForFileTimed ($nfsiorfile,$nfs->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$nfs_nfsiorfile>\n";
-    $NFS->Kill (); $NFS->TimedWait (1);
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    $TS->Kill ();
     exit 1;
 }
 
@@ -66,31 +36,17 @@ print "****** Running consumer ******\n";
 ## The consumer takes one argument indicating
 ## how many events to receive before disconnecting.
 
-$CON->Arguments("5");
-$CON_status = $CON->Spawn ();
-
-if ($CON_status != 0) {
-    print STDERR "ERROR: Consumer returned $CON_status\n";
-    exit 1;
+$CONS->Arguments("5");
+my $client = $CONS->Spawn();
+if ($client != 0) {
+  $TS->Kill ();
+  exit 1;
 }
 
-if ($con->WaitForFileTimed ($eciorfile,$con->ProcessStartWaitInterval()+5) == -1) {
-    print STDERR "ERROR: cannot find file <$con_eciorfile>\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-if ($con->GetFile ($eciorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$con_eciorfile>\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-if ($sup->PutFile ($eciorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$sup_eciorfile>\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
+## The supplier needs wait after the consumer creates the event channel.
+if (PerlACE::waitforfile_timed ($ec_ior, 20) == -1) {
+    $TS->Kill ();
+    $client->Kill ();
     exit 1;
 }
 
@@ -101,31 +57,25 @@ if ($sup->PutFile ($eciorfile) == -1) {
 print "****** Running supplier ******\n";
 
 $SUP->Arguments("10 5");
-$SUP_status = $SUP->Spawn ();
-
-if ($SUP_status != 0) {
-    print STDERR "ERROR: Supplier returned $SUP_status\n";
-    $status = 1;
+my $server = $SUP->Spawn();
+if ($server != 0) {
+  $TS->Kill();
+  $CONS->Kill();
+  exit 1;
 }
 
-$CON_status = $CON->WaitKill ($con->ProcessStopWaitInterval()+15);
+$CONS->WaitKill(30);
 
-if ($CON_status != 0) {
-    print STDERR "ERROR: Consumer returned $CON_status\n";
-    $status = 1;
+
+$server = $SUP->WaitKill(30);
+if ($server != 0) {
+  $TS->Kill();
+  $CONS->Kill();
+  exit 1;
 }
 
-$SUP_status = $SUP->WaitKill ($sup->ProcessStopWaitInterval()+15);
+$TS->Kill ();
 
-if ($SUP_status != 0) {
-    print STDERR "ERROR: Supplier returned $SUP_status\n";
-    $status = 1;
-}
-
-$NFS->Kill (); $NFS->TimedWait (1);
-
-$nfs->DeleteFile ($nfsiorfile);
-$con->DeleteFile ($eciorfile);
-$sup->DeleteFile ($eciorfile);
-
-exit $status;
+unlink $ec_ior;
+unlink $notifyior;
+exit 0;

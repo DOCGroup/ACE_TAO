@@ -3,6 +3,8 @@
 
 #include "ace/OS_Errno.h"
 
+ACE_RCSID(ace, OS_Errno, "$Id$")
+
 // Inlining this class on debug builds with gcc on Solaris can cause
 // deadlocks during static initialization. On non debug builds it
 // causes compilation errors.

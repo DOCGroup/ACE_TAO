@@ -11,13 +11,12 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(BiDirectional_NestedUpcall, test_i, "$Id$")
+
 void
 Callback_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-  // Shutdown the server before we shutdown our own ORB
-  this->server_->shutdown ();
-  // now we shut down
   this->orb_->shutdown (0);
 }
 

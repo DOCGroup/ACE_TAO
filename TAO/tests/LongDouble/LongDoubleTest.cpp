@@ -4,6 +4,8 @@
 #include "LongDoubleTest.h"
 #include "Global.h"
 
+ACE_RCSID (LongDoubleTest, LongDoubleTest, "$Id$")
+
 LongDoubleTest::LongDoubleTest (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

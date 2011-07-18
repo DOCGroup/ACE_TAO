@@ -4,6 +4,10 @@
 
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (ImplRepo,
+           nestea_client,
+           "$Id$")
+
 // This function runs the test.
 
 int

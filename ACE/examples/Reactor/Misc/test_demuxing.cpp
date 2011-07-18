@@ -17,7 +17,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-
+ACE_RCSID(Misc, test_demuxing, "$Id$")
 
 // Default is to have a 2 second timeout.
 static int timeout = 2;
@@ -299,7 +299,7 @@ Message_Handler::svc (void)
 {
   for (int i = 0;; i++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (1),
@@ -334,7 +334,7 @@ Message_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Message_Handler::handle_input\n"));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
 
   if (this->getq (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     ACE_ERROR ((LM_ERROR,

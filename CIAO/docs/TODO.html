@@ -53,8 +53,8 @@ accomplishment) :
   </li> <p>
 
   <li>We need a set of tests to make sure most (and later
-   all) of the data types are function correctly.
-    More importantly, we need to make sure all the
+   all) of the data types are function correctly (in term of CIDL
+    generated code).  More importantly, we need to make sure all the
     component keywords are supported okay. (ETA - 2004/07)<p>
 
   <li>The naming convention used in <a
@@ -65,7 +65,7 @@ accomplishment) :
       to address that.(ETA - 07/2004) <p> </li>
 
   <li> Retire the old assembly and deployment framework (ETA -
-  2004/10)<p> </li>
+  2004/10) </li>
 
   <li>We need to review the implementation of servant glue code and
    container implementations to make sure that they are
@@ -163,6 +163,12 @@ accomplishment) :
       and inform the ComponentInstallation impl which and where to
       fetch the right implmentation for the host it is running on. (ETA - not
       known)<p>
+  <li><b>CIDL Compiler</b>:
+      There are no immediate plans to support the part of CIDL
+      corresponding to the OMG Persistent State Definition Langauge
+      (PSDL). For an up-to-date status of the CIDL, please see
+      $CIAO_ROOT/CCF/Documentation/TODO.
+
   <li> This is a set of the to-do associated with the DAnCE implementation.
   <p>
   <ul>
@@ -172,6 +178,11 @@ accomplishment) :
           entities so we can hook any Container with the
           ComponentServer. This change is essential to the RT
           configuration and for the future of CIAO.<p>
+
+      <li>Bala added ciao_[pre|post]_activate to the Session Component to
+          force the order of actions upon start-up, but this will not
+	  work with the new DnC framework. We need to change the DnC framework
+	  a bit to make this feature available again.<p>
 
       <li>We need to work on the Resource Management process in
           DAnCE. Right now this part of the DnC spec is omitted in our
@@ -219,9 +230,11 @@ accomplishment) :
       support using the <a href="EnvVars.html">environment
       variable</a> <code>CIAO_DEBUG_LEVEL</code> has been added.<P>
 
+  <li>Miminal implementation of CIDL compiler.<p>
+
   <li>CCM core workspace now contains 3 different DLLs:
       <UL>
-        <li>CCM_Client - Needed by CCM-aware client
+        <li>CCM_Client - Needed by CCM-awared client
         <li>CCM_Container - Needed by executors and servers
         <li>CCM_Server - Needed by servers and CIAO tools
       </UL><p>

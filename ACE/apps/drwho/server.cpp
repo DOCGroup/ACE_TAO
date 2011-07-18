@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- * Driver program for the server.  Note that it is easy to reuse the
- * server for other distributed programs.  Pretty much all that must
- * change are the functions registered with the communciations
- * manager.
- *
- *
- *  @author Douglas C. Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//   Driver program for the server.  Note that it is easy to reuse the
+//   server for other distributed programs.  Pretty much all that must
+//   change are the functions registered with the communciations
+//   manager.
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
 #include "Options.h"
 #include "SMR_Server.h"

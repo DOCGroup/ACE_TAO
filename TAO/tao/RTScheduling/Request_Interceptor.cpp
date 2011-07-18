@@ -12,6 +12,10 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (RTScheduling,
+           Request_Interceptor,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const IOP::ServiceId
@@ -77,14 +81,12 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           // the new <sched_param> is the current
           // <implicit_sched_param> and there is no
           // segment name.
-          CORBA::Policy_var implicit_sched_param =
-            current->implicit_scheduling_parameter ();
           ACE_NEW (new_current,
                    TAO_RTScheduler_Current_i (current->orb (),
                                               current->dt_hash (),
                                               guid,
                                               0,
-                                              implicit_sched_param.in (),
+                                              current->implicit_scheduling_parameter (),
                                               0,
                                               dt.in (),
                                               current));
@@ -283,8 +285,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
 
   RTScheduling::Current::IdType_var guid_var;
   char* name = 0;
-  CORBA::Policy_var sched_param = 0;
-  CORBA::Policy_var implicit_sched_param = 0;
+  CORBA::Policy_ptr sched_param = 0;
+  CORBA::Policy_ptr implicit_sched_param = 0;
 
   TAO_RTScheduler_Current_i* new_current = 0;
   ACE_NEW_THROW_EX (new_current,
@@ -303,8 +305,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   scheduler->receive_request (ri,
                               guid_var.out (),
                               name,
-                              sched_param.out (),
-                              implicit_sched_param.out ());
+                              sched_param,
+                              implicit_sched_param);
 
   if (guid_var->length () == 0)
     {
@@ -344,8 +346,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // the current <implicit_sched_param> and there is no segment name.
   new_current->id (guid);
   new_current->name (name);
-  new_current->scheduling_parameter (sched_param.in ());
-  new_current->implicit_scheduling_parameter (implicit_sched_param.in ());
+  new_current->scheduling_parameter (sched_param);
+  new_current->implicit_scheduling_parameter (implicit_sched_param);
   new_current->DT (dt.in ());
 
   // Install new current in the ORB and store the previous current
@@ -371,8 +373,8 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
     {
-      RTScheduling::DistributableThread_var dt = current->DT ();
-      if (dt->state () == RTScheduling::DistributableThread::CANCELLED)
+
+      if (current->DT ()->state () == RTScheduling::DistributableThread::CANCELLED)
         {
           current->cancel_thread ();
 

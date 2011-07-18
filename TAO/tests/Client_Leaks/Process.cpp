@@ -4,6 +4,8 @@
 #include "Process.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID(Client_Leaks, Process, "$Id$")
+
 Process::Process (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

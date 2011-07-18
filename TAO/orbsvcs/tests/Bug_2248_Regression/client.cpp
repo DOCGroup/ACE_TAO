@@ -11,7 +11,6 @@
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
 
 // Files which have the IOR
 const ACE_TCHAR *first_ior = 0;
@@ -20,8 +19,6 @@ const ACE_TCHAR *second_ior = 0;
 const ACE_TCHAR *second_key = 0;
 const ACE_TCHAR *first_iogr_file = 0;
 const ACE_TCHAR *second_iogr_file = 0;
-
-int sleep_delay = 15; //seconds
 
 // Objects
 CORBA::Object_var object_primary = 0;
@@ -32,7 +29,7 @@ CORBA::Object_var object_secondary = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:k:b:l:g:h:t:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:k:b:l:g:h:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,9 +53,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'h':
         second_iogr_file = get_opts.opt_arg ();
         break;
-      case 't':
-        sleep_delay = ACE_OS::atoi(get_opts.opt_arg ());
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,7 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -96,8 +90,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Write IOR to file
       if (manager.write_to_files ())
         return -1;
-
-      ACE_OS::sleep (sleep_delay);
 
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
@@ -155,7 +147,7 @@ Manager::make_merged_iors (void)
   if (CORBA::is_nil (iorm.in()))
     return -1;
 
-  CORBA::Object_var first = orb_->string_to_object (first_ior);
+  CORBA::Object_var first = orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
 
   if (CORBA::is_nil (first.in()))
     return -1;
@@ -180,13 +172,13 @@ Manager::make_merged_iors (void)
       return -1;
     }
 
-  first = orb_->string_to_object (first_ior);
+  first = orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
   if (CORBA::is_nil (first.in()))
     {
       return -1;
     }
 
-  CORBA::Object_var second = orb_->string_to_object (second_ior);
+  CORBA::Object_var second = orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
 
   if (CORBA::is_nil (second.in()))
     {

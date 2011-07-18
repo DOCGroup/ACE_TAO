@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
@@ -7,6 +6,10 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID (Request_Interceptor_Flow,
+           Client_Request_Interceptor,
+           "$Id$")
 
 Client_Request_Interceptor::Client_Request_Interceptor (const char *name)
   : Request_Interceptor (name)

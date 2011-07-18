@@ -18,8 +18,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Protocol_Factory.h"
-#include "tao/Resource_Factory.h"
-#include "tao/debug.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 
@@ -60,8 +58,9 @@ namespace TAO
                           T,
                           -1);
 
-          ACE_auto_ptr_reset (safe_protocol_factory,
-                              protocol_factory);
+          ACE_AUTO_PTR_RESET (safe_protocol_factory,
+                              protocol_factory,
+                              TAO_Protocol_Factory);
 
           transfer_ownership = true;
         }

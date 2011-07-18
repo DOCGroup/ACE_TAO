@@ -6,6 +6,10 @@
 #include "Peer.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (lib,
+           TAO_Peer,
+           "$Id$")
+
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"

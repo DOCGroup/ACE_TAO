@@ -1,144 +1,73 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+$iorfile = PerlACE::LocalFile ("obj.ior");
+unlink $iorfile;
+
+$lm_ior = "lm.ior";
+unlink $lm_ior;
 
 $status = 0;
-$debug_level = '0';
 
 ## The LoadManager needs to register signals with the ORB's reactor (on
 ## Windows only) and thus can not use the TP Reactor since it doesn't
 ## support that kind of thing.  So, we swith to the Select MT Reactor.
-$lm_conf = "windows" . $PerlACE::svcconf_ext;
+$lm_conf = PerlACE::LocalFile ("windows$PerlACE::svcconf_ext");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+$init_ref = "-ORBInitRef LoadManager=file://lm.ior";
 
-my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-
-my $ior1file = "lm.ior";
-my $ior2file = "obj.ior";
-
-#Files which used by server1
-my $server1_ior1file = $server1->LocalFile ($ior1file);
-$server1->DeleteFile($ior1file);
-
-#Files which used by server2
-my $server2_ior1file = $server2->LocalFile ($ior1file);
-$server2->DeleteFile($ior1file);
-my $server2_ior2file = $server2->LocalFile ($ior2file);
-$server2->DeleteFile($ior2file);
-
-#Files which used by client2
-my $client_ior2file = $client->LocalFile ($ior2file);
-$client->DeleteFile($ior2file);
-
-
-$SV1 = $server1->CreateProcess ("../../../../LoadBalancer/tao_loadmanager",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $server1_ior1file " .
-                              ($^O eq 'MSWin32' ?
+$LM = new PerlACE::Process ("../../../../LoadBalancer/LoadManager",
+                            "-o lm.ior" . ($^O eq 'MSWin32' ?
                                            " -ORBSvcConf $lm_conf" : ''));
+$SV = new PerlACE::Process ("server", $init_ref);
+$CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
-$SV2 = $server2->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBInitRef LoadManager=file://$server2_ior1file " .
-                              "-o $server2_ior2file");
+$LM->Spawn ();
 
-$CL = $client->CreateProcess ("client",
-                              "-ORBInitRef LoadManager=file://$client_ior2file");
-
-$server_status = $SV1->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ("lm.ior", $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file LoadManager IOR: lm.ior\n";
+    $LM->Kill (); $LM->TimedWait (1);
     exit 1;
 }
 
-if ($server1->WaitForFileTimed ($ior1file,
-                               $server1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server1_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find server file <$iorfile>\n";
+    $LM->Kill ();
+    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if ($server1->GetFile ($ior1file) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server1_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
+$client = $CL->SpawnWaitKill (100);
 
-if ($server2->PutFile ($ior2file) == -1) {
-    print STDERR "ERROR: cannot set file <$server2_ior2file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-$server_status = $SV2->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
-
-sub KillServers{
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $SV2->Kill (); $SV2->TimedWait (1);
-}
-
-if ($server2->WaitForFileTimed ($ior2file,
-                               $server2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server2_ior2file>\n";
-    KillServers ();
-    exit 1;
-}
-
-if ($server2->GetFile ($ior2file) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server2_ior2file>\n";
-    KillServers ();
-    exit 1;
-}
-
-if ($client->PutFile ($ior2file) == -1) {
-    print STDERR "ERROR: cannot set file <$client_ior2file>\n";
-    KillServers ();
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 85);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV2->TerminateWaitKill ($server2->ProcessStopWaitInterval());
+$server = $SV->TerminateWaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server_status = $SV1->TerminateWaitKill ($server1->ProcessStopWaitInterval());
+$load_manager = $LM->TerminateWaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($load_manager != 0) {
+    print STDERR "ERROR: LoadManager returned $load_manager\n";
     $status = 1;
 }
 
-$server1->DeleteFile($ior1file);
-$server2->DeleteFile($ior1file);
-$server2->DeleteFile($ior2file);
-$client->DeleteFile($ior2file);
+unlink $iorfile;
+unlink $lm_ior;
 
 exit $status;

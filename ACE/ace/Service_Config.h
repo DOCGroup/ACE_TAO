@@ -367,8 +367,6 @@ private:
    * - '-d' Turn on debugging mode
    * - '-f' Specifies a configuration file name other than the default
    *        svc.conf. Can be specified multiple times to use multiple files.
-   *        If any configuration file is provided with this option then
-   *        the default svc.conf will be ignored.
    * - '-k' Specifies the rendezvous point to use for the ACE distributed
    *        logger.
    * - '-y' Explicitly enables the use of static services. This flag
@@ -382,13 +380,7 @@ private:
    * - '-S' Specifies a service directive string. Enclose the string in quotes
    *        and escape any embedded quotes with a backslash. This option
    *        specifies service directives without the need for a configuration
-   *        file. Can be specified multiple times.
-   *
-   * Note: Options '-f' and '-S' complement each other. Directives from files
-   * and from '-S' option are processed together in the following order. First,
-   * all files are processed in the order they are specified in @a argv
-   * parameter. Second, all directive strings are executed in the order the
-   * directives appear in @a argv parameter.
+   *        file.
    *
    * @param argc The number of commandline arguments.
    * @param argv The array with commandline arguments

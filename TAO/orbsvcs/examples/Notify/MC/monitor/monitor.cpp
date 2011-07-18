@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_ctype.h"
 
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
+#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
 static const ACE_TCHAR* monitor_ior = 0;
 static const char* shutdown_cmd = "shutdown";
@@ -267,7 +267,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "Last: %g Average: %g\n",
-                                  data->data_union.num().dlist[0].value,
+                                  data->data_union.num().dlist[0],
                                   data->data_union.num().average));
                     }
                   else

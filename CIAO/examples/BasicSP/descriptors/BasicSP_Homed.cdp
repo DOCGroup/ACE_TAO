@@ -1,4 +1,3 @@
-<!-- $Id$ -->
 <Deployment:DeploymentPlan
     xmlns:Deployment="http://www.omg.org/Deployment"
     xmlns:xmi="http://www.omg.org/XMI"
@@ -15,45 +14,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>home factory</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_ECHome_Impl</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_ECHome_Impl</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_ECHome_Servant</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_ECHome_Servant</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>EC_svnt</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>EC_svnt</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>EC_exec</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>EC_exec</string>
+	</value>
       </value>
     </execParameter>
   </implementation>
@@ -66,45 +65,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>home factory</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_BMClosedEDHome_Impl</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_BMClosedEDHome_Impl</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_BMClosedEDHome_Servant</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_BMClosedEDHome_Servant</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMClosedED_svnt</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMClosedED_svnt</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMClosedED_exec</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMClosedED_exec</string>
+	</value>
       </value>
     </execParameter>
   </implementation>
@@ -117,45 +116,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>home factory</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_BMDeviceHome_Impl</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_BMDeviceHome_Impl</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_BMDeviceHome_Servant</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_BMDeviceHome_Servant</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMDevice_svnt</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMDevice_svnt</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMDevice_exec</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMDevice_exec</string>
+	</value>
       </value>
     </execParameter>
   </implementation>
@@ -168,45 +167,45 @@
       <!-- entrypoint as exec parameter (see 10.6.1) -->
       <name>home factory</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_BMDisplayHome_Impl</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_BMDisplayHome_Impl</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>create_BasicSP_BMDisplayHome_Servant</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>create_BasicSP_BMDisplayHome_Servant</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMDisplay_svnt</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMDisplay_svnt</string>
+	</value>
       </value>
     </execParameter>
     <execParameter>
       <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMDisplay_exec</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMDisplay_exec</string>
+	</value>
       </value>
     </execParameter>
   </implementation>
@@ -216,72 +215,28 @@
     <artifact xmi:idref="EC_ExecArtifact" />
     <artifact xmi:idref="EC_SvntArtifact" />
     <artifact xmi:idref="EC_StubArtifact" />
-    <execParameter>
-      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
+  </implementation>    
   <implementation xmi:id="BMClosedEDComponentImplementation">
     <name>BMClosedEDComponentImplementation</name>
     <source/>
     <artifact xmi:idref="BMClosedED_ExecArtifact" />
     <artifact xmi:idref="BMClosedED_SvntArtifact" />
     <artifact xmi:idref="BMClosedED_StubArtifact" />
-    <execParameter>
-      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
+  </implementation>    
   <implementation xmi:id="BMDeviceComponentImplementation">
     <name>BMDeviceComponentImplementation</name>
     <source/>
     <artifact xmi:idref="BMDevice_ExecArtifact" />
     <artifact xmi:idref="BMDevice_SvntArtifact" />
     <artifact xmi:idref="BMDevice_StubArtifact" />
-    <execParameter>
-      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
+  </implementation>    
   <implementation xmi:id="BMDisplayComponentImplementation">
     <name>BMDisplayComponentImplementation</name>
     <source/>
     <artifact xmi:idref="BMDisplay_ExecArtifact" />
     <artifact xmi:idref="BMDisplay_SvntArtifact" />
     <artifact xmi:idref="BMDisplay_StubArtifact" />
-    <execParameter>
-      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
-      <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
-        </value>
-      </value>
-    </execParameter>
-  </implementation>
+  </implementation>    
   <instance xmi:id="ECHomeInstance">
     <name>ECHome</name>
     <node>EC</node>
@@ -317,25 +272,25 @@
     <source/>
     <implementation xmi:idref="ECComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>ECHome</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>ECHome</string>
+	</value>
       </value>
     </configProperty>
     <configProperty>
       <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>rategen.ior</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>rategen.ior</string>
+	</value>
       </value>
     </configProperty>
   </instance>
@@ -346,14 +301,14 @@
     <source/>
     <implementation xmi:idref="BMClosedEDComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMClosedEDHome</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMClosedEDHome</string>
+	</value>
       </value>
     </configProperty>
   </instance>
@@ -364,14 +319,14 @@
     <source/>
     <implementation xmi:idref="BMDeviceComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMDeviceHome</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMDeviceHome</string>
+	</value>
       </value>
     </configProperty>
   </instance>
@@ -382,14 +337,14 @@
     <source/>
     <implementation xmi:idref="BMDisplayComponentImplementation" />
     <configProperty>
-      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <name>edu.vanderbilt.dre.DAnCE.ExplicitHome</name>
       <value>
-        <type>
-          <kind>tk_string</kind>
-        </type>
-        <value>
-          <string>BMDisplayHome</string>
-        </value>
+	<type>
+	  <kind>tk_string</kind>
+	</type>
+	<value>
+	  <string>BMDisplayHome</string>
+	</value>
       </value>
     </configProperty>
   </instance>
@@ -429,13 +384,13 @@
   <connection>
     <name>timeout_timeoutECComponentInstanceBMDeviceComponentInstance</name>
     <internalEndpoint>
-      <portName>timeout_value</portName>
+      <portName>timeout</portName>
       <provider>false</provider>
       <kind>EventPublisher</kind>
       <instance xmi:idref="ECComponentInstance" />
     </internalEndpoint>
     <internalEndpoint>
-      <portName>timeout_value</portName>
+      <portName>timeout</portName>
       <provider>true</provider>
       <kind>EventConsumer</kind>
       <instance xmi:idref="BMDeviceComponentInstance" />
@@ -491,7 +446,7 @@
     <source/>
     <node/>
     <location>BMDisplay_stub</location>
-  </artifact>
+  </artifact>  
   <artifact xmi:id="BMClosedED_ExecArtifact">
     <name>BMClosedED_exec</name>
     <source/>
@@ -509,7 +464,7 @@
     <source/>
     <node/>
     <location>BMClosedED_stub</location>
-  </artifact>
+  </artifact>  
   <artifact xmi:id="BMDevice_ExecArtifact">
     <name>BMDevice_exec</name>
     <source/>
@@ -527,7 +482,7 @@
     <source/>
     <node/>
     <location>BMDevice_stub</location>
-  </artifact>
+  </artifact>  
   <artifact xmi:id="EC_ExecArtifact">
     <name>EC_exec</name>
     <source/>
@@ -545,5 +500,5 @@
     <source/>
     <node/>
     <location>EC_stub</location>
-  </artifact>
+  </artifact>  
 </Deployment:DeploymentPlan>

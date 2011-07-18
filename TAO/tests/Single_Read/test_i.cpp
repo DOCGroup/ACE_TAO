@@ -3,10 +3,11 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
 
-test_i::test_i (CORBA::ORB_ptr orb, const ACE_TCHAR *file_name)
+ACE_RCSID(Single_Read, test_i, "$Id$")
+
+test_i::test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    client_done_ (false),
-    client_done_file_(file_name)
+    client_done_ (false)
 {
 }
 
@@ -20,7 +21,7 @@ test_i::method (CORBA::ULong request_number,
 
   if (!client_done_)
     {
-      FILE *input_file = ACE_OS::fopen (client_done_file_, "r");
+      FILE *input_file = ACE_OS::fopen ("client_done", "r");
       if (input_file == 0)
         {
           // Time required to process this request.

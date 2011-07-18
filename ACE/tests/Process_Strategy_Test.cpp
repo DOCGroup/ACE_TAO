@@ -1,37 +1,41 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Process_Strategy_Test.cpp
- *
- *  $Id$
- *
- *   This is a test of the <ACE_Strategy_Acceptor> and
- *   <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
- *   either the <ACE_Process_Strategy> (which forks a
- *   process-per-connection and runs as a concurrent server
- *   process), the <ACE_Thread_Strategy> (which spawns a
- *   thread-per-connection and runs as a concurrent server thread),
- *   or <ACE_Reactive_Strategy> (which register the <Svc_Handler>
- *   with the <Reactor> and runs in the main thread of control as an
- *   iterative server).  This server queries and increments a
- *   "counting value" in a file.
- *
- *   This test program can be run in the following ways:
- *
- *   # Run the server "reactively" (i.e., iteratively)
- *   % Process_Strategy_Test -c REACTIVE
- *
- *   # Run the server in multi-threads.
- *   % Process_Strategy_Test -c THREAD
- *
- *   # Run the server in multi-processes
- *   % Process_Strategy_Test -c PROCESS
- *
- *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Kevin Boyle <kboyle@sanwafp.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Process_Strategy_Test.cpp
+//
+// = DESCRIPTION
+//     This is a test of the <ACE_Strategy_Acceptor> and
+//     <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
+//     either the <ACE_Process_Strategy> (which forks a
+//     process-per-connection and runs as a concurrent server
+//     process), the <ACE_Thread_Strategy> (which spawns a
+//     thread-per-connection and runs as a concurrent server thread),
+//     or <ACE_Reactive_Strategy> (which register the <Svc_Handler>
+//     with the <Reactor> and runs in the main thread of control as an
+//     iterative server).  This server queries and increments a
+//     "counting value" in a file.
+//
+//     This test program can be run in the following ways:
+//
+//     # Run the server "reactively" (i.e., iteratively)
+//     % Process_Strategy_Test -c REACTIVE
+//
+//     # Run the server in multi-threads.
+//     % Process_Strategy_Test -c THREAD
+//
+//     # Run the server in multi-processes
+//     % Process_Strategy_Test -c PROCESS
+//
+// = AUTHOR
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//    and Kevin Boyle <kboyle@sanwafp.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -51,7 +55,7 @@
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
-
+ACE_RCSID(tests, Process_Strategy_Test, "$Id$")
 
 // This test does not function properly when fork() is used on HP-UX
 #if defined(__hpux)
@@ -81,7 +85,7 @@ static void
 connection_completed (void)
 {
   // Increment connection counter.
-  ++connections;
+  connections++;
 
   // If all connections have been serviced.
   if (connections == ACE_MAX_ITERATIONS + 1)
@@ -245,7 +249,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
       break;
 #else
-      ACE_TEST_ASSERT ("PROCESS invalid on this platform" == 0);
+      ACE_ASSERT ("PROCESS invalid on this platform" == 0);
 #endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
@@ -257,7 +261,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
       break;
 #else
-      ACE_TEST_ASSERT (!"THREAD invalid on this platform");
+      ACE_ASSERT (!"THREAD invalid on this platform");
 #endif /* !ACE_HAS_THREADS */
     case Options::REACTIVE:
       // Settle for the purely Reactive strategy.
@@ -437,18 +441,8 @@ int
 Counting_Service::handle_close (ACE_HANDLE,
                                 ACE_Reactor_Mask)
 {
-  // Count completed connections here only when the test is not in
-  // "process-per-connection" mode. In general, this should not be
-  // done here. Proper place for this is activate_svc_handler() but
-  // since only "process-per-connection" hooks into that function in
-  // other modes it's done here. The later creates a problem in
-  // "process-per-connection" mode since it calculates the same
-  // connection twice and as a result it cannot finalize gracefully.
-  if (OPTIONS::instance ()->concurrency_type () != Options::PROCESS)
-    {
-      // Done with another connection.
-      connection_completed ();
-    }
+  // Done with another connection.
+  connection_completed ();
 
   // Call down to base class
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close ();
@@ -587,7 +581,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) count = %d\n"),
                   count));
       // Make sure that the count is correct.
-      if (count != ACE_MAX_ITERATIONS)
+      if (count != ACE_MAX_ITERATIONS) 
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Error: Count invalid, has %d expected %d\n"),

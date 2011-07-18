@@ -41,28 +41,19 @@ ifdef TEMPLATE_REPOSITORY
 CLEANUP_DIRS += $(TEMPLATE_REPOSITORY)
 endif
 
-ifeq ($(use_pwd_call),)
-  ifneq ($(mingw32),1)
-    use_pwd_call := 0
-  else
-    use_pwd_call := 1
-  endif
-endif
-
-ifneq ($(use_pwd_call),1)
+ifneq ($(mingw32),1)
 makefile_name.local:
 	@echo
 	@echo GNUmakefile: $(shell pwd)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
 	@echo
 else
-ECHO_BLANK_LINE ?= echo
 makefile_name.local:
-	@$(ECHO_BLANK_LINE)
+	@echo
 	@echo GNUmakefile: $(call PWD)/$(MAKEFILE) MAKEFLAGS=$(MAKEFLAGS)
-	@$(ECHO_BLANK_LINE)
+	@echo
 endif
 
-all.local: makefile_name.local build.objdirs build.local binout.local
+all.local: makefile_name.local $(split_target) build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
 #       C/C++ compilation targets
@@ -103,22 +94,17 @@ OS ?=
 # Define a canned command set to create the output object directory if needed.
 ifeq ($(vxworks_ntbuild),1)
 define mk_obj_out_dir
-@if not exist $(subst /,\,$(@D)) $(MKDIR) $(subst /,\,$(@D)) $(ACE_NUL_STDERR)
+@if not exist $(dir $@) $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
+@echo > $(dir $@).creation_stamp
 endef
 else
 define mk_obj_out_dir
-@-test -d $(@D) || $(MKDIR) $(@D) $(ACE_NUL_STDERR)
+@-test -d $(dir $@) || $(MKDIR) $(dir $@) $(ACE_NUL_STDERR)
 endef
 endif
 
 nullstring :=
 CC_OUTPUT_FLAG_SEP ?= $(nullstring) #space
-
-%.$(PREPROCESS_SUFFIX): %.c
-	$(PREPROCESS.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
-
-%.$(PREPROCESS_SUFFIX): %.cpp
-	$(PREPROCESS.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
 $(VDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
@@ -184,9 +170,18 @@ $(VSHDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
 
+  ifeq ($(split), 1)
+$(VSHDIR)%.$(OBJEXT): %.cpp
+	$(mk_obj_out_dir)
+	$(COMPILE.cc) $(PIC) SPLIT/`echo $< | sed "s/.cpp/_S\*/"`
+	mv *.$(OBJEXT) $(VSHDIR)
+  else # ! split
+
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
 	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+
+  endif # split
 
 $(VSHDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
@@ -239,11 +234,11 @@ ifneq ($(INSBIN),)
 endif
 
 INSTALL ?=
-binout.local: $(INSTALL)
+install.local: $(INSTALL)
 
-clean_binout.local:
+deinstall.local:
 ifdef CLEANUP_INSTALL
-  ifneq ($(strip $(CLEANUP_INSTALL)),)
+  ifneq ($(CLEANUP_INSTALL),)
 	$(RM) $(CLEANUP_INSTALL)
   endif # CLEANUP_INSTALL
 endif # CLEANUP_INSTALL
@@ -268,12 +263,12 @@ ifndef LN_S
   endif # ! WIN32
 endif # ! LN_S
 
-# Don't call shell/call directly below since we may need to
+# Don't call shell/call directly below since we may need to 
 # add the architecture specific suffix to the directory
-ifneq ($(use_pwd_call),1)
-ARCH_SOURCE_DIR := $(patsubst %/,%,$(shell pwd)/$(ARCH))
+ifneq ($(mingw32),1)
+ARCH_SOURCE_DIR := $(patsubst /,,$(shell pwd)/$(ARCH))
 else
-ARCH_SOURCE_DIR := $(patsubst %/,%,$(call PWD)/$(ARCH))
+ARCH_SOURCE_DIR := $(patsubst /,,$(call PWD)/$(ARCH))
 endif
 
 $(INSBIN)/%$(VAR)$(EXEEXT) \
@@ -290,49 +285,72 @@ $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
 ifeq ($(vxworks_ntbuild),1)
-	@if not exist $@ $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+	@if exist $@ echo "$(@F) already installed"
+	@if not exist $@ echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) to $(@D)" && \
+		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
+		echo "Installing $(@F) to $(@D)" && \
 		$(RM) $@ && \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@ && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@
 else #not vxworks_ntbuild
+  ifeq ($(mingw32),1)
+    #If we're actually copying instead of linking, pay attention to timestamps to know when to install
     ifeq ($(firstword $(LN_S)),cp)
       ifneq ($(SOVERSION),)
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-	fi
-      endif #SOVERSION
-	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		$(RM) $@; \
-		echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
-		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
-	fi
-    else #firstword of LN_S is not cp, so we're using real symlinks
-      ifneq ($(SOVERSION),)
-	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test ! -s $@ ; then \
+		if test $(@F) -ot $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) ; then \
+			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 		fi ; \
 	fi
       endif #SOVERSION
 	@if test $(ARCH_SOURCE_DIR) != $(@D) ; then \
-		if test ! -s $@ ; then \
+		if test $@ -nt $(@F) ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			echo $(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
+		fi ; \
+	fi
+    else #firstword of LN_S is not cp, so we're using real symlinks
+	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
+			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			echo "Installing $(@F) -> $(@D)" ; \
+			$(RM) $@; \
 			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
 		fi ; \
 	fi
     endif #firstword
+  else #not mingw32
+	@if test $(ARCH_SOURCE_DIR) != $(@D) -o -n "$(SOVERSION)" ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
+			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			echo "Installing $(@F) -> $(@D)" ; \
+			$(RM) $@; \
+			$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $@; \
+		fi ; \
+	fi
+  endif #mingw32
 endif #vxworks_ntbuild
 
 ifdef MVSLIB
 #special for MVS in order to use the .x files
 	@if test -w $(@D) ; then \
-		if test ! -s $(@:.$(SOEXT)=.x) ; then \
+		if test -s $(@:.$(SOEXT)=.x) ; then \
+			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
+		else \
+			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
 			$(RM) $(@); $(LN_S) $(ARCH_SOURCE_DIR)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
@@ -400,7 +418,7 @@ ifdef DO_CLEANUP
 	templateregistry templateregistry.* ir.out core.* *.core $(CLEANUP_OBJS)
 endif # DO_CLEANUP
 
-realclean.local: clean.local clean_binout.local clean_idl_stubs.local
+realclean.local: clean.local deinstall.local clean_idl_stubs.local
 ifdef DO_CLEANUP
 	-$(RM) -r $(REALCLEAN_FILES) $(sort $(CLEANUP_OBJDIRS)) $(ARCH)
 endif # DO_CLEANUP
@@ -471,7 +489,7 @@ endif
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
-	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
+	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) \
 	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\
@@ -481,13 +499,20 @@ depend.local: $(MAKEFILE) idl_stubs.local
 	$(RM) $(DEPENDENCY_FILE).old ;
 
 #----------------------------------------------------------------------------
-#       idl_stubs target
+#       RCS info target
 #----------------------------------------------------------------------------
 
 IDL_FILES ?=
 IDL_CLIENT_HDR_EXT ?=
 
 idl_stubs.local: $(foreach file, $(IDL_FILES), $(file)$(IDL_CLIENT_HDR_EXT))
+
+#----------------------------------------------------------------------------
+#       RCS info target
+#----------------------------------------------------------------------------
+
+rcs_info.local:
+	@rcs info
 
 #----------------------------------------------------------------------------
 #       Variant targets and conditional macros
@@ -503,16 +528,17 @@ $(CLEANUP_DIRS):
 	@test -d $@ || $(MKDIR) $@ $(ACE_NUL_STDERR)
 endif
 
+#---------------------------------------------------------------------------
+#       Source file splitting
+#---------------------------------------------------------------------------
+SPLIT:
+	@echo "Splitting source files..."
+	@$(ACE_ROOT)/bin/split-cpp -s Svc_Conf_l.cpp -s Svc_Conf_y.cpp $(LSRC)
+	@echo "done."
+
 svnignore.local:
 	if [ "n$(ARCH_BIN)" != "n" ]; then \
 	  (svn propget svn:ignore .; echo $(ARCH_BIN)) | sort | uniq | sed '/^$$/d' >SvNiGnOrE; \
 	  svn propset svn:ignore -F SvNiGnOrE .; \
 	  rm SvNiGnOrE; \
 	fi
-
-#----------------------------------------------------------------------------
-#       Optional private, site-specific rules
-#----------------------------------------------------------------------------
-
-private_rules_file ?= rules.private.GNU
--include $(private_rules_file)

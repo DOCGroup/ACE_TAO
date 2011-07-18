@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    tie_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for operations for the TIE class.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for operations for the TIE class.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           tie_ss,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server inline for TIE class operations.
@@ -29,13 +39,6 @@ be_visitor_operation_tie_ss::~be_visitor_operation_tie_ss (void)
 
 int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
 {
-  /// These implied IDL operations are not to be processed on
-  /// the skeleton side.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_interface *intf = this->ctx_->interface ();
@@ -43,7 +46,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_tie_ss::"
+                         "(%N:%l) be_visitor_operation_tie_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
@@ -94,8 +97,8 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "template <class " << template_name.c_str () << ">" << be_nl;
 
@@ -112,9 +115,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << " " << intf->full_skel_name () << "_tie<"
-      << template_name.c_str () << ">::"
-      << this->ctx_->port_prefix ().c_str ()
+  *os << " " << intf->full_skel_name () << "_tie<" << template_name.c_str () << ">::"
       << node->local_name () << " ";
 
   // STEP 4: generate the argument list with the appropriate mapping (same as

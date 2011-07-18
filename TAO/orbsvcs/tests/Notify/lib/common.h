@@ -1,17 +1,20 @@
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file   common.h
- *
- *  $Id$
- *
- * A couple of useful functions
- *
- *
- *  @author Chad Elliott <elliott_c@ociweb.com>
- */
-//=============================================================================
-
+// $Id$
+// ==========================================================================
+//
+// = LIBRARY
+//   TAO/orbsvcs/tests/Notify/lib
+//
+// = FILENAME
+//   common.h
+//
+// = DESCRIPTION
+//   A couple of useful functions
+//
+// = AUTHOR
+//    Chad Elliott <elliott_c@ociweb.com>
+//
+// ==========================================================================
 #ifndef TAO_COMMON_H
 #define TAO_COMMON_H
 

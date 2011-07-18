@@ -26,7 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         proxy_ior = get_opts.opt_arg ();
         break;
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

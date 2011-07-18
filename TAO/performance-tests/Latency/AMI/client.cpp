@@ -9,6 +9,8 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/OS_NS_errno.h"
 
+ACE_RCSID(AMI_Latency, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 ACE_hrtime_t throughput_base;
@@ -44,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

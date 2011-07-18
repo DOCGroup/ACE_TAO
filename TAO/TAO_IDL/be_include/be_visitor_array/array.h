@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    array.h
- *
- *  $Id$
- *
- *  Visitors for generation of code for Arrays.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    array.h
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Arrays.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_ARRAY_ARRAY_H_
 #define _BE_VISITOR_ARRAY_ARRAY_H_
@@ -20,70 +25,71 @@
 // class be_visitor_array
 // ************************************************************
 
-/**
- * @class be_visitor_array
- *
- * @brief be_visitor_array
- *
- * This is a generic visitor for arrays
- */
 class be_visitor_array : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //    be_visitor_array
+  //
+  // = DESCRIPTION
+  //   This is a generic visitor for arrays
+  //
+  //
 public:
-  /// Constructor
   be_visitor_array (be_visitor_context *ctx);
+  // Constructor
 
-  /// destructor
   ~be_visitor_array (void);
+  // destructor
 
-  /// visit the array node
   virtual int visit_array (be_array *);
+  // visit the array node
 
   // = Visitor methods on array types
 
-  /// visit an enum
   virtual int visit_enum (be_enum *node);
+  // visit an enum
 
-  /// visit an interface
   virtual int visit_interface (be_interface *node);
+  // visit an interface
 
-  /// visit an interface forward node
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  // visit an interface forward node
 
-  /// visit a valuebox
   virtual int visit_valuebox (be_valuebox *node);
+  // visit a valuebox
 
-  /// visit a valuetype
   virtual int visit_valuetype (be_valuetype *node);
+  // visit a valuetype
 
-  /// visit a valuetype forward node
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit a valuetype forward node
 
-  /// visit a predefined type node
   virtual int visit_predefined_type (be_predefined_type *node);
+  // visit a predefined type node
 
-  /// visit sequence
   virtual int visit_sequence (be_sequence *node);
+  // visit sequence
 
-  /// visit string
   virtual int visit_string (be_string *node);
+  // visit string
 
-  /// visit structure
   virtual int visit_structure (be_structure *node);
+  // visit structure
 
-  /// visit typedef
   virtual int visit_typedef (be_typedef *node);
+  // visit typedef
 
-  /// visit union
   virtual int visit_union (be_union *node);
+  // visit union
 
 protected:
 
-  /// helper that does the common job
   int visit_node (be_type *);
+  // helper that does the common job
 
-  /// helper that does the common job
   int emit_common (be_type *node);
+  // helper that does the common job
 
 };
 

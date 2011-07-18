@@ -12,7 +12,7 @@ project(DsNotifyLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, dslogadmin,
 
 project(DsNotifyLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, dseventlogadmin, event, notification {
   sharedname   = TAO_DsNotifyLogAdmin
-  dynamicflags += TAO_NOTIFYLOG_BUILD_DLL
+  dynamicflags = TAO_NOTIFYLOG_BUILD_DLL
   tagchecks   += Log
   after       += DsNotifyLogAdmin_IDL
 
@@ -48,7 +48,7 @@ project(DsNotifyLogAdmin) : orbsvcslib, orbsvcs_output, install, dslogadmin, dse
 
 project(DsNotifyLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dsnotifylogadmin, dseventlogadmin_skel, dslogadmin_skel, event_skel, notification_skel, portableserver {
   sharedname   = TAO_DsNotifyLogAdmin_Skel
-  dynamicflags += TAO_NOTIFYLOG_SKEL_BUILD_DLL
+  dynamicflags = TAO_NOTIFYLOG_SKEL_BUILD_DLL
   tagchecks   += Log
 
   IDL_Files {
@@ -78,7 +78,7 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dsnotifylo
 
 project(DsNotifyLogAdmin_Serv) : orbsvcslib, orbsvcs_output, install, dsnotifylogadmin_skel, dslogadmin_serv {
   sharedname   = TAO_DsNotifyLogAdmin_Serv
-  dynamicflags += TAO_NOTIFYLOG_SERV_BUILD_DLL
+  dynamicflags = TAO_NOTIFYLOG_SERV_BUILD_DLL
   tagchecks   += Log
 
   IDL_Files {

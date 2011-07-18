@@ -11,6 +11,8 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(MT_Server, test_i, "$Id$")
+
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long exec_duration)
 {
@@ -18,11 +20,10 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   ACE_Thread::self (thr_handle);
   int prio;
   int guid;
-  RTScheduling::Current::IdType_var id = this->current_->id ();
 
   ACE_OS::memcpy (&guid,
-                  id->get_buffer (),
-                  sizeof (id->length ()));
+                  this->current_->id ()->get_buffer (),
+                  sizeof (this->current_->id ()->length ()));
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
@@ -91,7 +92,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
           if (yield_count_down_time <= ACE_Time_Value::zero)
             {
               CORBA::Policy_var sched_param_policy =
-                current_->scheduling_parameter();
+                CORBA::Policy::_duplicate (current_->
+                                           scheduling_parameter());
 
               const char * name = 0;
 

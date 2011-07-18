@@ -49,11 +49,16 @@ public:
   virtual ~TAO_LocalInterfaceDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  virtual CORBA::DefinitionKind def_kind (
+    );
 
-  virtual CORBA::Boolean is_a (const char *interface_id);
+  virtual CORBA::Boolean is_a (
+      const char *interface_id
+    );
 
-  CORBA::Boolean is_a_i (const char *interface_id);
+  CORBA::Boolean is_a_i (
+      const char *interface_id
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

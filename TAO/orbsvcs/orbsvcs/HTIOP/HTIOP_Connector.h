@@ -30,6 +30,7 @@
 
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
+#include "ace/OS.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE

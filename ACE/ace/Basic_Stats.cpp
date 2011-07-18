@@ -7,6 +7,10 @@
 #include "ace/Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace,
+          Basic_Stats,
+          "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

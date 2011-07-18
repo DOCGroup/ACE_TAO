@@ -18,11 +18,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'k':
-          ior = get_opts.opt_arg ();
+          ior = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
           break;
 
         case 'm':
-          message = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+          message = get_opts.opt_arg ();
           break;
 
         case '?':  // display help for use of the server.
@@ -58,7 +58,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      CORBA::Object_var obj = orb->string_to_object (ior);
+      CORBA::Object_var obj =
+        orb->string_to_object (ior);
 
       Hello::Sender_var sender = Hello::Sender::_narrow (obj.in ());
 
@@ -70,9 +71,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       if (message)
-        {
-          sender->local_message (message);
-        }
+      {
+        sender->local_message (message);
+      }
 
       sender->start ();
 

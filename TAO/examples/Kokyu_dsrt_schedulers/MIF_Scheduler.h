@@ -7,7 +7,7 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "MIF_SchedulingC.h"
 #include "tao/LocalObject.h"
-#include "Kokyu/Kokyu_dsrt.h"
+#include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
 
 struct MIF_Scheduler_Traits
@@ -50,8 +50,6 @@ public MIF_Scheduling::SchedulingParameterPolicy,
     void value (const MIF_Scheduling::SchedulingParameter & value);
 
      virtual CORBA::Policy_ptr copy ();
-
-     virtual CORBA::PolicyType policy_type (void);
 
      virtual void destroy ();
 

@@ -23,7 +23,7 @@
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
 
-#if defined (__NetBSD__) || defined (__OpenBSD__)
+#if defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,7 +50,7 @@ namespace ACE
 
     protected:
       ACE_UINT64 value_;
-
+      
     private:
       void init (void);
       void fetch (ACE_UINT64& value) const;
@@ -63,7 +63,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* defined (__NetBSD__) || defined (__OpenBSD__) */
+#endif /* defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) */
 
 #include /**/ "ace/post.h"
 

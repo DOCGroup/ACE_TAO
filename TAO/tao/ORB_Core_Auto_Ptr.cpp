@@ -1,12 +1,13 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/ORB_Core_Auto_Ptr.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Core_Auto_Ptr.inl"
 #endif  /* !__ACE_INLINE */
+
+ACE_RCSID (tao,
+           ORB_Core_Auto_Ptr,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
+ACE_RCSID(Simple, client, "$Id$")
+
 static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
@@ -135,7 +137,7 @@ ACT_TMAIN (int argc, ACE_TCHAR **argv)
 
       poa_manager->activate ();
 
-      object = orb->string_to_object (ior);
+      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       server_var server = server::_narrow (object.in ());
 

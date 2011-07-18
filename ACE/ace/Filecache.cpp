@@ -11,6 +11,10 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Truncate.h"
 
+ACE_RCSID (ace,
+           Filecache,
+           "$Id$")
+
 #if defined (ACE_WIN32)
 // Specifies no sharing flags.
 #define R_MASK ACE_DEFAULT_OPEN_PERMS
@@ -164,7 +168,6 @@ template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
                                               ACE_Filecache_Hash_Entry *prev)
   : ext_id_ (0),
-    int_id_ (0),
     next_ (next),
     prev_ (prev)
 {

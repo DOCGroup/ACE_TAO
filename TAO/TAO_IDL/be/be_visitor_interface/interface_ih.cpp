@@ -1,16 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_ih.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the implementation header
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_ih.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the implementation header
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           interface_ih,
+           "$Id$")
 
 // ************************************************************
 // Interface visitor for implementation header.
@@ -48,7 +56,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
     }
 
   // Now generate the class definition.
@@ -79,7 +87,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       << "public:" << be_idt_nl
       << "// Constructor " << be_nl
       <<  be_global->impl_class_prefix () << namebuf
-      << be_global->impl_class_suffix () << " (void);" << be_nl_2;
+      << be_global->impl_class_suffix () << " (void);" << be_nl << be_nl;
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {
@@ -96,7 +104,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "& " << "operator=(const "
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << "&);" << be_nl_2;
+          << be_global->impl_class_suffix () << "&);" << be_nl << be_nl;
 
     }
 
@@ -110,7 +118,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ih::"
-                         "visit_interface - "
+                        "visit_interface - "
                          "codegen for scope failed\n"),
                         -1);
     }
@@ -119,8 +127,9 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   // Generate the code for the members of the derived classes.
   int status =
     node->traverse_inheritance_graph (
-      be_visitor_interface_ih::method_helper,
-      os);
+              be_visitor_interface_ih::method_helper,
+              os
+            );
 
   if (status == -1)
     {
@@ -133,7 +142,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
 
   *os << be_uidt_nl
-      << "};" << be_nl_2;
+      << "};" << be_nl << be_nl;
 
   return 0;
 }
@@ -145,10 +154,8 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
                                         be_interface *node,
                                         TAO_OutStream *os)
 {
-  int compare =
-    ACE_OS::strcmp (derived->flat_name (), node->flat_name ());
 
-  if (compare != 0)
+  if (ACE_OS::strcmp (derived->flat_name (), node->flat_name ()) != 0)
     {
       be_visitor_context ctx;
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);

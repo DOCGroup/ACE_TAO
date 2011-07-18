@@ -3,6 +3,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_Thread.h"
 
+ACE_RCSID (ace,
+           OS_NS_stdio,
+           "$Id$")
+
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_stdio.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -69,6 +74,38 @@ ACE_OS::ace_flock_t::dump (void) const
 
 /*****************************************************************************/
 
+#if defined (ACE_USES_WCHAR)
+void ACE_OS::checkUnicodeFormat (FILE* fp)
+{
+  if (fp != 0)
+    {
+      // Due to the ACE_TCHAR definition, all default input files, such as
+      // svc.conf, have to be in Unicode format (small endian) on WinCE
+      // because ACE has all 'char' converted into ACE_TCHAR.
+      // However, for TAO, ASCII files, such as IOR file, can still be read
+      // and be written without any error since given buffers are all in 'char'
+      // type instead of ACE_TCHAR.  Therefore, it is user's reponsibility to
+      // select correct buffer type.
+
+      // At this point, check if the file is Unicode or not.
+      ACE_UINT16 first_two_bytes = 0;
+      size_t const numRead =
+        ACE_OS::fread(&first_two_bytes, sizeof (first_two_bytes), 1, fp);
+
+      if (numRead <= 1)
+        {
+          if ((first_two_bytes != 0xFFFE) && // not a small endian Unicode file
+              (first_two_bytes != 0xFEFF))   // not a big endian Unicode file
+            {
+              // set file pointer back to the beginning
+              ACE_OS::fseek(fp, 0, SEEK_SET);
+            }
+        }
+      // if it is a Unicode file, file pointer will be right next to the first
+      // two-bytes
+    }
+}
+#endif  // ACE_USES_WCHAR
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 namespace
@@ -124,11 +161,6 @@ ACE_OS::fopen (const char *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-#if defined (ACE_LACKS_FOPEN)
-  ACE_UNUSED_ARG (filename);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (0);
-#else
   int hmode = _O_TEXT;
 
   // Let the chips fall where they may if the user passes in a NULL
@@ -161,6 +193,9 @@ ACE_OS::fopen (const char *filename,
 #   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
+#   if defined (ACE_USES_WCHAR)
+            checkUnicodeFormat(fp);
+#   endif  // ACE_USES_WCHAR
             return fp;
           }
           ::_close (fd);
@@ -169,7 +204,6 @@ ACE_OS::fopen (const char *filename,
       ACE_OS::close (handle);
     }
   return 0;
-#endif
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -192,11 +226,6 @@ ACE_OS::fopen (const wchar_t *filename,
                const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-#if defined (ACE_LACKS_FOPEN)
-  ACE_UNUSED_ARG (filename);
-  ACE_UNUSED_ARG (mode);
-  ACE_NOTSUP_RETURN (0);
-#else
   int hmode = _O_TEXT;
 
   for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
@@ -222,6 +251,9 @@ ACE_OS::fopen (const wchar_t *filename,
 #   endif /* defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)) */
           if (fp != 0)
           {
+#   if defined (ACE_USES_WCHAR)
+            checkUnicodeFormat(fp);
+#   endif  // ACE_USES_WCHAR
             return fp;
           }
           ::_close (fd);
@@ -230,7 +262,6 @@ ACE_OS::fopen (const wchar_t *filename,
       ACE_OS::close (handle);
     }
   return 0;
-#endif
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -243,9 +274,10 @@ int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::fprintf");
+  int result = 0;
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vfprintf (fp, format, ap);
+  result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
 }
@@ -255,9 +287,10 @@ int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::fprintf");
+  int result = 0;
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vfprintf (fp, format, ap);
+  result = ACE_OS::vfprintf (fp, format, ap);
   va_end (ap);
   return result;
 }
@@ -267,9 +300,10 @@ int
 ACE_OS::asprintf (char **bufp, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::asprintf");
+  int result;
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vasprintf (bufp, format, ap);
+  result = ACE_OS::vasprintf (bufp, format, ap);
   va_end (ap);
   return result;
 }
@@ -279,9 +313,10 @@ int
 ACE_OS::asprintf (wchar_t **bufp, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::asprintf");
+  int result;
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vasprintf (bufp, format, ap);
+  result = ACE_OS::vasprintf (bufp, format, ap);
   va_end (ap);
   return result;
 }
@@ -291,9 +326,10 @@ int
 ACE_OS::printf (const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::printf");
+  int result;
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vprintf (format, ap);
+  result = ACE_OS::vprintf (format, ap);
   va_end (ap);
   return result;
 }
@@ -303,9 +339,10 @@ int
 ACE_OS::printf (const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::printf");
+  int result;
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vprintf (format, ap);
+  result = ACE_OS::vprintf (format, ap);
   va_end (ap);
   return result;
 }
@@ -317,7 +354,7 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
   // ACE_OS_TRACE ("ACE_OS::snprintf");
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
   return result;
 }
@@ -329,7 +366,7 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   // ACE_OS_TRACE ("ACE_OS::snprintf");
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
+  int result = ACE_OS::vsnprintf (buf, maxlen, format, ap);
   va_end (ap);
   return result;
 }
@@ -341,7 +378,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   // ACE_OS_TRACE ("ACE_OS::sprintf");
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vsprintf (buf, format, ap);
+  int result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -353,7 +390,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   // ACE_OS_TRACE ("ACE_OS::sprintf");
   va_list ap;
   va_start (ap, format);
-  int const result = ACE_OS::vsprintf (buf, format, ap);
+  int result = ACE_OS::vsprintf (buf, format, ap);
   va_end (ap);
   return result;
 }
@@ -365,7 +402,7 @@ ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
 {
   va_list ap;
   va_copy (ap, argptr);
-  int size = ACE_OS::vsnprintf (0, 0, format, ap);
+  int size = ACE_OS::vsnprintf(0, 0, format, ap);
   va_end (ap);
 
   if (size != -1)

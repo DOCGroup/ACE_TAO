@@ -1,17 +1,15 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Client_i.h
- *
- *  $Id$
- *
- *  A helper class for the client
- *
- *
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    Client_i.h
+//
+// = DESCRIPTION
+//    A helper class for the client
+//
+// ============================================================================
 
 #ifndef BUG_2248_REGRESSION_CLIENT_I_H
 #define BUG_2248_REGRESSION_CLIENT_I_H
@@ -26,11 +24,11 @@
 class Client_i
 {
 public:
-  /// Our constructor
   Client_i (CORBA::ORB_ptr orb);
+  // Our constructor
 
-  /// Initialize the ORB etc.
   int init (void);
+  // Initialize the ORB etc.
 
 private:
   CORBA::ORB_var orb_;

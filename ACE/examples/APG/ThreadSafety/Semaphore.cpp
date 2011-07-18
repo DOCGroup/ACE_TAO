@@ -29,7 +29,7 @@ public:
     csema_.acquire ();
     if (!is_closed ())
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb;
         this->getq (mb);
         if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
           {

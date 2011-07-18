@@ -3,10 +3,10 @@
 #ifndef FOO_IDL
 #define FOO_IDL
 
-typedef long LongBar[5];
 struct Foo
 {
-  LongBar bar;
+  long bar[5];
 };
 
 #endif
+

@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    simple.idl
- *
- *  $Id$
- *
- *  Tests of simple IDL
- *
- *
- *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    simple.idl
+//
+// = DESCRIPTION
+//    Tests of simple IDL
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
 
 typedef sequence<long,10> vec10;
 
@@ -34,7 +37,7 @@ interface simple2 : simple
   {
     long reason2;
   };
-
+  
   long op2 (in long a,
             in simple b,
             out simple2 c)

@@ -1,5 +1,5 @@
-// -*- MPC -*-
 // $Id$
+// -*- MPC -*-
 
 project : ciao, acelib {
   after += CIAO_Logger

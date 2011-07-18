@@ -1,50 +1,56 @@
 /* -*- C++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    enum_ch.h
- *
- *  $Id$
- *
- *  Concrete visitor for Enums generating code in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    enum_ch.h
+//
+// = DESCRIPTION
+//    Concrete visitor for Enums generating code in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_ENUM_ENUM_CH_H_
 #define _BE_VISITOR_ENUM_ENUM_CH_H_
 
-/**
- * @class be_visitor_enum_ch
- *
- * @brief be_visitor_enum_ch
- *
- * This is the base visitor for enum for the header file
- */
 class be_visitor_enum_ch : public be_visitor_scope
 {
+  //
+  // = TITLE
+  //   be_visitor_enum_ch
+  //
+  // = DESCRIPTION
+  //   This is the base visitor for enum for the header file
+  //
+  //
 public:
-  /// conenumor
   be_visitor_enum_ch (be_visitor_context *ctx);
+  // conenumor
 
-  /// deenumor
   ~be_visitor_enum_ch (void);
+  // deenumor
 
-  /// visit enum.
   virtual int visit_enum (be_enum *node);
+  // visit enum.
 
   // =visit operations on syntactically valid elements in our scope
 
-  /// visit enum_val
   virtual int visit_enum_val (be_enum_val *node);
+  // visit enum_val
 
   // = helper
 
-  /// generate a comma after each element is processed
   virtual int post_process (be_decl *);
+  // generate a comma after each element is processed
 };
 
 #endif /* _BE_VISITOR_ENUM_ENUM_CH_H_ */

@@ -9,7 +9,10 @@
 
 #include "ace/OS_NS_Thread.h"
 #include "ace/Service_Config.h"
-#include "tao/Invocation_Utils.h"
+
+ACE_RCSID (tao,
+           params,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,8 +61,6 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
                                      "TAO_PortableServer",
                                      "_make_TAO_Object_Adapter_Factory",
                                      ""))
-  , forward_invocation_on_object_not_exist_ (false)
-  , forward_once_exception_ (TAO::FOE_NON)
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)

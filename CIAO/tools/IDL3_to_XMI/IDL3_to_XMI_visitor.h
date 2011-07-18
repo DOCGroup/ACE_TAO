@@ -27,7 +27,6 @@
 #include "Literals.h"
 #include "XML/XercesString.h"
 #include "CIAO_IDL3_TO_XMI_Export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -41,7 +40,7 @@ namespace XERCES_CPP_NAMESPACE
   class DOMElement;
 }
 
-namespace DAnCE
+namespace CIAO
 {
   namespace XMI
   {
@@ -62,28 +61,15 @@ namespace DAnCE
       virtual int visit_type (AST_Type *node);
       virtual int visit_predefined_type (AST_PredefinedType *node);
       virtual int visit_module (AST_Module *node);
-      virtual int visit_template_module (AST_Template_Module *node);
-      virtual int visit_template_module_inst (AST_Template_Module_Inst *node);
-      virtual int visit_template_module_ref (AST_Template_Module_Ref *node);
-      virtual int visit_param_holder(AST_Param_Holder *node);
       virtual int visit_interface (AST_Interface *node);
       virtual int visit_interface_fwd (AST_InterfaceFwd *node);
       virtual int visit_valuebox (AST_ValueBox *node);
       virtual int visit_valuetype (AST_ValueType *node);
       virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
-      virtual int visit_eventtype (AST_EventType *node);
-      virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
       virtual int visit_component (AST_Component *node);
       virtual int visit_component_fwd (AST_ComponentFwd *node);
-      virtual int visit_provides (AST_Provides *node);
-      virtual int visit_uses (AST_Uses *node);
-      virtual int visit_publishes (AST_Publishes *node);
-      virtual int visit_emits (AST_Emits *node);
-      virtual int visit_consumes (AST_Consumes *node);
-      virtual int visit_porttype (AST_PortType *node);
-      virtual int visit_extended_port (AST_Extended_Port *node);
-      virtual int visit_mirror_port (AST_Mirror_Port *node);
-      virtual int visit_connector (AST_Connector *node);
+      virtual int visit_eventtype (AST_EventType *node);
+      virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
       virtual int visit_home (AST_Home *node);
       virtual int visit_factory (AST_Factory *node);
       virtual int visit_structure (AST_Structure *node);
@@ -107,7 +93,6 @@ namespace DAnCE
       virtual int visit_typedef (AST_Typedef *node);
       virtual int visit_root (AST_Root *node);
       virtual int visit_native (AST_Native *node);
-      virtual int visit_finder (AST_Finder *node);
 
       struct Error
       {
@@ -139,16 +124,10 @@ namespace DAnCE
 
       /// implementation for elements common to both eventtypes
       /// and valuetypes
-      void visit_valuetype_impl (AST_ValueType *node);
+      void visit_valuetype_impl (AST_ValueType *, const ACE_TCHAR *stereotype);
 
       /// implementation of elements common to exceptions and structures.
-      void visit_struct_impl (AST_Structure *node);
-
-      /// Generation of common associations of anonymous and typedefed arrays.
-      void gen_array_associations (AST_Decl *node, AST_Array *array);
-
-      /// Generation of common associations of anonymous and typedefed sequences.
-      void gen_sequence_associations (AST_Decl *node, AST_Sequence *sequence);
+      void visit_struct_impl (AST_Structure *, const ACE_TCHAR *stereotype);
 
       /// sets an attribute on the element at the top of the stack.
       void set_attribute (const ACE_TCHAR *name,
@@ -221,16 +200,31 @@ namespace DAnCE
       /// @param port_type Repository ID of port type (ie, interface type for facet)
       /// @param name The name of the port
       /// @param is_multiple The multiplicity of the port (ie, uses multiple.)
-      void add_port (const ACE_TCHAR *port_kind,
-                     AST_Field *port_node);
+      void add_port (const ACE_TCHAR *component,
+                     const ACE_TCHAR *port_kind,
+                     const ACE_TCHAR *port_type,
+                     const ACE_TCHAR *name,
+                     bool is_multiple,
+                     const ACE_TCHAR *file,
+                     long line);
 
       void add_managed_component (const ACE_TCHAR *home, const ACE_TCHAR *component);
 
 
+      typedef ACE_Unbounded_Queue<AST_Component::port_description> PORTS;
+
+      /// @param ports The queue representing the port from AST_component
+      /// @param component RepoID of the component
+      /// @param port_kind stereotype text of the port
+      void gen_component_ports (PORTS &ports,
+                                const ACE_TCHAR *component,
+                                const ACE_TCHAR *port_kind,
+                                const ACE_TCHAR *file_name);
+
       ACE_TCHAR * union_label_value (AST_Expression *exp);
 
       typedef ACE_Hash_Map_Manager_Ex< ACE_TString,
-                                       DAnCE::XML::XStr,
+                                       CIAO::XML::XStr,
                                        ACE_Hash <ACE_TString>,
                                        ACE_Equal_To <ACE_TString>,
                                        ACE_Null_Mutex > XMI_ID_MAP;
@@ -243,21 +237,6 @@ namespace DAnCE
       /// Stores elements we are currently generating XMI.  Top of stack is the current
       /// element.
       ELEMENT_STACK stack_;
-
-      struct ElementContext {
-        ACE_TString ns_;
-        XERCES_CPP_NAMESPACE::DOMElement *elem_;
-      };
-
-      typedef ACE_Hash_Map_Manager_Ex< ACE_TString,
-                                       ElementContext,
-                                       ACE_Hash <ACE_TString>,
-                                       ACE_Equal_To <ACE_TString>,
-                                       ACE_Null_Mutex > REPO_ID_MAP;
-
-      /// Stores elements that were forward declared. Also stores modules that can
-      /// be reopened.
-      REPO_ID_MAP repo_id_map_;
 
       /// Provides a "protected" push that is popped when the current scope
       /// is exited.
@@ -298,16 +277,13 @@ namespace DAnCE
 
       XERCES_CPP_NAMESPACE::DOMElement *associations_;
 
-      DAnCE::XML::XStr base_id_;
+      const CIAO::XML::XStr base_id_;
 
       /// true if for some reason the generated output is bad
       /// and shouldn't be written.
       bool output_dirty_;
 
       bool skip_imported_;
-
-      /// true if we are in enum "scope".
-      bool visiting_enum_;
 
       /// Used to determine IDL ordering of union labels.
       size_t order_;
@@ -320,5 +296,4 @@ namespace DAnCE
     };
   }
 }
-
 #endif

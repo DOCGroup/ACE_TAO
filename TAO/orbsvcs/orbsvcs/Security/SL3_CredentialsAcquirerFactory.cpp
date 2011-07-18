@@ -1,6 +1,9 @@
-// $Id$
-
 #include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
+
+
+ACE_RCSID (Security,
+           SL3_CredentialsAcquirerFactory,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

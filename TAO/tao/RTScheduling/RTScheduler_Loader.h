@@ -33,24 +33,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_RTScheduler_Loader (void);
-
   /// Destructor.
   virtual ~TAO_RTScheduler_Loader (void);
 
   /// Initialize the RTScheduler loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
-
-private:
-  /// Set to true after init is called.
-  bool initialized_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTScheduler, TAO_RTScheduler_Loader)
 ACE_FACTORY_DECLARE (TAO_RTScheduler, TAO_RTScheduler_Loader)
-
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RTSCHEDULER_LOADER_H */

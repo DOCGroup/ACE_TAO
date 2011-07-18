@@ -25,7 +25,7 @@
 #if (TAO_HAS_CORBALOC_PARSER == 1)
 
 #include "ace/Service_Config.h"
-#include "ace/Containers_T.h"
+#include "ace/Array.h"
 #include "tao/Profile.h"
 #include "ace/SString.h"
 

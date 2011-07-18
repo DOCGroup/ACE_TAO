@@ -10,6 +10,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(client, remote_dgram_client_test, "$Id$")
+
 // Name of the program.
 static const ACE_TCHAR *program_name;
 

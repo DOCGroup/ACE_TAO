@@ -1,5 +1,6 @@
 # $Id$
 
+exceptions ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 0
@@ -45,7 +46,7 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-CCFLAGS += $(CFLAGS) -ip
+CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
 DCFLAGS += -g -debug full
 DLD     = $(CXX)
 LD      = $(CXX)

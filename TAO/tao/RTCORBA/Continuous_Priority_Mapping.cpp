@@ -6,6 +6,8 @@
 
 #include "ace/Sched_Params.h"
 
+ACE_RCSID(RTCORBA, Continuous_Priority_Mapping, "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)

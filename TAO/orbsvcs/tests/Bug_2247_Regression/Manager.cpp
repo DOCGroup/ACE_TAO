@@ -71,7 +71,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -152,13 +152,13 @@ Manager::make_merged_iors (void)
 {
   // First  server
   object_primary =
-    this->orb_->string_to_object (first_ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (first_ior));
 
   if (merged_test)
     {
       //Second server
       object_secondary =
-        this->orb_->string_to_object (second_ior);
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (second_ior));
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_var IORM =

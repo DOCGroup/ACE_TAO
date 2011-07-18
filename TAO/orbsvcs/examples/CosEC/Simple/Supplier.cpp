@@ -3,35 +3,10 @@
 #include "Supplier.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://ec.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+ACE_RCSID (CosEC_Examples,
+           Supplier,
+           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -56,8 +31,12 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
+      if (argc <= 1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Usage: Supplier <event_channel_ior>\n"));
+          return 1;
+        }
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");
@@ -71,7 +50,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // command line argument or resolve_initial_references(), but
       // this is simpler...
       object =
-        orb->string_to_object (ior);
+        orb->string_to_object (argv[1]);
 
       CosEventChannelAdmin::EventChannel_var event_channel =
         CosEventChannelAdmin::EventChannel::_narrow (object.in ());

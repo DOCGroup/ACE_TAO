@@ -14,12 +14,8 @@
 
 module Foo
 {
-  struct Node;
-
-  typedef sequence <Node,5> nodesequence;
-
   struct Node {
-    nodesequence nodes;
+    sequence <Node,5> nodes;
   };
 
 };

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-// $Id$
+//$Id$
 
 #include "tao/Messaging/Asynch_Invocation.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
@@ -16,6 +15,10 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
+
+ACE_RCSID (Messaging,
+           Asynch_Invocation,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

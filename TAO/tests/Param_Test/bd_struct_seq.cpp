@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    bd_struct_seq.cpp
- *
- *  $Id$
- *
- *  tests bounded struct sequences
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    bd_struct_seq.cpp
+//
+// = DESCRIPTION
+//    tests bounded struct sequences
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "bd_struct_seq.h"
+
+ACE_RCSID (Param_Test,
+           bd_struct_seq,
+           "$Id$")
 
 const CORBA::ULong MAX_STRUCTSEQ_LEN = 1;
 
@@ -183,9 +190,9 @@ Test_Bounded_Struct_Sequence::compare (const Param_Test::Bounded_StructSeq &s1,
           || vs1.c != vs2.c
           || vs1.s != vs2.s
           || vs1.o != vs2.o
-          || !ACE::is_equal (vs1.f, vs2.f)
+          || vs1.f != vs2.f
           || vs1.b != vs2.b
-          || !ACE::is_equal (vs1.d, vs2.d))
+          || vs1.d != vs2.d )
         return 0;
     }
 

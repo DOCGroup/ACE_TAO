@@ -13,7 +13,7 @@ int ACE_TMAIN (int, ACE_TCHAR **)
 // Just for the book...
 
 // Listing 1 code/ch12
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
   ACE_NEW_RETURN (mb, ACE_Message_Block (128), -1);
 
   const char *deviceAddr= "Dev#12";
@@ -21,11 +21,11 @@ int ACE_TMAIN (int, ACE_TCHAR **)
 // Listing 1
 #endif /* 0 */
 // Listing 2 code/ch12
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
   ACE_NEW_RETURN (mb, ACE_Message_Block (128), -1);
 
   const char *commandSeq= "CommandSeq#14";
-  ACE_OS::sprintf (mb->wr_ptr (), "%s", commandSeq);
+  ACE_OS::sprintf (mb->wr_ptr (), commandSeq);
   // Move the wr_ptr() forward in the buffer by the
   // amount of data we just put in.
   mb->wr_ptr (ACE_OS::strlen (commandSeq) +1);

@@ -7,13 +7,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecSchedulerS.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/RtecSchedulerS.h"
 #include "orbsvcs/Event_Service_Constants.h"
+
 #include "orbsvcs/Sched/sched_export.h"
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)

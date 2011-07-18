@@ -10,6 +10,11 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/sys/os_mman.h"
 
+
+ACE_RCSID (ace,
+           Mutex,
+           "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)

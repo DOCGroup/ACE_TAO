@@ -1,5 +1,4 @@
-// -*- C++ -*-
-// $Id$
+// @(#) $Id$
 
 #include "tao/EndpointPolicy/Endpoint_Acceptor_Filter.h"
 #include "tao/EndpointPolicy/EndpointPolicyC.h"
@@ -9,6 +8,11 @@
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
+
+ACE_RCSID(EndpointPolicy,
+          Endpoint_Acceptor_Filter,
+          "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

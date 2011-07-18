@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_Framework_Loader.h"
@@ -7,12 +6,16 @@
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
+
+ACE_RCSID (CSD_Framework,
+           CSD_Framework_Loader,
+           "$Id$")
+
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CSD_Framework_Loader::TAO_CSD_Framework_Loader (void)
-  : initialized_ (false)
 {
 }
 
@@ -40,11 +43,13 @@ TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_CSD_Framework_Loader::init");
 
+  static bool initialized = false;
+
   // Only allow initialization once.
-  if (this->initialized_)
+  if (initialized)
     return 0;
 
-  this->initialized_ = true;
+  initialized = true;
 
   // Register the ORB initializer.
   try

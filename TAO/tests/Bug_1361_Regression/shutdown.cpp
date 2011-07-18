@@ -3,6 +3,11 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
+ACE_RCSID(Bug_1361_Regression, shutdown, "$Id$")
+
 #if defined (ACE_OPENVMS)
 // need this to circumvent link error on OpenVMS
 // has to do with interference in template instantiations
@@ -78,6 +83,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

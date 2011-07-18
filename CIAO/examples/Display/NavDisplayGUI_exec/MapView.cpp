@@ -2,28 +2,39 @@
 
 #include "MapView.h"
 #include <stdlib.h>
+
 #include "worldmap1.xpm"
 
 MapView::MapView(
-  QGraphicsScene& c,
-  QWidget* parent )
+  Q3Canvas& c,
+  QWidget* parent,
+  const char* name,
+  Qt::WindowFlags f)
   :
-  QGraphicsView(&c, parent),
+  Q3CanvasView(&c, parent, name, f),
   bg_pixmap_(worldmap1)
 {
-  setSceneRect (0,0, 601, 388);
-  setMinimumSize(bg_pixmap_.width() -10, bg_pixmap_.height() -10);
+  viewport()->setBackgroundMode(Qt::NoBackground);
+  enableClipper(TRUE);
+  if(!bg_pixmap_.isNull())
+  {
+    resizeContents(bg_pixmap_.width(), bg_pixmap_.height());
+  }
+  else
+    resizeContents(100, 100);
+
+  canvas()->setBackgroundPixmap(bg_pixmap_);
 }
 
 void
 MapView::clear()
 {
+  /*
+  QCanvasItemList list = canvas()->allItems();
+  for(QCanvasItemList::Iterator it = list.begin(); it != list.end(); ++it)
+    {
+      if(*it)
+        delete *it;
+    }
+  */
 }
-
-void
-MapView::resizeEvent (QResizeEvent * /*event*/)
-{
-  QPixmap oo  = bg_pixmap_.scaled(this->width() , this->height());
-  setBackgroundBrush(QBrush(oo));
-}
-

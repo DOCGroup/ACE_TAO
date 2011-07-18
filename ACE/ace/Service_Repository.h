@@ -96,11 +96,11 @@ public:
    * Locate a named entry in the service table, optionally ignoring
    * suspended entries.
    *
-   * @param name The name of the service to search for.
-   * @param srp  Optional; if not 0, it is a pointer to a location
-   *             to receive the ACE_Service_Type pointer for the
-   *             located service. Meaningless if this method
-   *             returns -1.
+   * @param service_name The name of the service to search for.
+   * @param srp          Optional; if not 0, it is a pointer to a location
+   *                     to receive the ACE_Service_Type pointer for the
+   *                     located service. Meaningless if this method
+   *                     returns -1.
    * @param ignore_suspended If true, the search ignores suspended services.
    *
    * @retval  0 Named service was located.

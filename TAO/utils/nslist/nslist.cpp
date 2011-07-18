@@ -359,17 +359,22 @@ namespace
 
 //============================================================================
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
   try
     {
       // Contact the orb
-      orb = CORBA::ORB_init (argc, argv);
+      ACE_Argv_Type_Converter argcon (argcw, argvw);
+      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv ());
 
       // Scan through the command line options
       bool
         failed = false,
         showNSonly = false;
+      int
+        argc = argcon.get_argc ();
+      ACE_TCHAR
+        **argv = argcon.get_TCHAR_argv ();
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
       ACE_TCHAR *name = 0;
@@ -387,7 +392,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --ns requires an argument\n"));
-                      failed = true;
+                      failed= true;
                     }
                   else
                     {
@@ -396,7 +401,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         {
                           ACE_DEBUG ((LM_DEBUG,
                                      "Error: more than one --ns.\n"));
-                          failed = true;
+                          failed= true;
                         }
                       else if (showNSonly)
                         {
@@ -452,7 +457,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --tree requires an argument\n"));
-                      failed = true;
+                      failed= true;
                     }
                   else
                     {
@@ -474,7 +479,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                  "Error: --node requires an argument\n"));
-                      failed = true;
+                      failed= true;
                     }
                   else
                     {
@@ -718,7 +723,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                      ((showCtxIOR)? str.in () : "")));
           list_context (root_nc.in (), 1);
         }
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
@@ -727,5 +731,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
+  orb->destroy ();
   return 0;
 }

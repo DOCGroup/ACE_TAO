@@ -1,86 +1,56 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
-# $Id$
+# $Id$ 
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
-
-$iterations = '10';
-$port = '8888';
-$timeout = '10';
-$hostname = '[::1]';
+$ORBdebuglevel = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+        $ORBdebuglevel = '10';
+    } 
 }
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$status = 0;
+$iorbase = "test.ior";
+$iorfile = PerlACE::LocalFile ($iorbase);
 
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+if (PerlACE::is_vxworks_test()) {
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint diop://$TARGETHOSTNAME:8888 -o $iorbase -ORBdebuglevel $ORBdebuglevel");
+}
+else {
+  $SV = new PerlACE::Process ("server", "-ORBEndpoint diop://[::1]:8888 -o $iorfile -ORBdebuglevel $ORBdebuglevel");
+}
 
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBEndpoint diop://$hostname:$port " .
-                              "-o $server_iorfile");
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -t 10 -i 10 -ORBdebuglevel $ORBdebuglevel");
 
-$CL = $client->CreateProcess ("client",
-                              "-ORBdebuglevel $debug_level " .
-                              "-k file://$client_iorfile " .
-                              "-t $timeout -i $iterations");
+$SV->Spawn ();
 
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: could not find file <$iorfile>\n";
+    $SV->Kill (); 
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 75);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+$client = $CL->SpawnWaitKill (90);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 exit $status;

@@ -16,8 +16,6 @@
 
 #include "orbsvcs/Trader/Trading_Loader.h"
 
-#include "orbsvcs/Daemon_Utilities.h"
-
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
 #include "tao/IORTable/IORTable.h"
@@ -28,7 +26,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-
+ACE_RCSID (Trader, Trading_Loader, "$Id$")
 
 TAO_Trading_Loader::TAO_Trading_Loader (void)
   : federate_ (0),
@@ -67,7 +65,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
         continue;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "*** Trading Service %C initializing.\n",
+                  "*** Trading Service %s initializing.\n",
                   trader_name));
 
       this->name_ = trader_name;
@@ -84,10 +82,6 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // Check if -ORBDaemon is specified and if so, daemonize at this moment,
-      // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
-      TAO_Daemon_Utility::check_for_daemon (argc, argv);
-
       // Copy command line parameter.
       ACE_Argv_Type_Converter command_line(argc, argv);
 
@@ -142,7 +136,7 @@ TAO_Trading_Loader::fini (void)
                 our_link->describe_link (link_name_seq[i]);
 
               ACE_DEBUG ((LM_DEBUG,
-                          "*** Removing link to %C.\n",
+                          "*** Removing link to %s.\n",
                           static_cast<const char *> (link_name_seq[i])));
               our_link->remove_link (link_name_seq[i]);
 

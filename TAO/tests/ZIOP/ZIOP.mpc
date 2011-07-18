@@ -3,7 +3,7 @@
 
 project(TestCompressor) : taolib, compression, taoidldefaults {
   sharedname   = TAO_TestCompressor
-  dynamicflags += TAO_TESTCOMPRESSOR_BUILD_DLL
+  dynamicflags = TAO_TESTCOMPRESSOR_BUILD_DLL
 
   Source_Files {
     TestCompressor

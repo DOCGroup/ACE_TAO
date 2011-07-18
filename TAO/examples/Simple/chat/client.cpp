@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    client.cpp
- *
- *  $Id$
- *
- *  The Chat client program entry point.
- *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+// = LIBRARY
+//    TAO/tests/Simple/chat
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//    The Chat client program entry point.
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Client_i.h"
 

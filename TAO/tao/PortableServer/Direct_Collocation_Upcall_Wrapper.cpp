@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
@@ -11,6 +10,10 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Object.h"
 #include "tao/SystemException.h"
+
+ACE_RCSID (PortableServer,
+           Direct_Collocation_Upcall_Wrapper,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

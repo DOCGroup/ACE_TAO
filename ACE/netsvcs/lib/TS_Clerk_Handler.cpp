@@ -8,6 +8,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
 
+ACE_RCSID(lib, TS_Clerk_Handler, "$Id$")
+
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
                                             ACE_INET_Addr &addr)
 : state_ (ACE_TS_Clerk_Handler::IDLE),
@@ -25,7 +27,7 @@ ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
 void
 ACE_TS_Clerk_Handler::state (ACE_TS_Clerk_Handler::State state)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::state");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::state"));
   this->state_ = state;
 }
 
@@ -33,7 +35,7 @@ ACE_TS_Clerk_Handler::state (ACE_TS_Clerk_Handler::State state)
 ACE_TS_Clerk_Handler::State
 ACE_TS_Clerk_Handler::state (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::state");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::state"));
   return this->state_;
 }
 
@@ -41,7 +43,7 @@ ACE_TS_Clerk_Handler::state (void)
 void
 ACE_TS_Clerk_Handler::timeout (long to)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::timeout"));
   if (to > this->max_timeout_)
     to = this->max_timeout_;
 
@@ -54,7 +56,7 @@ ACE_TS_Clerk_Handler::timeout (long to)
 long
 ACE_TS_Clerk_Handler::timeout (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::timeout"));
   long old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
@@ -76,7 +78,7 @@ ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 void
 ACE_TS_Clerk_Handler::max_timeout (long mto)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::max_timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::max_timeout"));
   this->max_timeout_ = mto;
 }
 
@@ -84,14 +86,14 @@ ACE_TS_Clerk_Handler::max_timeout (long mto)
 long
 ACE_TS_Clerk_Handler::max_timeout (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::max_timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::max_timeout"));
   return this->max_timeout_;
 }
 
 int
 ACE_TS_Clerk_Handler::open (void *)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::open");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::open"));
   ACE_INET_Addr server_addr;
 
   // Set connection state as established
@@ -130,7 +132,7 @@ ACE_TS_Clerk_Handler::open (void *)
 ACE_HANDLE
 ACE_TS_Clerk_Handler::get_handle (void) const
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::get_handle");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::get_handle"));
   return this->peer().get_handle ();
 }
 
@@ -138,7 +140,7 @@ int
 ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
                                     ACE_Reactor_Mask mask)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::handle_close");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::handle_close"));
   ACE_UNUSED_ARG (mask);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down on handle %d\n"),
@@ -150,7 +152,7 @@ ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
 int
 ACE_TS_Clerk_Handler::reinitiate_connection (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::reinitiate_connection");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::reinitiate_connection"));
   // Skip over deactivated descriptors.
 
   // Set state to connecting so that we don't try to send anything
@@ -175,7 +177,7 @@ ACE_TS_Clerk_Handler::reinitiate_connection (void)
 int
 ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::handle_input");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::handle_input"));
   // We're getting a time update message from a server
   ACE_Time_Request reply;
   if (this->recv_reply (reply) != 0)
@@ -205,7 +207,7 @@ int
 ACE_TS_Clerk_Handler::handle_timeout (const ACE_Time_Value &,
                                       const void *)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::handle_timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::handle_timeout"));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) attempting to reconnect to server with timeout = %d\n"),
               this->timeout_));
@@ -220,21 +222,21 @@ ACE_TS_Clerk_Handler::handle_timeout (const ACE_Time_Value &,
 void
 ACE_TS_Clerk_Handler::remote_addr (ACE_INET_Addr &addr)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::remote_addr");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::remote_addr"));
   this->remote_addr_ = addr;
 }
 
 ACE_INET_Addr &
 ACE_TS_Clerk_Handler::remote_addr (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::remote_addr");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::remote_addr"));
   return this->remote_addr_;
 }
 
 int
 ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::recv_reply");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::recv_reply"));
   const int bytes_expected = reply.size ();
 
   // Since Time_Request messages are fixed size, read the entire
@@ -268,7 +270,7 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
 int
 ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time_info)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::send_request");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Handler::send_request"));
   void    *buffer;
   ssize_t length;
 
@@ -327,7 +329,7 @@ ACE_TS_Clerk_Processor::ACE_TS_Clerk_Processor ()
 void
 ACE_TS_Clerk_Processor::alloc (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::alloc");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::alloc"));
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
   void *temp = 0;
@@ -358,14 +360,14 @@ int
 ACE_TS_Clerk_Processor::handle_timeout (const ACE_Time_Value &,
                                         const void *)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::handle_timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::handle_timeout"));
   return this->update_time ();
 }
 
 int
 ACE_TS_Clerk_Processor::update_time ()
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::update_time");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::update_time"));
   ACE_UINT32 expected_sequence_num = this->cur_sequence_num_;
 
   // Increment sequence number
@@ -428,7 +430,7 @@ ACE_TS_Clerk_Processor::update_time ()
 int
 ACE_TS_Clerk_Processor::fini (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::fini");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::fini"));
 
   // Cancel the timer
   if (this->timer_id_ != -1)
@@ -460,14 +462,14 @@ ACE_TS_Clerk_Processor::fini (void)
 int
 ACE_TS_Clerk_Processor::info (ACE_TCHAR **, size_t) const
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::info");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::info"));
   return 0;
 }
 
 int
 ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::init");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::init"));
   // Use the options hook to parse the command line arguments and set
   // options.
   this->parse_args (argc, argv);
@@ -505,7 +507,7 @@ int
 ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
                                              ACE_Synch_Options &synch_options)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::initiate_connection");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::initiate_connection"));
   ACE_TCHAR buf[MAXHOSTNAMELEN + 1];
 
   // Mark ourselves as idle so that the various iterators will ignore
@@ -564,7 +566,7 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
 int
 ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::parse_args");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::parse_args"));
   ACE_INET_Addr server_addr;
   ACE_TS_Clerk_Handler *handler;
 
@@ -612,14 +614,14 @@ ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TS_Clerk_Processor::suspend (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::suspend");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::suspend"));
   return 0;
 }
 
 int
 ACE_TS_Clerk_Processor::resume (void)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Processor::resume");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Clerk_Processor::resume"));
   return 0;
 }
 

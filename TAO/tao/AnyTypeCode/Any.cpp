@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any.h"
@@ -20,6 +19,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (AnyTypeCode,
+           Any,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -365,11 +368,6 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 
 // Insertion of the other basic types.
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
-
 void
 operator<<= (CORBA::Any &any, CORBA::Short s)
 {
@@ -516,18 +514,6 @@ operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
                CORBA::_tc_wstring,
                CORBA::wstring_dup (ws),
                0);
-}
-
-void
-operator <<= (CORBA::Any &any, const std::string & str)
-{
-  any <<= str.c_str ();
-}
-
-void
-operator <<= (CORBA::Any &, std::string *)
-{
-  // TODO
 }
 
 // Extraction: these are safe and hence we have to check that the
@@ -734,20 +720,6 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
       tc
     );
 }
-
-CORBA::Boolean
-operator >>= (const CORBA::Any &any, std::string &str)
-{
-  const char *buf = 0;
-  CORBA::Boolean flag = any >>= buf;
-  str.assign (buf);
-  ACE::strdelete (const_cast <char *> (buf));
-  return flag;
-}
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
 
 // ================================================================
 // Any_Impl_T template specializations.

@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_ptr,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -22,11 +22,11 @@ TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 #if TAO_HAS_INTERCEPTORS == 1
 
 template<typename S_ptr,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  Insert_Policy<S_ptr>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -52,7 +52,7 @@ TAO::In_Object_Argument_Cloner_T<S_ptr>::release (S_ptr objref)
 }
 
 template<typename S_ptr,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Argument_T (void)
 {
   if (this->is_clone_)
@@ -62,7 +62,7 @@ TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Arg
 }
 
 template<typename S_ptr,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 TAO::Argument*
 TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone (void)
 {
@@ -78,7 +78,7 @@ TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone (void)
 
 template<typename S_ptr,
          typename S_traits,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
@@ -87,7 +87,7 @@ TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::marshal (TAO_OutputC
 
 template<typename S_ptr,
          typename S_traits,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
@@ -99,12 +99,12 @@ TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::demarshal (TAO_Input
 
 template<typename S_ptr,
          typename S_traits,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_ptr>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -113,7 +113,7 @@ TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::interceptor_value (
 
 template<typename S_ptr,
          typename S_out,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
@@ -124,12 +124,12 @@ TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::demarshal (TAO_InputCDR &
 
 template<typename S_ptr,
          typename S_out,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_ptr>::any_insert (any, this->x_);
+  Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -138,7 +138,7 @@ TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::interceptor_value (
 
 template<typename S_ptr,
          typename S_var,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
@@ -149,12 +149,12 @@ TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::demarshal (TAO_InputCDR &
 
 template<typename S_ptr,
          typename S_var,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 void
 TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  Insert_Policy<S_ptr>::any_insert (any, this->x_.in ());
+  Insert_Policy::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

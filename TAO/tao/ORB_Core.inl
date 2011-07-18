@@ -324,10 +324,10 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   return 0;
 }
 
-ACE_INLINE void
-TAO_ORB_Core::tss_cleanup (ACE_Array_Base<void *> &ts_objects)
+ACE_INLINE TAO_Cleanup_Func_Registry *
+TAO_ORB_Core::tss_cleanup_funcs (void)
 {
-  this->tss_cleanup_funcs_.cleanup (ts_objects);
+  return &(this->tss_cleanup_funcs_);
 }
 
 ACE_INLINE bool

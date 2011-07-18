@@ -1,17 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    get.cpp
- *
- *  $Id$
- *
- *  Sample application demonstrating synchronous Snmp::get API
- *  to access an SNMP Version 1 agent.
- *
- *
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//    get.cpp
+//
+// = DESCRIPTION
+//  Sample application demonstrating synchronous Snmp::get API
+//  to access an SNMP Version 1 agent.
+//
+// = AUTHOR
+//  Peter E. Mellquist original code
+//  Michael R MacFaden mrm@cisco.com rework API/ACE integration
+//
+// ============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -35,6 +40,8 @@
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
+ACE_RCSID(get, get, "$Id$")
 
 //
 // SNMPv1 Get Application

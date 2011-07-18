@@ -18,6 +18,11 @@
 
 #include "ace/os_include/os_errno.h"
 
+ACE_RCSID (DynamicInterface,
+           DII_Invocation_Adapter,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

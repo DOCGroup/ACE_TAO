@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/PI_PolicyFactory.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -10,6 +8,10 @@
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_RCSID (tao,
+           PI_PolicyFactory,
+           "$Id$")
 
 CORBA::Policy_ptr
 TAO_PI_PolicyFactory::create_policy (

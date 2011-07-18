@@ -1,18 +1,24 @@
 /* -*- C++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_valuetype_fwd.h
- *
- *  $Id$
- *
- *  Concrete visitor for the valuetype_fwd class
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale (be_visitor_interface_fwd.h)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_valuetype_fwd.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the valuetype_fwd class
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale (be_visitor_interface_fwd.h)
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_VALUETYPE_FWD_H
 #define TAO_BE_VISITOR_VALUETYPE_FWD_H

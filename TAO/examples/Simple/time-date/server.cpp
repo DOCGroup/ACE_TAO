@@ -1,23 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- * This directory contains an example that illustrates how the ACE
- * Service Configurator can dynamically configure an ORB and its
- * servants from a svc.conf file.
- *
- *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples/Simple/time-date
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//   This directory contains an example that illustrates how the ACE
+//   Service Configurator can dynamically configure an ORB and its
+//   servants from a svc.conf file.
+//
+// = AUTHOR
+//    Doug Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (time_date,
+           server,
+           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

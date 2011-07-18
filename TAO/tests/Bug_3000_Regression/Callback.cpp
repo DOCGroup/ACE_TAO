@@ -3,6 +3,8 @@
 //
 #include "Callback.h"
 
+ACE_RCSID(Callback, Callback, "$Id$")
+
 Callback::Callback (void)
   : received_callback_ (false)
 {

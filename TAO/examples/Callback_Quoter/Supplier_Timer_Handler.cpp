@@ -1,17 +1,28 @@
-//=============================================================================
-/**
- *  Implementation of the Supplier_Time_Handler class.
- *
- *  $Id$
- *
- *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
+// $Id$
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/examples/Callback_Quoter
+//
+// = FILENAME
+//  Supplier_Time _Handler.cpp
+//
+// = DESCRIPTION
+//    Implementation of the Supplier_Time_Handler class.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
-
+#include "ace/OS.h"
 #include "ace/ACE.h"
 
 #include "Supplier_Timer_Handler.h"
+
+
+ACE_RCSID(Callback_Quoter, Supplier, "$Id$")
 
 // The supplier refernce is got so that the mathods in the supplier
 // can be accessed.

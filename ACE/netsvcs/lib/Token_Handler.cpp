@@ -7,6 +7,10 @@
 
 #include "ace/Signal.h"
 
+ACE_RCSID (lib,
+           Token_Handler,
+           "$Id$")
+
 int
 ACE_Token_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {

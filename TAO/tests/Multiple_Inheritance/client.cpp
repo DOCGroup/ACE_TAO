@@ -1,16 +1,19 @@
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *    A client program for the Multiple Inheritance module
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+// $Id$
+//
+//===================================================================
+//  = LIBRARY
+//      TAO/tests/Multiple_Inheritance
+//
+//  = FILENAME
+//     client.cpp
+//
+//  = DESCRIPTION
+//      A client program for the Multiple Inheritance module
+//
+//  = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
@@ -18,6 +21,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(Multiple_Inheritance, client, "$Id$")
 
 static ACE_TCHAR *ior = 0;
 static ACE_TCHAR *ior_input_file = 0;

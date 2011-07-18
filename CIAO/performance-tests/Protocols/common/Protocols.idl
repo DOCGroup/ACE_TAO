@@ -1,8 +1,4 @@
 // $Id$
-#ifndef PROTOCOLS_IDL
-#define PROTOCOLS_IDL
-
-#pragma ciao lem "../common/ProtocolsE.idl"
 
 module Protocols
 {
@@ -31,5 +27,3 @@ module Protocols
                         inout octets payload);
   };
 };
-
-#endif

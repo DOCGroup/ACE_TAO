@@ -1,5 +1,4 @@
 // $Id$
-
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"
@@ -7,6 +6,10 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h"
+
+ACE_RCSID (EventChannel,
+           FTEC_Factory,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

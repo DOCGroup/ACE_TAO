@@ -1,26 +1,29 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *    A client program for the File IDL module
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===================================================================
+//  = LIBRARY
+//      TAO/tests/POA/Default_Servant/client
+//
+//  = FILENAME
+//     client.cpp
+//
+//  = DESCRIPTION
+//      A client program for the File IDL module
+//
+//  = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
 
 #include "FileC.h"
 #include "tao/debug.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
+
+ACE_RCSID(Default_Servant, client, "$Id$")
 
 static const ACE_TCHAR *iorfile = 0;
 static const ACE_TCHAR *filename = ACE_TEXT ("test");

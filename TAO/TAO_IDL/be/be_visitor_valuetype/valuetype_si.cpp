@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_si.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the server inline file
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_si.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the server inline file
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_si,
+           "$Id$")
 
 
 // ************************************************************************

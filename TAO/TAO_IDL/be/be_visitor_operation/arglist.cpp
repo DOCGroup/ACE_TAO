@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    arglist.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the parameter list of the Operation signature.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    arglist.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the parameter list of the Operation signature.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           arglist,
+           "$Id$")
 
 // ************************************************************
 //   operation visitor  to generate the argument list.
@@ -21,8 +31,7 @@
 be_visitor_operation_arglist::be_visitor_operation_arglist (
     be_visitor_context *ctx
   )
-  : be_visitor_operation (ctx),
-    unused_ (false)
+  : be_visitor_operation (ctx)
 {
 }
 
@@ -34,16 +43,16 @@ int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  bool has_args = node->argument_count () > 0;
 
-  *os << " (" << be_idt_nl;
+  *os << " (" << be_idt << be_idt_nl;
 
   switch (this->ctx_->state ())
     {
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
       *os << "::CORBA::Object *_collocated_tao_target_";
 
-      if (has_args)
+      if (node->argument_count () > 0)
         {
           *os << "," << be_nl;
         }
@@ -63,24 +72,25 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  if (!has_args)
+  if (node->argument_count () == 0)
     {
       *os << "void";
     }
 
-  *os << ")" << be_uidt;
+  *os << ")" << be_uidt << be_uidt;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
       if (node->is_local ())
         {
           *os << " = 0";
         }
 
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+    case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
@@ -96,48 +106,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 }
 
 int
-be_visitor_operation_arglist::visit_factory (be_factory *node)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-  bool has_args = node->argument_count () > 0;
-
-  *os << " (";
-
-  if (has_args)
-    {
-      *os << be_idt_nl;
-    }
-
-  // All we do is hand over code generation to our scope.
-  if (this->visit_scope (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_operation_arglist::")
-                         ACE_TEXT ("visit_factory - ")
-                         ACE_TEXT ("codegen for scope failed\n")),
-                        -1);
-    }
-
-  if (!has_args)
-    {
-      *os << "void";
-    }
-
-  *os << ")";
-
-  if (has_args)
-    {
-      *os << be_uidt;
-    }
-
-  // At present, visit_factory() is called only from the home
-  // servant source visitor, so we don't need to check the state
-  // for semicolon generation.
-
-  return 0;
-}
-
-int
 be_visitor_operation_arglist::visit_argument (be_argument *node)
 {
   // Get the visitor that will dump the argument's mapping in the operation
@@ -148,25 +116,31 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
-  be_operation *op =
-    be_operation::narrow_from_scope (this->ctx_->scope ());
-  be_interface *intf = 0;
+  be_operation *op = this->ctx_->be_scope_as_operation ();
+
+  if (!op)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_arglist::"
+                         "visit_argument - "
+                         "Bad operation\n"),
+                        -1);
+    }
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
-  if (op == 0)
-    {
-      be_factory *f =
-        be_factory::narrow_from_scope (this->ctx_->scope ());
+  be_interface *intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (op->defined_in ());
 
-      intf = be_interface::narrow_from_scope (f->defined_in ());
-    }
-  else
+  if (!intf)
     {
-      intf = this->ctx_->attribute ()
-        ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-        : be_interface::narrow_from_scope (op->defined_in ());
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_arglist::"
+                         "visit_argument - "
+                         "Bad interface\n"),
+                        -1);
     }
 
   // Set new scope.
@@ -174,7 +148,6 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
 
   // Create a visitor.
   be_visitor_args_arglist visitor (&ctx);
-  visitor.unused (unused_);
 
   if (visitor.visit_argument (node) == -1)
     {
@@ -202,10 +175,4 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
     }
 
   return 0;
-}
-
-void
-be_visitor_operation_arglist::unused (bool val)
-{
-  unused_ = val;
 }

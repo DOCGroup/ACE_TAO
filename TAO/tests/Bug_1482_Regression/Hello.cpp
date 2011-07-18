@@ -4,6 +4,12 @@
 #include "Hello.h"
 #include "ace/ACE.h"
 
+
+ACE_RCSID (Bug_1482_Regression,
+           Hello,
+           "$Id$")
+
+
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
     , mutex_ ()
@@ -30,10 +36,9 @@ Hello::next_prime (void)
 
       while (bc == 0)
         {
-          ++this->latest_prime_;
-          if (ACE::is_prime (this->latest_prime_,
+          if (ACE::is_prime (++this->latest_prime_,
                              2,
-                             this->latest_prime_ / 2) == 0)
+                             this->latest_prime_/2) == 0)
             bc = 1;
         }
     }

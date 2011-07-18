@@ -15,7 +15,7 @@ module Test
 
   struct sct {
     string a;
-    bounded_string b;
+    string<BOUND> b;
     bounded_string c;
   };
 
@@ -27,7 +27,7 @@ module Test
 
   union unn switch (string_field) {
   case BOUNDED:
-    bounded_string b;
+    string<BOUND> b;
   case TYPEDEFED:
     bounded_string c;
   default:
@@ -36,17 +36,17 @@ module Test
 
   exception exc {
     string a;
-    bounded_string b;
+    string<BOUND> b;
     bounded_string c;
   };
 
   valuetype val_bd_str bounded_string;
-  valuetype val_bds_str bounded_string;
+  valuetype val_bds_str string<BOUND>;
   valuetype val_arr_bd_str arr_bds_str;
 
   valuetype vtp {
     public string a;
-    public bounded_string b;
+    public string<BOUND> b;
     public bounded_string c;
   };
 
@@ -63,10 +63,10 @@ module Test
                            in bounded_string arg1,
                            out bounded_string arg2,
                            inout bounded_string arg3);
-    bounded_string method_s (in FailOn where,
-                            in bounded_string arg1,
-                            out bounded_string arg2,
-                            inout bounded_string arg3);
+    string<BOUND> method_s (in FailOn where,
+                            in string<BOUND> arg1,
+                            out string<BOUND> arg2,
+                            inout string<BOUND> arg3);
     // Operations on strings.
 
     seq_bd_str seq_method (in FailOn where,

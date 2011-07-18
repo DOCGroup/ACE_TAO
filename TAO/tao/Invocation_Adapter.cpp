@@ -1,5 +1,4 @@
-// -*- C++ -*-
-// $Id$
+//$Id$
 
 #include "tao/Invocation_Adapter.h"
 #include "tao/Profile_Transport_Resolver.h"
@@ -20,6 +19,11 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
+
+
+ACE_RCSID (tao,
+           Invocation_Adapter,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,12 +66,6 @@ namespace TAO
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
-    ACE_Time_Value *max_wait_time = 0;
-    ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
-    if (this->get_timeout (stub, tmp_wait_time))
-      {
-        max_wait_time= &tmp_wait_time;
-      }
 
     while (status == TAO_INVOKE_START || status == TAO_INVOKE_RESTART)
       {
@@ -85,6 +83,7 @@ namespace TAO
 
         if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
+            ACE_Time_Value *max_wait_time = 0;
             status =
               this->invoke_remote_i (stub,
                                      details,
@@ -113,8 +112,8 @@ namespace TAO
             if (TAO_debug_level > 2)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
-                  ACE_TEXT("handling forwarded locations\n")));
+                  "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
+                  "handling forwarded locations\n"));
               }
           }
       }
@@ -222,6 +221,12 @@ namespace TAO
                                        CORBA::Object_var &effective_target,
                                        ACE_Time_Value *&max_wait_time)
   {
+    ACE_Time_Value tmp_wait_time;
+    bool const is_timeout = this->get_timeout (stub, tmp_wait_time);
+
+    if (is_timeout)
+      max_wait_time = &tmp_wait_time;
+
     (void) this->set_response_flags (stub, details);
 
     CORBA::Octet const rflags = details.response_flags ();
@@ -240,7 +245,7 @@ namespace TAO
 
     if (TAO_debug_level)
       {
-        if (max_wait_time && *max_wait_time == ACE_Time_Value::zero)
+        if (is_timeout && *max_wait_time == ACE_Time_Value::zero)
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
                       ACE_TEXT ("max wait time consumed during transport resolution\n")));
@@ -352,7 +357,8 @@ namespace TAO
       nil_forward_ref = true;
     else
       {
-        stubobj = effective_target->_stubobj ();
+        stubobj =
+          effective_target->_stubobj ();
 
         if (stubobj && stubobj->base_profiles ().size () == 0)
           nil_forward_ref = true;

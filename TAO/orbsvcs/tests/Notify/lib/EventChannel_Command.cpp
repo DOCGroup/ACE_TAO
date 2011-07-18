@@ -3,12 +3,12 @@
 #include "EventChannel_Command.h"
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(lib, TAO_EventChannel_Command, "$Id$")
 
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
-#include "orbsvcs/Notify/Service.h"
+#include "../../../orbsvcs/Notify/Service.h"
 
 TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command (void)
   : collocated_ (0)

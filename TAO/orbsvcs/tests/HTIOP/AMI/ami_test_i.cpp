@@ -1,23 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ami_test_i.cpp
- *
- *  $Id$
- *
- *  Implementation of the AMI Test interface.
- *
- *
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    ami_test_i.cpp
+//
+// = DESCRIPTION
+//    Implementation of the AMI Test interface.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
 #include "ami_test_i.h"
 #include "tao/debug.h"
 
-
+ACE_RCSID(AMI, ami_test_i, "$Id$")
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb)),

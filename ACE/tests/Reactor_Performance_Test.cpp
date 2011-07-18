@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Reactor_Performance_Test.cpp
- *
- *  $Id$
- *
- *  This test is used to time the dispatching mechanisms of the
- *  <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
- *  <ACE_Select_Reactor> can be tested.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Reactor_Performance_Test.cpp
+//
+// = DESCRIPTION
+//    This test is used to time the dispatching mechanisms of the
+//    <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
+//    <ACE_Select_Reactor> can be tested.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "Reactor_Performance_Test.h"
@@ -28,7 +31,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-
+ACE_RCSID(tests, Reactor_Performance_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -105,7 +108,7 @@ Read_Handler::handle_input (ACE_HANDLE handle)
           else
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("handle_input: %p (errno: %d)\n"),
-                          ACE_TEXT ("recv"), ACE_ERRNO_GET));
+                          ACE_TEXT ("recv"), errno));
 
               // This will cause handle_close to get called.
               return -1;
@@ -357,8 +360,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
-  if (acceptor.open (local_addr) == -1
+  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%t) %p\n"),

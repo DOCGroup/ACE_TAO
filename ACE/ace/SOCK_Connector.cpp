@@ -15,6 +15,8 @@
 #include "ace/SOCK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, SOCK_Connector, "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Connector)
@@ -81,9 +83,11 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
   if (local_sap != ACE_Addr::sap_any)
     {
       sockaddr *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
-      int const size = local_sap.get_size ();
+      int size = local_sap.get_size ();
 
-      if (ACE_OS::bind (new_stream.get_handle (), laddr, size) == -1)
+      if (ACE_OS::bind (new_stream.get_handle (),
+                        laddr,
+                        size) == -1)
         {
           // Save/restore errno.
           ACE_Errno_Guard error (errno);
@@ -146,7 +150,9 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
 #endif /* ACE_WIN32 */
             }
           // Wait synchronously using timeout.
-          else if (this->complete (new_stream, 0, timeout) == -1)
+          else if (this->complete (new_stream,
+                                   0,
+                                   timeout) == -1)
             error = errno;
           else
             return 0;
@@ -173,6 +179,7 @@ ACE_SOCK_Connector::shared_connect_finish (ACE_SOCK_Stream &new_stream,
 }
 
 // Actively connect and produce a new ACE_SOCK_Stream if things go well...
+
 int
 ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              const ACE_Addr &remote_sap,
@@ -199,7 +206,9 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
-  return this->shared_connect_finish (new_stream, timeout, result);
+  return this->shared_connect_finish (new_stream,
+                                      timeout,
+                                      result);
 }
 
 #if !defined (ACE_HAS_WINCE)
@@ -235,7 +244,9 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                                 remote_sap.get_size (),
                                 qos_params);
 
-  return this->shared_connect_finish (new_stream, timeout, result);
+  return this->shared_connect_finish (new_stream,
+                                      timeout,
+                                      result);
 }
 #endif  // ACE_HAS_WINCE
 
@@ -247,7 +258,8 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
                               const ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SOCK_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
+  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (),
+                                             tv);
   // We failed to get connected.
   if (h == ACE_INVALID_HANDLE)
     {
@@ -258,7 +270,8 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
       // then retry to see if it's a real failure.
       ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DELAY);
       ACE_OS::sleep (time);
-      h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
+      h = ACE::handle_timed_complete (new_stream.get_handle (),
+                                      tv);
       if (h == ACE_INVALID_HANDLE)
         {
 #endif /* ACE_WIN32 */

@@ -13,6 +13,8 @@ class be_exception : public virtual AST_Exception,
 
 {
 public:
+  be_exception (void);
+
   be_exception (UTL_ScopedName *n,
                 bool local,
                 bool abstract);
@@ -24,6 +26,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Narrowing.
+
   DEF_NARROW_FROM_DECL (be_exception);
   DEF_NARROW_FROM_SCOPE (be_exception);
 };

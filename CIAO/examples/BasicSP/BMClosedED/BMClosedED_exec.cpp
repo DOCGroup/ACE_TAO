@@ -2,41 +2,19 @@
 
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+#include "ciao/CIAO_common.h"
 #include "BMClosedED_exec.h"
 
 #define DISPLACEMENT 256
 
-MyImpl::ReadData_Impl::ReadData_Impl (const char* name)
-  : str_ (name)
-{
-}
-
-MyImpl::ReadData_Impl::~ReadData_Impl (void)
-{
-}
-
-void
-MyImpl::ReadData_Impl::set_name (const char* name)
-{
-  this->str_ = name;
-}
-
-char *
-MyImpl::ReadData_Impl::get_data (void)
-{
-  return CORBA::string_dup (this->str_.in());
-}
-
-//=================================================
-
 /// Default constructor.
-MyImpl::BMClosedED_exec_i::BMClosedED_exec_i (void)
+MyImpl::BMClosedED_exec_i::BMClosedED_exec_i ()
   : dataout_ (new ReadData_Impl(""))
 {
 }
 
 /// Default destructor.
-MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i (void)
+MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i ()
 {
   delete this->dataout_;
 }
@@ -44,7 +22,7 @@ MyImpl::BMClosedED_exec_i::~BMClosedED_exec_i (void)
 // Operations from HUDisplay::BMClosedED
 
 BasicSP::CCM_ReadData_ptr
-MyImpl::BMClosedED_exec_i::get_dataout (void)
+MyImpl::BMClosedED_exec_i::get_dataout ()
 {
   return BasicSP::CCM_ReadData::_duplicate (this->dataout_);
 }
@@ -110,19 +88,19 @@ MyImpl::BMClosedED_exec_i::set_session_context (
 }
 
 void
-MyImpl::BMClosedED_exec_i::configuration_complete (void)
+MyImpl::BMClosedED_exec_i::configuration_complete ()
 {
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_activate (void)
+MyImpl::BMClosedED_exec_i::ccm_activate ()
 {
   ACE_DEBUG ((LM_EMERGENCY,
               "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_passivate (void)
+MyImpl::BMClosedED_exec_i::ccm_passivate ()
 {
   //  if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_EMERGENCY,
@@ -130,7 +108,7 @@ MyImpl::BMClosedED_exec_i::ccm_passivate (void)
 }
 
 void
-MyImpl::BMClosedED_exec_i::ccm_remove (void)
+MyImpl::BMClosedED_exec_i::ccm_remove ()
 {
   //  if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_EMERGENCY,
@@ -151,12 +129,12 @@ create_BasicSP_BMClosedED_Impl (void)
 }
 
 /// Default ctor.
-MyImpl::BMClosedEDHome_exec_i::BMClosedEDHome_exec_i (void)
+MyImpl::BMClosedEDHome_exec_i::BMClosedEDHome_exec_i ()
 {
 }
 
 /// Default dtor.
-MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i (void)
+MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i ()
 {
 }
 
@@ -165,7 +143,7 @@ MyImpl::BMClosedEDHome_exec_i::~BMClosedEDHome_exec_i (void)
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::BMClosedEDHome_exec_i::create (void)
+MyImpl::BMClosedEDHome_exec_i::create ()
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();

@@ -1,6 +1,11 @@
 // "$Id$"
 
 #include "tao/ORB.h"
+
+ACE_RCSID (tao,
+           ORB,
+           "$Id$")
+
 #include "tao/ORB_Table.h"
 #include "tao/Connector_Registry.h"
 #include "tao/IOR_Parser.h"
@@ -944,15 +949,12 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   // Look for an environment variable called "<name>IOR".
   //
-  static const char ior_string[] = "IOR";
-
   CORBA::String_var ior_env_var_name =
-    CORBA::string_alloc (
-      static_cast<CORBA::ULong> (ACE_OS::strlen (name) + sizeof (ior_string)));
+    CORBA::string_alloc (static_cast<CORBA::ULong> (ACE_OS::strlen (name) + 3));
 
   ACE_OS::strcpy (ior_env_var_name.inout (), name);
 
-  ACE_OS::strcat (ior_env_var_name.inout (), ior_string);
+  ACE_OS::strcat (ior_env_var_name.inout (), "IOR");
 
   ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
 
@@ -1717,9 +1719,25 @@ CORBA::ValueFactory
 CORBA::ORB::register_value_factory (const char *repository_id,
                                     CORBA::ValueFactory factory)
 {
-  this->check_shutdown ();
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-  return this->orb_core_->register_value_factory (repository_id, factory);
+  if (vta)
+    {
+      int const result = vta->vf_map_rebind (repository_id, factory);
+
+      if (result == 0) // No previous factory found
+        {
+          return 0;
+        }
+
+      if (result == -1)
+        {
+          // Error on bind.
+          throw ::CORBA::MARSHAL ();
+        }
+    }
+
+  return factory;    // previous factory was found
 }
 #endif
 
@@ -1727,9 +1745,13 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 void
 CORBA::ORB::unregister_value_factory (const char *repository_id)
 {
-  this->check_shutdown ();
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-  this->orb_core_->unregister_value_factory (repository_id);
+  if (vta)
+    {
+      // Dont care whther it was successful or not!
+      (void) vta->vf_map_unbind (repository_id);
+    }
 }
 #endif
 
@@ -1737,9 +1759,14 @@ CORBA::ORB::unregister_value_factory (const char *repository_id)
 CORBA::ValueFactory
 CORBA::ORB::lookup_value_factory (const char *repository_id)
 {
-  this->check_shutdown ();
+  TAO_Valuetype_Adapter *vta = this->orb_core ()->valuetype_adapter ();
 
-  return this->orb_core_->lookup_value_factory (repository_id);
+  if (vta)
+    {
+      return vta->vf_map_find (repository_id);
+    }
+
+  return 0;
 }
 #endif
 

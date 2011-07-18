@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_operation.h
- *
- *  $Id$
- *
- *  Extension of class AST_Operation that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_operation.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Operation that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef BE_OPERATION_H
 #define BE_OPERATION_H
@@ -25,50 +30,61 @@
 class AST_Type;
 class be_visitor;
 class be_argument;
-//class be_operation_strategy;
+class be_operation_strategy;
 
 class be_operation : public virtual AST_Operation,
                      public virtual be_scope,
                      public virtual be_decl
 {
 public:
+  be_operation (void);
+  // Default constructor.
+
   be_operation (AST_Type *rt,
                 AST_Operation::Flags fl,
                 UTL_ScopedName *n,
                 bool local,
                 bool abstract);
+  // Constructor
 
   ~be_operation (void);
+  // Destructor.
 
-  /// Cleanup method.
   virtual void destroy (void);
+  // Cleanup method.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  /// Add an argument to the scope.
-  virtual AST_Argument *be_add_argument (AST_Argument *arg);
+  be_operation_strategy *set_strategy (be_operation_strategy *new_strategy);
 
-  /// Insert an exception at the head of the list.
-  int be_insert_exception (AST_Exception *ex);
+  TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
+                                    int is_extra_state = 0);
+  // Decide on the next state.
 
-  bool is_sendc_ami (void) const;
-  void is_sendc_ami (bool val);
+  int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
+  // Returns true if we have to genrate extra code.
 
-  bool is_excep_ami (void) const;
-  void is_excep_ami (bool val);
+  be_operation *marshaling (void);
+  // returns the operation containing special marshaling information,
+  // this makes sense if not all arguments get marshaled, e.g. AMI
+  // sendc_ operations.
 
-  bool is_attr_op (void) const;
-  void is_attr_op (bool val);
+  be_operation *arguments (void);
+  // Returns a customized arguments list, e.g. AMI sendc_ operations
+  // only use the in and inout arguments but not the out arguments,
+  // also the first argument is the reply handler.
 
   // Narrowing
+
   DEF_NARROW_FROM_DECL (be_operation);
   DEF_NARROW_FROM_SCOPE (be_operation);
 
 protected:
-  bool is_sendc_ami_;
-  bool is_excep_ami_;
-  bool is_attr_op_;
+  be_operation_strategy *strategy_;
+  // Member for holding the strategy for covering
+  // differences between various operations, e.g. sendc_, raise_
+  // operations in the AMI spec.
 };
 
 #endif

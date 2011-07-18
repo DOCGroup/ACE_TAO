@@ -8,7 +8,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI/PI.h"
-#include "tao/LocalObject.h"
 
 int g_nthreads = 1;
 bool g_setTimeout = true;
@@ -51,7 +50,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -66,8 +65,7 @@ private:
 };
 
 class MyORBinitializer
-  : public virtual PortableInterceptor::ORBInitializer
-  , public virtual CORBA::LocalObject
+  : public PortableInterceptor::ORBInitializer
 {
 public:
   MyORBinitializer( ACE_CString orbID )

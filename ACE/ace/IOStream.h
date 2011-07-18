@@ -64,6 +64,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #      endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
 #    endif /* ACE_WIN32 && defined (_MSC_VER) */
 
+#    if defined (__DECCXX_VER)
+#      if __DECCXX_VER < 50700000
+#        include /**/ <stl_macros>
+#      else
+#        include /**/ <stdcomp>
+#      endif /* __DECCXX_VER < 50700000 */
+#    endif /* __DECCXX_VER */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
@@ -156,7 +164,7 @@ class ACE_Export ACE_Streambuf : public streambuf
 public:
 
   /**
-   * If the default allocation strategy were used the common buffer
+   * If the default allocation strategey were used the common buffer
    * would be deleted when the object destructs.  Since we are
    * providing separate read/write buffers, it is up to us to manage
    * their memory.
@@ -274,11 +282,11 @@ protected:
    */
   int syncin (void);
 
-  /// syncout() is called when the output needs to be flushed.  This is
+  /// syncout is called when the output needs to be flushed.  This is
   /// easily done by calling the peer's send_n function.
   int syncout (void);
 
-  /// flushbuf() is the worker of syncout.  It is a separate function
+  /// flushbuf is the worker of syncout.  It is a separate function
   /// because it gets used sometimes in different context.
   int flushbuf (void);
 

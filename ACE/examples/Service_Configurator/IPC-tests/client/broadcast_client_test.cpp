@@ -12,6 +12,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(client, broadcast_client_test, "$Id$")
+
 /* Name of the program. */
 static ACE_TCHAR *program_name;
 
@@ -22,7 +24,7 @@ static void
 print_usage_and_die (void)
 {
   ACE_OS::fprintf (stderr, "usage: %s [-p broadcast portnum]\n",
-                   ACE_TEXT_ALWAYS_CHAR (program_name));
+                   program_name);
   ACE_OS::exit (1);
 }
 

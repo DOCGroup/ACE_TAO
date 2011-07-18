@@ -1,21 +1,30 @@
 
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_obv_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client header
- *  OBV_ class
- *  (see C++ mapping OMG 20.17)
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- *  @author based on interface_ch.cpp from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_obv__ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client header
+//    OBV_ class
+//    (see C++ mapping OMG 20.17)
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>,
+//    based on interface_ch.cpp from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_obv_ch,
+           "$Id$")
 
 // ******************************************************
 // Valuetype visitor for client header
@@ -45,13 +54,13 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ ;
 
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
     {
-      *os << be_nl_2 << "typedef " << node->full_name () << " ";
+      *os << be_nl << be_nl << "typedef " << node->full_name () << " ";
 
       if (!node->is_nested ())
         {
@@ -62,7 +71,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      *os << be_nl_2 << "// OBV_ class" << be_nl;
+      // STEP 1: Generate the class name and the class name we inherit.
+      os->gen_ifdef_macro (node->flat_name (), "_OBV");
+
+      *os << be_nl << be_nl << "// OBV_ class" << be_nl;
       *os << "class " << be_global->stub_export_macro() << " ";;
 
       if (!node->is_nested())
@@ -74,7 +86,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           << ": public virtual "
           << node->full_name ();
 
-      // STEP 1 (about which previous implementer forgot ):
+      // STEP 1a (about which previous implementer forgot ):
       // Generate inheritance from corresponding OBV_ classes.
 
 //------>>>
@@ -97,7 +109,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      AST_Type *inherited = 0;
+      AST_Interface *inherited = 0;
 
       for (; i < node->n_inherits (); ++i)
         {
@@ -147,10 +159,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
-          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ ;
 
-          *os << be_nl_2 << "virtual void _add_ref (void);" << be_nl;
+          *os << be_nl << be_nl << "virtual void _add_ref (void);" << be_nl;
           *os << "virtual void _remove_ref (void);";
         }
 
@@ -209,11 +221,11 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
           *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
+              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl << be_nl;
 
           *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
+              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl << be_nl;
 
           *os << "::CORBA::Boolean "
               << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
@@ -233,6 +245,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       *os << be_nl
           << "CORBA::Boolean require_truncation_;" << be_uidt_nl
           << "};";
+
+      os->gen_endif ();
     }
 
   return 0;

@@ -12,6 +12,10 @@
 # include "tao/TAO_Singleton_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (tao,
+           TAO_Singleton_Manager,
+           "$Id$")
+
 namespace
 {
   // Singleton instance pointer.

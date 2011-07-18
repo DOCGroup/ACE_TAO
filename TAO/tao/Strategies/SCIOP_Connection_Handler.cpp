@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SCIOP_Connection_Handler.h"
 
 #if TAO_HAS_SCIOP == 1
@@ -30,6 +28,10 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/os_include/os_netdb.h"
+
+ACE_RCSID (tao,
+           SCIOP_Connection_Handler,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -456,12 +458,6 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
     }
 
   return 0;
-}
-
-int
-TAO_SCIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

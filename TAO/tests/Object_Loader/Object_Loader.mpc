@@ -11,7 +11,7 @@ project(*idl): taoidldefaults {
 project(*Test): taolib_with_idl, portableserver {
   after += *idl
   sharedname   = Test_DLL
-  dynamicflags += OLT_BUILD_DLL
+  dynamicflags = OLT_BUILD_DLL
 
   IDL_Files {
   }

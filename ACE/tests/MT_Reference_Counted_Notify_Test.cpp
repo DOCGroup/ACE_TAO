@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    MT_Reference_Counted_Notify_Test.cpp
- *
- *  $Id$
- *
- *  This test is used to check reference counting of the event
- *  handlers when it interacts with the reactor notification
- *  mechanism.
- *
- *
- *  @author Irfan Pyarali <irfan@oomworks.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    MT_Reference_Counted_Notify_Test.cpp
+//
+// = DESCRIPTION
+//    This test is used to check reference counting of the event
+//    handlers when it interacts with the reactor notification
+//    mechanism.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@oomworks.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -24,6 +27,8 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(tests, MT_Reference_Counted_Notify_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -237,7 +242,7 @@ notify (ACE_Reactor &reactor,
 
   int result =
     event_loop_thread.activate ();
-  ACE_TEST_ASSERT (result == 0);
+  ACE_ASSERT (result == 0);
 
   for (int i = 0;
        i < iterations;
@@ -248,7 +253,7 @@ notify (ACE_Reactor &reactor,
       result = reactor.notify (event_handler,
                                ACE_Event_Handler::READ_MASK);
 
-      ACE_TEST_ASSERT (result == 0);
+      ACE_ASSERT (result == 0);
     }
 
   thread_manager.wait ();

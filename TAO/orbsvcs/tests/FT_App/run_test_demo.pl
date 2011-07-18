@@ -79,68 +79,43 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   10)       Start Cient3 with IOGR3.
 #   10.1)     Repeat 8.1 & 8.2 using IOGR3.
 #   11)       System manages to shut itself down.
+
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+#use lib '$ENV{ACE_ROOT}/bin';
+use PerlACE::Run_Test;
 
 ########################
 #command line options
 #set defaults:
-
-my($status) = 0;
 my($verbose) = 0;         # 1: report perl actions before executing them
 my($debug_builds) = ($^O eq 'MSWin32' ? 0 : 1);;    # 0: use exes from Release directories
 my($simulated) = 1;       # 1: use "client simulated" fault tolerance
 
-# List of the proccess which must be killed before exit with error
-@kill_list = ();
-
-sub add_to_kills{
-    $goal = shift;
-    @kill_list = (@kill_list, $goal);
-}
-sub exit_and_kill{
-    $status = shift;
-    foreach $goal (@kill_list){
-        $goal->Kill (); $goal->TimedWait (1);
-    }
-    exit $status;
-}
-
 foreach $i (@ARGV) {
-    if ($i eq "--debug_build"){
-        $debug_builds = 1;
-    }
-    elsif ($i eq "--no_simulate"){  # reverse this once we have FT ORB support
-        $simulated = 0;
-    }
-    elsif ($i eq "-v"){
-        $verbose += 1;
-    }
+  if ($i eq "--debug_build")
+  {
+    $debug_builds = 1;
+  }
+  elsif ($i eq "--no_simulate")  # reverse this once we have FT ORB support
+  {
+    $simulated = 0;
+  }
+  elsif ($i eq "-v")
+  {
+    $verbose += 1;
+  }
 }
 
 my($build_directory) = "/Release";
 if ( $debug_builds ) {
-    $build_directory = "";
+  $build_directory = "";
 }
 
 if ( $verbose > 1) {
-    print "verbose: $verbose\n";
-    print "debug_builds: $debug_builds -> $build_directory\n";
-    print "simulated: $simulated\n";
+  print "verbose: $verbose\n";
+  print "debug_builds: $debug_builds -> $build_directory\n";
+  print "simulated: $simulated\n";
 }
-
-my $rp_manager = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $rp_manager_controller = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $fault_detector1 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $fault_detector2 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-my $fault_notifier = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
-my $ft_replica1 = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
-my $ft_replica2 = PerlACE::TestTarget::create_target (7) || die "Create target 7 failed\n";
-my $ft_replica3 = PerlACE::TestTarget::create_target (8) || die "Create target 8 failed\n";
-my $ft_creator = PerlACE::TestTarget::create_target (9) || die "Create target 9 failed\n";
-my $client1 = PerlACE::TestTarget::create_target (10) || die "Create target 10 failed\n";
-my $client2 = PerlACE::TestTarget::create_target (11) || die "Create target 11 failed\n";
-my $client3 = PerlACE::TestTarget::create_target (12) || die "Create target 12 failed\n";
 
 my($role1) = "hobbit";
 my($role2) = "elf";
@@ -149,248 +124,117 @@ my($location1) = "shire";
 my($location2) = "bree";
 my($location3) = "rivendell";
 
+my ($rm_endpoint) = "-ORBEndpoint iiop://localhost:2833";
+my ($rm_initref) = "-ORBInitRef ReplicationManager=corbaloc::localhost:2833/ReplicationManager";
+
 #define temp files
-my($rm_ior) = "rm.ior";
-my($factory1_ior) = "factory1.ior";
-my($factory2_ior) = "factory2.ior";
-my($factory3_ior) = "factory3.ior";
-my($detector1_ior) = "detector1.ior";
-my($detector2_ior) = "detector2.ior";
-my($notifier_ior) = "notifier.ior";
+my($rm_ior) = PerlACE::LocalFile ("rm.ior");
+my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
+my($detector1_ior) = PerlACE::LocalFile ("detector1.ior");
+my($detector2_ior) = PerlACE::LocalFile ("detector2.ior");
+my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
+my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
+my($factory3_ior) = PerlACE::LocalFile ("factory3.ior");
+my($replica1_ior) = PerlACE::LocalFile ("${role1}_${location1}_0.ior");
+my($replica2_ior) = PerlACE::LocalFile ("${role1}_${location2}_0.ior");
+my($replica3_ior) = PerlACE::LocalFile ("${role2}_${location2}_1.ior");
+my($replica4_ior) = PerlACE::LocalFile ("${role2}_${location3}_0.ior");
+my($replica5_ior) = PerlACE::LocalFile ("${role1}_${location1}_1.ior");
+my($replica6_ior) = PerlACE::LocalFile ("${role1}_${location2}_2.ior");
 
-my($replica1_ior) = "${role1}_${location1}_0.ior";
-my($replica2_ior) = "${role1}_${location2}_0.ior";
-my($replica3_ior) = "${role2}_${location2}_1.ior";
-my($replica4_ior) = "${role2}_${location3}_0.ior";
-my($replica5_ior) = "${role1}_${location1}_1.ior";
-my($replica6_ior) = "${role1}_${location2}_2.ior";
+my($replica1_iogr) = PerlACE::LocalFile ("${role1}_0.iogr");
+my($replica2_iogr) = PerlACE::LocalFile ("${role2}_1.iogr");
+my($replica3_iogr) = PerlACE::LocalFile ("${role1}_2.iogr");
 
-my($replica1_iogr) = "${role1}_0.iogr";
-my($replica2_iogr) = "${role2}_1.iogr";
-my($replica3_iogr) = "${role1}_2.iogr";
+my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
-my($client_data) = "persistent.dat";
+#discard junk from previous tests
+unlink $rm_ior;
+unlink $notifier_ior;
+unlink $detector1_ior;
+unlink $detector2_ior;
+unlink $factory1_ior;
+unlink $factory2_ior;
+unlink $factory3_ior;
+unlink $replica1_ior;
+unlink $replica2_ior;
+unlink $replica3_ior;
+unlink $replica4_ior;
+unlink $replica5_ior;
+unlink $replica6_ior;
+unlink $replica1_iogr;
+unlink $replica2_iogr;
 
-# Files for rp_manager
-my $rp_manager_ior = $rp_manager->LocalFile ($rm_ior);
-$rp_manager->DeleteFile ($rm_ior);
+unlink $client_data;
 
-# Files for fault_detector1
-my $fault_detector1_ior = $fault_detector1->LocalFile ($detector1_ior);
-$fault_detector1->DeleteFile ($detector1_ior);
+my($status) = 0;
 
-# Files for fault_detector2
-my $fault_detector2_ior = $fault_detector2->LocalFile ($detector2_ior);
-$fault_detector2->DeleteFile ($detector2_ior);
-
-# Files for fault_notifier
-my $fault_notifier_ior = $fault_notifier->LocalFile ($notifier_ior);
-$fault_notifier->DeleteFile ($notifier_ior);
-
-# Files for ft_replica1
-my $ft_replica1_factory1_ior = $ft_replica1->LocalFile ($factory1_ior);
-my $ft_replica1_client_data = $ft_replica1->LocalFile ($client_data);
-
-$ft_replica1->DeleteFile ($factory1_ior);
-$ft_replica1->DeleteFile ($client_data);
-
-# Files for ft_replica2
-my $ft_replica2_factory2_ior = $ft_replica2->LocalFile ($factory2_ior);
-my $ft_replica2_client_data = $ft_replica2->LocalFile ($client_data);
-
-$ft_replica2->DeleteFile ($factory2_ior);
-$ft_replica2->DeleteFile ($client_data);
-
-# Files for ft_replica3
-my $ft_replica3_factory3_ior = $ft_replica3->LocalFile ($factory3_ior);
-my $ft_replica3_client_data = $ft_replica3->LocalFile ($client_data);
-
-$ft_replica3->DeleteFile ($factory3_ior);
-$ft_replica3->DeleteFile ($client_data);
-
-# Files for ft_creator
-my $creator_replica1_ior = $ft_creator->LocalFile ($replica1_ior);
-my $creator_replica2_ior = $ft_creator->LocalFile ($replica2_ior);
-my $creator_replica3_ior = $ft_creator->LocalFile ($replica3_ior);
-my $creator_replica4_ior = $ft_creator->LocalFile ($replica4_ior);
-my $creator_replica5_ior = $ft_creator->LocalFile ($replica5_ior);
-my $creator_replica6_ior = $ft_creator->LocalFile ($replica6_ior);
-
-my $creator_replica1_iogr = $ft_creator->LocalFile ($replica1_iogr);
-my $creator_replica2_iogr = $ft_creator->LocalFile ($replica2_iogr);
-my $creator_replica3_iogr = $ft_creator->LocalFile ($replica3_iogr);
-
-$ft_creator->DeleteFile ($replica1_ior);
-$ft_creator->DeleteFile ($replica2_ior);
-$ft_creator->DeleteFile ($replica3_ior);
-$ft_creator->DeleteFile ($replica4_ior);
-$ft_creator->DeleteFile ($replica5_ior);
-$ft_creator->DeleteFile ($replica6_ior);
-
-$ft_creator->DeleteFile ($replica1_iogr);
-$ft_creator->DeleteFile ($replica2_iogr);
-$ft_creator->DeleteFile ($replica3_iogr);
-
-# Files for client1
-my $client1_replica1_ior = $client1->LocalFile ($replica1_ior);
-my $client1_replica2_ior = $client1->LocalFile ($replica2_ior);
-my $client1_replica1_iogr = $client1->LocalFile ($replica1_iogr);
-
-$client1->DeleteFile ($replica1_ior);
-$client1->DeleteFile ($replica2_ior);
-$client1->DeleteFile ($replica1_iogr);
-
-# Files for client2
-my $client2_replica3_ior = $client2->LocalFile ($replica3_ior);
-my $client2_replica4_ior = $client2->LocalFile ($replica4_ior);
-my $client2_replica2_iogr = $client2->LocalFile ($replica2_iogr);
-
-$client2->DeleteFile ($replica3_ior);
-$client2->DeleteFile ($replica4_ior);
-$client2->DeleteFile ($replica2_iogr);
-
-# Files for client3
-my $client3_replica5_ior = $client3->LocalFile ($replica5_ior);
-my $client3_replica6_ior = $client3->LocalFile ($replica6_ior);
-my $client3_replica3_iogr = $client3->LocalFile ($replica3_iogr);
-
-$client3->DeleteFile ($replica5_ior);
-$client3->DeleteFile ($replica6_ior);
-$client3->DeleteFile ($replica3_iogr);
-
-$hostname = $rp_manager->HostName ();
-$port = $rp_manager->RandomPort ();
-
-$RM = $rp_manager->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager" .
-                                  "$build_directory/tao_ft_replicationmanager",
-                                  "-o $rp_manager_ior " .
-                                  "-ORBEndpoint iiop://$hostname:$port");
-
-$RMC = $rp_manager_controller->CreateProcess (".$build_directory/replmgr_controller" ,
-                                 "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                 "-x");
-
-$NOT = $fault_notifier->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier" .
-                                       "$build_directory/tao_fault_notifier" ,
-                                        "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                        "-o $fault_notifier_ior -q");
-
-$DET1 = $fault_detector1->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector" .
-                                       "$build_directory/tao_fault_detector" ,
-                                       "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                       "-o $fault_detector1_ior " .
-                                       "-l $location1 -q");
-
-$DET2 = $fault_detector2->CreateProcess ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector" .
-                                       "$build_directory/tao_fault_detector" ,
-                                       "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                       "-o $fault_detector1_ior " .
-                                       "-l $location2 -q");
-
-$REP1 = $ft_replica1->CreateProcess (".$build_directory/ft_replica" ,
-                                     "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                     "-o $ft_replica1_factory1_ior ".
-                                     "-l $location1 -i $role1 -q -p $ft_replica1_client_data");
-
-$REP2 = $ft_replica2->CreateProcess (".$build_directory/ft_replica" ,
-                                     "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                     "-o $ft_replica2_factory2_ior ".
-                                     "-l $location2 -i $role1 -i $role2 -q -p $ft_replica2_client_data");
-
-$REP3 = $ft_replica3->CreateProcess (".$build_directory/ft_replica" ,
-                                     "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                     "-o $ft_replica3_factory3_ior ".
-                                     "-l $location3 -i $role2 -q -p $ft_replica3_client_data");
+my($RM) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/FT_ReplicationManager$build_directory/FT_ReplicationManager", "-o $rm_ior $rm_endpoint");
+my($RMC) = new PerlACE::Process (".$build_directory/replmgr_controller", "$rm_initref -x");
+my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "$rm_initref -o $notifier_ior -q");
+my($DET1) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "$rm_initref -o $detector1_ior -l $location1 -q");
+my($DET2) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "$rm_initref -o $detector2_ior -l $location2 -q");
+my($FAC1) = new PerlACE::Process (".$build_directory/ft_replica", "$rm_initref -o $factory1_ior -l $location1 -i $role1 -q");
+my($FAC2) = new PerlACE::Process (".$build_directory/ft_replica", "$rm_initref -o $factory2_ior -l $location2 -i $role1 -i $role2 -q");
+my($FAC3) = new PerlACE::Process (".$build_directory/ft_replica", "$rm_initref -o $factory3_ior -l $location3 -i $role2 -q");
 
 my($OGC);
 my($CL1);
 my($CL2);
 my($CL3);
 if ($simulated) {
-    print "\nTEST: Preparing Client Mediated Fault Tolerance test.\n" if ($verbose);
-    $OGC = $ft_creator->CreateProcess (".$build_directory/ft_create" ,
-                                 "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                 "-n -r $role1 -r $role2 -r $role1 -u $role3 -i");
-
-    $CL1 = $client1->CreateProcess (".$build_directory/ft_client" ,
-                                 "-f file://$client1_replica1_ior " .
-                                 "-f file://$client1_replica2_ior " .
-                                 "-c testscript");
-
-    $CL2 = $client2->CreateProcess (".$build_directory/ft_client" ,
-                                 "-f file://$client2_replica3_ior " .
-                                 "-f file://$client2_replica4_ior " .
-                                 "-c testscript");
-
-    $CL3 = $client3->CreateProcess (".$build_directory/ft_client" ,
-                                 "-f file://$client3_replica5_ior " .
-                                 "-f file://$client3_replica6_ior " .
-                                 "-c testscript");
-
-
-
+  print "\nTEST: Preparing Client Mediated Fault Tolerance test.\n" if ($verbose);
+  $OGC= new PerlACE::Process (".$build_directory/ft_create", "$rm_initref  -r $role1 -r $role2 -r $role1 -i -n");
+  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_ior -f file://$replica2_ior -c testscript");
+  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_ior -f file://$replica4_ior -c testscript");
+  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica5_ior -f file://$replica6_ior -c testscript");
 }else{
-    print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
-    $OGC = $ft_creator->CreateProcess (".$build_directory/ft_create" ,
-                                 "-ORBInitRef ReplicationManager=corbaloc::$hostname:$port/ReplicationManager " .
-                                 "-n -r $role1 -r $role2 -r $role1 -u $role3 -g");
-
-    $CL1 = $client1->CreateProcess (".$build_directory/ft_client" ,
-                                 "-f file://$client1_replica1_iogr " .
-                                 "-c testscript");
-
-    $CL2 = $client2->CreateProcess (".$build_directory/ft_client" ,
-                                 "-f file://$client2_replica2_iogr " .
-                                 "-c testscript");
-
-    $CL3 = $client3->CreateProcess (".$build_directory/ft_client" ,
-                                 "-f file://$client3_replica3_iogr " .
-                                 "-c testscript");
+  print "\nTEST: Preparing IOGR based test.\n" if ($verbose);
+  $OGC = new PerlACE::Process (".$build_directory/ft_create", "$rm_initref  -r $role1 -r $role2 -r $role1 -g -n");
+  $CL1 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica1_iogr -c testscript");
+  $CL2 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica2_iogr -c testscript");
+  $CL3 = new PerlACE::Process (".$build_directory/ft_client", "-f file://$replica3_iogr -c testscript");
 }
 
-
 #######################
-# ReplicationManager
+# Start ReplicationManager
 
-print "\nTEST: starting ReplicationManager " . $RM->CommandLine . "\n" if ($verbose);
+print "\nTEST: Starting ReplicationManager " . $RM->CommandLine . "\n" if ($verbose);
 $RM->Spawn ();
 
-add_to_kills ($RM);
-
 print "TEST: waiting for registry's IOR\n" if ($verbose);
-
-if ($rp_manager->WaitForFileTimed ($rm_ior,
-                               $rp_manager->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$rp_manager_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($rm_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$rm_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    exit 1;
 }
 
 #######################
 # Start FaultNotifier
-print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
+print "\nTEST: Starting FaultNotifier " . $NOT->CommandLine . "\n" if ($verbose);
 $NOT->Spawn ();
 
-add_to_kills ($NOT);
-
-print "TEST: waiting for notifier's IOR\n" if ($verbose);
-if ($fault_notifier->WaitForFileTimed ($notifier_ior,
-                               $fault_notifier->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$fault_notifier_ior>\n";
-    exit_and_kill (1);
+print "TEST: waiting for FaultNotifier's IOR\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($notifier_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$notifier_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    exit 1;
 }
+
 
 ##############################
 # Start FaultDetectorFactory 1
 print "\nTEST: Starting FaultDetectorFactory at $location1 " . $DET1->CommandLine . "\n" if ($verbose);
 $DET1->Spawn ();
 
-add_to_kills ($DET1);
-
 print "TEST: waiting for FaultDetector's IOR\n" if ($verbose);
-if ($fault_detector1->WaitForFileTimed ($detector1_ior,
-                               $fault_detector1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$fault_detector1_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($detector1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$detector1_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    $DET1->Kill (); $DET1->TimedWait (1);
+    exit 1;
 }
 
 ##############################
@@ -398,252 +242,192 @@ if ($fault_detector1->WaitForFileTimed ($detector1_ior,
 print "\nTEST: Starting FaultDetectorFactory at $location2 " . $DET2->CommandLine . "\n" if ($verbose);
 $DET2->Spawn ();
 
-add_to_kills ($DET2);
-
 print "TEST: waiting for FaultDetector's IOR\n" if ($verbose);
-if ($fault_detector2->WaitForFileTimed ($detector2_ior,
-                               $fault_detector2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$fault_detector1_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($detector2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$detector2_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    $DET1->Kill (); $DET1->TimedWait (1);
+    $DET2->Kill (); $DET2->TimedWait (1);
+    exit 1;
 }
+
 
 #################
 # Start Factories
 
-print "\nTEST: starting factory 1 " . $REP1->CommandLine . "\n" if ($verbose);
-$REP1->Spawn ();
-
-add_to_kills ($REP1);
+print "\nTEST: Starting replica factory at $location1 " . $FAC1->CommandLine . "\n" if ($verbose);
+$FAC1->Spawn ();
 
 print "TEST: waiting for factory 1's IOR\n" if ($verbose);
-if ($ft_replica1->WaitForFileTimed ($factory1_ior,
-                               $ft_replica1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ft_replica1_factory1_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($factory1_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$factory1_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    $DET1->Kill (); $DET1->TimedWait (1);
+    $DET2->Kill (); $DET2->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    exit 1;
 }
 
-print "\nTEST: starting factory 2 " . $REP2->CommandLine . "\n" if ($verbose);
-$REP2->Spawn ();
-
-add_to_kills ($REP2);
+print "\nTEST: Starting replica factory at $location2 " . $FAC2->CommandLine . "\n" if ($verbose);
+$FAC2->Spawn ();
 
 print "TEST: waiting for factory 2's IOR\n" if ($verbose);
-if ($ft_replica2->WaitForFileTimed ($factory2_ior,
-                               $ft_replica2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ft_replica2_factory2_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($factory2_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$factory2_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    $DET1->Kill (); $DET1->TimedWait (1);
+    $DET2->Kill (); $DET2->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    $FAC2->Kill (); $FAC2->TimedWait (1);
+    exit 1;
 }
 
-print "\nTEST: starting factory 3 " . $REP3->CommandLine . "\n" if ($verbose);
-$REP3->Spawn ();
-
-add_to_kills ($REP3);
+print "\nTEST: Starting replica factory at $location3 " . $FAC3->CommandLine . "\n" if ($verbose);
+$FAC3->Spawn ();
 
 print "TEST: waiting for factory 3's IOR\n" if ($verbose);
-if ($ft_replica3->WaitForFileTimed ($factory3_ior,
-                               $ft_replica3->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ft_replica3_factory3_ior>\n";
-    exit_and_kill (1);
+if (PerlACE::waitforfile_timed ($factory3_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "TEST ERROR: cannot find file <$factory3_ior>\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    $DET1->Kill (); $DET1->TimedWait (1);
+    $DET2->Kill (); $DET2->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    $FAC2->Kill (); $FAC2->TimedWait (1);
+    $FAC3->Kill (); $FAC3->TimedWait (1);
+    exit 1;
 }
+
 ######################
 # Create object groups
+
 print "\nTEST: Starting object group creator " . $OGC->CommandLine . "\n" if ($verbose);
 $OGC->Spawn ();
 
 print "\nTEST: wait for object group creator.\n" if ($verbose);
-
-$status_creator = $OGC->WaitKill ($ft_creator->ProcessStartWaitInterval());
-
-if ($status_creator != 0) {
-    print STDERR "TEST ERROR: Object Group Creator returned $status_creator\n";
-    exit_and_kill (1);
-}
-# Get/Put files:
-# replica1_ior: client1
-if ($ft_creator->GetFile ($replica1_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$creator_replica1_ior\n";
-    exit_and_kill (1);
-}
-if ($client1->PutFile ($replica1_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client1_replica1_ior>\n";
-    exit_and_kill (1);
-}
-# replica2_ior: client1
-if ($ft_creator->GetFile ($replica2_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$creator_replica2_ior\n";
-    exit_and_kill (1);
-}
-if ($client1->PutFile ($replica2_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client1_replica2_ior>\n";
-    exit_and_kill (1);
-}
-# replica3_ior: client2
-if ($ft_creator->GetFile ($replica3_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$creator_replica3_ior\n";
-    exit_and_kill (1);
-}
-if ($client2->PutFile ($replica3_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client2_replica3_ior>\n";
-    exit_and_kill (1);
-}
-# replica4_ior: client2
-if ($ft_creator->GetFile ($replica4_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$creator_replica4_ior\n";
-    exit_and_kill (1);
-}
-if ($client2->PutFile ($replica4_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client2_replica4_ior>\n";
-    exit_and_kill (1);
-}
-# replica5_ior: client3
-if ($ft_creator->GetFile ($replica5_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$creator_replica5_ior\n";
-    exit_and_kill (1);
-}
-if ($client3->PutFile ($replica5_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client3_replica5_ior>\n";
-    exit_and_kill (1);
-}
-# replica6_ior: client3
-if ($ft_creator->GetFile ($replica6_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$creator_replica6_ior\n";
-    exit_and_kill (1);
-}
-if ($client3->PutFile ($replica6_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client3_replica6_ior>\n";
-    exit_and_kill (1);
+$config = $OGC->WaitKill (30);
+if ($config != 0) {
+    print STDERR "TEST ERROR: Object Group Creator returned $config\n";
+    $RM->Kill (); $RM->TimedWait (1);
+    $NOT->Kill (); $NOT->TimedWait (1);
+    $DET1->Kill (); $DET1->TimedWait (1);
+    $DET2->Kill (); $DET2->TimedWait (1);
+    $FAC1->Kill (); $FAC1->TimedWait (1);
+    $FAC2->Kill (); $FAC2->TimedWait (1);
+    $FAC3->Kill (); $FAC3->TimedWait (1);
+    exit 1;
 }
 
 #############
 # Run clients
 
 print "\nTEST: Starting client using first group of hobbits " . $CL1->CommandLine . "\n" if ($verbose);
-$status_client = $CL1->SpawnWaitKill ($client1->ProcessStartWaitInterval() + 45);
-if ($status_client != 0) {
-    print STDERR "TEST ERROR: client returned $status_client\n";
-    exit_and_kill(1);
+$client = $CL1->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "TEST ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print "\nTEST: Starting client using group of elves " . $CL2->CommandLine . "\n" if ($verbose);
-$status_client = $CL2->SpawnWaitKill ($client2->ProcessStartWaitInterval() + 45);
-if ($status_client != 0) {
-    print STDERR "TEST ERROR: client returned $status_client\n";
-    exit_and_kill(1);
+$client2 = $CL2->SpawnWaitKill (60);
+
+if ($client2 != 0) {
+    print STDERR "TEST ERROR: client returned $client2\n";
+    $status = 1;
 }
 
 print "\nTEST: Starting client using second group of hobbits " . $CL3->CommandLine . "\n" if ($verbose);
-$status_client = $CL3->SpawnWaitKill ($client3->ProcessStartWaitInterval() + 45);
-if ($status_client != 0) {
-    print STDERR "TEST ERROR: client returned $status_client\n";
-    exit_and_kill(1);
+$client3 = $CL3->SpawnWaitKill (60);
+
+if ($client3 != 0) {
+    print STDERR "TEST ERROR: client returned $client3\n";
+    $status = 1;
 }
 
 ######################
 # Clean house and exit
 
 print "\nTEST: wait for factory 1.\n" if ($verbose);
-$status_replica = $REP1->WaitKill ($ft_replica1->ProcessStopWaitInterval() + 15);
-if ($status_replica != 0) {
-    print STDERR "TEST ERROR: replica returned $status_replica\n";
+$factory1 = $FAC1->WaitKill (30);
+if ($factory1 != 0) {
+    print STDERR "TEST ERROR: replica returned $factory 1\n";
     $status = 1;
 }
+
 print "\nTEST: wait for factory 2.\n" if ($verbose);
-$status_replica = $REP2->WaitKill ($ft_replica2->ProcessStopWaitInterval() + 15);
-if ($status_replica != 0) {
-    print STDERR "TEST ERROR: replica returned $status_replica\n";
+$factory2 = $FAC2->WaitKill (30);
+if ($factory2 != 0) {
+    print STDERR "TEST ERROR: factory 2 returned $factory2\n";
     $status = 1;
 }
 
 print "\nTEST: wait for factory 3.\n" if ($verbose);
-$status_replica = $REP3->WaitKill ($ft_replica3->ProcessStopWaitInterval() + 15);
-if ($status_replica != 0) {
-    print STDERR "TEST ERROR: replica returned $status_replica\n";
+$factory3 = $FAC3->WaitKill (30);
+if ($factory3 != 0) {
+    print STDERR "TEST ERROR: factory 3 returned $factory3\n";
     $status = 1;
 }
+
 print "\nTEST: wait for FaultDetectorFactory 1.\n" if ($verbose);
-$status_detector = $DET1->WaitKill ($fault_detector1->ProcessStopWaitInterval() + 15);
-if ($status_detector != 0) {
-    print STDERR "TEST ERROR: FaultDetectorFactory returned $status_detector\n";
+$detector1 = $DET1->WaitKill (30);
+if ($detector1 != 0) {
+    print STDERR "TEST ERROR: FaultDetectorFactory returned $detector1\n";
     $status = 1;
 }
+
 print "\nTEST: wait for FaultDetectorFactory 2.\n" if ($verbose);
-$status_detector = $DET2->WaitKill ($fault_detector2->ProcessStopWaitInterval() + 15);
-if ($status_detector != 0) {
-    print STDERR "TEST ERROR: FaultDetectorFactory returned $status_detector\n";
+$detector2 = $DET2->WaitKill (30);
+if ($detector2 != 0) {
+    print STDERR "TEST ERROR: FaultDetectorFactory returned $detector2\n";
     $status = 1;
 }
 
 print "\nTEST: shutting down the replication manager.\n" if ($verbose);
-$status_controller = $RMC->SpawnWaitKill ($rp_manager_controller->ProcessStartWaitInterval() + 285);
-if ($status_controller != 0) {
-    print STDERR "TEST ERROR: replication manager controller returned $status_controller\n";
+$controller = $RMC->SpawnWaitKill (300);
+if ($controller != 0) {
+    print STDERR "TEST ERROR: replication manager controller returned $controller\n";
     $status = 1;
 }
+
 print "\nTEST: wait for ReplicationManager.\n" if ($verbose);
-$status_repmgr = $RM->WaitKill ($rp_manager->ProcessStopWaitInterval() + 15);
-if ($status_repmgr != 0) {
-    print STDERR "TEST ERROR: ReplicationManager returned $status_repmgr\n";
+#$RM->Kill ();
+$repmgr = $RM->WaitKill (30);
+if ($repmgr != 0) {
+    print STDERR "TEST ERROR: ReplicationManager returned $repmgr\n";
     $status = 1;
 }
 
 print "\nTEST: wait for FaultNotifier.\n" if ($verbose);
-$status_not = $NOT->WaitKill ($fault_notifier->ProcessStopWaitInterval());
-if ($status_not != 0) {
-    print STDERR "TEST ERROR: notifier returned $status_not\n";
+$notifier = $NOT->WaitKill (30);
+if ($notifier != 0) {
+    print STDERR "TEST ERROR: FaultNotifier returned $notifier\n";
     $status = 1;
 }
 
-print "\nTEST: releasing scratch files.\n" if ($verbose);
+if ($status == 0 && 0) {
+  print "\nTEST: releasing scratch files.\n" if ($verbose);
+  unlink $rm_ior;
+  unlink $detector1_ior;
+  unlink $detector2_ior;
+  unlink $notifier_ior;
+  unlink $factory1_ior;
+  unlink $factory2_ior;
+  unlink $factory3_ior;
+  unlink $replica1_ior;
+  unlink $replica2_ior;
+  unlink $replica3_ior;
+  unlink $replica4_ior;
+  unlink $replica5_ior;
+  unlink $replica6_ior;
+  unlink $replica1_iogr;
+  unlink $replica2_iogr;
 
-# Files for rp_manager
-$rp_manager->DeleteFile ($rm_ior);
+  unlink $client_data;
+}
 
-# Files for fault_detector1
-$fault_detector1->DeleteFile ($detector1_ior);
-
-# Files for fault_detector2
-$fault_detector2->DeleteFile ($detector2_ior);
-
-# Files for fault_notifier
-$fault_notifier->DeleteFile ($notifier_ior);
-
-# Files for ft_replica1
-$ft_replica1->DeleteFile ($factory1_ior);
-$ft_replica1->DeleteFile ($client_data);
-
-# Files for ft_replica2
-$ft_replica2->DeleteFile ($factory2_ior);
-$ft_replica2->DeleteFile ($client_data);
-
-# Files for ft_replica3
-$ft_replica3->DeleteFile ($factory3_ior);
-$ft_replica3->DeleteFile ($client_data);
-
-# Files for ft_creator
-$ft_creator->DeleteFile ($replica1_ior);
-$ft_creator->DeleteFile ($replica2_ior);
-$ft_creator->DeleteFile ($replica3_ior);
-$ft_creator->DeleteFile ($replica4_ior);
-$ft_creator->DeleteFile ($replica5_ior);
-$ft_creator->DeleteFile ($replica6_ior);
-
-$ft_creator->DeleteFile ($replica1_iogr);
-$ft_creator->DeleteFile ($replica2_iogr);
-$ft_creator->DeleteFile ($replica3_iogr);
-
-# Files for client1
-$client1->DeleteFile ($replica1_ior);
-$client1->DeleteFile ($replica2_ior);
-$client1->DeleteFile ($replica1_iogr);
-
-# Files for client2
-$client2->DeleteFile ($replica3_ior);
-$client2->DeleteFile ($replica4_ior);
-$client2->DeleteFile ($replica2_iogr);
-
-# Files for client3
-$client3->DeleteFile ($replica5_ior);
-$client3->DeleteFile ($replica6_ior);
-$client3->DeleteFile ($replica3_iogr);
 
 exit $status;

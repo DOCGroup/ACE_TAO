@@ -47,11 +47,12 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
+//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
+#define ACE_HAS_SIG_MACROS
+
 //#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
-
-#define ACE_HAS_SIOCGIFCONF
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -60,8 +61,12 @@
 
 #define ACE_HAS_SYSCTL
 
+//?
+#define ACE_LACKS_SIGSET
+
 #define ACE_NEEDS_SCHED_H
 
+// Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
 
 #define ACE_HAS_ALT_CUSERID
@@ -109,6 +114,9 @@
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
+
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H

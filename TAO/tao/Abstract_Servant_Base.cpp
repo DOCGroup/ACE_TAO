@@ -1,7 +1,10 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Abstract_Servant_Base.h"
+
+ACE_RCSID (tao,
+           Abstract_Servant_Base,
+           "$Id$")
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Abstract_Servant_Base.inl"

@@ -1,25 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Timer_Cancellation_Test.cpp
- *
- *  $Id$
- *
- *  A test to ensure the timer cancellation works correctly.
- *
- *
- *  @author Irfan Pyarali <irfan@oomworks.com>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Timer_Cancellation_Test.cpp
+//
+// = DESCRIPTION
+//    A test to ensure the timer cancellation works correctly.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@oomworks.com>
+//
+// ============================================================================
 
-
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Task.h"
 
-
+ACE_RCSID(tests, Timer_Cancellation_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

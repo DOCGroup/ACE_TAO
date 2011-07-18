@@ -1,23 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    tests_svc_loader.cpp
- *
- *  $Id$
- *
- * This directory contains a client that checks if a given object
- * reference points to an existing object or not and prints a debug
- * statement to reflect the same. This client is to be used in
- * conjunction with testing the dynamically loadable services. If
- * the service is loaded successfully, the object reference from the
- * server would be a valid one and the corresponding debug statement
- * is printed out. Or viceversa.
- *
- *
- *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs/tests/tests_svc_loader
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//   This directory contains a client that checks if a given object
+//   reference points to an existing object or not and prints a debug
+//   statement to reflect the same. This client is to be used in
+//   conjunction with testing the dynamically loadable services. If
+//   the service is loaded successfully, the object reference from the
+//   server would be a valid one and the corresponding debug statement
+//   is printed out. Or viceversa.
+//
+// = AUTHOR
+//     Priyanka Gontla <pgontla@ece.uci.edu>
+//
+// ============================================================================
 
 #include "tao/ORB.h"
 #include "tao/Object.h"
@@ -26,6 +29,10 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
+
+ACE_RCSID (tests_svc_loader,
+           tests_svc_loader,
+           "$Id$")
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
@@ -48,7 +55,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       // Use the first argument to create the object reference.
       CORBA::Object_var object =
-        orb->string_to_object (argv[1]);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv[1]));
 
       // Check if this object reference is a valid one..
       CORBA::Boolean not_exists =

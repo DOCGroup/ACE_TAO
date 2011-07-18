@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for value types in the server header
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for value types in the server header
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_sh,
+           "$Id$")
 
 
 // ************************************************************
@@ -34,7 +44,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
-  AST_Type *concrete = node->supports_concrete ();
+  AST_Interface *concrete = node->supports_concrete ();
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.
@@ -61,7 +71,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
     }
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the skeleton class name.
   *os << "class " << class_name.c_str () << ";" << be_nl;
@@ -102,14 +112,14 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       << "public:" << be_idt_nl;
 
   *os << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_uidt_nl;
-
+  
   // No copy constructor for locality constraint interface.
   *os << "private:" << be_idt_nl
       << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_uidt_nl;
+      
 
-
-  *os << "};" << be_nl_2;
+  *os << "};" << be_nl << be_nl;
 
   return 0;
 }

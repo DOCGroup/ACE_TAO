@@ -241,7 +241,7 @@ namespace CIDL_ReceiverImpl
     ACE_DEBUG ((LM_DEBUG, "ReceiverExec_i::set_session_context\n"));
 
     this->context_ =
-      ::Protocols::CCM_Receiver_Context::_narrow (ctx);
+      ReceiverExec_Context::_narrow (ctx);
 
     if (CORBA::is_nil (this->context_.in ()))
       throw CORBA::INTERNAL ();

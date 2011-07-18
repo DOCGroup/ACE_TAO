@@ -27,6 +27,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
+class ACE_Lock;
 class ACE_Event_Handler;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -52,13 +53,15 @@ class TAO_Transport;
  * right protocol. This way, most of the common code for the
  * different protocols would be in this implementation.
  */
-class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event,
-                                          private ACE_Copy_Disabled
+class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 {
 public:
 
   /// Constructor
-  explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
+  TAO_Connection_Handler (void);
+
+  /// Constructor
+  TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor
   virtual ~TAO_Connection_Handler (void);
@@ -133,8 +136,6 @@ public:
   /// Release the OS resources related to this handler.
   virtual int release_os_resources (void);
 
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
-
   /*
    * Hook to add public methods from concrete connection handler
    * implementation onto the base connection handler.
@@ -197,11 +198,19 @@ protected:
   //@}
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connection_Handler &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler (const TAO_Connection_Handler &))
+
+private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
 
   /// Transport object reference
   TAO_Transport* transport_;
+
+  /// Internal state lock, needs to be separate from the reference
+  /// count / pending upcalls lock because they interleave.
+  ACE_Lock * lock_;
 
   /// Stores the connection pending state
   bool connection_pending_;

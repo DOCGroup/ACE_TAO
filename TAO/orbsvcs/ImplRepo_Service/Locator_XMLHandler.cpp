@@ -3,6 +3,8 @@
 #include "Locator_XMLHandler.h"
 #include "ace/OS_NS_strings.h"
 
+ACE_RCSID (ImplRepo_Service,Locator_XMLHandler,"$Id$")
+
 const ACE_TCHAR* Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
 const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
 const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
@@ -26,19 +28,18 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
       this->server_name_ = ACE_TEXT("");
       this->env_vars_.clear();
 
-      if (attrs != 0 && attrs->getLength () == 9)
+      if (attrs != 0 && attrs->getLength () == 8)
         {
-          this->server_id_ = attrs->getValue ((size_t)0);
-          this->server_name_ = attrs->getValue ((size_t)1);
-          this->activator_name_ = attrs->getValue ((size_t)2);
-          this->command_line_ = attrs->getValue ((size_t)3);
-          this->working_dir_ = attrs->getValue ((size_t)4);
-          this->activation_ = attrs->getValue ((size_t)5);
+          this->server_name_ = attrs->getValue ((size_t)0);
+          this->activator_name_ = attrs->getValue ((size_t)1);
+          this->command_line_ = attrs->getValue ((size_t)2);
+          this->working_dir_ = attrs->getValue ((size_t)3);
+          this->activation_ = attrs->getValue ((size_t)4);
           this->env_vars_.clear ();
-          int limit = ACE_OS::atoi (attrs->getValue ((size_t)6));
+          int limit = ACE_OS::atoi (attrs->getValue ((size_t)5));
           this->start_limit_ = limit;
-          this->partial_ior_ = attrs->getValue ((size_t)7);
-          this->server_object_ior_ = attrs->getValue ((size_t)8);
+          this->partial_ior_ = attrs->getValue ((size_t)6);
+          this->server_object_ior_ = attrs->getValue ((size_t)7);
         }
     }
   else if (ACE_OS::strcasecmp (qName, ACTIVATOR_INFO_TAG) == 0)
@@ -73,8 +74,7 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0
     && this->server_name_.length () > 0)
   {
-    this->callback_.next_server (
-      this->server_id_, this->server_name_,
+    this->callback_.next_server (this->server_name_,
       this->activator_name_, this->command_line_,
       this->env_vars_, this->working_dir_, this->activation_,
       this->start_limit_, this->partial_ior_, this->server_object_ior_);

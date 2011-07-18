@@ -5,6 +5,8 @@
 #include "Receiver.h"
 #include "ace/High_Res_Timer.h"
 
+ACE_RCSID(Throughput, Receiver, "$Id$")
+
 Receiver::Receiver (void)
   : start_time_ (0)
   , message_count_ (0)

@@ -3,6 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Hello, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int message_size = 0;
 
@@ -30,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

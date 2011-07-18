@@ -10,6 +10,12 @@
 # include "tao/CDR.inl"
 #endif /* ! __ACE_INLINE__ */
 
+
+ACE_RCSID (tao,
+           CDR,
+           "$Id$")
+
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_CDR_Timeprobe_Description[] =
@@ -251,42 +257,6 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
 }
 
 
-
-int
-TAO_OutputCDR::offset (char* pos)
-{
-  int offset = 0;
-  const ACE_Message_Block * cur_mb = this->begin ();
-  char* wr_ptr = this->current ()->wr_ptr ();
-  bool found = false;
-
-  while (cur_mb != this->end ())
-  {
-    if (pos >= cur_mb->rd_ptr () && pos <= cur_mb->wr_ptr ())
-    {
-      offset += (cur_mb->wr_ptr () - pos);
-      found = true;
-    }
-    else if (found)
-    {
-      offset += cur_mb->length ();
-    }
-
-    if (wr_ptr == cur_mb->wr_ptr ())
-      break;
-
-    cur_mb = cur_mb->cont();
-  }
-
-  if (!found || wr_ptr != cur_mb->wr_ptr ())
-  {
-    throw ::CORBA::INTERNAL ();
-  }
-
-  return offset;
-}
-
-
 // ****************************************************************
 
 TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
@@ -365,6 +335,5 @@ TAO_InputCDR::clr_mb_flags( ACE_Message_Block::Message_Flags less_flags )
 {
   return start_.clr_self_flags( less_flags );
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

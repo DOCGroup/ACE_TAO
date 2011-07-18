@@ -32,7 +32,7 @@ namespace TAO
    *
    */
   template<typename S_forany,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_Var_Array_SArgument_T : public InArgument
   {
   public:
@@ -56,7 +56,7 @@ namespace TAO
    *
    */
   template<typename S_forany,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Inout_Var_Array_SArgument_T : public InoutArgument
   {
   public:
@@ -81,7 +81,7 @@ namespace TAO
    */
   template<typename S_var,
            typename S_forany,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Out_Var_Array_SArgument_T : public OutArgument
   {
   public:
@@ -105,7 +105,7 @@ namespace TAO
    */
   template<typename S_var,
            typename S_forany,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Ret_Var_Array_SArgument_T : public RetArgument
   {
   public:
@@ -129,7 +129,7 @@ namespace TAO
    */
   template<typename T_out,
            typename T_forany,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   struct Var_Array_SArg_Traits_T
   {
     typedef typename T_forany::_slice_type *            ret_type;

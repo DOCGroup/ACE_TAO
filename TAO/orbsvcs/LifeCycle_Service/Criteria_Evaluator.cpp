@@ -1,22 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Criteria_Evaluator.cpp
- *
- *  $Id$
- *
- *  An Evaluator for the CosLifeCycle Criteria
- *
- *
- *  @author Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    Criteria_Evaluator.cpp
+//
+// = DESCRIPTION
+//    An Evaluator for the CosLifeCycle Criteria
+//
+// = AUTHOR
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "Criteria_Evaluator.h"
 #include "ace/OS_NS_string.h"
 
-
+ACE_RCSID(LifeCycle_Service, Criteria_Evaluator, "$Id$")
 
 Criteria_Evaluator::Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
 : criteria_ (criteria)

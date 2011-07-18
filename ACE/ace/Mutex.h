@@ -144,7 +144,6 @@ public:
 
   /// Return the underlying mutex.
   const ACE_mutex_t &lock (void) const;
-  ACE_mutex_t &lock (void);
 
   /// Dump the state of an object.
   void dump (void) const;

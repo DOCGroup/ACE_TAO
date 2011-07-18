@@ -1,8 +1,8 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_unistd.h"
 
 char const * const scpc_orbId = "testDllOrb";
 
@@ -43,8 +43,7 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_loadPersistentPoa);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading PersistentPoa done. Result: <%d>\n"),
-    result
+    ACE_TEXT ("(%P|%t) loadunloadcycle - loading PersistentPoa done\n")
   ));
 
   ACE_DEBUG((
@@ -61,8 +60,7 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadPersistentPoa);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading PersistentPoa done. Result: <%d>\n"),
-    result
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading PersistentPoa done\n")
   ));
 
   ACE_DEBUG((
@@ -72,8 +70,7 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadOrb);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),
-    result
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done\n")
   ));
 }
 

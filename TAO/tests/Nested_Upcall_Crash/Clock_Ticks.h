@@ -9,6 +9,8 @@
  *
  */
 
+#include "ace/OS.h"
+
 namespace Clock_Ticks
 {
   /// Return the number of clock ticks per second

@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    buffer_type.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the internal buffer type of the Sequence node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    buffer_type.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the internal buffer type of the Sequence node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_sequence,
+           buffer_type,
+           "$Id$")
 
 // ****************************************************************
 // We have to generate the buffer type in the constructor
@@ -33,7 +42,7 @@ int
 be_visitor_sequence_buffer_type::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -46,7 +55,7 @@ be_visitor_sequence_buffer_type::visit_node (be_type *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << bt->nested_type_name (this->ctx_->scope ()->decl ());
+      *os << bt->nested_type_name (this->ctx_->scope ());
     }
   else
     {
@@ -95,8 +104,7 @@ be_visitor_sequence_buffer_type::visit_interface (be_interface *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (),
-                                     "_ptr");
+      *os << node->nested_type_name (this->ctx_->scope (), "_ptr");
     }
   else
     {
@@ -113,7 +121,7 @@ be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), "_ptr");
+      *os << node->nested_type_name (this->ctx_->scope (), "_ptr");
     }
   else
     {
@@ -142,7 +150,7 @@ be_visitor_sequence_buffer_type::visit_valuebox (be_valuebox *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
+      *os << node->nested_type_name (this->ctx_->scope (), " *");
     }
   else
     {
@@ -159,7 +167,7 @@ be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
+      *os << node->nested_type_name (this->ctx_->scope (), " *");
     }
   else
     {
@@ -176,7 +184,7 @@ be_visitor_sequence_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
-      *os << node->nested_type_name (this->ctx_->scope ()->decl (), " *");
+      *os << node->nested_type_name (this->ctx_->scope (), " *");
     }
   else
     {

@@ -14,7 +14,6 @@
 #include "tao/Generic_Sequence_T.h"
 #include "Valuetype_Sequence_Element_T.h"
 #include "tao/MM_Sequence_Iterator_T.h"
-#include "tao/Bounded_Reference_Allocation_Traits_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +28,6 @@ public:
   typedef object_type * value_type;
   typedef value_type const const_value_type;
   typedef object_t_var object_type_var;
-  typedef ::CORBA::ULong size_type;
 
   typedef details::valuetype_traits<object_type,object_type_var,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
@@ -181,7 +179,7 @@ private:
   bool marshal_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
 
     const ::CORBA::ULong length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {

@@ -1,10 +1,14 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h"
 #include "tao/CSD_Framework/CSD_POA.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID(CSD_Framework,
+          CSD_Default_Servant_Dispatcher,
+          "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -20,7 +24,8 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                                  ACE_Lock &lock,
                                                  TAO_SYNCH_MUTEX &thread_lock,
                                                  TAO_ORB_Core &orb_core,
-                                                 TAO_Object_Adapter *object_adapter)
+                                                 TAO_Object_Adapter *object_adapter
+                                                 )
     {
   TAO_CSD_POA *poa = 0;
 

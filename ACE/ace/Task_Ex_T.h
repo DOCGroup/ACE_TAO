@@ -58,8 +58,7 @@ template <ACE_SYNCH_DECL> class ACE_Module;
  * code is in action.
  */
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE>
-class ACE_Task_Ex : public ACE_Task_Base,
-                    private ACE_Copy_Disabled
+class ACE_Task_Ex : public ACE_Task_Base
 {
 public:
   friend class ACE_Module<ACE_SYNCH_USE>;
@@ -126,6 +125,12 @@ public: // Should be protected:
    */
   int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = 0);
 
+  /**
+   * Tests whether we can enqueue a message without blocking.
+   * @deprecated This method is deprecated and will go away in the future.
+   */
+  int can_put (ACE_MESSAGE_TYPE *);
+
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated
   /// with the Task, else returns 0.
@@ -174,6 +179,12 @@ public: // Should be protected:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+
+private:
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Ex (const ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE> &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

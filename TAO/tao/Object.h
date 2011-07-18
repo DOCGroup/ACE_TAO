@@ -32,13 +32,17 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#include "ace/Atomic_Op.h"
+#include "tao/Configurable_Refcount.h"
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
       and we don't want that definition.  See IOP_IORC.h. */
 # undef IOR
 #endif /* HPUX && IOR */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -79,13 +83,8 @@ namespace CORBA
 
   class Object;
   typedef Object *Object_ptr;
-
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
-
-  template<>
-  TAO_Export Boolean
-  is_nil<> (Object_ptr);
 
   /**
    * @class Object
@@ -219,7 +218,7 @@ namespace CORBA
     virtual CORBA::ORB_ptr _get_orb (void);
 
     /**
-     * @name Reference Count Management
+     * @name Reference Count Managment
      *
      * These are the standard CORBA object reference count manipulations
      * methods.
@@ -232,7 +231,7 @@ namespace CORBA
     virtual void _remove_ref (void);
 
     /// Get the refcount
-    virtual CORBA::ULong _refcount_value (void) const;
+    virtual CORBA::ULong _refcount_value(void) const;
     //@}
 
     // Useful for template programming.
@@ -339,11 +338,8 @@ namespace CORBA
     virtual char* convert_to_ior (bool use_omg_ior_format,
                                   const char* ior_prefix) const;
 
-    /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.
-    void _decr_refcount (void);
-
   protected:
+
     /// Initializing a local object.
     Object (int dummy = 0);
 
@@ -352,7 +348,7 @@ namespace CORBA
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
     /// Number of outstanding references to this object.
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+    TAO_Configurable_Refcount refcount_;
 
   private:
 
@@ -401,7 +397,7 @@ namespace CORBA
      * not require reference counting (the default) may be
      * instantiated in the critical path.
      */
-    TAO_SYNCH_MUTEX object_init_lock_;
+    ACE_Lock * object_init_lock_;
   };
 }   // End CORBA namespace.
 
@@ -413,7 +409,7 @@ namespace TAO
                                  CORBA::Object_var,
                                  CORBA::Object_out,
                                  TAO::Objref_Traits<CORBA::Object>,
-                                 TAO::Any_Insert_Policy_CORBA_Object>
+                                 TAO::Any_Insert_Policy_CORBA_Object <CORBA::Object_ptr> >
   {
   };
 

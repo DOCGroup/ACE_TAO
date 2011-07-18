@@ -2,6 +2,8 @@
 
 #include "ace/OS_NS_wchar.h"
 
+ACE_RCSID(ace, OS_NS_wchar, "$Id$")
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_wchar.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -155,7 +157,7 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 size_t
 ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
 {
-  const ACE_WCHAR_T *s = 0;
+  const ACE_WCHAR_T *s;
 
   for (s = string; *s; ++s)
     continue;
@@ -176,14 +178,14 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
       const ACE_WCHAR_T *s = source;
 
       while (*d != 0)
-        ++d;
+        d++;
 
       do
         {
           if ((*d = *s++) == 0)
             break;
 
-          ++d;
+          d++;
         } while (--count != 0);
 
       *d = 0;
@@ -283,7 +285,7 @@ wchar_t *
 ACE_OS::wcspbrk_emulation (const wchar_t *string,
                            const wchar_t *charset)
 {
-  const wchar_t *scanp = 0;
+  const wchar_t *scanp;
   int c, sc;
 
   while ((c = *string++) != 0)
@@ -333,7 +335,7 @@ ACE_OS::wcsspn_emulation (const wchar_t *string,
                           const wchar_t *charset)
 {
   const wchar_t *p = string;
-  const wchar_t *spanp = 0;
+  const wchar_t *spanp;
   wchar_t c, sc;
 
   // Skip any characters in charset, excluding the terminating \0.

@@ -1,23 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    LifeCycle_Service_i.cpp
- *
- *  $Id$
- *
- *  The implementation of a LifeCycle Service GenericFactory.
- *
- *
- *  @author Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    Life_Cycle_Service_i.cpp
+//
+// = DESCRIPTION
+//    The implementation of a LifeCycle Service GenericFactory.
+//
+// = AUTHOR
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 
 #include "orbsvcs/LifeCycleServiceC.h"
 
 #include "LifeCycle_Service_i.h"
+
+ACE_RCSID (LifeCycle_Service,
+           LifeCycle_Service_i,
+           "$Id$")
 
 // Constructor
 Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)

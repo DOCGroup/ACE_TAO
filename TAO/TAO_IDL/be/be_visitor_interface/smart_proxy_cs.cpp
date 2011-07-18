@@ -1,18 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    smart_proxy_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for smart_proxy classes for an Interface in the
- *  client proxy file.
- *
- *
- *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    smart_proxy_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for smart_proxy classes for an Interface in the
+//    client proxy file.
+//
+// = AUTHOR
+//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           smart_proxy_cs,
+           "$Id$")
 
 // ************************************************************
 //  be_visitor_interface_smart_proxy_cs
@@ -45,7 +52,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       // are in the same scope as the proxy.
       be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -79,7 +86,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "{" << be_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << node->full_name () << "_ptr" << be_nl << be_uidt << be_uidt;
       *os << scope->full_name ();
 
@@ -96,7 +103,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "return proxy;" << be_uidt_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -236,7 +243,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << be_uidt << be_uidt_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -247,7 +254,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_"
           <<  node->flat_name () << "_Smart_Proxy_Base (void)" << be_uidt_nl
           << "{" << be_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       os->indent ();
       *os << scope->full_name ();
@@ -275,7 +282,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "_stubobj (void) const"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
-          << "}"<< be_nl_2;
+          << "}"<< be_nl << be_nl;
 
       // Implement the <stubobj> method of the base class
       os->indent ();
@@ -289,7 +296,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "_stubobj (void)"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       if (this->visit_scope (node) == -1)
         {
@@ -327,7 +334,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << be_uidt_nl
           << "}" << be_uidt_nl
           << "return this->proxy_.in ();" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
   else
     {

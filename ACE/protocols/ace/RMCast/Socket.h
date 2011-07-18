@@ -1,5 +1,6 @@
-// $Id$
+// file      : ace/RMCast/Socket.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
+// cvs-id    : $Id$
 
 #ifndef ACE_RMCAST_SOCKET_H
 #define ACE_RMCAST_SOCKET_H

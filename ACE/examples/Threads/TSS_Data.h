@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    TSS_Data.h
- *
- *  $Id$
- *
- *  @author Prashant Jain and Doug Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    TSS_Data.cpp
+//
+// = AUTHOR
+//    Prashant Jain and Doug Schmidt
+//
+// ============================================================================
 
 #include "ace/Singleton.h"
 
@@ -18,12 +21,9 @@
 
 #include "ace/Synch_Traits.h"
 
-/**
- * @class TSS_Data
- *
- * @brief Data that is stored in thread-specific storage.
- */
 class TSS_Data
+  // = TITLE
+  //   Data that is stored in thread-specific storage.
 {
 public:
   void *data (void) { return this->data_; }

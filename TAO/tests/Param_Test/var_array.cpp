@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    var_array.cpp
- *
- *  $Id$
- *
- *  tests fixed size arrays
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    var_array.cpp
+//
+// = DESCRIPTION
+//    tests fixed size arrays
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "var_array.h"
+
+ACE_RCSID (Param_Test,
+           var_array,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Var_Array

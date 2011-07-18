@@ -14,6 +14,9 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 
+ACE_RCSID (DynamicInterface, AMH_DSI_Response_Handler,
+           "$Id$")
+
 #if !defined (__ACE_INLINE__)
 # include "AMH_DSI_Response_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -250,40 +253,44 @@ TAO_AMH_DSI_Exception_Holder::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::Boolean
 TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     TAO_InputCDR &strm,
-    TAO_AMH_DSI_Exception_Holder *&new_object)
+    TAO_AMH_DSI_Exception_Holder *&new_object
+  )
 {
-  ::CORBA::ValueBase *base = 0;
-  ::CORBA::Boolean is_indirected = 0;
-  ::CORBA::Boolean is_null_object = 0;
-  ::CORBA::Boolean const retval =
-    ::CORBA::ValueBase::_tao_unmarshal_pre (
+  CORBA::ValueBase *base = 0;
+  CORBA::ValueFactory_var factory;
+  CORBA::Boolean retval =
+    CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
         base,
-        TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id (),
-        is_null_object,
-        is_indirected
+        TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id ()
       );
 
-  ::CORBA::ValueBase_var owner (base);
+  if (retval == 0)
+    {
+      return false;
+    }
 
-  if (!retval)
-    return 0;
+  if (factory.in () != 0)
+    {
+      base = factory->create_for_unmarshal ();
 
-  if (is_null_object)
-    return 1;
+      if (base == 0)
+        {
+          return false;  // %! except.?
+        }
 
-  if (!is_indirected && base != 0 && ! base->_tao_unmarshal_v (strm))
-    return 0;
+      retval = base->_tao_unmarshal_v (strm);
 
+      if (retval == 0)
+        {
+          return false;
+        }
+    }
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TAO_AMH_DSI_Exception_Holder::_downcast (base);
-  if (is_indirected)
-    new_object->_add_ref ();
-
-  owner._retn ();
-  return 1;
+  return retval;
 }
 
 void

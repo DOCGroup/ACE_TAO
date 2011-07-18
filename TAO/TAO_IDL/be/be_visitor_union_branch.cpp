@@ -1,15 +1,21 @@
-//=============================================================================
-/**
- *  @file    be_visitor_union_branch.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for the base "BE_Union_Branch" node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+//
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_union_branch.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for the base "BE_Union_Branch" node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_enum.h"
@@ -19,10 +25,8 @@
 #include "be_sequence.h"
 #include "be_string.h"
 #include "be_structure.h"
-#include "be_structure_fwd.h"
 #include "be_typedef.h"
 #include "be_union.h"
-#include "be_union_fwd.h"
 #include "be_union_branch.h"
 #include "be_valuebox.h"
 #include "be_valuetype.h"
@@ -50,3 +54,9 @@
 #include "be_visitor_union_branch/public_cs.cpp"
 #include "be_visitor_union_branch/cdr_op_ch.cpp"
 #include "be_visitor_union_branch/cdr_op_cs.cpp"
+#include "be_visitor_union_branch/serializer_op_ch.cpp"
+#include "be_visitor_union_branch/serializer_op_cs.cpp"
+
+ACE_RCSID (be,
+           be_visitor_union_branch,
+           "$Id$")

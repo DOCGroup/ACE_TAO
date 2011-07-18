@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SCIOP_Factory.h"
 #include "tao/Strategies/SCIOP_Acceptor.h"
 #include "tao/Strategies/SCIOP_Connector.h"
@@ -8,6 +6,10 @@
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/IOPC.h"
+
+ACE_RCSID (tao,
+           SCIOP_Factory,
+           "$Id$")
 
 static const char prefix_[] = "sciop";
 

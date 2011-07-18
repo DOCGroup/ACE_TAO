@@ -13,8 +13,9 @@
 # include <sstream>
 #endif
 
+#include "ace/OS.h"
+
 #include "tao/corba.h"
-#include "ace/OS_NS_unistd.h"
 
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"

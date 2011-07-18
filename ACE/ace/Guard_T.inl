@@ -1,7 +1,6 @@
 // -*- C++ -*-
+//
 // $Id$
-
-// FUZZ: disable check_for_ACE_Guard
 
 #include "ace/RW_Thread_Mutex.h"
 

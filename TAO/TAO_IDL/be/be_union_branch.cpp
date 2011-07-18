@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_union_branch.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_UnionBranch that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_union_branch.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_UnionBranch that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_union_branch.h"
 #include "be_union.h"
@@ -22,6 +27,20 @@
 #include "be_helper.h"
 #include "ast_union_label.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_union_branch,
+           "$Id$")
+
+be_union_branch::be_union_branch (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Field (),
+    AST_UnionBranch (),
+    be_decl (),
+    be_field ()
+{
+}
 
 be_union_branch::be_union_branch (UTL_LabelList *ll,
                                   AST_Type *ft,
@@ -133,7 +152,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         *os << dv.u.ulong_val;
         break;
       case AST_Expression::EV_char:
-        os->print ("'\\%o'", dv.u.char_val);
+        os->print ("%d", dv.u.char_val);
         break;
       case AST_Expression::EV_bool:
         *os << (dv.u.bool_val == 0 ? "false" : "true");
@@ -146,19 +165,9 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
           AST_ConcreteType *act = bu->disc_type ();
           be_enum *be = be_enum::narrow_from_decl (act);
 
-          UTL_ScopedName *sn = be->value_to_name (dv.u.enum_val);
-          if (sn)
-            {
-              // The function value_to_name() takes care of adding
-              // any necessary scoping to the output.
-              *os << be->value_to_name (dv.u.enum_val);
-            }
-          else
-            {
-              // Since CORBA defines enums to be 32bits, use -1 as the
-              // out-of-bounds value for the _default() function.
-              *os << "(" << be->name () << ") -1";
-            }
+          // The function value_to_name() takes care of adding
+          // any necessary scoping to the output.
+          *os << be->value_to_name (dv.u.enum_val);
           break;
         }
       case AST_Expression::EV_longlong:

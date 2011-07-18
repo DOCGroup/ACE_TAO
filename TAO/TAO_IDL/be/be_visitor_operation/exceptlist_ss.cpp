@@ -1,18 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    exceptlist_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the list of exceptions that an operation
- *  raises (skeleton/server side).
- *
- *
- *  @author Ossama Othman
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exceptlist_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the list of exceptions that an operation
+//    raises (skeleton/server side).
+//
+// = AUTHOR
+//    Ossama Othman
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           exceptlist_ss,
+           "$Id$")
 
 // ****************************************************************************
 // visitor to generate the exception list for operations (skeleton/server_side)
@@ -72,7 +79,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
           << "static ::CORBA::ULong const nexceptions = 0;";
     }
 
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
 
   return 0;
 }

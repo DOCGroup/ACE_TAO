@@ -1,17 +1,19 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file      server.cpp
- *
- *  $Id$
- *
- *    A server program for the File IDL module
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===================================================================
+//  = LIBRARY
+//      TAO/tests/POA/Default_Servant/server
+//
+//  = FILENAME
+//      server.cpp
+//
+//  = DESCRIPTION
+//      A server program for the File IDL module
+//
+//  = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
 
 #include "File_i.h"
 #include "tao/debug.h"
@@ -19,6 +21,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID(Default_Servant, server, "$Id$")
 
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
 

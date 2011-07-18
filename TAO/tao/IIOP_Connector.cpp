@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/IIOP_Connector.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -21,6 +18,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/CORBA_macros.h"
+
+ACE_RCSID (tao,
+           IIOP_Connector,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,9 +61,8 @@ private:
   unsigned count_;
 };
 
-TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard (
-  TAO_IIOP_Connection_Handler **p,
-  unsigned count)
+TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard (TAO_IIOP_Connection_Handler **p,
+                                                          unsigned count)
   : ptr_ (p),
     count_ (count)
 {
@@ -89,7 +89,7 @@ TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
   , connect_strategy_ ()
-  , base_connector_ (0)
+  , base_connector_ ()
 {
 }
 
@@ -146,12 +146,14 @@ TAO_IIOP_Connector::supports_parallel_connects(void) const
 int
 TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (endpoint);
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    this->remote_endpoint (endpoint);
 
   if (iiop_endpoint == 0)
     return -1;
 
-   const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+   const ACE_INET_Addr &remote_address =
+     iiop_endpoint->object_addr ();
 
    // Verify that the remote ACE_INET_Addr was initialized properly.
    // Failure can occur if hostname lookup failed when initializing the
@@ -192,12 +194,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   int const result =
     this->begin_connection (svc_handler, r, iiop_endpoint, timeout);
 
-  // Make sure that we always do a remove_reference
-  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
-
   if (result == -1 && errno != EWOULDBLOCK)
     {
-      // Give users a clue to the problem.
+      // connect completed unsuccessfully
+      if (svc_handler)
+        {
+          svc_handler->remove_reference();
+        }
+
+       // Give users a clue to the problem.
       if (TAO_debug_level > 1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -215,33 +220,14 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   TAO_LF_Multi_Event mev;
   mev.add_event (svc_handler);
 
-  TAO_Transport *transport =
-    this->complete_connection (result,
-                               desc,
-                               sh_ptr,
-                               ep_ptr,
-                               1U,
-                               r,
-                               &mev,
-                               timeout);
-
-  // If complete_connection was unsuccessful then remove
-  // the last reference that we have to the svc_handler.
-  if (transport == 0)
-    {
-      if (TAO_debug_level > 1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
-                      ACE_TEXT ("connection to <%C:%d> completed unsuccessfully\n"),
-                      iiop_endpoint->host (),
-                      iiop_endpoint->port ()));
-        }
-      return 0;
-    }
-
-  svc_handler_auto_ptr.release ();
-  return transport;
+  return this->complete_connection (result,
+                                    desc,
+                                    sh_ptr,
+                                    ep_ptr,
+                                    1U,
+                                    r,
+                                    &mev,
+                                    timeout);
 }
 
 TAO_Transport *
@@ -319,24 +305,13 @@ TAO_IIOP_Connector::make_parallel_connection (
 
   TAO_Transport *winner = 0;
   if (count > 0) // only complete if at least one pending or success
-    {
-      // Make sure that we always do a remove_reference for every member
-      // of the list
-      TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (shlist, count);
-
-      winner = this->complete_connection (result,
-                                          desc,
-                                          shlist,
-                                          eplist,
-                                          count,r,
-                                          &mev,
-                                          timeout);
-
-      // We add here an extra reference so that when svc_handler_auto_ptr
-      // will go out of scope the winner will be still alive.
-      if (winner)
-        winner->add_reference ();
-    }
+    winner = this->complete_connection (result,
+                                        desc,
+                                        shlist,
+                                        eplist,
+                                        count,r,
+                                        &mev,
+                                        timeout);
 
   delete [] shlist; // reference reductions should have been done already
   delete [] eplist;
@@ -390,6 +365,24 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
                                    synch_options,
                                    local_addr);
 
+  // The connect() method creates the service handler and bumps the
+  // #REFCOUNT# up one extra.  There are four possibilities from
+  // calling connect(): (a) connection succeeds immediately - in this
+  // case, the #REFCOUNT# on the handler is two; (b) connection
+  // completion is pending - in this case, the #REFCOUNT# on the
+  // handler is also two; (c) connection fails immediately - in this
+  // case, the #REFCOUNT# on the handler is one since close() gets
+  // called on the handler; (d) the connect immediately returns when we
+  // have specified that it shouldn't block.
+  //
+  // The extra reference count in
+  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+  // the case when connection completion is pending and we are going
+  // to wait on a variable in the handler to changes, signifying
+  // success or failure.  Note, that this increment cannot be done
+  // once the connect() returns since this might be too late if
+  // another thread pick up the completion and potentially deletes the
+  // handler before we get a chance to increment the reference count.
   return result;
 }
 
@@ -435,6 +428,9 @@ TAO_IIOP_Connector::complete_connection (int result,
                                          TAO_LF_Multi_Event *mev,
                                          ACE_Time_Value *timeout)
 {
+  // Make sure that we always do a remove_reference for every member
+  // of the list
+  TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (sh_list,count);
   TList_Holder tlist(count);
 
   TAO_Transport *transport  = 0;
@@ -449,9 +445,6 @@ TAO_IIOP_Connector::complete_connection (int result,
       // the winner is the last member of the list, because the
       // iterator stopped on a successful connect.
       transport = tlist[count-1];
-
-      this->cleanup_pending (transport, tlist, count);
-
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
@@ -579,14 +572,14 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (TAO_debug_level > 2)
     {
-      ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::make_connection, ")
                   ACE_TEXT ("new %s connection to <%C:%d> on Transport[%d]\n"),
                   transport->is_connected() ?
                   ACE_TEXT("connected") : ACE_TEXT("not connected"),
                   iiop_endpoint->host (),
-                  iiop_endpoint->port (),
-                  svc_handler->peer ().get_handle ()));
+                iiop_endpoint->port (),
+                svc_handler->peer ().get_handle ()));
     }
 
 #if defined (INDUCE_BUG_2654_C)
@@ -666,7 +659,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_IIOP_Profile (this->orb_core ()),
                   0);
 
-  int const r = pfile->decode (cdr);
+  const int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();

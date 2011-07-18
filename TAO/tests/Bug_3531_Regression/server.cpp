@@ -5,15 +5,15 @@
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("file://test.ior");
-const ACE_TCHAR *srv_shutdown_file = ACE_TEXT("server_terminated");
+ACE_RCSID(Bug_2494_Regression, server, "$Id$")
 
+const ACE_TCHAR *ior_output_file = ACE_TEXT("file://test.ior");
 int nthreads = 4;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:x:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -27,10 +27,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
-      case 'x':
-        srv_shutdown_file = get_opts.opt_arg ();
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,17 +36,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
-/**
- * Run a server thread
- *
- * Use the ACE_Task_Base class to run server threads
- */
 class Worker : public ACE_Task_Base
 {
+  // = TITLE
+  //   Run a server thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run server threads
+  //
 public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
@@ -125,11 +122,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(srv_shutdown_file), "w");
+      const char *fname = "server_terminated";
+      FILE *output_file= ACE_OS::fopen (fname, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing: ",
-                           ACE_TEXT_ALWAYS_CHAR(srv_shutdown_file)),
+                           fname),
                           1);
       ACE_OS::fprintf (output_file, "%s", "OK\n");
       ACE_OS::fclose (output_file);

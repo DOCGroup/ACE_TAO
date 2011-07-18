@@ -14,6 +14,10 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
+ACE_RCSID (IFR_Service,
+           ifr_adding_visitor_union,
+           "$Id$")
+
 ifr_adding_visitor_union::ifr_adding_visitor_union (AST_Decl *scope)
   : ifr_adding_visitor (scope)
 {
@@ -336,7 +340,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           CORBA::UnionMemberSeq dummyMembers;
           dummyMembers.length (0);
           CORBA::Container_ptr current_scope = CORBA::Container::_nil ();
-
+          
           if (be_global->ifr_scopes ().top (current_scope) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -346,7 +350,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 ACE_TEXT (" scope stack is empty\n")),
                -1);
             }
-
+            
           // First create the named union without any members.
           union_def =
             current_scope->create_union (
@@ -405,7 +409,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // Also we know node->ifr_fwd_added_ is true.
           union_def = CORBA::UnionDef::_narrow (prev_def.in ());
           union_def->discriminator_type_def (this->ir_current_.in ());
-
+      
           if (be_global->ifr_scopes ().push (union_def.in ()) != 0)
             {
               ACE_ERROR_RETURN ((
@@ -427,7 +431,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
                 ACE_TEXT (" visit_scope failed\n")),
                -1);
             }
-
+           
           this->ir_current_ = CORBA::IDLType::_narrow (prev_def.in ());
 
           CORBA::Container_ptr used_scope =

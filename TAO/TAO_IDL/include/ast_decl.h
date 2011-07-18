@@ -76,7 +76,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
-
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
 
@@ -95,22 +94,25 @@ class ast_visitor;
 
 class TAO_IDL_FE_Export COMMON_Base
 {
-protected:
+public:
+
   COMMON_Base (bool local = false,
                bool abstract = false);
 
-  virtual ~COMMON_Base (void);
-
-public:
-  // A no-op, overridden in the child classes.
-  virtual void destroy (void);
+  virtual ~COMMON_Base (void) {}
 
   // Accessor needs to get overridden for a few types.
   virtual bool is_local (void);
   void is_local (bool val);
-
+  
   bool is_abstract (void) const;
   void is_abstract (bool val);
+
+  // A no-op, overridden in the child classes.
+  virtual void destroy (void);
+
+        // Narrowing.
+
 
 protected:
   bool is_local_;
@@ -150,44 +152,25 @@ public:
       , NT_native                   // Denotes a native type
                                     // dependent on the programming
                                     // language
-      , NT_factory                  // Denotes a OBV or home factory construct
-      , NT_finder                   // Denotes a home finder construct
+      , NT_factory                  // Denotes a OBV factory construct
       , NT_component                // Denotes a CORBA component
       , NT_component_fwd            // Denotes a forward declared component
       , NT_home                     // Denotes a CORBA component home
       , NT_eventtype                // Denotes a CCM event source or sink
       , NT_eventtype_fwd            // Denotes a forward declared CCM event
-      , NT_valuebox                 // Denotes a value box
-      , NT_type                     // Template interface parameter
-      , NT_fixed                    // Denotes (unsupported) fixed type
-      , NT_porttype                 // Denotes a port type
-      , NT_provides                 // Denotes a facet
-      , NT_uses                     // Denotes a receptacle
-      , NT_publishes                // Denotes an event source
-      , NT_emits                    // Denotes a one-to-one event source
-      , NT_consumes                 // Denotes an event sink
-      , NT_ext_port                 // Denotes an extended port
-      , NT_mirror_port              // Denotes a mirror port
-      , NT_connector                // Denotes a CCM connector
-      , NT_param_holder             // Denotes a template param placeholder
+      , NT_valuebox                 // Denotes an value box
   };
+
+  // Operations.
+
+  // Constructor(s).
+  AST_Decl (void);
 
   AST_Decl (NodeType type,
             UTL_ScopedName *n,
             bool anonymous = false);
 
   virtual ~AST_Decl (void);
-
-  // Cleanup method.
-  virtual void destroy (void);
-
-  // If this decl has been found, some types need to be
-  // moved onto their true definitions etc. Defaults to
-  // NO adjustment.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
-
-  // Is this decl a forward declared type (default false)
-  virtual bool is_fwd (void);
 
   // Data Accessors.
 
@@ -205,7 +188,7 @@ public:
   long line (void);
   void set_line (long l);
 
-  ACE_CString & file_name (void);
+  ACE_CString file_name (void);
   void set_file_name (ACE_CString s);
 
   UTL_ScopedName *name (void);
@@ -261,12 +244,13 @@ public:
   // prefix to the all the reserved keywords. But when we invoke the
   // operation remotely, we should be sending only the name with out
   // "_cxx_" prefix.
+  //
+
   Identifier *original_local_name (void);
   void original_local_name (Identifier *);
 
-  // To be overridden by the subclasses interface, struct, union, and
-  // the corresponding forward declaration classes.
-  virtual bool is_defined (void);
+  bool added (void);
+  void set_added (bool is_it);
 
   // Narrowing.
 
@@ -277,6 +261,9 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  // Cleanup method.
+  virtual void destroy (void);
 
   // Other operations
 
@@ -292,22 +279,13 @@ public:
   UTL_ScopedName *last_referenced_as (void) const;
   void last_referenced_as (UTL_ScopedName *n);
 
-  // Accessors for the prefix_scope_ member.
+  // Accessors for the prefix_socpe_ member.
   UTL_Scope *prefix_scope (void);
   void prefix_scope (UTL_Scope *s);
 
   // Useful for GIOP to know if a wstring is being marshaled.
   virtual int contains_wstring (void);
   void contains_wstring (int val);
-
-  // Additional checks when we think we have caught an IDL
-  // masking scope error in a lookup, which starts simply with
-  // a comparison of names in a scope masking queue.
-  bool masking_checks (AST_Decl *mod);
-
-  // Accessors for the member.
-  bool in_tmpl_mod_not_aliased (void) const;
-  void in_tmpl_mod_not_aliased (bool val);
 
 protected:
   // These are not private because they're used by
@@ -334,9 +312,6 @@ protected:
 
   void compute_flat_name (void);
   // Compute the flattened fully scoped name.
-
-  const char *node_type_to_string (NodeType nt);
-  // Convert a NodeType to a string for dumping.
 
 private:
   // Data
@@ -367,6 +342,9 @@ private:
   Identifier *pd_original_local_name;
   // _cxx_ removed if any.
 
+  bool pd_added;
+  // Already added.
+
   char *full_name_;
   // Our full scoped name.
 
@@ -388,9 +366,6 @@ private:
 
   // The scope in which our prefix, if any, was assigned.
   UTL_Scope *prefix_scope_;
-
-  bool in_tmpl_mod_not_aliased_;
-  // false by default - if true, we can't be referenced.
 
 private:
   void compute_full_name (UTL_ScopedName *n);

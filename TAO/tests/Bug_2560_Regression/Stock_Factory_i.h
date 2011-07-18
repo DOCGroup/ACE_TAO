@@ -14,8 +14,10 @@ public:
   Quoter::Stock_ptr get_stock (const char *symbol);
 
 private:
-  Quoter::Stock_var ref1_ ;
-  Quoter::Stock_var ref2_ ;
+  Quoter_Stock_i* servant1_;
+  Quoter_Stock_i* servant2_;
+  Quoter::Stock_ptr ref1_ ;
+  Quoter::Stock_ptr ref2_ ;
 };
 
 #endif /* TAO_TUTORIAL_QUOTER_SIMPLE_SERVER_STOCK_FACTORY_I_H */

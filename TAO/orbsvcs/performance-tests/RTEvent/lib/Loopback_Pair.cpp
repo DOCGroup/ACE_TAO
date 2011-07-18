@@ -13,6 +13,10 @@
 #include "Loopback_Pair.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (TAO_PERF_RTEC,
+           Loopback_Pair,
+           "$Id$")
+
 void
 Loopback_Pair::init (CORBA::Long experiment_id,
                      CORBA::Long base_event_type,

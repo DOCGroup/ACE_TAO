@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Thread_Lane_Resources_Manager.h"
@@ -6,6 +5,10 @@
 #include "tao/LF_Strategy.h"
 
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID (tao,
+           Thread_Lane_Resources_Manager,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

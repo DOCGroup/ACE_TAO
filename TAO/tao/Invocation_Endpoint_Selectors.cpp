@@ -1,5 +1,4 @@
 //$Id$
-
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -10,7 +9,12 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_RCSID (tao,
+           Invocation_Endpoint_Selectors,
+           "$Id$")
+
+
+  TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
 {

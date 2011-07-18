@@ -7,6 +7,8 @@
 #include "ace/Log_Msg.h"
 #include "Benchmark_Base.h"
 
+ACE_RCSID(Synch_Benchmarks, Benchmark_Base, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 // Initialize the static variables.
@@ -26,12 +28,12 @@ Benchmark_Base::benchmark_type (void)
 int
 Benchmark_Base::thr_id (void)
 {
-#if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
   // This invokes the thread-specific storage smart pointer.
   return this->id_->thr_id ();
 #else
   return ACE_Thread::self ();
-#endif /* ACE_HAS_PTHREADS || VXWORKS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 }
 
 Benchmark_Method_Base::Benchmark_Method_Base (void)
@@ -68,7 +70,7 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
   return 0;
 }
 
-#if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+#if defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_DCETHREADS) || defined (VXWORKS)
 /* static */
 MT_INT Thr_ID::thread_id_ (0);
 
@@ -89,5 +91,5 @@ Thr_ID::thr_id (int i)
   this->thr_id_ = i;
 }
 
-#endif /* ACE_HAS_PTHREADS || VXWORKS */
+#endif /* ACE_HAS_PTHREADS || ACE_HAS_DCETHREADS || VXWORKS */
 #endif /* ACE_HAS_THREADS */

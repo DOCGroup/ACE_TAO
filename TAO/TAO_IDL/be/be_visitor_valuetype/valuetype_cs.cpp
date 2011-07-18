@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client stubs file.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client stubs file.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cs,
+           "$Id$")
 
 // ************************************************************
 // Valuetype visitor for client stubs.
@@ -51,50 +61,50 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   if (node->is_defined ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
           << be_idt << be_idt_nl
-          << node->name () << " * p)" << be_uidt
-          << be_uidt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::add_ref (p);" << be_uidt_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
           << be_idt << be_idt_nl
-          << node->name () << " * p)" << be_uidt
-          << be_uidt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
-          << node->name () << " * p)" << be_uidt
-          << be_uidt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
     }
 
   // The _downcast method.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << node->name () << " *" << be_nl << node->name ()
       << "::_downcast ( ::CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
       << "return dynamic_cast< ::" << node->name ()
       << " * > (v);" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
@@ -103,7 +113,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();"
       << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
       << node->name ()
@@ -117,11 +127,11 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl
           << node->inherits_concrete ()->name ()
           << "::_tao_obv_truncatable_repo_ids (ids);" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
   else
     {
-      *os << be_uidt_nl << "}" << be_nl_2;
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
   if (be_global->any_support ())
@@ -135,7 +145,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->local_name () << " *> ("
           << "_tao_void_pointer);" << be_uidt << be_uidt_nl
           << "::CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
 
   // Switch streams to the *A.cpp file if we are using this option.
@@ -151,7 +161,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_type (void) const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
     }
 
   // Make sure we are generating to *C.cpp regardless of the above.
@@ -165,7 +175,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   //    "-fvisibility-inlines-hidden" command line option is used.
   *os << node->name () << "::~" << node->local_name () << " (void)"
       << be_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 
   bool is_an_amh_exception_holder =
     this->is_amh_exception_holder (node);
@@ -197,7 +207,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               << " (strm, ci);" << be_uidt_nl;
         }
 
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
       *os << "::CORBA::Boolean " << be_nl
@@ -224,7 +234,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               << " (strm,ci);" << be_uidt_nl;
         }
 
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
 
       *os << "::CORBA::Boolean " << be_nl
           << node->name ()
@@ -233,7 +243,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "{" << be_idt_nl
           << "return formal_type_id == reinterpret_cast<ptrdiff_t> ("
           << node->name() << "::_downcast);" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
     }
   else if (is_an_amh_exception_holder)
@@ -249,7 +259,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << be_nl
           << "{" << be_idt_nl
           << "return true;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
       *os << "::CORBA::Boolean" << be_nl
@@ -257,7 +267,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << be_nl
           << "{" << be_idt_nl
           << "return true;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       // The virtual _tao_match_formal_type method.
       *os << "::CORBA::Boolean " << be_nl
@@ -266,7 +276,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << be_nl
           << "{" << be_idt_nl
           << "return false;"<< be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
 
       if (!node->opt_accessor () && !node->is_abstract ())
@@ -276,17 +286,17 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
               << " (TAO_OutputCDR &, TAO_ChunkInfo&) const" << be_nl
               << "{" << be_idt_nl
               << "return true;" << be_uidt_nl
-              << "}" << be_nl_2;
+              << "}" << be_nl << be_nl;
 
           *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_unmarshal__" << node->flat_name ()
               << " (TAO_InputCDR &, TAO_ChunkInfo&)" << be_nl
               << "{" << be_idt_nl
               << "return true;" << be_uidt_nl
-              << "}" << be_nl_2;
+              << "}" << be_nl << be_nl;
         }
     }
-
+    
   if (be_global->gen_ostream_operators ())
     {
       *os << "std::ostream &" << be_nl
@@ -294,51 +304,43 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << be_nl
           << "{" << be_idt_nl
           << "strm << \"" << node->name () << "(\"";
-
-      unsigned long index = 0;
+          
+      unsigned long index = 0;         
       this->gen_ostream_operator_r (node, index);
-
+        
       *os << be_nl
-          << "     << \")\";" << be_nl_2
+          << "     << \")\";" << be_nl << be_nl
           << "return strm;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
 
   // The static T::_tao_unmarshal method
 
-  *os << "::CORBA::Boolean " << be_nl << node->name()
+  *os << "::CORBA::Boolean " << node->name()
       << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&new_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *base = 0;" << be_nl
-      << "::CORBA::Boolean is_indirected = false;" << be_nl
-      << "::CORBA::Boolean is_null_object = false;" << be_nl
       << "::CORBA::Boolean const retval =" << be_idt_nl
       << "::CORBA::ValueBase::_tao_unmarshal_pre ("
       << be_idt << be_idt_nl
       << "strm," << be_nl
       << "base," << be_nl
-      << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
-      << "is_null_object," << be_nl
-      << "is_indirected" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl
-      << "::CORBA::ValueBase_var owner (base);" << be_nl_2
+      << node->local_name () << "::_tao_obv_static_repository_id ()"
+      << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "::CORBA::ValueBase_var owner (base);" << be_nl << be_nl
       << "if (!retval)" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
-      << "if (is_null_object)" << be_idt_nl
-      << "return true;" << be_uidt_nl << be_nl
-      << "if (!is_indirected && !base->_tao_unmarshal_v (strm))" << be_idt_nl
+      << "if (base != 0 && ! base->_tao_unmarshal_v (strm))" << be_idt_nl
       << "return false;" << be_uidt_nl << be_nl
-      << "// Now base must point to the unmarshaled object." << be_nl
+      << "// Now base must be null or point to the unmarshaled object."
+      << be_nl
       << "// Align the pointer to the right subobject." << be_nl
-      << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
-      << "if (0 == new_object)" << be_idt_nl
-      << "return false;" << be_uidt_nl << be_nl
-      << "if (is_indirected)" << be_idt_nl
-      << "new_object->_add_ref ();" << be_uidt_nl << be_nl
-      << "owner._retn ();" << be_nl
+      << "new_object = " << node->local_name () << "::_downcast (base);"
+      << be_nl << "owner._retn ();" << be_nl
       << "return true;" << be_uidt_nl
       << "}";
 
@@ -347,7 +349,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // to avoid ambiguity.
   if (node->n_supports () > 0)
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "::CORBA::ValueBase *" << be_nl
           << node->name () << "::_tao_to_value (void)" << be_nl
           << "{" << be_idt_nl
@@ -406,8 +408,8 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // STEP I: Generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -476,45 +478,38 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
                                                  unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *parent = node->inherits_concrete ();
-
-  // Recurse up the parent chain.
+  AST_ValueType *parent = node->inherits_concrete ();
+    
+  // Recurse up the parent chain.  
   if (parent != 0)
     {
       this->gen_ostream_operator_r (be_valuetype::narrow_from_decl (parent),
                                     index);
     }
-
+  
   // Generate output for the members of whichever recursion we are in.
   for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
        !i.is_done ();
        i.next ())
     {
       be_field *f = be_field::narrow_from_decl (i.item ());
-      be_attribute *attr =
-        be_attribute::narrow_from_decl (i.item ());
-
+      
       // No way to access the private members from generated code.
-      if (f == 0
-          || f->visibility () != AST_Field::vis_PUBLIC
-          || attr != 0)
+      if (f == 0 || f->visibility () != AST_Field::vis_PUBLIC)
         {
           continue;
         }
-
+        
       if (index++ != 0)
         {
           *os << " << \", \"";
         }
-
+        
       *os << be_nl
           << "     << ";
-
+          
       ACE_CString instance_name ("this->");
       instance_name += f->local_name ()->get_string ();
-      f->gen_member_ostream_operator (os,
-                                      instance_name.c_str (),
-                                      false,
-                                      true);
+      f->gen_member_ostream_operator (os, instance_name.c_str (), true);
     }
 }

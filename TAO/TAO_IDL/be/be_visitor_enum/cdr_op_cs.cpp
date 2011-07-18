@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Enum for the CDR operators
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Enum for the CDR operators
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_enum,
+           cdr_op_cs,
+           "$Id$")
 
 
 // ***************************************************************************
@@ -37,8 +47,8 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -47,7 +57,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "{" << be_idt_nl
       << "return strm << static_cast< ::CORBA::ULong> (_tao_enumerator);"
       << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "::CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " & _tao_enumerator)" << be_nl
@@ -62,10 +72,10 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       << "}" << be_uidt_nl << be_nl
       << "return _tao_success;" << be_uidt_nl
       << "}" << be_nl;
-
+      
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;

@@ -44,6 +44,11 @@
 # include "tao/Transport.inl"
 #endif /* __ACE_INLINE__ */
 
+
+ACE_RCSID (tao,
+           Transport,
+           "$Id$")
+
 /*
  * Static function in file scope
  */
@@ -52,7 +57,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
           const ACE_TCHAR *location)
 {
-  ACE_GUARD (ACE_Log_Msg, ace_mon, *ACE_Log_Msg::instance ());
+  ACE_Guard <ACE_Log_Msg> log_guard (*ACE_Log_Msg::instance ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
@@ -162,7 +167,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   , stats_ (0)
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-  , flush_in_post_open_ (false)
+  , flush_in_post_open_ (0)
 {
   ACE_NEW (this->messaging_object_,
             TAO_GIOP_Message_Base (orb_core,
@@ -196,13 +201,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
 TAO_Transport::~TAO_Transport (void)
 {
-  if (TAO_debug_level > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport\n"),
-                  this->id_
-                  ));
-    }
-
   delete this->messaging_object_;
 
   delete this->ws_;
@@ -227,7 +225,7 @@ TAO_Transport::~TAO_Transport (void)
 
   // The following assert is needed for the test "Bug_2494_Regression".
   // See the bugzilla bug #2494 for details.
-  ACE_ASSERT (this->queue_is_empty_i ());
+  ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
@@ -403,7 +401,7 @@ TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
                          iovec * iov,
                          int iovcnt,
                          size_t &bytes_transferred,
-                         TAO::Transport::Drain_Constraints const & dc)
+                         ACE_Time_Value const * timeout)
 {
   // Concrete pluggable transport doesn't implement sendfile().
   // Fallback on TAO_Transport::send().
@@ -412,8 +410,7 @@ TAO_Transport::sendfile (TAO_MMAP_Allocator * /* allocator */,
   //    implementation to this base class method, and leave any TCP
   //    specific configuration out of this base class method.
   //      -Ossama
-  return this->send (iov, iovcnt, bytes_transferred,
-                     this->io_timeout (dc));
+  return this->send (iov, iovcnt, bytes_transferred, timeout);
 }
 #endif  /* TAO_HAS_SENDFILE==1 */
 
@@ -480,15 +477,17 @@ TAO_Transport::recache_transport (TAO_Transport_Descriptor_Interface *desc)
 int
 TAO_Transport::purge_entry (void)
 {
-  if (TAO_debug_level > 3)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
-                  ACE_TEXT ("entry is %@\n"),
-                  this->id (), this->cache_map_entry_));
-    }
-
-  return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
+  // We must store our entry in a temporary and zero out the data member.
+  // If there is only one reference count on us, we will end up causing
+  // our own destruction.  And we can not be holding a cache map entry if
+  // that happens.
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY* entry = 0;
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+    entry = this->cache_map_entry_;
+    this->cache_map_entry_ = 0;
+  }
+  return this->transport_cache_manager ().purge_entry (entry);
 }
 
 bool
@@ -516,27 +515,25 @@ TAO_Transport::update_transport (void)
   return this->transport_cache_manager ().update_entry (this->cache_map_entry_);
 }
 
-/**
+/*
+ *
  *  Methods called and used in the output path of the ORB.
+ *
  */
-TAO_Transport::Drain_Result
-TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
+int
+TAO_Transport::handle_output (ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output")
-                  ACE_TEXT (" - block_on_io=%d, timeout=%d.%06d\n"),
-                  this->id (),
-                  dc.block_on_io(),
-                  dc.timeout() ? dc.timeout()->sec() : static_cast<time_t> (-1),
-                  dc.timeout() ? dc.timeout()->usec() : -1 ));
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output\n"),
+                  this->id ()));
     }
 
   // The flushing strategy (potentially via the Reactor) wants to send
   // more data, first check if there is a current message that needs
   // more sending...
-  Drain_Result const retval = this->drain_queue (dc);
+  int const retval = this->drain_queue (max_wait_time);
 
   if (TAO_debug_level > 3)
     {
@@ -544,7 +541,7 @@ TAO_Transport::handle_output (TAO::Transport::Drain_Constraints const & dc)
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_output, ")
                   ACE_TEXT ("drain_queue returns %d/%d\n"),
                   this->id (),
-                  static_cast<int> (retval.dre_), ACE_ERRNO_GET));
+                  retval, errno));
     }
 
   // Any errors are returned directly to the Reactor
@@ -569,18 +566,15 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-  TAO::Transport::Drain_Constraints dc(
-      max_wait_time, true);
-
   return this->send_message_block_chain_i (mb,
                                            bytes_transferred,
-                                           dc);
+                                           max_wait_time);
 }
 
 int
 TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
-                                           TAO::Transport::Drain_Constraints const & dc)
+                                           ACE_Time_Value *max_wait_time)
 {
   size_t const total_length = mb->total_length ();
 
@@ -590,14 +584,14 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   synch_message.push_back (this->head_, this->tail_);
 
-  Drain_Result const n = this->drain_queue_i (dc);
+  int const n = this->drain_queue_i (max_wait_time);
 
-  if (n == DR_ERROR)
+  if (n == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
       return -1; // Error while sending...
     }
-  else if (n == DR_QUEUE_EMPTY)
+  else if (n == 1)
     {
       bytes_transferred = total_length;
       return 1;  // Empty queue, message was sent..
@@ -706,11 +700,12 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
   return 1;
 }
 
+
 int
 TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
                                      ACE_Time_Value *max_wait_time)
 {
-  // Don't clone now.. We could be sent in one shot!
+  // Dont clone now.. We could be sent in one shot!
   TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
@@ -774,17 +769,14 @@ int
 TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_message,
                                             ACE_Time_Value * max_wait_time)
 {
-  TAO::Transport::Drain_Constraints dc(
-      max_wait_time, this->using_blocking_io_for_synch_messages());
+  int const n = this->drain_queue_i (max_wait_time);
 
-  Drain_Result const n = this->drain_queue_i (dc);
-
-  if (n == DR_ERROR)
+  if (n == -1)
     {
       synch_message.remove_from_list (this->head_, this->tail_);
       return -1; // Error while sending...
     }
-  else if (n == DR_QUEUE_EMPTY)
+  else if (n == 1)
     {
       return 1;  // Empty queue, message was sent..
     }
@@ -804,18 +796,7 @@ TAO_Transport::schedule_output_i (void)
   ACE_Reactor * const reactor = eh->reactor ();
 
   if (reactor == 0)
-    {
-      if (TAO_debug_level > 1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("Transport[%d]::schedule_output_i, ")
-                      ACE_TEXT ("no reactor,")
-                      ACE_TEXT ("returning -1\n"),
-                      this->id ()));
-        }
-      return -1;
-    }
+     return -1;
 
   // Check to see if our event handler is still registered with the
   // reactor.  It's possible for another thread to have run close_connection()
@@ -829,7 +810,7 @@ TAO_Transport::schedule_output_i (void)
         {
           if (TAO_debug_level > 3)
             {
-              ACE_ERROR ((LM_ERROR,
+              ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("Transport[%d]::schedule_output_i ")
                           ACE_TEXT ("event handler not found in reactor,")
@@ -874,7 +855,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::handle_timeout, ")
+         ACE_TEXT ("TAO (%P|%t) - TAO_Transport[%d]::handle_timeout, ")
          ACE_TEXT ("timer expired\n"),
          this->id ()));
     }
@@ -908,13 +889,13 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
   return 0;
 }
 
-TAO_Transport::Drain_Result
-TAO_Transport::drain_queue (TAO::Transport::Drain_Constraints const & dc)
+int
+TAO_Transport::drain_queue (ACE_Time_Value *max_wait_time)
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, DR_ERROR);
-  Drain_Result const retval = this->drain_queue_i (dc);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+  int const retval = this->drain_queue_i (max_wait_time);
 
-  if (retval == DR_QUEUE_EMPTY)
+  if (retval == 1)
     {
       // ... there is no current message or it was completely
       // sent, cancel output...
@@ -923,22 +904,17 @@ TAO_Transport::drain_queue (TAO::Transport::Drain_Constraints const & dc)
 
       flushing_strategy->cancel_output (this);
 
-      return DR_OK;
+      return 0;
     }
 
   return retval;
 }
 
-TAO_Transport::Drain_Result
-TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
-    TAO::Transport::Drain_Constraints const & dc)
+int
+TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time)
 {
-  // As a side-effect, this decrements the timeout() pointed-to value by
-  // the time used in this function.  That might be important as there are
-  // potentially long running system calls invoked from here.
-  ACE_Countdown_Time countdown(dc.timeout());
-
   size_t byte_count = 0;
+  ACE_Countdown_Time countdown (max_wait_time);
 
   // ... send the message ...
   ssize_t retval = -1;
@@ -948,14 +924,12 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
     retval = this->sendfile (this->mmap_allocator_,
                              iov,
                              iovcnt,
-                             byte_count,
-                             dc);
+                             byte_count);
   else
 #endif  /* TAO_HAS_SENDFILE==1 */
-    retval = this->send (iov, iovcnt, byte_count,
-                         this->io_timeout (dc));
+    retval = this->send (iov, iovcnt, byte_count, max_wait_time);
 
-  if (TAO_debug_level > 9)
+  if (TAO_debug_level == 5)
     {
       dump_iov (iov, iovcnt, this->id (),
                 byte_count, ACE_TEXT("drain_queue_helper"));
@@ -970,7 +944,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
              ACE_TEXT ("send() returns 0\n"),
              this->id ()));
         }
-      return DR_ERROR;
+      return -1;
     }
   else if (retval == -1)
     {
@@ -979,15 +953,15 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
           ACE_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
              ACE_TEXT ("error during send() (errno: %d) - %m\n"),
-             this->id (), ACE_ERRNO_GET));
+             this->id (), errno));
         }
 
       if (errno == EWOULDBLOCK || errno == EAGAIN)
         {
-          return DR_WOULDBLOCK;
+          return 0;
         }
 
-      return DR_ERROR;
+      return -1;
     }
 
   // ... now we need to update the queue, removing elements
@@ -1007,15 +981,14 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
       ACE_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_helper, ")
          ACE_TEXT ("byte_count = %d, head_is_empty = %d\n"),
-         this->id(), byte_count, this->queue_is_empty_i ()));
+         this->id(), byte_count, (this->head_ == 0)));
     }
 
-  return DR_QUEUE_EMPTY;
-  // drain_queue_i will check if the queue is actually empty
+  return 1;
 }
 
-TAO_Transport::Drain_Result
-TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
+int
+TAO_Transport::drain_queue_i (ACE_Time_Value *max_wait_time)
 {
   // This is the vector used to send data, it must be declared outside
   // the loop because after the loop there may still be data to be
@@ -1066,23 +1039,23 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
       // IOV_MAX elements ...
       if (iovcnt == ACE_IOV_MAX)
         {
-          Drain_Result const retval =
-            this->drain_queue_helper (iovcnt, iov, dc);
+          int const retval = this->drain_queue_helper (iovcnt, iov,
+                                                       max_wait_time);
+
+          now = ACE_High_Res_Timer::gettimeofday_hr ();
 
           if (TAO_debug_level > 4)
             {
               ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
                  ACE_TEXT ("helper retval = %d\n"),
-                 this->id (), static_cast<int> (retval.dre_)));
+                 this->id (), retval));
             }
 
-          if (retval != DR_QUEUE_EMPTY)
+          if (retval != 1)
             {
               return retval;
             }
-
-          now = ACE_High_Res_Timer::gettimeofday_hr ();
 
           i = this->head_;
           continue;
@@ -1094,23 +1067,23 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
 
   if (iovcnt != 0)
     {
-      Drain_Result const retval = this->drain_queue_helper (iovcnt, iov, dc);
+      int const retval = this->drain_queue_helper (iovcnt, iov, max_wait_time);
 
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::drain_queue_i, ")
               ACE_TEXT ("helper retval = %d\n"),
-              this->id (), static_cast<int> (retval.dre_)));
+              this->id (), retval));
         }
 
-      if (retval != DR_QUEUE_EMPTY)
+      if (retval != 1)
         {
           return retval;
         }
     }
 
-  if (this->queue_is_empty_i ())
+  if (this->head_ == 0)
     {
       if (this->flush_timer_pending ())
         {
@@ -1120,10 +1093,10 @@ TAO_Transport::drain_queue_i (TAO::Transport::Drain_Constraints const & dc)
           this->reset_flush_timer ();
         }
 
-      return DR_QUEUE_EMPTY;
+      return 1;
     }
 
-  return DR_OK;
+  return 0;
 }
 
 void
@@ -1141,7 +1114,7 @@ TAO_Transport::cleanup_queue_i ()
   int msg_count = 0;
 
   // Cleanup all messages
-  while (!this->queue_is_empty_i ())
+  while (this->head_ != 0)
     {
       TAO_Queued_Message *i = this->head_;
 
@@ -1172,7 +1145,7 @@ TAO_Transport::cleanup_queue_i ()
 void
 TAO_Transport::cleanup_queue (size_t byte_count)
 {
-  while (!this->queue_is_empty_i () && byte_count > 0)
+  while (this->head_ != 0 && byte_count > 0)
     {
       TAO_Queued_Message *i = this->head_;
 
@@ -1352,7 +1325,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   // to send first:
   bool try_sending_first = true;
 
-  bool const queue_empty = this->queue_is_empty_i ();
+  bool const queue_empty = (this->head_ == 0);
 
   TAO::Transport_Queueing_Strategy *queue_strategy =
     stub->transport_queueing_strategy ();
@@ -1371,9 +1344,6 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
   bool partially_sent = false;
   bool timeout_encountered = false;
-
-  TAO::Transport::Drain_Constraints dc(
-      max_wait_time, this->using_blocking_io_for_asynch_messages());
 
   if (try_sending_first)
     {
@@ -1397,7 +1367,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       // code I will re-visit this decision
       n = this->send_message_block_chain_i (message_block,
                                             byte_count,
-                                            dc);
+                                            max_wait_time);
 
       if (n == -1)
         {
@@ -1616,9 +1586,11 @@ TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
   return 0;
 }
 
-/**
+/*
+ *
  * All the methods relevant to the incoming data path of the ORB are
  * defined below
+ *
  */
 int
 TAO_Transport::handle_input (TAO_Resume_Handle &rh,
@@ -1871,7 +1843,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
     }
 
   // Saving the size of the received buffer in case any one needs to
-  // get the size of the message that is received in the
+  // get the size of the message thats received in the
   // context. Obviously the value will be changed for each recv call
   // and the user is supposed to invoke the accessor only in the
   // invocation context to get meaningful information.
@@ -2585,6 +2557,7 @@ TAO_Transport::notify_reactor (void)
          this->id ()));
     }
 
+
   // Send a notification to the reactor...
   int const retval = reactor->notify (eh, ACE_Event_Handler::READ_MASK);
 
@@ -2670,11 +2643,6 @@ TAO_Transport::messaging_init (TAO_GIOP_Message_Version const &version)
 void
 TAO_Transport::pre_close (void)
 {
-  if (TAO_debug_level > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::pre_close\n"),
-                  this->id_));
-    }
   // @TODO: something needs to be done with is_connected_. Checking it is
   // guarded by a mutex, but setting it is not. Until the need for mutexed
   // protection is required, the transport cache is holding its own copy
@@ -2694,10 +2662,8 @@ bool
 TAO_Transport::post_open (size_t id)
 {
   if (TAO_debug_level > 9)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
-                  ACE_TEXT ("tport id changed from %d to %d\n"), this->id_, id));
-    }
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
+                ACE_TEXT ("tport id changed from %d to %d\n"), this->id_, id));
   this->id_ = id;
 
   // When we have data in our outgoing queue schedule ourselves
@@ -2787,37 +2753,6 @@ TAO_Transport::allocate_partial_message_block (void)
 void
 TAO_Transport::set_bidir_context_info (TAO_Operation_Details &)
 {
-}
-
-ACE_Time_Value const *
-TAO_Transport::io_timeout(
-    TAO::Transport::Drain_Constraints const & dc) const
-{
-  if (dc.block_on_io())
-  {
-    return dc.timeout();
-  }
-  if (this->wait_strategy()->can_process_upcalls())
-  {
-    return 0;
-  }
-  return dc.timeout();
-}
-
-bool
-TAO_Transport::using_blocking_io_for_synch_messages (void) const
-{
-  if (this->wait_strategy()->can_process_upcalls())
-  {
-    return false;
-  }
-  return true;
-}
-
-bool
-TAO_Transport::using_blocking_io_for_asynch_messages (void) const
-{
-  return false;
 }
 
 /*

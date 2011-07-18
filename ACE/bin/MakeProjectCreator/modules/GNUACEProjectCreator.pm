@@ -64,16 +64,11 @@ sub fill_value {
     return ((defined $incs && $incs =~ /ciao/i) ||
             (defined $libs && $libs =~ /ciao/i));
   }
-  elsif ($name eq 'dance') {
+  elsif ($name eq 'dds') {
     my($incs) = $self->get_assignment('includes');
     my($libs) = $self->get_assignment('libpaths');
-    return ((defined $incs && $incs =~ /DAnCE/i) ||
-            (defined $libs && $libs =~ /DAnCE/i));
-  }
-  elsif ($name eq 'genins') {
-    my $ins = '';
-    $self->get_install_info(sub { $ins .= '#' . $_[0] });
-    return $ins;
+    return ((defined $incs && $incs =~ /dds/i) ||
+            (defined $libs && $libs =~ /dds/i));
   }
 
   return undef;

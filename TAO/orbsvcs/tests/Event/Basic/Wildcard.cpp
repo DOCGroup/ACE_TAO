@@ -7,6 +7,10 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
+ACE_RCSID (EC_Tests,
+           Wildcard,
+           "$Id$")
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

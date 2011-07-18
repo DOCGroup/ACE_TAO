@@ -226,7 +226,7 @@ TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
   this->rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
   this->orb_->orb ()->register_initial_reference (
     "RTScheduler",
-    this->rtscheduler_.in ()
+    RTScheduling::Scheduler::_duplicate (this->rtscheduler_.in ())
    );
 }
 

@@ -34,6 +34,10 @@
 #include "ace/Value_Ptr.h"
 #include "ace/OS_NS_ctype.h"
 
+ACE_RCSID (TypeCodeFactory,
+           TypeCodeFactory_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TCF

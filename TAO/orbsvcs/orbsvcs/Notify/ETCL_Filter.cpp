@@ -1,6 +1,11 @@
 // $Id$
 
 #include "orbsvcs/Notify/ETCL_Filter.h"
+
+ACE_RCSID(Notify,
+          TAO_Notify_ETCL_Filter,
+          "$Id$")
+
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
@@ -22,7 +27,7 @@ TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr ()
 }
 
 
-void
+void 
 TAO_Notify_Constraint_Expr::save_persistent (
   TAO_Notify::Topology_Saver& saver)
 {
@@ -41,7 +46,7 @@ TAO_Notify_Constraint_Expr::save_persistent (
 }
 
 
-void
+void 
 TAO_Notify_Constraint_Expr::load_attrs(
   const TAO_Notify::NVPList& attrs)
 {
@@ -57,7 +62,7 @@ TAO_Notify_Constraint_Expr::load_attrs(
 TAO_Notify::Topology_Object*
 TAO_Notify_Constraint_Expr::load_child (
   const ACE_CString &type,
-  CORBA::Long id,
+  CORBA::Long id, 
   const TAO_Notify::NVPList& attrs)
 {
   ACE_UNUSED_ARG (id);
@@ -70,7 +75,7 @@ TAO_Notify_Constraint_Expr::load_child (
     attrs.find ("Type", type);
 
     CORBA::ULong len = this->constr_expr.event_types.length ();
-    if (DEBUG_LEVEL)
+    if (DEBUG_LEVEL) 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) reload EventType %d \n"),
                   len + 1));
@@ -151,7 +156,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   if (TAO_debug_level > 1)
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_DEBUG, 
                 ACE_TEXT("Added an empty constraint to filter\n")));
 
   if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) == -1)
@@ -166,7 +171,8 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
 void
 TAO_Notify_ETCL_Filter::add_constraint_i
         (const CosNotifyFilter::ConstraintInfo& constraint,
-         CosNotifyFilter::ConstraintID cnstr_id)
+         CosNotifyFilter::ConstraintID cnstr_id
+        )
 {
   TAO_Notify_Constraint_Expr* notify_constr_expr = 0;
 
@@ -175,18 +181,19 @@ TAO_Notify_ETCL_Filter::add_constraint_i
     CORBA::NO_MEMORY ());
   auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
-  CosNotifyFilter::ConstraintExp const & expr =
+  const CosNotifyFilter::ConstraintExp& expr =
     constraint.constraint_expression;
 
-  notify_constr_expr->interpreter.build_tree (expr);
+  notify_constr_expr->interpreter.
+    build_tree (expr);
 
   notify_constr_expr->constr_expr = expr;
 
   if (cnstr_id == 0)
   {
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Added constraint %C to filter %d\n"),
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("Added constraint %s to filter %d\n"), 
                   expr.constraint_expr.in (), this->id_));
 
     cnstr_id = ++constraint_expr_ids_;
@@ -194,8 +201,8 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   else
   {
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Loaded constraint %C to filter %d\n"),
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("Loaded constraint %s to filter %d\n"), 
                   expr.constraint_expr.in (), this->id_));
   }
 
@@ -213,10 +220,10 @@ TAO_Notify_ETCL_Filter::add_constraints (
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
-  CORBA::ULong const constraint_length = constraint_list.length ();
+  CORBA::ULong constraint_length = constraint_list.length ();
 
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG, 
                   ACE_TEXT ("constraint_length = %d\n"),
                   constraint_length));
 
@@ -258,7 +265,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (
                       CORBA::INTERNAL ());
 
   // First check if all the ids are valid.
-  CORBA::ULong index;
+  u_int index;
 
   for (index = 0; index < del_list.length (); ++index)
     {
@@ -348,7 +355,7 @@ TAO_Notify_ETCL_Filter::get_constraints (
 
   TAO_Notify_Constraint_Expr *notify_constr_expr = 0;
 
-  for (CORBA::ULong index = 0; index < id_list.length (); ++index)
+  for (u_int index = 0; index < id_list.length (); ++index)
     {
       if (this->constraint_expr_list_.find (id_list[index],
                                             notify_constr_expr) == -1)
@@ -370,8 +377,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints (void)
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
-  CORBA::ULong const current_size =
-    static_cast<CORBA::ULong> (this->constraint_expr_list_.current_size ());
+  CORBA::ULong current_size = static_cast<CORBA::ULong> (this->constraint_expr_list_.current_size ());
 
   // Create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq *infoseq_ptr;
@@ -419,7 +425,9 @@ TAO_Notify_ETCL_Filter::remove_all_constraints_i (void)
   CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
   CONSTRAINT_EXPR_LIST::ENTRY *entry;
 
-  for (CORBA::ULong index = 0; iter.done () == 0; iter.advance (), ++index)
+  u_int index;
+
+  for (index = 0; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {
@@ -437,14 +445,14 @@ TAO_Notify_ETCL_Filter::destroy (void)
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
-  if (!CORBA::is_nil (this->poa_.in()))
-    {
-      this->remove_all_constraints_i ();
+  if (CORBA::is_nil (this->poa_.in()))
+    return;
 
-      PortableServer::ObjectId_var refTemp = this->poa_->servant_to_id (this);
-      this->poa_->deactivate_object (refTemp.in ());
-      this->poa_ = PortableServer::POA::_nil();
-    }
+  this->remove_all_constraints_i ();
+
+  PortableServer::ObjectId_var refTemp = this->poa_->servant_to_id (this);
+  this->poa_->deactivate_object (refTemp.in ());
+  this->poa_ = PortableServer::POA::_nil();
 }
 
 CORBA::Boolean
@@ -488,7 +496,8 @@ TAO_Notify_ETCL_Filter::match_structured (
 
 CORBA::Boolean
 TAO_Notify_ETCL_Filter::match_typed (
-                            const CosNotification::PropertySeq & /* filterable_data */)
+                            const CosNotification::PropertySeq & /* filterable_data */
+                            )
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -514,7 +523,7 @@ TAO_Notify_ETCL_Filter::get_callbacks (void)
 }
 
 
-void
+void 
 TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
 {
   TAO_Notify::NVPList attrs;
@@ -534,10 +543,10 @@ TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
       TAO_Notify::NVPList attrs;
       bool changed = true;
       attrs.push_back(TAO_Notify::NVP("ConstraintId", entry->ext_id_));
-      attrs.push_back(TAO_Notify::NVP("Expression",
+      attrs.push_back(TAO_Notify::NVP("Expression", 
         entry->int_id_->constr_expr.constraint_expr.in ()));
       saver.begin_object(0, "constraint", attrs, changed);
-
+ 
       entry->int_id_->save_persistent (saver);
 
       saver.end_object(0, "constraint");
@@ -574,8 +583,10 @@ TAO_Notify_ETCL_Filter::load_attrs(const TAO_Notify::NVPList& attrs)
 
 TAO_Notify::Topology_Object*
 TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
-  CORBA::Long, const TAO_Notify::NVPList& attrs)
+  CORBA::Long id, const TAO_Notify::NVPList& attrs)
 {
+  ACE_UNUSED_ARG (id);
+
   TAO_Notify::Topology_Object* result = this;
   if (type == "constraint")
   {
@@ -585,12 +596,12 @@ TAO_Notify_ETCL_Filter::load_child (const ACE_CString &type,
       TAO_Notify_Object::ID id = ACE_OS::atoi (value);
       constraint_expr_ids_ = id;
 
-      if (DEBUG_LEVEL)
+      if (DEBUG_LEVEL) 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d constraint %d\n"),
                     static_cast<int> (this->id_), static_cast<int> (id)));
 
-      TAO_Notify_Constraint_Expr* expr
+      TAO_Notify_Constraint_Expr* expr 
         = this->add_constraint_i (id);
       expr->load_attrs (attrs);
 

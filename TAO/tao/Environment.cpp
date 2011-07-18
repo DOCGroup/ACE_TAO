@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
@@ -10,6 +8,12 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Environment.inl"
 #endif /* __ACE_INLINE__ */
+
+
+ACE_RCSID (tao,
+           Environment,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +60,7 @@ CORBA::Environment::~Environment (void)
   this->clear ();
 
   // If previous is 0 then this is the first Environment, allocated
-  // with the ORB, it shouldn't try to pop because the ORB is being
+  // with the ORB, it shouldn't try to pop because the ORB is beign
   // destroyed also.
   if (this->previous_ != 0)
     TAO_ORB_Core_instance ()->default_environment (this->previous_);
@@ -100,6 +104,7 @@ CORBA::Environment::clear (void)
 CORBA::Environment&
 CORBA::Environment::default_environment ()
 {
+  //
   // If we are using native C++ exceptions the user is *not* supposed
   // to clear the environment every time she calls into TAO.  In fact
   // the user is not supposed to use the environment at all!
@@ -112,6 +117,7 @@ CORBA::Environment::default_environment ()
   // This is not an issue when using the alternative C++ mapping (with
   // the Environment argument) because then the user is supposed to
   // clear the environment before calling into the ORB.
+  //
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
 
   return TAO_default_environment ();;

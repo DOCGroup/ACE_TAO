@@ -80,11 +80,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Union : public virtual AST_Structure
 {
 public:
+  // Operations.
+
+  // Constructor(s).
+  AST_Union (void);
+
   AST_Union (AST_ConcreteType *disc_type,
              UTL_ScopedName *n,
              bool local,
              bool abstract);
 
+  // Destructor.
   virtual ~AST_Union (void);
 
   // This also calls the base class version.
@@ -100,6 +106,7 @@ public:
   AST_Expression::ExprType udisc_type (void);
 
   // Narrowing.
+
   DEF_NARROW_FROM_DECL(AST_Union);
   DEF_NARROW_FROM_SCOPE(AST_Union);
 
@@ -137,14 +144,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  static AST_Decl::NodeType const NT;
-
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
-
-  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
-  // Moved out of private section so it can be called from subclass.
 
 private:
   // Data.
@@ -173,11 +175,11 @@ private:
   AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
 
   friend int tao_yyparse (void);
-  friend class ast_visitor_tmpl_module_inst;
-
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);
+
+  virtual AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b);
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
 

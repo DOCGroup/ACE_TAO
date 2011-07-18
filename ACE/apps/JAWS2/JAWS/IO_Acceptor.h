@@ -17,7 +17,7 @@
 #include "ace/Singleton.h"
 
 #include "JAWS/Export.h"
-#include "JAWS/Jaws_IO.h"
+#include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 
 // Forward declaration.

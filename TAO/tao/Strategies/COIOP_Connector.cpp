@@ -11,7 +11,14 @@
 #include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
+
 #include "tao/Strategies/COIOP_Profile.h"
+
+
+ACE_RCSID (Strategies,
+           COIOP_Connector,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

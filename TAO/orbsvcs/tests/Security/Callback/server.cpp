@@ -1,57 +1,28 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "server_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/SString.h"
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
-const ACE_TCHAR *cert_file = ACE_TEXT("cacert.pem");
+ACE_RCSID (Callback,
+           server,
+           "$Id$")
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+const char *cert_file = "cacert.pem";
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ACE_TString env (ACE_TEXT("SSL_CERT_FILE="));
+      ACE_CString env ("SSL_CERT_FILE=");
       env += cert_file;
-      ACE_OS::putenv ( ACE_TEXT_ALWAYS_CHAR(env.c_str ()) );
+      ACE_OS::putenv (env.c_str ());
 
       //
       // Initialize the ORB
       //
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) != 0)
-        return 1;
 
       //
       // Get the Root POA.
@@ -83,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Write the IOR to a file.
       //
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR\n"),

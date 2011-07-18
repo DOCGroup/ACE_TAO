@@ -81,6 +81,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (util,
+           utl_strlist,
+           "$Id$")
+
 UTL_StrList::UTL_StrList (UTL_String *s,
                           UTL_StrList *cdr)
   : UTL_List(cdr),

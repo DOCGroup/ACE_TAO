@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_ANYTYPECODE_ADAPTER
 #define TAO_ANYTYPECODE_ADAPTER
 
@@ -26,8 +27,6 @@
 
 #include "tao/Basic_Types.h"
 
-#include <string>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
@@ -40,6 +39,7 @@ namespace CORBA
   class Policy;
   typedef Policy *Policy_ptr;
 }
+
 
 /**
  * @class TAO_AnyTypeCode_Adapter
@@ -104,8 +104,6 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, const std::string & value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy) = 0;
 

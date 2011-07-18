@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    UPIPE_SAP_Test.cpp
- *
- *  $Id$
- *
- *    This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
- *    intra-process communication.
- *
- *
- *  @author Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *  @author and Prashant Jain <pjain@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    UPIPE_SAP_Test.cpp
+//
+// = DESCRIPTION
+//      This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
+//      intra-process communication.
+//
+// = AUTHOR
+//    Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>,
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
+//    Prashant Jain <pjain@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Stream.h"
@@ -22,7 +25,7 @@
 #include "ace/UPIPE_Connector.h"
 #include "ace/OS_NS_unistd.h"
 
-
+ACE_RCSID(tests, UPIPE_SAP_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS) && \
     (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES))
@@ -45,7 +48,7 @@ connector (void *)
   if (con.connect (c_stream, addr) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connector ACE_UPIPE_Connector failed\n")));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
 
   ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ("hello thanks") * sizeof (char)), 0);
 
@@ -57,7 +60,7 @@ connector (void *)
   if (c_stream.recv (mb) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) error connector recv\n")));
 
-  ACE_TEST_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "thanks") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "thanks") == 0);
 
   // Free up the memory block.
   mb->release ();
@@ -85,7 +88,7 @@ connector (void *)
 
   conbuf[i] = '\0';
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) conbuf = %s\n"), conbuf));
-  ACE_TEST_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!") == 0);
 
   c_stream.close ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) exiting thread\n")));
@@ -107,7 +110,7 @@ acceptor (void *args)
   if (s_stream.recv (mb) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
 
-  ACE_TEST_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "hello") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "hello") == 0);
 
   mb->wr_ptr (mb->rd_ptr ());
   mb->copy ("thanks");
@@ -121,7 +124,7 @@ acceptor (void *args)
   if (s_stream.recv (s_buf, sizeof (s_buf)) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
   else
-    ACE_TEST_ASSERT (ACE_OS::strcmp (s_buf,
+    ACE_ASSERT (ACE_OS::strcmp (s_buf,
                                 "This string is sent by connector as a buffer") == 0);
 
   const char svr_response[] = "this is the acceptor response!";

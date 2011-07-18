@@ -3,6 +3,8 @@
 //
 #include "Simple.h"
 
+ACE_RCSID(Activation, Simple, "$Id$")
+
 Simple::Simple (void)
 {
 }

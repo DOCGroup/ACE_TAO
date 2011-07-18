@@ -56,8 +56,9 @@ public:
   /// Shutdown reactor.
   virtual void shutdown_reactor (void) = 0;
 
-  /// Cleanup transports to wake threads up waiting on those sockets.
-  virtual void close_all_transports (void) = 0;
+  /// Cleanup transports that use the RW strategy since there are no
+  /// ways to wake threads up waiting on those sockets.
+  virtual void cleanup_rw_transports (void) = 0;
 
   /// Does @a mprofile belong to us?
   virtual int is_collocated (const TAO_MProfile& mprofile) = 0;
@@ -95,6 +96,7 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager_Factory
   : public ACE_Service_Object
 {
 public:
+
   /// Virtual destructor.
   virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
 

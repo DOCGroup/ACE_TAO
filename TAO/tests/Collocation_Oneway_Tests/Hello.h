@@ -13,6 +13,8 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
+#include "ace/OS.h"
+
 /// Implement the Test::Hello interface
 class Hello
   : public virtual POA_Test::Hello

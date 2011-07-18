@@ -1,6 +1,10 @@
 // $Id$
 #include "tao/orbconf.h"
 
+ACE_RCSID (PortableServer,
+           Request_Processing,
+           "$Id$")
+
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 #include "tao/ORB_Constants.h"
@@ -88,7 +92,8 @@ namespace TAO
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-      bool &wait_occurred_restart_call)
+      bool &wait_occurred_restart_call
+      )
     {
       PortableServer::Servant servant = 0;
 
@@ -186,9 +191,10 @@ namespace TAO
     RequestProcessingStrategyServantActivator::etherealize_servant (
       const PortableServer::ObjectId& object_id,
       PortableServer::Servant servant,
-      CORBA::Boolean cleanup_in_progress)
+      CORBA::Boolean cleanup_in_progress
+      )
     {
-      CORBA::Boolean const remaining_activations =
+      CORBA::Boolean remaining_activations =
         this->poa_->servant_has_remaining_activations (servant);
 
       // ATTENTION: Trick locking here, see class header for details
@@ -277,14 +283,7 @@ namespace TAO
               Non_Servant_Upcall non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
-              try
-                {
-                  servant->_remove_ref ();
-                }
-              catch (...)
-                {
-                  // Ignore exceptions from servant cleanup.
-                }
+              servant->_remove_ref ();
             }
         }
 

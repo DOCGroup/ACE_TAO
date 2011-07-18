@@ -5,6 +5,10 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (Bug_2735_Regression,
+           server,
+           "$Id$")
+
 static const ACE_TCHAR* server_strat =
   ACE_STATIC_SERVICE_DIRECTIVE ("Server_Strategy_Factory",
                                 "-ORBConcurrency thread-per-connection");

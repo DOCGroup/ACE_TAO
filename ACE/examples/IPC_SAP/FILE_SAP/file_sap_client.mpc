@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project : aceexe, avoids_ace_for_tao {
+project : aceexe {
+  avoids += ace_for_tao
   exename = client
   Source_Files {
     client.cpp

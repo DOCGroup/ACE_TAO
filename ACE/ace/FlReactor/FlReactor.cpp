@@ -2,6 +2,8 @@
 
 #include "ace/FlReactor/FlReactor.h"
 
+ACE_RCSID(ace, FlReactor, "$Id$")
+
 #include /**/ <FL/Fl.H>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

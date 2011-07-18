@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Strategies/SHMIOP_Connector.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -16,12 +17,16 @@
 #include "tao/Blocked_Connect_Strategy.h"
 #include "ace/OS_NS_strings.h"
 
+ACE_RCSID (Strategies,
+           SHMIOP_Connector,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ ()
 {
 }
 
@@ -155,6 +160,14 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                               remote_address,
                                               synch_options);
 
+  // This call creates the service handler and bumps the #REFCOUNT# up
+  // one extra.  There are two possibilities: (a) connection succeeds
+  // immediately - in this case, the #REFCOUNT# on the handler is two;
+  // (b) connection fails immediately - in this case, the #REFCOUNT#
+  // on the handler is one since close() gets called on the handler.
+  // We always use a blocking connection so the connection is never
+  // pending.
+
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
@@ -248,7 +261,6 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
-  svc_handler_auto_ptr.release ();
   return transport;
 }
 

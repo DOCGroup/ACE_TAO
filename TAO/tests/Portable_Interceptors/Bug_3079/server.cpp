@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
@@ -8,6 +7,10 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_stdio.h"
 #include "CrashPoint.h"
+
+ACE_RCSID (Redirection,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_file = 0;
 int number = 0;
@@ -102,8 +105,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
-                           "IOR: %C\n",
-                           ior_file, ior.in ()),
+                           "IOR: %s",
+                           ior.in ()),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);

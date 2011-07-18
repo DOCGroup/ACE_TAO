@@ -1,6 +1,9 @@
 // $Id$
 
 #include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
+
+ACE_RCSID(DynamicInterface, TAO_Dynamic_Adapter_Impl, "$Id$")
+
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -78,7 +81,7 @@ TAO_Dynamic_Adapter_Impl::context_release (CORBA::Context_ptr ctx)
 {
   if (ctx != 0)
     {
-      ctx->_decr_refcount ();
+      ctx->_decr_refcnt ();
     }
 }
 
@@ -93,7 +96,7 @@ TAO_Dynamic_Adapter_Impl::request_release (CORBA::Request_ptr req)
 {
   if (req != 0)
     {
-      req->_decr_refcount ();
+      req->_decr_refcnt ();
     }
 }
 
@@ -108,7 +111,7 @@ TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 {
   if (req != 0)
     {
-      req->_decr_refcount ();
+      req->_decr_refcnt ();
     }
 }
 

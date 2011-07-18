@@ -1,5 +1,9 @@
 // $Id$
 
+ACE_RCSID (be_visitor_operation,
+           be_visitor_operation_remote_proxy_impl_cs,
+           "$Id$")
+
 // ************************************************************
 // Operation visitor for client stubs
 // ************************************************************
@@ -55,8 +59,8 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
@@ -75,7 +79,7 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
   be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
   be_interface *interface = be_interface::narrow_from_decl (scope);
 
-  *os <<" " << interface->full_remote_proxy_impl_name ()
+  *os <<" " << interface->full_remote_proxy_impl_name () 
       << "::" << node->local_name ();
 
   // Generate the argument list with the appropriate mapping (same as
@@ -94,7 +98,7 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
     }
 
   // Generate the code for the operation body.
-  return this->gen_stub_operation_body (node,
+  return this->gen_stub_operation_body (node, 
                                         bt);
 }
 
@@ -104,7 +108,7 @@ be_visitor_operation_remote_proxy_impl_cs::visit_argument (be_argument *node)
   // This method is used to generate the ParamData table entry.
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt;
 
   // Retrieve the type for this argument.
   bt = be_type::narrow_from_decl (node->field_type ());

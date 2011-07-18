@@ -5,6 +5,11 @@
 
 #include "ace/Auto_Ptr.h"
 
+
+ACE_RCSID (EventChannel,
+           AMI_Replication_Strategy,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 AMI_Replication_Strategy::AMI_Replication_Strategy(bool mt)

@@ -9,7 +9,7 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Reaper.h"
 
-
+ACE_RCSID(JAWS, Concurrency, "$Id$")
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
@@ -30,7 +30,7 @@ JAWS_Concurrency_Base::singleton_mb (void)
 {
   if (this->mb_acquired_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, 0);
+      ACE_Guard<ACE_SYNCH_MUTEX> g(this->lock_);
 
       if (this->mb_acquired_ == 0)
         {

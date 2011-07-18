@@ -42,7 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -67,14 +67,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // We do the command line parsing first
       if (parse_args (argc, argv) != 0)
-        return -1;
+        return 1;
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
-                          -1);
+                          1);
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -122,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
-                              -1);
+                              1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
       }
@@ -150,7 +150,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught exception:");
-      return -1;
+      return 1;
     }
   return 0;
 }

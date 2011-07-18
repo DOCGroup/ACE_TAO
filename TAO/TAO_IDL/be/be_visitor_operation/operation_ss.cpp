@@ -1,16 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the server skeleton
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the server skeleton
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+
+ACE_RCSID (be_visitor_operation,
+           operation_ss,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server skeletons
@@ -25,15 +36,24 @@ be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
 }
 
+// // Processing to be done after every element in the scope is processed.
+// int
+// be_visitor_operation_ss::post_process (be_decl *bd)
+// {
+//   // All we do here is to insert a comma and a newline.
+//   TAO_OutStream *os = this->ctx_->stream ();
+
+//   if (!this->last_node (bd))
+//     {
+//       *os << ",\n";
+//     }
+
+//   return 0;
+// }
+
 int
 be_visitor_operation_ss::visit_operation (be_operation * node)
 {
-  /// No server-side code generation for these implied IDL nodes.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt = 0;
 
@@ -53,9 +73,9 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_operation_ss::")
-                         ACE_TEXT ("visit_operation - ")
-                         ACE_TEXT ("Bad return type\n")),
+                         "(%N:%l) be_visitor_operation_ss::"
+                         "visit_operation - "
+                         "Bad return type\n"),
                         -1);
     }
 
@@ -127,26 +147,23 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // We need the interface node in which this operation was
   // defined.  However, if this operation node was an attribute node
-  // in disguise, we get this information from the context.
-  UTL_Scope *s = this->ctx_->attribute ()
-                 ? this->ctx_->attribute ()->defined_in ()
-                 : node->defined_in ();
+  // in disguise, we get this information from the context
+  be_interface * const intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
-
-  if (intf == 0)
+  if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_operation_ss::")
-                         ACE_TEXT ("visit_operation - ")
-                         ACE_TEXT ("bad interface scope\n")),
+                         "(%N:%l) be_visitor_operation_ss::"
+                         "visit_operation - "
+                         "bad interface scope\n"),
                         -1);
     }
 
   ACE_CString upcall_command_name =
-    this->ctx_->port_prefix ()
-    + ACE_CString (node->local_name ()->get_string ()) + "_"
-    + ACE_CString (intf->local_name ());
+    ACE_CString (node->local_name ()->get_string()) + "_"  +
+    ACE_CString (intf->local_name());
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -169,8 +186,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                                 intf->full_skel_name (),
                                 upcall_command_name.c_str ());
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void " << intf->full_skel_name () << "::";
 
@@ -188,7 +205,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
+  *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
@@ -222,7 +239,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Declare the argument helper classes.
   this->gen_skel_body_arglist (node, os);
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "TAO::Argument * const args[] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&retval";
@@ -242,7 +259,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "};" << be_uidt_nl << be_nl;
 
   *os << "static size_t const nargs = "
-      << (node->argument_count () + 1) << ";" << be_nl_2;
+      << (node->argument_count () + 1) << ";" << be_nl << be_nl;
 
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
@@ -281,7 +298,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "                       , nexceptions"
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
       << "                       );" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   return 0;
 }

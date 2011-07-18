@@ -9,7 +9,9 @@
 #include "Server_Peer.h"
 #include "tao/debug.h"
 
-Server_Peer::Server_Peer (unsigned int seed,
+ACE_RCSID(Nested_Upcall_Crash, Server_Peer, "$Id$")
+
+Server_Peer::Server_Peer (ACE_RANDR_TYPE seed,
                           CORBA::ORB_ptr orb,
                           CORBA::ULong payload_size)
   : seed_ (seed)
@@ -23,7 +25,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
                     CORBA::ULong max_depth,
                     Test::Payload const &)
 {
-  int r = ACE_OS::rand_r(&this->seed_) % 50;
+  int r = ACE_OS::rand_r(this->seed_) % 50;
 
   if(TAO_debug_level)
     {

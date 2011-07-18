@@ -1,6 +1,10 @@
 // $Id$
 #include "orbsvcs/Notify/Builder.h"
 
+ACE_RCSID (Notify,
+           Builder,
+           "$Id$")
+
 #include "ace/Dynamic_Service.h"
 
 #include "tao/PortableServer/PortableServerC.h"
@@ -63,12 +67,11 @@ public:
 
     proxy_id = proxy->id ();
 
+    proxy_ret = PROXY::_narrow (obj.in());
+
     // insert proxy in admin container.
     parent->insert (proxy);
 
-    proxy->configure (*parent, proxy_id);
-
-    proxy_ret = PROXY::_narrow (obj.in());
     return proxy_ret._retn ();
   }
 

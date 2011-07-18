@@ -1,24 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     destroy.cpp
- *
- *  $Id$
- *
- *   Modified ORB destruction test.
- *
- *
- *  @author  Andrew Schnable <Andrew.Schnable@veritas.com>  Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/BiDir_Multiple_ORB
+//
+// = FILENAME
+//     destroy.cpp
+//
+// = DESCRIPTION
+//     Modified ORB destruction test.
+//
+// = AUTHOR
+//     Andrew Schnable <Andrew.Schnable@veritas.com>
+//     Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
+//
+//=========================================================================
 
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-
+ACE_RCSID(BiDir_Multiple_ORB, destroy, "$Id$")
 
 int
 test_with_bidir_poa (int argc,

@@ -65,9 +65,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Instantiate an EchoEventConsumer_i servant and register it
     // with the RootPOA
-    PortableServer::Servant_var<EchoEventConsumer_i> servant =
-      new EchoEventConsumer_i(orb.in(), supplier.in(), EVENT_LIMIT);
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
+    EchoEventConsumer_i servant(orb.in(), supplier.in(), EVENT_LIMIT);
+    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     CORBA::Object_var consumer_obj = poa->id_to_reference(oid.in());
     RtecEventComm::PushConsumer_var consumer =
       RtecEventComm::PushConsumer::_narrow(consumer_obj.in());

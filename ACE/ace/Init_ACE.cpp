@@ -1,7 +1,11 @@
-// $Id$
 #include "ace/Init_ACE.h"
 
 #include "ace/Object_Manager.h"
+
+ACE_RCSID (ace,
+           Init_ACE,
+           "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

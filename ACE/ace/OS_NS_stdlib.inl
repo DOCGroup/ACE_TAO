@@ -35,11 +35,12 @@ ACE_OS::_exit (int status)
 ACE_INLINE void
 ACE_OS::abort (void)
 {
-#if !defined (ACE_LACKS_ABORT)
+#if !defined (ACE_HAS_WINCE)
   ::abort ();
 #else
+  // @@ CE doesn't support abort?
   exit (1);
-#endif /* !ACE_LACKS_ABORT */
+#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE int
@@ -103,6 +104,10 @@ ACE_OS::atof (const wchar_t *s)
 #endif /* ACE_HAS_WTOF */
 }
 #endif /* ACE_HAS_WCHAR */
+
+#if defined (atop)
+#  undef atop
+#endif /* atop */
 
 ACE_INLINE void *
 ACE_OS::atop (const char *s)
@@ -402,24 +407,46 @@ ACE_OS::rand (void)
   ACE_OSCALL_RETURN (::rand (), int, -1);
 }
 
+#if !defined (ACE_WIN32)
+
 ACE_INLINE int
-ACE_OS::rand_r (unsigned int *seed)
+ACE_OS::rand_r (ACE_RANDR_TYPE &seed)
 {
   ACE_OS_TRACE ("ACE_OS::rand_r");
-#if defined (ACE_LACKS_RAND_R)
-  long new_seed = (long) *seed;
+# if defined (ACE_HAS_REENTRANT_FUNCTIONS) && \
+    !defined (ACE_LACKS_RAND_REENTRANT_FUNCTIONS)
+#   if defined (DIGITAL_UNIX)
+  ACE_OSCALL_RETURN (::_Prand_r (&seed), int, -1);
+#   elif defined (ACE_HAS_BROKEN_RANDR)
+  ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
+#   else
+  ACE_OSCALL_RETURN (::rand_r (&seed), int, -1);
+#   endif /* DIGITAL_UNIX */
+# else
+  ACE_UNUSED_ARG (seed);
+  ACE_OSCALL_RETURN (::rand (), int, -1);
+# endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+}
+
+#else /* ACE_WIN32 */
+
+ACE_INLINE int
+ACE_OS::rand_r (ACE_RANDR_TYPE& seed)
+{
+  ACE_OS_TRACE ("ACE_OS::rand_r");
+
+  long new_seed = (long) (seed);
   if (new_seed == 0)
     new_seed = 0x12345987;
   long temp = new_seed / 127773;
   new_seed = 16807 * (new_seed - temp * 127773) - 2836 * temp;
   if (new_seed < 0)
     new_seed += 2147483647;
-  *seed = (unsigned int)new_seed;
+ (seed) = (unsigned int)new_seed;
   return (int) (new_seed & RAND_MAX);
-#else
-  return ::rand_r (seed);
-# endif /* ACE_LACKS_RAND_R */
 }
+
+#endif /* !ACE_WIN32 */
 
 #  if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
@@ -538,7 +565,7 @@ ACE_OS::strtoll (const char *s, char **ptr, int base)
 #elif defined (ACE_STRTOLL_EQUIVALENT)
   return ACE_STRTOLL_EQUIVALENT (s, ptr, base);
 #else
-  return ace_strtoll_helper (s, ptr, base);
+  return ::strtoll (s, ptr, base);
 #endif /* ACE_LACKS_STRTOLL */
 }
 
@@ -564,7 +591,7 @@ ACE_OS::strtoull (const char *s, char **ptr, int base)
 #elif defined (ACE_STRTOULL_EQUIVALENT)
   return ACE_STRTOULL_EQUIVALENT (s, ptr, base);
 #else
-  return ace_strtoull_helper (s, ptr, base);
+  return ::strtoull (s, ptr, base);
 #endif /* ACE_LACKS_STRTOULL */
 }
 

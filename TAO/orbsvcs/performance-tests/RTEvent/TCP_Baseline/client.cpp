@@ -15,6 +15,10 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/orbconf.h"
 
+ACE_RCSID (TAO_RTEC_PERF_TCP_Baseline,
+           client,
+           "$Id$")
+
 ACE_TCHAR const *hi_endpoint = ACE_TEXT ("localhost:12345");
 ACE_TCHAR const *lo_endpoint = ACE_TEXT ("localhost:23456");
 
@@ -310,6 +314,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                          argv [0]),
                         1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

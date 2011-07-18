@@ -3,6 +3,9 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/Synch_T.h"
+
+ACE_RCSID(MT_Server, server, "server.cpp,v 1.7 2002/01/29 20:21:08 okellogg Exp")
 
 const ACE_TCHAR *ior_output_file = 0;
 const ACE_TCHAR *corbaloc_arg = ACE_TEXT("corbaloc:iiop:1.0@localhost:12000/ObjectName");
@@ -53,19 +56,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
 /*****************************************************/
 
-/**
- * Run a server thread
- *
- * Use the ACE_Task_Base class to run server threads
- */
 class Worker : public ACE_Task_Base
 {
+  // = TITLE
+  //   Run a server thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run server threads
+  //
 public:
   /// ctor
   Worker (CORBA::ORB_ptr orb);
@@ -81,13 +85,14 @@ private:
 
 /*****************************************************/
 
-/**
- * Run a client thread
- *
- * Use the ACE_Task_Base class to run client threads
- */
 class SelfClient : public ACE_Task_Base
 {
+  // = TITLE
+  //   Run the client thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run the client threads.
+  //
 public:
   SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server, int niterations);
   // ctor

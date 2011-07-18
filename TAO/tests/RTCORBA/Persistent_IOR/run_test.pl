@@ -33,7 +33,7 @@ $extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext
 @configurations =
     ({
          iorfiles => [ "persistent_ior", "tp_persistent_ior", "transient_ior" ],
-         server => "-a ". $server->LocalFile ("tp_persistent_ior") ." -p ".
+         server => "-a ". $server->LocalFile ("tp_persistent_ior") ." -p ". 
                           $server->LocalFile ("persistent_ior") ." -t ".
                           $server->LocalFile ("transient_ior") ." $extra_server_args",
          clients => [ "-k file://".$client->LocalFile("tp_persistent_ior"),
@@ -41,7 +41,7 @@ $extra_server_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext
                       "-k file://".$client->LocalFile("transient_ior")." -x" ],
      }, {
          iorfiles => [ "not_used_ior_1", "not_used_ior_2", "transient_ior" ],
-         server => "-a ". $server->LocalFile ("not_used_ior_1") ." -p ".
+         server => "-a ". $server->LocalFile ("not_used_ior_1") ." -p ". 
                           $server->LocalFile ("not_used_ior_2") ." -t ".
                           $server->LocalFile ("transient_ior") ." $extra_server_args",
          clients => [ "-k file://".$client->LocalFile("tp_persistent_ior"),
@@ -58,7 +58,7 @@ sub run_client
 
     $CL->Spawn ();
 
-    $client_status = $CL->WaitKill ($client->ProcessStartWaitInterval ());
+    $client_status = $CL->WaitKill ($client->ProcessStopWaitInterval ()+200);
 
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";

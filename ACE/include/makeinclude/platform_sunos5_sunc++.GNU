@@ -42,15 +42,12 @@
 
 compat4 ?= 0
 debug ?= 1
-distrib ?= 1
-rwtools ?= 0
+distrib ?= 0
 stdcpplib ?= 1
-stlport ?= 0
 threads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
-no_annotations ?= 1
 no_hidden_visibility ?= 1
 templates ?= automatic
 
@@ -73,6 +70,8 @@ CC_VERSION := $(shell $(CXX) -V 2>&1)
 ifeq (C++ 5.4,$(findstring C++ 5.4,$(CC_VERSION)))
   ACE_CC_PREPROCESSOR = cc
 endif
+
+PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
 
 ifeq ($(atomic_ops_sparc),1)
   CFLAGS += -DACE_HAS_BUILTIN_ATOMIC_OP -DACE_INCLUDE_ATOMIC_OP_SPARC
@@ -108,10 +107,11 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
       inline = 0
   else
-    ifeq (C++ 5.1 ,$(findstring C++ 5.1 ,$(CC_VERSION)))
+    ifeq (C++ 5.1,$(findstring C++ 5.1,$(CC_VERSION)))
       inline = 0
     else # ! 5.1
       inline ?= 1
+      exceptions ?= 1
     endif # 5.2 or greater
   endif #! 5.0
 
@@ -124,7 +124,20 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
     CCFLAGS += -compat=4
     CCFLAGS += -features=rtti
   else
-    ifneq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+    #### Use old iostreams.
+    ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
+      ifeq (1,$(stdcpplib))
+        CCFLAGS += -library=Cstd
+      else
+        CCFLAGS += -library=iostream,no%Cstd
+        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+      endif # stdcpplib
+    else
+      ifeq (0,$(stdcpplib))
+        CCFLAGS += -library=iostream
+        CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
+      endif # stdcpplib
+
       # If 64-bit build is desired, turn that on. If no code gen options
       # are given to Forte 6, the default build is 32-bit, even when
       # building on a 64-bit system. Specifying xarch=v9 generates code
@@ -146,20 +159,39 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
               CFLAGS += -m64
               LDFLAGS += -m64
             else
-              ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
-                CFLAGS += -m64
-                LDFLAGS += -m64
-              else
-                CFLAGS += -xarch=v9
-                LDFLAGS += -xarch=v9
-              endif # C++ 5.10
-            endif # C++ 5.9
+              CFLAGS += -xarch=v9
+              LDFLAGS += -xarch=v9
+            endif
           endif # C++ 5.8
         endif # C++ 5.7
       endif # buildbits
     endif # CC 5.0
   endif # compat4 requested
 endif # CC 5.0 or later
+
+CCFLAGS         += $(TEMPLATES_FLAG)
+
+#### Sun CC-specific "Pure virtual function called" bug fix trigger.
+#### XXX: Shouldn't this go into a compiler version specific guard ???
+CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
+
+#### Exception handling breaks on MP machines prior to Sun C++ 4.2
+#### with jumbo patch 104631-02, see ace/config-sunos5.5.h.
+#### If you are using a version of Sun C++ prior to 4,2, or haven't
+#### applied that jumbo patch to your 4.2, or don't want to pay the
+#### performance penalty of exception handling, then use the default
+#### of no exceptions.  If you want to enable exception handling,
+#### add "exceptions=1" to your "make" invocation.
+ifeq (0,$(exceptions))
+  CCFLAGS += -noex
+  ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
+    override stlport = 1
+  else
+    ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+      override stlport = 1
+    endif
+  endif
+endif # ! exceptions
 
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
@@ -189,43 +221,15 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 
 LIBS            += -lsocket -lrt -laio -ldl -lnsl -lgen -lposix4 -ladm
 
-# Support alternate CC libraries (i.e. STLport, Tools.h++, Cstd)
-# See: http://docs.sun.com/app/docs/doc/820-7599/bkaty?a=view
-ifeq ($(stlport),1)
-  CC_LIBRARY = stlport4
-  PLATFORM_STLPORT_CCFLAGS += -library=$(CC_LIBRARY)
-  PLATFORM_STLPORT_LDFLAGS += -library=$(CC_LIBRARY)
-else
-  ifeq ($(rwtools),1)
-    ifeq ($(stdcpplib),1)
-      CC_LIBRARY = rwtools7_std
-    else
-      CC_LIBRARY = rwtools7,iostream
-      CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-    endif
-  else  # default
-    ifeq ($(stdcpplib),1)
-      CC_LIBRARY = Cstd
-    else
-      CC_LIBRARY = no%Cstd,iostream
-      CPPFLAGS += -DACE_USES_OLD_IOSTREAMS
-    endif
-  endif
-  CCFLAGS += -library=$(CC_LIBRARY)
-  LDFLAGS += -library=$(CC_LIBRARY)
-endif
-
-### CC 5.10 enables annotation support by default; allow user to override
-### new behavior. This also provides a work around for 64-bit linker crashes,
-### see: http://defect.opensolaris.org/bz/show_bug.cgi?id=9720
-ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
-  ifeq ($(no_annotations),1)
-    LDFLAGS += -xannotate=no
-  endif
+# Sun Studio will not create a default dependency on libCrun and
+# libCstd when building a shared library with the -G option.
+stlport ?= 0
+ifeq ($(stlport),0)
+  LIBS          += -lCrun -lCstd
 endif
 
 LDFLAGS         += -xildoff
-CPPFLAGS        += -D_POSIX_PTHREAD_SEMANTICS
+
 OCFLAGS         += -xO4
 PIC             = -KPIC
 AR              = CC

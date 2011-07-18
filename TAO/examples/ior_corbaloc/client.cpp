@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    client.cpp
- *
- *  $Id$
- *
- *   This implements a simple CORBA client for the
- *   corbaloc: style IOR parser
- *
- *
- *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/ior_corbaloc/
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//     This implements a simple CORBA client for the
+//     corbaloc: style IOR parser
+//
+// = AUTHOR
+//     Priyanka Gontla <pgontla@ece.uci.edu>
+//
+// ============================================================================
 
 #include "ior_corbaloc_client_i.h"
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EC_exec.h"
+#include "ciao/CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -223,7 +224,7 @@ MyImpl::EC_exec_i::pulse (void)
 
       BasicSP::TimeOut_var ev = new OBV_BasicSP::TimeOut ();
 
-      this->context_->push_timeout_value (ev.in ());
+      this->context_->push_timeout (ev.in ());
     }
   catch (const CORBA::Exception& ex)
     {
@@ -237,11 +238,11 @@ create_BasicSP_EC_Impl (void)
 {
   ::Components::EnterpriseComponent_ptr retval =
     ::Components::EnterpriseComponent::_nil ();
-
+  
   ACE_NEW_RETURN (retval,
                   MyImpl::EC_exec_i,
                   ::Components::EnterpriseComponent::_nil ());
-
+  
   return retval;
 }
 

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -13,6 +12,10 @@
 #include "Current_TestC.h"
 
 #include "Client_ORBInitializer.h"
+
+ACE_RCSID (IIOP,
+           client,
+           "$Id$")
 
 // Prototype
 

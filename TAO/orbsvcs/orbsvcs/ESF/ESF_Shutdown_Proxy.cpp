@@ -4,7 +4,6 @@
 #define TAO_ESF_SHUTDOWN_PROXY_CPP
 
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
-#include "tao/Exception.h"
 #include "ace/CORBA_macros.h"
 
 #if ! defined (__ACE_INLINE__)

@@ -25,7 +25,6 @@
 #include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
-#include "ace/Vector_T.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -84,10 +83,6 @@ protected:
 
 private:
 
-  /// Keep a copy of location list for verify if the list is changed
-  /// in next next_member() call.
-  void copy_locations (PortableGroup::Locations_var& locations);
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 
@@ -106,9 +101,6 @@ private:
    * to be returned from the Strategy::next_member() method.
    */
   TAO_LB_Location_Index_Map location_index_map_;
-
-  /// Locations list retrieved in last next_member() call.
-  ACE_Vector <PortableGroup::Location> last_locations_;
 
 };
 

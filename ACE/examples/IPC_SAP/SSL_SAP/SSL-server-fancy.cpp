@@ -16,6 +16,10 @@
 
 #include "SSL-server-fancy.h"
 
+ACE_RCSID (SSL_SAP,
+           SSL_server_fancy,
+           "$Id$")
+
 // Forward declaration.
 class Handler;
 
@@ -57,7 +61,7 @@ private:
   // Oneway acceptor factory.
 };
 
-class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH>
+class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE
   //   Base class for the oneway and twoway handlers.

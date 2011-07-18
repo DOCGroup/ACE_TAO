@@ -3,48 +3,25 @@
 #include "amh_ami_pch.h"
 
 #include "middle_i.h"
-#include "ace/Get_Opt.h"
+#include "ace/OS_String.h"
 #include <iostream>
 #include <fstream>
 
 int use_synch = 0;
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
-const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://inner.ior");
-
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:n"));
-  int c;
+  int c = 0;
+  while (c < argc)
+    {
+      if (ACE_OS::strcasecmp (argv[c], ACE_TEXT("-no_AMH")) == 0)
+        use_synch = 1;
+      c++;
+    }
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-          ior_output_file = get_opts.opt_arg ();
-          break;
-      case 'i':
-          ior_input_file = get_opts.opt_arg ();
-          break;
-      case 'n':
-          use_synch = 1;
-          break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <ior_output_file> "
-                           "-i <ior_input_file> "
-                           "-n"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
+  return 1;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -53,8 +30,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
-    if (parse_args (argc, argv) != 0)
-        return 1;
+    parse_args(argc,argv);
 
     //Get reference to the RootPOA.
     CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
@@ -64,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POAManager_var mgr = poa->the_POAManager();
     mgr->activate();
 
-    obj = orb->string_to_object(ior_input_file);
+    obj = orb->string_to_object("file://inner.ior");
     Inner_var peer =
       Inner::_narrow(obj.in());
     if (CORBA::is_nil(peer.in()))
@@ -87,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( obj.in() );
 
-    ACE_CString iorname(ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+    ACE_CString iorname("middle.ior");
     std::ofstream iorFile (iorname.c_str());
     iorFile << str.in() << std::endl;
     iorFile.close();

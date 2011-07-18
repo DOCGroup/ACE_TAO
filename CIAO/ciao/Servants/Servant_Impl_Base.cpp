@@ -2,14 +2,19 @@
 
 #include "Servant_Impl_Base.h"
 
-#include "ciao/Logger/Log_Macros.h"
+#include "StandardConfigurator_Impl.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Containers/Container_BaseC.h"
+
 
 namespace CIAO
 {
   Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
                                         Home_Servant_Impl_Base *home_servant,
                                         Container_ptr c)
-    : Connector_Servant_Impl_Base (home, home_servant, c)
+    : home_ (Components::CCMHome::_duplicate (home)),
+      home_servant_ (home_servant),
+      container_ (Container::_duplicate (c))
   {
   }
 
@@ -17,59 +22,123 @@ namespace CIAO
   {
   }
 
+  // Operations for CCMObject interface.
+
+  ::Components::PrimaryKeyBase *
+  Servant_Impl_Base::get_primary_key (void)
+  {
+    CIAO_TRACE("Servant_Impl_Base::get_primary_key");
+    throw ::Components::NoKeyAvailable ();
+  }
+
+  CORBA::IRObject_ptr
+  Servant_Impl_Base::get_component_def (void)
+  {
+    CIAO_TRACE("Servant_Impl_Base::get_component_def");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  void
+  Servant_Impl_Base::configuration_complete (void)
+  {
+    CIAO_TRACE("Servant_Impl_Base::configuration_complete (void)");
+    // CIAO to-do
+  }
+
   void
   Servant_Impl_Base::remove (void)
   {
     CIAO_TRACE("Servant_Impl_Base::remove (void)");
-#if !defined (CCM_NOEVENT)
-
     try
     {
-      PortableServer::POA_var port_poa =
-        this->container_->the_port_POA ();
+      // Removing Facets
+      Components::FacetDescriptions_var facets = this->get_all_facets ();
 
-      for (ConsumerTable::const_iterator iter =
-             this->consumer_table_.begin ();
-           iter != this->consumer_table_.end ();
-           ++iter)
-        {
-          PortableServer::ObjectId_var cons_id =
-            port_poa->reference_to_id (iter->second);
+      CORBA::ULong const facet_len = facets->length ();
 
-          port_poa->deactivate_object (cons_id);
+      for (CORBA::ULong i = 0; i < facet_len; ++i)
+      {
+        PortableServer::ObjectId_var facet_id =
+          this->container_->the_port_POA ()->reference_to_id (
+            facets[i]->facet_ref ());
 
-          CIAO::Servant_Activator_var sa =
-            this->container_->ports_servant_activator ();
+        CIAO::Servant_Activator *sa =
+          this->container_->ports_servant_activator ();
 
-          if (!CORBA::is_nil (sa.in ()))
-            {
-              sa->update_port_activator (cons_id.in ());
-            }
-        }
+        sa->update_port_activator (facet_id.in ());
+
+        this->container_->the_port_POA ()->deactivate_object (
+          facet_id);
+      }
+
+      // Removed Facets
+
+      // Removing Consumers
+      Components::ConsumerDescriptions_var consumers =
+        this->get_all_consumers ();
+
+      CORBA::ULong const consumer_len = consumers->length ();
+
+      for (CORBA::ULong j = 0; j < consumer_len; ++j)
+      {
+        PortableServer::ObjectId_var cons_id =
+          this->container_->the_port_POA ()->reference_to_id (
+            consumers[j]->consumer ());
+
+        CIAO::Servant_Activator *sa =
+          this->container_->ports_servant_activator ();
+        sa->update_port_activator (cons_id.in ());
+
+        this->container_->the_port_POA ()->deactivate_object (
+          cons_id);
+      }
+
+      Components::SessionComponent_var temp = this->get_executor ();
+      temp->ccm_remove ();
+
+      CORBA::Object_var objref = this->container_->get_objref (this);
+
+      Components::CCMObject_var ccmobjref =
+        Components::CCMObject::_narrow (objref.in ());
+
+      PortableServer::ObjectId_var oid;
+
+      this->container_->uninstall_servant (this,
+                                           Container_Types::COMPONENT_t,
+                                           oid.out ());
+
+      if (this->home_servant_)
+        this->home_servant_->update_component_map (oid);
     }
     catch (const CORBA::Exception& ex)
     {
-      // log error and propagate so error gets reported to deployment framework
-      CIAO_ERROR (1, (LM_ERROR, CLINFO "Servant_Impl_Base::remove - CORBA exception : %C\n", ex._info ().c_str ()));
-      ex._raise (); // propagate
+      ex._tao_print_exception ("Port not active\n");
     }
-#endif
-
-    /// This call deactivates facets, removes executor and home
-    /// servant (if any), and uninstalls us from the container.
-    /// It has its own try/catch blocks.
-    this->Connector_Servant_Impl_Base::remove ();
   }
 
-#if !defined (CCM_LW)
+  ::Components::ConnectionDescriptions *
+  Servant_Impl_Base::get_connections (const char * /* name */)
+  {
+    CIAO_TRACE("Servant_Impl_Base::get_connections (const char * /* name */)");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
   ::Components::ComponentPortDescription *
   Servant_Impl_Base::get_all_ports (void)
   {
     CIAO_TRACE("Servant_Impl_Base::get_all_ports (void)");
+    OBV_Components::ComponentPortDescription *cps = 0;
+    ACE_NEW_THROW_EX (cps,
+                      OBV_Components::ComponentPortDescription,
+                      CORBA::NO_MEMORY ());
+    ::Components::ComponentPortDescription_var retv = cps;
 
-    ::Components::ComponentPortDescription_var retv =
-      this->Connector_Servant_Impl_Base::get_all_ports ();
-#if !defined (CCM_NOEVENT)
+    ::Components::FacetDescriptions_var facets_desc =
+      this->get_all_facets ();
+
+    ::Components::ReceptacleDescriptions_var receptacle_desc =
+      this->get_all_receptacles ();
+
     ::Components::ConsumerDescriptions_var consumer_desc =
       this->get_all_consumers ();
 
@@ -79,29 +148,92 @@ namespace CIAO
     ::Components::PublisherDescriptions_var publisher_desc =
       this->get_all_publishers ();
 
+    retv->facets (facets_desc.in ());
+    retv->receptacles (receptacle_desc.in ());
     retv->consumers (consumer_desc.in ());
     retv->emitters (emitter_desc.in ());
     retv->publishers (publisher_desc.in ());
-#endif
+
     return retv._retn ();
   }
-#endif
 
-#if !defined (CCM_LW)
-  ::Components::PrimaryKeyBase *
-  Servant_Impl_Base::get_primary_key (void)
+  CORBA::Object_ptr
+  Servant_Impl_Base::provide_facet (const char *name)
   {
-    CIAO_TRACE("Servant_Impl_Base::get_primary_key");
-    throw ::Components::NoKeyAvailable ();
-  }
-#endif
+    CIAO_TRACE("Servant_Impl_Base::provide_facet (const char *name)");
+    if (0 == name)
+      {
+        throw Components::InvalidName ();
+      }
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+    CORBA::Object_ptr retval = this->lookup_facet (name);
+
+    if (CORBA::is_nil (retval))
+      {
+        throw Components::InvalidName ();
+      }
+
+    return retval;
+  }
+
+  Components::FacetDescriptions *
+  Servant_Impl_Base::get_named_facets (
+    const ::Components::NameList & names)
+  {
+    CIAO_TRACE("Servant_Impl_Base::get_named_facets");
+    Components::FacetDescriptions *retval = 0;
+    ACE_NEW_THROW_EX (retval,
+                      ::Components::FacetDescriptions,
+                      CORBA::NO_MEMORY ());
+    Components::FacetDescriptions_var safe_retval = retval;
+    CORBA::ULong const len = names.length ();
+    safe_retval->length (len);
+
+    for (CORBA::ULong i = 0; i < len; ++i)
+      {
+        ::Components::FacetDescription *tmp =
+          this->lookup_facet_description (names[i]);
+
+        if (0 == tmp)
+          {
+            throw Components::InvalidName ();
+          }
+
+        safe_retval[i] = tmp;
+      }
+
+    return safe_retval._retn ();
+  }
+
+  ::Components::FacetDescriptions *
+  Servant_Impl_Base::get_all_facets (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_all_facets (void)");
+    ::Components::FacetDescriptions *tmp = 0;
+    ACE_NEW_THROW_EX (tmp,
+                      ::Components::FacetDescriptions,
+                      CORBA::NO_MEMORY ());
+
+    ::Components::FacetDescriptions_var retval = tmp;
+
+    retval->length (this->facet_table_.size ());
+    CORBA::ULong i = 0UL;
+
+    for (FacetTable::const_iterator iter = this->facet_table_.begin ();
+         iter != this->facet_table_.end ();
+         ++iter, ++i)
+      {
+        retval[i] = iter->second;
+      }
+
+    return retval._retn ();
+  }
+
+
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_all_consumers (void)
   {
     CIAO_TRACE("Servant_Impl_Base::get_all_consumers (void)");
-
     ::Components::ConsumerDescriptions *tmp = 0;
     ACE_NEW_THROW_EX (tmp,
                       ::Components::ConsumerDescriptions (
@@ -113,61 +245,46 @@ namespace CIAO
     retval->length (this->consumer_table_.size ());
     CORBA::ULong i = 0UL;
 
-    for (ConsumerTable::const_iterator iter =
-           this->consumer_table_.begin ();
+    for (ConsumerTable::const_iterator iter = this->consumer_table_.begin ();
          iter != this->consumer_table_.end ();
          ++iter, ++i)
       {
-        ::Components::ConsumerDescription *cd = 0;
-        ACE_NEW_THROW_EX (cd,
-                          ::OBV_Components::ConsumerDescription,
-                          CORBA::NO_MEMORY ());
-
-        cd->name (iter->first.c_str ());
-        cd->type_id (iter->second->_interface_repository_id ());
-        cd->consumer (iter->second);
-
-        retval[i] = cd;
+        retval[i] = iter->second;
       }
 
     return retval._retn ();
   }
-#endif
-#if !defined (CCM_NOEVENT)
+
+
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::get_consumer (const char *sink_name)
   {
     CIAO_TRACE("Servant_Impl_Base::get_consumer (const char *sink_name)");
-
-    if (sink_name == 0)
+    if (0 == sink_name)
       {
-        throw ::CORBA::BAD_PARAM ();
+        throw Components::InvalidName ();
       }
 
-    ::Components::EventConsumerBase_ptr retval =
+    Components::EventConsumerBase_ptr retval =
       this->lookup_consumer (sink_name);
 
-    if (::CORBA::is_nil (retval))
+    if (CORBA::is_nil (retval))
       {
-        throw ::Components::InvalidName ();
+        throw Components::InvalidName ();
       }
 
     return retval;
   }
-#endif
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::ConsumerDescriptions *
   Servant_Impl_Base::get_named_consumers (
     const ::Components::NameList & names)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_consumers");
-
     Components::ConsumerDescriptions *retval = 0;
     ACE_NEW_THROW_EX (retval,
                     ::Components::ConsumerDescriptions,
                       CORBA::NO_MEMORY ());
-
     Components::ConsumerDescriptions_var safe_retval = retval;
     CORBA::ULong const len = names.length ();
     safe_retval->length (len);
@@ -177,9 +294,9 @@ namespace CIAO
         ::Components::ConsumerDescription *tmp =
           this->lookup_consumer_description (names[i]);
 
-        if (tmp == 0)
+        if (0 == tmp)
           {
-            throw ::Components::InvalidName ();
+            throw Components::InvalidName ();
           }
 
         safe_retval[i] = tmp;
@@ -187,117 +304,275 @@ namespace CIAO
 
     return safe_retval._retn ();
   }
-#endif
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::EmitterDescriptions *
   Servant_Impl_Base::get_named_emitters (
-      const ::Components::NameList & names)
+      const ::Components::NameList & /* names */)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_emitters");
-    ::Components::EmitterDescriptions *retval = 0;
-    ACE_NEW_THROW_EX (retval,
-                      ::Components::EmitterDescriptions,
-                      ::CORBA::NO_MEMORY ());
-
-    ::Components::EmitterDescriptions_var safe_retval = retval;
-    const ::CORBA::ULong len = names.length ();
-    safe_retval->length (len);
-
-    for (::CORBA::ULong i = 0UL; i < len; ++i)
-      {
-        ::Components::EmitterDescription * desc =
-          this->lookup_emitter_description (names[i].in ());
-        if (desc)
-          {
-            safe_retval[i] = desc;
-          }
-        else
-          {
-            throw ::Components::InvalidName ();
-          }
-      }
-    return safe_retval._retn ();
+    throw CORBA::NO_IMPLEMENT ();
   }
-#endif
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
+  ::Components::ReceptacleDescriptions *
+  Servant_Impl_Base::get_all_receptacles (void)
+  {
+    CIAO_TRACE("  Servant_Impl_Base::get_all_receptacles (void)");
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Impl_Base::get_all_receptacles\n"));
+
+    ::Components::ReceptacleDescriptions *tmp = 0;
+    ACE_NEW_THROW_EX (tmp,
+                      ::Components::ReceptacleDescriptions,
+                      CORBA::NO_MEMORY ());
+
+    ::Components::ReceptacleDescriptions_var retval = tmp;
+
+    retval->length (this->receptacle_table_.current_size ());
+    CORBA::ULong i = 0;
+
+    CIAO_DEBUG ((LM_DEBUG, CLINFO
+                "Servant_Impl_Base::get_all_receptacles - Building sequence of length %d\n",
+                retval->length()));
+
+    for (ReceptacleTable::iterator iter = this->receptacle_table_.begin ();
+         iter != this->receptacle_table_.end ();
+         ++iter, ++i)
+      {
+        CIAO_DEBUG ((LM_TRACE, CLINFO
+                    "Servant_Impl_Base::get_all_receptacles - Starting loop iteration...\n",
+                    retval->length()));
+
+        ReceptacleTable::ENTRY & entry = *iter;
+        retval[i] = entry.int_id_;
+      }
+
+    CIAO_DEBUG ((LM_TRACE, CLINFO "Servant_Impl_Base::get_all_receptacles - Escaped loop.\n"));
+    return retval._retn ();
+  }
+
+  ::Components::ReceptacleDescriptions *
+  Servant_Impl_Base::get_named_receptacles (
+    const ::Components::NameList & /* names */)
+  {
+    CIAO_TRACE("Servant_Impl_Base::get_named_receptacles");
+    throw ::CORBA::NO_IMPLEMENT ();
+  }
+
   ::Components::PublisherDescriptions *
   Servant_Impl_Base::get_named_publishers (
-    const ::Components::NameList & names)
+    const ::Components::NameList & /* names */)
   {
     CIAO_TRACE("Servant_Impl_Base::get_named_publishers");
-    ::Components::PublisherDescriptions_var retval;
-    ACE_NEW_THROW_EX (retval,
-                      ::Components::PublisherDescriptions,
-                      ::CORBA::NO_MEMORY ());
-
-    retval->length (names.length ());
-    ::CORBA::ULong count = 0UL;
-
-    for (::CORBA::ULong name = 0UL;
-         name < names.length ();
-         ++name)
-      {
-        ::Components::PublisherDescription * desc =
-          this->lookup_publisher_description (names[name].in ());
-        if (desc)
-          {
-            retval[count++] = desc;
-          }
-        else
-          {
-            throw ::Components::InvalidName ();
-          }
-      }
-    ::Components::PublisherDescriptions_var safe_retval = retval;
-    return safe_retval._retn ();
+    throw ::CORBA::NO_IMPLEMENT ();
   }
-#endif
 
   /// Protected operations.
-#if  !defined (CCM_NOEVENT)
+  void
+  Servant_Impl_Base::add_facet (const char *port_name,
+                                ::CORBA::Object_ptr port_ref)
+  {
+    CIAO_TRACE("Servant_Impl_Base::add_facet");
+    if (0 == port_name || ::CORBA::is_nil (port_ref))
+      {
+        throw ::CORBA::BAD_PARAM ();
+        return;
+      }
+
+    ::Components::FacetDescription *fd = 0;
+    ACE_NEW_THROW_EX (fd,
+                      ::OBV_Components::FacetDescription (port_name,
+                                                          port_ref->_interface_repository_id (),
+                                                          port_ref),
+                      CORBA::NO_MEMORY ());
+    ::Components::FacetDescription_var safe = fd;
+
+    FacetTable::value_type entry;
+    entry.first = port_name;
+    entry.second = safe._retn ();
+
+    {
+      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+                                CORBA::NO_RESOURCES ());
+
+      (void) this->facet_table_.insert (entry);
+    }
+  }
+
+  CORBA::Object_ptr
+  Servant_Impl_Base::lookup_facet (const char *port_name)
+  {
+    CIAO_TRACE("Servant_Impl_Base::lookup_facet");
+    if (0 == port_name)
+      {
+        return CORBA::Object::_nil ();
+      }
+
+    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                             mon,
+                             this->lock_,
+                             CORBA::NO_RESOURCES ());
+
+    FacetTable::const_iterator iter =
+      this->facet_table_.find (port_name);
+
+    if (iter == this->facet_table_.end ())
+      {
+        return CORBA::Object::_nil ();
+      }
+
+    return CORBA::Object::_duplicate (iter->second->facet_ref ());
+  }
+
+  ::Components::FacetDescription *
+  Servant_Impl_Base::lookup_facet_description (const char *port_name)
+  {
+    CIAO_TRACE("Servant_Impl_Base::lookup_facet_description");
+    if (0 == port_name)
+      {
+        /// Calling function will throw InvalidName after getting this.
+        return 0;
+      }
+
+    ::Components::FacetDescription_var fd;
+
+    {
+      ACE_READ_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                             mon,
+                             this->lock_,
+                             0);
+      FacetTable::const_iterator iter =
+        this->facet_table_.find (port_name);
+
+      if (iter != this->facet_table_.end ())
+        {
+          fd = iter->second;
+        }
+    }
+
+    return fd._retn ();
+  }
+
+  void
+  Servant_Impl_Base::add_receptacle (const char *receptacle_name,
+                                     CORBA::Object_ptr recept_ref,
+                                     ::Components::Cookie * cookie)
+  {
+    CIAO_TRACE("Servant_Impl_Base::add_receptacle");
+    CIAO_DEBUG ((LM_INFO, CLINFO
+                "Servant_Impl_Base::add_receptacle - attempting to add new connection to receptacle (%C)\n",
+                receptacle_name));
+
+    ::Components::ReceptacleDescription_var safe;
+    ::Components::ReceptacleDescription *rd = 0;
+
+    if (this->receptacle_table_.find (receptacle_name,
+                                      safe) == -1)
+    {
+      CIAO_DEBUG ((LM_DEBUG, CLINFO
+                  "Servant_Impl_Base::add_receptacle - Found no receptacle named (%C), creating it...\n",
+                  receptacle_name));
+
+      ACE_NEW_THROW_EX (rd,
+                        OBV_Components::ReceptacleDescription,
+                        CORBA::NO_MEMORY ());
+      safe = rd;
+
+      rd->name (receptacle_name);
+      rd->type_id ();
+      // The receptacle is a multiplex receptacle if and only if a
+      // cookie was given.
+      rd->is_multiple (cookie != 0);
+
+      ::Components::ConnectionDescription *cd = 0;
+      ACE_NEW_THROW_EX (cd,
+                        OBV_Components::ConnectionDescription (cookie,
+                                                               recept_ref),
+                        CORBA::NO_MEMORY ());
+      ::Components::ConnectionDescription_var cd_safe = cd;
+      ::Components::ConnectionDescriptions cds (1);
+
+      cds.length (1);
+      cds[0] = cd_safe;
+      rd->connections (cds);
+    }
+    else
+    {
+      CIAO_DEBUG ((LM_DEBUG, CLINFO
+                  "Servant_Impl_Base::add_receptacle - Found a receptacle named (%C)\n",
+                  receptacle_name));
+      rd = safe.inout ();
+
+      ::Components::ConnectionDescription *cd = 0;
+      ACE_NEW_THROW_EX (cd,
+                        OBV_Components::ConnectionDescription (cookie,
+                                                               recept_ref),
+                        CORBA::NO_MEMORY ());
+      ::Components::ConnectionDescription_var cd_safe = cd;
+      ::Components::ConnectionDescriptions & cds = rd->connections ();
+      CORBA::ULong old_length = cds.length ();
+      cds.length (old_length + 1);
+      cds [old_length] = cd_safe;
+
+      CIAO_DEBUG ((LM_DEBUG, CLINFO
+                  "Servant_Impl_Base::add_receptacle - Added new connection to "
+      "existing receptacle named  (%C)\n",
+                  receptacle_name));
+    }
+
+    if (this->receptacle_table_.bind (receptacle_name, safe) == 0)
+      {
+        CIAO_DEBUG ((LM_INFO, CLINFO
+                    "Servant_Impl_Base::add_receptacle - Successfully added new receptacle named (%C)\n",
+                    receptacle_name));
+      }
+  }
+
   void
   Servant_Impl_Base::add_consumer (const char *port_name,
                                    ::Components::EventConsumerBase_ptr port_ref)
   {
     CIAO_TRACE("Servant_Impl_Base::add_consumer");
-
     if (0 == port_name || ::CORBA::is_nil (port_ref))
       {
-        CIAO_ERROR (1,
-                    (LM_ERROR,
-                     CLINFO
-                     "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
-                     port_name));
-
+  CIAO_ERROR ((LM_ERROR, CLINFO "Servant_Impl_Base::add_consumer - Bad port name [%C] or bad objref\n",
+                    port_name));
         throw ::CORBA::BAD_PARAM ();
+        return;
       }
 
-    {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
-                          CORBA::NO_RESOURCES ());
+    ::Components::ConsumerDescription *cd = 0;
+    ACE_NEW_THROW_EX (cd,
+                      ::OBV_Components::ConsumerDescription,
+                      CORBA::NO_MEMORY ());
 
-      this->consumer_table_[port_name] = ::Components::EventConsumerBase::_duplicate (port_ref);
-    }
+    ::Components::ConsumerDescription_var safe = cd;
+
+    cd->name (port_name);
+    cd->type_id (port_ref->_interface_repository_id ());
+    cd->consumer (port_ref);
+
+    ConsumerTable::value_type entry;
+    entry.first = port_name;
+    entry.second = safe._retn ();
+
+    ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+                              CORBA::NO_RESOURCES ());
+
+    (void) this->consumer_table_.insert (entry);
   }
-#endif
 
-#if !defined (CCM_NOEVENT)
   ::Components::EventConsumerBase_ptr
   Servant_Impl_Base::lookup_consumer (const char *port_name)
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_consumer");
-
     if (0 == port_name)
       {
         return ::Components::EventConsumerBase::_nil ();
       }
 
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-                        mon,
-                        this->lock_,
-                        CORBA::NO_RESOURCES ());
+    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                             mon,
+                             this->lock_,
+                             CORBA::NO_RESOURCES ());
 
     ConsumerTable::const_iterator iter =
       this->consumer_table_.find (port_name);
@@ -307,17 +582,16 @@ namespace CIAO
         return ::Components::EventConsumerBase::_nil ();
       }
 
-    return ::Components::EventConsumerBase::_duplicate (iter->second);
+    return
+      ::Components::EventConsumerBase::_duplicate (
+        iter->second->consumer ());
   }
-#endif
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
   ::Components::ConsumerDescription *
   Servant_Impl_Base::lookup_consumer_description (
     const char *port_name)
   {
     CIAO_TRACE("Servant_Impl_Base::lookup_consumer_description");
-
     if (0 == port_name)
       {
         /// Calling function will throw InvalidName after getting this.
@@ -328,109 +602,152 @@ namespace CIAO
     ConsumerTable::const_iterator iter;
 
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-                          mon,
-                          this->lock_,
-                          CORBA::NO_RESOURCES ());
+      ACE_READ_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                               mon,
+                               this->lock_,
+                               CORBA::NO_RESOURCES ());
 
       iter = this->consumer_table_.find (port_name);
 
       if (iter != this->consumer_table_.end ())
         {
-          ::Components::ConsumerDescription *cdp = 0;
-          ACE_NEW_THROW_EX (cdp,
-                            ::OBV_Components::ConsumerDescription,
-                            CORBA::NO_MEMORY ());
-
-          cdp->name (iter->first.c_str ());
-          cdp->type_id (iter->second->_interface_repository_id ());
-          cdp->consumer (iter->second);
-          cd = cdp;
+          cd = iter->second;
         }
     }
 
     return cd._retn ();
   }
-#endif
 
-  /// Private operations.
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
-  ::Components::PublisherDescription *
-  Servant_Impl_Base::lookup_publisher_description (const char *publisher_name)
+  ::Components::StandardConfigurator_ptr
+  Servant_Impl_Base::get_standard_configurator (void)
   {
-    CIAO_TRACE("Servant_Impl_Base::lookup_publisher_description");
+    CIAO_TRACE("Servant_Impl_Base::get_standard_configurator (void)");
+    // Create the configurator servant.
+    StandardConfigurator_Impl *config_impl = 0;
 
-    ::Components::PublisherDescriptions_var all_publishers =
-      this->get_all_publishers ();
+    ACE_NEW_THROW_EX (config_impl,
+                      StandardConfigurator_Impl (this),
+                      CORBA::NO_MEMORY ());
 
-    if (!publisher_name || all_publishers->length () == 0)
-      {
-        // Calling function will throw InvalidName after getting this.
-        return 0;
-      }
-    for (::CORBA::ULong publisher = 0;
-          publisher < all_publishers->length ();
-          ++publisher)
-      {
-        ::Components::PublisherDescription *publisher_desc =
-          all_publishers[publisher];
-        if (::ACE_OS::strcmp (publisher_name, publisher_desc->name ()) == 0)
-          {
-            ::Components::PublisherDescription *pd = 0;
-            ACE_NEW_THROW_EX (pd,
-                              ::OBV_Components::PublisherDescription (),
-                              CORBA::NO_MEMORY ());
-            pd->name (publisher_desc->name ());
-            pd->type_id (publisher_desc->type_id ());
-            pd->consumers (publisher_desc->consumers ());
-            ::Components::PublisherDescription_var safe = pd;
-            return safe._retn ();
-          }
-      }
-    return 0;
+
+    Components::StandardConfigurator_var configurator =
+      config_impl->_this ();
+
+    return configurator._retn ();
   }
-#endif
 
-#if !defined (CCM_LW) && !defined (CCM_NOEVENT)
-  ::Components::EmitterDescription *
-  Servant_Impl_Base::lookup_emitter_description (const char *emitter_name)
+  void
+  Servant_Impl_Base::activate_component (void)
   {
-    CIAO_TRACE("Servant_Impl_Base::lookup_emitter_description");
-
-    ::Components::EmitterDescriptions_var all_emitters =
-      this->get_all_emitters ();
-
-    if (!emitter_name || all_emitters->length () == 0)
-      {
-        // Calling function will throw InvalidName after getting this.
-        return 0;
-      }
-    for (::CORBA::ULong emitter = 0;
-          emitter < all_emitters->length ();
-          ++emitter)
-      {
-        ::Components::EmitterDescription *emitter_desc =
-          all_emitters[emitter];
-        if (::ACE_OS::strcmp (emitter_name, emitter_desc->name ()) == 0)
-          {
-            ::Components::EmitterDescription *ed = 0;
-
-            ACE_NEW_THROW_EX (ed,
-                              ::OBV_Components::EmitterDescription (),
-                              CORBA::NO_MEMORY ());
-
-            ed->name (emitter_desc->name ());
-            ed->type_id (emitter_desc->type_id ());
-            ed->consumer (emitter_desc->consumer());
-
-           ::Components::EmitterDescription_var safe = ed;
-
-            return safe._retn ();
-          }
-      }
-    return 0;
+    CIAO_TRACE ("Servant_Impl_Base::activate_component");
+    throw CORBA::NO_IMPLEMENT ();
   }
-#endif
 
+
+  void
+  Servant_Impl_Base::passivate_component (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::passivate_component");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  Components::SessionComponent_ptr
+  Servant_Impl_Base::get_executor (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_executor");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  void
+  Servant_Impl_Base::set_attributes (const Components::ConfigValues &/*descr*/)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::set_attributes");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  ::Components::CCMHome_ptr
+  Servant_Impl_Base::get_ccm_home (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_ccm_home");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  PortableServer::POA_ptr
+  Servant_Impl_Base::_default_POA (void)
+  {
+    CIAO_TRACE("Servant_Impl_Base::_default_POA (void)");
+    return
+      PortableServer::POA::_duplicate (container_->the_POA ());
+  }
+
+  ::Components::Cookie *
+  Servant_Impl_Base::subscribe (const char *,
+                                ::Components::EventConsumerBase_ptr)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::subscribe");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+
+   ::Components::EventConsumerBase_ptr
+   Servant_Impl_Base::unsubscribe (const char *,
+                                   ::Components::Cookie *)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::unsubscribe");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+   void
+   Servant_Impl_Base::connect_consumer (const char *,
+                                        ::Components::EventConsumerBase_ptr)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::connect_consumer");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  ::Components::EventConsumerBase_ptr
+  Servant_Impl_Base::disconnect_consumer (const char *)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::disconnect_consumer");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  ::Components::EmitterDescriptions *
+  Servant_Impl_Base::get_all_emitters (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_all_emitters");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  ::Components::PublisherDescriptions *
+  Servant_Impl_Base::get_all_publishers (void)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::get_all_publishers");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  ::CORBA::Boolean
+  Servant_Impl_Base::same_component (::CORBA::Object_ptr)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::same_component");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+
+  ::Components::Cookie *
+  Servant_Impl_Base::connect (const char *,
+                              ::CORBA::Object_ptr)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::connect");
+    throw CORBA::NO_IMPLEMENT ();
+  }
+
+  ::CORBA::Object_ptr
+  Servant_Impl_Base::disconnect (const char *,
+                                 ::Components::Cookie *)
+  {
+    CIAO_TRACE ("Servant_Impl_Base::disconnect");
+    throw CORBA::NO_IMPLEMENT ();
+  }
 }
 

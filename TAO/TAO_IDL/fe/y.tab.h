@@ -1,10 +1,8 @@
 // $Id$
-/* A Bison parser, made by GNU Bison 2.3.  */
+/* A Bison parser, made by GNU Bison 1.875c.  */
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
-
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
+/* Skeleton parser for Yacc-like parsing with Bison,
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,21 +16,13 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.  */
+   Foundation, Inc., 59 Temple Place - Suite 330,
+   Boston, MA 02111-1307, USA.  */
 
-/* As a special exception, you may create a larger work that contains
-   part or all of the Bison parser skeleton and distribute that work
-   under terms of your choice, so long as that work isn't itself a
-   parser generator using the skeleton or a modified version thereof
-   as a parser skeleton.  Alternatively, if you modify or redistribute
-   the parser skeleton itself, you may (at your option) remove this
-   special exception, which will cause the skeleton and the resulting
-   Bison output files to be licensed under the GNU General Public
-   License without this special exception.
-
-   This special exception was added by the Free Software Foundation in
-   version 2.2 of Bison.  */
+/* As a special exception, when this file is copied by Bison into a
+   Bison output file, you may use that output file without restriction.
+   This special exception was added by the Free Software Foundation
+   in version 1.24 of Bison.  */
 
 /* Tokens.  */
 #ifndef TAO_YYTOKENTYPE
@@ -104,27 +94,20 @@
      IDL_TYPEPREFIX = 319,
      IDL_USES = 320,
      IDL_MANAGES = 321,
-     IDL_TYPENAME = 322,
-     IDL_PORT = 323,
-     IDL_MIRRORPORT = 324,
-     IDL_PORTTYPE = 325,
-     IDL_CONNECTOR = 326,
-     IDL_ALIAS = 327,
-     IDL_INTEGER_LITERAL = 328,
-     IDL_UINTEGER_LITERAL = 329,
-     IDL_STRING_LITERAL = 330,
-     IDL_CHARACTER_LITERAL = 331,
-     IDL_FLOATING_PT_LITERAL = 332,
-     IDL_TRUETOK = 333,
-     IDL_FALSETOK = 334,
-     IDL_SCOPE_DELIMITOR = 335,
-     IDL_LEFT_SHIFT = 336,
-     IDL_RIGHT_SHIFT = 337,
-     IDL_WCHAR_LITERAL = 338,
-     IDL_WSTRING_LITERAL = 339
+     IDL_INTEGER_LITERAL = 322,
+     IDL_UINTEGER_LITERAL = 323,
+     IDL_STRING_LITERAL = 324,
+     IDL_CHARACTER_LITERAL = 325,
+     IDL_FLOATING_PT_LITERAL = 326,
+     IDL_TRUETOK = 327,
+     IDL_FALSETOK = 328,
+     IDL_SCOPE_DELIMITOR = 329,
+     IDL_LEFT_SHIFT = 330,
+     IDL_RIGHT_SHIFT = 331,
+     IDL_WCHAR_LITERAL = 332,
+     IDL_WSTRING_LITERAL = 333
    };
 #endif
-/* Tokens.  */
 #define IDENTIFIER 258
 #define IDL_CONST 259
 #define IDL_MODULE 260
@@ -189,32 +172,25 @@
 #define IDL_TYPEPREFIX 319
 #define IDL_USES 320
 #define IDL_MANAGES 321
-#define IDL_TYPENAME 322
-#define IDL_PORT 323
-#define IDL_MIRRORPORT 324
-#define IDL_PORTTYPE 325
-#define IDL_CONNECTOR 326
-#define IDL_ALIAS 327
-#define IDL_INTEGER_LITERAL 328
-#define IDL_UINTEGER_LITERAL 329
-#define IDL_STRING_LITERAL 330
-#define IDL_CHARACTER_LITERAL 331
-#define IDL_FLOATING_PT_LITERAL 332
-#define IDL_TRUETOK 333
-#define IDL_FALSETOK 334
-#define IDL_SCOPE_DELIMITOR 335
-#define IDL_LEFT_SHIFT 336
-#define IDL_RIGHT_SHIFT 337
-#define IDL_WCHAR_LITERAL 338
-#define IDL_WSTRING_LITERAL 339
+#define IDL_INTEGER_LITERAL 322
+#define IDL_UINTEGER_LITERAL 323
+#define IDL_STRING_LITERAL 324
+#define IDL_CHARACTER_LITERAL 325
+#define IDL_FLOATING_PT_LITERAL 326
+#define IDL_TRUETOK 327
+#define IDL_FALSETOK 328
+#define IDL_SCOPE_DELIMITOR 329
+#define IDL_LEFT_SHIFT 330
+#define IDL_RIGHT_SHIFT 331
+#define IDL_WCHAR_LITERAL 332
+#define IDL_WSTRING_LITERAL 333
 
 
 
 
-#if ! defined TAO_YYSTYPE && ! defined TAO_YYSTYPE_IS_DECLARED
-typedef union TAO_YYSTYPE
+#if ! defined (TAO_YYSTYPE) && ! defined (TAO_YYSTYPE_IS_DECLARED)
 
-{
+typedef union TAO_YYSTYPE {
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
   UTL_NameList                  *nlval;         /* Name list            */
@@ -223,6 +199,7 @@ typedef union TAO_YYSTYPE
   UTL_DeclList                  *dlval;         /* Declaration list     */
   FE_InterfaceHeader            *ihval;         /* Interface header     */
   FE_OBVHeader                  *vhval;         /* Valuetype header     */
+  FE_EventHeader                *ehval;         /* Event header         */
   FE_ComponentHeader            *chval;         /* Component header     */
   FE_HomeHeader                 *hhval;         /* Home header          */
   AST_Expression                *exval;         /* Expression value     */
@@ -234,8 +211,8 @@ typedef union TAO_YYSTYPE
   AST_Operation::Flags          ofval;          /* Operation flags      */
   FE_Declarator                 *deval;         /* Declarator value     */
   ACE_CDR::Boolean              bval;           /* Boolean value        */
-  ACE_CDR::LongLong             ival;           /* Long Long value      */
-  ACE_CDR::ULongLong            uival;          /* Unsigned long long   */
+  ACE_CDR::Long                 ival;           /* Long value           */
+  ACE_CDR::ULong                uival;          /* Unsigned long value  */
   ACE_CDR::Double               dval;           /* Double value         */
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
@@ -245,18 +222,15 @@ typedef union TAO_YYSTYPE
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
-  AST_Decl::NodeType            ntval;          /* Node type value      */
-  FE_Utils::T_Param_Info        *pival;         /* Template interface param */
-  FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
-  FE_Utils::T_ARGLIST           *alval;         /* List of template args */
-}
-/* Line 1489 of yacc.c.  */
+} TAO_YYSTYPE;
+/* Line 1275 of yacc.c.  */
 
-  TAO_YYSTYPE;
 # define tao_yystype TAO_YYSTYPE /* obsolescent; will be withdrawn */
 # define TAO_YYSTYPE_IS_DECLARED 1
 # define TAO_YYSTYPE_IS_TRIVIAL 1
 #endif
 
 extern TAO_YYSTYPE tao_yylval;
+
+
 

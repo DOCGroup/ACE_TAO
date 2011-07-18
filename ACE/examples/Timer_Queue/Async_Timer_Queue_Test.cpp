@@ -1,18 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Async_Timer_Queue_Test.cpp
- *
- *  $Id$
- *
- *    This test exercises the <ACE_Asynch_Timer_Queue_Adapter>
- *    using an <ACE_Timer_Heap>.
- *
- *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Async_Timer_Queue_Test.cpp
+//
+// = DESCRIPTION
+//      This test exercises the <ACE_Asynch_Timer_Queue_Adapter>
+//      using an <ACE_Timer_Heap>.
+//
+// = AUTHORS
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Signal.h"
@@ -21,7 +25,7 @@
 
 #include "Async_Timer_Queue_Test.h"
 
-
+ACE_RCSID(Timer_Queue, Async_Timer_Queue_Test, "$Id$")
 
 // Hook method that is called to handle the expiration of a timer.
 int

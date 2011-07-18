@@ -1,48 +1,22 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "serverC.h"
 #include "client_i.h"
 #include "ace/SString.h"
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
-const ACE_TCHAR  *cert_file = ACE_TEXT ("cacert.pem");
+ACE_RCSID (Callback,
+           client,
+           "$Id$")
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+const char *cert_file = "cacert.pem";
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ACE_TString env (ACE_TEXT ("SSL_CERT_FILE="));
+      ACE_CString env ("SSL_CERT_FILE=");
       env += cert_file;
-      ACE_OS::putenv ( ACE_TEXT_ALWAYS_CHAR(env.c_str ()));
+      ACE_OS::putenv (env.c_str ());
 
       //
       // Initialize the ORB
@@ -50,14 +24,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       //
       // Get the Root POA.
       //
       CORBA::Object_var obj =
-        orb->resolve_initial_references ( "RootPOA" );
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
@@ -65,7 +36,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //
       // Get a reference to the server.
       //
-      obj = orb->string_to_object ( ior );
+      obj = orb->string_to_object ("file://server.ior"
+                                   );
 
       if (CORBA::is_nil (obj.in ()))
         {

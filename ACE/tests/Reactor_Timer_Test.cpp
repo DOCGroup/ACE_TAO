@@ -1,20 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Reactor_Timer_Test.cpp
- *
- *  $Id$
- *
- *    This is a simple test that illustrates the timer mechanism of
- *    the reactor.  Scheduling timers, resetting timer intervals,
- *    handling expired timers and cancelling scheduled timers are
- *    all exercised in this test.
- *
- *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Reactor_Timer_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test that illustrates the timer mechanism of
+//      the reactor.  Scheduling timers, resetting timer intervals,
+//      handling expired timers and cancelling scheduled timers are
+//      all exercised in this test.
+//
+// = AUTHOR
+//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
@@ -24,7 +28,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 
 static int done = 0;
 static int the_count = 0;
@@ -33,26 +37,26 @@ static int odd = 0;
 class Time_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Time_Handler ();
+  // Default constructor
 
-  /// Handle the timeout.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
+  // Handle the timeout.
 
-  /// Called when <Time_Handler> is removed.
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
+  // Called when <Time_Handler> is removed.
 
-  /// Return our timer id.
   long timer_id (void) const;
+  // Return our timer id.
 
-  /// Set our timer id;
   void timer_id (long);
+  // Set our timer id;
 
 private:
-  /// Stores the id of this timer.
   long timer_id_;
+  // Stores the id of this timer.
 };
 
 Time_Handler::Time_Handler ()
@@ -80,7 +84,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
-    ACE_TEST_ASSERT (current_count == the_count);
+    ACE_ASSERT (current_count == the_count);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
@@ -136,7 +140,7 @@ test_registering_all_handlers (void)
         ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                   (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
-      ACE_TEST_ASSERT (t_id[i] != -1);
+      ACE_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
@@ -162,7 +166,7 @@ test_registering_one_handler (void)
         ACE_Reactor::instance ()->schedule_timer (&rt[0],
                                                   (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
-      ACE_TEST_ASSERT (t_id[i] != -1);
+      ACE_ASSERT (t_id[i] != -1);
     }
 
   while (!done)
@@ -187,7 +191,7 @@ test_canceling_odd_timers (void)
       t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                           (const void *) i,
                                                           ACE_Time_Value (2 * i + 1));
-      ACE_TEST_ASSERT (t_id[i] != -1);
+      ACE_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
@@ -227,7 +231,7 @@ test_resetting_timer_intervals (void)
      // Start off by making this an interval timer.
      ACE_Time_Value (1));
 
-  ACE_TEST_ASSERT (t_id != -1);
+  ACE_ASSERT (t_id != -1);
   rt.timer_id (t_id);
 
   while (!done)

@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Unload_libACE.cpp
- *
- *  $Id$
- *
- *    This is a simple test of library unloading that uses
- *    an application which has _not_ been linked with libACE
- *    but uses dlopen() to dynamically load libACE
- *    and then uses dlclose() to unload it.
- *
- *
- *  @author David Smith <dts@prismtech.com> and Don Sharp <Donald.Sharp@prismtech.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Unload_libACE.cpp
+//
+// = DESCRIPTION
+//      This is a simple test of library unloading that uses
+//      an application which has _not_ been linked with libACE
+//      but uses dlopen() to dynamically load libACE
+//      and then uses dlclose() to unload it.
+//
+// = AUTHORS
+//    David Smith <dts@prismtech.com> and Don Sharp <Donald.Sharp@prismtech.com>
+//
+// ============================================================================
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
@@ -150,14 +153,7 @@ main (int, char **)
           char buf[BUFSIZ];
 
           strcpy (buf, ace_root);
-          strcat (buf, "/lib/");
-          const char *subdir_env = getenv ("ACE_EXE_SUB_DIR");
-          if (subdir_env)
-            {
-              strcat (buf, subdir_env);
-              strcat (buf, "/");
-            }
-          strcat (buf, "lib");
+          strcat (buf, "/lib/lib");
 #if defined (ACE_LIB_NAME)
           strcat (buf, ACE_LIB_NAME);
 #else

@@ -5,6 +5,8 @@
 
 #include "Base_Optimizer.h"
 
+ACE_RCSID(lib, Base_Optimizer, "$Id$")
+
 template<class Base, class Member>
 Base_Optimizer<Base, Member>::Base_Optimizer (void)
 {

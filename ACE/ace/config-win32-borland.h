@@ -11,6 +11,10 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+#if (__BORLANDC__ < 0x610)
+#error This version of CodeGear C++ is not supported.
+#endif
+
 #define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag __declspec (dllexport)
 #define ACE_Proper_Import_Flag __declspec (dllimport)
@@ -28,16 +32,14 @@
 #  define __ACE_INLINE__ 1
 # endif /* __ACE_INLINE__ */
 
-# define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
+# define ACE_CC_NAME ACE_TEXT ("Borland C++ Builder")
 # define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
 
-#if (__BORLANDC__ >= 0x620)
-# define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
-#else
-# define ACE_CC_PREPROCESSOR_ARGS "-q -P- -o%s"
-#endif
+# ifndef ACE_USING_MCPP_PREPROCESSOR
+#  define ACE_CC_PREPROCESSOR_ARGS "-q -P- -o%s"
+# endif
 
 // Automatically define WIN32 macro if the compiler tells us it is our
 // target platform.
@@ -104,26 +106,28 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_USES_EXPLICIT_STD_NAMESPACE
 
-#define ACE_HAS_TIME_T_LONG_MISMATCH
-
-#define ACE_EXPORT_NESTED_CLASSES 1
-#define ACE_HAS_CPLUSPLUS_HEADERS 1
-#define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#define ACE_HAS_SIG_ATOMIC_T
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_STDCPP_STL_INCLUDES 1
-#define ACE_HAS_STRING_CLASS 1
-#define ACE_HAS_USER_MODE_MASKS 1
-#define ACE_LACKS_ACE_IOSTREAM 1
-#define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#define ACE_HAS_NEW_NOTHROW
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
-#define ACE_SIZEOF_LONG_DOUBLE 10
-#define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
-#define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#define ACE_USES_STD_NAMESPACE_FOR_ABS 1
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+# define ACE_EXPORT_NESTED_CLASSES 1
+# define ACE_HAS_CPLUSPLUS_HEADERS 1
+# define ACE_HAS_EXCEPTIONS
+# define ACE_HAS_GNU_CSTRING_H 1
+# define ACE_HAS_NONCONST_SELECT_TIMEVAL
+# define ACE_HAS_SIG_ATOMIC_T
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
+# define ACE_HAS_STDCPP_STL_INCLUDES 1
+# define ACE_HAS_STRERROR
+# define ACE_HAS_STRING_CLASS 1
+# define ACE_HAS_TEMPLATE_TYPEDEFS 1
+# define ACE_HAS_USER_MODE_MASKS 1
+# define ACE_LACKS_ACE_IOSTREAM 1
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
+# define ACE_LACKS_PRAGMA_ONCE 1
+# define ACE_HAS_NEW_NOTHROW
+# define ACE_TEMPLATES_REQUIRE_SOURCE 1
+# define ACE_SIZEOF_LONG_DOUBLE 10
+# define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
+# define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
+# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+# define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // must have _MT defined to include multithreading
@@ -133,21 +137,17 @@
 // You must link with the multi threaded libraries. Add -tWM to your
 // compiler options
 #  error You must link against multi-threaded libraries when using ACE (check your project settings)
-# endif /* !__MT__ */
+# endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ < 0x620)
+#if (__BORLANDC__ <= 0x610)
 # define ACE_LACKS_ISBLANK
 # define ACE_LACKS_ISWBLANK
-# define ACE_LACKS_PRAGMA_ONCE 1
-#endif
-
-#if (__BORLANDC__ < 0x630)
-# define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_ISCTYPE
+# define ACE_LACKS_ISWCTYPE
 #endif
 
-#if (__BORLANDC__ < 0x620)
+#if (__BORLANDC__ <= 0x610)
 // Older Borland compilers can't handle assembly in inline methods or
 // templates (E2211). When we build for pentium optimized and we are inlining
 // then we disable inline assembly
@@ -156,16 +156,11 @@
 # endif
 #endif
 
-#if (__BORLANDC__ == 0x621)
-// C++ Builder 2010 wcsncat seems broken
-# define ACE_LACKS_WCSNCAT
-#endif
 
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 #define ACE_WTOF_EQUIVALENT ::_wtof
-#define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
 #define ACE_HAS_ITOA 1
 
 #include /**/ "ace/post.h"

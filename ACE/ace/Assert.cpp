@@ -3,6 +3,8 @@
 #include "ace/Assert.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(ace, Assert, "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The following ASSERT macro is courtesy of Alexandre Karev

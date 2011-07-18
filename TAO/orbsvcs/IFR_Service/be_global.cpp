@@ -1,22 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_global.cpp
- *
- *  $Id$
- *
- *  Stores global data specific to the compiler back end.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+//
+// = LIBRARY
+//    TAO_IFR_BE_DLL
+//
+// = FILENAME
+//    be_global.cpp
+//
+// = DESCRIPTION
+//    Stores global data specific to the compiler back end.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "be_global.h"
 #include "ast_generator.h"
 #include "global_extern.h"
 #include "idl_defines.h"
+
+ACE_RCSID (IFR_Service,
+           be_global,
+           "$Id$")
 
 TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 
@@ -194,3 +202,45 @@ BE_GlobalData::parse_args (long &i, char **av)
     }
 }
 
+// Does nothing in this backend.
+void
+BE_GlobalData::prep_be_arg (char *)
+{
+}
+
+// Does nothing in this backend.
+void
+BE_GlobalData::arg_post_proc (void)
+{
+}
+
+void
+BE_GlobalData::usage (void) const
+{
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -L\t\t\tEnable locking at the IDL file level\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -r\t\t\tRemove contents of IDL file(s) from repository\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Si\t\t\tSuppress processing of included IDL files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -T\t\t\tAllow duplicate typedefs in IDL files\n")
+    ));
+}
+
+AST_Generator *
+BE_GlobalData::generator_init (void)
+{
+  AST_Generator *gen = 0;
+  ACE_NEW_RETURN (gen,
+                  AST_Generator,
+                  0);
+  return gen;
+}

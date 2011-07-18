@@ -1,19 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Quoter_i.cpp
- *
- *  $Id$
- *
- *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Quoter
+//
+// = FILENAME
+//    Quoter_i.cpp
+//
+// = AUTHOR
+//    Darrell Brunsch <brunsch@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Quoter_i.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
+
+ACE_RCSID (Quoter,
+           Quoter_i,
+           "$Id$")
 
 // Constructor.  Create all the quoter factories.
 
@@ -126,7 +133,8 @@ Quoter_i::get_quote (char const *)
 
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
-                const CosLifeCycle::Criteria &/*the_criteria*/)
+                const CosLifeCycle::Criteria &/*the_criteria*/
+                )
 {
   const char *exception_message = "Null message";
   CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
@@ -238,7 +246,8 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
 void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
-                const CosLifeCycle::Criteria & /* the_criteria */)
+                const CosLifeCycle::Criteria & /* the_criteria */
+                )
 {
   ACE_ERROR ((LM_ERROR,
               "Quoter_i::move: The Quoter object is not movable!"));

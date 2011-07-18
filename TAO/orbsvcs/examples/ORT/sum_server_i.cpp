@@ -2,6 +2,10 @@
 
 #include "sum_server_i.h"
 
+ACE_RCSID (ORT,
+           sum_server_i,
+           "$Id$")
+
 sum_server_i::sum_server_i ()
 {
 }

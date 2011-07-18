@@ -11,6 +11,10 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID (TAO_PERF_RTEC_TCP_Baseline,
+           server,
+           "$Id$")
+
 int use_rt   = 0;
 int nthreads = 1;
 ACE_TCHAR const * hi_endpoint = ACE_TEXT ("localhost:12345");
@@ -194,6 +198,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

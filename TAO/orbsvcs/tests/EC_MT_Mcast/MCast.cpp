@@ -16,6 +16,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID (EC_MT_Mcast,
+           MCast,
+           "$Id$")
+
 const ACE_TCHAR *udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
@@ -172,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Now we setup the sender:
-      PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender;
+      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender;
       sender = TAO_ECG_UDP_Sender::create();
 
       sender->init (event_channel.in (),
@@ -194,7 +198,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sender->connect (sub);
 
       // To receive events we need to setup an event handler:
-      PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
+      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver;
       receiver = TAO_ECG_UDP_Receiver::create();
 
       TAO_ECG_Mcast_EH mcast_eh (&*receiver);
@@ -370,6 +374,6 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

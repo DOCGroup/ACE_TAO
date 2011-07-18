@@ -1,20 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    recursive_struct.cpp
- *
- *  $Id$
- *
- *  test structure that contains a sequence of itself
- *
- *
- *  @author Aniruddha Gokhale
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    recursive_struct.cpp
+//
+// = DESCRIPTION
+//    test structure that contains a sequence of itself
+//
+// = AUTHORS
+//    Aniruddha Gokhale, Jeff Parsons
+//
+// ============================================================================
 
 #include "recursive_struct.h"
+
+ACE_RCSID (Param_Test,
+           recursive_struct,
+           "$Id$")
 
 const CORBA::ULong MAX_DEPTH = 5;
 const CORBA::ULong MAX_SEQ_LENGTH = 3;

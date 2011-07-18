@@ -1,14 +1,16 @@
-// $Id$
+// StandardConfigurator.cpp,v 1.0 2004/14/04 08:47:46 white Exp
 
 #include "StandardConfigurator_Impl.h"
 #include "Servant_Impl_Base.h"
 
-#if !defined (CCM_LW)
+ACE_RCSID (ciao,
+           StandardConfigurator_Impl,
+           "$Id$")
 
 namespace CIAO
 {
   StandardConfigurator_Impl::StandardConfigurator_Impl (
-        Connector_Servant_Impl_Base* servant)
+    Servant_Impl_Base* servant)
     : component_ (servant)
   {
   }
@@ -29,6 +31,3 @@ namespace CIAO
   {
   }
 }
-
-#endif
-

@@ -4,6 +4,7 @@
 #ifndef JAWS_HTTP_STATES_H
 #define JAWS_HTTP_STATES_H
 
+#include "ace/OS.h"
 #include "ace/Singleton.h"
 
 #include "jaws3/Protocol_Handler.h"

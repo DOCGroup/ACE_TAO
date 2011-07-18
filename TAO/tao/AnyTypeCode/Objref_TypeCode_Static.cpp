@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
@@ -14,6 +13,11 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (AnyTypeCode,
+           Objref_TypeCode_Static,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

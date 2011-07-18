@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Refcounted_Event_Handler_Test_DevPoll.cpp
- *
- *  $Id$
- *
- *  This is a simple test that checks the order of dispatching of
- *  ACE Reactors.  Order should be: timeout, output, and then input.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Refcounted_Event_Handler_Test_DevPoll.cpp
+//
+// = DESCRIPTION
+//    This is a simple test that checks the order of dispatching of
+//    ACE Reactors.  Order should be: timeout, output, and then input.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -23,7 +26,7 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
-
+ACE_RCSID(tests, Refcounted_Event_Handler_Test_DevPoll, "$Id$")
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
@@ -77,7 +80,7 @@ Handler::Handler (ACE_Reactor &reactor)
       if (0 != this->reactor ()->register_handler
                  (this->pipe_.read_handle (),
                   this,
-                  ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
+                  ACE_Event_Handler::ALL_EVENTS_MASK))
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
       else
         this->ok_ = true;
@@ -123,10 +126,13 @@ Handler::handle_output (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
-  // Don't want to continually see writeable; only verify its relative order.
+#if defined (__OpenBSD__) || defined (ACE_VXWORKS) || defined (__Lynx__)
+  // All that we need written has been written, so don't
+  // call handle_output again.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
+#endif /* __OpenBSD__ || ACE_VXWORKS || __Lynx__ */
 
   return 0;
 }

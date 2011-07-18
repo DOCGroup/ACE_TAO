@@ -1,24 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_visitor_sequence.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Sequence
- *
- *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
- */
-//=============================================================================
-
-#include "ace/Log_Msg.h"
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_sequence.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Sequence
+//
+// = AUTHOR
+//    Aniruddha Gokhale and Carlos O'Ryan
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_exception.h"
-#include "be_module.h"
-#include "be_util.h"
 #include "be_interface.h"
 #include "be_interface_fwd.h"
 #include "be_component.h"
@@ -47,13 +47,19 @@
 
 #include "be_visitor_sequence.h"
 #include "be_visitor_context.h"
+#include "ace/Log_Msg.h"
 
 #include "be_visitor_sequence/any_op_ch.cpp"
 #include "be_visitor_sequence/any_op_cs.cpp"
 #include "be_visitor_sequence/cdr_op_ch.cpp"
 #include "be_visitor_sequence/cdr_op_cs.cpp"
+#include "be_visitor_sequence/serializer_op_ch.cpp"
+#include "be_visitor_sequence/serializer_op_cs.cpp"
 #include "be_visitor_sequence/buffer_type.cpp"
 #include "be_visitor_sequence/sequence_base.cpp"
 #include "be_visitor_sequence/sequence_ch.cpp"
 #include "be_visitor_sequence/sequence_cs.cpp"
 
+ACE_RCSID (be, 
+           be_visitor_sequence, 
+           "$Id$")

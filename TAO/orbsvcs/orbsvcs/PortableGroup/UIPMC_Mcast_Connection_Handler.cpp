@@ -1,5 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
+
 
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
@@ -15,6 +17,11 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
+
+
+ACE_RCSID(PortableGroup,
+          UIPMC_Mcast_Connection_Handler,
+          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -219,13 +226,6 @@ TAO_UIPMC_Mcast_Connection_Handler::add_transport_to_cache (void)
   return this->orb_core ()->lane_resources ()
           .transport_cache ().cache_transport (&prop,
                                                this->transport ());
-}
-
-int
-TAO_UIPMC_Mcast_Connection_Handler::handle_write_ready
-  (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

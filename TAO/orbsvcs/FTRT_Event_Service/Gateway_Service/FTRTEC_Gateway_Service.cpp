@@ -11,6 +11,10 @@
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
+ACE_RCSID (Gateway_Service,
+           FTRTEC_Gateway_Service,
+           "$Id$")
+
 namespace {
   CORBA::ORB_var orb;
   FtRtecEventChannelAdmin::EventChannel_var ftec;
@@ -32,7 +36,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object (get_opt.opt_arg ());
+          CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
           ftec = FtRtecEventChannelAdmin::EventChannel::_narrow (obj.in());
         }
         break;

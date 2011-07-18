@@ -1,6 +1,9 @@
-// $Id$
-
 #include "Bzip2Compressor.h"
+
+ACE_RCSID (BZIP2,
+           Bzip2Compressor,
+           "$Id$")
+
 #include "bzlib.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -20,19 +20,17 @@ module CIAO
       SINK
     };
   };
-
+    
   local interface Port_Activator
   {
-    /// OID of port this activator encapsulates
+    // OID of port this activator encapsulates
     attribute string oid;
-
-    /// Name of the port
+    // name of the port
     readonly attribute string name;
-
+    
     PortableServer::Servant activate (in PortableServer::ObjectId oid);
-
-    void deactivate (in PortableServer::Servant servant,
-                     in boolean remaining_activations);
+    
+    void deactivate (in PortableServer::Servant servant);
   };
 };
 

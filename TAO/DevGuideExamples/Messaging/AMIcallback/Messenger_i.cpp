@@ -53,7 +53,7 @@ CORBA::Boolean Messenger_i::send_message (
   time_sent = static_cast<CORBA::Long> (ACE_OS::gettimeofday().sec());
 
   // We will assume the message has been sent, so return true
-  return true;
+  return 1;
 }
 
 

@@ -14,29 +14,59 @@
 # include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (Valuetype,
+           AbstractBase,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// ************************************************************
+// These are in CORBA namespace
+
+void
+CORBA::release (CORBA::AbstractBase_ptr obj)
+{
+  if (obj)
+    {
+      obj->_remove_ref ();
+    }
+}
+
+CORBA::Boolean
+CORBA::is_nil (CORBA::AbstractBase_ptr obj)
+{
+  return (obj == 0);
+}
+
+// ************************************************************
 
 CORBA::AbstractBase::AbstractBase (void)
   : is_objref_ (false)
-  , refcount_ (1)
+  , concrete_stubobj_ (0)
   , is_collocated_ (false)
   , servant_ (0)
-  , equivalent_obj_ (CORBA::Object::_nil ())
+  , is_local_ (false)
+  , equivalent_obj_ (0)
 {
 }
 
 CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
   : is_objref_ (rhs.is_objref_)
-  , refcount_ (1)
+  , concrete_stubobj_ (rhs.concrete_stubobj_)
   , is_collocated_ (rhs.is_collocated_)
   , servant_ (rhs.servant_)
-  , equivalent_obj_ (CORBA::Object::_nil ())
+  , is_local_ (rhs.is_local_)
+  , equivalent_obj_ (0)
 {
-  if (this->is_objref_)
+  if (rhs.concrete_stubobj_ != 0)
     {
-      // Need to duplicate equivalent obj only if it's objref.
+      rhs.concrete_stubobj_->_incr_refcnt ();
+    }
+
+  if (!CORBA::is_nil (rhs.equivalent_obj_))
+    {
       this->equivalent_obj_ =
-        CORBA::Object::_duplicate (rhs.equivalent_obj_.in ());
+        CORBA::Object::_duplicate (rhs.equivalent_obj_);
     }
 }
 
@@ -44,47 +74,59 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
                                    CORBA::Boolean collocated,
                                    TAO_Abstract_ServantBase * servant)
   : is_objref_ (true)
-  , refcount_ (1)
+  , concrete_stubobj_ (protocol_proxy)
   , is_collocated_ (collocated)
   , servant_ (servant)
-  , equivalent_obj_ (this->create_object (protocol_proxy))
+  , is_local_ (protocol_proxy == 0 ? true : false)
+  , equivalent_obj_ (0)
 {
+  if (this->concrete_stubobj_ != 0)
+    {
+      TAO_Stub *stub = this->concrete_stubobj_;
+
+      stub->_incr_refcnt ();
+
+      this->equivalent_obj_ =
+        stub->orb_core ()->create_object (stub);
+    }
+
 }
 
 CORBA::AbstractBase::~AbstractBase (void)
 {
+  if (this->concrete_stubobj_ != 0)
+    {
+      this->concrete_stubobj_->_decr_refcnt ();
+    }
 }
 
+CORBA::AbstractBase_ptr
+CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
+{
+  if (obj)
+    {
+      obj->_add_ref ();
+    }
+
+  if (!CORBA::is_nil (obj->equivalent_obj_.in ()))
+    {
+      obj->equivalent_obj_->_add_ref ();
+    }
+
+  return obj;
+}
+
+// These are non-pure virtual no-ops so we can instantiate the
+// class in the CDR extraction operator. The actual management
+// of the refcount will always be done in the derived class.
 void
 CORBA::AbstractBase::_add_ref (void)
 {
-  ++this->refcount_;
-
-  // This is required by the C++ Mapping 1.2.
-  if (this->is_objref_)
-    {
-      this->equivalent_obj_ =
-        CORBA::Object::_duplicate (this->equivalent_obj_.in ());
-    }
 }
 
 void
 CORBA::AbstractBase::_remove_ref (void)
 {
-  // This is required by the C++ Mapping 1.2.
-  if (this->is_objref_)
-    {
-      CORBA::release (this->equivalent_obj_.in ());
-    }
-
-  if (--this->refcount_ == 0)
-    {
-      // If this object is going to be deleted here then the reference to
-      // equivalent_obj_ that it owned is already released a few lines above.
-      this->equivalent_obj_._retn ();
-
-      delete this;
-    }
 }
 
 void
@@ -97,12 +139,18 @@ CORBA::AbstractBase::_tao_any_destructor (void *x)
 CORBA::Object_ptr
 CORBA::AbstractBase::_to_object (void)
 {
-  if (!this->is_objref_)
+  if (!CORBA::is_nil (this->equivalent_obj_.in ()))
+    return CORBA::Object::_duplicate (this->equivalent_obj_.in ());
+
+  if (this->concrete_stubobj_ == 0)
     {
       return CORBA::Object::_nil ();
     }
 
-  return CORBA::Object::_duplicate (this->equivalent_obj_.in ());
+  TAO_ORB_Core *orb_core = this->concrete_stubobj_->orb_core ();
+  this->concrete_stubobj_->_incr_refcnt ();
+
+  return orb_core->create_object (this->concrete_stubobj_);
 }
 
 CORBA::ValueBase *
@@ -126,12 +174,9 @@ CORBA::AbstractBase::_to_value (void)
 CORBA::Boolean
 CORBA::AbstractBase::_is_a (const char *type_id)
 {
-  if (this->is_objref_)
+  if (! CORBA::is_nil (this->equivalent_obj_.in ()))
     {
-      if (!CORBA::is_nil (this->equivalent_obj_.in ()))
-        {
-          return this->equivalent_obj_->_is_a (type_id);
-        }
+      return this->equivalent_obj_->_is_a (type_id);
     }
 
   return (ACE_OS::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
@@ -161,7 +206,10 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
     {
       // Marshal discriminator, then empty type hint.
       strm << ACE_OutputCDR::from_boolean (discriminator);
-      return strm << CORBA::Object::_nil ();
+      strm.write_ulong (1);
+      strm.write_char ('\0');
+      strm.write_ulong (0);
+      return (CORBA::Boolean) strm.good_bit ();
     }
 
   if (abs->_is_objref ())
@@ -211,17 +259,23 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
+          CORBA::Boolean retval = true;
+
           CORBA::ULong value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
                                    | TAO_OBV_GIOP_Flags::Type_info_single;
 
-          if ((strm.write_ulong (value_tag)) == 0)
+          retval = strm.write_ulong (value_tag);
+
+          if (retval == 0)
             {
-              return false;
+              return retval;
             }
 
-          if ((strm << abs->_tao_obv_repository_id ()) == 0)
+          retval = strm << abs->_tao_obv_repository_id ();
+
+          if (retval == 0)
             {
-              return false;
+              return retval;
             }
 
           return abs->_tao_marshal_v (strm);
@@ -308,16 +362,20 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           if (strm >> generic_objref.inout ())
             {
-              if (CORBA::is_nil (generic_objref.in ()))
-                {
-                  return true;
-                }
-
               TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
 
-              bool const collocated =
-                !CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ())
-                && concrete_stubobj->optimize_collocation_objects ()
+              CORBA::Boolean const stores_orb =
+                ! CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ());
+
+              if (stores_orb)
+                {
+                  orb_core =
+                    concrete_stubobj->servant_orb_var ()->orb_core ();
+                }
+
+              CORBA::Boolean const collocated =
+                orb_core != 0
+                && orb_core->optimize_collocation_objects ()
                 && generic_objref->_is_collocated ();
 
               ACE_NEW_RETURN (abs,
@@ -387,23 +445,23 @@ CORBA::AbstractBase::_tao_to_value (void)
 }
 
 CORBA::Object_ptr
-CORBA::AbstractBase::create_object (TAO_Stub *stub)
+CORBA::AbstractBase::equivalent_objref (void)
 {
-  if (stub)
+  if (CORBA::is_nil (this->equivalent_obj_.in ()))
     {
-      stub->_incr_refcnt ();
+      if (this->concrete_stubobj_ != 0)
+        {
+          TAO_ORB_Core *orb_core =
+            this->concrete_stubobj_->orb_core ();
 
-      TAO_Stub_Auto_Ptr safe_stub (stub);
+          this->concrete_stubobj_->_incr_refcnt ();
 
-      CORBA::Object_ptr obj =
-        stub->orb_core ()->create_object (stub);
-
-      safe_stub.release ();
-
-      return obj;
+          this->equivalent_obj_ =
+            orb_core->create_object (this->concrete_stubobj_);
+        }
     }
 
-  return CORBA::Object::_nil ();
+  return this->equivalent_obj_.in ();
 }
 
 // ================== Typecode initializations ==================

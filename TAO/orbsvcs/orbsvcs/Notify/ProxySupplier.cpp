@@ -6,6 +6,8 @@
 #include "orbsvcs/Notify/ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Notify, TAO_Notify_ProxySupplier, "$Id$")
+
 #include "orbsvcs/Notify/Event_Manager.h"
 #include "orbsvcs/Notify/AdminProperties.h"
 #include "orbsvcs/Notify/Consumer.h"
@@ -65,7 +67,8 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
 
   if (max_consumers != 0 && consumer_count >= max_consumers.value ())
   {
-    throw CORBA::IMP_LIMIT (); // we've reached the limit of consumers connected.
+    throw CORBA::IMP_LIMIT (
+      ); // we've reached the limit of consumers connected.
   }
 
   {

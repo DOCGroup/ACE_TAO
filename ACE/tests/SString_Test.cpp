@@ -1,26 +1,29 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    SString_Test.cpp
- *
- *  $Id$
- *
- *    This is a simple test that illustrates the use of ACE_CString
- *    and ACE_WString. No command line arguments are needed to run
- *    the test.
- *
- *
- *  @author Prashant Jain <pjain@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    SString_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test that illustrates the use of ACE_CString
+//      and ACE_WString. No command line arguments are needed to run
+//      the test.
+//
+// = AUTHOR
+//    Prashant Jain <pjain@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
-
+ACE_RCSID(tests, SString_Test, "$Id$")
 
 static int testConcatenation() {
 #ifdef ACE_HAS_WCHAR
@@ -62,101 +65,6 @@ static int testConcatenation() {
 #endif /* ACE_HAS_WCHAR */
   return 0;
 }
-
-int testIterator()
-{
-  ACE_CString s1 ("Hello, World");
-
-  // Use the advance () method to count number of characters.
-  size_t count = 0;
-  for (ACE_CString::ITERATOR iter (s1); !iter.done (); iter.advance ())
-    ++ count;
-
-  if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("advance () failed")),
-                       1);
-
-  // Use the prefix operator to count number of characters.
-  count = 0;
-  for (ACE_CString::ITERATOR iter (s1); !iter.done (); ++ iter)
-    ++ count;
-
-  if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("++ operator failed")),
-                       1);
-
-  count = 0;
-
-  for (ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
-       iter != iter_end; iter ++)
-  {
-    ++ count;
-  }
-
-  if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("end () failed")),
-                       1);
-
-  ACE_CString::iterator iter1 (s1);
-
-  if (*iter1 != s1[0])
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("dereference operator failed")),
-                       1);
-
-  return 0;
-}
-
-int testConstIterator()
-{
-  const ACE_CString s1 ("Hello, World");
-
-  // Use the advance () method to count number of characters.
-  size_t count = 0;
-  for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); iter.advance ())
-    ++ count;
-
-  if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("advance () failed")),
-                       1);
-
-  // Use the prefix operator to count number of characters.
-  count = 0;
-  for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); ++ iter)
-    ++ count;
-
-  if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("++ operator failed")),
-                       1);
-
-  count = 0;
-
-  for (ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
-       iter != iter_end; iter ++)
-  {
-    ++ count;
-  }
-
-  if (count != s1.length ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("end () failed")),
-                       1);
-
-  ACE_CString::const_iterator iter1 (s1);
-
-  if (*iter1 != s1[0])
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("dereference operator failed")),
-                       1);
-
-  return 0;
-}
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -430,9 +338,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_Allocator::instance ()->free (const_cast<char *> (tmp.rep ()));
   }
 
-  int err = testConcatenation ();
-  err += testIterator ();
-  err += testConstIterator ();
+  int err = testConcatenation();
 
   ACE_END_TEST;
   return err;

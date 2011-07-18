@@ -1,10 +1,11 @@
-# -*- Makefile -*-
 # $Id$
 
 # debug = 1
 # optimize = 1
+# exceptions = 0
 
 winsock2 ?= 1
+exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
@@ -43,4 +44,4 @@ OBJEXT     = obj
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
-CCFLAGS += $(CFLAGS)
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)

@@ -4,6 +4,10 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (Strategies,
+           Custom_Network_Priority_Mapping,
+           "$Id$")
+
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
 #define IPDSFIELD_DSCP_CS2      0x10

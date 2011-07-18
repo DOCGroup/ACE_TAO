@@ -42,7 +42,7 @@ public:
 
 private:
   /// Our local ORB ptr
-  CORBA::ORB_var orb_;
+  CORBA::ORB_ptr orb_;
 
   /// Number of active objects who are trying to connect
   CORBA::ULong active_objects_;

@@ -1,5 +1,6 @@
-// $Id$
+// file      : ACE_TMCast/FaultDetector.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
 
 #include "Protocol.hpp"
 

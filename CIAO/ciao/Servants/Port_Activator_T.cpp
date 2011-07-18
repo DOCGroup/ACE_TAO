@@ -8,6 +8,7 @@
 
 #include "ace/OS_NS_string.h"
 
+
 namespace CIAO
 {
   template <typename SERV,
@@ -18,12 +19,12 @@ namespace CIAO
       const char *oid,
       const char *name,
       Port_Activator_Types::Type t,
-      typename EXEC::_ptr_type e,
-      typename CONTEXT::_ptr_type c,
+      EXEC *e,
+      CONTEXT *c,
       COMP_SERV *cc)
     : Port_Activator_i (oid, name, t)
-    , executor_ (EXEC::_duplicate (e))
-    , context_ (CONTEXT::_duplicate (c))
+    , executor_ (e)
+    , context_ (c)
     , comp_serv_ (cc)
   {
   }
@@ -34,13 +35,10 @@ namespace CIAO
             typename COMP_SERV>
   void
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::deactivate (
-      PortableServer::Servant servant, CORBA::Boolean)
+      PortableServer::Servant servant)
   {
     SERVANT *s = dynamic_cast<SERVANT *> (servant);
-    if (s)
-      {
-        s->_remove_ref ();
-      }
+    s->_remove_ref ();
   }
 
   template <typename SERV,
@@ -51,15 +49,16 @@ namespace CIAO
   Port_Activator_T<SERV, EXEC, CONTEXT, COMP_SERV>::activate (
       const PortableServer::ObjectId &oid)
   {
-    CORBA::String_var str = PortableServer::ObjectId_to_string (oid);
+    CORBA::String_var str =
+      PortableServer::ObjectId_to_string (oid);
 
     // An additional check, may not be necessary. Being on the safe
     // side.
     if (ACE_OS::strcmp (this->oid_.in (), str.in ()) == 0)
       {
-        if (this->t_ == Port_Activator_Types::FACET && ::CORBA::is_nil (this->executor_.in ()))
+        if (this->executor_ == 0 && this->t_ == Port_Activator_Types::FACET)
           {
-            ::CORBA::Object_var tmp =
+            CORBA::Object_var tmp =
               this->comp_serv_->get_facet_executor (this->name_.in ());
 
             this->executor_ = EXEC::_narrow (tmp.in ());
@@ -68,14 +67,13 @@ namespace CIAO
         SERVANT *s = 0;
 
         ACE_NEW_THROW_EX (s,
-                          SERVANT (this->executor_.in (),
-                                   this->context_.in ()),
-                          ::CORBA::NO_MEMORY ());
-
+                          SERVANT (this->executor_,
+                                   this->context_),
+                          CORBA::NO_MEMORY ());
         return s;
       }
 
-    throw ::CORBA::OBJECT_NOT_EXIST ();
+    throw CORBA::OBJECT_NOT_EXIST ();
   }
 }
 

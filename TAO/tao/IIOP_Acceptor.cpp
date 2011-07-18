@@ -1,5 +1,3 @@
-// $Id$
-
 /*
  * Hook to copy all include and forward declarations.
  */
@@ -24,6 +22,10 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
+
+ACE_RCSID (tao,
+           IIOP_Acceptor,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -471,8 +473,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("cannot open acceptor")));
+                        ACE_TEXT ("%p, "),
+                        ACE_TEXT ("cannot open acceptor\n")));
           return -1;
         }
     }
@@ -557,8 +559,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("cannot get local addr")));
+                    ACE_TEXT ("%p"),
+                    ACE_TEXT ("cannot get local addr\n")));
       return -1;
     }
 
@@ -829,8 +831,8 @@ TAO_IIOP_Acceptor::dotted_decimal_address (const ACE_INET_Addr &addr,
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("IIOP_Acceptor::dotted_decimal_address, ")
-                    ACE_TEXT ("- %p\n"),
-                    ACE_TEXT ("cannot determine hostname")));
+                    ACE_TEXT ("- %p, "),
+                    ACE_TEXT ("cannot determine hostname\n")));
       return -1;
     }
 

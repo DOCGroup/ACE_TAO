@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
@@ -13,6 +12,11 @@
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
+
+
+ACE_RCSID (AnyTypeCode,
+           Enum_TypeCode_Static,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,7 +98,8 @@ TAO::TypeCode::Enum<char const *,
 
       char const * const lhs_name =
         Traits<char const *>::get_string (lhs_enumerator);
-      char const * const rhs_name = tc->member_name (i);
+      char const * const rhs_name = tc->member_name (i
+                                                    );
 
       if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
         return false;

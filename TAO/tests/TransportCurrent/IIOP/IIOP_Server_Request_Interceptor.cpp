@@ -1,9 +1,12 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
 #include "tao/TransportCurrent/TC_IIOPC.h"
+
+ACE_RCSID (ForwardRequest,
+           Server_Request_Interceptor,
+           "$Id$")
 
 #include "IIOP_Server_Request_Interceptor.h"
 
@@ -159,6 +162,8 @@ namespace Test {
       && !has_remaining_endpoints;
   }
 
+
+
   void
   IIOP_Server_Request_Interceptor::inbound_process_context  (PortableInterceptor::ServerRequestInfo_ptr ri)
   {
@@ -211,6 +216,11 @@ namespace Test {
     this->pop_request_info (ACE_OS::atoi (buf));
   }
 
+
+
+
+
+
   void
   IIOP_Server_Request_Interceptor::receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri)
   {
@@ -230,6 +240,7 @@ namespace Test {
     Server_Request_Interceptor::receive_request_service_contexts (ri);
 
   }
+
 
   void
   IIOP_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)

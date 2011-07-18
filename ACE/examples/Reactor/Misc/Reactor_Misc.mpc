@@ -6,8 +6,6 @@ project(*event_handler_t) : aceexe {
   Source_Files {
     test_event_handler_t.cpp
   }
-  Template_Files {
-  }
 }
 project(*demuxing) : aceexe {
   exename = demuxing

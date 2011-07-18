@@ -1,17 +1,20 @@
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file   Notify_Push_Consumer.h
- *
- *  $Id$
- *
- * A structured push consumer implementation.
- *
- *
- *  @author Chip Jones <jones_c@ociweb.com>
- */
-//=============================================================================
-
+// $Id$
+// ==========================================================================
+//
+// = LIBRARY
+//   TAO/orbsvcs/tests/Notify/Structured_Filter
+//
+// = FILENAME
+//   Notify_Push_Consumer.h
+//
+// = DESCRIPTION
+//   A structured push consumer implementation.
+//
+// = AUTHOR
+//    Chip Jones <jones_c@ociweb.com>
+//
+// ==========================================================================
 #ifndef NOTIFY_PUSH_CONSUMER_H
 #define NOTIFY_PUSH_CONSUMER_H
 

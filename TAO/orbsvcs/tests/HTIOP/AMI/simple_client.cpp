@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    simple_client.cpp
- *
- *  $Id$
- *
- *  A very simple client which uses the AMI callback model.
- *
- *
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/AMI
+//
+// = FILENAME
+//    simple_client.cpp
+//
+// = DESCRIPTION
+//    A very simple client which uses the AMI callback model.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu <alex@cs.wustl.edu>,
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
-
-#include "../test_config.h"
+#include "tests/test_config.h"
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
@@ -23,7 +26,7 @@
 #include "ami_testC.h"
 #include "ami_testS.h"
 
-
+ACE_RCSID(AMI, simple_client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
@@ -62,18 +65,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
   Handler (void) {};
+  // Constructor.
 
-  /// Destructor.
     ~Handler (void) {};
+  // Destructor.
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)

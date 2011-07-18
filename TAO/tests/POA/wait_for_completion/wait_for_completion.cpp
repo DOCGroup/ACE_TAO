@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     wait_for_completion.cpp
- *
- *  $Id$
- *
- *   This program tests the wait_for_completion feature of a POA.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/wait_for_completion
+//
+// = FILENAME
+//     wait_for_completion.cpp
+//
+// = DESCRIPTION
+//     This program tests the wait_for_completion feature of a POA.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "testS.h"
 

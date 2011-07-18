@@ -1,19 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    http_handler.cpp
- *
- *  $Id$
- *
- *  @author James Hu
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    apps/JAWS/clients/Caching
+//
+// = FILENAME
+//    http_handler.cpp
+//
+// = AUTHOR
+//    James Hu
+//
+// ============================================================================
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Filecache.h"
 #include "http_handler.h"
+
+ACE_RCSID(Caching, http_handler, "$Id$")
 
 HTTP_Handler::HTTP_Handler (void)
 {

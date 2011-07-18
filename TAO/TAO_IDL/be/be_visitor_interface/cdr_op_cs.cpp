@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for interfaces
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for interfaces
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           cdr_op_cs,
+           "$Id$")
 
 be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
     be_visitor_context *ctx
@@ -49,7 +59,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
@@ -63,13 +73,11 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
-  AST_Decl::NodeType nt = node->node_type ();
-
   if (node->is_abstract ())
     {
       *os << "::CORBA::AbstractBase_ptr";
     }
-  else if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  else if (node->node_type () == AST_Decl::NT_component)
     {
       *os << "Components::CCMObject_ptr";
     }
@@ -80,7 +88,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << " _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "return (strm << _tao_corba_obj);" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -95,7 +103,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << "::CORBA::AbstractBase_var obj;";
     }
-  else if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+  else if (node->node_type () == AST_Decl::NT_component)
     {
       *os << "Components::CCMObject_var obj;";
     }
@@ -104,13 +112,13 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       *os << "::CORBA::Object_var obj;";
     }
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "if (!(strm >> obj.inout ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "typedef ::" << node->name () << " RHS_SCOPED_NAME;"
-      << be_nl_2
+      << be_nl << be_nl
       << "// Narrow to the right type." << be_nl;
 
   *os << "_tao_objref =" << be_idt_nl;
@@ -147,7 +155,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << be_nl;
 
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
@@ -155,18 +163,3 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   node->cli_stub_cdr_op_gen (1);
   return 0;
 }
-
-int
-be_visitor_interface_cdr_op_cs::visit_component (
-  be_component *node)
-{
-  return this->visit_interface (node);
-}
-
-int
-be_visitor_interface_cdr_op_cs::visit_connector (
-  be_connector *node)
-{
-  return this->visit_interface (node);
-}
-

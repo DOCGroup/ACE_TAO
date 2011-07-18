@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ace/Object_Manager_Base.h"
+
+ACE_RCSID(ace, Object_Manager_Base, "$Id$")
+
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -12,6 +15,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Win32 structured exception exiting thread\n")));
+#endif /* 0 */
   // this is only windows and only used here,
   // defined in ace/config-win32-common.h.
   return (DWORD) ACE_SEH_DEFAULT_EXCEPTION_HANDLING_ACTION;

@@ -14,6 +14,11 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_sys_stat.h"
 
+ACE_RCSID (ace,
+           POSIX_Asynch_IO,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t

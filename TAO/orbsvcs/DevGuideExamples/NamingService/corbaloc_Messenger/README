@@ -39,7 +39,7 @@ Here are some examples:
 REM start the name server
 cd/d %TAO_ROOT%\orbsvcs\Naming_Service
 title NS
-Naming_Service -ORBListenEndpoints iiop://localhost:2809 -m 0
+Naming_Service -ORBEndpoint iiop://localhost:2809 -m 0
 
 REM start the example server
 cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
@@ -81,7 +81,7 @@ REM !!! kill the previous Naming_Service and MessengerServer !!!
 
 REM start the name server (at another address)
 cd/d %TAO_ROOT%\orbsvcs\Naming_Service
-Naming_Service -ORBListenEndpoints iiop://localhost:9999 -m 0
+Naming_Service -ORBEndpoint iiop://localhost:9999 -m 0
 
 REM start the example server
 cd/d %EXAMPLES%\NamingService\corbaloc_Messenger\Debug
@@ -137,7 +137,7 @@ REM iioploc: is TAO specific and deprecated
 REM start the name server
 cd/d %TAO_ROOT%\orbsvcs\Naming_Service
 title NS
-Naming_Service -ORBListenEndpoints iiop://localhost:2809 -m 0
+Naming_Service -ORBEndpoint iiop://localhost:2809 -m 0
 
 REM -ORBInitRef with iioploc (TAO specific and deprecated)
 MessengerServer -ORBInitRef NameService=iioploc://localhost:2809/NameService

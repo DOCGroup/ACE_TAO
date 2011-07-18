@@ -1,11 +1,7 @@
 // $Id$
-
-valuetype MyValueType;
-typedef sequence<MyValueType> MyValueType_Seq;
-
 valuetype MyValueType
 {
-   private MyValueType_Seq myValueTypes;
+   private sequence<MyValueType> myValueTypes;
 };
 
 

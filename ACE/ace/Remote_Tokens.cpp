@@ -10,6 +10,12 @@
 #include "ace/Remote_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
+
+ACE_RCSID (ace,
+           Remote_Tokens,
+           "$Id$")
+
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #define ACE_TSS_CONNECTION_MUTEX ACE_Thread_Mutex
 #else

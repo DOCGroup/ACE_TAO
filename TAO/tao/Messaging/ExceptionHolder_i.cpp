@@ -3,6 +3,10 @@
 
 #include "tao/Messaging/ExceptionHolder_i.h"
 
+ACE_RCSID (Messaging,
+           ExceptionHolder_i,
+           "$Id$")
+
 #include "tao/Messaging/Messaging.h"
 #include "tao/Exception_Data.h"
 #include "tao/CDR.h"
@@ -58,7 +62,7 @@ namespace TAO
 
       CORBA::String_var type_id;
 
-      if (!(_tao_in >> type_id.inout ()))
+      if ((_tao_in >> type_id.inout ()) == 0)
         {
           // Could not demarshal the exception id, raise a local
           // CORBA::MARSHAL
@@ -69,16 +73,14 @@ namespace TAO
         {
           CORBA::ULong minor = 0;
           CORBA::ULong completion = 0;
-          if (!(_tao_in >> minor) ||
-              !(_tao_in >> completion))
-            {
-              throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
-            }
+          if ((_tao_in >> minor) == 0 ||
+              (_tao_in >> completion) == 0)
+            throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
 
           CORBA::SystemException* exception =
             TAO::create_system_exception (type_id.in ());
 
-          if (!exception)
+          if (exception == 0)
             {
               // @@ We should raise a CORBA::NO_MEMORY, but we ran out
               //    of memory already. We need a pre-allocated, TSS,
@@ -106,13 +108,8 @@ namespace TAO
           CORBA::Exception * const exception = this->data_[i].alloc ();
 
           if (exception == 0)
-            {
-              throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
-            }
-          else
-            {
-              exception->_tao_decode (_tao_in);
-            }
+            throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
+          exception->_tao_decode (_tao_in);
 
           // Raise the exception.
           ACE_Auto_Basic_Ptr<CORBA::Exception> e_ptr (exception);
@@ -164,6 +161,7 @@ namespace TAO
                       CORBA::NO_MEMORY ());
     return ret_val;
   }
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

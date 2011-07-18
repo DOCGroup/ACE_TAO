@@ -1,17 +1,26 @@
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  Server-side driver program
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/Demux
+//
+// = FILENAME
+//    server.cpp
+//
+//    Server-side driver program
+//
+// = AUTHOR
+//
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
 
 #include "demux_test_server.h"
 #include "tao/debug.h"
+
+ACE_RCSID(CodeGen, server, "$Id$")
+
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {

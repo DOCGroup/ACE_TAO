@@ -1,16 +1,20 @@
-//=============================================================================
-/**
- *  @file    Supplier_i.cpp
- *
- *  $Id$
- *
- *  Implementation of the Supplier class.
- *
- *
- *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/examples/Callback_Quoter
+//
+// = FILENAME
+//    Supplier_i.cpp
+//
+// = DESCRIPTION
+//    Implementation of the Supplier class.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Supplier_i.h"
 #include "tao/debug.h"

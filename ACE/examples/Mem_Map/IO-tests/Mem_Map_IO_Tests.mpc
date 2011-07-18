@@ -1,6 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : aceexe, avoids_ace_for_tao {
+project : aceexe {
   exename = test_io
+  avoids += ace_for_tao
 }

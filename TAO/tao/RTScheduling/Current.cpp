@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/RTScheduling/Current.h"
 #include "tao/RTScheduling/Distributable_Thread.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
@@ -10,6 +7,11 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (RTScheduling,
+           Current,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -292,8 +294,8 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
   : orb_ (orb),
     guid_ (guid),
     name_ (CORBA::string_dup (name)),
-    sched_param_ (CORBA::Policy::_duplicate (sched_param)),
-    implicit_sched_param_ (CORBA::Policy::_duplicate (implicit_sched_param)),
+    sched_param_ (sched_param),
+    implicit_sched_param_ (implicit_sched_param),
     dt_ (RTScheduling::DistributableThread::_duplicate (dt)),
     previous_current_ (prev_current),
     dt_hash_ (dt_hash)
@@ -453,7 +455,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
       // scheduling segment.
       this->scheduler_->end_nested_scheduling_segment (this->guid_,
                                                        name,
-                                                       this->previous_current_->sched_param_.in ()
+                                                       this->previous_current_->sched_param_
                                                       );
 
       // Cleanup current.
@@ -487,7 +489,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
   if (sched_param == 0)
-    sched_param = this->implicit_sched_param_.in ();
+    sched_param = this->implicit_sched_param_;
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
   TAO_RTScheduler_Current_i *new_current = 0;
@@ -517,8 +519,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
       ACE_ERROR((LM_ERROR,
                  "Unable to activate DistributableThread\n"));
 
-      delete dttask;
-      return RTScheduling::DistributableThread::_nil ();
+      RTScheduling::DistributableThread::_nil ();
     }
 
   return dt._retn ();
@@ -640,13 +641,13 @@ TAO_RTScheduler_Current_i::id (void)
 CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::scheduling_parameter (void)
 {
-  return CORBA::Policy::_duplicate (this->sched_param_.in ());
+  return CORBA::Policy::_duplicate (this->sched_param_);
 }
 
 CORBA::Policy_ptr
 TAO_RTScheduler_Current_i::implicit_scheduling_parameter (void)
 {
-  return CORBA::Policy::_duplicate (this->implicit_sched_param_.in ());
+  return CORBA::Policy::_duplicate (this->implicit_sched_param_);
 }
 
 RTScheduling::Current::NameList *
@@ -672,7 +673,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names (void)
 const char*
 TAO_RTScheduler_Current_i::name (void)
 {
-  return this->name_.in ();
+  return CORBA::string_dup (this->name_.in ());
 }
 
 #if defined (THREAD_CANCELLED)

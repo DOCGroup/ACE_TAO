@@ -1,7 +1,9 @@
-// -*- C++ -*-
+//
 // $Id$
-
+//
 #include "Hello.h"
+
+ACE_RCSID(Hello, Hello, "$Id$")
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

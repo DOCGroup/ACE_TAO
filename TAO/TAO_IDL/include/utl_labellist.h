@@ -82,15 +82,12 @@ class AST_UnionLabel;
 class TAO_IDL_FE_Export UTL_LabelList : public UTL_List
 {
 public:
-  UTL_LabelList (AST_UnionLabel *s,
+  UTL_LabelList (AST_UnionLabel *s, 
                  UTL_LabelList *cdr);
 
   // Get list item.
   AST_UnionLabel *head (void);
-
-  // Override of base class method.
-  virtual UTL_LabelList *copy (void);
-
+  
   // Cleanup.
   virtual void destroy (void);
 
@@ -99,7 +96,7 @@ private:
 };
 
 // Active iterator for UTL_LabelList.
-class UTL_LabellistActiveIterator : public UTL_ListActiveIterator
+class   UTL_LabellistActiveIterator : public UTL_ListActiveIterator
 {
 public:
   UTL_LabellistActiveIterator (UTL_LabelList *source);

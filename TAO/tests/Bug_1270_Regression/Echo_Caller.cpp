@@ -10,6 +10,8 @@
 #include "Server_Timer.h"
 #include "tao/ORB_Core.h"
 
+ACE_RCSID(Bug_1270_Regression, Echo_Caller, "$Id$")
+
 Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {
@@ -21,12 +23,10 @@ Echo_Caller::start_task(Test::Echo_ptr client)
   Server_Timer * task =
     new Server_Timer(client, orb_->orb_core()->reactor());
   task->activate();
-  task->remove_reference ();
 
   task =
     new Server_Timer(client, orb_->orb_core()->reactor());
   task->activate();
-  task->remove_reference ();
 }
 
 void

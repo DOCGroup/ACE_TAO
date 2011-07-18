@@ -1,16 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_global.cpp
- *
- *  $Id$
- *
- *  Stores global data specific to the compiler back end.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_global.cpp
+//
+// = DESCRIPTION
+//    Stores global data specific to the compiler back end.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "be_global.h"
 #include "be_codegen.h"
@@ -18,20 +23,19 @@
 #include "be_module.h"
 #include "be_valuetype.h"
 #include "be_interface.h"
-#include "be_util.h"
-
 #include "ast_predefined_type.h"
-#include "ast_root.h"
-
 #include "utl_identifier.h"
 #include "utl_string.h"
 #include "global_extern.h"
 #include "idl_defines.h"
-
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
+
+ACE_RCSID (be,
+           be_global,
+           "$Id$")
 
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
@@ -43,12 +47,6 @@ BE_GlobalData::BE_GlobalData (void)
     stub_export_include_ (0),
     anyop_export_macro_ (0),
     anyop_export_include_ (0),
-    exec_export_macro_ (0),
-    exec_export_include_ (0),
-    svnt_export_macro_ (0),
-    svnt_export_include_ (0),
-    conn_export_macro_ (0),
-    conn_export_include_ (0),
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
@@ -73,21 +71,7 @@ BE_GlobalData::BE_GlobalData (void)
     server_inline_ending_ (ACE::strnew ("S.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
-    ciao_svnt_hdr_ending_ (ACE::strnew ("_svnt.h")),
-    ciao_svnt_src_ending_ (ACE::strnew ("_svnt.cpp")),
-    ciao_exec_hdr_ending_ (ACE::strnew ("_exec.h")),
-    ciao_exec_src_ending_ (ACE::strnew ("_exec.cpp")),
-    ciao_exec_stub_hdr_ending_ (ACE::strnew ("EC.h")),
-    ciao_exec_idl_ending_ (ACE::strnew ("E.idl")),
-    ciao_conn_hdr_ending_ (ACE::strnew ("_conn.h")),
-    ciao_conn_src_ending_ (ACE::strnew ("_conn.cpp")),
-    dds_typesupport_hdr_ending_ (ACE::strnew ("Support.h")),
-    ciao_ami_conn_idl_ending_ (ACE::strnew ("A.idl")),
-    ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
-    ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
-    ciao_container_type_ (ACE::strnew ("Session")),
     output_dir_ (0),
-    stub_include_dir_ (0),
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
     any_support_ (true),
@@ -101,24 +85,22 @@ BE_GlobalData::BE_GlobalData (void)
     gen_direct_collocation_ (false),
     gen_corba_e_ (false),
     gen_minimum_corba_ (false),
-    gen_lwccm_ (false),
-    gen_noeventccm_ (false),
     opt_tc_ (false),
-    ami4ccm_call_back_ (false),
     ami_call_back_ (false),
     gen_amh_classes_ (false),
     gen_tie_classes_ (false),
     gen_smart_proxies_ (false),
     gen_inline_constants_ (true),
+    gen_dcps_type_support_ (false),
+    gen_dcps_type_support_only_ (false),
     gen_orb_h_include_ (true),
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
-    dds_impl_ (DDS_NONE),
-    opendds_sequence_suffix_ ("Seq"),
     void_type_ (0),
     ccmobject_ (0),
     messaging_ (0),
     messaging_exceptionholder_ (0),
+    exceptionholder_ (0),
     messaging_replyhandler_ (0),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
@@ -130,25 +112,7 @@ BE_GlobalData::BE_GlobalData (void)
     use_clonable_in_args_ (false),
     gen_template_export_ (false),
     gen_ostream_operators_ (false),
-    gen_custom_ending_ (true),
-    gen_unique_guards_ (true),
-    gen_ciao_svnt_ (false),
-    gen_ciao_exec_idl_ (false),
-    gen_ciao_exec_impl_ (false),
-    gen_ciao_exec_reactor_impl_ (false),
-    gen_ciao_conn_impl_ (false),
-    gen_dds_typesupport_idl_ (false),
-    gen_ciao_valuefactory_reg_ (true),
-    gen_stub_export_hdr_file_ (false),
-    gen_skel_export_hdr_file_ (false),
-    gen_svnt_export_hdr_file_ (false),
-    gen_exec_export_hdr_file_ (false),
-    gen_conn_export_hdr_file_ (false),
-    gen_lem_force_all_ (false),
-    tab_size_ (2),
-    alt_mapping_ (false),
-    in_facet_servant_ (false),
-    gen_arg_traits_ (true)
+    gen_custom_ending_ (true)
 {
 }
 
@@ -222,8 +186,20 @@ be_change_idl_file_extension (UTL_String* idl_file,
     }
 
   // Anyop * skel file output defaults to general output dir if not set.
-  const char *output_path =
-    be_util::get_output_path (for_anyop, for_skel);
+  const char *output_path = 0;
+
+  if (for_anyop && 0 != be_global->anyop_output_dir ())
+    {
+      output_path = be_global->anyop_output_dir ();
+    }
+  else if (for_skel && 0 != be_global->skel_output_dir ())
+    {
+      output_path = be_global->skel_output_dir ();
+    }
+  else
+    {
+      output_path = be_global->output_dir ();
+    }
 
   if (!base_name_only && output_path != 0)
     {
@@ -233,9 +209,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
       ACE_OS::sprintf (fname, "%s/", output_path);
 
       // Append the base part to fname.
-      ACE_OS::strncpy (fname + ACE_OS::strlen (fname),
-                       string,
-                       base - string);
+      ACE_OS::strncpy (fname + ACE_OS::strlen (fname), string, base - string);
     }
   else
     {
@@ -253,7 +227,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
         {
           *i = '/';
 
-          if (*(j + 1) == '\\')
+          if (*(j+1) == '\\')
             {
               ++j;
             }
@@ -280,12 +254,9 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-
-  if (!orb_file && !be_global->gen_custom_ending ()
-      && FE_Utils::validate_orb_include (idl_file_name))
-    {
-      orb_file = true;
-    }
+  if (!orb_file && !be_global->gen_custom_ending () &&
+      idl_global->validate_orb_include (idl_file_name))
+    orb_file = true;
 
   return be_change_idl_file_extension (idl_file_name,
                                        orb_file
@@ -318,12 +289,9 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
   ACE_CString fn (idl_file_name->get_string ());
   ACE_CString fn_ext = fn.substr (fn.length () - 5);
   bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
-
-  if (!orb_file && !be_global->gen_custom_ending ()
-      && FE_Utils::validate_orb_include (idl_file_name))
-    {
-      orb_file = true;
-    }
+  if (!orb_file && !be_global->gen_custom_ending () &&
+      idl_global->validate_orb_include (idl_file_name))
+    orb_file = true;
 
   return be_change_idl_file_extension (idl_file_name,
                                        orb_file
@@ -416,341 +384,91 @@ BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
 }
 
 const char *
-BE_GlobalData::be_get_ciao_svnt_header (UTL_String *idl_file_name,
-                                        bool base_name_only)
+BE_GlobalData::be_get_client_hdr_fname (bool base_name_only)
 {
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->ciao_svnt_header_ending (),
-                                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_svnt_source (UTL_String *idl_file_name,
-                                        bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->ciao_svnt_source_ending (),
-                                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_header (UTL_String *idl_file_name,
-                                        bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->ciao_exec_header_ending (),
-                                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_source (UTL_String *idl_file_name,
-                                        bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->ciao_exec_source_ending (),
-                                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_stub_header (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->ciao_exec_stub_header_ending (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_idl (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->ciao_exec_idl_ending (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_conn_header (UTL_String *idl_file_name,
-                                        bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->ciao_conn_header_ending (),
-                                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_conn_source (UTL_String *idl_file_name,
-                                        bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->ciao_conn_source_ending (),
-                                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_dds_typesupport_header (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->dds_typesupport_hdr_ending (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_ami_conn_idl (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->ciao_ami_conn_idl_ending (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_ami_conn_impl_hdr (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->ciao_ami_conn_impl_hdr_ending (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_ami_conn_impl_src (
-  UTL_String *idl_file_name,
-  bool base_name_only)
-{
-  return
-    be_change_idl_file_extension (
-      idl_file_name,
-      be_global->ciao_ami_conn_impl_src_ending (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_client_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_client_hdr (idl_global->stripped_filename (),
-                       base_name_only);
+  return be_get_client_hdr (idl_global->stripped_filename (),
+                            base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_client_stub_fname (void)
 {
-  return
-    be_get_client_stub (idl_global->stripped_filename ());
+  return be_get_client_stub (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_client_inline_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_client_inline_fname (bool base_name_only)
 {
-  return
-    be_get_client_inline (idl_global->stripped_filename (),
-                          base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_server_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_server_hdr (idl_global->stripped_filename (),
-                       base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_implementation_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_implementation_hdr (idl_global->stripped_filename (),
+  return be_get_client_inline (idl_global->stripped_filename (),
                                base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_implementation_skel_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_server_hdr_fname (bool base_name_only)
 {
-  return
-    be_get_implementation_skel (idl_global->stripped_filename (),
-                                base_name_only);
+  return be_get_server_hdr (idl_global->stripped_filename (),
+                            base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_template_hdr_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_implementation_hdr_fname (bool base_name_only)
 {
-  return
-    be_get_server_template_hdr (idl_global->stripped_filename (),
-                                base_name_only);
+  return be_get_implementation_hdr (idl_global->stripped_filename (),
+                                    base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_implementation_skel_fname (bool base_name_only)
+{
+  return be_get_implementation_skel (idl_global->stripped_filename (),
+                                     base_name_only);
+}
+
+const char *
+BE_GlobalData::be_get_server_template_hdr_fname (bool base_name_only)
+{
+  return be_get_server_template_hdr (idl_global->stripped_filename (),
+                                     base_name_only);
 }
 
 const char *
 BE_GlobalData::be_get_server_skeleton_fname (void)
 {
-  return
-    be_get_server_skeleton (idl_global->stripped_filename ());
+  return be_get_server_skeleton (idl_global->stripped_filename ());
 }
 
 const char *
 BE_GlobalData::be_get_implementation_skeleton_fname (void)
 {
-  return
-    be_get_implementation_skel (idl_global->stripped_filename ());
+  return be_get_implementation_skel (idl_global->stripped_filename ());
 }
 
 const char *
-BE_GlobalData::be_get_server_template_skeleton_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_server_template_skeleton_fname (bool base_name_only)
 {
-  return
-    be_get_server_template_skeleton (idl_global->stripped_filename (),
-                                     base_name_only);
+  return be_get_server_template_skeleton (idl_global->stripped_filename (),
+                                          base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_server_inline_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_server_inline_fname (bool base_name_only)
 {
-  return
-    be_get_server_inline (idl_global->stripped_filename (),
-                          base_name_only);
+  return be_get_server_inline (idl_global->stripped_filename (),
+                               base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_anyop_source_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_anyop_source_fname (bool base_name_only)
 {
-  return
-    be_get_anyop_source (idl_global->stripped_filename (),
-                         base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_anyop_header_fname (
-  bool base_name_only)
-{
-  return
-    be_get_anyop_header (idl_global->stripped_filename (),
-                         base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_svnt_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_svnt_header (idl_global->stripped_filename (),
-                             base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_svnt_src_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_svnt_source (idl_global->stripped_filename (),
-                             base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_exec_header (idl_global->stripped_filename (),
-                             base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_src_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_exec_source (idl_global->stripped_filename (),
-                             base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_stub_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_exec_stub_header (
-      idl_global->stripped_filename (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_exec_idl_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_exec_idl (
-      idl_global->stripped_filename (),
-      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_conn_hdr_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_conn_header (idl_global->stripped_filename (),
-                             base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_conn_src_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_conn_source (idl_global->stripped_filename (),
-                             base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_ami_conn_idl_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_ami_conn_idl (idl_global->stripped_filename (),
+  return be_get_anyop_source (idl_global->stripped_filename (),
                               base_name_only);
 }
 
 const char *
-BE_GlobalData::be_get_ciao_ami_conn_impl_hdr_fname (
-  bool base_name_only)
+BE_GlobalData::be_get_anyop_header_fname (bool base_name_only)
 {
-  return
-    be_get_ciao_ami_conn_impl_hdr (idl_global->stripped_filename (),
-                                   base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_ciao_ami_conn_impl_src_fname (
-  bool base_name_only)
-{
-  return
-    be_get_ciao_ami_conn_impl_src (idl_global->stripped_filename (),
-                                   base_name_only);
+  return be_get_anyop_header (idl_global->stripped_filename (),
+                              base_name_only);
 }
 
 const char*
@@ -767,8 +485,7 @@ BE_GlobalData::skel_export_macro (void) const
 void
 BE_GlobalData::skel_export_macro (const char *s)
 {
-  ACE::strdelete (this->skel_export_macro_);
-  this->skel_export_macro_ = ACE::strnew (s);
+  this->skel_export_macro_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -780,8 +497,7 @@ BE_GlobalData::skel_export_include (void) const
 void
 BE_GlobalData::skel_export_include (const char *s)
 {
-  ACE::strdelete (this->skel_export_include_);
-  this->skel_export_include_ = ACE::strnew (s);
+  this->skel_export_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -798,8 +514,7 @@ BE_GlobalData::stub_export_macro (void) const
 void
 BE_GlobalData::stub_export_macro (const char *s)
 {
-  ACE::strdelete (this->stub_export_macro_);
-  this->stub_export_macro_ = ACE::strnew (s);
+  this->stub_export_macro_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -811,8 +526,7 @@ BE_GlobalData::stub_export_include (void) const
 void
 BE_GlobalData::stub_export_include (const char *s)
 {
-  ACE::strdelete (this->stub_export_include_);
-  this->stub_export_include_ = ACE::strnew (s);
+  this->stub_export_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -829,8 +543,7 @@ BE_GlobalData::anyop_export_macro (void) const
 void
 BE_GlobalData::anyop_export_macro (const char *s)
 {
-  ACE::strdelete (this->anyop_export_macro_);
-  this->anyop_export_macro_ = ACE::strnew (s);
+  this->anyop_export_macro_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -842,101 +555,7 @@ BE_GlobalData::anyop_export_include (void) const
 void
 BE_GlobalData::anyop_export_include (const char *s)
 {
-  ACE::strdelete (this->anyop_export_include_);
-  this->anyop_export_include_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::exec_export_macro (void) const
-{
-  if (this->exec_export_macro_ == 0)
-    {
-      return "";
-    }
-
-  return this->exec_export_macro_;
-}
-
-void
-BE_GlobalData::exec_export_macro (const char *s)
-{
-  ACE::strdelete (this->exec_export_macro_);
-  this->exec_export_macro_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::exec_export_include (void) const
-{
-  return this->exec_export_include_;
-}
-
-void
-BE_GlobalData::exec_export_include (const char *s)
-{
-  ACE::strdelete (this->exec_export_include_);
-  this->exec_export_include_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::svnt_export_macro (void) const
-{
-  if (this->svnt_export_macro_ == 0)
-    {
-      return "";
-    }
-
-  return this->svnt_export_macro_;
-}
-
-void
-BE_GlobalData::svnt_export_macro (const char *s)
-{
-  ACE::strdelete (this->svnt_export_macro_);
-  this->svnt_export_macro_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::svnt_export_include (void) const
-{
-  return this->svnt_export_include_;
-}
-
-void
-BE_GlobalData::svnt_export_include (const char *s)
-{
-  ACE::strdelete (this->svnt_export_include_);
-  this->svnt_export_include_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::conn_export_macro (void) const
-{
-  if (this->conn_export_macro_ == 0)
-    {
-      return "";
-    }
-
-  return this->conn_export_macro_;
-}
-
-void
-BE_GlobalData::conn_export_macro (const char *s)
-{
-  ACE::strdelete (this->conn_export_macro_);
-  this->conn_export_macro_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::conn_export_include (void) const
-{
-  return this->conn_export_include_;
-}
-
-void
-BE_GlobalData::conn_export_include (const char *s)
-{
-  ACE::strdelete (this->conn_export_include_);
-  this->conn_export_include_ = ACE::strnew (s);
+  this->anyop_export_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -948,8 +567,7 @@ BE_GlobalData::pch_include (void) const
 void
 BE_GlobalData::pch_include (const char *s)
 {
-  ACE::strdelete (this->pch_include_);
-  this->pch_include_ = ACE::strnew (s);
+  this->pch_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -961,8 +579,7 @@ BE_GlobalData::pre_include (void) const
 void
 BE_GlobalData::pre_include (const char *s)
 {
-  ACE::strdelete (this->pre_include_);
-  this->pre_include_ = ACE::strnew (s);
+  this->pre_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -974,8 +591,7 @@ BE_GlobalData::post_include (void) const
 void
 BE_GlobalData::post_include (const char *s)
 {
-  ACE::strdelete (this->post_include_);
-  this->post_include_ = ACE::strnew (s);
+  this->post_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -987,8 +603,7 @@ BE_GlobalData::include_guard (void) const
 void
 BE_GlobalData::include_guard (const char *s)
 {
-  ACE::strdelete (this->include_guard_);
-  this->include_guard_ = ACE::strnew (s);
+  this->include_guard_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -1000,8 +615,7 @@ BE_GlobalData::safe_include (void) const
 void
 BE_GlobalData::safe_include (const char *s)
 {
-  ACE::strdelete (this->safe_include_);
-  this->safe_include_ = ACE::strnew (s);
+  this->safe_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -1013,8 +627,7 @@ BE_GlobalData::unique_include (void) const
 void
 BE_GlobalData::unique_include (const char *s)
 {
-  ACE::strdelete (this->unique_include_);
-  this->unique_include_ = ACE::strnew (s);
+  this->unique_include_ = ACE_OS::strdup (s);
 }
 
 void
@@ -1025,8 +638,7 @@ BE_GlobalData::versioning_begin (const char * s)
     + ACE_CString (s)
     + ACE_CString ("\n\n");
 
-  this->core_versioning_end_ += this->versioning_begin_;
-  // Yes, "begin".
+  this->core_versioning_end_ += this->versioning_begin_;  // Yes, "begin".
 }
 
 const char *
@@ -1070,7 +682,7 @@ BE_GlobalData::core_versioning_end (void) const
 void
 BE_GlobalData::client_hdr_ending (const char* s)
 {
-  ACE::strdelete (client_hdr_ending_);
+  delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -1084,7 +696,7 @@ BE_GlobalData::client_hdr_ending (void) const
 void
 BE_GlobalData::client_inline_ending  (const char* s)
 {
-  ACE::strdelete (client_inline_ending_);
+  delete [] this->client_inline_ending_;
   this->client_inline_ending_ = ACE::strnew (s);
 }
 
@@ -1098,7 +710,7 @@ BE_GlobalData::client_inline_ending (void) const
 void
 BE_GlobalData::client_stub_ending (const char* s)
 {
-  ACE::strdelete (this->client_stub_ending_);
+  delete [] this->client_stub_ending_;
   this->client_stub_ending_ = ACE::strnew (s);
 }
 
@@ -1111,7 +723,7 @@ BE_GlobalData::client_stub_ending (void) const
 void
 BE_GlobalData::server_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->server_hdr_ending_);
+  delete [] this->server_hdr_ending_;
   this->server_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -1124,28 +736,28 @@ BE_GlobalData::server_hdr_ending (void) const
 void
 BE_GlobalData::implementation_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->implementation_hdr_ending_);
+  delete [] this->implementation_hdr_ending_;
   this->implementation_hdr_ending_ = ACE::strnew (s);
 }
 
 void
 BE_GlobalData::implementation_skel_ending (const char* s)
 {
-  ACE::strdelete (this->implementation_skel_ending_);
+  delete [] this->implementation_skel_ending_;
   this->implementation_skel_ending_ = ACE::strnew (s);
 }
 
 void
 BE_GlobalData::impl_class_prefix (const char* s)
 {
-  ACE::strdelete (this->impl_class_prefix_);
+  delete [] this->impl_class_prefix_;
   this->impl_class_prefix_ = ACE::strnew (s);
 }
 
 void
 BE_GlobalData::impl_class_suffix (const char* s)
 {
-  ACE::strdelete (this->impl_class_suffix_);
+  delete [] this->impl_class_suffix_;
   this->impl_class_suffix_ = ACE::strnew (s);
 }
 
@@ -1176,7 +788,7 @@ BE_GlobalData::implementation_skel_ending (void) const
 void
 BE_GlobalData::server_template_hdr_ending (const char* s)
 {
-  ACE::strdelete (this->server_template_hdr_ending_);
+  delete [] this->server_template_hdr_ending_;
   this->server_template_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -1189,7 +801,7 @@ BE_GlobalData::server_template_hdr_ending (void) const
 void
 BE_GlobalData::server_skeleton_ending (const char* s)
 {
-  ACE::strdelete (this->server_skeleton_ending_);
+  delete [] this->server_skeleton_ending_;
   this->server_skeleton_ending_ = ACE::strnew (s);
 }
 
@@ -1202,7 +814,7 @@ BE_GlobalData::server_skeleton_ending (void) const
 void
 BE_GlobalData::server_template_skeleton_ending (const char* s)
 {
-  ACE::strdelete (this->server_template_skeleton_ending_);
+  delete [] this->server_template_skeleton_ending_;
   this->server_template_skeleton_ending_ = ACE::strnew (s);
 }
 
@@ -1215,7 +827,7 @@ BE_GlobalData::server_template_skeleton_ending (void) const
 void
 BE_GlobalData::server_inline_ending (const char* s)
 {
-  ACE::strdelete (this->server_inline_ending_);
+  delete [] this->server_inline_ending_;
   this->server_inline_ending_ = ACE::strnew (s);
 }
 
@@ -1228,7 +840,7 @@ BE_GlobalData::server_inline_ending (void) const
 void
 BE_GlobalData::anyop_header_ending (const char* s)
 {
-  ACE::strdelete (this->anyop_hdr_ending_);
+  delete [] this->anyop_hdr_ending_;
   this->anyop_hdr_ending_ = ACE::strnew (s);
 }
 
@@ -1277,7 +889,7 @@ BE_GlobalData::anyop_header_ending (void) const
 void
 BE_GlobalData::anyop_source_ending (const char* s)
 {
-  ACE::strdelete (this->anyop_src_ending_);
+  delete [] this->anyop_src_ending_;
   this->anyop_src_ending_ = ACE::strnew (s);
 }
 
@@ -1288,178 +900,9 @@ BE_GlobalData::anyop_source_ending (void) const
 }
 
 void
-BE_GlobalData::ciao_svnt_header_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_svnt_hdr_ending_);
-  this->ciao_svnt_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_svnt_header_ending (void) const
-{
-  return this->ciao_svnt_hdr_ending_;
-}
-
-void
-BE_GlobalData::ciao_svnt_source_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_svnt_src_ending_);
-  this->ciao_svnt_src_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_svnt_source_ending (void) const
-{
-  return this->ciao_svnt_src_ending_;
-}
-
-void
-BE_GlobalData::ciao_exec_header_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_exec_hdr_ending_);
-  this->ciao_exec_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_exec_header_ending (void) const
-{
-  return this->ciao_exec_hdr_ending_;
-}
-
-void
-BE_GlobalData::ciao_exec_source_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_exec_src_ending_);
-  this->ciao_exec_src_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_exec_source_ending (void) const
-{
-  return this->ciao_exec_src_ending_;
-}
-
-void
-BE_GlobalData::ciao_exec_stub_header_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
-  this->ciao_exec_stub_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_exec_stub_header_ending (void) const
-{
-  return this->ciao_exec_stub_hdr_ending_;
-}
-
-void
-BE_GlobalData::ciao_exec_idl_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_exec_idl_ending_);
-  this->ciao_exec_idl_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_exec_idl_ending (void) const
-{
-  return this->ciao_exec_idl_ending_;
-}
-
-void
-BE_GlobalData::ciao_conn_header_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_conn_hdr_ending_);
-  this->ciao_conn_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_conn_header_ending (void) const
-{
-  return this->ciao_conn_hdr_ending_;
-}
-
-void
-BE_GlobalData::ciao_conn_source_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_conn_src_ending_);
-  this->ciao_conn_src_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::ciao_conn_source_ending (void) const
-{
-  return this->ciao_conn_src_ending_;
-}
-
-void
-BE_GlobalData::dds_typesupport_hdr_ending (const char* s)
-{
-  ACE::strdelete (this->dds_typesupport_hdr_ending_);
-  this->dds_typesupport_hdr_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::dds_typesupport_hdr_ending (void) const
-{
-  return this->dds_typesupport_hdr_ending_;
-}
-
-void
-BE_GlobalData::ciao_ami_conn_idl_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_ami_conn_idl_ending_);
-  this->ciao_ami_conn_idl_ending_ = ACE::strnew (s);
-}
-
-const char *
-BE_GlobalData::ciao_ami_conn_idl_ending (void) const
-{
-  return this->ciao_ami_conn_idl_ending_;
-}
-
-void
-BE_GlobalData::ciao_ami_conn_impl_hdr_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
-  this->ciao_ami_conn_impl_hdr_ending_ = ACE::strnew (s);
-}
-
-const char *
-BE_GlobalData::ciao_ami_conn_impl_hdr_ending (void) const
-{
-  return this->ciao_ami_conn_impl_hdr_ending_;
-}
-
-void
-BE_GlobalData::ciao_ami_conn_impl_src_ending (const char* s)
-{
-  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
-  this->ciao_ami_conn_impl_src_ending_ = ACE::strnew (s);
-}
-
-const char *
-BE_GlobalData::ciao_ami_conn_impl_src_ending (void) const
-{
-  return this->ciao_ami_conn_impl_src_ending_;
-}
-
-void
-BE_GlobalData::ciao_container_type (const char* s)
-{
-  ACE::strdelete (this->ciao_container_type_);
-  this->ciao_container_type_ = ACE::strnew (s);
-}
-
-const char *
-BE_GlobalData::ciao_container_type (void) const
-{
-  return this->ciao_container_type_;
-}
-
-void
 BE_GlobalData::output_dir (const char* s)
 {
-  ACE::strdelete (this->output_dir_);
+  delete [] this->output_dir_;
   this->output_dir_ = ACE::strnew (s);
 }
 
@@ -1472,7 +915,7 @@ BE_GlobalData::output_dir (void) const
 void
 BE_GlobalData::skel_output_dir (const char* s)
 {
-  ACE::strdelete (this->skel_output_dir_);
+  delete [] this->skel_output_dir_;
   this->skel_output_dir_ = ACE::strnew (s);
 }
 
@@ -1483,22 +926,9 @@ BE_GlobalData::skel_output_dir (void) const
 }
 
 void
-BE_GlobalData::stub_include_dir (const char* s)
-{
-  ACE::strdelete (this->stub_include_dir_);
-  this->stub_include_dir_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::stub_include_dir (void) const
-{
-  return this->stub_include_dir_;
-}
-
-void
 BE_GlobalData::anyop_output_dir (const char* s)
 {
-  ACE::strdelete (this->anyop_output_dir_);
+  delete [] this->anyop_output_dir_;
   this->anyop_output_dir_ = ACE::strnew (s);
 }
 
@@ -1641,31 +1071,6 @@ BE_GlobalData::gen_minimum_corba (void) const
 }
 
 void
-BE_GlobalData::gen_noeventccm (bool val)
-{
-  this->gen_noeventccm_ = val;
-}
-
-bool
-BE_GlobalData::gen_noeventccm (void) const
-{
-  return this->gen_noeventccm_;
-}
-
-void
-BE_GlobalData::gen_lwccm (bool val)
-{
-  this->gen_lwccm_ = val;
-}
-
-bool
-BE_GlobalData::gen_lwccm (void) const
-{
-  return this->gen_lwccm_;
-}
-
-
-void
 BE_GlobalData::opt_tc (bool val)
 {
   this->opt_tc_ = val;
@@ -1675,18 +1080,6 @@ bool
 BE_GlobalData::opt_tc (void) const
 {
   return this->opt_tc_;
-}
-
-void
-BE_GlobalData::ami4ccm_call_back (bool val)
-{
-  this->ami4ccm_call_back_ = val;
-}
-
-bool
-BE_GlobalData::ami4ccm_call_back (void) const
-{
-  return this->ami4ccm_call_back_;
 }
 
 void
@@ -1750,6 +1143,31 @@ BE_GlobalData::gen_inline_constants (void) const
 }
 
 void
+BE_GlobalData::gen_dcps_type_support (bool val)
+{
+  this->gen_dcps_type_support_ = val;
+}
+
+bool
+BE_GlobalData::gen_dcps_type_support (void) const
+{
+  return this->gen_dcps_type_support_;
+}
+
+void
+BE_GlobalData::gen_dcps_type_support_only (bool val)
+{
+  this->gen_dcps_type_support_only_ = val;
+}
+
+bool
+BE_GlobalData::gen_dcps_type_support_only (void) const
+{
+  return this->gen_dcps_type_support_only_;
+}
+
+
+void
 BE_GlobalData::gen_orb_h_include (bool val)
 {
   this->gen_orb_h_include_ = val;
@@ -1786,202 +1204,72 @@ BE_GlobalData::lookup_strategy (void) const
 }
 
 void
-BE_GlobalData::dds_impl (char const * const val)
-{
-  ACE_CString tmp (val, 0, false);
-
-  if (tmp == "ndds")
-    {
-      this->dds_impl_ = NDDS;
-    }
-  else if (tmp == "opensplice")
-    {
-      this->dds_impl_ = OPENSPLICE;
-    }
-  else if (tmp == "opendds")
-    {
-      this->dds_impl_ = OPENDDS;
-    }
-  else if (tmp == "coredx")
-    {
-      this->dds_impl_ = COREDX;
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%C: invalid or unknown ")
-                  ACE_TEXT ("argument <%C> to -Wb,dds_impl\n"),
-                  idl_global->prog_name (),
-                  val));
-    }
-}
-
-BE_GlobalData::DDS_IMPL
-BE_GlobalData::dds_impl (void) const
-{
-  return this->dds_impl_;
-}
-
-void
-BE_GlobalData::opendds_sequence_suffix (const char *val)
-{
-  this->opendds_sequence_suffix_ = val;
-}
-
-const char *
-BE_GlobalData::opendds_sequence_suffix (void) const
-{
-  return this->opendds_sequence_suffix_.c_str ();
-}
-
-void
 BE_GlobalData::destroy (void)
 {
-  ACE::strdelete (this->skel_export_macro_);
-  this->skel_export_macro_ = 0;
-
-  ACE::strdelete (this->skel_export_include_);
-  this->skel_export_include_ = 0;
-
-  ACE::strdelete (this->stub_export_macro_);
-  this->stub_export_macro_ = 0;
-
-  ACE::strdelete (this->stub_export_include_);
-  this->stub_export_include_ = 0;
-
-  ACE::strdelete (this->anyop_export_macro_);
-  this->anyop_export_macro_ = 0;
-
-  ACE::strdelete (this->anyop_export_include_);
-  this->anyop_export_include_ = 0;
-
-  ACE::strdelete (this->exec_export_macro_);
-  this->exec_export_macro_ = 0;
-
-  ACE::strdelete (this->exec_export_include_);
-  this->exec_export_include_ = 0;
-
-  ACE::strdelete (this->svnt_export_macro_);
-  this->svnt_export_macro_ = 0;
-
-  ACE::strdelete (this->svnt_export_include_);
-  this->svnt_export_include_ = 0;
-
-  ACE::strdelete (this->conn_export_macro_);
-  this->conn_export_macro_ = 0;
-
-  ACE::strdelete (this->conn_export_include_);
-  this->conn_export_include_ = 0;
-
-  ACE::strdelete (this->pch_include_);
+  ACE_OS::free (this->pch_include_);
   this->pch_include_ = 0;
 
-  ACE::strdelete (this->pre_include_);
+  ACE_OS::free (this->pre_include_);
   this->pre_include_ = 0;
 
-  ACE::strdelete (this->post_include_);
+  ACE_OS::free (this->post_include_);
   this->post_include_ = 0;
 
-  ACE::strdelete (this->include_guard_);
+  ACE_OS::free (this->include_guard_);
   this->include_guard_ = 0;
 
-  ACE::strdelete (this->safe_include_);
+  ACE_OS::free (this->safe_include_);
   this->safe_include_ = 0;
 
-  ACE::strdelete (this->unique_include_);
+  ACE_OS::free (this->unique_include_);
   this->unique_include_ = 0;
 
-  ACE::strdelete (this->client_hdr_ending_);
+  delete [] this->client_hdr_ending_;
   this->client_hdr_ending_ = 0;
 
-  ACE::strdelete (this->client_stub_ending_);
+  delete [] this->client_stub_ending_;
   this->client_stub_ending_ = 0;
 
-  ACE::strdelete (this->client_inline_ending_);
+  delete [] this->client_inline_ending_;
   this->client_inline_ending_ = 0;
 
-  ACE::strdelete (this->server_hdr_ending_);
+  delete [] this->server_hdr_ending_;
   this->server_hdr_ending_ = 0;
 
-  ACE::strdelete (this->implementation_hdr_ending_);
+  delete [] this->implementation_hdr_ending_;
   this->implementation_hdr_ending_ = 0;
 
-  ACE::strdelete (this->implementation_skel_ending_);
+  delete [] this->implementation_skel_ending_;
   this->implementation_skel_ending_ = 0;
 
-  ACE::strdelete (this->impl_class_prefix_);
+  delete [] this->impl_class_prefix_;
   this->impl_class_prefix_ = 0;
 
-  ACE::strdelete (this->impl_class_suffix_);
+  delete [] this->impl_class_suffix_;
   this->impl_class_suffix_ = 0;
 
-  ACE::strdelete (this->server_template_hdr_ending_);
+  delete [] this->server_template_hdr_ending_;
   this->server_template_hdr_ending_ = 0;
 
-  ACE::strdelete (this->server_skeleton_ending_);
+  delete [] this->server_skeleton_ending_;
   this->server_skeleton_ending_ = 0;
 
-  ACE::strdelete (this->server_template_skeleton_ending_);
+  delete [] this->server_template_skeleton_ending_;
   this->server_template_skeleton_ending_ = 0;
 
-  ACE::strdelete (this->server_inline_ending_);
+  delete [] this->server_inline_ending_;
   this->server_inline_ending_ = 0;
 
-  ACE::strdelete (this->anyop_hdr_ending_);
+  delete [] this->anyop_hdr_ending_;
   this->anyop_hdr_ending_ = 0;
 
-  ACE::strdelete (this->anyop_src_ending_);
+  delete [] this->anyop_src_ending_;
   this->anyop_src_ending_ = 0;
 
-  ACE::strdelete (this->ciao_svnt_hdr_ending_);
-  this->ciao_svnt_hdr_ending_ = 0;
-
-  ACE::strdelete (this->ciao_svnt_src_ending_);
-  this->ciao_svnt_src_ending_ = 0;
-
-  ACE::strdelete (this->ciao_exec_hdr_ending_);
-  this->ciao_exec_hdr_ending_ = 0;
-
-  ACE::strdelete (this->ciao_exec_src_ending_);
-  this->ciao_exec_src_ending_ = 0;
-
-  ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
-  this->ciao_exec_stub_hdr_ending_ = 0;
-
-  ACE::strdelete (this->ciao_exec_idl_ending_);
-  this->ciao_exec_idl_ending_ = 0;
-
-  ACE::strdelete (this->ciao_conn_hdr_ending_);
-  this->ciao_conn_hdr_ending_ = 0;
-
-  ACE::strdelete (this->ciao_conn_src_ending_);
-  this->ciao_conn_src_ending_ = 0;
-
-  ACE::strdelete (this->dds_typesupport_hdr_ending_);
-  this->dds_typesupport_hdr_ending_ = 0;
-
-  ACE::strdelete (this->ciao_ami_conn_idl_ending_);
-  this->ciao_ami_conn_idl_ending_ = 0;
-
-  ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
-  this->ciao_ami_conn_impl_hdr_ending_ = 0;
-
-  ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
-  this->ciao_ami_conn_impl_src_ending_ = 0;
-
-  ACE::strdelete (this->ciao_container_type_);
-  this->ciao_container_type_ = 0;
-
-  ACE::strdelete (this->output_dir_);
+  delete [] this->output_dir_;
   this->output_dir_ = 0;
 
-  ACE::strdelete (this->stub_include_dir_);
-  this->stub_include_dir_ = 0;
-
-  ACE::strdelete (this->skel_output_dir_);
-  this->skel_output_dir_ = 0;
-
-  ACE::strdelete (this->anyop_output_dir_);
+  delete [] this->anyop_output_dir_;
   this->anyop_output_dir_ = 0;
 
   if (0 != this->messaging_)
@@ -2017,9 +1305,9 @@ BE_GlobalData:: void_type (void)
   if (0 == this->void_type_)
     {
       AST_Decl *d =
-        idl_global->root ()->lookup_primitive_type (
-          AST_Expression::EV_void);
-
+        idl_global->scopes ().bottom ()->lookup_primitive_type (
+                                              AST_Expression::EV_void
+                                            );
       this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
     }
 
@@ -2049,6 +1337,8 @@ BE_GlobalData::ccmobject (void)
 
       AST_Decl *d =
         idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
+                                                               true,
+                                                               true,
                                                                true);
 
       sn.destroy ();
@@ -2159,6 +1449,18 @@ BE_GlobalData::messaging_exceptionholder (void)
     }
 
   return this->messaging_exceptionholder_;
+}
+
+be_valuetype *
+BE_GlobalData::exceptionholder (void) const
+{
+  return this->exceptionholder_;
+}
+
+void
+BE_GlobalData::exceptionholder (be_valuetype *val)
+{
+  this->exceptionholder_ = val;
 }
 
 be_interface *
@@ -2315,222 +1617,6 @@ BE_GlobalData::gen_custom_ending (bool val)
   this->gen_custom_ending_ = val;
 }
 
-bool
-BE_GlobalData::gen_unique_guards (void) const
-{
-  return this->gen_unique_guards_;
-}
-
-void
-BE_GlobalData::gen_unique_guards (bool val)
-{
-  this->gen_unique_guards_ = val;
-}
-
-bool
-BE_GlobalData::gen_ciao_svnt (void) const
-{
-  return this->gen_ciao_svnt_;
-}
-
-void
-BE_GlobalData::gen_ciao_svnt (bool val)
-{
-  this->gen_ciao_svnt_ = val;
-}
-
-bool
-BE_GlobalData::gen_ciao_exec_idl (void) const
-{
-  return this->gen_ciao_exec_idl_;
-}
-
-void
-BE_GlobalData::gen_ciao_exec_idl (bool val)
-{
-  this->gen_ciao_exec_idl_ = val;
-}
-
-bool
-BE_GlobalData::gen_ciao_exec_impl (void) const
-{
-  return this->gen_ciao_exec_impl_;
-}
-
-void
-BE_GlobalData::gen_ciao_exec_impl (bool val)
-{
-  this->gen_ciao_exec_impl_ = val;
-}
-
-bool
-BE_GlobalData::gen_ciao_exec_reactor_impl (void) const
-{
-  return this->gen_ciao_exec_reactor_impl_;
-}
-
-void
-BE_GlobalData::gen_ciao_exec_reactor_impl (bool val)
-{
-  this->gen_ciao_exec_reactor_impl_ = val;
-}
-
-bool
-BE_GlobalData::gen_ciao_conn_impl (void) const
-{
-  return this->gen_ciao_conn_impl_;
-}
-
-void
-BE_GlobalData::gen_ciao_conn_impl (bool val)
-{
-  this->gen_ciao_conn_impl_ = val;
-}
-
-bool
-BE_GlobalData::gen_dds_typesupport_idl (void) const
-{
-  return this->gen_dds_typesupport_idl_;
-}
-
-void
-BE_GlobalData::gen_dds_typesupport_idl (bool val)
-{
-  this->gen_dds_typesupport_idl_ = val;
-}
-
-bool
-BE_GlobalData::gen_ciao_valuefactory_reg (void) const
-{
-  return this->gen_ciao_valuefactory_reg_;
-}
-
-void
-BE_GlobalData::gen_ciao_valuefactory_reg (bool val)
-{
-  this->gen_ciao_valuefactory_reg_ = val;
-}
-
-bool
-BE_GlobalData::gen_stub_export_hdr_file (void) const
-{
-  return this->gen_stub_export_hdr_file_;
-}
-
-void
-BE_GlobalData::gen_stub_export_hdr_file (bool val)
-{
-  this->gen_stub_export_hdr_file_ = val;
-}
-
-bool
-BE_GlobalData::gen_skel_export_hdr_file (void) const
-{
-  return this->gen_skel_export_hdr_file_;
-}
-
-void
-BE_GlobalData::gen_skel_export_hdr_file (bool val)
-{
-  this->gen_skel_export_hdr_file_ = val;
-}
-
-bool
-BE_GlobalData::gen_svnt_export_hdr_file (void) const
-{
-  return this->gen_svnt_export_hdr_file_;
-}
-
-void
-BE_GlobalData::gen_svnt_export_hdr_file (bool val)
-{
-  this->gen_svnt_export_hdr_file_ = val;
-}
-
-bool
-BE_GlobalData::gen_exec_export_hdr_file (void) const
-{
-  return this->gen_exec_export_hdr_file_;
-}
-
-void
-BE_GlobalData::gen_exec_export_hdr_file (bool val)
-{
-  this->gen_exec_export_hdr_file_ = val;
-}
-
-bool
-BE_GlobalData::gen_conn_export_hdr_file (void) const
-{
-  return this->gen_conn_export_hdr_file_;
-}
-
-void
-BE_GlobalData::gen_conn_export_hdr_file (bool val)
-{
-  this->gen_conn_export_hdr_file_ = val;
-}
-
-bool
-BE_GlobalData::gen_lem_force_all (void) const
-{
-  return this->gen_lem_force_all_;
-}
-
-void
-BE_GlobalData::gen_lem_force_all (bool val)
-{
-  this->gen_lem_force_all_ = val;
-}
-
-bool
-BE_GlobalData::alt_mapping (void) const
-{
-  return this->alt_mapping_;
-}
-
-void
-BE_GlobalData::alt_mapping (bool val)
-{
-  this->alt_mapping_ = val;
-}
-
-bool
-BE_GlobalData::in_facet_servant (void) const
-{
-  return this->in_facet_servant_;
-}
-
-void
-BE_GlobalData::in_facet_servant (bool val)
-{
-  this->in_facet_servant_ = val;
-}
-
-bool
-BE_GlobalData::gen_arg_traits (void) const
-{
-  return this->gen_arg_traits_;
-}
-
-void
-BE_GlobalData::gen_arg_traits (bool val)
-{
-  this->gen_arg_traits_ = val;
-}
-
-unsigned long
-BE_GlobalData::tab_size (void) const
-{
-  return this->tab_size_;
-}
-
-void
-BE_GlobalData::tab_size (unsigned long val)
-{
-  this->tab_size_ = val;
-}
-
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -2588,7 +1674,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // I expect 'c' or 's' or 'I' or 'T' after this.
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2604,7 +1690,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
-                ACE_TEXT (" the '%C' option\n"),
+                ACE_TEXT (" the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2633,7 +1719,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // I expect 's' or 'i' after 'c'.
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2679,7 +1765,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             // I expect 's' or 'T' or 'i' or 't' after 's'.
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2723,7 +1809,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         else
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%C: unknown operation lookup <%C>\n"),
+                        ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
                         av[0],
                         av[i + 1]));
           }
@@ -2741,28 +1827,11 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             be_global->changing_standard_include_files (0);
           }
-        else if (av[i][2] == 'C')
-          {
-            if (av[i][3] == '\0')
-              {
-                be_global->stub_include_dir (av[i + 1]);
-                ++i;
-              }
-            else
-              {
-                ACE_ERROR ((
-                    LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand")
-                    ACE_TEXT (" the '%C' option\n"),
-                    av[i]
-                  ));
-              }
-          }
         else
           {
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2790,7 +1859,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
-                ACE_TEXT (" the '%C' option\n"),
+                ACE_TEXT (" the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2815,7 +1884,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: unable to create directory %C")
+                    ACE_TEXT ("IDL: unable to create directory %s")
                     ACE_TEXT (" specified by -o option\n"),
                     av[i + 1]
                   ));
@@ -2843,7 +1912,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     ACE_ERROR ((
                         LM_ERROR,
-                        ACE_TEXT ("IDL: unable to create directory %C")
+                        ACE_TEXT ("IDL: unable to create directory %s")
                         ACE_TEXT (" specified by -oA option\n"),
                         av[i + 1]
                       ));
@@ -2859,7 +1928,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand")
-                    ACE_TEXT (" the '%C' option\n"),
+                    ACE_TEXT (" the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -2881,7 +1950,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     ACE_ERROR ((
                         LM_ERROR,
-                        ACE_TEXT ("IDL: unable to create directory %C")
+                        ACE_TEXT ("IDL: unable to create directory %s")
                         ACE_TEXT (" specified by -oS option\n"),
                         av[i + 1]
                       ));
@@ -2897,7 +1966,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand")
-                    ACE_TEXT (" the '%C' option\n"),
+                    ACE_TEXT (" the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -2907,7 +1976,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand")
-                ACE_TEXT (" the '%C' option\n"),
+                ACE_TEXT (" the '%s' option\n"),
                 av[i]
               ));
           }
@@ -2919,13 +1988,6 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // AMI with Call back.
             be_global->ami_call_back (true);
-          }
-        else if (av[i][2] == 'M')
-          {
-            // AMI4CCM calls implicit option 'C': AMI with Call back.
-            be_global->ami_call_back (true);
-             // Generate tie classes and files
-            be_global->ami4ccm_call_back (true);
           }
         else if (av[i][2] == 'T')
           {
@@ -2948,32 +2010,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             // Any operators into a separate set of files.
             be_global->gen_anyop_files (true);
           }
-        else if (av[i][2] == 'c' && av[i][3] == 'n')
-          {
-            // CIAO connector impl code generation.
-            be_global->gen_ciao_conn_impl (true);
-
-            break;
-          }
-        else if (av[i][2] == 't' && av[i][3] == 's')
-          {
-            // DDS type support IDL generation.
-            be_global->gen_dds_typesupport_idl (true);
-
-            break;
-          }
-        else if (av[i][2] == 'e' && av[i][3] == 'x')
-          {
-            // CIAO executor impl code generation.
-            be_global->gen_ciao_exec_impl (true);
-
-            // should the reactor code be generated?
-            if (av[i][4] == 'r')
-              {
-                be_global->gen_ciao_exec_reactor_impl (true);
-              }
-            break;
-          }
         else if (av[i][2] == 's')
           {
             if (av[i][3] == 'p')
@@ -2985,79 +2021,6 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Explicit sequence base class template export.
                 be_global->gen_template_export (true);
-              }
-            else if (av[i][3] == 'v')
-              {
-                // CIAO servant code generation.
-                be_global->gen_ciao_svnt (true);
-              }
-            else if (av[i][3] == 't' && av[i][4] == 'l')
-              {
-                // Generate code using STL types for strings
-                // and sequences.
-                be_global->alt_mapping (true);
-              }
-            else
-              {
-                ACE_ERROR ((
-                    LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%C' option\n"),
-                    av[i]
-                  ));
-              }
-
-            break;
-          }
-        else if (av[i][2] == 'x')
-          {
-            if (av[i][3] == 'h')
-              {
-                if (av[i][4] == 's')
-                  {
-                    if (av[i][5] == 't')
-                      {
-                        be_global->gen_stub_export_hdr_file (true);
-                      }
-                    else if (av[i][5] == 'k')
-                      {
-                        be_global->gen_skel_export_hdr_file (true);
-                      }
-                    else if (av[i][5] == 'v')
-                      {
-                        be_global->gen_svnt_export_hdr_file (true);
-                      }
-                    else
-                      {
-                        ACE_ERROR ((
-                            LM_ERROR,
-                            ACE_TEXT ("IDL: I don't understand ")
-                            ACE_TEXT ("the '%s' option\n"),
-                            av[i]
-                          ));
-                      }
-
-                    break;
-                  }
-                else if (av[i][4] == 'e' && av[i][5] == 'x')
-                  {
-                    be_global->gen_exec_export_hdr_file (true);
-                  }
-                else if (av[i][4] == 'c' && av[i][5] == 'n')
-                  {
-                    be_global->gen_conn_export_hdr_file (true);
-                  }
-                else
-                  {
-                    ACE_ERROR ((
-                        LM_ERROR,
-                        ACE_TEXT ("IDL: I don't understand ")
-                        ACE_TEXT ("the '%s' option\n"),
-                        av[i]
-                      ));
-                  }
-
-                break;
               }
             else
               {
@@ -3083,7 +2046,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%C' option\n"),
+                    ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3097,22 +2060,12 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // CORBA/e.
                 be_global->gen_corba_e (true);
               }
-            else if (av[i][3] == 'l')
-              {
-                // CORBA/e.
-                be_global->gen_lwccm (true);
-              }
-            else if (av[i][3] == 'm')
-              {
-                // NOEVENTS ccm, ccm without events .
-                be_global->gen_noeventccm (true);
-              }
             else
               {
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%C' option\n"),
+                    ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3130,7 +2083,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%C' option\n"),
+                    ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3146,31 +2099,45 @@ BE_GlobalData::parse_args (long &i, char **av)
             // Generating Thru_POA collocated stubs.
             be_global->gen_thru_poa_collocation (true);
           }
-        else if (av[i][2] == 'l')
-          {
-            if (av[i][3] == 'e' && av[i][4] == 'm')
-              {
-                be_global->gen_ciao_exec_idl (true);
-              }
-            else if (av[i][3] == 'f' && av[i][4] == 'a')
-              {
-                be_global->gen_lem_force_all (true);
-              }
-            else
-              {
-                ACE_ERROR ((
-                    LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%s' option\n"),
-                    av[i]
-                  ));
-              }
-
-            break;
-          }
         else if (av[i][2] == 'd')
           {
-            if ('\0' == av[i][3])
+            if (av[i][3] == 'c')
+              {
+                if (av[i][4] == 'p' && av[i][5] =='s')
+                  {
+                    if ('\0' == av[i][6])
+                      {
+                        // DDS DCPS type support.
+                        be_global->gen_dcps_type_support (true);
+                      }
+                    else if (av[i][6] == 'o' && av[i][7] == 'n'
+                      && av[i][8] == 'l' && av[i][9] == 'y' && '\0' == av[i][10])
+                      {
+                        // DDS DCPS type only support
+                        be_global->gen_dcps_type_support (true);
+                        be_global->gen_dcps_type_support_only (true);
+                      }
+                    else
+                      {
+                        ACE_ERROR ((
+                            LM_ERROR,
+                            ACE_TEXT ("IDL: I don't understand ")
+                            ACE_TEXT ("the '%s' option\n"),
+                            av[i]
+                          ));
+                      }
+                  }
+                else
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: I don't understand ")
+                        ACE_TEXT ("the '%s' option\n"),
+                        av[i]
+                      ));
+                  }
+              }
+            else if ('\0' == av[i][3])
               {
                 // Generating Direct collocated stubs.
                 be_global->gen_direct_collocation (true);
@@ -3180,7 +2147,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%C' option\n"),
+                    ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3197,7 +2164,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_ERROR ((
                     LM_ERROR,
                     ACE_TEXT ("IDL: I don't understand ")
-                    ACE_TEXT ("the '%C' option\n"),
+                    ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3253,7 +2220,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_ERROR ((
                         LM_ERROR,
                         ACE_TEXT ("IDL: I don't understand")
-                        ACE_TEXT (" the '%C' option\n"),
+                        ACE_TEXT (" the '%s' option\n"),
                         av[i]
                       ));
 
@@ -3268,7 +2235,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
           }
@@ -3283,25 +2250,15 @@ BE_GlobalData::parse_args (long &i, char **av)
                 // Suppress Any support for local interfaces.
                 be_global->gen_local_iface_anyops (false);
               }
-            else if (av[i][3] == 't')
-              {
-                be_global->gen_arg_traits (false);
-              }
             else
               {
                 // Suppress all Any support.
                 be_global->any_support (false);
               }
           }
-        else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] == 'b' && '\0' == av[i][5])
+        else if (av[i][2] == 'o' && av[i][3] == 'r' && av[i][4] =='b' && '\0' == av[i][5])
           {
             be_global->gen_orb_h_include (false);
-          }
-        else if (av[i][2] == 'f' && av[i][3] == 'r')
-          {
-            // Suppress generation of valuetype factory registration
-            // in CIAO servants.
-            be_global->gen_ciao_valuefactory_reg (false);
           }
         else if (av[i][2] == 't')
           {
@@ -3336,7 +2293,7 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3352,14 +2309,12 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Disable skeleton file generation.
                 be_global->gen_skel_files (false);
-                be_global->gen_server_inline (false);
-                be_global->gen_server_skeleton (false);
               }
             else
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                     av[i]
                   ));
               }
@@ -3380,44 +2335,22 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 ACE_ERROR ((
                     LM_ERROR,
-                    ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                    ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                     av[i]
                   ));
               }
           }
         else if (av[i][2] == 'e')
           {
-            // Disable custom file endings for included idl/pidl
+            // disable custom file endings for included idl/pidl
             // files from TAO specific include paths.
             be_global->gen_custom_ending (false);
           }
-        else if (av[i][2] == 'g')
-          {
-            // Disable generation of unique guards.
-            be_global->gen_unique_guards (false);
-          }
         else
           {
             ACE_ERROR ((
                 LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
-                av[i]
-              ));
-          }
-
-        break;
-      case 'T':
-        if (av[i][2] == 'S')
-          {
-            unsigned long ul = ACE_OS::strtoul (av[i + 1], 0, 10);
-            be_global->tab_size (ul);
-            ++i;
-          }
-        else
-          {
-            ACE_ERROR ((
-                LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]
               ));
           }
@@ -3426,7 +2359,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       default:
         ACE_ERROR ((
             LM_ERROR,
-            ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
+            ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
             av[i]
           ));
 
@@ -3436,3 +2369,562 @@ BE_GlobalData::parse_args (long &i, char **av)
     }
 }
 
+// Prepare an argument for a BE
+void
+BE_GlobalData::prep_be_arg (char *s)
+{
+  static const char arg_macro[]            = "export_macro=";
+  static const char arg_include[]          = "export_include=";
+  static const char skel_arg_macro[]       = "skel_export_macro=";
+  static const char skel_arg_include[]     = "skel_export_include=";
+  static const char stub_arg_macro[]       = "stub_export_macro=";
+  static const char stub_arg_include[]     = "stub_export_include=";
+  static const char anyop_arg_macro[]      = "anyop_export_macro=";
+  static const char anyop_arg_include[]    = "anyop_export_include=";
+  static const char arg_pch_include[]      = "pch_include=";
+  static const char arg_pre_include[]      = "pre_include=";
+  static const char arg_post_include[]     = "post_include=";
+  static const char arg_versioning_begin[] = "versioning_begin=";
+  static const char arg_versioning_end[]   = "versioning_end=";
+  static const char obv_opt_accessor[]     = "obv_opt_accessor";
+  static const char include_guard[]        = "include_guard=";
+  static const char safe_include[]         = "safe_include=";
+  static const char unique_include[]       = "unique_include=";
+
+  char* last = 0;
+
+  for (char* arg = ACE_OS::strtok_r (s, ",", &last);
+       arg != 0;
+       arg = ACE_OS::strtok_r (0, ",", &last))
+    {
+      if (ACE_OS::strstr (arg, arg_macro) == arg)
+        {
+          char* val = arg + sizeof (arg_macro) - 1;
+          be_global->skel_export_macro (val);
+          be_global->stub_export_macro (val);
+          be_global->anyop_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_include) == arg)
+        {
+          char* val = arg + sizeof (arg_include) - 1;
+          be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, skel_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_macro) - 1;
+          be_global->skel_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, skel_arg_include) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_include) - 1;
+          be_global->skel_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_macro) - 1;
+          be_global->stub_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_include) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_include) - 1;
+          be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, anyop_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (anyop_arg_macro) - 1;
+          be_global->anyop_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, anyop_arg_include) == arg)
+        {
+          char* val = arg + sizeof (anyop_arg_include) - 1;
+          be_global->anyop_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
+        {
+          char* val = arg + sizeof (arg_pch_include) - 1;
+          be_global->pch_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_pre_include) == arg)
+        {
+          char* val = arg + sizeof (arg_pre_include) - 1;
+          be_global->pre_include (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_post_include) == arg)
+        {
+          char* val = arg + sizeof (arg_post_include) - 1;
+          be_global->post_include (val);
+        }
+      else if (ACE_OS::strstr (arg, include_guard) == arg)
+        {
+          char* val = arg + sizeof (include_guard) - 1;
+          be_global->include_guard (val);
+        }
+      else if (ACE_OS::strstr (arg, safe_include) == arg)
+        {
+          char* val = arg + sizeof (safe_include) - 1;
+          be_global->safe_include (val);
+        }
+      else if (ACE_OS::strstr (arg, unique_include) == arg)
+        {
+          char* val = arg + sizeof (unique_include) - 1;
+          be_global->unique_include (val);
+        }
+      else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
+        {
+          be_global->obv_opt_accessor (1);
+        }
+      else if (ACE_OS::strstr (arg, arg_versioning_begin) == arg)
+        {
+          char const * const val = arg + sizeof (arg_versioning_begin) - 1;
+          be_global->versioning_begin (val);
+        }
+      else if (ACE_OS::strstr (arg, arg_versioning_end) == arg)
+        {
+          char const * const val = arg + sizeof (arg_versioning_end) - 1;
+          be_global->versioning_end (val);
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%s%s%s%s"),
+                      idl_global->prog_name (),
+                      ACE_TEXT (": invalid or unknown argument <"),
+                      arg,
+                      ACE_TEXT ("> to back end\n")));
+        }
+    }
+}
+
+void
+BE_GlobalData::arg_post_proc (void)
+{
+  // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
+  // us check whether things are fine with GPERF.
+#if defined (ACE_HAS_GPERF) && !defined (ACE_USES_WCHAR)
+  // If Perfect Hashing or Binary Search or Linear Search strategies
+  // have been selected, let us make sure that it exists and will
+  // work.
+  if ((be_global->lookup_strategy () == BE_GlobalData::TAO_PERFECT_HASH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_BINARY_SEARCH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_LINEAR_SEARCH))
+    {
+      // Testing whether GPERF works or no.
+      if (idl_global->check_gperf () == -1)
+        {
+          // If gperf_path is an absolute path, try to call this
+          // again with
+          ACE_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT ("TAO_IDL: warning, GPERF could not be executed\n")
+              ACE_TEXT ("Perfect Hashing or Binary/Linear Search cannot be")
+              ACE_TEXT (" done without GPERF\n")
+              ACE_TEXT ("Now, using Dynamic Hashing..\n")
+              ACE_TEXT ("To use Perfect Hashing or Binary/Linear")
+              ACE_TEXT (" Search strategy\n")
+              ACE_TEXT ("\t-Build gperf at $ACE_ROOT/apps/gperf/src\n")
+              ACE_TEXT ("\t-Set the environment variable $ACE_ROOT")
+              ACE_TEXT (" appropriately or add $ACE_ROOT/bin to the PATH\n")
+              ACE_TEXT ("\t-Refer to Operation Lookup section in the TAO IDL")
+              ACE_TEXT (" User Guide ($TAO_ROOT/docs/compiler.html)")
+              ACE_TEXT (" for more details\n")
+            ));
+
+          // Switching over to Dynamic Hashing.
+          be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
+        }
+    }
+#else /* Not ACE_HAS_GPERF */
+  // If GPERF is not there, we cannot use PERFECT_HASH strategy. Let
+  // us go for DYNAMIC_HASH.
+  if ((be_global->lookup_strategy () == BE_GlobalData::TAO_PERFECT_HASH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_BINARY_SEARCH) ||
+      (be_global->lookup_strategy () == BE_GlobalData::TAO_LINEAR_SEARCH))
+    {
+      be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
+    }
+#endif /* ACE_HAS_GPERF */
+
+  // Make sure that we are not suppressing TypeCode generation and asking for
+  // optimized typecode support at the same time.
+  if (!be_global->tc_support () && be_global->opt_tc ())
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Bad Combination -St and -Gt\n")));
+    }
+}
+
+void
+BE_GlobalData::usage (void) const
+{
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,export_macro=<macro name>\t\t\tsets export macro ")
+      ACE_TEXT ("for all files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,export_include=<include path>\t\tsets export include ")
+      ACE_TEXT ("file for all files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_macro=<macro name>\t\tsets export ")
+      ACE_TEXT ("macro for client files only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for client only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_macro=<macro name>\t\tsets export ")
+      ACE_TEXT ("macro for server files only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_include=<include path>\t\tsets export ")
+      ACE_TEXT ("include file for server only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,anyop_export_macro=<macro name>\t\tsets export macro ")
+      ACE_TEXT ("for typecode/Any operator files only, when -GA option ")
+      ACE_TEXT ("is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,anyop_export_include=<include path>\tsets export ")
+      ACE_TEXT ("include file typecode/Any operator files only, when -GA ")
+      ACE_TEXT ("option is used\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,pch_include=<include path>\t\t\tsets include ")
+      ACE_TEXT ("file for precompiled header mechanism\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,pre_include=<include path>\t\t\tsets include ")
+      ACE_TEXT ("file generate before any other includes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,post_include=<include path>\t\tsets include ")
+      ACE_TEXT ("file generated at the end of the file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,include_guard=<include path>\t\tguard to prevent ")
+      ACE_TEXT ("the generated client header file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,safe_include=<include path>\t\tinclude that should ")
+      ACE_TEXT ("be used instead of the own generated client header file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,unique_include=<include path>\t\tinclude that should ")
+      ACE_TEXT ("be generated as only contents of the generated client ")
+      ACE_TEXT ("header file.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
+      ACE_TEXT ("data in valuetypes\n")
+    ));
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
+  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
+     && TAO_HAS_VERSIONED_NAMESPACE == 1)
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_begin\t\t\tSet text that opens a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_end\t\t\tSet text that closes a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -b\t\t\tUse a clonable argument type for oneway methods.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -ci\t\t\tClient inline file name ending. Default is C.inl\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -cs\t\t\tClient stub's file name ending.")
+      ACE_TEXT (" Default is C.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -g <gperf_path>\tPath for the GPERF program.")
+      ACE_TEXT (" Default is $ACE_ROOT/bin/ace_gperf\n")));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GC \t\t\tGenerate the AMI classes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GH \t\t\tGenerate the AMH classes\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gce \t\t\tGenerate code optimized for CORBA/e\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gmc \t\t\tGenerate code optimized for Minimum CORBA\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gd \t\t\tGenerate the code for direct collocation. Default ")
+      ACE_TEXT ("is thru-POA collocation\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gdcps \t\tGenerate code supporting DDS DCPS type ")
+      ACE_TEXT ("definitions.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gos \t\t\tGenerate std::ostream insertion operators.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gdcpsonly \t\t\tGenerate code only supporting DDS DCPS ")
+      ACE_TEXT ("type serializer definitions.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GI[h|s|b|e|c|a|d]\tGenerate Implementation Files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\th - Implementation header file name ending.")
+      ACE_TEXT (" Default is I.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\ts - Implementation skeleton file name ending.")
+      ACE_TEXT (" Default is I.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\tb - Prefix to the implementation class names.")
+      ACE_TEXT (" Default is 'no prefix'\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\te - Suffix to the implementation class names.")
+      ACE_TEXT (" Default is _i\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\tc - Generate copy constructors in the servant")
+      ACE_TEXT (" implementation template files (off by default)\n")
+     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\ta - Generate assignment operators in the servant")
+      ACE_TEXT (" implementation template files (off by default)\n")
+     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("  \t\t\td - Generate debug (source file/line#) information.")
+      ACE_TEXT (" (off by default)\n")
+     ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gp \t\t\tGenerate the code for thru-POA collocation")
+      ACE_TEXT (" (default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gsp\t\t\tGenerate the code for Smart Proxies\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gt\t\t\tenable optimized TypeCode support")
+      ACE_TEXT (" (unopt by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GT\t\t\tgenerate tie class (and file)")
+      ACE_TEXT (" generation (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -GA\t\t\tgenerate Any operator and type codes in *A.{h,cpp}")
+      ACE_TEXT (" (generated in *C.{h,cpp} by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Guc\t\t\tgenerate uninlined constant if declared ")
+      ACE_TEXT ("in a module (inlined by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Gse\t\t\tgenerate explicit export of sequence's ")
+      ACE_TEXT ("template base class (not generated by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -hc\t\t\tClient's header file name ending.")
+      ACE_TEXT (" Default is C.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -hs\t\t\tServer's header file name ending.")
+      ACE_TEXT (" Default is S.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -hT\t\t\tServer's template hdr file name ending.")
+      ACE_TEXT (" Default is S_T.h\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H perfect_hash\tTo force perfect hashed operation")
+      ACE_TEXT (" lookup strategy (default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H dynamic_hash\tTo force dynamic hashed operation")
+      ACE_TEXT (" lookup strategy. Default is perfect hashing\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H linear_search\tTo force linear search operation")
+      ACE_TEXT (" lookup strategy\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -H binary_search\tTo force binary search operation")
+      ACE_TEXT (" lookup strategy\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -in \t\t\tTo generate <>s for standard #include'd")
+      ACE_TEXT (" files (non-changing files)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -ic \t\t\tTo generate \"\"s for standard #include'd")
+      ACE_TEXT (" files (changing files)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -o <output_dir>\tOutput directory for the generated files.")
+      ACE_TEXT (" Default is current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -oS <output_dir>\tOutput directory for the generated ")
+      ACE_TEXT ("skeleton files. Default is -o value or current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -oA <output_dir>\tOutput directory for the generated anyop")
+      ACE_TEXT ("files. Default is -o value or current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -si\t\t\tServer's inline file name ending.")
+      ACE_TEXT (" Default is S.inl\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -ss\t\t\tServer's skeleton file name ending.")
+      ACE_TEXT (" Default is S.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -sT\t\t\tServer's template skeleton file name ending.")
+      ACE_TEXT (" Default is S_T.cpp\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sa\t\t\tsuppress Any support")
+      ACE_TEXT (" (support enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sal\t\t\tsuppress Any support")
+      ACE_TEXT (" for local interfaces")
+      ACE_TEXT (" (support enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -St\t\t\tsuppress TypeCode support")
+      ACE_TEXT (" (support enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sp\t\t\tsuppress generating Thru POA collocated")
+      ACE_TEXT (" stubs (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sd\t\t\tsuppress generating Direct collocated")
+      ACE_TEXT (" stubs (disable by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sm\t\t\tdisable IDL3 equivalent IDL preprocessing")
+      ACE_TEXT (" (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -SS\t\t\tsuppress generating skeleton implementation")
+      ACE_TEXT (" and inline file (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sci\t\t\tsuppress generating client inline file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Ssi\t\t\tsuppress generating server inline file")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sorb\t\t\tsuppress generating include of ORB.h")
+      ACE_TEXT (" (disabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Se\t\t\tdisable custom header file name endings")
+      ACE_TEXT (" for files\n\t\t\t")
+      ACE_TEXT ("that are found in TAO specific include directories,\n\t\t\t")
+      ACE_TEXT ("(i.e. $TAO_ROOT, $TAO_ROOT/tao, $TAO_ROOT/orbsvcs,\n\t\t\t")
+      ACE_TEXT ("$TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao, $TAO_ROOT/CIAO/ccm)\n\t\t\t")
+      ACE_TEXT (" (enabled by default)\n")
+    ));
+}
+
+AST_Generator *
+BE_GlobalData::generator_init (void)
+{
+  tao_cg = TAO_CODEGEN::instance ();
+  tao_cg->config_visitor_factory ();
+
+  AST_Generator *gen = 0;
+  ACE_NEW_RETURN (gen,
+                  be_generator,
+                  0);
+
+  return gen;
+}

@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ub_long_seq.cpp
- *
- *  $Id$
- *
- *  tests unbounded long sequences
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    ub_long_seq.cpp
+//
+// = DESCRIPTION
+//    tests unbounded long sequences
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "ub_long_seq.h"
+
+ACE_RCSID (Param_Test,
+           ub_long_seq,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Long_Sequence

@@ -13,15 +13,8 @@
 
 #include <Components.idl>
 
-#pragma ciao lem "../Display_Base/Display_BaseE.idl"
-
 module HUDisplay
 {
-  struct GPS_position
-  {
-    long pos_x;
-    long pos_y;
-  };
   /**
    * @brief interface opmode defines the "operation mode" interface.
    */
@@ -45,9 +38,8 @@ module HUDisplay
    */
   interface position
   {
-    GPS_position posxy ();
-    unsigned short id ();
-    boolean started ();
+    long posx ();
+    long posy ();
   };
 };
 

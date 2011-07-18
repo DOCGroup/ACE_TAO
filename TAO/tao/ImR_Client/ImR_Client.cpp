@@ -11,6 +11,10 @@
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 
+ACE_RCSID (ImR_Client,
+           ImR_Client,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -118,18 +122,7 @@ namespace TAO
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          ACE_CString serverId = poa->orb_core ().server_id ();
-          ACE_CString name;
-          if (serverId.empty ())
-          {
-            name = poa->name();
-          }
-          else
-          {
-            name = serverId + ":" + poa->name();
-          }
-
-          imr_locator->server_is_running (name.c_str (),
+          imr_locator->server_is_running (poa->name().c_str (),
                                           partial_ior.c_str(),
                                           svr.in());
         }
@@ -202,9 +195,9 @@ namespace TAO
 
       if (this->server_object_)
         {
-          PortableServer::POA_var default_poa = this->server_object_->_default_POA ();
+          PortableServer::POA_var poa = this->server_object_->_default_POA ();
 
-          TAO_Root_POA *root_poa = dynamic_cast <TAO_Root_POA*> (default_poa.in ());
+          TAO_Root_POA *root_poa = dynamic_cast <TAO_Root_POA*> (poa.in ());
 
           if (!root_poa)
             {

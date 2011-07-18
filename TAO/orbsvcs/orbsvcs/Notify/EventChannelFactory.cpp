@@ -1,6 +1,11 @@
 // $Id$
 
 #include "orbsvcs/Notify/EventChannelFactory.h"
+
+ACE_RCSID(Notify,
+          TAO_Notify_EventChannelFactory,
+          "$Id$")
+
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Factory.h"
 #include "orbsvcs/Notify/Builder.h"
@@ -510,7 +515,7 @@ TAO_Notify_EventChannelFactory::activate_self (void)
   {
     if (DEBUG_LEVEL > 9)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self\n") ));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) TAO_Notify_EventChannelFactory::activate_self") ));
     }
     this->reconnect ();
   }

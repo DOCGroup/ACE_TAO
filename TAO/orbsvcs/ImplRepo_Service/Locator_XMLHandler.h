@@ -45,12 +45,11 @@ public:
   struct Callback {
     virtual ~Callback() {}
 
-    virtual void next_server (const ACE_CString& server_id,
-      const ACE_CString& server_name, const ACE_CString& aname,
-      const ACE_CString& startup_cmd, const EnvList& env_vars,
-      const ACE_CString& working_dir, const ACE_CString& actmode,
-      int start_limit, const ACE_CString& partial_ior,
-      const ACE_CString& ior) = 0;
+    virtual void next_server (const ACE_CString& server_name,
+      const ACE_CString& aname, const ACE_CString& startup_cmd,
+      const EnvList& env_vars, const ACE_CString& working_dir,
+      const ACE_CString& actmode, int start_limit,
+      const ACE_CString& partial_ior, const ACE_CString& ior) = 0;
 
     virtual void next_activator (const ACE_CString& activator_name,
                                  long token,
@@ -73,7 +72,6 @@ public:
   // callback on completion of an element
   Callback& callback_;
 
-  ACE_CString server_id_;
   ACE_TString server_name_;
   ACE_TString activator_name_;
   ACE_TString command_line_;

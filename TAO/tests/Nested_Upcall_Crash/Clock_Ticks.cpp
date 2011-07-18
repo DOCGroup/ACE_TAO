@@ -8,6 +8,8 @@
  */
 #include "Clock_Ticks.h"
 
+ACE_RCSID(Nested_Upcall_Crash, Clock_Ticks, "$Id$")
+
 long
 Clock_Ticks::get_hz (void)
 {

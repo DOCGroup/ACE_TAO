@@ -1,6 +1,6 @@
-// $Id$
-
 #include "Sender_i.h"
+
+ACE_RCSID(Oneways_Invoking_Twoways, Sender_i, "$Id$")
 
 Sender_i::Sender_i (CORBA::ORB_ptr orb,
                     CORBA::ULong no)
@@ -50,6 +50,6 @@ void
 Sender_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) About to invoke shutdown...\n"));
+              "(%P|%t) About to invoke shudown...\n"));
   this->orb_->shutdown (0);
 }

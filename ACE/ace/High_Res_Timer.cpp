@@ -22,7 +22,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Truncate.h"
 
-
+ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -152,12 +152,9 @@ ACE_High_Res_Timer::get_cpuinfo (void)
             {
               // If the line "cpu MHz : xxx" is present, then it's a
               // reliable measure of the CPU speed - according to the
-              // kernel-source. It's possible to see a 0 value reported.
-              if (mhertz > 0.0)
-                {
-                  scale_factor = (ACE_UINT32) (mhertz + 0.5);
-                  break;
-                }
+              // kernel-source.
+              scale_factor = (ACE_UINT32) (mhertz + 0.5);
+              break;
             }
           else if (::sscanf (buf, "bogomips : %lf\n", &bmips) == 1
                    || ::sscanf (buf, "BogoMIPS : %lf\n", &bmips) == 1)
@@ -276,11 +273,14 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
        i < iterations;
        ++i)
     {
-      ACE_Time_Value const actual_start = ACE_OS::gettimeofday ();
-      ACE_hrtime_t const start = ACE_OS::gethrtime ();
+      const ACE_Time_Value actual_start =
+        ACE_OS::gettimeofday ();
+      const ACE_hrtime_t start =
+        ACE_OS::gethrtime ();
       ACE_OS::sleep (sleep_time);
-      ACE_hrtime_t const stop = ACE_OS::gethrtime ();
-      ACE_Time_Value const actual_delta =
+      const ACE_hrtime_t stop =
+        ACE_OS::gethrtime ();
+      const ACE_Time_Value actual_delta =
         ACE_OS::gettimeofday () - actual_start;
 
       // Store the sample.
@@ -477,9 +477,9 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 
   // Separate to seconds and nanoseconds.
   u_long total_secs =
-    static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+    (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
   ACE_UINT32 extra_nsecs =
-    static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+    (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)

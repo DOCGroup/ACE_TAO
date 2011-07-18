@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Cleanup_Func_Registry.h"
 
 #if !defined (__ACE_INLINE__)
@@ -7,6 +5,10 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (tao,
+           Cleanup_Func_Registry,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

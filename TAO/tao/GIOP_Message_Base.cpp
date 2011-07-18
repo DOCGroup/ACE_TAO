@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/GIOP_Message_Base.h"
@@ -20,6 +19,10 @@
  * Hook to add additional include files during specializations.
  */
 //@@ GIOP_MESSAGE_BASE_INCLUDE_ADD_HOOK
+
+ACE_RCSID (tao,
+           GIOP_Message_Base,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -261,7 +264,7 @@ int
 TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub* stub)
 {
   this->set_giop_flags (stream);
-
+  
   bool log_msg = TAO_debug_level > 9;
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP ==1
@@ -685,12 +688,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     }
 #endif
   if (TAO_debug_level > 9)
-    {
-      char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
-                       transport->id ());
-      //due to alignment data block has an offset which needs to be corrected
-      this->dump_msg (buf,
+    { //due to alignment data block has an offset which needs to be corrected
+      this->dump_msg ("recv",
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
                       db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);
     }
@@ -801,10 +800,7 @@ TAO_GIOP_Message_Base::process_reply_message (
 #endif
   if (TAO_debug_level > 9)
     {
-      char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
-                       params.transport_->id ());
-      this->dump_msg (buf,
+      this->dump_msg ("recv",
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
                       db->size ()  + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN);
     }
@@ -1441,6 +1437,25 @@ TAO_GIOP_Message_Base::
                       TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
+#if 0
+  // @@CJC I don't think we need this check b/c the transport's send()
+  // will simply return -1.  However, I guess we could create something
+  // like TAO_Tranport::is_closed() that returns whether the connection
+  // is already closed.  The problem with that, however, is that it's
+  // entirely possible that is_closed() could return TRUE, and then the
+  // transport could get closed down btw. the time it gets called and the
+  // time that the send actually occurs.
+  ACE_HANDLE which = transport->handle ();
+  if (which == ACE_INVALID_HANDLE)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+           ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Base::send_close_connection -")
+           ACE_TEXT (" connection already closed\n")));
+      return;
+    }
+#endif
+
   ACE_Data_Block data_block (TAO_GIOP_MESSAGE_HEADER_LEN,
                              ACE_Message_Block::MB_DATA,
                              close_message,
@@ -1458,7 +1473,7 @@ TAO_GIOP_Message_Base::
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
            ACE_TEXT ("(%P|%t) error closing connection %u, errno = %d\n"),
-           transport->id (), ACE_ERRNO_GET));
+           transport->id (), errno));
     }
 
   transport->close_connection ();
@@ -1560,36 +1575,18 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
             tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
           }
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-        if (byte_order == TAO_ENCAP_BYTE_ORDER)
-          {
-            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-          }
-        else
-          {
-            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
-          }
+      if (byte_order == TAO_ENCAP_BYTE_ORDER)
+        {
+          id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+        }
+      else
+        {
+          ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
+        }
 #else
-        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+      id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
 
-      }
-    else if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::CancelRequest ||
-             ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::LocateRequest ||
-             ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::LocateReply)
-      {
-        tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
-#if !defined (ACE_DISABLE_SWAP_ON_READ)
-        if (byte_order == TAO_ENCAP_BYTE_ORDER)
-          {
-            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-          }
-        else
-          {
-            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
-          }
-#else
-        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-#endif /* ACE_DISABLE_SWAP_ON_READ */
       }
 
     // Print.

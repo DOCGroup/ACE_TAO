@@ -1,19 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_typecode.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for TypeCodes for various types
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
-#include "be_visitor_typecode.h"
-#include "be_visitor_context.h"
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_typecode.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for TypeCodes for various types
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_array.h"
 #include "be_enum.h"
@@ -21,7 +24,7 @@
 #include "be_exception.h"
 #include "be_field.h"
 #include "be_interface.h"
-#include "be_connector.h"
+#include "be_component.h"
 #include "be_home.h"
 #include "be_module.h"
 #include "be_predefined_type.h"
@@ -37,11 +40,11 @@
 #include "be_eventtype.h"
 #include "be_helper.h"
 #include "be_extern.h"
-#include "be_util.h"
-
 #include "utl_identifier.h"
-
 #include "ast_union_label.h"
+
+#include "be_visitor_typecode.h"
+#include "be_visitor_context.h"
 
 #include "be_visitor_typecode/typecode_decl.cpp"
 #include "be_visitor_typecode/typecode_defn.cpp"
@@ -53,3 +56,7 @@
 #include "be_visitor_typecode/union_typecode.cpp"
 #include "be_visitor_typecode/value_typecode.cpp"
 
+
+ACE_RCSID (be,
+           be_visitor_typecode,
+           "$Id$")

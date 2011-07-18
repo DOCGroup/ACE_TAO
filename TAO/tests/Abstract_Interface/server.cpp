@@ -1,9 +1,12 @@
-// -*- C++ -*-
 // $Id$
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (Abstract_Interface,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -29,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

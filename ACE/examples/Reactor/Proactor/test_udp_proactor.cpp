@@ -1,19 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    test_udp_proactor.cpp
- *
- *  $Id$
- *
- *  This program illustrates how the <ACE_Proactor> can be used to
- *  implement an application that does asynchronous operations using
- *  datagrams.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Roger Tragin <r.tragin@computer.org>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    test_udp_proactor.cpp
+//
+// = DESCRIPTION
+//    This program illustrates how the <ACE_Proactor> can be used to
+//    implement an application that does asynchronous operations using
+//    datagrams.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu> and
+//    Roger Tragin <r.tragin@computer.org>
+//
+// ============================================================================
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
@@ -25,7 +29,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(Proactor, test_udp_proactor, "test_proactor.cpp,v 1.29 2001/02/02 23:41:16 shuston Exp")
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on asynch I/O-capable platforms.
@@ -39,14 +43,11 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 // Keep track of when we're done.
 static int done = 0;
 
-/**
- * @class Receiver
- *
- * @brief This class will receive data from
- * the network connection and dump it to a file.
- */
 class Receiver : public ACE_Service_Handler
 {
+  // = TITLE
+  //     This class will receive data from
+  //     the network connection and dump it to a file.
 public:
   // = Initialization and termination.
   Receiver (void);
@@ -64,8 +65,8 @@ protected:
 private:
   ACE_SOCK_Dgram sock_dgram_;
 
-  /// rd (read dgram): for reading from a UDP socket.
   ACE_Asynch_Read_Dgram rd_;
+  // rd (read dgram): for reading from a UDP socket.
   const char* completion_key_;
   const char* act_;
 };
@@ -215,35 +216,32 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   done++;
 }
 
-/**
- * @class Sender
- *
- * @brief The class will be created by <main>.
- */
 class Sender : public ACE_Handler
 {
+  // = TITLE
+  //     The class will be created by <main>.
 public:
   Sender (void);
   ~Sender (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   // These methods are called by the freamwork
 
-  /// This is called when asynchronous writes from the dgram socket
-  /// complete
   virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  // This is called when asynchronous writes from the dgram socket
+  // complete
 
 private:
 
-  /// Network I/O handle
   ACE_SOCK_Dgram sock_dgram_;
+  // Network I/O handle
 
-  /// wd (write dgram): for writing to the socket
   ACE_Asynch_Write_Dgram wd_;
+  // wd (write dgram): for writing to the socket
 
   const char* completion_key_;
   const char* act_;

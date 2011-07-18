@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_recursive_thread_mutex_t &
-ACE_Recursive_Thread_Mutex::lock (void)
+ACE_Recursive_Thread_Mutex::mutex (void)
 {
   return lock_;
 }

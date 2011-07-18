@@ -1,27 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    MT_Reactor_Timer_Test.cpp
- *
- *  $Id$
- *
- *    This is a simple test that illustrates the timer mechanism of
- *    the reactor scheduling timers, handling expired timers and
- *    cancelling scheduled timers from multiple threads.  No command
- *    line arguments are needed to run the test.
- *
- *
- *  @author Steve Huston <shuston@riverace.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    MT_Reactor_Timer_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test that illustrates the timer mechanism of
+//      the reactor scheduling timers, handling expired timers and
+//      cancelling scheduled timers from multiple threads.  No command
+//      line arguments are needed to run the test.
+//
+// = AUTHOR
+//    Steve Huston <shuston@riverace.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
-
+ACE_RCSID(tests, MT_Reactor_Timer_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -71,16 +74,16 @@ Time_Handler::setup (void)
 int
 Time_Handler::verify_results (void)
 {
-  ACE_TEST_ASSERT (this->timer_id_[0] == Time_Handler::TIMER_FIRED);
-  ACE_TEST_ASSERT (this->timer_id_[1] == Time_Handler::TIMER_FIRED);
-  ACE_TEST_ASSERT (this->timer_id_[2] == Time_Handler::TIMER_CANCELLED);
-  ACE_TEST_ASSERT (this->timer_id_[3] == Time_Handler::TIMER_FIRED);
-  ACE_TEST_ASSERT (this->timer_id_[4] == Time_Handler::TIMER_CANCELLED);
-  ACE_TEST_ASSERT (this->timer_id_[5] == Time_Handler::TIMER_FIRED);
-  ACE_TEST_ASSERT (this->timer_id_[6] == Time_Handler::TIMER_FIRED);
+  ACE_ASSERT (this->timer_id_[0] == Time_Handler::TIMER_FIRED);
+  ACE_ASSERT (this->timer_id_[1] == Time_Handler::TIMER_FIRED);
+  ACE_ASSERT (this->timer_id_[2] == Time_Handler::TIMER_CANCELLED);
+  ACE_ASSERT (this->timer_id_[3] == Time_Handler::TIMER_FIRED);
+  ACE_ASSERT (this->timer_id_[4] == Time_Handler::TIMER_CANCELLED);
+  ACE_ASSERT (this->timer_id_[5] == Time_Handler::TIMER_FIRED);
+  ACE_ASSERT (this->timer_id_[6] == Time_Handler::TIMER_FIRED);
 
   for (int i = 7; i < Time_Handler::TIMER_SLOTS; i++)
-    ACE_TEST_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
+    ACE_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
 
   return 0;
 }
@@ -90,7 +93,7 @@ Time_Handler::svc (void)
 {
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  ACE_TEST_ASSERT (r->cancel_timer (this->timer_id_[2]) == 1);
+  ACE_ASSERT (r->cancel_timer (this->timer_id_[2]) == 1);
   this->timer_id_[2] = Time_Handler::TIMER_CANCELLED;
 
   this->timer_id_[1] = r->schedule_timer(this,
@@ -111,7 +114,7 @@ Time_Handler::svc (void)
                                          (const void *)6,
                                          ACE_Time_Value (12));
 
-  ACE_TEST_ASSERT (r->cancel_timer (this->timer_id_[4]) == 1);
+  ACE_ASSERT (r->cancel_timer (this->timer_id_[4]) == 1);
   this->timer_id_[4] = Time_Handler::TIMER_CANCELLED;
 
   return 0;
@@ -131,10 +134,10 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
               time_tag,
               this->timer_id_[time_tag]));
 
-  ACE_TEST_ASSERT (time_tag > this->prev_timer_);
-  ACE_TEST_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_NOTSET);
-  ACE_TEST_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_CANCELLED);
-  ACE_TEST_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_FIRED);
+  ACE_ASSERT (time_tag > this->prev_timer_);
+  ACE_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_NOTSET);
+  ACE_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_CANCELLED);
+  ACE_ASSERT (this->timer_id_[time_tag] != Time_Handler::TIMER_FIRED);
   this->timer_id_[time_tag] = Time_Handler::TIMER_FIRED;
   this->prev_timer_ = time_tag;
 
@@ -184,7 +187,7 @@ Dispatch_Count_Handler::handle_close (ACE_HANDLE h,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%T (%t): handle_close\n")));
 
-  ACE_TEST_ASSERT (h == this->pipe_.read_handle ()
+  ACE_ASSERT (h == this->pipe_.read_handle ()
               && m == ACE_Event_Handler::READ_MASK);
 
   return 0;
@@ -195,7 +198,7 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
 {
   char c;
 
-  ACE_TEST_ASSERT (this->input_seen_ == 0);
+  ACE_ASSERT (this->input_seen_ == 0);
   this->input_seen_ = 1;
 
   if (ACE::recv (h, &c, 1) != 1)
@@ -204,7 +207,7 @@ Dispatch_Count_Handler::handle_input (ACE_HANDLE h)
                        ACE_TEXT ("recv")),
                       -1);
 
-  ACE_TEST_ASSERT (c == 'z');
+  ACE_ASSERT (c == 'z');
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%T (%t): handle_input\n")));
   // Trigger the <handle_close> hook.
@@ -216,7 +219,7 @@ Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
 {
   ACE_UNUSED_ARG (h);
 
-  ACE_TEST_ASSERT (this->notify_seen_ == 0);
+  ACE_ASSERT (this->notify_seen_ == 0);
   this->notify_seen_ = 1;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -309,7 +312,7 @@ run_main (int, ACE_TCHAR *[])
         break;
 
       // Make sure there were no errors.
-      ACE_TEST_ASSERT (result != -1);
+      ACE_ASSERT (result != -1);
 
       events += result;
     }
@@ -344,8 +347,8 @@ run_main (int, ACE_TCHAR *[])
   other_thread.activate (THR_NEW_LWP | THR_JOINABLE);
   status = ACE_Reactor::instance()->run_reactor_event_loop (time_limit);
   // Should have returned only because the time limit is up...
-  ACE_TEST_ASSERT (status != -1);
-  ACE_TEST_ASSERT (time_limit.sec () == 0);
+  ACE_ASSERT (status != -1);
+  ACE_ASSERT (time_limit.sec () == 0);
 
   status = other_thread.wait ();
   if (status == -1)
@@ -353,8 +356,8 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p, errno is %d\n"),
                   "wait ()",
-                  ACE_ERRNO_GET));
-      ACE_TEST_ASSERT (status != -1);
+                  errno));
+      ACE_ASSERT (status != -1);
     }
 
   status = other_thread.verify_results ();

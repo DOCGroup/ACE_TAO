@@ -2,9 +2,12 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS.h"
 #include "test_i.h"
 
 #include "tao/Strategies/advanced_resource.h"
+
+ACE_RCSID(Nested_Event_Loop, client, "$Id$")
 
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
@@ -92,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Get an object reference from the argument string.
-      object = orb->string_to_object (IOR);
+      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <server> reference.
       server_var server_object = server::_narrow (object.in ());

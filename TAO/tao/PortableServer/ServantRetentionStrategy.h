@@ -62,11 +62,13 @@ namespace TAO
         CORBA::Short priority,
         bool &wait_occurred_restart_call) = 0;
 
+#if !defined (CORBA_E_MICRO)
       virtual void activate_object_with_id (
         const PortableServer::ObjectId &id,
         PortableServer::Servant servant,
         CORBA::Short priority,
         bool &wait_occurred_restart_call) = 0;
+#endif
 
       virtual void deactivate_object (const PortableServer::ObjectId &id) = 0;
 
@@ -115,9 +117,6 @@ namespace TAO
         PortableServer::Servant servant) = 0;
 
       virtual ::PortableServer::ServantRetentionPolicyValue type() const = 0;
-
-      virtual TAO_Active_Object_Map * get_active_object_map() const = 0;
-
     };
   }
 }

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 
@@ -7,6 +6,10 @@
 #include "FOO_Client_ORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
+
+ACE_RCSID (IORInterceptor,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -72,8 +75,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       server->shutdown ();
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

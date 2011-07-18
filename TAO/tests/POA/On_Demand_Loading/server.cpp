@@ -1,19 +1,21 @@
+// $Id$
 
+//============================================================================
+//
+// = FILENAME
+//     server.cpp
+//
+// = DESCRIPTION
+//     Server application to test the Servant Activator and Servant Locator.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
 //=============================================================================
-/**
- *  @file     server.cpp
- *
- *  $Id$
- *
- *   Server application to test the Servant Activator and Servant Locator.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
 
 #include "Server_Manager.h"
+
+ACE_RCSID(On_Demand_Loading, server, "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

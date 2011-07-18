@@ -3,6 +3,8 @@
 //
 #include "Coordinator.h"
 
+ACE_RCSID(Big_Oneways, Coordinator, "$Id$")
+
 Coordinator::Coordinator (CORBA::ULong peer_count)
   : peers_ (0)
   , peer_count_ (0)
@@ -54,7 +56,6 @@ Coordinator::shutdown_all_peers (void)
       try
         {
           (*i)->shutdown ();
-          (*i) = Test::Peer::_nil ();
         }
       catch (const CORBA::Exception& ex)
         {

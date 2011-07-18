@@ -4,9 +4,11 @@
 #include "RootPanel.h"
 #include "NavUnit.h"
 
+
 AddNavUnitCmd::AddNavUnitCmd()
 {
 }
+
 
 AddNavUnitCmd *
 AddNavUnitCmd::create(RootPanel *form, NavUnit *unit)
@@ -16,6 +18,7 @@ AddNavUnitCmd::create(RootPanel *form, NavUnit *unit)
   cmd->unit_ = unit;
   return cmd;
 }
+
 
 int
 AddNavUnitCmd::execute(void * /* context */)

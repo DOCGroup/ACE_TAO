@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           operation,
+           "$Id$")
 
 // ************************************************************
 // Generic Operation visitor
@@ -136,29 +146,17 @@ be_visitor_operation::gen_stub_operation_body (
     be_type *return_type
   )
 {
-  UTL_Scope *s =
-    this->ctx_->attribute ()
-      ? this->ctx_->attribute ()->defined_in ()
-      : node->defined_in ();
+  be_interface *intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
-
-  if (intf == 0)
+  if (!intf)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
-
-      if (pt == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_operation::")
-                             ACE_TEXT ("gen_stub_operation_body - ")
-                             ACE_TEXT ("bad scope\n")),
-                            -1);
-        }
-      else
-        {
-          intf = this->ctx_->interface ();
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_stub_operation_body - "
+                         "bad interface scope\n"),
+                        -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -195,7 +193,6 @@ be_visitor_operation::gen_stub_operation_body (
           << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
-
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
             *os << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
@@ -222,7 +219,7 @@ be_visitor_operation::gen_stub_operation_body (
   // Declare the argument helper classes.
   this->gen_stub_body_arglist (node, os);
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
       << "&_tao_retval";
@@ -251,7 +248,11 @@ be_visitor_operation::gen_stub_operation_body (
                         -1);
     }
 
-  *os << be_nl_2
+  // Use the name without the possible '_cxx_' here.
+  ACE_CDR::ULong tmp_len =
+    ACE_OS::strlen (node->original_local_name ()->get_string ());
+
+  *os << be_nl << be_nl
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
       << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
@@ -259,37 +260,27 @@ be_visitor_operation::gen_stub_operation_body (
       << node->argument_count () + 1 << "," << be_nl
       << "\"";
 
-  /// This logic handles the implied IDL for attributes.
-  /// The AMI ReplyHandler version of generated get/set ops
-  /// for attributes doesn't have the leading underscore.
-  bool const escape = (node->is_attr_op () && !intf->is_ami_rh ());
-  ACE_CString opname (escape ? "_" : "");
-
-  /// This logic handles regular IDL for attributes. The AMI
-  /// backend preprocessing visitor doesn't set the context
-  /// member for attributes, but sets flags in the interface
-  /// and operation nodes instead.
+  // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
     {
+      // If we are a attribute node, add th elength of the operation
+      // name.
+      tmp_len += 5;
+
       // Now check if we are a "get" or "set" operation.
       if (node->nmembers () == 1)
         {
-          opname += "_set_";
+          *os << "_set_";
         }
       else
         {
-          opname += "_get_";
+          *os << "_get_";
         }
     }
 
-  opname += node->original_local_name ()->get_string ();
-
-  /// Some compilers can't resolve the stream operator overload.
-  const char *lname = opname.c_str ();
-  ACE_CDR::ULong len = opname.length ();
-
-  *os << lname << "\"," << be_nl
-      << len << "," << be_nl;
+  // original_local_name() strips off the leading '_cxx_' if any.
+  *os << node->original_local_name () << "\"," << be_nl
+      << tmp_len << "," << be_nl;
 
   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
     {
@@ -309,7 +300,7 @@ be_visitor_operation::gen_stub_operation_body (
   *os << be_uidt_nl
       << ");" << be_uidt;
 
-  *os << be_nl_2;
+  *os << be_nl << be_nl;
 
   // Since oneways cannot raise user exceptions, we have that
   // case covered as well.
@@ -328,7 +319,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (!this->void_return_type (return_type))
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "return _tao_retval.retn ();";
     }
 
@@ -461,13 +452,11 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
-  ACE_CDR::ULong bound = 0;
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *s =
-        AST_String::narrow_from_decl (bt->unaliased_type  ());
-      bound = s->max_size ()->ev ()->u.ulval;
+      AST_String *s = AST_String::narrow_from_decl (bt->unaliased_type  ());
+      ACE_CDR::ULong bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
       // last line of this method, whether bt is a typedef or not.
@@ -506,8 +495,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt =
-        AST_PredefinedType::narrow_from_decl (ut);
+      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (ut);
 
       switch (pdt->pt ())
         {
@@ -530,43 +518,13 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
             break;
         }
     }
-  else if (nt != AST_Decl::NT_string)
-    {
-      // We are unbounded, since the bounded case is handled
-      // above. In this case, we want to generate 'char *'
-      // without the leading double colon.
-      *os << "::";
-    }
-
-  /// For now, keep a list of system operation or arg names
-  /// that may not be remapped. May decide later to regnerate
-  /// ORB code for alt mapping as well.
-  ACE_CString repo_id (scope->repoID ());
-  bool sys_val = (repo_id == "IDL:repository_id:1.0");
-
-  // For types other than the 4 above, don't unalias the type name
-  // in case it is a sequence or array.
-  if (nt == AST_Decl::NT_string && bound == 0)
-    {
-      if (be_global->alt_mapping () && !sys_val)
-        {
-          *os << "std::string";
-        }
-      else
-        {
-          *os << "char *";
-        }
-    }
-  else if (nt == AST_Decl::NT_sequence)
-    {
-      // In some cases (e.g., if the node is imported)
-      // the underlying sequence is still named 'sequence'.
-      *os << bt->name ();
-    }
   else
     {
-      *os << ut->name ();
+      *os << "::";
     }
+  // For types other than the 4 above, don't unalias the type name
+  // in case it is a sequence or array.
+  *os << bt->name ();
 
   if (nt == AST_Decl::NT_array)
     {

@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     ctr64.cpp
- *
- *  $Id$
- *
- *  Implementation for Counter64 ( 64 bit counter class).
- *
- *
- *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     ctr64.cpp
+//
+// = DESCRIPTION
+//  Implementation for Counter64 ( 64 bit counter class).
+//
+// = AUTHOR
+//   Peter E Mellquist
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -30,6 +33,8 @@
 
 #include "asnmp/ctr64.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID(asnmp, ctr64, "$Id$")
 
 #define MAX32 4294967295u
 

@@ -88,18 +88,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   /// This method computes the largest integral value not greater than x.
-  template <typename T>
-  T floor (T x)
-  {
-    return ACE_STD_NAMESPACE::floor (x);
-  }
+  ACE_NAMESPACE_INLINE_FUNCTION
+  double floor (double x);
 
   /// This method computes the smallest integral value not less than x.
-  template <typename T>
-  T ceil (T x)
-  {
-    return ACE_STD_NAMESPACE::ceil (x);
-  }
+  ACE_NAMESPACE_INLINE_FUNCTION
+  double ceil (double x);
 
   /// This method computes the base-2 logarithm of x.
   ACE_NAMESPACE_INLINE_FUNCTION

@@ -1,10 +1,12 @@
-// $Id$
-
 #include "tao/Utils/PolicyList_Destroyer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Utils/PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (Utils,
+           PolicyList_Deactivator,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,23 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    driver.cpp
- *
- *  $Id$
- *
- *  Driver program
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    driver.cpp
+//
+// = DESCRIPTION
+//    Driver program
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "client.h"
 #include "driver.h"
 #include "results.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID (Param_Test,
+           driver,
+           "$Id$")
 
 // This function runs the test (main program)
 int

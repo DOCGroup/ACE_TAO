@@ -8,19 +8,28 @@
 // with the feature set to 0.
 
 feature(vc8_avoid_dominance_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9) {
     DisableSpecificWarnings += 4250
+  }
+  specific(nmake) {
+    compile_flags += /wd4250
   }
 }
 
 feature(!vc8_stl_deprecated_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9) {
     DisableSpecificWarnings += 4996
+  }
+  specific(nmake) {
+    compile_flags += /wd4996
   }
 }
 
 feature(vc8_avoid_unimpl_exception_spec_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9) {
     DisableSpecificWarnings += 4290
+  }
+  specific(nmake) {
+    compile_flags += /wd4290
   }
 }

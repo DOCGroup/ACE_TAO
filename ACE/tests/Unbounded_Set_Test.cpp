@@ -1,26 +1,29 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Unbounded_Set_Test.cpp
- *
- *  $Id$
- *
- *    This test illustrates the use of ACE_Unbounded_Set.
- *    No command line arguments are needed to run the test.
- *
- *
- *  @author Rudolf Weber <rfweber@tesionmail.de>
- *  @author ace/tests integration <Oliver.Kellogg@sysde.eads.net>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Unbounded_Set_Test.cpp
+//
+// = DESCRIPTION
+//      This test illustrates the use of ACE_Unbounded_Set.
+//      No command line arguments are needed to run the test.
+//
+// = AUTHOR
+//    Rudolf Weber <rfweber@tesionmail.de>,
+//    ace/tests integration <Oliver.Kellogg@sysde.eads.net>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include <ace/Unbounded_Set.h>
 #include <ace/Auto_Ptr.h>
 #include <ace/SString.h>
 
-
+ACE_RCSID(tests, Unbounded_Set_Test, "$Id$")
 
 struct MyNode
 {

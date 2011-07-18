@@ -14,6 +14,8 @@
 #include "orbsvcs/Notify/Object.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Object::TAO_Notify_Object (void)

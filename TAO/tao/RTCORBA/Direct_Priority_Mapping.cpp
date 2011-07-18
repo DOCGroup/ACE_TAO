@@ -7,6 +7,10 @@
 #include "tao/RTCORBA/Direct_Priority_Mapping.h"
 #include "ace/Sched_Params.h"
 
+ACE_RCSID(RTCORBA,
+          Direct_Priority_Mapping,
+          "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Direct_Priority_Mapping::TAO_Direct_Priority_Mapping (long)

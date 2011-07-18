@@ -2,7 +2,6 @@
 
 #include "Notify_Structured_Push_Consumer.h"
 #include "Notify_Test_Client.h"
-#include "ace/OS_NS_unistd.h"
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
   const char* name,
@@ -11,19 +10,11 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
   : name_ (name),
   expected_ (expected),
   count_ (0),
-  delay_count_ (0),
-  delay_period_ (5),
   client_ (client)
 {
   this->client_.consumer_start (this);
 }
 
-void
-Notify_Structured_Push_Consumer::set_delay_parameters (unsigned int delay_count, unsigned long delay_period)
-{
-  this->delay_count_ = delay_count;
-  this->delay_period_ = delay_period;
-}
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (
@@ -32,11 +23,6 @@ Notify_Structured_Push_Consumer::push_structured_event (
   ACE_DEBUG((LM_DEBUG, "-"));
 
   ++count_;
-
-  if (this->delay_count_ != 0 && this->count_ % this->delay_count_ == 0)
-    {
-      ACE_OS::sleep (this->delay_period_);
-    }
 
   if (this->count_ > this->expected_)
   {

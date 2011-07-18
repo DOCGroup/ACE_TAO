@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    TSS_Obj.h
- *
- *  $Id$
- *
- *   This program tests various features of ACE_Thread and the
- *   thread-specific storage variant of <ACE_SingletonEx>.
- *
- *
- *  @author Prashant Jain and Doug Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    TSS_Test.cpp
+//
+// = DESCRIPTION
+//     This program tests various features of ACE_Thread and the
+//     thread-specific storage variant of <ACE_SingletonEx>.
+//
+// = AUTHOR
+//    Prashant Jain and Doug Schmidt
+//
+// ============================================================================
 
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
@@ -21,12 +24,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/**
- * @class TSS_Obj
- *
- * @brief This object is stored in thread-specific storage.
- */
 class TSS_Obj
+  // = TITLE
+  //     This object is stored in thread-specific storage.
 {
 public:
   TSS_Obj (void);

@@ -11,7 +11,12 @@ require Cwd;
 ###########
 ###### Sanity Checks
 ##########
-
+my $hostname;
+chomp ($hostname = $ENV{'HOSTNAME'}  ||  `uname -n`);
+unless ("$hostname" eq 'naboo') {
+  #### For efficiency sake . . .
+  die "$0: must run on host naboo.dre.vanderbilt.edu\n";
+}
 my  $perl_path = '/usr/bin/perl';
 
 my $status= 0;
@@ -21,7 +26,14 @@ my $status= 0;
 
 my  $doxy_path = '/usr/local/bin';
 
+my $doxy_version = '1.5.8';
+
+&can_run($doxy_path.'/doxygen --version | grep '.$doxy_version.' >/dev/null') ||
+  die "$0: doxygen path or version incorrect, please fix the script\n";
+
 $ENV{'PATH'} = $ENV{'PATH'}.':'.$doxy_path;
+
+
 
 print "Starting doxygen document generation \n";
 
@@ -32,7 +44,7 @@ my $egrep = 'egrep';
 my $find = 'find';
 my $gzip = 'gzip';
 my $bzip = 'bzip2';
-my $tar = 'tar';
+my $make = 'make -f Release -s';
 my $mv = 'mv -f';
 my $scp = 'scp ';
 my $rm = 'rm -f';
@@ -53,6 +65,11 @@ my $bin_files =
     "\"\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|" .
     "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\"";
 
+my $dest = 'bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution';
+my $release_files = '';
+
+chomp ($release_files = `$make show_release_files`);
+
 ########
 ######## Main execution thread.
 ########
@@ -63,17 +80,16 @@ my $build_command =
     "$find ./html $release_filter | $cpio -o -H tar | " .
     "$gzip -9 > ACE-html.tar.gz && ".
     "$find ./html $release_filter | $cpio -o -H tar | " .
-    "$bzip -9 > ACE-html.tar.bz2 && ".
+   "$bzip -9 > ACE-html.tar.bz2 && ".
     "$find ./html $release_filter | $egrep -v $bin_files | " .
     "zip ACE-html.zip -q9@ &&" .
     "md5sum ACE-html.tar.gz > ACE-html.tar.gz.md5 &&" .
     "md5sum ACE-html.tar.bz2 > ACE-html.tar.bz2.md5 &&" .
-    "md5sum ACE-html.zip > ACE-html.zip.md5;";
+    "md5sum ACE-html.zip > ACE-html.zip.md5 &&" .
+    "$scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 $dest;";
 
 &ex ($build_command)
-    && die "$0: failed to package ACE man pages\n";
-
-print "Finished doxygen document generation \n";
+    && die "$0: failed to move ACE man pages to $dest\n";
 
 exit $status;
 

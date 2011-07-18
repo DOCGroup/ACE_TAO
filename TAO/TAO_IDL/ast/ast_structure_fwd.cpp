@@ -10,8 +10,18 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_StructureFwd::NT = AST_Decl::NT_struct_fwd;
+ACE_RCSID( ast,
+           ast_structure_fwd,
+           "$Id$")
+
+AST_StructureFwd::AST_StructureFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    pd_full_definition (0),
+    is_defined_ (false)
+{
+}
 
 AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
                                     UTL_ScopedName *n)
@@ -56,8 +66,8 @@ AST_StructureFwd::full_definition (void)
 void
 AST_StructureFwd::set_full_definition (AST_Structure *nfd)
 {
-  this->pd_full_definition->destroy ();
   delete this->pd_full_definition;
+  this->pd_full_definition = 0;
   this->pd_full_definition = nfd;
 
   // In case it's not already set.
@@ -89,27 +99,6 @@ AST_StructureFwd::destroy (void)
   this->AST_Type::destroy ();
 }
 
-bool
-AST_StructureFwd::is_fwd (void)
-{
-  return true; // This is a fwd declared type
-}
 
-// We don't actually want the forward declaration,
-// but want to return the full definition member,
-// whether defined yet or not.
-AST_Decl *
-AST_StructureFwd::adjust_found (
-  bool ignore_fwd,
-  bool full_def_only)
-{
-  if (ignore_fwd)
-    {
-      AST_Structure *s = this->full_definition ();
-      return (full_def_only && !s->is_defined () ? 0 : s);
-    }
-
-  return this;
-}
 
 IMPL_NARROW_FROM_DECL (AST_StructureFwd)

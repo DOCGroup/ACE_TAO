@@ -29,6 +29,12 @@
 # include "tao/Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
+
+ACE_RCSID (tao,
+           Synch_Invocation,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -143,7 +149,7 @@ namespace TAO
         countdown.update ();
 
         // For some strategies one may want to release the transport
-        // back to  cache. If the idling is successful let the
+        // back to  cache. If the idling is successfull let the
         // resolver about that.
         if (transport->idle_after_send ())
           this->resolver_.transport_released ();
@@ -248,20 +254,17 @@ namespace TAO
      * exception. Success alone is returned through the return value.
      */
 
-    bool const
-      expired = (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
-    if (expired)
-      errno = ETIME;
-    int const
-      reply_error = expired ? -1 :
-        this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
+    int const reply_error =
+      this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
 
     if (TAO_debug_level > 0 && max_wait_time)
       {
+        CORBA::ULong const msecs = max_wait_time->msec ();
+
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
                     "timeout after recv is <%u> status <%d>\n",
-                    max_wait_time->msec (),
+                    msecs,
                     reply_error));
       }
 
@@ -497,10 +500,12 @@ namespace TAO
 
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
-    // We must manage the memory allocated
-    // by the call above to alloc().
+    // If we have native exceptions, we must manage the memory allocated
+    // by the call above to alloc(). Otherwise the Environment class
+    // manages the memory.
     auto_ptr<CORBA::Exception> safety (exception);
 
+    // Direct throw because we don't have the try_ENV.
     exception->_raise ();
 
     return TAO_INVOKE_USER_EXCEPTION;
@@ -533,56 +538,34 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    bool do_forward = false;
-    int foe_kind = this->stub ()->orb_core ()->orb_params ()->forward_once_exception();
-
-    if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES
-        && (((foe_kind & TAO::FOE_TRANSIENT) == 0
-              && ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
-            ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
-            ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
-            ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
-              && ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) ||
-            (this->stub ()->orb_core ()->orb_params ()->forward_invocation_on_object_not_exist ()
-             && ACE_OS_String::strcmp (type_id.in (),
-                              "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
-            (do_forward = ! this->stub ()->forwarded_on_exception ()
-             && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
-                 (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
-                        && (ACE_OS_String::strcmp (type_id.in (),
-                                "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0))))))
+    // Special handling for non-fatal system exceptions.
+    //
+    // Note that we are careful to retain "at most once" semantics.
+    if ((ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 ||
+         ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
+         ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
+         ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) &&
+        (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
       {
-        // If we are here then possibly we'll need a restart.
-        mon.set_status (TAO_INVOKE_RESTART);
+        {
+          // Start the special case for FTCORBA.
+          /**
+           * There has been a unanimous view that this is not the
+           * right way to do things. But a need to be compliant is
+           * forcing us into this.
+           */
+          Invocation_Status const s =
+            this->stub ()->orb_core ()->service_raise_transient_failure (
+              this->details_.request_service_context ().service_info (),
+              this->resolver_.profile ());
 
-        if (do_forward)
-          this->stub ()->forwarded_on_exception (true);
-
-        // Start the special case for FTCORBA.
-        /**
-          * There has been a unanimous view that this is not the
-          * right way to do things. But a need to be compliant is
-          * forcing us into this.
-          */
-        Invocation_Status const s =
-          this->stub ()->orb_core ()->service_raise_transient_failure (
-            this->details_.request_service_context ().service_info (),
-            this->resolver_.profile ());
-
-        if (s == TAO_INVOKE_RESTART)
-          return s;
+          if (s == TAO_INVOKE_RESTART)
+            return s;
+        }
 
         // Attempt profile retry.
         /**
@@ -600,7 +583,6 @@ namespace TAO
           }
 
         // Fall through and raise an exception.
-        mon.set_status (TAO_INVOKE_FAILURE);
       }
 
     CORBA::SystemException *ex = TAO::create_system_exception (type_id.in ());

@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ub_string.cpp
- *
- *  $Id$
- *
- *  tests unbounded strings
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    ub_string.cpp
+//
+// = DESCRIPTION
+//    tests unbounded strings
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "ub_string.h"
+
+ACE_RCSID (Param_Test,
+           ub_string,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Unbounded_String

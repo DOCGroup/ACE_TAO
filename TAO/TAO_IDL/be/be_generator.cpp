@@ -1,4 +1,5 @@
 // $Id$
+
 /*
 
 COPYRIGHT
@@ -80,18 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
-#include "be_porttype.h"
-#include "be_mirror_port.h"
-#include "be_connector.h"
-#include "be_template_module.h"
-#include "be_template_module_inst.h"
-#include "be_template_module_ref.h"
-#include "be_param_holder.h"
-#include "be_provides.h"
-#include "be_uses.h"
-#include "be_publishes.h"
-#include "be_emits.h"
-#include "be_consumes.h"
 #include "be_union.h"
 #include "be_union_fwd.h"
 #include "be_structure.h"
@@ -113,10 +102,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_typedef.h"
 #include "be_native.h"
 #include "be_factory.h"
-#include "be_finder.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
 #include "ace/config-all.h"
+
+ACE_RCSID (be,
+           be_generator,
+           "$Id$")
 
 AST_Root *
 be_generator::create_root (UTL_ScopedName *n)
@@ -146,61 +138,71 @@ AST_Module *
 be_generator::create_module (UTL_Scope *s,
                              UTL_ScopedName *n)
 {
+  // We create this first so if we find a module with the
+  // same name from an included file, we can add its
+  // members to the new module's scope.
   AST_Module *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_module (n),
+                  0);
+
 
   // Check for another module of the same name in this scope.
   for (UTL_ScopeActiveIterator iter (s, UTL_Scope::IK_decls);
        !iter.is_done ();
        iter.next ())
     {
-      // Can't just check node type here, since it could be a
-      // template module or template module instantiation.
-      AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
+      AST_Decl *d = iter.item ();
 
-      if (m && m->local_name ()->compare (n->last_component ()))
+      if (d->node_type () == AST_Decl::NT_module)
         {
-          // Create this new module with referance to the
-          // "first" previous module found in scope.
-          ACE_NEW_RETURN (retval, be_module (n, m), 0);
-          retval->prefix (const_cast<char *> (m->prefix ()));
-          return retval;
-        }
-    }
-
-  // Since the scope didn't contain the same module name, it
-  // doesn't mean that we haven't see it before. If the scope
-  // is itself a module, and has been previously opened, any
-  // of the previous openings may contain a previous opening
-  // of the module we're creating.
-  AST_Module *prev_module = AST_Module::narrow_from_scope (s);
-  if (prev_module)
-    {
-      while (!!(prev_module = prev_module->previous_opening ()))
-        {
-          for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
-               !iter.is_done ();
-               iter.next ())
+          // Does it have the same name as the one we're
+          // supposed to create.
+          if (d->local_name ()->compare (n->last_component ()))
             {
-              AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
-              if (m && m->local_name ()->compare (n->last_component ()))
-                {
-                  // Create this new module with referance to the
-                  // "first" previous module found in scope.
-                  ACE_NEW_RETURN (retval, be_module (n, m), 0);
-                  return retval;
-                }
+              AST_Module *m = AST_Module::narrow_from_decl (d);
+
+              // Get m's previous_ member, plus all it's decls,
+              // into the new modules's previous_ member.
+              retval->add_to_previous (m);
+              retval->prefix (const_cast<char *> (m->prefix ()));
             }
         }
     }
 
-  // There is no previous module to be found
-  ACE_NEW_RETURN (retval, be_module (n), 0);
+  // If this scope is itself a module, and has been previously
+  // opened, the previous opening may contain a previous opening
+  // of the module we're creating.
+  AST_Decl *d = ScopeAsDecl (s);
+  AST_Decl::NodeType nt = d->node_type ();
+
+  if (nt == AST_Decl::NT_module || nt == AST_Decl::NT_root)
+    {
+      AST_Module *m = AST_Module::narrow_from_decl (d);
+
+      // AST_Module::previous_ is a set, so it contains each
+      // entry only once, but previous_ will contain the decls
+      // from all previous openings. See comment in
+      // AST_Module::add_to_previous() body.
+      d = m->look_in_previous (n->last_component ());
+
+      if (d != 0)
+        {
+          if (d->node_type () == AST_Decl::NT_module)
+            {
+              m = AST_Module::narrow_from_decl (d);
+
+              retval->add_to_previous (m);
+            }
+        }
+    }
+
   return retval;
 }
 
 AST_Interface *
 be_generator::create_interface (UTL_ScopedName *n,
-                                AST_Type **ih,
+                                AST_Interface **ih,
                                 long nih,
                                 AST_Interface **ih_flat,
                                 long nih_flat,
@@ -217,15 +219,6 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 l,
                                 a),
                   0);
-
-  /// Trigger this interation over the included pragmas when the
-  /// first local interface is seen in the main file. In an
-  /// executor IDL file (the case we want), this happens near the
-  /// top. In other files, it will do no harm.
-  if (l && idl_global->in_main_file ())
-    {
-      FE_Utils::create_implied_ami_uses_stuff ();
-    }
 
   return retval;
 }
@@ -268,14 +261,14 @@ be_generator::create_valuebox (UTL_ScopedName *n,
 
 AST_ValueType *
 be_generator::create_valuetype (UTL_ScopedName *n,
-                                AST_Type **inherits,
+                                AST_Interface **inherits,
                                 long n_inherits,
-                                AST_Type *inherits_concrete,
+                                AST_ValueType *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Type **supports_list,
+                                AST_Interface **supports_list,
                                 long n_supports,
-                                AST_Type *supports_concrete,
+                                AST_Interface *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
                                 bool is_custom)
@@ -328,14 +321,14 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 be_generator::create_eventtype (UTL_ScopedName *n,
-                                AST_Type **inherits,
+                                AST_Interface **inherits,
                                 long n_inherits,
-                                AST_Type *inherits_concrete,
+                                AST_ValueType *inherits_concrete,
                                 AST_Interface **inherits_flat,
                                 long n_inherits_flat,
-                                AST_Type **supports_list,
+                                AST_Interface **supports_list,
                                 long n_supports,
-                                AST_Type *supports_concrete,
+                                AST_Interface *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
                                 bool is_custom)
@@ -389,7 +382,7 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
-                                AST_Type **supports_list,
+                                AST_Interface **supports_list,
                                 long n_supports,
                                 AST_Interface **supports_flat,
                                 long n_supports_flat)
@@ -431,8 +424,8 @@ AST_Home *
 be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
-                           AST_Type *primary_key,
-                           AST_Type **supports_list,
+                           AST_ValueType *primary_key,
+                           AST_Interface **supports_list,
                            long n_supports,
                            AST_Interface **supports_flat,
                            long n_supports_flat)
@@ -710,17 +703,6 @@ be_generator::create_expr (ACE_CDR::Long l)
 }
 
 AST_Expression *
-be_generator::create_expr (ACE_CDR::LongLong l)
-{
-  be_expression *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_expression (l),
-                  0);
-
-  return retval;
-}
-
-AST_Expression *
 be_generator::create_expr (ACE_CDR::Boolean b)
 {
   be_expression *retval = 0;
@@ -732,34 +714,13 @@ be_generator::create_expr (ACE_CDR::Boolean b)
 }
 
 AST_Expression *
-be_generator::create_expr (ACE_CDR::ULong l)
-{
-  be_expression *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_expression (l),
-                  0);
-
-  return retval;
-}
-
-AST_Expression *
-be_generator::create_expr (ACE_CDR::ULongLong l)
-{
-  be_expression *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_expression (l),
-                  0);
-
-  return retval;
-}
-
-AST_Expression *
 be_generator::create_expr (ACE_CDR::ULong l,
                            AST_Expression::ExprType t)
 {
   be_expression *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_expression (l, t),
+                  be_expression (l,
+                                 t),
                   0);
 
   return retval;
@@ -950,194 +911,3 @@ be_generator::create_factory (UTL_ScopedName *n)
 
   return retval;
 }
-
-AST_Finder *
-be_generator::create_finder (UTL_ScopedName *n)
-{
-  be_finder *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_finder (n),
-                  0);
-
-  return retval;
-}
-
-AST_PortType *
-be_generator::create_porttype (UTL_ScopedName *n)
-{
-  be_porttype *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_porttype (n),
-                  0);
-
-  return retval;
-}
-
-AST_Provides *
-be_generator::create_provides (UTL_ScopedName *n,
-                               AST_Type *provides_type)
-{
-  be_provides *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_provides (n,
-                               provides_type),
-                  0);
-
-  return retval;
-}
-
-AST_Uses *
-be_generator::create_uses (UTL_ScopedName *n,
-                           AST_Type *uses_type,
-                           bool is_multiple)
-{
-  be_uses *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_uses (n,
-                           uses_type,
-                           is_multiple),
-                  0);
-
-  return retval;
-}
-
-AST_Publishes *
-be_generator::create_publishes (UTL_ScopedName *n,
-                                AST_Type *publishes_type)
-{
-  be_publishes *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_publishes (n,
-                                publishes_type),
-                  0);
-
-  return retval;
-}
-
-AST_Emits *
-be_generator::create_emits (UTL_ScopedName *n,
-                            AST_Type *emits_type)
-{
-  be_emits *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_emits (n,
-                            emits_type),
-                  0);
-
-  return retval;
-}
-AST_Consumes *
-be_generator::create_consumes (UTL_ScopedName *n,
-                               AST_Type *consumes_type)
-{
-  be_consumes *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_consumes (n,
-                               consumes_type),
-                  0);
-
-  return retval;
-}
-
-AST_Extended_Port *
-be_generator::create_extended_port (
-  UTL_ScopedName *n,
-  AST_PortType *porttype_ref)
-{
-  be_extended_port *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_extended_port (n,
-                                    porttype_ref),
-                  0);
-
-  return retval;
-}
-
-AST_Mirror_Port *
-be_generator::create_mirror_port (
-  UTL_ScopedName *n,
-  AST_PortType *porttype_ref)
-{
-  be_mirror_port *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_mirror_port (n,
-                                  porttype_ref),
-                  0);
-
-  return retval;
-}
-
-AST_Connector *
-be_generator::create_connector (
-  UTL_ScopedName *n,
-  AST_Connector *base_connector)
-{
-  be_connector *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_connector (n,
-                                base_connector),
-                  0);
-
-  return retval;
-}
-
-AST_Template_Module *
-be_generator::create_template_module (
-  UTL_ScopedName *n,
-  FE_Utils::T_PARAMLIST_INFO *template_params)
-{
-  be_template_module *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_template_module (n,
-                                      template_params),
-                  0);
-
-  return retval;
-}
-
-AST_Template_Module_Inst *
-be_generator::create_template_module_inst (
-  UTL_ScopedName *n,
-  AST_Template_Module *ref,
-  FE_Utils::T_ARGLIST *template_args)
-{
-  be_template_module_inst *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_template_module_inst (n,
-                                           ref,
-                                           template_args),
-                  0);
-
-  return retval;
-}
-
-AST_Template_Module_Ref *
-be_generator::create_template_module_ref (
-  UTL_ScopedName *n,
-  AST_Template_Module *ref,
-  UTL_StrList *param_refs)
-{
-  be_template_module_ref *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_template_module_ref (n,
-                                          ref,
-                                          param_refs),
-                  0);
-
-  return retval;
-}
-
-AST_Param_Holder *
-be_generator::create_param_holder (
-  UTL_ScopedName *parameter_name,
-  FE_Utils::T_Param_Info *info)
-{
-  be_param_holder *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  be_param_holder (parameter_name,
-                                   info),
-                  0);
-
-  return retval;
-}
-

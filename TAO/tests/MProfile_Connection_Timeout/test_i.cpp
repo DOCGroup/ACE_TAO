@@ -1,7 +1,10 @@
-// -*- C++ -*-
 // $Id$
 
 #include "test_i.h"
+
+ACE_RCSID(MProfile_Connection_Timeout,
+          test_i,
+          "$Id$")
 
 // part of the famous caesium 133 atom transition for a
 // second. Cannot represent the last part since the value gets out of

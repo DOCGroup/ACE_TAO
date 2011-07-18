@@ -1,7 +1,11 @@
-// $Id$
-
 #include "IORInterceptor.h"
 #include "testC.h"
+
+
+ACE_RCSID (PolicyFactory,
+           IORInterceptor,
+           "$Id$")
+
 
 IORInterceptor::IORInterceptor (void)
   : success_ (false)

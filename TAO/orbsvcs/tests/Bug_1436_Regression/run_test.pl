@@ -2,143 +2,88 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id$
 # -*- perl -*-
+# $Id$
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ifr_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $tao_ifr = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+use PerlACE::Run_Test;
 
 # The location of the implementation repository binaries
-my $ifr_bin_path = "../../IFR_Service";
+$ifr_bin_path = "../../IFR_Service";
 
 # The location of the tao_ifr IFR utility
-my $tao_ifr_bin_path = "$ENV{ACE_ROOT}/bin";
+$tao_ifr_bin_path = "$ENV{ACE_ROOT}/bin";
 
-# IOR file
-my $ior_file = "ifr.ior";
+# IOR file names
+$ifr_ior_file = PerlACE::LocalFile("ifr.ior");
 
 # IDL File
-my $idl_file = "test.idl";
+$idl_file = PerlACE::LocalFile("test.idl");
 
 #Log file
-my @result_files = ();
-for ($i = 0; $i < 2; $i++) {
-    $result_files[$i] = "test_result_$i.log";
-}
+$result_file = PerlACE::LocalFile("test_result.log");
 
-#Files specification
-$tao_ifr_idlfile = $tao_ifr->LocalFile($idl_file);
-$tao_ifr_iorfile = $tao_ifr->LocalFile($ior_file);
+$IFRSERVICE = new PerlACE::Process("$ifr_bin_path/IFR_Service");
+$TAO_IFR    = new PerlACE::Process("$tao_ifr_bin_path/tao_ifr");
 
-$ifr_service_iorfile = $ifr_service->LocalFile($ior_file);
+sub test_body
+{
+   unlink $ifr_ior_file;
 
-$tao_ifr->DeleteFile($ior_file);
-$ifr_service->DeleteFile($ior_file);
+   # Start the IFR Service to generate an IOR file for the tao_ifr to use...
+   $IFRSERVICE->Arguments("-o $ifr_ior_file ");
+   $IFRSERVICE->Spawn ();
 
-$ifr_service_result_file = $ifr_service->LocalFile ($result_files[0]);
-$tao_ifr_result_file     = $ifr_service->LocalFile ($result_files[1]);
-$ifr_service->DeleteFile ($result_files[0]);
-$tao_ifr->DeleteFile ($result_files[1]);
+   if (PerlACE::waitforfile_timed ($ifr_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
+   {
+      print STDERR "ERROR: cannot find $ifr_ior_file\n";
+      $IFRSERVICE->Kill ();
+      return 1;
+   }
 
-$IFRSERVICE = $ifr_service->CreateProcess("$ifr_bin_path/tao_ifr_service", "-ORBdebuglevel $debug_level ".
-                                         "-ORBLogFile $ifr_service_result_file ".
-                                         "-o $ifr_service_iorfile");
-$TAOIFR = $tao_ifr->CreateProcess("$tao_ifr_bin_path/tao_ifr", "-ORBLogFile $tao_ifr_result_file ".
-                                         "-ORBInitRef InterfaceRepository=file://$tao_ifr_iorfile ".
-                                         "-Cw $tao_ifr_idlfile");
+   # Redirect STDERR to a log file so that
+   # we can make sure that we got a warning
+   open(SAVEERR, ">&STDERR");
+   open(STDERR, ">$result_file");
 
-sub analyse_results {
-    my $result_file = $_[0];
+   $TAO_IFR->Arguments("-ORBInitRef InterfaceRepository=file://$ifr_ior_file -Cw $idl_file");
+   $TAO_IFR->SpawnWaitKill (30);
 
-    if (! -r $result_file) {
-        print STDERR "ERROR: cannot find $result_file\n";
-        return 1;
-    }
+   # Close the log file and restore STDERR
+   close(STDERR);
+   open(STDERR, ">&SAVEERR");
 
-    my $match = 0;
-    open (FILE, $result_file) or return -1;
-    while (<FILE>) {
-        $match = /Warning - identifier spellings differ only in case:/;
-        last if $match;
-    }
-    close FILE;
+   if (! -r $result_file) {
+      print STDERR "ERROR: cannot find $result_file\n";
+      $IFRSERVICE->Kill ();
+      $TAO_IFR->Kill ();
+      return 1;
+   }
 
-    return $match ? 0 : -1;
-}
-
-sub test_body {
-    # Start the IFR Service to generate an IOR file for the tao_ifr to use...
-    $ifr_status = $IFRSERVICE->Spawn ();
-
-    if ($ifr_status != 0) {
-        print STDERR "ERROR: ifr_service Spawn returned $ifr_status\n";
-        return 1;
-    }
-
-    if ($ifr_service->WaitForFileTimed ($ior_file,
-                               $ifr_service->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$ifr_service_iorfile>\n";
-        $IFRSERVICE->Kill (); $IFRSERVICE->TimedWait (1);
-        return 1;
-    }
-
-    if ($ifr_service->GetFile ($ior_file) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$ifr_service_iorfile>\n";
-        $IFRSERVICE->Kill (); $IFRSERVICE->TimedWait (1);
-        return 1;
-    }
-
-    if ($tao_ifr->PutFile ($ior_file) == -1) {
-        print STDERR "ERROR: cannot set file <$tao_ifr_iorfile>\n";
-        $IFRSERVICE->Kill (); $IFRSERVICE->TimedWait (1);
-        return 1;
-    }
-
-    $tao_status = $TAOIFR->SpawnWaitKill ($tao_ifr->ProcessStartWaitInterval() + 15);
-    if ($tao_status != 0) {
-        print STDERR "ERROR: tao_ifr returned $tao_status\n";
-        $status = 1;
-    }
-
-    $match = 0;
-#    $match = analyse_results ($ifr_service_result_file); $ # this string is not currently needed
-    $match += analyse_results ($tao_ifr_result_file);
-
-    # Tidy up
-    $ifr_status = $IFRSERVICE->TerminateWaitKill ($ifr_service->ProcessStopWaitInterval());
-    if ($ifr_status != 0) {
-        print STDERR "ERROR: ifr_service TerminateWaitKill returned $ifr_status\n";
-        return 1;
-    }
-
-    return $match;
+   $match = 0;
+   open (FILE, $result_file) or return -1;
+   while (<FILE>) {
+       $match = /Warning - identifier spellings differ only in case:/;
+       last if $match;
+      }
+   close FILE;
+   # Tidy up
+   $IFRSERVICE->TerminateWaitKill (5);
+   return $match ? 0 : -1;
 }
 
 # Run regression for bug #1436
-$status = test_body();
+$test_result = test_body();
 
-if ($status != 0) {
-    print STDERR "ERROR: Regression test for Bug #1436 failed\n";
+if ($test_result != 0)
+{
+   print STDERR "ERROR: Regression test for Bug #1436 failed\n";
 }
-else {
-    print "Regression test for Bug #1436 passed.\n";
+else
+{
+   print "Regression test for Bug #1436 passed.\n";
 }
 
-$tao_ifr->DeleteFile($ior_file);
-$ifr_service->DeleteFile($ior_file);
-$ifr_service->DeleteFile ($result_files[0]);
-$tao_ifr->DeleteFile ($result_files[1]);
-
-exit $status;
+unlink $ifr_ior_file;
+unlink $result_file;
+exit $test_result;

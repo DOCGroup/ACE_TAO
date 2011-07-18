@@ -23,6 +23,10 @@
 #include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (EC_Mcast,
+           EC_Mcast,
+           "$Id$")
+
 ECM_Driver::ECM_Driver (void)
   : event_period_ (250000),
     event_count_ (100),
@@ -201,7 +205,8 @@ ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->open (this->event_count_, ec);
+      this->local_federations_[i]->open (this->event_count_,
+                                         ec);
     }
 }
 
@@ -213,7 +218,8 @@ ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
   interval *= 10;
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
-      this->local_federations_[i]->activate (ec, interval);
+      this->local_federations_[i]->activate (ec,
+                                             interval);
     }
 }
 
@@ -250,7 +256,8 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
       ACE_NEW (clone,
                TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
 
-      this->all_federations_[i]->open (clone, ec);
+      this->all_federations_[i]->open (clone,
+                                       ec);
     }
 }
 
@@ -409,13 +416,7 @@ ECM_Driver::parse_config_file (void)
       int port;
       if (this->skip_blanks (cfg, "reading federation port number"))
         return -1;
-      s = fscanf (cfg, "%d", &port);
-      if (s == 0 || s == EOF)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "problem reading federation port number\n"), -1);
-        }
-
+      fscanf (cfg, "%d", &port);
       CORBA::UShort mcast_port = static_cast<CORBA::UShort> (port);
 
       int ns, nc;
@@ -736,7 +737,7 @@ ECM_Consumer::ECM_Consumer (ECM_Local_Federation *federation)
 void
 ECM_Consumer::open (const char*,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
-                    unsigned int *seed)
+                    ACE_RANDR_TYPE &seed)
 {
   // The worst case execution time is far less than 2
   // milliseconds, but that is a safe estimate....
@@ -751,7 +752,7 @@ ECM_Consumer::open (const char*,
 }
 
 void
-ECM_Consumer::connect (unsigned int *seed)
+ECM_Consumer::connect (ACE_RANDR_TYPE &seed)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
@@ -880,7 +881,7 @@ ECM_Local_Federation::open (int event_count,
 
   ACE_OS::strcpy (buf, this->federation_->name ());
   ACE_OS::strcat (buf, "/consumer");
-  this->consumer_.open (buf, ec, &this->seed_);
+  this->consumer_.open (buf, ec, this->seed_);
 
   this->last_subscription_change_ = ACE_OS::gettimeofday ();
 }
@@ -933,7 +934,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   ACE_Time_Value delta = ACE_OS::gettimeofday () -
     this->last_subscription_change_;
 
-  unsigned int x = ACE_OS::rand_r (&this->seed_);
+  unsigned int x = ACE_OS::rand_r (this->seed_);
   double p = double (x) / RAND_MAX;
   double maxp = double (delta.msec ()) / this->subscription_change_period_;
 
@@ -943,7 +944,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
                   "Reconfiguring federation %s: %f %f [%d]\n",
                   this->name (), p, maxp, x));
       this->consumer_.disconnect ();
-      this->consumer_.connect (&this->seed_);
+      this->consumer_.connect (this->seed_);
       this->last_subscription_change_ = ACE_OS::gettimeofday ();
     }
 }

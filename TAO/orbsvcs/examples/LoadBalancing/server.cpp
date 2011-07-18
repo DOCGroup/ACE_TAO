@@ -1,13 +1,15 @@
-// $Id$
-
 #include "tao/ORBInitializer_Registry.h"
 #include "StockFactory.h"
 #include "ORBInitializer.h"
 #include "RPS_Monitor.h"
+#include "ace/OS.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_strings.h"
 
 #include "ace/Get_Opt.h"
+
+ACE_RCSID (LoadBalancing,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("obj.ior");
 
@@ -66,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -133,16 +135,16 @@ join_object_group (CORBA::ORB_ptr orb,
           strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(strategy));
 
           if (ACE_OS::strcasecmp (strategy, ACE_TEXT("LeastLoaded")) == 0
-              && (!ACE::is_equal (reject_threshold, 0.0f)
-                  || !ACE::is_equal (critical_threshold, 0.0f)
-                  || !ACE::is_equal (dampening, 0.0f)))
+              && (reject_threshold != 0
+                  || critical_threshold != 0
+                  || dampening != 0))
             {
               CORBA::ULong len = 1;
 
               PortableGroup::Properties & props =
                 strategy_info.props;
 
-              if (!ACE::is_equal (reject_threshold, 0.0f))
+              if (reject_threshold != 0)
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -154,7 +156,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= reject_threshold;
                 }
 
-              if (!ACE::is_equal (critical_threshold, 0.0f))
+              if (critical_threshold != 0)
                 {
                   const CORBA::ULong i = len - 1;
 
@@ -166,7 +168,7 @@ join_object_group (CORBA::ORB_ptr orb,
                   props[i].val <<= critical_threshold;
                 }
 
-              if (!ACE::is_equal (dampening, 0.0f))
+              if (dampening != 0)
                 {
                   const CORBA::ULong i = len - 1;
 

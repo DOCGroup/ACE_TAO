@@ -4,12 +4,31 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE
+void
+CORBA::release (CORBA::Request_ptr x)
+{
+  if (x != 0)
+    {
+      x->_decr_refcnt ();
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::is_nil (CORBA::Request_ptr x)
+{
+  return (CORBA::Boolean) (x == 0);
+}
+
+// ===================================================================
+
 ACE_INLINE CORBA::Request_ptr
 CORBA::Request::_duplicate (CORBA::Request_ptr x)
 {
   if (x != 0)
     {
-      x->_incr_refcount ();
+      x->_incr_refcnt ();
     }
 
   return x;
@@ -62,7 +81,15 @@ CORBA::Request::contexts (void)
   return this->contexts_;
 }
 
+//// *** DEPRECATED ***  Return the <Environment> for this request.
+// ACE_INLINE CORBA::Environment *
+// CORBA::Request::env (void)
+// {
+//   return &this->env_;
+// }
+
 // The argument manipulation helper functions
+
 ACE_INLINE CORBA::Any &
 CORBA::Request::add_in_arg (void)
 {

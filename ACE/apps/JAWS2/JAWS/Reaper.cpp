@@ -4,7 +4,7 @@
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Acceptor.h"
 
-
+ACE_RCSID(JAWS, Reaper, "$Id$")
 
 JAWS_Reaper::JAWS_Reaper (JAWS_Concurrency_Base *concurrency)
   : concurrency_ (concurrency),
@@ -21,7 +21,7 @@ JAWS_Reaper::open (void *)
 {
   if (this->waiting_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, -1);
+      ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
       if (this->waiting_ == 0)
         {
           if (this->activate () == -1)

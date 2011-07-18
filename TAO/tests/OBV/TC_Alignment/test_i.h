@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   test_i.h
- *
- *  $Id$
- *
- *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/OBV/TC_Alignment
+//
+// = FILENAME
+//   test_i.h
+//
+// = AUTHOR
+//   Jeff Parsons <j.parsons@vanderbilt.edu>
+//
+// ============================================================================
 
 #ifndef TAO_OBV_TC_ALIGNMENT_TEST_I_H
 #define TAO_OBV_TC_ALIGNMENT_TEST_I_H

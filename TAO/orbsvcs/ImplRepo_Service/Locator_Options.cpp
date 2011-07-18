@@ -13,6 +13,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"
 
+ACE_RCSID (ImplRepo_Service,
+           Options,
+           "$Id$")
+
+
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Locator_NT_Service.h
@@ -33,7 +38,6 @@ Options::Options ()
 , startup_timeout_(DEFAULT_START_TIMEOUT)
 , readonly_ (false)
 , service_command_(SC_NONE)
-, unregister_if_address_reused_ (false)
 {
 }
 
@@ -138,11 +142,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
 
           this->persist_file_name_ = shifter.get_current ();
           this->repo_mode_ = REPO_HEAP_FILE;
-        }
-      else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("-UnregisterIfAddressReused")) == 0)
-        {
-          this->unregister_if_address_reused_ = true;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-r")) == 0)
@@ -265,7 +264,7 @@ Options::save_registry_options ()
   LONG err = ACE_TEXT_RegCreateKeyEx (SERVICE_REG_ROOT,
                              SERVICE_REG_PATH,
                              0,
-                             const_cast<ACE_TCHAR*> (ACE_TEXT("")), // class
+                             ACE_TEXT(""), // class
                              REG_OPTION_NON_VOLATILE,
                              KEY_ALL_ACCESS,
                              0,
@@ -504,8 +503,3 @@ Options::readonly (void) const
   return this->readonly_;
 }
 
-bool
-Options::unregister_if_address_reused (void) const
-{
-  return this->unregister_if_address_reused_;
-}

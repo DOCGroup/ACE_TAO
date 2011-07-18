@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/IIOP_Profile.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -10,8 +7,14 @@
 #include "tao/IIOP_EndpointsC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (tao,
+           IIOP_Profile,
+           "$Id$")
+
 #include "ace/os_include/os_netdb.h"
 
 static const char the_prefix[] = "iiop";
@@ -55,7 +58,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                  version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    last_endpoint_ (&this->endpoint_),
     count_ (1)
 {
 }
@@ -71,7 +73,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                  object_key,
                  version),
     endpoint_ (host, port, addr),
-    last_endpoint_ (&this->endpoint_),
     count_ (1)
 {
 }
@@ -82,7 +83,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
                                            TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    last_endpoint_ (&this->endpoint_),
     count_ (1)
 {
 }
@@ -118,7 +118,7 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
       bool const enforce =
         this->orb_core()->orb_params()->enforce_pref_interfaces();
-      this->count_ += this->endpoint_.preferred_interfaces(csv, enforce, *this);
+      this->count_ += this->endpoint_.preferred_interfaces(csv, enforce);
 
       return 1;
     }
@@ -147,8 +147,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos_overrun = ACE_OS::strchr (ior, ':');  // Look for a port
-  const char *cp_pos = (cp_pos_overrun < okd) ? cp_pos_overrun : 0; // but before object key
+  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
   bool ipv6_in_host = false;
@@ -161,8 +160,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a_overrun = ACE_OS::strchr(ior, ']');
-      const char *cp_pos_a = (cp_pos_a_overrun < okd) ? cp_pos_a_overrun : 0; // before object key
+      const char *cp_pos_a = ACE_OS::strchr(ior, ']');
       if (cp_pos_a == 0)
         {
           // No valid IPv6 address specified.
@@ -396,8 +394,8 @@ TAO_IIOP_Profile::endpoint_count (void) const
 void
 TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
 {
-  this->last_endpoint_->next_ = endp;
-  this->last_endpoint_ = endp;
+  endp->next_ = this->endpoint_.next_;
+  this->endpoint_.next_ = endp;
 
   ++this->count_;
 }
@@ -418,35 +416,27 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
           // since the assignment operator does not copy the next_
           // pointer, we must do it by hand
           this->endpoint_.next_ = n->next_;
-          if (this->last_endpoint_ == n)
-            {
-              this->last_endpoint_ = &this->endpoint_;
-            }
           delete n;
         }
       return;
     }
 
-  TAO_IIOP_Endpoint* prev = &this->endpoint_;
+  TAO_IIOP_Endpoint* last = &this->endpoint_;
   TAO_IIOP_Endpoint* cur = this->endpoint_.next_;
 
   while (cur != 0)
   {
     if (cur == endp)
       break;
-    prev = cur;
+    last = cur;
     cur = cur->next_;
   }
 
   if (cur != 0)
   {
-    prev->next_ = cur->next_;
+    last->next_ = cur->next_;
     cur->next_ = 0;
     --this->count_;
-    if (this->last_endpoint_ == cur)
-      {
-        this->last_endpoint_ = prev;
-      }
     delete cur;
   }
 }

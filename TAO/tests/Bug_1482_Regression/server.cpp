@@ -2,6 +2,11 @@
 
 #include "Hello.h"
 #include "ace/Get_Opt.h"
+#include "Server_Task.h"
+
+ACE_RCSID (LongUpcall_Crash_Test,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -27,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -48,18 +53,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
-                          -1);
+                          1);
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
-        return -1;
+        return 1;
 
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
-                      -1);
+                      1);
       PortableServer::ServantBase_var owner_transfer(hello_impl);
 
       PortableServer::ObjectId_var id =
@@ -79,12 +84,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-                              -1);
+                              1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
 
+      Server_Task st (orb.in (),
+                      ACE_Thread_Manager::instance ());
+
+      if (st.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error activating server task\n"));
+
+          return -1;
+        }
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
@@ -96,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      return -1;
+      return 1;
     }
 
   return 0;

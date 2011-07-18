@@ -23,7 +23,7 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* ACE_HAS_ACCESS_EMULATION */
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x680)
+#if defined (ACE_VXWORKS) && (((ACE_VXWORKS >= 0x620) && (ACE_VXWORKS <= 0x670)) || defined (ACE_HAS_VXWORKS551_MEDUSA))
 #  if defined (__RTP__)
 #    include "ace/os_include/os_strings.h"
 #  else
@@ -274,7 +274,7 @@ ACE_OS::execv (const char *path,
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__)
+# if defined (__BORLANDC__) /* VSB */
   return ::execv (path, argv);
 # elif defined (__MINGW32__)
   return ::_execv (path, (char *const *) argv);
@@ -304,7 +304,7 @@ ACE_OS::execve (const char *path,
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__)
+# if defined (__BORLANDC__) /* VSB */
   return ::execve (path, argv, envp);
 # elif defined (__MINGW32__)
   return ::_execve (path, (char *const *) argv, (char *const *) envp);
@@ -332,7 +332,7 @@ ACE_OS::execvp (const char *file,
 
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-# if defined (__BORLANDC__)
+# if defined (__BORLANDC__) /* VSB */
   return ::execvp (file, argv);
 # elif defined (__MINGW32__)
   return ::_execvp (file, (char *const *) argv);
@@ -622,13 +622,9 @@ ACE_OS::isatty (ACE_HANDLE handle)
   ACE_UNUSED_ARG (handle);
   return 0;
 #else
-  int const fd = ::_open_osfhandle (intptr_t (handle), 0);
-  int status = 0;
-  if (fd != -1)
-    {
-      status = ::_isatty (fd);
-      ::_close (fd);
-    }
+  int fd = ::_open_osfhandle (intptr_t (handle), 0);
+  int status = ::_isatty (fd);
+  ::_close (fd);
   return status;
 #endif /* ACE_LACKS_ISATTY */
 }
@@ -763,6 +759,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
               ACE_OVERLAPPED *overlapped)
 {
   ACE_OS_TRACE ("ACE_OS::read");
+  overlapped = overlapped;
 #if defined (ACE_WIN32)
   DWORD ok_len;
   DWORD short_len = static_cast<DWORD> (len);
@@ -771,7 +768,6 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
   else
     ACE_FAIL_RETURN (-1);
 #else
-  ACE_UNUSED_ARG (overlapped);
   return ACE_OS::read (handle, buf, len);
 #endif /* ACE_WIN32 */
 }
@@ -1209,6 +1205,7 @@ ACE_OS::write (ACE_HANDLE handle,
                ACE_OVERLAPPED *overlapped)
 {
   ACE_OS_TRACE ("ACE_OS::write");
+  overlapped = overlapped;
 #if defined (ACE_WIN32)
   DWORD bytes_written; // This is set to 0 byte WriteFile.
 
@@ -1218,7 +1215,6 @@ ACE_OS::write (ACE_HANDLE handle,
   else
     ACE_FAIL_RETURN (-1);
 #else
-  ACE_UNUSED_ARG (overlapped);
   return ACE_OS::write (handle, buf, nbyte);
 #endif /* ACE_WIN32 */
 }

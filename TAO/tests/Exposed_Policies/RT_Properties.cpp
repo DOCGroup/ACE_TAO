@@ -7,10 +7,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
+
 RT_Properties::RT_Properties (void)
   : priority_ (10)
 {
-  ior_source_ = ACE_TEXT("poa_default.ior");
+  ACE_OS::strcpy (ior_source_, ACE_TEXT("poa_default.ior"));
 }
 
 RT_Properties::~RT_Properties (void)
@@ -34,40 +36,32 @@ RT_Properties::read_from (const ACE_TCHAR *file_name)
   char string_field[256];
   int int_field;
   unsigned int i = 0;
-  int n_matched;
 
   while (fscanf (fp, "%s", string_field) != EOF )
     {
       if (ACE_OS::strcmp (string_field, "Priority") == 0)
         {
-          n_matched = fscanf (fp, "%d", &int_field);
-          ACE_UNUSED_ARG (n_matched);
-
+          fscanf (fp, "%d", &int_field);
           rt_properties->priority (int_field);
         }
       else if (ACE_OS::strcmp (string_field, "Priority_Bands") == 0)
         {
-          n_matched = fscanf (fp, "%d", &int_field);
-          ACE_UNUSED_ARG (n_matched);
-
+          fscanf (fp, "%d", &int_field);
           rt_properties->priority_bands_.length (int_field);
 
         }
       else if (ACE_OS::strcmp (string_field, "Priority_Range") == 0)
         {
-          n_matched = fscanf (fp, "%d", &int_field);
-          ACE_UNUSED_ARG (n_matched);
-
+          fscanf (fp, "%d", &int_field);
           rt_properties->priority_bands_[i].low = int_field;
 
-          n_matched = fscanf (fp, "%d", &int_field);
-          ACE_UNUSED_ARG (n_matched);
-
+          fscanf (fp, "%d", &int_field);
           rt_properties->priority_bands_[i].high = int_field;
 
           ++i;
         }
     }
+
 
   return rt_properties;
 }
@@ -96,14 +90,17 @@ RT_Properties::priority_bands (void)
   return this->priority_bands_;
 }
 
+
 void
 RT_Properties::ior_source (const ACE_TCHAR *s)
 {
-  this->ior_source_ = s;
+  // @@ Angelo: please use strncpy() for strings like this, otherwise
+  // you could blow the buffer limits!
+  ACE_OS::strcpy (this->ior_source_, s);
 }
 
 const ACE_TCHAR *
 RT_Properties::ior_source (void)
 {
-  return this->ior_source_.c_str ();
+  return this->ior_source_;
 }

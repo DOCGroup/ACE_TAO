@@ -1,21 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  @author Source code used in TAO has been modified and adapted from the codeprovided in the book
- *  @author "Advanced CORBA Programming with C++" by MichiHenning and Steve Vinoski. Copyright 1999. Addison-Wesley
- *  @author Reading
- *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/examples/Advanced/ch_21
+//
+// = FILENAME
+//    server.cpp
+//
+// = AUTHORS
+//   Source code used in TAO has been modified and adapted from the code
+//   provided in the book, "Advanced CORBA Programming with C++" by Michi
+//   Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
+//   MA.
+//
+//   Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
+//
+// ============================================================================
 
 #include <ace/streams.h>
 #include <strstream>
 #include "server.h"
+#include <ace/Synch_T.h>
 #include <algorithm>
 #include "icp.h"
 
@@ -142,8 +148,8 @@ Thermometer_impl::
 void
 Thermometer_impl::_add_ref ()
 {
-    ACE_GUARD (ACE_Mutex, ace_mon, m_count_mutex);
-    ++m_ref_count++;
+    ACE_Guard<ACE_Mutex> guard (m_count_mutex);
+    m_ref_count++;
 }
 
 void
@@ -151,7 +157,7 @@ Thermometer_impl::_remove_ref ()
 {
     bool del = false;
     {
-    ACE_GUARD (ACE_Mutex, ace_mon, m_count_mutex);
+    ACE_Guard<ACE_Mutex> guard (m_count_mutex);
     if (--m_ref_count == 0)
         del = true;
     }
@@ -373,7 +379,7 @@ CCS::Thermometer_ptr
 Controller_impl::create_thermometer (CCS::AssetType anum, const char * loc)
 {
     {
-    ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
+    ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
 
     if (anum % 2 == 0)
         throw CORBA::BAD_PARAM ();   // Thermometers have odd numbers
@@ -395,9 +401,8 @@ create_thermostat (
     const char*     loc,
     CCS::TempType       temp)
 {
-  {
-    ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
-
+    {
+    ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
 
     if (anum % 2 != 0)
         throw CORBA::BAD_PARAM ();   // Thermostats have even numbers
@@ -428,10 +433,10 @@ create_thermostat (
     }
 
     add_impl (anum);
-  }
+    }
 
-  CORBA::Object_var obj = make_dref (m_poa.in (), anum);
-  return CCS::Thermostat::_narrow (obj.in ());
+    CORBA::Object_var obj = make_dref (m_poa.in (), anum);
+    return CCS::Thermostat::_narrow (obj.in ());
 }
 
 // IDL list operation.
@@ -448,7 +453,7 @@ Controller_impl::list ()
 
     AssetSet tmp_assets;
     {
-        ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
+        ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
         tmp_assets = m_assets;
     }
 
@@ -527,7 +532,7 @@ find (CCS::Controller::SearchSeq & slist)
             bool make = false;
             CCS::AssetType num = 0;
                 {
-                ACE_GUARD (ACE_Mutex, ace_mon, m_assets_mutex);
+                ACE_Guard<ACE_Mutex> guard (m_assets_mutex);
                 where = m_assets.find (slist[i].key.asset_num ());
                 if (where != m_assets.end ()) {
                 num = *where;
@@ -607,7 +612,7 @@ preinvoke (
     if (istr.fail ())
         throw CORBA::OBJECT_NOT_EXIST ();
 
-    ACE_GUARD (ACE_Mutex, ace_mon, m_ctrl->m_assets_mutex);
+    ACE_Guard<ACE_Mutex> guard (m_ctrl->m_assets_mutex);
 
     // Check whether the device is known.
     if (!m_ctrl->exists (anum))

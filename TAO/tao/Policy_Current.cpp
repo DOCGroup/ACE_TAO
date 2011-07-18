@@ -10,6 +10,11 @@
 # include "tao/Policy_Current.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (tao,
+           Policy_Current,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Current_Impl &

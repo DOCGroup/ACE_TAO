@@ -1,25 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Map_Test.cpp
- *
- *  $Id$
- *
- *   This is a simple test of the <ACE_Map> and illustrates how to
- *   use the forward and reverse iterators.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Map_Test.cpp
+//
+// = DESCRIPTION
+//     This is a simple test of the <ACE_Map> and illustrates how to
+//     use the forward and reverse iterators.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "Map_Test.h"
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
 
-
+ACE_RCSID(tests, Map_Test, "$Id$")
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \

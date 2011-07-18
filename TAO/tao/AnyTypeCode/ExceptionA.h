@@ -36,17 +36,8 @@ namespace CORBA
   typedef Any *Any_ptr;
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
-
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Exception *);
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

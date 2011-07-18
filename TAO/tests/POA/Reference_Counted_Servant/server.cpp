@@ -1,28 +1,33 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  This example shows how to use reference counted servants to
- *  automatically manage dynamic memory for servants.
- *  Stubs/Skeletons and client code is available in
- *  ../Generic_Servant.
- *
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// ================================================================
+//
+// = LIBRARY
+//    TAO/tests/POA/Reference_Counted_Servant
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    This example shows how to use reference counted servants to
+//    automatically manage dynamic memory for servants.
+//    Stubs/Skeletons and client code is available in
+//    ../Generic_Servant.
+//
+// = AUTHOR
+//    Irfan Pyarali
+//
+// ================================================================
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
+ACE_RCSID(Reference_Counted_Servant, server, "$Id$")
+
+  // This is to remove "inherits via dominance" warnings from MSVC.
+  // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
@@ -31,9 +36,9 @@ class reference_counted_test_i :
   public virtual test_i
 {
 public:
-  /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
+  // Constructor - takes a POA and a value parameter
 };
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,

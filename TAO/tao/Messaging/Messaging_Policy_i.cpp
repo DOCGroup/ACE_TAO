@@ -11,6 +11,10 @@
 #include "tao/Messaging/Messaging_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (Messaging,
+           Messaging_Policy_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
@@ -231,8 +235,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
 
       if (CORBA::is_nil (policy.in ()))
         {
-          has_synchronization = true;
-          scope = Messaging::SYNC_WITH_TRANSPORT;
+          has_synchronization = false;
           return;
         }
       Messaging::SyncScopePolicy_var p =

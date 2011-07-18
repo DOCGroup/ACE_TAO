@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    IORManip_Filter.h
- *
- *  $Id$
- *
- *  @author Chad Elliott <elliott_c@ociweb.com>
- */
-//=============================================================================
-
+// =========================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    IORManip_Filter.h
+//
+// = AUTHOR
+//    Chad Elliott <elliott_c@ociweb.com>
+//
+// =========================================================================
 
 #ifndef TAO_IORMANIP_FILTER_H
 #define TAO_IORMANIP_FILTER_H
@@ -29,12 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_MProfile;
-
-namespace CORBA
-{
-  class Object;
-  typedef Object *Object_ptr;
-}
 
 class TAO_IORManip_Export TAO_IORManip_Filter
 {

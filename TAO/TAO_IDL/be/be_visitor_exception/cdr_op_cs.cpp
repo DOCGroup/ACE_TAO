@@ -1,19 +1,30 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for exceptions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for exceptions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_exception, 
+           cdr_op_cs, 
+           "$Id$")
 
 be_visitor_exception_cdr_op_cs::be_visitor_exception_cdr_op_cs (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_exception (ctx)
 {
 }
@@ -39,13 +50,13 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_cdr_op_cs::"
                          "visit_exception - "
-                         "codegen for scope failed\n"),
+                         "codegen for scope failed\n"), 
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_global->core_versioning_begin () << be_nl;
@@ -53,7 +64,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_aggregate" << be_uidt_nl
@@ -71,9 +82,9 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_cs::"
                              "visit_exception - "
-                             "codegen for field decl scope failed\n"),
+                             "codegen for field decl scope failed\n"), 
                             -1);
-        }
+        }        
 
       // some members
       *os << "// First marshal the repository ID." << be_nl
@@ -87,7 +98,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_cs::"
                              "visit_exception - "
-                             "codegen for scope failed\n"),
+                             "codegen for scope failed\n"), 
                             -1);
         }
 
@@ -105,7 +116,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           << "return (strm << _tao_aggregate._rep_id ());" << be_uidt_nl;
     }
 
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
@@ -150,7 +161,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_cdr_op_cs::"
                              "visit_exception - "
-                             "codegen for scope failed\n"),
+                             "codegen for scope failed\n"), 
                             -1);
         }
 
@@ -165,7 +176,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
@@ -178,7 +189,7 @@ int
 be_visitor_exception_cdr_op_cs::post_process (be_decl *bd)
 {
   // This checks for members of an enum 'non-scope' declared inside
-  // the exception. If an enum val is actually a member, it will
+  // the exception. If an enum val is actually a member, it will 
   // have node type NT_field.
   if (bd->node_type () == AST_Decl::NT_enum_val)
     {

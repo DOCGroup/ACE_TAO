@@ -29,6 +29,10 @@ TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLE
                                  this->arg_),
                     -1);
 
+  // We add to the #REFCOUNT# since the Connector needs this. See
+  // Connector::make_connection() for details.
+  sh->add_reference ();
+
   return 0;
 }
 

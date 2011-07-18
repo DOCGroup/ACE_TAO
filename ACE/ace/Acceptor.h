@@ -193,9 +193,9 @@ protected:
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
 
   /**
-   * Bridge method for activating a @a svc_handler with the appropriate
+   * Bridge method for activating a {svc_handler} with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the SVC_HANDLER by calling its open() method (which
+   * activate the SVC_HANDLER by calling its {open} method (which
    * allows the SVC_HANDLER to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as making the
@@ -503,30 +503,21 @@ protected:
  * @class ACE_Oneshot_Acceptor
  *
  * @brief Generic factory for passively connecting clients and creating
- * exactly one service handler of the type SVC_HANDLER specified in the
- * template.
+ * exactly one service handler (SVC_HANDLER).
  *
- * This class works similarly to the regular ACE_Acceptor, but
+ * This class works similarly to the regular {ACE_Acceptor},
  * with the following differences:
- *  -# ACE_Oneshot_Acceptor doesn't automatically register itself with the
- *     ACE_Reactor; the caller is expected to call the accept() method
- *     directly. Since a later call to accept() may require a reactor,
- *     the constructor and open() methods both accept an ACE_Reactor pointer
- *     which is saved in case it's needed in accept().
- *  -# ACE_Oneshot_Acceptor doesn't need an ACE_Creation_Strategy (because
- *     the user supplies the SVC_HANDLER) or an ACE_Accept_Strategy (because
- *     this class only accepts one connection and then removes all traces of
- *     itself from the ACE_Reactor if it was registered for asynchronous
- *     accepts).
- *
- * The usage model for ACE_Oneshot_Acceptor is:
- *  - Instantiate an object and establish its local address to listen at.
- *    This can be accomplished using either the address-accepting constructor
- *    (but there's no error indication) or the default constructor followed
- *    by a call to open().
- *  - Call the accept() method. This will attempt to accept a connection
- *    immediately. If there is no immediately available connection to accept,
- *    behavior is governed by the ACE_Synch_Options argument passed to open().
+ * 1. This class doesn't automagically register {this} with the
+ * {ACE_Reactor} since it expects to have its {accept} method
+ * called directly.  However, it stashes the {ACE_Reactor}
+ * pointer away in case it's needed later to finish accepting
+ * a connection asynchronously.
+ * 2. The class doesn't need an {ACE_Creation_Strategy} (since
+ * the user supplies the SVC_HANDLER) or an
+ * {ACE_Accept_Strategy} (since this class only accepts one
+ * connection and then removes all traces of itself from the
+ * {ACE_Reactor} if it was registered for asynchronous
+ * accepts).
  */
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Oneshot_Acceptor : public ACE_Service_Object
@@ -544,10 +535,10 @@ public:
 
   /**
    * Initialize the appropriate strategies for concurrency and then
-   * open the acceptor at the designated @a local_addr.  Note
-   * that unlike ACE_Acceptor and ACE_Strategy_Acceptor, this
-   * method does NOT register this acceptor with the @a reactor at
-   * this point -- the @a reactor parameter is saved in case it's
+   * open the {peer_acceptor} at the designated {local_addr}.  Note
+   * that unlike the {ACE_Acceptor} and {ACE_Strategy_Acceptor}, this
+   * method does NOT register {this} acceptor with the {reactor} at
+   * this point -- it just stashes the {reactor} away in case it's
    * needed later.
    */
   ACE_Oneshot_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -556,10 +547,10 @@ public:
 
   /**
    * Initialize the appropriate strategies for concurrency and then
-   * open the acceptor at the designated @a local_addr.  Note
-   * that unlike ACE_Acceptor and ACE_Strategy_Acceptor, this
-   * method does NOT register this acceptor with the @a reactor at
-   * this point -- the @a reactor parameter is saved in case it's
+   * open the {peer_acceptor} at the designated {local_addr}.  Note
+   * that unlike the {ACE_Acceptor} and {ACE_Strategy_Acceptor}, this
+   * method does NOT register {this} acceptor with the {reactor} at
+   * this point -- it just stashes the {reactor} away in case it's
    * needed later.
    */
   int open (const ACE_PEER_ACCEPTOR_ADDR &,

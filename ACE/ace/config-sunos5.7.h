@@ -25,10 +25,17 @@
 // SunOS 5.7 has getloadavg()
 #undef ACE_LACKS_GETLOADAVG
 
-#if defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x530)
+#if defined (ghs)
+  // SunOS 5.7's /usr/include/sys/procfs_isa.h needs uint64_t,
+  // but /usr/include/sys/int_types.h doesn't #define it because
+  // _NO_LONGLONG is #
+# undef ACE_HAS_PROC_FS
+# undef ACE_HAS_PRUSAGE_T
+
+#elif defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x530)
   // Wide character methods are in std:: when using SunCC 5.3
 # define ACE_WCHAR_IN_STD_NAMESPACE
-#endif
+#endif /* __GNUG__ || ghs */
 
 // SunOS 5.7 supports SCHED_FIFO and SCHED_RR, as well as SCHED_OTHER.
 #undef ACE_HAS_ONLY_SCHED_OTHER
@@ -46,6 +53,10 @@
 #if !defined (ACE_HAS_AIO_CALLS)
 #define ACE_HAS_AIO_CALLS
 #endif /* !ACE_HAS_AIO_CALLS */
+
+#ifdef ACE_HAS_LIMITED_SELECT
+#undef ACE_HAS_LIMITED_SELECT
+#endif /* ACE_HAS_LIMITED_SELECT */
 
 // SunOS 5.7 has socklen_t
 #define ACE_HAS_SOCKLEN_T

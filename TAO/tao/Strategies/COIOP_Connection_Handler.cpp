@@ -19,6 +19,9 @@
 #include "tao/Strategies/COIOP_Transport.h"
 #include "tao/Strategies/COIOP_Endpoint.h"
 
+ACE_RCSID(tao, COIOP_Connect, "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (ACE_Thread_Manager *t)

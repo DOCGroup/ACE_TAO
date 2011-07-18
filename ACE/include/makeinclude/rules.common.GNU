@@ -11,8 +11,8 @@
 all:              __prebuild__ all.nested all.local
 debug:	          debug.nested debug.local
 profile:          profile.nested profile.local
-binout:           binout.nested binout.local
-clean_binout:     clean_binout.nested clean_binout.local
+install:          install.nested install.local
+deinstall:        deinstall.nested deinstall.local
 clean_binaries:   clean_binaries.nested clean_binaries.local
 clean_idl_stubs:  clean_idl_stubs.nested clean_idl_stubs.local
 clean:            clean.nested clean.local

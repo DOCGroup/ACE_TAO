@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h"
@@ -6,6 +5,10 @@
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (PortableServer,
+           RequestProcessingStrategyAOMOnlyFactoryImpl,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

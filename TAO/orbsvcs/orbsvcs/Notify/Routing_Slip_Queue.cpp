@@ -28,12 +28,14 @@ namespace TAO_Notify
   void
   Routing_Slip_Queue::add (const Routing_Slip_Ptr & routing_slip)
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+    Guard guard (internals_);
+    ACE_ASSERT (guard.locked()); // check recursion
     if (this->allowed_ == 0)
     {
       ++this->active_;
       guard.release ();
       routing_slip->at_front_of_persist_queue ();
+//      guard.acquire ();
     }
     else
     {
@@ -44,7 +46,8 @@ namespace TAO_Notify
 
   void Routing_Slip_Queue::complete ()
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
+    Guard guard (internals_);
+    ACE_ASSERT (guard.locked()); // check recursion
     ACE_ASSERT (this->active_ > 0);
     --this->active_;
     dispatch (guard);
@@ -89,8 +92,8 @@ namespace TAO_Notify
   void
   Routing_Slip_Queue::set_allowed (size_t allowed)
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-    size_t const allowed_was = this->allowed_;
+    Guard guard (internals_);
+    size_t allowed_was = this->allowed_;
     this->allowed_ = allowed;
     if (allowed == 0 && allowed_was != 0)
     {

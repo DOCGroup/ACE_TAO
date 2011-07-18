@@ -5,7 +5,10 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
+ACE_RCSID(Echo, Server_i, "$Id$")
+
 // Constructor.
+
 Notifier_Server::Notifier_Server (void)
 {
   // no-op.

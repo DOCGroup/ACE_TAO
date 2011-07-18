@@ -1,19 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Thread_Pool_Reactor_SSL_Test.h
- *
- *  $Id$
- *
- *  This class gets its own header file to work around AIX C++
- *  compiler "features" related to template instantiation...  It is
- *  only used by Thread_Pool_Reactor_Test_SSL.cpp.
- *
- *
- *  @author   Irfan Pyarali <irfan@cs.wustl.edu>   Nanbor Wang <nanbor@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests/SSL
+//
+// = FILENAME
+//    Thread_Pool_Reactor_Test_SSL.h
+//
+// = DESCRIPTION
+//    This class gets its own header file to work around AIX C++
+//    compiler "features" related to template instantiation...  It is
+//    only used by Thread_Pool_Reactor_Test_SSL.cpp.
+//
+// = AUTHOR
+//      Irfan Pyarali <irfan@cs.wustl.edu>
+//      Nanbor Wang <nanbor@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H
 #define ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H
@@ -26,14 +30,14 @@
 
 #include "ace/Svc_Handler.h"
 
-class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream,
+class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_STREAM,
                                                ACE_MT_SYNCH>
 {
   // = TITLE
   //   This class is the Svc_Handler used by <Acceptor>.
 public:
-  /// The default constructor makes sure the right reactor is used.
   Request_Handler (ACE_Thread_Manager *tm = 0);
+  // The default constructor makes sure the right reactor is used.
 
 protected:
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);

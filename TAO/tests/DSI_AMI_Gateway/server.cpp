@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
+ACE_RCSID(DSI_Gateway, server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int nthreads = 4;
@@ -34,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

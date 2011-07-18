@@ -1,83 +1,40 @@
+# $Id$ 
+
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
-# $Id$
-# -*- perl -*-
+use Env (ACE_ROOT);
+use lib "$ACE_ROOT/bin";
+use PerlACE::Run_Test;
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+$ENV{'SSL_CERT_FILE'} = 'cacert.pem';
 
-$status = 0;
-$debug_level = '0';
+$file = PerlACE::LocalFile("Messenger.ior");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+unlink $file;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $iorbase = "Messenger.ior";
-my $server_conf = "server.conf";
-my $client_conf = "client.conf";
-my $certificate = "cacert.pem";
-
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$ENV{'SSL_CERT_FILE'} = $certificate;
-
-$SV = $server->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level ".
-                                        " -o $server_iorfile ".
-                                        "-ORBSvcConf $server_conf");
-$CL = $client->CreateProcess ("MessengerClient", "-k file://$client_iorfile ".
-                                        "-ORBSvcConf $client_conf");
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+# start MessengerServer
+$S = new PerlACE::Process("MessengerServer",
+			  "-ORBSvcConf server.conf");
+$S->Spawn();
+if (PerlACE::waitforfile_timed ($file, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$file>\n";
+    $S->Kill ();
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+# start MessengerClient
+$C = new PerlACE::Process("MessengerClient",
+			  "-ORBSvcConf client.conf");
+
+if ($C->SpawnWaitKill(10) != 0) {
+     exit (1);
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($S->WaitKill(10) == -1) {
+     $S->Kill();
 }
 
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+exit 0;
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-exit $status;

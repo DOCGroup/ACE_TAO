@@ -19,8 +19,9 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "History_exec_i.h"
+#include "ciao/CIAO_common.h"
 
-namespace CIAO_Messenger_Impl
+namespace CIDL_Messenger_Impl
 {
   //==================================================================
   // Facet Executor Implementation Class:   History_exec_i
@@ -42,7 +43,7 @@ namespace CIAO_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_all\n") ));
 
@@ -69,7 +70,7 @@ namespace CIAO_Messenger_Impl
     // Your code here.
 
     // MY CODE
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("History_i::get_latest\n") ));
 
@@ -84,12 +85,12 @@ namespace CIAO_Messenger_Impl
   void
   History_exec_i::add( ::Message* message )
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(lock_);
 
     // bump up the reference count; we don't own it.
     // the _var in the STL list takes ownership of the "copy"
     message->_add_ref();
-    this->messages_.push_back(message);
+    this->messages_.push_back( message );
   }
 }
 

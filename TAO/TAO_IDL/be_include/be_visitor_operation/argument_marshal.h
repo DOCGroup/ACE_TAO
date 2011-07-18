@@ -1,19 +1,24 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    argument_marshal.h
- *
- *  $Id$
- *
- *  Visitor for generating code for IDL operations. This is a visitor for
- *  passing arguments to the CDR operators in a compiled marshaling
- *  stub/skeleton
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    argument_marshal.h
+//
+// = DESCRIPTION
+//    Visitor for generating code for IDL operations. This is a visitor for
+//    passing arguments to the CDR operators in a compiled marshaling
+//    stub/skeleton
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
@@ -22,25 +27,29 @@
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************
 
-/**
- * This is a visitor to generate a variable declaration of an operation
- * return type
- */
 class be_visitor_operation_argument_marshal
   : public be_visitor_operation_argument
 {
+  //
+  // = TITLE
+  //   be_compiled_visitor_operation_argument_marshal
+  //
+  // = DESCRIPTION
+  //   This is a visitor to generate a variable declaration of an operation
+  //   return type
+  //
 public:
-  /// constructor
   be_visitor_operation_argument_marshal (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_operation_argument_marshal (void);
+  // destructor
 
-  /// stuff to o/p before each element of the scope is handled
   virtual int pre_process (be_decl *bd);
+  // stuff to o/p before each element of the scope is handled
 
-  /// stuff to o/p after each element of the scope is handled
   virtual int post_process (be_decl *bd);
+  // stuff to o/p after each element of the scope is handled
 
   enum LAST_ARG_PRINTED
   {
@@ -56,19 +65,19 @@ private:
 
 // ****************************************************************
 
-/**
- * @class be_visitor_args_decl
- *
- * @brief be_visitor_compiled_args_decl
- *
- * This is a visitor to generate variables declarations in the
- * compiled marshaling stubs.
- */
 class be_visitor_args_decl : public be_visitor_scope
 {
+  //
+  // = TITLE
+  //   be_visitor_compiled_args_decl
+  //
+  // = DESCRIPTION
+  //   This is a visitor to generate variables declarations in the
+  //   compiled marshaling stubs.
+  //
 public:
-  /// constructor
   be_visitor_args_decl (be_visitor_context *ctx);
+  // constructor
 
   int visit_array (be_array *node);
   int visit_typedef (be_typedef *node);

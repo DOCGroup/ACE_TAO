@@ -29,6 +29,10 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (be,
+           be_visitor_amh_pre_proc,
+           "$Id$")
+
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
@@ -105,7 +109,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
     this->create_exception_holder (node);
   excep_holder->set_defined_in (node->defined_in ());
   excep_holder->original_interface (node);
-  excep_holder->is_amh_excep_holder (true);
 
   AST_Module *module =
     AST_Module::narrow_from_scope (node->defined_in ());
@@ -188,14 +191,14 @@ be_visitor_amh_pre_proc::create_response_handler (
   response_handler->set_imported (node->imported ());
   response_handler->set_line (node->line ());
   response_handler->set_file_name (node->file_name ());
-
+  
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
   response_handler->AST_Decl::repoID (0);
   response_handler->prefix (const_cast<char*> (node->prefix ()));
-
+  
   response_handler->gen_fwd_helper_name ();
   this->add_rh_node_members (node, response_handler, exception_holder);
   return response_handler;
@@ -288,15 +291,9 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
     be_valuetype *exception_holder
   )
 {
-  if (node == 0)
+  if (!node)
     {
       return -1;
-    }
-
-  /// These are for the stub side only.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
     }
 
   if (this->add_normal_reply (node, response_handler) == -1)
@@ -321,15 +318,36 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
 
   this->visit_operation (get_operation);
 
+  be_operation_default_strategy *default_strategy = 0;
+  ACE_NEW_RETURN (default_strategy,
+                  be_operation_default_strategy (get_operation),
+                  -1);
+
+  be_operation_strategy *get_operation_strategy =
+    get_operation->set_strategy (default_strategy);
+
+  if (0 != get_operation_strategy)
+    {
+      be_operation_strategy *gos =
+        node->set_get_strategy (get_operation_strategy);
+        
+      if (0 != gos)
+        {
+          gos->destroy ();
+          delete gos;
+          gos = 0;
+        }
+    }
+
   int status =
     this->create_response_handler_operation (get_operation,
                                              response_handler,
                                              exception_holder);
-
+                                             
   get_operation->destroy ();
   delete get_operation;
   get_operation = 0;
-
+                                             
   if (status == -1)
     {
       return -1;
@@ -345,15 +363,37 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
 
   this->visit_operation (set_operation);
 
+  // Retrieve the strategy set by the visit operation.
+  ACE_NEW_RETURN (default_strategy,
+                  be_operation_default_strategy (set_operation),
+                  -1);
+
+  be_operation_strategy *set_operation_strategy =
+    set_operation->set_strategy (default_strategy);
+
+  // Assign it to the attribute as set_operation strategy.
+  if (0 != set_operation_strategy)
+    {
+      be_operation_strategy *sos =
+        node->set_set_strategy (set_operation_strategy);
+        
+      if (0 != sos)
+        {
+          sos->destroy ();
+          delete sos;
+          sos = 0;
+        }
+    }
+
   status =
     this->create_response_handler_operation (set_operation,
                                              response_handler,
                                              exception_holder);
-
+                                             
   set_operation->destroy ();
   delete set_operation;
   set_operation = 0;
-
+                                             
   return status;
 }
 
@@ -373,14 +413,14 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                                 1,
                                 0),
                   -1);
-
+                  
   node_excep->set_name (operation_name);
 
   Identifier *arg_id = 0;
   ACE_NEW_RETURN (arg_id,
                   Identifier ("holder"),
                   -1);
-
+                  
   UTL_ScopedName *arg_name = 0;
   ACE_NEW_RETURN (arg_name,
                   UTL_ScopedName (arg_id, 0),
@@ -452,7 +492,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
       ACE_NEW_RETURN (arg_id,
                       Identifier ("return_value"),
                       -1);
-
+                      
       UTL_ScopedName *arg_name = 0;
       ACE_NEW_RETURN (arg_name,
                       UTL_ScopedName (arg_id, 0),
@@ -465,9 +505,9 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                                    node->return_type (),
                                    arg_name),
                       -1);
-
+                      
       arg->set_name (arg_name);
-
+                      
       // Add the response handler to the argument list
       operation->be_add_argument (arg);
     }
@@ -535,6 +575,21 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
       return 0;
     }
 
+  // Set the proper strategy
+  be_operation_amh_strategy *strategy = 0;
+  ACE_NEW_RETURN (strategy,
+                  be_operation_amh_strategy (node),
+                  -1);
+
+  be_operation_strategy *old_strategy = node->set_strategy (strategy);
+
+  if (old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
+    }
+
   return 0;
 }
 
@@ -547,7 +602,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   idl_global->valuefactory_seen_ = true;
 
   const int inherit_count = 0;
-  AST_Type **p_intf = 0;
+  AST_Interface **p_intf = 0;
 
   UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_",
@@ -576,14 +631,14 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
   excep_holder->set_name (excep_holder_name);
   excep_holder->set_defined_in (node->defined_in ());
-
+  
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
   excep_holder->AST_Decl::repoID (0);
   excep_holder->prefix (const_cast<char*> (node->prefix ()));
-
+  
   excep_holder->gen_fwd_helper_name ();
 
   // Now our customized valuetype is created, we have to
@@ -705,12 +760,30 @@ be_visitor_amh_pre_proc::create_raise_operation (
         {
           // Copy the exceptions.
           UTL_ExceptList *exceptions = orig_op->exceptions ();
-
+          
           if (0 != exceptions)
             {
               operation->be_add_exceptions (exceptions->copy ());
             }
         }
+    }
+
+  // Set the proper strategy.
+  be_operation_ami_exception_holder_raise_strategy *ehrs = 0;
+  ACE_NEW_RETURN (
+      ehrs,
+      be_operation_ami_exception_holder_raise_strategy (operation),
+      -1
+    );
+
+  be_operation_strategy *old_strategy =
+    operation->set_strategy (ehrs);
+
+  if (old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
     }
 
   // After having generated the operation we insert it into the

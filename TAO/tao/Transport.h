@@ -30,7 +30,6 @@
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
-#include "ace/Copy_Disabled.h"
 
 struct iovec;
 
@@ -69,80 +68,6 @@ namespace TAO
     /// Transport-level statistics. Initially introduced to support
     /// the "Transport Current" functionality.
     class Stats;
-
-  /**
-   * @struct Drain_Constraints
-   *
-   * @brief Encapsulate the flushing control parameters.
-   *
-   * At several points, the ORB needs to flush data from a transport to the
-   * underlying I/O mechanisms.  How this data is flushed depends on the
-   * context where the request is made, the ORB configuration and the
-   * application level policies in effect.
-   *
-   * Some examples:
-   *
-   * # When idle, the ORB will want to send data on any socket that has
-   *   space available.  In this case, the queue must be drained on
-   *   a best-effort basis, without any blocking.
-   * # If the ORB is configured to handle nested upcalls, any two-way
-   *   request should block and push data to the underlying socket as fast
-   *   as possible.
-   * # In the same use-case, but now with a timeout policy in
-   *   effect, the ORB will need to send the data use I/O operations with
-   *   timeouts (as implemented by ACE::sendv()
-   * # When the ORB is configured to support nested upcalls, any two-way,
-   *   reliable oneway or similar should wait using the reactor or
-   *   Leader-Follower implementation.  While still respecting the timeout
-   *   policies.
-   *
-   * Instead of sprinkling if() statements throughput the critical path
-   * trying to determine how the I/O operations should be performed, we
-   * pass the information encapsulated in this class.  The caller into the
-   * Transport object determines the right parameters to use, and the
-   * Transport object simply obeys those instructions.
-   */
-  class Drain_Constraints : private ACE_Copy_Disabled
-  {
-  public:
-    /// Default constructor
-    Drain_Constraints()
-      : timeout_(0)
-      , block_on_io_(false)
-    {
-    }
-
-    /// Constructor
-    Drain_Constraints(
-        ACE_Time_Value * timeout,
-        bool block_on_io)
-      : timeout_(timeout)
-      , block_on_io_(block_on_io)
-    {
-    }
-
-    /**
-     * If true, then the ORB should block on I/O operations instead of
-     * using non-blocking I/O.
-     */
-    bool block_on_io() const
-    {
-      return block_on_io_;
-    }
-
-    /**
-     * The maximum time to block on I/O operations (or nested loops) based
-     * on the current timeout policies.
-     */
-    ACE_Time_Value * timeout() const
-    {
-      return timeout_;
-    }
-
-  private:
-    ACE_Time_Value * timeout_;
-    bool block_on_io_;
-  };
   }
 }
 
@@ -159,7 +84,7 @@ namespace TAO
  * The transport object is created in the Service handler
  * constructor and deleted in the Service Handler's destructor!!
  *
- * The main responsibility of a Transport object is to encapsulate a
+ * The main responsability of a Transport object is to encapsulate a
  * connection, and provide a transport independent way to send and
  * receive data.  Since TAO is heavily based on the Reactor for all if
  * not all its I/O the Transport class is usually implemented with a
@@ -223,7 +148,7 @@ namespace TAO
  * - A queue of pending messages
  * - A message currently being transmitted
  * - A per-transport 'send strategy' to choose between blocking on
- *   write, blocking on the reactor or blocking on leader/follower.
+ *   write, blocking on the reactor or blockin on leader/follower.
  * - A per-message 'waiting object'
  * - A per-message timeout
  *
@@ -241,7 +166,7 @@ namespace TAO
  *    same time ie. the handle should not be shared between threads at
  *    any instant.
  *  - Reads on the handle could give one or more messages.
- *  - Minimize locking and copying overhead when trying to attack the
+ *  - Minimise locking and copying overhead when trying to attack the
  *    above.
  *
  * <H3> Parsing messages (GIOP) & processing the message:</H3>
@@ -254,7 +179,7 @@ namespace TAO
  * <H3> Design forces and Challenges </H3>
  *
  * To keep things as efficient as possible for medium sized requests,
- * it would be good to minimize data copying and locking along the
+ * it would be good to minimise data copying and locking along the
  * incoming path ie. from the time of reading the data from the handle
  * to the application. We achieve this by creating a buffer on stack
  * and reading the data from the handle into the buffer. We then pass
@@ -318,7 +243,7 @@ namespace TAO
  * https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/TAO/docs/pluggable_protocols/index.html?revision=HEAD
  *
  */
-class TAO_Export TAO_Transport : private ACE_Copy_Disabled
+class TAO_Export TAO_Transport
 {
 public:
 
@@ -364,35 +289,8 @@ public:
    */
   TAO_Wait_Strategy *wait_strategy (void) const;
 
-  enum Drain_Result_Enum
-    {
-      DR_ERROR = -1,
-      DR_OK = 0,
-      DR_QUEUE_EMPTY = 1, // used internally, not returned from drain_queue()
-      DR_WOULDBLOCK = 2
-    };
-
-  /// The handle_output and drain_queue* functions return objects of this
-  /// struct instead of the enum value directly so the compiler will catch
-  /// any uses that assign the return value to an int.
-  struct Drain_Result
-  {
-    Drain_Result (Drain_Result_Enum dre) : dre_(dre) {}
-    Drain_Result_Enum dre_;
-
-    bool operator== (Drain_Result rhs) const
-    {
-      return this->dre_ == rhs.dre_;
-    }
-
-    bool operator!= (Drain_Result rhs) const
-    {
-      return this->dre_ != rhs.dre_;
-    }
-  };
-
   /// Callback method to reactively drain the outgoing data queue
-  Drain_Result handle_output (TAO::Transport::Drain_Constraints const & c);
+  int handle_output (ACE_Time_Value *max_wait_time);
 
   /// Get the bidirectional flag
   int bidirectional_flag (void) const;
@@ -449,7 +347,7 @@ public:
   /// Add event handlers corresponding to transports that have RW wait
   /// strategy to the handlers set.
   /**
-   * Called by the cache when the ORB is shutting down.
+   * Called by the cache when the ORB is shuting down.
    *
    * @param handlers The TAO_Connection_Handler_Set into which the
    *        transport should place its handler if the transport has RW
@@ -513,7 +411,7 @@ public:
   virtual ssize_t send (iovec *iov,
                         int iovcnt,
                         size_t &bytes_transferred,
-                        ACE_Time_Value const * timeout) = 0;
+                        const ACE_Time_Value *timeout = 0) = 0;
 
 #if TAO_HAS_SENDFILE == 1
   /// Send data through zero-copy write mechanism, if available.
@@ -530,7 +428,7 @@ public:
                             iovec * iov,
                             int iovcnt,
                             size_t &bytes_transferred,
-                            TAO::Transport::Drain_Constraints const & dc);
+                            ACE_Time_Value const * timeout = 0);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
 
@@ -577,7 +475,7 @@ public:
    * following methods with the semantics documented below.
    */
   /**
-   * Initializing the messaging object. This would be used by the
+   * Initialising the messaging object. This would be used by the
    * connector side. On the acceptor side the connection handler
    * would take care of the messaging objects.
    */
@@ -603,7 +501,7 @@ public:
   virtual bool post_connect_hook (void);
 
   /// Memory management routines.
-  /**
+  /*
    * Forwards to event handler.
    */
   ACE_Event_Handler::Reference_Count add_reference (void);
@@ -802,21 +700,6 @@ protected:
   int queue_message_i (const ACE_Message_Block *message_block,
                        ACE_Time_Value *max_wait_time, bool back=true);
 
-  /**
-   * @brief Re-factor computation of I/O timeouts based on operation
-   * timeouts.
-   * Depending on the wait strategy, we need to timeout I/O operations or
-   * not.  For example, if we are using a non-blocking strategy, we want
-   * to pass 0 to all I/O operations, and rely on the ACE_NONBLOCK
-   * settings on the underlying sockets.  However, for blocking strategies
-   * we want to pass the operation timeouts, to respect the application
-   * level policies.
-   *
-   * This function was introduced as part of the fixes for bug 3647.
-   */
-  ACE_Time_Value const *io_timeout(
-      TAO::Transport::Drain_Constraints const & dc) const;
-
 public:
   /// Format and queue a message for @a stream
   /// @param max_wait_time The maximum time that the operation can
@@ -825,14 +708,7 @@ public:
                             ACE_Time_Value *max_wait_time,
                             TAO_Stub* stub);
 
-  /**
-   * This is a very specialized interface to send a simple chain of
-   * messages through the Transport.  The only place we use this interface
-   * is in GIOP_Message_Base.cpp, to send error messages (i.e., an
-   * indication that we received a malformed GIOP message,) and to close
-   * the connection.
-   *
-   */
+  /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
@@ -840,8 +716,7 @@ public:
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
                                   size_t &bytes_transferred,
-                                  TAO::Transport::Drain_Constraints const & dc);
-
+                                  ACE_Time_Value *max_wait_time);
   /// Cache management
   int purge_entry (void);
 
@@ -900,8 +775,8 @@ public:
   /// Return true if the tcs has been set
   CORBA::Boolean is_tcs_set() const;
 
-  /// Set the state of the first_request_ to flag.
-  void first_request_sent (bool flag = false);
+  /// Set the state of the first_request_ flag to false
+  void first_request_sent();
 
   /// Get the first request flag
   bool first_request () const;
@@ -922,11 +797,14 @@ private:
   /**
    * As the outgoing data is drained this method is invoked to send as
    * much of the current message as possible.
+   *
+   * Returns 0 if there is more data to send, -1 if there was an error
+   * and 1 if the message was completely sent.
    */
-  Drain_Result drain_queue (TAO::Transport::Drain_Constraints const & dc);
+  int drain_queue (ACE_Time_Value *max_wait_time);
 
   /// Implement drain_queue() assuming the lock is held
-  Drain_Result drain_queue_i (TAO::Transport::Drain_Constraints const & dc);
+  int drain_queue_i (ACE_Time_Value *max_wait_time);
 
   /// Check if there are messages pending in the queue
   /**
@@ -938,8 +816,7 @@ private:
   bool queue_is_empty_i (void) const;
 
   /// A helper routine used in drain_queue_i()
-  Drain_Result drain_queue_helper (int &iovcnt, iovec iov[],
-      TAO::Transport::Drain_Constraints const & dc);
+  int drain_queue_helper (int &iovcnt, iovec iov[], ACE_Time_Value *max_wait_time);
 
   /// These classes need privileged access to:
   /// - schedule_output_i()
@@ -1051,19 +928,9 @@ private:
   /// partial_message_ data member.
   void allocate_partial_message_block (void);
 
-  /**
-   * Return true if blocking I/O should be used for sending synchronous
-   * (two-way, reliable oneways, etc.) messages.  This is determined based
-   * on the current flushing and waiting strategies.
-   */
-  bool using_blocking_io_for_synch_messages() const;
-
-  /**
-   * Return true if blocking I/O should be used for sending asynchronous
-   * (AMI calls, non-blocking oneways, responses to operations, etc.)
-   * messages.  This is determined based on the current flushing strategy.
-   */
-  bool using_blocking_io_for_asynch_messages() const;
+  // Disallow copying and assignment.
+  TAO_Transport (const TAO_Transport&);
+  void operator= (const TAO_Transport&);
 
   /*
    * Specialization hook to add concrete private methods from

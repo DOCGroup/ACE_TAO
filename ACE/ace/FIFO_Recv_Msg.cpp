@@ -8,6 +8,8 @@
 #include "ace/FIFO_Recv_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(ace, FIFO_Recv_Msg, "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv_Msg)

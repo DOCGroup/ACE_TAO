@@ -2,6 +2,8 @@
 
 #include "Handle_Timeout.h"
 
+ACE_RCSID(server, Handle_Timeout, "$Id$")
+
 #if defined (SunOS4)
 extern "C"
 {

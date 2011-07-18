@@ -14,6 +14,10 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_stdlib.h"
 
+ACE_RCSID (ace,
+           Get_Opt,
+           "$Id$")
+
 /*
  * Copyright (c) 1987, 1993, 1994
  *      The Regents of the University of California.  All rights reserved.

@@ -1,17 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_helper.cpp
- *
- *  $Id$
- *
- * Provides helper classes to print generated code to the output
- *
- *
- *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_helper.cpp
+//
+// = DESCRIPTION
+//   Provides helper classes to print generated code to the output
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+//    Improvements by Carlos O'Ryan
+//
+// ============================================================================
 
 #include "be_helper.h"
 #include "be_extern.h"
@@ -19,6 +25,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+
+ACE_RCSID (be,
+           be_helper,
+           "$Id$")
 
 static const char copyright[] =
 "// -*- C++ -*-\n"
@@ -240,7 +250,7 @@ TAO_OutStream::gen_ifndef_string (const char *fname,
       extension = fname;
     }
 
-  ACE_OS::sprintf (macro_name, "%s", prefix);
+  ACE_OS::sprintf (macro_name, prefix);
 
   size_t offset = ACE_OS::strlen (prefix);
 

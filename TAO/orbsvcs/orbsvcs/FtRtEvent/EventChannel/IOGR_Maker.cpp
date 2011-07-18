@@ -12,6 +12,10 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 
+ACE_RCSID (EventChannel,
+           IOGR_Maker,
+           "$Id$")
+
 static IOGR_Maker* maker;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

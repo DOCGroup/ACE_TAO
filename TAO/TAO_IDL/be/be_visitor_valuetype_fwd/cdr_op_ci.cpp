@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for forward
- *  declarations of valuetypes. This uses compiled marshaling.
- *
- *
- *  @author Torsten Kuepper based on code from Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
- */
-//=============================================================================
+// ================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for forward
+//    declarations of valuetypes. This uses compiled marshaling.
+//
+// = AUTHOR
+//    Torsten Kuepper based on code from
+//    Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
+//
+// ================================================================
 
+ACE_RCSID (be_visitor_valuetype_fwd, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ****************************************************************
 // Interface visitor for generating CDR operator declarations in the
@@ -68,9 +78,9 @@ be_visitor_valuetype_fwd_cdr_op_ci::visit_valuetype_fwd (
 
   //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__
-      << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ 
+      << be_nl << be_nl;
 
   //This is just declaration so no ACE_INLINE
   *os << be_global->stub_export_macro ()

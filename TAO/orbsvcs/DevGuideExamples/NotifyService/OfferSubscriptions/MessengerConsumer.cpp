@@ -56,7 +56,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CosNotifyChannelAdmin::AdminID adminid;
     CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-      CosNotifyChannelAdmin::AND_OP;
+      CosNotifyChannelAdmin::OR_OP;
 
     CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
       ec->new_for_consumers(ifgop,
@@ -67,10 +67,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-    PortableServer::Servant_var<StructuredEventConsumer_i> servant =
-      new StructuredEventConsumer_i(orb.in());
+    StructuredEventConsumer_i  servant(orb.in());
 
-    CosNotifyComm::StructuredPushConsumer_var consumer = servant->_this();
+    CosNotifyComm::StructuredPushConsumer_var consumer =
+      servant._this();
 
     CosNotifyChannelAdmin::ProxyID consumeradmin_proxy_id;
 

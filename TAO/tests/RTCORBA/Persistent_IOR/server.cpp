@@ -109,14 +109,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const ACE_TCHAR *filename)
+                    const char *filename)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");
@@ -127,7 +127,7 @@ write_iors_to_file (CORBA::Object_ptr object,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "%s: %C\n",
+                "%C: %C\n",
                 filename,
                 ior.in ()));
 
@@ -182,7 +182,7 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      persistent_ior);
+                      ACE_TEXT_ALWAYS_CHAR (persistent_ior));
 }
 
 void
@@ -234,7 +234,7 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      transient_ior);
+                      ACE_TEXT_ALWAYS_CHAR (transient_ior));
 }
 
 void
@@ -293,7 +293,7 @@ create_poa_with_tp_and_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      tp_persistent_ior);
+                      ACE_TEXT_ALWAYS_CHAR (tp_persistent_ior));
 }
 
 int

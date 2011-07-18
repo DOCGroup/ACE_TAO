@@ -26,6 +26,7 @@
 #include "tao/Versioned_Namespace.h"
 #include "ace/FILE.h"
 #include "ace/streams.h"
+#include "ace/Synch_T.h"
 
 #include "tao/orbconf.h"
 

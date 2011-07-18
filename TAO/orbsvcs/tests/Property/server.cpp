@@ -1,21 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  Test server for the CosPropertyService
- *
- *
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/tests/CosPropertyService
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    Test server for the CosPropertyService
+//
+// = AUTHORS
+//   Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "server.h"
 
-
+ACE_RCSID(CosPropertyService, server, "$Id$")
 
 // Main program
 

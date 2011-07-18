@@ -1,30 +1,36 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    structure_fwd_ch.h
- *
- *  $Id$
- *
- *  Concrete visitor for the be_structure_fwd node.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure_fwd_ch.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the be_structure_fwd node.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef _BE_INTERFACE_STRUCTURE_FWD_CH_H_
 #define _BE_INTERFACE_STRUCTURE_FWD_CH_H_
 
-/**
- * @class be_visitor_structure_fwd_ch
- *
- * @brief be_visitor_structure_fwd_ch
- *
- * This is the visitor for be_structure_fwd for the header file
- */
 class be_visitor_structure_fwd_ch : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //   be_visitor_structure_fwd_ch
+  //
+  // = DESCRIPTION
+  //   This is the visitor for be_structure_fwd for the header file
+  //
+  //
 public:
   be_visitor_structure_fwd_ch (be_visitor_context *ctx);
 

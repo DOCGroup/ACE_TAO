@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance_deployment_stub, portableserver,  {
+  after += Deployment_svnt
+  libs  += DAnCE_Deployment_svnt
+  idlflags += -I$(CIAO_ROOT)/DAnCE
+}

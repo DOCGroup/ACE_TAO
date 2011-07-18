@@ -1,18 +1,21 @@
+// $Id$
 
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file    ifr_adding_visitor.h
- *
- *  $Id$
- *
- *  Header file for class ifr_adding_visitor.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IFR_BE_DLL
+//
+// = FILENAME
+//    ifr_adding_visitor.h
+//
+// = DESCRIPTION
+//    Header file for class ifr_adding_visitor.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_IFR_ADDING_VISITOR_H
 #define TAO_IFR_ADDING_VISITOR_H
@@ -26,16 +29,16 @@
 
 class UTL_ExceptList;
 
-/**
- * @class ifr_adding_visitor
- *
- * @brief ifr_adding_visitor.
- *
- * This visitor adds items found in the IDL file being processed
- * to the Interface Repository.
- */
 class ifr_adding_visitor : public ifr_visitor
 {
+  //
+  // = TITLE
+  //    ifr_adding_visitor.
+  //
+  // = DESCRIPTION
+  //    This visitor adds items found in the IDL file being processed
+  //    to the Interface Repository.
+  //
 public:
   ifr_adding_visitor (AST_Decl *scope,
                       CORBA::Boolean in_reopened = 0,
@@ -53,14 +56,10 @@ public:
   virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
   virtual int visit_component (AST_Component *node);
   virtual int visit_component_fwd (AST_ComponentFwd *node);
-  virtual int visit_provides (AST_Provides *node);
-  virtual int visit_uses (AST_Uses *node);
-  virtual int visit_publishes (AST_Publishes *node);
-  virtual int visit_emits (AST_Emits *node);
-  virtual int visit_consumes (AST_Consumes *node);
   virtual int visit_eventtype (AST_EventType *node);
   virtual int visit_eventtype_fwd (AST_EventTypeFwd *node);
   virtual int visit_home (AST_Home *node);
+  virtual int visit_factory (AST_Factory *node);
   virtual int visit_structure (AST_Structure *node);
   virtual int visit_structure_fwd (AST_StructureFwd *node);
   virtual int visit_exception (AST_Exception *node);
@@ -79,39 +78,39 @@ public:
   virtual int visit_native (AST_Native *node);
 
 protected:
-  /// Conversion functions.
   CORBA::PrimitiveKind expr_type_to_pkind (AST_Expression::ExprType et);
   CORBA::PrimitiveKind predefined_type_to_pkind (AST_PredefinedType *node);
+  // Conversion functions.
 
-  /// Determine the primitive type and insert into the Any.
   void load_any (AST_Expression::AST_ExprValue *ev,
                  CORBA::Any &any);
+  // Determine the primitive type and insert into the Any.
 
-  /// Creates or looks up the element type of an array or sequence,
-  /// and stores the result in ir_current_.
   void element_type (AST_Type *base_type, bool owned = false);
+  // Creates or looks up the element type of an array or sequence,
+  // and stores the result in ir_current_.
 
-  /// Code encapsulated out of visit_interface().
   int create_interface_def (AST_Interface *node);
+  // Code encapsulated out of visit_interface().
 
-  /// Code encapsulated out of visit_valuetype().
   int create_value_def (AST_ValueType *node);
+  // Code encapsulated out of visit_valuetype().
 
-  /// Code encapsulated out of visit_component().
   int create_component_def (AST_Component *node);
+  // Code encapsulated out of visit_component().
 
-  /// Code encapsulated out of visit_home().
   int create_home_def (AST_Home *node);
+  // Code encapsulated out of visit_home().
 
-  /// Code encapsulated out of visit_eventtype().
   int create_event_def (AST_EventType *node);
+  // Code encapsulated out of visit_eventtype().
 
-  /// Conditional call from visit_field().
   int create_value_member (AST_Field *node);
+  // Conditional call from visit_field().
 
-  /// Utility method to update ir_current_ for struct members, union
-  /// members, operation parameters and operation return types.
   void get_referenced_type (AST_Type *node);
+  // Utility method to update ir_current_ for struct members, union
+  // members, operation parameters and operation return types.
 
   void fill_base_value (CORBA::ValueDef_ptr &result,
                         AST_ValueType *node);
@@ -138,7 +137,7 @@ protected:
                                   AST_Interface *node);
 
   void fill_interfaces (CORBA::InterfaceDefSeq &result,
-                        AST_Type **list,
+                        AST_Interface **list,
                         CORBA::Long length);
 
   void fill_initializers (CORBA::ExtInitializerSeq &result,
@@ -157,7 +156,22 @@ protected:
                         UTL_ExceptList *list);
 
   void fill_params (CORBA::ParDescriptionSeq &result,
-                    UTL_Scope *node);
+                    AST_Operation *node);
+
+  void visit_all_provides (AST_Component *node,
+                           CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_uses (AST_Component *node,
+                       CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_emits (AST_Component *node,
+                        CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_publishes (AST_Component *node,
+                            CORBA::ComponentIR::ComponentDef_ptr c);
+
+  void visit_all_consumes (AST_Component *node,
+                           CORBA::ComponentIR::ComponentDef_ptr c);
 
   void visit_all_factories (AST_Home *node,
                             CORBA::ComponentIR::HomeDef_ptr h);
@@ -169,22 +183,20 @@ protected:
                   const char *local_name);
 
 protected:
-  /**
-   * Holder for the IR object most recently created or looked up by
-   * the visitor. This makes it accessible by visitor methods that
-   * need the result of a call to another visitor method that
-   * creates an IR object.
-   */
   CORBA::IDLType_var ir_current_;
+  // Holder for the IR object most recently created or looked up by
+  // the visitor. This makes it accessible by visitor methods that
+  // need the result of a call to another visitor method that
+  // creates an IR object.
 
-  /// Store the node whose scope (if any) we will be visiting.
   AST_Decl *scope_;
+  // Store the node whose scope (if any) we will be visiting.
 
-  /// Are we traversing the scope of a reopened module?
   bool in_reopened_;
+  // Are we traversing the scope of a reopened module?
 
-  /// Do we allow duplicate typedefs?
   bool allow_duplicate_typedefs_;
+  // Do we allow duplicate typedefs?
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_H */

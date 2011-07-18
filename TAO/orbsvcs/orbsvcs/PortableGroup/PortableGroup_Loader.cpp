@@ -7,6 +7,11 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
+ACE_RCSID (PortableGroup,
+           PortableGroup_Loader,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
@@ -51,6 +56,14 @@ int
 TAO_PortableGroup_Loader::Initializer (void)
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_PortableGroup_Loader);
+  TAO_PortableGroup_Loader *tmp =
+    ACE_Dynamic_Service<TAO_PortableGroup_Loader>::instance (
+      "PortableGroup_Loader");
+
+  if (tmp != 0)
+    {
+      return tmp->init (0, 0);
+    }
 
   return -1;
 }

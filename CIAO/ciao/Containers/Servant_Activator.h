@@ -21,12 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Array_Base.h"
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
-
-#include <map>
-#include <string>
 
 namespace CIAO
 {
@@ -45,7 +43,7 @@ namespace CIAO
    * right one (yes a linear algorithm is used), calls activate () on
    * it which returns the servant for *that* port.
    */
-  class CIAO_SERVANT_ACTIVATOR_Export Servant_Activator_i
+  class CIAO_Servant_Activator_Export Servant_Activator_i
     : public virtual ::CIAO::Servant_Activator,
       public virtual ::CORBA::LocalObject
   {
@@ -75,12 +73,15 @@ namespace CIAO
                               PortableServer::Servant servant,
                               CORBA::Boolean cleanup_in_progress,
                               CORBA::Boolean remaining_activations);
+    /// Local helper methods
 
   private:
     /// Pointer to our ORB
     CORBA::ORB_var orb_;
 
-    typedef std::map <std::string, Port_Activator_var> Port_Activators;
+    /// @@ This should be changed at some point of time so that we
+    /// don't land up with a linear algorithm
+    typedef ACE_Array_Base<Port_Activator_var> Port_Activators;
 
     /// Array of port activators
     Port_Activators pa_;

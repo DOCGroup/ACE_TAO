@@ -66,37 +66,38 @@ public:
    */
   virtual void characters (const ACEXML_Char *ch,
                            size_t start,
-                           size_t length);
+                           size_t length
+                           ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void);
+  virtual void endDocument (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /*
    * Receive notification of the end of an element.
    */
   virtual void endElement (const ACEXML_Char *namespaceURI,
                            const ACEXML_Char *localName,
-                           const ACEXML_Char *qName);
+                           const ACEXML_Char *qName ACEXML_ENV_ARG_DECL);
 
   /*
    * End the scope of a prefix-URI mapping.
    */
-  virtual void endPrefixMapping (const ACEXML_Char *prefix);
+  virtual void endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of ignorable whitespace in element content.
    */
   virtual void ignorableWhitespace (const ACEXML_Char *ch,
                                     int start,
-                                    int length);
+                                    int length ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of a processing instruction.
    */
   virtual void processingInstruction (const ACEXML_Char *target,
-                                      const ACEXML_Char *data);
+                                      const ACEXML_Char *data ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive an object for locating the origin of SAX document events.
@@ -106,12 +107,12 @@ public:
   /*
    * Receive notification of a skipped entity.
    */
-  virtual void skippedEntity (const ACEXML_Char *name);
+  virtual void skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void);
+  virtual void startDocument (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /*
    * Receive notification of the beginning of an element.
@@ -119,13 +120,13 @@ public:
   virtual void startElement (const ACEXML_Char *namespaceURI,
                              const ACEXML_Char *localName,
                              const ACEXML_Char *qName,
-                             ACEXML_Attributes *atts);
+                             ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL);
 
   /*
    * Begin the scope of a prefix-URI Namespace mapping.
    */
   virtual void startPrefixMapping (const ACEXML_Char *prefix,
-                                   const ACEXML_Char *uri);
+                                   const ACEXML_Char *uri ACEXML_ENV_ARG_DECL);
 
   // *** Methods inherit from ACEXML_DTDHandler.
 
@@ -134,7 +135,7 @@ public:
    */
   virtual void notationDecl (const ACEXML_Char *name,
                              const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId);
+                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of an unparsed entity declaration event.
@@ -142,7 +143,7 @@ public:
   virtual void unparsedEntityDecl (const ACEXML_Char *name,
                                    const ACEXML_Char *publicId,
                                    const ACEXML_Char *systemId,
-                                   const ACEXML_Char *notationName);
+                                   const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL);
 
   // Methods inherit from ACEXML_EnitityResolver.
 
@@ -150,24 +151,24 @@ public:
    * Allow the application to resolve external entities.
    */
   virtual ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                             const ACEXML_Char *systemId);
+                                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL);
 
   // Methods inherit from ACEXML_ErrorHandler.
 
   /*
    * Receive notification of a recoverable error.
    */
-  virtual void error (ACEXML_SAXParseException &exception);
+  virtual void error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of a non-recoverable error.
    */
-  virtual void fatalError (ACEXML_SAXParseException &exception);
+  virtual void fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL);
 
   /*
    * Receive notification of a warning.
    */
-  virtual void warning (ACEXML_SAXParseException &exception);
+  virtual void warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL);
 };
 
 #include /**/ "ace/post.h"

@@ -95,7 +95,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -111,8 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       char ior[100];
-      ACE_OS::sprintf (ior, "corbaloc::%s:%d/Racer",
-                       ACE_TEXT_ALWAYS_CHAR (target_host), port);
+      ACE_OS::sprintf (ior,"corbaloc::%s:%d/Racer",target_host,port);
 
       Pinger pinger(orb, ior);
 

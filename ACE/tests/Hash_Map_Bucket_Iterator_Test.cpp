@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Hash_Map_Bucket_Iterator_Test.cpp
- *
- *  $Id$
- *
- *   This is a simple test of the <Hash_Map_Bucket_Iterator>.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Hash_Map_Bucket_Iterator_Test.cpp
+//
+// = DESCRIPTION
+//     This is a simple test of the <Hash_Map_Bucket_Iterator>.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
@@ -20,6 +23,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Get_Opt.h"
 #include "ace/Functor.h"
+
+ACE_RCSID(tests, Hash_Map_Bucket_Iterator_Test, "$Id$")
 
 static ACE_UINT32 iterations = ACE_MAX_ITERATIONS * 10;
 static ACE_UINT32 table_size = ACE_MAX_ITERATIONS;
@@ -84,7 +89,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < iterations; ++i)
     {
       int result = map.bind (i, i);
-      ACE_TEST_ASSERT (result == 0);
+      ACE_ASSERT (result == 0);
+      ACE_UNUSED_ARG (result);
     }
 
   for (i = 0; i < table_size; ++i)
@@ -102,7 +108,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "%d ", (*iterator).int_id_));
           ACE_UINT32 key = (*iterator).ext_id_;
-          ACE_TEST_ASSERT (((key - i) % table_size) == 0);
+          ACE_ASSERT (((key - i) % table_size) == 0);
         }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));

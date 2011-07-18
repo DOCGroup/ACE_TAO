@@ -84,21 +84,21 @@ public:
 
   /**
    * Hook called from ACE_Thread_Exit when during thread exit and from
-   * the default implementation of @c module_closed().  In general, this
+   * the default implementation of <module_closed>.  In general, this
    * method shouldn't be called directly by an application,
-   * particularly if the Task is running as an Active Object.
-   * Instead, a special message should be passed into the Task via
-   * the put() method defined below, and the svc() method should
-   * interpret this as a flag to shut down the Task.
+   * particularly if the <Task> is running as an Active Object.
+   * Instead, a special message should be passed into the <Task> via
+   * the <put> method defined below, and the <svc> method should
+   * interpret this as a flag to shut down the <Task>.
    */
   virtual int close (u_long flags = 0);
 
   /**
-   * Hook called during ACE_Module::close().  The default
+   * Hook called during <ACE_Module::close>.  The default
    * implementation calls forwards the call to close(1).  Please
-   * notice the changed value of the default argument of close().
+   * notice the changed value of the default argument of <close>.
    * This allows tasks to differ between the call has been originated
-   * from ACE_Thread_Exit or from module_closed().  Be aware that
+   * from <ACE_Thread_Exit> or from <module_closed>.  Be aware that
    * close(0) will be also called when a thread associated with the
    * ACE_Task instance exits.
    */
@@ -111,7 +111,7 @@ public:
 
   /// A hook method that can be used to pass a message to a
   /// task, where it can be processed immediately or queued for subsequent
-  /// processing in the svc() hook method.
+  /// processing in the <svc> hook method.
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
 
   /// Run by a daemon thread to handle deferred processing.
@@ -286,6 +286,7 @@ protected:
 
   /// Holds the thread ID of the last thread to exit svc() in this object.
   ACE_thread_t  last_thread_id_;
+
 private:
 
   // = Disallow these operations.

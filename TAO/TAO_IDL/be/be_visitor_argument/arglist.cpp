@@ -1,16 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    arglist.cpp
- *
- *  $Id$
- *
- *  Visitor that generates the parameters in an Operation signature
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    arglist.cpp
+//
+// = DESCRIPTION
+//    Visitor that generates the parameters in an Operation signature
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_argument,
+           arglist,
+           "$Id$")
+
 
 // ************************************************************
 // be_visitor_args_arglist for parameter list in method declarations and
@@ -18,8 +29,7 @@
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx),
-    unused_ (false)
+  : be_visitor_args (ctx)
 {
 }
 
@@ -57,11 +67,9 @@ int be_visitor_args_arglist::visit_argument (be_argument *node)
 
   if (this->ctx_->state () != TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH)
     {
-      *os << " " << (unused_ ? "/* " : "" )
-          << node->local_name ()->get_string ()
-          << (unused_ ? " */" : "");
+      *os << " " << node->local_name ();
     }
-
+    
   return 0;
 }
 
@@ -87,7 +95,7 @@ int be_visitor_args_arglist::visit_array (be_array *node)
 
 int be_visitor_args_arglist::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
   switch (this->direction ())
     {
@@ -271,7 +279,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
   // There seems to be one case where the two conditions below
   // are true - in generating get/set operations for an
   // inherited valuetype member, which is included from
-  // another IDL file, and whose type is an anonymous
+  // another IDL file, and whose type is an anonymous 
   // sequence. There is also no better place to make the
   // call to create_name() - the node constructor sets the
   // 'anonymous' flag to false, the typedef that resets it
@@ -285,7 +293,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-
+  
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -295,15 +303,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
       *os << this->type_name (node) << " &";
       break;
     case AST_Argument::dir_OUT:
-      if (be_global->alt_mapping () && node->unbounded ())
-        {
-          *os << this->type_name (node) << " &";
-        }
-      else
-        {
-          *os << this->type_name (node, "_out");
-        }
-
+      *os << this->type_name (node, "_out");
       break;
     }
 
@@ -313,23 +313,6 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != (long) sizeof (char));
-
-  if (!wide && bound == 0 && be_global->alt_mapping ())
-    {
-      switch (this->direction ())
-        {
-          case AST_Argument::dir_IN:
-            *os << "const std::string";
-            break;
-          default:
-            *os << "std::string &";
-            break;
-        }
-
-      return 0;
-    }
 
   if (node->width () == (long) sizeof (char))
     {
@@ -490,10 +473,4 @@ int be_visitor_args_arglist::emit_common (be_type *node)
     }
 
   return 0;
-}
-
-void
-be_visitor_args_arglist::unused (bool val)
-{
-  this->unused_ = val;
 }

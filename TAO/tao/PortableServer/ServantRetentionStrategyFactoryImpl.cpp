@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/ServantRetentionStrategyFactoryImpl.h"
@@ -6,6 +5,10 @@
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (PortableServer,
+           ServantRetentionStrategyFactoryImpl,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,16 +1,19 @@
-//=============================================================================
-/**
- *  @file    CC_command.cpp
- *
- *  $Id$
- *
- *    This is the command classes for the test of the concurrency service.
- *
- *
- *  @author   Torben Worm <tworm@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/tests
+//
+// = FILENAME
+//    CC_command.cpp
+//
+// = DESCRIPTION
+//      This is the command classes for the test of the concurrency service.
+//
+// = AUTHORS
+//      Torben Worm <tworm@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "CC_command.h"
 #include "CC_test_utils.h"
@@ -22,6 +25,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (Concurrency,
+           CC_command,
+           "$Id$")
+
 
 CC_Command::~CC_Command(void)
 {

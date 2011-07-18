@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Token_Collection.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
@@ -7,6 +6,10 @@
 #include "ace/Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
 
+
+ACE_RCSID (ace,
+           Token_Collection,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

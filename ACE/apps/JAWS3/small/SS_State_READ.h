@@ -4,6 +4,7 @@
 #ifndef TERA_SS_STATE_READ_H
 #define TERA_SS_STATE_READ_H
 
+#include "ace/OS.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "jaws3/Protocol_Handler.h"

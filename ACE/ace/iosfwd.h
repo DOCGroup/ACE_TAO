@@ -44,7 +44,6 @@
 
 # if !defined (ACE_USES_OLD_IOSTREAMS)
 #   include /**/ <iosfwd>
-#define ACE_HAS_CPP98_IOSTREAMS 1
 # else
   // @note If these forward declarations don't work (e.g. aren't
   //       portable), we may have to include "ace/streams.h" as a last

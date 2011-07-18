@@ -1,10 +1,13 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
 #include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
+
+ACE_RCSID (PortableServer,
+           ImplicitActivationStrategyFactoryImpl,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,13 +1,14 @@
-# -*- Makefile -*-
 # $Id$
-
+#
 # RTEMS 4.6.6 and later with GNU g++.
 
 CROSS-COMPILE = 1
 
 debug ?= 1
 optimize ?= 1
+exceptions ?= 1
 threads ?= 1
+pipes ?= 1
 
 shared_libs =
 static_libs = 1
@@ -15,9 +16,11 @@ rwho = 0
 
 ifneq (,$(HOST_ROOT))
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
+  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
   TAO_IDL_DEP = $(TAO_IDL)
   TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+  CIDLC_DEP = $(CIDLC)
 endif
 
 ifeq (,$(RTEMS_MAKEFILE_PATH))
@@ -40,7 +43,8 @@ ifeq (no,$(RTEMS_HAS_NETWORKING))
  CCFLAGS += -DACE_LACKS_NETWORKING
 endif
 
-CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CFLAGS          += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
+CCFLAGS         += -specs bsp_specs -qrtems -D_REENTRANT -fasm -fno-builtin -fno-defer-pop -fvolatile -W -Wall -DACE_HAS_RTEMS -B$(RTEMS_MAKEFILE_PATH)/lib
 DCFLAGS         += -g
 DCCFLAGS        += -g
 DLD             = $(LD)
@@ -50,3 +54,4 @@ LD              = $(CXX)
 LDFLAGS         += -Wl,--allow-multiple-definition -B$(RTEMS_MAKEFILE_PATH)/lib -Wl,-Ttext,0x00100000
 OCFLAGS         += -O
 PIC             =
+

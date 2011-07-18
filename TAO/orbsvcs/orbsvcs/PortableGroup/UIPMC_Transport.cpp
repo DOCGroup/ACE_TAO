@@ -20,6 +20,10 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
+ACE_RCSID (PortableGroup,
+           UIPMC_Transport,
+           "$Id$")
+
 // Local MIOP Definitions:
 
 // Note: We currently support packet fragmentation on transmit, but
@@ -180,7 +184,7 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
           current_fragment->iovcnt == ACE_IOV_MAX)
         {
           // Make a new fragment.
-          ++num_fragments;
+          num_fragments++;
 
           // Check if too many fragments
           if (num_fragments > MIOP_MAX_FRAGMENTS)
@@ -209,9 +213,9 @@ TAO_UIPMC_Transport<CONNECTION_HANDLER>::send (iovec *iov, int iovcnt,
             }
 
           // Otherwise, initialize another fragment.
-          ++current_fragment;
+          current_fragment++;
           current_fragment->iovcnt = 1;  // The MIOP Header
-          current_fragment->length = 0;
+          current_fragment->length = MIOP_HEADER_SIZE;
         }
     }
 

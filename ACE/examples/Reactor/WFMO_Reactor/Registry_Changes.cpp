@@ -1,18 +1,22 @@
-//=============================================================================
-/**
- *  @file    Registry_Changes.cpp
- *
- *  $Id$
- *
- *
- *  This application tests the working of Reactor when users are
- *  interested in monitoring changes in the registry.
- *
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Registry_Changes.cpp
+//
+// = DESCRIPTION
+//
+//    This application tests the working of Reactor when users are
+//    interested in monitoring changes in the registry.
+//
+// = AUTHOR
+//    Irfan Pyarali
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 
@@ -23,7 +27,7 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 
-
+ACE_RCSID(WFMO_Reactor, Registry_Changes, "$Id$")
 
 static int stop_test = 0;
 static HKEY context_to_monitor = HKEY_CURRENT_USER;

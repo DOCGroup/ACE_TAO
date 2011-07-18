@@ -1,8 +1,11 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Transport_Selection_Guard.h"
 #include "tao/TSS_Resources.h"
+
+ACE_RCSID (tao,
+           Transport_Selection_Guard,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,6 +2,11 @@
 
 #include "orbsvcs/IFRService/ComponentModuleDef_i.h"
 
+ACE_RCSID (IFRService, 
+           ComponentModuleDef_i, 
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ComponentModuleDef_i::TAO_ComponentModuleDef_i (TAO_Repository_i *repo)

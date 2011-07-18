@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    bd_short_seq.cpp
- *
- *  $Id$
- *
- *  tests bounded short sequences
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    bd_short_seq.cpp
+//
+// = DESCRIPTION
+//    tests bounded short sequences
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "bd_short_seq.h"
+
+ACE_RCSID (Param_Test,
+           bd_short_seq,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_Short_Sequence

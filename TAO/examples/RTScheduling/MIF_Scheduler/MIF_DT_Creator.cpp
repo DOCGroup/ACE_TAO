@@ -54,7 +54,7 @@ MIF_DT_Creator::yield (time_t suspend_time,
 
           ACE_OS::sleep (1);
           CORBA::Policy_var sched_param;
-          sched_param = this->sched_param (100);
+          sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
           const char * name = 0;
           current->update_scheduling_segment (name,
                                               sched_param.in (),
@@ -81,16 +81,6 @@ MIF_DT_Creator::wait (void)
 {
   while (active_dt_count_ > 0 || active_job_count_ > 0)
     {
-      try
-        {
-          (void)this->orb_->work_pending ();
-        }
-      catch (CORBA::BAD_INV_ORDER const &)
-        {
-          // If there is BAD_INV_ORDER exception there is
-          // no point in running this loop any more.
-          break;
-        }
       yield(1,0);
     }
 }

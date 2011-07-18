@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/IIOP_Transport.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -18,6 +16,10 @@
 #include "tao/MMAP_Allocator.h"
 
 #include "ace/OS_NS_sys_sendfile.h"
+
+ACE_RCSID (tao,
+           IIOP_Transport,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -73,7 +75,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
                       ACE_TEXT ("send failure (errno: %d) - %m\n"),
-                      this->id (), ACE_ERRNO_GET));
+                      this->id (), errno));
         }
     }
 
@@ -86,7 +88,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
                               iovec * iov,
                               int iovcnt,
                               size_t &bytes_transferred,
-                              TAO::Transport::Drain_Constraints const & dc)
+                              ACE_Time_Value const * timeout)
 {
   // @@ We should probably set the TCP_CORK socket option to minimize
   //    network operations.  It may also be useful to adjust the
@@ -95,7 +97,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   // If we don't have an allocator, fallback to the regular way of sending
   // data
   if (allocator == 0)
-    return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
+    return this->send (iov, iovcnt, bytes_transferred, timeout);
 
   // We can only use sendfile when all data is coming from the mmap allocator,
   // if not, we just fallback to to the regular way of sending data
@@ -104,8 +106,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   for (iovec * index = off_check_begin; index != off_check_end; ++index)
     {
       if (-1 == allocator->offset (index->iov_base))
-        return this->send (iov, iovcnt, bytes_transferred,
-                           this->io_timeout(dc));
+        return this->send (iov, iovcnt, bytes_transferred, timeout);
     }
 
   ssize_t retval = -1;
@@ -124,17 +125,17 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
     {
       off_t offset = allocator->offset (i->iov_base);
 
-      if (this->io_timeout(dc))
+      if (timeout)
         {
           int val = 0;
-          if (ACE::enter_send_timedwait (out_fd,
-                                         this->io_timeout(dc), val) == -1)
+          if (ACE::enter_send_timedwait (out_fd, timeout, val) == -1)
             return retval;
           else
             {
               retval =
                 ACE_OS::sendfile (out_fd, in_fd, &offset, i->iov_len);
               ACE::restore_non_blocking_mode (out_fd, val);
+
             }
         }
       else
@@ -154,7 +155,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::sendfile, ")
                   ACE_TEXT ("sendfile failure - %m (errno: %d)\n"),
                   this->id (),
-                  ACE_ERRNO_GET));
+                  errno));
     }
 
   return retval;
@@ -178,7 +179,7 @@ TAO_IIOP_Transport::recv (char *buf,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::recv, ")
                   ACE_TEXT ("read failure - %m errno %d\n"),
                   this->id (),
-                  ACE_ERRNO_GET));
+                  errno));
     }
 
   // Error handling

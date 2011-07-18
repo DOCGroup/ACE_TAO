@@ -72,8 +72,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
-AST_Decl::NodeType const
-AST_Enum::NT = AST_Decl::NT_enum;
+ACE_RCSID (ast,
+           ast_enum,
+           "$Id$")
+
+AST_Enum::AST_Enum (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    pd_enum_counter (0),
+    member_count_ (-1)
+{
+  this->size_type (AST_Type::FIXED);
+}
 
 AST_Enum::AST_Enum (UTL_ScopedName *n,
                     bool local,
@@ -236,6 +249,7 @@ AST_Enum::compute_member_count (void)
   return 0;
 }
 
+// Add an AST_EnumVal node to this scope.
 AST_EnumVal *
 AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 {
@@ -264,11 +278,11 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 
       t1->set_name (sn);
     }
-
+      
   // Already defined and cannot be redefined? Or already used?
-  if ((d = this->lookup_for_add (t)) != 0)
+  if ((d = this->lookup_for_add (t, false)) != 0)
     {
-      if (!FE_Utils::can_be_redefined (d, t))
+      if (!can_be_redefined (d))
         {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
@@ -303,10 +317,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
                            t->local_name ());
 
   if (t1 == 0)
-    {
-      // Prevent dereferencing null pointer in nested calls.
-      return 0;
-    }
+    return 0;  // Prevent dereferencing null pointer in nested calls.
 
   // Add it to enclosing scope.
   idl_global->scopes ().next_to_top ()->fe_add_enum_val (t1);

@@ -1,13 +1,16 @@
-//=============================================================================
-/**
- *  @file    Identity_Client.cpp
- *
- *  $Id$
- *
- *  @author Marina Spivak <marina@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/examples/Load_Balancing
+//
+// = FILENAME
+//    Identity_Client.cpp
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Identity_Client.h"
 #include "IdentityC.h"

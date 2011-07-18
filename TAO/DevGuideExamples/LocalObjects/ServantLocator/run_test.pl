@@ -1,75 +1,37 @@
-eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
-
 # $Id$
-# -*- perl -*-
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
-$status = 0;
-$debug_level = '0';
+use Env (ACE_ROOT);
+use lib "$ACE_ROOT/bin";
+use PerlACE::Run_Test;
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+$messenger_ior = "Messenger.ior";
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $iorbase = "Messenger.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $messenger_ior;
 
 # start MessengerServer
-$SV = $server->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("MessengerClient", "-k file://$client_iorfile");
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+$S = new PerlACE::Process("MessengerServer");
+$S->Spawn();
+if (PerlACE::waitforfile_timed ($messenger_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$implrepo_ior>\n";
+    $S->Kill(); 
     exit 1;
 }
+ 
+# start MessengerClient
+$C = new PerlACE::Process("MessengerClient");  
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($C->SpawnWaitKill(15) != 0) {
+   print STDERR "ERROR: client failed\n";
+   $S->Kill();
+   exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$S->Kill();
 
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+unlink $messenger_ior;
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$server_status = $SV->Kill ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-exit $status;
+exit 0;

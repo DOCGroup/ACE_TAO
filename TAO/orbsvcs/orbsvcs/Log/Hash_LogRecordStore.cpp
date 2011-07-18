@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/Hash_Iterator_i.h"
@@ -11,6 +9,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_RCSID (Log,
+           Hash_LogRecordStore,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -466,12 +468,10 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 #endif
 
   if (how_many >= 0)
-    ACE_OS::sprintf (constraint, "time >= %s",
-                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+    ACE_OS::sprintf (constraint, "time >= %s", uint64_formating);
   else
     {
-      ACE_OS::sprintf (constraint, "time < %s",
-                       ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+      ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
       how_many = -(how_many);
     }
 

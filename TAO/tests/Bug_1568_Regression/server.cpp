@@ -7,10 +7,13 @@
  */
 #include "TestS.h"
 
+#include "tao/Utils/Servant_Var.h"
 #include "tao/corba.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
+
+ACE_RCSID(Bug_1568_Regression, server, "$Id$")
 
 /**
  * @class Simple_C
@@ -30,7 +33,7 @@ public:
   void op4 (Baz::AMH_CResponseHandler_ptr _tao_rh);
   void shutdown (Baz::AMH_CResponseHandler_ptr _tao_rh);
 protected:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_ptr orb_;
 };
 
 
@@ -98,7 +101,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -127,7 +130,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PortableServer::Servant_var<Simple_C> simple_c_impl(
+      TAO::Utils::Servant_Var<Simple_C> simple_c_impl(
           new Simple_C(orb.in()));
 
       PortableServer::ObjectId_var id =

@@ -60,7 +60,7 @@ Job_i::work (CORBA::ULong work,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-    "Job_i::work: %d units of work\n",
+    "test_i::method: %d units of work\n",
     work));
 
   CORBA::Object_var object =
@@ -69,12 +69,11 @@ Job_i::work (CORBA::ULong work,
 
   RTScheduling::Current_var current =
     RTScheduling::Current::_narrow (object.in ());
-  RTScheduling::Current::IdType_var guid = current->id ();
 
   if (guid_ == 0)
     ACE_OS::memcpy (&guid_,
-                    guid->get_buffer (),
-                    sizeof (guid->length ()));
+                    current->id ()->get_buffer (),
+                    sizeof (current->id ()->length ()));
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -94,11 +93,7 @@ Job_i::work (CORBA::ULong work,
     {
       //    ACE_hrtime_t now = ACE_OS::gethrtime ();
 
-      ACE_Time_Value *base_time = dt_creator_->base_time ();
-      if (base_time == 0)
-        return;
-
-      ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(base_time);
+      ACE_Time_Value run_time = ACE_OS::gettimeofday () - *(dt_creator_->base_time ());
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);
 
       ACE_Time_Value count_down_time (1);
@@ -116,7 +111,7 @@ Job_i::work (CORBA::ULong work,
       TASK_STATS::instance ()->sample (run_time.sec (), guid_);
 
       CORBA::Policy_var sched_param;
-      sched_param = dt_creator_->sched_param (importance);
+      sched_param = CORBA::Policy::_duplicate (dt_creator_->sched_param (importance));
       const char * name = 0;
       current->update_scheduling_segment (name,
                 sched_param.in (),

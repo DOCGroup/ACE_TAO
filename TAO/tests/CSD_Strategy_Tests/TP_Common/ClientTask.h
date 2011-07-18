@@ -37,9 +37,12 @@ class CSD_TP_Test_Export ClientTask : public ACE_Task_Base
 
   private:
 
+     typedef TAO_SYNCH_MUTEX     LockType;
+     typedef ACE_Guard<LockType> GuardType;
+
      typedef ACE_Vector<ClientEngine_Handle> EngineVector;
 
-     TAO_SYNCH_MUTEX lock_;
+     LockType lock_;
      EngineVector engines_;
      bool         shutdown_after_done_;
      unsigned     failure_count_;

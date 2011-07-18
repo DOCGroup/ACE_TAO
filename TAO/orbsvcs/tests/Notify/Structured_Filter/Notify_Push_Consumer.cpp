@@ -30,8 +30,9 @@ Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
 
 void
 Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                                CosNotifyChannelAdmin::EventChannel_ptr)
+                                CosNotifyChannelAdmin::EventChannel_ptr notify_channel)
 {
+  ACE_UNUSED_ARG(notify_channel);
   CosNotifyComm::StructuredPushConsumer_var objref =
     this->_this ();
 
@@ -54,7 +55,7 @@ static void validate_expression(bool expr, const char* msg)
 {
   if (! expr)
   {
-    ACE_ERROR((LM_ERROR, ACE_TEXT("Error: %C\n"), msg));
+    ACE_ERROR((LM_ERROR, "Error: %s\n", msg));
   }
 }
 
@@ -65,7 +66,7 @@ Notify_Push_Consumer::push_structured_event (
   const CosNotification::StructuredEvent& event)
 {
   ACE_DEBUG((LM_DEBUG, "-"));
-  ++received_;
+  received_++;
 
   CORBA::ULong id = 0;
   CORBA::ULong group = 0;

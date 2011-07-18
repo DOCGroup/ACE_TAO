@@ -6,6 +6,8 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
+ACE_RCSID(BiDirectional, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 void do_nothing (void)
@@ -34,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -107,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Callback_i *callback_impl = 0;
       ACE_NEW_THROW_EX (callback_impl,
-                        Callback_i (orb.in (), server.in ()),
+                        Callback_i (orb.in ()),
                         CORBA::NO_MEMORY ());
 
       PortableServer::ServantBase_var owner_transfer(callback_impl);
@@ -139,7 +141,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Time_Value run_time (5);
       orb->run (run_time);
 
+      // Shutdown the server
+      server->shutdown ();
+
       root_poa->destroy (1, 1);
+
     }
   catch (const CORBA::Exception& ex)
     {

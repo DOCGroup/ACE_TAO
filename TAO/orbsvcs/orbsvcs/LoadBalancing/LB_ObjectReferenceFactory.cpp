@@ -1,7 +1,11 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
+
+ACE_RCSID (LoadBalancing,
+           LB_ObjectReferenceFactory,
+           "$Id$")
+
 #include "tao/debug.h"
+
 #include "ace/SString.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"

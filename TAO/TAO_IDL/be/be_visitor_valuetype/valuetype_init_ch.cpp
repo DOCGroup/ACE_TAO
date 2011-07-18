@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_init_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes factory in the client header
- *  (see IDL to C++ mapping). Based on ptc/00-01-02.
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_init_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes factory in the client header
+//    (see IDL to C++ mapping). Based on ptc/00-01-02.
+//
+// = AUTHOR
+//   Boris Kolpackov <bosk@ipmce.ru>
+//
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_init_ch,
+           "$Id$")
 
 be_visitor_valuetype_init_ch::be_visitor_valuetype_init_ch (
     be_visitor_context *ctx
@@ -55,14 +65,16 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream& os = *(this->ctx_->stream ());
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  // Generate the ifdef macro for the _init class.
+  os.gen_ifdef_macro (node->flat_name (), "_init");
+
+  os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
      << " " << node->local_name ()
-     << "_init" << be_idt_nl
-     << ": public virtual ::CORBA::ValueFactoryBase" << be_uidt_nl;
+     << "_init : public virtual ::CORBA::ValueFactoryBase" << be_nl;
 
   // Generate the body.
   os << "{" << be_nl
@@ -85,7 +97,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate _downcast method.
-  os << be_nl_2
+  os << be_nl << be_nl
      << "static " << node->local_name () << "_init* "
      << "_downcast ( ::CORBA::ValueFactoryBase *);";
 
@@ -93,19 +105,19 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     {
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
-      os << be_nl_2
+      os << be_nl << be_nl
          << "virtual ::CORBA::ValueBase *" << be_nl
          << "create_for_unmarshal (void);";
 
       if (node->supports_abstract ())
         {
-          os << be_nl_2
+          os << be_nl << be_nl
              << "virtual ::CORBA::AbstractBase_ptr" << be_nl
              << "create_for_unmarshal_abstract (void);" << be_uidt;
         }
     }
 
-  os << be_nl_2;
+  os << be_nl << be_nl;
 
     // Proprietary extensions.
   os << "// TAO-specific extensions"
@@ -117,16 +129,18 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     {
       // Protected constructor.
       os << be_uidt_nl << be_nl
-         << "protected:" << be_idt_nl
-         << node->local_name () << "_init (void);";
+         << "protected:" << be_idt_nl;
+      os << node->local_name () << "_init (void);";
     }
 
   // Protected virtual destructor.
-  os << be_uidt_nl << be_nl
-     << "protected:" << be_idt_nl
-     << "virtual ~" << node->local_name () << "_init (void);"
-     << be_uidt_nl
-     << "};";
+  os << be_uidt_nl << be_nl << "protected:" << be_idt_nl;
+  os << "virtual ~" << node->local_name () << "_init (void);";
+
+  os << be_uidt_nl << "};";
+
+  // Generate the endif macro.
+  os.gen_endif ();
 
   return 0;
 }
@@ -144,11 +158,11 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
   TAO_OutStream& os = *(this->ctx_->stream ());
 
   be_valuetype *vt =
-    be_valuetype::narrow_from_decl (this->ctx_->scope ()->decl ());
+    be_valuetype::narrow_from_decl (this->ctx_->scope ());
 
 
   // STEP I: Generate preambule.
-  os << be_nl_2
+  os << be_nl << be_nl
      << "virtual " << vt->local_name () << "* ";
 
   // STEP 2: Generate the operation name.

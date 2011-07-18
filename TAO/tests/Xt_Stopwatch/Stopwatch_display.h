@@ -1,13 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   Stopwatch_display.h
- *
- *  $Id$
- *
- *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/Xt_Stopwatch/Stopwatch_server
+//
+// = FILENAME
+//   Stopwatch.h
+//
+// = AUTHOR
+//   Balachandran  Natarajan <bala@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
@@ -22,24 +26,24 @@ class Stopwatch_display
 {
 public:
 
-  /// Stopwatch_display constructor
   Stopwatch_display (Widget &parent);
+  // Stopwatch_display constructor
 
-  /// Destructor
   virtual ~Stopwatch_display (void);
+  // Destructor
 
-  /// Manage the widget
   virtual void manage (void);
+  // Manage the widget
 
-  /// Change the displayed time
   void set_time (CORBA::Float value);
+  // Change the displayed time
 
 private:
-  /// A frame widget...
   Widget frame_;
+  // A frame widget...
 
-  /// Label Widget that is used to display time..
   Widget label_;
+  // Label Widget that is used to display time..
 };
 
 

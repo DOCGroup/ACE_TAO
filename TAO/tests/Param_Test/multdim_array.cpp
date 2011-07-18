@@ -1,21 +1,26 @@
-
-//=============================================================================
-/**
- *  @file    multdim_array.cpp
- *
- *  $Id$
- *
- *  tests multidimensional fixed size arrays
- *
- *
- *  @author   Bala
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    multidim_array.cpp
+//
+// = DESCRIPTION
+//    tests multidimensional fixed size arrays
+//
+// = AUTHORS
+//      Bala
+//
+// ============================================================================
 
 #include "helper.h"
 #include "multdim_array.h"
 
+
+ACE_RCSID (Param_Test,
+           multdim_array,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Multdim_Array

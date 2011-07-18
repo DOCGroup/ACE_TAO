@@ -5,7 +5,6 @@
 
 #include "Validate_Worker_T.h"
 #include "tao/debug.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -28,7 +27,7 @@ namespace TAO_Notify
     {
       if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG, 
           ACE_TEXT("(%P|%t)Validate_Worker<TOPOOBJ>::work: obj is nil\n")));
       }
     }

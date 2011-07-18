@@ -12,6 +12,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
+ACE_RCSID (be,
+           be_sunsoft,
+           "$Id$")
+
 TAO_SunSoft_OutStream::TAO_SunSoft_OutStream (void)
   : TAO_OutStream ()
 {
@@ -24,7 +28,8 @@ TAO_SunSoft_OutStream::~TAO_SunSoft_OutStream (void)
 TAO_OutStream &
 TAO_SunSoft_OutStream::print (Identifier *id)
 {
-  ACE_OS::fprintf (this->fp_, "%s", id->get_string ());
+  ACE_OS::fprintf (this->fp_,
+                   id->get_string ());
 
   return *this;
 }
@@ -39,34 +44,34 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
       switch (ev->et)
         {
         case AST_Expression::EV_short:
-          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII,
-                                      ev->u.sval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.sval);
           break;
         case AST_Expression::EV_ushort:
-          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII,
-                                      ev->u.usval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.usval, 'U');
           break;
         case AST_Expression::EV_long:
-          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII,
-                                      ev->u.lval);
+          this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.lval);
           break;
         case AST_Expression::EV_ulong:
-          this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-                                      ev->u.ulval);
+          this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
           break;
-        /// The next 2 cases differ from the tao_idl backend - the
-        /// ACE_(U)INT64_LITERAL macros have been removed since
-        /// we are generating IDL rather than C++.
+        // The ACE_LACKS_LONGLONG_T guards have been removed around
+        // the next 2 cases since the macros now used should work
+        // whether native 64-bit integers are defined or not.
         case AST_Expression::EV_longlong:
+          this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
           this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,
                                       ev->u.llval);
+          this->TAO_OutStream::print (")");
           break;
         case AST_Expression::EV_ulonglong:
+          this->TAO_OutStream::print ("ACE_UINT64_LITERAL (");
           this->TAO_OutStream::print (ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                                       ev->u.ullval);
+          this->TAO_OutStream::print (")");
           break;
         case AST_Expression::EV_float:
-          this->TAO_OutStream::print ("%f", ev->u.fval);
+          this->TAO_OutStream::print ("%f%c", ev->u.fval, 'F');
           break;
         case AST_Expression::EV_double:
           this->TAO_OutStream::print ("%24.16G", ev->u.dval);
@@ -128,7 +133,7 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%d", ev->u.oval);
           break;
         case AST_Expression::EV_bool:
-          this->TAO_OutStream::print ("%s", ev->u.bval ? "TRUE" : "FALSE");
+          this->TAO_OutStream::print ("%s", ev->u.bval ? "true" : "false");
           break;
         case AST_Expression::EV_string:
           this->TAO_OutStream::print ("\"%s\"", ev->u.strval->get_string ());

@@ -54,13 +54,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_TCHAR **second_extra = 0;
       ACE_NEW_RETURN (second_extra, ACE_TCHAR *[second_extra_argc], -1);
-      second_extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConf"));
-      second_extra[1] = ACE::strnew (ACE_TEXT ("TAO_Conf_File.conf"));
+      extra[0] = ACE::strnew (ACE_TEXT ("-ORBSvcConf"));
+      extra[1] = ACE::strnew (ACE_TEXT ("TAO_Conf_File.conf"));
       ACE_TCHAR **second_largv = new ACE_TCHAR *[second_largc+second_extra_argc];
       for (int i = 0; i < second_largc; i++)
         second_largv[i] = argv[i];
       for (int i = 0; i < second_extra_argc; i++)
-        second_largv[second_largc + i] = second_extra[i];
+        second_largv[argc+i] = second_extra[i];
 
       second_largc += second_extra_argc;
 

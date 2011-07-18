@@ -1,8 +1,6 @@
 // $Id$
 
-project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults, avoids_ccm_noevent {
-  requires += dummy_label
-  after += Messenger_idl_gen Messenger_Administrator_idl_gen
+project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults, avoids_ace_for_tao {
   // ensures that only idl3-to-idl2 processing is performed
   custom_only = 1
 
@@ -19,8 +17,7 @@ project(Administrator_Client_IDL2_Compile): taoidl3toidl2defaults, avoids_ccm_no
   }
 }
 
-project(Administrator_Client_IDL2): ccm_stub, valuetype, avoids_ccm_noevent {
-  requires += dummy_label
+project(Administrator_Client_IDL2): ccm_stub, valuetype, avoids_ace_for_tao {
   after += Administrator_Client_IDL2_Compile
 
   exename = Administrator_Client_IDL2

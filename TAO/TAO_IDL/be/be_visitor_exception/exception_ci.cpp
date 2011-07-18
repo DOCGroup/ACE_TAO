@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exception_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Exception in the inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exception_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Exception in the inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_exception, 
+           exception_ci, 
+           "$Id$")
 
 
 // ******************************************************
@@ -40,7 +50,7 @@ int be_visitor_exception_ci::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception::"
                          "visit_exception -"
-                         "code for inline failed\n"),
+                         "code for inline failed\n"), 
                         -1);
     }
 

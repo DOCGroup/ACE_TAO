@@ -29,7 +29,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/operation_details.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

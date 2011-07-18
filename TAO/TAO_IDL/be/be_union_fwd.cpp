@@ -1,21 +1,41 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_union_fwd.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_UnionFwd that provides additional means for C++
- *  mapping of a union.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_union_fwd.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_UnionFwd that provides additional means for C++
+//    mapping of a union.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #include "be_union_fwd.h"
 #include "be_visitor.h"
 #include "ast_union.h"
+
+ACE_RCSID (be, 
+           be_union_fwd, 
+           "$Id$")
+
+be_union_fwd::be_union_fwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_StructureFwd (),
+    AST_UnionFwd (),
+    be_decl (),
+    be_type (),
+    be_structure_fwd ()
+{
+}
 
 be_union_fwd::be_union_fwd (AST_Union *dummy,
                             UTL_ScopedName *n)

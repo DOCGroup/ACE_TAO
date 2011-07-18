@@ -80,6 +80,7 @@ namespace ACE_OS
                      struct sockaddr *addr,
                      int *addrlen);
 
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
    * QoS-enabled @c accept, which passes @a qos_params to @c accept.  If
    * the OS platform doesn't support QoS-enabled @c accept then the
@@ -90,6 +91,7 @@ namespace ACE_OS
                      struct sockaddr *addr,
                      int *addrlen,
                      const ACE_Accept_QoS_Params &qos_params);
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int bind (ACE_HANDLE s,
@@ -106,6 +108,7 @@ namespace ACE_OS
                struct sockaddr *addr,
                int addrlen);
 
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /**
    * QoS-enabled @c connect, which passes @a qos_params to @c connect.
    * If the OS platform doesn't support QoS-enabled @c connect then the
@@ -116,6 +119,7 @@ namespace ACE_OS
                const sockaddr *addr,
                int addrlen,
                const ACE_QoS_Params &qos_params);
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   /// Retrieve information about available transport protocols
   /// installed on the local machine. Windows specific...
@@ -140,12 +144,14 @@ namespace ACE_OS
                   char *optval,
                   int *optlen);
 
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
   /// Joins a leaf node into a QoS-enabled multi-point session.
   extern ACE_Export
   ACE_HANDLE join_leaf (ACE_HANDLE socket,
                         const sockaddr *name,
                         int namelen,
                         const ACE_QoS_Params &qos_params);
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int listen (ACE_HANDLE handle,
@@ -192,14 +198,6 @@ namespace ACE_OS
                 size_t len,
                 int flags = 0);
 
-  /// internal function used by send when an ENOBUFS condition
-  /// requires a buffer to do a partial send
-  extern ACE_Export
-  ssize_t send_partial_i (ACE_HANDLE handle,
-                          const char *buf,
-                          size_t len,
-                          int flags);
-
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendmsg (ACE_HANDLE handle,
                    const struct msghdr *msg,
@@ -229,12 +227,6 @@ namespace ACE_OS
                  const iovec *iov,
                  int iovcnt);
 
-  /// internal function used by sendv when an ENOBUFS condition
-  /// requires a buffer to do a partial send
-  extern ACE_Export
-  ssize_t sendv_partial_i (ACE_HANDLE handle,
-                           const iovec *iov,
-                           int iovcnt);
 
   /// Manipulate the options associated with a socket.
   ACE_NAMESPACE_INLINE_FUNCTION

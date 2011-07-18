@@ -61,32 +61,29 @@ ClientInterceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
   ACE_OS::strcpy (reinterpret_cast<char*> (buf), user_name);
 
-  sc.context_data.replace (string_len, string_len, buf, true);
+  sc.context_data.replace (string_len, string_len, buf, 1);
 
   // recursive call setup
   CORBA::Any *recurse = ri->get_slot(slot);
   CORBA::Boolean x;
+  *recurse >>= CORBA::Any::to_boolean(x);
+
   CORBA::Any flag;
-  if (*recurse >>= CORBA::Any::to_boolean(x)) {
-    if (x == false)
-      {
-        x = true;
-        flag <<= CORBA::Any::from_boolean(x);
+  if (x == 0)
+    {
+      x = 1;
+      flag <<= CORBA::Any::from_boolean(x);
 
-        pic->set_slot(slot, flag);
+      pic->set_slot(slot, flag);
 
-        // get server time
-        std::cout << "Server Time = " << messenger->get_time() << std::endl;
-      }
-  } else {
-    std::cerr << "Could not extract a boolean value from any" << std::endl;
-  }
-
+      // get server time
+      std::cout << "Server Time = " << messenger->get_time() << std::endl;
+    }
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, false);
+  ri->add_request_service_context (sc, 0);
 
   // reset recursion test
-  x = false;
+  x = 0;
   flag <<= CORBA::Any::from_boolean(x);
   pic->set_slot(slot,flag);
 

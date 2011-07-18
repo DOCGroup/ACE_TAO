@@ -4,6 +4,10 @@
 
 #include "ace/Get_Opt.h"
 
+ACE_RCSID (ORT,
+           client,
+           "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

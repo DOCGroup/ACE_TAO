@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "orbsvcs/FaultTolerance/fault_tol_export.h"
 

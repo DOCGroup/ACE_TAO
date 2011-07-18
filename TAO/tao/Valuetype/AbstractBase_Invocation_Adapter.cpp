@@ -1,8 +1,10 @@
-// -*- C++ -*-
-// $Id$
-
+//$Id$
 #include "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
 #include "tao/Valuetype/AbstractBase.h"
+
+ACE_RCSID (Valuetype,
+           AbstractBase_Invocation_Adapter,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

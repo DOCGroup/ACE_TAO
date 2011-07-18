@@ -1,16 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_visitor_root.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Root
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_root.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Root
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_constant.h"
 #include "be_enum.h"
@@ -32,7 +36,6 @@
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
-#include "be_connector.h"
 #include "be_helper.h"
 #include "be_extern.h"
 #include "be_native.h"
@@ -55,7 +58,6 @@
 #include "be_visitor_component.h"
 #include "be_visitor_component_fwd.h"
 #include "be_visitor_home.h"
-#include "be_visitor_connector.h"
 #include "be_visitor_traits.h"
 #include "be_visitor_arg_traits.h"
 #include "be_visitor_template_export.h"
@@ -72,12 +74,10 @@
 #include "be_visitor_root/root_sth.cpp"
 #include "be_visitor_root/root_is.cpp"
 #include "be_visitor_root/root_ih.cpp"
-#include "be_visitor_root/root_svh.cpp"
-#include "be_visitor_root/root_svs.cpp"
-#include "be_visitor_root/root_ex_idl.cpp"
-#include "be_visitor_root/root_exh.cpp"
-#include "be_visitor_root/root_exs.cpp"
-#include "be_visitor_root/root_cnh.cpp"
-#include "be_visitor_root/root_cns.cpp"
 #include "be_visitor_root/any_op.cpp"
 #include "be_visitor_root/cdr_op.cpp"
+#include "be_visitor_root/serializer_op.cpp"
+
+ACE_RCSID (be,
+           be_visitor_root,
+           "$Id$")

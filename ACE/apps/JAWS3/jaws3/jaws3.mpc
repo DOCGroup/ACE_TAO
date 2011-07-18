@@ -3,7 +3,7 @@
 
 project(JAWS3) : ace_output, acelib {
     sharedname = JAWS3
-    dynamicflags += JAWS_BUILD_DLL
+    dynamicflags = JAWS_BUILD_DLL
     avoids += uses_wchar
     avoids += ace_for_tao
 
@@ -21,7 +21,7 @@ project(JAWS3) : ace_output, acelib {
         Event_Completer.cpp
         Event_Dispatcher.cpp
         FILE.cpp
-        Jaws_IO.cpp
+        IO.cpp
         Options.cpp
         Protocol_Handler.cpp
         Reactive_IO.cpp
@@ -55,7 +55,7 @@ project(JAWS3) : ace_output, acelib {
         Event_Result.h
         Export.h
         FILE.h
-        Jaws_IO.h
+        IO.h
         Options.h
         Protocol_Handler.h
         Reactive_IO.h

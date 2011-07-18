@@ -1,15 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Cubit_i.cpp
- *
- *  $Id$
- *
- *  @author Andy Gokhale
- *  @author Sumedh Mungee and Sergio Flores-Gaitan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Cubit
+//
+// = FILENAME
+//    Cubit_i.cpp
+//
+// = AUTHOR
+//    Andy Gokhale, Sumedh Mungee and Sergio Flores-Gaitan
+//
+// ============================================================================
 
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
@@ -20,6 +22,10 @@
 #include "tao/Timeprobe.h"
 
 #include "ace/Auto_Ptr.h"
+
+ACE_RCSID (IDL_Cubit,
+           Cubit_i,
+           "Cubit_i.cpp,v 1.8 1999/07/07 15:01:28 irfan Exp")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

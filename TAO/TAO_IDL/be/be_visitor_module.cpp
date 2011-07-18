@@ -1,16 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_module.cpp
- *
- *  $Id$
- *
- *  Visitors for generation of code for Module
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_module.cpp
+//
+// = DESCRIPTION
+//    Visitors for generation of code for Module
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_module.h"
 #include "be_constant.h"
@@ -32,7 +38,6 @@
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_home.h"
-#include "be_connector.h"
 #include "be_extern.h"
 #include "be_helper.h"
 #include "utl_err.h"
@@ -55,7 +60,6 @@
 #include "be_visitor_component.h"
 #include "be_visitor_component_fwd.h"
 #include "be_visitor_home.h"
-#include "be_visitor_connector.h"
 #include "be_visitor_context.h"
 
 #include "be_visitor_module/module.cpp"
@@ -64,3 +68,8 @@
 #include "be_visitor_module/module_ih.cpp"
 #include "be_visitor_module/any_op.cpp"
 #include "be_visitor_module/cdr_op.cpp"
+#include "be_visitor_module/serializer_op.cpp"
+
+ACE_RCSID (be,
+           be_visitor_module,
+           "$Id$")

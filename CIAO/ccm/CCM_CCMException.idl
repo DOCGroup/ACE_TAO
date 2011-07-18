@@ -1,5 +1,4 @@
 // $Id$
-// Compliant to OMG 06-04-01, section 9.3.3.2
 
 #if !defined (CCM_CCMEXCEPTION_IDL)
 #define CCM_CCMEXCEPTION_IDL
@@ -17,7 +16,6 @@ module Components
     FIND_ERROR,
     OBJECT_NOT_FOUND,
     NO_SUCH_ENTITY,
-    // Coming from QoS4CCM
     QOS_ERROR,
     REGISTRATION_ERROR,
     SERVICE_INSTALLATION_ERROR

@@ -1,6 +1,9 @@
 // $Id$
-
 #include "ConfigValue.h"
+
+ACE_RCSID (ciao,
+           ConfigValue,
+           "$Id$")
 
 namespace CIAO
 {
@@ -18,8 +21,8 @@ namespace CIAO
       : OBV_Components::ConfigValue()
    {
       CORBA::Any any = the_value;
-      name (the_name);
-      value (any);
+      name( the_name );
+      value( any );
    }
 
    CORBA::ValueBase* ConfigValue_impl::_copy_value()

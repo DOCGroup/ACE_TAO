@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Locator_Repository.h"
 #include "Locator_XMLHandler.h"
 #include "utils.h"
@@ -10,6 +8,8 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
+
+ACE_RCSID (ImplRepo_Service, Locator_Repository, "$Id$")
 
 static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
 static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
@@ -22,7 +22,6 @@ static const ACE_TCHAR* ACTIVATOR = ACE_TEXT("Activator");
 static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
 static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
 static const ACE_TCHAR* TOKEN = ACE_TEXT("Token");
-static const ACE_TCHAR* SERVER_ID = ACE_TEXT("ServerId");
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
@@ -76,7 +75,7 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
       ACE_TString name;
       while (config.enumerate_sections (root, index, name) == 0)
         {
-          ACE_CString server_id, cmdline, dir, envstr, partial_ior, ior, aname;
+          ACE_CString cmdline, dir, envstr, partial_ior, ior, aname;
           u_int amodeint = ImplementationRepository::MANUAL;
           u_int start_limit;
 
@@ -86,7 +85,6 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
           config.open_section (root, name.c_str (), 0, key);
 
           // Ignore any missing values. Server name is enough on its own.
-          config.get_string_value (key, SERVER_ID, server_id);
           config.get_string_value (key, ACTIVATOR, aname);
           config.get_string_value (key, STARTUP_COMMAND, cmdline);
           config.get_string_value (key, WORKING_DIR, dir);
@@ -102,7 +100,7 @@ static void loadServersAsBinary(ACE_Configuration& config, Locator_Repository::S
           ImplementationRepository::EnvironmentList env_vars =
             ImR_Utils::parseEnvList (envstr);
 
-          Server_Info_Ptr info (new Server_Info(server_id, name, aname, cmdline,
+          Server_Info_Ptr info (new Server_Info(name, aname, cmdline,
             env_vars, dir, amode, start_limit, partial_ior, ior));
           map.bind (name, info);
           index++;
@@ -137,10 +135,10 @@ public:
     : repo_ (repo)
   {
   }
-  virtual void next_server (const ACE_CString& server_id,
-    const ACE_CString& name, const ACE_CString& aname,
-    const ACE_CString& cmdline, const Locator_XMLHandler::EnvList& envlst,
-    const ACE_CString& dir, const ACE_CString& amodestr, int start_limit,
+  virtual void next_server (const ACE_CString& name,
+    const ACE_CString& aname, const ACE_CString& cmdline,
+    const Locator_XMLHandler::EnvList& envlst, const ACE_CString& dir,
+    const ACE_CString& amodestr, int start_limit,
     const ACE_CString& partial_ior, const ACE_CString& ior)
   {
     ImplementationRepository::ActivationMode amode =
@@ -151,7 +149,7 @@ public:
 
     int limit = start_limit < 1 ? 1 : start_limit;
 
-    Server_Info_Ptr si (new Server_Info (server_id, name, aname, cmdline,
+    Server_Info_Ptr si (new Server_Info (name, aname, cmdline,
       env_vars, dir, amode, limit, partial_ior, ior));
 
     this->repo_.servers ().bind (name, si);
@@ -192,16 +190,18 @@ static int loadAsXML (const ACE_CString& fname, Locator_Repository& repo)
   parser.setErrorHandler (&handler);
   parser.setEntityResolver (&handler);
 
-  try
+  ACEXML_TRY_NEW_ENV
     {
-      parser.parse (&input);
+      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_TRY_CHECK;
     }
-  catch (const ACEXML_Exception& ex)
+  ACEXML_CATCH (ACEXML_Exception, ex)
     {
       ACE_ERROR ((LM_ERROR, "Error during load of ImR persistence xml file."));
       ex.print ();
       return -1;
     }
+  ACEXML_ENDTRY;
   return 0;
 }
 
@@ -224,7 +224,6 @@ static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
     {
       Server_Info_Ptr& info = sientry->int_id_;
 
-      ACE_CString server_id = ACEXML_escape_string (info->server_id);
       ACE_CString name = ACEXML_escape_string (info->name);
       ACE_CString activator = ACEXML_escape_string (info->activator);
       ACE_CString cmdline = ACEXML_escape_string (info->cmdline);
@@ -233,7 +232,6 @@ static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
       ACE_CString ior = ACEXML_escape_string (info->ior);
 
       ACE_OS::fprintf (fp,"\t<%s", Locator_XMLHandler::SERVER_INFO_TAG);
-      ACE_OS::fprintf (fp," server_id=\"%s\"", server_id.c_str ());
       ACE_OS::fprintf (fp," name=\"%s\"", name.c_str ());
       ACE_OS::fprintf (fp," activator=\"%s\"", activator.c_str ());
       ACE_OS::fprintf (fp," command_line=\"%s\"", cmdline.c_str ());
@@ -278,7 +276,6 @@ static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
 Locator_Repository::Locator_Repository ()
 : rmode_ (Options::REPO_NONE)
 , config_ (0)
-, debug_ (0)
 {
 }
 
@@ -287,7 +284,6 @@ Locator_Repository::init(const Options& opts)
 {
   this->rmode_ = opts.repository_mode ();
   this->fname_ = opts.persist_file_name ();
-  this->debug_ = opts.debug ();
 
   int err = 0;
   switch (this->rmode_)
@@ -352,69 +348,8 @@ Locator_Repository::init(const Options& opts)
   return err;
 }
 
-
 int
-Locator_Repository::unregister_if_address_reused (
-  const ACE_CString& server_id,
-  const ACE_CString& name,
-  const char* partial_ior)
-{
-  if (this->debug_ > 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
-      ACE_TEXT ("for server \"%s %s\" ior \"%s\"\n"),
-      server_id.c_str(), name.c_str (), partial_ior));
-  }
-
-  ACE_Vector<ACE_CString> srvs;
-
-  Locator_Repository::SIMap::ENTRY* sientry = 0;
-  Locator_Repository::SIMap::ITERATOR siit (servers ());
-  for (; siit.next (sientry); siit.advance() )
-  {
-    Server_Info_Ptr& info = sientry->int_id_;
-
-    if (this->debug_)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
-        ACE_TEXT ("\"%s %s\" ior \"%s\"\n"), info->server_id.c_str(),
-        info->name.c_str (), info->partial_ior.c_str ()));
-    }
-
-    if (info->partial_ior == partial_ior
-      && name != info->name
-      && info->server_id != server_id)
-    {
-      if (this->debug_)
-      {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: reuse address %s so remove")
-          ACE_TEXT ("server %s \n"), info->partial_ior.c_str (), info->name.c_str ()));
-      }
-      if (! info->name.empty ())
-      {
-        srvs.push_back (info->name);
-      }
-    }
-  }
-
-  int err = 0;
-  for (size_t i = 0; i < srvs.size (); ++i)
-  {
-
-    if (this->remove_server (srvs[i]) != 0)
-    {
-      err = -1;
-    }
-  }
-
-  return err;
-}
-
-
-
-int
-Locator_Repository::add_server (const ACE_CString& server_id,
-                        const ACE_CString& name,
+Locator_Repository::add_server (const ACE_CString& name,
                         const ACE_CString& aname,
                         const ACE_CString& startup_command,
                         const ImplementationRepository::EnvironmentList& env_vars,
@@ -426,7 +361,7 @@ Locator_Repository::add_server (const ACE_CString& server_id,
                         ImplementationRepository::ServerObject_ptr svrobj)
 {
   int limit = start_limit < 1 ? 1 : start_limit;
-  Server_Info_Ptr info(new Server_Info (server_id, name, aname, startup_command,
+  Server_Info_Ptr info(new Server_Info (name, aname, startup_command,
     env_vars, working_dir, activation, limit, partial_ior, ior, svrobj));
 
   int err = servers ().bind (name, info);
@@ -481,7 +416,6 @@ Locator_Repository::update_server (const Server_Info& info)
 
       ACE_CString envstr = ImR_Utils::envListToString(info.env_vars);
 
-      cfg.set_string_value (key, SERVER_ID, info.server_id.c_str ());
       cfg.set_string_value (key, ACTIVATOR, info.activator.c_str ());
       cfg.set_string_value (key, STARTUP_COMMAND, info.cmdline.c_str ());
       cfg.set_string_value (key, WORKING_DIR, info.dir.c_str ());

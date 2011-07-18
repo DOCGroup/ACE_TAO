@@ -3,24 +3,34 @@
 #include "ast_home.h"
 #include "ast_component.h"
 #include "ast_valuetype.h"
-#include "ast_param_holder.h"
 #include "ast_operation.h"
-#include "ast_finder.h"
 #include "ast_visitor.h"
-
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
 
-AST_Decl::NodeType const
-AST_Home::NT = AST_Decl::NT_home;
+ACE_RCSID (ast,
+           ast_home,
+           "$Id$")
+
+AST_Home::AST_Home (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    pd_base_home (0),
+    pd_managed_component (0),
+    pd_primary_key (0)
+{
+}
 
 AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
                     AST_Component *managed_component,
-                    AST_Type *primary_key,
-                    AST_Type **supports,
+                    AST_ValueType *primary_key,
+                    AST_Interface **supports,
                     long n_supports,
                     AST_Interface **supports_flat,
                     long n_supports_flat)
@@ -40,22 +50,11 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
-    pd_primary_key (primary_key),
-    owns_primary_key_ (false)
+    pd_primary_key (primary_key)
 {
-  FE_Utils::tmpl_mod_ref_check (this, base_home);
-
-  AST_ValueType *pk =
-    AST_ValueType::narrow_from_decl (primary_key);
-
-  if (pk != 0)
+  if (primary_key != 0)
     {
-      idl_global->primary_keys ().enqueue_tail (pk);
-    }
-  else if (primary_key != 0)
-    {
-      // If we are here, it's a param holder and we must destroy it.
-      this->owns_primary_key_ = true;
+      idl_global->primary_keys ().enqueue_tail (primary_key);
     }
 }
 
@@ -65,14 +64,13 @@ AST_Home::~AST_Home (void)
 
 AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
-                             bool full_def_only)
+                             bool treat_as_ref)
 {
   AST_Decl *d = 0;
 
   if (this->pd_base_home != 0)
     {
-      d =
-        this->pd_base_home->lookup_by_name (e, full_def_only);
+      d = this->pd_base_home->lookup_by_name (e, treat_as_ref);
     }
 
   return d;
@@ -81,10 +79,10 @@ AST_Home::look_in_inherited (UTL_ScopedName *e,
 // Look through supported interface list.
 AST_Decl *
 AST_Home::look_in_supported (UTL_ScopedName *e,
-                             bool full_def_only)
+                             bool treat_as_ref)
 {
   AST_Decl *d = 0;
-  AST_Type **is = 0;
+  AST_Interface **is = 0;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
@@ -104,35 +102,13 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
-        {
-          continue;
-        }
-
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
-
-      d = (i)->lookup_by_name_r (e, full_def_only);
-
+      d = (*is)->lookup_by_name (e,
+                                 treat_as_ref,
+                                 0 /* not in parent */);
       if (d != 0)
         {
           break;
         }
-    }
-
-  return d;
-}
-
-AST_Decl *
-AST_Home::special_lookup (UTL_ScopedName *e,
-                          bool full_def_only,
-                          AST_Decl *&/*final_parent_decl*/)
-{
-  AST_Decl *d = this->look_in_inherited (e, full_def_only);
-
-  if (d == 0)
-    {
-      d = this->look_in_supported (e, full_def_only);
     }
 
   return d;
@@ -147,13 +123,10 @@ AST_Home::base_home (void) const
 // These next two look ugly, but it is to keep from having to
 // create separate visitors for homes in the back end.
 
-AST_Type **
+AST_Interface **
 AST_Home::supports (void) const
 {
-  return
-    this->pd_base_home == 0
-      ? this->inherits ()
-      : this->inherits () + 1;
+  return this->pd_base_home ? this->inherits () + 1 : this->inherits ();
 }
 
 long
@@ -168,58 +141,65 @@ AST_Home::managed_component (void) const
   return this->pd_managed_component;
 }
 
-AST_Type *
+AST_ValueType *
 AST_Home::primary_key (void) const
 {
   return this->pd_primary_key;
 }
 
-void
-AST_Home::transfer_scope_elements (AST_Interface *dst)
+ACE_Unbounded_Queue<AST_Operation *> &
+AST_Home::factories (void)
 {
-  for (UTL_ScopeActiveIterator src_iter (this, UTL_Scope::IK_decls);
-       ! src_iter.is_done ();
-       src_iter.next ())
-    {
-      AST_Decl *d = src_iter.item ();
+  return this->pd_factories;
+}
 
-      Identifier *local_id = 0;
-      ACE_NEW (local_id,
-               Identifier (d->local_name ()->get_string ()));
-      UTL_ScopedName *last_segment = 0;
-      ACE_NEW (last_segment,
-               UTL_ScopedName (local_id,
-                               0));
-      UTL_ScopedName *full_name =
-        static_cast<UTL_ScopedName *> (dst->name ()->copy ());
-      full_name->nconc (last_segment);
-
-      d->set_name (full_name);
-      dst->add_to_scope (d);
-      d->set_defined_in (dst);
-    }
-
-  // Zero decls so that they are not cleaned twice.
-  long const end = this->pd_decls_used;
-  for (long i = 0; i < end; ++i)
-    {
-      this->pd_decls[i] = 0;
-      --this->pd_decls_used;
-    }
+ACE_Unbounded_Queue<AST_Operation *> &
+AST_Home::finders (void)
+{
+  return this->pd_finders;
 }
 
 void
 AST_Home::destroy (void)
 {
-  // If it's a param holder, it was created on the fly.
-  if (owns_primary_key_)
-    {
-      this->pd_primary_key->destroy ();
-      delete this->pd_primary_key;
-      this->pd_primary_key = 0;
-    }
+  // We have to go through these conniptions to destroy
+  // a home because its decls (for which there are no
+  // copy constructors) are assigned to the scope
+  // of the equivalent interface, which will destroy
+  // them. But we still have to destroy the containers
+  // for those references, which may be private or
+  // protected.
 
-  this->AST_Interface::destroy ();
+  delete [] this->inherits ();
+  delete [] this->inherits_flat ();
+  
+  delete [] this->pd_decls;
+  this->pd_decls = 0;
+  this->pd_decls_allocated = 0;
+  this->pd_decls_used = 0;
+  
+  delete [] this->pd_referenced;
+  this->pd_referenced = 0;
+  this->pd_referenced_allocated = 0;
+  this->pd_referenced_used = 0;
+  
+  // These are stored by copying the Identifier.
+  for (long i = 0; i < this->pd_name_referenced_used; ++i)
+    {
+      this->pd_name_referenced[i]->destroy ();
+      delete this->pd_name_referenced[i];
+      this->pd_name_referenced[i] = 0;
+    }
+  
+  delete [] this->pd_name_referenced;
+  this->pd_name_referenced = 0;
+  this->pd_name_referenced_allocated = 0;
+  this->pd_name_referenced_used = 0;
+  
+  // Skip AST_Interface, since the home's decls
+  // are added to the equivalent interface, and
+  // they should get destroyed there.
+  this->AST_Type::destroy ();
 }
 
 void
@@ -263,22 +243,6 @@ int
 AST_Home::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_home (this);
-}
-
-AST_Factory *
-AST_Home::fe_add_factory (AST_Factory *f)
-{
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
-}
-
-AST_Finder *
-AST_Home::fe_add_finder (AST_Finder *f)
-{
-  return
-    AST_Finder::narrow_from_decl (
-      this->fe_add_decl (f));
 }
 
   // Narrowing.

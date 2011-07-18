@@ -4,8 +4,17 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_ValueBox::NT = AST_Decl::NT_valuebox;
+ACE_RCSID (ast, 
+           ast_valuebox, 
+           "ast_valuebox.cpp,v 1.0  Exp")
+
+AST_ValueBox::AST_ValueBox (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType () 
+{
+}
 
 AST_ValueBox::AST_ValueBox (UTL_ScopedName *n,
                             AST_Type       *boxed_type)
@@ -15,14 +24,14 @@ AST_ValueBox::AST_ValueBox (UTL_ScopedName *n,
     AST_Type (AST_Decl::NT_valuebox,
               n),
     AST_ConcreteType (AST_Decl::NT_valuebox, n),
-    pd_boxed_type (boxed_type)
+    pd_boxed_type (boxed_type) 
 {
 }
 
 AST_ValueBox::~AST_ValueBox (void)
 {
 }
-
+ 
 AST_Type *
 AST_ValueBox::boxed_type (void) const
 {
@@ -32,7 +41,7 @@ AST_ValueBox::boxed_type (void) const
 void
 AST_ValueBox::dump (ACE_OSTREAM_TYPE &o)
 {
-
+  
   this->dump_i (o, "valuetype ");
 
   this->local_name ()->dump (o);
@@ -51,6 +60,8 @@ AST_ValueBox::destroy (void)
 {
   this->AST_ConcreteType::destroy ();
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_ValueBox)
 

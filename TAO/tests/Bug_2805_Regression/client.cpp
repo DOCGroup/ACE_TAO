@@ -18,8 +18,11 @@
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
-#include "ace/OS_NS_Thread.h"
 #include "ami_test_i.h"
+
+ACE_RCSID (AMI,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
@@ -64,7 +67,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -197,8 +200,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       AMI_Test_i * servant =
         new AMI_Test_i(orb.in(), in_number, in_str, true);
-      PortableServer::ServantBase_var safe (servant);
-
       server = servant->_this();
 
       if (CORBA::is_nil (server.in ()))
@@ -257,10 +258,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               orb->perform_work();
             }
-
-          // On some systems this loop must yield or else the other threads
-          // will not get a chance to run.
-          ACE_OS::thr_yield();
         }
 
       if (debug)

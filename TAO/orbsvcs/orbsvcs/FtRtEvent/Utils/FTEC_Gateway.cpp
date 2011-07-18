@@ -1,11 +1,13 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/activate_with_id.h"
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
+
+ACE_RCSID (Utils,
+           FTEC_Gateway,
+           "$Id$")
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"

@@ -40,7 +40,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if !defined (ACE_HAS_MSG)
+#if !defined (ACE_HAS_MSG) && !defined (SCO)
    struct msghdr {};
 #endif /* ACE_HAS_MSG */
 

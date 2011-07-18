@@ -1,21 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    MT_Object_i.cpp
- *
- *  $Id$
- *
- *  This class implements the Object A  of the
- *  Nested Upcalls - MT Client test.
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/NestedUpCalls/MT_Client_Test
+//
+// = FILENAME
+//    MT_Object_i.cpp
+//
+// = DESCRIPTION
+//    This class implements the Object A  of the
+//    Nested Upcalls - MT Client test.
+//
+// = AUTHORS
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "MT_Object_i.h"
 
 #include "tao/Exception.h"
+
+ACE_RCSID(MT_Client_Test, MT_Object_i, "$Id$")
 
 #define MAX_HOP_COUNT 20
 

@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Server_i.cpp
- *
- *  $Id$
- *
- *  Implementation of the Chat Server_i class.
- *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/tests/Simple/chat
+//
+// = FILENAME
+//    Server_i.cpp
+//
+// = DESCRIPTION
+//    Implementation of the Chat Server_i class.
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Server_i.h"
 #include "ace/Get_Opt.h"

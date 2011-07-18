@@ -2,10 +2,15 @@
 
 #include "Echo.h"
 #include "ORB_Task.h"
+#include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_signal.h"
+
+ACE_RCSID(Bug_1270_Regression, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int serverthreads = 4;
@@ -20,8 +25,6 @@ public:
   Client_Timer (ACE_Reactor * reactor)
     : ACE_Event_Handler (reactor)
   {
-    this->reference_counting_policy ().value (
-      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
   void activate (void)
@@ -33,11 +36,17 @@ public:
   /// Thread entry point
   int handle_timeout (ACE_Time_Value const & , void const *)
   {
-    this->reactor ()->cancel_timer (this);
     // kill the application
-    ACE::terminate_process (ACE_OS::getpid ());
+    ACE_OS::raise (SIGABRT);
+    this->reactor ()->cancel_timer (this);
     return 0;
   }
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  {
+    delete this;
+    return 0;
+  }
+
 };
 
 int
@@ -62,12 +71,35 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("PolicyCurrent");
+
+      CORBA::PolicyCurrent_var policy_current =
+        CORBA::PolicyCurrent::_narrow (object.in ());
+
+      if (CORBA::is_nil (policy_current.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: Nil policy current\n"));
+          return 1;
+        }
+      CORBA::Any scope_as_any;
+      scope_as_any <<= Messaging::SYNC_WITH_TRANSPORT;
+
+      CORBA::PolicyList policies(1); policies.length (1);
+      policies[0] =
+        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                            scope_as_any);
+
+      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+
+      policies[0]->destroy ();
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PortableServer::ServantBase_var impl;
+      TAO::Utils::Servant_Var<Echo> impl;
       {
-        Echo * tmp = 0;
+        Echo * tmp;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -119,7 +151,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Timer * task = new Client_Timer (orb->orb_core()->reactor());
       task->activate ();
-      task->remove_reference ();
 
       orb->run ();
 
@@ -168,6 +199,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

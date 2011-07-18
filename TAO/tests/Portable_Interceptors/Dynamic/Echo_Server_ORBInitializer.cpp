@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "Echo_Server_ORBInitializer.h"
+
+ACE_RCSID (Dynamic, Echo_Server_ORBInitializer, "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 

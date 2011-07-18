@@ -9,6 +9,8 @@
 //#include "DSRT_Direct_Dispatcher_Impl_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
+
 namespace Kokyu
 {
 
@@ -281,6 +283,10 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> dispatch_item;
   ACE_hthread_t thr_handle;
+  //@@ Perhaps the lock could be got rid of. It looks like the state
+  //of this object is not getting modified here. It makes calls to
+  //other methods, which already are thread-safe.
+  //ACE_Guard<cond_lock_t> mon(sched_queue_modified_cond_lock_);
 
   int found = this->ready_queue_.find (guid, dispatch_item);
   if (found == 0 && flag == BLOCK)
@@ -355,7 +361,7 @@ shutdown_i ()
 {
   this->shutdown_flagged_ = 1;
 
-  ACE_GUARD_RETURN (cond_lock_t, mon, this->sched_queue_modified_cond_lock_, 0);
+  ACE_Guard<cond_lock_t> mon(this->sched_queue_modified_cond_lock_);
   this->sched_queue_modified_ = 1;
   this->sched_queue_modified_cond_.signal ();
   // We have to wait until the scheduler executive thread shuts

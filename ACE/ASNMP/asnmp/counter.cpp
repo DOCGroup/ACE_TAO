@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     counter.cpp
- *
- *  $Id$
- *
- *  Class implementation for SMI Counter32 class.
- *
- *
- *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     counter.cpp
+//
+// = DESCRIPTION
+//  Class implementation for SMI Counter32 class.
+//
+// = AUTHOR
+//   Peter E Mellquist
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -29,6 +32,8 @@
 =====================================================================*/
 
 #include "asnmp/counter.h"
+
+ACE_RCSID(asnmp, counter, "$Id$")
 
 // constructor with a value
 Counter32::Counter32( const unsigned long i):SnmpUInt32(i)

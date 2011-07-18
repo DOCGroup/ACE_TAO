@@ -58,7 +58,8 @@ ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key)
 {
-  return tss_destructor_ [key];
+  ACE_KEY_INDEX (key_index, key);
+  return tss_destructor_ [key_index];
 }
 
 ACE_INLINE
@@ -66,13 +67,16 @@ void
 ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key,
                                    ACE_TSS_DESTRUCTOR destructor)
 {
-  tss_destructor_ [key] = destructor;
+  ACE_KEY_INDEX (key_index, key);
+  tss_destructor_ [key_index] = destructor;
 }
 
 ACE_INLINE
 void *&
 ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 {
+  ACE_KEY_INDEX (key_index, key);
+
 #    if defined (ACE_HAS_VXTHREADS)
     /* If someone wants tss_base make sure they get one.  This
        gets used if someone spawns a VxWorks task directly, not
@@ -93,7 +97,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
       }
 #    endif /* ACE_HAS_VXTHREADS */
 
-  return tss_base ()[key];
+  return tss_base ()[key_index];
 }
 
 #endif /* ACE_HAS_TSS_EMULATION */
@@ -486,11 +490,30 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // need to release the lock one fewer times than this thread has acquired
   // it. Remember how many times, and reacquire it that many more times when
   // the condition is signaled.
-
+  //
+  // For WinCE, the situation is a bit trickier. CE doesn't have
+  // RecursionCount, and LockCount has changed semantics over time.
+  // In CE 3 (and maybe 4?) LockCount is not an indicator of recursion;
+  // instead, see when it's unlocked by watching the OwnerThread, which will
+  // change to something other than the current thread when it's been
+  // unlocked "enough" times. Note that checking for 0 (unlocked) is not
+  // sufficient. Another thread may acquire the lock between our unlock and
+  // checking the OwnerThread. So grab our thread ID value first, then
+  // compare to it in the loop condition. NOTE - the problem with this
+  // scheme is that we really want to unlock the mutex one _less_ times than
+  // required to release it for another thread to acquire. With CE 5 we
+  // can do this by watching LockCount alone. I _think_ it can be done by
+  // watching LockCount on CE 4 as well (though its meaning is different),
+  // but I'm leary of changing this code since a user reported success
+  // with it.
+  //
   // We're using undocumented fields in the CRITICAL_SECTION structure
   // and they've been known to change across Windows variants and versions./
   // So be careful if you need to change these - there may be other
   // Windows variants that depend on existing values and limits.
+#      if defined (ACE_HAS_WINCE) && (UNDER_CE < 500)
+  ACE_thread_t me = ACE_OS::thr_self ();
+#      endif /* ACE_HAS_WINCE && CE 4 or earlier */
 
   state.relock_count_ = 0;
   while (
@@ -498,8 +521,13 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
          m->LockCount > 0 && m->RecursionCount > 1
 #      else
          // WinCE doesn't have RecursionCount and the LockCount semantic
-         // Mobile 5 has it 1-indexed.
+         // has changed between versions; pre-Mobile 5 the LockCount
+         // was 0-indexed, and Mobile 5 has it 1-indexed.
+#        if (UNDER_CE < 500)
+         m->LockCount > 0 && m->OwnerThread == (HANDLE)me
+#        else
          m->LockCount > 1
+#        endif /* UNDER_CE < 500 */
 #      endif /* ACE_HAS_WINCE */
          )
     {
@@ -1085,7 +1113,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
       while (rw->ref_count_ > 1) // wait until only I am left
         {
           rw->num_waiting_writers_++; // prohibit any more readers
-          rw->important_writer_ = true;
+          rw->important_writer_ = 1;
 
           if (ACE_OS::cond_wait (&rw->waiting_important_writer_, &rw->lock_) == -1)
             {
@@ -1093,7 +1121,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
               // we know that we have the lock again, we have this guarantee,
               // but something went wrong
             }
-          rw->important_writer_ = false;
+          rw->important_writer_ = 0;
           rw->num_waiting_writers_--;
         }
       if (result == 0)
@@ -1358,8 +1386,8 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #     else /* ACE_USES_WINCE_SEMA_SIMULATION */
   // Free up underlying objects of the simulated semaphore.
-  int const r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
-  int const r2 = ACE_OS::event_destroy (&s->count_nonzero_);
+  int r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
+  int r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
@@ -2496,17 +2524,32 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
      return *sig;
    #endif /* _POSIX_C_SOURCE - 0 >= 199506L || _POSIX_PTHREAD_SEMANTICS */
 # elif defined (ACE_HAS_PTHREADS)
-#   if defined (CYGWIN32)
-      // Cygwin has sigwait definition, but it is not implemented
-      ACE_UNUSED_ARG (sset);
-      ACE_NOTSUP_RETURN (-1);
-#   elif defined (ACE_TANDEM_T1248_PTHREADS)
-      errno = ::spt_sigwait (sset, sig);
+  // LynxOS and Digital UNIX have their own hoops to jump through.
+#   if defined (__Lynx__)
+    // Second arg is a void **, which we don't need (the selected
+    // signal number is returned).
+    *sig = ::sigwait (sset, 0);
+    return *sig;
+#   elif defined (DIGITAL_UNIX)  &&  defined (__DECCXX_VER)
+      // DEC cxx (but not g++) needs this direct call to its internal
+      // sigwait ().  This allows us to #undef sigwait, so that we can
+      // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait
+      // if sigwait is _not_ #undef'ed.
+      errno = ::_Psigwait (sset, sig);
       return errno == 0  ?  *sig  :  -1;
-#   else   /* this is draft 7 or std */
-      errno = ::sigwait (sset, sig);
-      return errno == 0  ?  *sig  :  -1;
-#   endif /* CYGWIN32 */
+#   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
+#     if defined (CYGWIN32)
+        // Cygwin has sigwait definition, but it is not implemented
+        ACE_UNUSED_ARG (sset);
+        ACE_NOTSUP_RETURN (-1);
+#     elif defined (ACE_TANDEM_T1248_PTHREADS)
+        errno = ::spt_sigwait (sset, sig);
+        return errno == 0  ?  *sig  :  -1;
+#     else   /* this is draft 7 or std */
+        errno = ::sigwait (sset, sig);
+        return errno == 0  ?  *sig  :  -1;
+#     endif /* CYGWIN32 */
+#   endif /* ! __Lynx__ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 # elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
@@ -2662,12 +2705,11 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (ht_id, &priority), result), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
-
-#   if defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY)
-  priority = ::CeGetThreadPriority (ht_id);
-#   else
+#   if !defined (ACE_HAS_WINCE)
   priority = ::GetThreadPriority (ht_id);
-#   endif /* defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY) */
+#   else
+  priority = ::CeGetThreadPriority (ht_id);
+#   endif
 
 #   if defined (ACE_HAS_PHARLAP)
 #     if defined (ACE_PHARLAP_LABVIEW_RT)
@@ -2984,35 +3026,10 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int result;
-  int local_new, local_old;
-  switch (new_state)
-    {
-    case THR_CANCEL_ENABLE:
-      local_new = PTHREAD_CANCEL_ENABLE;
-      break;
-    case THR_CANCEL_DISABLE:
-      local_new = PTHREAD_CANCEL_DISABLE;
-      break;
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_setcancelstate (local_new,
-                                                        &local_old),
-                                result),
-              int, -1, result);
-  if (result == -1)
-    return -1;
-  switch (local_old)
-    {
-    case PTHREAD_CANCEL_ENABLE:
-      *old_state = THR_CANCEL_ENABLE;
-      break;
-    case PTHREAD_CANCEL_DISABLE:
-      *old_state = THR_CANCEL_DISABLE;
-      break;
-    }
-  return result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setcancelstate (new_state,
+                                                               old_state),
+                                       result),
+                     int, -1);
 # elif defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (new_state);
   ACE_UNUSED_ARG (old_state);
@@ -3040,35 +3057,10 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int result;
-  int local_new, local_old;
-  switch (new_type)
-    {
-    case THR_CANCEL_DEFERRED:
-      local_new = PTHREAD_CANCEL_DEFERRED;
-      break;
-    case THR_CANCEL_ASYNCHRONOUS:
-      local_new = PTHREAD_CANCEL_ASYNCHRONOUS;
-      break;
-    default:
-      errno = EINVAL;
-      return -1;
-    }
-  ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_setcanceltype (local_new,
-                                                       &local_old),
-                                result),
-              int, -1, result);
-  if (result == -1)
-    return -1;
-  switch (local_old)
-    {
-    case PTHREAD_CANCEL_DEFERRED:
-      *old_type = THR_CANCEL_DEFERRED;
-      break;
-    case PTHREAD_CANCEL_ASYNCHRONOUS:
-      *old_type = THR_CANCEL_ASYNCHRONOUS;
-      break;
-    }
-  return result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setcanceltype (new_type,
+                                                              old_type),
+                                       result),
+                     int, -1);
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (new_type);
   ACE_UNUSED_ARG (old_type);
@@ -3144,17 +3136,15 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
                                        result),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
-
-#   if defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
-                                          ace_result_),
-                        int, -1);
-#   else
+#  if !defined (ACE_HAS_WINCE)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
-#   endif /* defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY) */
-
+#  else
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
+                                          ace_result_),
+                        int, -1);
+#  endif /* ACE_HAS_WINCE */
 # elif defined (ACE_HAS_VXTHREADS)
   ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
 # else
@@ -3201,6 +3191,14 @@ ACE_OS::thr_sigsetmask (int how,
                                        result), int, -1);
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* !ACE_LACKS_PTHREAD_SIGMASK */
+
+#if 0
+  /* Don't know if any platform actually needs this... */
+  // as far as I can tell, this is now pthread_sigaction() -- jwr
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_sigaction (how, nsm, osm),
+                                       result), int, -1);
+#endif /* 0 */
 
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (osm);
@@ -3625,18 +3623,6 @@ ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
   : thread_id_ (id.thread_id_),
     thread_handle_ (id.thread_handle_)
 {
-}
-
-ACE_INLINE
-ACE_Thread_ID&
-ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
-{
-  if (this != &id)
-    {
-      this->thread_id_ = id.thread_id_;
-      this->thread_handle_ = id.thread_handle_;
-    }
-  return *this;
 }
 
 ACE_INLINE

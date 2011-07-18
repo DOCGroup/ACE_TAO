@@ -16,10 +16,10 @@ TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
                              , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator)
 {
   // check if it passes the parent filter.
-  CORBA::Boolean const parent_val =
+  CORBA::Boolean parent_val =
     parent_filter_admin.match (event);
 
-  CORBA::Boolean val = false;
+  CORBA::Boolean val = 0;
 
   if (filter_operator == CosNotifyChannelAdmin::AND_OP)
     {

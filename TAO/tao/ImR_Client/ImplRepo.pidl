@@ -1,13 +1,19 @@
 // -*- IDL -*-
 
+//=============================================================================
 /**
  *  @file   ImplRepo.pidl
  *
  * $Id$
+ *
+ * This file is used to generate the code in ImplRepo{A,C,S}.{h,inl,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl -Ssi -Gp -Gd -I$(TAO_ROOT) -Wb,export_macro=TAO_IMR_Client_Export -Wb,export_include=imr_client_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" ImplRepo.pidl
+ *
  */
-
-#ifndef TAO_IMRCLIENT_IMPLREPO_PIDL
-#define TAO_IMRCLIENT_IMPLREPO_PIDL
+//=============================================================================
 
 #include "tao/ImR_Client/ServerObject.pidl"
 
@@ -168,5 +174,3 @@ module ImplementationRepository
     oneway void shutdown(in boolean activators, in boolean servers);
   };
 };
-
-#endif /* TAO_IMRCLIENT_IMPLREPO_PIDL */

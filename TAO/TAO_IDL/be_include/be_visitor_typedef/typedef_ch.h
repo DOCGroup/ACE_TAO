@@ -1,78 +1,84 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef_ch.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Typedef class
- *  This provides the code generation for the Typedef class in the client
- *  header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef_ch.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Typedef class
+//    This provides the code generation for the Typedef class in the client
+//    header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_
 #define _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_
 
-/**
- * @class be_visitor_typedef_ch
- *
- * @brief be_visitor_typedef_ch
- *
- * This is a concrete visitor to generate the client header for typedef
- */
 class be_visitor_typedef_ch : public be_visitor_typedef
 {
+  //
+  // = TITLE
+  //   be_visitor_typedef_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the client header for typedef
+  //
+  //
 public:
-  /// constructor
   be_visitor_typedef_ch (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_typedef_ch (void);
+  // destructor
 
-  /// visit typedef. We provide code for this method in the derived class
   virtual int visit_typedef (be_typedef *node);
+  // visit typedef. We provide code for this method in the derived class
 
   // =visit methods on all elements syntactically valid as types that can be
   // typedefed.
 
-  /// visit a array
   virtual int visit_array (be_array *node);
+  // visit a array
 
-  /// visit an enum
   virtual int visit_enum (be_enum *node);
+  // visit an enum
 
-  /// visit an interface;
   virtual int visit_interface (be_interface *node);
+  // visit an interface;
 
-  /// visit an interface;
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  // visit an interface;
 
-  /// visit predefined type node
   virtual int visit_predefined_type (be_predefined_type *node);
+  // visit predefined type node
 
-  /// visit a typedef
   virtual int visit_string (be_string *node);
+  // visit a typedef
 
-  /// visit a sequence
   virtual int visit_sequence (be_sequence *node);
+  // visit a sequence
 
-  /// visit a structure
   virtual int visit_structure (be_structure *node);
+  // visit a structure
 
-  /// visit a union
   virtual int visit_union (be_union *node);
+  // visit a union
 
-  /// visit a valuebox
   virtual int visit_valuebox (be_valuebox *node);
+  // visit a valuebox
 
-  /// visit a valuetype
   virtual int visit_valuetype (be_valuetype *node);
+  // visit a valuetype
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_ */

@@ -11,7 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Task.h"
-#include "JAWS_IO.h"
+#include "IO.h"
 
 class JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
   // = TITLE

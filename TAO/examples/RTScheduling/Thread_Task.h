@@ -53,7 +53,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   //Task *task_;
   ACE_Time_Value* base_time_;
   int dist_;
-  CORBA::String_var job_name_;
+  char *job_name_;
   Job_var job_;
   Task_Stats *task_stats_;
 };

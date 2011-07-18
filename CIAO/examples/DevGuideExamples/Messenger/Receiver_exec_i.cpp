@@ -19,8 +19,9 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Receiver_exec_i.h"
+#include "ciao/CIAO_common.h"
 
-namespace CIAO_Receiver_Impl
+namespace CIDL_Receiver_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Receiver_exec_i

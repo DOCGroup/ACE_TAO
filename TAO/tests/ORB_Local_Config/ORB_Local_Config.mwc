@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  lib
+  Bunch
+  Bug_1459
+  Bug_2612
+  Separation
+  Service_Dependency
+  Shared
+  Simple
+  Two_DLL_ORB
+}

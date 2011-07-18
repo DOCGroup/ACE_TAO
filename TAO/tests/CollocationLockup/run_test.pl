@@ -1,86 +1,69 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
+use strict;
 
+# Variables for command-line arguments to client and server
+# executables.
+my $iorbase = "SimpleNamingService.ior";
+my $iorfile = PerlACE::LocalFile ($iorbase);
+
+my $status = 0;
+
+my $NS = new PerlACE::Process ("SimpleNamingService");
+
+unlink $iorfile;
+
+my $nsresult = $NS->Spawn ();
+if ($nsresult != 0) {
+  print STDERR "ERROR: SimpleNamingService returned $nsresult\n";
+  exit 1;
+}
+
+if (PerlACE::waitforfile_timed ($iorfile,
+        $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
+  $NS->Kill ();
+  exit 1;
+}
+
+my $CL;
+if (PerlACE::is_vxworks_test()) {
+  $CL = new PerlACE::ProcessVX ("CollocationLockup",
+                                "-ORBInitRef " .
+                                "SimpleNamingService=file://$iorbase");
+}
+else {
+  $CL = new PerlACE::Process ("CollocationLockup",
+                              "-ORBInitRef " .
+                              "SimpleNamingService=file://$iorfile");
+}
+
+my $client;
+if ($^O eq "VMS") {
+  # On OpenVMS this test does not lock up but takes much longer
+  $client = $CL->SpawnWaitKill (300);
+}
+else {
 # In testing on various platforms, the builds with the bug failed before
 # 20 seconds and when the bug was fixed it returned before 20 seconds.
-$timeout = 0;
-
-if ($^O eq "VMS") {
-    # On OpenVMS this test does not lock up but takes much longer
-    $timeout = 280;
+  $client = $CL->SpawnWaitKill (20);
 }
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+if ($client != 0) {
+  print STDERR "ERROR: client returned $client\n";
+  $status = 1;
 }
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$NS->TerminateWaitKill (5);
 
-my $iorbase = "SimpleNamingService.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("SimpleNamingService", "-ORBdebuglevel $debug_level -o $server_iorfile");
-
-$CL = $client->CreateProcess ("CollocationLockup",
-                              "-ORBInitRef " .
-                              "SimpleNamingService=file://$client_iorfile");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
-
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + $timeout);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
-}
-
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
 exit $status;

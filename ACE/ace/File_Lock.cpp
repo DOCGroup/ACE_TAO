@@ -7,7 +7,7 @@
 #include "ace/File_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(ace, File_Lock, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,8 +26,8 @@ ACE_File_Lock::dump (void) const
 }
 
 ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,
-                              bool unlink_in_destructor)
-  : removed_ (false),
+                              int unlink_in_destructor)
+  : removed_ (0),
     unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
@@ -41,7 +41,7 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,
 ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
                               int flags,
                               mode_t perms,
-                              bool unlink_in_destructor)
+                              int unlink_in_destructor)
   : unlink_in_destructor_ (unlink_in_destructor)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
@@ -59,7 +59,7 @@ ACE_File_Lock::open (const ACE_TCHAR *name,
                      mode_t perms)
 {
 // ACE_TRACE ("ACE_File_Lock::open");
-  this->removed_ = false;
+  this->removed_ = 0;
   return ACE_OS::flock_init (&this->lock_, flags, name, perms);
 }
 

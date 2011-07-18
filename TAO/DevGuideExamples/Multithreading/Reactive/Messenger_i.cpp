@@ -13,12 +13,12 @@
 Messenger_i::Messenger_i (void)
 {
 }
-
+  
 // Implementation skeleton destructor
 Messenger_i::~Messenger_i (void)
 {
 }
-
+  
 CORBA::Boolean Messenger_i::send_message (
     const char * user_name,
     const char * subject,
@@ -30,5 +30,5 @@ CORBA::Boolean Messenger_i::send_message (
   std::cout << "Message:      " << message << std::endl;
   CORBA::string_free(message);
   message = CORBA::string_dup("Thanks for the message.");
-  return true;
+  return 1;
 }

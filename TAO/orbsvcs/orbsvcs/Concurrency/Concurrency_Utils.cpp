@@ -14,6 +14,10 @@
 #include "tao/debug.h"
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
 
+ACE_RCSID (Concurrency,
+           Concurrency_Utils,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor

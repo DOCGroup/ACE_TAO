@@ -7,35 +7,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("messenger.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 PortableServer::POA_ptr
 createPersistentPOA (PortableServer::POA_ptr root_poa, const char *poa_name)
@@ -60,7 +31,7 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char *poa_name)
 void
 writeIORFile (const char* ior)
 {
-  FILE *out = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
+  FILE *out = ACE_OS::fopen ("messenger.ior", "w");
   if (out)
     {
       ACE_OS::fprintf (out, "%s", ior);
@@ -74,10 +45,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server Process started\n")));
 
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");

@@ -57,8 +57,8 @@ sub pre_workspace {
   print $fh 'MAKEFILE = ', $self->get_modified_workspace_name($base, '', 1),
             $crlf;
 }
-
-
+  
+  
 sub write_project_targets {
   my($self)   = shift;
   my($fh)     = shift;
@@ -69,7 +69,7 @@ sub write_project_targets {
   foreach my $project (@$list) {
     my($dname) = $self->mpc_dirname($project);
     my($chdir) = ($dname ne '.');
-    print $fh "\t\$(KEEP_GOING)\@",
+    print $fh "\t\@",
               ($chdir ? "cd $dname && " : ''),
               "\$(MAKE) -f ",
               ($chdir ? $self->mpc_basename($project) : $project),
@@ -99,7 +99,7 @@ sub write_comps {
   if ($named) {
     $self->write_named_targets($fh, $crlf, \%targnum, \@list,
                                'REMAINING_TARGETS := ' .
-                               '$(filter-out all,$(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)' .
+                               '$(subst all, , $(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)' .
                                "$crlf$crlf\$(REMAINING_TARGETS)", '', '',
                                $self->project_target_translation(1), 1);
   }

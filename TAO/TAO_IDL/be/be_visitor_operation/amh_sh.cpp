@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    amh_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating AMH skeleton code for Operation node in the
- *  skeleton header.
- *
- *
- *  @author Mayur Deshpande <mayur@ics.uci.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    amh_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating AMH skeleton code for Operation node in the
+//    skeleton header.
+//
+// = AUTHOR
+//    Mayur Deshpande <mayur@ics.uci.edu>
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           amh_sh,
+           "$Id$")
 
 // ******************************************************
 // Visitor for generating AMH skeleton for "operation" in skeleton header.
@@ -31,14 +41,8 @@ be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh (void)
 int
 be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 {
-  /// If there is an argument of type "native", return immediately.
+  // If there is an argument of type "native", return immediately.
   if (node->has_native ())
-    {
-      return 0;
-    }
-
-  /// These are not for the server side.
-  if (node->is_sendc_ami ())
     {
       return 0;
     }
@@ -130,11 +134,10 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
     const char *skel_prefix
   )
 {
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "static void " << skel_prefix
-      << this->ctx_->port_prefix ().c_str ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl

@@ -11,6 +11,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stropts.h"
 
+ACE_RCSID(client, local_fifo_client_test, "$Id$")
+
 // Name of the program.
 static ACE_TCHAR *program_name;
 

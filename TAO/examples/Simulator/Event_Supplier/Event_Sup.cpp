@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Event_Sup.cpp
- *
- *  $Id$
- *
- * Event Supplier for the flight simulator
- *
- *
- *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    Event_Sup.cpp
+//
+// = DESCRIPTION
+//   Event Supplier for the flight simulator
+//
+// = AUTHOR
+//    originally
+//    David Levine (levine@cs.wustl.edu) and
+//    Tim Harrison (harrison@cs.wustl.edu)
+//    modified
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "Event_Sup.h"
 #include "NavWeapC.h"
@@ -28,7 +32,12 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_ctype.h"
+
+#include "ace/os_include/os_ctype.h"
+
+ACE_RCSID (Event_Supplier,
+           Event_Sup,
+           "$Id$")
 
 static const char usage [] =
 "[[-?]\n"

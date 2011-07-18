@@ -58,7 +58,7 @@ ClientTask::svc()
   ClientEngine_Handle engine;
 
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+    GuardType guard(this->lock_);
     this->engines_.get(engine, this->engines_.size() - 1);
     this->engines_.pop_back();
   }
@@ -68,7 +68,7 @@ ClientTask::svc()
     bool exec_ret = engine->execute();
     if (exec_ret == false)
       {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+        GuardType guard(this->lock_);
         this->failure_count_ ++;
       }
   }
@@ -77,7 +77,7 @@ ClientTask::svc()
     ex._tao_print_exception (
       "ClientTask::svc Caught exception from execute():");
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+    GuardType guard(this->lock_);
     this->failure_count_ ++;
   }
   catch (...)
@@ -85,7 +85,7 @@ ClientTask::svc()
     ACE_ERROR((LM_ERROR,
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
                "in execute() " ));
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+    GuardType guard(this->lock_);
     this->failure_count_ ++;
   }
 
@@ -99,11 +99,13 @@ ClientTask::svc()
   return 0;
 }
 
+
 int
 ClientTask::close(u_long)
 {
   return 0;
 }
+
 
 unsigned
 ClientTask::failure_count () const

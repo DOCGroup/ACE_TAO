@@ -5,11 +5,16 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
+#include "ace/OS.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Time_Utilities.h"
+
+ACE_RCSID (Notify_Tests,
+           Throughput,
+           "$Id$")
 
 /***************************************************************************/
 
@@ -203,7 +208,7 @@ Notify_Throughput::~Notify_Throughput ()
 {
   this->orb_->shutdown (0);
 
-  delete[] payload_;
+  delete payload_;
 }
 
 int

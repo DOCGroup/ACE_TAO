@@ -1,7 +1,6 @@
 // -*- C++ -*-
+//
 // $Id$
-
-#include "ace/OS_NS_macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

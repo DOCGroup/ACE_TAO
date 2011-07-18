@@ -18,7 +18,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 
-static const ACE_TCHAR *ior_file = ACE_TEXT ("supplier.ior");
+static const char* ior_file = "supplier.ior";
 static TAO_Notify_Tests_StructuredPushSupplier* supplier = 0;
 static int num_events = 90;
 
@@ -61,38 +61,6 @@ private:
   CORBA::ORB_ptr orb_;
   bool started_;
 };
-
-class Supplier_Client : public Notify_Test_Client
-{
-public:
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
-};
-
-int
-Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'o':
-      ior_file = get_opts.optarg;
-      break;
-
-    default:
-      ACE_ERROR_RETURN ((LM_ERROR,
-        "usage:  %s "
-        "-o <iorfile>"
-        "\n",
-        argv [0]),
-        -1);
-  }
-
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
@@ -184,7 +152,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         client.orb ()->object_to_string (sig.in ());
 
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_file), "w");
+      FILE *output_file= ACE_OS::fopen (ior_file, "w");
       ACE_ASSERT (output_file != 0);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);

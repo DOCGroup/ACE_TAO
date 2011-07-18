@@ -6,154 +6,82 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use File::stat;
 
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $sv1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $sv2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $cl = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-
 # amount of delay between running the servers
+
 $sleeptime = 6;
+$status = 0;
 
-$nsiorfile = "ns.ior";
-$test1file = "test1";
-$test2file = "test2";
-$inputfile = "test_input";
-
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $sv1_nsiorfile = $sv1->LocalFile ($nsiorfile);
-my $sv2_nsiorfile = $sv2->LocalFile ($nsiorfile);
-my $cl_nsiorfile = $cl->LocalFile ($nsiorfile);
-my $sv1_test1file = $sv1->LocalFile ($test1file);
-my $sv2_test2file = $sv2->LocalFile ($test2file);
-$ns->DeleteFile ($nsiorfile);
-$sv1->DeleteFile ($nsiorfile);
-$sv2->DeleteFile ($nsiorfile);
-$cl->DeleteFile ($nsiorfile);
-$cl->DeleteFile ($inputfile);
-$sv1->DeleteFile ($test1file);
-$sv2->DeleteFile ($test2file);
+$nsior = PerlACE::LocalFile ("ns.ior");
+$test1 = PerlACE::LocalFile ("test1");
+$test2 = PerlACE::LocalFile ("test2");
 
 # generate test stream data
-$inputfile = PerlACE::generate_test_file($inputfile, 102400);
-my $cl_inputfile = $cl->LocalFile ($inputfile);
-if ($cl->PutFile ($inputfile) == -1) {
-    print STDERR "ERROR: cannot set file <$cl_inputfile>\n";
-    exit 1;
-}
+$input = PerlACE::generate_test_file("test_input", 102400);
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
-                          " -o $ns_nsiorfile");
-$SV1 = $sv1->CreateProcess ("server",
-                            " -ORBDebugLevel $debug_level ".
-                            " -ORBInitRef NameService=file://$sv1_nsiorfile ".
-                            "-f $sv1_test1file");
-$SV2 = $sv2->CreateProcess ("server",
-                            " -ORBDebugLevel $debug_level ".
-                            " -ORBInitRef NameService=file://$sv2_nsiorfile ".
-                            "-f $sv2_test2file");
-$CL = $cl->CreateProcess ("ftp",
-                          " -ORBInitRef NameService=file://$cl_nsiorfile ".
-                          "-f $cl_inputfile");
+unlink $nsior, $test1, $test2;
+
+$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
+$SV1 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test1");
+$SV2 = new PerlACE::Process ("server", "-ORBInitRef NameService=file://$nsior -f $test2");
+$CL  = new PerlACE::Process ("ftp", "-ORBInitRef NameService=file://$nsior -f $input");
 
 print STDERR "Starting Naming Service\n";
-$NS_status = $NS->Spawn ();
 
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
+if ($NS->Spawn () == -1) {
     exit 1;
 }
 
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()+45) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($sv1->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$sv1_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($sv2->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$sv2_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($cl->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$cl_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
+if (PerlACE::waitforfile_timed ($nsior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find naming service IOR file\n";
+    $NS->Kill ();
     exit 1;
 }
 
 print STDERR "Starting Server 1\n";
-$SV1_status = $SV1->Spawn ();
-if ($SV1_status != 0) {
-    print STDERR "ERROR: Server 1 returned $SV1_status\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
+
+$SV1->Spawn ();
+
 sleep $sleeptime;
 
 print STDERR "Starting Server 2\n";
-$SV2_status = $SV2->Spawn ();
-if ($SV2_status != 0) {
-    print STDERR "ERROR: Server 2 returned $SV2_status\n";
-    $SV2->Kill (); $SV2->TimedWait (1);
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
+
+$SV2->Spawn ();
+
 sleep $sleeptime;
 
 print STDERR "Starting Client\n";
-$CL_status = $CL->SpawnWaitKill ($cl->ProcessStartWaitInterval()+45);
-if ($CL_status != 0) {
-    print STDERR "ERROR: client returned $CL_status\n";
+
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$SV1_status = $SV1->TerminateWaitKill ($sv1->ProcessStopWaitInterval());
-if ($SV1_status != 0) {
-    print STDERR "ERROR: server 1 returned $SV1_status\n";
+$server = $SV1->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server 1 returned $server\n";
     $status = 1;
 }
 
-$SV2_status = $SV2->TerminateWaitKill ($sv2->ProcessStopWaitInterval());
-if ($SV2_status != 0) {
-    print STDERR "ERROR: server 2 returned $SV2_status\n";
+$server = $SV2->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server 2 returned $server\n";
     $status = 1;
 }
 
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-if ($NS_status != 0) {
-    print STDERR "ERROR: Naming Service returned $NS_status\n";
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: Naming Service returned $nserver\n";
     $status = 1;
 }
 
-$ns->DeleteFile ($nsiorfile);
-$sv1->DeleteFile ($nsiorfile);
-$sv2->DeleteFile ($nsiorfile);
-$cl->DeleteFile ($nsiorfile);
-$cl->DeleteFile ($inputfile);
-$sv1->DeleteFile ($test1file);
-$sv2->DeleteFile ($test2file);
+unlink $nsior, $test1, $test2, $input;
 
 exit $status;

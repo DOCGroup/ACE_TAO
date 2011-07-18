@@ -117,7 +117,6 @@ protected:
    */
   //  void handle_close_i (void);
   virtual int release_os_resources (void);
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 
 private:

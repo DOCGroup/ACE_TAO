@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Notifier_Input_Handler.cpp
- *
- *  $Id$
- *
- *  Implementation of the callback quoter Notifier_Input_Handler class.
- *
- *
- *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/examples/Callback_Quoter
+//
+// = FILENAME
+//    Notifier_Input_Handler.cpp
+//
+// = DESCRIPTION
+//    Implementation of the callback quoter Notifier_Input_Handler class.
+//
+// = AUTHOR
+//   Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Notifier_Input_Handler.h"
 #include "tao/debug.h"

@@ -9,6 +9,11 @@
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 
+
+ACE_RCSID (TypeCodeFactory,
+           Recursive_TypeCode,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
@@ -17,7 +22,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal (
   CORBA::ULong offset) const
 {
 
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       // Marshaling an incomplete recursive TypeCode placeholder is
       // not allowed.
@@ -33,7 +38,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_marshal_kind (
   TAO_OutputCDR & cdr) const
 {
 
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       // Marshaling an incomplete recursive TypeCode placeholder is
       // not allowed.
@@ -59,7 +64,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::tao_release (void)
 CORBA::Boolean
 TAO::TypeCodeFactory::Recursive_TypeCode::equal_i (CORBA::TypeCode_ptr tc) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       // Nothing to compare yet.
 
@@ -73,7 +78,7 @@ CORBA::Boolean
 TAO::TypeCodeFactory::Recursive_TypeCode::equivalent_i (
   CORBA::TypeCode_ptr tc) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       // Nothing to compare yet.
 
@@ -87,7 +92,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::get_compact_typecode_i (
   void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       // Nothing to compare yet.
 
@@ -108,7 +113,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::id_i (void) const
 char const *
 TAO::TypeCodeFactory::Recursive_TypeCode::name_i (void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -119,7 +124,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::name_i (void) const
 CORBA::ULong
 TAO::TypeCodeFactory::Recursive_TypeCode::member_count_i (void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -131,7 +136,7 @@ char const *
 TAO::TypeCodeFactory::Recursive_TypeCode::member_name_i (
   CORBA::ULong index) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -143,7 +148,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::member_type_i (
   CORBA::ULong index) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -155,7 +160,7 @@ CORBA::Any *
 TAO::TypeCodeFactory::Recursive_TypeCode::member_label_i (
   CORBA::ULong index) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -167,7 +172,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::discriminator_type_i (
   void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -179,7 +184,7 @@ CORBA::Long
 TAO::TypeCodeFactory::Recursive_TypeCode::default_index_i (
   void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -191,7 +196,7 @@ CORBA::Visibility
 TAO::TypeCodeFactory::Recursive_TypeCode::member_visibility_i (
   CORBA::ULong index) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -202,7 +207,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::member_visibility_i (
 CORBA::ValueModifier
 TAO::TypeCodeFactory::Recursive_TypeCode::type_modifier_i (void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }
@@ -213,7 +218,7 @@ TAO::TypeCodeFactory::Recursive_TypeCode::type_modifier_i (void) const
 CORBA::TypeCode_ptr
 TAO::TypeCodeFactory::Recursive_TypeCode::concrete_base_type_i (void) const
 {
-  if (CORBA::is_nil (this->the_typecode_))
+  if (CORBA::is_nil (this->the_typecode_.in ()))
     {
       throw ::CORBA::BAD_TYPECODE (0, CORBA::COMPLETED_NO);
     }

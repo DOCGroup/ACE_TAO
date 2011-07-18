@@ -1,6 +1,8 @@
 // $Id$
 
 #include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
+
+ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushSupplier, "$Id$")
 #include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

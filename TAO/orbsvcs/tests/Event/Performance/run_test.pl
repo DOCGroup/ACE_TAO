@@ -9,15 +9,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # are needed
 
 use lib  "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+PerlACE::add_lib_path ('../lib');
 
 $status = 0;
 
-my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-$test->AddLibPath ('../lib');
-
-$ec_st_conf = $test->LocalFile ("ec.st$PerlACE::svcconf_ext");
+$ec_st_conf = PerlACE::LocalFile ("ec.st$PerlACE::svcconf_ext");
 
 sub RunTest ($$$)
 {
@@ -25,14 +23,14 @@ sub RunTest ($$$)
     my $program = shift;
     my $arguments = shift;
 
-    my $T = $test->CreateProcess ($program, $arguments);
+    my $TEST = new PerlACE::Process ($program, $arguments);
 
     print STDERR "\n\n$message\n";
 
-    my $test_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
+    my $test = $TEST->SpawnWaitKill (60);
 
-    if ($test_status != 0) {
-        print STDERR "ERROR: Test returned $test_status\n";
+    if ($test != 0) {
+        print STDERR "ERROR: Test returned $test\n";
         $status = 1;
     }
 }

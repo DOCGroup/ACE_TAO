@@ -1,42 +1,76 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_valuetype.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Interface and be_interface that provides
- *  additional means for C++ mapping of an valuetype.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_valuetype.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Interface and be_interface that provides
+//    additional means for C++ mapping of an valuetype.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    derived from be_interface.cpp
+//
+// ============================================================================
 
 #include "be_valuetype.h"
 #include "be_visitor.h"
 #include "be_extern.h"
 #include "be_helper.h"
-
 #include "ast_module.h"
-#include "ast_attribute.h"
-
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
 #include "global_extern.h"
-
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (be,
+           be_valuetype,
+           "$Id$")
+
+// Default constructor.
+be_valuetype::be_valuetype (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_interface (),
+    AST_ValueType (),
+    full_obv_skel_name_ (0)
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+
+  AST_Module *m = AST_Module::narrow_from_scope (this->defined_in ());
+
+  if (m != 0)
+    {
+      m->set_has_nested_valuetype ();
+    }
+
+  // Always the case.
+  this->has_constructor (true);
+}
+
+// Constructor used to build the AST.
 be_valuetype::be_valuetype (UTL_ScopedName *n,
-                            AST_Type **inherits,
+                            AST_Interface **inherits,
                             long n_inherits,
-                            AST_Type *inherits_concrete,
+                            AST_ValueType *inherits_concrete,
                             AST_Interface **inherits_flat,
                             long n_inherits_flat,
-                            AST_Type **supports,
+                            AST_Interface **supports,
                             long n_supports,
-                            AST_Type *supports_concrete,
+                            AST_Interface *supports_concrete,
                             bool abstract,
                             bool truncatable,
                             bool custom)
@@ -78,10 +112,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    abstract,
                    truncatable,
                    custom),
-    supports_abstract_ (false),
-    var_out_seq_decls_gen_ (false),
     full_obv_skel_name_ (0),
-    is_amh_excep_holder_ (false)
+    supports_abstract_ (false),
+    var_out_seq_decls_gen_ (0)
 {
   // Check that redefine() copies all members.
 
@@ -103,12 +136,6 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
       be_interface *intf =
         be_interface::narrow_from_decl (this->pd_supports[i]);
 
-      if (intf == 0)
-        {
-          // The item is a template param holder.
-          continue;
-        }
-
       if (intf->is_abstract () || intf->has_mixed_parentage ())
         {
           this->supports_abstract_ = true;
@@ -120,8 +147,6 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     {
       return;
     }
-
-  idl_global->var_size_decl_seen_ = true;
 
   // Set the flag that says we have a valuetype in this IDL file.
   if (this->is_defined ())
@@ -168,7 +193,7 @@ be_valuetype::full_obv_skel_name (void)
 {
   if (0 == this->full_obv_skel_name_)
     {
-      this->compute_fullobvskelname ();
+      compute_fullobvskelname ();
     }
 
   return this->full_obv_skel_name_;
@@ -293,7 +318,7 @@ be_valuetype::have_operation (void)
       // Now traverse inheritance tree.
       long i;  // loop index
       long n_inherits = this->n_inherits ();
-      AST_Type **inherits = this->inherits ();
+      AST_Interface **inherits = this->inherits ();
 
       for (i = 0; i < n_inherits; ++i)
         {
@@ -310,17 +335,15 @@ be_valuetype::have_operation (void)
   if (! have_operation)
     {
       // Check for operations on supported interfaces
-      AST_Type * supported = this->supports_concrete ();
+      AST_Interface * supported = this->supports_concrete ();
 
       if (supported != 0)
         {
-          be_interface *intf =
-            be_interface::narrow_from_decl (supported);
+          be_interface *intf = be_interface::narrow_from_decl (supported);
 
           if (intf != 0)
             {
-              have_operation =
-                be_valuetype::have_supported_op (intf);
+                    have_operation = be_valuetype::have_supported_op (intf);
             }
         }
     }
@@ -331,6 +354,7 @@ be_valuetype::have_operation (void)
 bool
 be_valuetype::have_supported_op (be_interface * node)
 {
+
   bool have_supported_op = 0;
 
   if (node->nmembers () == 0)
@@ -369,17 +393,14 @@ be_valuetype::have_supported_op (be_interface * node)
       // Now traverse inheritance tree.
       long i;  // loop index
       long n_inherits = node->n_inherits ();
-      AST_Type **inherits = node->inherits ();
-
+      AST_Interface **inherits = node->inherits ();
       for (i = 0; i < n_inherits; ++i)
         {
-          be_interface * intf =
-            be_interface::narrow_from_decl (inherits[i]);
+          be_interface * intf = be_interface::narrow_from_decl (inherits[i]);
 
           if (intf != 0)
             {
-              have_supported_op =
-                be_valuetype::have_supported_op (intf);
+              have_supported_op = be_valuetype::have_supported_op (intf);
 
               if (have_supported_op)
                 {
@@ -403,7 +424,7 @@ be_valuetype::will_have_factory (void)
 bool
 be_valuetype::has_member (void)
 {
-  AST_Type *parent = this->pd_inherits_concrete;
+  AST_ValueType *parent = this->pd_inherits_concrete;
 
   // We're looking for inherited members too.
   if (parent != 0)
@@ -430,26 +451,14 @@ be_valuetype::has_member (void)
   return false;
 }
 
-bool
-be_valuetype::is_amh_excep_holder (void) const
-{
-  return this->is_amh_excep_holder_;
-}
-
-void
-be_valuetype::is_amh_excep_holder (bool val)
-{
-  this->is_amh_excep_holder_ = val;
-}
-
 int
 be_valuetype::gen_helper_header (char *, char *)
 {
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -478,10 +487,10 @@ be_valuetype::gen_helper_inline (char *, char *)
   // is not getting generated... Actually this is a much bigger
   // problem. Just hacking  it up for the timebeing..
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "#if defined (__ACE_INLINE__)" << be_nl_2
+  *os << "#if defined (__ACE_INLINE__)" << be_nl << be_nl
       << be_global->core_versioning_begin () << be_nl
       << "namespace CORBA" << be_nl
       << "{"
@@ -491,7 +500,7 @@ be_valuetype::gen_helper_inline (char *, char *)
       << "extern " << be_global->stub_export_macro () << " void remove_ref ("
       << this->full_name () << " *);"
       <<  be_uidt_nl
-      << "}" << be_nl_2
+      << "}" << be_nl << be_nl
       << be_global->core_versioning_end () << be_nl
       << "#endif /*__ACE_INLINE__*/";
 
@@ -504,8 +513,8 @@ be_valuetype::gen_helper_stubs (char *, char *)
 {
   TAO_OutStream *os = tao_cg->client_stubs ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
@@ -514,7 +523,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
       << "{" << be_idt_nl
       << "vt->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
       << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
@@ -529,8 +538,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
 }
 
 void
-be_valuetype::gen_ostream_operator (TAO_OutStream *os,
-                                    bool /* use_underscore */)
+be_valuetype::gen_ostream_operator (TAO_OutStream *os)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -547,17 +555,17 @@ be_valuetype::gen_ostream_operator (TAO_OutStream *os,
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_valuetype::gen_var_out_seq_decls (void)
+be_valuetype:: gen_var_out_seq_decls (void)
 {
-  if (this->var_out_seq_decls_gen_)
+  if (this->var_out_seq_decls_gen_ == 1)
     {
       return;
     }
 
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
@@ -565,7 +573,7 @@ be_valuetype::gen_var_out_seq_decls (void)
 
   const char *lname = this->local_name ();
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Value_Var_T<" << be_idt << be_idt_nl
@@ -580,7 +588,7 @@ be_valuetype::gen_var_out_seq_decls (void)
 
   os->gen_endif ();
 
-  this->var_out_seq_decls_gen_ = true;
+  this->var_out_seq_decls_gen_ = 1;
 }
 
 // For building the pre and postfix of private data fields.
@@ -601,9 +609,7 @@ be_valuetype::statefull_inherit (void)
 {
   if (this->pd_inherits_concrete != 0)
     {
-      return
-        be_valuetype::narrow_from_decl (
-          this->pd_inherits_concrete);
+      return be_valuetype::narrow_from_decl (this->pd_inherits_concrete);
     }
   else
     {
@@ -647,9 +653,8 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
         }
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
-      AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
-      if (field == 0 || attr != 0)
+      if (!field)
         {
           continue;
         }
@@ -737,15 +742,14 @@ int
 be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
                                                    TAO_OutStream *os)
 {
-  AST_Type *supported = this->supports_concrete ();
+  AST_Interface *supported = this->supports_concrete ();
 
   if (supported == 0)
     {
       return 0;
     }
 
-  be_interface *concrete =
-    be_interface::narrow_from_decl (supported);
+  be_interface *concrete = be_interface::narrow_from_decl (supported);
 
   // Make sure the queues are empty.
   this->insert_queue.reset ();
@@ -823,7 +827,7 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
               os->indent ();
 
               *os << "// TAO_IDL - Generated from" << be_nl
-                  << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+                  << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -867,6 +871,8 @@ be_valuetype::gen_skel_helper (be_interface *concrete,
 
   return 0;
 }
+
+
 
 IMPL_NARROW_FROM_DECL (be_valuetype)
 IMPL_NARROW_FROM_SCOPE (be_valuetype)

@@ -20,7 +20,7 @@ ifeq ($(versioned_so),1)
   # Version number of the libraries
   #
   ifeq ($(SOVERSION),)
-    SOVERSION = .$(GNUACE_PROJECT_VERSION)
+    SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
   endif # SOVERSION
 
   # Name that will be written into the dynamic library
@@ -35,6 +35,7 @@ endif # versioned_so
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
+LIB_PREFIX ?= lib
 VLIB = $(ARCH_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 CLEANUP_VLIB = $(CLEANUP_LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
@@ -49,7 +50,6 @@ VSHLIB_NO_VER = $(ARCH_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 CLEANUP_VSHLIB_NO_VER = $(CLEANUP_SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 VSHLIB = $(VSHLIB_NO_VER:%=%$(SOVERSION))
 CLEANUP_VSHLIB = $(CLEANUP_VSHLIB_NO_VER:%=%$(SOVERSION))
-SHLIB_WITH_VER = $(SHLIB:%=%$(SOVERSION))
 
 SHLIBA ?=
 VSHLIBA = $(ARCH_SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
@@ -90,27 +90,18 @@ ifneq ($(IDL_SRC),)
   $(VLOBJS) $(VSHOBJS): $(IDL_SRC)
 endif
 
-# Since INSLIB already has the ARCH dir appended, if appropriate, ARCH
-# needs to be stripped from V[SH]LIB on the way over to INSLIB. To avoid
-# an extra '/' which confuses the relative link calculation, ensure the
-# '/' after ARCH is stripped if it's an ARCH build.
-ARCHDIR ?=
-ifdef ARCH
-  ARCHDIR = $(ARCH)/
-endif
-
 ifdef static_libs
-  LIB_INSTALL += $(VLIB:$(ARCHDIR)%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  LIB_INSTALL += $(VLIB:%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VLIB:%=$(INSLIB)/%)
 endif # static_libs
 
 ifdef shared_libs
-  LIB_INSTALL += $(VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:$(ARCHDIR)%=$(INSLIB)/%*)
+  LIB_INSTALL += $(VSHLIB:%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:%=$(INSLIB)/%)
+  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:%=$(INSLIB)/%*)
   ifdef SHLIBA
-    LIB_INSTALL += $(VSHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
-    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
+    LIB_INSTALL += $(VSHLIBA:%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:%=$(INSLIB)/%)
   endif
 endif # shared_libs
 
@@ -246,21 +237,21 @@ $(VSHLIB): $(VSHOBJS)
           #### to lib files, for example.
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $^ $(LDFLAGS) $(ACE_NUL_STDERR)
           endif # ace_lib_prelink
-          ifneq ($(SOLINK.cc.override),)
+          ifeq ($(split),1)
+	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+          else # ! split
+            ifneq ($(SOLINK.cc.override),)
 	$(SOLINK.cc.override)
-          else
+            else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
-          endif #override
+            endif #override
+          endif  # split
       endif  # ibmcxx_build
     endif  # SHLIBBUILD
   endif  # aix_build
 endif # VXWORKSLINK
 ifneq ($(SOVERSION),)
-# This carefully works with both ARCH (where VSHLIB_* refer to the ARCH
-# subdir, but SHLIB does not) and non-ARCH builds (where VSHLIB_* and SHLIB
-# refer to the same place). SHLIB_WITH_VER should be the same as $@ but
-# without the ARCH subdir.
 	-$(RM) $(VSHLIB_NO_VER)
-	-$(LN_S) $(if $(findstring cp,$(firstword $(LN_S))),$(@),$(SHLIB_WITH_VER)) $(VSHLIB_NO_VER)
+	-$(LN_S) $@ $(VSHLIB_NO_VER)
 endif
 	-chmod a+rx $@

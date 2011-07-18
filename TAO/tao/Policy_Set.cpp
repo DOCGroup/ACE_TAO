@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Policy_Set.h"
@@ -9,6 +8,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           Policy_Set,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

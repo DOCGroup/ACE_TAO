@@ -6,52 +6,41 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+$iorfile = PerlACE::LocalFile ("test.ior");
+unlink $iorfile;
+
+$port = 12345;
+
+if (PerlACE::is_vxworks_test()) {
+    $exe = new PerlACE::ProcessVX ("test", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -o $iorfile -p $port");
 }
-
-my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-my $iorbase = "test.ior";
-my $port = 12345;
-my $test_iorfile = $test->LocalFile ($iorbase);
-$test->DeleteFile($iorbase);
-
-$T = $test->CreateProcess ("test", "-ORBdebuglevel $debug_level ".
-                                   "-ORBDottedDecimalAddresses 0 ".
-                                   "-ORBUseSharedProfile 1 ".
-                                   "-o $test_iorfile -p $port");
+else {
+    $exe = new PerlACE::Process ("test", "-ORBDottedDecimalAddresses 0 -ORBUseSharedProfile 1 -o $iorfile -p $port");
+}
 
 print "Starting server using shared profiles\n";
 
-$test_status = $T->Spawn ();
+$exe->Spawn ();
 
-if ($test_status != 0) {
-    print STDERR "ERROR: test returned $test_status\n";
-    exit 1;
-}
-
-if ($test->WaitForFileTimed ($iorbase,
-                             $test->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$test_iorfile>\n";
-    $T->Kill (); $T->TimedWait (1);
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $exe->Kill (); $exe->TimedWait (1);
     exit 1;
 }
 
 # The server ought to die quickly on its own.
-$test_status = $T->WaitKill ($test->ProcessStopWaitInterval());
-if ($test_status != 0) {
-    print STDERR "ERROR: server [single profile per IOR] returned $test_status\n";
-    exit 1;
+$server = $exe->WaitKill (2);
+
+if ($server != 0) {
+    print STDERR "ERROR: server [single profile per IOR] returned $server\n";
+    $status = 1;
 }
 
-$test->DeleteFile($iorbase);
+unlink $iorfile;
 
 exit $status;

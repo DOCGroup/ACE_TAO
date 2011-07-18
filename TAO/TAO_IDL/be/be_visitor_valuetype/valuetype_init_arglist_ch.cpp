@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_init_arglist_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the parameter list of the OBV factory
- *  signature.
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_init_arglist_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the parameter list of the OBV factory
+//    signature.
+//
+// = AUTHOR
+//    Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype_init,
+           arglist_ch,
+           "$Id$")
 
 be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
     be_visitor_context *ctx
@@ -22,7 +31,8 @@ be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
 }
 
 be_visitor_valuetype_init_arglist_ch::~be_visitor_valuetype_init_arglist_ch (
-  void)
+    void
+  )
 {
 }
 
@@ -35,7 +45,7 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
 
   if (node->nmembers () > 0)
     {
-      os << be_idt_nl;
+      os << be_idt << be_idt_nl;
 
       // All we do is hand over code generation to our scope.
       if (this->visit_scope (node) == -1)
@@ -47,11 +57,12 @@ be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)
                             -1);
         }
 
-      os << ")" << be_uidt;
+      os << be_uidt_nl
+         << ")";
     }
   else
     {
-      os << "void)";
+      os << "void)" << be_idt;
     }
 
    return 0;
@@ -84,7 +95,7 @@ be_visitor_valuetype_init_arglist_ch::post_process (be_decl *bd)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // If we are not the last node in the list of arguments, generate a comma.
-  if (! this->last_node (bd))
+  if (!this->last_node (bd))
     {
       *os << "," << be_nl;
     }

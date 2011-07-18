@@ -1,6 +1,6 @@
 // $Id$
 
-project(Display_NavDisplayGUI_exec_moc) : ace_qt4, avoids_ccm_noevent{
+project(Display_NavDisplayGUI_exec_moc) : ace_qt4, qt4_qt3support {
   custom_only = 1
   MOC_Files {
     DetailView.h
@@ -10,13 +10,13 @@ project(Display_NavDisplayGUI_exec_moc) : ace_qt4, avoids_ccm_noevent{
   }
 }
 
-project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4,  avoids_ccm_noevent{
-  after   += Display_NavDisplay_lem_gen \
-             Display_NavDisplay_svnt \
+project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4, qt4_qt3support, avoids_ace_for_tao {
+  after   += Display_NavDisplay_cidl_gen \
+             Display_NavDisplay_stub \
              Display_NavDisplayGUI_exec_moc
   sharedname = NavDisplayGUI_exec
   libs += NavDisplay_stub Display_Base_stub
-  dynamicflags += NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
+  dynamicflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
   includes  += ../NavDisplay
   libout = ../lib
   libpaths += ../lib
@@ -54,7 +54,7 @@ project(Display_NavDisplayGUI_exec) : ciao_executor, ace_qt4,  avoids_ccm_noeven
   }
 }
 
-project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, avoids_ccm_noevent {
+project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, qt4_qt3support, avoids_ace_for_tao {
   after      += Display_Base_skel Display_NavDisplayGUI_exec
   sharedname  = NavDisplayGUI_svnt
   includes  += ../NavDisplay
@@ -62,9 +62,12 @@ project(Display_NavDisplayGUI_svnt) : ciao_servant, ace_qt4, avoids_ccm_noevent 
                 NavDisplay_stub \
                 Display_Base_skel \
                 Display_Base_stub
-  dynamicflags += NAVDISPLAY_SVNT_BUILD_DLL
+  dynamicflags = NAVDISPLAY_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
+
+  CIDL_Files {
+  }
 
   IDL_Files {
   }

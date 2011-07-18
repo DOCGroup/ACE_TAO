@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SCIOP_Acceptor.h"
 #include "tao/Strategies/SCIOP_Profile.h"
 
@@ -16,6 +14,10 @@
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(tao,
+          SCIOP_Acceptor,
+          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

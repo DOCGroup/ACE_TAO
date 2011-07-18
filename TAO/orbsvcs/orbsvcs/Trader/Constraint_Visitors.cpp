@@ -9,6 +9,12 @@
 
 #include "ace/OS_NS_string.h"
 
+
+ACE_RCSID (Trader,
+           Constraint_Visitors,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
@@ -709,7 +715,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   try
     {
       CORBA::Float value = dyn_any.get_float ();
-      return_value = ACE::is_equal (value, element);
+      return_value = (value == element);
     }
   catch (const CORBA::Exception&){}
   return return_value;
@@ -724,7 +730,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   try
     {
       CORBA::Double value = dyn_any.get_double ();
-      return_value = ACE::is_equal (value, element);
+      return_value = (value == element);
     }
   catch (const CORBA::Exception&){}
   return return_value;
@@ -979,8 +985,8 @@ visit_div (TAO_Binary_Constraint* boolean_div)
           break;
         case TAO_DOUBLE:
           right_isnt_zero =
-            ACE::is_inequal (static_cast<CORBA::Double>
-               (*dynamic_cast<TAO_Literal_Constraint*> (right)), 0.0);
+            (static_cast<CORBA::Double>
+               (*dynamic_cast<TAO_Literal_Constraint*> (right)) != 0.0);
           break;
         }
 

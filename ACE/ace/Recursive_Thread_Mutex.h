@@ -72,7 +72,7 @@ public:
   int acquire (ACE_Time_Value &tv);
 
   /**
-   * If @a tv == 0 the call acquire() directly.  Otherwise, Block the
+   * If @a tv == 0 the call <acquire()> directly.  Otherwise, Block the
    * thread until we acquire the mutex or until @a tv times out, in
    * which case -1 is returned with @c errno == @c ETIME.  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
@@ -89,23 +89,23 @@ public:
   int tryacquire (void);
 
   /**
-   * Acquire mutex ownership.  This calls acquire() and is only
-   * here to make the ACE_Recusive_Thread_Mutex interface consistent
+   * Acquire mutex ownership.  This calls <acquire> and is only
+   * here to make the <ACE_Recusive_Thread_Mutex> interface consistent
    * with the other synchronization APIs.
    */
   int acquire_read (void);
 
   /**
-   * Acquire mutex ownership.  This calls acquire() and is only
-   * here to make the ACE_Recusive_Thread_Mutex interface consistent
+   * Acquire mutex ownership.  This calls <acquire> and is only
+   * here to make the <ACE_Recusive_Thread_Mutex> interface consistent
    * with the other synchronization APIs.
    */
   int acquire_write (void);
 
   /**
    * Conditionally acquire mutex (i.e., won't block).  This calls
-   * tryacquire() and is only here to make the
-   * ACE_Recusive_Thread_Mutex interface consistent with the other
+   * <tryacquire> and is only here to make the
+   * <ACE_Recusive_Thread_Mutex> interface consistent with the other
    * synchronization APIs.  Returns -1 on failure.  If we "failed"
    * because someone else already had the lock, @c errno is set to
    * @c EBUSY.
@@ -114,8 +114,8 @@ public:
 
   /**
    * Conditionally acquire mutex (i.e., won't block).  This calls
-   * tryacquire() and is only here to make the
-   * ACE_Recusive_Thread_Mutex interface consistent with the other
+   * <tryacquire> and is only here to make the
+   * <ACE_Recusive_Thread_Mutex> interface consistent with the other
    * synchronization APIs.  Returns -1 on failure.  If we "failed"
    * because someone else already had the lock, @c errno is set to
    * @c EBUSY.
@@ -151,7 +151,7 @@ public:
   int get_nesting_level (void);
 
   /// Returns a reference to the recursive mutex;
-  ACE_recursive_thread_mutex_t &lock (void);
+  ACE_recursive_thread_mutex_t &mutex (void);
 
   /// Returns a reference to the recursive mutex's internal mutex;
   ACE_thread_mutex_t &get_nesting_mutex (void);
@@ -169,11 +169,11 @@ protected:
   /// Recursive mutex.
   ACE_recursive_thread_mutex_t lock_;
 
-  /// Keeps track of whether remove() has been called yet to avoid
-  /// multiple remove() calls, e.g., explicitly and implicitly in the
+  /// Keeps track of whether <remove> has been called yet to avoid
+  /// multiple <remove> calls, e.g., explicitly and implicitly in the
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
-  /// remove() on the same object, which is a bad idea anyway...
+  /// <remove> on the same object, which is a bad idea anyway...
   bool removed_;
 
 private:

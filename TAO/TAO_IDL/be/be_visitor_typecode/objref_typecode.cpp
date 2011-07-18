@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+
 TAO::be_visitor_objref_typecode::be_visitor_objref_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
@@ -34,7 +35,7 @@ TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
 
   if (dynamic_cast<be_component *> (node))
     kind = component;
-  else if (node->home_equiv ())
+  else if (dynamic_cast<be_home *> (node))
     kind = home;
   else if (node->is_abstract ())
     kind = abstract_interface;
@@ -54,6 +55,11 @@ int
 TAO::be_visitor_objref_typecode::visit_native (be_native * /* node */)
 {
   return 0;
+//   return this->visit_i ("native",
+//                         ,
+//                         ,
+//                         ,
+//                         node);
 }
 
 int
@@ -65,9 +71,9 @@ TAO::be_visitor_objref_typecode::visit_i (char const * kind,
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
+  os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the TypeCode instantiation.
   os

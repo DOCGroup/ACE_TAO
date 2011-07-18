@@ -9,31 +9,6 @@
 #include "StructuredEventConsumer_i.h"
 #include "Priorities.h"
 #include <iostream>
-#include <fstream>
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *output_file = ACE_TEXT ("MessengerConsumer.ready");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-      ;
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -41,9 +16,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-
-      if (parse_args (argc, argv) != 0)
-        return 1;
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
@@ -61,7 +33,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosNotifyChannelAdmin::AdminID adminid;
       CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-        CosNotifyChannelAdmin::AND_OP;
+        CosNotifyChannelAdmin::OR_OP;
 
       CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
         ec->new_for_consumers(ifgop,
@@ -123,11 +95,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               poa_manager.in (),
               poa_policy_list);
 
-      PortableServer::Servant_var<StructuredEventConsumer_i> servant =
-        new StructuredEventConsumer_i(orb.in());
+      StructuredEventConsumer_i  servant (orb.in());
 
       PortableServer::ObjectId_var objectId =
-        rt_poa->activate_object (servant.in());
+        rt_poa->activate_object (&servant);
 
       CORBA::Object_var consumer_obj =
         rt_poa->id_to_reference (objectId.in ());
@@ -191,11 +162,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       supplier_proxy->subscription_change(added, removed);
 
       poa_manager->activate();
-
-      // Write a file to let the run_test.pl script know we are ready.
-      std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(output_file) );
-      iorFile << "Ready" << std::endl;
-      iorFile.close();
 
       orb->run();
     }

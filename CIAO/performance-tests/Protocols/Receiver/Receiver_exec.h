@@ -5,12 +5,12 @@
 #include "tao/LocalObject.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"
-#include "ace/Containers_T.h"
+#include "ace/Array.h"
 
 namespace CIDL_ReceiverImpl
 {
   class RECEIVER_EXEC_Export ReceiverExec_i :
-    public virtual ::CIAO_Protocols_Receiver_Impl::Receiver_Exec,
+    public virtual ReceiverExec,
     public virtual ::CORBA::LocalObject
   {
   public:
@@ -33,7 +33,7 @@ namespace CIDL_ReceiverImpl
 
   protected:
 
-    ::Protocols::CCM_Receiver_Context_var context_;
+    ReceiverExec_Context_var context_;
 
     CORBA::ORB_var orb_;
 
@@ -81,7 +81,7 @@ namespace CIDL_ReceiverImpl
   };
 
   class RECEIVER_EXEC_Export ReceiverHomeExec_i :
-    public virtual ::CIAO_Protocols_Receiver_Impl::ReceiverHome_Exec,
+    public virtual ReceiverHomeExec,
     public virtual ::CORBA::LocalObject
   {
   public:

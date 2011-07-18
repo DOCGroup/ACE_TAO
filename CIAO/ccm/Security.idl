@@ -10,8 +10,6 @@
 #if !defined (CIAO_SECURITY_IDL)
 #define CIAO_SECURITY_IDL
 
-#if !defined (CCM_LW)
-
 #pragma prefix "omg.org"
 
 module SecurityLevel2 {
@@ -22,7 +20,4 @@ module SecurityLevel2 {
   {
   };
 };
-
-#endif
-
 #endif /* CIAO_SECURITY_IDL */

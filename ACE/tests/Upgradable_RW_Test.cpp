@@ -1,27 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Upgradable_RW_Test.cpp
- *
- *  $Id$
- *
- *    This test program verifies the functionality of the ACE_OS
- *    implementation of readers/writer locks on Win32 and Posix
- *    pthreads.  Use the RW_Mutex define switch to use
- *    readers/writer mutexes or regular mutexes.
- *
- *
- *  @author Michael Kircher <mk1@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Upgradable_RW_Test.cpp
+//
+// = DESCRIPTION
+//      This test program verifies the functionality of the ACE_OS
+//      implementation of readers/writer locks on Win32 and Posix
+//      pthreads.  Use the RW_Mutex define switch to use
+//      readers/writer mutexes or regular mutexes.
+//
+// = AUTHOR
+//    Michael Kircher <mk1@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Upgradable_RW_Test.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Atomic_Op.h"
 
-
+ACE_RCSID(tests, Upgradable_RW_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -170,9 +173,9 @@ Reader_Task::svc (void)
 
       {
 #if defined (RW_MUTEX)
-        ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 1);
+        ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
-        ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 1);
+        ACE_Guard<ACE_Thread_Mutex> g (mutex);
 #endif /* RW_MUTEX */
         find_last ();
 #if defined (RW_MUTEX)
@@ -195,9 +198,9 @@ Reader_Task::svc (void)
           || !use_try_upgrade)             // we did not try at all
         {
 #if defined (RW_MUTEX)
-          ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, g, rw_mutex, 1);
+          ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
-          ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 1);
+          ACE_Guard<ACE_Thread_Mutex> g (mutex);
 #endif /* RW_MUTEX */
 
           not_upgraded++;
@@ -242,9 +245,9 @@ Writer_Task::svc (void)
       ACE_Thread::yield ();
 
 #if defined (RW_MUTEX)
-      ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
+      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 #else
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 0);
+      ACE_Guard<ACE_Thread_Mutex> g (mutex);
 #endif /* RW_MUTEX */
 
       find_last ();
@@ -264,7 +267,7 @@ Writer_Task::svc (void)
 void
 Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
 {
-  ACE_GUARD (ACE_Thread_Mutex, g, mutex_);
+  ACE_Guard<ACE_Thread_Mutex> g (mutex_);
 
   this->times_.real_time += elapsed_time.real_time;
   this->times_.user_time += elapsed_time.user_time;
@@ -291,7 +294,7 @@ Time_Calculation ::print_stats (void)
 
       double tmp = 0.0;
 
-      if (!ACE::is_equal (elapsed_time.real_time, 0.0))
+      if (elapsed_time.real_time != 0.0)
         tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,

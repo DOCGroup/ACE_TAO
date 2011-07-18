@@ -48,9 +48,6 @@ public:
   /// destructor
   ~TAO_ORB_Core_TSS_Resources (void);
 
-  /// Cleans TSS resources.
-  void fini (void);
-
 private:
 
   /// The ORB Core TSS resources should not be copied

@@ -1,10 +1,16 @@
 // -*- C++ -*-
+//
 // $Id$
+//
 
 #include "Server_ORBInitializer.h"
 #include "test_i.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
+
+ACE_RCSID (Recursive_ORBInitializer,
+           Server_ORBInitializer,
+           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (void)
 {
@@ -17,19 +23,18 @@ Server_ORBInitializer::pre_init (
   POA_TestModule::test* test = 0;
   ACE_NEW (test,
            test_i);
-  PortableServer::ServantBase_var safe (test);
 
-  CORBA::Object_var object = test->_this ();
+  CORBA::Object_ptr object = test->_this ();
 
   orbinitinfo->register_initial_reference ("MyService",
-                                           object.in ());
+                                           object);
 
   bool invalid_name = false;
   try
     {
       // Registering with an empty string should give an exception
       orbinitinfo->register_initial_reference ("",
-                                               object.in ());
+                                               object);
     }
   catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
     {
@@ -48,7 +53,7 @@ Server_ORBInitializer::pre_init (
     {
       // Registering with an duplicate string should give an exception
       orbinitinfo->register_initial_reference ("MyService",
-                                               object.in ());
+                                               object);
     }
   catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
     {

@@ -28,7 +28,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-
+ACE_RCSID(TAO_RTEC_PERF_Roundtrip, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int nthreads   = 0;
@@ -120,7 +120,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -164,7 +164,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n"));
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Federated_Test::Control_var control =
         Federated_Test::Control::_narrow (object.in ());

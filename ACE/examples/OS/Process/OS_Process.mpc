@@ -1,7 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(*imore) : aceexe, avoids_ace_for_tao {
+project(*imore) : aceexe {
+  avoids += ace_for_tao
   exename = imore
   Source_Files {
     imore.cpp

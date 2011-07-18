@@ -7,6 +7,10 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
+ACE_RCSID (Notify,
+           RedGreen_Test,
+           "$Id$")
+
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
@@ -129,7 +133,6 @@ RedGreen_Test::run (void)
       this->orb_->run(tv);
     }
 
-    this->destroy_ec ();
     this->orb_->shutdown (0);
   }
   catch (const CORBA::Exception& ex)
@@ -274,12 +277,12 @@ RedGreen_Test::send_events (void)
   // Setup the Consumer 1 to receive
   //event_type : "DOMAIN_GREEN", "DOMAIN_GREEN".
   CosNotification::EventTypeSeq added_1(1);
-  added_1.length (1);
   CosNotification::EventTypeSeq removed_1 (0);
-  removed_1.length (0);
 
   added_1[0].domain_name =  CORBA::string_dup (DOMAIN_GREEN);
   added_1[0].type_name = CORBA::string_dup (TYPE_GREEN);
+  added_1.length (1);
+  removed_1.length (0);
 
   this->normal_consumer_->get_proxy_supplier ()->subscription_change (
                                                      added_1,
@@ -288,12 +291,12 @@ RedGreen_Test::send_events (void)
 
   // Setup the Consumer 2 to receive event_type : "DOMAIN_RED", "TYPE_RED"
   CosNotification::EventTypeSeq added_2(1);
-  added_2.length (1);
   CosNotification::EventTypeSeq removed_2 (0);
-  removed_2.length (0);
 
   added_2[0].domain_name =  CORBA::string_dup (DOMAIN_RED);
   added_2[0].type_name = CORBA::string_dup (TYPE_RED);
+  added_2.length (1);
+  removed_2.length (0);
 
   this->slow_consumer_->get_proxy_supplier ()->subscription_change (
                                                    added_2,

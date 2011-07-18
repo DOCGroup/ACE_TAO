@@ -1,17 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     File.idl
- *
- *  $Id$
- *
- *   A simple File Descriptor and File System IDL interface.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//=================================================================
+//
+// = FILENAME
+//     File.idl
+//
+// = DESCRIPTION
+//     A simple File Descriptor and File System IDL interface.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//==================================================================
 
 // IDL
 

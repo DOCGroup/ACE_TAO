@@ -49,7 +49,7 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = TAO/CIAO/ciao TAO/CIAO/ccm
+INPUT                 = TAO/CIAO/ciao
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl *.txt *.idl
 RECURSIVE             = YES
 EXCLUDE               =
@@ -72,12 +72,12 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/libciao-doc/ciao
+HTML_OUTPUT           = html/tao/ciao/ciao
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = NO
+GENERATE_HTMLHELP     = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -118,31 +118,33 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = TAO/tao TAO/orbsvcs/orbsvcs . ace
+INCLUDE_PATH          = TAO . ACEXML
 PREDEFINED            = __ACE_INLINE__ \
                         ACE_TEMPLATES_REQUIRE_SOURCE \
                         ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
                         ACE_END_VERSIONED_NAMESPACE_DECL \
                         ACE_INLINE
-EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER
+EXPAND_AS_DEFINED     = ACE_RCSID \
+                        ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER \
+                        ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to external references
+# Configuration::addtions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/libace-doc/ACE.tag=../../../libace-doc \
-                        html/libtao-doc/TAO.tag=../../../libtao-doc \
-                        html/libace-doc/ssl/ACE_SSL.tag=../../../libace-doc/ssl \
-                        html/libtao-doc/portableserver/TAO_PortableServer.tag=../../../libtao-doc/portableserver \
-                        html/libtao-doc/iortable/TAO_IORTable.tag=../../../libtao-doc/iortable \
-                        html/libtao-doc/rtcorba/TAO_RTCORBA.tag=../../../libtao-doc/rtcorba \
-                        html/libtao-doc/security/TAO_Security.tag=../../../libtao-doc/security \
-                        html/libacexml-doc/ACEXML.tag=../../../libacexml-doc \
-                        html/libtao-doc/rtportableserver/TAO_RTPortableServer.tag=../../../libtao-doc/rtportableserver \
-                        html/libtao-doc/cosnaming/TAO_CosNaming.tag=../../../libtao-doc/cosnaming \
-                        html/libtao-doc/ifr/TAO_IFR.tag=../../../libtao-doc/ifr
-GENERATE_TAGFILE      = html/libciao-doc/ciao/CIAO.tag
+TAGFILES              = html/ace/ACE.tag=../../../ace \
+                        html/tao/TAO.tag=../.. \
+                        html/ace/ssl/ACE_SSL.tag=../../../ace/ssl \
+                        html/tao/portableserver/TAO_PortableServer.tag=../../portableserver \
+                        html/tao/iortable/TAO_IORTable.tag=../../iortable \
+                        html/tao/rtcorba/TAO_RTCORBA.tag=../../rtcorba \
+                        html/tao/security/TAO_Security.tag=../../security \
+                        html/acexml/ACEXML.tag=../../../acexml \
+                        html/tao/rtportableserver/TAO_RTPortableServer.tag=../../rtportableserver \
+                        html/tao/cosnaming/TAO_CosNaming.tag=../../cosnaming \
+                        html/tao/ifr/TAO_IFR.tag=../../ifr
+GENERATE_TAGFILE      = html/tao/ciao/ciao/CIAO.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -156,17 +158,16 @@ PERL_PATH             = /usr/bin/perl
 HAVE_DOT              = YES
 CLASS_GRAPH           = YES
 COLLABORATION_GRAPH   = YES
-INCLUDE_GRAPH         = NO
-INCLUDED_BY_GRAPH     = NO
+INCLUDE_GRAPH         = YES
+INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 DOT_MULTI_TARGETS     = YES
-MAX_DOT_GRAPH_DEPTH   = 3
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to the search engine
+# Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
 SEARCHENGINE          = YES

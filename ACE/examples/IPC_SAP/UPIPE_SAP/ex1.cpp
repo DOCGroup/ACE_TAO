@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   ex1.cpp
- *
- *  $Id$
- *
- *  Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
- *  intra-process communication.
- *
- *
- *  @author Gerhard Lenzer and Douglas C. Schmidt
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   examples
+//
+// = FILENAME
+//   ex1.cpp
+//
+// = DESCRIPTION
+//    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
+//    intra-process communication.
+//
+// = AUTHOR
+//    Gerhard Lenzer and Douglas C. Schmidt
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_string.h"
@@ -20,7 +23,7 @@
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 
-
+ACE_RCSID(UPIPE_SAP, ex1, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -42,7 +45,7 @@ peer1 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) peer1 ACE_UPIPE_Connector failed\n"));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (20),
                   0);

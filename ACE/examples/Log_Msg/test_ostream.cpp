@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    test_ostream.cpp
- *
- *  $Id$
- *
- *   This program tests the Log_Msg abstraction wrt writing to
- *   stderr and to a file.
- *
- *
- *  @author Irfan Pyarali <irfan@cse.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples/Log_Msg
+//
+// = FILENAME
+//    test_ostream.cpp
+//
+// = DESCRIPTION
+//     This program tests the Log_Msg abstraction wrt writing to
+//     stderr and to a file.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cse.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 
@@ -21,7 +24,7 @@
 
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(Log_Msg, test_ostream, "$Id$")
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -73,7 +76,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (infile.bad ())
     return 1;
 
-  // This loop should print out the contents of file "output", which should
+  // This loop should print out the contents of file "output", which should 
   // have the strings "fourth\n" and "fifth\n" in them.
 
   char line[BUFSIZ];

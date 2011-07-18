@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Reverse_Lock_Test.cpp
- *
- *  $Id$
- *
- *  This is a simple test to illustrate the functionality of
- *  ACE_Reverse_Lock. The test acquires and releases mutexes. No
- *  command line arguments are needed to run the test.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Reverse_Lock_Test.cpp
+//
+// = DESCRIPTION
+//    This is a simple test to illustrate the functionality of
+//    ACE_Reverse_Lock. The test acquires and releases mutexes. No
+//    command line arguments are needed to run the test.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Synch_Traits.h"
@@ -21,7 +24,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Reverse_Lock_T.h"
 
-
+ACE_RCSID(tests, Reverse_Lock_Test, "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
 

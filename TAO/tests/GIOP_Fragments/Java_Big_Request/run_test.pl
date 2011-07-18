@@ -6,67 +6,48 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
+$iorfile = PerlACE::LocalFile ('server.ior');
+$TARGETHOSTNAME = 'localhost';
+$port = PerlACE::uniqueid () + 12000;
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-my $host = $server->HostName();
-my $port = $server->RandomPort();
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server", "");
 ## No ORB fragments GIOP 1.0 messages.
 ## The JDK ORB only fragments GIOP 1.2 messages.
 foreach my $giop ('1.2') {
-    print "Testing GIOP $giop Fragmentation\n";
+  print "Testing GIOP $giop Fragmentation\n";
+  unlink $iorfile;
 
-    $server->DeleteFile($iorbase);
-    $SV->Arguments("-ORBdebuglevel $debug_level -o $server_iorfile ".
-                   "-ORBEndpoint iiop://$giop\@$host:$port");
+  $SV  = new PerlACE::Process ('server',
+                               '-ORBEndpoint ' .
+                               "iiop://$giop\@$TARGETHOSTNAME" . ":$port");
+  $SV->Spawn ();
 
-    $server_status = $SV->Spawn ();
+  if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+      print STDERR "ERROR: cannot find file <$iorfile>\n";
+      $SV->Kill (); $SV->TimedWait (1);
+      exit 1;
+  }
 
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        exit 1;
-    }
+  my($cl) = system('java client');
+  if ($cl != 0) {
+      print STDERR "ERROR: client returned $cl\n";
+      ++$status;
+  }
 
-    if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
+  $server = $SV->WaitKill (20);
 
-    my $client_status = system('java client');
-    if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
-        ++$status;
-    }
+  if ($server != 0) {
+      print STDERR "ERROR: server returned $server\n";
+      ++$status;
+  }
 
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 10);
+  unlink $iorfile;
 
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        ++$status;
-    }
-
-    if ($status) {
-        last;
-    }
+  if ($status) {
+    last;
+  }
 }
-
-$server->DeleteFile($iorbase);
 
 exit $status;

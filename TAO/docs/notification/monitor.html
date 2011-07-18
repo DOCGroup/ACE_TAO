@@ -19,12 +19,7 @@ and Control is configured.
 <h2>Using the Notification Service Monitor</h2>
 <h3>Configuration</h3>
 <p>
-The monitor is enabled via the Service Configurator.  These instructions
-assume that ACE and TAO are built as dynamic libraries.  If you are using
-static libraries, read these instructions first, then refer to the
-<a href="#static">special procedures for static libraries</a> section below.
-
-The following
+The monitor is enabled via the Service Configurator.  The following
 Service Configurator commands will enable the monitor:</p>
 <pre>
   dynamic TAO_MonitorAndControl Service_Object * TAO_CosNotification_MC:_make_TAO_MonitorAndControl () ""
@@ -136,46 +131,4 @@ combination of <b>get_statistics()</b> and <b>clear_statistics()</b>.
 not correspond to an event channel, the <b>InvalidName</b> exception will be
 thrown.
 </p>
-
-<h3><a name="static">Special Procedures for Static Libraries</a></h3>
-If ACE and TAO are built as static libraries, follow the instructions above
-with these modifications:
-<ul>
-<li>On the mwc.pl command used to generate the build files, add the 
--features -features "notify_monitor_control=1" option.  For example
-to build for VC9, the mwc commmand would look like:
-<ul><li><pre>
-mwc.pl -type vc9 -static -features "notify_monitor_control=1" TAO_ACE.mwc
-</pre></li></ul>
-</li>
-<li>Replace the "dynamic" service configuration commands with a "static"
-commands.  <i>Note that these commands have different syntaxes.</i>   
-<br/>For example if
-the service configuration commands for a dynamic build are (Lines wrapped
-for illustrative purposes.  In the service conf file the following should
-appear on two lines):
-<ul><li><pre>
-  dynamic TAO_MonitorAndControl Service_Object * 
-    TAO_CosNotification_MC:_make_TAO_MonitorAndControl () 
-    "-o monitor.ior 
-    -ORBArg \"-ORBInitRef -ORBArg NameService=corbaloc:iiop:localhost:10637/NameService\""
-    
-  dynamic TAO_MC_Notify_Service Service_Object *
-    TAO_CosNotification_MC_Ext:_make_TAO_MC_Notify_Service ()
-    "-DispatchingThreads 1"
-    
-</pre></li></ul>  you should replace them with
-<ul><li><pre>
-  static TAO_MonitorAndControl 
-    "-o monitor.ior 
-    -ORBArg -ORBInitRef 
-      -ORBArg NameService=corbaloc:iiop:localhost:10637/NameService"
-  
-  static TAO_MC_Notify_Service "-DispatchingThreads 1"
-</pre></li></ul>
-Please note that the parser for the static service configuration directives
-does not honor escaped quotes, so the -ORBArg option must appear separately for
-each argument to the Notification Service MC's ORB.
-</li>
-</ul>
 </html>

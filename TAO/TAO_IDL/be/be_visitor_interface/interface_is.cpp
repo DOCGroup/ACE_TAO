@@ -1,20 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    interface_is.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the implementation skeletons file.
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    interface_is.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the implementation skeletons file.
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
+//
+// ============================================================================
 
 // ************************************************************
 // Interface visitor for implementation skeletons.
 // ************************************************************
+
+ACE_RCSID (be_visitor_interface,
+           interface_is,
+           "$Id$")
 
 be_visitor_interface_is::be_visitor_interface_is (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -41,7 +49,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   if (be_global->gen_impl_debug_info ())
     {
       *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
     }
 
   *os << "// Implementation skeleton constructor" << be_nl;
@@ -54,7 +62,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << " (void)" << be_nl;
 
   *os << "{" << be_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   os->indent ();
   *os << "// Implementation skeleton destructor" << be_nl;
@@ -66,7 +74,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << " (void)" << be_nl;
 
   *os << "{" <<be_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {
@@ -97,7 +105,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
           if (node->is_nested ())
             {
-              be_decl *scope = 0;
+              be_decl *scope;
               scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
               *os << "  POA_" << scope->name () << "::"
@@ -134,7 +142,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_is::"
+                         "be_visitor_interface_ss::"
                          "visit_interface - "
                          "codegen for scope failed\n"),
                         -1);

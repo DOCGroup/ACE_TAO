@@ -1,4 +1,4 @@
-ACKNOWLEDGEMENTS
+ACKNOWLEDGEMENTSACKNOWLEDGEMENTS
 
 ACE and TAO have been deeply influenced and improved by the following
 members of my research group at Washington University in St. Louis, the
@@ -168,7 +168,7 @@ Jean-Francois Ripouteau <Jean-Francois dot Ripouteau at netsurf dot org>
 Ajit Sagar <asagar at spdmail dot spd dot dsccc dot com>
 Ashish Singhai <singhai at delirius dot cs dot uiuc dot edu>
 David Sames <David dot L dot Sames dot 1 at gsfc dot nasa dot gov>
-Gonzalo Diethelm <gdiethelm at dcv dot cl>
+Gonzalo Diethelm <gonzalo dot diethelm at aditiva dot com>
 Raj <raj at itd dot ssb dot com>
 Darrin Edelman <darrin at aetherworks dot com>
 Steve Weismuller <spweismu at rsoc dot rockwell dot com>
@@ -411,7 +411,7 @@ Andrew Harbick <aharbick at opentext dot com>
 Pavel Motuzenko <p_motuzenko at hotmail dot com>
 Ross J. Lillie <lillie at rsch dot comm dot mot dot com>
 Sam Hauer <shauer at nmo dot gtegsc dot com>
-Frank J. Hodum <FRANK.J.HODUM at saic dot com>
+Frank J. Hodum <fhodum at dctd dot saic dot com>
 David Miron <dxm at crapper dot dsto dot defence dot gov dot au>
 Anton van Straaten <anton at appsolutions dot com>
 Joe Covalesky <joe at nowsol dot com>
@@ -776,6 +776,7 @@ Philipp Slusallek <slusallek at graphics dot stanford dot edu>
 Matthew Davis <matthew dot davis at solers dot com>
 Janusz Stopa <jstopa at bear dot com>
 Rusty Conover <rconover at zootweb dot com>
+Alex Mintz <amintz at bear dot com>
 Phillippe Merle <Philippe dot Merle at lifl dot fr>
 Mark Winrock <mwinrock at nortelnetworks dot com>
 Boris Kaminer <boris_kaminer at mail dot ru>
@@ -1068,7 +1069,7 @@ Giovanni Zito <gzito at mbox dot thunder dot it>
 Matthew Adams <madams at bexusa dot com>
 Sameer Schabungbam <schabungbam at hss dot hns dot com>
 Jeff Butler <jeff at panasas dot com>
-Roland Rï¿½denauer <roland dot ruedenauer at freenet dot de>
+Roland Rüdenauer <roland dot ruedenauer at freenet dot de>
 John Buckman <john at lyris dot com>
 Guy Rosen <grosen at bigfoot dot com>
 <amoderni at viasoft dot com>
@@ -1962,7 +1963,7 @@ Arto Jalkanen <ajalkane at gmail dot com>
 Scott Zionic <sz at finsatconsulting dot com>
 Diana Ukleja <Diana_Ukleja at raytheon dot com>
 Shaun Cooley <scooley4241 at hotmail dot com>
-Aapo Mï¿½kinen <aapo dot makinen at firstbeattechnologies dot com>
+Aapo Mäkinen <aapo dot makinen at firstbeattechnologies dot com>
 Matt Emerson <mjemerson at isis dot vanderbilt dot edu>
 Sean Parker <supinlick at yahoo dot com>
 Mark Wilson <mwil at lle dot rochester dot edu>
@@ -2008,7 +2009,7 @@ Timothy Wayne Gomez <gomezt at saic dot com>
 Ventimiglia Chere <Ventimiglia_Chere at emc dot com>
 Frederick Heckel <fwph at cse dot wustl dot edu>
 Ian Zagorskih <ianzag at megasignal dot com>
-Olivier Guï¿½rin <guerin35 at hotmail dot com>
+Olivier Guérin <guerin35 at hotmail dot com>
 Abdel Rigumye <rigumyea at ociweb dot com>
 James Damour <james dot damour at request dot com>
 Alan Anderson <Alan dot Anderson at sdsmt dot edu>
@@ -2164,7 +2165,7 @@ Ray Lischner <rlischner at proteus-technologies dot com>
 Sergey Kosenko <sergey dot kosenko at gmail dot com>
 Pavel Zaichenko <zpf at ivl dot ua>
 Paul Riley <paul at riley dot net>
-Nelson Filipe Ferreira Gonï¿½alves <ngoncalves at isr dot ist dot utl dot pt>
+Nelson Filipe Ferreira Gonçalves <ngoncalves at isr dot ist dot utl dot pt>
 Harry Goldschmitt <harry at hgac dot com>
 Sail Zeng <sailzeng at tencent dot com>
 Markus Henschel <m dot henschel at bally-wulff dot de>
@@ -2220,7 +2221,7 @@ Hayim Shaul <hayim at iportent dot com>
 Erman Balcik <erman dot balcik at siemens dot com>
 Torsten Saliwada <sally at gmx dot net>
 Nathan Glasser <nglasser at cantata dot com>
-Grï¿½gor Boirie <gregor dot boirie at free dot fr>
+Grégor Boirie <gregor dot boirie at free dot fr>
 Alex Solan <alex dot solan at gmail dot com>
 Venkat Sidhabathuni <venkats at idengines dot com>
 Nathan Ernst <Nathan dot Ernst at citadelgroup dot com>
@@ -2249,7 +2250,7 @@ Ittehad Shaikh <ishaikh at verivue dot com>
 Michael Doubez <michael dot doubez at gmail dot com>
 Namrata Gandhi <...>
 Michael Guntli <michael dot guntli at leica-geosystems dot com>
-Frank Fï¿½rster <F dot Forster at herts dot ac dot uk>
+Frank Förster <F dot Forster at herts dot ac dot uk>
 Roger Leblanc <rog dot leblanc at gmail dot com>
 Bob Fiske <Robert dot Fiske at ironmountain dot com>
 Julien Vintrou <vintrouj at gmail dot com>
@@ -2285,74 +2286,6 @@ Alon Diamant <diamant at alon at gmail dot com>
 Igor Rayak <igor dot rayak at gmail dot com>
 Shai Kedem <shai_kedem at hotmail dot com>
 Steve Ramsay <steve dot ramsay at caris dot com>
-<moyyo at freetekno dot cz>
-Skrzyniarz Alexandre <alexandre dot skrzyniarz at fr dot thalesgroup dot com>
-Rob Beekmans <r dot a dot beekmans at philips dot com>
-Steven Hartmann <shartmann at militho dot com>
-Dicky <qianchendi at gmail dot com>
-Boyan Kasarov <bkasarov at gmail dot com>
-Brendan Murphy <brendan dot murphy at euro dot apple dot com>
-Ryan Carmichael <RCarmichael at drs-tem dot com>
-Koh Onishi <k_onishi at mtj dot biglobe dot ne dot jp>
-Markus Gaugusch <markus at gaugusch dot at>
-Annette Wilson <awilson at raytheonvtc dot com>
-Sharon Mizrahi <sharon dot mizrahi at gmail dot com>
-William Glenn <wglenn at scires dot com>
-Christian Ehrlicher <Ch dot Ehrlicher at gmx dot de>
-Hui Zhang <zhanghui9527 at gmail dot com>
-Marijke Hengstmengel <mhengstmengel at remedy dot nl>
-Christian Freund <freund at wrz dot de>
-Chris Shaw <google at cshaw-tech dot co dot uk>
-Matthew Carter <r_q_einstein-acetaobugs at yahoo dot com>
-Denis Budko <denis dot budko at remedy dot nl>
-Gaurav Kulshreshtha <gaurav dot kulshreshtha at onmobile dot com>
-Wolfgang Pickartz <Wolfgang dot Pickartz at procom.de>
-Joost Kraaijeveld <J dot Kraaijeveld at Askesis dot nl>
-Pau Garcia i Quiles <pgquiles at elpauer dot org>
-Sail Zeng <sailzeng at tencent dot com>
-Dirk Bonekaemper <dirk dot bonekaemper at dfs dot de>
-Sreejith <sreejithsmadhavan at gmail dot com>
-Guillaume Lahaye <Guillaume dot Lahaye at nuance dot com>
-Andrew Kaplan <alexande dot kaplan at tafcorp dot com>
-Alexander Mintz <alexande dot mintz at tafcorp dot com>
-Jennifer Kahng <jennifer dot kahng at lmco dot com>
-Trent Nadeau <Trent dot Nadeau at ngc dot com>
-Nick Meyer <nick dot meyer at sensis dot com>
-Olivier Langlois <olivier at olivierlanglois dot net>
-Patrick Soboljew <patrick dot soboljew at gmail dot com>
-Tim Pinkawa <tpinkawa at eagleseven dot com>
-Ed Blackmond <ed dot blackmond at themis dot com>
-Dave <dwh0403 at 163 dot com>
-Inma Perea <inma dot perea dot fdz at gmail dot com>
-David Ward <dpward at mit dot edu>
-Anatoli Sakhnik <sakhnik at gmail dot com>
-Max Zhou <earthdog at 126 dot com>
-Daynesh Mangal <daynesh at gmail dot com>
-Robert Shectman <shectman at llnl dot gov>
-Rafi <rafi dot net at gmail dot com>
-Kannan Ramaswamy <kannan dot ramaswamy at cogcap dot com>
-Brian Johnson  <johnsonb at ociweb dot com>
-Catherine L. Paquin <catherine dot paquin at ngc dot com>
-Susan Finster <sfinster at daetwyler-rd dot com>
-Frank Preischl <Frank dot Preischl at ids dot de>
-Matthew Waller <matthewrwaller at gmail dot com>
-Elez <elezsh at gmail dot com>
-Ranjit Hande <hande at avaya dot com>
-Van Vuong <vanvuong1 at us dot ibm dot com>
-Mark <markg85 at gmail dot com>
-Wendsomde Yameogo <wendsomde at yameogo dot com>
-Shi John <John dot Shi at acxiom dot com>
-Helmut BÃ¶ing
-Andrew Hill <lists at thefrog dot net>
-Henk Jan Priester <hjpriester at gmail dot com>
-Glenn Zickert <gzickert at comcast dot net>
-Chris Galli <christian dot galli at gmail dot com>
-Laura Autón García <darklulu+ace at gmail dot com>
-Jonathan Saxton <jsaxton at appsecinc dot com>
-Remko Duppen <remko dot duppen at syntel dot nl>
-Paul Fitzpatrick <paul at robotrebuilt dot com>
-Chad Beaulac <chad dot beaulac at objectivesolutions dot com>
-Jochen Meier <gesammeltimusenet2009 at arcor dot de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -2373,7 +2306,6 @@ hear about it.  Please see the instructions in
 $ACE_ROOT/PROBLEM-REPORT-FORM
 $TAO_ROOT/PROBLEM-REPORT-FORM
 $CIAO_ROOT/PROBLEM-REPORT-FORM
-$DANCE_ROOT/PROBLEM-REPORT-FORM
 
 for instructions on submitting suggestions or fixes.
 

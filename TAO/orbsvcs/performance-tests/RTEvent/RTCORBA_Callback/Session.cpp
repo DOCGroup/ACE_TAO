@@ -1,7 +1,12 @@
+//
 // $Id$
-
+//
 #include "Session.h"
 #include "Implicit_Deactivator.h"
+
+ACE_RCSID (TAO_RTEC_Perf_RTCORBA_Callback,
+           Session,
+           "$Id$")
 
 Session::Session (Test::Callback_ptr cb,
                   PortableServer::POA_ptr poa)

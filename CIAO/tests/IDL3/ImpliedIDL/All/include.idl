@@ -6,24 +6,21 @@
  * Tests tool's regeneration of IDL2 constructs, which
  * should be basically unchanged.
  */
-
+ 
 #ifndef INCLUDE_IDL
 #define INCLUDE_IDL
 
 module pre_mod
 {
   typedef long longarray[3][14][7];
-  typedef string reasonsarray[4][2];
-  typedef wstring<3> wstringofthree;
-  typedef sequence<sequence<long> > seqoflongseq;
 
   exception wrong
   {
-    seqoflongseq longseqseq;
-    reasonsarray reasons;
-    wstringofthree why;
+    sequence<sequence<long> > longseqseq;
+    string reasons[4][2];
+    wstring<3> why;
   };
-
+  
   enum which
   {
     ZERO,

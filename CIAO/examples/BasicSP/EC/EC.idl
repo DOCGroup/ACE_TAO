@@ -17,19 +17,19 @@
 module BasicSP
 {
   interface trigger
-  {
-    void start ();
-    void stop ();
-  };
-
+    {
+      void start ();
+      void stop ();
+    };
   component EC supports trigger
-  {
-    publishes TimeOut timeout_value;
+    {
+      publishes TimeOut timeout;
 
-    /// The attribute can be configured via the home or the
-    /// component property file.
-    attribute long hertz;
-  };
+      /// The attribute can be configured via the home or the
+      /// component property file.
+      attribute long hertz;
+
+    };
 
   home ECHome manages EC
   {

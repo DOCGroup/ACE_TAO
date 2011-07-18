@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Simple_Message_Block_Test.cpp
- *
- *  $Id$
- *
- *    This test program is a torture test that illustrates how
- *    ACE_Message_Block reference counting works, how and when locks
- *    are used, how memory is managed, and how continuation chains
- *    of message blocks are made. Ideally used with purify :-)
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Simple_Message_Block_Test.cpp
+//
+// = DESCRIPTION
+//      This test program is a torture test that illustrates how
+//      ACE_Message_Block reference counting works, how and when locks
+//      are used, how memory is managed, and how continuation chains
+//      of message blocks are made. Ideally used with purify :-)
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Message_Block.h"
@@ -23,7 +26,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Thread_Mutex.h"
 
-
+ACE_RCSID(tests, Simple_Message_Block_Test, "$Id$")
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -37,7 +40,7 @@ run_main (int, ACE_TCHAR *[])
 
   {
     // Checks normal heap deletes.
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb;
 
     ACE_NEW_RETURN (mb, ACE_Message_Block, -1);
     mb->release ();
@@ -76,7 +79,7 @@ run_main (int, ACE_TCHAR *[])
 
     {
       // Checks normal heap deletes.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
       ACE_NEW_RETURN (mb, ACE_Message_Block, -1);
       mb->locking_strategy (lock);
       mb->release ();

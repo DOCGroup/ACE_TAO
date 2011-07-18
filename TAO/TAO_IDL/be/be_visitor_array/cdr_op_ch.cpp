@@ -1,20 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor for code generation of Arrays for the Cdr operators in the client
- *  header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor for code generation of Arrays for the Cdr operators in the client
+//    header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_sequence/cdr_op_ch.h"
+
+ACE_RCSID (be_visitor_array,
+           cdr_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Array visitor for generating CDR operator declarations in the client header
@@ -64,7 +73,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // is a declaration (not a reference), we must generate code for
   // the declaration.
   if (this->ctx_->alias () == 0 && // Not a typedef.
-      bt->is_child (this->ctx_->scope ()->decl ()))
+      bt->is_child (this->ctx_->scope ()))
     {
       int status = 0;
       be_visitor_context ctx (*this->ctx_);
@@ -103,8 +112,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 

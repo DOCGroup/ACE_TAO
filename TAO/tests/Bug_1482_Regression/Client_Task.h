@@ -24,6 +24,8 @@ public:
                CORBA::ORB_ptr o,
                ACE_Thread_Manager *thr_mgr);
 
+  ~Client_Task (void);
+
   /// Thread entry point
   int svc (void);
 

@@ -75,16 +75,16 @@ for ($testid = 1; $testid <= 9; ++$testid) {
 
     my $SV;
 
-    $SV = $process->CreateProcess ("PI_ProcMode_Collocated_Test",
+    $SV = $process->CreateProcess ("PI_ProcMode_Collocated_Test", 
                                       "-c $client_mode " .
                                       "-s $server_mode " .
                                       "-ORBobjrefstyle url");
-
+      
     print STDERR "\n\n==== Starting test variant #$testid\n\n";
 
     $SV->Spawn ();
-
-    my $collocated  = $SV->WaitKill ($process->ProcessStartWaitInterval() + 30);
+     
+    my $collocated  = $SV->WaitKill ($process->ProcessStopWaitInterval() + 30);
 
     if ($collocated != 0) {
         print STDERR "ERROR: PI_ProcMode_Collocated_Test returned $collocated\n";

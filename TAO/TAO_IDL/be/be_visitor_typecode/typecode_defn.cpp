@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typecode_defn.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TypeCode definitions for types.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typecode_defn.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TypeCode definitions for types.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_typecode,
+           typecode_defn,
+           "$Id$")
 
 #include "be_interface_fwd.h"
 
@@ -75,6 +85,50 @@ be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
   this->queue_reset (this->compute_queue_);
 }
 
+// The following needs to be done to deal until the MSVC compiler's broken
+// handling of namespaces is fixed (hopefully forthcoming in version 7).
+int
+be_visitor_typecode_defn::gen_nested_namespace_begin (be_module *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  char *item_name = 0;
+
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
+    {
+      item_name = i.item ()->get_string ();
+
+      if (ACE_OS::strcmp (item_name, "") != 0)
+        {
+          // Leave the outermost root scope.
+          *os << "namespace " << item_name << be_nl
+              << "{" << be_idt_nl;
+        }
+    }
+
+  return 0;
+}
+
+// The following needs to be done to deal until the MSVC compiler's broken
+// handling of namespaces is fixed (hopefully forthcoming in version 7).
+int
+be_visitor_typecode_defn::gen_nested_namespace_end (be_module *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  for (UTL_IdListActiveIterator i (node->name ()); !i.is_done (); i.next ())
+    {
+      if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
+        {
+          // Leave the outermost root scope.
+          *os << be_uidt_nl << "}";
+        }
+    }
+
+  *os << be_nl << be_nl;
+
+  return 0;
+}
+
 int
 be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
 {
@@ -99,16 +153,13 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       be_module * const module =
         be_module::narrow_from_scope (node->defined_in ());
 
-      if (module == 0)
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_typecode_defn::")
-                             ACE_TEXT ("gen_typecode_ptr - ")
-                             ACE_TEXT ("Error parsing nested name\n")),
+                             "be_visitor_typecode_defn::gen_typecode_ptr - "
+                             "Error parsing nested name\n"),
                             -1);
         }
-
-      be_util::gen_nested_namespace_begin (&os, module);
 
       os << "::CORBA::TypeCode_ptr const _tc_"
          << node->local_name ()
@@ -117,7 +168,13 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
          << node->flat_name () << ";"
          << be_uidt;
 
-      be_util::gen_nested_namespace_end (&os, module);
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::gen_typecode_ptr - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
     }
   else
     {
@@ -189,30 +246,33 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
       be_module * const module =
         be_module::narrow_from_scope (node->defined_in ());
 
-      if (module == 0)
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_typecode_defn::")
-                             ACE_TEXT ("gen_forward_declared_typecode - ")
-                             ACE_TEXT ("Error parsing nested name\n")),
+                             "be_visitor_typecode_defn::"
+                             "gen_forward_declared_typecode - "
+                             "Error parsing nested name\n"),
                             -1);
         }
-
-      be_util::gen_nested_namespace_begin (&os, module);
 
       os << "extern ::CORBA::TypeCode_ptr const _tc_"
          << node->local_name () << ";";
 
-      be_util::gen_nested_namespace_end (&os, module);
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::"
+                             "gen_forward_declared_typecode - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
     }
   else
     {
       // outermost scope.
       os << "extern ::CORBA::TypeCode_ptr const "
-         << node->tc_name () << ";" << be_uidt;
+         << node->tc_name () << ";" << be_uidt_nl;
     }
-
-  os << be_nl;
 
   return 0;
 }
@@ -234,6 +294,8 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
       // full definition node (if it exists) on which to call is_defined().
       // The last 'true' arg below filters out full-def members of fwd decls.
       AST_Decl *d = node->defined_in ()->lookup_by_name (node->name (),
+                                                         true,
+                                                         true,
                                                          true);
 
       be_interface * const intf =
@@ -292,9 +354,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
+  os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -402,7 +464,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
       if (i < ndims - 1)
         {
-          os << be_nl_2;
+          os << be_nl << be_nl;
         }
     }
 
@@ -437,12 +499,6 @@ be_visitor_typecode_defn::visit_component (be_component *node)
 }
 
 int
-be_visitor_typecode_defn::visit_connector (be_connector *node)
-{
-  return this->visit_interface (node);
-}
-
-int
 be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd * node)
 {
   return this->gen_forward_declared_typecode (node);
@@ -455,9 +511,9 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
+  os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // generate typecode for the base type
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
@@ -528,7 +584,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   os << be_global->core_versioning_end ();
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
-     << be_nl_2;
+     << be_nl << be_nl;
 
   return 0; // this->gen_typecode_ptr (node);
 }
@@ -550,9 +606,9 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
+  os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
@@ -587,7 +643,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
   os << be_global->core_versioning_end ();
 
   os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
-     << be_nl_2;
+     << be_nl << be_nl;
 
   return 0;
 }

@@ -17,6 +17,7 @@
 
 namespace TAO
 {
+
   /**
    * @class be_visitor_objref_typecode
    *
@@ -31,6 +32,8 @@ namespace TAO
     : public be_visitor_typecode_defn
   {
   public:
+
+    /// Constructor.
     be_visitor_objref_typecode (be_visitor_context * ctx);
 
     /// Visit an object reference / interface.
@@ -50,13 +53,16 @@ namespace TAO
     virtual int visit_native (be_native * node);
 
   private:
+
     /// Generate TypeCode instance.
     int visit_i (char const * kind,
                  char const * flat_name,
                  char const * repository_id,
                  char const * original_local_name,
                  be_type * node);
+
   };
+
 }
 
 #endif  /* TAO_BE_VISITOR_OBJREF_TYPECODE_H */

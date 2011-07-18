@@ -21,7 +21,6 @@
 #include /**/ "ace/pre.h"
 
 #include /**/ "tao/TAO_Export.h"
-#include "tao/RequestInterceptor_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,7 +61,6 @@ namespace TAO
    * specification/chapter.
    */
   class TAO_Export ClientRequestInterceptor_Adapter
-    : public RequestInterceptor_Adapter
   {
   public:
     virtual ~ClientRequestInterceptor_Adapter (void);
@@ -101,10 +99,13 @@ namespace TAO
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies) = 0;
 
+    virtual void destroy_interceptors (void) = 0;
+
     /// Convert TAO Invocation status to a PI status
     virtual PortableInterceptor::ReplyStatus pi_reply_status (
       TAO::Invocation_Base const &invocation_base) = 0;
   };
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

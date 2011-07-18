@@ -1,18 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    DualEC_Sup.cpp
- *
- *  $Id$
- *
- * Event Supplier for visualizing scheduling behavior, using arrival
- * and dispatch data logged by an event channel dispatch command object
- *
- *
- *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the DOVE simulation event supplier originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    DualEC_Sup.cpp
+//
+// = DESCRIPTION
+//   Event Supplier for visualizing scheduling behavior, using arrival
+//   and dispatch data logged by an event channel dispatch command object
+//
+// = AUTHOR
+//    Chris Gill (cdgill@cs.wustl.edu)
+//
+//    Adapted from the DOVE simulation event supplier
+//    originally
+//    David Levine (levine@cs.wustl.edu) and
+//    Tim Harrison (harrison@cs.wustl.edu)
+//    modified
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "DualEC_Sup.h"
 #include "NavWeapC.h"
@@ -30,7 +37,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_ctype.h"
+
+ACE_RCSID (Event_Supplier,
+           DualEC_Sup,
+           "$Id$")
 
 //FUZZ: disable check_for_lack_ACE_OS
 static const char usage [] =

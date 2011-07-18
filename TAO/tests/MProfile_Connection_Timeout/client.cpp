@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/IORManipulation/IORManip_Loader.h"
@@ -8,6 +7,10 @@
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
+
+ACE_RCSID(MProfile_Connection_Timeout,
+          client,
+          "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int do_shutdown = 0;
@@ -46,7 +49,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -74,11 +77,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->string_to_object (name);
 
       // Get an object reference for the ORBs IORManipultion object!
-      CORBA::Object_var IORM =
+      CORBA::Object_ptr IORM =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
-      TAO_IOP::TAO_IOR_Manipulation_var iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
+      TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
 
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);

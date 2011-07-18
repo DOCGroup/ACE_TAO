@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Exception.h"
@@ -25,6 +24,11 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (tao,
+           Exception,
+           "$Id$")
+
 
 // ****************************************************************
 

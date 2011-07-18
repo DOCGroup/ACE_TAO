@@ -1,40 +1,46 @@
 /* -*- c++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuebox.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuebox node.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuebox.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuebox node.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_VALUEBOX_H_
 #define _BE_VISITOR_VALUEBOX_H_
 
-/**
- * @class be_visitor_valuebox
- *
- * @brief be_visitor_valuebox
- *
- * This is a concrete visitor to generate code for valueboxes.
- */
 class be_visitor_valuebox : public be_visitor_decl
 {
+  //
+  // = TITLE
+  //   be_visitor_valuebox
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate code for valueboxes.
+  //
+  //
 public:
-  /// constructor
   be_visitor_valuebox (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_valuebox (void);
+  // destructor
 
-  /// visit attribute. We provide code for this method in the derived class
   virtual int visit_valuebox (be_valuebox *node);
+  // visit attribute. We provide code for this method in the derived class
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_H_ */

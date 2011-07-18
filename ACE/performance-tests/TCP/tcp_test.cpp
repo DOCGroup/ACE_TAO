@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   tcp_test.cpp
- *
- *  $Id$
- *
- * Measures TCP round-trip performance.
- *
- *
- *  @author Based on udp_test by Fred Kuhns and David L. LevineModified by Carlos O'Ryan and Nanbor Wang.
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    performance-tests/TCP
+//
+// = FILENAME
+//   tcp_test.cpp
+//
+// = DESCRIPTION
+//   Measures TCP round-trip performance.
+//
+// = AUTHORS
+//   Based on udp_test by Fred Kuhns and David L. Levine
+//   Modified by Carlos O'Ryan and Nanbor Wang.
+//
+// ============================================================================
 
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
@@ -37,6 +41,8 @@
 
 // FUZZ: disable check_for_math_include
 #include <math.h>
+
+ACE_RCSID(TCP, tcp_test, "$Id$")
 
 // Global variables (evil).
 static const u_short DEFPORT = 5050;
@@ -106,27 +112,27 @@ public:
                             ACE_Reactor_Mask close_mask);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send the <buf> to the server.
   int send (const char *buf, size_t len);
+  // Send the <buf> to the server.
   //FUZZ: enable check_for_lack_ACE_OS
 
-  /// Wait for the response.
   int get_response (char *buf, size_t len);
+  // Wait for the response.
 
-  /// Send messages to server and record statistics.
   int run (void);
+  // Send messages to server and record statistics.
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send shutdown message to server.
   int shutdown (void);
+  // Send shutdown message to server.
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  /// To send messages and receive responses.
   ACE_SOCK_Stream endpoint_;
+  // To send messages and receive responses.
 
-  /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
+  // The address to send messages to.
 
   ACE_UNIMPLEMENTED_FUNC (Client (void))
   ACE_UNIMPLEMENTED_FUNC (Client (const Client &))
@@ -303,8 +309,8 @@ public:
                             ACE_Reactor_Mask close_mask);
 
 private:
-  /// Receives datagrams.
   ACE_SOCK_Stream endpoint_;
+  // Receives datagrams.
 
   ACE_UNIMPLEMENTED_FUNC (Server (void))
   ACE_UNIMPLEMENTED_FUNC (Server (const Server &))
@@ -535,10 +541,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
 
-  while ((c = get_opt ()) != -1)
+  while ((c = getopt ()) != -1)
     {
+  //FUZZ: enable check_for_lack_ACE_OS
       switch ((char) c)
         {
         case 'v':
@@ -550,7 +558,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
 
         case 'm':
-          bufsz = ACE_OS::atoi (get_opt.opt_arg ());
+          bufsz = ACE_OS::atoi (getopt.opt_arg ());
 
           if (bufsz <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -563,7 +571,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
 
         case 'i':
-          nsamples = ACE_OS::atoi (get_opt.opt_arg ());
+          nsamples = ACE_OS::atoi (getopt.opt_arg ());
           if (nsamples <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nIterations must be greater than 0!\n\n"),
@@ -587,7 +595,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_WIN32 */
 
         case 'b':
-          so_bufsz = ACE_OS::atoi (get_opt.opt_arg ());
+          so_bufsz = ACE_OS::atoi (getopt.opt_arg ());
 
           if (so_bufsz <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -596,7 +604,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
 
         case 'I':
-          usdelay = ACE_OS::atoi (get_opt.opt_arg ());
+          usdelay = ACE_OS::atoi (getopt.opt_arg ());
 
           if (usdelay < 0)
             {
@@ -604,20 +612,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: bad usdelay: %s\n",
                                  argv[0],
-                                 get_opt.opt_arg ()),
+                                 getopt.opt_arg ()),
                                 1);
             }
           break;
 
         case 'p':
-          dstport = ACE_OS::atoi (get_opt.opt_arg ());
+          dstport = ACE_OS::atoi (getopt.opt_arg ());
           if (dstport <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nInvalid port number!\n\n"),
                               1);
           break;
         case 't':
-          svr_thrno = ACE_OS::atoi (get_opt.opt_arg ());
+          svr_thrno = ACE_OS::atoi (getopt.opt_arg ());
 
           if (svr_thrno <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -639,7 +647,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if ((get_opt.opt_ind () >= argc && client != 0) || argc == 1)
+  if ((getopt.opt_ind () >= argc && client != 0) || argc == 1)
     {
       usage ();
       return 1;
@@ -662,25 +670,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr remote_addr;
 
-  if (ACE_OS::ace_isdigit(argv[get_opt.opt_ind ()][0]))
+  if (ACE_OS::ace_isdigit(argv[getopt.opt_ind ()][0]))
     {
-      if (remote_addr.set (ACE_HTONS(dstport),
+      if (remote_addr.set (dstport,
                            (ACE_UINT32) ACE_OS::inet_addr
-                           (ACE_TEXT_ALWAYS_CHAR(argv[get_opt.opt_ind ()])), 0) == -1)
+                           (ACE_TEXT_ALWAYS_CHAR(argv[getopt.opt_ind ()]))) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
-                           argv[get_opt.opt_ind ()]),
+                           argv[getopt.opt_ind ()]),
                           1);
     }
   else
     {
-      if (remote_addr.set (dstport, argv[get_opt.opt_ind ()]) == -1)
+      if (remote_addr.set (dstport, argv[getopt.opt_ind ()]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
-                           argv[get_opt.opt_ind ()]),
+                           argv[getopt.opt_ind ()]),
                           1);
     }
-  get_opt.opt_ind ()++;
+  getopt.opt_ind ()++;
 
   ACE_DEBUG ((LM_DEBUG, "Connecting to %s:%d\n",
               remote_addr.get_host_name (),

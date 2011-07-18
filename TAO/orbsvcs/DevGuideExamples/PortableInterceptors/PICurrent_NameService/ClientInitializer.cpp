@@ -4,7 +4,6 @@
 #include "ClientInterceptor.h"
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_unistd.h"
 #include <iostream>
 
 ClientInitializer::ClientInitializer (void)
@@ -35,15 +34,7 @@ ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
   CosNaming::Name name;
   name.length( 1 );
   name[0].id = CORBA::string_dup( "Messenger" );
-  CORBA::Object_var obj = CORBA::Object::_nil();
-  while ( CORBA::is_nil( obj.in() ) ) {
-    try {
-      obj = root->resolve( name );
-    } catch (const CosNaming::NamingContext::NotFound&) {
-      // Sleep for a second and try again
-      ACE_OS::sleep(1);
-    }
-   }
+  CORBA::Object_var obj = root->resolve( name );
 
   Messenger_var messenger = Messenger::_narrow( obj.in() );
   if( CORBA::is_nil( messenger.in() ) ) {

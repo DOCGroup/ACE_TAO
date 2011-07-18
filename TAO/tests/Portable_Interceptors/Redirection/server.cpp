@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
@@ -8,6 +7,10 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_stdio.h"
 #include "CrashPoint.h"
+
+ACE_RCSID (Redirection,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_file = 0;
 int number = 0;

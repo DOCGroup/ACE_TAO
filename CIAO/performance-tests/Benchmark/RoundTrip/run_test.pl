@@ -10,25 +10,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #
 
 use lib "$ENV{'ACE_ROOT'}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
+$daemon_ior = PerlACE::LocalFile ("daemon.ior");
+$svr_ior = PerlACE::LocalFile ("server.ior");
+$home_ior = PerlACE::LocalFile ("test.ior");
 
-$daemon_base = "daemon.ior";
-$svr_base = "server.ior";
-$home_base = "test.ior";
-
-$tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
-
-$daemon_ior = $tg->LocalFile ($daemon_base);
-$svr_ior = $tg->LocalFile ($svr_base);
-$home_ior = $tg->LocalFile ($home_base);
-
+$ACE_ROOT=$ENV{'ACE_ROOT'};
 $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 
-$tg->DeleteFile ($daemon_base);
-$tg->DeleteFile ($svr_base);
-$tg->DeleteFile ($home_base);
+unlink $daemon_ior;
+unlink $svr_ior;
+unlink $home_ior;
 
 # CIAO Daemon command line arguments
 $daemon_args = "-c ../RoundTrip/svc.conf -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
@@ -52,35 +46,33 @@ $shutdown_args = "shutdown";
 $cl_args = "-ORBSvcConf ../RoundTrip/svc.conf -i 300000";
 
 # CIAO daemon process definition
-$DS = $tg->CreateProcess ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
+$DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
                             "$daemon_args");
 
 # Client process definition
-$CL = $tg->CreateProcess ("../RoundTrip/client",
+$CL = new PerlACE::Process ("../RoundTrip/client",
                             $cl_args);
 
 ## Starting up the CIAO daemon
 $DS->Spawn ();
-if ($tg->WaitForFileTimed($daemon_base,
-                          $tg->ProcessStartWaitInterval ()) == -1) {
+if (PerlACE::waitforfile_timed ($daemon_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find daemon ior file <$daemon_ior>\n";
     $DS->Kill ();
     exit 1;
 }
 
 ## Starting up a ComponentServer running the Roundtrip home.
-$DC = $tg->CreateProcess ("$controller",
-                          "$common_args $start_args");
+$DC = new PerlACE::Process ("$controller",
+                            "$common_args $start_args");
 
-$DC->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
-if ($tg->WaitForFileTimed($home_base,
-                          $tg->ProcessStartWaitInterval ()) == -1) {
+$DC->SpawnWaitKill (60);
+if (PerlACE::waitforfile_timed ($home_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: Could not find home ior file <$home_ior>\n";
     $DS->Kill ();
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
+$client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -88,10 +80,10 @@ if ($client != 0) {
 }
 
 ## Terminating the ComponentServer running.
-$DC = $tg->CreateProcess ("$controller",
+$DC = new PerlACE::Process ("$controller",
                             "$common_args $end_args");
 
-$ctrl = $DC->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
+$ctrl = $DC->SpawnWaitKill (60);
 if ($ctrl != 0) {
     print STDERR "ERROR: Fail to end component server\n";
     $DC->Kill ();
@@ -99,25 +91,25 @@ if ($ctrl != 0) {
 }
 
 ## Terminating the ComponentServer running the RateGen home.
-$DC = $tg->CreateProcess ("$controller",
-                          "$common_args $shutdown_args");
+$DC = new PerlACE::Process ("$controller",
+                            "$common_args $shutdown_args");
 
-$ctrl = $DC->SpawnWaitKill ($tg->ProcessStartWaitInterval ());
+$ctrl = $DC->SpawnWaitKill (60);
 if ($ctrl != 0) {
     print STDERR "ERROR: Fail to shutdown CIAODaemon\n";
     $DS->Kill ();
     exit 1;
 }
 
-$ctrl = $DS->WaitKill ($tg->ProcessStopWaitInterval ());
+$ctrl = $DS->WaitKill (60);
 if ($ctrl != 0) {
     print STDERR "ERROR: CIAODaemon didn't shutdown gracefully $ctrl\n";
     $DS->Kill ();
     exit 1;
 }
 
-$tg->DeleteFile ($daemon_base);
-$tg->DeleteFile ($svr_base);
-$tg->DeleteFile ($home_base);
+unlink $daemon_ior;
+unlink $svr_ior;
+unlink $home_ior;
 
 exit $status;

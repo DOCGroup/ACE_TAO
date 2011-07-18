@@ -2,6 +2,10 @@
 
 #include "tao/PortableServer/ThreadStrategy.h"
 
+ACE_RCSID (PortableServer,
+           ThreadStrategy,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

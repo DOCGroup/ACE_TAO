@@ -1,6 +1,6 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
@@ -9,23 +9,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # are needed
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+PerlACE::add_lib_path ('../lib');
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
-$test->AddLibPath ('../lib');
-
-my $svc_pull_conf = "svc.pull$PerlACE::svcconf_ext";
-my $test_svc_pull_conf = $test->LocalFile ("svc.pull$PerlACE::svcconf_ext");
+$svc_pull_conf = PerlACE::LocalFile ("svc.pull$PerlACE::svcconf_ext");
 
 sub RunTest ($$$)
 {
@@ -33,14 +23,14 @@ sub RunTest ($$$)
     my $program = shift;
     my $arguments = shift;
 
-    my $T = $test->CreateProcess ($program, $arguments);
+    my $TEST = new PerlACE::Process ($program, $arguments);
 
     print STDERR "\n\n$message\n";
 
-    my $process_status = $T->SpawnWaitKill ($test->ProcessStartWaitInterval() + 225);
+    my $test = $TEST->SpawnWaitKill (240);
 
-    if ($process_status != 0) {
-        print STDERR "ERROR: Test returned $process_status\n";
+    if ($test != 0) {
+        print STDERR "ERROR: Test returned $test\n";
         $status = 1;
     }
 }

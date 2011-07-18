@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.h"
 #include "orbsvcs/LoadBalancing/LB_LoadMap.h"
 #include "orbsvcs/LoadBalancing/LB_Random.h"
@@ -11,6 +9,12 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (LoadBalancing,
+           LB_LeastLoaded,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.inl"
@@ -31,7 +35,7 @@ TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (PortableServer::POA_ptr poa)
 {
   // A load map that retains previous load values at a given location
   // and lock are only needed if dampening is enabled, i.e. non-zero.
-  if (!ACE::is_equal (this->dampening_, 0.0f))
+  if (this->dampening_ != 0)
     {
       ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
 
@@ -258,7 +262,7 @@ TAO_LB_LeastLoaded::analyze_loads (
 */
           // Perform load rebalancing only if the critical threshold
           // was  set.
-          if (!ACE::is_equal (this->critical_threshold_, 0.0f))
+          if (this->critical_threshold_ != 0)
             {
               if (load.value > this->critical_threshold_)
                 {
@@ -345,7 +349,7 @@ TAO_LB_LeastLoaded::get_location (
                        load.value,
                        min_load));
 */
-          if ((ACE::is_equal (this->reject_threshold_, 0.0f)
+          if ((this->reject_threshold_ == 0
                || load.value < this->reject_threshold_)
               && load.value < min_load)
             {
@@ -353,7 +357,7 @@ TAO_LB_LeastLoaded::get_location (
 //                           "**** LOAD == %f\n",
 //                           load.value));
 
-              if (i > 0 && !ACE::is_equal (load.value, 0.0f))
+              if (i > 0 && load.value != 0)
                 {
                   /*
                     percent difference =
@@ -464,7 +468,7 @@ TAO_LB_LeastLoaded::get_location (
         //ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));
         location = locations[location_index];
       }
-      else if (!ACE::is_equal (this->reject_threshold_, 0.0f))
+      else if (this->reject_threshold_ != 0)
         throw CORBA::TRANSIENT ();
 
 //       ACE_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
@@ -535,8 +539,7 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props)
         }
     }
 
-  if (!ACE::is_equal (critical_threshold, 0.0f)
-      && !ACE::is_equal (reject_threshold, 0.0f)
+  if (critical_threshold != 0 && reject_threshold != 0
       && critical_threshold <= reject_threshold)
     throw PortableGroup::InvalidProperty (ct->nam, ct->val);
 

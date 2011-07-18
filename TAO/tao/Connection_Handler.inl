@@ -43,6 +43,7 @@ TAO_Connection_Handler::is_connecting (void) const
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
 }
 
+
 ACE_INLINE void
 TAO_Connection_Handler::connection_pending (void)
 {
@@ -61,14 +62,6 @@ TAO_Connection_Handler::cancel_pending_connection (void)
       this->connection_pending_ = false;
       this->transport()->remove_reference();
     }
-}
-
-/// Derived classes should implement this for proper support with the
-/// Blocking Flushing Strategy.
-ACE_INLINE int
-TAO_Connection_Handler::handle_write_ready (const ACE_Time_Value *)
-{
-  return 0;
 }
 
 //@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK

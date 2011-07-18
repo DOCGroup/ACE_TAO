@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/UIOP_Profile.h"
 
 #if TAO_HAS_UIOP == 1
@@ -15,6 +13,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+
+ACE_RCSID (Strategies,
+           UIOP_Profile,
+           "$Id$")
 
 static const char prefix_[] = "uiop";
 

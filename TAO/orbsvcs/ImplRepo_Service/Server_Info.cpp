@@ -3,7 +3,6 @@
 
 Server_Info::Server_Info
 (
- const ACE_CString& serverId,
  const ACE_CString& server_name,
  const ACE_CString& aname,
  const ACE_CString& cmdline,
@@ -15,8 +14,7 @@ Server_Info::Server_Info
  const ACE_CString& server_ior,
  ImplementationRepository::ServerObject_ptr svrobj
  )
- : server_id (serverId)
- , name (server_name)
+ : name (server_name)
  , activator (aname)
  , cmdline( cmdline)
  , env_vars (env)

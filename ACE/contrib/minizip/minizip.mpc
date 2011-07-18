@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (minizip) : install, zlib, vc_warnings {
+project (minizip) : zlib, vc_warnings {
   sharedname = minizip
   libout = $(ACE_ROOT)/lib
   dynamicflags += MINIZIP_BUILD_DLL

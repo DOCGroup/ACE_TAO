@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Oid_Test.cpp
- *
- *  $Id$
- *
- *  Test all the member functions of the Oid class. An Object
- *  representing an ASN.1 Integer64 SMI OID SYNTAX.
- *
- *
- *  @author Michael R. MacFaden <mrm@cisco.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//    Oid_Test.cpp
+//
+// = DESCRIPTION
+//  Test all the member functions of the Oid class. An Object
+//  representing an ASN.1 Integer64 SMI OID SYNTAX.
+//
+// = AUTHOR
+//    Michael R. MacFaden <mrm@cisco.com>
+//
+// ============================================================================
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -38,6 +41,8 @@ DAMAGES.
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
 #include "test_config.h"
+
+ACE_RCSID(tests, Oid_Test, "$Id$")
 
 /*
   Oid( const char * dotted_oid_string = "", size_t size = -1);

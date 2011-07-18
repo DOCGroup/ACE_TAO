@@ -3,7 +3,7 @@
 
 project(ACE_ETCL) : acelib, install, ace_output {
   sharedname   = ACE_ETCL
-  dynamicflags += ACE_ETCL_BUILD_DLL
+  dynamicflags = ACE_ETCL_BUILD_DLL
 
   Source_Files {
     ETCL_Constraint.cpp
@@ -26,15 +26,11 @@ project(ACE_ETCL) : acelib, install, ace_output {
   Pkgconfig_Files {
     ACE_ETCL.pc.in
   }
-
-  specific {
-    install_dir = ace/ETCL
-  }
 }
 
 project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
   sharedname   = ACE_ETCL_Parser
-  dynamicflags += ETCL_PARSER_BUILD_DLL
+  dynamicflags = ETCL_PARSER_BUILD_DLL
 
   Source_Files {
     ETCL_Interpreter.cpp
@@ -56,9 +52,5 @@ project(ACE_ETCL_Parser) : acelib, ace_etcl, install, ace_output {
 
   Pkgconfig_Files {
     ACE_ETCL_Parser.pc.in
-  }
-
-  specific {
-    install_dir = ace/ETCL
   }
 }

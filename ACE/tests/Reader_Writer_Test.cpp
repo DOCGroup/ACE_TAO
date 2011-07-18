@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Reader_Writer_Test.cpp
- *
- *  $Id$
- *
- *    This test program verifies the functionality of the ACE_OS
- *    implementation of readers/writer locks on Win32 and Posix
- *    pthreads.
- *
- *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Reader_Writer_Test.cpp
+//
+// = DESCRIPTION
+//      This test program verifies the functionality of the ACE_OS
+//      implementation of readers/writer locks on Win32 and Posix
+//      pthreads.
+//
+// = AUTHOR
+//    Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Thread.h"
@@ -25,7 +28,7 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 
-
+ACE_RCSID(tests, Reader_Writer_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -110,7 +113,7 @@ reader (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_OS::sleep (pause);
-      ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
+      ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) I'm reader number %d\n"), n));
 
@@ -210,7 +213,7 @@ writer (void *)
     {
       ACE_OS::sleep (pause);
 
-      ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
+      ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 
       ++current_writers;
 

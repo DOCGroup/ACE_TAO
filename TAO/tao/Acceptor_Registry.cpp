@@ -19,10 +19,16 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           Acceptor_Registry,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -593,7 +599,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
         {
           ACE_ERROR ((
               LM_ERROR,
-              ACE_TEXT ("TAO (%P|%t) - Unable to open ")
+              ACE_TEXT ("TAO (%P|%t) unable to open ")
               ACE_TEXT ("default acceptor for <%C>%p\n"),
               (*factory)->protocol_name ().c_str (),
               ACE_TEXT ("")
@@ -842,8 +848,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               if (TAO_debug_level > 0)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("TAO (%P|%t) - ")
-                              ACE_TEXT ("Unable to open acceptor ")
+                              ACE_TEXT ("TAO (%P|%t) ")
+                              ACE_TEXT ("unable to open acceptor ")
                               ACE_TEXT ("for <%C>%p\n"),
                               address.c_str (),
                               ACE_TEXT ("")));

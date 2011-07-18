@@ -23,6 +23,11 @@
 
 class ECT_Throughput : public ECT_Driver
 {
+  //
+  // = TITLE
+  //
+  // = DESCRIPTION
+  //
 public:
   ECT_Throughput (void);
 

@@ -5,6 +5,10 @@
 #include <FL/Fl_Slider.H>
 #include <FL/Fl_Button.H>
 
+ACE_RCSID (FL_Cube,
+           test_i,
+           "$Id$")
+
 Progress_i::Progress_i (Progress_Window *window)
   :  window_ (window)
 {

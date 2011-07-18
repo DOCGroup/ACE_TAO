@@ -9,32 +9,12 @@
 #include "ace/Null_Mutex.h"
 #include "MapView.h"
 #include "DetailView.h"
-#include <QtGui/qmainwindow.h>
-#include <QtGui/qevent.h>
-#include <QtGui/qgraphicsscene.h>
-
-#include "Command.h"
+#include <Qt/qmainwindow.h>
+#include <Qt/qevent.h>
+#include <Qt/q3popupmenu.h>
 
 class NodeItem;
 class QMouseEvent;
-
-class NavEvent : public QEvent
-{
-public:
-  NavEvent(CommandBase* cmd);
-  virtual ~NavEvent ();
-
-  CommandBase* cmd () const;
-
-  static void set_type (int type);
-
-  static QEvent::Type get_type ();
-
-private:
-  CommandBase* cmd_;
-
-  static int registered_type_;
-};
 
 class RootPanel : public QMainWindow
 {
@@ -47,7 +27,7 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_UINT64,
                                 ACE_Null_Mutex> NodeItemMap;
 
 public:
-  RootPanel(QGraphicsScene&, QWidget *parent = 0);
+  RootPanel(Q3Canvas&, QWidget *parent = 0, const char *name = 0);
   ~RootPanel();
 
 public:
@@ -56,11 +36,13 @@ public:
 
 protected:
   void clear();
-  virtual void customEvent(QEvent *e);
+  virtual void customEvent(QCustomEvent *e);
 
-  QGraphicsScene& canvas;
+  Q3Canvas& canvas;
   MapView *navview;
   DetailView *details;
+
+  Q3PopupMenu* options;
   NodeItemMap nodeMap;
 };
 

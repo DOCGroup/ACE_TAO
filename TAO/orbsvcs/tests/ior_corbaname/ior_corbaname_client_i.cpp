@@ -1,19 +1,23 @@
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ior_corbaname_client_i.cpp
- *
- *  $Id$
- *
- *  This example implements a simple client which sends a corbaname:
- *  style url to the server and gets a response from the
- *  server to indicate that the server has received the request.
- *
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+// = LIBRARY
+//    TAO/tests/ior_corbaname/
+//
+// = FILENAME
+//    ior_corbaname_client_i.cpp
+//
+// = DESCRIPTION
+//    This example implements a simple client which sends a corbaname:
+//    style url to the server and gets a response from the
+//    server to indicate that the server has received the request.
+//
+// = AUTHORS
+//    Priyanka Gontla <pgontla@ece.uci.edu>
+//
+//============================================================
 
 #include "ior_corbaname_client_i.h"
 #include "ace/Get_Opt.h"
@@ -74,7 +78,8 @@ IOR_corbaname_Client_i::run (void)
         }
 
       // Invoke a request on the server
-      CORBA::Boolean const ret_value = factory->print_status ();
+      CORBA::Boolean ret_value =
+        factory->print_status ();
 
       if (!ret_value)
         {

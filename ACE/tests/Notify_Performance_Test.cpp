@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Notify_Performance_Test.cpp
- *
- *  $Id$
- *
- *  This test is used to time the notification mechanisms of the
- *  ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
- *  tested. The notify() mechanism can also be tested with or
- *  without data.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Notify_Performance_Test.cpp
+//
+// = DESCRIPTION
+//    This test is used to time the notification mechanisms of the
+//    ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
+//    tested. The notify() mechanism can also be tested with or
+//    without data.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Profile_Timer.h"
@@ -27,7 +30,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
 
-
+ACE_RCSID(tests, Notify_Performance_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -53,8 +56,8 @@ static int opt_pass_notify_data = 0;
 class Handler : public ACE_Event_Handler
 {
 public:
-  /// The Handler callbacks.
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  // The Handler callbacks.
 };
 
 int

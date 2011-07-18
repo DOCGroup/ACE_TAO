@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/LocateRequest_Invocation_Adapter.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
@@ -12,6 +9,10 @@
 #include "tao/Stub.h"
 #include "tao/SystemException.h"
 #include "ace/Service_Config.h"
+
+ACE_RCSID (tao,
+           LocateRequest_Invocation_Adapter,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,7 +55,8 @@ namespace TAO
 
     Invocation_Status s = TAO_INVOKE_START;
 
-    while (s == TAO_INVOKE_START || s == TAO_INVOKE_RESTART)
+    while (s == TAO_INVOKE_START ||
+           s == TAO_INVOKE_RESTART)
       {
         Profile_Transport_Resolver resolver (effective_target.in (), stub, true);
 

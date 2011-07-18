@@ -38,12 +38,10 @@ private:
   int   numObjsPerPOA_;
   int   useItLoseItSecs_;
 
-  std::string managerIor_;
-  std::string outputIor_;
   std::string baseDir_;
   std::string expectedDir_;
   std::vector<std::pair<std::string, std::string> > expectedEnv_;
-  PortableServer::Servant_var<Messenger_i> servant_;
+  ACE_Auto_Ptr<Messenger_i>  servant_;
 
   CORBA::ORB_var                  orb_;
   IORTable::Table_var             iorTable_;

@@ -1,18 +1,22 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_home.h
- *
- *  $Id$
- *
- *  Extension of class AST_Home that provides additional
- *  means for C++ mapping of a component home.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_home.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Home that provides additional
+//    means for C++ mapping of a component home.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
 #ifndef TAO_BE_HOME_H
 #define TAO_BE_HOME_H
@@ -29,18 +33,18 @@ class be_home : public virtual AST_Home,
   // =DESCRIPTION
   //   Extensions to the AST_Home class
 public:
+  be_home (void);
+
   be_home (UTL_ScopedName *n,
            AST_Home *base_home,
            AST_Component *managed_component,
-           AST_Type *primary_key,
-           AST_Type **supports,
+           AST_ValueType *primary_key,
+           AST_Interface **supports,
            long n_supports,
            AST_Interface **supports_flat,
            long n_supports_flat);
 
   virtual ~be_home (void);
-
-  void scan (UTL_Scope *s);
 
   // Cleanup function.
   virtual void destroy (void);

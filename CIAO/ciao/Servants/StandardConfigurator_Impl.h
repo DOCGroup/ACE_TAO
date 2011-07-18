@@ -28,10 +28,8 @@
 
 namespace CIAO
 {
-  class Connector_Servant_Impl_Base;
+  class Servant_Impl_Base;
 }
-
-#if !defined (CCM_LW)
 
 namespace CIAO
 {
@@ -41,7 +39,7 @@ namespace CIAO
    * @brief Servant implementation for Components::StandardConfigurator
    *
    * This class implements the Components::StandardConfigurator
-   * interface as defined by the CCM specification. This class aids
+   * interface as defined by the CCM spcification. This class aids
    * in setting the initial values of component attributes that are
    * defined in the meta data.
    */
@@ -50,8 +48,7 @@ namespace CIAO
   {
   public:
     /// Constructor
-    StandardConfigurator_Impl (
-      Connector_Servant_Impl_Base* toconfigure);
+    StandardConfigurator_Impl (Servant_Impl_Base* toconfigure);
 
     /// Destructor
     virtual ~StandardConfigurator_Impl (void);
@@ -66,10 +63,10 @@ namespace CIAO
   private:
     /// The component whose attributes are going to be configured via
     /// set_attributes
-    Connector_Servant_Impl_Base* const component_;
+    Servant_Impl_Base* const component_;
   };
+
 }
-#endif
 
 #include /**/ "ace/post.h"
 

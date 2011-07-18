@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -10,6 +7,10 @@
 #include "tao/SystemException.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID (DiffServPolicy,
+           DiffServ_Protocols_Hooks,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

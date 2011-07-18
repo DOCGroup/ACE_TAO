@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    SOCK_Connector_Test.cpp
- *
- *  $Id$
- *
- *   This is a test of ACE_SOCK_Connector, focusing on failure cases more
- *   than on success cases.
- *
- *
- *  @author Steve Huston <shuston@riverace.com>
- */
-//=============================================================================
-
+// ==========================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    SOCK_Connector_Test.cpp
+//
+// = DESCRIPTION
+//     This is a test of ACE_SOCK_Connector, focusing on failure cases more
+//     than on success cases.
+//
+// = AUTHOR
+//    Steve Huston <shuston@riverace.com>
+//
+// ==========================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -23,7 +26,7 @@
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_netdb.h"
 
-
+ACE_RCSID(tests, SOCK_Connector_Test, "$Id$")
 
 // Host candidate list
 struct Host_Candidate
@@ -206,7 +209,7 @@ fail_no_listener_nonblocking (void)
       ACE_DEBUG ((LM_WARNING,
                   ACE_TEXT ("Test not executed fully; ")
                   ACE_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
-                  ACE_TEXT ("not"), ACE_ERRNO_GET));
+                  ACE_TEXT ("not"), errno));
       status = -1;
     }
 
@@ -266,9 +269,7 @@ succeed_nonblocking (void)
   else
     {
       if (sock.get_handle () != ACE_INVALID_HANDLE)
-        {
-          status = con.complete (sock);
-        }
+        status = con.complete (sock);
 
       if (status == -1)
         {
@@ -283,8 +284,7 @@ succeed_nonblocking (void)
           else
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT("Errno <%d>: %p\n"),
-                          ACE_ERRNO_GET,
+                          ACE_TEXT("%p\n"),
                           ACE_TEXT("connect should succeed, but")));
             }
         }

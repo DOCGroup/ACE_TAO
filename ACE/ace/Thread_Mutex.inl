@@ -11,13 +11,6 @@ ACE_Thread_Mutex::lock (void) const
   return this->lock_;
 }
 
-ACE_INLINE ACE_thread_mutex_t &
-ACE_Thread_Mutex::lock (void)
-{
-// ACE_TRACE ("ACE_Thread_Mutex::lock");
-  return this->lock_;
-}
-
 ACE_INLINE int
 ACE_Thread_Mutex::acquire_read (void)
 {

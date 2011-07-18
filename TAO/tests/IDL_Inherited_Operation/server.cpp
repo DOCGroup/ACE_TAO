@@ -1,35 +1,8 @@
 // $Id$
 
 #include "InheritedOp_i.h"
-#include "ace/Get_Opt.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -53,9 +26,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       Derived_i *derived_impl = 0;
       ACE_NEW_RETURN (derived_impl,
                       Derived_i (orb.in ()),
@@ -75,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-
+      
       if (output_file == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              ior_output_file),
                              1);
         }
-
+        
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

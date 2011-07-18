@@ -1,41 +1,46 @@
 // $Id$
 
-project(BMClosedED_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+project(BMClosedED_stub_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
-  after += BasicSP_idl_gen
-  idlflags += -I.. \
-              -Wb,stub_export_macro=BMCLOSEDED_STUB_Export \
-              -Wb,stub_export_include=BMClosedED_stub_export.h \
-              -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export \
-              -Wb,skel_export_include=BMClosedED_svnt_export.h \
-              -Wb,exec_export_macro=BMCLOSEDED_EXEC_Export \
-              -Wb,exec_export_include=BMClosedED_exec_export.h \
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
+  idlflags += -Wb,stub_export_macro=BMCLOSEDED_STUB_Export
+  idlflags += -Wb,stub_export_include=BMClosedED_stub_export.h
+  idlflags += -Wb,skel_export_macro=BMCLOSEDED_SVNT_Export
+  idlflags += -Wb,skel_export_include=BMClosedED_svnt_export.h
 
   IDL_Files {
     BMClosedED.idl
   }
 }
 
-project(BMClosedED_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
-  after += BMClosedED_idl_gen
+project(BMClosedED_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+  after += BasicSP_lem_gen
   custom_only = 1
+  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
+
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=BMCLOSEDED_EXEC_Export \
                 -Wb,export_include=BMClosedED_exec_export.h \
-                -SS -I..
+                -SS
+
+  CIDL_Files {
+    BMClosedED.cidl
+  }
 
   IDL_Files {
     BMClosedEDE.idl
   }
+
 }
 
-project(BMClosedED_stub): ccm_stub, avoids_ccm_noevent {
+project(BMClosedED_stub): ccm_stub, avoids_ace_for_tao {
   libout = ../lib
   libpaths += ../lib
-  after += BasicSP_stub BasicSP_lem_gen BMClosedED_idl_gen
+  after += BasicSP_stub BMClosedED_stub_gen
   sharedname = BMClosedED_stub
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
   libs += BasicSP_stub
-  dynamicflags += BMCLOSEDED_STUB_BUILD_DLL
+  dynamicflags   = BMCLOSEDED_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -49,19 +54,22 @@ project(BMClosedED_stub): ccm_stub, avoids_ccm_noevent {
   }
 
   Inline_Files {
+
   }
+
 }
 
-project(BMClosedED_exec) : ciao_executor, avoids_ccm_noevent {
+
+project(BMClosedED_exec) : ciao_executor, avoids_ace_for_tao {
   after      += BMClosedED_stub BMClosedED_lem_gen BasicSP_exec
   sharedname = BMClosedED_exec
   libs       += BMClosedED_stub
   libs       += BasicSP_stub BasicSP_exec
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags += BMCLOSEDED_EXEC_BUILD_DLL
+  dynamicflags   = BMCLOSEDED_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -78,22 +86,27 @@ project(BMClosedED_exec) : ciao_executor, avoids_ccm_noevent {
   }
 
   Inline_Files {
+
   }
+
 }
 
-project(BMClosedED_svnt) : ciao_servant, avoids_ccm_noevent {
-  after += BasicSP_svnt BMClosedED_exec BasicSP_exec
+project(BMClosedED_svnt) : ciao_servant, avoids_ace_for_tao {
+  after += BasicSP_svnt BMClosedED_exec
 
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
 
   sharedname = BMClosedED_svnt
 
-  libs    += BMClosedED_stub BMClosedED_exec BasicSP_exec
-  libs    += BasicSP_stub BasicSP_svnt
+  libs    += BMClosedED_stub BMClosedED_exec
+  libs    += BasicSP_stub BasicSP_exec BasicSP_svnt
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags += BMCLOSEDED_SVNT_BUILD_DLL
+  dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
 
   IDL_Files {
   }
@@ -109,6 +122,7 @@ project(BMClosedED_svnt) : ciao_servant, avoids_ccm_noevent {
   }
 
   Inline_Files {
-  }
-}
 
+  }
+
+}

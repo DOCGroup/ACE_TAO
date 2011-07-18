@@ -61,6 +61,10 @@
 # include "tao/PortableServer/Root_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
+ACE_RCSID (PortableServer,
+           Root_POA,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
@@ -1146,6 +1150,7 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
     }
 }
 
+#if !defined (CORBA_E_MICRO)
 void
 TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
                                        PortableServer::Servant servant)
@@ -1171,7 +1176,9 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
         return;
     }
 }
+#endif
 
+#if !defined (CORBA_E_MICRO)
 void
 TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant servant,
@@ -1184,6 +1191,7 @@ TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                              priority,
                              wait_occurred_restart_call);
 }
+#endif
 
 void
 TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
@@ -1197,12 +1205,13 @@ TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
 void
 TAO_Root_POA::wait_for_completions (CORBA::Boolean wait_for_completion)
 {
-  while (wait_for_completion &&
+  while (this->object_adapter ().enable_locking_ &&
+         wait_for_completion &&
          this->outstanding_requests_ > 0)
     {
-      this->wait_for_completion_pending_ = true;
+      this->wait_for_completion_pending_ = 1;
 
-      int const result = this->outstanding_requests_condition_.wait ();
+      int result = this->outstanding_requests_condition_.wait ();
       if (result == -1)
         {
           throw ::CORBA::OBJ_ADAPTER ();
@@ -1265,6 +1274,7 @@ TAO_Root_POA::deactivate_object (const PortableServer::ObjectId &oid)
 
   this->deactivate_object_i (oid);
 }
+
 
 void
 TAO_Root_POA::deactivate_object_i (const PortableServer::ObjectId &id)
@@ -2006,9 +2016,6 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
       obj = this->orb_core_.orb ()->string_to_object (ior.c_str ());
 
-      // type_id info is not in the corbaloc, so set it here
-      obj->_stubobj()->type_id = type_id;
-
       return obj;
     }
 
@@ -2218,7 +2225,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   for (CORBA::ULong i = 0; i != len; ++i)
     {
       this->add_ior_component (mprofile, this->tagged_component_[i]);
-    }
+      }
 
   len = this->tagged_component_id_.length ();
 
@@ -2722,13 +2729,5 @@ TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant,
                                         const PortableServer::ObjectId&)
 {
 }
-
-TAO_Active_Object_Map *
-TAO_Root_POA::get_active_object_map() const
-{
-  return this->active_policy_strategies_.servant_retention_strategy()->
-    get_active_object_map();
-}
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

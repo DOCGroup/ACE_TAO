@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Task.h"
 
-
+ACE_RCSID(Big_Reply, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -63,7 +63,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -120,7 +120,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
+                           "Cannot open output file for writing IOR: %s",
                            ior_output_file),
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());

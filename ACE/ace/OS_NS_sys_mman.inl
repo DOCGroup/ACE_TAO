@@ -75,14 +75,10 @@ ACE_OS::mmap (void *addr,
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
-#  if defined(ACE_HAS_WINCE)
-      // PAGE_WRITECOPY is not avaible on CE, but this should be the same
-      // as PAGE_READONLY according to MSDN
-      nt_flags = FILE_MAP_ALL_ACCESS;
-#  else
+#  if !defined(ACE_HAS_WINCE)
       prot = PAGE_WRITECOPY;
-      nt_flags = FILE_MAP_COPY;
 #  endif  // ACE_HAS_WINCE
+      nt_flags = FILE_MAP_COPY;
     }
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
@@ -97,23 +93,16 @@ ACE_OS::mmap (void *addr,
     {
       SECURITY_ATTRIBUTES sa_buffer;
       SECURITY_DESCRIPTOR sd_buffer;
-      LPSECURITY_ATTRIBUTES const attr =
+      const LPSECURITY_ATTRIBUTES attr =
         ACE_OS::default_win32_security_attributes_r (sa,
                                                      &sa_buffer,
                                                      &sd_buffer);
 
-#  ifdef ACE_WIN64
-      const DWORD len_low = static_cast<DWORD>(len),
-        len_high = static_cast<DWORD>(len >> 32);
-#  else
-      const DWORD len_low = len, len_high = 0;
-#  endif
-
       *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
                                                   attr,
                                                   prot,
-                                                  (file_handle == ACE_INVALID_HANDLE) ? len_high : 0,
-                                                  (file_handle == ACE_INVALID_HANDLE) ? len_low : 0,
+                                                  0,
+                                                  (file_handle == ACE_INVALID_HANDLE) ? len : 0,
                                                   file_mapping_name);
     }
 
@@ -127,20 +116,20 @@ ACE_OS::mmap (void *addr,
   DWORD low_off  = ACE_LOW_PART (off);
   DWORD high_off = ACE_HIGH_PART (off);
 
-#  if defined (ACE_HAS_WINCE)
-  void *addr_mapping = ::MapViewOfFile (*file_mapping,
-                                        nt_flags,
-                                        high_off,
-                                        low_off,
-                                        len);
-#  else
+#  if !defined (ACE_HAS_WINCE)
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping,
                                           nt_flags,
                                           high_off,
                                           low_off,
                                           len,
                                           addr);
-#  endif /* ACE_HAS_WINCE */
+#  else
+  void *addr_mapping = ::MapViewOfFile (*file_mapping,
+                                        nt_flags,
+                                        high_off,
+                                        low_off,
+                                        len);
+#  endif /* ! ACE_HAS_WINCE */
 
   // Only close this down if we used the temporary.
   if (file_mapping == &local_handle)
@@ -250,7 +239,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   ACE_OS_TRACE ("ACE_OS::shm_open");
 #if defined (ACE_HAS_SHM_OPEN)
   ACE_UNUSED_ARG (sa);
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x650)
   // With VxWorks the file should just start with / and no other
   // slashes, so replace all other / by _
   ACE_TCHAR buf [MAXPATHLEN + 1];
@@ -282,7 +271,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
 #if defined (ACE_HAS_SHM_OPEN)
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670)
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x650)
   // With VxWorks the file should just start with / and no other
   // slashes, so replace all other / by _
   ACE_TCHAR buf [MAXPATHLEN + 1];

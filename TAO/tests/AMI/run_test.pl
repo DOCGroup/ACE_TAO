@@ -13,8 +13,7 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
 
-$server_debug_level = '0';
-$client_debug_level = '0';
+$debug_level = '0';
 $iterations = '1';
 
 foreach $i (@ARGV) {
@@ -22,8 +21,7 @@ foreach $i (@ARGV) {
         $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
     }
     elsif ($i eq '-debug') {
-        $server_debug_level = '1';
-        $client_debug_level = '1';
+        $debug_level = '1';
     }
     elsif ($i eq '-exclusive') {
         $client_conf = $client->LocalFile ("exclusive$PerlACE::svcconf_ext");
@@ -36,7 +34,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $server_debug_level -o $server_iorfile");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 
 $server_status = $SV->Spawn ();
 
@@ -51,20 +49,10 @@ if ($server->WaitForFileTimed ($iorbase,
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot get file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
 
 $CL = $client->CreateProcess ("simple_client",
                               "-ORBsvcconf $client_conf "
-                              . "-ORBdebuglevel $client_debug_level"
+                              . "-ORBdebuglevel $debug_level"
                               . " -k file://$client_iorfile "
                               . " -i $iterations -d");
 
@@ -79,7 +67,7 @@ if ($client_status != 0) {
 $CL2 = $client->CreateProcess ("simple_client",
                                "-ORBsvcconf $client_conf"
                                . " -ORBCollocation no"
-                               . " -ORBdebuglevel $client_debug_level"
+                               . " -ORBdebuglevel $debug_level"
                                . " -k file://$client_iorfile "
                                . " -i $iterations -x -d");
 

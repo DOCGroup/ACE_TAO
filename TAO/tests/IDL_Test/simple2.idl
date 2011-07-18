@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    simple2.idl
- *
- *  $Id$
- *
- *  Further tests of simple IDL
- *
- *
- *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    simple2.idl
+//
+// = DESCRIPTION
+//    Further tests of simple IDL
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
 
 #include "simple.idl"
 
@@ -35,7 +38,7 @@ interface simple3 : simple2
   };
 
   exception UserError
-  {
+  { 
     any reason;
   };
 

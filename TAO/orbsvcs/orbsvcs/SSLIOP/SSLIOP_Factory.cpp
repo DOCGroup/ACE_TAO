@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Factory.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Acceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
@@ -14,6 +12,11 @@
 
 #include "ace/SSL/sslconf.h"
 #include "ace/SSL/SSL_Context.h"
+
+ACE_RCSID (SSLIOP,
+           SSLIOP_Factory,
+           "$Id$")
+
 
 // An SSL session id seed value. Needs not be too unique, just somewhat
 // different. See the OpenSSL manual
@@ -141,13 +144,9 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // underlying SSL library (e.g. OpenSSL), which occurs when an
   // ACE_SSL_Context is instantiated.
 
-  // This directive processing initializes ACE_SSL_Context as well
-  // as registers ACE_SSL for correct cleanup.
-  ACE_Service_Config::process_directive (
-    ACE_STATIC_SERVICE_DIRECTIVE ("ACE_SSL_Initializer", ""));
-
   // The code is cleaner this way anyway.
   ACE_SSL_Context * ssl_ctx = ACE_SSL_Context::instance ();
+  ACE_ASSERT (ssl_ctx != 0);
 
   size_t session_id_len =
     (sizeof session_id_context_ >= SSL_MAX_SSL_SESSION_ID_LENGTH)
@@ -163,7 +162,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     if (TAO_debug_level > 0)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) Unable to set the session id ")
-                  ACE_TEXT ("context to \'%C\'\n"), session_id_context_));
+                  ACE_TEXT ("context to \'%s\'\n"), session_id_context_));
 
     return -1;
   }
@@ -189,7 +188,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           // cipher only disables encryption.  However, certificate
           // exchanges will still occur.
           if (::SSL_CTX_set_cipher_list (ssl_ctx->context (),
-                                         "ALL:eNULL") == 0)
+                                         "DEFAULT:eNULL") == 0)
             {
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) Unable to set eNULL ")
@@ -351,10 +350,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       }
       else
       {
-        if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Loaded ")
-                      ACE_TEXT ("more entropy from <%s>\n"), path));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) Loaded ")
+                        ACE_TEXT ("more entropy from <%s>\n"), path));
       }
 
       path = ACE_OS::strtok_r (0, TAO_PATH_SEPARATOR_STRING, &file_name);
@@ -427,7 +426,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                           ACE_TEXT ("unable to set ")
-                          ACE_TEXT ("DH parameters <%C>\n"),
+                          ACE_TEXT ("DH parameters <%s>\n"),
                           dhparams_path));
               return -1;
             }
@@ -437,7 +436,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                 ACE_DEBUG ((LM_INFO,
                             ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
                             ACE_TEXT ("No DH parameters found in ")
-                            ACE_TEXT ("certificate <%C>; either none ")
+                            ACE_TEXT ("certificate <%s>; either none ")
                             ACE_TEXT ("are needed (RSA) or problems ")
                             ACE_TEXT ("will ensue later.\n"),
                             dhparams_path));
@@ -449,7 +448,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("(%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Diffie-Hellman params ")
-                        ACE_TEXT ("from %C\n"),
+                        ACE_TEXT ("from %s\n"),
                         dhparams_path));
         }
     }
@@ -465,7 +464,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                      ACE_TEXT ("SSL certificate <%C> ")
+                      ACE_TEXT ("SSL certificate <%s> ")
                       ACE_TEXT ("in SSLIOP factory.\n"),
                       certificate_path));
 
@@ -477,7 +476,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("SSL certificate ")
-                        ACE_TEXT ("from %C\n"),
+                        ACE_TEXT ("from %s\n"),
                         certificate_path));
         }
     }
@@ -490,7 +489,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to set ")
                       ACE_TEXT ("SSL private key ")
-                      ACE_TEXT ("<%C> in SSLIOP factory.\n"),
+                      ACE_TEXT ("<%s> in SSLIOP factory.\n"),
                       private_key_path));
 
           return -1;
@@ -501,7 +500,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
                         ACE_TEXT ("Private Key ")
-                        ACE_TEXT ("from <%C>\n"),
+                        ACE_TEXT ("from %s\n"),
                         private_key_path));
         }
     }

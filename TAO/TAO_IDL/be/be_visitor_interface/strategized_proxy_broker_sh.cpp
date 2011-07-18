@@ -2,6 +2,10 @@
 // $Id$
 //
 
+ACE_RCSID (be_visitor_interface,
+           base_proxy_broker_sh,
+           "$Id$")
+
 be_visitor_interface_strategized_proxy_broker_sh::
 be_visitor_interface_strategized_proxy_broker_sh (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -22,14 +26,14 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//               Strategized Proxy Broker Declaration " << be_nl
-      << "//" << be_nl_2;
+      << "//" << be_nl << be_nl;
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "class " << be_global->skel_export_macro () << " "
       << node->strategized_proxy_broker_name () << be_idt_nl
@@ -42,7 +46,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
   *os << be_nl
       << "virtual ~" << node->strategized_proxy_broker_name () << " (void);";
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "TAO::Collocation_Strategy "
       << "get_strategy (::CORBA::Object_ptr obj);" << be_nl;
 
@@ -67,23 +71,18 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (
 
   *os << "};";
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//            End Strategized Proxy Broker Declaration " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
-      << be_nl_2;
+      << be_nl << be_nl;
 
   return 0;
 }
 
 int be_visitor_interface_strategized_proxy_broker_sh::visit_component (
-    be_component *node)
+    be_component *node
+  )
 {
   return this->visit_interface (node);
-}
-
-int be_visitor_interface_strategized_proxy_broker_sh::visit_connector (
-    be_connector *node)
-{
-  return this->visit_component (node);
 }

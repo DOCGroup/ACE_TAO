@@ -47,10 +47,10 @@ class TAO_MProfile;
 class TAO_ServerRequest;
 class TAO_Adapter;
 
-class TAO_Export TAO_Adapter_Registry : private ACE_Copy_Disabled
+class TAO_Export TAO_Adapter_Registry
 {
 public:
-  explicit TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
+  TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
 
   /// Close the
   ~TAO_Adapter_Registry (void);
@@ -58,7 +58,7 @@ public:
   /**
    * Close each of of the Adapters and then cleanup the Registry.
    * It is possible that an Adapter will reject a close() call if it
-   * is invoked in an inappropriate context (think shutting down the
+   * is invoked in an innapropriate context (think shutting down the
    * POA while performing an upcall).
    */
   void close (int wait_for_completion);
@@ -104,6 +104,10 @@ private:
   size_t adapters_count_;
   TAO_Adapter **adapters_;
   //@}
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Adapter_Registry &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

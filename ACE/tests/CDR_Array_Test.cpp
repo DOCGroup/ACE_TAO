@@ -1,22 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    CDR_Array_Test.cpp
- *
- *  $Id$
- *
- *  Checks ACE_OutputCDR::write_XX_array.
- *  Checks ACE_InputCDR::read_XX_array.
- *  Checks operator<< and operator>> for CDR Streams in
- *  each of the basic CDR types.
- *  Gives a measure of the speed of the ACE CDR streams wrt those
- *  operations.
- *
- *
- *  @author Cristian Ferretti <cristian_ferretti@yahoo.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    CDR_Array_Test.cpp
+//
+// = DESCRIPTION
+//    Checks ACE_OutputCDR::write_XX_array.
+//    Checks ACE_InputCDR::read_XX_array.
+//    Checks operator<< and operator>> for CDR Streams in
+//    each of the basic CDR types.
+//    Gives a measure of the speed of the ACE CDR streams wrt those
+//    operations.
+//
+// = AUTHORS
+//    Cristian Ferretti <cristian_ferretti@yahoo.com>
+//
+// ============================================================================
 
 // For measuring time, choose your method:
 // Define:
@@ -50,7 +53,7 @@
 #error "Can't define USE_GETRUSAGE on this platform."
 #endif
 
-
+ACE_RCSID(tests, CDR_Array_Test, "$Id$")
 
 // Default number of elements for check buffer, for each tested CDR type.
 // Be aware that time will be affected by the buffer fitting/not fitting
@@ -388,7 +391,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
   char* toread = 0;
   {
-    ACE_TEST_ASSERT(use_array || total % 4 == 0);
+    ACE_ASSERT(use_array || total % 4 == 0);
 
     double totalsecs = 0.0;
     int n;
@@ -614,7 +617,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
         tellalign (src);
 
         T cv = CDR_Test<T, H>::checkval (i);
-        if (!ACE::is_equal (rv, cv))
+        if (rv != cv)
           {
             static char rs[32 + 1];
             static char cs[32 + 1];

@@ -27,6 +27,7 @@
 
 #include "tao/orb_typesC.h"
 #include "tao/objectid.h"
+#include "tao/CORBA_methods.h"
 #include "tao/VarOut_T.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
@@ -71,9 +72,6 @@ namespace CORBA
   class ValueMemberSeq;
   class ORB_ObjectIdList;
 
-  class Object;
-  typedef Object * Object_ptr;
-
   class ExceptionList;
   typedef ExceptionList * ExceptionList_ptr;
 
@@ -91,9 +89,6 @@ namespace CORBA
 
   class Policy;
   typedef Policy *Policy_ptr;
-
-  class OperationDef;
-  typedef OperationDef * OperationDef_ptr;
 
   typedef CORBA::ULong PolicyType;
 
@@ -510,9 +505,9 @@ namespace CORBA
 #endif
 
     /// Reference counting...
-    unsigned long _incr_refcount (void);
-    unsigned long _decr_refcount (void);
-    unsigned long _refcount (void) const;
+    unsigned long _incr_refcnt (void);
+    unsigned long _decr_refcnt (void);
+    unsigned long _refcnt (void) const;
 
     /// Set the IOR flag.
     void _use_omg_ior_format (CORBA::Boolean ior);

@@ -10,6 +10,12 @@
 
 #include "ace/OS_NS_stdio.h"
 
+
+ACE_RCSID (Strategies,
+           SHMIOP_Endpoint,
+           "$Id$")
+
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SHMIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */

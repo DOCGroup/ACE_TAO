@@ -3,7 +3,6 @@
 workspace {
   exclude {
     CIAO
-    DAnCE
   }
 
   // The associate scope does not add directories to the workspace;

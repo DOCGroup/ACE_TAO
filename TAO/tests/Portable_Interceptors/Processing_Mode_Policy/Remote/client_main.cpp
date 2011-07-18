@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
        return 0;
       }
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -119,8 +119,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     number_called, expected_interceptor_check));
           return 1;
         }
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception&)
     {

@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef ACE_THREAD_HOOK_H
 #define ACE_THREAD_HOOK_H
 #include /**/ "ace/pre.h"
@@ -33,7 +34,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Thread_Hook
 {
+
 public:
+
   /// Destructor.
   virtual ~ACE_Thread_Hook (void);
 
@@ -48,7 +51,7 @@ public:
   virtual ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func,
                                      void *arg);
 
-  /// Sets the system wide thread hook, returns the previous thread
+  /// sets the system wide thread hook, returns the previous thread
   /// hook or 0 if none is set.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *hook);
 

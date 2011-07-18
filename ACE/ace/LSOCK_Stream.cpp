@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
 
-
+ACE_RCSID(ace, LSOCK_Stream, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/LSOCK_Stream.inl"

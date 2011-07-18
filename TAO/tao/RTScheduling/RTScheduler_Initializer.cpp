@@ -1,8 +1,11 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "tao/RTScheduling/RTScheduler_Initializer.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
+
+ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 
 #include "tao/RTScheduling/RTScheduler.h"
 #include "tao/RTScheduling/Current.h"
@@ -20,8 +23,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+static TAO_RTScheduler_Current_var current_cleanup;
+
 void
-TAO_RTScheduler_ORB_Initializer::pre_init (
+ TAO_RTScheduler_ORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
   //
@@ -51,20 +56,20 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
       throw ::CORBA::INTERNAL ();
     }
 
-  TAO_RTScheduler_Current *tmp_current = 0;
-  ACE_NEW_THROW_EX (tmp_current,
+
+  ACE_NEW_THROW_EX (this->current_,
                     TAO_RTScheduler_Current,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  this->current_ = tmp_current;
+
+  current_cleanup = this->current_;
 
   this->current_->init (tao_info->orb_core ());
 
-  CORBA::Object_var current_obj =
-    RTScheduling::Current::_narrow (this->current_.in ());
+  CORBA::Object_var current_obj = RTScheduling::Current::_narrow (this->current_);
 
   info->register_initial_reference ("RTScheduler_Current", current_obj.in ());
 
@@ -84,7 +89,7 @@ TAO_RTScheduler_ORB_Initializer::pre_init (
 
   Server_Interceptor *server_interceptor = 0;
   ACE_NEW_THROW_EX (server_interceptor,
-                    Server_Interceptor (this->current_.in ()),
+                    Server_Interceptor (this->current_),
                     CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
@@ -128,11 +133,10 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
     ACE_DEBUG ((LM_DEBUG,
                 "In post_init\n"));
 
-  CORBA::Object_var rt_current_obj =
-    info->resolve_initial_references (TAO_OBJID_RTCURRENT);
+  CORBA::Object_var rt_current_obj = info->resolve_initial_references ("RTCurrent");
 
-  RTCORBA::Current_var rt_current =
-    RTCORBA::Current::_narrow (rt_current_obj.in ());
+
+  RTCORBA::Current_var rt_current = RTCORBA::Current::_narrow (rt_current_obj.in ());
 
   if (CORBA::is_nil (rt_current.in ()))
     {

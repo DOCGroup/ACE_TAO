@@ -10,9 +10,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-my $server1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $server2 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client  = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $server2 = PerlACE::TestTarget::create_target (1) || die "Create target 2 failed\n";
+my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 3 failed\n";
 
 my $iorbase1 = "test.ior";
 my $iorbase2 = "test2.ior";
@@ -40,7 +40,7 @@ print STDERR "\n\n==== Running PortableInterceptor::Redirection test\n";
 $SV1->Spawn ();
 
 if ($server1->WaitForFileTimed ($iorbase1,
-                                $server1->ProcessStartWaitInterval()) == -1) {
+                               $server1->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server1_iorfile>\n";
     $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
@@ -49,7 +49,7 @@ if ($server1->WaitForFileTimed ($iorbase1,
 $SV2->Spawn ();
 
 if ($server2->WaitForFileTimed ($iorbase2,
-                                $server2->ProcessStartWaitInterval()) == -1) {
+                               $server2->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server2_iorfile>\n";
     $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;

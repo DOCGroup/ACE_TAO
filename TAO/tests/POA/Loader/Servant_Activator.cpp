@@ -1,21 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Servant_Activator.cpp
- *
- *  $Id$
- *
- *   Implementation of <ServantActivator>, which is used by a POA
- *   with a RETAIN policy.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//     TAO/examples/POA/Loader
+//
+// = FILENAME
+//     Servant_Activator.cpp
+//
+// = DESCRIPTION
+//     Implementation of <ServantActivator>, which is used by a POA
+//     with a RETAIN policy.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Servant_Activator.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID (Loader,
+           Servant_Activator,
+           "$Id$")
 
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and

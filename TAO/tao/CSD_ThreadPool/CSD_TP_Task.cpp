@@ -5,6 +5,10 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
 
+ACE_RCSID (CSD_ThreadPool,
+           TP_Task,
+           "$Id$")
+
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Task.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -19,7 +23,7 @@ TAO::CSD::TP_Task::~TP_Task()
 bool
 TAO::CSD::TP_Task::add_request(TP_Request* request)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
+  GuardType guard(this->lock_);
 
   if (!this->accepting_requests_)
     {
@@ -49,19 +53,22 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
 {
   Thread_Counter num = 1;
 
-  Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
-
-  if (tmp == 0)
+  if (num_threads_ptr != 0)
     {
-      //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
-                        ACE_TEXT ("Invalid argument type passed to open().\n")),
-                        -1);
-      //FUZZ: enable check_for_lack_ACE_OS
-    }
+      Thread_Counter* tmp = static_cast<Thread_Counter*> (num_threads_ptr);
 
-  num = *tmp;
+      if (tmp == 0)
+        {
+          //FUZZ: disable check_for_lack_ACE_OS
+          ACE_ERROR_RETURN((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
+                            ACE_TEXT ("Invalid argument type passed to open().\n")),
+                           -1);
+          //FUZZ: enable check_for_lack_ACE_OS
+        }
+
+      num = *tmp;
+    }
 
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
@@ -84,7 +91,7 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
     }
 
   // We need the lock acquired from here on out.
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, -1);
+  GuardType guard(this->lock_);
 
   // We can assume that we are in the proper state to handle this open()
   // call as long as we haven't been open()'ed before.
@@ -132,7 +139,7 @@ TAO::CSD::TP_Task::svc()
   // Account for this current worker thread having started the
   // execution of this svc() method.
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
+    GuardType guard(this->lock_);
     // Put the thread id into a collection which is used to check whether
     // the orb shutdown is called by one of the threads in the pool.
     ACE_thread_t thr_id = ACE_OS::thr_self ();
@@ -153,7 +160,7 @@ TAO::CSD::TP_Task::svc()
       // Do the "GetWork" step.
       {
         // Acquire the lock until just before we decide to "PerformWork".
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+        GuardType guard(this->lock_);
 
         // Start the "GetWork" loop.
         while (request.is_nil())
@@ -212,7 +219,7 @@ TAO::CSD::TP_Task::svc()
       // worker threads that there may be some dispatchable requests in the
       // queue now for this not-busy servant.  We need the lock_ to do this.
       {
-        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+        GuardType guard(this->lock_);
         request->mark_as_ready();
         this->work_available_.signal();
       }
@@ -232,7 +239,7 @@ TAO::CSD::TP_Task::svc()
 int
 TAO::CSD::TP_Task::close(u_long flag)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+  GuardType guard(this->lock_);
 
   if (flag == 0)
     {
@@ -300,7 +307,7 @@ TAO::CSD::TP_Task::close(u_long flag)
 void
 TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
+  GuardType guard(this->lock_);
 
   // Cancel the requests targeted for the provided servant.
   TP_Cancel_Visitor cancel_visitor(servant);

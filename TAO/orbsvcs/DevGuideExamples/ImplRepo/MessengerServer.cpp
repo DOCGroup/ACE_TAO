@@ -47,7 +47,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var messenger_poa = createPOA(root_poa.in(), poa_name);
 
-    PortableServer::Servant_var<Messenger_i> messenger_servant = new Messenger_i;
+    Messenger_i messenger_servant;
 
     PortableServer::ObjectId_var object_id =
       PortableServer::string_to_ObjectId("messenger_object");
@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // obtain its object reference, and get a
     // stringified IOR.
     //
-    messenger_poa->activate_object_with_id(object_id.in(), messenger_servant.in());
+    messenger_poa->activate_object_with_id(object_id.in(), &messenger_servant);
 
     //
     // Create binding between "MessengerService" and

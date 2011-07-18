@@ -2,6 +2,9 @@
 
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 
+ACE_RCSID (Notify, Buffering_Strategy, "$Id$")
+
+
 #include "orbsvcs/Notify/Method_Request.h"
 #include "orbsvcs/Notify/Notify_Extensions.h"
 #include "orbsvcs/Notify/QoSProperties.h"
@@ -91,45 +94,9 @@ TAO_Notify_Buffering_Strategy::oldest_event (void)
   return tv;
 }
 
-
-TAO_Notify_Buffering_Strategy::Tracker::Tracker (void)
-  : child_ (0)
-{
-}
-
-
 TAO_Notify_Buffering_Strategy::Tracker::~Tracker (void)
 {
 }
-
-
-void
-TAO_Notify_Buffering_Strategy::Tracker::register_child (TAO_Notify_Buffering_Strategy::Tracker * child)
-{
-  if (this->child_ == 0)
-    {
-      this->child_ = child;
-    }
-  else if (this->child_ != child)
-    {
-      this->child_->register_child (child);
-    }
-  // we simply ignore duplicate registrations.
-}
-
-void
-TAO_Notify_Buffering_Strategy::Tracker::unregister_child (TAO_Notify_Buffering_Strategy::Tracker * child)
-{
-  if (this->child_ == child)
-    {
-      this->child_ = this->child_->child_;
-    }
-  else if (this->child_ != 0)
-    {
-      this->child_->unregister_child (child);
-    }
-}
-
 
 int
 TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* method_request)
@@ -174,10 +141,6 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
               continue;
             }
         }
-      if (tracker_ != 0)
-        {
-          tracker_->count_queue_overflow (local_overflow, global_overflow);
-        }
 
       discarded_existing = this->discard(method_request);
       if (discarded_existing)
@@ -202,18 +165,10 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 
       local_not_empty_.signal ();
     }
-  else
-    {
-      ACE_DEBUG((LM_DEBUG,
-                 "Notify (%P|%t) - Panic! did not attempt to enqueue event\n"));
-      return -1;
-    }
 
   size_t count = this->msg_queue_.message_count ();
   if (this->tracker_ != 0)
-    {
-      this->tracker_->update_queue_count (count);
-    }
+    this->tracker_->update_queue_count (count);
 
   return ACE_Utils::truncate_cast<int> (count);
 }
@@ -221,7 +176,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 int
 TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, const ACE_Time_Value *abstime)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -243,9 +198,7 @@ TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &me
     return -1;
 
   if (this->tracker_ != 0)
-    {
-      this->tracker_->update_queue_count (this->msg_queue_.message_count ());
-    }
+    this->tracker_->update_queue_count (this->msg_queue_.message_count ());
 
   method_request = dynamic_cast<TAO_Notify_Method_Request_Queueable*>(mb);
 
@@ -263,14 +216,7 @@ void
 TAO_Notify_Buffering_Strategy::set_tracker (
                         TAO_Notify_Buffering_Strategy::Tracker* tracker)
 {
-  if (this->tracker_ == 0)
-    {
-      this->tracker_ = tracker;
-    }
-  else if (this->tracker_ != tracker)
-    {
-      this->tracker_->register_child (tracker);
-    }
+  this->tracker_ = tracker;
 }
 
 int
@@ -360,7 +306,5 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
 
   return false;
 }
-
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

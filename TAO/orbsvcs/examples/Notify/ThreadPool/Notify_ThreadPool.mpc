@@ -1,7 +1,6 @@
 // $Id$
 project(*Supplier): rtnotify, notifytest, rtportableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = Supplier
-  libpaths += ../../../tests/Notify/lib
   Source_Files {
     Supplier.cpp
     Supplier_Client.cpp
@@ -12,7 +11,6 @@ project(*Supplier): rtnotify, notifytest, rtportableserver, avoids_minimum_corba
 
 project(*Consumer): rtnotify, notifytest, rtportableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = Consumer
-  libpaths += ../../../tests/Notify/lib
   Source_Files {
     Consumer.cpp
     Consumer_Client.cpp

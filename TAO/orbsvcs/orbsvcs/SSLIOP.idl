@@ -23,7 +23,7 @@ module SSLIOP {
   struct SSL {
     Security::AssociationOptions    target_supports;
     Security::AssociationOptions    target_requires;
-    unsigned short        _port;
+    unsigned short        port;
   };
 
   // const Firewall::IdTag TAG_ID_SSL_CERT = xx;  // OMG allocated

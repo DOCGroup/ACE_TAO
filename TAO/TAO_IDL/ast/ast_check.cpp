@@ -70,7 +70,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "utl_err.h"
 
-#include "utl_scope.h"
+ACE_RCSID (ast,
+           ast_check,
+           "$Id$")
 
 // Static storage for remembering nodes.
 static AST_Type  **ast_fwds = 0;
@@ -137,6 +139,7 @@ AST_check_fwd_decls (void)
           // this lookup fails.
           AST_Decl *f =
             d->defined_in ()->lookup_by_name_local (d->local_name (),
+                                                    0,
                                                     true);
 
           if (f == 0)

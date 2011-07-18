@@ -22,9 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
-#include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/PortableServer/portableserver_export.h"
-#include "tao/AnyTypeCode/Any.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +38,7 @@ namespace TAO
     : public
         Var_Size_SArg_Traits_T<
             CORBA::Any,
-            TAO::Any_Insert_Policy_Stream
+            TAO::Any_Insert_Policy_Stream <CORBA::Any>
           >
   {
   };

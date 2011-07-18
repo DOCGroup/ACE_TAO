@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    server.cpp
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "param_test_i.h"
 #include "tao/Codeset/Codeset.h"
@@ -16,6 +19,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (Param_Test,
+           server,
+           "$Id$")
 
 // Parses the command line arguments and returns an error status.
 static FILE *ior_output_file = 0;

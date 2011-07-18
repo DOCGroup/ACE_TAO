@@ -4,13 +4,16 @@
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID (Application_Test,
+           ifr_dii_client,
+           "$Id$")
+
 IFR_DII_Client::IFR_DII_Client (void)
   : namespace_name (CORBA::string_dup ("warehouse")),
     interface_name (CORBA::string_dup ("inventory")),
     op_name (CORBA::string_dup ("getCDinfo")),
     lookup_by_name_ (false),
-    debug_ (false),
-    ior_output_file_(ACE_TEXT("file://iorfile"))
+    debug_ (false)
 {
 }
 
@@ -24,24 +27,25 @@ IFR_DII_Client::init (int argc,
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  if (this->parse_args (argc, argv) == -1)
-  {
-        return -1;
-  }
   // In a reall application, we would get the scoped or
   // local name from the Interface Repository and use that
   // to get the object reference of the target via the Naming
   // Service. Since we're not testing the Naming Service here,
   // we just use the IOR which is stored in a file by the server.
-  this->target_ = this->orb_->string_to_object (ior_output_file_);
+  this->target_ = this->orb_->string_to_object ("file://iorfile");
 
   if (CORBA::is_nil (this->target_.in ()))
   {
      ACE_ERROR_RETURN ((
         LM_ERROR,
-        "Unable to find interface repository in: %s\n", ior_output_file_),
+        "Unable to find interface repository in: file://iorfile\n"),
         -1);
   }
+
+  if (this->parse_args (argc, argv) == -1)
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -82,7 +86,7 @@ IFR_DII_Client::run (void)
 int
 IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, ACE_TEXT("k:nd"));
+  ACE_Get_Opt opts (argc, argv, ACE_TEXT("dn"));
   int c;
 
   while ((c = opts ()) != -1)
@@ -94,10 +98,6 @@ IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
         case 'n':   // Select lookup by name.
           this->lookup_by_name_ = true;
           break;
-        case 'k':
-          this->ior_output_file_ = opts.opt_arg ();
-          break;
-
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -321,7 +321,7 @@ IFR_DII_Client::invoke_and_display (void)
 
       ACE_ASSERT ((*args->item (2)->value () >>= price) == true);
 
-      ACE_ASSERT (ACE::is_equal (price, 13.49f));
+      ACE_ASSERT (price == 13.49f);
 
       if (this->debug_)
         {

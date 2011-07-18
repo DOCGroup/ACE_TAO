@@ -252,29 +252,23 @@ public:
   void collocation_resolver_name (const char *s);
   const char *collocation_resolver_name (void) const;
 
-  void forward_invocation_on_object_not_exist (bool opt);
-  bool forward_invocation_on_object_not_exist (void) const;
-
-  void forward_once_exception (const int);
-  int forward_once_exception () const;
-
 private:
-  /// Each "endpoint" is of the form:
-  ///
-  ///   protocol://V.v@addr1,...,W.w@addrN/
-  ///
-  /// or:
-  ///
-  ///   protocol://addr1,addr2,...,addrN/
-  ///
-  /// where "V.v" and "W.w" are optional versions.
-  ///
-  /// Multiple sets of endpoints may be separated by a semi-colon `;'.
-  /// For example:
-  ///
-  ///   iiop://space:2001,odyssey:2010;uiop://foo,bar
-  ///
-  /// All preconnect or endpoint strings should be of the above form(s).
+  // Each "endpoint" is of the form:
+  //
+  //   protocol://V.v@addr1,...,W.w@addrN/
+  //
+  // or:
+  //
+  //   protocol://addr1,addr2,...,addrN/
+  //
+  // where "V.v" and "W.w" are optional versions.
+  //
+  // Multiple sets of endpoints may be seperated by a semi-colon `;'.
+  // For example:
+  //
+  //   iiop://space:2001,odyssey:2010;uiop://foo,bar
+  //
+  // All preconnect or endpoint strings should be of the above form(s).
   int parse_and_add_endpoints (const ACE_CString &endpoints,
                                TAO_EndpointSet &endpoint_set);
 
@@ -312,7 +306,7 @@ private:
   /// 1 if we're using IP_MULTICAST_LOOP and 0 otherwise.
   bool ip_multicastloop_;
 
-  /// Control the strategy for copying vs. appending octet sequences in
+  /// Control the strategy for copying vs. appeding octet sequences in
   /// CDR streams.
   int cdr_memcpy_tradeoff_;
 
@@ -467,19 +461,6 @@ private:
    * poa_factory_name_ dynamically.
    */
   ACE_TString poa_factory_directive_;
-
-
-  /**
-   * Do we need forward invocation to next avaiable profile upon
-   * OBJECT_NOT_EXIST exception?
-   */
-  bool forward_invocation_on_object_not_exist_;
-
-
-  /**
-   * The exceptions upon which the requests will be forwarded once.
-   */
-  int forward_once_exception_;
 
   /**
    * Name of the collocation resolver that needs to be instantiated.

@@ -6,9 +6,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_unistd.h"
-
-#include "orbsvcs/Daemon_Utilities.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -20,6 +17,10 @@
 
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "ace/OS_NS_strings.h"
+
+ACE_RCSID (Event_Service,
+           Event_Service,
+           "$Id$")
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
@@ -65,15 +66,14 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
-      // Check if -ORBDaemon is specified and if so, daemonize at this moment,
-      // -ORBDaemon in the ORB core is faulty, see bugzilla 3335
-      TAO_Daemon_Utility::check_for_daemon (argc, argv);
+      // Make a copy of command line parameter.
+      ACE_Argv_Type_Converter command(argc, argv);
 
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (argc, argv);
+        CORBA::ORB_init (command.get_argc(), command.get_ASCII_argv(), "");
 
-      if (this->parse_args (argc, argv) == -1)
+      if (this->parse_args (command.get_argc(), command.get_TCHAR_argv()) == -1)
         return 1;
 
       CORBA::Object_var root_poa_object =

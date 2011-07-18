@@ -1,10 +1,11 @@
 # $Id$
 
 # This file is for use with AIX 5.x and up, using either of the IBM
-# compilers (Visual Age C++ 6 or newer XL C++ compiler).
+# compilers (Visual Age C++ 6 or newer compiler).
 
 debug ?= 1
 distrib ?= 0
+exceptions ?= 1
 optimize ?= 0
 threads ?= 1
 buildbits ?= 32
@@ -34,6 +35,13 @@ XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cp
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
 AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
+
+# Use of exceptions should be a compiler-specific setting, but for now it's
+# not. IBM C/C++ doesn't have a way to turn exceptions off, and Visual
+# Age C++ V5 building ACE without exception handling causes segv on startup
+# of every test. Until this is straightened out, force exceptions=1 for
+# both compilers.
+exceptions=1
 
 SOEXT = so
 SOFLAGS += -G
@@ -97,7 +105,9 @@ else
     # According to documentation, default is -qeh, which is equivalent
     # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
     # try-catch blocks.
-    CCFLAGS     += -qeh=v6
+    ifeq ($(exceptions),1)
+      CCFLAGS     += -qeh=v6
+    endif
   else
     ifeq ($(XLCVERSION),0x0800)
       CCFLAGS += -qflag=w:w
@@ -109,15 +119,10 @@ else
       # According to documentation, default is -qeh, which is equivalent
       # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
       # try-catch blocks.
-      CCFLAGS     += -qeh=v6
+      ifeq ($(exceptions),1)
+        CCFLAGS     += -qeh=v6
+      endif
     else
-      # Until there's a reason to change, use the V9 settings for V10.1 and 11.
-      ifeq ($(XLCVERSION),0x0a01)
-        XLCVERSION = 0x0900
-      endif
-      ifeq ($(XLCVERSION),0x0b01)
-        XLCVERSION = 0x0900
-      endif
       ifeq ($(XLCVERSION),0x0900)
         CCFLAGS += -qflag=w:w
         ifeq ($(templates),manual)
@@ -128,7 +133,9 @@ else
         # According to documentation, default is -qeh, which is equivalent
         # to -qeh=v5.  Apparently 6.0 fixed some problems with nested
         # try-catch blocks.
-        CCFLAGS     += -qeh=v6
+        ifeq ($(exceptions),1)
+          CCFLAGS     += -qeh=v6
+        endif
       else
         CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
       endif
@@ -154,6 +161,8 @@ else
   # Using 32bit the staticinline option works.
   #CCFLAGS += -qstaticinline
 endif
+
+CCFLAGS += -qfuncsect
 
 # The Visual Age preprocessor is not usable with the TAO_IDL compiler.
 # At the moment an idl file just contains includes of other idl files

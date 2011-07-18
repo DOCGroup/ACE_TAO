@@ -1,6 +1,12 @@
-// $Id$
-
 #include "Port_Activator.h"
+
+ACE_RCSID (ciao,
+           Servant_Activator,
+           "$Id$")
+
+#if !defined (__ACE_INLINE__)
+# include "Port_Activator.inl"
+#endif /* __ACE_INLINE__ */
 
 namespace CIAO
 {
@@ -15,23 +21,5 @@ namespace CIAO
 
   Port_Activator_i::~Port_Activator_i (void)
   {
-  }
-
-  char*
-  Port_Activator_i::oid (void)
-  {
-    return CORBA::string_dup(this->oid_.in ());
-  }
-
-  void
-  Port_Activator_i::oid (const char* oid)
-  {
-    this->oid_ = oid;
-  }
-
-  char*
-  Port_Activator_i::name (void)
-  {
-    return CORBA::string_dup(this->name_.in ());
   }
 }

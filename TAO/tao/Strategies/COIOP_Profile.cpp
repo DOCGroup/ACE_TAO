@@ -14,6 +14,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (Strategies,
+           COIOP_Profile,
+           "$Id$")
+
 static const char the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

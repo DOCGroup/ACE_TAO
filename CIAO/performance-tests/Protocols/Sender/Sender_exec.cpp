@@ -14,7 +14,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
-#include "ace/Containers_T.h"
+#include "ace/Array.h"
 #include "ace/Sample_History.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "Sender_exec.h"
@@ -651,7 +651,7 @@ CIDL_SenderImpl::SenderExec_i::set_session_context (
   ACE_DEBUG ((LM_DEBUG, "CIDL_SenderImpl::SenderExec_i::set_session_context\n"));
 
   this->context_ =
-    ::Protocols::CCM_Sender_Context::_narrow (ctx);
+    CIDL_SenderImpl::SenderExec_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
     throw CORBA::INTERNAL ();

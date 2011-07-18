@@ -130,16 +130,6 @@ sub IgnoreExeSubDir
     return $self->{IGNOREEXESUBDIR};
 }
 
-sub IgnoreHostRoot
-{
-    my $self = shift;
-
-    if (@_ != 0) {
-        $self->{IGNOREHOSTROOT} = shift;
-    }
-
-    return $self->{IGNOREHOSTROOT};
-}
 
 sub delay_factor {
   my($lps)    = 128;
@@ -202,8 +192,6 @@ sub iboot_cycle_power {
 
   if (defined($iboot_outlet) && defined($iboot_user) && defined($iboot_passwd)) {
     # We perform case #3
-    # This case doesn't support shutdown
-    return if $mode == 1;
 
     my $t = new Net::Telnet();
 
@@ -375,7 +363,6 @@ sub reboot {
 # Helper for spawning with list of kernel modules in a .vxtest file
 sub handle_vxtest_file
 {
-  my $self = shift;
   my $vxtestfile = shift;
   my $vx_ref = shift;
   my $unld_ref = shift;
@@ -438,27 +425,14 @@ for(my $i = 0; $i <= $#ARGV; ++$i) {
 $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = $ENV{"ACE_RUNTEST_DELAY"};
 
 if (defined $ENV{'ACE_TEST_WINCE'}) {
-  if ($OSNAME eq "MSWin32") {
-      require PerlACE::ProcessWinCE;
-  } else {
-      require PerlACE::ProcessWinCE_Unix;
-  }
+    require PerlACE::ProcessWinCE;
 } else {
-  if ($OSNAME eq "MSWin32") {
-      require PerlACE::ProcessVX_Win32;
-  }
-  else {
-      require PerlACE::ProcessVX_Unix;
-  }
+if ($OSNAME eq "MSWin32") {
+    require PerlACE::ProcessVX_Win32;
 }
-
-###
-
-sub kill_all
-{
-  my $procmask = shift;
-  my $target = shift;
-  ## NOT IMPLEMENTED YET
+else {
+    require PerlACE::ProcessVX_Unix;
+}
 }
 
 1;

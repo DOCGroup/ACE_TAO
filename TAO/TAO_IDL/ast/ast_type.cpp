@@ -78,6 +78,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
+ACE_RCSID (ast,
+           ast_type,
+           "$Id$")
+
+AST_Type::AST_Type (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    ifr_added_ (0),
+    ifr_fwd_added_ (0),
+    size_type_ (AST_Type::SIZE_UNKNOWN),
+    has_constructor_ (0),
+    nested_type_name_ (0),
+    in_recursion_ (-1),
+    recursing_in_legal_pk_ (false)
+{
+}
+
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
   : COMMON_Base (),
@@ -138,10 +155,18 @@ AST_Type::compute_size_type (void)
 }
 
 bool
-AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> & /*list*/)
+AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> &)
 {
   // By default we are not involved in recursion.
   return 0;
+}
+
+bool
+AST_Type::is_defined (void)
+{
+  // AST_Interface, AST_Structure, and AST_Union will
+  // override this, as will AST_InterfaceFwd, etc.
+  return 1;
 }
 
 bool
@@ -298,14 +323,14 @@ AST_Type::nested_name (const char* local_name,
   // generations of "::" here and there, which have now been removed.
   UTL_Scope *s = this->defined_in ();
   AST_Decl *def_scope = s != 0 ? ScopeAsDecl (s) : 0;
-
+  
   // TypeCode is a special case for predefined types, since it's
   // defined in the CORBA module.
   bool in_root =
     (def_scope != 0 && def_scope->node_type () == AST_Decl::NT_root)
     || ((this->node_type () == AST_Decl::NT_pre_defined
         && ACE_OS::strcmp (this->flat_name (), "CORBA_TypeCode") == 0));
-
+        
   ACE_CString fname (this->full_name ());
   bool corba_type = fname.find ("CORBA::") == 0;
 
@@ -543,5 +568,7 @@ AST_Type::destroy (void)
 
   this->AST_Decl::destroy ();
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Type)

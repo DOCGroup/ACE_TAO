@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for Union.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for Union.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating Any operator declarations in the client header
@@ -40,60 +49,11 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
-
-  be_module *module = 0;
-
-  AST_Decl *decl = node;
-  if (decl->is_nested ())
-    {
-      if (node->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
-        {
-          be_interface *intf = 0;
-          intf = be_interface::narrow_from_scope (node->defined_in ());
-          decl = intf;
-        }
-
-      if (decl->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-        {
-          module = be_module::narrow_from_scope (decl->defined_in ());
-
-          if (!module)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_union_any_op_ch::"
-                                 "visit_union - "
-                                 "Error parsing nested name\n"),
-                                -1);
-            }
-
-          // Some compilers handle "any" operators in a namespace
-          // corresponding to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-
-          be_util::gen_nested_namespace_begin (os, module);
-
-
-          *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
-              << " &); // copying version" << be_nl;
-          *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
-              << "*); // noncopying version" << be_nl;
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::"
-              << node->name () << " *&); // deprecated\n";
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
-              << node->name () << " *&);";
-
-          be_util::gen_nested_namespace_end (os, module);
-
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n\n";
-        }
-    }
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-
+  
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
@@ -104,35 +64,6 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       << node->name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
-
-  if (module != 0)
-    {
-      *os << "\n\n#endif";
-    }
-
-  be_visitor_context ctx (*this->ctx_);
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_localtypes);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-
-      be_enum *e = be_enum::narrow_from_decl (d);
-      if (e != 0)
-        {
-          be_visitor_enum_any_op_ch visitor (&ctx);
-
-          if (e->accept (&visitor) == -1)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%N:%l) be_visitor_union_any_op_ch::visit_union"
-                          " - codegen for enum failed\n"));
-            }
-
-          // Restore the union node in the enum visitor's context.
-          ctx.node (this->ctx_->node ());
-        }
-    }
 
   if (this->visit_scope (node) == -1)
     {

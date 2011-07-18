@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
@@ -11,6 +10,10 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/IORManipulation/IORManipulation.h"
 #include "tao/ORBInitializer_Registry.h"
+
+ACE_RCSID (Collocated_Forwarding,
+           server,
+           "$Id$")
 
 const CORBA::ULong passes_before_forward = 6;
 

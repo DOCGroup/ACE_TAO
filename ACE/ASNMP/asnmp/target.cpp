@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     target.cpp
- *
- *  $Id$
- *
- * Target class defines target SNMP agents.
- *
- *
- *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//     target.cpp
+//
+// = DESCRIPTION
+// Target class defines target SNMP agents.
+//
+// = AUTHOR
+//   Peter E Mellquist
+//   Michael R MacFaden  mrm@cisco.com - rework & ACE port
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -30,6 +33,8 @@
 
 #include "asnmp/target.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID(asnmp, target, "$Id$")
 
 //----------------------------------------------------------------------
 //--------[ Class default values ]----------------------

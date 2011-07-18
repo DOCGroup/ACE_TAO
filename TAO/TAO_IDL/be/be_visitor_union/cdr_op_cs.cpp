@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for unions
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for unions
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           cdr_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating CDR operator declarations in the client
@@ -43,30 +52,6 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   // Set the substate as generating code for the types defined in our scope
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);
 
-  be_visitor_context ctx (*this->ctx_);
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_localtypes);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-
-      be_enum *e = be_enum::narrow_from_decl (d);
-      if (e != 0)
-        {
-          be_visitor_enum_cdr_op_cs visitor (&ctx);
-
-          if (e->accept (&visitor) == -1)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%N:%l) be_visitor_union_cdr_op_cs::visit_union"
-                          " - codegen for enum failed\n"));
-            }
-
-          // Restore the union node in the enum visitor's context.
-          ctx.node (this->ctx_->node ());
-        }
-    }
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,11 +63,11 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
-
+  
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
@@ -118,7 +103,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2
+      << "::CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -143,9 +128,9 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       *os << "break;"<< be_uidt;
     }
 
-  *os << be_uidt_nl << "}" << be_nl_2
+  *os << be_uidt_nl << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
@@ -188,7 +173,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2
+      << "::CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt;
 
@@ -211,26 +196,22 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     {
       *os << be_nl;
       *os << "default:" << be_idt_nl;
-      *os << "_tao_union._default ();" << be_nl;
-      *os << "// For maximum interop compatability, force the same value as transmitted" << be_nl;
       *os << "_tao_union._d (_tao_discriminant);" << be_nl;
       *os << "break;" << be_uidt;
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl_2
+      << "}" << be_nl << be_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl;
 
-  bool use_underscore = (this->ctx_->tdef () == 0);
-
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, use_underscore);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (true);
+  node->cli_stub_cdr_op_gen (1);
   return 0;
 }

@@ -3,6 +3,8 @@
 //
 #include "Crashed_Callback.h"
 
+ACE_RCSID(Crashed_Callback, Crashed_Callback, "$Id$")
+
 Crashed_Callback::Crashed_Callback (void)
 {
 }
@@ -18,9 +20,10 @@ Crashed_Callback::crash_now_please (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Crashed_Callback - crashing application\n"));
-// OpenVMS seems to hang and not abort and dump core when abort() is called
-// here. This needs further
-#if defined (DEC_CXX) || defined (ACE_OPENVMS)
+// Tru64 seems to hang and not abort and dump core when abort() is called
+// here. This needs further investigation. This fix is a temporary one.
+// Likewise for OpenVMS.
+#if defined (DIGITAL_UNIX) || defined (DEC_CXX) || defined (ACE_OPENVMS)
   ACE_OS::_exit();
 #else
   ACE_OS::abort();

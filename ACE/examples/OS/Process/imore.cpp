@@ -1,23 +1,26 @@
-//=============================================================================
-/**
- *  @file    imore.cpp (imore stands for indirect more.)
- *
- *  $Id$
- *
- *  This program demonstrates how to redirect stdout of a parent
- *  process to the stdin of its child process using either unnamed pipe
- *  or named pipes to relay data to subprocess which runs "more" to
- *  display data on the screen.  Run imore to see how to use this
- *  program.
- *
- *  Unfortunately, on Win32, this program doesn't use any pipe at all because
- *  using pipes confuses MORE.COM on Win32 and it just acts like "cat" on Unix.
- *
- *
- *  @author Nanbor Wang <nanbor@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+// $Id$
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    imore.cpp (imore stands for indirect more.)
+//
+// = DESCRIPTION
+//    This program demonstrates how to redirect stdout of a parent
+//    process to the stdin of its child process using either unnamed pipe
+//    or named pipes to relay data to subprocess which runs "more" to
+//    display data on the screen.  Run imore to see how to use this
+//    program.
+//
+//    Unfortunately, on Win32, this program doesn't use any pipe at all because
+//    using pipes confuses MORE.COM on Win32 and it just acts like "cat" on Unix.
+//
+// = AUTHOR
+//    Nanbor Wang <nanbor@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
@@ -31,10 +34,12 @@
 #include "ace/Process.h"
 #include "ace/Signal.h"
 
-
+ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
 static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
+static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("c:/temp");
+static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #else
 static const char * executable = "more"; // I like less better.
 static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("/tmp");
@@ -89,7 +94,6 @@ parse_args (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-#if !defined (ACE_WIN32)
 static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
@@ -138,9 +142,7 @@ setup_named_pipes (ACE_Process_Options &opt)
   wfifo.close ();
   return 0;
 }
-#endif
 
-#if !defined (ACE_WIN32)
 static int
 setup_unnamed_pipe (ACE_Process_Options &opt)
 {
@@ -167,9 +169,7 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
   pipe.close ();
   return 0;
 }
-#endif
 
-#if !defined (ACE_WIN32)
 static int
 print_file (ACE_HANDLE infd)
 {
@@ -193,10 +193,9 @@ print_file (ACE_HANDLE infd)
             }
         }
     }
-
+    
   return 0;
 }
-#endif
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

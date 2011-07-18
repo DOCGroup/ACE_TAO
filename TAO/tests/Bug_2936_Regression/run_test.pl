@@ -27,7 +27,7 @@ if ($test != 0) {
     exit 1;
 }
 
-$collocated = $SV->WaitKill ($server->ProcessStopWaitInterval() + 15);
+$collocated = $SV->WaitKill (30);
 
 if ($collocated != 0) {
     print STDERR "ERROR: Bug_2936_Regression returned $collocated\n";

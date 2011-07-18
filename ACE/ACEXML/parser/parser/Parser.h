@@ -83,34 +83,34 @@ public:
    * programmers to check whether a specific feature has been
    * activated in the parser.
    */
-  virtual int getFeature (const ACEXML_Char *name);
+  virtual int getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL);
 
   /**
    * Activating or deactivating a feature.
    */
   virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value);
+                           int boolean_value ACEXML_ENV_ARG_DECL);
 
   /*
    * Look up the value of a property.
    */
-  virtual void * getProperty (const ACEXML_Char *name);
+  virtual void * getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL);
 
   /*
    * Set the value of a property.
    */
   virtual void setProperty (const ACEXML_Char *name,
-                            void *value);
+                            void *value ACEXML_ENV_ARG_DECL);
 
   /*
    * Parse an XML document.
    */
-  virtual void parse (ACEXML_InputSource *input);
+  virtual void parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL);
 
   /*
    * Parse an XML document from a system identifier (URI).
    */
-  virtual void parse (const ACEXML_Char *systemId)
+  virtual void parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
     ;
 
   /*
@@ -139,30 +139,30 @@ protected:
   /**
    * Parse XML Prolog.
    */
-  void parse_xml_prolog (void);
+  void parse_xml_prolog (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse VersionInfo declaration.
    *
    */
-  void parse_version_info (void);
+  void parse_version_info (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a EncodingDecl declaration.
    *
    */
-  void parse_encoding_decl (void);
+  void parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a XMLDecl declaration.
    *
    */
-  void parse_xml_decl (void);
+  void parse_xml_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a TextDecl declaration.
    */
-  int parse_text_decl (void);
+  int parse_text_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse a PI statement.  The first character encountered
@@ -170,13 +170,13 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_processing_instruction (void);
+  int parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse the DOCTYPE declaration.  The first character encountered
    * should always be  'D' in doctype prefix: "@<@!DOCTYPE".
    */
-  int parse_doctypedecl (void);
+  int parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse an XML element.  The first character encountered should
@@ -191,14 +191,15 @@ protected:
    * of validator or allow the function to return the element name so it
    * can be used in a validator.
    */
-  void parse_element (int is_root);
+  void parse_element (int is_root ACEXML_ENV_ARG_DECL);
 
   /**
    *  Parse a content declaration.
    *
    */
   int parse_content (const ACEXML_Char* startname, const ACEXML_Char*& ns_uri,
-                     const ACEXML_Char*& ns_lname, int ns_flag);
+                     const ACEXML_Char*& ns_lname, int ns_flag
+                     ACEXML_ENV_ARG_DECL);
 
   /**
    * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
@@ -230,13 +231,13 @@ protected:
    * @retval 0 on success.
    * @retval -1 if fail.
    */
-  int parse_cdata (void);
+  int parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse a "markupdecl" section, this includes both "markupdecl" and
    * "DeclSep" sections in XML specification
    */
-  int parse_internal_dtd (void);
+  int parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Skip over a comment. The first character encountered should always be
@@ -251,7 +252,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_element_decl (void);
+  int parse_element_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse an "ENTITY" decl.  The first character this method expects
@@ -259,7 +260,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_entity_decl (void);
+  int parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse an "ATTLIST" decl.  Thse first character this method
@@ -268,13 +269,13 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_attlist_decl (void);
+  int parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse a AttType declaration.
    *
    */
-  int parse_atttype (void);
+  int parse_atttype (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *Parse a "NOTATION" decl.  The first character this method
@@ -283,7 +284,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_notation_decl (void);
+  int parse_notation_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse an ExternalID or a reference to PUBLIC ExternalID.
@@ -305,68 +306,69 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_external_id (ACEXML_Char *&publicId, ACEXML_Char *&systemId);
+  int parse_external_id (ACEXML_Char *&publicId, ACEXML_Char *&systemId
+                         ACEXML_ENV_ARG_DECL);
 
   /**
    *  Parse an external DTD.
    *
    */
-  int parse_external_dtd (void);
+  int parse_external_dtd (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse an external subset. This does the actual parsing of an external
    *  subset and is called by @sa parse_external_dtd.
    *
    */
-  int parse_external_subset (void);
+  int parse_external_subset (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a markupDecl section.
    *
    */
-  int parse_markup_decl (void);
+  int parse_markup_decl (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a conditionalSect declaration.
    *
    */
-  int parse_conditional_section (void);
+  int parse_conditional_section (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a includeSect declaration.
    *
    */
-  int parse_includesect (void);
+  int parse_includesect (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *
    *  Parse a ignoreSect declaration.
    */
-  int parse_ignoresect (void);
+  int parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse a PEReference.
    *
    */
-  int parse_PE_reference (void);
+  int parse_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a Reference.
    *
    */
-  int parse_entity_reference (void);
+  int parse_entity_reference (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse an entityValue.
    *
    */
-  int parse_entity_value (ACEXML_Char *&str);
+  int parse_entity_value (ACEXML_Char *&str ACEXML_ENV_ARG_DECL);
 
   /**
    *  Parse a DefaultDecl specification.
    *
    */
-  int parse_defaultdecl (void);
+  int parse_defaultdecl (ACEXML_ENV_SINGLE_ARG_DECL);
 
 
   /**
@@ -377,7 +379,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_children_definition (void);
+  int parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    * Parse a @c cp non-terminal.  @c cp can either be a @c seq or a @c choice.
@@ -389,7 +391,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_child (int skip_open_paren);
+  int parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL);
 
   /**
    *  Parse a name from the input CharStream. If @a ch @!= 0, then we have
@@ -446,7 +448,7 @@ protected:
    *             if successful.
    *  @retval 0 otherwise.
    */
-  ACEXML_Char* parse_attname (void);
+  ACEXML_Char* parse_attname (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse an attribute value.
@@ -454,14 +456,14 @@ protected:
    *  @param str String containing the value of the attribute if successful.
    *  @return 0 if attribute value was read successfully, -1 otherwise.
    */
-  int parse_attvalue (ACEXML_Char*& str);
+  int parse_attvalue (ACEXML_Char*& str ACEXML_ENV_ARG_DECL);
 
   /**
    *  Parse a tokenized type attribute.
    *
    *  @return 0 if attribute type was read successfully, -1 otherwise.
    */
-  int parse_tokenized_type (void);
+  int parse_tokenized_type (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Parse a SystemLiteral.
@@ -622,19 +624,19 @@ private:
    * Dispatch errors to ErrorHandler.
    *
    */
-  void error (const ACEXML_Char* msg);
+  void error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL);
 
   /**
    * Dispatch warnings to ErrorHandler.
    *
    */
-  void warning (const ACEXML_Char* msg);
+  void warning (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL);
 
   /**
    * Dispatch fatal errors to ErrorHandler.
    *
    */
-  void fatal_error (const ACEXML_Char* msg);
+  void fatal_error (const ACEXML_Char* msg ACEXML_ENV_ARG_DECL);
 
   /**
    * Dispatch prefix mapping calls to the ContentHandler.
@@ -646,7 +648,7 @@ private:
    */
   void prefix_mapping (const ACEXML_Char* prefix,
                        const ACEXML_Char* uri,
-                       int start);
+                       int start ACEXML_ENV_ARG_DECL);
   /**
    *  Parse a keyword.
    */
@@ -661,7 +663,7 @@ private:
   /**
    *  Pop the top element in the stack and replace current context with that.
    */
-  size_t pop_context (int GE_ref);
+  size_t pop_context (int GE_ref ACEXML_ENV_ARG_DECL);
 
   /**
    *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
@@ -680,13 +682,13 @@ private:
 
   /**
    * Check for a parameter entity reference. This is used to check for the
-   * occurrence of a PE Reference withing markupDecl. Additionally this
+   * occurence of a PE Reference withing markupDecl. Additionally this
    * function consumes any leading or trailing whitespace around the PE
    * Reference.
    *
    * @retval Number of whitespace characters skipped.
    */
-  int check_for_PE_reference (void);
+  int check_for_PE_reference (ACEXML_ENV_SINGLE_ARG_DECL);
 
   /**
    *  Reset the parser state.

@@ -51,17 +51,6 @@ ACE_Mutex::lock (void) const
   return this->lock_;
 }
 
-ACE_INLINE ACE_mutex_t &
-ACE_Mutex::lock (void)
-{
-// ACE_TRACE ("ACE_Mutex::lock");
-#if defined (ACE_HAS_PTHREADS) || defined(ACE_HAS_STHREADS)
-  if (this->process_lock_)
-    return *this->process_lock_;
-#endif /* ACE_HAS_PTHREADS || ACE_HAS_STHREADS */
-  return this->lock_;
-}
-
 ACE_INLINE int
 ACE_Mutex::tryacquire_write (void)
 {

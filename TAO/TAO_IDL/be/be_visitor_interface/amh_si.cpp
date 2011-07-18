@@ -11,6 +11,10 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           amh_si,
+           "$Id$")
+
 be_visitor_amh_interface_si::be_visitor_amh_interface_si (
     be_visitor_context *ctx
   )
@@ -114,23 +118,13 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
         {
           // Get the next AST decl node
           AST_Decl *d = si.item ();
-          AST_Decl::NodeType nt = d->node_type ();
 
-          if (nt == AST_Decl::NT_op)
+          if (d->node_type () == AST_Decl::NT_op)
             {
-              be_operation *op =
-                be_operation::narrow_from_decl (d);
-
-              /// These implied IDL operations are for stub-side only.
-              if (op->is_sendc_ami ())
-                {
-                  continue;
-                }
-
-              *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+              *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__;
 
-              *os << be_nl_2;
+              *os << be_nl << be_nl;
 
               // Generate code in the inline file.
               // Generate the static method corresponding to this method.
@@ -157,16 +151,16 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << ");" << be_uidt << be_uidt_nl
                   << "}";
             }
-          else if (nt == AST_Decl::NT_attr)
+          else if (d->node_type () == AST_Decl::NT_attr)
             {
-              be_attribute *attr = be_attribute::narrow_from_decl (d);
+              AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
               if (attr == 0)
                 {
                   return -1;
                 }
 
-              *os << be_nl_2;
+              *os << be_nl << be_nl;
 
               // Generate code in the inline file.
               // Generate the static method corresponding to this method.
@@ -197,7 +191,7 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
 
               if (!attr->readonly ())
                 {
-                  *os << be_nl_2;
+                  *os << be_nl << be_nl;
 
                   // Generate code in the inline file.
                   // Generate the static method corresponding to

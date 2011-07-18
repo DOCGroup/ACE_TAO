@@ -16,7 +16,6 @@
 
 #include "ace/Node.h"
 #include "ace/os_include/os_stddef.h"
-#include <iterator>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,16 +43,6 @@ template <class T, class C>
 class ACE_Unbounded_Set_Ex_Iterator
 {
 public:
-  /// Type definition of the container type.
-  typedef ACE_Unbounded_Set_Ex<T, C> container_type;
-
-  // = std::iterator_traits typedefs/traits.
-  typedef std::forward_iterator_tag                iterator_category;
-  typedef typename container_type::value_type      value_type;
-  typedef typename container_type::reference       reference;
-  typedef typename container_type::pointer         pointer;
-  typedef typename container_type::difference_type difference_type;
-
   // = Initialization method.
   ACE_Unbounded_Set_Ex_Iterator (ACE_Unbounded_Set_Ex<T, C> &s, bool end = false);
 
@@ -113,15 +102,6 @@ template <class T, class C>
 class ACE_Unbounded_Set_Ex_Const_Iterator
 {
 public:
-  typedef ACE_Unbounded_Set_Ex<T, C> container_type;
-
-  // = std::iterator_traits typedefs/traits.
-  typedef std::forward_iterator_tag                 iterator_category;
-  typedef typename container_type::const_value_type value_type;
-  typedef typename container_type::const_reference  reference;
-  typedef typename container_type::const_pointer    pointer;
-  typedef typename container_type::difference_type  difference_type;
-
   // = Initialization method.
   ACE_Unbounded_Set_Ex_Const_Iterator (const ACE_Unbounded_Set_Ex<T, C> &s,
                                        bool end = false);
@@ -225,15 +205,6 @@ public:
   typedef ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const_iterator;
   typedef C COMP;
   typedef ACE_Node<T, C> NODE;
-
-  // = STL typedefs/traits.
-  typedef T                   value_type;
-  typedef T const             const_value_type;
-  typedef value_type &        reference;
-  typedef const_value_type &  const_reference;
-  typedef value_type *        pointer;
-  typedef const_value_type *  const_pointer;
-  typedef ptrdiff_t           difference_type;
 
   // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy

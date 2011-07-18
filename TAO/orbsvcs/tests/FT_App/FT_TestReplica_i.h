@@ -62,7 +62,7 @@ public:
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_var & orb, const ACE_TCHAR*);
+  int init (CORBA::ORB_var & orb);
 
   /**
    * Prepare to exit.
@@ -193,12 +193,6 @@ private:
    * The CORBA object id assigned to this object.
    */
   PortableServer::ObjectId_var object_id_;
-
-  /**
-   * The CORBA object id assigned to this object.
-   */
-
-  const ACE_TCHAR* name_persistent_storage;
 
 };
 

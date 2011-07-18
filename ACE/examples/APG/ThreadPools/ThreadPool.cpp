@@ -12,7 +12,6 @@
 #include "ace/Method_Request.h"
 #include "ace/Future.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Condition_T.h"
 
 class Worker;
 
@@ -32,8 +31,7 @@ public:
 
   virtual int svc (void)
   {
-    ACE_Thread_ID id;
-    thread_id_ = id;
+    thread_id_ = ACE_Thread::self ();
     while (1)
       {
         ACE_Message_Block *mb = 0;
@@ -57,15 +55,15 @@ public:
   }
   // Listing 2
 
-  const ACE_Thread_ID& thread_id (void)
+  ACE_thread_t thread_id (void)
   {
-    return this->thread_id_;
+    return thread_id_;
   }
 
 private:
   void process_message (ACE_Message_Block *mb)
   {
-    ACE_TRACE ("Worker::process_message");
+    ACE_TRACE (ACE_TEXT ("Worker::process_message"));
     int msgId;
     ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
     mb->release ();
@@ -80,7 +78,7 @@ private:
   }
 
   IManager *manager_;
-  ACE_Thread_ID thread_id_;
+  ACE_thread_t thread_id_;
 };
 
 // Listing 1 code/ch16
@@ -92,12 +90,12 @@ public:
   Manager ()
     : shutdown_(0), workers_lock_(), workers_cond_(workers_lock_)
   {
-    ACE_TRACE ("Manager::Manager");
+    ACE_TRACE (ACE_TEXT ("Manager::Manager"));
   }
 
   int svc (void)
   {
-    ACE_TRACE ("Manager::svc");
+    ACE_TRACE (ACE_TEXT ("Manager::svc"));
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Manager started\n")));
 
@@ -138,14 +136,15 @@ public:
 
   int shut_down (void);
 
-  const ACE_Thread_ID& thread_id (Worker *worker);
+  ACE_thread_t thread_id (Worker *worker);
 
   virtual int return_to_work (Worker *worker)
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex,
                       worker_mon, this->workers_lock_, -1);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Worker %t returning to work.\n")));
+                ACE_TEXT ("(%t) Worker %d returning to work.\n"),
+                worker->thr_mgr ()->thr_self ()));
     this->workers_.enqueue_tail (worker);
     this->workers_cond_.signal ();
 
@@ -161,7 +160,7 @@ private:
                       -1);
     for (int i = 0; i < POOL_SIZE; i++)
       {
-        Worker *worker = 0;
+        Worker *worker;
         ACE_NEW_RETURN (worker, Worker (this), -1);
         this->workers_.enqueue_tail (worker);
         worker->activate ();
@@ -188,7 +187,7 @@ int Manager::done (void)
 int
 Manager::shut_down (void)
 {
-  ACE_TRACE ("Manager::shut_down");
+  ACE_TRACE (ACE_TEXT ("Manager::shut_down"));
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
     this->workers_.begin ();
   Worker **worker_ptr = 0;
@@ -196,15 +195,12 @@ Manager::shut_down (void)
     {
       iter.next (worker_ptr);
       Worker *worker = (*worker_ptr);
-      ACE_Thread_ID id = thread_id (worker);
-      char buf [65];
-      id.to_string (buf);
       ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("(%t) Attempting shutdown of %C\n"),
-                 buf));
+                 ACE_TEXT ("(%t) Attempting shutdown of %d\n"),
+                 thread_id (worker)));
 
       // Send the hangup message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb;
       ACE_NEW_RETURN
         (mb,
          ACE_Message_Block(0,
@@ -217,8 +213,8 @@ Manager::shut_down (void)
 
       ACE_ASSERT (worker->msg_queue ()->is_empty ());
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Worker %C shut down.\n"),
-                  buf));
+                  ACE_TEXT ("(%t) Worker %d shut down.\n)"),
+                  thread_id (worker)));
       delete worker;
     }
   while (iter.advance ());
@@ -228,11 +224,12 @@ Manager::shut_down (void)
   return 0;
 }
 
-const ACE_Thread_ID&
+ACE_thread_t
 Manager::thread_id (Worker *worker)
 {
   return worker->thread_id ();
 }
+
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -243,7 +240,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN

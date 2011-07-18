@@ -6,148 +6,113 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $nfs = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $sup = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $con = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $flt = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+use PerlACE::Run_Test;
+use strict;
 
 my $persistent_test = 0;
-my $port = $nfs->RandomPort ();
-my $host = $nfs->HostName ();
-my $nts_ref = "NotifyService=iioploc://$host:$port/NotifyService";
-my $consumer_runtime = 5;
+my $notifyior = PerlACE::LocalFile("ecf.ior");
+my $notify2ior = PerlACE::LocalFile("ecf2.ior");
+my $notify_conf = PerlACE::LocalFile("ecf$PerlACE::svcconf_ext");
+my $port = PerlACE::uniqueid () + 10005;
+my $nts_ref = "NotifyService=iioploc://localhost:$port/NotifyService";
 my $svcconf = "";
+my $consumer_runtime = 5;
+my $persistent_file = PerlACE::LocalFile ("persistency.notif.xml");
+my $persistent_file_backup = PerlACE::LocalFile ("persistency.notif.000");
 
-my $nfsiorfile = "ecf.ior";
-#my $nfs2iorfile = "ecf2.ior";
-my $nfsconffile = "ecf$PerlACE::svcconf_ext";
-#my $persistfile = "persistency.notif.xml";
-#my $persistfilebackup = "persistency.notif.000";
-
-my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
-my $nfs_nfsconffile = $nfs->LocalFile ($nfsconffile);
-$nfs->DeleteFile ($nfsiorfile);
 
 if ($#ARGV >= 0 && $ARGV[0] eq '-p') {
-    $persistent_test = 1;
-    $svcconf = " -ORBSvcConf $nfs_nfsconffile";
-    $consumer_runtime = 20;
+  $persistent_test = 1;
+  $svcconf = " -ORBSvcConf $notify_conf";
+  $consumer_runtime = 20;
+}
+  
+my $NTS = new PerlACE::Process("../../../Notify_Service/Notify_Service",
+                              "-ORBDebugLevel 1 ".
+                              "-NoNameSvc -IORoutput $notifyior $svcconf " .
+                              "-ORBEndpoint iiop://localhost:$port");
+my $SUPPLIER = new PerlACE::Process("supplier", "$nts_ref");
+my $CONSUMER = new PerlACE::Process("consumer", "$nts_ref -t $consumer_runtime");
+my $FILTER = new PerlACE::Process("filter", "$nts_ref");
+
+unlink($notifyior, $persistent_file, $persistent_file_backup);
+
+
+print "\n*********** Starting the Notify_Service  ***********\n\n";
+$NTS->Spawn();
+if (PerlACE::waitforfile_timed($notifyior, 20) == -1) {
+  print STDERR "ERROR: waiting for the notify service to start\n";
+  $NTS->Kill();
+  exit(1);
 }
 
-my $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
-                               "-ORBDebugLevel $debug_level ".
-                               "-NoNameSvc -IORoutput $nfs_nfsiorfile $svcconf " .
-                               "-ORBEndpoint iiop://$host:$port");
-my $SUP = $sup->CreateProcess ("supplier", "$nts_ref");
-my $CON = $con->CreateProcess ("consumer", "$nts_ref -t $consumer_runtime");
-my $FLT = $flt->CreateProcess ("filter", "$nts_ref");
+if ($persistent_test == 0)
+{
+  print "\n*********** Starting the filter test ***********\n\n";
+  my $filter = $FILTER->SpawnWaitKill (10);
+  if ($filter != 0) {
+    $NTS->Kill();
+    exit(1);
+  }
 
-
-print "\n*********** Starting the Notify Service  ***********\n\n";
-$NFS_status = $NFS->Spawn ();
-if ($NFS_status != 0) {
-    print STDERR "ERROR: Notify Service returned $NFS_status\n";
-    exit 1;
-}
-if ($nfs->WaitForFileTimed ($nfsiorfile,$nfs->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$nfs_nfsiorfile>\n";
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-if ($persistent_test == 0) {
-    print "\n*********** Starting the filter test ***********\n\n";
-    $FLT_status = $FLT->SpawnWaitKill ($flt->ProcessStartWaitInterval());
-    if ($FLT_status != 0) {
-        print STDERR "ERROR: Filter returned $FLT_status\n";
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
-    }
-    print "\n*********** Filter test passed ***********\n\n";
+  print "\n*********** Filter test passed ***********\n\n";
 }
 
 print "\n*********** Starting the notification Consumer ***********\n\n";
-print STDERR $CON->CommandLine (). "\n";
+print STDERR $CONSUMER->CommandLine (). "\n";
 
-$CON_status = $CON->Spawn ();
-if ($CON_status != 0) {
-    print STDERR "ERROR: Consumer returned $CON_status\n";
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+my $client = $CONSUMER->Spawn();
+if ($client  != 0) {
+  $NTS->Kill();
+  exit(1);
 }
 
 sleep(5);
 
-if ($persistent_test == 1) {
-    print "*********** Killing the first Notify Service   ***********\n";
-    $NFS_status = $NFS->TerminateWaitKill ($nfs->ProcessStopWaitInterval());
-    if ($NFS_status != 0) {
-        print STDERR "ERROR: Notification Service returned $NFS_status\n";
-        $CON->Kill (); $CON->TimedWait (1);
-        exit 1;
-    }
-    sleep(1);
+if ($persistent_test == 1)
+{
+  print "*********** Killing the first Notify_Service   ***********\n";
+  $NTS->Kill();
+  sleep(1);
 
-    $nfs->DeleteFile ($nfsiorfile);
-
-    print "*********** Starting the second Notify Service ***********\n";
-    print STDERR $NFS->CommandLine (). "\n";
-    $NFS_status = $NFS->Spawn ();
-    if ($NFS_status != 0) {
-        print STDERR "ERROR: Notify Service returned $NFS_status\n";
-        $CON->Kill (); $CON->TimedWait (1);
-        exit 1;
-    }
-    if ($nfs->WaitForFileTimed ($nfsiorfile,$nfs->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$nfs_nfsiorfile>\n";
-        $CON->Kill (); $CON->TimedWait (1);
-        $NFS->Kill (); $NFS->TimedWait (1);
-        exit 1;
-    }
-
-    sleep(5);
+  unlink ($notifyior);
+  
+  print "*********** Starting the second Notify_Service ***********\n";
+print STDERR $NTS->CommandLine (). "\n";
+  $NTS->Spawn();
+  if (PerlACE::waitforfile_timed($notifyior, 20) == -1) {
+    print STDERR "ERROR: waiting for the notify service to start\n";
+    $SUPPLIER->Kill();
+    exit(1);
+  }
+  
+ sleep(5); 
 }
 
 print "\n*********** Starting the notification Supplier ***********\n\n";
-print STDERR $SUP->CommandLine (). "\n";
+print STDERR $SUPPLIER->CommandLine (). "\n";
 
-$SUP_status = $SUP->Spawn ();
-if ($SUP_status != 0) {
-    print STDERR "ERROR: Supplier returned $SUP_status\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+my $server = $SUPPLIER->Spawn();
+if ($server  != 0) {
+  $NTS->Kill();
+  $CONSUMER->Kill();
+  exit(1);
 }
 
-$SUP_status = $SUP->WaitKill ($sup->ProcessStopWaitInterval());
-if ($SUP_status != 0) {
-    print STDERR "ERROR: Supplier returned $SUP_status\n";
-    $status =1;
+$server = $SUPPLIER->WaitKill(10);
+if ($server  != 0) {
+  $NTS->Kill();
+  $CONSUMER->Kill();
+  exit(1);
 }
 
-$CON_status = $CON->WaitKill ($con->ProcessStopWaitInterval()+$consumer_runtime);
-if ($CON_status != 0) {
-    print STDERR "ERROR: Consumer returned $CON_status\n";
-    $status =1;
+$client = $CONSUMER->WaitKill($consumer_runtime + 10);
+if ($client  != 0) {
+  $NTS->Kill();
+  exit(1);
 }
 
-$NFS_status = $NFS->TerminateWaitKill ($nfs->ProcessStopWaitInterval());
-if ($NFS_status != 0) {
-    print STDERR "ERROR: Notification Service returned $NFS_status\n";
-    $status = 1;
-}
+$NTS->Kill();
 
-$nfs->DeleteFile ($nfsiorfile);
-
-exit $status;
+#unlink($notifyior, $persistent_file, $persistent_file_backup);
+exit(0);

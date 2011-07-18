@@ -3,8 +3,7 @@
 workspace {
   ccm
   ciao
-  $(DANCE_ROOT)
-  exclude {
-    $(DANCE_ROOT)/tests
-  }
+  DAnCE
+  tools/Config_Handlers
+  tools/XML
 }

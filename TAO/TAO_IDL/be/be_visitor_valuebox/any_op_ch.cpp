@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for a valuebox in the client
- *  header.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for a valuebox in the client
+//    header.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuebox,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Valuebox visitor for generating Any operator declarations.
@@ -41,8 +50,8 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_module *module = 0;
 
@@ -81,13 +90,12 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl_2
-          << "#else\n\n";
+      // emit #else
+      *os << "#else\n\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
-
+  
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
 
@@ -98,7 +106,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
       << node->name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
-
+  
   if (module != 0)
     {
       *os << "\n\n#endif";

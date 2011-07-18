@@ -82,6 +82,7 @@ test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 
 test_impl::~test_impl (void)
 {
+  this->orb_->shutdown (0);
 }
 
 void
@@ -159,7 +160,7 @@ test_impl::start (void)
 void
 test_impl::finish (void)
 {
-  this->orb_->shutdown (0);
+  this->_remove_ref ();
 }
 
 

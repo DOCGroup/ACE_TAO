@@ -11,6 +11,10 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_interface,
+           amh_ch,
+           "$Id$")
+
 be_visitor_amh_interface_ch::be_visitor_amh_interface_ch (
     be_visitor_context *ctx
   )
@@ -36,6 +40,9 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
   node->gen_var_out_seq_decls ();
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  // Now the interface definition itself.
+  os->gen_ifdef_macro (node->flat_name ());
 
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()

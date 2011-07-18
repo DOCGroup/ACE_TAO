@@ -10,6 +10,10 @@
 
 #include "ace/Dynamic_Service.h"
 
+ACE_RCSID (Event,
+           EC_Gateway_IIOP,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
@@ -254,7 +258,7 @@ TAO_EC_Gateway_IIOP::open_i (
     this->consumer_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
-  sub.is_gateway = true;
+  sub.is_gateway = 1;
 
   // Change the RT_Info in the consumer QoS.
   // On the same loop we discover the subscriptions by event source,
@@ -312,7 +316,7 @@ TAO_EC_Gateway_IIOP::open_i (
         {
           RtecEventChannelAdmin::SupplierQOS pub;
           pub.publications.length (sub.dependencies.length () + 1);
-          pub.is_gateway = true;
+          pub.is_gateway = 1;
 
           int c = 0;
 
@@ -352,7 +356,7 @@ TAO_EC_Gateway_IIOP::open_i (
   // then connect to the default consumer proxy.
   RtecEventChannelAdmin::SupplierQOS pub;
   pub.publications.length (sub.dependencies.length () + 1);
-  pub.is_gateway = true;
+  pub.is_gateway = 1;
   int c = 0;
   for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
     {

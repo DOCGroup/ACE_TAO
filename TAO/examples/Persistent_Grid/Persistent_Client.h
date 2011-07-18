@@ -1,18 +1,21 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Persistent_Client.h
- *
- *  $Id$
- *
- *  This class implements the interface calls for RMI.
- *
- *
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/examples/Persistent_Client
+//
+// = FILENAME
+//    Persistent_Client_i.h
+//
+// = DESCRIPTION
+//    This class implements the interface calls for RMI.
+//
+// = AUTHOR
+//   Balachandran Natarajan <bala@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef PERSISTENT_CLIENT_I_H
 #define PERSISTENT_CLIENT_I_H
@@ -20,42 +23,40 @@
 #include "Simple_util.h"
 #include "GridC.h"
 
-/**
- * @class Persistent_Client_i
- *
- * @brief Grid_Client interface subclass.
- *
- * This class implements the interface between the interface
- * objects and the client .
- */
 class Persistent_Client_i
 {
+  // = TITLE
+  //   Grid_Client interface subclass.
+  //
+  // = DESCRIPTION
+  //   This class implements the interface between the interface
+  //   objects and the client .
 public:
   // = Initialization and termination methods.
-  /// Constructor
   Persistent_Client_i (void);
+  // Constructor
 
-  /// Destructor
   virtual ~Persistent_Client_i (void);
+  // Destructor
 
-  /// Execute the methods.
   virtual int run (const char *, int, ACE_TCHAR *[]);
+  // Execute the methods.
 
-  /// Parses the command line arguments.
   virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  // Parses the command line arguments.
 
 private:
-  /// Instantiate the client object.
   Client<Grid_Factory, Grid_Factory_var> client;
+  // Instantiate the client object.
 
-  /// Height of the grid
   CORBA::Short height_;
+  // Height of the grid
 
-  /// Width of the grid.
   CORBA::Short width_;
+  // Width of the grid.
 
-  /// Flag for the deletion of memory
   CORBA::Short remove_;
+  // Flag for the deletion of memory
 };
 
 #endif /* PERSISTENT_CLIENT_I_H */

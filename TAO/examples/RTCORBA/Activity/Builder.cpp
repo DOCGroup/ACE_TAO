@@ -40,8 +40,8 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           task_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (task_list_, Periodic_Task*[task_count_], -1);
           ACE_OS::memset (this->task_list_,
-                          0,
-                          this->task_count_ * sizeof (this->task_list_[0]));
+                          this->task_count_ * sizeof (this->task_list_[0]),
+                          0);
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobCount"))))
@@ -49,8 +49,8 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           job_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
           ACE_OS::memset (this->job_list_,
-                          0,
-                          this->job_count_ * sizeof (this->job_list_[0]));
+                          this->job_count_ * sizeof (this->job_list_[0]),
+                          0);
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POACount"))))
@@ -58,8 +58,8 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           poa_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);
           ACE_OS::memset (this->poa_list_,
-                          0,
-                          this->poa_count_ * sizeof (this->poa_list_[0]));
+                          this->poa_count_ * sizeof (this->poa_list_[0]),
+                          0);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadTask")) == 0)
@@ -119,7 +119,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
           else
             return -1;
         }
-      else
+        else
         {
           arg_shifter.ignore_arg ();
         }
@@ -145,7 +145,7 @@ Builder::fini (void)
   delete [] this->job_list_;
 
   for (count = 0; count < this->poa_count_; ++count)
-    delete this->poa_list_[count];
+      delete this->poa_list_[count];
   delete [] this->poa_list_;
 
   already_cleaned = true;

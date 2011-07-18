@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Server_ORBInitializer.h"
 #include "IORInterceptor.h"
@@ -9,6 +8,12 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (PolicyFactory,
+           Server_ORBInitializer,
+           "$Id$")
+
 
 void
 Server_ORBInitializer::pre_init (

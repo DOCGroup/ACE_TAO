@@ -12,6 +12,11 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_strings.h"
 
+
+ACE_RCSID (EventChannel,
+           Replication_Service,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
@@ -70,7 +75,7 @@ namespace FTRTEC
       TAO_FTRTEC::Log(3, ACE_TEXT("Basic replication strategy\n"));
     }
 
-     ACE_auto_ptr_reset (replication_strategy, strategy);
+     ACE_AUTO_PTR_RESET (replication_strategy, strategy, Replication_Strategy);
 
       try
       {
@@ -106,7 +111,7 @@ namespace FTRTEC
     ACE_ASSERT(strategy);
 
     if (replication_strategy.get() != strategy) {
-      ACE_auto_ptr_reset(replication_strategy, strategy);
+      ACE_AUTO_PTR_RESET(replication_strategy, strategy, Replication_Strategy);
     }
   }
 

@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    module.idl
- *
- *  $Id$
- *
- *  Tests of module IDL constructs
- *
- *
- *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    module.idl
+//
+// = DESCRIPTION
+//    Tests of module IDL constructs
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
 
 module mod1
 {

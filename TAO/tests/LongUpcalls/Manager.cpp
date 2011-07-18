@@ -5,6 +5,10 @@
 #include "Manager.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID (LongUpcalls,
+           Manager,
+           "$Id$")
+
 static void
 validate_connection (Test::Controller_ptr controller)
 {

@@ -5,6 +5,10 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "../Utils/activate_with_id.h"
 
+ACE_RCSID (EventChannel,
+           TAO_FTEC_ProxyPushConsumer,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const TAO_FTEC_ProxyPushConsumer::RollbackOperation
@@ -16,13 +20,15 @@ TAO_FTEC_ProxyPushConsumer::TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Bas
 {
 }
 
+
 const FtRtecEventChannelAdmin::ObjectId&
 TAO_FTEC_ProxyPushConsumer::id() const
 {
   return object_id_.in();
 }
 
-/// Activate in the POA
+
+  /// Activate in the POA
 void
 TAO_FTEC_ProxyPushConsumer::activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &result)
@@ -40,7 +46,7 @@ TAO_FTEC_ProxyPushConsumer::activate (
   }
 }
 
-// = The RtecEventChannelAdmin::ProxyPushConsumer methods...
+    // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
                 const RtecEventChannelAdmin::SupplierQOS& qos)
@@ -59,7 +65,7 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
 
   try{
     FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-    ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
+    ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
     svc->replicate_request(update,
                            &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_consumer);
@@ -81,7 +87,7 @@ void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (void)
   Inherited::disconnect_push_consumer();
 
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
-  ACE_READ_GUARD (FTRTEC::Replication_Service, locker, *svc);
+  ACE_Read_Guard<FTRTEC::Replication_Service> locker(*svc);
 
   svc->replicate_request(update, 0);
 }

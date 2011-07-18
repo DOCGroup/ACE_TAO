@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    repo_id_mod.idl
- *
- *  $Id$
- *
- *  This file contains examples of IDL code that has
- *  caused problems in the past for the TAO IDL
- *  compiler. This test is to make sure the problems
- *  stay fixed.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    repo_id_mod.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has 
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
 
 module gleep
 {
@@ -46,7 +49,6 @@ module gleep
 
 // Tests the handling of extra whitespace as well as the version setting.
 #    pragma version     gleep::floop::schmendrick    524.23
-
     local interface schmendrick {};
 
     module verklempt

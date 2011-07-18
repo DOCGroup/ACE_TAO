@@ -25,7 +25,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CosNotifyChannelAdmin::AdminID adminid;
     CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-      CosNotifyChannelAdmin::AND_OP;
+      CosNotifyChannelAdmin::OR_OP;
 
     CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
       ec->new_for_consumers(ifgop,
@@ -35,10 +35,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in());
 
-    PortableServer::Servant_var<EventSequenceConsumer_i> servant =
-      new EventSequenceConsumer_i(orb.in());
+    EventSequenceConsumer_i servant(orb.in());
 
-    PortableServer::ObjectId_var objectId = poa->activate_object(servant.in());
+    PortableServer::ObjectId_var objectId = poa->activate_object(&servant);
 
     obj = poa->id_to_reference (objectId.in());
     CosNotifyComm::SequencePushConsumer_var consumer =

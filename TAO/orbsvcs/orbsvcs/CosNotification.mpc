@@ -17,7 +17,7 @@ project(CosNotification_IDL) : orbsvcslib, orbsvcs_output, install, event, tao_v
 
 project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
   sharedname   = TAO_CosNotification
-  dynamicflags += TAO_NOTIFY_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_BUILD_DLL
   tagchecks   += Notify
   after       += CosNotification_IDL
 
@@ -41,7 +41,8 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
     CosNotifyChannelAdminC.h
     NotifyExtC.h
     Event_ForwarderC.h
-    Notify
+    Notify/Notify_Extensions.h
+    Notify/notify_export.h
   }
 
   Inline_Files {
@@ -54,7 +55,6 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
   }
 
   Template_Files {
-    Notify
   }
 
   Resource_Files {
@@ -69,7 +69,7 @@ project(CosNotification) : orbsvcslib, orbsvcs_output, install, event {
 
 project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notification, event_skel, portableserver {
   sharedname   = TAO_CosNotification_Skel
-  dynamicflags += TAO_NOTIFY_SKEL_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_SKEL_BUILD_DLL
   tagchecks   += Notify
 
   IDL_Files {
@@ -113,7 +113,7 @@ project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notificatio
 
 project(CosNotification_Serv) : orbsvcslib, orbsvcs_output, svc_utils, install, notification_skel, dynamicany, etcl, messaging{
   sharedname   = TAO_CosNotification_Serv
-  dynamicflags += TAO_NOTIFY_SERV_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_SERV_BUILD_DLL
   tagchecks   += Notify
   after       += Messaging
 
@@ -227,7 +227,7 @@ project(CosNotification_Serv) : orbsvcslib, orbsvcs_output, svc_utils, install, 
 
 project(CosNotification_Persist) : notification_serv, orbsvcs_output, install, acexml {
   sharedname   = TAO_CosNotification_Persist
-  dynamicflags += TAO_NOTIFY_PERSIST_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_PERSIST_BUILD_DLL
   tagchecks   += Notify
 
   IDL_Files {
@@ -250,7 +250,7 @@ project(CosNotification_Persist) : notification_serv, orbsvcs_output, install, a
 
 project(CosNotification_MC): tao_versioning_idl_defaults, orbsvcs_output, naming, tao_monitor, iortable, install {
   sharedname   = TAO_CosNotification_MC
-  dynamicflags += TAO_NOTIFY_MC_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_MC_BUILD_DLL
   tagchecks   += Notify
 
   IDL_Files {
@@ -278,7 +278,7 @@ project(CosNotification_MC): tao_versioning_idl_defaults, orbsvcs_output, naming
 
 project(CosNotification_MC_Ext): notification_serv, orbsvcs_output, notification_mc, tao_monitor, install {
   sharedname   = TAO_CosNotification_MC_Ext
-  dynamicflags += TAO_NOTIFY_MC_EXT_BUILD_DLL
+  dynamicflags = TAO_NOTIFY_MC_EXT_BUILD_DLL
   tagchecks   += Notify
 
 

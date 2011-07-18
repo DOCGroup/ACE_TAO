@@ -1,17 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *   This is a client that uses buffered oneways.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+// ================================================================
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is a client that uses buffered oneways.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+// ================================================================
 
 #include "testC.h"
 #include "tao/Messaging/Messaging.h"
@@ -20,7 +20,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-
+ACE_RCSID(Buffered_Oneways, client, "$Id$")
 
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var base =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (base.in ());

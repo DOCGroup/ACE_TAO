@@ -14,13 +14,12 @@
 #define ACE_HTBP_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "HTBP_Export.h"
-
+#include "ace/OS.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
+#include "HTBP_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

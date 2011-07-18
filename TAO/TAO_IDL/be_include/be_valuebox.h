@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_valuebox.h
- *
- *  $Id$
- *
- *  Extension of class AST_Valuebox that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_valuebox.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Valuebox that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
 #ifndef TAO_BE_VALUEBOX_H
 #define TAO_BE_VALUEBOX_H
@@ -26,8 +30,12 @@ class be_valuebox : public virtual AST_ValueBox,
                     public virtual be_type
 {
 public:
+  be_valuebox (void);
+  // Default constructor.
+
   be_valuebox ( AST_Type *boxed_type,
                 UTL_ScopedName *n );
+  // Constructor.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
@@ -36,6 +44,7 @@ public:
   virtual void destroy (void);
 
   // Narrowing
+
   DEF_NARROW_FROM_DECL (be_valuebox);
 };
 

@@ -6,205 +6,112 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-use Getopt::Std;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $sup = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $con = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $rel = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+use PerlACE::Run_Test;
+use File::Copy;
 
 $experiment_timeout = 60;
 $startup_timeout = 60;
+$naming_ior = PerlACE::LocalFile ("naming.ior");
+$consumer_ior = PerlACE::LocalFile ("consumer.ior");
+$relay_ior = PerlACE::LocalFile ("relay.ior");
 
-$nsiorfile = "naming.ior";
-$reliorfile = "relay.ior";
-$coniorfile = "consumer.ior";
-$supconffile = "supplier.conf";
-$conconffile = "consumer.conf";
-$relconffile = "relay.conf";
+$supplier_conf = PerlACE::LocalFile ("supplier.conf");
+$consumer_conf = PerlACE::LocalFile ("consumer.conf");
+$relay_conf = PerlACE::LocalFile ("relay.conf");
 
-$chighdat = "c_high.dat";
-$shighdat = "s_high.dat";
+$status = 0;
 
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $rel_nsiorfile = $rel->LocalFile ($nsiorfile);
-my $sup_nsiorfile = $sup->LocalFile ($nsiorfile);
-my $con_nsiorfile = $con->LocalFile ($nsiorfile);
-my $rel_reliorfile = $rel->LocalFile ($reliorfile);
-my $sup_reliorfile = $sup->LocalFile ($reliorfile);
-my $con_coniorfile = $con->LocalFile ($coniorfile);
-my $rel_coniorfile = $rel->LocalFile ($coniorfile);
-my $sup_supconffile = $sup->LocalFile ($supconffile);
-my $con_conconffile = $con->LocalFile ($conconffile);
-my $rel_relconffile = $rel->LocalFile ($relconffile);
-my $con_chighdat = $con->LocalFile ($chighdat);
-my $sup_shighdat = $sup->LocalFile ($shighdat);
-$ns->DeleteFile ($nsiorfile);
-$rel->DeleteFile ($nsiorfile);
-$sup->DeleteFile ($nsiorfile);
-$con->DeleteFile ($nsiorfile);
-$con->DeleteFile ($coniorfile);
-$rel->DeleteFile ($coniorfile);
-$rel->DeleteFile ($reliorfile);
-$sup->DeleteFile ($reliorfile);
-$con->DeleteFile ($chighdat);
-$sup->DeleteFile ($shighdat);
+$Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service",
+                                "-o $naming_ior");
 
-$NS = $ns->CreateProcess ("../../../../../../Naming_Service/tao_cosnaming",
-                          "-o $ns_nsiorfile");
+$Supplier = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$SUP = $sup->CreateProcess ("../../../../Driver/Notify_Tests_Driver");
-$SUP_Args = "-ORBDebugLevel $debug_level ".
-            "-ORBInitRef NameService=file://$sup_nsiorfile ".
-            "-IORinput file://$sup_reliorfile ".
-            "-ORBSvcConf $sup_supconffile";
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$relay_ior -ORBSvcConf $supplier_conf";
 
-$CON = $con->CreateProcess ("../../../../Driver/Notify_Tests_Driver");
-$CON_Args = "-ORBInitRef NameService=file://$con_nsiorfile ".
-            "-IORoutput $con_coniorfile ".
-            "-ORBSvcConf $con_conconffile";
+$Consumer = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$REL = $rel->CreateProcess ("../../../../Driver/Notify_Tests_Driver");
-$REL_Args = "-ORBInitRef NameService=file://$rel_nsiorfile ".
-            "-IORoutput $rel_reliorfile ".
-            "-IORinput file://$rel_coniorfile ".
-            "-ORBSvcConf $rel_relconffile";
+$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf";
 
-$NS_status = $NS->Spawn ();
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()+$startup_timeout) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($rel->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$rel_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($sup->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$sup_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($con->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$con_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+$Relay = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
+
+$Relay_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $relay_ior -IORinput file://$consumer_ior -ORBSvcConf $relay_conf";
+
+unlink $naming_ior;
+$Naming->Spawn ();
+
+if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the naming service to start\n";
+  $Naming->Kill ();
+  exit 1;
 }
 
-$CON->Arguments ($CON_Args);
-$args = $CON->Arguments ();
+unlink $consumer_ior;
+$Consumer->Arguments ($Consumer_Args);
+$args = $Consumer->Arguments ();
 print STDERR "Running Consumer with arguments: $args\n";
-$CON_status = $CON->Spawn ();
-if ($CON_status != 0) {
-    print STDERR "ERROR: Consumer returned $CON_status\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($con->WaitForFileTimed ($coniorfile,$con->ProcessStartWaitInterval()+$startup_timeout) == -1) {
-    print STDERR "ERROR: cannot find file <$con_coniorfile>\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($con->GetFile ($coniorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$con_coniorfile>\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($rel->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$rel_nsiorfile>\n";
-    $CON->Kill (); $CON->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+$status = $Consumer->Spawn ();
+
+if (PerlACE::waitforfile_timed ($consumer_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the consumer to start\n";
+  $Naming->Kill ();
+  exit 1;
 }
 
-$REL->Arguments ($REL_Args);
-$args = $REL->Arguments ();
+unlink $relay_ior;
+$Relay->Arguments ($Relay_Args);
+$args = $Relay->Arguments ();
 print STDERR "Running Relay with arguments: $args\n";
-$REL_status = $REL->Spawn ();
-if ($REL_status != 0) {
-    print STDERR "ERROR: Relay returned $REL_status\n";
-    $REL->Kill (); $REL->TimedWait (1);
-    $CON->Kill (); $CON->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($rel->WaitForFileTimed ($reliorfile,$rel->ProcessStartWaitInterval()+$startup_timeout) == -1) {
-    print STDERR "ERROR: cannot find file <$rel_reliorfile>\n";
-    $REL->Kill (); $REL->TimedWait (1);
-    $CON->Kill (); $CON->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+$status = $Relay->Spawn ();
+
+if (PerlACE::waitforfile_timed ($relay_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the Relay to start\n";
+  $Consumer->Kill ();
+  $Naming->Kill ();
+  exit 1;
 }
 
-$SUP->Arguments ($SUP_Args);
-$args = $SUP->Arguments ();
+$Supplier->Arguments ($Supplier_Args);
+$args = $Supplier->Arguments ();
 print STDERR "Running Supplier with arguments: $args\n";
-$SUP_status = $SUP->SpawnWaitKill ($sup->ProcessStartWaitInterval()+$experiment_timeout);
-if ($SUP_status != 0) {
-    print STDERR "ERROR: Supplier returned $SUP_status\n";
-    $status = 1;
-}
+$Supplier->SpawnWaitKill ($experiment_timeout);
 
-$SUP_status = $SUP->TerminateWaitKill ($sup->ProcessStopWaitInterval());
-if ($SUP_status != 0) {
-    print STDERR "ERROR: Closing Supplier returned $SUP_status\n";
-    $status = 1;
-}
+if ($status != 0)
+  {
+    print STDERR "ERROR: Supplier returned $status\n";
+    $Supplier->Kill ();
+    $Notification->Kill ();
+    $Naming->Kill ();
+    exit 1;
+  }
 
-$CON_status = $CON->TerminateWaitKill ($con->ProcessStopWaitInterval());
-if ($CON_status != 0) {
-    print STDERR "ERROR: Closing Consumer returned $CON_status\n";
-    $status = 1;
-}
-$REL_status = $REL->TerminateWaitKill ($rel->ProcessStopWaitInterval());
-if ($REL_status != 0) {
-    print STDERR "ERROR: Closing Relay returned $REL_status\n";
-    $status = 1;
-}
+$Supplier->Kill ();
+$Consumer->Kill ();
+$Relay->Kill ();
 
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-if ($NS_status != 0) {
-    print STDERR "ERROR: Closing Name Service returned $NS_status\n";
-    $status = 1;
-}
+unlink $consumer_ior;
+unlink $relay_ior;
 
-if ($#ARGV > -1) {
-    print STDERR "Results are not saved in $ARGV[0]\n";
-}
+$Naming->Kill ();
+unlink $naming_ior;
 
-$ns->DeleteFile ($nsiorfile);
-$rel->DeleteFile ($nsiorfile);
-$sup->DeleteFile ($nsiorfile);
-$con->DeleteFile ($nsiorfile);
-$con->DeleteFile ($coniorfile);
-$rel->DeleteFile ($coniorfile);
-$rel->DeleteFile ($reliorfile);
-$sup->DeleteFile ($reliorfile);
-$con->DeleteFile ($chighdat);
-$sup->DeleteFile ($shighdat);
+if ($#ARGV > -1)
+  {
+    $results_directory = $ARGV[0];
+    print STDERR "Saving results to $results_directory\n";
+
+    mkdir $results_directory, 0777;
+
+    @list=glob("*.dat");
+    for $file (@list)
+      {
+        copy ("$file", "$results_directory/$file");
+      }
+
+    @list=glob("*.conf");
+    for $file (@list)
+      {
+        copy ("$file", "$results_directory/$file");
+      }
+  }
 
 exit $status;

@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    bd_array_seq.cpp
- *
- *  $Id$
- *
- *  tests bounded array sequences
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    bd_array_seq.cpp
+//
+// = DESCRIPTION
+//    tests bounded array sequences
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "helper.h"
 #include "bd_array_seq.h"
+
+ACE_RCSID (Param_Test,
+           bd_array_seq,
+           "$Id$")
 
 const CORBA::ULong MAX_ARRAYSEQ_LEN = 1;
 

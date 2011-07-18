@@ -9,6 +9,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID(server, HTTP_Helpers, "$Id$")
+
 // = Static initialization.
 const char *const
 HTTP_Helper::months_[12]=
@@ -101,7 +103,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   {
 
 #if !defined (ACE_HAS_REENTRANT_LIBC)
-    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, HTTP_Helper::mutex_, -1));
+    ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> g (HTTP_Helper::mutex_));
 #endif /* NOT ACE_HAS_REENTRANT_LIBC */
 
     return ACE_OS::mktime (&tms);
@@ -113,7 +115,7 @@ HTTP_Helper::HTTP_date (void)
 {
   if (HTTP_Helper::date_string_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, 0));
+      ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> m (HTTP_Helper::mutex_));
 
       if (HTTP_Helper::date_string_ == 0)
         {
@@ -385,7 +387,7 @@ HTTP_Status_Code::instance (void)
 {
   if (HTTP_Status_Code::instance_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, lock_, 0));
+      ACE_MT (ACE_Guard<ACE_SYNCH_MUTEX> g (lock_));
 
       if (HTTP_Status_Code::instance_ == 0)
         {

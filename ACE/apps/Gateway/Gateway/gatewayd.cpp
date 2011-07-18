@@ -1,18 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    gatewayd.cpp
- *
- *  $Id$
- *
- *  Driver for the gateway daemon (gatewayd).  Note that this is
- *  completely generic code due to the Service Configurator
- *  framework!
- *
- *
- *  @author Douglas C. Schmidt
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    gateway
+//
+// = FILENAME
+//    peerd.h
+//
+// = DESCRIPTION
+//    Driver for the gateway daemon (gatewayd).  Note that this is
+//    completely generic code due to the Service Configurator
+//    framework!
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
@@ -20,6 +24,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
 #include "Gateway.h"
+
+ACE_RCSID (Gateway,
+           gatewayd,
+           "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

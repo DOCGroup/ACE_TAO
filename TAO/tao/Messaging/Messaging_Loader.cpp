@@ -1,3 +1,4 @@
+
 // $Id$
 
 #include "tao/Messaging/Messaging_Loader.h"
@@ -8,10 +9,12 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
+ACE_RCSID (Messaging, Messaging_Loader, "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Messaging_Loader::TAO_Messaging_Loader (void)
-  : initialized_ (false)
 {
 }
 
@@ -25,23 +28,11 @@ TAO_Messaging_Loader::init (int,
 {
   ACE_TRACE ("TAO_Messaging_Loader::init");
 
-  if (this->initialized_)
+  static bool called_once = false;
+
+  if (called_once == true)
     return 0;
-
-  this->initialized_ = true;
-
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
-
-  ACE_Service_Object * const messaging_loader =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (
-      gestalt,
-      "Messaging_Loader",
-      true);
-
-  if (messaging_loader != 0 && messaging_loader != this)
-    {
-      return messaging_loader->init (0, 0);
-    }
+  called_once = true;
 
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();

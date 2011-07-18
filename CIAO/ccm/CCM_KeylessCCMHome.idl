@@ -1,5 +1,4 @@
 // $Id$
-/// Compliant with OMG 06-04-01 Section 6.7.7
 
 #if !defined (CCM_KEYLESSCCMHOME_IDL)
 #define CCM_KEYLESSCCMHOME_IDL
@@ -15,5 +14,6 @@ module Components
     CCMObject create_component()
       raises (CreateFailure);
   };
+
 };
 #endif /* CCM_KEYLESSCCMHOME_IDL */

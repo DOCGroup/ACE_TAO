@@ -40,22 +40,20 @@ namespace CIAO
     public virtual Port_Activator
   {
   public:
-    Port_Activator_i (const char *oid,
-                      const char *name,
-                      Port_Activator_Types::Type t);
+    Port_Activator_i (const char *oid, const char *name, Port_Activator_Types::Type t);
 
     virtual ~Port_Activator_i (void);
 
-    /// Return the oid of port that this activator encapsulates.
+    /// Return the oid of port that this activator encapulates.
     virtual char* oid (void);
 
     /// Set the oid
     virtual void oid (const char* oid);
 
-    /// Return the oid of port that this activator encapsulates.
+    /// Return the oid of port that this activator encapulates.
     virtual char* name (void);
 
-    /// Activate the servant responsible for this port.
+    /// Activate the servant reponsible for this port.
     /**
      * There are intentionally no throw specifications. It is the
      * caller's responsibility to handle CORBA and C++
@@ -64,11 +62,11 @@ namespace CIAO
     virtual PortableServer::Servant activate (
         const PortableServer::ObjectId &oid) = 0;
 
-    virtual void deactivate (::PortableServer::Servant servant,
-                             CORBA::Boolean remaining_activations) = 0;
+        virtual void deactivate (::PortableServer::Servant servant) = 0;
 
   protected:
-    /// The object ID that is used to activate the servant within the POA.
+    /// The object ID that is used to activate the servant within the
+    /// POA.
     CORBA::String_var oid_;
 
     /// Name of the port
@@ -78,6 +76,10 @@ namespace CIAO
     Port_Activator_Types::Type const t_;
   };
 }
+
+#if defined (__ACE_INLINE__)
+# include "Port_Activator.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

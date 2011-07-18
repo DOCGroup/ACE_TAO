@@ -1,10 +1,16 @@
+//
 // $Id$
-
+//
 #include "Server_Task.h"
 #include "test_i.h"
 #include "interceptors.h"
 
 #include "ace/Manual_Event.h"
+
+ACE_RCSID(Collocated_Test,
+          Server_Task,
+          "$Id$")
+
 
 Server_Task::Server_Task (const ACE_TCHAR *output,
                           CORBA::ORB_ptr sorb,

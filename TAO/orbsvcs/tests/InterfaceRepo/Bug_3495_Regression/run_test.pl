@@ -6,12 +6,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
 $debug_level = '0';
-
-$test_idl = "Test.idl";
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
@@ -19,159 +17,75 @@ foreach $i (@ARGV) {
     }
 }
 
-my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $server3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $client = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+$ifr_iorfile = PerlACE::LocalFile ("if_repo.ior");
+$test_idl = PerlACE::LocalFile ("Test.idl");
+$iorfile = PerlACE::LocalFile ("server.ior");
 
-my $ior1file = "if_repo.ior";
-my $ior2file = "server.ior";
+unlink $ifr_iorfile;
+unlink $iorfile;
 
-#Files which used by server1
-my $server1_ior1file = $server1->LocalFile ($ior1file);
-$server1->DeleteFile($ior1file);
+$TAO_IFR = new PerlACE::Process ("$ENV{ACE_ROOT}/bin/tao_ifr");
+$TAO_IFR->IgnoreExeSubDir (1);
 
-#Files which used by server2
-my $server2_ior1file = $server2->LocalFile ($ior1file);
-my $server2_ior2file = $server2->LocalFile ($ior2file);
-$server2->DeleteFile($ior1file);
-$server2->DeleteFile($ior2file);
+$IFR     = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " -o $ifr_iorfile");
 
-#Files which used by server3
-my $server3_ior1file = $server3->LocalFile ($ior1file);
-$server3->DeleteFile($ior1file);
-
-#Files which used by client
-my $client_ior1file = $client->LocalFile ($ior1file);
-my $client_ior2file = $client->LocalFile ($ior2file);
-$client->DeleteFile($ior1file);
-$client->DeleteFile($ior2file);
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-ORBInitRef InterfaceRepository=file://if_repo.ior -ORBDebuglevel $debug_level -o server.ior");
+}
+else {
+    $SV = new PerlACE::Process ("server", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile -ORBdebuglevel $debug_level -o $iorfile");
+}
+$CL = new PerlACE::Process ("client", "-ORBInitRef InterfaceRepository=file://$ifr_iorfile -k file://$iorfile");
 
 
-$SV1 = $server1->CreateProcess ("../../../IFR_Service/tao_ifr_service",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $server1_ior1file");
+$IFR->Spawn ();
 
-
-$SV2 = $server2->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBInitRef InterfaceRepository=file://$server2_ior1file " .
-                              "-o $server2_ior2file");
-
-$SV3 = $server3->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_ifr",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBInitRef InterfaceRepository=file://$server3_ior1file $test_idl");
-
-
-$CL = $client->CreateProcess ("client",
-                              "-ORBInitRef InterfaceRepository=file://$client_ior1file " .
-                              "-k file://$client_ior2file");
-
-$server_status = $SV1->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($ifr_iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$ifr_iorfile>\n";
+    $IFR->Kill ();
     exit 1;
 }
 
-if ($server1->WaitForFileTimed ($ior1file,
-                               $server1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server1_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $IFR->Kill ();
+    $SV->Kill ();
     exit 1;
 }
 
-if ($server1->GetFile ($ior1file) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server1_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
+$TAO_IFR->Arguments ("-ORBInitRef InterfaceRepository=file://$ifr_iorfile $test_idl");
 
-if ($server2->PutFile ($ior1file) == -1) {
-    print STDERR "ERROR: cannot set file <$server2_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
+$tresult = $TAO_IFR->SpawnWaitKill (30);
 
-if ($server3->PutFile ($ior1file) == -1) {
-    print STDERR "ERROR: cannot set file <$server3_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-if ($client->PutFile ($ior1file) == -1) {
-    print STDERR "ERROR: cannot set file <$client_ior1file>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-sub KillServers{
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $SV2->Kill (); $SV2->TimedWait (1);
-}
-
-$server_status = $SV2->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
-
-if ($server2->WaitForFileTimed ($ior2file,
-                               $server2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server2_ior2file>\n";
-    KillServers ();
-    exit 1;
-}
-
-if ($server2->GetFile ($ior2file) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server2_ior2file>\n";
-    KillServers ();
-    exit 1;
-}
-
-if ($client->PutFile ($ior2file) == -1) {
-    print STDERR "ERROR: cannot set file <$client_ior2file>\n";
-    KillServers ();
-    exit 1;
-}
-
-$server_status = $SV3->SpawnWaitKill ($server3->ProcessStartWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    KillServers ();
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($tresult != 0) {
+    print STDERR "ERROR: tao_ifr (test.idl) returned $tresult\n";
     $status = 1;
 }
 
-print STDERR "Stopping IFR\n";
+$client = $CL->SpawnWaitKill (60);
 
-$server_status = $SV2->TerminateWaitKill ($server2->ProcessStopWaitInterval());
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+$server = $SV->TerminateWaitKill (10);
 
 if ($server != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server_status = $SV1->TerminateWaitKill ($server1->ProcessStopWaitInterval());
+$server = $IFR->TerminateWaitKill (5);
 
 if ($server != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+    print STDERR "ERROR: IFR returned $server\n";
     $status = 1;
 }
 
-$server1->DeleteFile($ior1file);
-$server2->DeleteFile($ior1file);
-$server2->DeleteFile($ior2file);
-$server3->DeleteFile($ior1file);
-$client->DeleteFile($ior1file);
-$client->DeleteFile($ior2file);
+unlink $ifr_iorfile;
+unlink $iorfile;
 
 exit $status;

@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    basic_func.h
- *
- *  $Id$
- *
- *  For use with basic_perf.cpp.
- *
- *
- *  @author David Levine
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    performance-tests/Misc
+//
+// = FILENAME
+//    basic_func.h
+//
+// = DESCRIPTION
+//    For use with basic_perf.cpp.
+//
+// = AUTHOR
+//    David Levine
+//
+// ============================================================================
 
 #ifndef BASIC_FUNC_H
 #define BASIC_FUNC_H

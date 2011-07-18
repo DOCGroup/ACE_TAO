@@ -11,6 +11,10 @@
 # include "tao/PortableServer/POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (PortableServer,
+           POA_Current_IMpl,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

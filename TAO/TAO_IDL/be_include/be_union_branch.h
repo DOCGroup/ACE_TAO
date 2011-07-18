@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_union_branch.h
- *
- *  $Id$
- *
- *  Extension of class AST_UnionBranch that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_union_branch.h
+//
+// = DESCRIPTION
+//    Extension of class AST_UnionBranch that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef BE_UNION_BRANCH_H
 #define BE_UNION_BRANCH_H
@@ -30,25 +35,30 @@ class be_union_branch : public virtual AST_UnionBranch,
                         public virtual be_field
 {
 public:
+  be_union_branch (void);
+  // default constructor.
+
   be_union_branch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);
+  // Constructor.
 
-  /// Generate the label value (as in a switch/case statement).
   int gen_label_value (TAO_OutStream *os,
                        unsigned long index = 0);
+  // Generate the label value (as in a switch/case statement).
 
-  /// Generate the default label value (as in a switch/case statement).
   int gen_default_label_value (TAO_OutStream *os,
                                be_union *bu);
+  // Generate the default label value (as in a switch/case statement).
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-
+  
   // Cleanup.
   virtual void destroy (void);
 
   // Narrowing.
+
   DEF_NARROW_FROM_DECL (be_union_branch);
 };
 

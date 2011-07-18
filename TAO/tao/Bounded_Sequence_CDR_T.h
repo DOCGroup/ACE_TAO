@@ -390,7 +390,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Short, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_short_array (source.get_buffer (), length);
@@ -399,7 +399,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Long, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_long_array (source.get_buffer (), length);
@@ -408,7 +408,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::ULong, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_ulong_array (source.get_buffer (), length);
@@ -417,7 +417,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::UShort, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_ushort_array (source.get_buffer (), length);
@@ -426,7 +426,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Octet, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_octet_array (source.get_buffer (), length);
@@ -435,7 +435,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Char, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_char_array (source.get_buffer (), length);
@@ -445,7 +445,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::WChar, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_wchar_array (source.get_buffer (), length);
@@ -455,7 +455,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Float, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_float_array (source.get_buffer (), length);
@@ -464,7 +464,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Double, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_double_array (source.get_buffer (), length);
@@ -473,7 +473,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::LongLong, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_longlong_array (source.get_buffer (), length);
@@ -482,7 +482,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::ULongLong, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_ulonglong_array (source.get_buffer (), length);
@@ -491,7 +491,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::LongDouble, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_longdouble_array (source.get_buffer (), length);
@@ -500,7 +500,7 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Boolean, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     return strm.write_boolean_array (source.get_buffer (), length);
@@ -509,7 +509,7 @@ namespace TAO {
   template <typename stream, typename value_t, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <value_t, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
@@ -523,7 +523,7 @@ namespace TAO {
   template <typename stream, typename charT, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_basic_string_sequence <charT, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
@@ -537,7 +537,7 @@ namespace TAO {
   template <typename stream, typename charT, CORBA::ULong MAX, CORBA::ULong BD_STR_MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_bd_string_sequence <charT, MAX, BD_STR_MAX> & source) {
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
@@ -556,7 +556,7 @@ namespace TAO {
   bool marshal_sequence(stream & strm, const TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX> & source) {
     typedef typename TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX>::object_type object_type;
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {

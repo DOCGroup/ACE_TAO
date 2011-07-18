@@ -39,7 +39,7 @@ public:
 private:
   void process_message (ACE_Message_Block *mb)
   {
-    ACE_TRACE ("Workers::process_message");
+    ACE_TRACE (ACE_TEXT ("Workers::process_message"));
     int msgId;
     ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
     mb->release ();
@@ -62,12 +62,12 @@ public:
 
   Manager () : shutdown_(0)
   {
-    ACE_TRACE ("Manager::Manager");
+    ACE_TRACE (ACE_TEXT ("Manager::Manager"));
   }
 
   int svc (void)
   {
-    ACE_TRACE ("Manager::svc");
+    ACE_TRACE (ACE_TEXT ("Manager::svc"));
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Manager started\n")));
 
@@ -80,7 +80,7 @@ public:
         ACE_Message_Block *mb = 0;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (0);
-
+          
         // Get a message request.
         if (this->getq (mb, &tv) < 0)
           {
@@ -118,7 +118,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN

@@ -10,11 +10,6 @@
 #include "ast_array.h"
 #include "ast_attribute.h"
 #include "ast_component_fwd.h"
-#include "ast_provides.h"
-#include "ast_uses.h"
-#include "ast_publishes.h"
-#include "ast_emits.h"
-#include "ast_consumes.h"
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_eventtype.h"
@@ -28,10 +23,6 @@
 #include "ast_sequence.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
-#include "ast_template_module.h"
-#include "ast_template_module_inst.h"
-#include "ast_template_module_ref.h"
-#include "ast_typedef.h"
 #include "ast_union.h"
 #include "ast_union_branch.h"
 #include "ast_union_fwd.h"
@@ -57,7 +48,6 @@
 #include <sstream>
 
 #include "xercesc/dom/DOM.hpp"
-#include "xercesc/util/XMLChar.hpp"
 
 #include "XML/XML_Helper.h"
 
@@ -66,8 +56,9 @@ using XERCES_CPP_NAMESPACE::DOMAttr;
 using XERCES_CPP_NAMESPACE::DOMElement;
 using XERCES_CPP_NAMESPACE::DOMText;
 using XERCES_CPP_NAMESPACE::DOMDocumentType;
-using XERCES_CPP_NAMESPACE::XMLChar1_1;
-using DAnCE::XML::XStr;
+using CIAO::XML::XStr;
+
+
 
 #if 0
 struct Foo {
@@ -87,7 +78,7 @@ struct Foo {
 #define XMI_TRACE(X)
 #endif
 
-namespace DAnCE
+namespace CIAO
 {
   namespace XMI
   {
@@ -114,34 +105,6 @@ namespace DAnCE
         return ACE::strnew (LITERALS[CAPS_FALSE]);
     }
 
-    template <>
-    ACE_TCHAR *
-    idl3_to_xmi_visitor::number_to_string (char val)
-    {
-      // There is no way to convert any char to xml encoding nicely
-      // so we convert it to a decimal integer. This will preserve at
-      // least a correct char value instead of some non-printable xml.
-      std::stringstream str;
-
-      str << static_cast<unsigned int>(static_cast<unsigned char> (val));
-
-      return ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
-    }
-
-    template <>
-    ACE_TCHAR *
-    idl3_to_xmi_visitor::number_to_string (wchar_t val)
-    {
-      // There is no way to convert any char to xml encoding nicely
-      // so we convert it to a decimal integer. This will preserve at
-      // least a correct char value instead of some non-printable xml.
-      std::stringstream str;
-
-      str << static_cast<unsigned long>(static_cast<wchar_t> (val));
-
-      return ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
-    }
-
     idl3_to_xmi_visitor::idl3_to_xmi_visitor (bool skip_imported)
       : dom_ (0),
         root_ (0),
@@ -149,7 +112,6 @@ namespace DAnCE
         associations_ (0),
         base_id_ (idl3_to_xmi_visitor::gen_xmi_id ()),
         skip_imported_ (skip_imported),
-        visiting_enum_ (false),
         union_disc_ (0)
     {
     }
@@ -195,7 +157,6 @@ namespace DAnCE
           d->ast_accept (this);
           ++this->order_;
         }
-
       return 0;
     }
 
@@ -207,22 +168,15 @@ namespace DAnCE
     }
 
     int
-    idl3_to_xmi_visitor::visit_predefined_type (AST_PredefinedType *node)
+    idl3_to_xmi_visitor::visit_predefined_type (AST_PredefinedType *t)
     {
       XMI_TRACE ("predef type");
+      ACE_DEBUG ((LM_DEBUG, "pdt: %s\n", t->repoID ()));
 
-      char const *local_name = 0;
-      switch (node->pt ())
+      switch (t->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          // Only a limited number of predefined pseudo types
-          // needs our attention.
-          local_name = node->original_local_name ()->get_string ();
-          if (ACE_OS::strcmp (local_name, "TypeCode") == 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_TC]);
-            }
+          this->create_and_store_xmi_id (t);
         default:
           break;
         }
@@ -236,31 +190,13 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) == 0)
-            {
-              // If the module is reopened then put it on the stack.
-              NS_Guard ns_guard (ec.ns_.c_str (), this);
-              ES_Guard owned_guard (ec.elem_, this);
-              this->visit_scope (node);
-              // And don't do anything more.
-              return 0;
-            }
-
           ES_Guard package_guard (LITERALS[PACKAGE_TAG], this);
+
           this->gen_common_elements (node, LITERALS[ST_MODULE]);
 
           {
             NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
             ES_Guard owned_guard (LITERALS[OWNEDELEMENT_TAG], this);
-
-            // Save ownedElement to add to it later if the module
-            // will be reopened.
-            this->stack_.top (ec.elem_);
-            // Same save namespace string.
-            this->namespace_.top (ec.ns_);
-            this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-
             this->visit_scope (node);
           }
         }
@@ -270,37 +206,6 @@ namespace DAnCE
           throw;
         }
 
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_template_module (AST_Template_Module *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_template_module_inst (
-      AST_Template_Module_Inst *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_template_module_ref (AST_Template_Module_Ref *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_param_holder (AST_Param_Holder *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_finder (AST_Finder *)
-    {
       return 0;
     }
 
@@ -317,21 +222,11 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_INTF]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->gen_common_elements (node, LITERALS[ST_INTF]);
 
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
           { // Operations.
             ES_Guard owned_guard (LITERALS[OWNEDELEMENT_TAG], this);
@@ -343,10 +238,10 @@ namespace DAnCE
           // Inheritance
           for (long i = 0; i < node->n_inherits (); ++i)
             {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->inherits ()[i]->repoID ())));
+              XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (node->inherits ()[i]->repoID ())));
             }
+
         }
       catch (Error &err)
         {
@@ -364,18 +259,7 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_INTF]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->create_and_store_xmi_id (node);
         }
       catch (Error &err)
         {
@@ -392,9 +276,7 @@ namespace DAnCE
       XMI_TRACE ("valuebox");
 
       if (this->skip_imported_ && node->imported ())
-        {
-          return 0;
-        }
+        return 0;
 
       try
         {
@@ -402,9 +284,8 @@ namespace DAnCE
           this->gen_common_elements (node, LITERALS[ST_BOXVALUE]);
 
           // add a generalization for the value we box
-          XStr xid (this->add_generalization (
-            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-            ACE_TEXT_CHAR_TO_TCHAR (node->boxed_type ()->repoID ())));
+          XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                              ACE_TEXT_CHAR_TO_TCHAR (node->boxed_type ()->repoID ())));
         }
       catch (Error &err)
         {
@@ -413,48 +294,6 @@ namespace DAnCE
         }
 
       return 0;
-    }
-
-    void
-    idl3_to_xmi_visitor::visit_valuetype_impl (AST_ValueType *node)
-    {
-      try
-        {
-          // isAbstract
-          if (node->is_abstract ())
-            {
-              this->set_attribute (LITERALS[ABSTRACT], LITERALS[_TRUE]);
-            }
-          else
-            {
-              this->set_attribute (LITERALS[ABSTRACT], LITERALS[_FALSE]);
-            }
-
-          if (node->inherits_concrete () != 0)
-            {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->inherits_concrete ()->repoID ())));
-            }
-
-          for (long i = 0; i < node->n_supports (); ++i)
-            {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
-            }
-
-          ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
-
-          this->cached_type_ = node;
-          this->visit_scope (node);
-          this->cached_type_ = 0;
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
     }
 
     int
@@ -470,23 +309,9 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_VALUE]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
-
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
-
-          this->visit_valuetype_impl (node);
+          this->visit_valuetype_impl (node, LITERALS[ST_VALUE]);
         }
       catch (Error &err)
         {
@@ -495,6 +320,47 @@ namespace DAnCE
         }
 
       return 0;
+    }
+
+    void
+    idl3_to_xmi_visitor::visit_valuetype_impl (AST_ValueType *node, const ACE_TCHAR *stereo)
+    {
+      try
+        {
+          this->gen_common_elements (node, stereo);
+
+          // isAbstract
+          if (node->is_abstract ())
+            this->set_attribute (LITERALS[ABSTRACT], LITERALS[_TRUE]);
+          else this->set_attribute (LITERALS[ABSTRACT], LITERALS[_FALSE]);
+
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+
+          if (node->inherits_concrete () != 0)
+            XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                ACE_TEXT_CHAR_TO_TCHAR (node->inherits_concrete ()->repoID ())));
+
+          for (long i = 0; i < node->n_supports (); ++i)
+            {
+              XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
+            }
+
+          /* NOTE: CDMW XMI generator ignores supports specifications.
+          // Supports
+          if (node->n_supports () != 0)
+          throw Error ("ValueTypes which support are not currently supported.", node);
+          */
+
+          ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
+
+          this->visit_scope (node);
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
     }
 
     int
@@ -504,87 +370,7 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_VALUE]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
-
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_eventtype (AST_EventType *node)
-    {
-      XMI_TRACE ("eventtype");
-
-      if (this->skip_imported_ && node->imported ())
-        {
-          this->visit_scope (node);
-          return 0;
-        }
-
-      try
-        {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_EVENT]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
-
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
-
-          this->visit_valuetype_impl (node);
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
-
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
-    {
-      XMI_TRACE ("eventtype_fwd");
-
-      try
-        {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_EVENT]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->create_and_store_xmi_id (node);
         }
       catch (Error &err)
         {
@@ -608,39 +394,55 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_COMP]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->gen_common_elements (node, LITERALS[ST_COMP]);
 
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
           for (long i = 0; i < node->n_supports (); ++i)
             {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
+              XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
 
             }
 
           if (node->base_component () != 0)
             {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->base_component ()->repoID ())));
+              XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (node->base_component ()->repoID ())));
             }
+
+          // Component ports
+          this->gen_component_ports (node->provides (),
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                     LITERALS[ST_PROVIDES],
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
+
+          this->gen_component_ports (node->uses (),
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                     LITERALS[ST_USES],
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
+
+          this->gen_component_ports (node->emits (),
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                     LITERALS[ST_EMITS],
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
+
+          this->gen_component_ports (node->publishes (),
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                     LITERALS[ST_PUBLISH],
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
+
+          this->gen_component_ports (node->consumes (),
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                     LITERALS[ST_CONSUMES],
+                                     ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()));
+
 
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
+          // attributes in scope.
           this->cached_type_ = node;
           this->visit_scope (node);
           this->cached_type_ = 0;
@@ -661,18 +463,7 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_COMP]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->create_and_store_xmi_id (node);
         }
       catch (Error &err)
         {
@@ -684,61 +475,38 @@ namespace DAnCE
     }
 
     int
-    idl3_to_xmi_visitor::visit_provides (AST_Provides *node)
+    idl3_to_xmi_visitor::visit_eventtype (AST_EventType *node)
     {
-      this->add_port (LITERALS[ST_PROVIDES], node);
+      XMI_TRACE ("eventtype");
+
+      if (this->skip_imported_ && node->imported ())
+        {
+          this->visit_scope (node);
+          return 0;
+        }
+
+      try
+        {
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
+
+          this->visit_valuetype_impl (node, LITERALS[ST_EVENT]);
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
+
       return 0;
     }
 
     int
-    idl3_to_xmi_visitor::visit_uses (AST_Uses *node)
+    idl3_to_xmi_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
     {
-      this->add_port (LITERALS[ST_USES], node);
-      return 0;
-    }
+      XMI_TRACE ("eventtype_fwd");
 
-    int
-    idl3_to_xmi_visitor::visit_publishes (AST_Publishes *node)
-    {
-      this->add_port (LITERALS[ST_PUBLISH], node);
-      return 0;
-    }
+      this->visit_valuetype_fwd (node);
 
-    int
-    idl3_to_xmi_visitor::visit_emits (AST_Emits *node)
-    {
-      this->add_port (LITERALS[ST_EMITS], node);
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_consumes (AST_Consumes *node)
-    {
-      this->add_port (LITERALS[ST_CONSUMES], node);
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_porttype (AST_PortType *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_extended_port (AST_Extended_Port *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_mirror_port (AST_Mirror_Port *)
-    {
-      return 0;
-    }
-
-    int
-    idl3_to_xmi_visitor::visit_connector (AST_Connector *)
-    {
       return 0;
     }
 
@@ -746,6 +514,7 @@ namespace DAnCE
     idl3_to_xmi_visitor::visit_home (AST_Home *node)
     {
       XMI_TRACE ("home");
+
 
       if (this->skip_imported_ && node->imported ())
         {
@@ -756,29 +525,27 @@ namespace DAnCE
       try
         {
           ES_Guard es_guard (LITERALS[CLASS_TAG], this);
+
           this->gen_common_elements (node, LITERALS[ST_HOME]);
+
           NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
 
           for (long i = 0; i < node->n_supports (); ++i)
             {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
+              XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (node->supports ()[i]->repoID ())));
+
             }
 
           if (node->base_home () != 0)
             {
-              XStr xid (this->add_generalization (
-                ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-                ACE_TEXT_CHAR_TO_TCHAR (node->base_home ()->repoID ())));
+              XStr xid (this->add_generalization (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (node->base_home ()->repoID ())));
             }
-/*
- * @@@ (JP) This code will be moved to the appropriate visit_* methods
- *
+
           if (node->factories ().size () != 0)
             {
               ES_Guard noe_guard (LITERALS[OWNEDELEMENT_TAG], this);
-
               for (size_t i = 0; i < node->factories ().size (); ++i)
                 {
                   AST_Operation **op = 0;
@@ -788,18 +555,15 @@ namespace DAnCE
             }
 
           if (node->finders () .size () != 0)
-            {
-              throw Error ("home finders not supported", node);
-            }
-*/
-          this->add_managed_component (
-            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-            ACE_TEXT_CHAR_TO_TCHAR (node->managed_component ()->repoID ()));
+            throw Error ("home finders not supported", node);
+
+          this->add_managed_component (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
+                                       ACE_TEXT_CHAR_TO_TCHAR (node->managed_component ()->repoID ()));
 
           ES_Guard noe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
-          // attributes in scope.
           this->cached_type_ = node;
+          // attributes in scope.
           this->visit_scope (node);
           this->cached_type_ = 0;
         }
@@ -816,30 +580,11 @@ namespace DAnCE
     idl3_to_xmi_visitor::visit_factory (AST_Factory *node)
     {
       XMI_TRACE ("factory");
-
       if (this->skip_imported_ && node->imported ())
-        {
-          return 0;
-        }
-
+        return 0;
       throw Error ("Factories not supported", node);
 
       return 0;
-    }
-
-    void
-    idl3_to_xmi_visitor::visit_struct_impl (AST_Structure *node)
-    {
-      try
-        {
-          ES_Guard ns_oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
-          this->visit_scope (node);
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
     }
 
     int
@@ -847,6 +592,7 @@ namespace DAnCE
     {
       XMI_TRACE ("structure");
 
+
       if (this->skip_imported_ && node->imported ())
         {
           this->visit_scope (node);
@@ -855,23 +601,9 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_STRUCT]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
-
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
-
-          this->visit_struct_impl (node);
+          this->visit_struct_impl (node, LITERALS[ST_STRUCT]);
         }
       catch (Error &err)
         {
@@ -880,6 +612,23 @@ namespace DAnCE
         }
 
       return 0;
+    }
+
+    void
+    idl3_to_xmi_visitor::visit_struct_impl (AST_Structure *node, const ACE_TCHAR *stereotype)
+    {
+      try
+        {
+          this->gen_common_elements (node, stereotype);
+          ES_Guard ns_oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          this->visit_scope (node);
+        }
+      catch (Error &err)
+        {
+          err.node (node);
+          throw;
+        }
     }
 
     int
@@ -889,18 +638,7 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_STRUCT]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->create_and_store_xmi_id (node);
         }
       catch (Error &err)
         {
@@ -924,23 +662,9 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[EXCEPTION_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_EX]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          ES_Guard class_guard (LITERALS[EXCEPTION_TAG], this);
 
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
-
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
-
-          this->visit_struct_impl (node);
+          this->visit_struct_impl (node, LITERALS[ST_EX]);
         }
       catch (Error &err)
         {
@@ -980,9 +704,7 @@ namespace DAnCE
           NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
-          this->visiting_enum_ = true;
           this->visit_scope (node);
-          this->visiting_enum_ = false;
         }
       catch (Error &err)
         {
@@ -994,11 +716,8 @@ namespace DAnCE
     }
 
     void
-    idl3_to_xmi_visitor::visit_operation_impl (AST_Operation *op,
-                                               const ACE_TCHAR *stereotype)
+    idl3_to_xmi_visitor::visit_operation_impl (AST_Operation *op, const ACE_TCHAR *stereotype)
     {
-      XMI_TRACE ("operation");
-
       if (this->skip_imported_ && op->imported ())
         {
           this->visit_scope (op);
@@ -1011,9 +730,8 @@ namespace DAnCE
           ES_Guard op_guard (LITERALS[OP_TAG], this);
 
           // name and visiblity
-          this->set_attribute (
-            LITERALS[NAME],
-            ACE_TEXT_CHAR_TO_TCHAR (op->original_local_name ()->get_string ()));
+          this->set_attribute (LITERALS[NAME],
+                               ACE_TEXT_CHAR_TO_TCHAR (op->original_local_name ()->get_string ()));
 
           this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
 
@@ -1021,10 +739,8 @@ namespace DAnCE
 
           // If we have a stereotype, set it
           if (stereotype != 0)
-            {
               this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
                                               stereotype);
-            }
 
           // XMI ID
           this->create_and_store_xmi_id (op);
@@ -1044,7 +760,6 @@ namespace DAnCE
             }
 
             UTL_ExceptList *exceptions = op->exceptions ();
-
             if (exceptions != 0 && exceptions->length () > 0)
               {
                 for (UTL_ExceptlistActiveIterator ei (exceptions);
@@ -1053,9 +768,8 @@ namespace DAnCE
                   {
                     ES_Guard tv_guard (LITERALS[TV_TAG], this);
                     this->set_attribute (LITERALS[TAG], LITERALS[RAISES]);
-                    this->set_attribute (
-                      LITERALS[VALUE],
-                      ACE_TEXT_CHAR_TO_TCHAR (ei.item ()->full_name ()));
+                    this->set_attribute (LITERALS[VALUE],
+                                         ACE_TEXT_CHAR_TO_TCHAR (ei.item ()->full_name ()));
                   }
               }
           }
@@ -1123,31 +837,13 @@ namespace DAnCE
         {
           ES_Guard attr_guard (LITERALS[ATTR_TAG], this);
 
-          if (node->field_type ()->node_type () == AST_Decl::NT_sequence)
-            {
-              AST_Sequence* sequence =
-                AST_Sequence::narrow_from_decl (node->field_type ());
-              sequence->ast_accept (this);
-              // There is no need to proceed any further.
-              return 0;
-            }
-          else if (node->field_type ()->node_type () == AST_Decl::NT_array)
-            {
-              AST_Array* array =
-                AST_Array::narrow_from_decl (node->field_type ());
-              array->ast_accept (this);
-              // There is no need to proceed any further.
-              return 0;
-            }
-
           // I don't think anything else can refer to the parameter by
           // xid, so I won't store it.
           XStr xid = this->gen_xmi_id (node);
           this->set_attribute (LITERALS[XMI_ID], xid);
 
-          this->set_attribute (
-            LITERALS[NAME],
-            ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
+          this->set_attribute (LITERALS[NAME],
+                               ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
 
           switch (node->visibility ())
             {
@@ -1170,6 +866,8 @@ namespace DAnCE
           xid = this->lookup_type_xid (node->field_type ());
           this->set_attribute (LITERALS[TYPE],
                                xid);
+
+
         }
       catch (Error &err)
         {
@@ -1194,9 +892,8 @@ namespace DAnCE
         {
           ES_Guard param_guard (LITERALS[PARAM_TAG], this);
 
-          this->set_attribute (
-            LITERALS[NAME],
-            ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
+          this->set_attribute (LITERALS[NAME],
+                               ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
 
           // I don't think anything else can refer to the parameter by
           // xid, so I won't store it.
@@ -1250,7 +947,7 @@ namespace DAnCE
 
       if (this->cached_type_ == 0)
         {
-          ACE_ERROR ((LM_ERROR, "Zounds! %d\n",
+          ACE_DEBUG ((LM_DEBUG, "Zounds! %d\n",
                       this->cached_type_));
           throw Error ("Internal error - attribute expected "
                        "to have a cached type, but didn't");
@@ -1261,36 +958,31 @@ namespace DAnCE
           // ***
           NS_Guard global_ns (ACE_TEXT ("::"), this);
           ES_Guard assoc_group (this->associations_, this);
-          ES_Guard assoc_g (LITERALS[ASSOC_TAG], this);
+          ES_Guard attr_guard (LITERALS[ASSOC_TAG], this);
 
+          this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
+          if (node->readonly ())
+            this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
+                                            LITERALS[ST_RO]);
+          this->set_containing_element (LITERALS[OWNER]);
           // I don't think anything else can refer to the attribute by
           // xid, so I won't store it.
           XStr xid = this->gen_xmi_id (node);
           this->set_attribute (LITERALS[XMI_ID], xid);
-          this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
-          this->set_containing_element (LITERALS[NS]);
-
-          if (node->readonly ())
-            {
-              this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
-                                              LITERALS[ST_RO]);
-            }
 
           ES_Guard assoc_conn (LITERALS[ASSOC_CONN_TAG], this);
 
           { // Containing type
             ES_Guard assoc_end (LITERALS[ASSOC_END_TAG], this);
             this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
-            this->find_and_set_xid_as_attr (
-              LITERALS[TYPE],
-              ACE_TEXT_CHAR_TO_TCHAR (this->cached_type_->repoID ()));
+            this->find_and_set_xid_as_attr (LITERALS[TYPE],
+                                            ACE_TEXT_CHAR_TO_TCHAR (this->cached_type_->repoID ()));
           }
 
           {
             ES_Guard assoc_end (LITERALS[ASSOC_END_TAG], this);
-            this->set_attribute (
-              LITERALS[NAME],
-              ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
+            this->set_attribute (LITERALS[NAME],
+                                 ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
             this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
             xid = this->lookup_type_xid (node->field_type ());
             this->set_attribute (LITERALS[TYPE], xid);
@@ -1317,27 +1009,16 @@ namespace DAnCE
 
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_UNION]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->gen_common_elements (node, LITERALS[ST_UNION]);
 
-          ES_Guard class_guard (ec.elem_, this);
-          NS_Guard ns_guard (ec.ns_.c_str (), this);
+          NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
           ES_Guard oe_guard (LITERALS[OWNEDELEMENT_TAG], this);
 
           // Set discriminator type
           this->union_disc_ = node->disc_type ();
           this->visit_scope (node);
-          this->union_disc_ = 0;
         }
       catch (Error &err)
         {
@@ -1354,20 +1035,10 @@ namespace DAnCE
     {
       XMI_TRACE ("union_fwd");
 
+
       try
         {
-          ElementContext ec;
-          if (this->repo_id_map_.find (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec) != 0)
-            {
-              ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-              this->gen_common_elements (node, LITERALS[ST_UNION]);
-              NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
-
-              // Save in order not to generate same element later.
-              this->stack_.top (ec.elem_);
-              this->namespace_.top (ec.ns_);
-              this->repo_id_map_.bind (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), ec);
-            }
+          this->create_and_store_xmi_id (node);
         }
       catch (Error &err)
         {
@@ -1393,9 +1064,8 @@ namespace DAnCE
           this->set_attribute (LITERALS[XMI_ID], xid);
 
           // name
-          this->set_attribute (
-            LITERALS[NAME],
-            ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
+          this->set_attribute (LITERALS[NAME],
+                               ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
 
           // visiblity
           this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
@@ -1425,9 +1095,7 @@ namespace DAnCE
             }
 
             for (unsigned long i = 0; i < node->label_list_length (); ++i)
-              {
-                this->visit_union_label (node->label (i));
-              }
+              this->visit_union_label (node->label (i));
 
           }
         }
@@ -1447,12 +1115,13 @@ namespace DAnCE
 
       // @@TODO: Yuck, there has got to be a better way....
       AST_Expression::AST_ExprValue *ev = exp->ev ();
+      const size_t bool_length = 6;
 
       if (exp->ec () != AST_Expression::EC_symbol ||
           this->union_disc_->node_type () == AST_Decl::NT_typedef ||
           this->union_disc_->node_type () == AST_Decl::NT_pre_defined)
         {
-          /*AST_Expression::ExprType type;
+          /*          AST_Expression::ExprType type;
 
           if (this->union_disc_->node_type () == AST_Decl::NT_typedef)
             {
@@ -1461,26 +1130,46 @@ namespace DAnCE
             }
             else type = ev->et;*/
 
+          // We have a non-enum discriminator
+          // Allocate memory
+          switch (ev->et)
+            {
+            case AST_Expression::EV_bool:
+              ACE_DEBUG ((LM_DEBUG, "bool disc\n"));
+              buffer.reset (new ACE_TCHAR [bool_length]); // length of 'false' + 1
+              break;
+            case AST_Expression::EV_char:
+              ACE_DEBUG ((LM_DEBUG, "char disc\n"));
+              buffer.reset (new ACE_TCHAR[1]);
+              break;
+            default:
+              ACE_DEBUG ((LM_DEBUG, "numberic?disc\n"));
+              // don't need to allocate room for numerics, handled by
+              // number_to_string
+              break;
+            }
+
           // Decode the type
           switch (ev->et)
             {
             case AST_Expression::EV_long:
-              buffer.reset (this->number_to_string (ev->u.lval));
+              buffer.reset (this->number_to_string(ev->u.lval));
               break;
             case AST_Expression::EV_ulong:
-              buffer.reset (this->number_to_string (ev->u.ulval));
+              buffer.reset (this->number_to_string(ev->u.ulval));
               break;
             case AST_Expression::EV_short:
-              buffer.reset (this->number_to_string (ev->u.sval));
+              buffer.reset (this->number_to_string(ev->u.sval));
               break;
             case AST_Expression::EV_ushort:
-              buffer.reset (this->number_to_string (ev->u.usval));
+              buffer.reset (this->number_to_string(ev->u.usval));
               break;
+
             case AST_Expression::EV_bool:
               buffer.reset (this->number_to_string (ev->u.bval));
               break;
             case AST_Expression::EV_char:
-              buffer.reset (this->number_to_string (ev->u.cval));
+              *buffer.get () = ev->u.cval;
               break;
             default:
               throw Error ("Unknown union union label type");
@@ -1489,26 +1178,19 @@ namespace DAnCE
       else
         {
           AST_Enum *desc (0);
-
           if ((desc = AST_Enum::narrow_from_decl (this->union_disc_)) == 0)
-            {
-              throw Error ("Descriminator type is not an enum");
-            }
+            throw Error ("Descriminator type is not an enum");
 
           AST_Decl *ev_decl =
             desc->lookup_by_name (exp->n (), 1);
 
           if (ev_decl == 0)
-            {
-              throw Error ("Couldn't look up enum name");
-            }
+            throw Error ("Couldn't look up enum name");
 
           AST_EnumVal *ev = AST_EnumVal::narrow_from_decl (ev_decl);
 
           if (ev == 0)
-            {
-              throw Error ("Couldn't look up enum name");
-            }
+            throw Error ("Couldn't look up enum name");
 
           buffer.reset (ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (ev->full_name ())));
           //const char *name = desc->lookup_by_value (exp)->full_name ();
@@ -1517,9 +1199,7 @@ namespace DAnCE
         }
 
       if (buffer.get () == 0)
-        {
-          throw Error ("Unable to parse union label");
-        }
+        throw Error ("Unable to parse union label");
 
       return buffer.release ();
     }
@@ -1533,14 +1213,11 @@ namespace DAnCE
       this->set_attribute (LITERALS[TAG], LITERALS[CASE]);
 
       if (node->label_kind () == AST_UnionLabel::UL_default)
-        {
-          this->set_attribute (LITERALS[VALUE],
-                               LITERALS[DEFAULT_UNION]);
-        }
+        this->set_attribute (LITERALS[VALUE], LITERALS[DEFAULT_UNION]);
       else
         {
-          ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (
-            this->union_label_value (node->label_val ()));
+          ACE_Auto_Basic_Array_Ptr<ACE_TCHAR>
+            buffer (this->union_label_value (node->label_val ()));
 
           this->set_attribute (LITERALS[VALUE], buffer.get ());
         }
@@ -1549,7 +1226,7 @@ namespace DAnCE
     }
 
     int
-    idl3_to_xmi_visitor::visit_constant (AST_Constant *node)
+      idl3_to_xmi_visitor::visit_constant (AST_Constant *node)
     {
       XMI_TRACE ("constant");
 
@@ -1662,7 +1339,7 @@ namespace DAnCE
             {
               ES_Guard tv (LITERALS[TV_TAG], this);
               this->set_attribute (LITERALS[TAG], LITERALS[INIT_VAL]);
-              this->set_attribute (LITERALS[VALUE], str_value.get ());
+              this->set_attribute (LITERALS[VALUE], str_value. get ());
             }
           }
         }
@@ -1678,29 +1355,20 @@ namespace DAnCE
     int
     idl3_to_xmi_visitor::visit_enum_val (AST_EnumVal *node)
     {
-      XMI_TRACE ("enum val");
 
       if (this->skip_imported_ && node->imported ())
         {
           return 0;
         }
 
-      if (!this->visiting_enum_)
-        {
-          // It makes sence only to process enumvals in enum "scope".
-          return 0;
-        }
-
       try
         {
+          XMI_TRACE ("enum val");
           ES_Guard att_guard (LITERALS[ATTR_TAG], this);
 
-          this->create_and_store_xmi_id (
-            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()),
-            node);
-          this->set_attribute (
-            LITERALS[NAME],
-            ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
+          this->create_and_store_xmi_id (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
+          this->set_attribute (LITERALS[NAME],
+                               ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
 
           // I think this is fixed.
           this->set_attribute (LITERALS[MULT], LITERALS[MULT_OTO]);
@@ -1732,120 +1400,14 @@ namespace DAnCE
     idl3_to_xmi_visitor::visit_array (AST_Array *node)
     {
       XMI_TRACE ("array val");
-
-      if (this->skip_imported_ && node->imported ())
-        {
-          return 0;
-        }
-
-      try
-        {
-          this->gen_common_elements (node,
-                                     LITERALS[ST_ARR]);
-
-          this->gen_array_associations (node, node);
-        }
-      catch (Error  &err)
-        {
-          err.node (node);
-          throw;
-        }
-
+      throw Error ("Arrays not supported", node);
       return 0;
-    }
-
-    void
-    idl3_to_xmi_visitor::gen_array_associations (AST_Decl *node,
-                                                 AST_Array *array)
-    {
-      // <UML:Namespace.ownedElement>
-      NS_Guard global_ns (ACE_TEXT ("::"), this);
-
-      // <UML:Association xmi.id="xmi.1210085542354"
-      //   visibility="public" namespace="xmi.1210085542350">
-      ES_Guard assoc_group (this->associations_, this);
-      ES_Guard assoc_g (LITERALS[ASSOC_TAG], this);
-
-      XStr xid = this->gen_xmi_id (node);
-      this->set_attribute (LITERALS[XMI_ID], xid);
-      this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
-      this->set_containing_element (LITERALS[NS]);
-
-      // <UML:Association.connection>
-      ES_Guard assoc_conn (LITERALS[ASSOC_CONN_TAG], this);
-
-      {
-        // <UML:AssociationEnd multiplicity="0..1" type="xmi.1210085542353">
-        ES_Guard assocend (LITERALS[ASSOC_END_TAG], this);
-
-        this->set_attribute (LITERALS[MULT], LITERALS[MULT_ZTO]);
-
-        xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
-        this->set_attribute (LITERALS[TYPE], xid);
-
-        // <UML:AssociationEnd.qualifier>
-        ES_Guard assoc_qual (LITERALS[ASSOC_END_QUAL_TAG], this);
-
-        for (unsigned long i = 0;
-             array != 0  && i < array->n_dims ();
-             ++i)
-          {
-            // <UML:Attribute xmi.id="xmi.1210085542355"
-            //   name="index0" type='xmi.1210085542329'>
-            // N.B. that type is long.
-            ES_Guard attr (LITERALS[ATTR_TAG], this);
-
-            xid = this->gen_xmi_id (node);
-            this->set_attribute (LITERALS[XMI_ID], xid);
-
-            std::stringstream str;
-            str << LITERALS[INDEX];
-            str << i;
-
-            this->set_attribute (
-              LITERALS[NAME],
-              ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
-            xid = this->lookup_xid (LITERALS[ST_LONG]);
-            this->set_attribute (LITERALS[TYPE], xid);
-
-            // <UML:ModelElement.constraint>
-            ES_Guard me_c (LITERALS[ME_CONS_TAG], this);
-
-            // <UML:Constraint xmi.id="xmi.1210085542356">
-            ES_Guard cons (LITERALS[CONSTRAINT], this);
-
-            xid = this->gen_xmi_id (node);
-            this->set_attribute (LITERALS[XMI_ID], xid);
-
-            // <UML:ModelElement.taggedValue>
-            ES_Guard me_tv (LITERALS[ME_TV_TAG], this);
-
-            // <UML:TaggedValue tag="constraintUpperValue" value="4"/>
-            ES_Guard tv (LITERALS[TV_TAG], this);
-
-            this->set_attribute (LITERALS[TAG], LITERALS[CONST_UPPER]);
-
-            ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (
-              this->number_to_string (array->dims ()[i]->ev ()->u.ulval));
-
-            this->set_attribute (LITERALS[VALUE], buffer.get ());
-          }
-      }
-
-      // <UML:AssociationEnd multiplicity="1..1"
-      //   type="xmi.1210085542346"/> - type is Char for this IDL
-      ES_Guard assoc_end (LITERALS[ASSOC_END_TAG], this);
-      this->set_attribute (LITERALS[MULT], LITERALS[MULT_OTO]);
-
-      XStr arr_type = this->lookup_type_xid (array->base_type ());
-      this->set_attribute (LITERALS[TYPE], arr_type);
     }
 
     int
     idl3_to_xmi_visitor::visit_sequence (AST_Sequence *node)
     {
       XMI_TRACE ("sequence val");
-
       if (this->skip_imported_ && node->imported ())
         {
           return 0;
@@ -1853,12 +1415,71 @@ namespace DAnCE
 
       try
         {
+          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
+
           this->gen_common_elements (node,
                                      LITERALS[ST_SEQ]);
 
-          // Generate the bounds and type on the sequence, which is an
+          // Generate the bounds and type  on the sequence, which is an
           // association in the association tree.
-          this->gen_sequence_associations (node, node);
+          NS_Guard global_ns (ACE_TEXT ("::"), this);
+          ES_Guard assoc_group (this->associations_, this);
+          ES_Guard assoc_g (LITERALS[ASSOC_TAG], this);
+
+          // I don't think anything else can refer to this association
+          // xid, so I won't store it.
+          XStr xid = this->gen_xmi_id (node);
+          this->set_attribute (LITERALS[XMI_ID], xid);
+          this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
+          this->set_containing_element (LITERALS[NS]);
+
+          ES_Guard assoc_conn (LITERALS[ASSOC_CONN_TAG], this);
+
+
+          { // Bounds
+            ES_Guard assocend (LITERALS[ASSOC_END_TAG], this);
+
+            this->set_attribute (LITERALS[MULT], LITERALS[MULT_ZTO]);
+
+            xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
+            this->set_attribute (LITERALS[TYPE], xid);
+
+            ES_Guard assoc_qual (LITERALS[ASSOC_END_QUAL_TAG], this);
+            ES_Guard attr (LITERALS[ATTR_TAG], this);
+
+            xid = this->gen_xmi_id (node);
+            this->set_attribute (LITERALS[XMI_ID], xid);
+            this->set_attribute (LITERALS[NAME], LITERALS[INDEX]);
+            this->set_attribute (LITERALS[TYPE], LITERALS[ST_LONG]);
+
+            ES_Guard me_c (LITERALS[ME_CONS_TAG], this);
+            ES_Guard cons (LITERALS[CONSTRAINT], this);
+            ES_Guard me_tv (LITERALS[ME_TV_TAG], this);
+            ES_Guard tv (LITERALS[TV_TAG], this);
+
+            this->set_attribute (LITERALS[TAG], LITERALS[CONST_UPPER]);
+
+            // @@TODO: need to extract bound from node.
+            if (node->unbounded ())
+              this->set_attribute (LITERALS[CONST_UPPER], LITERALS[UNBOUNDED_SEQ]);
+            else
+              { // bounded sequence
+                // convert the array bound to a string
+                // need a buffer, with a little safety padding
+                ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer
+                  (this->number_to_string (node->max_size ()->ev ()->u.ulval));
+
+                this->set_attribute (LITERALS[CONST_UPPER], buffer.get ());
+              }
+          }
+
+          // Sequence type
+          ES_Guard assoc_end (LITERALS[ASSOC_END_TAG], this);
+          this->set_attribute (LITERALS[MULT], LITERALS[MULT_OTO]);
+
+          XStr seq_type = this->lookup_type_xid (node->base_type ());
+          this->set_attribute (LITERALS[TYPE],
+                               seq_type);
         }
       catch (Error &err)
         {
@@ -1867,79 +1488,6 @@ namespace DAnCE
         }
 
       return 0;
-    }
-
-    void
-    idl3_to_xmi_visitor::gen_sequence_associations (AST_Decl *node,
-                                                    AST_Sequence *sequence)
-    {
-      // <UML:Namespace.ownedElement>
-      NS_Guard global_ns (ACE_TEXT ("::"), this);
-
-      // <UML:Association xmi.id="xmi.1210085542354"
-      //   visibility="public" namespace="xmi.1210085542350">
-      ES_Guard assoc_group (this->associations_, this);
-      ES_Guard assoc_g (LITERALS[ASSOC_TAG], this);
-
-      XStr xid = this->gen_xmi_id (node);
-      this->set_attribute (LITERALS[XMI_ID], xid);
-      this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
-      this->set_containing_element (LITERALS[NS]);
-
-      // <UML:Association.connection>
-      ES_Guard assoc_conn (LITERALS[ASSOC_CONN_TAG], this);
-
-      {
-        // <UML:AssociationEnd multiplicity="0..1" type="xmi.1210085542353">
-        ES_Guard assocend (LITERALS[ASSOC_END_TAG], this);
-
-        this->set_attribute (LITERALS[MULT], LITERALS[MULT_ZTO]);
-
-        xid = this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
-        this->set_attribute (LITERALS[TYPE], xid);
-
-        // <UML:AssociationEnd.qualifier>
-        ES_Guard assoc_qual (LITERALS[ASSOC_END_QUAL_TAG], this);
-
-        ES_Guard attr (LITERALS[ATTR_TAG], this);
-
-        xid = this->gen_xmi_id (node);
-        this->set_attribute (LITERALS[XMI_ID], xid);
-        this->set_attribute (LITERALS[NAME], LITERALS[INDEX]);
-        xid = this->lookup_xid (LITERALS[ST_LONG]);
-        this->set_attribute (LITERALS[TYPE], xid);
-
-        ES_Guard me_c (LITERALS[ME_CONS_TAG], this);
-        ES_Guard cons (LITERALS[CONSTRAINT], this);
-        ES_Guard me_tv (LITERALS[ME_TV_TAG], this);
-        ES_Guard tv (LITERALS[TV_TAG], this);
-
-        this->set_attribute (LITERALS[TAG], LITERALS[CONST_UPPER]);
-
-        // @@TODO: need to extract bound from node.
-        if (sequence->unbounded ())
-          {
-            this->set_attribute (LITERALS[VALUE],
-                                 LITERALS[UNBOUNDED_SEQ]);
-          }
-        else
-          { // bounded sequence
-            // convert the array bound to a string
-            // need a buffer, with a little safety padding
-            ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (
-              this->number_to_string (sequence->max_size ()->ev ()->u.ulval));
-
-            this->set_attribute (LITERALS[VALUE], buffer.get ());
-          }
-      }
-
-      // <UML:AssociationEnd multiplicity="1..1"
-      //   type="xmi.1210085542346"/> - type is Char for this IDL
-      ES_Guard assoc_end (LITERALS[ASSOC_END_TAG], this);
-      this->set_attribute (LITERALS[MULT], LITERALS[MULT_OTO]);
-
-      XStr seq_type = this->lookup_type_xid (sequence->base_type ());
-      this->set_attribute (LITERALS[TYPE], seq_type);
     }
 
     int
@@ -1955,41 +1503,175 @@ namespace DAnCE
       XMI_TRACE ("typedef");
 
       if (this->skip_imported_ && node->imported ())
-        {
           return 0;
-        }
 
       try
         {
           ES_Guard class_guard (LITERALS[CLASS_TAG], this);
 
-          // Anonymous Sequences and arrays appear to be a special case
           AST_Decl *base (node->base_type ());
-          if (base->node_type () == AST_Decl::NT_sequence)
+          if (base->node_type () == AST_Decl::NT_sequence ||
+              base->node_type () == AST_Decl::NT_array)
             {
-              this->gen_common_elements (node, LITERALS[ST_SEQ]);
+              // Anonymous Sequences and arrays appear to be a special case
+              const ACE_TCHAR *stereo (0);
+              switch (base->node_type ())
+                {
+                case AST_Decl::NT_sequence:
+                  stereo = LITERALS[ST_SEQ];
+                  break;
+                case AST_Decl::NT_array:
+                  stereo = LITERALS[ST_ARR];
+                  break;
+                default:
+                  throw Error ("Unsupported anonymous type inside typedef.",
+                               node);
+                }
+              this->gen_common_elements (node, stereo);
 
-              AST_Sequence* sequence =
-                AST_Sequence::narrow_from_decl (base);
-              this->gen_sequence_associations (node, sequence);
-            }
-          else if (base->node_type () == AST_Decl::NT_array)
-            {
-              this->gen_common_elements (node, LITERALS[ST_ARR]);
+              // Hopefully we have hit something like:
+              // typedef char AirportName[4];
+              AST_Array* the_array = 0;
+              AST_Sequence* the_sequence = 0;
+              if (base->node_type () == AST_Decl::NT_array)
+                {
+                  the_array = AST_Array::narrow_from_decl (base);
+                }
+              else
+                {
+                  the_sequence = AST_Sequence::narrow_from_decl (base);
+                }
 
-              AST_Array* array =
-                AST_Array::narrow_from_decl (base);
-              this->gen_array_associations (node, array);
+              // <UML:Namespace.ownedElement>
+              NS_Guard global_ns (ACE_TEXT ("::"), this);
+
+              // <UML:Association xmi.id="xmi.1210085542354" visibility="public" namespace="xmi.1210085542350">
+              ES_Guard assoc_group (this->associations_, this);
+              ES_Guard assoc_g (LITERALS[ASSOC_TAG], this);
+
+              XStr xid = this->gen_xmi_id (node);
+              this->set_attribute (LITERALS[XMI_ID], xid);
+              this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
+              this->set_containing_element (LITERALS[NS]);
+
+              // <UML:Association.connection>
+              ES_Guard assoc_conn (LITERALS[ASSOC_CONN_TAG], this);
+
+              {
+                // <UML:AssociationEnd multiplicity="0..1" type="xmi.1210085542353">
+                ES_Guard assocend (LITERALS[ASSOC_END_TAG], this);
+
+                this->set_attribute (LITERALS[MULT], LITERALS[MULT_ZTO]);
+
+                xid =
+                  this->lookup_xid (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()));
+                this->set_attribute (LITERALS[TYPE], xid);
+
+                // <UML:AssociationEnd.qualifier>
+                ES_Guard assoc_qual (LITERALS[ASSOC_END_QUAL_TAG], this);
+
+                for (unsigned long i = 0;
+                     the_array != 0  && i < the_array->n_dims ();
+                     ++i)
+                  {
+                    // <UML:Attribute xmi.id="xmi.1210085542355" name="index0" type='xmi.1210085542329'> - N.B. that type is long.
+                    ES_Guard attr (LITERALS[ATTR_TAG], this);
+
+                    xid = this->gen_xmi_id (node);
+                    this->set_attribute (LITERALS[XMI_ID], xid);
+
+                    std::stringstream str;
+                    str << LITERALS[INDEX];
+                    str << i;
+
+                    this->set_attribute (
+                      LITERALS[NAME],
+                      ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
+                    xid = this->lookup_xid (LITERALS[ST_LONG]);
+                    this->set_attribute (LITERALS[TYPE], xid);
+
+                    // <UML:ModelElement.constraint>
+                    ES_Guard me_c (LITERALS[ME_CONS_TAG], this);
+
+                    // <UML:Constraint xmi.id="xmi.1210085542356">
+                    ES_Guard cons (LITERALS[CONSTRAINT], this);
+
+                    xid = this->gen_xmi_id (node);
+                    this->set_attribute (LITERALS[XMI_ID], xid);
+
+                    // <UML:ModelElement.taggedValue>
+                    ES_Guard me_tv (LITERALS[ME_TV_TAG], this);
+
+                    // <UML:TaggedValue tag="constraintUpperValue" value="4"/>
+                    ES_Guard tv (LITERALS[TV_TAG], this);
+
+                    this->set_attribute (LITERALS[TAG], LITERALS[CONST_UPPER]);
+
+                    ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (
+                      this->number_to_string (
+                        the_array->dims ()[i]->ev ()->u.ulval));
+
+                    this->set_attribute (LITERALS[VALUE], buffer.get ());
+                  }
+
+                if (the_sequence)
+                  {
+                    ES_Guard attr (LITERALS[ATTR_TAG], this);
+
+                    xid = this->gen_xmi_id (node);
+                    this->set_attribute (LITERALS[XMI_ID], xid);
+                    this->set_attribute (LITERALS[NAME], LITERALS[INDEX]);
+                    xid = this->lookup_xid (LITERALS[ST_LONG]);
+                    this->set_attribute (LITERALS[TYPE], xid);
+
+
+                    ES_Guard me_c (LITERALS[ME_CONS_TAG], this);
+                    ES_Guard cons (LITERALS[CONSTRAINT], this);
+                    ES_Guard me_tv (LITERALS[ME_TV_TAG], this);
+                    ES_Guard tv (LITERALS[TV_TAG], this);
+
+                    this->set_attribute (LITERALS[TAG], LITERALS[CONST_UPPER]);
+
+                    // @@TODO: need to extract bound from node.
+                    if (the_sequence->unbounded ())
+                      {
+                        this->set_attribute (LITERALS[CONST_UPPER],
+                                             LITERALS[UNBOUNDED_SEQ]);
+                      }
+                    else
+                      { // bounded sequence
+                        // convert the array bound to a string
+                        // need a buffer, with a little safety padding
+                        ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (
+                          this->number_to_string (
+                            the_sequence->max_size ()->ev ()->u.ulval));
+
+                        this->set_attribute (LITERALS[CONST_UPPER],
+                                             buffer.get ());
+                      }
+                  }
+
+                  // <UML:AssociationEnd multiplicity="1..1" type="xmi.1210085542346"/> - type is Char for this IDL
+                  ES_Guard assoc_end (LITERALS[ASSOC_END_TAG], this);
+                  this->set_attribute (LITERALS[MULT], LITERALS[MULT_OTO]);
+
+                  XStr seq_type =
+                    this->lookup_type_xid (
+                      (the_array ?
+                       the_array->base_type () :
+                       the_sequence->base_type ()));
+                  this->set_attribute (LITERALS[TYPE],
+                                       seq_type);
+              }
             }
           else
             {
               this->gen_common_elements (node,
                                          LITERALS[ST_TYPEDEF]);
 
-              // Generalization. Assignment required for memory management.
-              XStr xid = this->add_generalization (node,
-                                                   node->base_type ());
-              ACE_UNUSED_ARG (xid);
+              // Generalization
+              XStr xid (this->add_generalization (node,
+                                                  node->base_type ()));
             }
         }
       catch (Error &err)
@@ -2027,10 +1709,13 @@ namespace DAnCE
 
           target_name += fn;
 
-          DAnCE::XML::NoOp_Resolver res_func;
-          DAnCE::XML::XML_Schema_Resolver<> resolver (res_func);
-          DAnCE::XML::XML_Error_Handler handler;
-          DAnCE::XML::XML_Helper<> helper (&resolver, &handler);
+          ACE_DEBUG ((LM_DEBUG, "Opening %C\n",
+                      target_name.c_str ()));
+          
+          CIAO::XML::NoOp_Resolver res_func;
+          CIAO::XML::XML_Schema_Resolver<> resolver (res_func);
+          CIAO::XML::XML_Error_Handler handler;
+          CIAO::XML::XML_Helper<> helper (resolver, handler);
 
           // Create XML document
           std::auto_ptr<DOMDocumentType> doctype (
@@ -2080,10 +1765,8 @@ namespace DAnCE
 
           // Create generalizations and associations elements, but don't join
           // them to the tree yet
-          this->associations_ =
-            this->dom_->createElement (XStr (LITERALS[OWNEDELEMENT_TAG]));
-          this->generalizations_ =
-            this->dom_->createElement (XStr (LITERALS[OWNEDELEMENT_TAG]));
+          this->associations_ = this->dom_->createElement (XStr (LITERALS[OWNEDELEMENT_TAG]));
+          this->generalizations_ = this->dom_->createElement (XStr (LITERALS[OWNEDELEMENT_TAG]));
 
           if (this->visit_scope (node) != 0)
             {
@@ -2103,9 +1786,6 @@ namespace DAnCE
 
           helper.write_DOM (this->dom_,
                             ACE_TEXT_CHAR_TO_TCHAR (target_name.c_str ()));
-
-          this->id_map_.close ();
-          this->base_id_.reset ();
         }
       catch (const Error &ex)
         {
@@ -2124,27 +1804,9 @@ namespace DAnCE
     }
 
     int
-    idl3_to_xmi_visitor::visit_native (AST_Native *node)
+    idl3_to_xmi_visitor::visit_native (AST_Native *)
     {
       XMI_TRACE ("native");
-
-      if (this->skip_imported_ && node->imported ())
-        {
-          return 0;
-        }
-
-      try
-        {
-          ES_Guard class_guard (LITERALS[CLASS_TAG], this);
-
-          this->gen_common_elements (node, LITERALS[ST_NATIVE]);
-        }
-      catch (Error &err)
-        {
-          err.node (node);
-          throw;
-        }
-
       return 0;
     }
 
@@ -2195,8 +1857,7 @@ namespace DAnCE
     DOMElement *
     idl3_to_xmi_visitor::generate_stereotypes (void)
     {
-      DOMElement *retval =
-        this->dom_->createElement (XStr (LITERALS[OWNEDELEMENT_TAG]));
+      DOMElement *retval = this->dom_->createElement (XStr (LITERALS[OWNEDELEMENT_TAG]));
 
       // put it on the stack to subsequent create_element calls refer to it.
       this->stack_.push (retval);
@@ -2207,8 +1868,8 @@ namespace DAnCE
       this->add_stereotype (ST_UNION, CLASS);
       this->add_stereotype (ST_USES, ASSOC);
       this->add_stereotype (ST_SEQ, CLASS);
-      this->add_stereotype (ST_ROE, __NULL);
-      this->add_stereotype (ST_RO, __NULL);
+      this->add_stereotype (ST_ROE, _NULL);
+      this->add_stereotype (ST_RO, _NULL);
       this->add_stereotype (ST_OBJ, DATATYPE);
       this->add_stereotype (ST_STR, DATATYPE);
       this->add_stereotype (ST_LD, DATATYPE);
@@ -2255,7 +1916,6 @@ namespace DAnCE
       this->add_stereotype (ST_INTF, CLASS);
       this->add_stereotype (ST_PRI_KEY, CLASS);
       this->add_stereotype (ST_ANY, DATATYPE);
-      this->add_stereotype (ST_NATIVE, CLASS);
 
       this->stack_.pop (retval);
 
@@ -2289,26 +1949,11 @@ namespace DAnCE
           current_id_ = rand ();
         }
       std::stringstream str;
-      // Skip all characters that cannot be a first name char in xmi.id.
-      while (name && *name && !XMLChar1_1::isFirstNameChar(*name)) ++name;
-      // Since we use a file path as name then let's change all non-name
-      // chars for '_'.
-      while (name && *name)
-        {
-          if (XMLChar1_1::isNameChar (*name))
-            {
-              str << *name;
-            }
-          else
-            {
-              str << '_';
-            }
-          ++name;
-        }
-      str << ':' << line << '.' << current_id_++;
+      str << name << ':' << line << '.' << current_id_++;
 
       XStr retval (ACE_TEXT_CHAR_TO_TCHAR (str.str ().c_str ()));
       return retval.release ();
+
     }
 
     XMLCh *
@@ -2320,20 +1965,13 @@ namespace DAnCE
           current_id_ = rand ();
         }
 
-      // we want these IDs to be unique, but the CDMW
-      // code generator sometimes depends
-      // on the order these things were declared in IDL,
-      // so for cases like that,
-      // we generate an ID that will sort to the order it
-      // was declared in IDL,
+      // we want these IDs to be unique, but the CDMW code generator sometimes depends
+      // on the order these things were declared in IDL, so for cases like that,
+      // we generate an ID that will sort to the order it was declared in IDL,
       // no matter which order we visit the nodes.
       if (node != 0)
-        {
-          return
-            gen_xmi_id (
-              ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()),
-              node->line ());
-        }
+        return gen_xmi_id (ACE_TEXT_CHAR_TO_TCHAR (node->file_name ().c_str ()),
+                           node->line ());
 
       std::stringstream str;
 
@@ -2343,8 +1981,7 @@ namespace DAnCE
     }
 
     void
-    idl3_to_xmi_visitor::set_containing_element (
-      const ACE_TCHAR *cont_name)
+    idl3_to_xmi_visitor::set_containing_element (const ACE_TCHAR *cont_name)
     {
       ACE_TString tmp;
       XStr xid;
@@ -2359,8 +1996,7 @@ namespace DAnCE
     {
       try
         {
-          this->create_and_store_xmi_id (
-            ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), node);
+          this->create_and_store_xmi_id (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), node);
         }
       catch (Error &ex)
         {
@@ -2370,8 +2006,7 @@ namespace DAnCE
     }
 
     void
-    idl3_to_xmi_visitor::create_and_store_xmi_id (
-      const ACE_TCHAR *name, AST_Decl *node)
+    idl3_to_xmi_visitor::create_and_store_xmi_id (const ACE_TCHAR *name, AST_Decl *node)
     {
       XStr xid = this->gen_xmi_id (node);
 
@@ -2484,8 +2119,7 @@ namespace DAnCE
     }
 
     XMLCh *
-    idl3_to_xmi_visitor::add_generalization (const ACE_TCHAR *sub,
-                                             const ACE_TCHAR *super)
+    idl3_to_xmi_visitor::add_generalization (const ACE_TCHAR *sub, const ACE_TCHAR *super)
     {
       return this->add_generalization (XStr (this->lookup_xid (sub)),
                                        XStr (this->lookup_xid (super)));
@@ -2499,11 +2133,9 @@ namespace DAnCE
     }
 
     XMLCh *
-    idl3_to_xmi_visitor::add_generalization (const XMLCh *sub,
-                                             const XMLCh *super)
+    idl3_to_xmi_visitor::add_generalization (const XMLCh *sub, const XMLCh *super)
     {
-      // Generate XMI ID
-      XStr xid (this->gen_xmi_id ());
+      XStr xid;
 
       { // add generalization to the 'generalizations' set
         ES_Guard es_guard (this->generalizations_, this);
@@ -2511,6 +2143,8 @@ namespace DAnCE
 
         ES_Guard gen_guard (LITERALS[GEN_TAG], this);
 
+        // Generate XMI ID
+        xid = this->gen_xmi_id ();
         this->set_attribute (LITERALS[XMI_ID], xid);
 
         this->set_containing_element (LITERALS[NS]);
@@ -2540,18 +2174,16 @@ namespace DAnCE
     }
 
     void
-    idl3_to_xmi_visitor::add_port (const ACE_TCHAR *port_kind,
-                                   AST_Field *port_node)
+    idl3_to_xmi_visitor::add_port (const ACE_TCHAR *component,
+                                   const ACE_TCHAR *port_kind,
+                                   const ACE_TCHAR *port_type,
+                                   const ACE_TCHAR *name,
+                                   bool is_multiple,
+                                   const ACE_TCHAR *file_name,
+                                   long line)
     {
-      if (port_node->node_type () == AST_Decl::NT_uses)
-        {
-          AST_Uses *u = AST_Uses::narrow_from_decl (port_node);
-
-          if (u->is_multiple ())
-            {
-              throw Error ("uses multiple not yet supported.");
-            }
-        }
+      if (is_multiple)
+        throw Error ("uses multiple not yet supported.");
 
       ES_Guard es_guard (this->associations_, this);
       NS_Guard ns_guard (ACE_TEXT ("::"), this);
@@ -2559,7 +2191,7 @@ namespace DAnCE
       ES_Guard assoc_guard (LITERALS[ASSOC_TAG], this);
 
       // Generate XMI ID
-      XStr xid (this->gen_xmi_id (port_node));
+      XStr xid (this->gen_xmi_id (file_name, line));
       this->set_attribute (LITERALS[XMI_ID], xid);
       this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
       this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR], port_kind);
@@ -2570,28 +2202,14 @@ namespace DAnCE
       { // component end
         ES_Guard end_guard (LITERALS[ASSOC_END_TAG], this);
         this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
-        this->find_and_set_xid_as_attr (
-          LITERALS[TYPE],
-          ACE_TEXT_CHAR_TO_TCHAR (this->cached_type_->repoID ()));
+        this->find_and_set_xid_as_attr (LITERALS[TYPE], component);
       }
 
       { // component end
         ES_Guard end_guard (LITERALS[ASSOC_END_TAG], this);
-
-        Identifier *id =
-          IdentifierHelper::original_local_name (
-            port_node->local_name ());
-
-        this->set_attribute (LITERALS[NAME], ACE_TEXT_CHAR_TO_TCHAR (id->get_string ()));
+        this->set_attribute (LITERALS[NAME], name);
         this->set_attribute (LITERALS[MULT], ACE_TEXT ("1"));
-
-        this->find_and_set_xid_as_attr (
-          LITERALS[TYPE],
-          ACE_TEXT_CHAR_TO_TCHAR (port_node->field_type ()->repoID ()));
-
-        id->destroy ();
-        delete id;
-        id = 0;
+        this->find_and_set_xid_as_attr (LITERALS[TYPE], port_type);
       }
     }
 
@@ -2608,35 +2226,30 @@ namespace DAnCE
       XStr xid (this->gen_xmi_id ());
       this->set_attribute (LITERALS[XMI_ID], xid);
       this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
-      this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
-                                      LITERALS[ST_MANAGES]);
+      this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR], LITERALS[ST_MANAGES]);
       this->set_containing_element (LITERALS[NS]);
 
       ES_Guard conn_guard (LITERALS[ASSOC_CONN_TAG], this);
 
       { // home end
         ES_Guard end_guard (LITERALS[ASSOC_END_TAG], this);
-        this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
-                                        LITERALS[ST_HOME]);
+        this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR], LITERALS[ST_HOME]);
         this->find_and_set_xid_as_attr (LITERALS[TYPE], home);
       }
 
       { // component end
         ES_Guard end_guard (LITERALS[ASSOC_END_TAG], this);
-        this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
-                                        LITERALS[ST_COMP]);
+        this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR], LITERALS[ST_COMP]);
         this->find_and_set_xid_as_attr (LITERALS[TYPE], component);
       }
     }
 
     void
-    idl3_to_xmi_visitor::gen_common_elements (AST_Decl *node,
-                                              const ACE_TCHAR *stereotype)
+    idl3_to_xmi_visitor::gen_common_elements (AST_Decl *node, const ACE_TCHAR *stereotype)
     {
       this->create_and_store_xmi_id (node);
-      this->set_attribute (
-        LITERALS[NAME],
-        ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
+      this->set_attribute (LITERALS[NAME],
+                           ACE_TEXT_CHAR_TO_TCHAR (node->original_local_name ()->get_string ()));
       this->set_attribute (LITERALS[VISIBIL], LITERALS[PUBLIC]);
       this->set_containing_element (LITERALS[NS]);
       this->find_and_set_xid_as_attr (LITERALS[STEREO_ATTR],
@@ -2645,17 +2258,34 @@ namespace DAnCE
       NS_Guard ns_guard (ACE_TEXT_CHAR_TO_TCHAR (node->repoID ()), this);
       this->gen_tagged_value (node);
     }
+    void
+    idl3_to_xmi_visitor::gen_component_ports (PORTS &ports,
+                                              const ACE_TCHAR *component,
+                                              const ACE_TCHAR *port_kind,
+                                              const ACE_TCHAR *file_name)
+    {
+      for (size_t i = 0; i < ports.size (); ++i)
+        {
+          AST_Component::port_description *pd = 0;
+          ports.get (pd, i);
+          this->add_port (component,
+                          port_kind,
+                          ACE_TEXT_CHAR_TO_TCHAR (pd->impl->repoID ()),
+                          ACE_TEXT_CHAR_TO_TCHAR (IdentifierHelper::original_local_name (pd->id)->get_string ()),
+                          pd->is_multiple,
+                          file_name,
+                          pd->line_number);
+        }
+    }
 
-    idl3_to_xmi_visitor::ES_Guard::ES_Guard (const ACE_TCHAR *name,
-                                             idl3_to_xmi_visitor *vis)
+    idl3_to_xmi_visitor::ES_Guard::ES_Guard (const ACE_TCHAR *name, idl3_to_xmi_visitor *vis)
       : vis_ (*vis)
     {
       if (vis_.stack_.push (vis_.create_element (name)))
         throw Error ("element stack error");
     }
 
-    idl3_to_xmi_visitor::ES_Guard::ES_Guard (DOMElement *ele,
-                                             idl3_to_xmi_visitor *vis)
+    idl3_to_xmi_visitor::ES_Guard::ES_Guard (DOMElement *ele, idl3_to_xmi_visitor *vis)
       : vis_ (*vis)
     {
       if (vis_.stack_.push (ele) != 0)
@@ -2672,8 +2302,7 @@ namespace DAnCE
         }
     }
 
-    idl3_to_xmi_visitor::NS_Guard::NS_Guard (const ACE_TCHAR *name,
-                                             idl3_to_xmi_visitor *vis)
+    idl3_to_xmi_visitor::NS_Guard::NS_Guard (const ACE_TCHAR *name, idl3_to_xmi_visitor *vis)
       : vis_ (*vis)
     {
       int res = vis_.namespace_.push (name);

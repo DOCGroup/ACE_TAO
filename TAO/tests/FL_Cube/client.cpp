@@ -3,6 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(FL_Cube, client, "$Id$")
+
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Roller.H>
@@ -179,7 +181,7 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (ior);
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
   this->server_ =
     Simple_Server::_narrow (object.in ());

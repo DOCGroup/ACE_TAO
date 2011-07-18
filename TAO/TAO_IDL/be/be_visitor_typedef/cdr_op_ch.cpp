@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Cdr operators of a Typedef node
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Cdr operators of a Typedef node
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef,
+           cdr_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Typedef visitor for generating Cdr operator declarations in the client header
@@ -62,7 +71,7 @@ be_visitor_typedef_cdr_op_ch::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0; // base type
+  be_type *bt; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -135,7 +144,7 @@ be_visitor_typedef_cdr_op_ch::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_cdr_op_ch::visit_array (be_array *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -166,7 +175,7 @@ be_visitor_typedef_cdr_op_ch::visit_array (be_array *node)
 int
 be_visitor_typedef_cdr_op_ch::visit_enum (be_enum *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -196,7 +205,7 @@ be_visitor_typedef_cdr_op_ch::visit_enum (be_enum *node)
 int
 be_visitor_typedef_cdr_op_ch::visit_sequence (be_sequence *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -226,7 +235,7 @@ be_visitor_typedef_cdr_op_ch::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_cdr_op_ch::visit_structure (be_structure *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -256,7 +265,7 @@ be_visitor_typedef_cdr_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_typedef_cdr_op_ch::visit_union (be_union *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {

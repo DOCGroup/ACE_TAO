@@ -1,13 +1,13 @@
-//=============================================================================
-/**
- *  @file   Load_Balancer_i.cpp
- *
- *  $Id$
- *
- *  @author Marina Spivak <marina@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = FILENAME
+//   Load_Balancer_i.cpp
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Load_Balancer_i.h"
 #include "ace/Auto_Ptr.h"
@@ -231,7 +231,7 @@ Object_Group_i::unbind (const char * id)
 {
   ACE_CString member_id (id);
 
-  // Code below works if list and hash map states are consistent,
+  // Code below works iff list and hash map states are consistent,
   // which is the case unless the system experienced major problems,
   // e.g., ran out of memory ...
 

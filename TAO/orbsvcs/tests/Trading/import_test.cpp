@@ -3,7 +3,7 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Offer_Importer.h"
 
-
+ACE_RCSID(Trading, import_test, "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -47,7 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception&)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Trader Import Tests Failed.\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Trader Import Tests Failed."), -1);
     }
 
   return 0;

@@ -10,10 +10,15 @@
 */
 //=============================================================================
 
+ACE_RCSID (be_visitor_operation,
+           amh_ss,
+           "$Id$")
+
 #include "ace/SString.h"
 
 be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -27,12 +32,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 {
   // If there is an argument of type "native", return immediately.
   if (node->has_native ())
-    {
-      return 0;
-    }
-
-  /// These are not for the server side.
-  if (node->is_sendc_ami ())
     {
       return 0;
     }
@@ -83,7 +82,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       *os << be_nl
           << "TAO_InputCDR & _tao_in ="
-          << " *_tao_server_request.incoming ();" << be_nl_2
+          << " *_tao_server_request.incoming ();" << be_nl << be_nl
           << "if (!(" << be_idt << be_idt;
 
       // Marshal each in and inout argument.
@@ -237,7 +236,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
   *os << be_nl
       << "TAO_InputCDR & _tao_in ="
       << " *_tao_server_request.incoming ();"
-      << be_nl_2
+      << be_nl << be_nl
       << "if (!(" << be_idt << be_idt;
 
   {
@@ -302,8 +301,8 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
                                                        const char *skel_prefix)
 {
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -332,7 +331,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
 
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::"
-      << skel_prefix << this->ctx_->port_prefix ().c_str ()
+      << skel_prefix
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & _tao_server_request," << be_nl

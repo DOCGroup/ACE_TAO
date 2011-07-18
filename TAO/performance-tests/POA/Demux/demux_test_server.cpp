@@ -1,18 +1,24 @@
-//=============================================================================
-/**
- *  @file    demux_test_server.cpp
- *
- *  $Id$
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/Demux
+//
+// = FILENAME
+//    demux_test_server.cpp
+//
+// = AUTHOR
+//
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "demux_test_server.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(CodeGen, demux_test_server, "$Id$")
 
 // Constructor
 Demux_Test_Server::Demux_Test_Server (void)
@@ -193,8 +199,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
       char poa_name [128];
 
       ACE_OS::memset (poa_name, 0, 128);
-      int n_matched = fscanf (this->poa_fp_, "%s", poa_name);
-      ACE_UNUSED_ARG (n_matched);
+      (void) fscanf (this->poa_fp_, "%s", poa_name);
 
       try
         {
@@ -265,8 +270,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 
                   ACE_OS::memset (servant_name, 0, 128);
 
-                  n_matched = fscanf (this->servant_fp_, "%s", servant_name);
-                  ACE_UNUSED_ARG (n_matched);
+                  (void) fscanf (this->servant_fp_, "%s", servant_name);
 
                   ACE_DEBUG ((LM_DEBUG,
                               "Activating Servant with Name : %s\n",

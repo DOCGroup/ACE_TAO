@@ -8,19 +8,22 @@
 #include "testC.h"
 #include "MIF_Scheduler.h"
 
+ACE_RCSID(MT_Server, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 int do_shutdown = 0;
 int enable_dynamic_scheduling = 0;
 int enable_yield = 1;
 
-/**
- * Run a server thread
- *
- * Use the ACE_Task_Base class to run server threads
- */
 class Worker : public ACE_Task_Base
 {
+  // = TITLE
+  //   Run a server thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run server threads
+  //
 public:
   Worker (CORBA::ORB_ptr orb,
           Simple_Server_ptr server_ptr,
@@ -87,7 +90,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -139,8 +142,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      RTScheduling::Scheduler_var sched_owner;
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
@@ -164,11 +165,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (enable_dynamic_scheduling)
         {
           ACE_DEBUG ((LM_DEBUG, "Dyn Sched enabled\n"));
-          CORBA::Object_var manager_obj =
+          CORBA::Object_ptr manager_obj =
             orb->resolve_initial_references ("RTSchedulerManager");
 
           TAO_RTScheduler_Manager_var manager =
-            TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
+            TAO_RTScheduler_Manager::_narrow (manager_obj);
 
           Kokyu::DSRT_Dispatcher_Impl_t disp_impl_type;
           if (enable_yield)
@@ -185,7 +186,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
-          sched_owner = scheduler;
 
           manager->rtscheduler (scheduler);
 
@@ -249,8 +249,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       scheduler->shutdown ();
       ACE_DEBUG ((LM_DEBUG, "scheduler shutdown done\n"));
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

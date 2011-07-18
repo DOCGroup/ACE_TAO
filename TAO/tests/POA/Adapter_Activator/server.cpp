@@ -1,29 +1,34 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  This example is very similar to the Explicit_Activation example
- *  except that the POAs are deleted once the object references have
- *  been created. After this, an adapter activator is install in the
- *  RootPOA to reactivate the POAs on demand.
- *
- *  Similar to the Explicit_Activation, the client for this example
- *  is Generic_Servant.
- *
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// ================================================================
+//
+// = LIBRARY
+//    TAO/tests/POA/Adapter_Activator
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    This example is very similar to the Explicit_Activation example
+//    except that the POAs are deleted once the object references have
+//    been created. After this, an adapter activator is install in the
+//    RootPOA to reactivate the POAs on demand.
+//
+//    Similar to the Explicit_Activation, the client for this example
+//    is Generic_Servant.
+//
+// = AUTHOR
+//    Irfan Pyarali
+//
+// ================================================================
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "tao/PortableServer/AdapterActivatorC.h"
+
+ACE_RCSID(Adapter_Activator, server, "$Id$")
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -35,9 +40,9 @@ class reference_counted_test_i :
   public virtual test_i
 {
 public:
-  /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
+  // Constructor - takes a POA and a value parameter
 };
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,

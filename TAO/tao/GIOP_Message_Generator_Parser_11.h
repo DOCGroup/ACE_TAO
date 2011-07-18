@@ -36,6 +36,7 @@ class TAO_GIOP_Message_Generator_Parser_11
   : public TAO_GIOP_Message_Generator_Parser_10
 {
 public:
+
   /// Our minor version
   virtual CORBA::Octet minor_version (void) const;
 

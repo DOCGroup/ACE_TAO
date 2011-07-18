@@ -1,35 +1,34 @@
 // $Id$
-
 #ifndef CIAO_LOGGER_SERVICE_H_
 #define CIAO_LOGGER_SERVICE_H_
 
 #include "CIAO_Logger_Export.h"
-#include "ace/Service_Object.h"
+#include "CIAOLoggerFactory.h"
+#include "File_Logger_Backend.h"
 
 namespace CIAO
   {
-    class CIAO_Logger_Export Logger_Service : public ACE_Service_Object
-      {
-      public:
-        Logger_Service (void);
-        virtual int init (int argc, ACE_TCHAR * argv[]);
 
-        static int Initializer (void);
-      private:
-        void parse_args (int argc, ACE_TCHAR **argv);
+  class CIAO_Logger_Export Logger_Service : public CIAOLoggerFactory
+    {
+    public:
+      Logger_Service (void);
 
-        ACE_TString filename_;
-        ACE_TString backend_;
-        bool trace_;
-      };
-  }
+      virtual int init (int argc, ACE_TCHAR * argv[]);
+      virtual ACE_Log_Msg_Backend * get_logger_backend (CORBA::ORB_ptr orb);
 
-static int TAO_Requires_CIAO_Logger_Service_Initializer =
-  CIAO::Logger_Service::Initializer ();
+    private:
 
-typedef CIAO::Logger_Service CIAO_LOGGER_SERVICE;
+      void parse_args (int argc, ACE_TCHAR **argv);
+      void set_levels (void);
 
-ACE_STATIC_SVC_DECLARE (CIAO_LOGGER_SERVICE)
-ACE_FACTORY_DECLARE (CIAO_Logger, CIAO_LOGGER_SERVICE)
+      ACE_TString filename_;
+      bool trace_;
+      int log_level_;
+    };
+
+} // DAnCE
+
+ACE_FACTORY_DECLARE (CIAO_Logger, Logger_Service)
 
 #endif /*LOGGER_SERVICE_H_*/

@@ -1,22 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Object_A_i.cpp
- *
- *  $Id$
- *
- *  This class implements the Object A  of the
- *  Nested Upcalls - Triangle test.
- *
- *
- *  @author Michael Kircher
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/NestedUpCalls/Triangle_Test
+//
+// = FILENAME
+//    Object_A_i.cpp
+//
+// = DESCRIPTION
+//    This class implements the Object A  of the
+//    Nested Upcalls - Triangle test.
+//
+// = AUTHORS
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "Object_A_i.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+
+ACE_RCSID(Triangle_Test, Object_A_i, "$Id$")
 
 // CTOR
 Object_A_i::Object_A_i (void)
@@ -53,14 +58,4 @@ Object_A_i::finish (void)
 {
   this->finish_two_way_call_ = 1;
 
-}
-
-void
-Object_A_i::shutdown (void)
-{
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-  orb->shutdown ();
 }

@@ -40,39 +40,25 @@ Command line arguments:
 
 "-Channel"              : If this option is specified, a EventChannel is
                           created and registered with the Naming Service.
-                          This option is disabled by default. This option can
-                          be specified multiple times, each option will result
-                          in a created and registered EventChannel
-
+                          This option is disabled by default.
 
 "-ChannelName channel_name" : Specifies the <channel_name> to register with the
                               Naming Service.
                               The default is "NotifyEventChannel".
 
-"-RunThreads nthreads"   : Number of threads to run the
-                           ORB::run method.
+"-ORBRunThreads nthreads"   : Number of threads to run the
+                              ORB::run method.
 
 "-UseSeparateDispatchingORB 1|0"
                             : Indicates whether the service should create and
                               and use a separate ORB dedicated to dispatching of
                               events.
 
-"-ShutdownORB 1|0" : Indicates that we have to shutdown the default ORB,
-                     1 by default
-
-"-ShutdownDispatchingORB 1|0" : Indicates that we have to shutdown the
-                                dispatching ORB, 1 by default
-
 "-Timeout msec" : Applies a relative round-trip timeout of msec microseconds
                   to the main ORB and, if -UseSeparateDispatchingORB 1 is
                   specified, to the dispatching ORB.  This requires the
                   'corba_messaging' MPC feature during building of the
                   Notify_Service, which is on by default.
-
-"-LoggingInterval seconds" : Sets up a logging interval timer for the ORB's
-                             reactor.  This is required to use the ACE 
-                             Logging Service features such as file sizing
-                             and rotation.  See the example below.
 
 !! The -Notify_TPReactor option is deprecated!! use the -ORBRunThreads
 option instead.
@@ -89,7 +75,7 @@ on this.
 
 Running the Service:
 -------------------
-1. Start the Naming Service from
+1. Start the Naming Service from 
 
 $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
 
@@ -100,10 +86,10 @@ if you are using the "-NameSvc" options.
 
    Note:
    ====
-   By default, the Naming Service disables multicast discovery.
+   By default, the Naming Service disables multicast discovery. 
    The "-m 1" option enables the Naming Service to be resolved via
-   multicast.
-
+   multicast. 
+   
    If you do not wish to do this, then use the
    -ORBInitRef option in which case the Naming Service should be started
    as:
@@ -133,58 +119,33 @@ Note that the client uses:
  resolve_initial_references ("NotifyEventChannelFactory");
 to obtain the object reference.
 
-Using the ACE Logging Service:
-------------------------------
-
-Start the Notify_Service executable with the debug options desired and
-the -LoggingInterval option:
-
-./Notify_Service -ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBSvcConf ns.conf -LoggingInterval 5
-
-Configure the logging service in the ns.conf file:
-dynamic Logging_Strategy Service_Object * ACE:_make_ACE_Logging_Strategy() "-s NS -f OSTREAM -t 0 "
-
-
-
 The svc.conf options:
 ----------------------
 
 The "TAO_CosNotify_Service" service object accepts the following options:
 
-"-AllocateTaskperProxy"              : Allocate worker tasks per proxy
-                                       *see footnote below for explanation*
+"-DispatchingThreads [thread_count]" : Enables MT dispatching with the specified number
+                                       of threads.
 
+"-ListenerThreads"                   : How many threads for listener filter evaluation.
+
+"-AsynchUpdates"                     : Send subscription and
+                                       publication updates
+                                       asynchronously.
+
+"-AllocateTaskperProxy"              : Allocate worker tasks per
+                                       proxy 
+                                       *see footnote below for explanation*
 "-AllowReconnect"                    : Allows consumers and suppliers to
                                        reconnect to existing proxies.
-
-"-AsynchUpdates"                     : Send subscription and publication
-                                       updates asynchronously.
-
-"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter
-                                       operator. op can be either "OR" or
-                                       "AND". The default is "OR" to be
-                                       consistent with older releases of TAO.
-
-"-DefaultSupplierAdminFilterOp [op]" : Sets the default supplier admin filter
-                                       operator. op can be either "OR" or
-                                       "AND". The default is "OR" to be
-                                       consistent with older releases of TAO.
-
-"-DispatchingThreads [thread_count]" : Enables MT dispatching with the
-                                       specified number of threads. This
-                                       option supercedes the deprecated
-                                       ListenerThreads, MTListenerEval and
-                                       MTDispatching options. Note that
-                                       "AllocateTaskperProxy" affects how this
-                                       value is applied.
 
 "-NoUpdates"                         : Globally disables subscription and
                                        publication updates.
 
 "-ValidateClient"                    : Creates a thread that periodically
                                        walks the topology tree visiting each
-                                       proxy and checking the liviness of
-                                       the peer. A peer which had ordinary
+                                       proxy and checking the liviness of 
+                                       the peer. A peer which had ordinary 
                                        activity within the validation time
                                        period is considered alive. Otherwise
                                        the peer's _non_existent() operation
@@ -201,18 +162,17 @@ The "TAO_CosNotify_Service" service object accepts the following options:
                                        has to repopulate its topology from a
                                        persistent store, which takes time.
 
-"-ValidateClientInterval [sec]"      : Specifies how frequently after the
+"-ValidateClientInterval [sec]"      : Specifies how frequently after the 
                                        first pass to revisit the topology
-                                       to further validate clients. The
-                                       default value of 0 means validation
+                                       to further validate clients. The 
+                                       default value of 0 means validation 
                                        will only happen once.
 
-"-SourceThreads [thread_count]"      : Specifies the number of threads for each
-                                       supplier admin or proxy consumer. See
-                                       the note below for details about thread
-                                       assignments. This option supercedes the
-                                       deprecated LookupThreads, MTSourceEval,
-                                       and MTLookup options.
+"-DefaultConsumerAdminFilterOp [op]" : Sets the default consumer admin filter
+                                       operator [OR|AND]. Default is AND.
+
+"-DefaultSupplierAdminFilterOp [op]" : Sets the default supplier admin filter
+                                       operator [OR|AND]. Default is AND.
 
 All other options are deprecated and should not be used.
 
@@ -225,19 +185,20 @@ This means that we want to enable event dispatching with 2 threads.
 What does the "-AllocateTaskperProxy" option do?
 
 A Task here implies a thread pool that performs a fixed work in the
-Notify Service. e.g. When you specify "-DispatchingThreads 1" this
-means there is 1 thread to perform the event dispatching to consumers
-IRRESPECTIVE OF THE NUMBER OF PROXY SUPPLIERS. It also means that
-events destined for each consumer will be queued to a buffer for that
-consumer.  Therefore, you can also think of this option as Enable
-Consumer-side Buffering of Events.
+Notify.
+e.g. When you specify "DispatchingThreads 1".
+It means that there is 1 thread to perform the event dispatching to
+consumers IRRESPECTIVE OF THE NUMBER OF PROXYSUPPLIERS. It also means that
+events destined for each consumer will be queued to a buffer for that consumer. 
+Therefore, you can also think of this option as Enable Consumer-side Buffering
+of Events.
 
 This is the default case.
 
 When you specify "-AllocateTaskperProxy" it asks notify to create a
-dispatching task with the specified thread pool size PER PROXY
-SUPPLIER.  So if you use this option and connect 50 consumers with 1
-thread for the dispatching task you will have created 50 dispatching
+dispatching task (with the specified thread pool size) PER
+PROXYSUPPLIER. So if you use this option and connect 50 consumers with
+1 thread for the dispatching task you will have created 50 dispatching
 threads! so use this option with care and you might not need it in
 most cases.
 
@@ -248,11 +209,10 @@ and how much thread resources are deployed.  e.g. a channel could have
 quantities.  A dedicated thread pool to this proxy will ensure better
 throughput to it's consumers. (Eventually I want to be able to set the
 thread pool size via a QoS property)
-
-Similarly "-SourceThreads 2" specifies a thread pool for use by the
-supplier-side processing. This enables Buffering on the Supplier-side,
-with the thread pool being used to process supplier side filters and
-push the events to the Consumer side.
+Similarly "-ListenerThreads 2" specifies a thread pool for use by 
+the supplier-side processing. This enables Buffering on the Supplier-side, with
+the thread pool being used to process supplier side filters and push the 
+events to the Consumer side. 
 
 How to use the NT_Notify_Service
 ================================

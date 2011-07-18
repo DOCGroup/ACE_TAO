@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/SystemExceptionA.h"
@@ -12,6 +11,11 @@
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 #include "tao/CORBA_String.h"
+
+ACE_RCSID (AnyTypeCode,
+           SystemExceptionA,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -163,9 +167,8 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::Boolean \
-CORBA::operator>>= (const CORBA::Any &any, \
-                    const CORBA::name *&ex) \
+CORBA::Boolean operator>>= (const CORBA::Any &any, \
+                            const CORBA::name *&ex) \
 { \
   return \
     TAO::Any_SystemException::extract ( \

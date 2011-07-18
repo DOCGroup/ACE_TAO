@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Object_Reactivation.cpp
- *
- *  $Id$
- *
- *   This program tests the reactivation of a servant that has been
- *   deactivated but not removed from the Active Object Map yet.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/Object_Reactivation
+//
+// = FILENAME
+//     Object_Reactivation.cpp
+//
+// = DESCRIPTION
+//     This program tests the reactivation of a servant that has been
+//     deactivated but not removed from the Active Object Map yet.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "testS.h"
 #include "ace/Task.h"

@@ -1,19 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    union.idl
- *
- *  $Id$
- *
- *  This file contains examples of IDL code that has
- *  caused problems in the past for the TAO IDL
- *  compiler. This test is to make sure the problems
- *  stay fixed.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    union.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
 
 
 // Implicit default case
@@ -58,7 +62,7 @@ module Necessary
 // At the moment, the SunCC preprocessor separates the negative
 // sign from the number.  This causes problems for the scanner/lexer
 // used by tao_idl.
-#if !defined (__SUNPRO_CC) || (__SUNPRO_CC > 0x5100)
+#if !defined (__SUNPRO_CC) || (__SUNPRO_CC > 0x590)
 union foo switch (short)
 {
   case -3:
@@ -67,7 +71,7 @@ union foo switch (short)
   default: long   foo_iface_member;
   case  0: long   foo_iface_member2;
 };
-#endif // !__SUNPRO_CC || __SUNPRO_CC > 0x5100
+#endif /* !__SUNPRO_CC || __SUNPRO_CC > 0x590 */
 
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
@@ -82,6 +86,17 @@ module UnionDiscTest
       case 'a': string value;
     };
 };
+
+// AnyUnion
+enum AnyUnionEnum {
+  ANYUNIONENUM2
+};
+
+union MyAnyUnion switch (AnyUnionEnum) {
+  case ANYUNIONENUM2:
+    any my_any;
+};
+
 
 // Nested unions
 
@@ -205,7 +220,7 @@ union FieldValue switch (FieldType)
 
 struct Field
 {
-  FieldValue value;
+    FieldValue value;
 };
 
 // Tricky case of lookup for a recursive union. When defined
@@ -249,8 +264,6 @@ union TestUnion switch (short)
 // Test for various kinds of declarations inside a union,
 // similar to the example in enum_in_struct.idl.
 
-typedef long NamedLongArray[10];
-
 union decl_heavy_union switch (short)
 {
   case 1:
@@ -279,11 +292,5 @@ union decl_heavy_union switch (short)
       case 1: long a;
       case 2: char b;
     } m_un_arr[10];
-  // The following caused compile problems once
-  // when generating ostream ops
-  case 5:
-    NamedLongArray m_named_long_array;
-  case 6:
-    long m_anon_long_array[10];
 };
 

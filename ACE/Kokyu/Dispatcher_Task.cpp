@@ -9,6 +9,8 @@
 #include "Dispatcher_Task.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
+
 namespace
 //anonymous namespace - use this to avoid polluting the global namespace
 {
@@ -95,8 +97,8 @@ Dispatcher_Task::svc (void)
 
   while (!done)
     {
-      ACE_Message_Block *mb = 0;
-
+      ACE_Message_Block *mb;
+      
       if (this->getq (mb) == -1)
         {
           if (ACE_OS::last_error () == ESHUTDOWN)

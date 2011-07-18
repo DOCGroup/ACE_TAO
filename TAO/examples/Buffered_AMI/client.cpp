@@ -1,17 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *   This is a client that uses buffered AMI calls.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+// ================================================================
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is a client that uses buffered AMI calls.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+// ================================================================
 
 #include "testS.h"
 #include "tao/Messaging/Messaging.h"
@@ -19,6 +19,10 @@
 #include "tao/AnyTypeCode/TAOA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+
+ACE_RCSID (Buffered_AMI,
+           client,
+           "$Id$")
 
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
@@ -251,7 +255,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (base.in ());
 
       // Get an object reference from the argument string.
-      base = orb->string_to_object (IOR);
+      base = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();

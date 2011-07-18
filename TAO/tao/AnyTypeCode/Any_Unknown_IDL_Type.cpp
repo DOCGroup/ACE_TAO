@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -8,14 +7,17 @@
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
-#include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (AnyTypeCode,
+           Any_Unknown_IDL_Type,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Unknown_IDL_Type::LOCK const
+TAO::Unknown_IDL_Type::LOCK
 TAO::Unknown_IDL_Type::lock_i (void)
 {
   static LOCK base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
@@ -147,10 +149,6 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
   this->cdr_.char_translator (cdr.char_translator ());
   this->cdr_.wchar_translator (cdr.wchar_translator ());
 
-  this->cdr_.set_repo_id_map (cdr.get_repo_id_map ());
-  this->cdr_.set_codebase_url_map (cdr.get_codebase_url_map ());
-  this->cdr_.set_value_map (cdr.get_value_map ());
-
   // Take over the GIOP version, the input cdr can have a different
   // version then our current GIOP version.
   ACE_CDR::Octet major_version;
@@ -215,7 +213,6 @@ TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase* & val) const
 
       TAO_Valuetype_Adapter * const adapter =
         orb_core->valuetype_adapter ();
-
       return adapter->stream_to_value (for_reading, val);
     }
   catch (::CORBA::Exception const &)
@@ -256,9 +253,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr & obj) const
 
       TAO_Valuetype_Adapter * const adapter =
         orb_core->valuetype_adapter ();
-      CORBA::Boolean ret = adapter->stream_to_abstract_base (for_reading, obj);
-
-      return ret;
+      return adapter->stream_to_abstract_base (for_reading, obj);
     }
    catch (::CORBA::Exception const &)
     {

@@ -70,14 +70,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "drv_extern.h"
 #include "fe_extern.h"
-
 #include "be_global.h"
 #include "be_extern.h"
-#include "be_util.h"
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_ctype.h"
+
+ACE_RCSID (driver,
+           drv_args,
+           "$Id$")
 
 extern long DRV_nfiles;
 extern char *DRV_files[];
@@ -143,21 +144,6 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -ae\t\t\tError if anonymous type is seen ")
-      ACE_TEXT ("(default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
-      ACE_TEXT ("(default is error)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
-      ACE_TEXT ("(default is error)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
     ));
   ACE_DEBUG ((
@@ -199,14 +185,14 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
+      ACE_TEXT (" -Wp,<arg1,...,argn>\t\t\t\tpasses args to preprocessor\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
     ));
 
-  be_util::usage ();
+  be_global->usage ();
 }
 
 // Parse arguments on command line
@@ -272,33 +258,6 @@ DRV_parse_args (long ac, char **av)
               ACE_OS::strcat (idl_global->local_escapes (), s);
               ACE_OS::strcat (idl_global->local_escapes (), " ");
               break;
-            case 'a':
-              if (av[i][2] == 'e')
-                {
-                  idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_ERROR);
-                }
-              else if (av[i][2] == 'w')
-                {
-                  idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_WARNING);
-                }
-              else if (av[i][2] == 's')
-                {
-                  idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_SILENT);
-                }
-              else
-                {
-                  ACE_ERROR ((
-                      LM_ERROR,
-                      ACE_TEXT ("IDL: I don't understand")
-                      ACE_TEXT (" the '%s' option\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                    ));
-                 }
-
-               break;
             // Temp directory for the IDL compiler to keep its files.
             case 't':
               if ((av[i][2] == '\0') && (i < ac - 1))
@@ -331,7 +290,7 @@ DRV_parse_args (long ac, char **av)
                   if (i < ac - 1)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
-                      has_space = FE_Utils::hasspace (av[i + 1]);
+                      has_space = idl_global->hasspace (av[i + 1]);
 
                       // If the include path has a space, we need to
                       // add literal "s.
@@ -341,7 +300,7 @@ DRV_parse_args (long ac, char **av)
                       arg += (has_space ? "\"" : "");
 
                       DRV_cpp_putarg (arg.c_str ());
-                      idl_global->add_include_path (arg.substr (2).c_str (), false);
+                      idl_global->add_include_path (arg.substr (2).c_str ());
                       ++i;
                     }
                   else
@@ -362,7 +321,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  has_space = FE_Utils::hasspace (av[i]);
+                  has_space = idl_global->hasspace (av[i]);
 
                   // If the include path has a space, we need to
                   // add literal "s.
@@ -371,7 +330,7 @@ DRV_parse_args (long ac, char **av)
                   arg += av[i] + 2;
                   arg += (has_space? "\"" : "");
 
-                  idl_global->add_include_path (arg.substr (2).c_str (), false);
+                  idl_global->add_include_path (arg.substr (2).c_str ());
                   DRV_cpp_putarg (arg.c_str ());
                 }
 
@@ -436,7 +395,7 @@ DRV_parse_args (long ac, char **av)
                 case 'b':
                   if (*(s + 1) == ',')
                     {
-                      be_util::prep_be_arg (s + 2);
+                      be_global->prep_be_arg (s + 2);
                     }
 
                   break;
@@ -564,7 +523,7 @@ DRV_parse_args (long ac, char **av)
         }
     } // End of FOR (i = 1; i < ac; i++)
 
-  be_util::arg_post_proc ();
+  be_global->arg_post_proc ();
 
   // Make sure the output directory is valid.
   if (idl_global->temp_dir () == 0)

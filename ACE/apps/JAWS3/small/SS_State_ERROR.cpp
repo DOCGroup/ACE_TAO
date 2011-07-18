@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "jaws3/IO.h"
 
 #include "SS_State_ERROR.h"

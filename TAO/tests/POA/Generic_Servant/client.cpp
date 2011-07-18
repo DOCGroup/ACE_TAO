@@ -6,6 +6,8 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
+ACE_RCSID(Generic_Servant, client, "$Id$")
+
 static ACE_TCHAR *IOR = 0;
 static int iterations = 1;
 static int oneway = 0;
@@ -120,7 +122,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a test reference.
       test_var test = test::_narrow (object.in ());

@@ -8,6 +8,8 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 
+ACE_RCSID(server, Parse_Headers, "$Id$")
+
 // Implementation of class Headers
 
 Headers::Headers (void) : done_(0)

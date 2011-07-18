@@ -93,23 +93,6 @@ Test_i::shutdown (void)
 
 static const ACE_TCHAR *simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        simple_servant_ior_file = get_opts.opt_arg ();
-        break;
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
-
 void
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
@@ -138,14 +121,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      CORBA::Object_var object;
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       // RootPOA.
-      CORBA::Object_var object =
+      object =
         orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =

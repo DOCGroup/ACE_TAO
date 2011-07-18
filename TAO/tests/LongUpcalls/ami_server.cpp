@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "AMI_Manager.h"
 
+ACE_RCSID(LongUpcalls, ami_server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
@@ -26,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

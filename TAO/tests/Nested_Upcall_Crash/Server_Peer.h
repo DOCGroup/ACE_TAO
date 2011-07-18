@@ -15,7 +15,7 @@ class Server_Peer
   : public POA_Test::Peer
 {
 public:
-  Server_Peer (unsigned int seed,
+  Server_Peer (ACE_RANDR_TYPE seed,
                CORBA::ORB_ptr orb,
                CORBA::ULong payload_size);
 
@@ -26,7 +26,7 @@ public:
   void noop(void);
 
 private:
-  unsigned int seed_;
+  ACE_RANDR_TYPE seed_;
 
   CORBA::ORB_var orb_;
 

@@ -60,7 +60,7 @@ public:
             int protocol = IPPROTO_ICMP,
             int reuse_addr = 0);
 
-  /// @a to_connect = true - makes connect to remote address
+  /// @a toConnect = 1 - makes connect to remote address
   int send_echo_check (ACE_INET_Addr & remote_addr,
                        bool to_connect = false);
 
@@ -68,7 +68,7 @@ public:
   /// sending @c ICMP_ECHO.
   int process_incoming_dgram (char * ptr, ssize_t len);
 
-  /// @a to_connect = true - makes connect to remote address
+  /// @a toConnect = 1 - makes connect to remote address
   int make_echo_check (ACE_INET_Addr & remote_addr,
                        bool to_connect = false,
                        ACE_Time_Value const * timeout = &time_default_);

@@ -1,6 +1,9 @@
 // $Id$
 
 #include "orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h"
+
+ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushSupplier, "$Id$")
+
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Any/PushConsumer.h"
 
@@ -49,7 +52,7 @@ TAO_Notify_CosEC_ProxyPushSupplier::get_proxy_type_name (void) const
   return "ec_proxy_push_supplier";
 }
 
-void
+void 
 TAO_Notify_CosEC_ProxyPushSupplier::validate ()
 {
   TAO_Notify_Consumer* con = this->consumer ();
@@ -57,21 +60,12 @@ TAO_Notify_CosEC_ProxyPushSupplier::validate ()
   {
     if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_DEBUG, 
                   ACE_TEXT ("(%P|%t) TAO_Notify_CosEC_ProxyPushSupplier::validate(%d)")
                   ACE_TEXT ("disconnecting \n"), this->id ()));
     }
     this->disconnect_push_supplier ();
   }
-}
-
-void
-TAO_Notify_CosEC_ProxyPushSupplier::configure(
-  TAO_Notify_ConsumerAdmin & /*admin*/,
-  CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
-{
-  // Nothing to do.
-  // This virtual method was added to support Notification MC
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

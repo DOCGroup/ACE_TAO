@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
@@ -12,6 +11,10 @@
 
 //#define ACE_ENABLE_TIMEPROBES
 #include "ace/Timeprobe.h"
+
+ACE_RCSID (ace,
+           Message_Block,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,5 +1,6 @@
-// $Id$
+// file      : ace/RMCast/Protocol.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
+// cvs-id    : $Id$
 
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
@@ -20,6 +21,10 @@
 #include "ace/OS_NS_stdlib.h"
 
 #include "Bits.h"
+
+/*
+#include <iostream>
+*/
 
 namespace ACE_RMCast
 {
@@ -1019,7 +1024,7 @@ namespace ACE_RMCast
     u64
     find (Address const& addr) const
     {
-      u64 sn = 0;
+      u64 sn;
 
       if (map_.find (addr, sn) == -1) return 0;
 

@@ -7,52 +7,21 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 #include <iostream>
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://MessengerServer.ior");
-bool automated = false;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:a:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-      case 'a':
-        automated = !(ACE_OS::atoi(get_opts.opt_arg ()) == 0);
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " -k <ior>"
-                           " -a <automated>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+//-----------------------------------------------------------------------------
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
 
+    // assume any command line parameter means we want an automated test.
+    bool automated = argc > 1;
+
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    if (parse_args (argc, argv) != 0)
-      return 1;
-
-    CORBA::Object_var obj = orb->string_to_object(ior);
+    CORBA::Object_var obj = orb->string_to_object("file://MessengerServer.ior");
     if (CORBA::is_nil(obj.in())) {
       std::cerr << "Nil Messenger reference" << std::endl;
       return 1;
@@ -74,9 +43,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     mgr->activate();
 
     // Register an AMI handler for the Messenger interface
-    PortableServer::Servant_var<MessengerHandler> servant =
-      new MessengerHandler(orb.in());
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
+    MessengerHandler servant(orb.in());
+    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
     obj = poa->id_to_reference(oid.in());
     AMI_MessengerHandler_var handler = AMI_MessengerHandler::_narrow(obj.in());
 
@@ -114,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     // Our simple servant will exit as soon as it receives the results.
     orb->run();
 
-    if (servant->message_was_sent())
+    if (servant.message_was_sent())
     {
       // Note : We can't use the
       ACE_Time_Value delay = ACE_OS::gettimeofday() - time_sent;

@@ -11,6 +11,10 @@
 #include "tao/Policy_CurrentC.h"
 #include "tao/Transport.h"
 
+ACE_RCSID (Hello,
+           server,
+           "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 int test = 1;
 
@@ -39,7 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -131,7 +135,7 @@ CORBA::Policy_ptr
 create_min_ratio_policy (CORBA::ORB_ptr orb)
 {
   CORBA::Any min_compression_ratio_any;
-  Compression::CompressionRatio min_compression_ratio = 0.75;
+  CORBA::Long min_compression_ratio = 75;
   min_compression_ratio_any <<= min_compression_ratio;
 
   return orb->create_policy (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID, min_compression_ratio_any);

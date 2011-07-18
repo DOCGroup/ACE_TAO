@@ -24,17 +24,9 @@ dnl Macros that add ACE configuration options to a `configure' script.
 dnl ACE_CONFIGURATION_OPTIONS
 AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
 [
-  dnl There's no TAO support anywhere here, but these conditionals need
-  dnl to be here to satisfy MPC's generated conditionals.
-  AM_CONDITIONAL([BUILD_ACE_FOR_TAO], false)
-  AM_CONDITIONAL([BUILD_CORBA_E_COMPACT], false)
+ AM_CONDITIONAL([BUILD_ACE_FOR_TAO], false)
 
-  dnl This one is just wrong... this is a feature test and should not be
-  dnl an MPC 'avoids' but I don't have time to go fix all that, so just
-  dnl squash it here.
-  AM_CONDITIONAL([BUILD_OLD_STDSTREAM], false)
-
-  AC_ARG_ENABLE([ace-codecs],
+ AC_ARG_ENABLE([ace-codecs],
   AS_HELP_STRING(--enable-ace-codecs,build ACE with codecs support [[[yes]]]),
   [
    case "${enableval}" in
@@ -75,28 +67,6 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
    ace_user_enable_ace_filecache=yes
   ])
  AM_CONDITIONAL([BUILD_ACE_FILECACHE], [test X$ace_user_enable_ace_filecache = Xyes])
-
-  dnl This is odd, yes, but the MPC switch is backwards from what's
-  dnl usually intended.
-  AC_ARG_ENABLE([ace-inet],
-  AS_HELP_STRING(--enable-ace-inet,build ACE with protocols/INet component [[[yes]]]),
-  [
-   case "${enableval}" in
-    yes)
-      ace_user_disable_ace_inet=no
-      ;;
-    no)
-      ace_user_disable_ace_inet=yes
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-ace-inet])
-      ;;
-   esac
-  ],
-  [
-   ace_user_disable_ace_inet=no
-  ])
- AM_CONDITIONAL([BUILD_EXCLUDE_INET], [test X$ace_user_disable_ace_inet = Xyes])
 
  AC_ARG_ENABLE([ace-other],
   AS_HELP_STRING(--enable-ace-other,build ACE with all misc pieces [[[yes]]]),
@@ -610,6 +580,25 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
  ACE_ENABLE_QOS
  ACE_ENABLE_SSL
  ACE_ENABLE_ACEXML
+
+ AC_ARG_WITH([tao],
+  AS_HELP_STRING(--with-tao,build TAO (the ACE ORB) [[[yes]]]),
+  [
+   case "${withval}" in
+    yes)
+      ace_user_with_tao=yes
+      ;;
+    no)
+      ace_user_with_tao=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${withval} for --with-tao])
+      ;;
+   esac
+  ],
+  [
+   ace_user_with_tao=yes
+  ])
 
  AC_ARG_WITH([tli-device],
   AS_HELP_STRING(--with-tli-device(=DEV),device for TCP on TLI [[/dev/tcp]]),
@@ -1261,8 +1250,8 @@ AC_DEFUN([ACE_PATH_FL],
    fi
  fi
  if test X"${FLTKCONFIG}" != X; then
-   ACE_FLTK_CPPFLAGS=`$FLTKCONFIG --cxxflags 2>/dev/null`
-   ACE_FLTK_LIBS=`$FLTKCONFIG --ldflags 2>/dev/null`
+   ACE_FLTK_CPPFLAGS=`$FLTKCONFIG --use-gl --cxxflags 2>/dev/null`
+   ACE_FLTK_LIBS=`$FLTKCONFIG --use-gl --ldflags 2>/dev/null`
 
    AC_SUBST(ACE_FLTK_CPPFLAGS)
    AC_SUBST(ACE_FLTK_LIBS)
@@ -1404,7 +1393,6 @@ if test "$no_x" != yes; then
    AC_SUBST(ACE_XT_LIBS)
 fi
 AM_CONDITIONAL([BUILD_ATHENA], true)
-AM_CONDITIONAL([BUILD_ATHENA3D], true)
 AM_CONDITIONAL([BUILD_MOTIF], false)
 ])
 
@@ -1619,6 +1607,8 @@ AM_CONDITIONAL([BUILD_GL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_FL], [test X$ace_user_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
                [test X$ace_user_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_FLRESOURCE],
+               [test X$ace_user_enable_fl_reactor = Xyes])
 ])
 
 
@@ -1647,6 +1637,8 @@ AC_ARG_ENABLE([qt-reactor],
                 ])
 AM_CONDITIONAL([BUILD_QT], [test X$ace_user_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
+               [test X$ace_user_enable_qt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_QTRESOURCE],
                [test X$ace_user_enable_qt_reactor = Xyes])
 ])
 
@@ -1678,6 +1670,8 @@ AC_ARG_ENABLE([tk-reactor],
                 ])
 AM_CONDITIONAL([BUILD_TK], [test X$ace_user_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_TKREACTOR],
+               [test X$ace_user_enable_tk_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_TKRESOURCE],
                [test X$ace_user_enable_tk_reactor = Xyes])
 ])
 
@@ -1714,6 +1708,8 @@ dnl line, then "no_x" is set to "yes."
 		])
 AM_CONDITIONAL([BUILD_XT], [test X$ace_user_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
+               [test X$ace_user_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_user_enable_xt_reactor = Xyes])
 ])
 
@@ -1768,5 +1764,7 @@ AC_ARG_ENABLE([fox-reactor],
                ])
 AM_CONDITIONAL([BUILD_FOX], [test X$ace_user_enable_fox_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FOXREACTOR],
+               [test X$ace_user_enable_fox_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_FOXRESOURCE],
                [test X$ace_user_enable_fox_reactor = Xyes])
 ])

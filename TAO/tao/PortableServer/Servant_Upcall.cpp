@@ -19,6 +19,10 @@
 
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (PortableServer,
+           Servant_Upcall,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -361,7 +365,8 @@ namespace TAO
                   // Ignore errors from servant cleanup ....
                 }
 
-              if (this->poa_->waiting_servant_deactivation() > 0)
+              if (this->poa_->waiting_servant_deactivation() > 0 &&
+                  this->object_adapter_->enable_locking_)
                 {
                   // Wakeup all waiting threads.
                   this->poa_->servant_deactivation_condition_.broadcast ();
@@ -385,7 +390,8 @@ namespace TAO
       if (outstanding_requests == 0)
         {
           // If locking is enabled and some thread is waiting in POA::destroy.
-          if (this->poa_->wait_for_completion_pending_)
+          if (this->object_adapter_->enable_locking_ &&
+              this->poa_->wait_for_completion_pending_)
             {
               // Wakeup all waiting threads.
               this->poa_->outstanding_requests_condition_.broadcast ();

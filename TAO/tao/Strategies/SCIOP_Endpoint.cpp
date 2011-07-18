@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SCIOP_Endpoint.h"
 
 #if TAO_HAS_SCIOP == 1
@@ -15,6 +13,11 @@
 #include "ace/Synch.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
+
+ACE_RCSID (Strategies,
+           SCIOP_Endpoint,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SCIOP_Endpoint.inl"

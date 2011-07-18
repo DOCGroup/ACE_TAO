@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Current.cpp
- *
- *  $Id$
- *
- *   This program tests if accessing the POA current before the
- *   RootPOA can cause any problems.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/Current
+//
+// = FILENAME
+//     Current.cpp
+//
+// = DESCRIPTION
+//     This program tests if accessing the POA current before the
+//     RootPOA can cause any problems.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"

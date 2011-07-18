@@ -116,7 +116,7 @@ void Temperature_Monitor2::record_failure (void)
       this->reset_device (resetCount);
     }
 
-  this->naming_context_.rebind ("lastFailure", lastFailureTime);
+  this->naming_context_.rebind ("lastFailure", now);
 }
 
 void Temperature_Monitor2::monitor (void)

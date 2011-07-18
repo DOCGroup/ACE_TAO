@@ -8,8 +8,6 @@ project(*Server): portableserver, orbsvcsexe, security, ssliop {
 }
 
 project(*Client): orbsvcsexe, security, ssliop {
-  after += *Server
-
   Source_Files {
     MessengerC.cpp
     MessengerClient.cpp

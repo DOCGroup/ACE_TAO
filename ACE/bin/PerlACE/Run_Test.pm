@@ -42,11 +42,7 @@ if ($PerlACE::LabVIEW_RT_Test) {
 
 $PerlACE::WinCE_Test = $config->check_config("WINCE");
 if ($PerlACE::WinCE_Test) {
-if ($OSNAME eq "MSWin32") {
     require PerlACE::ProcessWinCE;
-} else {
-    require PerlACE::ProcessWinCE_Unix;
-}
 }
 
 # Figure out the svc.conf extension
@@ -87,19 +83,12 @@ sub LocalFile ($)
     return $newfile;
 }
 
-sub rebase_path {
-    my $path = shift;
-    my $cur_root = shift;
-    my $new_root = shift;
-    $path = File::Spec->rel2abs ($path);
-    $path = File::Spec->abs2rel ($path, $cur_root);
-    return $new_root."/".$path;
-}
-
 sub VX_HostFile($)
 {
     my $file = shift;
-    return rebase_path ($file, $ENV{"ACE_ROOT"}, $ENV{"HOST_ROOT"});
+    $file = File::Spec->rel2abs ($file);
+    $file = File::Spec->abs2rel ($file, $ENV{"ACE_ROOT"});
+    return $ENV{"HOST_ROOT"}."/".$file;
 }
 
 # Returns a random port within the range of 10002 - 32767
@@ -212,40 +201,33 @@ sub is_vxworks_rtp_test()
     return ($PerlACE::VxWorks_RTP_Test);
 }
 
-sub concat_path {
-    my $pathlist   = shift;
-    my $path       = shift;
-    if ((!defined $pathlist) || $pathlist =~ /^\s*$/) {
-        return $path;
-    } else {
-        return $pathlist . ($^O eq 'MSWin32' ? ';' : ':') . $path;
-    }
-}
-
 sub add_path {
-    my $name   = shift;
-    my $value  = shift;
-    $ENV{$name} = concat_path ($ENV{$name}, $value);
+  my $name   = shift;
+  my $value  = shift;
+  if (defined $ENV{$name}) {
+    $ENV{$name} .= ($^O eq 'MSWin32' ? ';' : ':') . $value
+  }
+  else {
+    $ENV{$name} = $value;
+  }
 }
 
 sub add_lib_path {
-    my($value) = shift;
+  my($value) = shift;
 
-    # Set the library path supporting various platforms.
-    foreach my $env ('PATH', 'DYLD_LIBRARY_PATH', 'LD_LIBRARY_PATH',
-                     'SHLIB_PATH') {
-      add_path($env, $value);
-      if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-        add_path($env, $value . '/' . $PerlACE::Process::ExeSubDir);
-      }
-    }
+  # Set the library path supporting various platforms.
+  add_path('PATH', $value);
+  add_path('DYLD_LIBRARY_PATH', $value);
+  add_path('LD_LIBRARY_PATH', $value);
+  add_path('LIBPATH', $value);
+  add_path('SHLIB_PATH', $value);
 
-    if (defined $ENV{"HOST_ROOT"}) {
-        add_path('PATH', VX_HostFile ($value));
-        add_path('LD_LIBRARY_PATH', VX_HostFile ($value));
-        add_path('LIBPATH', VX_HostFile ($value));
-        add_path('SHLIB_PATH', VX_HostFile ($value));
-    }
+  if (defined $ENV{"HOST_ROOT"}) {
+    add_path('PATH', VX_HostFile ($value));
+    add_path('LD_LIBRARY_PATH', VX_HostFile ($value));
+    add_path('LIBPATH', VX_HostFile ($value));
+    add_path('SHLIB_PATH', VX_HostFile ($value));
+  }
 }
 
 sub check_privilege_group {
@@ -313,14 +295,6 @@ sub waitforfileoutput_timed {
     sleep 1;
   }
   return -1;
-}
-
-sub GetArchDir {
-  my $dir = shift;
-  if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-    return $dir . $PerlACE::Process::ExeSubDir;
-  }
-  return $dir;
 }
 
 # Add PWD to the load library path

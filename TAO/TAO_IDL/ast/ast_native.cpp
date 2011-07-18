@@ -3,8 +3,20 @@
 #include "ast_native.h"
 #include "ast_visitor.h"
 
-AST_Decl::NodeType const
-AST_Native::NT = AST_Decl::NT_native;
+ACE_RCSID (ast,
+           ast_native,
+           "$Id$")
+
+AST_Native::AST_Native (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    AST_Exception ()
+{
+}
 
 AST_Native::AST_Native (UTL_ScopedName *n)
   : COMMON_Base (),

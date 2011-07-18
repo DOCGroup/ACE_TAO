@@ -1,6 +1,6 @@
-// $Id$
-
 #include "Sender_i.h"
+
+ACE_RCSID(Bug_1476_Regression, Sender_i, "$Id$")
 
 Sender_i::Sender_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),

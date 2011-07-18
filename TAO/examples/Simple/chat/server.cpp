@@ -1,17 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  Entry point for the chat server.
- *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/tests/Simple/chat
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    Entry point for the chat server.
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Server_i.h"
 

@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Reference_Counted_Event_Handler_Test.cpp
- *
- *  $Id$
- *
- *  This test is used to check reference counting of the Event
- *  Handler when it interacts with the Reactor.
- *
- *
- *  @author Irfan Pyarali <irfan@oomworks.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Reference_Counted_Event_Handler_Test.cpp
+//
+// = DESCRIPTION
+//    This test is used to check reference counting of the Event
+//    Handler when it interacts with the Reactor.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@oomworks.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -22,6 +25,8 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
+
+ACE_RCSID(tests, Reference_Counted_Event_Handler_Test, "$Id$")
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static const int message_size = 26;
@@ -892,6 +897,7 @@ void
 closed_in_upcall_event_handler (ACE_Reactor *reactor)
 {
   int events = 0;
+  int handle_events_result = 0;
 
   if (test_io)
     {
@@ -922,9 +928,8 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
 
   while (events > 0)
     {
-      int handle_events_result =
+      handle_events_result =
         reactor->handle_events ();
-      ACE_UNUSED_ARG (handle_events_result);
     }
 }
 
@@ -1096,7 +1101,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_UNUSED_ARG (test);
     }
 
-#endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */
+#endif /* ACE_HAS_DEV_POOL || ACE_HAS_EVENT_POLL */
 
   ACE_END_TEST;
 

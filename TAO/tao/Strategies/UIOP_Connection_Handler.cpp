@@ -18,6 +18,10 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
 
+ACE_RCSID (Strategies,
+           UIOP_Connection_Handler,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
@@ -232,12 +236,6 @@ TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
 
   // Add the handler to Cache
   return cache.cache_transport (&prop, this->transport ());
-}
-
-int
-TAO_UIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

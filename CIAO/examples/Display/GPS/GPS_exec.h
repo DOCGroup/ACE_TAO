@@ -10,6 +10,7 @@
 
 #include "GPS_exec_export.h"
 #include "GPSEC.h"
+#include "ciao/CIAO_common.h"
 #include "ace/OS_NS_time.h"
 #include "tao/LocalObject.h"
 
@@ -23,7 +24,7 @@ namespace MyImpl
    * GPS executor implementation class.
    */
   class GPS_EXEC_Export GPS_exec_i :
-    public virtual ::CIAO_HUDisplay_GPS_Impl::GPS_Exec,
+    public virtual CIDL_GPS_Impl::GPS_exec,
     public virtual ::CORBA::LocalObject
   {
 
@@ -40,12 +41,9 @@ namespace MyImpl
     void push_Refresh (HUDisplay::tick *);
 
     // Operations from HUDisplay::position
-    HUDisplay::GPS_position posxy ();
+    CORBA::Long posx ();
 
-    CORBA::UShort id ();
-    void id ( CORBA::UShort id);
-
-    CORBA::Boolean started ();
+    CORBA::Long posy ();
 
     // Operations from Components::SessionComponent
     void set_session_context (Components::SessionContext_ptr ctx);
@@ -64,9 +62,8 @@ namespace MyImpl
 
    private:
     CORBA::Long positionx_, positiony_;
-    CORBA::UShort id_;
-    CORBA::Boolean started_;
   };
+
 
   /**
    * @class GPSHome_exec_i
@@ -99,11 +96,9 @@ namespace MyImpl
     }
 
     // Operations from HUDisplay::position
-    HUDisplay::GPS_position posxy ();
+    CORBA::Long posx ();
 
-    CORBA::UShort id ();
-
-    CORBA::Boolean started ();
+    CORBA::Long posy ();
 
   private:
     GPS_exec_i& component_;

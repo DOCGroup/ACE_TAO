@@ -30,7 +30,7 @@
 struct HTIOP_Endpoint_Info
 {
   string host;
-  short _port;
+  short port;
   string htid;
 };
 

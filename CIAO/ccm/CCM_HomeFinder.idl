@@ -1,12 +1,9 @@
 // $Id$
-/// Compliant with OMG 06-04-01 Section 6.8
 
 #if !defined (CCM_HOMEFINDER_IDL)
 #define CCM_HOMEFINDER_IDL
 
 #include "tao/orb_types.pidl"
-
-#if !defined (CCM_LW)
 
 module Components
 {
@@ -28,6 +25,4 @@ module Components
       raises (HomeNotFound);
   };
 };
-#endif
-
 #endif /* CCM_HOMEFINDER_IDL */

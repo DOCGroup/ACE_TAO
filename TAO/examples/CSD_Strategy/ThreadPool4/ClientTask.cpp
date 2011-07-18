@@ -12,6 +12,8 @@
 
 #include "ClientTask.h"
 #include "ace/SString.h"
+#include "ace/OS.h"
+
 
 ClientTask::ClientTask(Foo_ptr foo,
                        Callback_ptr callback)

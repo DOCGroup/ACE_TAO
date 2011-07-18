@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef TAO_MONITOR_MONITOR_PIDL
-#define TAO_MONITOR_MONITOR_PIDL
-
 #include "tao/Monitor/Monitor_Types.pidl"
 
 module Monitor
@@ -57,5 +54,3 @@ module Monitor
     void unregister_constraints (in ConstraintStructList constraint);
   };
 };
-
-#endif /* TAO_MONITOR_MONITOR_PIDL */

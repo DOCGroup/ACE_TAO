@@ -1,17 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    next.cpp
- *
- *  $Id$
- *
- *  Sample application demonstrating synchronous Snmp::get_next API
- *  to access an SNMP Version 1 agent.
- *
- *
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    asnmp
+//
+// = FILENAME
+//    next.cpp
+//
+// = DESCRIPTION
+//  Sample application demonstrating synchronous Snmp::get_next API
+//  to access an SNMP Version 1 agent.
+//
+// = AUTHOR
+//  Peter E. Mellquist original code
+//  Michael R MacFaden mrm@cisco.com rework API/ACE integration
+//
+// ============================================================================
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -34,6 +39,8 @@
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
+ACE_RCSID(next, next, "$Id$")
 
 //
 // SNMPv1 Get Next Application

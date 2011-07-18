@@ -28,6 +28,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
 
+ACE_RCSID (tests,
+           Service_Config_Test,
+           "$Id$")
+
 static const u_int VARIETIES = 3;
 
 static u_int error = 0;
@@ -324,55 +328,6 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 }
 
 
-// Loading and unloading the ACE logger service should not smash singletons.
-void
-testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
-{
-  static const ACE_TCHAR *load_logger =
-#if (ACE_USES_CLASSIC_SVC_CONF == 1)
-    ACE_TEXT ("dynamic Logger Service_Object * ")
-    ACE_TEXT ("  ACE:_make_ACE_Logging_Strategy() \"\"")
-#else
-    ACE_TEXT ("<dynamic id=\"Logger\" type=\"Service_Object\">")
-    ACE_TEXT ("  <initializer init=\"_make_ACE_Logging_Strategy\" ")
-    ACE_TEXT ("    path=\"ACE\" params=\"\"/>")
-    ACE_TEXT ("</dynamic>")
-#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
-    ;
-
-  static const ACE_TCHAR *unload_logger =
-#if (ACE_USES_CLASSIC_SVC_CONF == 1)
-    ACE_TEXT ("remove Logger")
-#else
-    ACE_TEXT ("<remove id=\"Logger\" />");
-#endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
-    ;
-
-  ACE_Reactor *r1 = ACE_Reactor::instance();
-
-  // Ensure no errors are logged while searching for a valid ACE lib name;
-  // these skew the scoreboard results.
-  u_long mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
-  ACE_LOG_MSG->priority_mask (mask & ~LM_ERROR, ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ((LM_DEBUG, "Was %x, now %x\n", mask, mask & ~LM_ERROR));
-  int error_count = ACE_Service_Config::process_directive (load_logger);
-  ACE_LOG_MSG->priority_mask (mask);
-  if (error_count != 0)
-    {
-      ++error;
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Load ACE Logger should have returned 0; ")
-                  ACE_TEXT ("returned %d instead\n"),
-                  error_count));
-    }
-  ACE_Service_Config::process_directive (unload_logger);
-
-  ACE_Reactor *r2 = ACE_Reactor::instance ();
-  if (r1 != r2)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
-}
-
-
 // @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
@@ -570,7 +525,7 @@ testOrderlyInstantiation (int , ACE_TCHAR *[])
 // To do this, we need a native thread entry and, thus, it needs special care
 // for each platform type. Feel free to add more platforms as needed here and
 // in main() where the test is called.
-#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
 #  if defined (ACE_HAS_WTHREADS)
 extern "C" unsigned int __stdcall
 #  else
@@ -664,7 +619,7 @@ testNonACEThread ()
       WaitForSingleObject (thr_h, INFINITE);
       CloseHandle (thr_h);
     }
-#elif defined (ACE_HAS_PTHREADS)
+#elif defined (ACE_HAS_PTHREADS_STD)
   pthread_t thr_id;
   int status = pthread_create (&thr_id, 0, nonacethreadentry, &log_msg_attrs);
   if (status != 0)
@@ -699,7 +654,7 @@ testNonACEThread ()
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Non-ACE thread lookup test completed\n")));
 }
-#endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS */
+#endif /* ACE_HAS_WTHREADS || ACE_HAS_PTHREADS_STD */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
@@ -710,10 +665,9 @@ run_main (int argc, ACE_TCHAR *argv[])
   testFailedServiceInit (argc, argv);
   testLoadingServiceConfFile (argc, argv);
   testLoadingServiceConfFileAndProcessNo (argc, argv);
-  testUnloadingACELoggingStrategy (argc, argv);
   testLimits (argc, argv);
   testrepository (argc, argv);
-#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_PTHREADS_STD)
   testNonACEThread();
 #endif
 

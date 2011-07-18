@@ -1,15 +1,18 @@
 /* -*- C++ -*- */
+//$Id$
 
-//=============================================================================
-/**
- *  @file    FlowSpec_Dbase.h
- *
- *  $Id$
- *
- *  @author Vishal Kachroo <vishal@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    ACE_wrappers/examples/QOS
+//
+// = FILENAME
+//    FlowSpec_Dbase.h
+//
+// = AUTHOR
+//    Vishal Kachroo <vishal@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef FLOWSPEC_DBASE_H
 #define FLOWSPEC_DBASE_H

@@ -3,6 +3,11 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/orbconf.h"
 
+ACE_RCSID (tao, 
+           Server_Strategy_Factory, 
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
@@ -12,6 +17,42 @@ TAO_Server_Strategy_Factory::TAO_Server_Strategy_Factory (void)
 
 TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
 {
+}
+
+int
+TAO_Server_Strategy_Factory::open (TAO_ORB_Core*)
+{
+  return 0;
+}
+
+int
+TAO_Server_Strategy_Factory::enable_poa_locking (void)
+{
+  return -1;
+}
+
+int
+TAO_Server_Strategy_Factory::activate_server_connections (void)
+{
+  return 0;
+}
+
+int
+TAO_Server_Strategy_Factory::thread_per_connection_timeout (ACE_Time_Value &)
+{
+  return -1;
+}
+
+int
+TAO_Server_Strategy_Factory::server_connection_thread_flags (void)
+{
+  return 0;
+}
+
+int
+TAO_Server_Strategy_Factory::server_connection_thread_count (void)
+{
+  return 0;
 }
 
 const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &

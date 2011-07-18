@@ -199,7 +199,7 @@ Task::svc (void)
         CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       test_var test =
         test::_narrow (object.in ());

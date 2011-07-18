@@ -1,14 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   Test_impl.h
- *
- *  $Id$
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/OBV/ValueBox
+//
+// = FILENAME
+//   Test_impl.h
+//
+// = AUTHOR
+//   Gary Maxey
+//
+// ============================================================================
 
 
 #ifndef TAO_TEST_IMPL_H
@@ -20,8 +23,8 @@
 class Test_impl : public POA_Test
 {
 public:
-  /// ctor
   Test_impl (CORBA::ORB_ptr orb);
+  // ctor
 
   virtual VBlong * basic_op1 (
                        VBlong * p1,
@@ -108,8 +111,8 @@ public:
   virtual void shutdown (void);
 
 private:
-  /// The ORB
   CORBA::ORB_var orb_;
+  // The ORB
 };
 
 #endif /* TAO_TEST_IMPL_H */

@@ -1,4 +1,5 @@
 # -*- Makefile -*-
+
 # $Id$
 
 # SunOS 5.x (Solaris 2.x) with g++
@@ -9,12 +10,13 @@
 debug ?= 1
 optimize ?= 1
 threads ?= 1
+exceptions ?= 1
+pipes ?= 1
 buildbits ?= 32
 
-ifeq ($(buildbits),64)
-  FLAGS_C_CC += -m64
-  LDFLAGS    += -m64
-endif
+ifeq ($(exceptions),0)
+  CCFLAGS += -fno-exceptions
+endif # exceptions
 
 ifeq ($(shell /bin/uname -m),i86pc)
   #### gcc on Solaris86 doesn't use -g
@@ -27,6 +29,8 @@ endif # ! i86pc
 
 CC              = gcc
 CXX             = g++
+CFLAGS          += -W -Wall -Wpointer-arith
+CCFLAGS         += -W -Wall -Wpointer-arith
 
 ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
@@ -53,6 +57,8 @@ include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(TEMPLATES_FLAG)
 
 # Make sure we resolve all symbols at link time, see bugzilla 2710
 LDFLAGS         += -z now

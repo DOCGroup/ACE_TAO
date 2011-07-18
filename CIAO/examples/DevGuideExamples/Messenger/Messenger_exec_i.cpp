@@ -19,14 +19,15 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Messenger_exec_i.h"
+#include "ciao/CIAO_common.h"
 
 // MY CODE
-#include "ace/OS_NS_unistd.h"
+#include "ace/OS.h"
 #include "History_exec_i.h"
 #include "Runnable_exec_i.h"
 #include "Publication_exec_i.h"
 
-namespace CIAO_Messenger_Impl
+namespace CIDL_Messenger_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Messenger_exec_i
@@ -62,7 +63,7 @@ namespace CIAO_Messenger_Impl
       // get the run_lock from the Runnable executor; we have an
       // agreement with the Runnable executor that we must posess the
       // run_lock to publish
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->control_->get_run_lock(), 0);
+      ACE_Guard<TAO_SYNCH_MUTEX> guard( this->control_->get_run_lock() );
 
       // create a message to publish
       ::Message_var msg = new ::OBV_Message();
@@ -122,13 +123,25 @@ namespace CIAO_Messenger_Impl
   ::CCM_Publication_ptr
   Messenger_exec_i::get_content ()
   {
-    return ::CCM_Publication::_duplicate (this->content_);
+    // Your code here.
+
+    // MY CODE
+
+    // bump up ref count because we give up ownership when we return this
+    this->content_->_add_ref();
+    return this->content_;
   }
 
   ::CCM_History_ptr
   Messenger_exec_i::get_message_history ()
   {
-    return ::CCM_History::_duplicate (this->history_);
+    // Your code here.
+
+    // MY CODE
+
+    // bump up ref count because we give up ownership when we return this
+    this->history_->_add_ref();
+    return this->history_;
   }
 
   // Operations from Components::SessionComponent

@@ -111,7 +111,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   DWORD procID;
   WSAPROTOCOL_INFO protInfo;
   ssize_t res = this->recv(&procID, sizeof(procID));
-  if (res != static_cast <ssize_t> (sizeof(procID)))
+  if (res != sizeof(procID))
   {
     if(res != -1)
         errno = ENXIO;
@@ -123,7 +123,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
       return -1;
   }
   res = this->send(&protInfo, sizeof(protInfo));
-  if (res != static_cast <ssize_t> (sizeof(protInfo)))
+  if (res != sizeof(protInfo))
   {
     if(res != -1)
         errno = ENXIO;
@@ -131,7 +131,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   }
   // This is just for synchronization, we will ignore the data
   res = this->recv(&procID, sizeof(procID));
-  if (res != static_cast <ssize_t> (sizeof(procID)))
+  if (res != sizeof(procID))
   {
     if(res != -1)
         errno = ENXIO;
@@ -139,7 +139,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   }
   return 0;
 #else
-  ACE_UNUSED_ARG (handle);
+  handle = handle;
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
@@ -165,14 +165,14 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   pid_t procID = ACE_OS::getpid();
   WSAPROTOCOL_INFO protInfo;
   ssize_t res = this->send(&procID, sizeof(procID));
-  if (res != static_cast <ssize_t> (sizeof(procID)))
+  if (res != sizeof(procID))
   {
     if(res != -1)
         errno = ENXIO;
     return -1;
   }
   res = this->recv(&protInfo, sizeof(protInfo));
-  if (res != static_cast <ssize_t> (sizeof(protInfo)))
+  if (res != sizeof(protInfo))
   {
     if(res != -1)
         errno = ENXIO;
@@ -187,7 +187,7 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   // Since it does not matter what the data is, just send something to
   // synchronize the end of the exchange
   res = this->send(&procID, sizeof(procID));
-  if (res != static_cast <ssize_t> (sizeof(procID)))
+  if (res != sizeof(procID))
   {
     if(res != -1)
         errno = ENXIO;
@@ -195,7 +195,7 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   }
   return 0;
 #else
-  ACE_UNUSED_ARG (handle);
+  handle = handle;
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }

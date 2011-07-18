@@ -1,140 +1,115 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
-# This is a Perl script that runs a Naming Service test.  It starts
-# all the servers and clients as necessary.
 # -*- perl -*-
 
+# This is a Perl script that runs a Naming Service test.  It starts
+# all the servers and clients as necessary.
+
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use Cwd;
 
-$status = 0;
-$debug_level = '0';
 $quiet = 0;
-
-if ($ARGV[0] eq '-q') {
-    $quiet = 1;
-}
+$debug_level = '0';
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
     }
+    if ($ARGV[0] eq '-q') {
+        $quiet = 1;
+    }
 }
+
 
 # Variables for command-line arguments to client and server
 # executables.
-my $ns_orb_port1 = 9931;
-my $ns_orb_port2 = 9932;
-my $ns_endpoint1 = "iiop://localhost:$ns_orb_port1";
-my $ns_endpoint2 = "iiop://localhost:$ns_orb_port2";
-my $ns1_ior = "ns1.ior";
-my $ns2_ior = "ns2.ior";
-my $iorbase = "test.ior";
+$ns_orb_port1 = 9931;
+$ns_orb_port2 = 9932;
+$ns_endpoint1 = "iiop://localhost:$ns_orb_port1";
+$ns_endpoint2 = "iiop://localhost:$ns_orb_port2";
+$nsiorfile1 = PerlACE::LocalFile ("ns1.ior");
+$nsiorfile2 = PerlACE::LocalFile ("ns2.ior");
+$iorfile = PerlACE::LocalFile ("test.ior");
 
-my $ns1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $ns2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $server = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $client = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $ns1_iorfile = $ns1->LocalFile ($ns1_ior);
-my $ns2_iorfile = $ns2->LocalFile ($ns2_ior);
-$server->DeleteFile ($iorbase);
-$ns1->DeleteFile ($ns1_ior);
-$ns2->DeleteFile ($ns2_ior);
-
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "");
-
-$NS1 = $ns1->CreateProcess("../../Naming_Service/tao_cosnaming",
-                           "-ORBEndPoint $ns_endpoint1 -o $ns1_iorfile -m 0");
-$NS2 = $ns2->CreateProcess("../../Naming_Service/tao_cosnaming",
-                           "-ORBEndPoint $ns_endpoint2 -o $ns2_iorfile -m 0");
+$status = 0;
 
 # Run two Naming Servers
-$process_status = $NS1->Spawn ();
 
-if ($process_status != 0) {
-    print STDERR "ERROR: ns1 returned $process_status\n";
+my $args = "-ORBEndPoint $ns_endpoint1 -o $nsiorfile1 -m 0";
+my $prog = "../../Naming_Service/Naming_Service";
+$NS1 = new PerlACE::Process ($prog, $args);
+
+unlink $nsiorfile1;
+unlink $iorfile;
+
+$NS1->Spawn ();
+
+if (PerlACE::waitforfile_timed ($nsiorfile1, $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: cannot find IOR file <$nsiorfile1>\n";
+  $NS1->Kill ();
+  exit 1;
+}
+
+my $args = "-ORBEndPoint $ns_endpoint2 -o $nsiorfile2 -m 0";
+my $prog = "../../Naming_Service/Naming_Service";
+$NS2 = new PerlACE::Process ($prog, $args);
+
+unlink $nsiorfile2;
+
+$NS2->Spawn ();
+
+if (PerlACE::waitforfile_timed ($nsiorfile2, $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: cannot find IOR file <$nsiorfile2>\n";
+  $NS2->Kill ();
+  exit 1;
+}
+
+$SV = new PerlACE::Process ("server", "-ORBDebuglevel $debug_level");
+$CL = new PerlACE::Process ("client", "");
+
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     exit 1;
 }
 
-if ($ns1->WaitForFileTimed ($ns1_ior,
-                            $ns1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns1_iorfile>\n";
-    $NS1->Kill (); $NS1->TimedWait (1);
-    exit 1;
-}
-
-$process_status = $NS2->Spawn ();
-
-if ($process_status != 0) {
-    print STDERR "ERROR: ns2 returned $process_status\n";
-    $NS1->Kill (); $NS1->TimedWait (1);
-    exit 1;
-}
-
-if ($ns2->WaitForFileTimed ($ns2_ior,
-                            $ns2->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns2_iorfile>\n";
-    $NS2->Kill (); $NS2->TimedWait (1);
-    $NS1->Kill (); $NS1->TimedWait (1);
-    exit 1;
-}
-
-$process_status = $SV->Spawn ();
-
-if ($process_status != 0) {
-    print STDERR "ERROR: server returned $process_status\n";
-    $NS2->Kill (); $NS2->TimedWait (1);
-    $NS1->Kill (); $NS1->TimedWait (1);
-    exit 1;
-}
-
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $NS2->Kill (); $NS2->TimedWait (1);
-    $NS1->Kill (); $NS1->TimedWait (1);
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
+# Kill naming service 2
 print STDERR "Killing second naming server\n";
 $NS2->Kill ();
 
 print STDERR "Starting client\n";
-$process_status = $CL->Spawn ();
+$client = $CL->Spawn ();
 
-if ($process_status != 0) {
-    print STDERR "ERROR: client returned $process_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
 sleep (15);
 
-$process_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->TerminateWaitKill (10);
 
-if ($process_status != 0) {
-    print STDERR "ERROR: server returned $process_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
 $NS1->Kill ();
+$CL->TerminateWaitKill (2);
 
-$process_status = $CL->TerminateWaitKill ($server->ProcessStopWaitInterval());
-
-if ($process_status != 0) {
-    print STDERR "ERROR: client returned $process_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile ($iorbase);
-$ns1->DeleteFile ($ns1_ior);
-$ns2->DeleteFile ($ns2_ior);
+unlink $iorfile1;
+unlink $iorfile2;
 
 exit $status;

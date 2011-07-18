@@ -1,17 +1,22 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    tie_ss.h
- *
- *  $Id$
- *
- *  Visitor for generating code for IDL operations for the TIE class
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_ss.h
+//
+// = DESCRIPTION
+//    Visitor for generating code for IDL operations for the TIE class
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_TIE_SS_H_
 #define _BE_VISITOR_OPERATION_TIE_SS_H_
@@ -20,24 +25,25 @@
 // Operation visitor for operation declaration inside the TIE class
 // ***********************************************************************
 
-/**
- * @class be_visitor_operation_tie_ss
- *
- * @brief be_visitor_operation_tie_ss
- *
- * This is a concrete visitor to generate the operaton inside a TIE class
- */
 class be_visitor_operation_tie_ss : public be_visitor_scope
 {
+  //
+  // = TITLE
+  //   be_visitor_operation_tie_ss
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the operaton inside a TIE class
+  //
+  //
 public:
-  /// constructor
   be_visitor_operation_tie_ss (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_operation_tie_ss (void);
+  // destructor
 
-  /// set the right context and make a visitor
   virtual int visit_operation (be_operation *node);
+  // set the right context and make a visitor
 };
 
 #endif /* _BE_VISITOR_OPERATION_TIE_SS_H_ */

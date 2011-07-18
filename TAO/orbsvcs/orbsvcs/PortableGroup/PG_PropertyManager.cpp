@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
@@ -8,6 +7,10 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/SString.h"
+
+ACE_RCSID (PortableGroup,
+           PG_PropertyManager,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

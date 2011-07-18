@@ -6,7 +6,7 @@
 #define JAWS_BUILD_DLL
 #endif
 
-#include "jaws3/Jaws_IO.h"
+#include "jaws3/IO.h"
 #include "jaws3/Synch_IO.h"
 #include "jaws3/Event_Completer.h"
 

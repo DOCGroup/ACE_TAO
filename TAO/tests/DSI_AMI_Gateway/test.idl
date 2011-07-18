@@ -7,7 +7,7 @@ typedef sequence<long> DSI_LongSeq;
 struct Structure
 {
   short i;
-  DSI_LongSeq seq;
+  sequence<long> seq;
 };
 
 exception test_exception

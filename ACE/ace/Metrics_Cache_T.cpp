@@ -15,7 +15,8 @@
 #include "ace/Metrics_Cache_T.inl"
 #endif /* __ACE_INLINE__ */
 
-/// Const strings for timeprobe event type descriptions.
+// Const strings for timeprobe event type descriptions.
+
 static const char * event_description_strings [] =
 {
   "start",
@@ -168,7 +169,7 @@ flush_ACE_Metrics_Timeprobe ()
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::
 ACE_Metrics_Cache (u_long table_size,
-                   u_long,
+                   u_long number_of_probes,
                    ALLOCATOR *alloc)
   : probe_set_size_ (0),
     enqueue_names_ (0),
@@ -182,6 +183,7 @@ ACE_Metrics_Cache (u_long table_size,
     metrics_enabled_(1),
     allocator_ (alloc)
 {
+  ACE_UNUSED_ARG(number_of_probes);
   // Initialize probe and count arrays.
 
   // Ensure that the high res timer global scale factor
@@ -204,6 +206,7 @@ template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Cache ()
 {
 }
+
 
 // Obtain an allocator pointer correctly thunked for the current
 // address space.  If there is no allocator stored in the instance,

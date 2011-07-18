@@ -4,7 +4,7 @@
 project(FaultTolerance): orbsvcslib, orbsvcs_output, install, pi, pi_server, notification, ftorb, portablegroup, avoids_minimum_corba, tao_versioning_idl_defaults {
   sharedname   = TAO_FaultTolerance
   idlflags    += -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h
-  dynamicflags += TAO_FT_BUILD_DLL
+  dynamicflags = TAO_FT_BUILD_DLL
   tagchecks   += FaultTolerance
 
   IDL_Files {

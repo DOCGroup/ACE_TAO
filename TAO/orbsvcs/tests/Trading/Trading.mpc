@@ -4,7 +4,7 @@
 project(*Test Lib): orbsvcslib, trading_serv, naming, utils, pi, codecfactory {
   sharedname = TTest
   idlflags += -I..\..\.. -I..\..\..\orbsvcs -Wb,export_macro=TAO_TTest_Export -Wb,export_include=ttest_export.h
-  dynamicflags += TAO_TTEST_BUILD_DLL
+  dynamicflags = TAO_TTEST_BUILD_DLL
 
   Source_Files {
     TT_Info.cpp

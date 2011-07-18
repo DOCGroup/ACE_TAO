@@ -1,9 +1,12 @@
-// $Id$
 #include "ace/Remote_Name_Space.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID (ace,
+           Remote_Name_Space,
+           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

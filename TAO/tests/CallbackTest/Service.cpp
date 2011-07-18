@@ -3,6 +3,8 @@
 //
 #include "Service.h"
 
+ACE_RCSID(Callback, Service, "$Id$")
+
 Service::Service (CORBA::ORB_ptr orb)
   : test_count_ (0),
     orb_ (CORBA::ORB::_duplicate (orb))
@@ -60,8 +62,8 @@ Service::call_are_you_there (Test::Callback_ptr callback)
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
     {
-      CORBA::String_var outstr;
-      CORBA::String_out out_str (outstr.out ());
+      char* outstr;
+      CORBA::String_out out_str (outstr);
       try
         {
           (void) callback->are_you_there (out_str);
@@ -71,7 +73,7 @@ Service::call_are_you_there (Test::Callback_ptr callback)
           exception_count++;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, answer = %C\n", outstr.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, answer = %C\n", outstr));
     }
   return exception_count;
 }

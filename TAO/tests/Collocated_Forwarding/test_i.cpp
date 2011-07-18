@@ -1,8 +1,11 @@
-// $Id$
 // -*- C++ -*-
 
 #include "test_i.h"
 #include "tao/PortableServer/ForwardRequestC.h"
+
+ACE_RCSID (Collocated_Forwarding,
+           test_i,
+           "$Id$")
 
 test_i::test_i (CORBA::Short id,
                 bool direct,

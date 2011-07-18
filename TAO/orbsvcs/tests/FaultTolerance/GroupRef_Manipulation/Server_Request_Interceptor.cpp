@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "Server_Request_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
@@ -7,6 +6,10 @@
 #include "tao/ORB_Constants.h"
 #include "tao/CDR.h"
 #include "testS.h"
+
+ACE_RCSID (ForwardRequest,
+           Server_Request_Interceptor,
+           "$Id$")
 
 static const CORBA::ULong expected_version = 5;
 

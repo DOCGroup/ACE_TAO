@@ -6,117 +6,71 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $sts = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $stc = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-my $ses = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
-my $sec = PerlACE::TestTarget::create_target (6) || die "Create target 6 failed\n";
-
-$sts->AddLibPath ('../lib');
-$stc->AddLibPath ('../lib');
-$ses->AddLibPath ('../lib');
-$sec->AddLibPath ('../lib');
+PerlACE::add_lib_path ('../lib');
 
 PerlACE::check_privilege_group();
 
+$ior = PerlACE::LocalFile ("supplier.ior");
+$notifyior = PerlACE::LocalFile ("notify.ior");
+$naming_ior = PerlACE::LocalFile ("naming.ior");
+$notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
+$status = 0;
 $deadline = 0;
-$port = $ns->RandomPort ();
-$host = $ns->HostName ();
-
-$iorbase = "supplier.ior";
-$nfsiorfile = "notify.ior";
-$nsiorfile = "naming.ior";
-$nfsconffile = "notify$PerlACE::svcconf_ext";
-
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $nfs_nfsiorfile = $nfs->LocalFile ($nfsiorfile);
-my $sts_iorfile = $sts->LocalFile ($iorbase);
-my $stc_iorfile = $stc->LocalFile ($iorbase);
-my $sec_iorfile = $sec->LocalFile ($iorbase);
-my $ses_iorfile = $ses->LocalFile ($iorbase);
-my $nfs_nfsconffile = $nfs->LocalFile ($nfsconffile);
-$ns->DeleteFile ($nsiorfile);
-$nfs->DeleteFile ($nfsiorfile);
-$sts->DeleteFile ($iorbase);
-$stc->DeleteFile ($iorbase);
-$sec->DeleteFile ($iorbase);
-$ses->DeleteFile ($iorbase);
 
 foreach my $arg (@ARGV) {
-    if ($arg eq "-d") {
-        $deadline = 1;
-    }
-    else {
-        print "Usage: $0 [-d]\n" .
-              "       -d specifies that deadline discarding be tested.\n";
-        exit(0);
-    }
+  if ($arg eq "-d") {
+    $deadline = 1;
+  }
+  else {
+    print "Usage: $0 [-d]\n" .
+          "       -d specifies that deadline discarding be tested.\n";
+    exit(0);
+  }
 }
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
-                          "-ORBEndpoint iiop://$host:$port -o $ns_nsiorfile");
-
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+$port = PerlACE::uniqueid () + 10001;
+$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                            "-ORBEndpoint iiop://localhost:$port -o $naming_ior");
+$TS = new PerlACE::Process ("../../../Notify_Service/Notify_Service",
                             "-ORBInitRef NameService=iioploc://" .
-                            "$host:$port/NameService " .
-                            "-IORoutput $nfs_nfsiorfile -ORBSvcConf " .
-                            "$nfs_nfsconffile");
+                            "localhost:$port/NameService " .
+                            "-IORoutput $notifyior -ORBSvcConf " .
+                            "$notify_conf");
+$STS = new PerlACE::Process ("Structured_Supplier",
+                             "-ORBInitRef NameService=iioploc://" .
+                             "localhost:$port/NameService");
+$STC = new PerlACE::Process ("Structured_Consumer");
 
-$STS = $sts->CreateProcess ("Structured_Supplier",
-                            "-ORBDebugLevel $debug_level ".
-                            "-ORBInitRef NameService=iioploc://".
-                            "$host:$port/NameService ".
-                            "-o $sts_iorfile");
+$SES = new PerlACE::Process ("Sequence_Supplier",
+                             "-ORBInitRef NameService=iioploc://" .
+                             "localhost:$port/NameService");
+$SEC = new PerlACE::Process ("Sequence_Consumer");
 
-$STC = $stc->CreateProcess ("Structured_Consumer");
+$client_args = "-ORBInitRef NameService=iioploc://localhost:" .
+               "$port/NameService";
 
-$SES = $ses->CreateProcess ("Sequence_Supplier",
-                            "-ORBDebugLevel $debug_level ".
-                            "-ORBInitRef NameService=iioploc://".
-                            "$host:$port/NameService ".
-                            "-o $ses_iorfile");
+unlink $notifyior;
+unlink $naming_ior;
 
-$SEC = $sec->CreateProcess ("Sequence_Consumer");
-
-$CLI_args = "-ORBInitRef NameService=iioploc://$host:$port/NameService ";
-
-$NS_status = $NS->Spawn ();
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    exit 1;
-}
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+$NS->Spawn ();
+if (PerlACE::waitforfile_timed ($naming_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+  print STDERR "ERROR: waiting for the naming service to start\n";
+  $NS->Kill ();
+  exit 1;
 }
 
-$NFS_status = $NFS->Spawn ();
-if ($NFS_status != 0) {
-    print STDERR "ERROR: Notify Service returned $NFS_status\n";
-    exit 1;
-}
-if ($nfs->WaitForFileTimed ($nfsiorfile,$nfs->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$nfs_nfsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
+$TS->Spawn ();
+if (PerlACE::waitforfile_timed ($notifyior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: waiting for the notify service to start\n";
+    $TS->Kill ();
+    $NS->Kill ();
     exit 1;
 }
 
 if ($deadline) {
-    ## @@todo : Add combinations of deadline ordering.
+  ## @@todo : Add combinations of deadline ordering.
 }
 
 # Although the TAO notify service supports OrderPolicy on the supplier side
@@ -126,276 +80,144 @@ if ($deadline) {
 # Therefore we don't test setting this policy on the supplier side.
 
 print "**** Structured Supplier (fifo) -> Structured Consumer (none) *****\n";
+unlink $ior;
 $STS->Arguments($STS->Arguments() . " -d fifo");
-$STS_status = $STS->Spawn ();
-if ($STS_status != 0) {
-    print STDERR "ERROR: Structured Supplier returned $STS_status\n";
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
     exit 1;
 }
-if ($sts->WaitForFileTimed ($iorbase,$sts->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$sts_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$STC->Arguments($client_args . " -d fifo");
+$client = $STC->SpawnWaitKill (20);
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($sts->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$sts_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($stc->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$stc_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-sleep 2;
-
-$STC->Arguments($CLI_args . " -k file://$stc_iorfile -d fifo");
-$STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
-if ($STC_status != 0) {
-    print STDERR "ERROR: Structured Consumer returned $STC_status\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$STS_status = $STS->WaitKill ($sts->ProcessStopWaitInterval());
-if ($STS_status != 0) {
-    print STDERR "ERROR: Structured Supplier returned $STS_status\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$sts->DeleteFile ($iorbase);
-$stc->DeleteFile ($iorbase);
-
-
 
 print "**** Structured Supplier (fifo) -> Structured Consumer (priority) *****\n";
+unlink $ior;
 $STS->Arguments($STS->Arguments() . " -d fifo");
-$STS_status = $STS->Spawn ();
-if ($STS_status != 0) {
-    print STDERR "ERROR: Structured Supplier returned $STS_status\n";
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
     exit 1;
 }
-if ($sts->WaitForFileTimed ($iorbase,$sts->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$sts_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$STC->Arguments($client_args . " -d priority -o");
+$client = $STC->SpawnWaitKill (20);
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($sts->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$sts_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($stc->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$stc_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-sleep 2;
-
-$STC->Arguments($CLI_args . " -k file://$stc_iorfile -d priority -o");
-$STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
-if ($STC_status != 0) {
-    print STDERR "ERROR: Structured Consumer returned $STC_status\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$STS_status = $STS->WaitKill ($sts->ProcessStopWaitInterval());
-if ($STS_status != 0) {
-    print STDERR "ERROR: Structured Supplier returned $STS_status\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$sts->DeleteFile ($iorbase);
-$stc->DeleteFile ($iorbase);
-
-
 
 print "**** Structured Supplier (fifo) -> Sequence Consumer (priority) *****\n";
+unlink $ior;
 $STS->Arguments($STS->Arguments() . " -d fifo");
-$STS_status = $STS->Spawn ();
-if ($STS_status != 0) {
-    print STDERR "ERROR: Structured Supplier returned $STS_status\n";
+$STS->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: waiting for the supplier to start\n";
+    $STS->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
     exit 1;
 }
-if ($sts->WaitForFileTimed ($iorbase,$sts->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$sts_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$SEC->Arguments($client_args . " -d priority -o");
+$client = $SEC->SpawnWaitKill (20);
+if ($client != 0) {
+  $STS->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($sts->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$sts_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$server = $STS->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($sec->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$sec_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-sleep 2;
-
-$SEC->Arguments($CLI_args . " -k file://$sec_iorfile -d priority -o");
-$SEC_status = $SEC->SpawnWaitKill ($sec->ProcessStartWaitInterval()+5);
-if ($SEC_status != 0) {
-    print STDERR "ERROR: Sequence Consumer returned $SEC_status\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$STS_status = $STS->WaitKill ($sts->ProcessStopWaitInterval());
-if ($STS_status != 0) {
-    print STDERR "ERROR: Structured Supplier returned $STS_status\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$sts->DeleteFile ($iorbase);
-$sec->DeleteFile ($iorbase);
-
-
 
 print "**** Sequence Supplier (fifo) -> Structured Consumer (priority) *****\n";
+unlink $ior;
 $SES->Arguments($SES->Arguments() . " -d fifo");
-$SES_status = $SES->Spawn ();
-if ($SES_status != 0) {
-    print STDERR "ERROR: Sequence Supplier returned $SES_status\n";
+$SES->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    $SES->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
     exit 1;
 }
-if ($ses->WaitForFileTimed ($iorbase,$ses->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ses_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$STC->Arguments($client_args . " -d priority -o");
+$client = $STC->SpawnWaitKill (20);
+if ($client != 0) {
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($ses->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ses_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$server = $SES->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($stc->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$stc_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-sleep 2;
-
-$STC->Arguments($CLI_args . " -k file://$stc_iorfile -d priority -o");
-$STC_status = $STC->SpawnWaitKill ($stc->ProcessStartWaitInterval()+5);
-if ($STC_status != 0) {
-    print STDERR "ERROR: Structured Consumer returned $STC_status\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$SES_status = $SES->WaitKill ($ses->ProcessStopWaitInterval());
-if ($SES_status != 0) {
-    print STDERR "ERROR: Sequence Supplier returned $SES_status\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-
-$ses->DeleteFile ($iorbase);
-$stc->DeleteFile ($iorbase);
-
 
 print "**** Sequence Supplier (fifo) -> Sequence Consumer (priority) *****\n";
+unlink $ior;
 $SES->Arguments($SES->Arguments() . " -d fifo");
-$SES_status = $SES->Spawn ();
-if ($SES_status != 0) {
-    print STDERR "ERROR: Sequence Supplier returned $SES_status\n";
+$SES->Spawn ();
+if (PerlACE::waitforfile_timed ($ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    $SES->Kill ();
+    $TS->Kill ();
+    $NS->Kill ();
+    $status = 1;
     exit 1;
 }
-if ($ses->WaitForFileTimed ($iorbase,$ses->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ses_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
+$SEC->Arguments($client_args . " -d priority -o");
+$client = $SEC->SpawnWaitKill (20);
+if ($client != 0) {
+  $SES->Kill ();
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
-if ($ses->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ses_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-if ($sec->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$sec_iorfile>\n";
-    $STS->Kill (); $STS->TimedWait (1);
-    $NS->Kill (); $NS->TimedWait (1);
-    $NFS->Kill (); $NFS->TimedWait (1);
-    exit 1;
-}
-sleep 2;
-
-$SEC->Arguments($CLI_args . " -k file://$sec_iorfile -d priority -o");
-$SEC_status = $SEC->SpawnWaitKill ($sec->ProcessStartWaitInterval()+5);
-if ($SEC_status != 0) {
-    print STDERR "ERROR: Sequence Consumer returned $SEC_status\n";
-    $status = 1;
+$server = $SES->WaitKill(5);
+if ($server != 0) {
+  $TS->Kill ();
+  $NS->Kill ();
+  exit 1;
 }
 
-$SES_status = $SES->WaitKill ($ses->ProcessStopWaitInterval());
-if ($SES_status != 0) {
-    print STDERR "ERROR: Sequence Supplier returned $SES_status\n";
-    $status = 1;
-}
 
-$NFS_status = $NFS->Kill ($nfs->ProcessStopWaitInterval());
-if ($NFS_status != 0) {
-    print STDERR "ERROR: Notify Service returned $NFS_status\n";
-    $status = 1;
-}
+$TS->Kill ();
+$NS->Kill ();
 
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    $status = 1;
-}
-
-$ns->DeleteFile ($nsiorfile);
-$nfs->DeleteFile ($nfsiorfile);
-$sts->DeleteFile ($iorbase);
-$stc->DeleteFile ($iorbase);
-$sec->DeleteFile ($iorbase);
-$ses->DeleteFile ($iorbase);
+unlink $ior;
+unlink $notifyior;
+unlink $naming_ior;
 
 exit $status;

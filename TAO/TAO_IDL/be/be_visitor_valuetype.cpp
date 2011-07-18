@@ -1,20 +1,22 @@
 
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_valuetype.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for the Valuetype class
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
- */
-//=============================================================================
-
-#include "utl_identifier.h"
-#include "utl_exceptlist.h"
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_valuetype.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for the Valuetype class
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//
+// ============================================================================
 
 #include "be_argument.h"
 #include "be_array.h"
@@ -45,6 +47,8 @@
 #include "be_valuetype_fwd.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "utl_identifier.h"
+#include "utl_exceptlist.h"
 #include "be_util.h"
 
 #include "be_visitor_valuetype.h"
@@ -87,9 +91,14 @@
 #include "be_visitor_valuetype/field_cdr_ch.cpp"
 #include "be_visitor_valuetype/field_cdr_cs.cpp"
 #include "be_visitor_valuetype/obv_module.cpp"
+#include "be_visitor_valuetype/ami_exception_holder_ch.cpp"
+#include "be_visitor_valuetype/ami_exception_holder_cs.cpp"
 #include "be_visitor_valuetype/valuetype_init.cpp"
 #include "be_visitor_valuetype/valuetype_init_ch.cpp"
 #include "be_visitor_valuetype/valuetype_init_ci.cpp"
 #include "be_visitor_valuetype/valuetype_init_cs.cpp"
 #include "be_visitor_valuetype/valuetype_init_arglist_ch.cpp"
 
+ACE_RCSID (be,
+           be_visitor_valuetype,
+          "$Id$")

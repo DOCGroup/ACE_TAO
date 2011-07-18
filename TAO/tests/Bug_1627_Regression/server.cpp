@@ -8,12 +8,11 @@
 #include "tao/IORTable/IORTable.h"
 
 const ACE_TCHAR *object_key = 0;
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -22,20 +21,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'k':
         object_key = get_opts.opt_arg ();
         break;
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "SERVER (%P): usage:  %s "
-                           "-o <ior output file>"
                            "-k <object key>"
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -84,19 +79,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       adapter->bind("Name-with-hyphens", ior.in());
 
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
                                "SERVER (%P): Cannot open output file "
                                "for writing IOR: %s",
-                               ior_output_file),
+                               "server.ior"),
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       ACE_DEBUG ((LM_DEBUG,
                       "SERVER (%P): Activated as file://%s\n",
-                      ior_output_file));
+                      "server.ior"));
 
       poa_manager->activate();
 

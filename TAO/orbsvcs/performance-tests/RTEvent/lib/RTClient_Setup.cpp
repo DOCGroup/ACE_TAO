@@ -16,6 +16,10 @@
 #include "RTClient_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (TAO_PERF_RTEC,
+           RTClient_Setup,
+           "$Id$")
+
 RTClient_Setup::RTClient_Setup (int use_rt_corba,
                                 CORBA::ORB_ptr orb,
                                 const RT_Class &rt_class,
@@ -26,15 +30,19 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
 
   if (use_rt_corba)
     {
-      ACE_auto_ptr_reset (this->rtcorba_setup_,
+      ACE_AUTO_PTR_RESET (this->rtcorba_setup_,
                           new RTCORBA_Setup (orb,
                                              rt_class,
-                                             nthreads));
+                                             nthreads),
+                          RTCORBA_Setup
+                         );
 
 #if 0
-      ACE_auto_ptr_reset (this->priorityband_setup_,
+      ACE_AUTO_PTR_RESET (this->priorityband_setup_,
                           new PriorityBand_Setup (orb,
-                                                  *this->rtcorba_setup_));
+                                                  *this->rtcorba_setup_),
+                          PriorityBand_Setup
+                         );
 
 #endif /* 0 */
     }

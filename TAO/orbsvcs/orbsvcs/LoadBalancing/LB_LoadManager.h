@@ -22,6 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 #include "orbsvcs/LoadBalancing/LB_LoadAlertMap.h"
 #include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
 #include "orbsvcs/LoadBalancing/LB_LoadListMap.h"
@@ -32,24 +33,16 @@
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Task.h"
-#include "tao/Condition.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
-  : public virtual POA_CosLoadBalancing::LoadManager,
-    public ACE_Task_Base
+  : public virtual POA_CosLoadBalancing::LoadManager
 {
 public:
 
   /// Constructor.
-  TAO_LB_LoadManager (int ping_timeout,
-                      int ping_interval);
-
-  virtual int svc (void);
+  TAO_LB_LoadManager (void);
 
   /**
    * @name CosLoadBalancing::LoadManager Methods
@@ -269,9 +262,9 @@ public:
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
-  void initialize (ACE_Reactor * reactor,
-                   CORBA::ORB_ptr orb,
-                   PortableServer::POA_ptr root_poa);
+  void init (ACE_Reactor * reactor,
+             CORBA::ORB_ptr orb,
+             PortableServer::POA_ptr root_poa);
 
 protected:
 
@@ -318,8 +311,6 @@ private:
 
 private:
 
-  CORBA::ORB_var orb_;
-
   /// Reactor used when pulling loads from registered load monitors.
   ACE_Reactor * reactor_;
 
@@ -356,7 +347,7 @@ private:
   /// necessary for application-controlled object group membership.
   TAO_PG_ObjectGroupManager object_group_manager_;
 
-  /// The PropertyManager that is responsible for parsing all criteria,
+  /// The PropertyManager that is reponsible for parsing all criteria,
   /// and keeping track of property-type_id associations.
   TAO_PG_PropertyManager property_manager_;
 
@@ -413,17 +404,7 @@ private:
   /// "org.omg.CosLoadBalancing.CustomStrategy".
   PortableGroup::Name custom_balancing_strategy_name_;
 
-  TAO_SYNCH_MUTEX validate_lock_;
-  TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
-
-  bool shutdown_;
-
-  /// Short timeout for non_exist call. defaults to 1 second
-  TimeBase::TimeT ping_timeout_;
-  /// Long timeout for non_exist call. defaults to 5 seconds
-  ACE_Time_Value ping_interval_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

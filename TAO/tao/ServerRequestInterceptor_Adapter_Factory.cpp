@@ -1,7 +1,9 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/ServerRequestInterceptor_Adapter_Factory.h"
+
+ACE_RCSID (tao,
+           ServerRequestInterceptorAdapterFactory,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

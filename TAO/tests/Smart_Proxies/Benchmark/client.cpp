@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *   This is the client program that tests TAO's Smart Proxy extension.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/Smart_Proxies/Benchmark
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is the client program that tests TAO's Smart Proxy extension.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+//=========================================================================
 
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
@@ -23,6 +26,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
+
+ACE_RCSID (Benchmark,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
@@ -52,8 +59,8 @@ class Marker
 
     }
  private:
-  /// Keep throughput statistics on a per-thread basis
   ACE_Throughput_Stats throughput_;
+  // Keep throughput statistics on a per-thread basis
 };
 
 
@@ -177,8 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           now - latency_base);
 
            if (TAO_debug_level > 0 && i % 100 == 0)
-             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration <%d> - price <%d> - cost <%d>\n",
-                         i, price, cost));
+             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
          }
 
        marker.dump_stats (ACE_TEXT("buying tickets "), gsf);

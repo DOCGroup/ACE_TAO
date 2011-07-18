@@ -111,7 +111,7 @@ BE_produce (void)
 
   if (be_global->ir_filter ())
     {
-      DAnCE::XMI::ir_simulator_visitor visitor;
+      CIAO::XMI::ir_simulator_visitor visitor;
 
       if (visitor.visit_root (ast_root) == -1)
         {
@@ -123,7 +123,7 @@ BE_produce (void)
         }
     }
 
-  DAnCE::XMI::idl3_to_xmi_visitor visitor (be_global->ir_filter ());
+  CIAO::XMI::idl3_to_xmi_visitor visitor (be_global->ir_filter ());
 
   if (visitor.visit_root (ast_root) == -1)
     {

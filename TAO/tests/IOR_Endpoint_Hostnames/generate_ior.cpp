@@ -6,37 +6,10 @@
 
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Get_Opt.h"
 
 #include "bogus_i.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+ACE_RCSID (IOR_Endpoint_Hostnames, generate_ior, "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -53,9 +26,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if  (CORBA::is_nil (rp.in()))
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) panic: nil root poa\n"), 1);
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       bogus* bogus_impl = new bogus();
       PortableServer::ServantBase_var owner_transfer(bogus_impl);
       PortableServer::ObjectId_var id =
@@ -67,15 +37,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (b.in());
 
-      // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::printf ("%s\n", ior.in());
 
       orb->shutdown();
       orb->destroy();

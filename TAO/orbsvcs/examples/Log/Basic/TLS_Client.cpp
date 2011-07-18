@@ -1,7 +1,9 @@
-// $Id$
-
 #include "TLS_Client.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (Basic,
+           TLS_Client,
+           "$Id$")
 
 #define NAMING_SERVICE_NAME "NameService"
 #define BASIC_TLS_LOG_FACTORY_NAME "BasicLogFactory"

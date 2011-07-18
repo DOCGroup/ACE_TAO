@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_string.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_String that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_string.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_String that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_string.h"
 #include "be_visitor.h"
@@ -20,6 +25,22 @@
 
 #include "utl_identifier.h"
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_string,
+           "$Id$")
+
+be_string::be_string (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_String (),
+    be_decl (),
+    be_type ()
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+}
 
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
@@ -31,8 +52,6 @@ be_string::be_string (AST_Decl::NodeType nt,
               true),
     AST_Type (nt,
               n),
-    AST_ConcreteType (nt,
-                      n),
     AST_String (nt,
                 n,
                 v,
@@ -42,26 +61,13 @@ be_string::be_string (AST_Decl::NodeType nt,
     be_type (nt,
              n)
 {
-  if (!this->imported ())
-    {
-      idl_global->string_seen_ = true;
-
-      if (v->ev ()->u.ulval != 0)
-        {
-          idl_global->bd_string_seen_ = true;
-        }
-      else
-        {
-          idl_global->ub_string_seen_ = true;
-        }
-    }
+  idl_global->string_seen_ = true;
 }
 
 // Overridden method.
 void
 be_string::gen_member_ostream_operator (TAO_OutStream *os,
                                         const char *instance_name,
-                                        bool use_underscore,
                                         bool accessor)
 {
   // For wide strings, generate code that outputs the hex values of
@@ -70,17 +76,16 @@ be_string::gen_member_ostream_operator (TAO_OutStream *os,
   if (this->width () == 1)
     {
       *os << "\"\\\"\" << ";
-
+      
       this->be_type::gen_member_ostream_operator (os,
                                                   instance_name,
-                                                  use_underscore,
                                                   accessor);
-
+      
       *os << " << \"\\\"\"";
     }
   else
     {
-      *os << "\"[\";" << be_nl_2
+      *os << "\"[\";" << be_nl << be_nl
           << "for (size_t i = 0; i < " << "ACE_OS::strlen ("
           << instance_name
           << (accessor ? " ()" : ".in ()") << "); ++i)" << be_idt_nl
@@ -154,7 +159,7 @@ be_string::compute_tc_name (void)
       ACE_NEW (id,
                Identifier (local_tc_name.c_str ()));
     }
-
+    
   zero.destroy ();
 
   UTL_ScopedName *conc_name = 0;
@@ -177,5 +182,7 @@ be_string::destroy (void)
   this->be_type::destroy ();
   this->AST_String::destroy ();
 }
+
+
 
 IMPL_NARROW_FROM_DECL (be_string)

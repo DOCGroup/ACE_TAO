@@ -4,9 +4,10 @@
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
-#include "tao/ORB_Core_Auto_Ptr.h"
 // Force static build to load the DII_Arguments_Converter service.
 #include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
+
+ACE_RCSID(DII_Collocation_Tests, Hello, "$Id$")
 
 extern CORBA::Boolean debug;
 extern char TEST_STR[];
@@ -311,8 +312,7 @@ Hello::get_string (void)
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
-          if (tmp.get () == 0)
+          if (orb_table->find ("server_orb") == 0)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,

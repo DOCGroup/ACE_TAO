@@ -37,6 +37,7 @@ int main_i(int, wchar_t**);
 
 #else
 
+#include <ace/OS.h>
 #include <ace/CE_Screen_Output.h>
 
 int ace_main_i(int, ACE_TCHAR**);

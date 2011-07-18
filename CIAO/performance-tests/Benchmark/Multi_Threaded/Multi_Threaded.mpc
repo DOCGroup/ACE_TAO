@@ -1,6 +1,6 @@
 // $Id$
 
-project (Multi_Threaded_client) : ccm_stub, strategies {
+project (Multi_Threaded_client) : ccm_stub, strategies, avoids_ace_for_tao {
   exename = client
   after += Benchmark_RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
 
 #include "tao/debug.h"
@@ -14,12 +12,17 @@
 #include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
 
+
+ACE_RCSID (SSLIOP,
+           IIOP_SSL_Connector,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (void)
   : TAO_IIOP_Connector (),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ ()
 {
 }
 
@@ -144,6 +147,24 @@ TAO::IIOP_SSL_Connector::make_connection (
   int result =
     this->base_connector_.connect (svc_handler, remote_address, synch_options);
 
+  // The connect() method creates the service handler and bumps the
+  // #REFCOUNT# up one extra.  There are three possibilities from
+  // calling connect(): (a) connection succeeds immediately - in this
+  // case, the #REFCOUNT# on the handler is two; (b) connection
+  // completion is pending - in this case, the #REFCOUNT# on the
+  // handler is also two; (c) connection fails immediately - in this
+  // case, the #REFCOUNT# on the handler is one since close() gets
+  // called on the handler.
+  //
+  // The extra reference count in
+  // TAO_Connect_Creation_Strategy::make_svc_handler() is needed in
+  // the case when connection completion is pending and we are going
+  // to wait on a variable in the handler to changes, signifying
+  // success or failure.  Note, that this increment cannot be done
+  // once the connect() returns since this might be too late if
+  // another thread pick up the completion and potentially deletes the
+  // handler before we get a chance to increment the reference count.
+
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
@@ -192,9 +213,9 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
-  if (svc_handler->keep_waiting ())
+  if (transport->connection_handler ()->keep_waiting ())
     {
-      svc_handler->connection_pending ();
+      svc_handler->add_reference ();
     }
 
   // At this point, the connection has be successfully connected.
@@ -250,7 +271,6 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
-  svc_handler_auto_ptr.release ();
   return transport;
 }
 

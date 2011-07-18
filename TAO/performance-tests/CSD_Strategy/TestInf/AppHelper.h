@@ -6,7 +6,9 @@
 #include "TestInf/TestAppExceptionC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
+
 
 template <typename T>
 struct RefHelper

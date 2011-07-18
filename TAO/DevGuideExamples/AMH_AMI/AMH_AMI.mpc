@@ -22,7 +22,7 @@ project(*Client): taoclient, messaging {
   // object files (and resulting SunWS_cache directory) in a different
   // location than the default.
   verbatim(gnuace, macros) {
-    VDIR = $(if $(ARCH),$(ARCH)/).obj/AMH_AMI_Client/
+    VDIR := .obj/AMH_AMI_Client/
   }
 }
 

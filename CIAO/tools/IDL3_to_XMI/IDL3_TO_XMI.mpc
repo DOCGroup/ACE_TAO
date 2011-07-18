@@ -1,9 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, dance_xml_utils, xerces, tao_idl_fe {
+project(CIAO_IDL3_TO_XMI_BE) : acelib, install, ciao_output, crosscompile, ciao_xml_utils, xerces {
+  after       += TAO_IDL_FE
   sharedname   = CIAO_IDL3_TO_XMI_BE
-  dynamicflags += CIAO_IDL3_TO_XMI_BUILD_DLL
+  libs        += TAO_IDL_FE
+  dynamicflags = CIAO_IDL3_TO_XMI_BUILD_DLL
+  includes    += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
+
+  // This is necessary for MPC to pull in rules.ciao.GNU
+  includes    += $(CIAO_ROOT)
 
   Source_Files {
     be_global.cpp
@@ -11,7 +17,6 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, dance_xml_utils
     be_init.cpp
     be_produce.cpp
     be_sunsoft.cpp
-    be_util.cpp
     IDL3_to_XMI_visitor.cpp
     IR_Simulator_visitor.cpp
     Literals.cpp
@@ -23,17 +28,19 @@ project(CIAO_IDL3_TO_XMI_BE) : acelib, install_lib, ciao_output, dance_xml_utils
     be_global.h
     be_helper.h
     be_sunsoft.h
-    be_util.h
     IDL3_to_XMI_visitor.h
     CIAO_IDL3_TO_XMI_Export.h
   }
 }
 
-project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, dance_xml_utils, xerces, tao_idl_fe {
-  after          += CIAO_IDL3_TO_XMI_BE
+project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, crosscompile, ciao_xml_utils, tao_idl_mcpp, xerces {
+  after          += CIAO_IDL3_TO_XMI_BE TAO_IDL_FE
   exename         = tao_idl3_to_xmi
-  libs           += CIAO_IDL3_TO_XMI_BE
-  includes       += $(TAO_ROOT) .
+  libs           += CIAO_IDL3_TO_XMI_BE TAO_IDL_FE
+  includes       += . $(TAO_ROOT)/TAO_IDL/include \
+                    $(TAO_ROOT)/TAO_IDL/fe \
+                    $(TAO_ROOT)
+  libpaths       += $(TAO_ROOT)/TAO_IDL
   exeout          = $(CIAO_ROOT)/bin
 
   // Adding a strict ordering dependency with TAO_IDL_EXE. It appears on some systems, there
@@ -55,16 +62,10 @@ project(CIAO_IDL3_TO_XMI_EXE) : aceexe, install, ciao_output, dance_xml_utils, x
 
   Source_Files {
     $(TAO_ROOT)/TAO_IDL/driver/drv_args.cpp
-    $(TAO_ROOT)/TAO_IDL/driver/drv_preproc.cpp
     $(TAO_ROOT)/TAO_IDL/tao_idl.cpp
   }
 
   Header_Files {
     $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
-  }
-
-  verbatim(gnuace, postinstall) {
-"	@$(MKDIR) $(INSTALL_PREFIX)/share/ciao/bin"
-"	ln -sf $(INSTALL_PREFIX)/bin/tao_idl3_to_xmi $(INSTALL_PREFIX)/share/ciao/bin"
   }
 }

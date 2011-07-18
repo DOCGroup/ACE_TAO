@@ -6,35 +6,6 @@
 #include <iostream>
 #include <fstream>
 #include <fstream>
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior_output_file1 = ACE_TEXT ("messenger1.ior");
-const ACE_TCHAR *ior_output_file2 = ACE_TEXT ("messenger2.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file1 = get_opts.opt_arg ();
-        break;
-
-      case 'i':
-        ior_output_file2 = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-      ;
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 PortableServer::POA_ptr
 createPersistentPOA(PortableServer::POA_ptr root_poa,
@@ -61,8 +32,8 @@ createPersistentPOA(PortableServer::POA_ptr root_poa,
   return poa._retn();
 }
 
-void writeIORFile(const char* ior, const ACE_TCHAR* name) {
-  std::ofstream out(ACE_TEXT_ALWAYS_CHAR (name));
+void writeIORFile(const char* ior, const char* name) {
+  std::ofstream out(name);
   out << ior;
 }
 
@@ -71,9 +42,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-
-    if (parse_args (argc, argv) != 0)
-      return 1;
 
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow(obj.in());
@@ -84,13 +52,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var poa = createPersistentPOA(root_poa.in(), poa_name);
 
-    PortableServer::Servant_var<Messenger_i> servant1 = new Messenger_i;
-    PortableServer::Servant_var<Messenger_i> servant2 = new Messenger_i;
+    Messenger_i servant1, servant2;
 
     PortableServer::ObjectId_var id1 = PortableServer::string_to_ObjectId("Object1");
-    poa->activate_object_with_id(id1.in(), servant1.in());
+    poa->activate_object_with_id(id1.in(), &servant1);
     PortableServer::ObjectId_var id2 = PortableServer::string_to_ObjectId("Object2");
-    poa->activate_object_with_id(id2.in(), servant2.in());
+    poa->activate_object_with_id(id2.in(), &servant2);
 
     obj = poa->id_to_reference(id1.in());
     CORBA::String_var ior1 = orb->object_to_string(obj.in());
@@ -106,8 +73,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ior_table->bind("MessengerService/Object1", direct_ior1.in());
     ior_table->bind("MessengerService/Object2", ior2.in());
 
-    writeIORFile(ior1.in(), ior_output_file1);
-    writeIORFile(ior2.in(), ior_output_file2);
+    writeIORFile(ior1.in(), "messenger1.ior");
+    writeIORFile(ior2.in(), "messenger2.ior");
 
     mgr->activate();
 

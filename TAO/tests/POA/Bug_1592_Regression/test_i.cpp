@@ -1,6 +1,10 @@
-// $Id$
-
 #include "test_i.h"
+
+
+ACE_RCSID (ServantLocator,
+           test_i,
+           "$Id$")
+
 
 extern CORBA::Boolean receive_request_called;
 

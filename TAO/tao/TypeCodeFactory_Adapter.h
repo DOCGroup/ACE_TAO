@@ -157,6 +157,8 @@ public:
       CORBA::TypeCode_ptr concrete_base,
       const CORBA::ValueMemberSeq &members) = 0;
 
+  // --
+
   /**
    * @name TAO-specific TypeCode factory methods.
    *

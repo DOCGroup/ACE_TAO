@@ -33,12 +33,18 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+# if defined (ACE_HAS_BROKEN_R_ROUTINES)
+#   undef getpwnam_r
+# endif /* ACE_HAS_BROKEN_R_ROUTINES */
+
 struct passwd;
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
+
+
   //@{ @name A set of wrappers for password routines.
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -51,15 +57,14 @@ namespace ACE_OS
   struct passwd *getpwnam (const char *user);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int getpwnam_r (const char *name,
-                  struct passwd *pwd,
-                  char *buffer,
-                  size_t bufsize,
-                  struct passwd **result);
-
+  struct passwd *getpwnam_r (const char *name,
+                             struct passwd *pwent,
+                             char *buffer,
+                             int buflen);
   ACE_NAMESPACE_INLINE_FUNCTION
   void setpwent (void);
   //@}
+
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

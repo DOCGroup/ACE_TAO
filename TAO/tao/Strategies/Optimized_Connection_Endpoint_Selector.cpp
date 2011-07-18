@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "tao/Strategies/Optimized_Connection_Endpoint_Selector.h"
 
@@ -12,6 +11,10 @@
 #include "tao/Transport.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/SystemException.h"
+
+ACE_RCSID (tao,
+           Optimized_Connection_Endpoint_Selector,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

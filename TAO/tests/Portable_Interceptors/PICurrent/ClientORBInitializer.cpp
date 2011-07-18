@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ClientORBInitializer.h"
 #include "ClientRequestInterceptor.h"
@@ -8,7 +7,13 @@
 
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (PICurrent,
+           ClientORBInitializer,
+           "$Id$")
+
+
 PortableInterceptor::SlotId slot_id = 2093843211;
+
 
 void
 ClientORBInitializer::pre_init (

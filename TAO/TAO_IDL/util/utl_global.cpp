@@ -66,22 +66,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "idl_global.h"
 #include "global_extern.h"
+#include "ast_root.h"
+#include "ast_generator.h"
+#include "ast_structure.h"
+#include "ast_sequence.h"
+#include "ast_valuetype.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "utl_string.h"
 #include "fe_extern.h"
-#include "fe_private.h"
 #include "nr_extern.h"
-
-#include "ast_root.h"
-#include "ast_generator.h"
-#include "ast_valuetype.h"
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_strings.h"
 #include "ace/Process.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/Env_Value_T.h"
+
+ACE_RCSID (util,
+           utl_global,
+           "$Id$")
 
 // Define an increment for the size of the array used to store names of
 // included files.
@@ -95,14 +100,12 @@ static long *pSeenOnce= 0;
 char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 {
   char* transName = (ACE_OS::strpbrk (name, ":[") == 0
-                      ? (char*)name
-                      : ::decc$translate_vms (name));
+                      ? (char*)name : ::decc$translate_vms (name));
   if (transName)
-    {
-      ACE_OS::strcpy (name_buf, transName);
-      transName = name_buf;
-    }
-
+  {
+    ACE_OS::strcpy (name_buf, transName);
+    transName = name_buf;
+  }
   return (transName == 0 || ((int)transName) == -1 ) ? 0 : transName;
 }
 #endif
@@ -146,18 +149,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     ignore_idl3_ (false),
     dcps_support_zero_copy_read_ (false),
     dcps_gen_zero_copy_read_ (false),
-    recursion_start_ (0),
-    multi_file_input_ (false),
-    big_file_name_ ("PICML_IDL_file_bag"),
-    current_params_ (0),
-    alias_params_ (0),
-    for_new_holder_ (0),
-    included_ami_receps_done_ (false),
-    corba_module_ (0),
-    anon_type_diagnostic_ (ANON_TYPE_ERROR),
-    in_typedef_ (false),
-    in_tmpl_mod_no_alias_ (false),
-    in_tmpl_mod_alias_ (false)
+    recursion_start_ (0)  // Not used by all backends.
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -211,14 +203,6 @@ IDL_GlobalData::IDL_GlobalData (void)
 #endif /* ACE_GPERF */
     }
 
-#if defined (IDL_ANON_ERROR)
-  this->anon_type_diagnostic_ = ANON_TYPE_ERROR;
-#elif defined (IDL_ANON_WARNING)
-  this->anon_type_diagnostic_ = ANON_TYPE_WARNING;
-#elif defined (IDL_ANON_SILENT)
-  this->anon_type_diagnostic_ = ANON_TYPE_SILENT;
-#endif
-
   // ambiguous_type_seen_ and basic_type_seen_ are not reset between
   // command line idl files, so do those here and then reset the rest.
   this->ambiguous_type_seen_ = false;
@@ -237,23 +221,23 @@ IDL_GlobalData::reset_flag_seen (void)
   abstract_iface_seen_ = false;
   abstractbase_seen_ = false;
   aggregate_seen_ = false;
+//ambiguous_type_seen_
   any_arg_seen_ = false;
   any_seen_ = false;
   any_seq_seen_ = false;
   array_seen_ = false;
   array_seq_seen_ = false;
   base_object_seen_ = false;
+  basic_arg_seen_ = false;
 //basic_type_seen_
-  bd_string_seen_ = false;
+  bd_string_arg_seen_ = false;
   boolean_seq_seen_ = false;
   char_seq_seen_ = false;
-  component_seen_ = false;
-  connector_seen_ = false;
   double_seq_seen_ = false;
   enum_seen_ = false;
   exception_seen_ = false;
-  fixed_array_decl_seen_ = false;
-  fixed_size_decl_seen_ = false;
+  fixed_array_arg_seen_ = false;
+  fixed_size_arg_seen_ = false;
   float_seq_seen_ = false;
   fwd_iface_seen_ = false;
   fwd_valuetype_seen_ = false;
@@ -263,7 +247,6 @@ IDL_GlobalData::reset_flag_seen (void)
   long_seq_seen_ = false;
   longdouble_seq_seen_ = false;
   longlong_seq_seen_ = false;
-  non_local_fwd_iface_seen_ = false;
   non_local_iface_seen_ = false;
   non_local_op_seen_ = false;
   object_arg_seen_ = false;
@@ -273,12 +256,12 @@ IDL_GlobalData::reset_flag_seen (void)
   recursive_type_seen_ = false;
   seq_seen_ = false;
   short_seq_seen_ = false;
-  special_basic_decl_seen_ = false;
+  special_basic_arg_seen_ = false;
   string_seen_ = false;
   string_member_seen_ = false;
   string_seq_seen_ = false;
   typecode_seen_ = false;
-  ub_string_seen_ = false;
+  ub_string_arg_seen_ = false;
   ulong_seq_seen_ = false;
   ulonglong_seq_seen_ = false;
   union_seen_ = false;
@@ -286,13 +269,11 @@ IDL_GlobalData::reset_flag_seen (void)
   valuebase_seen_ = false;
   valuefactory_seen_ = false;
   valuetype_seen_ = false;
-  var_array_decl_seen_ = false;
-  var_size_decl_seen_ = false;
+  var_array_arg_seen_ = false;
+  var_size_arg_seen_ = false;
   vt_seq_seen_ = false;
   wchar_seq_seen_ = false;
   wstring_seq_seen_ = false;
-  dds_connector_seen_ = false;
-  ami_connector_seen_ = false;
 
   need_skeleton_includes_ = false;
 }
@@ -484,9 +465,7 @@ void
 IDL_GlobalData::set_stripped_filename (UTL_String *nm)
 {
   if (this->pd_stripped_filename != 0)
-    {
-      delete this->pd_stripped_filename;
-    }
+    delete this->pd_stripped_filename;
 
   this->pd_stripped_filename = nm;
 }
@@ -530,8 +509,8 @@ IDL_GlobalData::set_compile_flags (long cf)
   this->pd_compile_flags = cf;
 }
 
-// Get or set local escapes string. This provides an additional
-// mechanism to pass information to a BE.
+// Get or set local escapes string. This provides additional mechanism
+// to pass information to a BE.
 char *
 IDL_GlobalData::local_escapes (void)
 {
@@ -604,8 +583,7 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
           this->pd_n_alloced_file_names = INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
-          ACE_NEW (pSeenOnce,
-                   long [this->pd_n_alloced_file_names]);
+          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
         }
       else
         {
@@ -616,8 +594,7 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
           this->pd_n_alloced_file_names += INCREMENT;
           ACE_NEW (this->pd_include_file_names,
                    UTL_String *[this->pd_n_alloced_file_names]);
-          ACE_NEW (pSeenOnce,
-                   long [this->pd_n_alloced_file_names]);
+          ACE_NEW (pSeenOnce, long [this->pd_n_alloced_file_names]);
 
           for (unsigned long i = 0; i < o_n_alloced_file_names; ++i)
             {
@@ -663,7 +640,7 @@ IDL_GlobalData::n_include_file_names (void)
 // IDL file.
 
 void
-IDL_GlobalData::add_to_included_idl_files (const char *file_name)
+IDL_GlobalData::add_to_included_idl_files (char *file_name)
 {
   // Let's avoid duplicates.
   for (size_t index = 0; index < this->n_included_idl_files_; ++index)
@@ -698,8 +675,7 @@ IDL_GlobalData::add_to_included_idl_files (const char *file_name)
 
           for (size_t i = 0; i < n_old_allocated_idl_files; ++i)
             {
-              this->included_idl_files_ [i] =
-                old_included_idl_files [i];
+              this->included_idl_files_ [i] = old_included_idl_files [i];
             }
 
           delete [] old_included_idl_files;
@@ -732,6 +708,157 @@ IDL_GlobalData::n_included_idl_files (size_t n)
   this->n_included_idl_files_ = n;
 }
 
+// Validate the included idl files, some files might have been
+// ignored by the preprocessor.
+void
+IDL_GlobalData::validate_included_idl_files (void)
+{
+  // Flag to make sure we don't repeat things.
+  static int already_done = 0;
+
+  if (already_done == 1)
+    {
+      return;
+    }
+
+  already_done = 1;
+
+  // New number of included_idl_files.
+  size_t newj = 0;
+  size_t n_pre_preproc_includes = idl_global->n_included_idl_files ();
+  char **pre_preproc_includes = idl_global->included_idl_files ();
+  size_t n_post_preproc_includes = idl_global->n_include_file_names ();
+  UTL_String **post_preproc_includes = idl_global->include_file_names ();
+
+  char pre_abspath[MAXPATHLEN] = "";
+  char post_abspath[MAXPATHLEN] = "";
+  char **path_tmp = 0;
+  char *post_tmp = 0;
+  char *full_path = 0;
+
+  // We are going to assemble a list of the include files found in
+  // the top level file in the order that they are found in the pre-
+  // processor output here
+  // @see bug TAO#711 / Bugzilla #3513 for more
+  char** ordered_include_files = new char*[n_pre_preproc_includes];
+
+  for (size_t i = 0; i < n_post_preproc_includes; ++i)
+    {
+      for (size_t j = 0; j < n_pre_preproc_includes; ++j)
+        {
+          // Check this name with the name that we got from the
+          // preprocessor.
+
+          size_t valid_file = 0;
+          full_path = ACE_OS::realpath (pre_preproc_includes[j],
+                                        pre_abspath);
+
+          if (full_path != 0)
+            {
+              post_tmp = post_preproc_includes[i]->get_string ();
+              full_path = ACE_OS::realpath (post_tmp, post_abspath);
+              if (full_path != 0
+                  && this->path_cmp (pre_abspath, post_abspath) == 0
+                  && ACE_OS::access (post_abspath, R_OK) == 0)
+                {
+                  // This file name is valid.
+                  valid_file = 1;
+                }
+            }
+
+          if (valid_file == 0)
+            {
+              for (ACE_Unbounded_Queue_Iterator<char *>iter (
+                      this->include_paths_
+                    );
+                  !iter.done ();
+                  iter.advance ())
+                {
+                  iter.next (path_tmp);
+                  ACE_CString pre_partial (*path_tmp);
+
+                  // If the include path has literal "s (because of an include
+                  // of a Windows path with spaces), we must remove them here.
+                  if (this->hasspace (pre_partial.c_str ()))
+                    {
+                      pre_partial =
+                        pre_partial.substr (1, pre_partial.length () - 2);
+                    }
+
+                  pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
+                  pre_partial += pre_preproc_includes[j];
+                  full_path =
+                    ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
+
+                  if (full_path != 0)
+                    {
+
+                      post_tmp = post_preproc_includes[i]->get_string ();
+                      full_path = ACE_OS::realpath (post_tmp, post_abspath);
+
+                      if (full_path != 0
+                          && this->path_cmp (pre_abspath, post_abspath) == 0
+                          && ACE_OS::access (post_abspath, R_OK) == 0)
+                        {
+                          // This file name is valid.
+                          valid_file = 1;
+                          break;
+                        }
+                    }
+                }
+            }
+
+          if (valid_file == 1)
+            {
+              // File is valid.
+              // Move to the new index position.
+              // ... in the ordered list
+              ordered_include_files[newj] =
+                    pre_preproc_includes[j];
+
+              // Increment the new index.
+              newj++;
+
+              for (size_t k = j + 1; k < n_pre_preproc_includes; ++k)
+                {
+                  // Shift remaining entries down
+                  pre_preproc_includes[k-1] = pre_preproc_includes[k];
+                }
+
+              // Reduce length and zero the discarded element
+              pre_preproc_includes[--n_pre_preproc_includes] = 0;
+
+              // Break out to next entry in pre-processor
+              // output
+              break;
+            }
+        }
+
+      if (n_pre_preproc_includes == 0)
+        {
+          break;
+        }
+    }
+
+  // Tidy up not required includes
+  for (size_t l = 0; l < n_pre_preproc_includes; ++l)
+    {
+      delete [] pre_preproc_includes[l];
+      pre_preproc_includes[l] = 0;
+    }
+
+  // Copy list back
+  for (size_t m = 0; m < newj; ++m)
+    {
+      pre_preproc_includes[m] = ordered_include_files[m];
+    }
+
+  delete [] ordered_include_files;
+
+  // Now adjust the count on the included_idl_files.
+  idl_global->n_included_idl_files (newj);
+}
+
 void
 IDL_GlobalData::set_parse_state(ParseState ps)
 {
@@ -739,9 +866,51 @@ IDL_GlobalData::set_parse_state(ParseState ps)
 }
 
 IDL_GlobalData::ParseState
-IDL_GlobalData::parse_state (void)
+IDL_GlobalData::parse_state()
 {
   return pd_parse_state;
+}
+
+/*
+ * Convert a PredefinedType to an ExprType
+ */
+AST_Expression::ExprType
+IDL_GlobalData::PredefinedTypeToExprType (
+    AST_PredefinedType::PredefinedType pt
+  )
+{
+  switch (pt) {
+  case AST_PredefinedType::PT_long:
+    return AST_Expression::EV_long;
+  case AST_PredefinedType::PT_ulong:
+    return AST_Expression::EV_ulong;
+  case AST_PredefinedType::PT_short:
+    return AST_Expression::EV_short;
+  case AST_PredefinedType::PT_ushort:
+    return AST_Expression::EV_ushort;
+  case AST_PredefinedType::PT_longlong:
+    return AST_Expression::EV_longlong;
+  case AST_PredefinedType::PT_ulonglong:
+    return AST_Expression::EV_ulonglong;
+  case AST_PredefinedType::PT_float:
+    return AST_Expression::EV_float;
+  case AST_PredefinedType::PT_double:
+    return AST_Expression::EV_double;
+  case AST_PredefinedType::PT_longdouble:
+    return AST_Expression::EV_longdouble;
+  case AST_PredefinedType::PT_char:
+    return AST_Expression::EV_char;
+  case AST_PredefinedType::PT_wchar:
+    return AST_Expression::EV_wchar;
+  case AST_PredefinedType::PT_octet:
+    return AST_Expression::EV_octet;
+  case AST_PredefinedType::PT_boolean:
+    return AST_Expression::EV_bool;
+  case AST_PredefinedType::PT_void:
+    return AST_Expression::EV_void;
+  default:
+    return AST_Expression::EV_enum;
+  }
 }
 
 // returns the IDL source file being copiled
@@ -937,13 +1106,13 @@ IDL_GlobalData::destroy (void)
 void
 IDL_GlobalData::append_idl_flag (const char *s)
 {
-  this->idl_flags_ += " " + ACE_CString (s);
+  idl_flags_ += " " + ACE_CString (s);
 }
 
 const char *
 IDL_GlobalData::idl_flags (void) const
 {
-  return this->idl_flags_.c_str ();
+  return idl_flags_.c_str ();
 }
 
 ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &
@@ -1036,6 +1205,128 @@ IDL_GlobalData::update_prefix (char *filename)
     }
 }
 
+UTL_ScopedName *
+IDL_GlobalData::string_to_scoped_name (char *s)
+{
+  char *start = s;
+  int len = 0;
+  UTL_ScopedName *retval = 0;
+  char tmp[256];
+
+  // If we're doing #pragma ID, the id string may have a ::
+  // while the target scoped name does not, so we check for
+  // a space.
+  char *test = ACE_OS::strchr (start, ' ');
+  char *end = ACE_OS::strstr (start, "::");
+
+  if (test != 0 && test - end < 0)
+    {
+      end = test;
+    }
+
+  while (end != 0)
+    {
+      len = end - start;
+
+      if (len != 0)
+        {
+          ACE_OS::strncpy (tmp,
+                           start,
+                           len);
+
+          tmp[len] = '\0';
+
+          Identifier *id = 0;
+          ACE_NEW_RETURN (id,
+                          Identifier (tmp),
+                          0);
+
+          if (retval == 0)
+            {
+              ACE_NEW_RETURN (retval,
+                              UTL_ScopedName (id,
+                                              0),
+                              0);
+            }
+          else
+            {
+              UTL_ScopedName *conc_name = 0;
+              ACE_NEW_RETURN (conc_name,
+                              UTL_ScopedName (id,
+                                              0),
+                              0);
+
+              retval->nconc (conc_name);
+            }
+        }
+
+      start = end + 2;
+      end = (end[0] == ' ' ? 0 : ACE_OS::strstr (start, "::"));
+
+      if (test != 0 && test - end < 0)
+        {
+          end = 0;
+        }
+    }
+
+  len = test - start;
+
+  // This means we've already dealt with the space between the target
+  // name and the id string (above) and we're done.
+  if (test == 0 || len <= 0)
+    {
+      return retval;
+    }
+
+  ACE_OS::strncpy (tmp,
+                   start,
+                   len);
+
+  tmp[len] = '\0';
+
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier (tmp),
+                  0);
+
+  if (retval == 0)
+    {
+      ACE_NEW_RETURN (retval,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+    }
+  else
+    {
+      UTL_ScopedName *conc_name = 0;
+      ACE_NEW_RETURN (conc_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      retval->nconc (conc_name);
+    }
+
+  return retval;
+}
+
+const char *
+IDL_GlobalData::stripped_preproc_include (const char *name)
+{
+  // Some preprocessors prepend "./" to filenames in the
+  // working directory, some others prepend ".\". If either
+  // of these are here, we want to strip them.
+  if (name[0] == '.')
+    {
+      if (name[1] == '\\' || name[1] == '/')
+        {
+          return name + 2;
+        }
+    }
+
+  return name;
+}
+
 /**
  Whether we should not mung idl element names that are
  C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
@@ -1059,10 +1350,9 @@ IDL_GlobalData::preserve_cpp_keywords (bool val)
 }
 
 void
-IDL_GlobalData::add_include_path (const char *s, bool is_system)
+IDL_GlobalData::add_include_path (const char *s)
 {
-  Include_Path_Info info = { ACE::strnew (s), is_system };
-  this->include_paths_.enqueue_tail (info);
+  this->include_paths_.enqueue_tail (ACE::strnew (s));
 }
 
 void
@@ -1075,144 +1365,6 @@ ACE_Unbounded_Queue<char *> const &
 IDL_GlobalData::rel_include_paths (void) const
 {
   return this->rel_include_paths_;
-}
-
-void
-IDL_GlobalData::add_ciao_lem_file_names (const char *s)
-{
-  this->ciao_lem_file_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_lem_file_names (void)
-{
-  return this->ciao_lem_file_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_rti_ts_file_names (const char *s)
-{
-  this->ciao_rti_ts_file_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_rti_ts_file_names (void)
-{
-  return this->ciao_rti_ts_file_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_spl_ts_file_names (const char *s)
-{
-  this->ciao_spl_ts_file_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_spl_ts_file_names (void)
-{
-  return this->ciao_spl_ts_file_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_oci_ts_file_names (const char *s)
-{
-  this->ciao_oci_ts_file_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_oci_ts_file_names (void)
-{
-  return this->ciao_oci_ts_file_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_coredx_ts_file_names (const char *s)
-{
-  this->ciao_coredx_ts_file_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_coredx_ts_file_names (void)
-{
-  return this->ciao_coredx_ts_file_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_ami_iface_names (const char *s)
-{
-  this->ciao_ami_iface_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_iface_names (void)
-{
-  return this->ciao_ami_iface_names_;
-}
-
-void
-IDL_GlobalData::add_ciao_ami_recep_names (const char *s)
-{
-  this->ciao_ami_recep_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_recep_names (void)
-{
-  return this->ciao_ami_recep_names_;
-}
-
-void
-IDL_GlobalData::add_included_ami_recep_names (const char *s)
-{
-  this->included_ami_recep_names_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::included_ami_recep_names (void)
-{
-  return this->included_ami_recep_names_;
-}
-
-bool
-IDL_GlobalData::included_ami_receps_done (void) const
-{
-  return this->included_ami_receps_done_;
-}
-
-void
-IDL_GlobalData::included_ami_receps_done (bool val)
-{
-  this->included_ami_receps_done_ = val;
-}
-
-void
-IDL_GlobalData::add_ciao_ami_idl_fnames (const char *s)
-{
-  this->ciao_ami_idl_fnames_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::ciao_ami_idl_fnames (void)
-{
-  return this->ciao_ami_idl_fnames_;
-}
-
-void
-IDL_GlobalData::add_dds4ccm_impl_fnames (const char *s)
-{
-  this->dds4ccm_impl_fnames_.enqueue_tail (ACE::strnew (s));
-}
-
-ACE_Unbounded_Queue<char *> &
-IDL_GlobalData::dds4ccm_impl_fnames (void)
-{
-  return this->dds4ccm_impl_fnames_;
-}
-
-ACE_Unbounded_Queue<AST_Interface *> &
-IDL_GlobalData::mixed_parentage_interfaces (void)
-{
-  return this->mixed_parentage_interfaces_;
 }
 
 ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
@@ -1288,13 +1440,13 @@ IDL_GlobalData::check_gperf (void)
 {
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf.
-  if (this->gperf_path_ == 0)
+  if (idl_global->gperf_path () == 0)
     {
       // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
-      this->gperf_path (ACE_GPERF);
+      idl_global->gperf_path (ACE_GPERF);
 #else
-      this->gperf_path ("ace_gperf");
+      idl_global->gperf_path ("ace_gperf");
 #endif /* ACE_GPERF */
     }
 
@@ -1305,14 +1457,14 @@ IDL_GlobalData::check_gperf (void)
 
   // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
-  if (ACE_OS::strcmp (this->gperf_path_, ACE_GPERF) != 0)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), ACE_GPERF) != 0)
 #else
-  if (ACE_OS::strcmp (this->gperf_path_, "ace_gperf") != 0)
+  if (ACE_OS::strcmp (idl_global->gperf_path (), "ace_gperf") != 0)
 #endif /* ACE_GPERF */
     {
-      // It is absolute path. Check the existence, permissions and
+      // It is absolute path. Check the existance, permissions and
       // the modes.
-      if (ACE_OS::access (this->gperf_path_,
+      if (ACE_OS::access (idl_global->gperf_path (),
                           F_OK | X_OK) == -1)
         {
           // Problem with the file. No point in having the absolute
@@ -1320,9 +1472,9 @@ IDL_GlobalData::check_gperf (void)
           // If ACE_GPERF is defined then use that gperf program
           //instead of "gperf."
 #if defined (ACE_GPERF)
-          this->gperf_path (ACE_GPERF);
+          idl_global->gperf_path (ACE_GPERF);
 #else
-          this->gperf_path ("ace_gperf");
+          idl_global->gperf_path ("ace_gperf");
 #endif /* ACE_GPERF */
         }
     }
@@ -1334,8 +1486,10 @@ IDL_GlobalData::check_gperf (void)
   ACE_Process_Options process_options;
 
   // Set the command line for the gperf program.
-  process_options.command_line (ACE_TEXT ("\"%s\" -V"),
-                                this->gperf_path_);
+  process_options.command_line ("%s"
+                                " "
+                                "-V",
+                                idl_global->gperf_path ());
 
   // Spawn a process for gperf.
   if (process.spawn (process_options) == -1)
@@ -1355,7 +1509,7 @@ IDL_GlobalData::check_gperf (void)
     }
   else
     {
-      // Wait is successful, we will check the exit code from the
+      // Wait is sucessful, we will check the exit code from the
       // spawned process.
       if (WIFEXITED (wait_status))
         {
@@ -1367,7 +1521,6 @@ IDL_GlobalData::check_gperf (void)
           // to <errno> again, so that it can be used to print error
           // messages.
           errno = WEXITSTATUS (wait_status);
-
           if (errno)
             {
               // <exec> has failed.
@@ -1417,17 +1570,17 @@ IDL_GlobalData::fini (void)
   delete [] this->pd_include_file_names;
   this->pd_include_file_names = 0;
 
-  Include_Path_Info *path_info = 0;
+  char **path_tmp = 0;
 
-  for (Unbounded_Paths_Queue_Iterator qiter (this->include_paths_);
+  for (ACE_Unbounded_Queue_Iterator<char *>qiter (
+            this->include_paths_
+          );
        qiter.done () == 0;
        qiter.advance ())
     {
-      qiter.next (path_info);
-      ACE::strdelete (path_info->path_);
+      qiter.next (path_tmp);
+      ACE::strdelete (*path_tmp);
     }
-
-  char **path_tmp  = 0;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
             this->rel_include_paths_
@@ -1436,87 +1589,6 @@ IDL_GlobalData::fini (void)
        riter.advance ())
     {
       riter.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter1 (
-         this->ciao_lem_file_names_);
-       iter1.done () == 0;
-       iter1.advance ())
-    {
-      iter1.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter2 (
-         this->ciao_rti_ts_file_names_);
-       iter2.done () == 0;
-       iter2.advance ())
-    {
-      iter2.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter3 (
-         this->ciao_spl_ts_file_names_);
-       iter3.done () == 0;
-       iter3.advance ())
-    {
-      iter3.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter4 (
-         this->ciao_oci_ts_file_names_);
-       iter4.done () == 0;
-       iter4.advance ())
-    {
-      iter4.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter5 (
-         this->ciao_ami_iface_names_);
-       iter5.done () == 0;
-       iter5.advance ())
-    {
-      iter5.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter6 (
-         this->ciao_ami_recep_names_);
-       iter6.done () == 0;
-       iter6.advance ())
-    {
-      iter6.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter7 (
-         this->included_ami_recep_names_);
-       iter7.done () == 0;
-       iter7.advance ())
-    {
-      iter7.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter8 (
-         this->ciao_ami_idl_fnames_);
-       iter8.done () == 0;
-       iter8.advance ())
-    {
-      iter8.next (path_tmp);
-      ACE::strdelete (*path_tmp);
-    }
-
-  for (ACE_Unbounded_Queue_Iterator<char *>iter9 (
-         this->dds4ccm_impl_fnames_);
-       iter9.done () == 0;
-       iter9.advance ())
-    {
-      iter9.next (path_tmp);
       ACE::strdelete (*path_tmp);
     }
 
@@ -1532,26 +1604,125 @@ IDL_GlobalData::fini (void)
       ACE::strdelete (entry->ext_id_);
       ACE::strdelete (entry->int_id_);
     }
+}
 
-  DCPS_Type_Info_Map::ENTRY *dcps_entry = 0;
+void
+IDL_GlobalData::create_uses_multiple_stuff (
+    AST_Component *c,
+    AST_Component::port_description &pd
+  )
+{
+  ACE_CString struct_name (pd.id->get_string ());
+  struct_name += "Connection";
+  Identifier struct_id (struct_name.c_str ());
+  UTL_ScopedName sn (&struct_id, 0);
+  AST_Structure *connection =
+    idl_global->gen ()->create_structure (&sn, 0, 0);
+  struct_id.destroy ();
 
-  for (DCPS_Type_Info_Map::ITERATOR dcps_iter (
-         this->dcps_type_info_map_);
-       !dcps_iter.done ();
-       dcps_iter.advance ())
+  Identifier object_id ("objref");
+  UTL_ScopedName object_name (&object_id,
+                              0);
+  AST_Field *object_field =
+    idl_global->gen ()->create_field (pd.impl,
+                                      &object_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (object_field);
+  object_id.destroy ();
+
+  Identifier local_id ("Cookie");
+  UTL_ScopedName local_name (&local_id,
+                             0);
+  Identifier module_id ("Components");
+  UTL_ScopedName scoped_name (&module_id,
+                              &local_name);
+  AST_Decl *d = c->lookup_by_name (&scoped_name,
+                                   true);
+  local_id.destroy ();
+  module_id.destroy ();
+
+  if (d == 0)
     {
-      dcps_iter.next (dcps_entry);
-
-      dcps_entry->int_id_->name_->destroy ();
-      delete dcps_entry->int_id_->name_;
-      dcps_entry->int_id_->name_ = 0;
-
-      delete dcps_entry->int_id_;
-      dcps_entry->int_id_ = 0;
-
-      delete [] dcps_entry->ext_id_;
-      dcps_entry->ext_id_ = 0;
+      // This would happen if we haven't included Components.idl.
+      idl_global->err ()->lookup_error (&scoped_name);
+      return;
     }
+
+  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
+
+  Identifier cookie_id ("ck");
+  UTL_ScopedName cookie_name (&cookie_id,
+                              0);
+  AST_Field *cookie_field =
+    idl_global->gen ()->create_field (cookie,
+                                      &cookie_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (cookie_field);
+  cookie_id.destroy ();
+
+  (void) c->fe_add_structure (connection);
+
+  ACE_CDR::ULong bound = 0;
+  AST_Expression *bound_expr =
+    idl_global->gen ()->create_expr (bound,
+                                     AST_Expression::EV_ulong);
+  AST_Sequence *sequence =
+    idl_global->gen ()->create_sequence (bound_expr,
+                                         connection,
+                                         0,
+                                         0,
+                                         0);
+
+  ACE_CString seq_string (pd.id->get_string ());
+  seq_string += "Connections";
+  Identifier seq_id (seq_string.c_str ());
+  UTL_ScopedName seq_name (&seq_id,
+                           0);
+  AST_Typedef *connections =
+    idl_global->gen ()->create_typedef (sequence,
+                                        &seq_name,
+                                        0,
+                                        0);
+  seq_id.destroy ();
+
+  (void) c->fe_add_typedef (connections);
+}
+
+int
+IDL_GlobalData::path_cmp (const char *s, const char *t)
+{
+#if defined (WIN32) || defined (ACE_OPENVMS)
+  // Since Windows has case-insensitive filenames, the preprocessor,
+  // when searching using a provided relative path, will sometimes
+  // capitalize the first letter of the last segment of a path name
+  // and make the rest lowercase, regardless of how it was actually
+  // spelled when created. This 'feature' was preventing the
+  // validation of included IDL files, necessary before generating
+  // the corresponding C++ includes.
+  return ACE_OS::strcasecmp (s, t);
+#else
+  return ACE_OS::strcmp (s, t);
+#endif /* defined (WIN32) */
+}
+
+bool
+IDL_GlobalData::hasspace (const char *s)
+{
+  size_t length = ACE_OS::strlen (s);
+
+  if (length > 2)
+    {
+      // We don't need to check the first or last slot.
+      for (size_t i = 1; i < length - 1; ++i)
+        {
+          if (ACE_OS::ace_isspace (s[i]))
+            {
+              return true;
+            }
+        }
+    }
+
+  return false;
 }
 
 ACE_Unbounded_Queue<AST_ValueType *> &
@@ -1593,77 +1764,13 @@ void
 IDL_GlobalData::recursion_start (const char *val)
 {
   ACE::strdelete (this->recursion_start_);
-
-  /// Strip off any trailing slashes (not needed
-  /// for further processing).
-  ACE_CString tmp (val);
-  ACE_CString::size_type len = tmp.length ();
-  ACE_TCHAR c = tmp[len - 1];
-
-  while (c == '\\' || c == '/')
-    {
-      tmp = tmp.substr (0, --len);
-      c = tmp[len - 1];
-    }
-
-  this->recursion_start_ = ACE::strnew (tmp.c_str ());
+  this->recursion_start_ = ACE::strnew (val);
 }
 
-bool
-IDL_GlobalData::multi_file_input (void) const
+UTL_String *
+IDL_GlobalData::utl_string_factory (const char *str)
 {
-  return this->multi_file_input_;
-}
-
-void
-IDL_GlobalData::multi_file_input (bool val)
-{
-  this->multi_file_input_ = val;
-}
-
-const char *
-IDL_GlobalData::big_file_name (void) const
-{
-  return this->big_file_name_;
-}
-
-FE_Utils::T_PARAMLIST_INFO const *
-IDL_GlobalData::current_params (void) const
-{
-  return this->current_params_;
-}
-
-void
-IDL_GlobalData::current_params (
-FE_Utils::T_PARAMLIST_INFO *params)
-{
-  this->current_params_ = params;
-}
-
-UTL_StrList const *
-IDL_GlobalData::alias_params (void) const
-{
-  return this->alias_params_;
-}
-
-void
-IDL_GlobalData::alias_params (
-UTL_StrList *params)
-{
-  this->alias_params_ = params;
-}
-
-UTL_StrList const *
-IDL_GlobalData::for_new_holder (void) const
-{
-  return this->for_new_holder_;
-}
-
-void
-IDL_GlobalData::for_new_holder (
-  UTL_StrList *params)
-{
-  this->for_new_holder_ = params;
+  return new UTL_String (str);
 }
 
 void
@@ -1671,31 +1778,28 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
 {
   // Check if the type already exists.
   DCPS_Data_Type_Info* newinfo ;
-
   if (this->dcps_type_info_map_.find (id, newinfo) != 0)
     {
       // No existing entry, add one.
 
+      // trailing space required!!
       char* foo_type;
-      ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 1]);
-      ACE_OS::strcpy (foo_type, id);
+      ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 2]);
+      ACE_OS::sprintf (foo_type, "%s ", id);
 
-      UTL_ScopedName* t1 =
-        FE_Utils::string_to_scoped_name (foo_type);
-
-      // Chained with null Identifier required!!
-      UTL_ScopedName* target =
-        new UTL_ScopedName (new Identifier (""), t1);
+      UTL_ScopedName* t1 = idl_global->string_to_scoped_name (foo_type);
+      // chained with null Identifier required!!
+      UTL_ScopedName* target = new UTL_ScopedName (new Identifier (""), t1);
 
       newinfo = new DCPS_Data_Type_Info ();
       newinfo->name_ = target;
 
       // Add the newly formed entry to the map.
-      if (this->dcps_type_info_map_.bind (foo_type, newinfo) != 0)
+      if (this->dcps_type_info_map_.bind( id, newinfo) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Unable to insert type into ")
-                      ACE_TEXT ("DCPS type container: %s.\n"),
+                      ACE_TEXT ("(%P|%t) Unable to insert type")
+                      ACE_TEXT (" into DCPS type container: %s.\n"),
                       id));
           return;
         }
@@ -1703,9 +1807,10 @@ IDL_GlobalData::add_dcps_data_type (const char* id)
   else
     {
       ACE_ERROR ((LM_WARNING,
-                  ACE_TEXT ("Duplicate DCPS type defined: %s.\n"),
+                  ACE_TEXT ("(%P|%t) Duplicate DCPS type defined: %s.\n"),
                   id));
     }
+
 }
 
 bool
@@ -1722,9 +1827,8 @@ IDL_GlobalData::add_dcps_data_key (const char* id, const char* key)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("missing previous #pragma ")
-                  ACE_TEXT ("DCPS_DATA_TYPE\n")));
+      ACE_ERROR((LM_ERROR,
+                 ACE_TEXT ("missing previous #pragma DCPS_DATA_TYPE\n")));
     }
 
   return false;
@@ -1735,9 +1839,7 @@ IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 {
   // Traverse the entire map.
   DCPS_Type_Info_Map::ENTRY* entry ;
-
-  for (DCPS_Type_Info_Map::ITERATOR current (
-         this->dcps_type_info_map_);
+  for (DCPS_Type_Info_Map::ITERATOR current (this->dcps_type_info_map_);
        current.next (entry);
        current.advance ())
     {
@@ -1753,81 +1855,219 @@ IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
   return 0;
 }
 
-AST_Module *
-IDL_GlobalData::corba_module (void) const
+FILE *
+IDL_GlobalData::open_included_file (char const * filename,
+                                    char const *& directory)
 {
-  return this->corba_module_;
+  FILE * f = 0;
+  ACE_CString const the_file (ACE_CString ('/')
+                              + ACE_CString (filename));
+
+  for (ACE_Unbounded_Queue_Iterator<char *> i (this->include_paths_);
+       !i.done () && f == 0;
+       i.advance ())
+    {
+      char ** path = 0;
+      (void) i.next (path);
+
+      if (path != 0)
+        {
+          ACE_CString const complete_filename (ACE_CString (*path)
+                                               + the_file);
+
+          f = ACE_OS::fopen (complete_filename.c_str (), "r");
+
+          if (f != 0)
+            directory = *path;
+        }
+    }
+
+  return f;
 }
 
-void
-IDL_GlobalData::corba_module (AST_Module *m)
+static bool
+is_include_file_found (ACE_CString & inc_file,
+                       UTL_String * idl_file_name,
+                       IDL_GlobalData * global)
 {
-  this->corba_module_ = m;
-}
+  char abspath[MAXPATHLEN] = "";
+  char *full_path = 0;
 
-IDL_GlobalData::Unbounded_Paths_Queue &
-IDL_GlobalData::include_paths (void)
-{
-  return this->include_paths_;
-}
+  // If the include path has literal "s (because of an include
+  // of a Windows path with spaces), we must remove them here.
+  const char *tmp_inc_file = inc_file.c_str ();
+  if (tmp_inc_file && global->hasspace (tmp_inc_file) && tmp_inc_file[0] == '\"')
+    {
+      inc_file =
+        inc_file.substr (1, inc_file.length () - 2);
+    }
 
-void
-IDL_GlobalData::anon_type_diagnostic (
-  IDL_GlobalData::ANON_TYPE_DIAGNOSTIC val)
-{
-  this->anon_type_diagnostic_ = val;
+  inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
+  inc_file += idl_file_name->get_string ();
+  full_path =
+    ACE_OS::realpath (inc_file.c_str (), abspath);
+
+  if (full_path != 0)
+    {
+      FILE *test = ACE_OS::fopen (abspath, "r");
+      if (test == 0)
+        {
+          return false;
+        }
+      else
+        {
+          // Overwrite inc_file with abspath since the later
+          // is normalized to the native OS representation.
+          inc_file = abspath;
+          ACE_OS::fclose (test);
+          return true;
+        }
+    }
+
+  return false;
 }
 
 bool
-IDL_GlobalData::anon_error (void) const
+IDL_GlobalData::validate_orb_include (UTL_String * idl_file_name)
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_ERROR);
-}
+  // It's important to update the values of orb_includes/svcs_includes
+  // once new predefined include dirs are added somewhere in
+  // driver/drv_preproc.cpp
 
-bool
-IDL_GlobalData::anon_warning (void) const
-{
-  return (this->anon_type_diagnostic_ == ANON_TYPE_WARNING);
-}
+  ACE_Unbounded_Queue<ACE_CString> list;
+  FE_extract_env_include_paths (list);
+  const size_t env_includes = list.size () + 1; // 1 for current folder
 
-bool
-IDL_GlobalData::anon_silent (void) const
-{
-  return (this->anon_type_diagnostic_ == ANON_TYPE_SILENT);
-}
+  // We try to search for idl_file_name in several folders in the
+  // following order.
+  //   0) Current folder (include_counter == 0). If idl_file_name is
+  //      found here then it's definitely not TAO specific. Return false.
+  //   1) Those includes that were extracted from INCLUDE environment
+  //      variable if one existed (include_counter > 0 && include_counter
+  //      < env_includes). If idl_file_name is found here then
+  //      we have to check if its complete path is not equal to any of
+  //      those in group 2 or 4.
+  //   2) $TAO_ROOT, $TAO_ROOT/tao
+  //      (include_counter >= env_includes && include_counter < env_includes
+  //      + orb_includes). Return true if nothing was found in group
+  //      1 and idl_file_name is found here OR idl_file_name was found
+  //      in group 1 and path is the same as here.
+  //   3) User specific includes i.e. those that were provided with -I
+  //      option (include_counter >= env_includes + orb_includes &&
+  //      include_counter < all_includes - svcs_includes). If idl_file_name
+  //      is found here then check for existence of the same path in group 4.
+  //   4) $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao,
+  //      $TAO_ROOT/CIAO/ccm
+  //      (include_counter >= all_includes - svcs_includes && include_counter
+  //      < all_includes). Return true if nothing was found in groups
+  //      1 or 3 and idl_file_name is found here OR idl_file_name
+  //      was found in groups 1 or 3 and path is the same as here.
+  // Return false if idl_file_name was found neither in groups 2 nor 4.
 
-bool
-IDL_GlobalData::in_typedef (void) const
-{
-  return this->in_typedef_;
-}
+  const size_t orb_includes = 2;
+  const size_t svcs_includes = 4;
+  const size_t all_includes =
+    this->include_paths_.size () + 1; // 1 for current folder
 
-void
-IDL_GlobalData::in_typedef (bool val)
-{
-  this->in_typedef_ = val;
-}
+  char foundpath[MAXPATHLEN] = "";
+  size_t include_counter = 0;
+  unsigned int inc_group = 0;
 
-bool
-IDL_GlobalData::in_tmpl_mod_no_alias (void) const
-{
-  return this->in_tmpl_mod_no_alias_;
-}
+  for (ACE_Unbounded_Queue_Iterator<char *>iter (this->include_paths_);
+       !iter.done (); ++include_counter)
+    {
+      if (include_counter == 0)
+        {
+          inc_group = 0;
+        }
+      else if (include_counter > 0 &&
+               include_counter < env_includes)
+        {
+          inc_group = 1;
+        }
+      else if (include_counter >= env_includes &&
+               include_counter < env_includes + orb_includes)
+        {
+          inc_group = 2;
+        }
+      else if (include_counter >= env_includes + orb_includes &&
+               include_counter < all_includes - svcs_includes)
+        {
+          inc_group = 3;
+        }
+      else if (include_counter >= all_includes - svcs_includes &&
+               include_counter < all_includes)
+        {
+          inc_group = 4;
+        }
 
-void
-IDL_GlobalData::in_tmpl_mod_no_alias (bool val)
-{
-  this->in_tmpl_mod_no_alias_ = val;
-}
+      // We don't need to check anything in groups 1 and 3 if
+      // foundpath was already set then we only have to check
+      // whether it belongs to groups 2 or 4.
+      if (foundpath[0] != 0 && (inc_group == 1 || inc_group == 3))
+        {
+          iter.advance ();
+          continue;
+        }
 
-bool
-IDL_GlobalData::in_tmpl_mod_alias (void) const
-{
-  return this->in_tmpl_mod_alias_;
-}
+      ACE_CString partial;
+      if (inc_group == 0)
+        {
+          char abspath[MAXPATHLEN] = "";
+          char *path_tmp = ACE_OS::getcwd (abspath, MAXPATHLEN);
+          partial = path_tmp;
+        }
+      else
+        {
+          char **path_tmp = 0;
+          iter.next (path_tmp);
+          iter.advance ();
+          partial = *path_tmp;
+        }
 
-void
-IDL_GlobalData::in_tmpl_mod_alias (bool val)
-{
-  this->in_tmpl_mod_alias_ = val;
+      if (is_include_file_found (partial, idl_file_name, this))
+        {
+          // 0)
+          if (inc_group == 0)
+            {
+              return false;
+            }
+          // 1)
+          else if (inc_group == 1)
+            {
+              // We can fill in foundpath here since we are sure
+              // that it was not set before. Check above ensures that.
+              ACE_OS::strcpy (foundpath, partial.c_str ());
+              continue;
+            }
+          // 2)
+          else if (inc_group == 2)
+            {
+              if (foundpath[0] == 0 ||
+                  ACE_OS::strcmp (foundpath, partial.c_str ()) == 0)
+                {
+                  return true;
+                }
+            }
+          // 3)
+          else if (inc_group == 3)
+            {
+              // We can fill in foundpath here since we are sure
+              // that it was not set before. Check above ensures that.
+              ACE_OS::strcpy (foundpath, partial.c_str ());
+              continue;
+            }
+          // 4)
+          else if (inc_group == 4)
+            {
+              if (foundpath[0] == 0 ||
+                  ACE_OS::strcmp (foundpath, partial.c_str ()) == 0)
+                {
+                  return true;
+                }
+            }
+        }
+    }
+
+  return false;
 }

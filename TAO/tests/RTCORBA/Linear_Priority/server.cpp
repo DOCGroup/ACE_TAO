@@ -75,16 +75,12 @@ static const ACE_TCHAR *lanes_file = ACE_TEXT ("lanes");
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:b:d:l:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:d:l:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'o':
-        ior = get_opts.opt_arg ();
-        break;
-
       case 'b':
         bands_file = get_opts.opt_arg ();
         break;
@@ -104,7 +100,6 @@ parse_args (int argc, ACE_TCHAR **argv)
                            "-b <bands_file> "
                            "-d <debug> "
                            "-l <lanes_file> "
-                           "-o <ior file> "
                            "\n",
                            argv [0]),
                           -1);

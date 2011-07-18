@@ -2,7 +2,7 @@
 
 #include "Literals.h"
 
-namespace DAnCE
+namespace CIAO
 {
   namespace XMI
   {
@@ -27,10 +27,10 @@ namespace DAnCE
         ACE_TEXT("UML:ModelElement.constraint"),            // ME_CONS_TAG
         ACE_TEXT("UML:Constraint"),                         // CONSTRAINT
         ACE_TEXT("UML:TaggedValue"),                        // TV_TAG
-        ACE_TEXT("UML:Stereotype"),                         // STEREOTYPE_TAG
-        ACE_TEXT("UML:Class"),                              // CLASS_TAG
+        ACE_TEXT("UML:Stereotype"),                          // STEREOTYPE_TAG
+        ACE_TEXT("UML:Class"),                               // CLASS_TAG
         ACE_TEXT("UML:Operation"),                          // OP_TAG
-        ACE_TEXT("UML:BehavioralFeature.parameter"),        // BFP_TAG
+        ACE_TEXT("UML:BehavioralFeature.parameter"),         // BFP_TAG
         ACE_TEXT("UML:Parameter"),                          // PARAM_TAG
         ACE_TEXT("UML:BehavioralFeature.raisedException"),  // BF_RE_TAG
         ACE_TEXT("UML:Exception"),                          // EXCEPT_TAG
@@ -50,9 +50,9 @@ namespace DAnCE
         ACE_TEXT("tag"),                                    // TAG
         ACE_TEXT("value"),                                  // VALUE
         ACE_TEXT("name"),                                   // NAME
-        ACE_TEXT("baseClass"),                              // BASEC
+        ACE_TEXT("baseClass"),                               // BASEC
         ACE_TEXT("visibility"),                             // VISIBIL
-        ACE_TEXT("stereotype"),                             // STEREO_ATTR
+        ACE_TEXT("stereotype"),                             //STEREO_ATTR
         ACE_TEXT("namespace"),                              // NS
         ACE_TEXT("owner"),                                  // OWNER
         ACE_TEXT("kind"),                                   // KIND
@@ -71,8 +71,8 @@ namespace DAnCE
         ACE_TEXT("Package"),                                // PACKAGE
         ACE_TEXT("null"),                                   // NULL
         ACE_TEXT("Attribute"),                              // ATTR
-        ACE_TEXT("public"),                                 // PUBLIC
-        ACE_TEXT("private"),                                // _PRIVATE
+        ACE_TEXT("public"),                                  // PUBLIC
+        ACE_TEXT("private"),                                  // _PRIVATE
         ACE_TEXT("typeid"),                                 // TYPEID
         ACE_TEXT("raises"),                                 // RAISES
         ACE_TEXT("return"),                                 // RETURN
@@ -94,7 +94,6 @@ namespace DAnCE
         ACE_TEXT("classifier"),                             // CLASSIFIER
         ACE_TEXT("frozen"),                                 // FROZEN
         ACE_TEXT("initialValue"),                           // INIT_VAL
-
         //******** Stereotypes
         ACE_TEXT("CCMConsumes"),                            // ST_CONSUMES
         ACE_TEXT("CORBAAnonymousSequence"),                 // ST_ANON_SEQ
@@ -149,8 +148,7 @@ namespace DAnCE
         ACE_TEXT("CORBAchar"),                              // ST_CHAR
         ACE_TEXT("CORBAInterface"),                         // ST_INTF
         ACE_TEXT("CCMPrimaryKey"),                          // ST_PRI_KEY
-        ACE_TEXT("CORBAany"),                               // ST_ANY
-        ACE_TEXT("CORBAnative")                             // ST_NATIVE
+        ACE_TEXT("CORBAany")                                // ST_ANY
       };
   }
 }

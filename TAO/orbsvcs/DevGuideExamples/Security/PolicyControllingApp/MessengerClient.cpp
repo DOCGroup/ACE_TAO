@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
 #include "MessengerC.h"
@@ -75,29 +76,24 @@
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //
 
-const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
 
 int which = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e:k:"));
+  ACE_Get_Opt get_opts (argc, argv, "e:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
       case 'e':
         which = ACE_OS::atoi(get_opts.optarg);
     if(which < 1 || 2 < which)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Usage:  %s "
-                               "-e [12] "
-                               "-k <ior>"
+                               "-e [12]"
                                "\n",
                                argv [0]),
                               -1);
@@ -106,13 +102,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
-                           "-e [12] "
-                           "-k <ior>"
+                           "-e [12]"
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -124,13 +119,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb =
       CORBA::ORB_init( argc, argv );
 
+    CORBA::Object_var obj =
+      orb->string_to_object( "file://Messenger.ior" );
+
     if (parse_args (argc, argv) != 0)
       return 1;
     else if(which < 1 || 2 < which)
       return 1;
-
-    CORBA::Object_var obj =
-      orb->string_to_object( ior );
 
     Security::QOP            qop;
     CORBA::Any               protection;

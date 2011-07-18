@@ -21,19 +21,19 @@ CORBA::ORB::set_timeout (ACE_Time_Value *timeout)
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_incr_refcount (void)
+CORBA::ORB::_incr_refcnt (void)
 {
   return ++this->refcount_;
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_refcount (void) const
+CORBA::ORB::_refcnt (void) const
 {
   return this->refcount_.value ();
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_decr_refcount (void)
+CORBA::ORB::_decr_refcnt (void)
 {
   unsigned long const count = --this->refcount_;
 
@@ -51,7 +51,7 @@ CORBA::ORB::_duplicate (CORBA::ORB_ptr obj)
 {
   if (obj)
     {
-      obj->_incr_refcount ();
+      obj->_incr_refcnt ();
     }
 
   return obj;
@@ -81,6 +81,23 @@ ACE_INLINE TAO_ORB_Core *
 CORBA::ORB::orb_core (void) const
 {
   return this->orb_core_;
+}
+
+// ************************************************************
+// These are in CORBA namespace
+// ************************************************************
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::ORB_ptr obj)
+{
+  return obj == CORBA::ORB::_nil ();
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::ORB_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_decr_refcnt ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

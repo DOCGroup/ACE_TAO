@@ -1,19 +1,23 @@
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    ncontextext_client_i.cpp
- *
- *  $Id$
- *
- *  This class implements a simple CORBA client which
- *  converts a Name to a string and viceversa, forms a IIOPNAME
- *  url address and can resolve a stringified name.
- *
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+// = LIBRARY
+//    TAO/ORBSVCS/tests/SimpleNaming
+//
+// = FILENAME
+//    ncontextext_client_i.cpp
+//
+// = DESCRIPTION
+//    This class implements a simple CORBA client which
+//    converts a Name to a string and viceversa, forms a IIOPNAME
+//    url address and can resolve a stringified name.
+//
+// = AUTHORS
+//    Priyanka Gontla <pgontla@ece.uci.edu>
+//
+//============================================================
 
 #include "ncontextext_client_i.h"
 #include "tao/debug.h"

@@ -352,29 +352,4 @@ TAO_ORB_Parameters::collocation_resolver_name (void) const
   return this->collocation_resolver_name_.c_str ();
 }
 
-ACE_INLINE bool
-TAO_ORB_Parameters::forward_invocation_on_object_not_exist (void) const
-{
-  return this->forward_invocation_on_object_not_exist_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::forward_invocation_on_object_not_exist (bool x)
-{
-  this->forward_invocation_on_object_not_exist_ = x;
-}
-
-ACE_INLINE int
-TAO_ORB_Parameters::forward_once_exception (void) const
-{
-  return this->forward_once_exception_;
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::forward_once_exception (const int ef)
-{
-  this->forward_once_exception_ |= ef;
-}
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

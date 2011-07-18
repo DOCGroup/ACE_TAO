@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    client.cpp
- *
- *  $Id$
- *
- *  This is the client for the UDP simple performance test.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/examples/PluggableUDP/tests/SimplePerformance
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//    This is the client for the UDP simple performance test.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
@@ -27,65 +30,37 @@
 # define ACE_MAIN testClient
 #endif
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
-
+const ACE_TCHAR *iorFile = ACE_TEXT("file://test.ior");
 ACE_UINT32 niter = 10;
 ACE_UINT32 SIZE_BLOCK= 256;
 
-/**
- * @class Client
- *
- * @brief Run the client thread
- *
- * Use the ACE_Task_Base class to run the client threads.
- */
 class Client
 {
+  // = TITLE
+  //   Run the client thread
+  //
+  // = DESCRIPTION
+  //   Use the ACE_Task_Base class to run the client threads.
+  //
 public:
-  /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
+  // ctor
 
   virtual ~Client (void) {};
 
-  /// The thread entry point.
   virtual int svc (void);
+  // The thread entry point.
 
 private:
-  /// The server.
   Simple_Server_var server_;
+  // The server.
 
-  /// The number of iterations on each client thread.
   ACE_UINT32 niterations_;
+  // The number of iterations on each client thread.
 };
 
 
-//int testClient (char* orbName, char* ior)
+//int testClient (char* orbName, char* iorFile)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
@@ -95,11 +70,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            argv,
                            "ORB_Test_Client");
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (iorFile);
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());
@@ -108,7 +80,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             iorFile),
                             1);
         }
 

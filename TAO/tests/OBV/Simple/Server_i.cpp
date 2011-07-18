@@ -46,6 +46,8 @@ Checkpoint_i::put_event (Event *event)
 {
   // Let us see what event has arrived
   event->do_print ();
+
+  return;
 }
 
 // Shutdown the server application.
@@ -60,12 +62,15 @@ Checkpoint_i::shutdown (void)
   this->orb_->shutdown ();
 }
 
+
 // Constructor.
+
 Checkpoint_i::Checkpoint_i (void)
 {
 }
 
 // Destructor.
+
 Checkpoint_i::~Checkpoint_i (void)
 {
 }

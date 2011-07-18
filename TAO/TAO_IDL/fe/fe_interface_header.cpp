@@ -69,25 +69,139 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // node itself is created.
 
 #include "fe_interface_header.h"
-
-#include "ace/streams.h"
-
-#include "utl_namelist.h"
-#include "utl_err.h"
-
-#include "fe_extern.h"
-#include "global_extern.h"
-#include "nr_extern.h"
-
 #include "ast_interface_fwd.h"
 #include "ast_valuetype.h"
 #include "ast_component.h"
 #include "ast_home.h"
 #include "ast_module.h"
-#include "ast_param_holder.h"
+#include "utl_namelist.h"
+#include "utl_err.h"
+#include "fe_extern.h"
+#include "global_extern.h"
+#include "nr_extern.h"
+
+ACE_RCSID (fe,
+           fe_interface_header,
+           "$Id$")
 
 #undef  INCREMENT
 #define INCREMENT 512
+
+// Private storage used to store interfaces seen already in the
+// computation of the unique inheritance list.
+static AST_Interface **iseen = 0;
+static long iallocated = 0;
+static long iused = 0;
+
+// Same as above, but the list is flattened and
+// includes all ancestors, not just immediate ones.
+static AST_Interface **iseen_flat = 0;
+static long iallocated_flat = 0;
+static long iused_flat = 0;
+
+// Add an interface to an inheritance spec.
+static void
+add_inheritance (AST_Interface *i)
+{
+  AST_Interface  **oiseen;
+
+  // Make sure there's space for one more.
+  if (iallocated == iused)
+    {
+      if (iallocated == 0)
+        {
+          iallocated = INCREMENT;
+
+          ACE_NEW (iseen,
+                   AST_Interface *[iallocated]);
+        }
+      else
+        {
+          oiseen = iseen;
+          iallocated += INCREMENT;
+
+          ACE_NEW (iseen,
+                   AST_Interface *[iallocated]);
+
+          for (long k = 0; k < iused; ++k)
+            {
+              iseen[k] = oiseen[k];
+            }
+
+          delete oiseen;
+        }
+    }
+
+  // OK, now insert it.
+  iseen[iused++] = i;
+}
+
+// Add an interface to the flat list.
+static void
+add_inheritance_flat (AST_Interface *i)
+{
+  AST_Interface **oiseen_flat;
+
+  // Make sure there's space for one more.
+  if (iallocated_flat == iused_flat)
+    {
+      if (iallocated_flat == 0)
+        {
+          iallocated_flat = INCREMENT;
+
+          ACE_NEW (iseen_flat,
+                   AST_Interface *[iallocated_flat]);
+        }
+      else
+        {
+          oiseen_flat = iseen_flat;
+          iallocated_flat += INCREMENT;
+
+          ACE_NEW (iseen_flat,
+                   AST_Interface *[iallocated_flat]);
+
+          for (long k = 0; k < iused_flat; k++)
+            {
+              iseen_flat[k] = oiseen_flat[k];
+            }
+
+          delete oiseen_flat;
+        }
+    }
+
+  // OK, now insert it.
+  iseen_flat[iused_flat++] = i;
+}
+
+// Have we already seen this interface?
+static long
+already_seen (AST_Interface *ip)
+{
+  for (long i = 0; i < iused; ++i)
+    {
+      if (iseen[i] == ip)
+        {
+          return true;
+        }
+    }
+
+  return false;
+}
+
+// Have we already seen this interface in the flat list?
+static long
+already_seen_flat (AST_Interface *ip)
+{
+  for (long i = 0; i < iused_flat; ++i)
+    {
+      if (iseen_flat[i] == ip)
+        {
+          return true;
+        }
+    }
+
+  return false;
+}
 
 // @@@ (JP) Here are the rules for interface inheritance and
 // value type inheritance and supports, straight from Jonathan
@@ -139,20 +253,13 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
                                         bool is_local,
                                         bool is_abstract,
                                         bool compile_now)
-  : interface_name_ (n),
-    has_template_parent_ (false),
-    inherits_ (0),
-    n_inherits_ (0),
-    inherits_flat_ (0),
-    n_inherits_flat_ (0),
-    is_local_ (is_local),
-    is_abstract_ (is_abstract),
-    iseen_ (0),
-    iseen_flat_ (0),
-    iallocated_ (0),
-    iused_ (0),
-    iallocated_flat_ (0),
-    iused_flat_ (0)
+  : pd_interface_name (n),
+    pd_inherits (0),
+    pd_n_inherits (0),
+    pd_inherits_flat (0),
+    pd_n_inherits_flat (0),
+    pd_is_local (is_local),
+    pd_is_abstract (is_abstract)
 {
   if (compile_now)
     {
@@ -168,32 +275,29 @@ FE_InterfaceHeader::~FE_InterfaceHeader (void)
 bool
 FE_InterfaceHeader::is_local (void) const
 {
-  return this->is_local_;
+  return this->pd_is_local;
 }
 
 bool
 FE_InterfaceHeader::is_abstract (void) const
 {
-  return this->is_abstract_;
+  return this->pd_is_abstract;
 }
 
 void
 FE_InterfaceHeader::destroy (void)
 {
-  if (0 != this->interface_name_)
+  if (0 != this->pd_interface_name)
     {
-      this->interface_name_->destroy ();
-      delete this->interface_name_;
-      this->interface_name_ = 0;
+      this->pd_interface_name->destroy ();
+      delete this->pd_interface_name;
+      this->pd_interface_name = 0;
     }
-
-  delete [] this->iseen_;
-  delete [] this->iseen_flat_;
 }
 
 // Add this interface to the list of inherited if not already there.
 void
-FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
+FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
 {
   // Check for badly formed interface.
   if (i == 0)
@@ -202,59 +306,34 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
     }
 
   // If we've seen it already then don't expand again.
-  if (this->already_seen (i))
+  if (already_seen (i))
     {
       return;
     }
 
   // OK, add i to the list of inherited interfaces.
-  this->add_inheritance (i);
+  add_inheritance (i);
 
-  AST_Interface *iface =
-    AST_Interface::narrow_from_decl (i);
-
-  if (iface == 0)
+  // And add i to the flat list as well.
+  if (!already_seen_flat (i))
     {
-      // If a template parameter as parent appears at any time,
-      // we bag the flat list until instantiation time.
-      this->has_template_parent_ = true;
-      this->destroy_flat_arrays ();
+      add_inheritance_flat (i);
     }
-  else if (! this->has_template_parent_)
+
+  // Add i's parents to the flat list.
+  AST_Interface **parents = i->inherits_flat ();
+  long num_parents = i->n_inherits_flat ();
+
+  for (long j = 0; j < num_parents; ++j)
     {
-      // And add i to the flat list as well.
-      if (!this->already_seen_flat (iface))
+      AST_Interface *tmp = parents[j];
+
+      if (already_seen_flat (tmp))
         {
-          this->add_inheritance_flat (iface);
+          continue;
         }
 
-      // Add i's parents to the flat list.
-      AST_Interface **parents = iface->inherits_flat ();
-      long num_parents = iface->n_inherits_flat ();
-
-      for (long j = 0; j < num_parents; ++j)
-        {
-          AST_Interface *tmp =
-            AST_Interface::narrow_from_decl (parents[j]);
-
-          if (tmp == 0)
-            {
-              // If a template parameter as parent appears at any time,
-              // we bag the flat list until instantiation time.
-              this->has_template_parent_ = true;
-              this->destroy_flat_arrays ();
-              break;
-            }
-          else if (! this->has_template_parent_)
-            {
-              if (this->already_seen_flat (tmp))
-                {
-                  continue;
-                }
-
-              this->add_inheritance_flat (tmp);
-            }
-        }
+      add_inheritance_flat (tmp);
     }
 }
 
@@ -269,22 +348,24 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
     }
 
   AST_Decl *d = 0;
-  UTL_ScopedName *item = 0;
+  UTL_ScopedName *item = 0;;
   AST_Interface *i = 0;
+  long j = 0;
+  long k = 0;
+  int inh_err = 0;
+
+  iused = 0;
+  iused_flat = 0;
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
 
-  for (UTL_NamelistActiveIterator l (ifaces);
-       !l.is_done ();
-       l.next ())
+  for (UTL_NamelistActiveIterator l (ifaces); !l.is_done (); l.next ())
     {
       item = l.item ();
 
-      UTL_Scope *s = idl_global->scopes ().top ();
-
       // Check that scope stack is valid.
-      if (s == 0)
+      if (idl_global->scopes ().top () == 0)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -294,7 +375,11 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         }
 
       // Look it up.
+      UTL_Scope *s = idl_global->scopes ().top ();
+
       d = s->lookup_by_name  (item,
+                              true,
+                              true,
                               true); // full_def_only
 
        // Undefined interface?
@@ -302,12 +387,12 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         {
           // If the lookup now succeeds, without the full_def_only
           // constraint, it's an error.
-          d = s->lookup_by_name (item, false);
+          d = s->lookup_by_name (item, true, true);
 
           if (0 != d)
             {
               idl_global->err ()->inheritance_fwd_error (
-                                      this->interface_name_,
+                                      this->pd_interface_name,
                                       AST_Interface::narrow_from_decl (d)
                                     );
               break;
@@ -322,7 +407,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
             {
               AST_Module *m = AST_Module::narrow_from_decl (sad);
 
-              d = m->look_in_prev_mods_local (item->last_component ());
+              d = m->look_in_previous (item->last_component ());
             }
         }
 
@@ -336,10 +421,8 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           throw Bailout ();
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
-
       // Not an appropriate interface?
-      if (nt == AST_Decl::NT_typedef)
+      if (d->node_type () == AST_Decl::NT_typedef)
         {
           d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
         }
@@ -348,55 +431,59 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
       if (i != 0)
         {
-          if (this->check_inherit (i, for_valuetype) == -1)
-            {
-              idl_global->err ()->interface_expected (d);
-              break;
-            }
-          else if (!for_valuetype
-                   && this->is_abstract_
-                   && !i->is_abstract ())
-            {
-              idl_global->err ()->abstract_inheritance_error (
-                this->name (),
-                i->name ());
-              break;
-            }
-        }
-      else if (nt == AST_Decl::NT_param_holder)
-        {
-          AST_Param_Holder *ph =
-            AST_Param_Holder::narrow_from_decl (d);
-
-          nt = ph->info ()->type_;
-
-          bool ok_param =
-            nt == AST_Decl::NT_type
-            || (nt == AST_Decl::NT_interface && !for_valuetype)
-            || (nt == AST_Decl::NT_valuetype && for_valuetype);
-
-          if (!ok_param)
-            {
-              idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
-
-              break;
-            }
+          inh_err = this->check_inherit (i,
+                                         for_valuetype);
         }
       else
+        {
+          inh_err = -1;
+        }
+
+      if (inh_err == -1)
         {
           idl_global->err ()->interface_expected (d);
           break;
         }
 
+      if (!for_valuetype && this->pd_is_abstract && !i->is_abstract ())
+        {
+          idl_global->err ()->abstract_inheritance_error (this->name (),
+                                                          i->name ());
+        }
+
       // OK, see if we have to add this to the list of interfaces
       // inherited from.
-      this->compile_one_inheritance (
-        AST_Type::narrow_from_decl (d));
+      this->compile_one_inheritance (i);
     }
 
   // OK, install in interface header.
-  this->install_in_header ();
+  // First the flat list (all ancestors).
+  if (iused_flat > 0)
+    {
+      ACE_NEW (this->pd_inherits_flat,
+               AST_Interface *[iused_flat]);
+
+      for (j = 0; j < iused_flat; ++j)
+        {
+          this->pd_inherits_flat[j] = iseen_flat[j];
+        }
+
+      this->pd_n_inherits_flat = iused_flat;
+    }
+
+  // Then the list of immediate ancestors.
+  if (iused > 0)
+    {
+      ACE_NEW (this->pd_inherits,
+               AST_Interface *[iused]);
+
+      for (k = 0; k < iused; ++k)
+        {
+          this->pd_inherits[k] = iseen[k];
+        }
+
+      this->pd_n_inherits = iused;
+    }
 }
 
 int
@@ -409,7 +496,7 @@ FE_InterfaceHeader::check_inherit (AST_Interface *i,
 
   if (
       // Non-local interfaces may not inherit from local ones.
-      (! this->is_local_ && i->is_local ())
+      (! this->pd_is_local && i->is_local ())
       // Both valuetype or both interface.
       || (for_valuetype ^ is_valuetype)
      )
@@ -422,203 +509,682 @@ FE_InterfaceHeader::check_inherit (AST_Interface *i,
     }
 }
 
-// Add an interface to an inheritance spec.
-void
-FE_InterfaceHeader::add_inheritance (AST_Type *i)
-{
-  AST_Type  **oiseen = 0;
-
-  // Make sure there's space for one more.
-  if (this->iallocated_ == this->iused_)
-    {
-      if (this->iallocated_ == 0)
-        {
-          this->iallocated_ = INCREMENT;
-
-          ACE_NEW (this->iseen_,
-                   AST_Type *[this->iallocated_]);
-        }
-      else
-        {
-          oiseen = this->iseen_;
-          this->iallocated_ += INCREMENT;
-
-          ACE_NEW (this->iseen_,
-                   AST_Type *[this->iallocated_]);
-
-          for (long k = 0; k < this->iused_; ++k)
-            {
-              this->iseen_[k] = oiseen[k];
-            }
-
-          delete [] oiseen;
-        }
-    }
-
-  // OK, now insert it.
-  this->iseen_[this->iused_++] = i;
-}
-
-// Add an interface to the flat list.
-void
-FE_InterfaceHeader::add_inheritance_flat (AST_Interface *i)
-{
-  AST_Interface **oiseen_flat = 0;
-
-  // Make sure there's space for one more.
-  if (this->iallocated_flat_ == this->iused_flat_)
-    {
-      if (this->iallocated_flat_ == 0)
-        {
-          this->iallocated_flat_ = INCREMENT;
-
-          ACE_NEW (this->iseen_flat_,
-                   AST_Interface *[this->iallocated_flat_]);
-        }
-      else
-        {
-          oiseen_flat = this->iseen_flat_;
-          this->iallocated_flat_ += INCREMENT;
-
-          ACE_NEW (this->iseen_flat_,
-                   AST_Interface *[this->iallocated_flat_]);
-
-          for (long k = 0; k < this->iused_flat_; k++)
-            {
-              this->iseen_flat_[k] = oiseen_flat[k];
-            }
-
-          delete [] oiseen_flat;
-        }
-    }
-
-  // OK, now insert it.
-  this->iseen_flat_[this->iused_flat_++] = i;
-}
-
-// Have we already seen this interface?
-bool
-FE_InterfaceHeader::already_seen (AST_Type *ip)
-{
-  AST_Param_Holder *ph =
-    AST_Param_Holder::narrow_from_decl (ip);
-
-  for (long i = 0; i < this->iused_; ++i)
-    {
-      AST_Param_Holder *tmp =
-        AST_Param_Holder::narrow_from_decl (this->iseen_[i]);
-
-      if (ph != 0 && tmp != 0)
-        {
-          if (ph->info ()->name_ == tmp->info ()->name_)
-            {
-              idl_global->err ()->duplicate_param_id (ph->name ());
-              ph->destroy ();
-              delete ph;
-              ph = 0;
-              return true;
-            }
-        }
-      else if (this->iseen_[i] == ip)
-        {
-          return true;
-        }
-    }
-
-  return false;
-}
-
-// Have we already seen this interface in the flat list?
-bool
-FE_InterfaceHeader::already_seen_flat (AST_Interface *ip)
-{
-  for (long i = 0; i < this->iused_flat_; ++i)
-    {
-      if (this->iseen_flat_[i] == ip)
-        {
-          return true;
-        }
-    }
-
-  return false;
-}
-
-void
-FE_InterfaceHeader::install_in_header (void)
-{
-  long j = 0;
-  long k = 0;
-
-  // First the flat list (all ancestors).
-  if (this->iused_flat_ > 0)
-    {
-      ACE_NEW (this->inherits_flat_,
-               AST_Interface *[this->iused_flat_]);
-
-      for (j = 0; j < this->iused_flat_; ++j)
-        {
-          this->inherits_flat_[j] = this->iseen_flat_[j];
-        }
-
-      this->n_inherits_flat_ = iused_flat_;
-    }
-
-  // Then the list of immediate ancestors.
-  if (this->iused_ > 0)
-    {
-      ACE_NEW (this->inherits_,
-               AST_Type *[this->iused_]);
-
-      for (k = 0; k < this->iused_; ++k)
-        {
-          this->inherits_[k] = this->iseen_[k];
-        }
-
-      this->n_inherits_ = this->iused_;
-    }
-}
-
 // Data accessors.
 
 UTL_ScopedName *
 FE_InterfaceHeader::name (void) const
 {
-  return this->interface_name_;
+  return this->pd_interface_name;
 }
 
-AST_Type **
+AST_Interface **
 FE_InterfaceHeader::inherits (void) const
 {
-  return this->inherits_;
+  return this->pd_inherits;
 }
 
 long
 FE_InterfaceHeader::n_inherits (void) const
 {
-  return this->n_inherits_;
+  return this->pd_n_inherits;
 }
 
 AST_Interface **
 FE_InterfaceHeader::inherits_flat (void) const
 {
-  return this->inherits_flat_;
+  return this->pd_inherits_flat;
 }
 
 long
 FE_InterfaceHeader::n_inherits_flat (void) const
 {
-  return this->n_inherits_flat_;
+  return this->pd_n_inherits_flat;
+}
+
+//************************************************************************
+
+FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
+                            UTL_NameList *inherits,
+                            UTL_NameList *supports,
+                            bool truncatable,
+                            bool is_eventtype)
+  : FE_InterfaceHeader (n,
+                        inherits,
+                        false,
+                        false,
+                        false),
+    pd_supports (0),
+    pd_n_supports (0),
+    pd_inherits_concrete (0),
+    pd_supports_concrete (0),
+    pd_truncatable (truncatable)
+{
+  this->compile_inheritance (inherits,
+                             is_eventtype);
+
+  if (idl_global->err_count () == 0)
+    {
+      this->compile_supports (supports);
+    }
+}
+
+FE_OBVHeader::~FE_OBVHeader (void)
+{
+}
+
+AST_Interface **
+FE_OBVHeader::supports (void) const
+{
+  return this->pd_supports;
+}
+
+long
+FE_OBVHeader::n_supports (void) const
+{
+  return this->pd_n_supports;
+}
+
+AST_ValueType *
+FE_OBVHeader::inherits_concrete (void) const
+{
+  return this->pd_inherits_concrete;
+}
+
+AST_Interface *
+FE_OBVHeader::supports_concrete (void) const
+{
+  return this->pd_supports_concrete;
+}
+
+bool
+FE_OBVHeader::truncatable (void) const
+{
+  return this->pd_truncatable;
 }
 
 void
-FE_InterfaceHeader::destroy_flat_arrays (void)
+FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
+                                   bool is_eventtype)
 {
-  delete [] this->inherits_flat_;
-  this->inherits_flat_ = 0;
-  delete [] this->iseen_flat_;
-  this->iseen_flat_ = 0;
-  this->n_inherits_flat_ = 0;
-  this->iallocated_flat_ = 0;
-  this->iused_flat_ = 0;
+  this->FE_InterfaceHeader::compile_inheritance (vtypes,
+                                                 true);
+
+  if (this->pd_n_inherits > 0)
+    {
+      AST_Interface *iface = this->pd_inherits[0];
+      AST_ValueType *vt = AST_ValueType::narrow_from_decl (iface);
+
+      if (vt != 0
+          && vt->is_abstract () == false)
+        {
+          this->pd_inherits_concrete = vt;
+        }
+
+      if (! is_eventtype
+          && this->pd_inherits[0]->node_type () == AST_Decl::NT_eventtype)
+        {
+          idl_global->err ()->valuetype_expected (this->pd_inherits[0]);
+        }
+
+      for (long i = 1; i < this->pd_n_inherits; ++i)
+        {
+          iface = this->pd_inherits[i];
+
+          if (!iface->is_abstract ())
+            {
+              idl_global->err ()->abstract_expected (iface);
+            }
+
+          if (! is_eventtype
+              && iface->node_type () == AST_Decl::NT_eventtype)
+            {
+              idl_global->err ()->valuetype_expected (iface);
+            }
+        }
+    }
+}
+
+void
+FE_OBVHeader::compile_supports (UTL_NameList *supports)
+{
+  if (supports == 0)
+    {
+      this->pd_supports = 0;
+      this->pd_n_supports = 0;
+      return;
+    }
+
+  long length = supports->length ();
+  this->pd_n_supports = length;
+  ACE_NEW (this->pd_supports,
+           AST_Interface *[length]);
+
+  AST_Decl *d = 0;
+  UTL_ScopedName *item = 0;;
+  AST_Interface *iface = 0;
+  int i = 0;
+
+  for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
+    {
+      item = l.item ();
+
+      // Check that scope stack is valid.
+      if (idl_global->scopes ().top () == 0)
+        {
+          idl_global->err ()->lookup_error (item);
+
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          throw Bailout ();
+        }
+
+      // Look it up.
+      UTL_Scope *s = idl_global->scopes ().top ();
+
+      d = s->lookup_by_name  (item,
+                              true);
+
+      if (d == 0)
+        {
+          AST_Decl *sad = ScopeAsDecl (s);
+
+          if (sad->node_type () == AST_Decl::NT_module)
+            {
+              AST_Module *m = AST_Module::narrow_from_decl (sad);
+
+              d = m->look_in_previous (item->last_component ());
+            }
+        }
+
+      // Not found?
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (item);
+
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          throw Bailout ();
+        }
+
+      // Remove typedefs, if any.
+      if (d->node_type () == AST_Decl::NT_typedef)
+        {
+          d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+        }
+
+      if (d->node_type () == AST_Decl::NT_interface)
+        {
+          iface = AST_Interface::narrow_from_decl (d);
+        }
+      else
+        {
+          idl_global->err ()->supports_error (pd_interface_name,
+                                              d);
+          continue;
+        }
+
+      // Forward declared interface?
+      if (!iface->is_defined ())
+        {
+          idl_global->err ()->supports_fwd_error (pd_interface_name,
+                                                  iface);
+          continue;
+        }
+
+      if (!iface->is_abstract ())
+        {
+          if (i == 0)
+            {
+              this->pd_supports_concrete = iface;
+
+              if (!this->check_concrete_supported_inheritance (iface))
+                {
+                  idl_global->err ()->concrete_supported_inheritance_error (
+                                          this->name (),
+                                          iface->name ()
+                                        );
+                }
+            }
+          else
+            {
+              idl_global->err ()->abstract_expected (iface);
+              continue;
+            }
+        }
+
+      this->pd_supports[i++] = iface;
+    }
+}
+
+bool
+FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
+{
+  if (this->pd_n_inherits == 0)
+    {
+      return true;
+    }
+
+  AST_ValueType *vt = 0;
+  AST_Interface *concrete = 0;
+  AST_Interface *ancestor = 0;
+
+  for (long i = 0; i < this->pd_n_inherits; ++i)
+    {
+      vt = AST_ValueType::narrow_from_decl (this->pd_inherits[i]);
+      concrete = vt->supports_concrete ();
+
+      if (0 == concrete)
+        {
+          return true;
+        }
+
+      if (d == concrete)
+        {
+          return true;
+        }
+
+      for (long j = 0; j < d->n_inherits_flat (); ++j)
+        {
+          ancestor = d->inherits_flat ()[j];
+
+          if (ancestor == concrete)
+            {
+              return true;
+            }
+        }
+    }
+
+  return false;
+}
+
+//************************************************************************
+
+FE_EventHeader::FE_EventHeader (UTL_ScopedName *n,
+                                UTL_NameList *inherits,
+                                UTL_NameList *supports,
+                                bool truncatable)
+  : FE_OBVHeader (n,
+                  inherits,
+                  supports,
+                  truncatable,
+                  true)
+{
+}
+
+FE_EventHeader::~FE_EventHeader (void)
+{
+}
+
+//************************************************************************
+
+FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
+                                        UTL_ScopedName *base_component,
+                                        UTL_NameList *supports,
+                                        bool /* compile_now */)
+  : FE_InterfaceHeader (n,
+                        supports,
+                        false,
+                        false,
+                        false),
+    pd_base_component (0)
+{
+  this->compile_inheritance (base_component);
+  this->compile_supports (supports);
+}
+
+FE_ComponentHeader::~FE_ComponentHeader (void)
+{
+}
+
+AST_Component *
+FE_ComponentHeader::base_component (void) const
+{
+  return this->pd_base_component;
+}
+
+AST_Interface **
+FE_ComponentHeader::supports (void) const
+{
+  return this->pd_inherits;
+}
+
+long
+FE_ComponentHeader::n_supports (void) const
+{
+  return this->pd_n_inherits;
+}
+
+AST_Interface **
+FE_ComponentHeader::supports_flat (void) const
+{
+  return this->pd_inherits_flat;
+}
+
+long
+FE_ComponentHeader::n_supports_flat (void) const
+{
+  return this->pd_n_inherits_flat;
+}
+
+void
+FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
+{
+  // If there is a base component, look up the decl and assign our member.
+  // We also inherit its supported interfaces.
+  if (base_component == 0)
+    {
+      return;
+    }
+
+  UTL_Scope *s = idl_global->scopes ().top_non_null ();
+  AST_Decl *d = s->lookup_by_name (base_component,
+                                   true);
+
+  if (d == 0)
+    {
+      idl_global->err ()->lookup_error (base_component);
+
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      throw Bailout ();
+    }
+
+  if (d->node_type () == AST_Decl::NT_typedef)
+    {
+      d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+    }
+
+  this->pd_base_component = AST_Component::narrow_from_decl (d);
+
+  if (this->pd_base_component == 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_USE,
+                                  d);
+    }
+  else if (!this->pd_base_component->is_defined ())
+    {
+      idl_global->err ()->inheritance_fwd_error (
+                              this->name (),
+                              this->pd_base_component
+                            );
+      this->pd_base_component = 0;
+    }
+}
+
+void
+FE_ComponentHeader::compile_supports (UTL_NameList *supports)
+{
+  if (supports == 0)
+    {
+      return;
+    }
+
+  AST_Decl *d = 0;
+  UTL_ScopedName *item = 0;;
+  AST_Interface *i = 0;
+  long j = 0;
+  long k = 0;
+
+  iused = 0;
+  iused_flat = 0;
+
+  // Compute expanded flattened non-repeating list of interfaces
+  // which this one inherits from.
+
+  for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
+    {
+      item = l.item ();
+
+      // Check that scope stack is valid.
+      if (idl_global->scopes ().top () == 0)
+        {
+          idl_global->err ()->lookup_error (item);
+
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          throw Bailout ();
+        }
+
+      // Look it up.
+      UTL_Scope *s = idl_global->scopes ().top ();
+
+      d = s->lookup_by_name  (item,
+                              true);
+
+      if (d == 0)
+        {
+          AST_Decl *sad = ScopeAsDecl (s);
+
+          if (sad->node_type () == AST_Decl::NT_module)
+            {
+              AST_Module *m = AST_Module::narrow_from_decl (sad);
+
+              d = m->look_in_previous (item->last_component ());
+            }
+        }
+
+      // Not found?
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (item);
+
+          // This is probably the result of bad IDL.
+          // We will crash if we continue from here.
+          throw Bailout ();
+        }
+
+      // Not an appropriate interface?
+      if (d->node_type () == AST_Decl::NT_typedef)
+        {
+          d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+        }
+
+      i = AST_Interface::narrow_from_decl (d);
+
+      // Not an interface?
+      if (i == 0 || i->node_type () != AST_Decl::NT_interface)
+        {
+          idl_global->err ()->interface_expected (d);
+          continue;
+        }
+
+      // Undefined interface?
+      if (!i->is_defined ())
+        {
+          idl_global->err ()->inheritance_fwd_error (this->pd_interface_name,
+                                                     i);
+          continue;
+        }
+
+      // Local interface? (illegal for components to support).
+      if (i->is_local ())
+        {
+          idl_global->err ()->unconstrained_interface_expected (this->name (),
+                                                                i->name ());
+          continue;
+       }
+
+      // OK, see if we have to add this to the list of interfaces
+      // inherited from.
+      this->compile_one_inheritance (i);
+    }
+
+  // OK, install in interface header.
+  // First the flat list (all ancestors).
+  if (iused_flat > 0)
+    {
+      ACE_NEW (this->pd_inherits_flat,
+               AST_Interface *[iused_flat]);
+
+      for (j = 0; j < iused_flat; ++j)
+        {
+          this->pd_inherits_flat[j] = iseen_flat[j];
+        }
+
+      this->pd_n_inherits_flat = iused_flat;
+    }
+
+  // Then the list of immediate ancestors.
+  if (iused > 0)
+    {
+      ACE_NEW (this->pd_inherits,
+               AST_Interface *[iused]);
+
+      for (k = 0; k < iused; ++k)
+        {
+          this->pd_inherits[k] = iseen[k];
+        }
+
+      this->pd_n_inherits = iused;
+    }
+}
+
+//************************************************************************
+
+FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
+                              UTL_ScopedName *base_home,
+                              UTL_NameList *supports,
+                              UTL_ScopedName *managed_component,
+                              UTL_ScopedName *primary_key)
+  : FE_ComponentHeader (n,
+                        0,
+                        supports,
+                        false),
+    pd_base_home (0),
+    pd_primary_key (0)
+{
+  // No need to call compile_supports(), it got done in
+  // the call to the base class FE_ComponentHeader.
+  this->compile_inheritance (base_home);
+  this->compile_managed_component (managed_component);
+  this->compile_primary_key (primary_key);
+}
+
+FE_HomeHeader::~FE_HomeHeader (void)
+{
+}
+
+AST_Home *
+FE_HomeHeader::base_home (void) const
+{
+  return this->pd_base_home;
+}
+
+AST_Component *
+FE_HomeHeader::managed_component (void) const
+{
+  return this->pd_managed_component;
+}
+
+AST_ValueType *
+FE_HomeHeader::primary_key (void) const
+{
+  return this->pd_primary_key;
+}
+
+void
+FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
+{
+  if (base_home == 0)
+    {
+      return;
+    }
+
+  UTL_Scope *s = idl_global->scopes ().top_non_null ();
+  AST_Decl *d = s->lookup_by_name (base_home,
+                                   true);
+
+  if (d == 0)
+    {
+      idl_global->err ()->lookup_error (base_home);
+
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      throw Bailout ();
+    }
+
+  if (d->node_type () == AST_Decl::NT_typedef)
+    {
+      d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+    }
+
+  this->pd_base_home = AST_Home::narrow_from_decl (d);
+
+  if (this->pd_base_home == 0)
+    {
+      idl_global->err ()->inheritance_error (this->name (),
+                                             d);
+    }
+}
+
+void
+FE_HomeHeader::compile_managed_component (UTL_ScopedName *managed_component)
+{
+  if (managed_component == 0)
+    {
+      return;
+    }
+
+  UTL_Scope *s = idl_global->scopes ().top_non_null ();
+  AST_Decl *d = s->lookup_by_name (managed_component,
+                                   true);
+
+  if (d == 0)
+    {
+      idl_global->err ()->lookup_error (managed_component);
+
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      throw Bailout ();
+    }
+
+  if (d->node_type () == AST_Decl::NT_typedef)
+    {
+      d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+    }
+
+  this->pd_managed_component = AST_Component::narrow_from_decl (d);
+
+  if (this->pd_managed_component == 0)
+    {
+      idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_USE,
+                                  d);
+    }
+}
+
+void
+FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
+{
+  if (primary_key == 0)
+    {
+      return;
+    }
+
+  UTL_Scope *s = idl_global->scopes ().top_non_null ();
+  AST_Decl *d = s->lookup_by_name (primary_key,
+                                   true);
+
+  if (d == 0)
+    {
+      idl_global->err ()->lookup_error (primary_key);
+
+      // This is probably the result of bad IDL.
+      // We will crash if we continue from here.
+      throw Bailout ();
+    }
+
+  AST_Decl::NodeType nt = d->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+    }
+
+  this->pd_primary_key = AST_ValueType::narrow_from_decl (d);
+
+  if (this->pd_primary_key == 0 || nt != AST_Decl::NT_valuetype)
+    {
+      idl_global->err ()->valuetype_expected (d);
+    }
 }
 

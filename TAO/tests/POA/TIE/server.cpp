@@ -1,75 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  In this example,
- *
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// =========================================================================
+// = LIBRARY
+//    TAO/tests/POA/TIE
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//    In this example,
+//
+// = AUTHOR
+//    Irfan Pyarali
+// =========================================================================
 
 #include "ace/streams.h"
 #include "ace/SString.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_1 = ACE_TEXT ("ior_1");
-const ACE_TCHAR *ior_2 = ACE_TEXT ("ior_2");
-const ACE_TCHAR *ior_3 = ACE_TEXT ("ior_3");
-const ACE_TCHAR *ior_4 = ACE_TEXT ("ior_4");
-const ACE_TCHAR *ior_5 = ACE_TEXT ("ior_5");
-const ACE_TCHAR *ior_6 = ACE_TEXT ("ior_6");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:e:f:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'a':
-          ior_1 = get_opts.opt_arg ();
-          break;
-      case 'b':
-          ior_2 = get_opts.opt_arg ();
-          break;
-      case 'c':
-          ior_3 = get_opts.opt_arg ();
-          break;
-      case 'd':
-          ior_4 = get_opts.opt_arg ();
-          break;
-      case 'e':
-          ior_5 = get_opts.opt_arg ();
-          break;
-      case 'f':
-          ior_6 = get_opts.opt_arg ();
-          break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-a <ior_1> "
-                           "-b <ior_2> "
-                           "-c <ior_3> "
-                           "-d <ior_4> "
-                           "-e <ior_5> "
-                           "-f <ior_6> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+ACE_RCSID(TIE, server, "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -84,8 +34,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
-          return 1;
       // Obtain the RootPOA.
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
@@ -206,10 +154,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var forth_ior =
         orb->object_to_string (a_tie.in ());
 
-      FILE *output_file_1 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_1), "w");
-      FILE *output_file_2 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_2), "w");
-      FILE *output_file_3 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_3), "w");
-      FILE *output_file_4 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_4), "w");
+      FILE *output_file_1 = ACE_OS::fopen ("ior_1", "w");
+      FILE *output_file_2 = ACE_OS::fopen ("ior_2", "w");
+      FILE *output_file_3 = ACE_OS::fopen ("ior_3", "w");
+      FILE *output_file_4 = ACE_OS::fopen ("ior_4", "w");
 
       if (output_file_1)
         ACE_OS::fprintf (output_file_1,
@@ -243,8 +191,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var sixth_ior =
         orb->object_to_string (c_tie.in ());
 
-      FILE *output_file_5 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_5), "w");
-      FILE *output_file_6 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_6), "w");
+      FILE *output_file_5 = ACE_OS::fopen ("ior_5", "w");
+      FILE *output_file_6 = ACE_OS::fopen ("ior_6", "w");
 
       if (output_file_5)
         ACE_OS::fprintf (output_file_5,

@@ -169,11 +169,6 @@ namespace TAO
   }
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
-
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
@@ -229,10 +224,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
-
 // TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
@@ -263,11 +254,6 @@ namespace TAO
     return true;
   }
 }
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
 
 // Copying insertion.
 void operator<<= (
@@ -324,10 +310,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
-
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50
 
@@ -343,11 +325,6 @@ namespace TAO
     return true;
   }
 }
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
 
 // Copying insertion.
 void
@@ -390,10 +367,6 @@ operator>>= (
         _tao_elem
       );
 }
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:50

@@ -1,4 +1,3 @@
-<!-- $Id$ -->
 <Deployment:DeploymentPlan
   xmlns:Deployment="http://www.omg.org/Deployment"
   xmlns:xmi="http://www.omg.org/XMI"
@@ -82,5 +81,5 @@
   <source/>
   <node/>
   <location>Null_Component_stub</location>
-</artifact>
+</artifact>  
 </Deployment:DeploymentPlan>

@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    tie_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for TIE classes for the Interface node in the
- *  inline file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for TIE classes for the Interface node in the
+//    inline file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_interface,
+           tie_ss,
+           "$Id$")
 
 
 // ************************************************************************
@@ -82,15 +92,15 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_nl
       << "\t: ptr_ (&t)," << be_nl
       << "\t  poa_ ( ::PortableServer::POA::_nil ())," << be_nl
       << "\t  rel_ (false)" << be_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 
   *os << "template <class T> " << be_nl
       << fulltiename << "<T>::" << localtiename
@@ -98,7 +108,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "\t: ptr_ (&t)," << be_nl
       << "\t  poa_ ( ::PortableServer::POA::_duplicate (poa))," << be_nl
       << "\t  rel_ (false)" << be_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename
@@ -106,7 +116,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "\t: ptr_ (tp)," << be_nl
       << "\t  poa_ ( ::PortableServer::POA::_nil ())," << be_nl
       << "\t  rel_ (release)" << be_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename
@@ -115,7 +125,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "\t: ptr_ (tp)," << be_nl
       << "\t  poa_ ( ::PortableServer::POA::_duplicate (poa))," << be_nl
       << "\t  rel_ (release)" << be_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::~" << localtiename << " (void)" << be_nl
@@ -124,13 +134,13 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "delete this->ptr_;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "template <class T> T *" << be_nl
       << fulltiename << "<T>::_tied_object (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->ptr_;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "template <class T> void" << be_nl
       << fulltiename << "<T>::_tied_object (T &obj)" << be_nl
@@ -141,7 +151,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "}" << be_uidt_nl << be_nl
       << "this->ptr_ = &obj;" << be_nl
       << "this->rel_ = false;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "template <class T> void" << be_nl
       << fulltiename << "<T>::_tied_object (T *obj, "
@@ -153,19 +163,19 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "}" << be_uidt_nl << be_nl
       << "this->ptr_ = obj;" << be_nl
       << "this->rel_ = release;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "template <class T>  ::CORBA::Boolean" << be_nl
       << fulltiename << "<T>::_is_owner (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->rel_;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "template <class T> void" << be_nl
       << fulltiename << "<T>::_is_owner ( ::CORBA::Boolean b)" << be_nl
       << "{" << be_idt_nl
       << "this->rel_ = b;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "template <class T> "
       << "PortableServer::POA_ptr" << be_nl

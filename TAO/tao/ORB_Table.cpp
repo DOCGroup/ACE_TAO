@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Singleton.h"
@@ -10,6 +8,14 @@
 
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (tao,
+           ORB_Table,
+           "$Id$")
+
+
+// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

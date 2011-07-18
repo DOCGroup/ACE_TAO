@@ -1,9 +1,12 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/PortableServer/LifespanStrategyTransientFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/PortableServer/LifespanStrategyTransient.h"
+
+ACE_RCSID (PortableServer,
+           LifespanStrategyFactoryImpl,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

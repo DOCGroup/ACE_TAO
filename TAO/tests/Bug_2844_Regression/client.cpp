@@ -9,6 +9,11 @@
 #include <algorithm>
 #include <functional>
 
+
+ACE_RCSID (Recursive,
+           client,
+           "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int

@@ -110,8 +110,12 @@ public:
    */
   ACE_Array_Map (size_type s = 0);
 
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
   template<typename InputIterator>
   ACE_Array_Map (InputIterator f, InputIterator l);
+#else
+  ACE_Array_Map (const_iterator f, const_iterator l);
+#endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 
   ACE_Array_Map (ACE_Array_Map const & map);
   ACE_Array_Map & operator= (ACE_Array_Map const & map);
@@ -177,9 +181,14 @@ public:
    */
   std::pair<iterator, bool> insert (value_type const & x);
 
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
   /// Insert range of elements into map.
   template<typename InputIterator>
   void insert (InputIterator f, InputIterator l);
+#else
+  /// Insert range of elements into map.
+  void insert (const_iterator f, const_iterator l);
+#endif  /* ACE_LACKS_MEMBER_TEMPLATES */
 
   /// Remove element at position @a pos from the map.
   void erase (iterator pos);

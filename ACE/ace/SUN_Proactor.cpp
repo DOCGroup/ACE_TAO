@@ -8,6 +8,12 @@
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
 
+
+ACE_RCSID (ace,
+           POSIX_CB_Proactor,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)

@@ -6,61 +6,52 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
+$iorfile = PerlACE::LocalFile ('server.ior');
+$TARGETHOSTNAME = '127.0.0.1';
 $port = PerlACE::uniqueid () + 12000;
+$debug = 0;
 $endien = (pack('L', 0x41424344) eq 'ABCD' ? '_be' : '');
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+unlink $iorfile;
+
+if (PerlACE::is_vxworks_test()) {
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+    $SV = new PerlACE::ProcessVX ('server',
+                             '-ORBEndpoint ' .
+                             "iiop://$TARGETHOSTNAME" . ":$port " .
+                             "-ORBDebugLevel $debug");
 }
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $hostname = $server->HostName();
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server",
-                              "-ORBEndpoint iiop://$hostname:$port " .
-                              "-ORBDebugLevel $debug_level " .
-                              "-o $server_iorfile");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $server->DeleteFile($iorbase);
-    exit 1;
+else {
+    $SV = new PerlACE::Process ('server',
+                             '-ORBEndpoint ' .
+                             "iiop://$TARGETHOSTNAME" . ":$port " .
+                             "-ORBDebugLevel $debug");
 }
+$SV->Spawn ();
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($iorbase);
     exit 1;
 }
 
-my($CL) = system("$^X dribble.pl --host=$hostname --port=$port " .
+my($cl) = system("$^X dribble.pl --host=$TARGETHOSTNAME --port=$port " .
                  "--stream=giop1.2_fragments$endien.dat " .
                  "--layout=giop1.2_fragments$endien.layout");
-if ($CL != 0) {
-    print STDERR "ERROR: client returned $CL\n";
-    $status = 2;
+if ($cl != 0) {
+    print STDERR "ERROR: client returned $cl\n";
+    ++$status;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (15);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 3;
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    ++$status;
 }
 
-$server->DeleteFile($iorbase);
-
+unlink $iorfile;
 exit $status;

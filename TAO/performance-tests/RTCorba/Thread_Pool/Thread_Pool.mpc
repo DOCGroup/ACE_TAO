@@ -10,7 +10,6 @@ project(*RTCorba idl): taoidldefaults {
 
 project(*RTCorba server): rt_server, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after += *RTCorba_idl
-  includes += ../../..
   Source_Files {
     testC.cpp
     testS.cpp
@@ -23,7 +22,6 @@ project(*RTCorba server): rt_server, avoids_minimum_corba, avoids_corba_e_compac
 project(*RTCorba client): rt_client, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   avoids += ace_for_tao
   after  += *RTCorba_idl
-  includes += ../../..
   Source_Files {
     testC.cpp
     client.cpp

@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   alignment.cpp
- *
- *  $Id$
- *
- * Verifies that octet sequence marshaling does not affect
- * marshaling.
- *
- *
- *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/CDR
+//
+// = FILENAME
+//   alignment.cpp
+//
+// = DESCRIPTION
+//   Verifies that octet sequence marshaling does not affect
+//   marshaling.
+//
+// = AUTHORS
+//   Carlos O'Ryan (coryan@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "tao/CDR.h"
 
@@ -59,7 +62,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       if (input.read_double (read_dbl) == 0)
         ACE_DEBUG ((LM_DEBUG, "Failure reading double...\n"));
 
-      if (!ACE::is_equal (read_dbl, dbl))
+      if (read_dbl != dbl)
         {
           status = 1;
           ACE_DEBUG ((LM_DEBUG,

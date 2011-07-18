@@ -1,3 +1,4 @@
+
 //=============================================================================
 /**
  *  @file     append.cpp
@@ -27,6 +28,10 @@
 #include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID (AnyTypeCode,
+           append,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

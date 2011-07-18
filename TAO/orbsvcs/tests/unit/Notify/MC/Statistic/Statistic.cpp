@@ -27,8 +27,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       counter.receive (0.0);
       counter.receive (0.0);
       counter.receive (0.0);
-
-      if (!ACE::is_equal (counter.last_sample(), 3.0))
+      
+      if (counter.last_sample() != 3)
         {
           error ("Counter Monitor_Control::receive() failed");
         }
@@ -40,23 +40,23 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       number.receive (size);
       size = 42;
       number.receive (size);
-
-      if (!ACE::is_equal (number.average (), 20.0))
+      
+      if (number.average () != 20)
         {
           error ("Number Monitor_Base::average() failed");
         }
-
-      if (!ACE::is_equal (number.minimum_sample (), 8.0))
+        
+      if (number.minimum_sample () != 8)
         {
           error ("Number Monitor_Base::minimum_sample() failed");
         }
-
-      if (!ACE::is_equal (number.maximum_sample (), 42.0))
+        
+      if (number.maximum_sample () != 42)
         {
           error ("Number Monitor_Base::maximum_sample() failed");
         }
-
-      if (!ACE::is_equal (number.sum_of_squares (), 1928.0))
+        
+      if (number.sum_of_squares () != 1928)
         {
           error ("Number Monitor_Base::sum_of_squares() failed");
         }
@@ -65,18 +65,18 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       stime.receive (1183466309.01234);
       stime.receive (1183466377.9922);
       stime.receive (1083466309.88374);
-
-      if (!ACE::is_equal (stime.average (), 1150132998.96276))
+      
+      if (stime.average () != 1150132998.96276)
         {
           error ("Time Monitor_Base::average() failed");
         }
-
-      if (!ACE::is_equal (stime.minimum_sample (), 1083466309.88374))
+        
+      if (stime.minimum_sample () != 1083466309.88374)
         {
-          error ("Time Monitor_Base::minimum_sample() failed");
+          error ("Time TAO_Statistic::minimum_sample() failed");
         }
-
-      if (!ACE::is_equal (stime.maximum_sample (), 1183466377.9922))
+        
+      if (stime.maximum_sample () != 1183466377.9922)
         {
           error ("Time Monitor_Base::maximum_sample() failed");
         }
@@ -85,7 +85,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       interval.receive (.8);
       interval.receive (.1);
       interval.receive (.42);
-
+      
       // This multiplication and casting is necessary since the machine
       // representation of the floating point values in the receive()
       // calls are not exactly what is represented by the text of the code.
@@ -93,17 +93,17 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         {
           error ("Interval Monitor_Base::average() failed");
         }
-
-      if (!ACE::is_equal (interval.minimum_sample (), 0.1))
+        
+      if (interval.minimum_sample () != .1)
         {
           error ("Interval Monitor_Base::minimum_sample() failed");
         }
-
-      if (!ACE::is_equal (interval.maximum_sample (), 0.8))
+        
+      if (interval.maximum_sample () != .8)
         {
           error ("Interval Monitor_Base::maximum_sample() failed");
         }
-
+        
       if (static_cast<int> (interval.sum_of_squares () * 10000) != 8264)
         {
           error ("Interval Monitor_Base::sum_of_squares() failed");
@@ -115,8 +115,8 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       l.push_back ("two");
       l.push_back ("three");
       list.receive (l);
-
-      if (list.count () != 3)
+      
+      if (counter.count () != 3)
         {
           error ("List Monitor_Base::receive() failed");
         }

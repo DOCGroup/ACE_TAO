@@ -40,6 +40,11 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (CosEvent,
+           CEC_Default_Factory,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)

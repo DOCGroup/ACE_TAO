@@ -18,11 +18,11 @@ project(*Server): taoserver, valuetype, strategies {
 }
 
 project(*Client): taoclient, taoserver, valuetype {
+  exename = client
+  after += *Server
   // This is just a dummy_label to prevent the test from being compiled
   // in MPC builds
   requires += dummy_label
-  exename = client
-  after += *Server
   Source_Files {
     client.cpp
     Supports_Test_impl.cpp

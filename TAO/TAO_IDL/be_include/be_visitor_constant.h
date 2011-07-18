@@ -1,18 +1,23 @@
 /* -*- C++ -*- */
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    be_visitor_constant.h
- *
- *  $Id$
- *
- *  Concrete visitor for the constant class
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_constant.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the constant class
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef TAO_BE_VISITOR_CONSTANT_H
 #define TAO_BE_VISITOR_CONSTANT_H

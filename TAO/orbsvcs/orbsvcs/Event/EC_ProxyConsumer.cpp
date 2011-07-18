@@ -11,6 +11,10 @@
 #include "orbsvcs/Event/EC_ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (Event,
+           EC_ProxyConsumer,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
@@ -193,7 +197,7 @@ TAO_EC_ProxyPushConsumer::deactivate (void)
   catch (const CORBA::Exception&)
     {
       // Exceptions here should not be propagated.  They usually
-      // indicate that an object is being disconnected twice, or some
+      // indicate that an object is beign disconnected twice, or some
       // race condition, but not a fault that the user needs to know
       // about.
     }
@@ -241,7 +245,7 @@ TAO_EC_ProxyPushConsumer_Guard::
      proxy_ (proxy),
      locked_ (false)
 {
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+  ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
   // If the guard fails there is not much we can do, raising an
   // exception is wrong, the client has *no* way to handle that kind
   // of error.  Even worse, there is no exception to raise in that
@@ -268,7 +272,7 @@ TAO_EC_ProxyPushConsumer_Guard::
     return;
 
   {
-    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    ACE_Guard<ACE_Lock> ace_mon (*this->lock_);
     // If the guard fails there is not much we can do, raising an
     // exception is wrong, the client has *no* way to handle that kind
     // of error.  Even worse, there is no exception to raise in that
@@ -278,7 +282,7 @@ TAO_EC_ProxyPushConsumer_Guard::
 
     this->filter->_decr_refcnt ();
 
-    --this->refcount_;
+    this->refcount_--;
     if (this->refcount_ != 0)
       return;
   }

@@ -1,11 +1,15 @@
-// $Id$
-
 #include "ServerORBInitializer.h"
 #include "ServerRequestInterceptor.h"
 #include "ORT_test_IORInterceptor.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/PortableServer.h"
+
+
+ACE_RCSID (ORT,
+           ServerORBInitializer,
+           "$Id$")
+
 
 void
 ServerORBInitializer::pre_init (

@@ -3,6 +3,8 @@
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
 
+ACE_RCSID(Logging_Service, Logging_Service, "$Id$")
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -20,8 +20,8 @@ use SVNFileLocator;
 # ************************************************************
 
 sub create {
-  ## Check for Subversion first.  It is unlikely that the .svn directory
-  ## will exist when Subversion isn't the rcs being used.  However, that
+  ## Check for Subversion first.  It is unlikely that the .svn directory 
+  ## will exist when Subversion isn't the rcs being used.  However, that 
   ## is not the case for CVS directories.
   switch: {
     ((defined $ENV{SVN_ASP_DOT_NET_HACK} && -d '_svn') || -d '.svn')

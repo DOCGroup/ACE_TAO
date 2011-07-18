@@ -31,7 +31,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_Var_Size_SArgument_T : public InArgument
   {
   public:
@@ -53,7 +53,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Inout_Var_Size_SArgument_T : public InoutArgument
   {
   public:
@@ -77,7 +77,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Out_Var_Size_SArgument_T : public OutArgument
   {
   public:
@@ -100,7 +100,7 @@ namespace TAO
    *
    */
   template<typename S,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Ret_Var_Size_SArgument_T : public RetArgument
   {
   public:
@@ -124,7 +124,7 @@ namespace TAO
    *
    */
   template<typename T,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   struct Var_Size_SArg_Traits_T
   {
     typedef T *                                             ret_type;

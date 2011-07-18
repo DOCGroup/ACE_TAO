@@ -1,17 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for valuetypes in the stubs
- *  file.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for valuetypes in the stubs
+//    file.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//    Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           any_op_cs,
+           "$Id$")
 
 
 // ***************************************************************************
@@ -44,14 +53,14 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   // Generate the Any <<= and >>= operator declarations
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
   // All template specializations must be generated before the instantiations
   // in the operators.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "namespace TAO" << be_nl
       << "{" << be_idt_nl
       << "template<>" << be_nl
@@ -65,7 +74,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "_tao_elem = this->value_;" << be_nl
       << "return true;" << be_uidt_nl
       << "}" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << be_global->core_versioning_end () << be_nl;
 
@@ -101,7 +110,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
           << "{" << be_idt_nl
           << "::CORBA::add_ref (_tao_elem);" << be_nl
           << "_tao_any <<= &_tao_elem;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       *os << "// Non-copying insertion." << be_nl
           << "void" << be_nl
@@ -117,7 +126,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
           << "(*_tao_elem)->_tao_type ()," << be_nl
           << "*_tao_elem" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       *os << "::CORBA::Boolean" << be_nl
           << "operator>>= (" << be_idt << be_idt_nl
@@ -133,13 +142,12 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
           << node->tc_name ()->last_component () << "," << be_nl
           << "_tao_elem" << be_uidt_nl
           << ");" << be_uidt << be_uidt << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl_2
-          << "#else\n\n";
+      // emit #else
+      *os << "#else\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
@@ -153,7 +161,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "{" << be_idt_nl
       << "::CORBA::add_ref (_tao_elem);" << be_nl
       << "_tao_any <<= &_tao_elem;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "// Non-copying insertion." << be_nl
       << "void" << be_nl
@@ -169,7 +177,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "(*_tao_elem)->_tao_type ()," << be_nl
       << "*_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
@@ -185,7 +193,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << node->tc_name () << "," << be_nl
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << be_global->core_versioning_end () << be_nl;
 

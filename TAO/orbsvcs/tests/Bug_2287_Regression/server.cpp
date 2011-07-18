@@ -13,6 +13,10 @@
 // Make sure this file is included to avoid permanent forward problems in win32.
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
+ACE_RCSID (Hello,
+           server,
+           "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
 
@@ -38,7 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

@@ -5,8 +5,17 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_ValueTypeFwd::NT = AST_Decl::NT_valuetype_fwd;
+ACE_RCSID( ast,
+           ast_valuetype_fwd,
+           "$Id$")
+
+AST_ValueTypeFwd::AST_ValueTypeFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_InterfaceFwd ()
+{
+}
 
 AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
@@ -50,7 +59,6 @@ AST_ValueTypeFwd::ast_accept (ast_visitor *visitor)
 void
 AST_ValueTypeFwd::destroy (void)
 {
-  this->AST_InterfaceFwd::destroy ();
 }
 
 

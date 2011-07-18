@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : tao_vc8warnings {
+project : exceptions, tao_vc8warnings {
   staticflags += TAO_AS_STATIC_LIBS
   includes    += $(TAO_ROOT)
   libpaths    += $(ACE_ROOT)/lib
@@ -20,7 +20,7 @@ feature(!corba_messaging) {
 }
 
 // If the transport current feature is disabled, then we need
-// to add the TAO_HAS_TRANSPORT_CURRENT=0 macro onto the command line.
+// to add the TAO_HAS_CORBA_MESSAGING=0 macro onto the command line.
 feature(!transport_current) {
   macros += TAO_HAS_TRANSPORT_CURRENT=0
 }

@@ -1,15 +1,18 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    QoS_Util.h
- *
- *  $Id$
- *
- *  @author Vishal Kachroo <vishal@cs.wustl.edu>
- */
-//=============================================================================
-
+// =====================================================================
+//
+// = LIBRARY
+//    ACE_wrappers/examples/QOS
+//
+// = FILENAME
+//    QoS_Util.h
+//
+// = AUTHOR
+//    Vishal Kachroo <vishal@cs.wustl.edu>
+//
+// =====================================================================
 
 #ifndef QOS_UTIL_H
 #define QOS_UTIL_H
@@ -17,14 +20,11 @@
 #include "ace/INET_Addr.h"
 #include "ace/QoS/QoS_Session.h"
 
-/**
- * @class QoS_Util
- *
- * @brief This class provides the utility functions like parse_args ()
- * required by a QoS enabled application.
- */
 class QoS_Util
 {
+  // = TITLE
+  //     This class provides the utility functions like parse_args ()
+  //     required by a QoS enabled application.
 
 public:
 

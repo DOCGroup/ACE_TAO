@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
 $debug_level = '0';
@@ -16,29 +16,40 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
 }
+$iorbase = "test.ior";
+if (PerlACE::is_vxworks_test()) {
+  $iorfile = $iorbase;
+}
+else {
+  $iorfile = PerlACE::LocalFile ("test.ior");
+}
 
-my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+@synchs = ("none","delayed");
+@levels = ("obj", "orb", "thread");
 
-my $iorbase = "test.ior";
-my $client_iorfile = $client->LocalFile ($iorbase);
+for ($s = 0; $s < @synchs; $s++)
+{
+    $synch = $synchs[$s];
 
-$CL = $client->CreateProcess ("client");
+    for ($l = 0; $l < @levels; $l++)
+    {
+	$level = $levels[$l];
 
-my @synchs = ("none","delayed");
-my @levels = ("obj", "orb", "thread");
+    if (PerlACE::is_vxworks_test()) {
+      $CL = new PerlACE::ProcessVX ("client", "-ORBDebuglevel $debug_level -k file://$iorfile -s$synch -l$level");
+    }
+    else {
+      $CL = new PerlACE::Process ("client", "-ORBDebuglevel $debug_level -k file://$iorfile -s$synch -l$level");
+    }
 
-foreach $synch (@synchs) {
-    foreach $level (@levels) {
-        $CL->Arguments ("-ORBDebuglevel $debug_level -k file://$client_iorfile -s$synch -l$level");
+	$client = $CL->SpawnWaitKill (300);
 
-        $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
+	if ($client != 0) {
+	    print STDERR "ERROR: client returned $client\n";
+	    $status = 1;
+	}
 
-        if ($client_status != 0) {
-            print STDERR "ERROR: client returned $client_status\n";
-            $status = 1;
-        }
-
-        print STDOUT "----------\n";
+	print STDOUT "----------\n";
     }
 }
 

@@ -7,6 +7,8 @@
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
+ACE_RCSID(Single_Threaded_Latency, Roundtrip, "$Id$")
+
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

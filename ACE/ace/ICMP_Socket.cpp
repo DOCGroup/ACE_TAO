@@ -9,6 +9,12 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_sys_socket.h"
 
+
+ACE_RCSID (ace,
+           ICMP_Socket,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)
@@ -85,9 +91,9 @@ ACE_ICMP_Socket::open (ACE_Addr const & local,
 
   // Check if icmp protocol is supported on this host
   int proto_number = -1;
-  protoent *proto = 0;
+  protoent *proto;
 
-  if (! (proto = ACE_OS::getprotobyname ("icmp")))
+  if (! (proto = getprotobyname ("icmp")))
     {
       ACE_ERROR_RETURN
         ((LM_ERROR,

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/LF_Event_Loop_Thread_Helper.h"
@@ -7,3 +6,6 @@
 # include "tao/LF_Event_Loop_Thread_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (tao,
+           LF_Event_Loop_Thread_Helper,
+           "$Id$")

@@ -50,7 +50,7 @@ public:
   virtual ~TAO_FT_Service_Callbacks (void);
 
   /// Select the profile from MProfile as the needs of the services
-  /// may be. Return the profile in @a pfile
+  /// may be. Return the profile in <pfile>
   virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
                                          TAO_Profile *&pfile);
 
@@ -97,6 +97,10 @@ private:
 private:
   /// The ORB core in which we have been activated
   TAO_ORB_Core *orb_core_;
+
+  /// Mutex to protect access to the profile that gets passed along
+  /// @@ Lock needs to be removed...
+  ACE_Lock* profile_lock_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,54 +6,26 @@
 // Ensure that the PI library is linked in when building statically
 #include "tao/PI/PI.h"
 #include <iostream>
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior = ACE_TEXT ("file://Messenger.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      PortableInterceptor::ORBInitializer_ptr temp_initializer =
+        PortableInterceptor::ORBInitializer::_nil ();
+
+      temp_initializer = new ClientInitializer;
+
       PortableInterceptor::ORBInitializer_var orb_initializer =
-        new ClientInitializer;
+        temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       // Destringify ior
-      CORBA::Object_var obj = orb->string_to_object( ior );
+      CORBA::Object_var obj = orb->string_to_object( "file://Messenger.ior" );
       if( CORBA::is_nil( obj.in() ) ) {
         std::cerr << "Nil Messenger reference" << std::endl;
         return 1;

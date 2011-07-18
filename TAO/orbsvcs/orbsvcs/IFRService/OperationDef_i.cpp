@@ -9,6 +9,11 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
+
+ACE_RCSID (IFRService,
+           OperationDef_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_OperationDef_i::TAO_OperationDef_i (

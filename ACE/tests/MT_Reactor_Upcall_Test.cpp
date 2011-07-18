@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    MT_Reactor_Upcall_Test.cpp
- *
- *  $Id$
- *
- *  This is a test that shows how to handle upcalls from the
- *  TP_Reactor and the WFMO_Reactor when the event loop is being run
- *  by multiple threads.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    MT_Reactor_Upcall_Test.cpp
+//
+// = DESCRIPTION
+//    This is a test that shows how to handle upcalls from the
+//    TP_Reactor and the WFMO_Reactor when the event loop is being run
+//    by multiple threads.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -27,7 +30,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 
-
+ACE_RCSID(tests, MT_Reactor_Upcall_Test, "$Id$")
 
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;
@@ -349,7 +352,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
 
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
-  dev_poll_reactor_impl.restart (true);
   ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
 
   test_reactor_upcall (dev_poll_reactor);

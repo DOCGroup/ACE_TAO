@@ -1,7 +1,12 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/New_Leader_Generator.h"
+
+
+ACE_RCSID (tao,
+           New_Leader_Generator,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

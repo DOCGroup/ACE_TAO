@@ -140,18 +140,12 @@ sub DeleteFile ($)
 sub GetFile ($)
 {
     # Use FTP to retrieve the file from the target; should still be open.
-    # If only one name is given, use it for both local and remote (after
-    # properly LocalFile-ing it). If both names are given, assume the caller
-    # knows what he wants and don't adjust the paths.
     my $self = shift;
     my $remote_file = shift;
     my $local_file = shift;
-    if (!defined $local_file) {
-        $local_file = $remote_file;
-        $remote_file = $self->LocalFile($local_file);
-    }
+    my $newfile = $self->LocalFile($file);
     $self->{FTP}->ascii();
-    if ($self->{FTP}->get($remote_file, $local_file)) {
+    if ($self->{FTP}->get($newfile, $local_file)) {
         return 0;
     }
     return -1;
@@ -286,13 +280,6 @@ sub RebootReset ($)
     else {
         $self->{FTP}->login("","");
     }
-}
-
-sub KillAll ($)
-{
-    my $self = shift;
-    my $procmask = shift;
-    PerlACE::ProcessLVRT::kill_all ($procmask, $self);
 }
 
 1;

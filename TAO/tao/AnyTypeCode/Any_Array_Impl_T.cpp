@@ -7,7 +7,6 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"

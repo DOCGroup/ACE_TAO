@@ -24,7 +24,7 @@ project(*Test_Client_Module): taolib_with_idl, anytypecode {
 project(*Test_Server_Module) : taolib_with_idl, portableserver {
   after += *idl
   sharedname   = Test_Server_Module
-  dynamicflags += TEST_SERVER_MODULE_BUILD_DLL
+  dynamicflags = TEST_SERVER_MODULE_BUILD_DLL
   after += *Test_CLient_Module
 
   Source_Files {

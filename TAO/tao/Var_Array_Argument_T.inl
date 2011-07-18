@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::
 In_Var_Array_Argument_T (const typename S_forany::_slice_type * x)
@@ -14,7 +14,7 @@ In_Var_Array_Argument_T (const typename S_forany::_slice_type * x)
 }
 
 template<typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type const *
 TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::arg (void) const
@@ -23,7 +23,7 @@ TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::arg (void) const
 }
 
 template<typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::
 In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x)
@@ -34,7 +34,7 @@ In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x)
 // ==========================================================================
 
 template<typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::
 Inout_Var_Array_Argument_T (typename S_forany::_slice_type  *&x)
@@ -43,7 +43,7 @@ Inout_Var_Array_Argument_T (typename S_forany::_slice_type  *&x)
 }
 
 template<typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *
 TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::arg (void)
@@ -55,7 +55,7 @@ TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::arg (void)
 
 template<typename S_out,
          typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::
 Out_Var_Array_Argument_T (S_out x)
@@ -65,7 +65,7 @@ Out_Var_Array_Argument_T (S_out x)
 
 template<typename S_out,
          typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *&
 TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::arg (void)
@@ -77,7 +77,7 @@ TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::arg (void)
 
 template<typename S_var,
          typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::
 Ret_Var_Array_Argument_T (void)
@@ -85,7 +85,7 @@ Ret_Var_Array_Argument_T (void)
 
 template<typename S_var,
          typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *&
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::arg (void)
@@ -95,7 +95,7 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::arg (void)
 
 template<typename S_var,
          typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::excp (void)
@@ -105,7 +105,7 @@ TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::excp (void)
 
 template<typename S_var,
          typename S_forany,
-         template <typename> class Insert_Policy>
+         class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *
 TAO::Ret_Var_Array_Argument_T<S_var,S_forany,Insert_Policy>::retn (void)

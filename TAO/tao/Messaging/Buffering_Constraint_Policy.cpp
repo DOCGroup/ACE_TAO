@@ -8,6 +8,10 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
+ACE_RCSID (Messaging,
+           Buffering_Constraint_Policy,
+           "$Id$")
+
 #if ! defined (__ACE_INLINE__)
 #include "tao/Messaging/Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
@@ -41,7 +45,7 @@ TAO_Buffering_Constraint_Policy::policy_type (void)
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
 {
-  const TAO::BufferingConstraint *buffering_constraint = 0;
+  TAO::BufferingConstraint *buffering_constraint = 0;
   if ((val >>= buffering_constraint) == 0)
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 

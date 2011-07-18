@@ -1,8 +1,13 @@
+//
 // $Id$
-
+//
 #include "Roundtrip.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
+
+ACE_RCSID(LoadBalancing,
+          Roundtrip,
+          "$Id$")
 
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),

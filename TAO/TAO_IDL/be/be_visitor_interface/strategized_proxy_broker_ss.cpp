@@ -1,5 +1,10 @@
 //
 // $Id$
+//
+
+ACE_RCSID (be_visitor_interface,
+           strategized_proxy_broker_ss,
+           "$Id$")
 
 be_visitor_interface_strategized_proxy_broker_ss::
 be_visitor_interface_strategized_proxy_broker_ss (be_visitor_context *ctx)
@@ -29,16 +34,16 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//            Strategized Proxy Broker Implementation" << be_nl
-      << "//" << be_nl_2;
+      << "//" << be_nl << be_nl;
 
   *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// Global static proxy broker." << be_nl
       << "static " << node->full_strategized_proxy_broker_name () << be_nl
       << "tao_" << node->flat_client_enclosing_scope ()
       << node->base_proxy_broker_name ()
-      << ";" << be_nl_2;
+      << ";" << be_nl << be_nl;
 
   *os << "// Factory function Implementation." << be_nl
       << node->full_strategized_proxy_broker_name ()
@@ -49,13 +54,13 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "{" << be_idt_nl
       << "return &" << "tao_" << node->flat_client_enclosing_scope ()
       << node->base_proxy_broker_name () << ";" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Destructor Implementation.
   *os << node->full_strategized_proxy_broker_name () << "::~"
       << node->strategized_proxy_broker_name () << " (void)" << be_nl
       << "{" << be_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // get_strategy() impementation.
   *os << "TAO::Collocation_Strategy" << be_nl
@@ -64,7 +69,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "::CORBA::Object_ptr obj)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "return TAO_ORB_Core::collocation_strategy (obj);" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // create_proxy implementation
   *os << "void" << be_nl
@@ -91,7 +96,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "strategy);" << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//        End Strategized Proxy Broker Implementation" << be_nl
       << "///////////////////////////////////////////////////////////////////////";
@@ -101,21 +106,16 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
 
 int
 be_visitor_interface_strategized_proxy_broker_ss::visit_component (
-    be_component *node)
+    be_component *node
+  )
 {
   return this->visit_interface (node);
-}
-
-int
-be_visitor_interface_strategized_proxy_broker_ss::visit_connector (
-    be_connector *node)
-{
-  return this->visit_component (node);
 }
 
 void
 be_visitor_interface_strategized_proxy_broker_ss::gen_direct_operations (
     be_interface *,
-    TAO_OutStream *)
+    TAO_OutStream *
+  )
 {
 }

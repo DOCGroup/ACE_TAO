@@ -9,6 +9,8 @@
 #include "Echo.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID(Bug_1270_Regression, Echo, "$Id$")
+
 Echo::Echo(CORBA::ORB_ptr orb,
            int abort_counter)
   : orb_(CORBA::ORB::_duplicate(orb))
@@ -27,8 +29,13 @@ Echo::echo_payload(Test::Payload const &)
       // Sleep for 15 seconds, forcing a flow control of some kind.
       ACE_OS::sleep(15);
 
+      // Run the ORB for a while, to generate a short-lived release of
+      // the flow control.
+      ACE_Time_Value tv(0, 10000);
+      this->orb_->perform_work(tv);
+
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Echo::echo_payload, aborting\n"));
       // Kill the app
-      ACE::terminate_process (ACE_OS::getpid ());
+      ACE_OS::abort();
     }
 }

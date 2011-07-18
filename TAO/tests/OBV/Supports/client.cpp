@@ -9,22 +9,18 @@ int id = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:i:k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:i:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 't':
-        num_trials = ACE_OS::atoi (get_opts.opt_arg ());
+        num_trials = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'i':
-        id = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'k':
-        ior = get_opts.opt_arg ();
+        id = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case '?':
@@ -32,13 +28,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-t <trials> "
-                           "-k <ior> "
-                           "-i <id> "
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

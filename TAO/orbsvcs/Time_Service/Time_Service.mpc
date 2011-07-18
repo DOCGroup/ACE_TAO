@@ -2,7 +2,7 @@
 // $Id$
 
 project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
-  exename  = tao_costime_server
+  exename  = Time_Service_Server
   Source_Files {
     Server_i.cpp
     Time_Service_Server.cpp
@@ -10,7 +10,7 @@ project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, av
 }
 
 project(Time_Service_Clerk) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
-  exename  = tao_costime_clerk
+  exename  = Time_Service_Clerk
   Source_Files {
     Clerk_i.cpp
     Time_Service_Clerk.cpp

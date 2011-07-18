@@ -11,6 +11,11 @@
 #include "ace/OS_NS_string.h"
 
 
+ACE_RCSID (ace,
+           Malloc,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Process-wide ACE_Allocator.

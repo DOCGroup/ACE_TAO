@@ -20,10 +20,8 @@ class Sender_i
 {
 public:
   /// Constructor
-  Sender_i (CORBA::ULong no_clients,
+  Sender_i (int no_clients,
             ACE_Manual_Event &event);
-
-  virtual ~Sender_i (void);
 
   // = The skeleton methods
   virtual CORBA::Long receiver_object (Receiver *recv);
@@ -39,13 +37,13 @@ private:
   ACE_Manual_Event &event_;
 
   /// An array of receiver pointers
-  Receiver_var *receivers_;
+  Receiver **receivers_;
 
   /// Size of the <this->receivers_> array
-  CORBA::ULong no_clients_;
+  int no_clients_;
 
   /// Receiver index
-  CORBA::ULong last_index_;
+  int last_index_;
 
   /// Payload that is being sent
   Receiver::Payload payload_;

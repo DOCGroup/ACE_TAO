@@ -14,6 +14,10 @@
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 #include "ace/Sched_Params.h"
 
+ACE_RCSID(RTCORBA,
+          RT_ORB,
+          "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
@@ -208,7 +212,8 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Boolean keep_alive,
                                             CORBA::Boolean dont_route,
                                             CORBA::Boolean no_delay,
-                                            CORBA::Boolean enable_network_priority)
+                                            CORBA::Boolean enable_network_priority
+                                            )
 {
   TAO_TCP_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -292,7 +297,8 @@ TAO_RT_ORB::create_stream_control_protocol_properties (
                                                        CORBA::Boolean keep_alive,
                                                        CORBA::Boolean dont_route,
                                                        CORBA::Boolean no_delay,
-                                                       CORBA::Boolean enable_network_priority)
+                                                       CORBA::Boolean enable_network_priority
+                                                       )
 {
   TAO_StreamControl_Protocol_Properties *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -316,7 +322,8 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                RTCORBA::Priority default_priority,
                                CORBA::Boolean allow_request_buffering,
                                CORBA::ULong max_buffered_requests,
-                               CORBA::ULong max_request_buffer_size)
+                               CORBA::ULong max_request_buffer_size
+                               )
 {
   return this->tp_manager_->create_threadpool (stacksize,
                                                static_threads,
@@ -443,6 +450,7 @@ TAO_RT_ORB::orb_core (void) const
 int
 TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
 {
+  //
   // This method changes the scheduling policy of the calling thread
   // to match the scheduling policy specified in the svc.conf file.
   // The priority of the calling thread will be set to the minimum
@@ -456,6 +464,7 @@ TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
   // created.  On such platforms, one can set the correct scheduling
   // scope and policy when creating the thread, thus not needing to
   // use this method.
+  //
 
 #if defined (linux)
 

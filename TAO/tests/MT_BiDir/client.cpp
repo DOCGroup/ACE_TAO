@@ -7,6 +7,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "Client_Task.h"
 
+ACE_RCSID(BiDirectional, client, "client.cpp,v 1.6 2001/03/30 20:11:05 bala Exp")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -30,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

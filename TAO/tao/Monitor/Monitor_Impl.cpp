@@ -1,5 +1,6 @@
+//
 // $Id$
-
+//
 #include "tao/Monitor/Monitor_Impl.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
@@ -7,6 +8,10 @@
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Control_Action.h"
 #include "ace/Monitor_Control/Monitor_Control.h"
+
+ACE_RCSID (Monitor,
+           Monitor_Impl,
+           "$Id$")
 
 class TAO_Control_Action : public Control_Action
 {
@@ -173,7 +178,6 @@ TAO_Monitor::get_monitor_data (
       num.count = static_cast<CORBA::ULong> (monitor->count ());
       num.minimum = monitor->minimum_sample ();
       num.maximum = monitor->maximum_sample ();
-      num.last = monitor->last_sample ();
       num.dlist.length (1);
       num.dlist[0].value = monitor->last_sample ();
       Monitor_Control_Types::Data d (monitor->type ());

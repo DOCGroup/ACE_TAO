@@ -2,7 +2,13 @@
 
 #include "tao/Policy_Validator.h"
 #include "tao/debug.h"
+
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (tao,
+           Policy_Validator,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +48,7 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
               if (TAO_debug_level > 3)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) Skipping validator [%@] ")
+                              ACE_TEXT ("(%P|%t) Skipping validator [0x%x] ")
                               ACE_TEXT ("since it would create a circular list\n"),
                               validator));
                 }

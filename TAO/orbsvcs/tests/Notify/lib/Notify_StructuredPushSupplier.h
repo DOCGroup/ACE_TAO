@@ -1,17 +1,21 @@
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file   Notify_StructuredPushSupplier.h
- *
- *  $Id$
- *
- * This class is to be used by clients of the Notification Service
- * to implement Structured Push Suppliers.
- *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- */
-//=============================================================================
+// $Id$
+// ==========================================================================
+//
+// = LIBRARY
+//   orbsvcs
+//
+// = FILENAME
+//   Notify_StructuredPushSupplier
+//
+// = DESCRIPTION
+//   This class is to be used by clients of the Notification Service
+//   to implement Structured Push Suppliers.
+//
+// = AUTHOR
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//
+// ==========================================================================
 
 #ifndef TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
 #define TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H

@@ -41,7 +41,7 @@ sub create_target
     }
     my $config_os = $ENV{$envname};
     SWITCH: {
-      if ($config_os =~ m/local|remote/i) {
+      if ($config_os =~ m/local/i) {
         $target = new PerlACE::TestTarget ($config_name);
         last SWITCH;
       }
@@ -129,13 +129,6 @@ sub GetConfigSettings ($)
             $self->{EXE_SUBDIR} = $PerlACE::Process::ExeSubDir;
         }
     }
-    $env_name = $env_prefix.'ARCH';
-    if (exists $ENV{$env_name}) {
-        $self->{ARCH} = $ENV{$env_name};
-    } elsif ($config_name eq 'default'
-             && grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-        $self->{ARCH} = 1;
-    }
     $env_name = $env_prefix.'PROCESS_START_WAIT_INTERVAL';
     if (exists $ENV{$env_name}) {
         $self->{PROCESS_START_WAIT_INTERVAL} = $ENV{$env_name};
@@ -206,36 +199,6 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         $self->{HOST_ROOT} = $ENV{$env_name};
     }
-    $env_name = $env_prefix.'SYSTEM_LIBS';
-    if (exists $ENV{$env_name}) {
-        $self->{SYSTEM_LIBS} = $ENV{$env_name};
-    }
-    $env_name = $env_prefix.'REMOTE_SHELL';
-    if (exists $ENV{$env_name}) {
-        $self->{REMOTE_SHELL} = $ENV{$env_name};
-    }
-    $env_name = $env_prefix.'LIBPATH';
-    if (exists $ENV{$env_name}) {
-        $self->{LIBPATH} = $ENV{$env_name};
-    }
-    $env_name = $env_prefix.'REMOTE_FILETEST';
-    if (exists $ENV{$env_name}) {
-        $self->{REMOTE_FILETEST} = $ENV{$env_name};
-    }
-    $env_name = $env_prefix.'PS_CMD';
-    if (exists $ENV{$env_name}) {
-        $self->{PS_CMD} = $ENV{$env_name};
-    }
-    $self->{EXTRA_ENV} = {};
-    $env_name = $env_prefix.'EXTRA_ENV';
-    if (exists $ENV{$env_name}) {
-        my @x_env = split (' ', $ENV{$env_name});
-        foreach my $x_env_s (@x_env) {
-          if ($x_env_s =~ /(\w+)=(.*)/) {
-            $self->{EXTRA_ENV}->{$1} = $2;
-          }
-        }
-    }
 }
 
 ##################################################################
@@ -274,23 +237,6 @@ sub ExeSubDir ($)
     return $self->{EXE_SUBDIR};
 }
 
-sub GetArchDir
-{
-    my $self = shift;
-    my $dir = shift;
-    if (exists $self->{ARCH}) {
-        return $dir . $self->{EXE_SUBDIR};
-    }
-    return $dir;
-}
-
-
-sub SystemLibs ($)
-{
-    my $self = shift;
-    return $self->{SYSTEM_LIBS};
-}
-
 sub RandomPort ($)
 {
     my $self = shift;
@@ -300,12 +246,20 @@ sub RandomPort ($)
 sub ProcessStartWaitInterval ($)
 {
     my $self = shift;
+    my $new_val = shift;
+    if (defined $new_val) {
+        $self->{PROCESS_START_WAIT_INTERVAL} = $new_val;
+    }
     return $self->{PROCESS_START_WAIT_INTERVAL};
 }
 
 sub ProcessStopWaitInterval ($)
 {
     my $self = shift;
+    my $new_val = shift;
+    if (defined $new_val) {
+        $self->{PROCESS_STOP_WAIT_INTERVAL} = $new_val;
+    }
     return $self->{PROCESS_STOP_WAIT_INTERVAL};
 }
 
@@ -315,7 +269,7 @@ sub LocalFile ($)
     my $file = shift;
     my $newfile = PerlACE::LocalFile($file);
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print STDERR "LocalFile for $file is $newfile\n";
+      print STDERR "LocalFile for $file is $newfile\n";
     }
     return $newfile;
 }
@@ -324,44 +278,10 @@ sub AddLibPath ($)
 {
     my $self = shift;
     my $dir = shift;
-    my $noarch = shift;
-
-    # If we have -Config ARCH, use the -ExeSubDir setting as a sub-directory
-    # of the lib path.  This is in addition to the regular LibPath.
-    if (!$noarch && defined $self->{ARCH}) {
-        $self->AddLibPath($dir, 1);
-        $dir .= '/' . $self->{EXE_SUBDIR};
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "Adding libpath $dir\n";
     }
-
-    if ($self->ACE_ROOT () eq $ENV{'ACE_ROOT'}) {
-        # add (relative) path without rebasing
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print STDERR "Adding libpath $dir\n";
-        }
-        $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
-    } else {
-        # add rebased path
-        $dir = PerlACE::rebase_path ($dir, $ENV{"ACE_ROOT"}, $self->ACE_ROOT ());
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print STDERR "Adding libpath $dir\n";
-        }
-        $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
-    }
-}
-
-sub SetEnv ($)
-{
-    my $self = shift;
-    my $env_name = shift;
-    my $env_value = shift;
-    $self->{EXTRA_ENV}->{$env_name} = $env_value;
-}
-
-sub GetEnv ($)
-{
-    my $self = shift;
-    my $env_name = shift;
-    return $self->{EXTRA_ENV}->{$env_name};
+    PerlACE::add_lib_path ($dir);
 }
 
 sub DeleteFile ($)
@@ -399,33 +319,7 @@ sub WaitForFileTimed ($)
     my $file = shift;
     my $timeout = shift;
     my $newfile = $self->LocalFile($file);
-    if (defined $self->{REMOTE_SHELL} && defined $self->{REMOTE_FILETEST}) {
-      # If the target's config has a different ACE_ROOT, rebase the file
-      # from $ACE_ROOT to the target's root.
-      if ($self->ACE_ROOT () ne $ENV{'ACE_ROOT'}) {
-        $file = File::Spec->rel2abs($file);
-        $file = File::Spec->abs2rel($file, $ENV{"ACE_ROOT"});
-        $file = $self->{TARGET}->ACE_ROOT() . "/$file";
-      }
-      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
-      my $cmd = $self->{REMOTE_SHELL};
-      if ($self->{REMOTE_FILETEST} =~ /^\d*$/) {
-        $cmd .= " 'test -e $newfile && test -s $newfile ; echo \$?'";
-      } else {
-        $cmd .= $self->{REMOTE_FILETEST} . ' ' . $file;
-      }
-      my $rc = 1;
-      while ($timeout-- != 0) {
-        $rc = int(`$cmd`);
-        if ($rc == 0) {
-          return 0;
-        }
-        sleep 1;
-      }
-      return -1;
-    } else {
-      return PerlACE::waitforfile_timed ($newfile, $timeout);
-    }
+    return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
 
 sub CreateProcess ($)
@@ -441,13 +335,6 @@ sub GetStderrLog ($)
 {
     my $self = shift;
     return;
-}
-
-sub KillAll ($)
-{
-    my $self = shift;
-    my $procmask = shift;
-    PerlACE::Process::kill_all ($procmask, $self);
 }
 
 1;

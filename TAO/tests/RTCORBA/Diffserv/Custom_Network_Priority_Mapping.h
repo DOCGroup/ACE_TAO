@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   Custom_Network_Priority_Mapping.h
- *
- *  $Id$
- *
- * Declares the Custom_Network_Priority_Mapping interface,
- *
- *
- *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Custom_Network_Priority_Mapping.h
+//
+// = DESCRIPTION
+//   Declares the Custom_Network_Priority_Mapping interface,
+//
+// = AUTHOR
+//   Yamuna Krishnamurthy (yamuna@oomworks.com)
+//
+// ============================================================================
 
 #ifndef CUSTOM_NETWORK_PRIORITY_MAPPING_H
 #define CUSTOM_NETWORK_PRIORITY_MAPPING_H
@@ -23,18 +26,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/**
- * @class Custom_Network_Priority_Mapping
- *
- * @brief A simple implementation of the Network_Priority_Mapping interface
- *
- * This implementation uses custom mapping between the range of
- * priorities for a given scheduling class (ACE_SCHED_OTHER,
- * ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
- * priorities (0...32767)
- */
 class Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
+  //
+  // = TITLE
+  //   A simple implementation of the Network_Priority_Mapping interface
+  //
+  // = DESCRIPTION
+  //   This implementation uses custom mapping between the range of
+  //   priorities for a given scheduling class (ACE_SCHED_OTHER,
+  //   ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
+  //   priorities (0...32767)
+  //
 public:
   Custom_Network_Priority_Mapping (void);
 

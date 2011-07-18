@@ -13,7 +13,7 @@
 #include "orbsvcs/Event/ECG_Mcast_EH.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -248,19 +248,19 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to open multicast socket\n",
-                    ACE_ERRNO_GET));
+                    errno ));
       }
 
       if ( socket->enable (ACE_NONBLOCK) != 0 ) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to enable nonblocking on mcast_eh\n",
-                    ACE_ERRNO_GET));
+                    errno ));
       }
 
       if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
         ACE_ERROR ((LM_ERROR,
                     "Error: %d - Unable to join multicast group\n",
-                    ACE_ERRNO_GET));
+                    errno ));
       }
 
       if (this->recvbuf_size_ != 0
@@ -272,7 +272,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
         {
           ACE_ERROR ((LM_ERROR,
                       "Error: %d - Unable to set mcast_eh recvbuf_size:%d\n",
-                      ACE_ERRNO_GET,
+                      errno,
                       this->recvbuf_size_));
         }
       (void) this->reactor ()->register_handler (

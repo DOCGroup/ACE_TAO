@@ -67,9 +67,6 @@ public:
                                    SVC_HANDLER *,
                                    long timer_id);
 
-  /// Destructor.
-  ~ACE_NonBlocking_Connect_Handler (void);
-
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
    * If the return value is true the close was performed succesfully,
@@ -102,9 +99,6 @@ public:
   /// Called by ACE_Reactor when asynchronous connections fail.
   virtual int handle_input (ACE_HANDLE);
 
-  /// Called by ACE_Dev_Poll_Reactor when asynchronous connections fail.
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-
   /// Called by ACE_Reactor when asynchronous connections succeed.
   virtual int handle_output (ACE_HANDLE);
 
@@ -132,9 +126,6 @@ private:
 
   /// Associated SVC_HANDLER.
   SVC_HANDLER *svc_handler_;
-
-  /// Same as svc_handler_ if svc_handler_ is reference counted.
-  SVC_HANDLER *cleanup_svc_handler_;
 
   /// Associated timer id.
   long timer_id_;
@@ -427,7 +418,7 @@ public:
   SUPER;
 
   /**
-   * Initialize a connector.  @a flags indicates how SVC_HANDLER's
+   * Initialize a connector.  @a flags indicates how <SVC_HANDLER>'s
    * should be initialized prior to being activated.  Right now, the
    * only flag that is processed is ACE_NONBLOCK, which enabled
    * non-blocking I/O on the SVC_HANDLER when it is opened.
@@ -538,21 +529,21 @@ protected:
   /// Creation strategy for an Connector.
   CREATION_STRATEGY *creation_strategy_;
 
-  /// True if Connector created the creation strategy and thus should
+  /// true if Connector created the creation strategy and thus should
   /// delete it, else false.
   bool delete_creation_strategy_;
 
   /// Connect strategy for a Connector.
   CONNECT_STRATEGY *connect_strategy_;
 
-  /// True if Connector created the connect strategy and thus should
+  /// true if Connector created the connect strategy and thus should
   /// delete it, else false.
   bool delete_connect_strategy_;
 
-  /// Concurrency strategy for a Connector.
+  /// Concurrency strategy for an <Connector>.
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 
-  /// True if Connector created the concurrency strategy and thus should
+  /// true if Connector created the concurrency strategy and thus should
   /// delete it, else false.
   bool delete_concurrency_strategy_;
 };

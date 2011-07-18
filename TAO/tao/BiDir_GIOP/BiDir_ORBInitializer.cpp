@@ -11,6 +11,10 @@
 
 #include "ace/CORBA_macros.h"
 
+ACE_RCSID (BiDir_GIOP,
+           BiDir_ORBInitializer,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

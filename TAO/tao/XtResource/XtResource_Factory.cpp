@@ -4,6 +4,10 @@
 #include "tao/debug.h"
 #include "ace/XtReactor/XtReactor.h"
 
+ACE_RCSID( TAO_XtResource,
+           XtResource_Factory,
+           "$Id$");
+
 namespace TAO
 {
 

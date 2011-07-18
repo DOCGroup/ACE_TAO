@@ -1,7 +1,9 @@
-// $Id$
-
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
 #include "orbsvcs/Log/Hash_LogStore.h"
+
+ACE_RCSID (Log,
+           Hash_Persistence_Strategy,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

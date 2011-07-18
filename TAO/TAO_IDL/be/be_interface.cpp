@@ -1,43 +1,38 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_interface.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Interface that provides additional means for C++
- *  mapping of an interface.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- *  @author Michael Kircher
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_interface.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Interface that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale,
+//    Michael Kircher
+//
+// ============================================================================
 
 #include "be_interface.h"
-#include "be_component.h"
-#include "be_connector.h"
+#include "be_interface_strategy.h"
 #include "be_attribute.h"
 #include "be_operation.h"
 #include "be_exception.h"
 #include "be_visitor.h"
 #include "be_helper.h"
-#include "be_util.h"
-#include "be_identifier_helper.h"
+#include "be_stream_factory.h"
 #include "be_extern.h"
-
-#include "be_visitor_interface.h"
-#include "be_visitor_operation.h"
-#include "be_visitor_attribute.h"
-#include "be_visitor_context.h"
-
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
-
 #include "ast_generator.h"
-#include "ast_home.h"
-
+#include "ast_component.h"
 #include "global_extern.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
@@ -47,23 +42,34 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-const char *be_interface::suffix_table_[] =
-{
-  "_Proxy_Impl",
-  "_Proxy_Broker"
-};
+ACE_RCSID (be,
+           be_interface,
+           "$Id$")
 
-const char *be_interface::tag_table_[] =
+// Default constructor.
+be_interface::be_interface (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    UTL_Scope (),
+    AST_Interface (),
+    be_scope (),
+    be_type (),
+    var_out_seq_decls_gen_ (0),
+    skel_count_ (0),
+    in_mult_inheritance_ (-1),
+    strategy_ (0),
+    original_interface_ (0),
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
 {
-  "_ThruPOA",
-  "_Direct",
-  "_Remote",
-  "_Strategized",
-  "_TAO_"
-};
+  ACE_NEW (this->strategy_,
+           be_interface_default_strategy (this));
+}
 
+// Constructor used to build the AST.
 be_interface::be_interface (UTL_ScopedName *n,
-                            AST_Type **ih,
+                            AST_Interface **ih,
                             long nih,
                             AST_Interface **ih_flat,
                             long nih_flat,
@@ -84,40 +90,19 @@ be_interface::be_interface (UTL_ScopedName *n,
                    local,
                    abstract),
     be_scope (AST_Decl::NT_interface),
-    be_decl (AST_Decl::NT_interface,
-             n),
     be_type (AST_Decl::NT_interface,
              n),
-    base_proxy_impl_name_ (0),
-    remote_proxy_impl_name_ (0),
-    direct_proxy_impl_name_ (0),
-    full_base_proxy_impl_name_ (0),
-    full_remote_proxy_impl_name_ (0),
-    full_direct_proxy_impl_name_ (0),
-    base_proxy_broker_ (0),
-    remote_proxy_broker_ (0),
-    strategized_proxy_broker_ (0),
-    full_base_proxy_broker_name_ (0),
-    full_remote_proxy_broker_name_ (0),
-    full_strategized_proxy_broker_name_ (0),
-    client_scope_ (0),
-    flat_client_scope_ (0),
-    server_scope_ (0),
-    flat_server_scope_ (0),
-    var_out_seq_decls_gen_ (false),
+    var_out_seq_decls_gen_ (0),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
+    strategy_ (0),
     original_interface_ (0),
-    is_ami_rh_ (false),
-    is_ami4ccm_rh_ (false),
-    full_skel_name_ (0),
-    full_coll_name_ (0),
-    local_coll_name_ (0),
-    relative_skel_name_ (0),
-    cached_type_ (-1),
-    has_rw_attributes_ (false),
-    dds_connector_traits_done_ (false)
+    has_mixed_parentage_ (-1),
+    session_component_child_ (-1)
 {
+  ACE_NEW (this->strategy_,
+           be_interface_default_strategy (this));
+
   AST_Decl::NodeType nt = this->node_type ();
 
   if (this->imported ()
@@ -160,281 +145,161 @@ be_interface::~be_interface (void)
 {
 }
 
-const char *
-be_interface::local_name (void)
+be_interface_strategy *
+be_interface::set_strategy (be_interface_strategy *new_strategy)
 {
-  // Return the local name.
-//  return this->strategy_->local_name ();
-  return this->AST_Decl::local_name ()->get_string ();
-}
+  be_interface_strategy *old = this->strategy_;
 
-const char *
-be_interface::full_skel_name (void)
-{
-  if (this->full_skel_name_ == 0)
+  if (new_strategy != 0)
     {
-      this->compute_full_skel_name ("POA_",
-                                    this->full_skel_name_);
+      this->strategy_ = new_strategy;
     }
 
-  return this->full_skel_name_;
+  return old;
+}
+
+
+const char *
+be_interface::local_name (void) const
+{
+  // Return the local name.
+  return this->strategy_->local_name ();
 }
 
 const char *
-be_interface::full_coll_name (int type)
+be_interface::full_name (void)
 {
-  this->compute_coll_names (type,
-                            0,  // prefix
-                            0); // suffix
-
-  return this->full_coll_name_;
+  return this->strategy_->full_name ();
 }
 
 const char *
-be_interface::local_coll_name (int type)
+be_interface::flat_name (void)
 {
-  this->compute_coll_names (type,
-                            0,  // prefix
-                            0); // suffix
+  // Return the flattened full scoped name.
+  return this->strategy_->flat_name ();
+}
 
-  return this->local_coll_name_;
+const char *
+be_interface::repoID (void) const
+{
+  // Retrieve the repository ID.
+  return this->strategy_->repoID ();
+}
+
+const char *
+be_interface::full_skel_name (void) const
+{
+  // Retrieve the fully scoped skel class name.
+  return this->strategy_->full_skel_name ();
+}
+
+const char *
+be_interface::full_coll_name (int type) const
+{
+  // Retrieve the fully qualified collocated class name
+  return this->strategy_->full_coll_name (type);
+}
+
+const char *
+be_interface::local_coll_name (int type) const
+{
+  // Retrieve the fully qualified collocated class name.
+  return this->strategy_->local_coll_name (type);
 }
 
 const char *
 be_interface::relative_skel_name (const char *skel_name)
 {
-  return be_interface::relative_name (this->full_skel_name (),
-                                      skel_name);
+  // Relative skeleton name.
+  return this->strategy_->relative_skel_name (skel_name);
 }
+
 
 void
 be_interface::compute_full_skel_name (const char *prefix,
-                                      char *&skel_name)
+                                      char *&skelname)
 {
-  if (skel_name != 0)
-    {
-      return;
-    }
-
-  size_t namelen = ACE_OS::strlen (prefix);
-  long first = true;
-  long second = false;
-  char *item_name = 0;
-
-  // In the first loop compute the total length.
-  for (UTL_IdListActiveIterator i (this->name ());
-       !i.is_done ();
-       i.next ())
-    {
-      if (!first)
-        {
-          namelen += 2; // for "::"
-        }
-      else if (second)
-        {
-          first = second = false;
-        }
-
-      // Print the identifier.
-      item_name = i.item ()->get_string ();
-      namelen += ACE_OS::strlen (item_name);
-
-      // Additional 4 for the POA_ characters.
-      if (first)
-        {
-          if (ACE_OS::strcmp (item_name, "") != 0)
-            {
-              // Does not start with a "".
-              first = false;
-            }
-          else
-            {
-              second = true;
-            }
-        }
-    }
-
-  ACE_NEW (skel_name,
-           char [namelen + 1]);
-  skel_name[0] = '\0';
-  first = true;
-  second = false;
-  ACE_OS::strcat (skel_name, prefix);
-
-  for (UTL_IdListActiveIterator j (this->name ());
-       !j.is_done ();
-       j.next ())
-    {
-      if (!first)
-        {
-          ACE_OS::strcat (skel_name, "::");
-        }
-      else if (second)
-        {
-          first = second = false;
-        }
-
-      // Print the identifier.
-      item_name = j.item ()->get_string ();
-      ACE_OS::strcat (skel_name, item_name);
-
-      if (first)
-        {
-          if (ACE_OS::strcmp (item_name, "") != 0)
-            {
-              // Does not start with a "".
-              first = false;
-            }
-          else
-            {
-              second = true;
-            }
-        }
-    }
-}
-
-// Compute stringified fully qualified collocated class name.
-void
-be_interface::compute_coll_names (int type,
-                                  const char *prefix,
-                                  const char *suffix)
-{
-  if (type == this->cached_type_ && this->full_coll_name_ != 0)
+  if (skelname != 0)
     {
       return;
     }
   else
     {
-      this->cached_type_ = type;
-      delete [] this->full_coll_name_;
-      delete [] this->local_coll_name_;
+      size_t namelen = ACE_OS::strlen (prefix);
+      long first = true;
+      long second = false;
+      char *item_name = 0;
 
-      // Reset to zero in case allocations below fail, and cause
-      // premature return to caller.
-      this->full_coll_name_ = 0;
-      this->local_coll_name_ = 0;
-    }
-
-  static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
-                                           "_tao_direct_collocated_"};
-  static const char *poa = "POA_";
-
-  // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
-  // prefix and the local name and the (optional) "::"
-  const char *collocated = collocated_names[type];
-
-  size_t name_len = ACE_OS::strlen (collocated)
-                    + ACE_OS::strlen (poa)
-                    + 1;
-
-  if (prefix)
-    {
-      name_len += ACE_OS::strlen (prefix);
-    }
-
-  if (suffix)
-    {
-      name_len += ACE_OS::strlen (suffix);
-    }
-
-  for (UTL_IdListActiveIterator i (this->name ());
-       !i.is_done ();
-       i.next ())
-    {
-      // Reserve 2 characters for "::".
-      name_len += ACE_OS::strlen (i.item ()->get_string ()) + 2;
-    }
-
-  ACE_NEW (this->full_coll_name_,
-           char[name_len + 1]);
-
-  // Null terminate the string.
-  this->full_coll_name_[0] = 0;
-
-  // Only the first component get the "POA_" preffix.
-  int poa_added = 0;
-
-  // Iterate again.
-  // Must advance the iterator explicitly inside the loop.
-  for (UTL_IdListActiveIterator j (this->name ());
-       !j.is_done ();)
-    {
-      const char *item = j.item ()->get_string ();
-
-      // Increase right away, so we can test for the final component
-      // in the loop.
-      j.next ();
-
-      // We add the POA_ preffix only if the first component is not
-      // the global scope...
-      if (ACE_OS::strcmp (item, "") != 0)
+      // In the first loop compute the total length.
+      for (UTL_IdListActiveIterator i (this->name ());
+           !i.is_done ();
+           i.next ())
         {
-          if (!j.is_done ())
+          if (!first)
             {
-              // We only add the POA_ preffix if there are more than
-              // two components in the name, in other words, if the
-              // class is inside some scope.
-              if (!poa_added)
-                {
-                  ACE_OS::strcat (this->full_coll_name_, poa);
-                  poa_added = 1;
-                }
-              ACE_OS::strcat (this->full_coll_name_, item);
-              ACE_OS::strcat (this->full_coll_name_, "::");
+              namelen += 2; // for "::"
             }
-          else
+          else if (second)
             {
-              ACE_OS::strcat (this->full_coll_name_, collocated);
+              first = second = false;
+            }
 
-              if (prefix)
+          // Print the identifier.
+          item_name = i.item ()->get_string ();
+          namelen += ACE_OS::strlen (item_name);
+
+          // Additional 4 for the POA_ characters.
+          if (first)
+            {
+              if (ACE_OS::strcmp (item_name, "") != 0)
                 {
-                  ACE_OS::strcat (this->full_coll_name_, prefix);
+                  // Does not start with a "".
+                  first = false;
                 }
-
-              ACE_OS::strcat (this->full_coll_name_, item);
-
-              if (suffix)
+              else
                 {
-                  ACE_OS::strcat (this->full_coll_name_, suffix);
+                  second = true;
                 }
             }
         }
-    }
 
-  // Compute the local name for the collocated class.
-  char *local_name =
-    this->AST_Interface::local_name ()->get_string ();
-  size_t local_len = ACE_OS::strlen (collocated)
-                     + ACE_OS::strlen (local_name)
-                     + 1;
-  if (prefix)
-    {
-      local_len += ACE_OS::strlen (prefix);
-    }
+      ACE_NEW (skelname,
+               char [namelen+1]);
+      skelname[0] = '\0';
+      first = true;
+      second = false;
+      ACE_OS::strcat (skelname, prefix);
 
-  if (suffix)
-    {
-      local_len += ACE_OS::strlen (suffix);
-    }
+      for (UTL_IdListActiveIterator j (this->name ());
+           !j.is_done ();
+           j.next ())
+        {
+          if (!first)
+            {
+              ACE_OS::strcat (skelname, "::");
+            }
+          else if (second)
+            {
+              first = second = false;
+            }
 
-  ACE_NEW (this->local_coll_name_,
-           char[local_len]);
+          // Print the identifier.
+          item_name = j.item ()->get_string ();
+          ACE_OS::strcat (skelname, item_name);
 
-  ACE_OS::strcpy (this->local_coll_name_,
-                  collocated);
-
-  if (prefix)
-    {
-      ACE_OS::strcat (this->local_coll_name_,
-                      prefix);
-    }
-
-  ACE_OS::strcat (this->local_coll_name_,
-                  this->AST_Interface::local_name ()->get_string ());
-
-  if (suffix)
-    {
-      ACE_OS::strcat (this->local_coll_name_, suffix);
+          if (first)
+            {
+              if (ACE_OS::strcmp (item_name, "") != 0)
+                {
+                  // Does not start with a "".
+                  first = false;
+                }
+              else
+                {
+                  second = true;
+                }
+            }
+        }
     }
 }
 
@@ -578,12 +443,6 @@ be_interface::in_mult_inheritance (int mi)
     }
 }
 
-bool
-be_interface::has_rw_attributes (void) const
-{
-  return this->has_rw_attributes_;
-}
-
 void
 be_interface::redefine (AST_Interface *from)
 {
@@ -593,10 +452,10 @@ be_interface::redefine (AST_Interface *from)
 
   if (bi->has_mixed_parentage_)
     {
-      ACE_Unbounded_Queue<AST_Interface *> &q =
-        idl_global->mixed_parentage_interfaces ();
+      ACE_Unbounded_Queue<be_interface *> &q =
+        be_global->mixed_parentage_interfaces;
       size_t slot = 0;
-      AST_Interface **t = 0;
+      be_interface **t = 0;
 
       // The queue of interfaces with mixed parentage must
       // replace each interface that has been forward
@@ -669,7 +528,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
   // Generate the constructor from stub and servant.
   if (!this->is_local ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl;
       *os << this->name () << "::"
           << this->local_name () << " ("
@@ -677,7 +536,8 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *oc)" << be_uidt_nl
+          << "TAO_ORB_Core *oc" << be_uidt_nl
+          << ")" << be_nl
           << ": ";
 
       bool the_check =
@@ -687,7 +547,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
          && this->pd_inherits[0]->is_abstract ())
         || this->is_abstract_;
 
-      if (this->has_mixed_parentage_ || this->is_abstract_)
+      if (this->has_mixed_parentage_)
         {
           *os << "::CORBA::"
               << (the_check ? "AbstractBase" : "Object")
@@ -743,7 +603,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
       if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
         {
           *os << "," << be_nl
-              << "the" << this->base_proxy_broker_name () << "_ (0)"
+              << "the"<< this->base_proxy_broker_name () << "_ (0)"
               << be_uidt << be_uidt;
         }
 
@@ -772,7 +632,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 void
 be_interface:: gen_var_out_seq_decls (void)
 {
-  if (this->var_out_seq_decls_gen_)
+  if (this->var_out_seq_decls_gen_ == 1)
     {
       return;
     }
@@ -780,53 +640,18 @@ be_interface:: gen_var_out_seq_decls (void)
   const char *lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
 
-  // Need this clunky string compare for when we are processing
-  // the *A.idl file. The *_sendc operations are generated in
-  // a separate interface distinguished only by the AMI4CCM_
-  // prefix. Since it does not come from implied IDL (in this
-  // execution of the IDL compiler) there is nothing
-  // to tell the IDL compiler that this interface is in any
-  // way special. All we can do is search for the prefix.
-  ACE_CString test (lname, 0, false);
-  bool has_ami4ccm_prefix = (test.find ("AMI4CCM_") == 0);
-
-  bool already_ami =
-    (this->is_ami_rh ()
-     || this->is_ami4ccm_rh ()
-     || has_ami4ccm_prefix);
-
-  /// Forward declare the handler interface before declaring
-  /// the original interface.
-  if (be_global->ami_call_back ()
-      && !already_ami)
-    {
-      *os << be_nl_2
-          << "class AMI_" << lname << "Handler;" << be_nl
-          << "typedef AMI_" << lname << "Handler *AMI_"
-          << lname << "Handler_ptr;";
-     }
-
-  if (be_global->ami4ccm_call_back ()
-      && !already_ami)
-    {
-      *os << be_nl_2
-          << "class AMI4CCM_" << lname << "Handler;" << be_nl
-          << "typedef AMI4CCM_" << lname << "Handler *AMI4CCM_"
-          << lname << "Handler_ptr;";
-    }
-
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "class " << lname << ";" << be_nl
       << "typedef " << lname << " *" << lname << "_ptr;";
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "typedef" << be_idt_nl
       << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
       << lname << be_uidt_nl
@@ -840,13 +665,14 @@ be_interface:: gen_var_out_seq_decls (void)
 
   os->gen_endif ();
 
-  this->var_out_seq_decls_gen_ = true;
+  this->var_out_seq_decls_gen_ = 1;
 }
 
 // ****************************************************************
 
 TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
-    void)
+    void
+  )
 {
 }
 
@@ -902,7 +728,9 @@ private:
   be_visitor *visitor_;
 };
 
-Pure_Virtual_Regenerator::Pure_Virtual_Regenerator (be_visitor *visitor)
+Pure_Virtual_Regenerator::Pure_Virtual_Regenerator (
+    be_visitor *visitor
+  )
   : visitor_ (visitor)
 {
 }
@@ -971,13 +799,13 @@ be_interface::gen_operation_table (const char *flat_name,
       {
         this->skel_count_ = 0;
         // Init the outstream appropriately.
-        TAO_OutStream *os = tao_cg->server_skeletons ();
+        TAO_OutStream *os = this->strategy_->get_out_stream ();
 
         // Start from current indentation level.
         os->indent ();
 
         // Start the table generation.
-        *os << be_nl_2
+        *os << be_nl << be_nl
             << "static const TAO_operation_db_entry " << flat_name
             << "_operations [] = {" << be_idt_nl;
 
@@ -1042,7 +870,7 @@ be_interface::gen_operation_table (const char *flat_name,
             ++this->skel_count_;
           }
 
-        *os << "};" << be_nl_2;
+        *os << "};" << be_nl << be_nl;
         *os << "static const ::CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
             << " TAO::Operation_Skeletons>) * (" << (3 * this->skel_count_)
@@ -1081,7 +909,6 @@ be_interface::gen_operation_table (const char *flat_name,
                         char [ACE_OS::strlen (idl_global->temp_dir ())
                               + 11 // The number of possible digits in
                                    // a 32-bit number plus a dot
-                              + 11 // for process id
                               + ACE_OS::strlen (flat_name)
                               + ACE_OS::strlen (".gperf")
                               + 1],
@@ -1091,20 +918,19 @@ be_interface::gen_operation_table (const char *flat_name,
         // obscure chance of even this arriving at colliding filenames
         // on multiprocessor machines when the IDL compiler was run at
         // exactly the same time.
-        unsigned int seed =
-          (static_cast<unsigned int> (ACE_OS::time())
-           + static_cast<unsigned int> (ACE_OS::getpid ()));
+        ACE_RANDR_TYPE seed =
+          (static_cast<ACE_RANDR_TYPE> (ACE_OS::time())
+           + static_cast<ACE_RANDR_TYPE> (ACE_OS::getpid ()));
         ACE_OS::sprintf (temp_file,
-                         "%s%d.%d.%s.gperf",
+                         "%s%d.%s.gperf",
                          idl_global->temp_dir (),
-                         ACE_OS::rand_r (&seed),
-                         static_cast<int> (ACE_OS::getpid ()),
+                         ACE_OS::rand_r (seed),
                          flat_name);
 
         // QNX can't handle individual file names (path components)
         // longer than 48 characters.
 #if defined(__QNX__)
-        size_t const temp_dir_len = ACE_OS::strlen (idl_global->temp_dir ());
+        size_t temp_dir_len = ACE_OS::strlen (idl_global->temp_dir ());
 
         if (ACE_OS::strlen (temp_file) > temp_dir_len + 47)
           {
@@ -1117,8 +943,13 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Make a new outstream to hold the gperf_temp_file for this
         // interface.
-        TAO_OutStream *os = 0;
-        ACE_NEW_NORETURN (os, TAO_OutStream);
+
+        // Retrieve the singleton instance to the outstream factory.
+        TAO_OutStream_Factory *factory =
+          TAO_OUTSTREAM_FACTORY::instance ();
+
+        // Get a new instance for the temp file.
+        TAO_OutStream *os = factory->make_outstream ();
 
         if (os == 0)
           {
@@ -1209,7 +1040,6 @@ be_interface::gen_operation_table (const char *flat_name,
             *os << "_repository_id,&"
                 << skeleton_class_name
                 << "::_repository_id_skel, 0" << be_nl;
-
             ++this->skel_count_;
           }
 
@@ -1276,7 +1106,7 @@ be_interface::gen_gperf_input_header (TAO_OutStream *os)
       << "\n";
 }
 
-// We separate the generation of operation table entries from the
+// we separate the generation of operation table entries from the
 // "gen_operation_table" method. This enables us to invoke generation of
 // entries for interfaces from which we inherit without any additional
 // code. The parameter "derived" is the one for which the entire operation
@@ -1295,19 +1125,11 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
            !si.is_done ();
            si.next ())
         {
-          // Get the next AST decl node
+          // get the next AST decl node
           AST_Decl *d = si.item ();
 
           if (d->node_type () == AST_Decl::NT_op)
             {
-              be_operation *op =
-                be_operation::narrow_from_decl (d);
-
-              if (op->is_sendc_ami ())
-                {
-                  continue;
-                }
-
               // We are an operation node.
               *os << "{\"" << d->original_local_name () << "\", &"
                   << full_skeleton_name << "::"
@@ -1401,14 +1223,6 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
           if (d->node_type () == AST_Decl::NT_op)
             {
-              be_operation *op =
-                be_operation::narrow_from_decl (d);
-
-              if (op->is_sendc_ami ())
-                {
-                  continue;
-                }
-
               // Generate operation name.
 
               // We are an operation node. We use the original
@@ -1507,11 +1321,11 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
                                         UTL_ExceptList *,
                                         TAO_OutStream *os)
 {
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the static method corresponding to this method.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "ACE_INLINE void" << be_nl
       << derived->full_direct_proxy_impl_name ()
       << "::" << prefix << d->local_name () << " ("
@@ -1533,8 +1347,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 }
 
 void
-be_interface::gen_ostream_operator (TAO_OutStream *os,
-                                    bool /* use_underscore */)
+be_interface::gen_ostream_operator (TAO_OutStream *os)
 {
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
@@ -1552,16 +1365,48 @@ be_interface::gen_ostream_operator (TAO_OutStream *os,
 void
 be_interface::gen_member_ostream_operator (TAO_OutStream *os,
                                            const char *instance_name,
-                                           bool /* use_underscore */,
                                            bool accessor)
 {
   *os << instance_name << (accessor ? " ()" : ".in ()");
 }
 
+void
+be_interface::analyze_parentage (void)
+{
+  if (this->has_mixed_parentage_ != -1)
+    {
+      return;
+    }
+
+  this->has_mixed_parentage_ = 0;
+
+  for (long i = 0; i < this->pd_n_inherits; ++i)
+    {
+      be_interface *parent =
+        be_interface::narrow_from_decl (this->pd_inherits[i]);
+
+      if (parent->is_abstract () || parent->has_mixed_parentage ())
+        {
+          this->has_mixed_parentage_ = 1;
+          break;
+        }
+    }
+
+  AST_Decl::NodeType nt = this->node_type ();
+  bool can_be_mixed = nt == AST_Decl::NT_interface
+                          || nt == AST_Decl::NT_component
+                          || nt == AST_Decl::NT_home;
+
+  if (this->has_mixed_parentage_ == 1 && can_be_mixed && this->is_defined ())
+    {
+      be_global->mixed_parentage_interfaces.enqueue_tail (this);
+    }
+}
+
 // ****************************************************************
 
-be_code_emitter_wrapper::be_code_emitter_wrapper (
-      be_interface::tao_code_emitter emitter)
+be_code_emitter_wrapper::
+be_code_emitter_wrapper (be_interface::tao_code_emitter emitter)
   : emitter_ (emitter)
 {
 }
@@ -1576,17 +1421,13 @@ be_code_emitter_wrapper::emit (be_interface *derived_interface,
                          output_stream);
 }
 
-// ****************************************************************
-
 // Template method that traverses the inheritance graph in a breadth-first
 // style. The actual work on each element in the inheritance graph is carried
 // out by the function passed as argument.
 int
-be_interface::traverse_inheritance_graph (
-  be_interface::tao_code_emitter gen,
-  TAO_OutStream *os,
-  bool abstract_paths_only,
-  bool add_ccm_object)
+be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
+                                          TAO_OutStream *os,
+                                          bool abstract_paths_only)
 {
   // Make sure the queues are empty.
   this->insert_queue.reset ();
@@ -1604,26 +1445,24 @@ be_interface::traverse_inheritance_graph (
 
   be_code_emitter_wrapper wrapper (gen);
 
-  return
-    this->traverse_inheritance_graph (wrapper,
-                                      os,
-                                      abstract_paths_only,
-                                      add_ccm_object);
+  return this->traverse_inheritance_graph (wrapper,
+                                           os,
+                                           abstract_paths_only);
 }
 
 int
 be_interface::traverse_inheritance_graph (
-  TAO_IDL_Inheritance_Hierarchy_Worker &worker,
-  TAO_OutStream *os,
-  bool abstract_paths_only,
-  bool add_ccm_object)
+    TAO_IDL_Inheritance_Hierarchy_Worker &worker,
+    TAO_OutStream *os,
+    bool abstract_paths_only
+  )
 {
-  AST_Type *intf = 0;  // element inside the queue
+  AST_Interface *intf = 0;  // element inside the queue
 
   if (!this->insert_queue.is_empty ())
     {
       // Dequeue the element at the head of the queue.
-      if (this->insert_queue.dequeue_head (intf) != 0)
+      if (this->insert_queue.dequeue_head (intf))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_interface::traverse_graph - "
@@ -1631,25 +1470,27 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
-      AST_Decl::NodeType nt = intf->node_type ();
-
-      // If we are doing a home, we check for a parent.
-      if (nt == AST_Decl::NT_home)
-        {
-          this->enqueue_base_home_r (
-            AST_Home::narrow_from_decl (intf));
-        }
-
       // If we are doing a component, we check for a parent.
-      if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
+      if (intf->node_type () == AST_Decl::NT_component)
         {
-          if (add_ccm_object)
-            {
-              (void) this->insert_non_dup (be_global->ccmobject ());
-            }
+          (void) this->insert_non_dup (be_global->ccmobject ());
 
-          this->enqueue_base_component_r (
-            AST_Component::narrow_from_decl (intf));
+          AST_Component *base =
+            AST_Component::narrow_from_decl (intf)->base_component ();
+
+          if (base != 0)
+            {
+              (void) this->insert_non_dup (base);
+
+              long const n_supports = base->n_supports ();
+              AST_Interface **supports = base->supports ();
+
+              for (long j = 0; j < n_supports; ++j)
+                {
+                  (void) this->insert_non_dup (supports[j],
+                                               abstract_paths_only);
+                }
+            }
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);
@@ -1708,10 +1549,10 @@ be_interface::gen_gperf_things (const char *flat_name)
   // GPERF can give Binary search, Linear search and Perfect Hash
   // methods. Generate the class defintion according to that.
 
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,
@@ -1772,13 +1613,16 @@ be_interface::gen_gperf_things (const char *flat_name)
 
     default:
       ACE_ERROR_RETURN ((
-        LM_ERROR,
-        "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"),
-       -1);
+          LM_ERROR,
+          "tao_idl:ERROR:%N:%l:Unknown Operation Lookup Strategy\n"
+        ),
+        -1
+      );
   }
 
   return 0;
 }
+
 
 // Outputs the class definition for the perfect hashing. This class
 // will inherit from the TAO_Perfect_Hash_OpTable.
@@ -1786,7 +1630,7 @@ void
 be_interface::gen_perfect_hash_class_definition (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
 
   *os << "class " << "TAO_" << flat_name << "_Perfect_Hash_OpTable"
       << be_idt_nl
@@ -1808,7 +1652,7 @@ void
 be_interface::gen_binary_search_class_definition (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
 
   *os << "class " << "TAO_" << flat_name << "_Binary_Search_OpTable"
       << be_idt_nl
@@ -1826,7 +1670,7 @@ void
 be_interface::gen_linear_search_class_definition (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *ss = tao_cg->server_skeletons ();
+  TAO_OutStream *ss = this->strategy_->get_out_stream ();
 
   *ss << "class " << "TAO_" << flat_name << "_Linear_Search_OpTable"
       << be_idt_nl
@@ -1863,12 +1707,10 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (ACE_OS::fclose (tao_cg->gperf_input_stream ()->file ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error:%p:File close failed ")
-                         ACE_TEXT ("on temp gperf's input file\n"),
+                         "Error:%p:File close failed on temp gperf's input file\n",
                          "fclose"),
                         -1);
     }
-
   // And reset file to 0 because otherwise there is a problem during destruction of stream.
   tao_cg->gperf_input_stream ()->file () = 0;
 
@@ -1882,27 +1724,22 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                              "fop=dfw");
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-  ACE_HANDLE input =
-    ACE::open_temp_file (
-      ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ()),
-      O_RDONLY);
+  ACE_HANDLE input = ACE::open_temp_file (ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ()),
+                                          O_RDONLY);
 #endif
 
   if (input == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR_RETURN ((
-        LM_ERROR,
-        ACE_TEXT ("Error:%p:File open failed on ")
-        ACE_TEXT ("gperf's temp input file %s\n"),
-        "open_temp_file",
-        tao_cg->gperf_input_filename ()),
-        -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error:%p:File open failed on gperf's temp input file\n",
+                         "open_temp_file"),
+                        -1);
     }
 
 #ifndef ACE_OPENVMS
   // Flush the output stream.  Gperf also uses it as output.  Ensure
   // current contents are written before gperf writes.
-  ACE_OS::fflush (tao_cg->server_skeletons ()->file ());
+  ACE_OS::fflush (this->strategy_->get_out_stream ()->file ());
 #endif  /* !ACE_OPENVMS */
 
   // Stdout is server skeleton.  Do *not* close the file, just open
@@ -1915,9 +1752,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   if (gperfOutput == 0)
     {
       ACE_OS::close (input);
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("failed to allocate memory\n")),
-                        -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "failed to allocate memory\n"), -1);
     }
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -1929,17 +1764,15 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
                               "fop=dfw");
   //FUZZ: enable check_for_lack_ACE_OS
 #else
-  ACE_HANDLE output =
-    ACE_OS::open (be_global->be_get_server_skeleton_fname (),
-                  O_WRONLY | O_APPEND);
+  ACE_HANDLE output = ACE_OS::open (this->strategy_->get_out_stream_fname (),
+                                    O_WRONLY | O_APPEND);
 #endif
 
   if (output == ACE_INVALID_HANDLE)
     {
       ACE_OS::close (input);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error:%p:File open failed ")
-                         ACE_TEXT ("on server skeleton file\n"),
+                         "Error:%p:File open failed on server skeleton file\n",
                          "open"),
                         -1);
     }
@@ -1958,75 +1791,75 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   {
       // Perfect Hashing.
     case BE_GlobalData::TAO_PERFECT_HASH:
-      process_options.command_line (ACE_TEXT ("%s")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-m -M -J -c -C")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-D -E -T -f 0")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-F 0,0")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-Z TAO_%s_Perfect_Hash_OpTable")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-N lookup"),
+      process_options.command_line ("%s"
+                                    " "
+                                    "-m -M -J -c -C"
+                                    " "
+                                    "-D -E -T -f 0"
+                                    " "
+                                    "-F 0,0"
+                                    " "
+                                    "-a -o -t -p -K"
+                                    " "
+                                    "opname -L C++"
+                                    " "
+                                    "-Z TAO_%s_Perfect_Hash_OpTable"
+                                    " "
+                                    "-N lookup",
                                     idl_global->gperf_path (),
                                     flat_name);
       break;
 
       // Binary search methods from GPERF. Everythis and the -B flag.
     case BE_GlobalData::TAO_BINARY_SEARCH:
-      process_options.command_line (ACE_TEXT ("%s")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-B")
-                                    ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -c -C")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-D -E -T -f 0")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-F 0,0,0")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-Z TAO_%s_Binary_Search_OpTable")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-N lookup"),
+      process_options.command_line ("%s"
+                                    " "
+                                    "-B"
+                                    "  "
+                                    "-m -M -J -c -C"
+                                    " "
+                                    "-D -E -T -f 0"
+                                    " "
+                                    "-F 0,0,0"
+                                    " "
+                                    "-a -o -t -p -K"
+                                    " "
+                                    "opname -L C++"
+                                    " "
+                                    "-Z TAO_%s_Binary_Search_OpTable"
+                                    " "
+                                    "-N lookup",
                                     idl_global->gperf_path (),
                                     flat_name);
       break;
 
       // Linear search methods from GPERF. Everything and the -Z flag.
     case BE_GlobalData::TAO_LINEAR_SEARCH:
-      process_options.command_line (ACE_TEXT ("%s")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-b")
-                                    ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -c -C")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-D -E -T -f 0")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-F 0,0")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-a -o -t -p -K")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("opname -L C++")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-Z TAO_%s_Linear_Search_OpTable")
-                                    ACE_TEXT (" ")
-                                    ACE_TEXT ("-N lookup"),
+      process_options.command_line ("%s"
+                                    " "
+                                    "-b"
+                                    "  "
+                                    "-m -M -J -c -C"
+                                    " "
+                                    "-D -E -T -f 0"
+                                    " "
+                                    "-F 0,0"
+                                    " "
+                                    "-a -o -t -p -K"
+                                    " "
+                                    "opname -L C++"
+                                    " "
+                                    "-Z TAO_%s_Linear_Search_OpTable"
+                                    " "
+                                    "-N lookup",
                                     idl_global->gperf_path (),
                                     flat_name);
       break;
 
     default:
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("tao_idl:ERROR:%N:%l:Unknown ")
-                  ACE_TEXT ("Operation Lookup Strategy\n")));
+                  "tao_idl:ERROR:%N:%l:Unknown "
+                  "Operation Lookup Strategy\n"));
 
       result = -1;
   }
@@ -2039,8 +1872,8 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       if (result == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error:%p:Couldn't spawn a ")
-                      ACE_TEXT ("process for gperf program\n")));
+                      "Error:%p:Couldn't spawn a "
+                      "process for gperf program\n"));
         }
 
       // Wait for gperf to complete.
@@ -2052,15 +1885,15 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
           if (result == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error:%p:gperf program ")
-                          ACE_TEXT ("returned exit code %d.\n"),
+                          "Error:%p:gperf program "
+                          "returned exit code %d.\n",
                           exitcode));
             }
         }
 
       // Adjust the file offset to the EOF for the server skeleton
       // file.
-      ACE_OS::fseek (tao_cg->server_skeletons ()->file (),
+      ACE_OS::fseek (this->strategy_->get_out_stream ()->file (),
                      0,
                      SEEK_END);
     }
@@ -2069,7 +1902,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
   ACE_OS::close (input);
 
 #if defined (ACE_OPENVMS)
-  ACE_OS::unlink (tao_cg->gperf_input_filename ());
+  ACE_OS::unlink(tao_cg->gperf_input_filename ());
   process_options.release_handles ();
 
   if (result != -1)
@@ -2079,14 +1912,13 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
       if (gperfOutputFile == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error:%p: Couldn't open ")
-                      ACE_TEXT ("gperf output file\n"),
+                      "Error:%p:Couldn't open gperf output file\n",
                       "fopen"));
           result = -1;
         }
       else
         {
-          FILE* out = tao_cg->server_skeletons ()->file ();
+          FILE* out = this->strategy_->get_out_stream ()->file ();
           int c;
 
           while ((c = ACE_OS::fgetc(gperfOutputFile)) != EOF)
@@ -2097,8 +1929,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
           if (ferror (gperfOutputFile) || ferror (out))
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error:%p: Couldn't open ")
-                          ACE_TEXT ("gperf output file\n"),
+                          "Error:%p:Couldn't open gperf output file\n",
                           "get/put"));
               result = -1;
             }
@@ -2119,7 +1950,7 @@ void
 be_interface::gen_perfect_hash_instance (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
 
   *os << be_nl
       << "static TAO_" << flat_name << "_Perfect_Hash_OpTable"
@@ -2132,7 +1963,7 @@ void
 be_interface::gen_binary_search_instance (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
 
   *os << be_nl
       << "static TAO_" << flat_name << "_Binary_Search_OpTable"
@@ -2146,7 +1977,7 @@ void
 be_interface::gen_linear_search_instance (const char *flat_name)
 {
   // Outstream.
-  TAO_OutStream *os = tao_cg->server_skeletons ();
+  TAO_OutStream *os = this->strategy_->get_out_stream ();
 
   *os << be_nl
       << "static TAO_" << flat_name << "_Linear_Search_OpTable"
@@ -2160,10 +1991,10 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
       << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
-      << ") == 0 ||" << be_uidt_nl;
+      << ") ||" << be_uidt_nl;
 
   return 0;
 }
@@ -2205,23 +2036,13 @@ be_interface::gen_skel_helper (be_interface *derived,
         {
           // Get the next AST decl node
           AST_Decl *d = si.item ();
-          AST_Decl::NodeType nt = d->node_type ();
 
-          if (nt == AST_Decl::NT_op)
+          if (d->node_type () == AST_Decl::NT_op)
             {
-              be_operation *op =
-                be_operation::narrow_from_decl (d);
-
-              /// These are not generated on the server side.
-              if (op->is_sendc_ami ())
-                {
-                  continue;
-                }
-
-              *os << be_nl_2
+              *os << be_nl << be_nl
                   << "// TAO_IDL - Generated from" << be_nl
                   << "// " << __FILE__ << ":" << __LINE__
-                  << be_nl_2;
+                  << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -2231,8 +2052,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request, " << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
-                      << be_uidt;
+                      << "void * servant" << be_uidt_nl
+                      << ");" << be_uidt;
                 }
               else
                 { // Generate code in the inline file.
@@ -2244,27 +2065,26 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant)" << be_uidt
-                      << be_uidt_nl
+                      << "void * servant" << be_uidt_nl
+                      << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
-                      << " * const impl =" << be_idt_nl
-                      << "static_cast<"
+                      << " * const impl = static_cast<"
                       << derived->full_skel_name ()
-                      << " *> (servant);" << be_uidt_nl;
+                      << " *> (servant);" << be_nl;
 
                   *os << ancestor->full_skel_name ()
                       << "::" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl);" << be_uidt
-                      << be_uidt << be_uidt_nl
+                      << "impl" << be_uidt_nl
+                      << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
             }
-          else if (nt == AST_Decl::NT_attr)
+          else if (d->node_type () == AST_Decl::NT_attr)
             {
               AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
@@ -2273,7 +2093,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                   return -1;
                 }
 
-              *os << be_nl_2;
+              *os << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -2283,8 +2103,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
-                      << be_uidt;
+                      << "void * servant" << be_uidt_nl
+                      << ");" << be_uidt;
                 }
               else
                 { // Generate code in the inline file.
@@ -2296,8 +2116,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant)" << be_uidt
-                      << be_uidt_nl
+                      << "void * servant" << be_uidt_nl
+                      << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
@@ -2310,14 +2130,14 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl);" << be_uidt
-                      << be_uidt << be_uidt_nl
+                      << "impl" << be_uidt_nl
+                      << ");" << be_uidt << be_uidt_nl
                       << "}";
                 }
 
               if (!attr->readonly ())
                 {
-                  *os << be_nl_2;
+                  *os << be_nl << be_nl;
 
                   if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                     {
@@ -2328,8 +2148,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant);" << be_uidt
-                          << be_uidt;
+                          << "void * servant" << be_uidt_nl
+                          << ");" << be_uidt;
                     }
                   else
                     { // Generate code in the inline file.
@@ -2342,8 +2162,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
                           << "void * servant_upcall," << be_nl
-                          << "void * servant)" << be_uidt
-                          << be_uidt_nl
+                          << "void * servant" << be_uidt_nl
+                          << ")" << be_uidt_nl
                           << "{" << be_idt_nl;
 
                       *os << ancestor->full_skel_name ()
@@ -2356,8 +2176,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "_skel (" << be_idt << be_idt_nl
                           << "server_request," << be_nl
                           << "servant_upcall," << be_nl
-                          << "impl);" << be_uidt
-                          << be_uidt << be_uidt_nl
+                          << "impl" << be_uidt_nl
+                          << ");" << be_uidt << be_uidt_nl
                           << "}";
                     }
                 }
@@ -2399,8 +2219,8 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
           // Generate the static method corresponding to this method.
           *os << "static void" << be_nl
@@ -2427,7 +2247,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
 
           if (!attr->readonly ())
             {
-              *os << be_nl_2;
+              *os << be_nl << be_nl;
 
               // Generate the static method corresponding to
               // this method.
@@ -2475,17 +2295,10 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
     {
       // Get the next AST decl node
       d = si.item ();
-      AST_Decl::NodeType nt = d->node_type ();
 
-      if (nt == AST_Decl::NT_op)
+      if (d->node_type () == AST_Decl::NT_op)
         {
           op = be_operation::narrow_from_decl (d);
-
-          /// Skip these on the skeleton side.
-          if (op->is_sendc_ami ())
-            {
-              continue;
-            }
 
           if (be_global->gen_direct_collocation ())
             {
@@ -2498,7 +2311,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                                                       os);
             }
         }
-      else if (nt == AST_Decl::NT_attr)
+      else if (d->node_type () == AST_Decl::NT_attr)
         {
           AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
 
@@ -2564,7 +2377,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
   else if (base->is_nested ())
     {
-      be_decl *scope = 0;
+      be_decl *scope;
       scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::"
@@ -2647,134 +2460,16 @@ be_interface::gen_abstract_init_helper (be_interface *node,
   return 0;
 }
 
-int
-be_interface::op_attr_decl_helper (be_interface * /*derived */,
-                                   be_interface *ancestor,
-                                   TAO_OutStream *os)
-{
-  if (be_component::narrow_from_decl (ancestor) != 0)
-    {
-      return 0;
-    }
-
-  be_visitor_context ctx;
-  ctx.stream (os);
-  ctx.state (TAO_CodeGen::TAO_ROOT_SVH);
-
-  for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      // Get the next AST decl node
-      AST_Decl *d = si.item ();
-      AST_Decl::NodeType nt = d->node_type ();
-
-      if (nt == AST_Decl::NT_op)
-        {
-          be_operation *op = be_operation::narrow_from_decl (d);
-
-          /// No sendc_* operations in facet servants. If the
-          /// original interface had these generated as AMI
-          /// implied IDL, we want to skip them.
-          if (be_global->in_facet_servant () && op->is_sendc_ami ())
-            {
-              continue;
-            }
-
-          be_visitor_operation_ch v (&ctx);
-
-          if (v.visit_operation (op) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("be_interface::")
-                                 ACE_TEXT ("op_attr_decl_helper - ")
-                                 ACE_TEXT ("visit_operation()")
-                                 ACE_TEXT (" failed\n")),
-                                -1);
-            }
-        }
-      else if (nt == AST_Decl::NT_attr)
-        {
-          be_attribute *attr = be_attribute::narrow_from_decl (d);
-          be_visitor_attribute v (&ctx);
-
-          if (v.visit_attribute (attr) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("be_interface::")
-                                 ACE_TEXT ("op_attr_decl_helper - ")
-                                 ACE_TEXT ("visit_attribute()")
-                                 ACE_TEXT (" failed\n")),
-                                -1);
-            }
-        }
-    }
-
-  return 0;
-}
-
 void
 be_interface::destroy (void)
 {
-  delete [] this->full_skel_name_;
-  this->full_skel_name_ = 0;
-
-  delete [] this->full_coll_name_;
-  this->full_coll_name_ = 0;
-
-  delete [] this->local_coll_name_;
-  this->local_coll_name_ = 0;
-
-  delete [] this->relative_skel_name_;
-  this->relative_skel_name_ = 0;
-
-  delete [] this->base_proxy_impl_name_;
-  this->base_proxy_impl_name_ = 0;
-
-  delete [] this->remote_proxy_impl_name_;
-  this->remote_proxy_impl_name_ = 0;
-
-  delete [] this->direct_proxy_impl_name_;
-  this->direct_proxy_impl_name_ = 0;
-
-  delete [] this->full_base_proxy_impl_name_;
-  this->full_base_proxy_impl_name_ = 0;
-
-  delete [] this->full_remote_proxy_impl_name_;
-  this->full_remote_proxy_impl_name_ = 0;
-
-  delete [] this->full_direct_proxy_impl_name_;
-  this->full_direct_proxy_impl_name_ = 0;
-
-  delete [] this->base_proxy_broker_;
-  this->base_proxy_broker_ = 0;
-
-  delete [] this->remote_proxy_broker_;
-  this->remote_proxy_broker_ = 0;
-
-  delete [] this->strategized_proxy_broker_;
-  this->strategized_proxy_broker_ = 0;
-
-  delete [] this->full_base_proxy_broker_name_;
-  this->full_base_proxy_broker_name_ = 0;
-
-  delete [] this->full_remote_proxy_broker_name_;
-  this->full_remote_proxy_broker_name_ = 0;
-
-  delete [] this->full_strategized_proxy_broker_name_;
-  this->full_strategized_proxy_broker_name_ = 0;
-
-  delete [] this->client_scope_;
-  this->client_scope_ = 0;
-
-  delete [] this->flat_client_scope_;
-  this->flat_client_scope_ = 0;
-
-  delete [] this->server_scope_;
-  this->server_scope_ = 0;
-
-  delete [] this->flat_server_scope_;
-  this->flat_server_scope_ = 0;
+  // We know that it cannot be 0, but..
+  if (this->strategy_ != 0)
+    {
+      this->strategy_->destroy ();
+      delete this->strategy_;
+      this->strategy_ = 0;
+    }
 
   // Call the destroy methods of our base classes.
   this->AST_Interface::destroy ();
@@ -2788,6 +2483,22 @@ be_interface::accept (be_visitor *visitor)
   return visitor->visit_interface (this);
 }
 
+
+TAO_CodeGen::CG_STATE
+be_interface::next_state (TAO_CodeGen::CG_STATE current_state,
+                          int is_extra_state)
+{
+  return this->strategy_->next_state (current_state,
+                                      is_extra_state);
+}
+
+int
+be_interface::has_extra_code_generation (
+  TAO_CodeGen::CG_STATE current_state)
+{
+  return this->strategy_->has_extra_code_generation (current_state);
+}
+
 void
 be_interface::original_interface (be_interface *original_interface)
 {
@@ -2795,9 +2506,87 @@ be_interface::original_interface (be_interface *original_interface)
 }
 
 be_interface *
-be_interface::original_interface (void)
+be_interface::original_interface ()
 {
   return this->original_interface_;
+}
+
+be_interface *
+be_interface::replacement (void)
+{
+  return this->strategy_->replacement ();
+}
+
+int
+be_interface::has_mixed_parentage (void)
+{
+  if (this->is_abstract_)
+    {
+      return 0;
+    }
+
+  AST_Decl::NodeType nt = this->node_type ();
+
+  if (AST_Decl::NT_component == nt || AST_Decl::NT_home == nt)
+    {
+      return 0;
+    }
+
+  if (this->has_mixed_parentage_ == -1)
+    {
+      this->analyze_parentage ();
+    }
+
+  return this->has_mixed_parentage_;
+}
+
+int
+be_interface::session_component_child (void)
+{
+  if (this->session_component_child_ == -1)
+    {
+      // We are looking only for executor interfaces.
+      if (!this->is_local_)
+        {
+          this->session_component_child_ = 0;
+          return this->session_component_child_;
+        }
+
+      Identifier tail_id ("SessionComponent");
+      UTL_ScopedName tail (&tail_id, 0);
+      Identifier head_id ("Components");
+      UTL_ScopedName sn (&head_id, &tail);
+
+      AST_Decl *session_component =
+        const_cast<be_interface*> (this)->scope ()->lookup_by_name (&sn,
+                                                                    true);
+
+      tail_id.destroy ();
+      head_id.destroy ();
+
+      // If Components::SessionComponent is not in the AST, we are
+      // barking up the wrong tree.
+      if (session_component == 0)
+        {
+          this->session_component_child_ = 0;
+          return this->session_component_child_;
+        }
+
+      for (long i = 0; i < this->pd_n_inherits; ++i)
+        {
+          AST_Decl *tmp = this->pd_inherits[i];
+
+          if (tmp == session_component)
+            {
+              this->session_component_child_ = 1;
+              return this->session_component_child_;
+            }
+        }
+
+      this->session_component_child_ = 0;
+    }
+
+  return this->session_component_child_;
 }
 
 bool
@@ -2809,908 +2598,101 @@ be_interface::is_event_consumer (void)
                        "Components::EventConsumerBase") == 0;
 }
 
-void
-be_interface::gen_facet_idl (TAO_OutStream &os)
-{
-  if (this->ex_idl_facet_gen ())
-    {
-      return;
-    }
-
-  be_util::gen_nesting_open (os, this);
-
-  os << be_nl
-     << "local interface CCM_"
-     << this->original_local_name ()->get_string ()
-     << " : ::"
-     << IdentifierHelper::orig_sn (this->name ()).c_str ()
-     << be_nl
-     << "{" << be_idt;
-
-  os << be_uidt_nl
-     << "};";
-
-  be_util::gen_nesting_close (os, this);
-
-  this->ex_idl_facet_gen (true);
-}
-
-void
-be_interface::enqueue_base_component_r (AST_Component *node)
-{
-  AST_Component *base = node->base_component ();
-
-  if (base == 0)
-    {
-      return;
-    }
-
-  this->enqueue_base_component_r (base);
-
-  (void) this->insert_non_dup (base);
-
-  long const n_supports = base->n_supports ();
-  AST_Type **supports = base->supports ();
-
-  for (long j = 0; j < n_supports; ++j)
-    {
-      (void) this->insert_non_dup (supports[j]);
-    }
-}
-
-void
-be_interface::enqueue_base_home_r (AST_Home *node)
-{
-  AST_Home *base = node->base_home ();
-
-  if (base == 0)
-    {
-      return;
-    }
-
-  this->enqueue_base_home_r (base);
-
-  (void) this->insert_non_dup (base);
-
-  long const n_supports = base->n_supports ();
-  AST_Type **supports = base->supports ();
-
-  for (long j = 0; j < n_supports; ++j)
-    {
-      (void) this->insert_non_dup (supports[j]);
-    }
-}
-
-bool
-be_interface::dds_connector_traits_done (void) const
-{
-  return this->dds_connector_traits_done_;
-}
-
-void
-be_interface::dds_connector_traits_done (bool val)
-{
-  this->dds_connector_traits_done_ = val;
-}
-
-void
-be_interface::gen_stub_inheritance (TAO_OutStream *os)
-{
-  long i;
-  long nparents = this->n_inherits ();
-  bool has_concrete_parent = false;
-  bool i_am_abs = this->is_abstract ();
-
-  // If node interface inherits from other interfaces.
-  if (nparents > 0)
-    {
-      *os << be_idt;
-
-      AST_Type **parents = this->inherits ();
-
-      for (i = 0; i < nparents; ++i)
-        {
-          AST_Type *parent = parents[i];
-
-          if (! parent->is_abstract ())
-            {
-              has_concrete_parent = true;
-            }
-
-          *os << "public virtual ::"
-              << parent->name ();
-
-          if (i < nparents - 1)
-            {
-              // Node has multiple inheritance, so put a comma.
-              *os << "," << be_nl;
-            }
-        }
-
-      if (has_concrete_parent || i_am_abs)
-        {
-          *os << be_uidt << be_uidt_nl;
-        }
-      else if (! i_am_abs)
-        {
-          *os << "," << be_nl;
-        }
-    }
-
-  if (i_am_abs && nparents == 0)
-    {
-      *os << "public virtual ::CORBA::AbstractBase"
-          << be_uidt_nl;
-    }
-
-  if (! has_concrete_parent && ! i_am_abs)
-    {
-      *os << "public virtual ::CORBA::Object";
-
-      if (nparents > 0)
-        {
-          *os << be_uidt;
-        }
-
-      *os << be_uidt;
-    }
-}
-
-void
-be_interface::gen_skel_inheritance (TAO_OutStream *os)
-{
-  long n_parents = this->n_inherits ();
-  AST_Type *parent = 0;
-  AST_Type **parents = this->inherits ();
-  bool has_concrete_parent = false;
-
-  for (int i = 0; i < n_parents; ++i)
-    {
-      parent = parents[i];
-
-      if (parent->is_abstract ())
-        {
-          continue;
-        }
-
-      if (has_concrete_parent)
-        {
-          *os << "," << be_nl;
-        }
-
-      *os << "public virtual " << "POA_"
-          << parent->name ();
-
-      has_concrete_parent = true;
-    }
-
-  if (! has_concrete_parent)
-    {
-      // We don't inherit from another user defined object, hence our
-      // base class is the ServantBase class.
-      *os << "public virtual PortableServer::ServantBase";
-    }
-}
-
-int
-be_interface::gen_is_a_ancestors (TAO_OutStream *os)
-{
-   int const status =
-    this->traverse_inheritance_graph (be_interface::is_a_helper,
-                                      os);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::")
-                         ACE_TEXT ("gen_is_a_ancestors - ")
-                         ACE_TEXT ("traverse_inheritance_graph failed\n")),
-                        -1);
-    }
-
-  if (this->is_abstract () || this->has_mixed_parentage ())
-    {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
-          << ") == 0";
-    }
-  else if (this->is_local ())
-    {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
-          << ") == 0";
-    }
-
-  if (this->has_mixed_parentage () || this->is_local ())
-    {
-      *os << " ||" << be_uidt_nl;
-    }
-  else if (this->is_abstract ())
-    {
-      *os << be_uidt << be_uidt_nl;
-    }
-
-  if (! this->is_abstract ())
-    {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-          << ") == 0" << be_uidt << be_uidt_nl;
-    }
-
-  return 0;
-}
-
-void
-be_interface::gen_parent_collocation (TAO_OutStream *os)
-{
-  long n_parents = this->n_inherits ();
-  bool has_parent = false;
-  AST_Type **parents = this->inherits ();
-
-  if (n_parents > 0)
-    {
-      for (long i = 0; i < n_parents; ++i)
-        {
-          be_interface *inherited =
-            be_interface::narrow_from_decl (parents[i]);
-
-          if (!has_parent)
-            {
-              *os << be_nl;
-            }
-
-          has_parent = true;
-
-          *os << be_nl
-              << "this->" << inherited->flat_name ()
-              << "_setup_collocation" << " ();";
-        }
-    }
-}
-
-// =================================================================
-
-class Facet_Op_Attr_Helper
-  : public TAO_IDL_Inheritance_Hierarchy_Worker
-{
-public:
-  Facet_Op_Attr_Helper (be_visitor *visitor);
-
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *os,
-                    be_interface *base_interface);
-
-private:
-  be_visitor *visitor_;
-};
-
-Facet_Op_Attr_Helper::Facet_Op_Attr_Helper (
-    be_visitor *visitor)
-  : visitor_ (visitor)
-{
-}
-
-int
-Facet_Op_Attr_Helper::emit (be_interface * /*derived_interface */,
-                            TAO_OutStream *,
-                            be_interface *base_interface)
-{
-  AST_Decl::NodeType nt = base_interface->node_type ();
-
-  if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
-    {
-      return 0;
-    }
-
-  return visitor_->visit_scope (base_interface);
-}
-
-// ================================================================
-
-int
-be_interface::gen_facet_svnt_hdr (be_visitor *visitor,
-                                  TAO_OutStream &os)
-{
-  // No '_cxx_' prefix>
-  const char *lname =
-    this->original_local_name ()->get_string ();
-
-  be_decl *scope =
-    be_scope::narrow_from_scope (this->defined_in ())->decl ();
-  ACE_CString suffix (scope->flat_name ());
-
-  ACE_CString export_macro (be_global->svnt_export_macro ());
-
-  if (export_macro == "")
-    {
-      export_macro = be_global->skel_export_macro ();
-    }
-
-  if (suffix != "")
-    {
-      suffix = ACE_CString ("_") + suffix;
-    }
-
-  os << be_nl_2
-     << "namespace CIAO_FACET" << suffix.c_str () << be_nl
-     << "{" << be_idt_nl;
-
-  os << "class " << export_macro.c_str () <<  " " << lname << "_Servant" << be_idt_nl
-     << ": public virtual " << this->full_skel_name () << be_uidt_nl
-     << "{" << be_nl
-     << "public:" << be_idt_nl;
-
-  AST_Decl *s = ScopeAsDecl (this->defined_in ());
-  ACE_CString sname_str (s->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
-
-  os << lname << "_Servant (" << be_idt_nl
-     << global << sname << "::CCM_"
-     << lname << "_ptr executor," << be_nl
-     << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
-
-  os << "virtual ~" << lname << "_Servant (void);";
-
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
-  this->insert_queue.enqueue_tail (this);
-
-  Facet_Op_Attr_Helper helper (visitor);
-
-  int status =
-    this->traverse_inheritance_graph (helper,
-                                      &os,
-                                      false,
-                                      false);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::")
-                         ACE_TEXT ("gen_facet_svnt_hdr - ")
-                         ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
-
-  os << be_nl_2 << "// Get component implementation." << be_nl
-     << "virtual CORBA::Object_ptr _get_component (void);"
-     << be_uidt_nl << be_nl;
-
-  os << "protected:" << be_idt_nl;
-
-  os << "// Facet executor." << be_nl
-     << global << sname << "::CCM_"
-     << lname << "_var executor_;" << be_nl_2;
-
-  os << "// Context object." << be_nl
-     << "::Components::CCMContext_var ctx_;" << be_uidt_nl;
-
-  os << "};" << be_nl_2;
-
-  os << be_uidt_nl
-     << "}";
-
-  return 0;
-}
-
-int
-be_interface::gen_facet_svnt_src (be_visitor *visitor,
-                                  TAO_OutStream &os)
-{
-  // No '_cxx_' prefix.
-  const char *lname =
-    this->original_local_name ()->get_string ();
-
-  be_decl *scope =
-    be_scope::narrow_from_scope (this->defined_in ())->decl ();
-
-  ACE_CString sname_str (scope->full_name ());
-
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
-
-  ACE_CString suffix (scope->flat_name ());
-
-  if (suffix != "")
-    {
-      suffix = ACE_CString ("_") + suffix;
-    }
-
-  os << be_nl_2
-     << "namespace CIAO_FACET" << suffix.c_str () << be_nl
-     << "{" << be_idt_nl;
-
-  os << lname << "_Servant::"
-     << lname << "_Servant (" << be_idt << be_idt_nl
-     << global << sname << "::CCM_"
-     << lname << "_ptr executor," << be_nl
-     << "::Components::CCMContext_ptr ctx)" << be_uidt_nl
-     << ": executor_ ( " << global << sname
-     << "::CCM_" << lname
-     << "::_duplicate (executor))," << be_idt_nl
-     << "ctx_ ( ::Components::CCMContext::_duplicate (ctx))"
-     << be_uidt << be_uidt_nl
-     << "{" << be_nl
-     << "}";
-
-  os << be_nl_2
-     << lname << "_Servant::~"
-     << lname << "_Servant (void)" << be_nl
-     << "{" << be_nl
-     << "}";
-
-  os << be_nl_2
-     << "// All facet operations and attributes.";
-
-  /// The overload of traverse_inheritance_graph() used here
-  /// doesn't automatically prime the queues.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
-  this->insert_queue.enqueue_tail (this);
-
-  Facet_Op_Attr_Helper op_attr_gen (visitor);
-
-  int status =
-    this->traverse_inheritance_graph (op_attr_gen,
-                                      &os,
-                                      false,
-                                      false);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::")
-                         ACE_TEXT ("gen_facet_svnt_src - ")
-                         ACE_TEXT ("traverse_inheritance_graph() ")
-                         ACE_TEXT ("failed\n")),
-                        -1);
-    }
-
-  os << be_nl_2
-     << "::CORBA::Object_ptr" << be_nl
-     << lname << "_Servant::_get_component (void)"
-     << be_nl
-     << "{" << be_idt_nl
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context_var sc =" << be_idt_nl
-     << "::Components::" << be_global->ciao_container_type ()
-     << "Context::_narrow (this->ctx_.in ());"
-     << be_uidt_nl << be_nl
-     << "if (! ::CORBA::is_nil (sc.in ()))" << be_idt_nl
-     << "{" << be_idt_nl;
-
-  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
-    {
-      os << "return sc->get_CCM_object ();";
-    }
-  else
-    {
-      os << "return ::CORBA::Object::_nil ();";
-    }
-
-  os  << be_uidt_nl << "}" << be_uidt_nl << be_nl;
-
-  os << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-     << "}";
-
-  os << be_uidt_nl
-     << "}";
-
-  return 0;
-}
-
-int
-be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
-{
-  if (this->ami4ccm_ex_idl_gen ())
-    {
-      return 0;
-    }
-
-  be_util::gen_nesting_open (*os, this);
-
-  be_visitor_context ctx;
-  ctx.stream (os);
-
-  be_visitor_ami4ccm_rh_ex_idl rh_visitor (&ctx);
-
-  if (rh_visitor.visit_interface (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
-                         ACE_TEXT ("rh visitor failed\n")),
-                        -1);
-    }
-
-  be_visitor_ami4ccm_sendc_ex_idl sendc_visitor (&ctx);
-
-  if (sendc_visitor.visit_interface (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
-                         ACE_TEXT ("sendc visitor failed\n")),
-                        -1);
-    }
-
-  be_visitor_ami4ccm_conn_ex_idl conn_visitor (&ctx);
-
-  if (conn_visitor.visit_interface (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_interface::gen_ami4ccm_idl - ")
-                         ACE_TEXT ("connector visitor failed\n")),
-                        -1);
-    }
-
-  be_util::gen_nesting_close (*os, this);
-
-  this->ami4ccm_ex_idl_gen (true);
-
-  return 0;
-}
-
-bool
-be_interface::is_ami_rh (void) const
-{
-  return this->is_ami_rh_;
-}
-
-void
-be_interface::is_ami_rh (bool val)
-{
-  this->is_ami_rh_ = val;
-}
-
-bool
-be_interface::is_ami4ccm_rh (void) const
-{
-  return this->is_ami4ccm_rh_;
-}
-
-void
-be_interface::is_ami4ccm_rh (bool val)
-{
-  this->is_ami4ccm_rh_ = val;
-}
-
 const char *
 be_interface::base_proxy_impl_name (void)
 {
-  if (this->base_proxy_impl_name_ == 0)
-    {
-      this->base_proxy_impl_name_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_IMPL]);
-    }
-
-  return this->base_proxy_impl_name_;
+  return this->strategy_->base_proxy_impl_name ();
 }
 
 const char *
 be_interface::full_base_proxy_impl_name (void)
 {
-  if (this->full_base_proxy_impl_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name =
-        this->base_proxy_impl_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_base_proxy_impl_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_base_proxy_impl_name_,
-                      scope);
-      ACE_OS::strcat (this->full_base_proxy_impl_name_,
-                      base_name);
-    }
-
-  return this->full_base_proxy_impl_name_;
+  return this->strategy_->full_base_proxy_impl_name ();
 }
 
 const char *
 be_interface::remote_proxy_impl_name (void)
 {
-  if (this->remote_proxy_impl_name_ == 0)
-    {
-      this->remote_proxy_impl_name_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_IMPL],
-          this->tag_table_[REMOTE]);
-    }
-
-  return this->remote_proxy_impl_name_;
+  return this->strategy_->remote_proxy_impl_name ();
 }
 
 const char *
 be_interface::full_remote_proxy_impl_name (void)
 {
-  if (this->full_remote_proxy_impl_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name = this->remote_proxy_impl_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_remote_proxy_impl_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_remote_proxy_impl_name_,
-                      scope);
-      ACE_OS::strcat (this->full_remote_proxy_impl_name_,
-                      base_name);
-    }
-
-  return this->full_remote_proxy_impl_name_;
+  return this->strategy_->full_remote_proxy_impl_name ();
 }
 
 const char *
 be_interface::direct_proxy_impl_name (void)
 {
-  if (this->direct_proxy_impl_name_ == 0)
-    {
-      this->direct_proxy_impl_name_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_IMPL],
-          this->tag_table_[DIRECT]);
-    }
-
-  return this->direct_proxy_impl_name_;
+  return this->strategy_->direct_proxy_impl_name ();
 }
 
 const char *
 be_interface::full_direct_proxy_impl_name (void)
 {
-  if (this->full_direct_proxy_impl_name_ == 0)
-    {
-      const char *scope = this->server_enclosing_scope ();
-      const char *base_name = this->direct_proxy_impl_name ();
-
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_direct_proxy_impl_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_direct_proxy_impl_name_,
-                      scope);
-      ACE_OS::strcat (this->full_direct_proxy_impl_name_,
-                      base_name);
-    }
-
-  return this->full_direct_proxy_impl_name_;
+  return this->strategy_->full_direct_proxy_impl_name ();
 }
 
 
 const char *
 be_interface::base_proxy_broker_name (void)
 {
-  if (this->base_proxy_broker_ == 0)
-    {
-      this->base_proxy_broker_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_BROKER]);
-    }
-
-  return this->base_proxy_broker_;
+  return this->strategy_->base_proxy_broker_name ();
 }
 
 const char *
 be_interface::full_base_proxy_broker_name (void)
 {
-  if (this->full_base_proxy_broker_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name = this->base_proxy_broker_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_base_proxy_broker_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_base_proxy_broker_name_,
-                      scope);
-      ACE_OS::strcat (this->full_base_proxy_broker_name_,
-                      base_name);
-    }
-
-  return this->full_base_proxy_broker_name_;
+  return this->strategy_->full_base_proxy_broker_name ();
 }
 
 
 const char *
 be_interface::remote_proxy_broker_name (void)
 {
-  if (this->remote_proxy_broker_ == 0)
-    {
-      this->remote_proxy_broker_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_BROKER],
-          this->tag_table_[REMOTE]);
-    }
-
-  return this->remote_proxy_broker_;
+  return this->strategy_->remote_proxy_broker_name ();
 }
 
 const char *
 be_interface::full_remote_proxy_broker_name (void)
 {
-  if (this->full_remote_proxy_broker_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name = this->remote_proxy_broker_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_remote_proxy_broker_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_remote_proxy_broker_name_,
-                      scope);
-      ACE_OS::strcat (this->full_remote_proxy_broker_name_,
-                      base_name);
-    }
-
-  return this->full_remote_proxy_broker_name_;
+  return this->strategy_->full_remote_proxy_broker_name ();
 }
 
 
 const char *
 be_interface::strategized_proxy_broker_name (void)
 {
-  if (this->strategized_proxy_broker_ == 0)
-    {
-      this->strategized_proxy_broker_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_BROKER],
-          this->tag_table_[STRATEGIZED]);
-    }
-
-  return this->strategized_proxy_broker_;
+  return this->strategy_->strategized_proxy_broker_name ();
 }
 
 const char *
 be_interface::full_strategized_proxy_broker_name (void)
 {
-  if (this->full_strategized_proxy_broker_name_ == 0)
-    {
-      const char *scope = this->server_enclosing_scope ();
-      const char *base_name =
-        this->strategized_proxy_broker_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_strategized_proxy_broker_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_strategized_proxy_broker_name_,
-                      scope);
-      ACE_OS::strcat (this->full_strategized_proxy_broker_name_,
-                      base_name);
-    }
-
-  return this->full_strategized_proxy_broker_name_;
+  return this->strategy_->full_strategized_proxy_broker_name ();
 }
 
 const char *
 be_interface::client_enclosing_scope (void)
 {
-  if (this->client_scope_ == 0)
-    {
-      const char *full_name = this->full_name ();
-      const char *name = this->local_name ();
-
-      size_t offset = ACE_OS::strlen (name);
-      size_t length = ACE_OS::strlen (full_name) - offset;
-      ACE_NEW_RETURN (this->client_scope_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strncpy (this->client_scope_, full_name, length);
-      this->client_scope_[length] = '\0';
-    }
-
-  return this->client_scope_;
+  return this->strategy_->client_scope ();
 }
 
 const char *
 be_interface::flat_client_enclosing_scope (void)
 {
-  if (this->flat_client_scope_ == 0)
-    {
-      const char *full_name = this->flat_name ();
-      const char *name =
-        this->original_local_name ()->get_string ();
-
-      size_t offset = ACE_OS::strlen (name);
-      size_t length = ACE_OS::strlen (full_name) - offset;
-
-      ACE_NEW_RETURN (this->flat_client_scope_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strncpy (this->flat_client_scope_,
-                       full_name,
-                       length);
-      this->flat_client_scope_[length] = '\0';
-    }
-
-  return this->flat_client_scope_;
+  return this->strategy_->flat_client_scope ();
 }
 
 const char *
 be_interface::server_enclosing_scope (void)
 {
-  if (this->server_scope_ == 0)
-    {
-      const char *full_name =
-        this->full_coll_name (be_interface::DIRECT);
-
-      const char *name =
-        this->local_coll_name (be_interface::DIRECT);
-
-      size_t offset = ACE_OS::strlen (name);
-      size_t length = ACE_OS::strlen (full_name) - offset;
-      ACE_NEW_RETURN (this->server_scope_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strncpy (this->server_scope_, full_name, length);
-      this->server_scope_[length] = '\0';
-    }
-
-  return this->server_scope_;
+  return this->strategy_->server_scope ();
 }
 
-char *
-be_interface::create_with_prefix_suffix (const char *prefix,
-                                         const char *str,
-                                         const char *suffix,
-                                         const char *separator)
-{
-  char *cat_string = 0;
-  size_t length =
-    ACE_OS::strlen (str) +
-    ACE_OS::strlen (prefix) +
-    ACE_OS::strlen (suffix) +
-    ACE_OS::strlen (separator) +
-    1; // The '/0'
 
-  ACE_NEW_RETURN (cat_string,
-                  char[length],
-                  0);
 
-  ACE_OS::strcpy (cat_string, prefix);
-  ACE_OS::strcat (cat_string, str);
-  ACE_OS::strcat (cat_string, separator);
-  ACE_OS::strcat (cat_string, suffix);
-
-  return cat_string;
-}
 
 IMPL_NARROW_FROM_DECL (be_interface)
 IMPL_NARROW_FROM_SCOPE (be_interface)

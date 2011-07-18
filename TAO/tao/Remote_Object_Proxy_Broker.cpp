@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/Remote_Object_Proxy_Broker.h"
 #include "tao/CORBA_String.h"
 #include "tao/UB_String_Arguments.h"
@@ -11,6 +8,11 @@
 #include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID (tao,
+           Remote_Object_Proxy_Broker,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

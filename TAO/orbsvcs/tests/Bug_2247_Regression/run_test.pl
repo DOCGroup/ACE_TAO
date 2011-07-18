@@ -1,222 +1,142 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+$file1ior = PerlACE::LocalFile ("file1.ior");
+$file2ior = PerlACE::LocalFile ("file2.ior");
+$outputior = PerlACE::LocalFile ("output.ior");
+
+unlink $file1ior, $file2ior, $outputior;
+
+$SERV1 = new PerlACE::Process ("server", "-o $file1ior -k KEY1");
+$SERV2 = new PerlACE::Process ("server", "-o $file2ior -k KEY2");
+$MANAGER_00 = new PerlACE::Process ("Manager", "-a file://$file1ior -k KEY1 -b file://$file2ior -l KEY2 -c $outputior");
+$MANAGER_01 = new PerlACE::Process ("Manager", "-a file://$file1ior -k KEY1 -b file://$file2ior -l KEY2 -c $outputior -s");
+$MANAGER_10 = new PerlACE::Process ("Manager", "-a file://$file1ior -k KEY1 -b file://$file2ior -l KEY2 -c $outputior -m");
+$MANAGER_11 = new PerlACE::Process ("Manager", "-a file://$file1ior -k KEY1 -b file://$file2ior -l KEY2 -c $outputior -m -s");
+
+# ---------------
+print STDERR "Starting ABORT test\n";
+
+print STDERR "Starting Server 1\n";
+$SERV1->Spawn ();
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+	print STDERR "ERROR: cannot find file <$file1ior>\n";
+	$SERV1->Kill ();
+	exit 1;
 }
 
-my $file1_ior = "file1.ior";
-my $file2_ior = "file2.ior";
-my $output_ior = "output.ior";
+print STDERR "Starting ABORT Manager\n";
+$MANAGER_00->Spawn ();
+$manager = $MANAGER_00->WaitKill (30);
 
-my $server1   = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server2   = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $managers_number = 4;
-my @managers = ();
-for ($i = 0; $i < $managers_number; $i++) {
-    $managers[$i] = PerlACE::TestTarget::create_target ($i + 3) || die "Create target $i + 3 failed\n";
+$SERV1->WaitKill(5);
+
+if ($manager != 0) {
+	print STDERR "ERROR: Manager returned $manager\n";
+	++ $status;
 }
 
-my $server1_file1_ior = $server1->LocalFile($file1_ior);
-my $server2_file2_ior = $server2->LocalFile($file2_ior);
-my @managers_file1_ior = ();
-my @managers_file2_ior = ();
-my @managers_output_ior = ();
-for ($i = 0; $i < $managers_number; $i++) {
-    $managers_file1_ior[$i] = $managers[$i]->LocalFile($file1_ior);
-    $managers_file2_ior[$i] = $managers[$i]->LocalFile($file2_ior);
-    $managers_output_ior[$i] = $managers[$i]->LocalFile($output_ior);
+unlink $file1ior, $outputior;
+
+# ---------------
+print STDERR "Starting SHUTDOWN test\n";
+
+print STDERR "Starting Server 1\n";
+$SERV1->Spawn ();
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+	print STDERR "ERROR: cannot find file <$file1ior>\n";
+	$SERV1->Kill ();
+	exit 1;
 }
 
-$SV1 = $server1->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server1_file1_ior -k KEY1");
-$SV2 = $server2->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server2_file2_ior -k KEY2");
+print STDERR "Starting SHUTDOWN Manager\n";
+$MANAGER_01->Spawn ();
+$manager = $MANAGER_01->WaitKill (30);
 
-my @MNS_ARG_SUFFIX = ("", " -s", " -m", " -m -s");
+$SERV1->WaitKill(5);
 
-@MNS = ();
-for ($i = 0; $i < $managers_number; $i++) {
-    $MNS[$i] = $managers[$i]->CreateProcess ("Manager", "-a file://$managers_file1_ior[$i] -k KEY1 ".
-                                                        "-b file://$managers_file2_ior[$i] -l KEY2 ".
-                                                        "-c $managers_output_ior[$i]".$MNS_ARG_SUFFIX[$i]);
+if ($manager != 0) {
+	print STDERR "ERROR: Manager returned $manager\n";
+	++ $status;
 }
 
-sub clean_all {
-    $server1->DeleteFile($file1_ior);
-    $server2->DeleteFile($file2_ior);
-    for ($i = 0; $i < $managers_number; $i++) {
-        $managers[$i]->DeleteFile($file1_ior);
-        $managers[$i]->DeleteFile($file2_ior);
-        $managers[$i]->DeleteFile($output_ior);
-    }
+unlink $file1ior, $outputior;
+
+# ---------------
+print STDERR "Starting MERGED ABORT test\n";
+
+print STDERR "Starting Server 1\n";
+$SERV1->Spawn ();
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+	print STDERR "ERROR: cannot find file <$file1ior>\n";
+	$SERV1->Kill ();
+	exit 1;
 }
 
-sub run_single {
-    clean_all();
-
-    my $name = $_[0];
-    my $mn_id = $_[1];
-
-    print STDERR "Starting $name test\n";
-    print STDERR "Starting Server 1\n";
-    my $server_result = $SV1->Spawn ();
-    if ($server_result != 0) {
-        print STDERR "ERROR: server 1 returned $server_status\n";
-        return 1;
-    }
-
-    if ($server1->WaitForFileTimed ($file1_ior,
-                                    $server1->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server1_file1_ior>\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($server1->GetFile ($file1_ior) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$server1_file1_ior>\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($managers[$mn_id]->PutFile ($file1_ior) == -1) {
-        print STDERR "ERROR: cannot set file <$managers_file1_ior[$mn_id]>\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    print STDERR "Starting $name Manager\n";
-    my $mn_status = $MNS[$mn_id]->SpawnWaitKill ($managers[$mn_id]->ProcessStartWaitInterval() + 15);
-
-    if ($mn_status != 0) {
-        print STDERR "ERROR: Manager $mn_id returned $mn_status\n";
-        $status = 1;
-    }
-
-    $server_status = $SV1->WaitKill ($server1->ProcessStopWaitInterval());
-
-    if ($server1_status != 0) {
-        print STDERR "ERROR: server 1 returned $server_status\n";
-        $status = 1;
-    }
-
-    return 0;
+print STDERR "Starting Server 2\n";
+$SERV2->Spawn ();
+if (PerlACE::waitforfile_timed ($file2ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+	print STDERR "ERROR: cannot find file <$file2ior>\n";
+	$SERV1->Kill ();
+	$SERV2->Kill ();
+	exit 1;
 }
 
-sub run_merged {
-    clean_all();
+print STDERR "Starting ABORT Manager\n";
+$MANAGER_10->Spawn ();
+$manager = $MANAGER_10->WaitKill (30);
 
-    my $name = $_[0];
-    my $mn_id = $_[1];
+$SERV1->WaitKill(5);
+$SERV2->WaitKill(5);
 
-    print STDERR "Starting MERGED $name test\n";
-    print STDERR "Starting Server 1\n";
-    my $server_result = $SV1->Spawn ();
-    if ($server_result != 0) {
-        print STDERR "ERROR: server 1 returned $server_status\n";
-        return 1;
-    }
-
-    if ($server1->WaitForFileTimed ($file1_ior,
-                                    $server1->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server1_file1_ior>\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($server1->GetFile ($file1_ior) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$server1_file1_ior>\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($managers[$mn_id]->PutFile ($file1_ior) == -1) {
-        print STDERR "ERROR: cannot set file <$managers_file1_ior[$mn_id]>\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    print STDERR "Starting Server 2\n";
-    $server_result = $SV2->Spawn ();
-    if ($server_result != 0) {
-        print STDERR "ERROR: server 2 returned $server_status\n";
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($server2->WaitForFileTimed ($file2_ior,
-                                    $server2->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server2_file2_ior>\n";
-        $SV2->Kill (); $SV2->TimedWait (1);
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($server2->GetFile ($file2_ior) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$server2_file2_ior>\n";
-        $SV2->Kill (); $SV2->TimedWait (1);
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    if ($managers[$mn_id]->PutFile ($file2_ior) == -1) {
-        print STDERR "ERROR: cannot set file <$managers_file2_ior[$mn_id]>\n";
-        $SV2->Kill (); $SV2->TimedWait (1);
-        $SV1->Kill (); $SV1->TimedWait (1);
-        return 1;
-    }
-
-    print STDERR "Starting $name Manager\n";
-    my $mn_status = $MNS[$mn_id]->SpawnWaitKill ($managers[$mn_id]->ProcessStartWaitInterval() + 15);
-
-    if ($mn_status != 0) {
-        print STDERR "ERROR: Manager $mn_id returned $mn_status\n";
-        $status = 1;
-    }
-
-    $server_status = $SV1->WaitKill ($server1->ProcessStopWaitInterval() + 5);
-
-    if ($server1_status != 0) {
-        print STDERR "ERROR: server 1 returned $server_status\n";
-        $status = 1;
-    }
-
-    $server_status = $SV2->WaitKill ($server2->ProcessStopWaitInterval() + 5);
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server 2 returned $server_status\n";
-        $status = 1;
-    }
-
-    return $status;
+if ($manager != 0) {
+	print STDERR "ERROR: Manager returned $manager\n";
+	++ $status;
 }
 
-if (run_single("ABORT", 0) != 0) {
-    exit 1;
+unlink $file1ior, $file2ior, $outputior;
+
+# ---------------
+print STDERR "Starting MERGED SHUTDOWN test\n";
+
+print STDERR "Starting Server 1\n";
+$SERV1->Spawn ();
+if (PerlACE::waitforfile_timed ($file1ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+	print STDERR "ERROR: cannot find file <$file1ior>\n";
+	$SERV1->Kill ();
+	exit 1;
 }
 
-if (run_single("SHUTDOWN", 1) != 0) {
-    exit 1;
+print STDERR "Starting Server 2\n";
+$SERV2->Spawn ();
+if (PerlACE::waitforfile_timed ($file2ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+	print STDERR "ERROR: cannot find file <$file2ior>\n";
+	$SERV1->Kill ();
+	$SERV2->Kill ();
+	exit 1;
 }
 
-if (run_merged("ABORT", 2) != 0) {
-    exit 1;
+print STDERR "Starting SHUTDOWN Manager\n";
+$MANAGER_11->Spawn ();
+$manager = $MANAGER_11->WaitKill (30);
+
+$SERV1->WaitKill(5);
+$SERV2->WaitKill(5);
+
+if ($manager != 0) {
+	print STDERR "ERROR: Manager returned $manager\n";
+	++ $status;
 }
 
-if (run_merged("SHUTDOWN", 3) != 0) {
-    exit 1;
-}
-
-clean_all();
+unlink $file1ior, $file2ior, $outputior;
 
 exit $status

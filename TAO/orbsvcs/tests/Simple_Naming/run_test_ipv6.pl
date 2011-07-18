@@ -10,12 +10,10 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # It starts all the servers and clients as necessary.
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use Cwd;
 
 ## Save the starting directory
-$status = 0;
-$multicast = "[ff01::ff01:1]";
 $startdir = getcwd();
 
 $quiet = 0;
@@ -25,60 +23,30 @@ if ($ARGV[0] eq '-q') {
     $quiet = 1;
 }
 
-my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10001 + $test->RandomPort(); # Can not be 10000 on Chorus 4.0
-$ns_orb_port = 12000 + $test->RandomPort();
+$ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 4.0
+$ns_orb_port = 12000 + PerlACE::uniqueid ();
+$iorfile = PerlACE::LocalFile ("ns.ior");
+$persistent_ior_file = PerlACE::LocalFile ("pns.ior");
+$persistent_log_file = PerlACE::LocalFile ("test_log");
+$data_file = PerlACE::LocalFile ("test_run.data");
 
-$iorfile = "ns.ior";
-$persistent_ior_file = "pns.ior";
-$persistent_log_file = "test_log";
-
-$data_file = "test_run.data";
-
-## Allow the user to determine where the persistent file will be located
-## just in case the current directory is not suitable for locking.
-## We can't change the name of the persistent file because that is not
-## sufficient to work around locking problems for Tru64 when the current
-## directory is NFS mounted from a system that does not properly support
-## locking.
-foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
-    if (defined $possible && -d $possible) {
-      if (chdir($possible)) {
-        last;
-      }
-    }
-}
-
-$test_log = $test->LocalFile ($data_file);
-$test->DeleteFile ($data_file);
-
-#Files which used by test
-my $test_iorfile = $test->LocalFile ($iorfile);
-my $test_persistent_log_file = $test->LocalFile ($persistent_log_file);
-my $test_persistent_ior_file = $test->LocalFile ($persistent_ior_file);
-
-$test->DeleteFile($iorfile);
-$test->DeleteFile($persistent_log_file);
-$test->DeleteFile($persistent_ior_file);
+$status = 0;
 
 sub name_server
 {
-    my $args = "-ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
-    my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
+    my $args = "-ORBMulticastDiscoveryEndpoint [ff01::ff01:1]:$ns_multicast_port -o $iorfile -m 1 @_";
+    my $prog = "$startdir/../../Naming_Service/Naming_Service";
+    $NS = new PerlACE::Process ($prog, $args);
 
-    $SV = $test->CreateProcess ("$prog", "$args");
+    unlink $iorfile;
 
-    $test->DeleteFile($iorfile);
+    $NS->Spawn ();
 
-    $SV->Spawn ();
-
-    if ($test->WaitForFileTimed ($iorfile,
-                               $test->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$test_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+    if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+        print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
+        $NS->Kill (); 
         exit 1;
     }
 }
@@ -88,15 +56,14 @@ sub client
     my $args = "@_"." ";
     my $prog = "$startdir/client";
 
-    $CL = $test->CreateProcess ("$prog", "$args");
+    $CL = new PerlACE::Process ($prog, $args);
 
-    $client_status = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
+    $client = $CL->SpawnWaitKill (60);
 
-    if ($client_status != 0) {
-        print STDERR "ERROR: client returned $client_status\n";
+    if ($client != 0) {
+        print STDERR "ERROR: client returned $client\n";
         $status = 1;
     }
-
 }
 
 ## The options below have been reordered due to a
@@ -104,22 +71,20 @@ sub client
 ## that has only been seen on Windows XP.
 
 # Options for all simple tests recognized by the 'client' program.
-@opts = ("-s -ORBInitRef NameService=file://$test_iorfile",
-         "-p $test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile",
-         "-s -ORBInitRef NameService=mcast://$multicast:$ns_multicast_port\::/NameService",
-         "-t -ORBInitRef NameService=file://$test_iorfile",
-         "-i -ORBInitRef NameService=file://$test_iorfile",
-         "-e -ORBInitRef NameService=file://$test_iorfile",
-         "-y -ORBInitRef NameService=file://$test_iorfile",
-         "-c file://$test_persistent_ior_file -ORBInitRef NameService=file://$test_iorfile",
+@opts = ("-s -ORBInitRef NameService=file://$iorfile",
+         "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+         "-s -ORBInitRef NameService=mcast://[ff01::ff01:1]:$ns_multicast_port\::/NameService",
+         "-t -ORBInitRef NameService=file://$iorfile",
+         "-i -ORBInitRef NameService=file://$iorfile",
+         "-e -ORBInitRef NameService=file://$iorfile",
+         "-y -ORBInitRef NameService=file://$iorfile",
+         "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
          );
 
-$hostname = $test->HostName ();
-
 @server_opts = ("-t 30",
-                "-ORBEndpoint iiop://$hostname:$ns_orb_port -f $test_persistent_log_file",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
                 "", "", "", "", "",
-                "-ORBEndpoint iiop://$hostname:$ns_orb_port -f $test_persistent_log_file",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
                 );
 
 @comments = ("Simple Test: \n",
@@ -134,9 +99,23 @@ $hostname = $test->HostName ();
 
 $test_number = 0;
 
-
+## Allow the user to determine where the persistent file will be located
+## just in case the current directory is not suitable for locking.
+## We can't change the name of the persistent file because that is not
+## sufficient to work around locking problems for Tru64 when the current
+## directory is NFS mounted from a system that does not properly support
+## locking.
+foreach my $possible ($ENV{TMPDIR}, $ENV{TEMP}, $ENV{TMP}) {
+  if (defined $possible && -d $possible) {
+    if (chdir($possible)) {
+      last;
+    }
+  }
+}
 
 print "INFO: Running the test in ", getcwd(), "\n";
+
+unlink ($persistent_ior_file, $persistent_log_file);
 
 # Run server and client for each of the tests.  Client uses ior in a
 # file to bootstrap to the server.
@@ -147,51 +126,67 @@ foreach $o (@opts) {
 
     client ($o);
 
-    $SV->Kill ();
+    $NS->Kill ();
 
     ## For some reason, only on Windows XP, we need to
-    ## wait before starting another tao_cosnaming when
+    ## wait before starting another Naming_Service when
     ## the mmap persistence option is used
     if ($^O eq "MSWin32") {
       sleep(1);
     }
+
     $test_number++;
 }
 
-$test->DeleteFile($persistent_ior_file);
-$test->DeleteFile($persistent_log_file);
-$test->DeleteFile($iorfile);
+unlink ($persistent_ior_file, $persistent_log_file);
 
 # Now run the multithreaded test, sending output to the file.
 print STDERR "\n          Multithreaded Test:\n";
-$test->DeleteFile ($data_file);
+unlink $data_file;
+
+open (OLDOUT, ">&STDOUT");
+open (STDOUT, ">$data_file") or die "can't redirect stdout: $!";
+open (OLDERR, ">&STDERR");
+open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
+
+# just here to quiet warnings
+$fh = \*OLDOUT;
+$fh = \*OLDERR;
 
 name_server ();
-client ("-ORBInitRef NameService=file://$test_iorfile -ORBLogFile $test_log", "-m15");
+
+client ("-ORBInitRef NameService=file://$iorfile", "-m15");
+
+close (STDERR);
+close (STDOUT);
+open (STDOUT, ">&OLDOUT");
+open (STDERR, ">&OLDERR");
+
+$NS->Kill ();
+
+unlink $iorfile;
 
 
-$SV->Kill ();
-
-$errors = system ("perl $startdir/process-m-output.pl $test_log 15") >> 8;
+$errors = system ("perl $startdir/process-m-output.pl $data_file 15") >> 8;
 
 if ($errors > 0) {
     $status = 1;
 
     if (!$quiet) {
         print STDERR "Errors Detected, printing output\n";
-        if (open (DATA, "<$test_log")) {
+        if (open (DATA, "<$data_file")) {
             print STDERR "================================= Begin\n";
             print STDERR <DATA>;
             print STDERR "================================= End\n";
             close (DATA);
         }
         else {
-            print STDERR "ERROR: Could not open $test_log\n";
+            print STDERR "ERROR: Could not open $data_file\n";
         }
-        $test->DeleteFile ($data_file);
+        unlink $data_file;
     }
 }
 
-$test->DeleteFile($iorfile);
+unlink $iorfile;
 
 exit $status;

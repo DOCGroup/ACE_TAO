@@ -1,11 +1,14 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 
 #include "FooC.h"
 #include "orbsvcs/SecurityC.h"
 #include "ace/SString.h"
+
+ACE_RCSID (Secure_Invocation,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char *cert_file = "cacert.pem";
@@ -114,7 +117,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

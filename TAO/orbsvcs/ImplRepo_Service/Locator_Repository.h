@@ -54,13 +54,8 @@ public:
   /// Initializes the Server Repository
   int init (const Options& opts);
 
-  int unregister_if_address_reused (const ACE_CString& server_id,
-                                    const ACE_CString& name,
-                                    const char* partial_ior);
-
   /// Add a new server to the Repository
-  int add_server (const ACE_CString& server_id,
-    const ACE_CString& name,
+  int add_server (const ACE_CString& name,
     const ACE_CString& aname,
     const ACE_CString& startup_command,
     const ImplementationRepository::EnvironmentList& environment_vars,
@@ -113,8 +108,6 @@ private:
   ACE_Auto_Ptr<ACE_Configuration> config_;
   // XML requires the file name
   ACE_CString fname_;
-
-  unsigned int debug_;
 };
 
 

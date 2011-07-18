@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    anonymous.idl
- *
- *  $Id$
- *
- *  This file contains examples of IDL code that has
- *  caused problems in the past for the TAO IDL
- *  compiler. This test is to make sure the problems
- *  stay fixed.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    anonymous.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has 
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
 
 // Normal typedef'd sequence
 module Not_Anon
@@ -52,12 +55,9 @@ module All_Anon
   };
 
   // Neither array nor sequence are typedef'd.
-  exception Nested_Anon
+  exception Nested_Anon 
   {
     sequence<float> float_seq_array[6];
-    sequence<float> another_fsa[6];
-    long long_array_1[6];
-    long long_array_2[6];
   };
 };
 
@@ -69,4 +69,3 @@ module Second
 {
   typedef string<32> SecondString;
 };
-

@@ -35,6 +35,10 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+# if defined (ACE_HAS_BROKEN_R_ROUTINES)
+#   undef rand_r
+# endif /* ACE_HAS_BROKEN_R_ROUTINES */
+
 // We need this for MVS... as well as Linux, etc...
 // On Windows, we explicitly set this up as __cdecl so it's correct even
 // if building with another calling convention, such as __stdcall.
@@ -47,42 +51,6 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 #endif /* ACE_WIN32 && _MSC_VER */
-
-// FreeBSD has atop macro (not related to ACE_OS::atop)
-#if defined (atop)
-# undef atop
-#endif
-
-/*
- * We inline and undef some functions that may be implemented
- * as macros on some platforms. This way macro definitions will
- * be usable later as there is no way to save the macro definition
- * using the pre-processor.
- */
-
-#if !defined (ACE_LACKS_STRTOLL) && !defined (ACE_STRTOLL_EQUIVALENT)
-inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
-{
-# if defined (strtoll)
-  return strtoll (s, ptr, base);
-# undef strtoll
-# else
-  return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
-# endif /* strtoll */
-}
-#endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
-
-#if !defined (ACE_LACKS_STRTOULL) && !defined (ACE_STRTOULL_EQUIVALENT)
-inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
-{
-# if defined (strtoull)
-  return strtoull (s, ptr, base);
-# undef strtoull
-# else
-  return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
-# endif /* strtoull */
-}
-#endif /* !ACE_LACKS_STRTOULL && !ACE_STRTOULL_EQUIVALENT */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,6 +118,10 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   // atop not in spec
+# if defined (atop)
+#   undef atop
+# endif /* atop */
+
   /*
    * Convert string to pointer
    */
@@ -242,7 +214,7 @@ namespace ACE_OS {
 #else
   extern ACE_Export
   ACE_TCHAR *mktemp (ACE_TCHAR *s);
-#endif /* !ACE_LACKS_MKTEMP */
+#endif /* !ACE_LACKS_MSTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const char *string);
@@ -272,7 +244,7 @@ namespace ACE_OS {
   int rand (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rand_r (unsigned int *seed);
+  int rand_r (ACE_RANDR_TYPE &seed);
 
   extern ACE_Export
   void *realloc (void *, size_t);

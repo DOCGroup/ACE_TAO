@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    main.cpp
- *
- *  $Id$
- *
- * This directory contains an example that illustrates how the ACE
- * Service Configurator can configure static and dynamic services,
- * both from the command-line and from a svc.config file.
- *
- *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples/Service_Configurator/Misc
+//
+// = FILENAME
+//    main.cpp
+//
+// = DESCRIPTION
+//   This directory contains an example that illustrates how the ACE
+//   Service Configurator can configure static and dynamic services,
+//   both from the command-line and from a svc.config file.
+//
+// = AUTHOR
+//    Doug Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
@@ -21,7 +24,7 @@
 #include "ace/Log_Msg.h"
 #include "Timer_Service.h"
 
-
+ACE_RCSID(Misc, main, "$Id$")
 
 // Create an object that will insert the <Timer_Service> into the list
 // of statically linked services that the <ACE_Service_Config> will
@@ -37,10 +40,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Manufacture a "fake" svc.conf entry to demonstrate the -S option
   // that allows us to pass these entries via the "command-line"
   // rather than the svc.conf file.
-
+  
   for (int i = 0; i < argc; i++)
     args.add (argv[i]);
-
+  
   args.add (ACE_TEXT ("-y"));
   args.add (ACE_TEXT ("-d"));
   args.add (ACE_TEXT ("-S"));

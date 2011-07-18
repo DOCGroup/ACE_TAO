@@ -11,6 +11,10 @@
 
 #include "tao/PortableServer/LifespanStrategy.h"
 
+ACE_RCSID (PortableServer,
+           LifespanStrategy,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

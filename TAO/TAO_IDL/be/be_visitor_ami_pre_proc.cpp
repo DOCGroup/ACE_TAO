@@ -1,50 +1,61 @@
+//
+// $Id$
+//
 
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    be_visitor_ami_pre_proc.cpp
- *
- *  $Id$
- *
- *  This visitor creates for AMI implied IDL constructs
- *  the appropriate AST (Abstract Syntax Tree) node,
- *  sets the corresponding interface or operation strategy
- *  on it and enteres the nodes into the AST.
- *
- *
- *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_visitor_ami_pre_proc.cpp
+//
+// = DESCRIPTION
+//    This visitor creates for AMI implied IDL constructs
+//    the appropriate AST (Abstract Syntax Tree) node,
+//    sets the corresponding interface or operation strategy
+//    on it and enteres the nodes into the AST.
+//
+// = AUTHOR
+//    Michael Kircher <Michael.Kircher@mchp.siemens.de>
+//
+// ============================================================================
 
 #include "be_visitor_ami_pre_proc.h"
 #include "be_visitor_context.h"
 #include "be_root.h"
 #include "be_module.h"
 #include "be_interface.h"
+#include "be_interface_strategy.h"
 #include "be_valuetype.h"
 #include "be_operation.h"
+#include "be_operation_strategy.h"
 #include "be_attribute.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
-
 #include "be_global.h"
 #include "be_extern.h"
-
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
-
 #include "nr_extern.h"
 #include "global_extern.h"
-
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (be,
+           be_visitor_ami_pre_proc,
+           "$Id$")
+
 
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
+
 }
 
 be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc (void)
 {
+
 }
 
 int
@@ -53,27 +64,10 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ami_pre_proc::")
-                         ACE_TEXT ("visit_root - ")
-                         ACE_TEXT ("visit scope failed\n")),
+                         "(%N:%l) be_visitor_ami_pre_proc::"
+                         "visit_root - "
+                         "visit scope failed\n"),
                         -1);
-    }
-
-  if (be_global->ami4ccm_call_back ())
-    {
-      /// Generate the *A.idl file containing AMI4CCM-related
-      /// interfaces and connector.
-      int status = this->generate_ami4ccm_idl ();
-
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_ami_pre_proc::")
-                             ACE_TEXT ("visit_root - ")
-                             ACE_TEXT ("generate_ami4ccm_idl() ")
-                             ACE_TEXT ("failed\n")),
-                            -1);
-        }
     }
 
   return 0;
@@ -123,7 +117,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
   // home itself, which was declared first.
   Identifier *node_lname = node->AST_Decl::local_name ();
   AST_Decl *first_stored =
-    node->defined_in ()->lookup_by_name_local (node_lname, false);
+    node->defined_in ()->lookup_by_name_local (node_lname, 0);
 
   if (0 != first_stored && first_stored->node_type () == AST_Decl::NT_home)
     {
@@ -137,7 +131,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     {
       UTL_Scope *s = node->defined_in ();
       Identifier local_id (lname.substr (0, lname.length () - 8).c_str ());
-      AST_Decl *d = s->lookup_by_name_local (&local_id, false);
+      AST_Decl *d = s->lookup_by_name_local (&local_id, 0);
       local_id.destroy ();
 
       if (0 != d)
@@ -158,8 +152,9 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
 
-  be_interface *reply_handler = this->create_reply_handler (node);
-
+  be_valuetype *excep_holder = this->create_exception_holder (node);
+  be_interface *reply_handler = this->create_reply_handler (node,
+                                                            excep_holder);
   if (reply_handler)
     {
       reply_handler->set_defined_in (node->defined_in ());
@@ -184,6 +179,21 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
 
+  // Set the proper strategy.
+  be_interface_ami_strategy *bias = 0;
+  ACE_NEW_RETURN (bias,
+                  be_interface_ami_strategy (node,
+                                             reply_handler),
+                  -1);
+  be_interface_strategy *old_strategy = node->set_strategy (bias);
+
+  if (old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
+    }
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -205,17 +215,45 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
       return 0;
     }
 
-  be_interface *parent =
-    be_interface::narrow_from_scope (node->defined_in ());
-
   // If we're here, we're sure that the arg traits specialization
   // for this will be needed.
   be_global->messaging_exceptionholder ()->seen_in_operation (true);
 
-  be_operation *sendc_op =
-    this->create_sendc_operation (node); // for arguments = TRUE
+  be_operation *sendc_marshaling =
+    this->create_sendc_operation (node,
+                                  0); // for arguments = FALSE
 
-  parent->be_add_operation (sendc_op);
+  be_operation *sendc_arguments =
+    this->create_sendc_operation (node,
+                                  1); // for arguments = TRUE
+
+  if (0 != sendc_marshaling && 0 != sendc_arguments)
+    {
+      sendc_marshaling->set_defined_in (node->defined_in ());
+
+      sendc_arguments->set_defined_in (node->defined_in ());
+
+      // We do not copy the exceptions because the exceptions
+      // are delivered by the excep methods.
+
+      // Set the proper strategy, and store the specialized
+      // marshaling and arguments operations in it.
+      be_operation_ami_sendc_strategy * boass = 0;
+      ACE_NEW_RETURN (boass,
+                      be_operation_ami_sendc_strategy (node,
+                                                       sendc_marshaling,
+                                                       sendc_arguments),
+                      -1);
+
+      be_operation_strategy *old_strategy = node->set_strategy (boass);
+
+      if (old_strategy)
+        {
+          old_strategy->destroy ();
+          delete old_strategy;
+          old_strategy = 0;
+        }
+    }
 
   return 0;
 }
@@ -223,36 +261,83 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 int
 be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
 {
-  if (! node->readonly ())
+  // Temporerily generate the set operation.
+  be_operation *set_operation =
+    this->generate_set_operation (node);
+
+  this->visit_operation (set_operation);
+
+  // Retrieve the strategy set by the visit operation.
+  be_operation_default_strategy *bods = 0;
+  ACE_NEW_RETURN (bods,
+                  be_operation_default_strategy (set_operation),
+                  -1);
+
+  be_operation_strategy *set_operation_strategy =
+    set_operation->set_strategy (bods);
+
+  set_operation->destroy ();
+  delete set_operation;
+  set_operation = 0;
+
+  // Assign it to the attribute as set_operation strategy.
+  if (0 != set_operation_strategy)
     {
-      /// Temporarily generate the set operation.
-      be_operation *set_operation =
-        this->generate_set_operation (node);
-      set_operation->set_defined_in (node->defined_in ());
+      be_operation_strategy *bos =
+        node->set_set_strategy (set_operation_strategy);
 
-      this->visit_operation (set_operation);
-
-      set_operation->destroy ();
-      delete set_operation;
-      set_operation = 0;
+      if (0 != bos)
+        {
+          bos->destroy ();
+          delete bos;
+          bos = 0;
+        }
     }
 
-  /// Temporarily generate the get operation.
+  // Temporerily generate the get operation.
   be_operation *get_operation =
     this->generate_get_operation (node);
-  get_operation->set_defined_in (node->defined_in ());
 
   this->visit_operation (get_operation);
+
+  // Retrieve the strategy set by the visit operation.
+  ACE_NEW_RETURN (bods,
+                  be_operation_default_strategy (get_operation),
+                  -1);
+
+  be_operation_strategy *get_operation_strategy =
+    get_operation->set_strategy (bods);
 
   get_operation->destroy ();
   delete get_operation;
   get_operation = 0;
 
+  // Assign it to the attribute as get_operation strategy.
+  if (0 != get_operation_strategy)
+    {
+      be_operation_strategy *bos =
+        node->set_get_strategy (get_operation_strategy);
+
+      if (0 != bos)
+        {
+          bos->destroy ();
+          delete bos;
+          bos = 0;
+        }
+    }
+
   return 0;
 }
 
+be_valuetype *
+be_visitor_ami_pre_proc::create_exception_holder (be_interface *)
+{
+  return be_global->messaging_exceptionholder ();
+}
+
 be_interface *
-be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
+be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
+                                               be_valuetype *excep_holder)
 {
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
@@ -262,7 +347,6 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   // Create the reply handler name.
   ACE_CString reply_handler_local_name;
-
   this->generate_name (reply_handler_local_name,
                        "AMI_",
                        node->name ()->last_component ()->get_string(),
@@ -270,21 +354,12 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   UTL_ScopedName *reply_handler_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
-
   reply_handler_name->last_component ()->replace_string (
-    reply_handler_local_name.c_str ());
+                                             reply_handler_local_name.c_str ()
+                                           );
 
   long n_parents = 0;
-  AST_Type **p_intf =
-    this->create_inheritance_list (node, n_parents);
-
-  if (p_intf == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
-                        "bad inheritance list\n"),
-                        0);
-    }
+  AST_Interface **p_intf = this->create_inheritance_list (node, n_parents);
 
   be_interface *reply_handler = 0;
   ACE_NEW_RETURN (reply_handler,
@@ -302,17 +377,14 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
   reply_handler->set_name (reply_handler_name);
   reply_handler->set_defined_in (s);
-
-  /// Store here for convenient retrieval later.
-  node->ami_handler (reply_handler);
-
+  
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
   reply_handler->AST_Decl::repoID (0);
   reply_handler->prefix (const_cast<char*> (node->prefix ()));
-
+  
   reply_handler->gen_fwd_helper_name ();
 
   // Now our customized reply handler is created, we have to
@@ -339,42 +411,47 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
                                  "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
                                  "bad node in this scope\n"),
                                 0);
+
             }
 
           if (d->node_type () == AST_Decl::NT_attr)
             {
               be_attribute *attribute = be_attribute::narrow_from_decl (d);
 
-              if (attribute)
+              if (attribute == 0)
                 {
-                  be_operation *get_operation =
-                    this->generate_get_operation (attribute);
+                  return 0;
+                }
 
-                  this->create_reply_handler_operation (get_operation,
-                                                        reply_handler);
+              be_operation *get_operation =
+                this->generate_get_operation (attribute);
 
-                  this->create_excep_operation (get_operation,
-                                                reply_handler);
-
-                  get_operation->destroy ();
-                  delete get_operation;
-                  get_operation = 0;
-
-                  if (!attribute->readonly ())
-                    {
-                      be_operation *set_operation =
-                        this->generate_set_operation (attribute);
-
-                      this->create_reply_handler_operation (set_operation,
-                                                            reply_handler);
-
-                      this->create_excep_operation (set_operation,
+              this->create_reply_handler_operation (get_operation,
                                                     reply_handler);
 
-                      set_operation->destroy ();
-                      delete set_operation;
-                      set_operation = 0;
-                    }
+              this->create_excep_operation (get_operation,
+                                            reply_handler,
+                                            excep_holder);
+
+              get_operation->destroy ();
+              delete get_operation;
+              get_operation = 0;
+
+              if (!attribute->readonly ())
+                {
+                  be_operation *set_operation =
+                    this->generate_set_operation (attribute);
+
+                  this->create_reply_handler_operation (set_operation,
+                                                        reply_handler);
+
+                  this->create_excep_operation (set_operation,
+                                                reply_handler,
+                                                excep_holder);
+
+                  set_operation->destroy ();
+                  delete set_operation;
+                  set_operation = 0;
                 }
             }
           else
@@ -387,20 +464,142 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
                                                         reply_handler);
 
                   this->create_excep_operation (operation,
-                                                reply_handler);
+                                                reply_handler,
+                                                excep_holder);
                 }
             }
         } // end of while loop
     } // end of if
 
-  reply_handler->is_ami_rh (true);
-  reply_handler->is_ami4ccm_rh (true);
-
   return reply_handler;
 }
 
+int
+be_visitor_ami_pre_proc::create_raise_operation (
+    be_decl *node,
+    be_valuetype *excep_holder,
+    Operation_Kind operation_kind
+  )
+{
+  be_operation *orig_op = 0;
+
+  if (operation_kind == NORMAL)
+    {
+      orig_op = be_operation::narrow_from_decl (node);
+
+      if (orig_op)
+        {
+          if (orig_op->flags () == AST_Operation::OP_oneway)
+            {
+              // We do nothing for oneways!
+              return 0;
+            }
+        }
+    }
+
+  Identifier *id = 0;
+  UTL_ScopedName *sn = 0;
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("void"),
+                  -1);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  -1);
+
+  // Create the return type, which is "void"
+  be_predefined_type *rt = 0;
+  ACE_NEW_RETURN (rt,
+                  be_predefined_type (AST_PredefinedType::PT_void,
+                                      sn),
+                  -1);
+
+  // Name the operation properly
+  UTL_ScopedName *op_name =
+    static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
+
+  ACE_CString new_local_name ("raise_");
+
+  if (operation_kind == SET_OPERATION)
+    {
+      new_local_name += "set_";
+    }
+  else if (operation_kind == GET_OPERATION)
+    {
+      new_local_name += "get_";
+    }
+
+  new_local_name += node->name ()->last_component ()->get_string ();
+
+  ACE_NEW_RETURN (id,
+                  Identifier (new_local_name.c_str ()),
+                  -1);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  -1);
+
+  op_name->nconc (sn);
+
+  be_operation *operation = 0;
+  ACE_NEW_RETURN (operation,
+                  be_operation (rt,
+                                AST_Operation::OP_noflags,
+                                op_name,
+                                0,
+                                0),
+                  -1);
+
+  operation->set_name (op_name);
+  operation->set_defined_in (excep_holder);
+
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+  if (operation_kind == NORMAL)
+    {
+      if (orig_op)
+        {
+          // Copy the exceptions.
+          UTL_ExceptList *exceptions = orig_op->exceptions ();
+
+          if (0 != exceptions)
+            {
+              operation->be_add_exceptions (exceptions->copy ());
+            }
+        }
+    }
+#endif
+
+  // Set the proper strategy.
+  be_operation_ami_exception_holder_raise_strategy *boaehrs = 0;
+  ACE_NEW_RETURN (boaehrs,
+                  be_operation_ami_exception_holder_raise_strategy (operation),
+                  -1);
+
+  be_operation_strategy *old_strategy = operation->set_strategy (boaehrs);
+
+  if (old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
+    }
+
+  // After having generated the operation we insert it into the
+  // exceptionholder valuetype.
+  if (0 == excep_holder->be_add_operation (operation))
+    {
+      return -1;
+    }
+
+  return 0;
+}
+
 be_operation *
-be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
+be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
+                                                 int for_arguments)
 {
   if (node->flags () == AST_Operation::OP_oneway)
     {
@@ -414,15 +613,13 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   // Create the new name
   // Prepend "sendc_" to the name of the operation
   ACE_CString original_op_name (
-    node->name ()->last_component ()->get_string ());
-  ACE_CString new_op_name =
-    ACE_CString ("sendc_") + original_op_name;
+                  node->name ()->last_component ()->get_string ()
+                );
+  ACE_CString new_op_name = ACE_CString ("sendc_") + original_op_name;
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (node->name ()->copy ());
   op_name->last_component ()->replace_string (new_op_name.c_str ());
-
-  idl_global->scopes ().push (node->defined_in ());
 
   // Create the operation
   be_operation *op = 0;
@@ -430,72 +627,79 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                false,
-                                false),
+                                0,
+                                0),
                   0);
-
-  idl_global->scopes ().pop ();
 
   op->set_name (op_name);
 
   // Create the first argument, which is a Reply Handler
 
-  // Look up the field type.
-  UTL_Scope *s = node->defined_in ();
-  be_interface *parent = be_interface::narrow_from_scope (s);
-
-  // Add the pre- and suffix
-  ACE_CString handler_local_name;
-
-  this->generate_name (
-    handler_local_name,
-    "AMI_",
-    parent->name ()->last_component ()->get_string (),
-    "Handler");
-
-  AST_Interface *handler = parent->ami_handler ();
-
-  if (0 == handler)
+  if (for_arguments)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ami_pre_proc::")
-                         ACE_TEXT ("create_sendc_operation - ")
-                         ACE_TEXT ("null reply ")
-                         ACE_TEXT ("handler found\n")),
-                        0);
-    }
+      // Look up the field type.
+      UTL_Scope *s = node->defined_in ();
+      be_decl *parent = be_scope::narrow_from_scope (s)->decl ();
 
-  be_interface *field_type =
-    be_interface::narrow_from_decl (handler);
+      // Add the pre- and suffix
+      ACE_CString handler_local_name;
+      this->generate_name (handler_local_name,
+                           "AMI_",
+                           parent->name ()->last_component ()->get_string (),
+                           "Handler");
 
-  ACE_NEW_RETURN (id,
-                  Identifier ("ami_handler"),
-                  0);
+      UTL_ScopedName *field_name =
+        static_cast<UTL_ScopedName *> (parent->name ()->copy ());
+      field_name->last_component ()->replace_string (
+                                         handler_local_name.c_str ()
+                                       );
 
-  UTL_ScopedName *tmp = 0;
+      AST_Decl *d = s->lookup_by_name (field_name, true);
+      field_name->destroy ();
+      delete field_name;
+      field_name = 0;
 
-  ACE_NEW_RETURN (tmp,
-                  UTL_ScopedName (id,
-                                  0),
-                  0);
+      if (0 == d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "create_sendc_operation - "
+                             "lookup of reply handler failed\n"),
+                            0);
+        }
 
-  sn = (UTL_ScopedName *)op->name ()->copy ();
-  sn->nconc (tmp);
+      be_interface *field_type = be_interface::narrow_from_decl (d);
 
-  be_argument *arg = 0;
-  ACE_NEW_RETURN (arg,
-                  be_argument (AST_Argument::dir_IN,
-                               field_type, // is also a valuetype
-                               sn),
-                  0);
+      // Create the argument.
+      ACE_NEW_RETURN (id,
+                      Identifier ("ami_handler"),
+                      0);
 
-  arg->set_defined_in (op);
-  arg->set_name (sn);
-  op->be_add_argument (arg);
+      UTL_ScopedName *tmp = 0;
 
-  if (field_type->imported ())
-    {
-      field_type->seen_in_operation (false);
+      ACE_NEW_RETURN (tmp,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      sn = (UTL_ScopedName *)op->name ()->copy ();
+      sn->nconc (tmp);
+
+      be_argument *arg = 0;
+      ACE_NEW_RETURN (arg,
+                      be_argument (AST_Argument::dir_IN,
+                                   field_type, // is also a valuetype
+                                   sn),
+                      0);
+
+      arg->set_defined_in (op);
+      arg->set_name (sn);
+      op->be_add_argument (arg);
+
+      if (field_type->imported ())
+        {
+          field_type->seen_in_operation (false);
+        }
     }
 
   // Iterate over the arguments and put all the in and inout
@@ -543,15 +747,14 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
         } // end of while loop
     } // end of if
 
-  op->is_sendc_ami (true);
-  op->is_attr_op (node->is_attr_op ());
   return op;
 }
 
 int
 be_visitor_ami_pre_proc::create_reply_handler_operation (
-  be_operation *node,
-  be_interface *reply_handler)
+    be_operation *node,
+    be_interface *reply_handler
+  )
 {
   if (!node)
     {
@@ -673,6 +876,21 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
         } // end of while loop
     } // end of if
 
+  // Set the proper strategy.
+  be_operation_ami_handler_reply_stub_strategy *boahrss = 0;
+  ACE_NEW_RETURN (boahrss,
+                  be_operation_ami_handler_reply_stub_strategy (operation),
+                  -1);
+
+  be_operation_strategy *old_strategy = operation->set_strategy (boahrss);
+
+  if (old_strategy)
+    {
+      old_strategy->destroy ();
+      delete old_strategy;
+      old_strategy = 0;
+    }
+
   operation->set_defined_in (reply_handler);
 
   // Copy the exceptions.
@@ -693,14 +911,19 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
       return -1;
     }
 
-  operation->is_attr_op (node->is_attr_op ());
   return 0;
 }
 
 int
 be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
-                                                 be_interface *reply_handler)
+                                                 be_interface *reply_handler,
+                                                 be_valuetype *excep_holder)
 {
+  if (!node)
+    {
+      return -1;
+    }
+
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // We do nothing for oneways!
@@ -721,7 +944,6 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                                   0),
                   -1);
 
-  be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
   be_argument *arg = 0;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
@@ -762,8 +984,8 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
                                 op_name,
-                                false,
-                                false),
+                                0,
+                                0),
                   -1);
 
   operation->set_name (op_name);
@@ -785,9 +1007,13 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
       operation->be_add_exceptions (exceptions->copy ());
     }
 
-  reply_handler->be_add_operation (operation);
+  // After having generated the operation we insert it into the
+  // reply handler interface.
+  if (0 == reply_handler->be_add_operation (operation))
+    {
+      return -1;
+    }
 
-  operation->is_excep_ami (true);
   return 0;
 }
 
@@ -810,7 +1036,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           }
       }
 
-      AST_Decl **elements = 0;
+      AST_Decl **elements;
       ACE_NEW_RETURN (elements,
                       AST_Decl *[number_of_elements],
                       -1);
@@ -850,7 +1076,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           // Set the scope node as "node" in which the code is being
           // generated so that elements in the node's scope can use it
           // for code generation.
-          this->ctx_->scope (node);
+          this->ctx_->scope (node->decl ());
 
           // Set the node to be visited.
           this->ctx_->node (bd);
@@ -907,23 +1133,13 @@ be_visitor_ami_pre_proc::generate_get_operation (be_attribute *node)
                   be_operation (node->field_type (),
                                 AST_Operation::OP_noflags,
                                 get_name,
-                                false,
-                                false),
+                                0,
+                                0),
                   0);
 
   operation->set_name (get_name);
   operation->set_defined_in (node->defined_in ());
 
-  // Copy the exceptions since the user exception information may
-  // be needed when collocation is disabled.
-  UTL_ExceptList *exceptions = node->get_get_exceptions ();
-
-  if (0 != exceptions)
-    {
-      operation->be_add_exceptions (exceptions->copy ());
-    }
-
-  operation->is_attr_op (true);
   return operation;
 }
 
@@ -955,36 +1171,26 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 set_name,
-                                false,
-                                false),
+                                0,
+                                0),
                   0);
 
   operation->set_name (set_name);
   operation->set_defined_in (node->defined_in ());
   operation->be_add_argument (arg);
 
-  // Copy the exceptions since the user exception information may
-  // be needed when collocation is disabled.
-  UTL_ExceptList *exceptions = node->get_set_exceptions ();
-
-  if (0 != exceptions)
-    {
-      operation->be_add_exceptions (exceptions->copy ());
-    }
-
-  operation->is_attr_op (true);
   return operation;
 }
 
-AST_Type **
+AST_Interface **
 be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                                                   long &n_rh_parents)
 {
-  AST_Type **retval = 0;
+  AST_Interface **retval = 0;
 
-  long const n_parents = node->n_inherits ();
-  AST_Type **parents = node->inherits ();
-  AST_Type *parent = 0;
+  long n_parents = node->n_inherits ();
+  AST_Interface **parents = node->inherits ();
+  AST_Interface *parent = 0;
 
   for (long i = 0; i < n_parents; ++i)
     {
@@ -1003,7 +1209,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
       be_interface *inherit_intf = be_global->messaging_replyhandler ();
 
       ACE_NEW_RETURN (retval,
-                      AST_Type *[1],
+                      AST_Interface *[1],
                       0);
 
       retval[0] = inherit_intf;
@@ -1012,11 +1218,10 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
   else
     {
       ACE_NEW_RETURN (retval,
-                      AST_Type *[n_rh_parents],
+                      AST_Interface *[n_rh_parents],
                       0);
 
       ACE_CString prefix ("AMI_");
-
       ACE_CString suffix ("Handler");
       long index = 0;
 
@@ -1067,88 +1272,3 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 
   return retval;
 }
-
-int
-be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
-{
-  /// The interfaces in the list below are from this IDL file,
-  /// which then must be processed with the -GC option, so we
-  /// know we'll get here - a good place to generate the *A.idl
-  /// file containing the local interfaces and connector
-  /// associated with each interface in the list.
-
-  ACE_Unbounded_Queue<char *> &ccm_ami_ifaces =
-    idl_global->ciao_ami_iface_names ();
-
-  /// If the queue is empty, we're done.
-  if (ccm_ami_ifaces.size () == 0)
-    {
-      return 0;
-    }
-
-  /// Open the *A.idl file and create the file stream.
-  int status =
-    tao_cg->start_ciao_ami_conn_idl (
-      be_global->be_get_ciao_ami_conn_idl_fname ());
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_ami_pre_proc")
-                         ACE_TEXT ("::generate_ami4ccm_idl - ")
-                         ACE_TEXT ("Error opening CIAO AMI ")
-                         ACE_TEXT ("connector IDL file\n")),
-                        -1);
-    }
-
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         ccm_ami_ifaces);
-       ! i.done ();
-       i.advance ())
-    {
-      char **item = 0;
-      i.next (item);
-
-      UTL_ScopedName *sn =
-        FE_Utils::string_to_scoped_name (*item);
-
-      UTL_Scope *s =
-        idl_global->scopes ().top_non_null ();
-
-      AST_Decl *d = s->lookup_by_name (sn, true);
-
-      if (d == 0)
-        {
-          idl_global->err ()->lookup_error (sn);
-
-          sn->destroy ();
-          delete sn;
-          sn = 0;
-
-          continue;
-        }
-
-      sn->destroy ();
-      delete sn;
-      sn = 0;
-
-      be_interface *iface =
-        be_interface::narrow_from_decl (d);
-
-      if (iface == 0)
-        {
-          idl_global->err ()->interface_expected (d);
-          continue;
-        }
-
-      /// The interface's method encapsulates the code that
-      /// spawns the appropriate visitors. We just pass it
-      /// the file stream.
-      iface->gen_ami4ccm_idl (tao_cg->ciao_ami_conn_idl ());
-    }
-
-  tao_cg->end_ciao_ami_conn_idl ();
-
-  return 0;
-}
-

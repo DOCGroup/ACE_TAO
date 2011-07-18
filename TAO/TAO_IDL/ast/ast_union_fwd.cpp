@@ -10,8 +10,17 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 
-AST_Decl::NodeType const
-AST_UnionFwd::NT = AST_Decl::NT_union_fwd;
+ACE_RCSID (ast, 
+           ast_union_fwd, 
+           "$Id$")
+
+AST_UnionFwd::AST_UnionFwd (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_StructureFwd ()
+{
+}
 
 AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
                             UTL_ScopedName *n)

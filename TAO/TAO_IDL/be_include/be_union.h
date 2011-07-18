@@ -1,18 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_union.h
- *
- *  $Id$
- *
- *  Extension of class AST_Union that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_union.h
+//
+// = DESCRIPTION
+//    Extension of class AST_Union that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef BE_UNION_H
 #define BE_UNION_H
@@ -29,37 +34,35 @@ class be_union : public virtual AST_Union,
                  public virtual be_type
 {
 public:
+  be_union (void);
+
   be_union (AST_ConcreteType *dt,
             UTL_ScopedName *n,
             bool local,
             bool abstract);
 
-  /// Catch BE-specific member values before delegating to the base class.
   virtual void redefine (AST_Structure *from);
+  // Catch BE-specific member values before delegating to the base class.
 
-  /// Do we have at least one member with multiple case labels?
   virtual bool has_duplicate_case_labels (void);
+  // Do we have at least one member with multiple case labels?
 
-  /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  virtual void gen_ostream_operator (TAO_OutStream *os);
+  // Overridden from class be_type.
 
-  /// Cleanup function.
   virtual void destroy (void);
+  // Cleanup function.
 
-  /// Visiting.
   virtual int accept (be_visitor *visitor);
+  // Visiting.
 
-  /// Decides whether a default switch case label in the generated copy
-  /// constructor, assignment operator, etc. is needed.
   bool gen_empty_default_label (void);
+  // Decides whether a default switch case label in the generated copy
+  // constructor, assignment operator, etc. is needed.
 
-  /// Just a way to get at fe_add_union_branch() from the backend.
-  AST_UnionBranch *be_add_union_branch (AST_UnionBranch *b);
-
-  /// Returns total number of labels, useful when the union has
-  /// multiple case labels.
-  ACE_UINT64 nlabels (void);
+  unsigned long nlabels (void);
+  // Returns total number of labels, useful when the union has
+  // multiple case labels.
 
   // Narrowing.
 

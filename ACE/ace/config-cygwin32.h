@@ -25,15 +25,13 @@
 #endif /* ACE_IOV_MAX */
 
 // Define custom export macros for export/import of symbols from/of dll's
-#if !defined (ACE_HAS_CUSTOM_EXPORT_MACROS)
-# define ACE_HAS_CUSTOM_EXPORT_MACROS 1
-# define ACE_Proper_Export_Flag __declspec (dllexport)
-# define ACE_Proper_Import_Flag __declspec (dllimport)
-# define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
-# define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
-# define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
-# define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
-#endif
+#define ACE_HAS_CUSTOM_EXPORT_MACROS 1
+#define ACE_Proper_Export_Flag __declspec (dllexport)
+#define ACE_Proper_Import_Flag __declspec (dllimport)
+#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
+#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
+#define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
+#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
 
 #define ACE_HAS_SELECT_H
 
@@ -63,7 +61,9 @@
 
 #define ACE_HAS_VOIDPTR_SOCKOPT 1
 #define ACE_HAS_UALARM 1
+#define ACE_HAS_SYS_ERRLIST 1
 #define ACE_HAS_STRNLEN 1
+#define ACE_HAS_POSIX_GETPWNAM_R 1
 #define ACE_HAS_POSIX_NONBLOCK 1
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_CLOCK_GETTIME 1
@@ -72,9 +72,11 @@
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x8000000)
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
+//#define ACE_HAS_SYSV_IPC
 #define ACE_HAS_VOIDPTR_MMAP
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_POLL
+#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 #define ACE_HAS_SOCKADDR_MSG_NAME 1
 #define ACE_LACKS_PRI_T 1
 #define ACE_HAS_3_PARAM_READDIR_R
@@ -108,7 +110,8 @@
 
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
 
-#define ACE_HAS_STRSIGNAL
+// Compiler/platform supports strerror ().
+#define ACE_HAS_STRERROR
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
@@ -193,11 +196,9 @@
 #  define ACE_LACKS_PTHREAD_YIELD 1
 #  define ACE_LACKS_PTHREAD_ATTR_SETSTACK
 
-#if CYGWIN_VERSION_API_MINOR < 207
 // In the 1.5.9 release of Cygwin the pthread_kill gives an access violation
 // so for the time being we say Cygwin doesn't support pthread_kill.
 #  define ACE_LACKS_PTHREAD_KILL
-#endif
 
 #endif  /* ACE_MT_SAFE */
 

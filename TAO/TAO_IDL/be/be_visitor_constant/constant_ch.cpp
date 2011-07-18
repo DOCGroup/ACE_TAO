@@ -1,16 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    constant_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for the Constant node in the client header.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    constant_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for the Constant node in the client header.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_constant,
+           constant_ch,
+           "$Id$")
+
 
 // ********************************************************************
 // Visitor implementation for the Constant type
@@ -37,7 +48,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // If we are defined in the outermost scope, then the value is assigned
@@ -56,7 +67,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       bnt = td->base_node_type ();
     }
 
-  *os << be_nl_2;
+  *os << be_nl << be_nl;
 
   if (! node->is_nested ())
     {

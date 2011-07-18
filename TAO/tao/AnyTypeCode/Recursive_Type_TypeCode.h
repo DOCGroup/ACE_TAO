@@ -18,7 +18,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/ValueModifierC.h"
 #include "tao/Basic_Types.h"
 #include "tao/Typecode_typesC.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -146,10 +145,10 @@ namespace TAO
       class Reset
       {
       public:
-        Reset (CORBA::ULong & flag) : flag_ (flag) { }
-        ~Reset (void) { this->flag_ = 0; }
+        Reset (bool & flag) : flag_ (flag) { }
+        ~Reset (void) { this->flag_ = false; }
       private:
-        CORBA::ULong & flag_;
+        bool & flag_;
       };
 
     private:
@@ -163,7 +162,7 @@ namespace TAO
        * This flag is used to prevent @c TypeCode equality and
        * equivalence operations from recursing indefinitely.
        */
-      mutable CORBA::ULong recursion_start_offset_;
+      mutable bool in_recursion_;
 
       /// Track whether data has been initialized.
       bool data_initialized_;

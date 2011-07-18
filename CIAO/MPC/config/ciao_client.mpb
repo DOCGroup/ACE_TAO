@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ccm_configvalue, ccm_cookie, ciao_vcwarnings {
+  after    += CIAO_Client
+  libs     += CIAO_Client
+}

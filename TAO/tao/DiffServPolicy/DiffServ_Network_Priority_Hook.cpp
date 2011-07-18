@@ -1,5 +1,4 @@
-// -*- C++ -*-
-// $Id$
+// @(#) $Id$
 
 #include "tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h"
 #include "tao/PortableServer/Root_POA.h"
@@ -12,6 +11,11 @@
 #include "tao/ORB_Core.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Transport.h"
+
+ACE_RCSID(DiffServPolicy,
+          DiffServ_Network_Priority_Hook,
+          "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

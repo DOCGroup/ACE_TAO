@@ -10,6 +10,8 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID(Bug_1269_Regression, Server_Timer, "$Id$")
+
 Server_Timer::Server_Timer(Test::Echo_ptr echo,
                            ACE_Reactor * reactor)
   : ACE_Event_Handler (reactor)
@@ -30,7 +32,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
   Test::Payload pload(1024);
   pload.length(1024);
 
-  ACE_OS::memset(pload.get_buffer(), 0, pload.length());
+  ACE_OS::memset(pload.get_buffer(), pload.length(), 0);
 
   try
   {

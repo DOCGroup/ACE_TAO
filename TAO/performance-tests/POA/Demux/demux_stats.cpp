@@ -1,13 +1,17 @@
-//=============================================================================
-/**
- *  @file    demux_stats.cpp
- *
- *  $Id$
- *
- *  @author Vishal Kachroo
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/Demux
+//
+// = FILENAME
+//    demux_stats.cpp
+//
+// = AUTHOR
+//
+//    Vishal Kachroo
+//
+// ============================================================================
 
 // FUZZ: disable check_for_math_include
 #include <math.h>
@@ -19,19 +23,19 @@ class Demux_Stats
 
 public:
 
-  /// Calculates the average latency and Standard deviation.
-  /// Expects the input data in my_results.dat.
   int
   calculate_avg_latency (void);
+  // Calculates the average latency and Standard deviation.
+  // Expects the input data in my_results.dat.
 
-  /// parses args.
   int
   Demux_Stats::parse_args (int argc_, char * argv_ []);
+  // parses args.
 
 private :
 
-  /// temporary results file.
   FILE *result_fp_;
+  // temporary results file.
 
   int iterations;
 };

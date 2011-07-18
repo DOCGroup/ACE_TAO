@@ -210,9 +210,6 @@ public:
    *
    * @note This call is potentially dangerous to use since the process
    * being terminated may not have a chance to cleanup before it shuts down.
-   * The process's entry is also not removed from this class's process
-   * table. Calling either wait() or remove() after terminate() is
-   * advisable.
    *
    * @retval 0 on success and -1 on failure.
    */
@@ -272,6 +269,17 @@ public:
    */
   pid_t wait (pid_t pid,
               ACE_exitcode *status = 0);
+
+  /**
+   * @deprecated
+   * Reap the result of a single process by calling ACE_OS::waitpid(),
+   * therefore, this method is not portable to Windows.  If the child is
+   * successfully reaped, remove() is called automatically.
+   * Use one of the wait() methods instead of this method.
+   */
+  int reap (pid_t pid = -1,
+            ACE_exitcode *stat_loc = 0,
+            int options = WNOHANG);
   //@}
 
   /**
@@ -293,9 +301,10 @@ public:
 
   /**
    * Remove process @a pid from the ACE_Process_Manager's internal records.
-   * This is called automatically by the wait() method if the waited process
-   * exits. This method can also be called after calling terminate() if
-   * there's no need to wait() for the terminated process.
+   * This is called automatically by the reap() method after it successfully
+   * reaps a process.  It's also possible to call this method
+   * directly from a signal handler, but don't call both reap() and
+   * remove()!
    */
   int remove (pid_t pid);
 

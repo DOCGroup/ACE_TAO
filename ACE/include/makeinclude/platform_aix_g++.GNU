@@ -9,6 +9,7 @@
 
 debug ?= 1
 distrib ?= 0
+exceptions ?= 1
 optimize ?= 1
 threads ?= 1
 buildbits ?= 32
@@ -49,7 +50,7 @@ AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 CC             = gcc
 CXX            = g++
 
-CFLAGS          += -DACE_AIX_VERS=$(AIX_VERS)
+CFLAGS          += -W -Wall -DACE_AIX_VERS=$(AIX_VERS)
 ifeq ($(buildbits),32)
   CFLAGS    += -maix32
 endif
@@ -90,3 +91,5 @@ RANLIB          = ranlib
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

@@ -80,23 +80,13 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   if (this->ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
                                                                          arg) == -1)
-    {
-      // Activation fails, decrease reference.
-      sh->transport ()->remove_reference ();
-
-      // #REFCOUNT# is zero at this point.
-
-      return -1;
-    }
+    return -1;
 
   // The service handler has been activated. Now cache the handler.
   if (sh->add_transport_to_cache () == -1)
     {
       // Adding to the cache fails, close the handler.
       sh->close ();
-
-      // close() doesn't really decrease reference.
-      sh->transport ()->remove_reference ();
 
       // #REFCOUNT# is zero at this point.
 
@@ -112,7 +102,9 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Registration with cache is successful, #REFCOUNT# is two at this
   // point.
-  TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
+
+  TAO_Server_Strategy_Factory *f =
+    this->orb_core_->server_factory ();
 
   int result = 0;
 
@@ -162,9 +154,6 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       // Close handler.
       sh->close ();
 
-      // close() doesn't really decrease reference.
-      sh->transport ()->remove_reference ();
-
       // #REFCOUNT# is zero at this point.
 
       if (TAO_debug_level > 0)
@@ -191,8 +180,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::TAO_Accept_Strategy (TAO_ORB_Core *orb_core)
-  : ACCEPT_STRATEGY_BASE (orb_core->reactor ())
-  , orb_core_ (orb_core)
+  : orb_core_ (orb_core)
 {
 }
 
@@ -206,15 +194,7 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCE
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDLER *svc_handler)
 {
-  int const result = ACCEPT_STRATEGY_BASE::accept_svc_handler (svc_handler);
-  if (result == -1)
-    {
-      svc_handler->transport ()->remove_reference ();
-
-      // #REFCOUNT# is zero at this point.
-    }
-
-  return result;
+  return ACCEPT_STRATEGY_BASE::accept_svc_handler (svc_handler);
 }
 
 

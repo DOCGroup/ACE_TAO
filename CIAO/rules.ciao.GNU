@@ -19,20 +19,11 @@ endif
 CIAO_ROOT := $(subst \,/,$(CIAO_ROOT))
 
 ifndef TAO_IDL3_TO_IDL2
-  TAO_IDL3_TO_IDL2 = $(CIAO_ROOT)/tools/IDL3_to_IDL2/tao_idl3_to_idl2
+  TAO_IDL3_TO_IDL2 = $(CIAO_ROOT)/tools/IDL3_TO_IDL2/tao_idl3_to_idl2
   TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)$(EXEEXT)
 else
 ifndef TAO_IDL3_TO_IDL2_DEP
   TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
-endif
-endif
-
-ifndef TAO_IDL3_TO_XMI
-  TAO_IDL3_TO_XMI = $(CIAO_ROOT)/tools/IDL3_to_XMI/tao_idl3_to_xmi
-  TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)$(EXEEXT)
-else
-ifndef TAO_IDL3_TO_XMI_DEP
-  TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
 endif
 endif
 
@@ -58,4 +49,18 @@ CIAO_MINOR_VERSION := $(shell awk '/CIAO_MINOR_VERSION/ { print $$3}' ${CIAO_ROO
 CIAO_BETA_VERSION := $(shell awk '/CIAO_BETA_VERSION/ { print $$3}' ${CIAO_ROOT}/ciao/Version.h)
 endif
 
-GNUACE_PROJECT_VERSION ?= $(CIAO_MAJOR_VERSION).$(CIAO_MINOR_VERSION).$(CIAO_BETA_VERSION)
+# Version number of the libraries
+#
+ifeq ($(versioned_so),1)
+  # Only set SOVERSION for CIAO if versioning is turned on and SOVERION is
+  # blank, which gives users to ability to override it.
+  ifeq ($(SOVERSION),)
+    SOVERSION = .$(CIAO_MAJOR_VERSION).$(CIAO_MINOR_VERSION).$(CIAO_BETA_VERSION)
+  endif # SOVERSION
+
+  # Name that will be written into the dynamic library
+  #
+  ifneq ($(SONAME),)
+    SONAME = $(SHLIB).$(CIAO_MAJOR_VERSION).$(CIAO_MINOR_VERSION).$(CIAO_BETA_VERSION)
+  endif # SONAME
+endif # versioned_so

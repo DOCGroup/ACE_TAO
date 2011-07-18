@@ -49,6 +49,7 @@ public:
   // = The TAO_Server_Strategy_Factory methods, please read the
   //   documentation in "tao/Server_Strategy_Factory.h"
   virtual int open (TAO_ORB_Core*);
+  virtual int enable_poa_locking (void);
   virtual int activate_server_connections (void);
   virtual int thread_per_connection_timeout (ACE_Time_Value &timeout);
   virtual int server_connection_thread_flags (void);
@@ -70,6 +71,15 @@ protected:
 
   /// Default thread flags passed to thr_create().
   int thread_flags_;
+
+  enum Lock_Type
+  {
+    TAO_NULL_LOCK,
+    TAO_THREAD_LOCK
+  };
+
+  /// The type of lock to be returned by <create_poa_lock()>.
+  Lock_Type poa_lock_type_;
 
   /// The timeout flag and value for the thread-per-connection model
   int thread_per_connection_use_timeout_;

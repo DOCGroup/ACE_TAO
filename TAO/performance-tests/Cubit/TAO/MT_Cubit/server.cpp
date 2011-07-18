@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  @author Andy Gokhale
- *  @author Sumedh Mungee
- *  @author Sergio Flores-Gaitan
- *  @author and Nagarajan Surendran
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests
+//
+// = FILENAME
+//    server.cpp
+//
+// = AUTHOR
+//    Andy Gokhale,
+//    Sumedh Mungee,
+//    Sergio Flores-Gaitan, and
+//    Nagarajan Surendran
+//
+// ============================================================================
 
 #include "ace/config-all.h"
 
@@ -32,6 +35,8 @@
 #if defined (ACE_HAS_QUANTIFY)
 # include "quantify.h"
 #endif /* ACE_HAS_QUANTIFY */
+
+ACE_RCSID(MT_Cubit, server, "$Id$")
 
 Server::Server (void)
   :argc_ (0),
@@ -175,7 +180,7 @@ Server::activate_high_servant (void)
 
   ACE_OS::sprintf (orbendpoint,
                    "-ORBEndpoint %s ",
-                   ACE_TEXT_ALWAYS_CHAR (GLOBALS::instance ()->endpoint));
+                   GLOBALS::instance ()->endpoint);
 
   char *high_second_argv[] =
     {orbendpoint,

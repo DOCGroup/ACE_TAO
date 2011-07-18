@@ -3,6 +3,8 @@
 #include "brokenC.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Hello, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://broken.ior");
 
 int
@@ -27,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -59,10 +61,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ArrayTest_var atobj = saobj->target();
 
-      CharArray_var char_array = CharArray_alloc();
+      CharArray_slice * char_array = CharArray_alloc();
       for (int i = 0; i < 10; i++)
-        char_array.inout ()[i] = (char)('a' + i);
-      atobj->a_charArray (char_array.in ());
+        char_array[i] = (char)('a' + i);
+      atobj->a_charArray (char_array);
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));
 

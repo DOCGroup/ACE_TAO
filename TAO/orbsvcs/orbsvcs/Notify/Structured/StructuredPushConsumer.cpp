@@ -1,5 +1,8 @@
 // $Id$
 #include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
+
+ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
+
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
 #include "tao/ORB_Core.h"
@@ -90,8 +93,8 @@ TAO_Notify_StructuredPushConsumer::push (const CORBA::Any& event)
   if ( !connection_valid ) {
     try
       {
-        CORBA::PolicyList_var inconsistent_policies;
-        this->push_consumer_->_validate_connection (inconsistent_policies.out());
+        CORBA::PolicyList_var inconsistent_policies; 
+        this->push_consumer_->_validate_connection (inconsistent_policies.out()); 
       }
     catch (const CORBA::COMM_FAILURE&)
       {
@@ -123,8 +126,8 @@ TAO_Notify_StructuredPushConsumer::push (const CosNotification::StructuredEvent&
   if ( !connection_valid ) {
     try
       {
-        CORBA::PolicyList_var inconsistent_policies;
-        this->push_consumer_->_validate_connection (inconsistent_policies.out());
+        CORBA::PolicyList_var inconsistent_policies; 
+        this->push_consumer_->_validate_connection (inconsistent_policies.out()); 
       }
     catch (const CORBA::COMM_FAILURE&)
       {

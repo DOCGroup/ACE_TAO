@@ -4,6 +4,7 @@
 #ifndef TERA_SS_STATE_DONE_H
 #define TERA_SS_STATE_DONE_H
 
+#include "ace/OS.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 

@@ -73,13 +73,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_type.h"
 #include "utl_scope.h"
+#include "ace/Unbounded_Queue.h"
 
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
+  AST_Interface (void);
+
   AST_Interface (UTL_ScopedName *n,
-                 AST_Type **ih,
+                 AST_Interface **ih,
                  long nih,
                  AST_Interface **ih_flat,
                  long nih_flat,
@@ -95,7 +98,7 @@ public:
   // Overridden for valuetypes, components, and eventtypes.
   virtual void redefine (AST_Interface *from);
 
-  AST_Type **inherits (void) const;
+  AST_Interface **inherits (void) const;
 
   long n_inherits (void) const;
 
@@ -103,8 +106,8 @@ public:
 
   long n_inherits_flat (void) const;
 
-  ACE_Unbounded_Queue<AST_Type *> &get_insert_queue (void);
-  ACE_Unbounded_Queue<AST_Type *> &get_del_queue (void);
+  ACE_Unbounded_Queue<AST_Interface *> &get_insert_queue (void);
+  ACE_Unbounded_Queue<AST_Interface *> &get_del_queue (void);
 
   AST_Operation *be_add_operation (AST_Operation *);
 
@@ -123,39 +126,19 @@ public:
   // Accessors for the member.
   bool home_equiv (void) const;
   void home_equiv (bool val);
-
+  
   // Accessors for the member.
   AST_InterfaceFwd *fwd_decl (void) const;
   void fwd_decl (AST_InterfaceFwd *node);
 
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
-                                       bool full_def_only);
-
-  AST_Decl *look_in_inherited_local (Identifier *e,
-                                     bool full_def_only = false);
-
-  /// Do we have both abstract and concrete parents?
-  int has_mixed_parentage (void);
-
-  /// Compute whether or not we have both abstract and concrete parents,
-  /// and make a list of the abstract parents, if any.
-  void analyze_parentage (void);
+                                       bool treat_as_ref);
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
   virtual bool legal_for_primary_key (void) const;
-
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
-
-  /// Accessors for the members.
-  AST_Interface *ami_handler (void) const;
-  void ami_handler (AST_Interface *handler);
-  AST_Interface *ami4ccm_uses (void) const;
-  void ami4ccm_uses (AST_Interface *implied);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -171,14 +154,11 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  static AST_Decl::NodeType const NT;
-  typedef AST_InterfaceFwd FWD_TYPE;
-
 protected:
   // Data.
 
   // Immediate ancestors.
-  AST_Type **pd_inherits;
+  AST_Interface **pd_inherits;
   long pd_n_inherits;
 
   // All ancestors.
@@ -187,7 +167,7 @@ protected:
 
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.
-  ACE_Unbounded_Queue<AST_Type *> insert_queue;
+  ACE_Unbounded_Queue<AST_Interface *> insert_queue;
 
   // For a special case of a deeply nested inheritance graph and one specific
   // way of inheritance in which a node that was already visited,
@@ -198,36 +178,26 @@ protected:
   // parent turns out to be a child of the first .
 
   // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue<AST_Type *> del_queue;
+  ACE_Unbounded_Queue<AST_Interface *> del_queue;
 
   // Are we the equivalent interface of a home?
   bool home_equiv_;
-
+  
   // The forward declaration we may have been created from.
   AST_InterfaceFwd *fwd_decl_;
 
-  // Must keep these base interface placeholders in a separate
-  // container, so they can be destroyed. Iterating over
-  // pd_inherits won't work because the real interfaces will
-  // probably already be destroyed and the pointers will be
-  // garbage.
-  ACE_Unbounded_Queue<AST_Type *> param_holders_;
-
-  /// Do we have both abstract and concrete parents?
-  int has_mixed_parentage_;
-
-  /// Store here for quick retrieval without an AST lookup.
-  AST_Interface *ami_handler_;
-  AST_Interface *ami4ccm_uses_;
-
-public:
+protected:
   // Scope Management Protocol.
+  friend int tao_yyparse (void);
+  friend class IDL_GlobalData;
 
   virtual AST_Constant *fe_add_constant (AST_Constant *c);
 
   virtual AST_Exception *fe_add_exception (AST_Exception *e);
 
   virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
+
+  virtual AST_Field *fe_add_field (AST_Field *o);
 
   virtual AST_Operation *fe_add_operation (AST_Operation *o);
 
@@ -247,17 +217,17 @@ public:
 
   virtual AST_Native *fe_add_native (AST_Native *n);
 
-protected:
   // Lookup based on the local name, override of UTL_Scope definition.
   // This version checks for redefinitions of attributes or operations.
-  AST_Decl *lookup_for_add (AST_Decl *d);
+  AST_Decl *lookup_for_add (AST_Decl *d,
+                            bool treat_as_ref);
 
-  void redef_clash_populate_r (AST_Type *t);
+  void redef_clash_populate_r (AST_Interface *t);
   // Populate the insert queue with our parents, and, if we are a
   // valuetype, with our supported interface and our parents'
   // supported interfaces.
 
-  int insert_non_dup (AST_Type *t,
+  int insert_non_dup (AST_Interface *t,
                       bool abstract_paths_only = false);
   // Do non-duplicating insert of bi, by searching both the
   // insert queue and the delete queue.

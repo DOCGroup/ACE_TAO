@@ -32,7 +32,7 @@ libJAWS_la_SOURCES = \
   HTTP_Request.cpp \
   HTTP_Response.cpp \
   HTTP_Server.cpp \
-  JAWS_IO.cpp \
+  IO.cpp \
   JAWS_Concurrency.cpp \
   JAWS_Pipeline.cpp \
   Parse_Headers.cpp
@@ -44,7 +44,7 @@ noinst_HEADERS = \
   HTTP_Request.h \
   HTTP_Response.h \
   HTTP_Server.h \
-  JAWS_IO.h \
+  IO.h \
   JAWS_Concurrency.h \
   JAWS_Pipeline.h \
   Parse_Headers.h

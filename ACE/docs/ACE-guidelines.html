@@ -37,10 +37,6 @@ bgcolor="#ffffff">
 
         <pre>(setq-default nuke-trailing-whitespace-p t)</pre>
 
-        Newer versions of emacs will require the following instead:
-
-        <pre>(add-hook 'before-save-hook 'delete-trailing-whitespace)</pre>
-
         <strong>Note for Microsoft Visual Studio .NET Users:</strong>
         <p>There is a macro project <code>(ace_guidelines.vsmacros)</code>
         located in <code>$ACE_ROOT/docs</code> that replaces tabs with spaces
@@ -498,13 +494,20 @@ If using g++, problems like this can be flagged as a warning by using the "<code
         for (unsigned int i = 0; i &lt; count; ++i)
           ++total;
         </pre>
+        Though, I prefer to always wrap the body of the loop in braces,
+        to avoid surprises when other code or debugging statements are
+        added, and to maintain sanity when the body consists of a macro,
+        such as an <code>ACE_ASSERT</code> without a trailing semicolon:
+        <pre>
+        for (unsigned int i = 0; i &lt; count; ++i)
+          {
+            ACE_ASSERT (++total &lt; UINT_MAX;)
+          }
+        </pre><p>
 
         Similarly, <strong><code>if</code></strong> statements should have
         a space after the "<strong>if</strong>", and no spaces just after
         the opening parenthesis and just before the closing parenthesis.<p>
-
-        If there's just one statement in the loop or if statement
-        there's no need to use additional braces.
 
     <li>If a loop index is used after the body of the loop, it
         <strong>must</strong> be declared before the loop.  For example,
@@ -1257,7 +1260,7 @@ public:
     <li>Test your change on at least Windows and Linux before commiting.
       After commiting watch the scoreboard to catch errors your change
       may be related to on other platforms.
-    <li>Add an entry to the appropriate ChangeLog.  TAO and some
+    <li>An an entry to the appropriate ChangeLog.  TAO and some
       ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
       <a href="../apps/JAWS">JAWS</a>, and
       <a href="../apps/gperf">gperf,</a> have their

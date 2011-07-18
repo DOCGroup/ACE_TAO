@@ -1,21 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ub_wstr_seq.cpp
- *
- *  $Id$
- *
- *  tests unbounded wide string sequences
- *
- *
- *  @author   Jeff Parsons
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    ub_wstr_seq.cpp
+//
+// = DESCRIPTION
+//    tests unbounded wide string sequences
+//
+// = AUTHORS
+//      Jeff Parsons
+//
+// ============================================================================
 
 #include "helper.h"
 #include "ub_wstr_seq.h"
 #include "ace/OS_NS_wchar.h"
+
+ACE_RCSID (Param_Test,
+           ub_wstr_seq,
+           "$Id$")
 
 // ************************************************************************
 //               Test_WString_Sequence

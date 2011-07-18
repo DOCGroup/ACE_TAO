@@ -18,10 +18,8 @@
 // ******************************************************************
 
 static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
-static const ACE_TCHAR *ready_output_file = ACE_TEXT ("ready.txt");
+static const char* ready = "ready.txt";
 static unsigned int expected = 2000;
-static unsigned int delay_period = 5;
-static unsigned int delay_count = 0;
 static Notify_Structured_Push_Consumer* consumer_1 = 0;
 
 class Consumer_Client : public Notify_Test_Client
@@ -34,7 +32,7 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:p:d:o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -48,31 +46,16 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
           expected = ACE_OS::atoi (get_opts.optarg);
           break;
 
-        case 'p':
-          delay_period = ACE_OS::atoi (get_opts.optarg);
-          break;
-
-        case 'd':
-          delay_count = ACE_OS::atoi (get_opts.optarg);
-          break;
-
-        case 'o':
-          ready_output_file = get_opts.optarg;
-          break;
-
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
             "usage:  %s "
             "-k <ior> "
             "-e <expected events> "
-            "-d <delay every 'n' seconds> "
-            "-p <how many seconds to delay> "
-            "-o <readyfile> -e <# of events> "
             "\n",
             argv [0]),
             -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -98,7 +81,6 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                                                      expected,
                                                      *client),
                     CORBA::NO_MEMORY ());
-  consumer_1->set_delay_parameters (delay_count, delay_period);
   consumer_1->init (client->root_poa ());
   consumer_1->_connect (admin);
 }
@@ -126,18 +108,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNotifyChannelAdmin::EventChannel_var ec =
         client.create_event_channel ("MyEventChannel", 0);
 
-#ifdef TEST_QOS_MAX_QUEUE_LENGTH
-      ACE_OS::printf ("%s: setting max queue length to 1000\n", argv[0]);
-      CosNotification::AdminProperties properties(1);
-      properties.length(1);
-      properties[0].name = CORBA::string_dup (CosNotification::MaxQueueLength);
-      properties[0].value <<= 1000;
-      ec->set_admin(properties);
-#endif //TEST_QOS_MAX_QUEUE_LENGTH
-
       CORBA::ORB_ptr orb = client.orb ();
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       MonitorTestInterface_var sig =
         MonitorTestInterface::_narrow (object.in ());
@@ -165,7 +138,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
-      FILE* ready_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ready_output_file), "w");
+      FILE* ready_file = ACE_OS::fopen (ready, "w");
 
       if (ready_file == 0)
         {
@@ -178,11 +151,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fclose (ready_file);
 
       client.ORB_run ();
-#ifdef PAUSE_ON_EXIT
-      _cputs( "All events received. Still connected.\n");
-      _cputs( "Hit a key to exit consumer: " );
-      _getch();
-#endif // PAUSE_ON_EXIT
+
       ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
       consumer_1->disconnect ();
 

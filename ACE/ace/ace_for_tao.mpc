@@ -15,7 +15,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
   macros      += ACE_LACKS_ACE_TOKEN
   requires     = ace_for_tao ace_svcconf
   sharedname   = ACE_FOR_TAO
-  dynamicflags += ACE_BUILD_DLL
+  dynamicflags = ACE_BUILD_DLL
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
@@ -84,7 +84,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Mem_Map.cpp
     Message_Block.cpp
     Message_Queue.cpp
-    Message_Queue_NT.cpp
     MMAP_Memory_Pool.cpp
     Monitor_Admin.cpp
     Monitor_Admin_Manager.cpp
@@ -142,7 +141,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Parse_Node.cpp
     Pipe.cpp
     Process.cpp
-    Process_Manager.cpp
     Reactor.cpp
     Reactor_Impl.cpp
     Reactor_Notification_Strategy.cpp
@@ -192,12 +190,12 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     TSS_Adapter.cpp
 
     // Dev_Poll_Reactor isn't available on Windows.
-    conditional(!prop:windows) {
+    conditional(automake,make,gnuace) {
       Dev_Poll_Reactor.cpp
     }
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
-    conditional(prop:windows) {
+    conditional(vc6,vc71,vc8,vc9,vc10,nmake,bmake) {
       NT_Service.cpp // Required by ace_for_tao sponsors
       Semaphore.cpp
       Process_Mutex.cpp
@@ -262,6 +260,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Stream_Modules.cpp
     String_Base.cpp
     Svc_Handler.cpp
+    Synch_T.cpp
     TSS_T.cpp
     Task_Ex_T.cpp
     Task_T.cpp
@@ -272,7 +271,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Timer_Queue_Adapters.cpp
     Timer_Queue_T.cpp
     Timer_Wheel_T.cpp
-    Tokenizer_T.cpp
     Typed_SV_Message.cpp
     Typed_SV_Message_Queue.cpp
     Unbounded_Queue.cpp
@@ -286,7 +284,9 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
+    OS.inl
     OS_Memory.inl
+    OS_String.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     TSS_T.inl
@@ -297,6 +297,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
 
   Header_Files {
     ACE_export.h
+    Array.h
     Based_Pointer_Repository.h
     Bound_Ptr.h
     CORBA_macros.h
@@ -320,12 +321,14 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Null_Mutex.h
     Null_Semaphore.h
     Numeric_Limits.h
+    OS.h
+    OS_Dirent.h
     OS_Memory.h
     OS_NS_macros.h
+    OS_String.h
     OS_Thread_Adapter.h
     Object_Manager_Base.h
-    Process.h
-    Process_Manager.h
+    Pair.h
     Reactor_Impl.h
     Reactor_Timer_Interface.h
     Refcounted_Auto_Ptr.h
@@ -333,6 +336,7 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Select_Reactor.h
     SStringfwd.h
     Static_Object_Lock.h
+    Strategies.h
     String_Base_Const.h
     Svc_Conf.h
     Svc_Conf_Tokens.h
@@ -352,6 +356,8 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     config-minimal.h
     config-win32-borland.h
     config-win32-common.h
+    config-win32-ghs.h
+    config-win32-msvc-6.h
     config-win32-msvc-7.h
     config-win32-msvc.h
     config-win32.h

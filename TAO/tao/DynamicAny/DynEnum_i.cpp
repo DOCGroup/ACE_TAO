@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/TypeCode.h"
@@ -9,6 +8,11 @@
 #include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (DynamicAny,
+           DynEnum_i,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -3,6 +3,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/StringSeqC.h"
 
+ACE_RCSID(Bug_2795_Regression,
+          client,
+          "$Id$")
+
 void
 StringOutTest (CORBA::String_out so)
 {

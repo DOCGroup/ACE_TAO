@@ -17,7 +17,8 @@
 #include "test_config.h"
 
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdlib.h"
+
+ACE_RCSID(tests, ACE_Test, "$Id$")
 
 int
 log2_test (void)

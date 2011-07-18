@@ -65,66 +65,6 @@ TAO_OutputCDR::get_version (TAO_GIOP_Message_Version& giop_version)
   giop_version.major = this->major_version_;
   giop_version.minor = this->minor_version_;
 }
-
-ACE_INLINE TAO_OutputCDR::Repo_Id_Map_Handle&
-TAO_OutputCDR::get_repo_id_map ()
-{
-  return this->repo_id_map_;
-}
-
-#ifdef TAO_HAS_VALUETYPE_CODEBASE
-ACE_INLINE TAO_OutputCDR::Codebase_URL_Map_Handle&
-TAO_OutputCDR::get_codebase_url_map ()
-{
-  return this->codebase_map_;
-}
-#endif
-
-ACE_INLINE TAO_OutputCDR::Value_Map_Handle&
-TAO_OutputCDR::get_value_map ()
-{
-  return this->value_map_;
-}
-
-ACE_INLINE void
-TAO_OutputCDR::set_repo_id_map (TAO_OutputCDR::Repo_Id_Map_Handle& map)
-{
-  this->repo_id_map_ = map;
-}
-
-#ifdef TAO_HAS_VALUETYPE_CODEBASE
-ACE_INLINE void
-TAO_OutputCDR::set_codebase_url_map (TAO_OutputCDR::Codebase_URL_Map_Handle& map)
-{
-  this->codebase_map_ = map;
-}
-#endif
-
-ACE_INLINE void
-TAO_OutputCDR::set_value_map (TAO_OutputCDR::Value_Map_Handle& map)
-{
-  this->value_map_ = map;
-}
-
-ACE_INLINE void
-TAO_OutputCDR::reset_vt_indirect_maps ()
-{
-  if (! this->repo_id_map_.is_nil () && this->repo_id_map_->get()->current_size () != 0)
-  {
-    this->repo_id_map_->get()->unbind_all ();
-  }
-#ifdef TAO_HAS_VALUETYPE_CODEBASE
-  if (! this->codebase_map_.is_nil () && this->codebase_map_->get()->current_size () != 0)
-  {
-    this->codebase_map_->get()->unbind_all ();
-  }
-#endif
-  if (! this->value_map_.is_nil () && this->value_map_->get()->current_size () != 0)
-  {
-    this->value_map_->get()->unbind_all ();
-  }
-}
-
 // -------------------------------------------------------------------
 
 ACE_INLINE
@@ -248,10 +188,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
   : ACE_InputCDR (rhs),
-    orb_core_ (rhs.orb_core_),
-    repo_id_map_ (rhs.repo_id_map_),
-    codebase_map_ (rhs.codebase_map_),
-    value_map_ (rhs.value_map_)
+    orb_core_ (rhs.orb_core_)
 {
 }
 
@@ -263,7 +200,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
 {
 }
 
-
 ACE_INLINE
 TAO_InputCDR::~TAO_InputCDR (void)
 {
@@ -274,78 +210,6 @@ TAO_InputCDR::orb_core (void) const
 {
   return this->orb_core_;
 }
-
-
-ACE_INLINE TAO_InputCDR::Repo_Id_Map_Handle&
-TAO_InputCDR::get_repo_id_map ()
-{
-  return this->repo_id_map_;
-}
-
-ACE_INLINE TAO_InputCDR::Codebase_URL_Map_Handle&
-TAO_InputCDR::get_codebase_url_map ()
-{
-  return this->codebase_map_;
-}
-
-ACE_INLINE TAO_InputCDR::Value_Map_Handle&
-TAO_InputCDR::get_value_map ()
-{
-  return this->value_map_;
-}
-
-ACE_INLINE void
-TAO_InputCDR::set_repo_id_map (TAO_InputCDR::Repo_Id_Map_Handle& map)
-{
-  this->repo_id_map_ = map;
-}
-
-ACE_INLINE void
-TAO_InputCDR::set_codebase_url_map (TAO_InputCDR::Codebase_URL_Map_Handle& map)
-{
-  this->codebase_map_ = map;
-}
-
-ACE_INLINE void
-TAO_InputCDR::set_value_map (TAO_InputCDR::Value_Map_Handle& map)
-{
-  this->value_map_ = map;
-}
-
-ACE_INLINE void
-TAO_InputCDR::reset_vt_indirect_maps ()
-{
-  if (! this->repo_id_map_.is_nil () && this->repo_id_map_->get()->current_size () != 0)
-  {
-    this->repo_id_map_->get()->unbind_all ();
-  }
-  if (! this->codebase_map_.is_nil () && this->codebase_map_->get()->current_size () != 0)
-  {
-    this->codebase_map_->get()->unbind_all ();
-  }
-  if (! this->value_map_.is_nil () && this->value_map_->get()->current_size () != 0)
-  {
-    this->value_map_->get()->unbind_all ();
-  }
-}
-
-ACE_INLINE
-TAO_InputCDR::to_std_string::to_std_string (std::string &s,
-                                            ACE_CDR::ULong b)
-  : val_ (s),
-    bound_ (b)
-{
-}
-
-#if !defined(ACE_LACKS_STD_WSTRING)
-ACE_INLINE
-TAO_InputCDR::to_std_wstring::to_std_wstring (std::wstring &s,
-                                              ACE_CDR::ULong b)
-  : val_ (s),
-    bound_ (b)
-{
-}
-#endif /* ACE_LACKS_STD_WSTRING */
 
 // ****************************************************************
 
@@ -472,20 +336,6 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
   return os << x.val_;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string &x)
-{
-  return os << x.c_str ();
-}
-
-#if !defined(ACE_LACKS_STD_WSTRING)
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::wstring &x)
-{
-  return os << x.c_str ();
-}
-#endif /* ACE_LACKS_STD_WSTRING */
-
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -579,51 +429,5 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
     }
   return marshal_flag;
 }
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      std::string &x)
-{
-  char *buf = 0;
-  CORBA::Boolean const marshal_flag = is >> buf;
-  x.assign (buf);
-  ACE::strdelete (buf);
-  return marshal_flag;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      TAO_InputCDR::to_std_string x)
-{
-  CORBA::Boolean const marshal_flag =
-    is >> x.val_;
-  if (marshal_flag && x.bound_ != 0 && x.val_.size () > x.bound_)
-    {
-      throw ::CORBA::BAD_PARAM ();
-    }
-  return marshal_flag;
-}
-
-#if !defined(ACE_LACKS_STD_WSTRING)
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      std::wstring &x)
-{
-  CORBA::WChar *buf = 0;
-  CORBA::Boolean const marshal_flag = is >> buf;
-  x.assign (buf);
-  ACE::strdelete (buf);
-  return marshal_flag;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      TAO_InputCDR::to_std_wstring x)
-{
-  CORBA::Boolean const marshal_flag =
-    is >> x.val_;
-  if (marshal_flag && x.bound_ != 0 && x.val_.size () > x.bound_)
-    {
-      throw ::CORBA::BAD_PARAM ();
-    }
-  return marshal_flag;
-}
-#endif /* ACE_LACKS_STD_WSTRING */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

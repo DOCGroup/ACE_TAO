@@ -1,7 +1,11 @@
 // $Id$
 #include "Foo_i.h"
 #include "TestInf/AppShutdown.h"
+#include "ace/OS.h"
 #include "ace/Time_Value.h"
+
+
+
 
 Foo_i::Foo_i()
 {

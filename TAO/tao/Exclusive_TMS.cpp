@@ -5,6 +5,10 @@
 #include "tao/debug.h"
 #include "tao/Transport.h"
 
+ACE_RCSID (tao,
+           Exclusive_TMS,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
@@ -116,7 +120,7 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
       // did not find the right reply handler.
       return 0;
     }
-
+  
   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get ());
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_.release ();
@@ -136,7 +140,7 @@ bool
 TAO_Exclusive_TMS::idle_after_reply (void)
 {
   // Irrespective of whether we are successful or not we need to
-  // return true. If *this* class is not successful in idling the
+  // return true. If *this* class is not successfull in idling the
   // transport no one can.
   if (this->transport_ != 0)
     (void) this->transport_->make_idle ();

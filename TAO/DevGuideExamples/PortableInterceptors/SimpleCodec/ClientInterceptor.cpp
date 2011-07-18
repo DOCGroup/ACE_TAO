@@ -65,10 +65,11 @@ ClientInterceptor::send_request (
   CORBA::Any gid_as_any;
   gid_as_any <<= gid;
 
-  sc.context_data = *codec->encode(gid_as_any);
+  sc.context_data = reinterpret_cast<CORBA::OctetSeq&> (
+                                         *codec->encode(gid_as_any));
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, false);
+  ri->add_request_service_context (sc, 0);
 
 }
 

@@ -1,7 +1,10 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Collocation_Resolver.h"
+
+ACE_RCSID (tao,
+           Collocation_Resolver,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

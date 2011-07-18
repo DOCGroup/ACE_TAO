@@ -25,6 +25,7 @@
  *    - ACE_SIZEOF_LONG_DOUBLE
  *
  *  Wrappers for built-in types of specific sizes:
+ *    - ACE_USHORT16 (For backward compatibility.  Use ACE_UINT16 instead.)
  *    - ACE_INT8
  *    - ACE_UINT8
  *    - ACE_INT16
@@ -326,7 +327,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #  endif /* defined (ACE_UINT64_TYPE) */
 #endif /* !(ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T) */
 
-/// Define a generic byte for use in codecs
+
+typedef ACE_UINT16 ACE_USHORT16;  // @@ Backward compatibility.
+
+// Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
 
 // Define a pseudo wide character type when wchar is not supported so we
@@ -344,6 +348,13 @@ typedef unsigned char ACE_Byte;
 # ifndef ACE_SIZEOF_VOID_P
 #   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
 # endif /* ACE_SIZEOF_VOID_P */
+
+// Type for doing arithmetic on pointers ... as elsewhere, we assume
+// that unsigned versions of a type are the same size as the signed
+// version of the same type.
+# if defined (ACE_HAS_WINCE) && (_WIN32_WCE < 400)
+typedef unsigned long ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+# endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -708,7 +719,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  if defined (PRId8)
 #    define ACE_INT8_FORMAT_SPECIFIER ACE_TEXT ("%") ACE_TEXT (PRId8)
 #  else
-#    define ACE_INT8_FORMAT_SPECIFIER ACE_TEXT (ACE_INT8_FORMAT_SPECIFIER_ASCII)
+#    define ACE_INT8_FORMAT_SPECIFIER ACE_TEXT (ACE_INT8_FORMAT_SPECIFIER)
 #  endif /* defined (PRId8) */
 #endif /* ACE_INT8_FORMAT_SPECIFIER */
 
@@ -897,17 +908,13 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   if LDBL_MAX_EXP == 128
 #     define ACE_SIZEOF_LONG_DOUBLE 4
 #   elif LDBL_MAX_EXP == 1024
-#     if defined (__powerpc64__)
-#       define ACE_SIZEOF_LONG_DOUBLE 16
-#     else
-#       define ACE_SIZEOF_LONG_DOUBLE 8
-#     endif
+#     define ACE_SIZEOF_LONG_DOUBLE 8
 #   elif LDBL_MAX_EXP == 16384
 #     if defined (LDBL_DIG)  &&  LDBL_DIG == 18
 #       if defined (__ia64) || defined (__x86_64)
 #         define ACE_SIZEOF_LONG_DOUBLE 16
-#       else /* ! __ia64 || __x86_64 */
-#         define ACE_SIZEOF_LONG_DOUBLE 12
+#       else /* ! __ia64 */
+#       define ACE_SIZEOF_LONG_DOUBLE 12
 #       endif /* __ia64 */
 #     else  /* ! LDBL_DIG  ||  LDBL_DIG != 18 */
 #       define ACE_SIZEOF_LONG_DOUBLE 16

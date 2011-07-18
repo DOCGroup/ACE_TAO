@@ -16,7 +16,10 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+
+ACE_RCSID (tests,
+           Bug_2540_Regression_Test,
+           "$Id$")
 
 int const nhandlers = 3;
 
@@ -67,7 +70,7 @@ private:
  * in a repeating interval.  On the first @c initial_iterations the Timer
  * writes data through all of its handlers.  On iteration @c initial_iteration
  * it triggers bug 2540 by removing two handlers from the reactor.
- *
+ * 
  */
 class Timer : public ACE_Event_Handler
 {
@@ -106,11 +109,8 @@ run_main (int, ACE_TCHAR *[])
   // regardless of platform. In particular, this test relies on a handler
   // that doesn't consume ready-to-read data being called back - this won't
   // happen with ACE_WFMO_Reactor.
-  ACE_Select_Reactor *impl_ptr = 0;
-  ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
-  auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
-
-  ACE_Reactor reactor (impl_ptr);
+  ACE_Select_Reactor select_reactor;
+  ACE_Reactor reactor (&select_reactor);
 
   // Create the timer, this is the main driver for the test
   Timer * timer = new Timer;
@@ -264,7 +264,7 @@ int Timer::handle_timeout(ACE_Time_Value const &, void const *)
       // The first iterations are there just to prime things.
       return 0;
     }
-
+    
     if (iteration_ == initial_iterations)
     {
       // We expect the special_handler() to work normally after this

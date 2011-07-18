@@ -3,6 +3,8 @@
 //
 #include "Receiver.h"
 
+ACE_RCSID(Muxing, Receiver, "$Id$")
+
 Receiver::Receiver (CORBA::ORB_ptr orb)
   :  message_count_ (0)
   ,  byte_count_ (0)

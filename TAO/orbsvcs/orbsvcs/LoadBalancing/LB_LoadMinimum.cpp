@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_LoadMinimum.h"
 #include "ace/OS_NS_sys_time.h"
 #include "orbsvcs/LoadBalancing/LB_LoadMap.h"
@@ -12,6 +10,12 @@
 
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (LoadBalancing,
+           LB_LoadMinimum,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadMinimum.inl"
@@ -30,7 +34,7 @@ TAO_LB_LoadMinimum::TAO_LB_LoadMinimum (PortableServer::POA_ptr poa)
 {
   // A load map that retains previous load values at a given location
   // and lock are only needed if dampening is enabled, i.e. non-zero.
-  if (!ACE::is_equal (this->dampening_, 0.0f))
+  if (this->dampening_ != 0)
     {
       ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
 
@@ -100,7 +104,7 @@ TAO_LB_LoadMinimum::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = 0;
+      TAO_LB_LoadMap::ENTRY * entry;
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -262,7 +266,7 @@ TAO_LB_LoadMinimum::analyze_loads (
           total_load.value = total_load.value + load.value;
           tmp[i] = load;
 
-          if ((load.value < min_load) && !ACE::is_equal (load.value, 0.0f))
+          if ((load.value < min_load) && (load.value != 0))
           {
             min_load = load.value;
           }
@@ -316,7 +320,7 @@ TAO_LB_LoadMinimum::analyze_loads (
               CORBA::Float percent_diff =
                 (tmp[j].value / min_load) - 1;
 
-              if (ACE::is_equal (tmp[j].value, min_load))
+              if (tmp[j].value == min_load)
               {
                 percent_diff = 0;
               }
@@ -409,7 +413,7 @@ TAO_LB_LoadMinimum::get_location (
           if (load.value < min_load)
             {
 
-              if (i > 0 && !ACE::is_equal (load.value, 0.0f))
+              if (i > 0 && load.value != 0)
                 {
                   /*
                     percent difference =

@@ -1,23 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    complex_any.cpp
- *
- *  $Id$
- *
- *  tests complex Anys
- *
- *
- *  @author Aniruddha Gokhale
- *  @author Jeff Parsons
- *  @author Frank Buschmann
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    complex_any.cpp
+//
+// = DESCRIPTION
+//    tests complex Anys
+//
+// = AUTHORS
+//    Aniruddha Gokhale, Jeff Parsons, Frank Buschmann
+//
+// ============================================================================
 
 #include "helper.h"
 #include "complex_any.h"
 #include "tao/debug.h"
+
+ACE_RCSID (Param_Test,
+           complex_any,
+           "$Id$")
 
 const int LEVEL_2_LENGTH = 5;
 const int LEVEL_3_LENGTH = 3;

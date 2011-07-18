@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Unions in the client stubs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Unions in the client stubs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union,
+           union_cs,
+           "$Id$")
 
 // ******************************************************
 // For client stubs.
@@ -78,22 +87,20 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Now generate the operations on the union such as the copy constructor
   // and the assignment operator.
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the copy constructor and the assignment operator here.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << node->name () << "::" << node->local_name () << " (void)" << be_nl
       << "{" << be_idt_nl
-      << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
+      << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl
+      << "this->disc_ = ";
 
   // The default constructor must initialize the discriminator
   // to the first case label value found in the union declaration
   // so that, if the uninitialized union is inserted into an Any,
   // the Any destructor's call to deep_free() will work properly.
-
-  *os << "this->disc_ = ";
-
   UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
   be_union_branch *ub = 0;
 
@@ -110,8 +117,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   // Get the first label in its list.
   AST_UnionLabel *ul = ub->label (0);
-
   AST_Union::DefaultValue dv;
+
   // This can indicate an error in the return value, but it is
   // caught elsewhere.
   (void) node->default_value (dv);
@@ -144,7 +151,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
         }
     }
 
-  *os << be_uidt_nl << "}" << be_nl_2;
+  *os << be_uidt_nl << "}" << be_nl << be_nl;
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
 
@@ -182,14 +189,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl << "}" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl
       << "{" << be_idt_nl
       << "// Finalize." << be_nl
       << "this->_reset ();" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
     {
@@ -201,7 +208,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
           << "delete tmp;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
@@ -221,7 +228,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       << "}" << be_uidt_nl << be_nl;
   // Reset and set the discriminant.
   *os << "this->_reset ();" << be_nl;
-  *os << "this->disc_ = u.disc_;" << be_nl_2;
+  *os << "this->disc_ = u.disc_;" << be_nl << be_nl;
   // now switch based on the disc value
   *os << "switch (this->disc_)" << be_nl;
   *os << "{" << be_idt;
@@ -249,9 +256,9 @@ int be_visitor_union_cs::visit_union (be_union *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);

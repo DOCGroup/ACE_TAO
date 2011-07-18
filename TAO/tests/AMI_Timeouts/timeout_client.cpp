@@ -31,11 +31,16 @@ TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
   , INVOKE_ASYNCH (1)
   , timeToWait_ (timeToWait)
 {
+
 }
+
 
 TimeoutClient::~TimeoutClient ()
 {
+
 }
+
+
 
 int
 TimeoutClient::svc ()
@@ -44,6 +49,7 @@ TimeoutClient::svc ()
 
   try
     {
+
       // Tests timeouts for synchronous
       this->synch_test ();
 

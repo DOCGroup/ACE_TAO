@@ -48,7 +48,7 @@
 #elif defined (__DCC__)
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_TEMPLATES_REQUIRE_SOURCE
-#else  /* ! __GNUG__ && !__DCC__ */
+#else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler on VxWorks
 #  endif  /* __cplusplus */
@@ -113,6 +113,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
+#define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_SYSCTL
 #define ACE_LACKS_ALPHASORT
@@ -238,6 +239,7 @@
   #define ACE_LACKS_STDINT_H
   #define ACE_LACKS_UNAME
   #define ACE_LACKS_UTSNAME_T
+  #define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
   #define ACE_LACKS_DLFCN_H
   #define ACE_LACKS_WAIT
   #define ACE_LACKS_WAITPID
@@ -335,6 +337,11 @@
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
+
+// By default, don't include RCS Id strings in object code.
+#if !defined (ACE_USE_RCSID)
+#define ACE_USE_RCSID 0
+#endif /* !ACE_USE_RCSID */
 
 #if defined (ACE_HAS_IP_MULTICAST)
 # define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1

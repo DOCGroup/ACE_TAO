@@ -2,13 +2,11 @@
 
 #include "ace/OS_NS_sys_socket.h"
 
-
+ACE_RCSID(ace, OS_NS_sys_socket, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_sys_socket.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
-
-#include "ace/Containers_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,6 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int ACE_OS::socket_initialized_;
 #endif /* ACE_WIN32 */
 
+#if !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500))
 ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
                 struct sockaddr *addr,
@@ -96,6 +95,7 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # endif /* ACE_HAS_WINSOCK2 */
 }
+#endif  /* !(defined (ACE_HAS_WINCE) && (UNDER_CE < 500)) */
 
 int
 ACE_OS::socket_init (int version_high, int version_low)
@@ -156,125 +156,6 @@ ACE_OS::socket_fini (void)
     }
 # endif /* ACE_WIN32 */
   return 0;
-}
-
-ssize_t
-ACE_OS::sendv_partial_i (ACE_HANDLE handle,
-                         const iovec *buffers,
-                         int n)
-{
-  // the divide and conquer logic should remain consistent
-  // with send_partial_i
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  DWORD bytes_sent = 0;
-  int result = 1;
-  int simulated_n = n;
-  ACE_UINT64 buffer_size = 0;
-  ACE_Array<iovec> iovec_array(simulated_n);
-  int i = 0;
-  for ( ; i < simulated_n; ++i)
-    {
-      iovec_array[i].iov_base = buffers[i].iov_base;
-      iovec_array[i].iov_len = buffers[i].iov_len;
-      buffer_size += buffers[i].iov_len;
-    }
-  // keep dividing the current buffer_size in half and then
-  // attempt to send the modified iovec buffer until some
-  // data is sent, or we get an errno that is not ENOBUFS
-  while (true)
-    {
-      ACE_UINT64 remove_size = buffer_size / 2;
-      buffer_size -= remove_size;
-      for (i = simulated_n - 1; (i >= 0) && (remove_size > 0); --i)
-        {
-          // if the buffer division splits an iovec, we need
-          // to set its iov_len properly
-          if (iovec_array[i].iov_len > remove_size)
-            {
-              iovec_array[i].iov_len -= static_cast<u_long>(remove_size);
-              break;
-            }
-          remove_size -= iovec_array[i].iov_len;
-        }
-
-      simulated_n = i + 1;
-
-      result = ::WSASend ((SOCKET) handle,
-                          (WSABUF *) &(iovec_array[0]),
-                          simulated_n,
-                          &bytes_sent,
-                          0,
-                          0,
-                          0);
-      if (result != SOCKET_ERROR)
-        break;
-
-      ACE_OS::set_errno_to_wsa_last_error ();
-      // if ENOBUFS is received, we apply a divide and
-      // conquer strategy, but if bytes are sent we
-      // cannot guarantee this is the same behavior
-      if ((errno != ENOBUFS) ||
-          (bytes_sent != 0))
-        {
-          return -1;
-        }
-    }
-
-  return (ssize_t) bytes_sent;
-# else
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buffers);
-  ACE_UNUSED_ARG (n);
-
-  return -1;
-# endif /* ACE_HAS_WINSOCK2 */
-}
-
-ssize_t
-ACE_OS::send_partial_i (ACE_HANDLE handle,
-                        const char *buf,
-                        size_t len,
-                        int flags)
-{
-  // the divide and conquer logic should remain consistent
-  // with sendv_partial_i
-#if !defined (ACE_LACKS_SEND) && defined (ACE_WIN32)
-  DWORD bytes_sent = 0;
-  ssize_t result = 1;
-  // keep dividing the current buffer_size in half and then
-  // attempt to send the modified buffer until some data is
-  // sent, or we get an errno that is not ENOBUFS
-  while (true)
-    {
-      len -= len / 2;
-
-      result = (ssize_t) ::send ((SOCKET) handle,
-                                 buf,
-                                 static_cast<int> (len),
-                                 flags);
-      if (result != SOCKET_ERROR)
-        break;
-
-      ACE_OS::set_errno_to_wsa_last_error ();
-      // if ENOBUFS is received, we apply a divide and
-      // conquer strategy, but if bytes are sent we
-      // cannot guarantee this is the same behavior
-      if ((errno != ENOBUFS) ||
-          (bytes_sent != 0))
-        {
-          return -1;
-        }
-    }
-
-  return result;
-# else
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (len);
-  ACE_UNUSED_ARG (flags);
-
-  return -1;
-# endif /* ACE_LACKS_SEND && ACE_WIN32 */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

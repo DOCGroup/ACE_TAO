@@ -80,10 +80,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Create a local event channel and register it with the RootPOA.
     TAO_EC_Event_Channel_Attributes attributes (poa.in (), poa.in ());
-    PortableServer::Servant_var<TAO_EC_Event_Channel> ec_impl =
-      new TAO_EC_Event_Channel(attributes);
-    ec_impl->activate ();
-    PortableServer::ObjectId_var oid = poa->activate_object(ec_impl.in());
+    TAO_EC_Event_Channel ec_impl (attributes);
+    ec_impl.activate ();
+    PortableServer::ObjectId_var oid = poa->activate_object(&ec_impl);
     CORBA::Object_var ec_obj = poa->id_to_reference(oid.in());
     RtecEventChannelAdmin::EventChannel_var ec =
       RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
@@ -102,11 +101,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                         admin->obtain_push_consumer();
 
     // Instantiate an EchoEventSupplier_i servant.
-    PortableServer::Servant_var<EchoEventSupplier_i> servant =
-      new EchoEventSupplier_i(orb.in());
+    EchoEventSupplier_i servant(orb.in());
 
     // Register it with the RootPOA.
-    oid = poa->activate_object(servant.in());
+    oid = poa->activate_object(&servant);
     CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
     RtecEventComm::PushSupplier_var supplier =
       RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
@@ -135,8 +133,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize data fields in event.
     event[0].data.any_value <<= eventData;
 
-    PortableServer::Servant_var<TAO_EC_Gateway_IIOP> gateway =
-      new TAO_EC_Gateway_IIOP;
+    TAO_EC_Gateway_IIOP gateway;
     int gateway_initialized = 0;
 
     std::cout << "Supplier starting sending of events.\n";
@@ -170,10 +167,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // There is a good remote event channel so initialize the
           // gateway.
           if (ok) {
-            gateway->init(remote_ec.in(), ec.in());
+            gateway.init(remote_ec.in(), ec.in());
 
             PortableServer::ObjectId_var gateway_oid =
-              poa->activate_object(gateway.in());
+              poa->activate_object(&gateway);
             CORBA::Object_var gateway_obj =
               poa->id_to_reference(gateway_oid.in());
             RtecEventChannelAdmin::Observer_var obs =

@@ -6,6 +6,12 @@
 #include "ace/Hashable.inl"
 #endif /* __ACE_INLINE __ */
 
+
+ACE_RCSID (ace,
+           Hashable,
+           "$Id$")
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Hashable::~ACE_Hashable (void)

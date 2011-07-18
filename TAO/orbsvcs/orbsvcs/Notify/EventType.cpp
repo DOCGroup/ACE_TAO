@@ -12,6 +12,10 @@
 
 #include "orbsvcs/Notify/Topology_Saver.h"
 
+ACE_RCSID (Notify,
+           TAO_Notify_EventType,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType

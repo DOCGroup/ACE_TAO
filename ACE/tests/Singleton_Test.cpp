@@ -1,22 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Singleton_Test.cpp
- *
- *  $Id$
- *
- *    This is a simple test of ACE Singleton
- *
- *
- *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Singleton_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test of ACE Singleton
+//
+// = AUTHOR
+//    Johnny Willemsen  <jwillemsen@remedy.nl>
+//
+// ============================================================================
 
-
-#include "test_config.h"
+#include "tests/test_config.h"
 #include "ace/Singleton.h"
 
-
+ACE_RCSID(tests, Singleton_Test, "$Id$")
 
 int
 run_main (int, ACE_TCHAR *[])

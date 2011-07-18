@@ -1,4 +1,5 @@
 // $Id$ 
 
 workspace {
+  cmdline = -include $PWD
 }

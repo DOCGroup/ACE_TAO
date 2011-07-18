@@ -1,23 +1,50 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_exception.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Exception that provides additional means for C++
- *  mapping of an interface.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_exception.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Exception that provides additional means for C++
+//    mapping of an interface.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
 
 #include "be_exception.h"
 #include "be_visitor.h"
 
 #include "global_extern.h"
+
+ACE_RCSID (be,
+           be_exception,
+           "$Id$")
+
+be_exception::be_exception (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
+    AST_Exception (),
+    be_scope (),
+    be_decl (),
+    be_type (),
+    be_structure ()
+{
+  // Always the case.
+  this->size_type (AST_Type::VARIABLE);
+}
 
 be_exception::be_exception (UTL_ScopedName *n,
                             bool local,
@@ -43,8 +70,7 @@ be_exception::be_exception (UTL_ScopedName *n,
              n),
     be_type (AST_Decl::NT_except,
              n),
-    be_structure (AST_Decl::NT_except,
-                  n,
+    be_structure (n,
                   local,
                   abstract)
 {

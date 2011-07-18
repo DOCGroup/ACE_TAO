@@ -21,6 +21,9 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 
+ACE_RCSID(tests,
+          Bug_2820_Regression_Test, "$Id$")
+
 /**
  * @class Simple_Handler
  *

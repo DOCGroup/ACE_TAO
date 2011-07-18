@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h"
+#include "ace/Synch_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
@@ -11,6 +12,10 @@
 #include "../Utils/resolve_init.h"
 #include "../Utils/ScopeGuard.h"
 #include "../Utils/Log.h"
+
+ACE_RCSID (EventChannel,
+           AMI_Primary_Replication_Strategy,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

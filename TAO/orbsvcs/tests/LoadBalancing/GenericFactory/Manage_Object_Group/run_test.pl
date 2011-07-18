@@ -1,36 +1,29 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+$lm_ior = "lm.ior";
+unlink $lm_ior;
 
 $status = 0;
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 ## The LoadManager needs to register signals with the ORB's reactor (on
 ## Windows only) and thus can not use the TP Reactor since it doesn't
 ## support that kind of thing.  So, we swith to the Select MT Reactor.
-$lm_conf = $server->LocalFile ("windows" . $PerlACE::svcconf_ext);
+$lm_conf = PerlACE::LocalFile ("windows$PerlACE::svcconf_ext");
 
+$init_ref = "-ORBInitRef LoadManager=file://lm.ior";
 
-my $iorbase = "lm.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("../../../../LoadBalancer/tao_loadmanager",
-                              "-o $server_iorfile " .
-                              ($^O eq 'MSWin32' ?
+$LM = new PerlACE::Process ("../../../../LoadBalancer/LoadManager",
+                            "-o lm.ior" . ($^O eq 'MSWin32' ?
                                            " -ORBSvcConf $lm_conf" : ''));
-
-$CL = $client->CreateProcess ("server", "-ORBInitRef LoadManager=file://$client_iorfile");
+$SV = new PerlACE::Process ("server", $init_ref);
 
 print STDERR "\n\n======== Running Manage ObjectGroup Membership Test================\n";
 print STDERR "\n";
@@ -39,46 +32,30 @@ print STDERR "This test will check the add_member () and remove_member () method
 print STDERR "ObjectGroupManager\n";
 print STDERR "\n";
 
-$server_status = $SV->Spawn ();
+$LM->Spawn ();
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
-}
-if ($server->WaitForFileTimed ($iorbase,
-
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+if (PerlACE::waitforfile_timed ("lm.ior", $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file LoadManager IOR: lm.ior\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$SV->Spawn ();
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$server = $SV->WaitKill (10);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$load_manager = $LM->TerminateWaitKill (10);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($load_manager != 0) {
+    print STDERR "ERROR: LoadManager returned $load_manager\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $lm_ior;
 
 exit $status;

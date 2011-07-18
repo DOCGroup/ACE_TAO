@@ -1,7 +1,8 @@
 // -*- C++ -*-
-// $Id$
 
 #include "WUCS4_UTF16_Factory.h"
+
+ACE_RCSID(UCS4_UTF16, WUCS4_UTF16_Factory, "$Id$")
 
 ACE_STATIC_SVC_DEFINE (WUCS4_UTF16_Factory,
                        ACE_TEXT ("WUCS4_UTF16_Factory"),

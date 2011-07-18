@@ -1,42 +1,45 @@
 // -*- C++ -*-
+//
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_codegen.h
- *
- *  $Id$
- *
- * The Code generator class
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ================================================================
+//
+// = LIBRARY
+//    TAO_IDL_BE
+//
+// = FILENAME
+//    be_codegen.h
+//
+// = DESCRIPTION
+//   The Code generator class
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ================================================================
 
 #ifndef TAO_BE_CODEGEN_H
 #define TAO_BE_CODEGEN_H
 
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Unbounded_Queue.h"
-
 #include "TAO_IDL_BE_Export.h"
 
+class TAO_Visitor_Factory;
 class TAO_OutStream;
 class be_visitor_context;
 class be_visitor;
 class be_decl;
 
-/**
- * @class TAO_CodeGen
- *
- * @brief TAO_CodeGen
- *
- * Holds global parameters for the Back End and
- * generates the C++ mapping.
- */
 class TAO_IDL_BE_Export TAO_CodeGen
 {
+  // = TITLE
+  //    TAO_CodeGen
+  //
+  // = DESCRIPTION
+  //    Holds global parameters for the Back End and
+  //    generates the C++ mapping.
+  //
 public:
 
   // Define all the code generation states.
@@ -79,6 +82,8 @@ public:
 
       // Emitting code for the valuetype.
       TAO_VALUETYPE_OBV_CH,                 // OBV_ class
+      TAO_VALUETYPE_OBV_CI,
+      TAO_VALUETYPE_OBV_CS,
 
       // Emitting code for the module,
       TAO_MODULE_OBV_CH,                    // for OBV_ (cmp. POA_ namespace)
@@ -93,26 +98,41 @@ public:
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
       TAO_TIE_OPERATION_ARGLIST_SH,           // ... for TIE class header
 
+      TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
+      // in client/server  header
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XS,
+
 
       TAO_OPERATION_ARGLIST_IH,               // ... for implementation header
       TAO_OPERATION_ARGLIST_IS,               // ... for implementation header
       TAO_OPERATION_ARGLIST_COLLOCATED_SH,    // ... for collocated server
-                                              //   variable to do_static_call
+      //   variable to do_static_call
       TAO_OPERATION_ARG_INVOKE_CS,            // passing argument variable to do_static_call
-                                              //   after do_static_call
+      //   after do_static_call
       TAO_OPERATION_ARG_DECL_SS,              // argument decl in skeleton
       TAO_OPERATION_ARG_DEMARSHAL_SS,         //   and argument variables to the
-                                              // variable
+      TAO_OPERATION_ARG_MARSHAL_SS,
+      // variable
       TAO_OPERATION_ARG_UPCALL_SS,            // variables to upcall
       TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS, // variables to upcall for
-                                              // collocated op
+      // collocated op
 
       TAO_OBV_OPERATION_ARGLIST_CH,           // parameter list in obv op signature
       TAO_OBV_OPERATION_ARGLIST_CS,           // used only for AMH exceptions
+      // ... for client header
       TAO_OBV_OPERATION_ARGLIST_SH,           // ... for server header
       TAO_OBV_OPERATION_ARGLIST_IH,           // ... for implementation header
       TAO_OBV_OPERATION_ARGLIST_IS,           // ... for implementation header
+
+      // AMI next generation states
+      TAO_AMI_INTERFACE_CH,
+      TAO_AMI_SENDC_OPERATION_CH,
+      TAO_AMI_SENDC_OPERATION_CS,
+      TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CH,
+      TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CS,
+      TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CH,
+      TAO_AMI_EXCEPTION_HOLDER_VALUETYPE_CS,
+      TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS,
 
       // Emitting code for root.
       TAO_ROOT_CH,
@@ -125,17 +145,13 @@ public:
       TAO_ROOT_TIE_SS,
       TAO_ROOT_IH,
       TAO_ROOT_IS,
-      TAO_ROOT_SVH,
-      TAO_ROOT_SVS,
-      TAO_ROOT_EXH,
-      TAO_ROOT_EXS,
-      TAO_ROOT_CNH,
-      TAO_ROOT_CNS,
-      TAO_ROOT_EX_IDL,
       TAO_ROOT_ANY_OP_CH,
       TAO_ROOT_ANY_OP_CS,
       TAO_ROOT_CDR_OP_CH,
       TAO_ROOT_CDR_OP_CS,
+
+      TAO_ROOT_SERIALIZER_OP_CH,
+      TAO_ROOT_SERIALIZER_OP_CS,
 
       // Emitting code for sequence base type.
       TAO_SEQUENCE_BASE_CH,
@@ -175,6 +191,11 @@ public:
       TAO_CDR_OUTPUT,
       TAO_CDR_SCOPE,
 
+      // DDS DCPS Serializer support methods
+      TAO_MAX_MARSHALED_SIZE,
+      TAO_IS_BOUNDED_SIZE,
+      TAO_FIND_SIZE,
+
       // These are for typecode generation.
       TAO_TC_DEFN_TYPECODE,                   // top level typecode
       TAO_TC_DEFN_TYPECODE_NESTED,            // nested tc
@@ -199,60 +220,58 @@ public:
       TAO_SUB_STATE_UNKNOWN
     };
 
-  /// Constructor
   TAO_CodeGen (void);
+  // Constructor
 
-  /// Destructor
   ~TAO_CodeGen (void);
+  // Destructor
 
-  /// Set the client header stream.
+  be_visitor *make_visitor (be_visitor_context *);
+  // Factory that makes the right visitor based on the contex. This
+  // delegates the task to its factory data member.
+
+  int gen_cplusplus_mapping (void);
+  // Generate the C++ mapping for CORBA IDL.
+
   int start_client_header (const char *fname);
+  // Set the client header stream.
 
-  /// Set the client inline stream.
   int start_client_inline (const char *fname);
+  // Set the client inline stream.
 
-  /// Set the client stub stream.
   int start_client_stubs (const char *fname);
+  // Set the client stub stream.
 
-  /// Set the server header stream.
   int start_server_header (const char *fname);
+  // Set the server header stream.
 
-  /// Set the implementation header stream.
   int start_implementation_header (const char *fname);
+  // Set the implementation header stream.
 
-  /// Set the implementation skeleton stream.
   int start_implementation_skeleton (const char *fname);
+  // Set the implementation skeleton stream.
 
-  /// Set the server template header stream.
   int start_server_template_header (const char *fname);
+  // Set the server template header stream.
 
-  /// Set the server inline stream.
   int start_server_inline (const char *fname);
+  // Set the server inline stream.
 
-  /// Set the server skeletons stream.
   int start_server_skeletons (const char *fname);
+  // Set the server skeletons stream.
 
-  /// Set the server template skeletons stream.
   int start_server_template_skeletons (const char *fname);
+  // Set the server template skeletons stream.
 
-  /// Set the anyop header stream.
   int start_anyop_header (const char *fname);
+  // Set the anyop header stream.
 
-  /// Set the anyop source stream.
   int start_anyop_source (const char *fname);
+  // Set the anyop source stream.
 
-  int start_ciao_svnt_header (const char *fname);
-  int start_ciao_svnt_source (const char *fname);
-  int start_ciao_exec_header (const char *fname);
-  int start_ciao_exec_source (const char *fname);
-  int start_ciao_exec_idl (const char *fname);
-  int start_ciao_conn_header (const char *fname);
-  int start_ciao_conn_source (const char *fname);
-  int start_ciao_ami_conn_idl (const char *fname);
-
-  /// Generate code at the end such as the <<= and >>= operators along
-  /// with the ending #endif statement.
   int end_client_header (void);
+  // Generate code at the end such as the <<= and >>= operators along
+  // with the ending #endif statement.
 
   /// Generate necessary code at end of client inline file.
   void end_client_inline (void);
@@ -260,140 +279,112 @@ public:
   /// Generate necessary code at end of client stub file.
   void end_client_stubs (void);
 
-  /// Put a last #endif in the server header.
   int end_server_header (void);
+  // Put a last #endif in the server header.
 
   /// Generate necessary code at end of server inline file.
   void end_server_inline (void);
 
-  /// Put a last #endif in the server header.
   int end_implementation_header (const char *fname);
+  // Put a last #endif in the server header.
 
-  /// Put a last #endif in the server header.
   int end_implementation_skeleton (const char *fname);
+  // Put a last #endif in the server header.
 
-  /// Put a last #endif in the server template header.
   int end_server_template_header (void);
+  // Put a last #endif in the server template header.
 
-  /// Put a last #endif in the server skeletons.
   int end_server_template_skeletons (void);
+  // Put a last #endif in the server skeletons.
 
-  /// Put a last #endif in the server skeletons.
   int end_server_skeletons (void);
+  // Put a last #endif in the server skeletons.
 
-  /// Put a last #endif in the anyop header.
   int end_anyop_header (void);
+  // Put a last #endif in the anyop header.
 
-  /// Make sure we end with a newline.
   int end_anyop_source (void);
+  // Make sure we end with a newline.
 
-  int end_ciao_svnt_header (void);
-  int end_ciao_svnt_source (void);
-  int end_ciao_exec_header (void);
-  int end_ciao_exec_source (void);
-  int end_ciao_exec_idl (void);
-  int end_ciao_conn_header (void);
-  int end_ciao_conn_source (void);
-  int end_ciao_ami_conn_idl (void);
-
-  /// Get the client header stream.
   TAO_OutStream *client_header (void);
+  // Get the client header stream.
 
-  /// Get the client stubs stream.
   TAO_OutStream *client_stubs (void);
+  // Get the client stubs stream.
 
-  /// Get the client inline stream.
   TAO_OutStream *client_inline (void);
+  // Get the client inline stream.
 
-  /// get the server header stream.
   TAO_OutStream *server_header (void);
+  // get the server header stream.
 
-  /// Get the implementation header stream.
   TAO_OutStream *implementation_header (void);
+  // Get the implementation header stream.
 
-  /// Get the implementation skeleton stream.
   TAO_OutStream *implementation_skeleton (void);
+  // Get the implementation skeleton stream.
 
-  /// Get the server header template stream.
   TAO_OutStream *server_template_header (void);
+  // Get the server header template stream.
 
-  /// Get the server skeletons stream.
   TAO_OutStream *server_skeletons (void);
+  // Get the server skeletons stream.
 
-  /// Get the server template skeletons stream.
   TAO_OutStream *server_template_skeletons (void);
+  // Get the server template skeletons stream.
 
-  /// Get the server inline stream.
   TAO_OutStream *server_inline (void);
+  // Get the server inline stream.
 
-  /// Get the server template inline stream.
   TAO_OutStream *server_template_inline (void);
+  // Get the server template inline stream.
 
-  /// Get the anyop header stream.
   TAO_OutStream *anyop_header (void);
+  // Get the anyop header stream.
 
-  /// Get the anyop source stream.
   TAO_OutStream *anyop_source (void);
+  // Get the anyop source stream.
 
-  /// Get the CIAO servant header stream.
-  TAO_OutStream *ciao_svnt_header (void);
-
-  /// Get the CIAO servant source stream.
-  TAO_OutStream *ciao_svnt_source (void);
-
-  /// Get the CIAO executor impl header stream.
-  TAO_OutStream *ciao_exec_header (void);
-
-  /// Get the CIAO executor impl source stream.
-  TAO_OutStream *ciao_exec_source (void);
-
-  /// Get the CIAO executor IDL source stream.
-  TAO_OutStream *ciao_exec_idl (void);
-
-  /// Get the CIAO connector impl header stream.
-  TAO_OutStream *ciao_conn_header (void);
-
-  /// Get the CIAO connector impl source stream.
-  TAO_OutStream *ciao_conn_source (void);
-
-  /// Get the CIAO AMI connector IDL stream.
-  TAO_OutStream *ciao_ami_conn_idl (void);
-
-  /// Set the gperf input file stream.
   void gperf_input_stream (TAO_OutStream *gperf_input);
+  // Set the gperf input file stream.
 
-  /// Retrieve the gperf input stream being used.
   TAO_OutStream *gperf_input_stream (void);
+  // Retrieve the gperf input stream being used.
 
-  /// Set the gperf input file name.
   void gperf_input_filename (char *filename);
+  // Set the gperf input file name.
 
-  /**
-   * Retrieve the gperf input file name being used.
-   * Name of the temp file used to collect the input for gperf
-   * program. This is needed coz I do ACE_OS::open on this when I need
-   * ACE_HANDLE for the file instead FILE*.
-   */
   char *gperf_input_filename (void);
+  // Retrieve the gperf input file name being used.
+  // Name of the temp file used to collect the input for gperf
+  // program. This is needed coz I do ACE_OS::open on this when I need
+  // ACE_HANDLE for the file instead FILE*.
 
-  /// Convert input string to all one case.
+  void outstream (TAO_OutStream *os);
+  // Set current out stream.
+
+  TAO_OutStream *outstream (void);
+  // Retrieve current out stream being used.
+
+  void config_visitor_factory (void);
+  // Set the visitor factory  object. In this respect, this behaves as the
+  // "strategy" pattern in which the TAO_CodeGen object is the context and the
+  // visitor_factory is the strategy object.
+
+  void node (be_decl *n);
+  // Pass info.
+
+  be_decl *node (void);
+  // Retrieve passed info.
+
   const char *upcase (const char *str);
-  const char *downcase (const char *str);
+  // Convert input string to all upcase.
 
-  /// Pass along the #ident string, if any, from the IDL file.
   void gen_ident_string (TAO_OutStream *stream) const;
+  // Pass along the #ident string, if any, from the IDL file.
 
-  /// Generates the export files selected on the command line.
-  void gen_export_files (void);
-
-  /// Generate file include, with optional empty comment to
-  /// short-circuit DOxygen.
-  void gen_standard_include (TAO_OutStream *stream,
-                             const char *included_file,
-                             bool add_comment = false);
-
-  /// Cleanup.
   void destroy (void);
+  // Cleanup.
 
 private:
   void gen_ifndef_string (const char *fname,
@@ -401,10 +392,13 @@ private:
                           const char *prefix,
                           const char *suffix);
 
-  /// Utility methods for generating file includes.
+  void gen_standard_include (TAO_OutStream *stream,
+                             const char *included_file,
+                             bool add_comment=false);
+
+  // Utility methods for generating ORB file includes.
   void gen_stub_hdr_includes (void);
   void gen_stub_src_includes (void);
-  void gen_skel_hdr_includes (void);
   void gen_skel_src_includes (void);
   void gen_seq_file_includes (void);
   void gen_any_file_includes (TAO_OutStream * stream) ;
@@ -416,98 +410,62 @@ private:
                               TAO_OutStream *stream);
   void gen_typecode_includes (TAO_OutStream * stream);
 
-  /// Used if one or both of the CIAO code gen flags are set.
-  void gen_svnt_hdr_includes (void);
-  void gen_svnt_src_includes (void);
-  void gen_exec_hdr_includes (void);
-  void gen_exec_src_includes (void);
-  void gen_exec_idl_includes (void);
-  void gen_conn_hdr_includes (void);
-  void gen_conn_src_includes (void);
-  void gen_ami_conn_idl_includes (void);
-
-  void gen_export_file (const char *filename,
-                        const char *macro,
-                        const char *msg,
-                        bool for_skel = false);
-
-  void make_rand_extension (char * const t);
-
-  void gen_conn_ts_includes (ACE_Unbounded_Queue<char *> &ts_files);
-
 private:
-  /// Client header stream.
   TAO_OutStream *client_header_;
+  // Client header stream.
 
-  /// Client stub file stream
   TAO_OutStream *client_stubs_;
+  // Client stub file stream
 
-  /// Client side inline definitions.
   TAO_OutStream *client_inline_;
+  // Client side inline definitions.
 
-  /// Server header stream.
   TAO_OutStream *server_header_;
+  // Server header stream.
 
-  /// Implementation header stream.
   TAO_OutStream *implementation_header_;
+  // Implementation header stream.
 
-  /// Implementation skeleton stream.
   TAO_OutStream *implementation_skeleton_;
+  // Implementation skeleton stream.
 
-  /// Server header template stream.
   TAO_OutStream *server_template_header_;
+  // Server header template stream.
 
-  /// Server skeleton stream.
   TAO_OutStream *server_skeletons_;
+  // Server skeleton stream.
 
-  /// Server skeleton template stream.
   TAO_OutStream *server_template_skeletons_;
+  // Server skeleton template stream.
 
-  /// Server side inline file.
   TAO_OutStream *server_inline_;
+  // Server side inline file.
 
-  /// Anyop header file.
   TAO_OutStream *anyop_header_;
+  // Anyop header file.
 
-  /// Anyop source file.
   TAO_OutStream *anyop_source_;
+  // Anyop source file.
 
-  /// TAO_OutStream to collect the input for gperf program.
   TAO_OutStream *gperf_input_stream_;
+  // TAO_OutStream to collect the input for gperf program.
 
-  /// Component servant header file.
-  TAO_OutStream *ciao_svnt_header_;
-
-  /// Component servant source file.
-  TAO_OutStream *ciao_svnt_source_;
-
-  /// Component executor impl header file.
-  TAO_OutStream *ciao_exec_header_;
-
-  /// Component executor impl source file.
-  TAO_OutStream *ciao_exec_source_;
-
-  /// Component executor impl source file.
-  TAO_OutStream *ciao_exec_idl_;
-
-  /// Component connector impl header file.
-  TAO_OutStream *ciao_conn_header_;
-
-  /// Component connector impl source file.
-  TAO_OutStream *ciao_conn_source_;
-
-  /// Component connector impl source file.
-  TAO_OutStream *ciao_ami_conn_idl_;
-
-  /**
-   * Name of the temp file used to collect the input for gperf
-   * program. This is needed coz I do ACE_OS::open on this when I need
-   * ACE_HANDLE for the file instead FILE*.
-   */
   char *gperf_input_filename_;
+  // Name of the temp file used to collect the input for gperf
+  // program. This is needed coz I do ACE_OS::open on this when I need
+  // ACE_HANDLE for the file instead FILE*.
 
-  /// The enumerated value indicating the lookup strategy.
+  TAO_OutStream *curr_os_;
+  // Currently used out stream.
+
+  be_decl *node_;
+  // Save current node in this.
+
+  TAO_Visitor_Factory *visitor_factory_;
+  // Visitor factory object.
+
   LOOKUP_STRATEGY strategy_;
+  // The enumerated value indicating the lookup strategy.
 };
 
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;

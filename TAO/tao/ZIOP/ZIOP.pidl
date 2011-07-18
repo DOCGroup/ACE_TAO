@@ -6,8 +6,8 @@
 
 module ZIOP
 {
-  struct CompressionData {
-    Compression::CompressorId compressor;
+  struct CompressedData {
+    Compression::CompressorId compressorid;
     unsigned long original_length;
     Compression::Buffer data;
    };
@@ -56,7 +56,7 @@ module ZIOP
     };
 
     /**
-     * The ZIOP CompressionMinRatioPolicy. If the compression ratio is smaller
+     * The ZIOP CompressionMinRatioPolicy. If the compression ratio is smaller 
      * than this setting, a message is send uncompressed.
      */
     const CORBA::PolicyType COMPRESSION_MIN_RATIO_POLICY_ID = 67;

@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         // This is a hack but that is okay!
         return 0;
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -120,7 +120,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "(%P|%t) ERROR:Client Interceptors not called"
                   " properly\n"));
 
-      corb->destroy ();
     }
   catch (const CORBA::Exception&)
     {

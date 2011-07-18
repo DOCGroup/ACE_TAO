@@ -6,6 +6,8 @@
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
+ACE_RCSID(Gateway, Connection_Handler, "$Id$")
+
 Event_Channel *
 Connection_Handler::event_channel (void) const
 {

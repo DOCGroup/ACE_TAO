@@ -1,17 +1,21 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  A simple server to demonstrate the use of codeset translation
- *
- *
- *  @author Phil Mesnier <mesnier_p@ociweb.com>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/CodeSets/simple
+//
+// = FILENAME
+//    client.cpp
+//
+// = DESCRIPTION
+//    A simple client to demonstrate the use of codeset translation
+//
+// = AUTHORS
+//    Phil Mesnier <mesnier_p@ociweb.com>
+//
+// ============================================================================
 
 // IDL generated header
 #include "simpleS.h"
@@ -20,35 +24,6 @@
 #include "ace/streams.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 // ------------------------------------------------------------
 // Servant for associated CORBA object
@@ -105,6 +80,7 @@ private:
 // ------------------------------------------------------------
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+
   try
     {
       // Init the orb
@@ -130,15 +106,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       // Create a C++ implementation of CORBA object
       SimpleImpl* my_impl = 0;
       ACE_NEW_RETURN (my_impl,
                       SimpleImpl (orb.in ()),
                       -1);
-      PortableServer::ServantBase_var safe (my_impl);
 
       // Create CORBA object for servant and REGISTER with POA
       PortableServer::ObjectId_var id =
@@ -151,7 +123,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Get the IOR for our object
       CORBA::String_var ior = orb->object_to_string (server.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: server.ior"),

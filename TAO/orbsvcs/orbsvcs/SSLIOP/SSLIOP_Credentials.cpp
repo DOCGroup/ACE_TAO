@@ -1,8 +1,14 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
+
 #include "tao/ORB_Constants.h"
+
 #include "ace/SString.h"
+
+
+ACE_RCSID (SSLIOP,
+           SSLIOP_Credentials,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Credentials.inl"

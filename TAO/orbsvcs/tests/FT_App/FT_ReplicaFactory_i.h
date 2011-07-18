@@ -161,6 +161,7 @@ private:
    * locked if necessary.
    */
   TAO_SYNCH_MUTEX internals_;
+  typedef ACE_Guard<TAO_SYNCH_MUTEX> InternalGuard;
 
   /**
    * The orb
@@ -269,11 +270,6 @@ private:
    * boolean: starts false.  Set to true when it's time to quit.
    */
   int quit_requested_;
-
-  /**
-  * A file that use by FT_TestReplica_i object
-  */
-  const ACE_TCHAR* name_persistent_file_;
 
 };
 

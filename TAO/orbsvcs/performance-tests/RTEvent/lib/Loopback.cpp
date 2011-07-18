@@ -10,6 +10,10 @@
 #include "Auto_Disconnect.h"
 #include "Implicit_Deactivator.h"
 
+ACE_RCSID (TAO_RTEC_Perf,
+           Loopback,
+           "$Id$")
+
 Loopback::Loopback (CORBA::Long experiment_id,
                     CORBA::Long base_event_type,
                     PortableServer::POA_ptr supplier_poa,

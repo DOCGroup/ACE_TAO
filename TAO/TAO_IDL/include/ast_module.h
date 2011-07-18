@@ -71,29 +71,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Set.h"
 
+// Representation of module.
+//
 // NOTE: add(AST_EnumValue *) is defined here because enums can
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope.
-
-class AST_Template_Module_Inst;
-class AST_Template_Module_Ref;
 
 class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
-  static AST_Decl::NodeType const NT;
+  // Operations.
 
-  // Constructor.
-  AST_Module (UTL_ScopedName *n, AST_Module *prev = 0);
+  // Constructor(s) and destructor.
+  AST_Module (void);
 
-  // Destructor.
+  AST_Module (UTL_ScopedName *n);
+
   virtual ~AST_Module (void);
 
-  // Cleanup function.
-  virtual void destroy (void);
-
   // Narrowing.
+
   DEF_NARROW_FROM_DECL(AST_Module);
   DEF_NARROW_FROM_SCOPE(AST_Module);
 
@@ -104,147 +102,89 @@ public:
   void set_has_nested_valuetype (void);
   bool has_nested_valuetype (void);
 
-  // Allows adding an interface at a later point.
+  // Allows adding an interface to a later point
   // The interface i is inserted after interface ix, if
   // ix is not null.
   int be_add_interface (AST_Interface *i,
                         AST_Interface *ix = 0);
 
-  // Allows adding a valuetype at a later point.
-  int be_add_valuetype (AST_ValueType *v);
-
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
   virtual bool referenced (AST_Decl *e,
-                           Identifier *id = 0);
+                               Identifier *id = 0);
 
-  // Accessor to this module's previous opening.
-  AST_Module *previous_opening ();
+  // Add decls from previous opening of this module to the
+  // 'previous' set of this module, along with the argument's
+  // own 'previous' set.
+  void add_to_previous (AST_Module *m);
 
-  // Called to look up some declaration
+  // Called by lookup_by_name_local, to check for declaration
   // in a previous opening of this module.
-  AST_Decl *look_in_prev_mods_local (Identifier *e,
-                                     bool ignore_fwd = false);
+  virtual AST_Decl *look_in_previous (Identifier *e, bool ignore_fwd = false);
 
-  // Called to look up some declaration
-  // in a previous opening of this module.
-  AST_Decl *look_in_prev_mods (UTL_ScopedName *e,
-                               bool full_def_only,
-                               AST_Decl *&final_parent_decl);
+  // Accessor to the member.
+  ACE_Unbounded_Set<AST_Decl *> &previous (void);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-  // Accessors for the member.
-  AST_Template_Module_Inst *from_inst (void) const;
-  void from_inst (AST_Template_Module_Inst *node);
-
-  // Accessors for the member.
-  AST_Template_Module_Ref *from_ref (void) const;
-  void from_ref (AST_Template_Module_Ref *node);
-
-  // Override that looks in previous openings.
-  virtual AST_Decl *special_lookup (UTL_ScopedName *e,
-                                    bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
-
-  // We actually want to match the LAST module found in
-  // the scope being searched not the FIRST one in the
-  // list.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
+private:
+  friend void fe_populate_global_scope (AST_Module *m);
+  friend int tao_yyparse (void);
 
   // Scope Management Protocol
 
-  virtual
-  AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
+  virtual AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
 
-  virtual
-  AST_Module *fe_add_module (AST_Module *m);
+  virtual AST_Module *fe_add_module (AST_Module *m);
 
-  virtual
-  AST_Template_Module_Inst *fe_add_template_module_inst (
-    AST_Template_Module_Inst *m);
+  virtual AST_Interface *fe_add_interface (AST_Interface *i);
 
-  virtual
-  AST_Interface *fe_add_interface (AST_Interface *i);
+  virtual AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
 
-  virtual
-  AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
+  virtual AST_ValueType *fe_add_valuetype (AST_ValueType *i);
 
-  virtual
-  AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+  virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
 
-  virtual
-  AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+  virtual AST_EventType *fe_add_eventtype (AST_EventType *i);
 
-  virtual
-  AST_EventType *fe_add_eventtype (AST_EventType *i);
+  virtual AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
 
-  virtual
-  AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
+  virtual AST_Component *fe_add_component (AST_Component *i);
 
-  virtual
-  AST_Component *fe_add_component (AST_Component *i);
+  virtual AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
 
-  virtual
-  AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
+  virtual AST_Home *fe_add_home (AST_Home *i);
 
-  virtual
-  AST_Connector *fe_add_connector (AST_Connector *i);
+  virtual AST_Constant *fe_add_constant (AST_Constant *c);
 
-  virtual
-  AST_Home *fe_add_home (AST_Home *i);
+  virtual AST_Exception *fe_add_exception (AST_Exception *e);
 
-  virtual
-  AST_Constant *fe_add_constant (AST_Constant *c);
+  virtual AST_Union *fe_add_union (AST_Union *u);
 
-  virtual
-  AST_Exception *fe_add_exception (AST_Exception *e);
+  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
 
-  virtual
-  AST_Union *fe_add_union (AST_Union *u);
+  virtual AST_Structure *fe_add_structure (AST_Structure *s);
 
-  virtual
-  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
-  virtual
-  AST_Structure *fe_add_structure (AST_Structure *s);
+  virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
-  virtual
-  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
+  virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
-  virtual
-  AST_Enum *fe_add_enum (AST_Enum *e);
+  virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
-  virtual
-  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  virtual AST_Native *fe_add_native (AST_Native *n);
 
-  virtual
-  AST_Typedef *fe_add_typedef (AST_Typedef *t);
+  virtual AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
 
-  virtual
-  AST_Native *fe_add_native (AST_Native *n);
+  bool pd_has_nested_valuetype;
 
-  virtual
-  AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
-
-  virtual
-  AST_PortType *fe_add_porttype (AST_PortType *pt);
-
-private: // Data
-  bool pd_has_nested_valuetype_;
-
-  AST_Module *previous_opening_;
-  /// The immediatly previous opening of this module.
-
-  AST_Module *last_in_same_parent_scope_;
-  /// Pointer to the last opening of this module in the same parent
-
-  AST_Template_Module_Inst *from_inst_;
-  /// Reference to the instantiation that created us, if any.
-
-  AST_Template_Module_Ref *from_ref_;
-  /// Reference to the 'alias' type that created us, if any.
+  ACE_Unbounded_Set<AST_Decl *> previous_;
+  // Container for declaration from previous openings of this module.
 };
 
 #endif           // _AST_MODULE_AST_MODULE_HH

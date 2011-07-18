@@ -14,7 +14,7 @@
 
 #include <algorithm>
 
-
+ACE_RCSID(ace, Event_Handler, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -377,8 +377,6 @@ ACE_Event_Handler_var::reset (ACE_Event_Handler *p)
 // ---------------------------------------------------------------------
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (void)
-  : eh_ (0),
-    mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }

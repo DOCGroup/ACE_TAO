@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# $Id$
+
 """ This script implements branching and tagging in the DOC group
 repository, and automates the process of creating sets. """
 
@@ -42,7 +42,7 @@ def parse_args ():
         parser.error ("must specify either a branch or tag action")
 
     if opts.project is None:
-        parser.error ("must specify a project to branch")
+        parser.error ("must specity a project to branch")
 
     return (opts, args)
 
@@ -63,19 +63,12 @@ def svn_copy (source, dest):
     execute (command)
 
 def svn_propset (path, prop, value):
-    temp = open ("sets_manager_props.tmp", 'w')
-    temp.write (value)
-    temp.close ()
-
     command = " ".join ([opts.svn,
                         "propset",
                         prop,
-                        "-F sets_manager_props.tmp",
+                        "'" + value + "'",
                         path])
     execute (command)
-    
-    os.unlink ("sets_manager_props.tmp")
-        
 
 def svn_mkdir (path):
     command = " ".join ([opts.svn,

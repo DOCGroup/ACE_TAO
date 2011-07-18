@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    DLList_Test.cpp
- *
- *  $Id$
- *
- *    This test illustrates the use of <ACE_DLList>.
- *
- *
- *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    DLList_Test.cpp
+//
+// = DESCRIPTION
+//      This test illustrates the use of <ACE_DLList>.
+//
+// = AUTHOR
+//    James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Containers.h"

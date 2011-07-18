@@ -1,6 +1,11 @@
-// $Id$
-
 #include "ObjectReferenceFactory.h"
+
+
+ACE_RCSID (ORT,
+           ObjectReferenceFactory,
+           "$Id$")
+
+
 #include "tao/debug.h"
 
 

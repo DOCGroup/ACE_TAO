@@ -1,25 +1,34 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for structures
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for structures
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Structure visitor for generating Any operator declarations in the client header
 // ***************************************************************************
 
 be_visitor_structure_any_op_ch::be_visitor_structure_any_op_ch (
-                                                                be_visitor_context *ctx
-                                                                )
+    be_visitor_context *ctx
+  )
   : be_visitor_structure (ctx)
 {
 }
@@ -40,53 +49,8 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
-
-  be_module *module = 0;
-  if (node->is_nested ())
-    {
-      AST_Decl *d = node;
-      AST_Decl::NodeType nt = d->node_type ();
-
-      while (nt != AST_Decl::NT_root)
-        {
-          if (nt == AST_Decl::NT_module)
-            {
-              module = be_module::narrow_from_decl (d);
-              break;
-            }
-          else
-            {
-              d = ScopeAsDecl (d->defined_in ());
-              nt = d->node_type ();
-            }
-        }
-
-      if (module != 0)
-        {
-          // Some compilers handle "any" operators in a namespace
-          // corresponding to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-
-          be_util::gen_nested_namespace_begin (os, module);
-
-          *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
-              << " &); // copying version" << be_nl;
-          *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
-              << "*); // noncopying version" << be_nl;
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::"
-              << node->name () << " *&); // deprecated\n";
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
-              << node->name () << " *&);";
-
-          be_util::gen_nested_namespace_end (os, module);
-
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n\n";
-        }
-    }
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -100,12 +64,6 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
       << node->name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
-
-  if (module != 0)
-    {
-      *os << "\n\n#endif";
-    }
-
 
   // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
@@ -123,7 +81,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_structure_any_op_ch::visit_field (be_field *node)
 {
-  be_type *bt = 0;
+  be_type *bt;
 
   // First generate the type information.
   bt = be_type::narrow_from_decl (node->field_type ());

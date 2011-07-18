@@ -1,6 +1,6 @@
 #ifndef lint
 static char const
-yyrcsid[] = "$Id$";
+yyrcsid[] = "$FreeBSD: src/usr.bin/yacc/skeleton.c,v 1.28 2000/01/17 02:04:06 bde Exp $";
 #endif
 #include "ace/os_include/os_stdlib.h"
 #define YYBYACC 1
@@ -13,6 +13,19 @@ yyrcsid[] = "$Id$";
 #define YYRECOVERING() (yyerrflag!=0)
 
 #define YYPREFIX "yy"
+  /* $Id$*/
+/* ========================================================================*/
+/**/
+/* = LIBRARY*/
+/*    orbsvcs*/
+/* */
+/* = FILENAME*/
+/*    constraint.y*/
+/**/
+/* = AUTHOR*/
+/*    Seth Widoff <sbw1@cs.wustl.edu>*/
+/**/
+/* ========================================================================*/
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"

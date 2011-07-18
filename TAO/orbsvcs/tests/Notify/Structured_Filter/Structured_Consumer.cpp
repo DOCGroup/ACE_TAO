@@ -14,7 +14,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_strings.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
+static const char* ior = "file://supplier.ior";
 static int numEvents = 90;
 static Notify_Push_Consumer* consumer = 0;
 static bool useFilter = false;
@@ -30,16 +30,12 @@ public:
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:fe:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("fe:"));
   int x;
 
   while ((x = get_opts ()) != -1)
     switch (x)
   {
-    case 'k':
-      ior = get_opts.opt_arg ();
-      break;
-
     case 'e':
       numEvents = ACE_OS::atoi (get_opts.optarg);
       break;
@@ -50,7 +46,7 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-        "usage:  %s -n <num events> -k <ior> [-f]\n", argv [0]), -1);
+        "usage:  %s -n <num events> [-f]\n", argv [0]), -1);
   }
 
   return 0; // successful parse

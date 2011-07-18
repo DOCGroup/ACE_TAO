@@ -6,134 +6,78 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+$ns_ior   = PerlACE::LocalFile ("ns.ior");
+$conffile = PerlACE::LocalFile ("ec" . "$PerlACE::svcconf_ext");
 
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $t = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $c = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $s = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+unlink $ns_ior;
 
-$nsiorfile = "ns.ior";
-$conffile = "ec" . "$PerlACE::svcconf_ext";
+$NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
+                           "-o $ns_ior ");
 
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $t_nsiorfile = $t->LocalFile ($nsiorfile);
-my $c_nsiorfile = $c->LocalFile ($nsiorfile);
-my $s_nsiorfile = $s->LocalFile ($nsiorfile);
-my $t_conffile = $t->LocalFile ($conffile);
-$ns->DeleteFile ($nsiorfile);
-$t->DeleteFile ($nsiorfile);
-$c->DeleteFile ($nsiorfile);
-$s->DeleteFile ($nsiorfile);
+$T = new PerlACE::Process ("Service",
+                           "-ORBInitRef NameService=file://$ns_ior "
+                           . "-ORBsvcconf $conffile");
 
-$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
-                          " -o $ns_nsiorfile");
+$C = new PerlACE::Process ("Consumer",
+                           "-ORBInitRef NameService=file://$ns_ior ");
 
-$T = $t->CreateProcess ("Service",
-                          " -ORBInitRef NameService=file://$t_nsiorfile ".
-                          "-ORBsvcconf $t_conffile ");
+$S = new PerlACE::Process ("Supplier",
+                           "-ORBInitRef NameService=file://$ns_ior ");
 
-$C = $c->CreateProcess ("Consumer",
-                        " -ORBInitRef NameService=file://$c_nsiorfile ");
-
-$S = $s->CreateProcess ("Supplier",
-                        " -ORBInitRef NameService=file://$s_nsiorfile ");
 
 
 print STDOUT "Starting name server\n";
-$NS_status = $NS->Spawn ();
+$NS->Spawn ();
 
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    exit 1;
-}
-
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($t->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$t_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($c->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$c_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($s->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$s_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
+if (PerlACE::waitforfile_timed ($ns_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$ns_ior>\n";
+    $NS->Kill (); 
     exit 1;
 }
 
 print STDOUT "Starting event server\n";
-$T_status = $T->Spawn ();
-
-if ($T_status != 0) {
-    print STDERR "ERROR: Service returned $T_status\n";
-    exit 1;
-}
+$T->Spawn ();
 
 sleep 2;
 
 print STDOUT "Starting consumer\n";
-$C_status = $C->Spawn ();
-
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
-    exit 1;
-}
+$C->Spawn ();
 
 sleep 1;
 
 print STDOUT "Starting supplier\n";
-$S_status = $S->SpawnWaitKill ($s->ProcessStartWaitInterval()+105);
-if ($S_status != 0) {
-    print STDERR "ERROR: Supplier returned $S_status\n";
-    exit 1;
-}
+$supplier = $S->SpawnWaitKill (120);
 
-$C_status = $C->WaitKill ($c->ProcessStopWaitInterval());
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
+if ($supplier != 0) {
+    print STDERR "ERROR: supplier returned $supplier\n";
     $status = 1;
 }
 
-$T_status = $T->TerminateWaitKill ($t->ProcessStopWaitInterval());
+$consumer = $C->WaitKill (15);
 
-if ($T_status != 0) {
-    print STDERR "ERROR: service returned $T_status\n";
+if ($consumer != 0) {
+    print STDERR "ERROR: consumer returned $consumer\n";
     $status = 1;
 }
 
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
+$service = $T->TerminateWaitKill (5);
 
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
+if ($service != 0) {
+    print STDERR "ERROR: service returned $service\n";
     $status = 1;
 }
 
-$ns->DeleteFile ($nsiorfile);
-$t->DeleteFile ($nsiorfile);
-$c->DeleteFile ($nsiorfile);
-$s->DeleteFile ($nsiorfile);
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: name server returned $nserver\n";
+    $status = 1;
+}
+
+unlink $ns_ior;
 
 exit $status;

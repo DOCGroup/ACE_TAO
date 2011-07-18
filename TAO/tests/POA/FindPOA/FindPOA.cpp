@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     FindPOA.cpp
- *
- *  $Id$
- *
- *   This Program tests the find_POA method of a POA.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//===========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/FindPOA
+//
+// = FILENAME
+//     FindPOA.cpp
+//
+// = DESCRIPTION
+//     This Program tests the find_POA method of a POA.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//===========================================================================
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Adapter_Activator.h"
@@ -19,6 +22,10 @@
 #include "tao/ORB.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
+
+ACE_RCSID (FindPOA,
+           FindPOA,
+           "$Id$")
 
 void
 find_non_existant_POA (PortableServer::POA_ptr parent,

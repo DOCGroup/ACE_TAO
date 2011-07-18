@@ -8,6 +8,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
 
+ACE_RCSID (Messaging,
+           Messaging_Queueing_Strategies,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -108,7 +113,7 @@ namespace TAO
       }
 
     // Compute the next deadline...
-    ACE_Time_Value const now = ACE_OS::gettimeofday ();
+    ACE_Time_Value now = ACE_OS::gettimeofday ();
     ACE_Time_Value timeout =
       this->time_conversion (buffering_constraint.timeout);
     new_deadline = now + timeout;

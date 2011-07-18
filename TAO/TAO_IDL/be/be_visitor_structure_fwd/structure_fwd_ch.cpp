@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    structure_fwd_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for be_structure_fwd node in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    structure_fwd_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for be_structure_fwd node in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure_fwd, 
+           structure_fwd_ch, 
+           "$Id$")
 
 be_visitor_structure_fwd_ch::be_visitor_structure_fwd_ch (
     be_visitor_context *ctx
@@ -35,7 +44,7 @@ be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_structure *fd =
+  be_structure *fd = 
     be_structure::narrow_from_decl (node->full_definition ());
 
   // This will be a no-op if it has already been done for this node.

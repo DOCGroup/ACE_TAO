@@ -18,7 +18,10 @@
 #include "tao/Argument.h"
 #include "tao/operation_details.h"
 #include "ace/Log_Msg.h"
-#include "tao/debug.h"
+
+ACE_RCSID (PortableServer,
+           Upcall_Wrapper,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -225,24 +228,16 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
   //        always the first element in the array, regardless of
   //        whether or not the return type is void.
 
-  try {
-    TAO::Argument * const * const begin = args + 1;  // Skip the return value.
-    TAO::Argument * const * const end   = args + nargs;
+  TAO::Argument * const * const begin = args + 1;  // Skip the return value.
+  TAO::Argument * const * const end   = args + nargs;
 
-    for (TAO::Argument * const * i = begin; i != end; ++i)
-      {
-        if (!(*i)->demarshal (cdr))
-          {
-            TAO_InputCDR::throw_skel_exception (errno);
-          }
-      }
-
-    cdr.reset_vt_indirect_maps ();
-  }
-  catch (...) {
-    cdr.reset_vt_indirect_maps ();
-    throw;
-  }
+  for (TAO::Argument * const * i = begin; i != end; ++i)
+    {
+      if (!(*i)->demarshal (cdr))
+        {
+          TAO_InputCDR::throw_skel_exception (errno);
+        }
+    }
 }
 
 void
@@ -254,28 +249,16 @@ TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
   TAO::Argument * const * const begin = args;
   TAO::Argument * const * const end   = args + nargs;
 
-  try {
-    for (TAO::Argument * const * i = begin; i != end; ++i)
-      {
-        if (!(*i)->marshal (cdr))
-          {
-            TAO_OutputCDR::throw_skel_exception (errno);
-          }
-      }
+  for (TAO::Argument * const * i = begin; i != end; ++i)
+    {
+      if (!(*i)->marshal (cdr))
+        {
+          TAO_OutputCDR::throw_skel_exception (errno);
+        }
+    }
 
-    // Reply body marshaling completed.  No other fragments to send.
-    cdr.more_fragments (false);
-
-  #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
-    cdr.reset_vt_indirect_maps ();
-  #endif
-  }
-  catch (...) {
-#ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
-    cdr.reset_vt_indirect_maps ();
-#endif
-    throw;
-  }
+  // Reply body marshaling completed.  No other fragments to send.
+  cdr.more_fragments (false);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

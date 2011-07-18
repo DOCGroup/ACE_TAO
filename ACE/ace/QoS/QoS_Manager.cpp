@@ -4,6 +4,8 @@
 #include "QoS_Manager.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(ace, QoS_Manager, "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_MANAGER)

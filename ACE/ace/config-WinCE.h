@@ -15,13 +15,26 @@
 # error Use config-win32.h in config.h instead of this header
 #endif  // ACE_CONFIG_WIN32_H
 
-#if !defined (_WIN32_WCE)
-# error Define _WIN32_WCE to version (i.e. 500 = 5.0)
-#endif  // _WIN32_WCE
+#if !defined (UNDER_CE)
+# error Define UNDER_CE to version (i.e. 300 = 3.0)
+#endif  // UNDER_CE
 
-#if (_WIN32_WCE < 500)
-# error ACE requires Windows CE 5.0 and later.
-#endif  // _WIN32_WCE
+#if (UNDER_CE < 300)
+# error ACE requires Windows CE 3.0 and later.
+#endif  // UNDER_CE
+
+#if (UNDER_CE < 400)
+// CE 3 doesn't have Winsock 2, but CE 4 does.
+# if !defined (ACE_HAS_WINSOCK2)
+#  define ACE_HAS_WINSOCK2 0
+# endif
+# define ACE_LACKS_ASSERT_H
+# define ACE_LACKS_SEARCH_H
+# define ACE_LACKS_WCHAR_H
+# define ACE_LACKS_WCTYPE_H
+# define ACE_LACKS_STDDEF_H
+# define ACE_LACKS_PTRDIFF_T
+#endif /* UNDER_CE < 400 */
 
 #if !defined (ACE_HAS_WINCE)
 # define ACE_HAS_WINCE 1
@@ -37,10 +50,8 @@
 #endif
 
 // We need these libraries to build:
-#if defined (_MSC_VER)
-#  pragma comment(lib,"corelibc.lib")
-#  pragma comment(linker, "/nodefaultlib:oldnames.lib")
-#endif
+#pragma comment(lib,"corelibc.lib")
+#pragma comment(linker, "/nodefaultlib:oldnames.lib")
 
 // Only DLL version is supported on CE.
 //#if defined (ACE_HAS_DLL)
@@ -53,7 +64,6 @@
 // the information using getenv.
 #define ACE_DEFAULT_LD_SEARCH_PATH ACE_TEXT (".\\;\\windows")
 
-#define ACE_LACKS_ABORT
 #define ACE_LACKS_FCNTL_H
 #define ACE_LACKS_SYS_TYPES_H
 #define ACE_LACKS_GETCWD
@@ -62,7 +72,6 @@
 #define ACE_LACKS_GMTIME
 #define ACE_LACKS_GMTIME_R
 #define ACE_LACKS_LOCALTIME
-#define ACE_LACKS_STRTOK_R
 #define ACE_LACKS_PERROR
 #define ACE_LACKS_STRFTIME
 #define ACE_LACKS_WIN32_SETFILEPOINTEREX
@@ -75,6 +84,8 @@
 #define ACE_LACKS_TZSET
 #define ACE_LACKS_RAISE
 #define ACE_LACKS_BSEARCH
+
+#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_UMASK
@@ -93,7 +104,7 @@
 # define ACE_LACKS_ERRNO_H
 # define ACE_LACKS_DUP
 # define ACE_LACKS_GETSYSTEMTIMEASFILETIME
-#endif /*  (_WIN32_WCE < 0x600) */
+#endif
 
 #define ACE_LACKS_REGNOTIFYCHANGEKEYVALUE
 
@@ -142,8 +153,22 @@
 #define _O_TEXT         0x4000  // file mode is text (translated)
 #define _O_BINARY       0x8000  // file mode is binary (untranslated)
 
+// macro to translate the C 2.0 name used to force binary mode for files
+//#define _O_RAW  _O_BINARY
+
+// Open handle inherit bit
+//#define _O_NOINHERIT    0x0080  // child process doesn't inherit file
+
 // Temporary file bit - file is deleted when last handle is closed
 #define _O_TEMPORARY    0x0040  // temporary file bit
+
+// temporary access hint
+//#define _O_SHORT_LIVED  0x1000  // temporary storage file, try not to flush
+
+// sequential/random access hints
+//#define _O_SEQUENTIAL   0x0020  // file access is primarily sequential
+//#define _O_RANDOM       0x0010  // file access is primarily random
+
 
 // Non-ANSI names
 #define O_RDONLY        _O_RDONLY
@@ -156,18 +181,29 @@
 #define O_TEXT          _O_TEXT
 #define O_BINARY        _O_BINARY
 #define O_TEMPORARY     _O_TEMPORARY
+//#define O_RAW           _O_BINARY
+//#define O_NOINHERIT     _O_NOINHERIT
+//#define O_SEQUENTIAL    _O_SEQUENTIAL
+//#define O_RANDOM        _O_RANDOM
+
 
 // @@ NSIG value.  This is definitely not correct.
 #define NSIG 23
 
-#if !defined (FILE_MAP_COPY)
+// @@ For some reason, WinCE forgot to define this.
+//    Need to find out what it is. (Used in MapViewOfFile ().)
 #define FILE_MAP_COPY 0
+
+#if (_WIN32_WCE >= 0x400)
+# define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
 
-#define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #define ACE_LACKS_ACCESS
 #define ACE_LACKS__WACCESS
 #define ACE_HAS_ACCESS_EMULATION
+#if (_WIN32_WCE < 0x500)
+# define ACE_LACKS_FILELOCKS
+#endif
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_ISATTY
@@ -193,7 +229,7 @@
 #endif  // _WIN32_WCE_EMULATION
 
 #if !defined (BUFSIZ)
-# define BUFSIZ 1024
+#  define BUFSIZ 1024
 #endif
 
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
@@ -203,22 +239,22 @@
 #define ACE_HAS_STRDUP_EMULATION
 
 #if !defined (MAXSYMLINKS)
-# define MAXSYMLINKS 0
+#define MAXSYMLINKS 0
 #endif
 
 // WinCE can't do fixed addresses for memory-mapped files.
 #if defined (ACE_DEFAULT_BASE_ADDR)
-# undef ACE_DEFAULT_BASE_ADDR
+#  undef ACE_DEFAULT_BASE_ADDR
 #endif
 #define ACE_DEFAULT_BASE_ADDR 0
 
 #if (_WIN32_WCE < 0x600)
-# define ACE_HAS_TSS_EMULATION
+#define ACE_HAS_TSS_EMULATION
 #endif  // WinCE version < 6.0
 
 // CE doesn't support FILE_SHARE_DELETE like regular windows
 #if !defined (ACE_DEFAULT_FILE_PERMS)
-# define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
+#define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
 #endif
 
 #define ACE_LACKS_SIGNAL_H

@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
+// SCIOP_Profile.cpp
 
 #include "tao/Strategies/SCIOP_Profile.h"
 
@@ -13,6 +13,10 @@
 #include "tao/StringSeqC.h"
 #include "tao/Strategies/sciop_endpointsC.h"
 #include "ace/os_include/os_netdb.h"
+
+ACE_RCSID(Strategies,
+          SCIOP_Profile,
+          "$Id$")
 
 static const char prefix_[] = "sciop";
 

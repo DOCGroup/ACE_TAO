@@ -1,35 +1,8 @@
 // $Id$
 
 #include "Messenger_i.h"
-#include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
+const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -38,9 +11,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-
-    if (parse_args (argc, argv) != 0)
-      return 1;
 
     //Get reference to Root POA
     CORBA::Object_var POA_obj = orb->resolve_initial_references( "RootPOA" );
@@ -60,11 +30,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // If the ior_output_file exists, output the ior to it
     if (ior_output_file != 0)
     {
-      FILE *output_file= ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ACE_TEXT_ALWAYS_CHAR(ior_output_file)),
+                           ior_output_file),
                           1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);

@@ -12,6 +12,10 @@
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
+ACE_RCSID (Notify,
+           TAO_CosNotify_Service,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
@@ -384,9 +388,9 @@ TAO_CosNotify_Service::finalize_service (
 
   TAO_Notify_EventChannelFactory* necf =
     dynamic_cast<TAO_Notify_EventChannelFactory*> (ecf->_servant ());
-
   if (necf != 0)
     necf->stop_validator();
+
 }
 
 void

@@ -2,7 +2,12 @@
 
 #include "Echo_Caller.h"
 #include "tao/ORB_Core.h"
+#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(Bug_1020_Basic_Regression,
+          server,
+          "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -28,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -58,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PortableServer::Servant_var<Echo_Caller> impl;
+      TAO::Utils::Servant_Var<Echo_Caller> impl;
       {
         Echo_Caller * tmp;
         // ACE_NEW_RETURN is the worst possible way to handle

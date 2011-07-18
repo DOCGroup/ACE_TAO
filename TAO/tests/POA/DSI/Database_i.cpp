@@ -8,6 +8,10 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/Null_Mutex.h"
 
+ACE_RCSID (DSI,
+           Database_i,
+           "$Id$")
+
 DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
   //  : DATABASE_MALLOC ()
 {
@@ -195,7 +199,7 @@ DatabaseImpl::Agent::find_entry (const char *key,
                       "Employee") != 0)
     throw Database::Unknown_Type ();
 
-  void *temp = 0;
+  void *temp;
   Database::Entry_var entry;
   if (DATABASE::instance ()->find (key, temp) == 0)
     {
@@ -239,7 +243,7 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
   if (ACE_OS::strcmp (entry_type, "Employee") != 0)
     throw Database::Unknown_Type ();
 
-  void *temp = 0;
+  void *temp;
   if (DATABASE::instance ()->unbind (key, temp) == 0)
     {
       Employee *employee =

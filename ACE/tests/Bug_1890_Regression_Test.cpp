@@ -16,7 +16,10 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+
+ACE_RCSID (tests,
+           Bug_1890_Regression_Test,
+           "$Id$")
 
 int const nhandlers = 3;
 
@@ -102,11 +105,8 @@ run_main (int, ACE_TCHAR *[])
 
   // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
   // regardless of platform.
-  ACE_Select_Reactor *impl_ptr = 0;
-  ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
-  auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
-
-  ACE_Reactor reactor (impl_ptr);
+  ACE_Select_Reactor select_reactor;
+  ACE_Reactor reactor (&select_reactor);
 
   // Create the timer, this is the main driver for the test
   Timer * timer = new Timer;

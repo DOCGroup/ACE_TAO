@@ -341,8 +341,8 @@ private:
   /// Method for evaluating a binary operation.
   int visit_bin_op (TAO_Binary_Constraint* op, int operation);
 
-  /// Determine if sequence contains @a element, a literal of the same
-  /// simple type as <sequence_type>. Return true in this eventuality.
+  /// Determine if sequence contains <element>, a literal of the same
+  /// simple type as <sequence_type>. Return 1 in this eventuality.
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
 

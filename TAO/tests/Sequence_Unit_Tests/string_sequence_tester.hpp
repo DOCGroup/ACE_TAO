@@ -62,11 +62,7 @@ struct string_sequence_test_helpers<char>
   }
 };
 
-#if defined(_GLIBCPP_VERSION) && !defined(_GLIBCPP_USE_WCHAR_T)
-# define TAO_LACKS_WCHAR_CXX_STDLIB
-#endif
-
-#if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
+#if defined(ACE_HAS_WCHAR)
 template<>
 struct string_sequence_test_helpers<CORBA::WChar>
 {
@@ -204,11 +200,10 @@ struct string_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    character_type const * lhs;
+    character_type const * lhs = 0;
     character_type const * rhs = 0;
     CHECK_THROW(lhs = y[32], std::range_error);
     CHECK_THROW(x[32] = rhs, std::range_error);
-    ACE_UNUSED_ARG (lhs);
     return 0;
   }
 
@@ -224,7 +219,7 @@ struct string_sequence_tester
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
 
-    CORBA::ULong max = 0;
+    CORBA::ULong max;
     {
       tested_sequence b(a);
       FAIL_RETURN_IF_NOT(d.expect(16), d);
@@ -298,7 +293,7 @@ struct string_sequence_tester
 
     expected_calls d(tested_element_traits::duplicate_calls);
     expected_calls r(tested_element_traits::release_calls);
-    CORBA::ULong max = 0;
+    CORBA::ULong max;
     {
       tested_sequence b;
       b = a;
@@ -390,10 +385,10 @@ struct string_sequence_tester
   {
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
-      tested_sequence x; x.length(4);
+      tested_sequence x; x.length(8);
       f.reset();
 
-      for(CORBA::ULong i = 0; i != 4; ++i)
+      for(CORBA::ULong i = 0; i != 8; ++i)
       {
         x[i] = helper::allocate_test_string();
       }
@@ -404,8 +399,8 @@ struct string_sequence_tester
 
 
       {
-        tested_sequence y; y.length(8);
-        for(CORBA::ULong i = 0; i != 8; ++i)
+        tested_sequence y; y.length(4);
+        for(CORBA::ULong i = 0; i != 4; ++i)
         {
           y[i] = helper::allocate_test_string();
         }
@@ -415,14 +410,14 @@ struct string_sequence_tester
         r.reset();
         f.reset();
         tested_element_traits::duplicate_calls.failure_countdown(4);
-        CHECK_THROW(x = y, testing_exception);
+        CHECK_THROW(y = x, testing_exception);
         FAIL_RETURN_IF_NOT(a.expect(1), a);
         FAIL_RETURN_IF_NOT(f.expect(1), f);
         FAIL_RETURN_IF_NOT(d.expect(4), d);
-        FAIL_RETURN_IF_NOT(r.expect(y.maximum()), r);
+        FAIL_RETURN_IF_NOT(r.expect(x.maximum()), r);
 
-        CHECK_EQUAL(CORBA::ULong(8), y.length());
-        for(CORBA::ULong i = 0; i != 8; ++i)
+        CHECK_EQUAL(CORBA::ULong(4), y.length());
+        for(CORBA::ULong i = 0; i != 4; ++i)
         {
           FAIL_RETURN_IF_NOT(
               helper::compare_test_string(y[i]),

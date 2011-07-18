@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    operation_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Operation in the server header
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    operation_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Operation in the server header
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           operation_sh,
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server header
@@ -28,17 +38,11 @@ be_visitor_operation_sh::~be_visitor_operation_sh (void)
 int
 be_visitor_operation_sh::visit_operation (be_operation *node)
 {
-  /// No server-side code generation for these implied IDL nodes.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "virtual ";
 
@@ -88,7 +92,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   // if there was no "native" type.
   if (!node->has_native ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "static void ";
 
       // Check if we are an attribute node in disguise.
@@ -109,8 +113,8 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
           << "_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest & server_request," << be_nl
           << "void * servant_upcall," << be_nl
-          << "void * servant);" << be_uidt
-          << be_uidt;
+          << "void * servant" << be_uidt_nl
+          << ");" << be_uidt;
     }
 
   return 0;

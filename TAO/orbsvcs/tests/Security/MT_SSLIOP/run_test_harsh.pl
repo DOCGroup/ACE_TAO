@@ -1,122 +1,64 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
-
 $threads = '4';
-$iterations = '1000';
-$number_threads_in_client = '10';
+$iorfile = PerlACE::LocalFile ("test.ior");
+$sv_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
+$cl_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
+unlink $iorfile;
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client1 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $client2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+$SV = new PerlACE::Process ("server", "-ORBsvcconf $sv_conf -o $iorfile -n $threads");
 
-my $iorfile = "test.ior";
+$CL1 = new PerlACE::Process 
+         ("client", "-k file://$iorfile -n 10 -i 1000 -ORBSvcConf $cl_conf");
 
-#Files which used by server
-my $server_iorfile = $server->LocalFile ($iorfile);
-$server->DeleteFile($iorfile);
+$CLS = new PerlACE::Process 
+         ("client", "-k file://$iorfile -n 10 -i 1000 -ORBSvcConf $cl_conf -x");
 
-#Files which used by client1
-my $client1_iorfile = $client1->LocalFile ($iorfile);
-$client1->DeleteFile($iorfile);
+$SV->Spawn ();
 
-#Files which used by client2
-my $client2_iorfile = $client2->LocalFile ($iorfile);
-$client2->DeleteFile($iorfile);
-
-#Configuration files for server and client
-$server_conf = $server->LocalFile ("server" . $PerlACE::svcconf_ext);
-$client1_conf = $client1->LocalFile ("client" . $PerlACE::svcconf_ext);
-$client2_conf = $client2->LocalFile ("client" . $PerlACE::svcconf_ext);
-
-
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBSvcConf $server_conf " .
-                              "-o $server_iorfile " .
-                              "-n $threads");
-
-$CL1 = $client1->CreateProcess ("client",
-                                "-k file://$client1_iorfile " .
-                                "-ORBSvcConf $client1_conf " .
-                                "-n $number_threads_in_client -i $iterations");
-
-$CL2 = $client2->CreateProcess ("client",
-                                "-k file://$client2_iorfile " .
-                                "-ORBSvcConf $client2_conf " .
-                                "-n $number_threads_in_client -i $iterations -x");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorfile,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    KillServers ();
-    exit 1;
-}
+$CL1->Spawn ();
+$client = $CL1->WaitKill (480);
 
-if ($server->GetFile ($iorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($client1->PutFile ($iorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$client1_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($client2->PutFile ($iorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$client2_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL1->SpawnWaitKill ($client1->ProcessStartWaitInterval() + 450);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
+$client = $CLS->SpawnWaitKill (480);
 
-$client_status = $CL2->SpawnWaitKill ($client2->ProcessStartWaitInterval() + 450);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (5);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1
 }
 
-$server->DeleteFile($iorfile);
-$client1->DeleteFile($iorfile);
-$client2->DeleteFile($iorfile);
+unlink $iorfile;
 
-exit $status;
+exit $status
+
+
+
+
+

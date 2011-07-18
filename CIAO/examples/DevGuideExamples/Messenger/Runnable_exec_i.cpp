@@ -19,8 +19,9 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Runnable_exec_i.h"
+#include "ciao/CIAO_common.h"
 
-namespace CIAO_Messenger_Impl
+namespace CIDL_Messenger_Impl
 {
   //==================================================================
   // Facet Executor Implementation Class:   Runnable_exec_i

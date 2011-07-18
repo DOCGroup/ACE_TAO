@@ -4,7 +4,7 @@
 project(RT_Notification) : orbsvcslib, orbsvcs_output, install, rtcorba, notification_serv, tao_versioning_idl_defaults {
   sharedname   = TAO_RT_Notification
   idlflags    += -Wb,export_macro=TAO_RT_Notify_Export -Wb,export_include=orbsvcs/Notify/rt_notify_export.h
-  dynamicflags += TAO_RT_NOTIFY_BUILD_DLL
+  dynamicflags = TAO_RT_NOTIFY_BUILD_DLL
   tagchecks   += RT_Notify
 
   // The using in the TAO_MC_Default_Factory class is apparently ignored by

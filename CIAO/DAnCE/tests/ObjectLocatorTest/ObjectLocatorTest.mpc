@@ -1,0 +1,27 @@
+// $Id$
+project (ObjectLocatorTestServer): avoids_minimum_corba, dance, taoserver, iortable, dance_redirection_service, dance_logger {
+  exename = ObjectLocatorTestServer
+
+  IDL_Files {
+    Dummy.idl
+  }
+
+  Source_Files {
+    srv_main.cpp
+    DummyC.cpp
+    DummyS.cpp
+    DummyImpl.cpp
+  }
+}
+
+project (ObjectLocatorTestClient): avoids_minimum_corba, dance, taoclient, anytypecode, dance_logger, portableserver {
+
+	after  += ObjectLocatorTestServer
+	exename = ObjectLocatorTestClient
+
+	Source_Files {
+		clt_main.cpp
+		DummyC.cpp
+   		DummyS.cpp
+   	}
+}

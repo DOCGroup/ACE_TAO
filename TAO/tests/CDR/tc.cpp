@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    tc.cpp
- *
- *  $Id$
- *
- * Verify that the basic typecodes are able to interpret their CDR
- * buffers.
- *
- *
- *  @author Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/CDR
+//
+// = FILENAME
+//    tc.cpp
+//
+// = DESCRIPTION
+//   Verify that the basic typecodes are able to interpret their CDR
+//   buffers.
+//
+// = AUTHORS
+//    Carlos O'Ryan
+//
+// ============================================================================
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
@@ -22,8 +25,14 @@
 
 #include "ace/Log_Msg.h"
 
+
+ACE_RCSID (CDR,
+           tc,
+           "$Id$")
+
 // In this version of TAO typecodes are based on CDR, we have to
 // verify that CDR offers the services needed for Typecode...
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

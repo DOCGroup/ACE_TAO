@@ -1,6 +1,9 @@
-// $Id$
-
 #include "tao/Compression/Compression_Manager.h"
+
+ACE_RCSID (Compression,
+           Compression_Manager,
+           "$Id$")
+
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

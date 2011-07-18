@@ -10,6 +10,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
+
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
@@ -297,10 +299,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // If no errors
   if (!error)
     {
-      // Update the Proactor unless make_handler() or constructed handler
-      // set up its own.
-      if (new_handler->proactor () == 0)
-        new_handler->proactor (this->proactor ());
+      // Update the Proactor.
+      new_handler->proactor (this->proactor ());
 
       // Pass the addresses
       if (this->pass_addresses_)
@@ -338,7 +338,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       && result.error () != ECANCELED
 #endif
       )
-    this->accept (this->bytes_to_read_, result.act ());
+    this->accept (this->bytes_to_read_);
 }
 
 template <class HANDLER> int
@@ -445,6 +445,13 @@ ACE_Asynch_Acceptor<HANDLER>::make_handler (void)
                   HANDLER,
                   0);
   return handler;
+}
+
+/* static */
+template <class HANDLER> size_t
+ACE_Asynch_Acceptor<HANDLER>::address_size (void)
+{
+  return sizeof (sockaddr) + sizeof (sockaddr_in);
 }
 
 template <class HANDLER> bool

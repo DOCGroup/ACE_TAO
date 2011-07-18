@@ -8,6 +8,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_resource.h"
 
+ACE_RCSID (ConnectionSpinning,
+           server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
 class Test_i: public virtual POA_Test
@@ -99,7 +102,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -179,12 +182,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       Descriptors descriptors;
-      descriptors.leak (
-#ifdef _WRS_KERNEL
-                        "server.out");
-#else
-                        argv[0]);
-#endif
+      descriptors.leak (argv[0]);
 
       ACE_Time_Value tv (10);
       orb->run (tv);

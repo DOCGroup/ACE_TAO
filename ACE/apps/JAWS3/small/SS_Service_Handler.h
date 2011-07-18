@@ -4,6 +4,7 @@
 #ifndef TERA_SS_SERVICE_HANDLER_H
 #define TERA_SS_SERVICE_HANDLER_H
 
+#include "ace/OS.h"
 #include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Svc_Handler.h"
@@ -21,7 +22,7 @@ class TeraSS_Service_Handler
 //     The Small Server service handler.
 //
 // = DESCRIPTION
-//     This class is responsible for initializing the JAWS_Protocol_Handler
+//     This class is reponsible for initializing the JAWS_Protocol_Handler
 //     with the correct state and data so that the Small Server can
 //     be properly serviced by the underlying framework.
 //

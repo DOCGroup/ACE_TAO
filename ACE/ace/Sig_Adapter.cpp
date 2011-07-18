@@ -2,7 +2,7 @@
 
 #include "ace/Sig_Adapter.h"
 
-
+ACE_RCSID(ace, Sig_Adapter, "$Id$")
 
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)

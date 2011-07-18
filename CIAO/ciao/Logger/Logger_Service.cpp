@@ -5,163 +5,147 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Env_Value_T.h"
 #include "tao/SystemException.h"
-#include "ace/Service_Config.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Log_Msg_Backend.h"
-#include "ace/Dynamic_Service.h"
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-// Needed to set ACE_LOG_MSG::msg_ostream()
-// FUZZ: disable check_for_streams_include
-#  include "ace/streams.h"
-#endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
-
-CIAO::Logger_Service::Logger_Service (void)
-  : filename_ (ACE_TEXT("")),
-    trace_ (false)
+namespace CIAO
 {
-}
+  Logger_Service::Logger_Service (void)
+    : filename_ (ACE_TEXT("")),
+      trace_ (false),
+      log_level_ (5)
+  {
+  }
 
-int
-CIAO::Logger_Service::init (int argc, ACE_TCHAR * argv[])
-{
-  // Get prospective values from the environment first, those given on
-  // command line can override
-  ACE_Env_Value<int> log (ACE_TEXT("CIAO_LOG_LEVEL"), CIAO_debug_level);
-  CIAO_debug_level = log;
+  int
+  Logger_Service::init (int argc, ACE_TCHAR * argv[])
+  {
+    // Get prospective values from the environment first, those given on
+    // command line can override
+    ACE_Env_Value<int> log (ACE_TEXT("CIAO_LOG_LEVEL"), this->log_level_);
+    this->log_level_ = log;
 
-  ACE_Env_Value<int> trace (ACE_TEXT("CIAO_TRACE_ENABLE"), 0);
-  this->trace_ = (trace != 0);
+    ACE_Env_Value<int> trace (ACE_TEXT("CIAO_TRACE_ENABLE"), this->trace_);
+    this->trace_ = trace;
 
-  ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("CIAO_LOG_FILE"), this->filename_.c_str ());
-  this->filename_ = filename;
+    ACE_Env_Value<const ACE_TCHAR *> filename (ACE_TEXT("CIAO_LOG_FILE"), this->filename_.c_str ());
+    this->filename_ = filename;
 
-  ACE_Env_Value<const ACE_TCHAR *> backend (ACE_TEXT("CIAO_LOG_BACKEND"), this->backend_.c_str ());
-  this->backend_ = backend;
+    this->parse_args (argc, argv);
+    this->set_levels ();
 
-  this->parse_args (argc, argv);
+    return 0;
+  }
 
-  if (this->trace_)
-    {
-      CIAO_ENABLE_TRACE ();
-    }
-  else
-    {
-      CIAO_DISABLE_TRACE ();
-    }
+  void
+  Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
+  {
+    const ACE_TCHAR *shortl = ACE_TEXT("-l");
+    const ACE_TCHAR *longl = ACE_TEXT("--log-level");
+    const ACE_TCHAR *tracel = ACE_TEXT("--trace");
+    const ACE_TCHAR *traces = ACE_TEXT("-t");
+    const ACE_TCHAR *lfl = ACE_TEXT("--log-file");
+    const ACE_TCHAR *lfs = ACE_TEXT("-f");
 
-  if (this->filename_.length () > 0)
-    {
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+    // We need to actually FIND the -l option, as the get_opt won't ignore
+    // the ORB options and such.
+    for (int i = 0; i < argc; ++i)
+      {
+        if (ACE_OS::strncmp (argv[i], traces, 2) == 0 ||
+            ACE_OS::strncmp (argv[i], tracel, 7) == 0)
+          {
+            this->trace_ = true;
+            continue;
+          }
 
-      FILE* output_stream = ACE_OS::fopen (this->filename_.c_str (), ACE_TEXT ("a"));
+        if (ACE_OS::strncmp (argv[i], shortl, 2) == 0 ||
+            ACE_OS::strncmp (argv[i], longl,11 ) == 0)
+          {
+            if ((i + 1) < argc && *argv[i + 1] != '-')
+              {
+                int level = ACE_OS::atoi (argv[i + 1]);
 
-      ACE_LOG_MSG->msg_ostream (output_stream, 1);
-#else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-      ofstream* output_stream = 0;
+                if (level != 0)
+                  this->log_level_ = level;
+              }
+          }
 
-      ACE_NEW_THROW_EX (output_stream,
-                        ofstream (),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            0,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
+        if (ACE_OS::strncmp (argv[i], lfs, 2) == 0 ||
+            ACE_OS::strncmp (argv[i], lfl, 10 ) == 0)
+          {
+            if ((i + 1) < argc && *argv[i + 1] != '-')
+              {
+                this->filename_ = argv[i+1];
+              }
+          }
+      }
+  }
 
-      output_stream->open (ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ()),
-                           ios::out | ios::app);
+  void
+  Logger_Service::set_levels (void)
+  {
+    if (this->trace_)
+      {
+        CIAO_ENABLE_TRACE ();
+        this->log_level_ = 10;
+      }
+    else
+      {
+        CIAO_DISABLE_TRACE ();
+      }
 
-      if (!output_stream->bad ())
-        {
-          ACE_LOG_MSG->msg_ostream (output_stream, 1);
-        }
-#endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+    u_long new_mask = 0;
 
-      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
-      ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
-    }
+    if (this->log_level_ >= 9)
+      {
+        new_mask |= LM_TRACE;
+      }
+    if (this->log_level_ >= 8)
+      {
+        new_mask |= LM_DEBUG;
+      }
+    if (this->log_level_ >= 7)
+      {
+        new_mask |= LM_INFO;
+      }
+    if (this->log_level_ >= 6)
+      {
+        new_mask |= LM_NOTICE;
+      }
+    if (this->log_level_ >= 5)
+      {
+        new_mask |= LM_WARNING;
+      }
+    if (this->log_level_ >= 4)
+      {
+        new_mask |= LM_ERROR;
+      }
+    if (this->log_level_ >= 3)
+      {
+        new_mask |= LM_CRITICAL;
+      }
+    if (this->log_level_ >= 2)
+      {
+        new_mask |= LM_ALERT;
+      }
+    if (this->log_level_ >= 1)
+      {
+        new_mask |= LM_EMERGENCY;
+      }
+    ACE_Log_Msg::instance()->priority_mask(new_mask, ACE_Log_Msg::PROCESS);
+    CIAO_DEBUG ( (LM_TRACE, CLINFO "Logging level is set to %i\n", this->log_level_));
+  }
 
-  if (this->backend_.length () > 0)
-    {
+  ACE_Log_Msg_Backend *
+  Logger_Service::get_logger_backend (CORBA::ORB_ptr)
+  {
+    File_Logger_Backend * the_backend;
+    ACE_NEW_THROW_EX (the_backend,
+                      File_Logger_Backend (this->filename_.c_str()),
+                      CORBA::NO_MEMORY());
+    return the_backend;
+  }
 
-      ACE_Log_Msg_Backend* logger_be =
-        ACE_Dynamic_Service<ACE_Log_Msg_Backend>::instance(this->backend_.c_str ());
+} // CIAO
 
-      //        backend->open ("");
-
-      if (logger_be == 0)
-        {
-          CIAO_ERROR (1,
-                       (LM_EMERGENCY, CLINFO
-                        "Logger_Service::init - "
-                        "Unable to load backend %s\n",
-                        this->backend_.c_str ()));
-          return -1;
-        }
-
-      ACE_Log_Msg::msg_backend (logger_be);
-
-      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER);
-      ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
-    }
-
-  return 0;
-}
-
-void
-CIAO::Logger_Service::parse_args (int argc, ACE_TCHAR **argv)
-{
-  CIAO_TRACE ("CIAO::Logger_Service::parse_args");
-
-  ACE_Arg_Shifter arg_shifter (argc, argv);
-
-  while (arg_shifter.is_anything_left ())
-    {
-      const ACE_TCHAR *current_arg = 0;
-      if (0 != (current_arg =
-                     arg_shifter.get_the_parameter
-                     (ACE_TEXT ("-CIAOLogLevel"))))
-        {
-          CIAO_debug_level = ACE_OS::atoi (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 == arg_shifter.cur_arg_strncasecmp
-          (ACE_TEXT ("-CIAOTraceEnable")))
-        {
-          this->trace_ = true;
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg =
-                     arg_shifter.get_the_parameter
-                     (ACE_TEXT ("-CIAOLogFile"))))
-        {
-          this->filename_ = current_arg;
-
-          arg_shifter.consume_arg ();
-        }
-      else
-        {
-          // Can't interpret this argument.  Move on to the next
-          // argument.  Any arguments that don't match are ignored
-          // so that the caller can still use them.
-          arg_shifter.ignore_arg ();
-        }
-    }
-}
-
-int
-CIAO::Logger_Service::Initializer (void)
-{
-  return ACE_Service_Config::process_directive (ace_svc_desc_CIAO_LOGGER_SERVICE);
-}
-
-ACE_STATIC_SVC_DEFINE (CIAO_LOGGER_SERVICE,
-                       ACE_TEXT ("CIAO_Logger"),
-                       ACE_SVC_OBJ_T,
-                       &ACE_SVC_NAME (CIAO_LOGGER_SERVICE),
-                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-                       0)
-ACE_FACTORY_DEFINE (CIAO_Logger, CIAO_LOGGER_SERVICE)
+using namespace CIAO;
+ACE_FACTORY_DEFINE (CIAO_Logger, Logger_Service)
 

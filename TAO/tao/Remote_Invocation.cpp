@@ -12,6 +12,10 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
+ACE_RCSID (tao,
+           Remote_Invocation,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -110,12 +114,12 @@ namespace TAO
 
   void
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
-  {
-    // Marshal application data
-    if (this->details_.marshal_args (out_stream) == false)
-      {
-        throw ::CORBA::MARSHAL ();
-      }
+    {
+      // Marshal application data
+      if (this->details_.marshal_args (out_stream) == false)
+        {
+          throw ::CORBA::MARSHAL ();
+        }
   }
 
   Invocation_Status
@@ -164,10 +168,6 @@ namespace TAO
     // Note that if noth nph and tph are 0, then we do not make any
     // virtual calls any more, because we have removed the default
     // implementations.
-
-    if (! this->resolver_.transport ()->is_connected()) {
-      throw ::CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-    }
 
     int const retval =
       this->resolver_.transport ()->send_request (

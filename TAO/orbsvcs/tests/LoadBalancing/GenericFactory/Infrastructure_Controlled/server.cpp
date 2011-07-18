@@ -1,8 +1,10 @@
-// $Id$
-
 #include "LB_server.h"
 #include "Factory.h"
 #include "Simple.h"
+
+ACE_RCSID (Infrastructure_Controlled,
+           server,
+           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

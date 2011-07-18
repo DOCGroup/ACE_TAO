@@ -49,7 +49,7 @@ extern "C"
 #   define ACE_IPPROTO_TCP IPPROTO_TCP
 # endif /* ACE_HAS_PHARLAP_RT */
 
-# if !defined (ACE_HAS_IP_MULTICAST) && defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
+# if !defined (ACE_HAS_IP_MULTICAST)  &&  defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
   // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP
   // is defined, assume that the ip_mreq struct is also defined
   // (presumably in netinet/in.h).

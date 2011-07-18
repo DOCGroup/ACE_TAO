@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 #include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
@@ -24,10 +22,14 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+
+ACE_RCSID (LoadBalancing,
+           LB_LoadManager,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
-                                        int ping_interval)
+TAO_LB_LoadManager::TAO_LB_LoadManager (void)
   : reactor_ (0),
     poa_ (),
     root_poa_ (),
@@ -51,32 +53,20 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
     load_average_ (),
     built_in_balancing_strategy_info_name_ (1),
     built_in_balancing_strategy_name_ (1),
-    custom_balancing_strategy_name_ (1),
-    validate_condition_ (validate_lock_),
-    shutdown_ (false),
-    ping_timeout_ (ping_timeout * 10000),
-    ping_interval_ (ping_interval)
+    custom_balancing_strategy_name_ (1)
 {
   this->pull_handler_.initialize (&this->monitor_map_, this);
 
-  // @note "this->initialize()" is not called here (in the constructor)
+  // @note "this->init()" is not called here (in the constructor)
   //       since it may thrown an exception.  Throwing an exception in
   //       a constructor in an emulated exception environment is
   //       problematic since native exception semantics cannot be
-  //       reproduced in such a case.  As such, initialize() must be called
+  //       reproduced in such a case.  As such, init() must be called
   //       by whatever code instantiates this LoadManager.
 }
 
 TAO_LB_LoadManager::~TAO_LB_LoadManager (void)
 {
-  this->shutdown_ = true;
-  this->validate_condition_.signal ();
-
-  if (this->ping_interval_ > ACE_Time_Value::zero)
-  {
-    // Wait for liveliness checking thread exit.
-    this->wait ();
-  }
 }
 
 void
@@ -168,7 +158,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
+  TAO_LB_LoadAlertMap::ENTRY * entry;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -222,7 +212,7 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
+  TAO_LB_LoadAlertMap::ENTRY * entry;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -305,7 +295,7 @@ TAO_LB_LoadManager::get_load_alert (
                     this->load_alert_lock_,
                     CosLoadBalancing::LoadAlert::_nil ());
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = 0;
+  TAO_LB_LoadAlertMap::ENTRY * entry;
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -405,7 +395,7 @@ TAO_LB_LoadManager::get_load_monitor (
                     this->monitor_lock_,
                     CosLoadBalancing::LoadMonitor::_nil ());
 
-  TAO_LB_MonitorMap::ENTRY * entry = 0;
+  TAO_LB_MonitorMap::ENTRY * entry;
   if (this->monitor_map_.find (the_location, entry) == 0)
     {
       return
@@ -538,15 +528,11 @@ TAO_LB_LoadManager::add_member (
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member)
 {
-  PortableGroup::ObjectGroup_var ret =
+  return
     this->object_group_manager_.add_member (object_group,
                                             the_location,
                                             member);
-
-  this->validate_condition_.signal ();
-  return ret._retn ();
 }
-
 
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::remove_member (
@@ -557,7 +543,6 @@ TAO_LB_LoadManager::remove_member (
     this->object_group_manager_.remove_member (object_group,
                                                the_location);
 }
-
 
 PortableGroup::Locations *
 TAO_LB_LoadManager::locations_of_members (
@@ -615,7 +600,7 @@ TAO_LB_LoadManager::create_object (
     PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id)
 {
-//   this->initialize ();
+//   this->init ();
 
 
   PortableGroup::Criteria new_criteria (the_criteria);
@@ -715,56 +700,17 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
        && (value >>= strategy)
        && !CORBA::is_nil (strategy))
     {
-      CORBA::Object_var obj;
-
-      // The following iteration to get next_member from strategy needs
-      // be synchronized with any member change method (e.g. add_member,
-      // remove_member). We need make the LB use RW strategy to ensure
-      // single threaded.
-
-      // Remove any disconnected members. Doing removing in the ORB thread
-      // to avoid synchnorize between ORB and validate thread.
-      this->object_group_manager_.remove_inactive_members ();
-
-      size_t n_members = this->object_group_manager_.member_count (oid, true);
-
-      size_t count = 0;
-
-      while (count < n_members)
-      {
-        ++ count;
-
-        obj = CORBA::Object::_nil ();
-        try {
-          obj = strategy->next_member (object_group.in (),
-                                       this->lm_ref_.in ());
-        }
-        catch (const CORBA::TRANSIENT&) //no member
-        {
-          break;
-        }
-        catch (...)
-        {
-          throw;
-        }
-
-        if (this->object_group_manager_.is_alive (oid, obj.in ()))
-          break;
-      }
-
-      if (CORBA::is_nil (obj.in ()))
-        throw CORBA::OBJECT_NOT_EXIST ();
-      else
-        return obj._retn ();
+      return strategy->next_member (object_group.in (),
+                                    this->lm_ref_.in ());
     }
-  else
-    throw CORBA::OBJECT_NOT_EXIST ();
+
+  throw CORBA::OBJECT_NOT_EXIST ();
 }
 
 void
-TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
-                                CORBA::ORB_ptr orb,
-                                PortableServer::POA_ptr root_poa)
+TAO_LB_LoadManager::init (ACE_Reactor * reactor,
+                          CORBA::ORB_ptr orb,
+                          PortableServer::POA_ptr root_poa)
 {
   ACE_ASSERT (!CORBA::is_nil (orb));
   ACE_ASSERT (!CORBA::is_nil (root_poa));
@@ -772,11 +718,6 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
              this->lock_);
-
-  if (CORBA::is_nil (this->orb_.in ()))
-  {
-    this->orb_ = CORBA::ORB::_duplicate (orb);
-  }
 
   if (CORBA::is_nil (this->poa_.in ()))
     {
@@ -860,14 +801,6 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
       this->reactor_ = reactor;
       this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
     }
-
-  if (this->ping_interval_ > ACE_Time_Value::zero && this->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-  {
-    ACE_ERROR((LM_ERROR,
-      ACE_TEXT ("(%P|%t)TAO_LB_LoadManager::initialize  failed to activate ")
-      ACE_TEXT ("thread to validate connection.\n")));
-    throw CORBA::INTERNAL ();
-  }
 
   if (CORBA::is_nil (this->lm_ref_.in ()))
     {
@@ -1160,28 +1093,5 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info)
 //     this->poa_->reference_to_id (
 //   this->poa_->deactivate_object ();
 // }
-
-
-int
-TAO_LB_LoadManager::svc (void)
-{
-  while (! this->shutdown_)
-  {
-    // The validate interval for each member is in the range
-    // between ping_interval_ and  ping_timeout_ * number of members.
-    ACE_Time_Value start = ACE_OS::gettimeofday ();
-    ACE_Time_Value due = start + this->ping_interval_;
-    this->object_group_manager_.validate_members (this->orb_.in (), this->ping_timeout_);
-    ACE_Time_Value end = ACE_OS::gettimeofday ();
-    if (due > end)
-    {
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->validate_lock_, -1);
-      this->validate_condition_.wait (&due);
-    }
-  }
-
-  return 0;
-}
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,17 +1,20 @@
+//$Id$
 
-//=============================================================================
-/**
- *  @file    Counter_i.h
- *
- *  $Id$
- *
- *   This class implements the Counter IDL interface.
- *
- *
- *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Exposed_Policies
+//
+// = FILENAME
+//    Counter_i.h
+//
+// = DESCRIPTION
+//     This class implements the Counter IDL interface.
+//
+// = AUTHOR
+//     Angelo Corsaro <corsaro@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef COUNTER_I_H_
 #define COUNTER_I_H_

@@ -11,6 +11,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
 
+ACE_RCSID(Policies, Manipulation, "$Id$")
+
 int nthreads = 5;
 int niterations = 100;
 
@@ -39,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -61,7 +63,7 @@ public:
   // The thread entry point.
 
 private:
-  void perform_iteration (unsigned int *seed,
+  void perform_iteration (ACE_RANDR_TYPE &seed,
                           CORBA::PolicyList_var &policies,
                           CORBA::PolicyManager_ptr policy_manager,
                           CORBA::PolicyCurrent_ptr policy_current);
@@ -138,7 +140,7 @@ Manipulation::Manipulation (CORBA::ORB_ptr orb,
 }
 
 void
-Manipulation::perform_iteration (unsigned int *seed,
+Manipulation::perform_iteration (ACE_RANDR_TYPE &seed,
                                  CORBA::PolicyList_var &policies,
                                  CORBA::PolicyManager_ptr policy_manager,
                                  CORBA::PolicyCurrent_ptr policy_current)
@@ -279,11 +281,11 @@ Manipulation::svc (void)
   try
     {
 #ifndef ACE_LACKS_LONGLONG_T
-      unsigned int seed =
-        static_cast<unsigned int> (ACE_OS::gethrtime ());
+      ACE_RANDR_TYPE seed =
+        static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime ());
 #else
-      unsigned int seed =
-        static_cast<unsigned int> (ACE_OS::gethrtime().lo());
+      ACE_RANDR_TYPE seed =
+        static_cast<ACE_RANDR_TYPE> (ACE_OS::gethrtime().lo());
 #endif
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("ORBPolicyManager");
@@ -300,7 +302,7 @@ Manipulation::svc (void)
       for (int i = 0; i != this->niterations_; ++i)
         {
           CORBA::PolicyList_var policies;
-          this->perform_iteration (&seed,
+          this->perform_iteration (seed,
                                    policies,
                                    policy_manager.in (),
                                    policy_current.in ());

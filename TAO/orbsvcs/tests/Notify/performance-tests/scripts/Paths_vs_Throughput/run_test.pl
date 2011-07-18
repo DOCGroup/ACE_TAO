@@ -1,205 +1,169 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 use File::Copy;
 use Getopt::Std;
 
 PerlACE::check_privilege_group();
 
-$status = 0;
-
 # -n notify.conf -s high_path.conf -c other_paths.conf -o output_dir -h
 getopts ("n:s:c:o:h");
 
-if ($opt_h) {
-    $opt_h = 0; #to disable warning
+if ($opt_h)
+{
     print STDERR "-n notify.conf -s high_path.conf -c other_paths.conf -o output_dir -h -d\n";
     exit 0;
 }
 
+$experiment_timeout = 300;
+$startup_timeout = 300;
 $debug = "";
 
-if ($opt_d) {
-    $opt_d = 0; #to disable warning
-    $debug = "-ORBDebugLevel 1"
+if ($opt_d)
+{
+  $debug = "-ORBDebugLevel 1"
 }
 
-$notify_conf = "notify.conf";
-if ($opt_n) {
-    $notify_conf = $opt_n;
+if ($opt_n)
+{
+    $notify_conf = PerlACE::LocalFile ($opt_n);
+
+}else
+{
+    $notify_conf = PerlACE::LocalFile ("notify.conf");
 }
 
-$high_path_conf = "high_path.conf";
-if ($opt_s) {
-    $high_path_conf = $opt_s;
+if ($opt_s)
+{
+    $high_path_conf = PerlACE::LocalFile ($opt_s);
+
+}else
+{
+    $high_path_conf = PerlACE::LocalFile ("high_path.conf");
 }
 
-$other_paths_conf = "other_paths.conf";
-if ($opt_c) {
-    $other_paths_conf = $opt_c;
+if ($opt_c)
+{
+    $other_paths_conf = PerlACE::LocalFile ($opt_c);
+
+}else
+{
+    $other_paths_conf = PerlACE::LocalFile ("other_paths.conf");
 }
 
-my $notify_ior    = "notify.ior";
-my $naming_ior    = "naming.ior";
-my $high_path_ior = "high_path.ior";
+$notify_ior = PerlACE::LocalFile ("notify.ior");
 
-$nm_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-$nt_service = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-$high_path  = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-$other_path = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+$naming_ior = PerlACE::LocalFile ("naming.ior");
 
-#uncomment it when test will be fixed
-#@list = glob("*.dat");
-#for $file (@list) {
-#->DeleteFile($file);
-#}
+$high_path_ior = PerlACE::LocalFile ("high_path.ior");
 
-#localisations of ior files
-$nm_service_nmiorfile = $nm_service->LocalFile($naming_ior);
-$nt_service_nmiorfile = $nt_service->LocalFile($naming_ior);
-$high_path_nmiorfile = $high_path->LocalFile($naming_ior);
-$other_path_nmiorfile = $other_path->LocalFile($naming_ior);
-$nt_service_ntiorfile = $nt_service->LocalFile($notify_ior);
-$high_path_hpiorfile = $high_path->LocalFile($high_path_ior);
-$other_path_hpiorfile = $other_path->LocalFile($high_path_ior);
-#delete all ior files
-$nm_service->DeleteFile($naming_ior);
-$nt_service->DeleteFile($naming_ior);
-$high_path->DeleteFile($naming_ior);
-$other_path->DeleteFile($naming_ior);
-$nt_service->DeleteFile($notify_ior);
-$high_path->DeleteFile($high_path_ior);
-$other_path->DeleteFile($high_path_ior);
-#localisations of conf files
-$nt_service_ntconffile = $nt_service->LocalFile($notify_conf);
-$high_path_hpconffile = $high_path->LocalFile($high_path_conf);
-$other_path_opconffile = $other_path->LocalFile($other_paths_conf);
+@list=glob("*.dat");
+for $file (@list)
+{
+  unlink $file or die "Could not delete $file";
+}
 
-$NM_SV = $nm_service->CreateProcess ("../../../../../Naming_Service/tao_cosnaming",
-                                     "-o $nm_service_nmiorfile $debug");
-$NT_SV = $nt_service->CreateProcess ("../../../../../Notify_Service/tao_cosnotification",
-                                     "-ORBInitRef NameService=file://$nt_service_nmiorfile ".
-                                     "-IORoutput $nt_service_ntiorfile ".
-                                     "-ORBSvcConf $nt_service_ntconffile $debug");
+$status = 0;
 
-$HP = $high_path->CreateProcess ("../../../Driver/Notify_Tests_Driver",
-                                 "-ORBInitRef NameService=file://$high_path_nmiorfile ".
-                                 "-IORoutput $high_path_hpiorfile ".
-                                 "-ORBSvcConf $high_path_hpconffile $debug");
+$Naming = new PerlACE::Process ("../../../../../Naming_Service/Naming_Service",
+                                "-o $naming_ior");
 
-$OP = $other_path->CreateProcess ("../../../Driver/Notify_Tests_Driver",
-                                  "-ORBInitRef NameService=file://$other_path_nmiorfile ".
-                                  "-IORinput file://$other_path_hpiorfile ".
-                                  "-ORBSvcConf $other_path_opconffile $debug");
+$Notification = new PerlACE::Process ("../../../../../Notify_Service/Notify_Service");
 
-$process_status = $NM_SV->Spawn ();
+$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf $debug";
 
-if ($process_status != 0) {
-    print STDERR "ERROR: naming service returned $process_status\n";
+$High_path = new PerlACE::Process ("../../../Driver/Notify_Tests_Driver");
+
+$High_path_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $high_path_ior -ORBSvcConf $high_path_conf $debug";
+
+$Other_paths = new PerlACE::Process ("../../../Driver/Notify_Tests_Driver");
+
+$Other_paths_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$high_path_ior -ORBSvcConf $other_paths_conf $debug";
+
+unlink $naming_ior;
+$Naming->Spawn ();
+
+if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the naming service to start\n";
+  $Naming->Kill ();
+  exit 1;
+}
+
+unlink $notify_ior;
+$Notification->Arguments ($Notify_Args);
+$args = $Notification->Arguments ();
+print STDERR "Running Notification with arguments: $args\n";
+$Notification->Spawn ();
+
+if (PerlACE::waitforfile_timed ($notify_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the notify service to start\n";
+  $Notification->Kill ();
+  $Naming->Kill ();
+  exit 1;
+}
+
+unlink $high_path_ior;
+$High_path->Arguments ($High_path_Args);
+$args = $High_path->Arguments ();
+print STDERR "Running High_path with arguments: $args\n";
+$High_path->Spawn ();
+
+if (PerlACE::waitforfile_timed ($high_path_ior, $startup_timeout) == -1) {
+  print STDERR "ERROR: waiting for the high_path to start\n";
+  $High_path->Kill ();
+  $Notification->Kill ();
+  $Naming->Kill ();
+  exit 1;
+}
+
+unlink $other_paths_ior;
+$Other_paths->Arguments ($Other_paths_Args);
+$args = $Other_paths->Arguments ();
+print STDERR "Running Other_paths with arguments: $args\n";
+$status = $Other_paths->SpawnWaitKill ($experiment_timeout);
+
+if ($status != 0)
+  {
+    print STDERR "ERROR: Other_paths returned $status\n";
+    $High_path->Kill ();
+    $Notification->Kill ();
+    $Naming->Kill ();
     exit 1;
-}
+  }
 
-if ($nm_service->WaitForFileTimed ($naming_ior,
-                                   $nm_service->ProcessStartWaitInterval() + 285) == -1) {
-    print STDERR "ERROR: cannot find file <$nm_service_nmiorfile>\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
+unlink $other_paths_ior;
 
-if ($nm_service->GetFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$nm_service_nmiorfile>\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
+$High_path->Wait ();
+unlink $high_path_ior;
 
-if ($nt_service->PutFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$nt_service_nmiorfile>\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
+$Notification->Kill ();
+unlink $notify_ior;
 
-if ($high_path->PutFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$high_path_nmiorfile>\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
+$Naming->Kill ();
+unlink $naming_ior;
 
-if ($other_path->PutFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$other_path_nmiorfile>\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
+if ($opt_o)
+  {
+      $results_directory = PerlACE::LocalFile ($opt_o);
 
-$process_status = $NT_SV->Spawn ();
+      if (! -e $results_directory)
+      {
+          mkdir $results_directory, 0777;
+      }
 
-if ($process_status != 0) {
-    print STDERR "ERROR: notify service returned $process_status\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
+      print STDERR "Saving results to $results_directory\n";
 
-if ($nt_service->WaitForFileTimed ($notify_ior,
-                                   $nt_service->ProcessStartWaitInterval() + 285) == -1) {
-    print STDERR "ERROR: cannot find file <$nt_service_ntiorfile> to start\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    $NT_SV->Kill (); $NT_SV->TimedWait (1);
-    exit 1;
-}
-
-$process_status = $HP->Spawn ();
-
-if ($process_status != 0) {
-    print STDERR "ERROR: high path returned $process_status\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    $NT_SV->Kill (); $NT_SV->TimedWait (1);
-    exit 1;
-}
-
-if ($high_path->WaitForFileTimed ($high_path_ior,
-                                  $high_path->ProcessStartWaitInterval() + 285) == -1) {
-    print STDERR "ERROR: cannot find file <$high_path_hpiorfile> to start\n";
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    $NT_SV->Kill (); $NT_SV->TimedWait (1);
-    $HP->Kill (); $HP->TimedWait (1);
-    exit 1;
-}
-
-$process_status = $OP->SpawnWaitKill ($other_path->ProcessStartWaitInterval() + 285);
-
-if ($process_status != 0) {
-    print STDERR "ERROR: other path returned $process_status\n";
-    $status = 1;
-    $HP->Kill (); $HP->TimedWait (1);
-    $NT_SV->Kill (); $NT_SV->TimedWait (1);
-    $NM_SV->Kill (); $NM_SV->TimedWait (1);
-    exit 1;
-}
-
-$process_status = $HP->WaitKill ($high_path->ProcessStopWaitInterval());
-if ($process_status != 0) {
-    print STDERR "ERROR: high path returned $process_status\n";
-    $status = 1;
-}
-
-$NT_SV->Kill ();
-$NM_SV->Kill ();
-
-if ($opt_o) {
-    print STDERR "Results are not saved in $opt_o\n";
-}
-
-$nm_service->DeleteFile($naming_ior);
-$nt_service->DeleteFile($naming_ior);
-$high_path->DeleteFile($naming_ior);
-$other_path->DeleteFile($naming_ior);
-$nt_service->DeleteFile($notify_ior);
-$high_path->DeleteFile($high_path_ior);
-$other_path->DeleteFile($high_path_ior);
+      @list=glob("*.dat");
+      for $file (@list)
+      {
+          move ("$file", "$results_directory/$file");
+      }
+  }
 
 exit $status;

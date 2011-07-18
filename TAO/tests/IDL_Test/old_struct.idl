@@ -1,25 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    old_struct.idl
- *
- *  $Id$
- *
- *  Tests of struct IDL constructs
- *
- *
- *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
- */
-//=============================================================================
-
-
-typedef string string_20[20];
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    old_struct.idl
+//
+// = DESCRIPTION
+//    Tests of struct IDL constructs
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
 
 struct bar1
 {
   long b1;
   long b2;
-  string_20 b3;
+  string<20> b3;
 };
 
 struct bar2
@@ -53,7 +54,7 @@ interface foo1
 interface foo2 : foo1
 {
   bar1  op2 (in bar2 a);
-
+  
   long op3 (in long a, out char b);
 };
 

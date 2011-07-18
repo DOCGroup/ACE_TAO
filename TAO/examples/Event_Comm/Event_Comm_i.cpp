@@ -1,14 +1,18 @@
 // $Id$
 
 #include "Event_Comm_i.h"
-#include "ace/OS_NS_regex.h"
+#if defined (ACE_HAS_REGEX)
+# include "ace/OS_NS_regex.h"
+#endif
 
-/**
- * Keeps track of context information associated with
- * a <Event_Comm::Consumer> entry.
- */
+ACE_RCSID(Event_Comm, Event_Comm_i, "$Id$")
+
+
 class Consumer_Entry
 {
+  // = TITLE
+  //   Keeps track of context information associated with
+  //   a <Event_Comm::Consumer> entry.
 public:
   // = Initialization and termination methods.
   Consumer_Entry (Event_Comm::Consumer *consumer,

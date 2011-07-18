@@ -75,47 +75,37 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // nodes and AST_UnionBranch nodes.
 
 #include "ast_field.h"
-#include "ast_param_holder.h"
+#include "ast_type.h"
 #include "ast_visitor.h"
-
 #include "utl_identifier.h"
-#include "utl_err.h"
 
-#include "global_extern.h"
+ACE_RCSID (ast, ast_field, "$Id$")
 
-AST_Decl::NodeType const
-AST_Field::NT = AST_Decl::NT_field;
+AST_Field::AST_Field (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    pd_field_type (0),
+    pd_visibility (vis_NA),
+    anonymous_type_ (false)
+{
+}
 
+// To be used when constructing an AST_Field node.
 AST_Field::AST_Field (AST_Type *ft,
                       UTL_ScopedName *n,
                       Visibility vis)
   : COMMON_Base (),
     AST_Decl (AST_Decl::NT_field,
               n),
-    ref_type_ (ft),
-    visibility_ (vis),
-    owns_base_type_ (false)
+    pd_field_type (ft),
+    pd_visibility (vis),
+    anonymous_type_ (false)
 {
-  FE_Utils::tmpl_mod_ref_check (this, ft);
-
   AST_Decl::NodeType fnt = ft->node_type ();
-
-  // In each of these cases, we are responsible for destroying
-  // our ref_type_ member.
-  this->owns_base_type_ =
-    fnt == AST_Decl::NT_array
-    || fnt == AST_Decl::NT_sequence
-    || fnt == AST_Decl::NT_param_holder;
-
-  if (fnt == AST_Decl::NT_param_holder)
+  
+  if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
     {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ft);
-
-      if (ph->info ()->type_ == AST_Decl::NT_const)
-        {
-          idl_global->err ()->not_a_type (ft);
-        }
+      this->anonymous_type_ = true;
     }
 }
 
@@ -127,28 +117,15 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
   : COMMON_Base (),
     AST_Decl (nt,
               n),
-    ref_type_ (ft),
-    visibility_ (vis),
-    owns_base_type_ (false)
+    pd_field_type (ft),
+    pd_visibility (vis),
+    anonymous_type_ (false)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
-
-  // In each of these cases, we are responsible for destroying
-  // our ref_type_ member.
-  this->owns_base_type_ =
-    fnt == AST_Decl::NT_array
-    || fnt == AST_Decl::NT_sequence
-    || fnt == AST_Decl::NT_param_holder;
-
-  if (fnt == AST_Decl::NT_param_holder)
+  
+  if (AST_Decl::NT_array == fnt || AST_Decl::NT_sequence == fnt)
     {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ft);
-
-      if (ph->info ()->type_ == AST_Decl::NT_const)
-        {
-          idl_global->err ()->not_a_type (ft);
-        }
+      this->anonymous_type_ = true;
     }
 }
 
@@ -160,7 +137,7 @@ AST_Field::~AST_Field (void)
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
-  switch (this->visibility_)
+  switch (this->pd_visibility)
     {
     case vis_PRIVATE:
       this->dump_i (o, "private ");
@@ -174,7 +151,7 @@ AST_Field::dump (ACE_OSTREAM_TYPE &o)
       break;
     }
 
-  this->ref_type_->local_name ()->dump (o);
+  this->pd_field_type->local_name ()->dump (o);
 
   this->dump_i (o, " ");
 
@@ -190,11 +167,11 @@ AST_Field::ast_accept (ast_visitor *visitor)
 void
 AST_Field::destroy (void)
 {
-  if (this->owns_base_type_ && this->ref_type_)
+  if (this->anonymous_type_)
     {
-      this->ref_type_->destroy ();
-      delete this->ref_type_;
-      this->ref_type_ = 0;
+      this->pd_field_type->destroy ();
+      delete this->pd_field_type;
+      this->pd_field_type = 0;
     }
 
   this->AST_Decl::destroy ();
@@ -203,19 +180,21 @@ AST_Field::destroy (void)
 AST_Type *
 AST_Field::field_type (void) const
 {
-  return this->ref_type_;
+  return this->pd_field_type;
 }
 
 AST_Field::Visibility
-AST_Field::visibility (void) const
+AST_Field::visibility (void)
 {
-  return this->visibility_;
+  return this->pd_visibility;
 }
 
 int
 AST_Field::contains_wstring (void)
 {
-  return this->ref_type_->contains_wstring ();
+  return this->pd_field_type->contains_wstring ();
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Field)

@@ -9,6 +9,10 @@
 #  include "ace/Multihomed_INET_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (ace,
+           Multihomed_INET_Addr,
+           "$Id$")
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)

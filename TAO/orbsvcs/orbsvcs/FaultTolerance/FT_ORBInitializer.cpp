@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"
@@ -7,6 +8,11 @@
 #include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
+
+
+ACE_RCSID (FaultTolerance,
+           FT_ORBInitializer,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

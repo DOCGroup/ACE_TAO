@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/LF_Event.h"
@@ -9,6 +8,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/LF_Event.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           LF_Event,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

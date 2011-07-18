@@ -146,9 +146,10 @@ namespace TAO_Notify
       try
       {
         object_stack_.push (root);
-        parser.parse (&input);
+        parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+        ACEXML_TRY_CHECK;
         ACE_ASSERT (object_stack_.size () == 1);
-        Topology_Object* cur = 0;
+        Topology_Object* cur;
         object_stack_.pop (cur);
       }
       catch (const ACEXML_Exception& ex)

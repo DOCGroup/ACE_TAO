@@ -6,145 +6,69 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
+$port = PerlACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
+
+$NS_ior = PerlACE::LocalFile ("NameService.ior");
 $sleeptime = 8;
+$status = 0;
 
-my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $server3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $client = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+$NS = new PerlACE::Process ("../../Naming_Service/Naming_Service",
+                            "-ORBNameServicePort $port -o $NS_ior");
+$ES = new PerlACE::Process ("../../Event_Service/Event_Service",
+                            "-ORBInitRef NameService=file://$NS_ior");
+$C  = new PerlACE::Process ("ECM_Consumer", 
+                            "-ORBInitRef NameService=file://$NS_ior");
+$S  = new PerlACE::Process ("ECM_Supplier",
+                            "-ORBInitRef NameService=file://$NS_ior");
 
-$port = $server1->RandomPort () + 10001; # This can't be 10000 on Chorus 4.0
+$NS->Spawn ();
 
-$naming_ior = "NameService.ior";
-
-$server1_naming_ior = $server1->LocalFile ($naming_ior);
-$server2_naming_ior = $server2->LocalFile ($naming_ior);
-$server3_naming_ior = $server3->LocalFile ($naming_ior);
-$client_naming_ior = $client->LocalFile ($naming_ior);
-
-$server1->DeleteFile ($naming_ior);
-$server2->DeleteFile ($naming_ior);
-$server3->DeleteFile ($naming_ior);
-$client->DeleteFile ($naming_ior);
-
-
-$SV1 = $server1->CreateProcess ("../../Naming_Service/tao_cosnaming",
-                                "-ORBNameServicePort $port " .
-                                "-o $server1_naming_ior");
-
-$SV2 = $server2->CreateProcess ("../../Event_Service/tao_rtevent",
-                                "-ORBInitRef NameService=file://$server2_naming_ior");
-
-$SV3 = $server3->CreateProcess ("ECM_Supplier",
-                                "-ORBInitRef NameService=file://$server3_naming_ior");
-
-$CL = $client->CreateProcess ("ECM_Consumer",
-                                "-ORBInitRef NameService=file://$client_naming_ior");
-
-$server_status = $SV1->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-if ($server1->WaitForFileTimed ($naming_ior,
-                               $server1->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server1_naming_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
+if (PerlACE::waitforfile_timed ($NS_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: waiting for naming service IOR file\n";
+    $NS->Kill (); 
     exit 1;
 }
 
-if ($server1->GetFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server1_naming_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-if ($server2->PutFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$server2_naming_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-if ($server3->PutFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$server3_naming_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-if ($client->PutFile ($naming_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client_naming_ior>\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    exit 1;
-}
-
-$server_status = $SV2->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $SV2->Kill (); $SV2->TimedWait (1);
-    exit 1;
-}
+$ES->Spawn ();
 
 sleep $sleeptime;
 
-$client_status = $CL->Spawn ();
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $SV2->Kill (); $SV2->TimedWait (1);
-    $CL->Kill (); $CL->TimedWait (1);
-    exit 1;
-}
+$C->Spawn ();
 
 sleep $sleeptime;
 
-$server_status = $SV3->Spawn ();
+$S->Spawn ();
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $SV1->Kill (); $SV1->TimedWait (1);
-    $SV2->Kill (); $SV2->TimedWait (1);
-    $SV3->Kill (); $SV3->TimedWait (1);
-    $CL->Kill (); $CL->TimedWait (1);
-    exit 1;
-}
+$consumer = $C->WaitKill (60);
 
-$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval() + 45);
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($consumer != 0) {
+    print STDERR "ERROR: consumer returned $consumer\n";
     $status = 1;
 }
 
-$server_status = $SV3->WaitKill ($server3->ProcessStopWaitInterval() + 45);
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+$supplier = $S->WaitKill (60);
+
+if ($supplier == -1) {
+    print STDERR "ERROR: supplier returned $supplier\n";
     $status = 1;
 }
 
-$server_status = $SV2->TerminateWaitKill ($server2->ProcessStopWaitInterval());
+$nserver = $NS->TerminateWaitKill (5);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($nserver != 0) {
+    print STDERR "ERROR: nameserver returned $nserver\n";
     $status = 1;
 }
 
+$eserver = $ES->TerminateWaitKill (5);
 
-$server_status = $SV1->TerminateWaitKill ($server1->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($eserver != 0) {
+    print STDERR "ERROR: eventserver returned $eserver\n";
     $status = 1;
 }
 
-$server1->DeleteFile ($naming_ior);
-$server2->DeleteFile ($naming_ior);
-$server3->DeleteFile ($naming_ior);
-$client->DeleteFile ($naming_ior);
+unlink $NS_ior;
 
 exit $status;

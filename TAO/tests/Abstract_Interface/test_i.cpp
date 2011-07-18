@@ -1,8 +1,12 @@
-// -*- C++ -*-
 // $Id$
 
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (Abstract_Interface,
+           test_i,
+           "$Id$")
 
 char *
 foo_i::foo_op (const char * inarg)
@@ -95,10 +99,4 @@ passer_i::pass_state (base_out outarg)
   sn->right (r_dummy.in ());
 
   outarg = tc._retn ();
-}
-
-void
-passer_i::pass_nil (base_out outarg)
-{
-  outarg = foo::_nil ();
 }

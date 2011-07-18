@@ -11,7 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
-#include "ace/Get_Opt.h"
 
 #include "TestS.h"
 #include "Client_Task.h"
@@ -44,40 +43,6 @@ private:
   CORBA::ORB_var orb_;
   Client_Task* task_;
 };
-
-const ACE_TCHAR *ior_a_file = ACE_TEXT("iorA.ior");
-const ACE_TCHAR *ior_b_file = ACE_TEXT("iorB.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'a':
-        ior_a_file = get_opts.optarg;
-        break;
-
-      case 'b':
-        ior_b_file = get_opts.optarg;
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-a <iorAfile>"
-                           "-b <iorBfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
 
 RTCORBA::ThreadpoolId
 createThreadpool(CORBA::ORB_ptr orb, RTCORBA::RTORB_ptr rtorb, CORBA::ULong nthreads)
@@ -137,7 +102,7 @@ RTCORBA::RTORB_ptr getRTORB(CORBA::ORB_ptr orb, const char *id)
                   "Failed getting RTORB for orb <%C>\n",
                   id));
     }
-  return rtorb;
+  return RTCORBA::RTORB::_duplicate (rtorb);
 }
 
 PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
@@ -150,10 +115,10 @@ PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
                   "Failed getting RootPOA for orb <%C>\n",
                   id));
     }
-  return poa;
+  return PortableServer::POA::_duplicate (poa);
 }
 
-char*
+const char*
 addServant(
   CORBA::ORB_ptr orb,
   RTCORBA::RTORB_ptr rtorb,
@@ -252,37 +217,30 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::POA_var rootPoaA = getRootPoa(orbA.in (), orbidA);
     PortableServer::POA_var rootPoaB = getRootPoa(orbB.in (), orbidB);
 
-    PortableServer::POAManager_var managerA = rootPoaA->the_POAManager();
-    managerA->activate();
-    PortableServer::POAManager_var managerB = rootPoaB->the_POAManager();
-    managerB->activate();
+    rootPoaA->the_POAManager()->activate();
+    rootPoaB->the_POAManager()->activate();
 
     Client_Task client_taskA (orbA.in ());
     Client_Task client_taskB (orbB.in ());
 
     implA = new Test_i(orbA.in (), &client_taskA);
-    PortableServer::ServantBase_var safeA (implA);
     implB = new Test_i(orbB.in (), &client_taskB);
-    PortableServer::ServantBase_var safeB (implB);
 
-    CORBA::String_var iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
-    CORBA::String_var iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
+    const char* iorA = addServant(orbA.in (), rtorbA.in (), rootPoaA.in (), implA, tpidA, 3);
+    const char* iorB = addServant(orbB.in (), rtorbB.in (), rootPoaB.in (), implB, tpidB, 3);
 
-    if (parse_args (argc, argv) != 0)
+    if (write_iorfile(ACE_TEXT("iorA.ior"), iorA) == 1)
       return 1;
 
-    if (write_iorfile(ior_a_file, iorA.in ()) == 1)
-      return 1;
-
-    if (write_iorfile(ior_b_file, iorB.in ()) == 1)
+    if (write_iorfile(ACE_TEXT("iorB.ior"), iorB) == 1)
       return 1;
 
     // colocated calls work fine
-    CORBA::Object_var objA = orbA->string_to_object(iorA.in ());
+    CORBA::Object_var objA = orbA->string_to_object(iorA);
     Test::Hello_var helloA(Test::Hello::_narrow(objA.in ()));
     CORBA::String_var resA = helloA->get_string();
 
-    CORBA::Object_var objB = orbB->string_to_object(iorB.in ());
+    CORBA::Object_var objB = orbB->string_to_object(iorB);
     Test::Hello_var helloB(Test::Hello::_narrow(objB.in ()));
     CORBA::String_var resB = helloB->get_string();
 
@@ -312,7 +270,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
     shutdownORB(orbB.in (), orbidB);
-
     objB = CORBA::Object::_nil ();
     helloB = Test::Hello::_nil ();
     orbB = CORBA::ORB::_nil ();

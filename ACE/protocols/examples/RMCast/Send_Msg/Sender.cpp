@@ -2,8 +2,8 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_unistd.h"
 
 #include "ace/RMCast/Socket.h"
 

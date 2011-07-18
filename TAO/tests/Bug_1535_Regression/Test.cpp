@@ -3,6 +3,8 @@
 //
 #include "Test.h"
 
+ACE_RCSID(Hello, Hello, "$Id$")
+
 Hello::Hello (PortableServer::POA_ptr poa) :
   poa_ (PortableServer::POA::_duplicate (poa))
 {

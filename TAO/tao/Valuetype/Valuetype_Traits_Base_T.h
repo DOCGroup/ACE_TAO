@@ -10,7 +10,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/Valuetype/Value_VarOut_T.h"
+#include "tao/Objref_VarOut_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

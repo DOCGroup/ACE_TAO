@@ -1,32 +1,35 @@
 // -*- C++ -*-
 
+// $Id$
+
 // Fast lookup table abstraction implemented as an Iteration Number Array
 
-/**
- * $Id$
- *
- * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
- *
- * This file is part of GNU GPERF.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
+// Copyright (C) 1989 Free Software Foundation, Inc.
+// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+
+// This file is part of GNU GPERF.
+
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "Bool_Array.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(src, Bool_Array, "$Id$")
+
+#if defined (ACE_HAS_GPERF)
+
 #include "ace/OS_Memory.h"
 
 // Prints out debugging diagnostics.
@@ -37,7 +40,7 @@ Bool_Array::~Bool_Array (void)
     ACE_DEBUG ((LM_DEBUG,
                 "\ndumping boolean array information\n"
                 "size = %u\niteration number = %u\nend of array dump\n",
-                size_,
+                size_, 
                 generation_number_));
   delete [] this->storage_array_;
 }
@@ -101,3 +104,5 @@ Bool_Array::reset (void)
                     "done\n"));
     }
 }
+
+#endif /* ACE_HAS_GPERF */

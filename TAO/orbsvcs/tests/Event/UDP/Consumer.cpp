@@ -6,6 +6,10 @@
 
 #include "TestC.h"
 
+ACE_RCSID (EC_Examples,
+           Consumer,
+           "$Id$")
+
 Consumer::Consumer (bool valuetype)
   : event_count_ (0),
     valuetype_ (valuetype)

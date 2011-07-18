@@ -105,7 +105,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     }
   while (true);
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -130,7 +130,7 @@ public:
           {
             CORBA::Short c = 0;
             {
-              ACE_GUARD_RETURN (ACE_Mutex, ace_mon, this->mutex_, 0);
+              ACE_Guard<ACE_Mutex> guard (this->mutex_);
               c = this->count_++;
             }
 

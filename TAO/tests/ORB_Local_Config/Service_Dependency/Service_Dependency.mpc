@@ -18,7 +18,7 @@ project(*) : taoserver {
 
 project(Service Config Dependent DLL) : acelib {
   sharedname   = Service_Config_Dependent_DLL
-  dynamicflags += SERVICE_CONFIG_DLL_BUILD_DLL
+  dynamicflags = SERVICE_CONFIG_DLL_BUILD_DLL
 
   specific (automake) {
     includes += $(srcdir)/../lib

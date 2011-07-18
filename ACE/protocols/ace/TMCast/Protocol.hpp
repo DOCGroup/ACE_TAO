@@ -1,5 +1,6 @@
-// $Id$
+// file      : ACE_TMCast/Protocol.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
 
 #ifndef TMCAST_PROTOCOL_HPP
 #define TMCAST_PROTOCOL_HPP
@@ -8,6 +9,9 @@ namespace ACE_TMCast
 {
   namespace Protocol
   {
+    //
+    //
+    //
     unsigned long const MEMBER_ID_LENGTH = 38;
 
     struct MemberId
@@ -19,7 +23,12 @@ namespace ACE_TMCast
       */
     };
 
+    //
+    //
+    //
     typedef unsigned short TransactionId;
+
+
 
     typedef unsigned char  TransactionStatus;
 
@@ -42,6 +51,9 @@ namespace ACE_TMCast
     // typedef Transaction TransactionList[TL_LENGTH];
 
 
+    //
+    //
+    //
     struct MessageHeader
     {
       unsigned long length;
@@ -54,6 +66,11 @@ namespace ACE_TMCast
 
       //TransactionList transaction_list;
     };
+
+
+    //
+    //
+    //
 
     unsigned long const MAX_MESSAGE_SIZE = 768;
 

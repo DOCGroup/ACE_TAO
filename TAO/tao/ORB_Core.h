@@ -160,7 +160,7 @@ namespace PortableInterceptor
 class TAO_Export TAO_ORB_Core
 {
   friend class TAO_ORB_Core_Auto_Ptr;
-  friend TAO_Export CORBA::ORB_ptr CORBA::ORB_init (int &,
+  friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          ACE_TCHAR *argv[],
                                          const char *);
 public:
@@ -537,12 +537,6 @@ public:
 
   void set_sync_scope_hook (Sync_Scope_Hook hook);
 
-  /// Default Sync_Scope_Hook.
-  static void default_sync_scope_hook (TAO_ORB_Core *,
-                                       TAO_Stub *,
-                                       bool &has_synchronization,
-                                       Messaging::SyncScope &scope);
-
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
 
@@ -564,8 +558,8 @@ public:
   /// argument.  This method return 0 on success, and -1 on failure.
   int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup, size_t &slot_id);
 
-  /// Cleans up ts_objects using the underlying TSS cleanup function registry.
-  void tss_cleanup (ACE_Array_Base<void *> &ts_objects);
+  /// Return the underlying TSS cleanup function registry.
+  TAO_Cleanup_Func_Registry *tss_cleanup_funcs (void);
 
   /// Get access to the leader_follower class.
   TAO_Leader_Follower &leader_follower (void);
@@ -820,21 +814,6 @@ public:
   /// Return the valuetype adapter
   TAO_Valuetype_Adapter *valuetype_adapter (void);
 
-#if !defined(CORBA_E_MICRO)
-  /// Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
-  CORBA::ValueFactory register_value_factory (
-    const char *repository_id,
-    CORBA::ValueFactory factory);
-#endif
-
-#if !defined(CORBA_E_MICRO)
-  void unregister_value_factory (const char * repository_id);
-#endif
-
-#if !defined(CORBA_E_MICRO)
-  CORBA::ValueFactory lookup_value_factory (const char *repository_id);
-#endif
-
   /// Get the IOR Interceptor adapter. If not created, this method will try
   /// to create one.
   TAO_IORInterceptor_Adapter *ior_interceptor_adapter (void);
@@ -862,7 +841,7 @@ public:
   /// gets called at initialization.
   void request_dispatcher (TAO_Request_Dispatcher *rd);
 
-  /// Call the libraries to handover the validators if they haven't
+  /// Call the libraries to handover the validators if they havent
   /// registered yet with the list of validators.
   void load_policy_validators (TAO_Policy_Validator &validator);
 
@@ -890,6 +869,10 @@ public:
 
   /// Choose to be not a default ORB when there is more than one ORB.
   void not_default (const char * orb_id);
+
+  /// This strategy is the default, no explicit queueing and no explicit
+  /// flush
+  TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy (void);
 
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
@@ -919,7 +902,7 @@ protected:
   ~TAO_ORB_Core (void);
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
-  /// called by CORBA::ORB_init().
+  /// called by <CORBA::ORB_init>.
   int init (int &argc, char *argv[]);
 
   /// Final termination hook, typically called by CORBA::ORB's
@@ -1202,6 +1185,9 @@ protected:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+  /// This strategy will not queue by default and not flush
+  TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy_;
+
   /// Number of outstanding references to this object.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 
@@ -1347,7 +1333,7 @@ public:
 
   /**
    * Name of the factory object used to adapt function calls on
-           * the valuetype-related interfaces.
+   * the valuetype-related interfaces.
    * The default value is "Valuetype_Adapter_Factory". If the
    * Valuetype library is linked, the corresponding accessor
    * function valuetype_adapter_factory_name() will be called to set

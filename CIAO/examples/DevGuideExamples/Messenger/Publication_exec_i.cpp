@@ -19,8 +19,9 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Publication_exec_i.h"
+#include "ciao/CIAO_common.h"
 
-namespace CIAO_Messenger_Impl
+namespace CIDL_Messenger_Impl
 {
   //==================================================================
   // Facet Executor Implementation Class:   Publication_exec_i
@@ -42,7 +43,7 @@ namespace CIAO_Messenger_Impl
   char*
   Publication_exec_i::text ()
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     return CORBA::string_dup( this->text_.c_str() );
   }
@@ -51,7 +52,7 @@ namespace CIAO_Messenger_Impl
   Publication_exec_i::text (
   const char* text)
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     this->text_ = text;
     ACE_DEBUG((LM_INFO, ACE_TEXT("publication text changed to %C\n"), text ));
@@ -60,7 +61,7 @@ namespace CIAO_Messenger_Impl
   CORBA::UShort
   Publication_exec_i::period ()
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard(this->lock_);
 
     return this->period_;
   }
@@ -68,7 +69,7 @@ namespace CIAO_Messenger_Impl
   void
   Publication_exec_i::period (CORBA::UShort period)
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+    ACE_Guard<TAO_SYNCH_MUTEX> guard( this->lock_ );
 
     if ( period > 0 ) {
       this->period_ = period;

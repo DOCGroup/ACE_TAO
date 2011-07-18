@@ -9,6 +9,7 @@
 
 #include "TestC.h"
 #include "Reply_Handler.h"
+#include "tao/Utils/Servant_Var.h"
 #include "ace/Task.h"
 
 /// Implement a Task to run the experiments using multiple threads.
@@ -29,7 +30,7 @@ private:
   /// Reference to the test interface
   Test::Hello_var receiver_;
 
-  PortableServer::Servant_var <Reply_Handler> handler_;
+  TAO::Utils::Servant_Var<Reply_Handler> handler_;
 
   Test::AMI_HelloHandler_var handler_var_;
 

@@ -14,8 +14,14 @@
 #  error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+#define ACE_CC_NAME ACE_TEXT ("g++")
 #define ACE_CC_PREPROCESSOR "cpp"
 #define ACE_CC_PREPROCESOR_ARGS ""
+
+// Why all this is not in config-g++-common.h?
+#define ACE_CC_MAJOR_VERSION __GNUC__
+#define ACE_CC_MINOR_VERSION __GNUC_MINOR__
+#define ACE_CC_BETA_VERSION (0)
 
 #if !defined (ACE_HAS_CEGCC)
 #  error You do not seem to be using cegcc
@@ -29,13 +35,11 @@
 
 #include "ace/config-g++-common.h"
 
+#undef _WIN32_WCE
+#define _WIN32_WCE 0x600
+
 #include /**/ <cegcc.h>
 #include /**/ <w32api.h>
-#include /**/ <_mingw.h>
-
-#if (__MINGW32_MAJOR_VERSION > 3)  || ((__MINGW32_MAJOR_VERSION == 3) && (__MINGW32_MINOR_VERSION >= 15))
-# undef ACE_LACKS_USECONDS_T
-#endif
 
 #define ACE_HAS_USER_MODE_MASKS
 
@@ -48,13 +52,17 @@
 #undef ACE_LACKS_SEEKDIR
 #undef ACE_LACKS_REWINDDIR
 
+#undef ACE_LACKS_USECONDS_T
+
 #undef ACE_HAS_WTOF
 
+#define ACE_LACKS_SIGSET_DEFINITIONS
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_STRPTIME
+#define ACE_HAS_STRERROR
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_SYS_MSG_H
@@ -79,29 +87,28 @@
 #define ACE_LACKS_PDHMSG_H
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
-#define ACE_LACKS_CORRECT_ISWPRINT_TAB
 
 //Changes to compile on CE gcc.
 #undef ACE_HAS_TYPES_H
 #define ACE_LACKS_ERRNO_H
+#undef ACE_LACKS_SIGSET
 #undef ACE_LACKS_DEV_T
+#define ACE_LACKS_USECONDS_T
 #define ACE_LACKS_ISCTYPE
 #define ACE_HAS_NONCONST_WFDOPEN
 #undef ACE_HAS_WTOI
 #undef ACE_HAS_WTOL
+#define ACE_LACKS_GETSYSTEMTIMEASFILETIME
+#define ACE_LACKS_FILELOCKS
 
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
-#define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
-#define ACE_Proper_Export_Flag __declspec (dllexport)
-#define ACE_Proper_Import_Flag __declspec (dllimport)
-#define ACE_EXPORT_SINGLETON_DECLARATION(T) template class __declspec (dllexport) T
-#define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
-#define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
-#define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
-
-#define ACE_DLL_PREFIX ACE_TEXT ("lib")
+#if defined (_WIN32_WCE)
+#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
+#else
+#  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+#endif /* _WIN32_WCE */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_CEGCC_H */

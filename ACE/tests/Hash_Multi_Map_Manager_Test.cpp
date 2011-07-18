@@ -1,24 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Hash_Multi_Map_Manager_Test.cpp
- *
- *  $Id$
- *
- *    This test illustrates the use of <ACE_Hash_Multi_Map_Manager> to
- *    maintain a hash table using strings.
- *
- *
- *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Hash_Multi_Map_Manager_Test.cpp
+//
+// = DESCRIPTION
+//      This test illustrates the use of <ACE_Hash_Multi_Map_Manager> to
+//      maintain a hash table using strings.
+//
+// = AUTHOR
+//    Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Hash_Multi_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-
+ACE_RCSID(tests, Hash_Multi_Map_Manager_Test, "$Id$")
 
 typedef ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *,
                                    const ACE_TCHAR *,
@@ -247,11 +250,11 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("iterating (%d): %s:\n"),
                   i,
-                  entry->key ()));
+                  entry->ext_id_));
       i++;
 
-      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
-           iter != entry->item ().end ();
+      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->int_id_set_);
+           iter != entry->int_id_set_.end ();
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -315,11 +318,11 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("reverse iterating (%d): %s\n"),
                   i,
-                  entry->key ()));
+                  entry->ext_id_));
       i++;
 
-      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
-           iter != entry->item ().end ();
+      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->int_id_set_);
+           iter != entry->int_id_set_.end ();
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -346,11 +349,11 @@ run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("const iterating (%d): %s\n"),
                   i,
-                  entry->key ()));
+                  entry->ext_id_));
       i++;
 
-      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
-           iter != entry->item ().end ();
+      for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->int_id_set_);
+           iter != entry->int_id_set_.end ();
            iter++)
         {
           ACE_DEBUG ((LM_DEBUG,

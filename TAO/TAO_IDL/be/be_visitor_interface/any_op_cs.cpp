@@ -1,18 +1,23 @@
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for Interface in the stubs
+//    file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
-//=============================================================================
-/**
- *  @file    any_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for Interface in the stubs
- *  file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+ACE_RCSID (be_visitor_interface,
+           any_op_cs,
+           "$Id$")
 
 // ***************************************************************************
 // Interface visitor for generating Any operator declarations in the client
@@ -42,7 +47,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // All template specializations must be generated before the instantiations
@@ -52,7 +57,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   if (! node->is_abstract ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -70,7 +75,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract () || node->has_mixed_parentage ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -96,7 +101,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -107,7 +112,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "return false;" << be_uidt_nl
           << "}";
 
-      *os << be_nl_2
+      *os << be_nl << be_nl
           << "template<>" << be_nl
           << "::CORBA::Boolean" << be_nl
           << "Any_Impl_T<" << node->name ()
@@ -122,87 +127,78 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   be_module *module = 0;
 
-  if (node->is_nested ())
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      AST_Decl *d = node;
-      AST_Decl::NodeType nt = d->node_type ();
+      module = be_module::narrow_from_scope (node->defined_in ());
 
-      while (nt != AST_Decl::NT_root)
+      if (!module)
         {
-          if (nt == AST_Decl::NT_module)
-            {
-              module = be_module::narrow_from_decl (d);
-              break;
-            }
-          else
-            {
-              d = ScopeAsDecl (d->defined_in ());
-              nt = d->node_type ();
-            }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_valuebox_any_op_cs::"
+                             "visit_valuebox - "
+                             "Error parsing nested name\n"),
+                            -1);
         }
 
-      if (module != 0)
-        {
-          // Some compilers handle "any" operators in a namespace corresponding
-          // to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
+      // Some compilers handle "any" operators in a namespace corresponding
+      // to their module, others do not.
+      *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
 
-          be_util::gen_nested_namespace_begin (os, module);
+      be_util::gen_nested_namespace_begin (os, module);
 
-          // emit  nested variation of any operators
-          *os << be_nl_2
-              << "/// Copying insertion." << be_nl
-              << "void" << be_nl
-              << "operator<<= (" << be_idt << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << node->local_name () << "_ptr _tao_elem)" << be_uidt << be_uidt_nl
-              << "{" << be_idt_nl
-              << node->local_name () << "_ptr _tao_objptr =" << be_idt_nl
-              << node->local_name () << "::_duplicate (_tao_elem);" << be_uidt_nl
-              << "_tao_any <<= &_tao_objptr;" << be_uidt_nl
-              << "}" << be_nl_2;
+      // emit  nested variation of any operators
+      *os << be_nl << be_nl
+          << "/// Copying insertion." << be_nl
+          << "void" << be_nl
+          << "operator<<= (" << be_idt << be_idt_nl
+          << "::CORBA::Any &_tao_any," << be_nl
+          << node->local_name () << "_ptr _tao_elem)" << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl
+          << node->local_name () << "_ptr _tao_objptr =" << be_idt_nl
+          << node->local_name () << "::_duplicate (_tao_elem);" << be_uidt_nl
+          << "_tao_any <<= &_tao_objptr;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
-          *os << "/// Non-copying insertion." << be_nl
-              << "void" << be_nl
-              << "operator<<= (" << be_idt << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << node->local_name () << "_ptr *_tao_elem)" << be_uidt << be_uidt_nl
-              << "{" << be_idt_nl
-              << "TAO::Any_Impl_T<" << node->local_name () << ">::insert ("
-              << be_idt << be_idt_nl
-              << "_tao_any," << be_nl
-              << node->local_name () << "::_tao_any_destructor," << be_nl
-              << node->tc_name ()->last_component () << "," << be_nl
-              << "*_tao_elem);" << be_uidt
-              << be_uidt << be_uidt_nl
-              << "}" << be_nl_2;
+      *os << "/// Non-copying insertion." << be_nl
+          << "void" << be_nl
+          << "operator<<= (" << be_idt << be_idt_nl
+          << "::CORBA::Any &_tao_any," << be_nl
+          << node->local_name () << "_ptr *_tao_elem)" << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl
+          << "TAO::Any_Impl_T<" << node->local_name () << ">::insert ("
+          << be_idt << be_idt_nl
+          << "_tao_any," << be_nl
+          << node->local_name () << "::_tao_any_destructor," << be_nl
+          << node->tc_name ()->last_component () << "," << be_nl
+          << "*_tao_elem)" << be_uidt
+          << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
 
-          *os << "::CORBA::Boolean" << be_nl
-              << "operator>>= (" << be_idt << be_idt_nl
-              << "const ::CORBA::Any &_tao_any," << be_nl
-              << node->local_name () << "_ptr &_tao_elem)" << be_uidt << be_uidt_nl
-              << "{" << be_idt_nl
-              << "return" << be_idt_nl
-              << "TAO::Any_Impl_T<" << node->local_name () << ">::extract ("
-              << be_idt << be_idt_nl
-              << "_tao_any," << be_nl
-              << node->local_name () << "::_tao_any_destructor," << be_nl
-              << node->tc_name ()->last_component () << "," << be_nl
-              << "_tao_elem);" << be_uidt << be_uidt
-              << be_uidt << be_uidt_nl
-              << "}";
+      *os << "::CORBA::Boolean" << be_nl
+          << "operator>>= (" << be_idt << be_idt_nl
+          << "const ::CORBA::Any &_tao_any," << be_nl
+          << node->local_name () << "_ptr &_tao_elem)" << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl
+          << "return" << be_idt_nl
+          << "TAO::Any_Impl_T<" << node->local_name () << ">::extract ("
+          << be_idt << be_idt_nl
+          << "_tao_any," << be_nl
+          << node->local_name () << "::_tao_any_destructor," << be_nl
+          << node->tc_name ()->last_component () << "," << be_nl
+          << "_tao_elem)" << be_uidt << be_uidt
+          << be_uidt << be_uidt_nl
+          << "}";
 
-          be_util::gen_nested_namespace_end (os, module);
+      be_util::gen_nested_namespace_end (os, module);
 
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n";
-        }
+      // emit #else
+      *os << "#else\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "/// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
@@ -212,7 +208,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << node->full_name () << "_ptr _tao_objptr =" << be_idt_nl
       << node->full_name () << "::_duplicate (_tao_elem);" << be_uidt_nl
       << "_tao_any <<= &_tao_objptr;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "/// Non-copying insertion." << be_nl
       << "void" << be_nl
@@ -227,7 +223,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << node->tc_name () << "," << be_nl
       << "*_tao_elem);" << be_uidt
       << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
@@ -262,18 +258,3 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
   node->cli_stub_any_op_gen (1);
   return 0;
 }
-
-int
-be_visitor_interface_any_op_cs::visit_component (
-  be_component *node)
-{
-  return this->visit_interface (node);
-}
-
-int
-be_visitor_interface_any_op_cs::visit_connector (
-  be_connector *node)
-{
-  return this->visit_interface (node);
-}
-

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
@@ -7,6 +6,10 @@
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Root_POA.h"
+
+ACE_RCSID (PortableServer,
+           Request_Processing,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -105,14 +108,7 @@ namespace TAO
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          try
-            {
-              servant->_remove_ref ();
-            }
-          catch (...)
-            {
-              // Ignore exceptions from servant cleanup.
-            }
+          servant->_remove_ref ();
         }
 
       // This operation causes the association of the Object Id specified

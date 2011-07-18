@@ -1,5 +1,9 @@
 // $Id$
 
+ACE_RCSID (be_visitor_operation, 
+           x_proxy_impl_xh, 
+           "$Id$")
+
 be_visitor_operation_base_proxy_impl_ch::
 be_visitor_operation_base_proxy_impl_ch (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -16,8 +20,8 @@ int be_visitor_operation_base_proxy_impl_ch::visit_operation (be_operation *node
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "virtual ";
 
@@ -46,8 +50,7 @@ int be_visitor_operation_base_proxy_impl_ch::visit_operation (be_operation *node
     }
 
   // STEP 2: generate the operation name
-  *os << this->ctx_->port_prefix ().c_str ()
-      << " " << node->local_name ();
+  *os << " " << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing

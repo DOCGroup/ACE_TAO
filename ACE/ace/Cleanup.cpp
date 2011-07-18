@@ -2,6 +2,10 @@
 
 #include "ace/Cleanup.h"
 
+ACE_RCSID (ace,
+           Cleanup,
+           "$Id$")
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Cleanup.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */

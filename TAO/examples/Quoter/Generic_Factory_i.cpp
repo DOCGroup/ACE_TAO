@@ -1,18 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Generic_Factory_i.cpp
- *
- *  $Id$
- *
- *  The implementation of a LifeCycle Service GenericFactory for the
- *  Quoter example.
- *
- *
- *  @author Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    Generic_Factory_i.cpp
+//
+// = DESCRIPTION
+//    The implementation of a LifeCycle Service GenericFactory for the
+//    Quoter example.
+//
+// = AUTHOR
+//    Michael Kircher (mk1@cs.wustl.edu)
+// ============================================================================
 
 #include "Generic_Factory_i.h"
 #include "QuoterC.h"
@@ -20,6 +19,10 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
+
+ACE_RCSID (Quoter,
+           Generic_Factory_i,
+           "$Id$")
 
 // Constructor
 Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)

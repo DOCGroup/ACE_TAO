@@ -1,12 +1,14 @@
-// -*- C++ -*-
 // $Id$
-
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
+
+ACE_RCSID (Messaging,
+           AMI_Arguments_Converter_Impl,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +42,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
   details->use_stub_args (false);
 }
 
-void
+void 
 TAO_AMI_Arguments_Converter_Impl::dsi_convert_request (
     TAO_ServerRequest & server_request,
     TAO_OutputCDR & output)
@@ -78,7 +80,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     }
 }
 
-void
+void 
 TAO_AMI_Arguments_Converter_Impl::dsi_convert_reply (
     TAO_ServerRequest & server_request,
     TAO_InputCDR & input)

@@ -1,21 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     server.cpp
- *
- *  $Id$
- *
- *   This is the server program that tests TAO's Smart Proxy extension.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/Smart_Proxy
+//
+// = FILENAME
+//     server.cpp
+//
+// = DESCRIPTION
+//     This is the server program that tests TAO's Smart Proxy extension.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+//=========================================================================
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(Smart_Proxy, server, "$Id$")
 
 // The servant
 
@@ -27,8 +32,8 @@ public:
   CORBA::Short method  (CORBA::Short boo);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ///FUZZ: enable check_for_lack_ACE_OS
   void shutdown  (void);
+  //FUZZ: enable check_for_lack_ACE_OS
 
 private:
   CORBA::ORB_var orb_;
@@ -80,7 +85,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

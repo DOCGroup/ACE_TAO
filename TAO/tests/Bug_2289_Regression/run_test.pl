@@ -3,74 +3,60 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      if 0;
 
 # $Id$
+
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
-$dotted_decimal_addresses = '1';
+# The server IOR file
+$server_ior_file = PerlACE::LocalFile ("server.ior");
+$client_ior_file = PerlACE::LocalFile ("client.ior");
+unlink $server_ior_file;
+unlink $client_ior_file;
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+# The client and server processes
+if (PerlACE::is_vxworks_test()) {
+  $SERVER     = new PerlACE::ProcessVX("server");
+  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
 }
+else {
+  $SERVER     = new PerlACE::Process("server");
+  $TARGETHOSTNAME = "127.0.0.1";
+}
+$CLIENT     = new PerlACE::Process("client");
 
 # We want the server to run on a fixed port
 $port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$SERVER->Arguments("-ORBEndpoint iiop://:$port -ORBDottedDecimalAddresses 1");
 
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
+# Fire up the server
+$sv = $SERVER->Spawn();
 
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-ORBEndpoint iiop://:$port " .
-                              "-o $server_iorfile " .
-                              "-ORBDottedDecimalAddresses $dotted_decimal_addresses ");
-
-$hostname = $server->HostName();
-
-$CL = $client->CreateProcess ("client",
-                              "-k corbaloc::$hostname:$port/collocated_ior_bound_in_remote_iortable " .
-                              "-ORBCollocationStrategy thru_poa " .
-                              "-ORBDottedDecimalAddresses $dotted_decimal_addresses ");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if ($sv != 0) {
+   print STDERR "ERROR: server returned $sv\n";
+   exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+# We can wait on the IOR file
+if (PerlACE::waitforfile_timed ($server_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
+{
+   print STDERR "ERROR: cannot find $server_ior_file\n";
+   $SERVER->Kill();
+   exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: Bug 2289 Regression failed. Client returned $client_status\n";
-    $status = 1;
+$CLIENT->Arguments("-k corbaloc::$TARGETHOSTNAME:$port/collocated_ior_bound_in_remote_iortable -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa");
+if ($CLIENT->SpawnWaitKill (60) != 0)
+{
+   print STDERR "ERROR: Bug 2289 Regression failed. Non zero result from client.\n";
+   $SERVER->Kill();
+   exit 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
-
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-exit $status;
+# Clean up and return
+$SERVER->TerminateWaitKill (15);
+unlink $server_ior_file;
+unlink $client_ior_file;
+exit 0;

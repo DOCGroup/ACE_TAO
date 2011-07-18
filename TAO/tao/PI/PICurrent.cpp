@@ -1,15 +1,19 @@
-// $Id$
-
 #include "tao/PI/PICurrent.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+ACE_RCSID (tao,
+           PICurrent,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PI/PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/PI/PICurrent_Impl.h"
+
 #include "tao/ORB_Core.h"
+#include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
 #include "ace/CORBA_macros.h"
 
@@ -62,7 +66,7 @@ TAO::PICurrent::tsc (void)
   if (0 == impl)
   {
     ACE_NEW_THROW_EX (impl,
-                      TAO::PICurrent_Impl (&this->orb_core_, this->tss_slot_),
+                      TAO::PICurrent_Impl,
                       CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                           TAO::VMCID,

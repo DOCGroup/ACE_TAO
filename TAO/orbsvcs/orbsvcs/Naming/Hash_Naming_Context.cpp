@@ -13,11 +13,20 @@
 #include "orbsvcs/Naming/nsconf.h"
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID (Naming,
+           Hash_Naming_Context,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// -------------------------------------------------
 
 TAO_Bindings_Map::~TAO_Bindings_Map (void)
 {
 }
+
+// -------------------------------------------------
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   const char *poa_id)
@@ -72,7 +81,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
     {
       // Add the last component of the name, which was stripped before
       // the call to resolve.
-      CORBA::ULong const rest_len = ex.rest_of_name.length () + 1;
+      CORBA::ULong rest_len = ex.rest_of_name.length () + 1;
       ex.rest_of_name.length (rest_len);
       ex.rest_of_name[rest_len - 1] = name[name_len - 1];
 

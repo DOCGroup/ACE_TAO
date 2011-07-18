@@ -1,6 +1,6 @@
 //$Id$
 
-project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_install {
+project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream {
   custom_only = 1
   idlflags += -SS -Sorb -GA -Gp -Gd -oA AnyTypeCode \
               -Wb,export_macro=TAO_Export \
@@ -24,6 +24,8 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
     Messaging_SyncScope.pidl >> AnyTypeCode/Messaging_SyncScopeA.h AnyTypeCode/Messaging_SyncScopeA.cpp
     ObjectIdList.pidl >> AnyTypeCode/ObjectIdListA.h AnyTypeCode/ObjectIdListA.cpp
     orb_types.pidl >> AnyTypeCode/orb_typesA.h AnyTypeCode/orb_typesA.cpp
+    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
+    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
     Policy_Manager.pidl >> AnyTypeCode/Policy_ManagerA.h AnyTypeCode/Policy_ManagerA.cpp
     Policy_Current.pidl >> AnyTypeCode/Policy_CurrentA.h AnyTypeCode/Policy_CurrentA.cpp
     PI_Forward.pidl >> AnyTypeCode/PI_ForwardA.h AnyTypeCode/PI_ForwardA.cpp
@@ -31,16 +33,6 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
     Services.pidl >> AnyTypeCode/ServicesA.h AnyTypeCode/ServicesA.cpp
     TAO.pidl >> AnyTypeCode/TAOA.h AnyTypeCode/TAOA.cpp
     TimeBase.pidl >> AnyTypeCode/TimeBaseA.h AnyTypeCode/TimeBaseA.cpp
-  }
-
-  IDL_Files {
-    idlflags += -Sci -Sa
-    Policy_Forward.pidl >> AnyTypeCode/Policy_ForwardA.h AnyTypeCode/Policy_ForwardA.cpp
-  }
-
-  IDL_Files {
-    idlflags += -Sci -Sat
-    ParameterMode.pidl >> AnyTypeCode/ParameterModeA.h AnyTypeCode/ParameterModeA.cpp
   }
 
   IDL_Files {
@@ -62,21 +54,12 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
     WStringSeq.pidl >> AnyTypeCode/WStringSeqA.h AnyTypeCode/WStringSeqA.cpp
   }
 
-  PidlInstallWithoutBuilding_Files {
-    InterfaceDef.pidl
-    InvalidName.pidl
-    Object_Key.pidl
-    Policy.pidl
-    Typecode_types.pidl
-    WrongTransaction.pidl
-    orb.idl
-  }
 }
 
-project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop, valuetype_out_indirection {
+project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoidldefaults, gen_ostream, corba_e_micro, corba_e_compact, core_minimum_corba, tao_no_iiop {
   after       += TAO_Core_idl
   sharedname   = TAO
-  dynamicflags += TAO_BUILD_DLL
+  dynamicflags = TAO_BUILD_DLL
 
   Source_Files(TAO_COMPONENTS) {
     Abstract_Servant_Base.cpp
@@ -107,6 +90,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Collocated_Invocation.cpp
     Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
+    Configurable_Refcount.cpp
     Connect_Strategy.cpp
     Connection_Handler.cpp
     Connection_Purging_Strategy.cpp
@@ -249,10 +233,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Remote_Object_Proxy_Broker.cpp
     Reply_Dispatcher.cpp
     Request_Dispatcher.cpp
-    RequestInterceptor_Adapter.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
-    Resume_Handle_Deferred.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
@@ -328,6 +310,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Array_VarOut_T.h
     Asynch_Queued_Message.h
     Asynch_Reply_Dispatcher_Base.h
+    Auto_Functor.h
     Base_Transport_Property.h
     Basic_Arguments.h
     Basic_Argument_T.h
@@ -473,9 +456,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     MCAST_Parser.h
     Message_Semantics.h
     Messaging_PolicyValueC.h
-    Messaging_PolicyValueS.h
     Messaging_SyncScopeC.h
-    Messaging_SyncScopeS.h
     MM_Sequence_Iterator_T.h
     MMAP_Allocator.h
     MProfile.h
@@ -485,7 +466,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Object.h
     objectid.h
     ObjectIdListC.h
-    ObjectIdListS.h
     Object_KeyC.h
     ObjectKey_Table.h
     Object_Loader.h
@@ -516,7 +496,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     params.h
     Parser_Registry.h
     PI_ForwardC.h
-    PI_ForwardS.h
     Pluggable_Messaging_Utils.h
     PolicyC.h
     PolicyFactory_Registry_Adapter.h
@@ -552,10 +531,8 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Remote_Object_Proxy_Broker.h
     Reply_Dispatcher.h
     Request_Dispatcher.h
-    RequestInterceptor_Adapter.h
     Resource_Factory.h
     Resume_Handle.h
-    Resume_Handle_Deferred.h
     Seq_Out_T.h
     Seq_Var_T.h
     Sequence_T.h
@@ -640,8 +617,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     varbase.h
     VarOut_T.h
     Var_Size_Argument_T.h
-    Vector_Argument_T.h
-    Vector_CDR_T.h
     Version.h
     Versioned_Namespace.h
     Wait_On_Leader_Follower.h
@@ -659,7 +634,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
   }
 
   Inline_Files {
-    GIOPC.inl
     *.inl
   }
 
@@ -669,6 +643,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Condition.cpp
     Connector_Impl.cpp
     TAO_Singleton.cpp
+    orb.idl
   }
 
   Pkgconfig_Files {
@@ -676,26 +651,5 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
   }
 
   IDL_Files {
-  }
-
-  PIDL_Files {
-    orb.idl // not compiled
-  }
-
-  InstallData_Files {
-    gendir = .
-    ../rules.tao.GNU
-    ../README*
-    ../VERSION
-    ../PROBLEM-REPORT-FORM
-    ../NEWS
-    ../COPYING*
-    ../docs
-    ../MPC
-  }
-
-  verbatim(gnuace, postinstall) {
-"	perl -i -pe's!\\$$[{(]TAO_ROOT[})]!$(INSTALL_PREFIX)/include!g' $(DESTDIR)$(INSTALL_PREFIX)/share/tao/rules.tao.GNU"
-"	echo export TAO_ROOT=$(INSTALL_PREFIX)/share/tao> $(DESTDIR)$(INSTALL_PREFIX)/share/tao/tao-devel.sh"
   }
 }

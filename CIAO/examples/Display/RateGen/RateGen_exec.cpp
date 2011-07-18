@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RateGen_exec.h"
+#include "ciao/CIAO_common.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
 
@@ -82,7 +83,7 @@ int
 MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
                                      ACE_Reactor_Mask close_mask)
 {
-
+  
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("[%x] handle = %d, close_mask = %d\n"),
               this,
@@ -93,17 +94,17 @@ MyImpl::Pulse_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-MyImpl::Pulse_Handler::handle_timeout (const ACE_Time_Value &/*tv*/,
+MyImpl::Pulse_Handler::handle_timeout (const ACE_Time_Value &,
                                        const void *)
 {
   this->pulse_callback_->pulse ();
 
-/*   ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT ("[%x] with count #%05d timed out at %d.%d!\n"),
-               this,
-               tv.sec (),
-               tv.usec ()));
-*/
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("[%x] with count #%05d timed out at %d.%d!\n"),
+//               this,
+//               tv.sec (),
+//               tv.usec ()));
+
   return 0;
 }
 
@@ -198,11 +199,10 @@ MyImpl::RateGen_exec_i::set_session_context (
 
   if (CORBA::is_nil (this->context_.in ()))
     {
-      ACE_DEBUG ((LM_DEBUG,
-                   "MyImpl::RateGen_exec_i::context IS NIL!\n"));
-
       throw CORBA::INTERNAL ();
     }
+  // Urm, we actually discard exceptions thown from this operation.
+
 }
 
 void
@@ -240,8 +240,12 @@ MyImpl::RateGen_exec_i::pulse (void)
 {
   try
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Rate Generator sends Pulse to GPS!\n")));
+//       if (CIAO::debug_level () > 0)
+//         {
+//           ACE_DEBUG ((LM_DEBUG,
+//                       ACE_TEXT ("Pushing HUDisplay::tick event!\n")));
+//         }
+
       HUDisplay::tick_var ev = new OBV_HUDisplay::tick ();
 
       this->context_->push_Pulse (ev.in ());

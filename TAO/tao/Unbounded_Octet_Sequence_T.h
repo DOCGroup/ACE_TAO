@@ -39,7 +39,6 @@ public:
   typedef CORBA::Octet const const_value_type;
   typedef value_type & subscript_type;
   typedef value_type const & const_subscript_type;
-  typedef ::CORBA::ULong size_type;
 
   typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;
   typedef details::value_traits<value_type,true> element_traits;
@@ -245,7 +244,7 @@ public:
     return mb_;
   }
 
-  /// Replaces the current buffer with @a mb, using only @a length bytes.
+  /// Replaces the current buffer with <mb>, using only <length> bytes.
   /// It takes a duplicate of <mb> so the user still owns it.
   inline void replace (CORBA::ULong length, const ACE_Message_Block* mb) {
     unbounded_value_sequence<CORBA::Octet> s (length, mb);

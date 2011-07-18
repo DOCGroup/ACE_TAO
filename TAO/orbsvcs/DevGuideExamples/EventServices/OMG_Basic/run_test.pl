@@ -4,150 +4,60 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use Env (ACE_ROOT);
+use lib "$ACE_ROOT/bin";
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
+$nsiorfile = PerlACE::LocalFile ("ns.ior");
+$esiorfile = PerlACE::LocalFile ("es.ior");
+$arg_ns_ref = "-ORBInitRef NameService=file://$nsiorfile";
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $es = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $s = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-my $c = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
-
-my $nsiorfile = "ns.ior";
-my $esiorfile = "es.ior";
-
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-my $es_nsiorfile = $es->LocalFile ($nsiorfile);
-my $s_nsiorfile = $s->LocalFile ($nsiorfile);
-my $c_nsiorfile = $c->LocalFile ($nsiorfile);
-my $es_esiorfile = $es->LocalFile ($esiorfile);
-$ns->DeleteFile ($nsiorfile);
-$es->DeleteFile ($nsiorfile);
-$s->DeleteFile ($nsiorfile);
-$c->DeleteFile ($nsiorfile);
-$es->DeleteFile ($esiorfile);
-
-$sleeptime = 10;
-
-$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
-$NS = $ns->CreateProcess ($NameService, "-ORBdebuglevel $debug_level -ORBListenEndpoints iiop://:2809 ".
-                                        " -o $ns_nsiorfile");
-
-$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/tao_cosevent";
-$ES = $es->CreateProcess ($EventService, " -o $es_esiorfile ".
-                                        "-ORBInitRef NameService=file://$es_nsiorfile");
-$S = $ns->CreateProcess ("EchoEventSupplier", "-ORBInitRef NameService=file://$s_nsiorfile");
-$C = $ns->CreateProcess ("EchoEventConsumer", "-ORBInitRef NameService=file://$c_nsiorfile");
+unlink $nsiorfile;
+unlink $esiorfile;
 
 # start Naming Service
-$NS_status = $NS->Spawn ();
 
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    exit 1;
-}
-
-sleep $sleeptime;
-
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-
-if ($ns->GetFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($es->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$es_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($s->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$s_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($c->PutFile ($nsiorfile) == -1) {
-    print STDERR "ERROR: cannot set file <$c_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
+$NameService = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/Naming_Service";
+$NS = new PerlACE::Process($NameService, "-o $nsiorfile");
+$NS->Spawn();
+if (PerlACE::waitforfile_timed ($nsiorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$nsiorfile>\n";
+    $NS->Kill(); 
     exit 1;
 }
 
 # start Event Service
-$ES_status = $ES->Spawn ();
-
-if ($ES_status != 0) {
-    print STDERR "ERROR: Event Service returned $ES_status\n";
+$EventService = "$ENV{TAO_ROOT}/orbsvcs/CosEvent_Service/CosEvent_Service";
+$ES = new PerlACE::Process($EventService, "-o $esiorfile $arg_ns_ref");
+$ES->Spawn();
+if (PerlACE::waitforfile_timed ($esiorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$esiorfile>\n";
+    $ES->Kill(); 
+    unlink $nsiorfile;
     exit 1;
 }
 
-sleep $sleeptime;
+# start EchoEventSupplier  
+$S = new PerlACE::Process("EchoEventSupplier", $arg_ns_ref);
+$S->Spawn();
 
-if ($es->WaitForFileTimed ($esiorfile,$es->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$es_esiorfile>\n";
-    $ES->Kill (); $ES->TimedWait (1);
-    exit 1;
-}
+# start EchoEventConsumer  
+$C = new PerlACE::Process("EchoEventConsumer", $arg_ns_ref);
+$C->Spawn();
 
-# start EchoEventSupplier
-$S_status = $S->Spawn ();
+$CRET = $C->WaitKill(60);
+$S->Kill();
+$NS->Kill();
+$ES->Kill();
 
-if ($S_status != 0) {
-    print STDERR "ERROR: Supplier returned $S_status\n";
-    exit 1;
-}
+unlink $nsiorfile;
+unlink $esiorfile;
 
-# start EchoEventConsumer
-$C_status = $C->Spawn ();
+if ($CRET != 0) {
+    print STDERR "ERROR: Client returned <$CRET>\n";
+    exit 1 ;
+}  
 
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
-    exit 1;
-}
+exit 0;
 
-$C_status = $C->WaitKill ($c->ProcessStopWaitInterval()+45);
 
-if ($C_status != 0) {
-    print STDERR "ERROR: Consumer returned $C_status\n";
-    $status = 1;
-}
-
-$S_status = $S->TerminateWaitKill ($s->ProcessStopWaitInterval());
-
-if ($S_status != 0) {
-    print STDERR "ERROR: Supplier returned $S_status\n";
-    $status = 1;
-}
-
-$ES_status = $ES->TerminateWaitKill ($es->ProcessStopWaitInterval());
-
-if ($ES_status != 0) {
-    print STDERR "ERROR: Event Service returned $ES_status\n";
-    $status = 1;
-}
-
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    $status = 1;
-}
-
-$ns->DeleteFile ($nsiorfile);
-$es->DeleteFile ($nsiorfile);
-$s->DeleteFile ($nsiorfile);
-$c->DeleteFile ($nsiorfile);
-$es->DeleteFile ($esiorfile);
-
-exit $status;

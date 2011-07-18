@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/TAO_Server_Request.h"
@@ -21,6 +20,10 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/TAO_Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           TAO_Server_Request,
+           "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -586,6 +589,6 @@ TAO_ServerRequest::rs_pi_current (void)
   return this->rs_pi_current_;
 }
 
-#endif /* TAO_HAS_INTERCEPTORS */
-
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_INTERCEPTORS */

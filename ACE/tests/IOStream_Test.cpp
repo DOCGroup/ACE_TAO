@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    IOStream_Test.cpp
- *
- *  $Id$
- *
- *  This is a simple test of the IOStream class that illustrates
- *  how to use iostream operations on almost arbitrary I/O classes.
- *
- *
- *  @author James CE Johnson <jcej@lads.com>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    IOStream_Test.cpp
+//
+// = DESCRIPTION
+//    This is a simple test of the IOStream class that illustrates
+//    how to use iostream operations on almost arbitrary I/O classes.
+//
+// = AUTHOR
+//    James CE Johnson <jcej@lads.com>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Thread.h"
@@ -22,7 +25,7 @@
 #include "ace/IOStream.h"
 #include "ace/OS_NS_sys_wait.h"
 
-
+ACE_RCSID (tests, IOStream_Test, "$Id$")
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"
@@ -247,7 +250,7 @@ client (void *arg = 0)
               d));
 
   // Check for proper received values.
-  ACE_TEST_ASSERT (i == 1  && (f1 >= 0.123420 && f1 <= 0.123422)
+  ACE_ASSERT (i == 1  && (f1 >= 0.123420 && f1 <= 0.123422)
               && l == 666555444  && (f2 >= 23.44 && f2 <= 23.46)
               && (d >= -47.1e+9 && d <= -45.9e+9));
   // Reset the precision to limit ourselves to two significant digits.
@@ -399,7 +402,7 @@ server (void *arg = 0)
               d));
 
   // check for proper received values
-  ACE_TEST_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
+  ACE_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
               && l == -666555444  && (f2 >= -24.0 && f2 <= -22.0)
               && (d >= 45e+9 && d <= 47e+9));
 

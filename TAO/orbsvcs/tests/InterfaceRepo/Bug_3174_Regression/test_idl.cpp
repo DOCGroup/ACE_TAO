@@ -45,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -68,7 +68,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_DEBUG (( LM_DEBUG, "Get IFR\n" ));
       CORBA::Object_var objref =
-        the_orb->string_to_object (ifr_ior_file);
+        the_orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ifr_ior_file));
       if (objref.in () == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

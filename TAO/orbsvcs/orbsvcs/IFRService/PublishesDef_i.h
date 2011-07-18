@@ -31,13 +31,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * Represents the definition of an event that is published
- * by a component.
- */
 class TAO_IFRService_Export TAO_PublishesDef_i
   : public virtual TAO_EventPortDef_i
 {
+  // = TITLE
+  //    TAO_PublishesDef_i
+  //
+  // = DESCRIPTION
+  //    Represents the definition of an event that is published
+  //    by a component.
+  //
 public:
   /// Constructor
     TAO_PublishesDef_i (TAO_Repository_i *repo);
@@ -46,7 +49,8 @@ public:
   virtual ~TAO_PublishesDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ();
+  virtual CORBA::DefinitionKind def_kind (
+    );
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

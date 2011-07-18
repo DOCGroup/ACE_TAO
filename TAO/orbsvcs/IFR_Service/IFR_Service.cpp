@@ -11,6 +11,10 @@
 #include "tao/ORB_Core.h"
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID (IFR_Service,
+           IFR_Service,
+           "$Id$")
+
 IFR_Service::IFR_Service (void)
 {
 }

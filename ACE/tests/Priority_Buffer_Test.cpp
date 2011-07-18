@@ -1,26 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Priority_Buffer_Test.cpp
- *
- *  $Id$
- *
- *    This is a simple test to illustrate the priority mechanism of
- *    <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
- *    to enqueue a bunch of messages with different priorities which
- *    are then dequeued by the consumer.
- *
- *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Priority_Buffer_Test.cpp
+//
+// = DESCRIPTION
+//      This is a simple test to illustrate the priority mechanism of
+//      <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
+//      to enqueue a bunch of messages with different priorities which
+//      are then dequeued by the consumer.
+//
+// = AUTHOR
+//    Prashant Jain <pjain@cs.wustl.edu> and
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
 
-
+ACE_RCSID(tests, Priority_Buffer_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
@@ -69,8 +73,8 @@ consumer (void *args)
         {
           // This isn't a "shutdown" message, so process it
           // "normally."
-          ACE_TEST_ASSERT (c == *mb->rd_ptr ());
-          ACE_TEST_ASSERT (mb->msg_priority () < cur_priority);
+          ACE_ASSERT (c == *mb->rd_ptr ());
+          ACE_ASSERT (mb->msg_priority () < cur_priority);
           cur_priority = mb->msg_priority ();
         }
 
@@ -84,7 +88,7 @@ consumer (void *args)
         break;
     }
 
-  ACE_TEST_ASSERT (local_count == message_count);
+  ACE_ASSERT (local_count == message_count);
   return 0;
 }
 

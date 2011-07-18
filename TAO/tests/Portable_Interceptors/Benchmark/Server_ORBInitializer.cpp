@@ -1,9 +1,15 @@
 // -*- C++ -*-
+//
 // $Id$
+//
 
 #include "Server_ORBInitializer.h"
 #include "Interceptor_Type.h"
 #include "server_interceptors.h"
+
+ACE_RCSID (Benchmark,
+           Server_ORBInitializer,
+           "$Id$")
 
 Server_ORBInitializer::Server_ORBInitializer (int interceptor_type)
   :  interceptor_type_ (interceptor_type)

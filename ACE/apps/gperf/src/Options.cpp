@@ -1,38 +1,43 @@
 // -*- C++ -*-
 
-/**
- * $Id$
- *
- * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
- *
- * This file is part of GNU GPERF.
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
+// $Id$
+
+// Handles parsing the Options provided to the user.
+
+// Copyright (C) 1989 Free Software Foundation, Inc.
+// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+
+// This file is part of GNU GPERF.
+
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "Options.h"
+
+ACE_RCSID(src, Options, "$Id$")
+
+#if defined (ACE_HAS_GPERF)
+
 #include "ace/Get_Opt.h"
 #include "Iterator.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
-/// These need to appear before the global class instantiation, since
-/// they are static members with a default constructor that initializes
-/// an ACE_Allocator needed in the Options class constructor.
+// These need to appear before the global class instantiation, since
+// they are static members with a default constructor that initializes
+// an ACE_Allocator needed in the Options class constructor.
 ACE_CString Options::function_name_;
 ACE_CString Options::fill_default_;
 ACE_CString Options::key_name_;
@@ -40,31 +45,31 @@ ACE_CString Options::class_name_;
 ACE_CString Options::hash_name_;
 ACE_CString Options::delimiters_;
 
-/// Global option coordinator for the entire program.
+// Global option coordinator for the entire program.
 Options option;
 
-/// Current program version.
+// Current program version.
 extern const char *version_string;
 
-/// Size to jump on a collision.
+// Size to jump on a collision.
 static const int DEFAULT_JUMP_VALUE = 5;
 
-/// Default name for generated lookup function.
+// Default name for generated lookup function.
 static const char *const DEFAULT_NAME = "in_word_set";
 
-/// Default filler for keyword table.
+// Default filler for keyword table.
 static const char *const DEFAULT_FILL = "";
 
-/// Default name for the key component.
+// Default name for the key component.
 static const char *const DEFAULT_KEY = "name";
 
-/// Default name for the generated class.
+// Default name for the generated class.
 static const char *const DEFAULT_CLASS_NAME = "Perfect_Hash";
 
-/// Default name for generated hash function.
+// Default name for generated hash function.
 static const char *const DEFAULT_HASH_NAME = "hash";
 
-/// Default delimiters that separate keywords from their attributes.
+// Default delimiters that separate keywords from their attributes.
 static const char *const DEFAULT_DELIMITERS = ",\n";
 
 int Options::option_word_;
@@ -79,7 +84,8 @@ ACE_TCHAR **Options::argv_;
 int Options::iterations_;
 char Options::key_positions_[MAX_KEY_POS];
 
-/// Prints program usage to standard error stream.
+// Prints program usage to standard error stream.
+
 void
 Options::usage (void)
 {
@@ -90,32 +96,35 @@ Options::usage (void)
               "(type %n -h for help)\n"));
 }
 
-/// Output command-line Options.
+// Output command-line Options.
+
 void
 Options::print_options (void)
 {
+  int i;
+
   ACE_OS::printf ("/* Command-line: ");
 
-  for (int i = 0; i < argc_; i++)
+  for (i = 0; i < argc_; i++)
     ACE_OS::printf ("%s ",
-                    ACE_TEXT_ALWAYS_CHAR (argv_[i]));
+                    argv_[i]);
 
   ACE_OS::printf (" */");
 }
 
-/// Sorts the key positions *IN REVERSE ORDER!!* This makes further
-/// routines more efficient.  Especially when generating code.  Uses a
-/// simple Insertion Sort since the set is probably ordered.  Returns 1
-/// if there are no duplicates, 0 otherwise.
+// Sorts the key positions *IN REVERSE ORDER!!* This makes further
+// routines more efficient.  Especially when generating code.  Uses a
+// simple Insertion Sort since the set is probably ordered.  Returns 1
+// if there are no duplicates, 0 otherwise.
+
 int
 Options::key_sort (char *base, int len)
 {
-  int j = 0;
-  int i = 0;
+  int i, j;
+
   for (i = 0, j = len - 1; i < j; i++)
     {
-      int curr = 0;
-      int tmp = 0;
+      int curr, tmp;
 
       for (curr = i + 1, tmp = base[curr];
            curr > 0 && tmp >= base[curr - 1];
@@ -150,12 +159,13 @@ Options::Options (void)
   initial_asso_value_ = iterations_ = 0;
 }
 
-/// Dumps option status when debug is set.
+// Dumps option status when debug is set.
+
 Options::~Options (void)
 {
   if (ACE_BIT_ENABLED (option_word_, DEBUGGING))
     {
-      char *ptr = 0;
+      char *ptr;
 
       ACE_OS::fprintf (stderr,
                        "\ndumping Options:"
@@ -184,14 +194,14 @@ Options::~Options (void)
                        "\nLINEARSEARCH is: %s"
                        "\nBINARYSEARCH is: %s"
                        "\niterations = %d"
-                       "\nlookup function name = %s"
-                       "\nfill default = %s"
-                       "\nhash function name = %s"
-                       "\nkey name = %s"
+                       "\nlookup function name = %C"
+                       "\nfill default = %C"
+                       "\nhash function name = %C"
+                       "\nkey name = %C"
                        "\njump value = %d"
                        "\nmax associcated value = %d"
                        "\ninitial associated value = %d"
-                       "\ndelimiters = %s"
+                       "\ndelimiters = %C"
                        "\nnumber of switch statements = %d"
                        "\n",
                        ACE_BIT_ENABLED (option_word_, DEBUGGING) ? "enabled" : "disabled",
@@ -246,21 +256,25 @@ Options::~Options (void)
     }
 }
 
-/// Parses the command line Options and sets appropriate flags in
-/// option_word_.
+// Parses the command line Options and sets appropriate flags in
+// option_word_.
+
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
+  //FUZZ: enable check_for_lack_ACE_OS
+
+  int option_char;
 
   argc_ = argc;
   argv_ = argv;
 
-  int option_char;
-  while ((option_char = get_opt ()) != -1)
+  while ((option_char = getopt ()) != -1)
     {
       switch (option_char)
         {
@@ -312,7 +326,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Allows user to provide keyword/attribute separator
         case 'e':
           {
-            delimiters_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+            delimiters_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         case 'E':
@@ -324,7 +338,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'f':
           {
             ACE_SET_BITS (option_word_, FAST);
-            iterations_ = ACE_OS::atoi (get_opt.opt_arg ());
+            iterations_ = ACE_OS::atoi (getopt.opt_arg ());
             if (iterations_ < 0)
               {
                 ACE_ERROR ((LM_ERROR, "iterations value must not be negative, assuming 0\n"));
@@ -444,13 +458,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Sets the name for the hash function.
         case 'H':
           {
-            hash_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+            hash_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Sets the initial value for the associated values array.
         case 'i':
           {
-            initial_asso_value_ = ACE_OS::atoi (get_opt.opt_arg ());
+            initial_asso_value_ = ACE_OS::atoi (getopt.opt_arg ());
             if (initial_asso_value_ < 0)
               ACE_ERROR ((LM_ERROR,
                           "Initial value %d should be non-zero, ignoring and continuing.\n",
@@ -468,7 +482,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
          // Sets the jump value, must be odd for later algorithms.
         case 'j':
           {
-            jump_ = ACE_OS::atoi (get_opt.opt_arg ());
+            jump_ = ACE_OS::atoi (getopt.opt_arg ());
             if (jump_ < 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Jump value %d must be a positive number.\n%r",
@@ -492,7 +506,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           {
             const int BAD_VALUE = -1;
             int value;
-            Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
+            Iterator expand (ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ()),
                              1,
                              MAX_KEY_POS - 1,
                              WORD_END,
@@ -500,7 +514,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              EOS);
 
             // Use all the characters for hashing!!!!
-            if (*get_opt.opt_arg () == '*')
+            if (*getopt.opt_arg () == '*')
               option_word_ = (option_word_ & ~DEFAULTCHARS) | ALLCHARS;
             else
               {
@@ -541,7 +555,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Make this the keyname for the keyword component field.
         case 'K':
           {
-            key_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+            key_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Create length table to avoid extra string compares.
@@ -554,15 +568,15 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'L':
           {
             option_word_ &= ~C;
-            if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++")))
+            if (!ACE_OS::strcmp (getopt.opt_arg (), ACE_TEXT("C++")))
               ACE_SET_BITS (option_word_, (CPLUSPLUS | ANSI));
-            else if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C")))
+            else if (!ACE_OS::strcmp (getopt.opt_arg (), ACE_TEXT("C")))
               ACE_SET_BITS (option_word_, C);
             else
               {
                 ACE_ERROR ((LM_ERROR,
                             "unsupported language option %s, defaulting to C\n",
-                            get_opt.opt_arg ()));
+                            getopt.opt_arg ()));
                 ACE_SET_BITS (option_word_, C);
               }
             break;
@@ -588,13 +602,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Make generated lookup function name be.opt_arg ()
         case 'N':
           {
-            function_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+            function_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Make fill_default be.opt_arg ()
         case 'F':
           {
-            fill_default_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+            fill_default_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         // Order input by frequency of key set occurrence.
@@ -627,7 +641,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Range of associated values, determines size of final table.
         case 's':
           {
-            size_ = ACE_OS::atoi (get_opt.opt_arg ());
+            size_ = ACE_OS::atoi (getopt.opt_arg ());
             if (abs (size_) > 50)
               ACE_ERROR ((LM_ERROR,
                           "%d is excessive, did you really mean this?! (type %n -h for help)\n",
@@ -638,11 +652,11 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'S':
           {
             ACE_SET_BITS (option_word_, SWITCH);
-            total_switches_ = ACE_OS::atoi (get_opt.opt_arg ());
+            total_switches_ = ACE_OS::atoi (getopt.opt_arg ());
             if (total_switches_ <= 0)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "number of switches %s must be a positive number\n%r",
-                                 get_opt.opt_arg (),
+                                 getopt.opt_arg (),
                                  &Options::usage),
                                 -1);
             break;
@@ -676,7 +690,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Set the class name.
         case 'Z':
           {
-            class_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+            class_name_ = ACE_TEXT_ALWAYS_CHAR(getopt.opt_arg ());
             break;
           }
         default:
@@ -688,16 +702,16 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
     }
 
-  if (argv[get_opt.opt_ind ()] &&
-    ACE_OS::freopen (argv[get_opt.opt_ind ()],
+  if (argv[getopt.opt_ind ()] &&
+    ACE_OS::freopen (argv[getopt.opt_ind ()],
                      ACE_TEXT("r"),
                      stdin) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open keyword file %p\n%r",
-                       argv[get_opt.opt_ind ()],
+                       argv[getopt.opt_ind ()],
                        &Options::usage),
                       -1);
-  if (get_opt.opt_ind () + 1 < argc)
+  if (getopt.opt_ind () + 1 < argc)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Extra trailing arguments to %n.\n%r",
                        usage),
@@ -705,21 +719,24 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-/// True if option enable, else false.
+// True if option enable, else false.
+
 int
 Options::operator[] (Option_Type option)
 {
   return ACE_BIT_ENABLED (option_word_, option);
 }
 
-/// Enables option OPT.
+// Enables option OPT.
+
 void
 Options::operator = (enum Option_Type opt)
 {
   ACE_SET_BITS (option_word_, opt);
 }
 
-/// Disables option OPT.
+// Disables option OPT.
+
 bool
 Options::operator != (enum Option_Type opt)
 {
@@ -729,115 +746,132 @@ Options::operator != (enum Option_Type opt)
   return true;
 }
 
-/// Initializes the key Iterator.
+// Initializes the key Iterator.
+
 void
 Options::reset (void)
 {
   key_pos_ = 0;
 }
 
-/// Returns current key_position and advanced index.
+// Returns current key_position and advanced index.
+
 int
 Options::get (void)
 {
   return key_positions_[key_pos_++];
 }
 
-/// Sets the size of the table size.
+// Sets the size of the table size.
+
 void
 Options::asso_max (int r)
 {
   size_ = r;
 }
 
-/// Returns the size of the table size.
+// Returns the size of the table size.
+
 int
 Options::asso_max (void)
 {
   return size_;
 }
 
-/// Returns total distinct key positions.
+// Returns total distinct key positions.
+
 u_int
 Options::max_keysig_size (void)
 {
   return total_keysig_size_;
 }
 
-/// Sets total distinct key positions.
+// Sets total distinct key positions.
+
 void
 Options::keysig_size (u_int a_size)
 {
   total_keysig_size_ = a_size;
 }
 
-/// Returns the jump value.
+// Returns the jump value.
+
 int
 Options::jump (void)
 {
   return jump_;
 }
 
-/// Returns the generated function name.
+// Returns the generated function name.
+
 const char *
 Options::function_name (void)
 {
   return function_name_.c_str ();
 }
 
-/// Returns the fill default
+// Returns the fill default
+
 const char *
 Options::fill_default (void)
 {
   return fill_default_.c_str ();
 }
 
-/// Returns the keyword key name.
+// Returns the keyword key name.
+
 const char *
 Options::key_name (void)
 {
   return key_name_.c_str ();
 }
 
-/// Returns the hash function name.
+// Returns the hash function name.
+
 const char *
 Options::hash_name (void)
 {
   return hash_name_.c_str ();
 }
 
-/// Returns the generated class name.
+// Returns the generated class name.
+
 const char *
 Options::class_name (void)
 {
   return class_name_.c_str ();
 }
 
-/// Returns the initial associated character value.
+// Returns the initial associated character value.
+
 int
 Options::initial_value (void)
 {
   return initial_asso_value_;
 }
 
-/// Returns the iterations value.
+// Returns the iterations value.
+
 int
 Options::iterations (void)
 {
   return iterations_;
 }
 
-/// Returns the string used to delimit keywords from other attributes.
+// Returns the string used to delimit keywords from other attributes.
+
 const char *
 Options::delimiter (void)
 {
   return delimiters_.c_str ();
 }
 
-/// Gets the total number of switch statements to generate.
+// Gets the total number of switch statements to generate.
+
 int
 Options::total_switches (void)
 {
   return total_switches_;
 }
 
+#endif /* ACE_HAS_GPERF */

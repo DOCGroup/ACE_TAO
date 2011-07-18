@@ -1,17 +1,20 @@
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file   Notify_Push_Consumer.h
- *
- *  $Id$
- *
- * A push consumer implementation.
- *
- *
- *  @author Chad Elliott <elliott_c@ociweb.com>
- */
-//=============================================================================
-
+// $Id$
+// ==========================================================================
+//
+// = LIBRARY
+//   TAO/orbsvcs/tests/Notify/Discarding
+//
+// = FILENAME
+//   Notify_Push_Consumer.h
+//
+// = DESCRIPTION
+//   A push consumer implementation.
+//
+// = AUTHOR
+//    Chad Elliott <elliott_c@ociweb.com>
+//
+// ==========================================================================
 #ifndef TAO_NOTIFY_PUSH_CONSUMER_H
 #define TAO_NOTIFY_PUSH_CONSUMER_H
 #include "Notify_StructuredPushConsumer.h"

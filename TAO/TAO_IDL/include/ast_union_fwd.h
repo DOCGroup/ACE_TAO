@@ -13,6 +13,8 @@ class AST_Union;
 class TAO_IDL_FE_Export AST_UnionFwd : public virtual AST_StructureFwd
 {
 public:
+  AST_UnionFwd (void);
+
   AST_UnionFwd (AST_Union *dummy,
                 UTL_ScopedName *n);
 
@@ -30,8 +32,6 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
-
-  static AST_Decl::NodeType const NT;
 };
 
 #endif           // _AST_UNION_FWD_AST_UNION_FWD_HH

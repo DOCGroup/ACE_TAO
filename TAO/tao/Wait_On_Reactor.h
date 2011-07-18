@@ -26,7 +26,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Wait_On_Reactor
  *
- * Wait on the Reactor. Happens in a single threaded client environment.
+ * @brief Wait on the Reactor. Happens in s Single Threaded client
+ * environment.
  *
  */
 class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
@@ -34,22 +35,17 @@ class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 
 public:
   /// Constructor.
-  explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
+  TAO_Wait_On_Reactor (TAO_Transport *transport);
 
   /// Destructor.
   virtual ~TAO_Wait_On_Reactor (void);
 
-  /*! @copydoc TAO_Wait_Strategy::wait() */
+  // = Documented in TAO_Wait_Strategy.
+
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
-
-  /*! @copydoc TAO_Wait_Strategy::register_handler() */
   virtual int register_handler (void);
-
-  /*! @copydoc TAO_Wait_Strategy::non_blocking() */
   virtual bool non_blocking (void) const;
-
-  /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   virtual bool can_process_upcalls (void) const;
 };
 

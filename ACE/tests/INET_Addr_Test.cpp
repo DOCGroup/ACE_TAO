@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    INET_Addr_Test.cpp
- *
- *  $Id$
- *
- *   Performs several tests on the ACE_INET_Addr class.  It creates several
- *   IPv4 and IPv6 addresses and checks that the address formed by the
- *   class is valid.
- *
- *
- *  @author John Aughey (jha@aughey.com)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    INET_Addr_Test.cpp
+//
+// = DESCRIPTION
+//     Performs several tests on the ACE_INET_Addr class.  It creates several
+//     IPv4 and IPv6 addresses and checks that the address formed by the
+//     class is valid.
+//
+// = AUTHOR
+//    John Aughey (jha@aughey.com)
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -57,8 +60,11 @@ struct Address {
   bool loopback;
 };
 
-int run_main (int, ACE_TCHAR *[])
+int run_main (int argc, ACE_TCHAR *argv[])
 {
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_START_TEST (ACE_TEXT ("INET_Addr_Test"));
 
   int status = 0;     // Innocent until proven guilty
@@ -75,7 +81,6 @@ int run_main (int, ACE_TCHAR *[])
   for (int i=0; ipv4_addresses[i] != 0; i++)
     {
       struct in_addr addrv4;
-      ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
       ACE_UINT32 addr32;
 
       ACE_OS::inet_pton (AF_INET, ipv4_addresses[i], &addrv4);
@@ -92,7 +97,7 @@ int run_main (int, ACE_TCHAR *[])
       if (addr.get_ip_address () != ACE_HTONL (addr32))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error: %C failed get_ip_address() check\n")
+                      ACE_TEXT ("Error: %s failed get_ip_address() check\n")
                       ACE_TEXT ("0x%x != 0x%x\n"),
                       ipv4_addresses[i],
                       addr.get_ip_address (),
@@ -104,8 +109,8 @@ int run_main (int, ACE_TCHAR *[])
           ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%C failed get_host_addr() check\n")
-                      ACE_TEXT ("%C != %C\n"),
+                      ACE_TEXT ("%s failed get_host_addr() check\n")
+                      ACE_TEXT ("%s != %s\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));
@@ -118,8 +123,8 @@ int run_main (int, ACE_TCHAR *[])
           ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%C failed get_host_addr(char* buf,int) check\n")
-                      ACE_TEXT ("buf ['%C'] != return value ['%C']\n"),
+                      ACE_TEXT ("%s failed get_host_addr(char* buf,int) check\n")
+                      ACE_TEXT ("buf ['%s'] != return value ['%s']\n"),
                       ipv4_addresses[i],
                       &hostaddr[0],
                       haddr));
@@ -128,8 +133,8 @@ int run_main (int, ACE_TCHAR *[])
       if (ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%C failed get_host_addr(char*,int) check\n")
-                      ACE_TEXT ("buf ['%C'] != expected value ['%C']\n"),
+                      ACE_TEXT ("%s failed get_host_addr(char*,int) check\n")
+                      ACE_TEXT ("buf ['%s'] != expected value ['%s']\n"),
                       ipv4_addresses[i],
                       &hostaddr[0],
                       ipv4_addresses[i]));
@@ -154,8 +159,8 @@ int run_main (int, ACE_TCHAR *[])
           ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%C failed second get_host_addr() check\n")
-                      ACE_TEXT ("return value ['%C'] != expected value ['%C']\n"),
+                      ACE_TEXT ("%s failed second get_host_addr() check\n")
+                      ACE_TEXT ("return value ['%s'] != expected value ['%s']\n"),
                       ipv4_addresses[i],
                       addr.get_host_addr (),
                       ipv4_addresses[i]));
@@ -209,36 +214,14 @@ int run_main (int, ACE_TCHAR *[])
           if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("IPv6 get_host_addr failed: %C != %C\n"),
+                          ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
                           addr.get_host_addr (),
                           ipv6_addresses[i]));
               status = 1;
             }
         }
-
-      const char *ipv6_names[] = {
-        "naboo.dre.vanderbilt.edu",
-        "v6.ipv6-test.com",
-        0
-      };
-      for (int i=0; ipv6_names[i] != 0; i++)
-        {
-          ACE_INET_Addr addr (80, ipv6_names[i]);
-          status |= check_type_consistency (addr);
-
-          if (0 != ACE_OS::strcmp (addr.get_host_name (), ipv6_names[i]))
-            {
-              ACE_ERROR ((LM_WARNING,
-                          ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
-                          addr.get_host_name (),
-                          addr.get_host_addr (),
-                          ipv6_names[i]));
-            }
-        }
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 tests done\n")));
-#else
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_HAS_IPV6 not set; no IPv6 tests run\n")));
+
 #endif
 
   struct Address loopback_addresses[] =
@@ -262,7 +245,7 @@ int run_main (int, ACE_TCHAR *[])
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ACE_INET_Addr::is_loopback() ")
-                      ACE_TEXT ("failed to distinguish loopback address. %C\n")
+                      ACE_TEXT ("failed to distinguish loopback address. %s\n")
                       , loopback_addresses[i].name));
           status = 1;
         }

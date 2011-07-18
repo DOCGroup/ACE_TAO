@@ -5,6 +5,10 @@
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/PolicyC.h"
 
+ACE_RCSID (FaultTolerance,
+           FT_ClientPolicyFactory,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr

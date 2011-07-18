@@ -2,6 +2,10 @@
 
 #include "ace/Registry.h"
 
+ACE_RCSID (ace,
+           Registry,
+           "$Id$")
+
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
 #  include "ace/os_include/os_netdb.h"
@@ -838,14 +842,11 @@ ACE_Registry::Binding_Iterator::Iteration_State::iterator (Binding_Iterator *ite
 }
 
 
-ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State (void)
+ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State ()
   : index_ (0)
 {
 }
 
-ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State (void)
-{
-}
 
 // Next entry
 int
@@ -1074,9 +1075,6 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
                                          const ACE_TCHAR *machine_name)
 {
 #if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG(naming_context);
-  ACE_UNUSED_ARG(predefined);
-  ACE_UNUSED_ARG(machine_name);
   return -1;
 #else
   long result = -1;
@@ -1090,7 +1088,6 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
                                    predefined,
                                    &naming_context.key_);
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
-    {
     // Make sure that for these types, the machine is local
     if (machine_name == 0 ||
         ACE_Predefined_Naming_Contexts::is_local_host (machine_name))
@@ -1100,7 +1097,6 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
       }
     else
       result = -1;
-    }
 
   ACE_REGISTRY_CALL_RETURN (result);
 #endif  // ACE_HAS_WINCE

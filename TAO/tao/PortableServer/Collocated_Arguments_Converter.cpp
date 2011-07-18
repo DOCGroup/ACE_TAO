@@ -1,7 +1,11 @@
-// -*- C++ -*-
-// $Id$
+// @(#) $Id$
 
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
+
+ACE_RCSID(PortableServer,
+          TAO_Collocated_Arguments_Converter,
+          "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

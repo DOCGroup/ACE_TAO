@@ -5,6 +5,10 @@
 #include "tao/Environment.h"
 #include "orbsvcs/Shutdown_Utilities.h"
 
+ACE_RCSID (IFR_Service,
+           IFR_Server,
+           "$Id$")
+
 class IFR_Service_Shutdown_Functor : public Shutdown_Functor
 {
 public:

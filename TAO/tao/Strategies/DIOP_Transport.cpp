@@ -19,6 +19,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
+ACE_RCSID (tao, DIOP_Transport, "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
@@ -84,7 +86,7 @@ TAO_DIOP_Transport::recv (char *buf,
                   n,
                   from_addr.get_host_name (),
                   from_addr.get_port_number (),
-                  ACE_ERRNO_GET));
+                  errno));
     }
 
   // Most of the errors handling is common for

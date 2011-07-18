@@ -5,8 +5,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use lib '../../bin';
+use PerlACE::Run_Test;
 
 $SV = new PerlACE::Process ("tcp_test", "-s");
 $CL = new PerlACE::Process ("tcp_test", "-c localhost -i 50000 -b 64");

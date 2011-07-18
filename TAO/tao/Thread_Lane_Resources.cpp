@@ -1,6 +1,11 @@
 // $Id$
 
 #include "tao/Thread_Lane_Resources.h"
+
+ACE_RCSID (tao,
+           Thread_Lane_Resources,
+           "$Id$")
+
 #include "tao/Acceptor_Registry.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
@@ -501,17 +506,16 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
       leader_follower.has_clients ())
     {
       reactor->wakeup_all_threads ();
+      return;
     }
-  else
-    {
-      // End the reactor if we want shutdown dropping replies along the
-      // way.
-      reactor->end_reactor_event_loop ();
-    }
+
+  // End the reactor if we want shutdown dropping replies along the
+  // way.
+  reactor->end_reactor_event_loop ();
 }
 
 void
-TAO_Thread_Lane_Resources::close_all_transports (void)
+TAO_Thread_Lane_Resources::cleanup_rw_transports (void)
 {
   // If we have no-drop-reply strategy or already fininalized simply return.
   if (!this->orb_core_.resource_factory ()->drop_replies_during_shutdown () ||
@@ -521,12 +525,7 @@ TAO_Thread_Lane_Resources::close_all_transports (void)
   // Set of handlers still in the connection cache.
   TAO::Connection_Handler_Set handlers;
 
-  // Close the transport cache and return the handlers that were still
-  // registered.  The cache will decrease the #REFCOUNT# on the
-  // handler when it removes the handler from cache.  However,
-  // #REFCOUNT# is increased when the handler is placed in the handler
-  // set.
-  this->transport_cache_->close (handlers);
+  this->transport_cache_->blockable_client_transports (handlers);
 
   // Go through the handler set, closing the connections and removing
   // the references.
@@ -536,8 +535,9 @@ TAO_Thread_Lane_Resources::close_all_transports (void)
        iter.next (handler);
        iter.advance ())
     {
-      // Connection is closed.  Potential removal from the Reactor.
-      (*handler)->close_connection ();
+      // Connection is closed. There will be a double closure but that
+      // is okay.
+      (*handler)->release_os_resources ();
 
       // #REFCOUNT# related to the handler set decreases.
       (*handler)->transport ()->remove_reference ();

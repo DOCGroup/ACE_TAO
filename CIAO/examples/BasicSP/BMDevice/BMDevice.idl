@@ -16,15 +16,15 @@
 module BasicSP
 {
   component BMDevice
-  {
-    provides ReadData data_read;
-    publishes DataAvailable data_available;
-    consumes TimeOut timeout_value;
-  };
+    {
+      provides ReadData data_read;
+      publishes DataAvailable data_available;
+      consumes TimeOut timeout;
+    };
 
   home BMDeviceHome manages BMDevice
-  {
-  };
+    {
+    };
 };
 
 #endif /*CIAO_BMDEVICE_IDL */

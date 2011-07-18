@@ -6,88 +6,45 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
+$inputfile = PerlACE::LocalFile ("test.ior");
+$thrserverfile = PerlACE::LocalFile ("thr_server.ior");
+
+unlink $inputfile;
+unlink $thrserverfile;
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+if (PerlACE::is_vxworks_test()) {
+    $CL = new PerlACE::ProcessVX ("client", "-o thr_server.ior -i test.ior");
 }
+else {
+    $CL = new PerlACE::Process ("client", "-o $thrserverfile -i $inputfile");
+}
+$SV = new PerlACE::Process ("server", "-o $inputfile -i file://$thrserverfile");
 
-my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$client = $CL->Spawn ();
 
-
-my $iorbase = "test.ior";
-my $thrserverfile = "thr_server.ior";
-
-my $server_iorbase = $server->LocalFile ($iorbase);
-my $client_iorbase = $client->LocalFile ($iorbase);
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-my $server_thrserverfile = $server->LocalFile ($thrserverfile);
-my $client_thrserverfile = $client->LocalFile ($thrserverfile);
-$server->DeleteFile($thrserverfile);
-$client->DeleteFile($thrserverfile);
-
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $server_iorbase " .
-                              "-i file://$server_thrserverfile");
-
-$CL = $client->CreateProcess ("client",
-                              "-ORBdebuglevel $debug_level " .
-                              "-o $client_thrserverfile " .
-                              "-i $client_iorbase");
-
-$client_status = $CL->Spawn ();
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if (PerlACE::waitforfile_timed ($thrserverfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$thrserverfile>\n";
     exit 1;
 }
 
-if ($client->WaitForFileTimed ($thrserverfile,
-                               $client->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_thrserverfile>\n";
-    $CL->Kill (); $CL->TimedWait (1);
-    exit 1;
-}
+$server = $SV->SpawnWaitKill (30);
 
-if ($client->GetFile ($thrserverfile) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$client_thrserverfile>\n";
-    $CL->Kill (); $CL->TimedWait (1);
-    exit 1;
-}
-if ($server->PutFile ($thrserverfile) == -1) {
-    print STDERR "ERROR: cannot set file <$server_thrserverfile>\n";
-    $CL->Kill (); $CL->TimedWait (1);
-    exit 1;
-}
+$client = $CL->WaitKill (5);
 
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval() + 20);
-
-if ($server_status != 0) {
-    print STDERR "ERROR: client returned $server_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$client_status = $CL->WaitKill ($client->ProcessStopWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$server->DeleteFile($thrserverfile);
-$client->DeleteFile($thrserverfile);
+unlink $inputfile;
+unlink $thrserverfile;
 
 exit $status;

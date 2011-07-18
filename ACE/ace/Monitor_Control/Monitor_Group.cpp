@@ -36,25 +36,25 @@ namespace ACE
     {
       /// No-op, should always call update().
     }
-
+    
     void
     Monitor_Group::receive (size_t /* data */)
     {
       /// No-op, should always call update().
     }
-
+    
     void
     Monitor_Group::receive (const Monitor_Control_Types::NameList& /* data */)
     {
       /// No-op, should always call update().
     }
-
+    
     void
     Monitor_Group::clear (void)
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
         {
-          Monitor_Base **member = 0;
+          Monitor_Base **member;
           i.next (member);
           (*member)->clear ();
         }
@@ -65,3 +65,4 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
+

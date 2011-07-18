@@ -2,6 +2,10 @@
 
 #include "ace/OS_NS_stdlib.h"
 
+ACE_RCSID (ace,
+           OS_NS_stdlib,
+           "$Id$")
+
 #include "ace/Default_Constants.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
@@ -57,11 +61,17 @@ ACE_OS::exit (int status)
     (*exit_hook_) ();
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-#if defined (ACE_WIN32)
+#if !defined (ACE_HAS_WINCE)
+# if defined (ACE_WIN32)
   ::ExitProcess ((UINT) status);
-#else
+# else
   ::exit (status);
-#endif /* ACE_WIN32 */
+# endif /* ACE_WIN32 */
+#else
+  // @@ This is not exactly the same as ExitProcess.  But this is the
+  // closest one I can get.
+  ::TerminateProcess (::GetCurrentProcess (), status);
+#endif /* ACE_HAS_WINCE */
 }
 
 void
@@ -259,13 +269,13 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
   // Now reverse the string to get the correct result
 
   while (e > b)
-    {
-      wchar_t temp = *e;
-      *e = *b;
-      *b = temp;
-      ++b;
-      --e;
-    }
+  {
+    wchar_t temp = *e;
+    *e = *b;
+    *b = temp;
+    ++b;
+    --e;
+  }
 
   return string;
 }
@@ -1108,7 +1118,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // ACE_thread_t may be a char* (returned by ACE_OS::thr_self()) so
   // we need to use a C-style cast as a catch-all in order to use a
   // static_cast<> to an integral type.
-  unsigned int seed = static_cast<unsigned int> (msec);
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (msec);
 
   // We only care about UTF-8 / ASCII characters in generated
   // filenames.  A UTF-16 or UTF-32 character could potentially cause
@@ -1148,7 +1158,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
           // selection to work for EBCDIC, as well.
           do
             {
-              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (&seed));
+              r = static_cast<ACE_TCHAR> (coefficient * ACE_OS::rand_r (seed));
             }
           while (!ACE_OS::ace_isalnum (r));
 

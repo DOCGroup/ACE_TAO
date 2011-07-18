@@ -1,22 +1,26 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    SV_Shared_Memory_Test.cpp
- *
- *  $Id$
- *
- *   This is a simple test of <ACE_SV_Shared_Memory> and
- *   <ACE_Malloc> using the <ACE_Shared_Memory_Pool>.  The test
- *   forks two processes and then executes client and server
- *   allowing them to exchange data using shared memory. No user
- *   input is required as far as command line arguments are
- *   concerned.
- *
- *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    SV_Shared_Memory_Test.cpp
+//
+// = DESCRIPTION
+//     This is a simple test of <ACE_SV_Shared_Memory> and
+//     <ACE_Malloc> using the <ACE_Shared_Memory_Pool>.  The test
+//     forks two processes and then executes client and server
+//     allowing them to exchange data using shared memory. No user
+//     input is required as far as command line arguments are
+//     concerned.
+//
+// = AUTHOR
+//    Prashant Jain <pjain@cs.wustl.edu>
+//    and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/Malloc_T.h"
@@ -26,7 +30,7 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
+ACE_RCSID(tests, SV_Shared_Memory_Test, "$Id$")
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
@@ -65,19 +69,19 @@ parent (char *shm)
 
   int result;
   result = parent_mutex->release ();
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   result = parent_synch->acquire ();
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   result = myallocator ().remove ();
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   result = parent_mutex->remove ();
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   result = parent_synch->remove ();
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   return 0;
 }
@@ -94,7 +98,7 @@ child (char *shm)
   result = mutex.open (SEM_KEY_1,
                        ACE_SV_Semaphore_Complex::ACE_CREATE,
                        0);
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   ACE_SV_Semaphore_Complex synch;
   // This semaphore is initially created with a count of 0, i.e., it
@@ -102,7 +106,7 @@ child (char *shm)
   result = synch.open (SEM_KEY_2,
                        ACE_SV_Semaphore_Complex::ACE_CREATE,
                        0);
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   // Perform "busy waiting" here until we acquire the semaphore.  This
   // isn't really a good design -- it's just to illustrate that you
@@ -116,14 +120,14 @@ child (char *shm)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P) child mutex.tryacquire")));
-        ACE_TEST_ASSERT (result != -1);
+        ACE_ASSERT (result != -1);
       }
 
   for (int i = 0; i < SHMSZ; i++)
-    ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
+    ACE_ASSERT (SHMDATA[i] == shm[i]);
 
   result = synch.release ();
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   return 0;
 }
@@ -162,14 +166,14 @@ run_main (int, ACE_TCHAR *[])
   int result = parent_mutex->open (SEM_KEY_1,
                                    ACE_SV_Semaphore_Complex::ACE_CREATE,
                                    0);
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   // This semaphore is initially created with a count of 0, i.e., it
   // is "locked."
   result = parent_synch->open (SEM_KEY_2,
                                ACE_SV_Semaphore_Complex::ACE_CREATE,
                                0);
-  ACE_TEST_ASSERT (result != -1);
+  ACE_ASSERT (result != -1);
 
   switch (ACE_OS::fork (ACE_TEXT ("SV_Shared_Memory_Test.cpp")))
     {

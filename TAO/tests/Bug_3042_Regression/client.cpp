@@ -1,8 +1,11 @@
 // -*- C++ -*-
-// $Id$
 
 #include "testC.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID (BoundedSeq,
+           client,
+           "$Id$")
 
 int
 ACE_TMAIN(int, ACE_TCHAR *[])

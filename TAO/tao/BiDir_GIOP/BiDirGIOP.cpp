@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
@@ -9,10 +6,16 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/CORBA_macros.h"
 
+ACE_RCSID (BiDir_GIOP,
+           BiDirGIOP,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Set the flag to zero to start with
+bool TAO_BiDirGIOP_Loader::is_activated_ = false;
+
 TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
-  : initialized_ (false)
 {
 }
 
@@ -23,25 +26,7 @@ TAO_BiDirGIOP_Loader::~TAO_BiDirGIOP_Loader (void)
 int
 TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 {
-  if (this->initialized_)
-    return 0;
-
-  this->initialized_ = true;
-
-  ACE_Service_Gestalt *gestalt = ACE_Service_Config::current ();
-
-  ACE_Service_Object * const bidir_loader =
-    ACE_Dynamic_Service<ACE_Service_Object>::instance (
-      gestalt,
-      "BiDirGIOP_Loader",
-      true);
-
-  if (bidir_loader != 0 && bidir_loader != this)
-    {
-      return bidir_loader->init (0, 0);
-    }
-
-  if (TAO_DEF_GIOP_MINOR >= 2)
+  if (TAO_BiDirGIOP_Loader::is_activated_ == false && TAO_DEF_GIOP_MINOR >= 2)
     {
       PortableInterceptor::ORBInitializer_ptr tmp_orb_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
@@ -62,6 +47,8 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ());
+
+          TAO_BiDirGIOP_Loader::is_activated_ = true;
         }
       catch (const ::CORBA::Exception& ex)
         {

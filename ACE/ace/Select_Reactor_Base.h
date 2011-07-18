@@ -92,6 +92,7 @@ public:
 class ACE_Event_Tuple
 {
 public:
+
   /// Default constructor.
   ACE_Event_Tuple (void);
 
@@ -105,6 +106,7 @@ public:
   bool operator!= (const ACE_Event_Tuple &rhs) const;
 
 public:
+
   /// Handle.
   ACE_HANDLE handle_;
 
@@ -178,11 +180,6 @@ public:
   /// Read one of the notify call on the @a handle into the
   /// @a buffer. This could be because of a thread trying to unblock
   /// the Reactor_Impl
-  ///
-  /// Return value semantics for this are:
-  /// -1: nothing read, fatal, unrecoverable error
-  ///  0: nothing read at all
-  ///  1: complete buffer read
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 

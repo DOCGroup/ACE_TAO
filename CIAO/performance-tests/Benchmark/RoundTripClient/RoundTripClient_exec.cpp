@@ -5,7 +5,7 @@
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Env_Value_T.h"
-#include "ace/Log_Msg.h"
+#include "ciao/Logger/Log_Macros.h"
 
 #include "RoundTripClient_exec.h"
 
@@ -26,7 +26,7 @@ void
 MyImpl::RoundTripClient_exec_i::set_session_context (
     Components::SessionContext_ptr ctx)
 {
-  ACE_DEBUG ((LM_TRACE,
+  CIAO_DEBUG ((LM_TRACE, CLINFO
                 "MyImpl::RoundTripClient_exec_i::set_session_context\n"));
 
   //Since this is in collocated mode; The server-component will change the
@@ -50,7 +50,7 @@ MyImpl::RoundTripClient_exec_i::configuration_complete ()
 void
 MyImpl::RoundTripClient_exec_i::ccm_activate ()
 {
-  ACE_DEBUG ((LM_TRACE, "MyImpl::RoundTripClient_exec_i::ccm_activate\n"));
+  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTripClient_exec_i::ccm_activate\n"));
 }
 
 void
@@ -62,7 +62,7 @@ MyImpl::RoundTripClient_exec_i::start ()
   Benchmark::LatencyTest_var lt =
     context_->get_connection_latency ();
 
-  ACE_DEBUG ((LM_INFO,
+  CIAO_DEBUG ((LM_INFO, CLINFO
                "MyImpl::RoundTripClient_exec::start obtain obj ref\n"));
 
   CORBA::Long test_data = 0L;
@@ -92,11 +92,11 @@ MyImpl::RoundTripClient_exec_i::start ()
 
   ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-  ACE_DEBUG ((LM_DEBUG, "test finished\n"));
+  CIAO_DEBUG ((LM_DEBUG, CLINFO"test finished\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "High resolution timer calibration...."));
+  CIAO_DEBUG ((LM_DEBUG, CLINFO"High resolution timer calibration...."));
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-  ACE_DEBUG ((LM_DEBUG, "done\n"));
+  CIAO_DEBUG ((LM_DEBUG, CLINFO"done\n"));
 
   ACE_Env_Value<int> envar (ACE_TEXT("CIAO_DUMP_SAMPLE_HISTORY"), 0);
   if (envar != 0)
@@ -116,7 +116,7 @@ MyImpl::RoundTripClient_exec_i::start ()
 }
 
 ::Benchmark::CCM_Controller_ptr
-MyImpl::RoundTripClient_exec_i::get_controller_ ()
+MyImpl::RoundTripClient_exec_i::get_controller ()
 {
   return ::Benchmark::CCM_Controller::_duplicate (this);
 }
@@ -125,13 +125,13 @@ MyImpl::RoundTripClient_exec_i::get_controller_ ()
 void
 MyImpl::RoundTripClient_exec_i::ccm_passivate ()
 {
-  ACE_DEBUG ((LM_TRACE, "MyImpl::RoundTripClient_exec_i::ccm_passivate\n"));
+  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTripClient_exec_i::ccm_passivate\n"));
 }
 
 void
 MyImpl::RoundTripClient_exec_i::ccm_remove ()
 {
-  ACE_DEBUG ((LM_TRACE, "MyImpl::RoundTripClient_exec_i::ccm_remove\n"));
+  CIAO_DEBUG ((LM_TRACE, CLINFO "MyImpl::RoundTripClient_exec_i::ccm_remove\n"));
 }
 
 
@@ -153,6 +153,6 @@ MyImpl::RoundTripClientHome_exec_i::create ()
 extern "C" ROUNDTRIPCLIENT_EXEC_Export ::Components::HomeExecutorBase_ptr
 createRoundTripClientHome_Impl (void)
 {
-  ACE_DEBUG ((LM_INFO, "Creating RoundTrip_client impl\n"));
+  CIAO_DEBUG ((LM_INFO, CLINFO "Creating RoundTrip_client impl\n"));
   return new MyImpl::RoundTripClientHome_exec_i ();
 }

@@ -1,19 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    exception_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Exception in the stubs file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    exception_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Exception in the stubs file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_typecode/typecode_defn.h"
+
+ACE_RCSID (be_visitor_exception,
+           exception_cs,
+           "$Id$")
 
 // ***************************************************************************
 // For client stubs.
@@ -94,11 +103,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << be_uidt_nl << "}" << be_nl_2;
+      *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
@@ -108,13 +117,13 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "\"" << node->local_name () << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
   *os << "{" << be_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Destructor.
   *os << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
   *os << "{" << be_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
@@ -145,7 +154,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
 
   *os << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Assignment operator.
   *os << node->name () << "&" << be_nl;
@@ -170,7 +179,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   *os << be_nl
       << "return *this;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
     {
@@ -182,7 +191,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
           << "delete _tao_tmp_pointer;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
 
   // Non-const downcast method.
@@ -191,7 +200,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<" << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Const downcast method.
   *os << "const " << node->name () << " *" << be_nl;
@@ -200,7 +209,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<const " << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   // Generate the _alloc method.
   *os << "::CORBA::Exception *" << node->name ()
@@ -210,7 +219,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "ACE_NEW_RETURN (retval, ::" << node->name ()
       << ", 0);" << be_nl
       << "return retval;" << be_uidt_nl;
-  *os << "}" << be_nl_2;
+  *os << "}" << be_nl << be_nl;
 
   *os << "::CORBA::Exception *" << be_nl
       << node->name () << "::_tao_duplicate (void) const" << be_nl
@@ -222,12 +231,12 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "0" << be_uidt_nl
       << ");" << be_uidt_nl
       << "return result;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "void " << node->name () << "::_raise (void) const" << be_nl
       << "{" << be_idt_nl
       << "throw *this;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "void " << node->name ()
       << "::_tao_encode (";
@@ -241,7 +250,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
 
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
     }
   else
     {
@@ -250,7 +259,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
 
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
     }
 
   *os << "void " << node->name ()
@@ -265,7 +274,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "throw ::CORBA::MARSHAL ();" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl;
 
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
     }
   else
     {
@@ -274,14 +283,14 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
 
-      *os << "}" << be_nl_2;
+      *os << "}" << be_nl << be_nl;
     }
 
   // Switch streams to the *A.cpp file if we are using this option.
   if (be_global->gen_anyop_files ())
     {
       os = tao_cg->anyop_source ();
-      *os << be_nl_2;
+      *os << be_nl << be_nl;
     }
 
   if (be_global->tc_support ())

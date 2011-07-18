@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
@@ -10,6 +9,11 @@
 #include "Current_Test_Impl.h"
 #include "Server_Request_Interceptor.h"
 #include "Server_ORBInitializer.h"
+
+
+ACE_RCSID (Transport_Current,
+           server,
+           "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 int nthreads = 1;
@@ -47,11 +51,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
+
+
 /// A helper class to encapsulate a task
+
 class Worker : public ACE_Task_Base
 {
 public:
@@ -65,13 +72,16 @@ private:
 
 
 /// Ctor
+
 Worker::Worker (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
+
 /// Test referencing the TC data *inside* the context of a client-side
 /// interceptor
+
 int
 Worker::svc (void)
 {

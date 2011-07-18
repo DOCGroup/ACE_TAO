@@ -5,6 +5,8 @@
 #include "tao/debug.h"
 #include "tao/Utils/ORB_Manager.h"
 
+ACE_RCSID(AccountManager, AccountManager_i, "$Id$")
+
 // Constructor
 AccountManager_i::AccountManager_i (void)
 {

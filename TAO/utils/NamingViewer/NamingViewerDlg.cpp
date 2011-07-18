@@ -219,7 +219,7 @@ void CNamingViewerDlg::OnSelectNs()
   }
   try
   {
-    CORBA::Object_var Object = m_pORB->string_to_object(Dialog.GetIOR());
+    CORBA::Object_var Object = m_pORB->string_to_object(ACE_TEXT_ALWAYS_CHAR (Dialog.GetIOR()));
     m_RootContext = CosNaming::NamingContext::_narrow(Object);
     m_Server = Dialog.GetName();
     UpdateData(FALSE);

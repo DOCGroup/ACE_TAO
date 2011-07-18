@@ -342,7 +342,8 @@ libACE_la_SOURCES = \
   WIN32_Proactor.cpp \
   XML_Svc_Conf.cpp \
   XTI_ATM_Mcast.cpp \
-  ace_wchar.cpp
+  ace_wchar.cpp \
+  gethrtime.cpp
 
 libACE_la_LDFLAGS = \
  -release @ACE_VERSION_NAME@
@@ -381,6 +382,7 @@ nobase_include_HEADERS += \
   Arg_Shifter.h \
   Argv_Type_Converter.h \
   Argv_Type_Converter.inl \
+  Array.h \
   Array_Base.cpp \
   Array_Base.h \
   Array_Base.inl \
@@ -400,9 +402,6 @@ nobase_include_HEADERS += \
   Atomic_Op.inl \
   Atomic_Op_Sparc.h \
   Atomic_Op_T.cpp \
-  Atomic_Op_GCC_T.h \
-  Atomic_Op_GCC_T.cpp \
-  Atomic_Op_GCC_T.inl \
   Atomic_Op_T.h \
   Atomic_Op_T.inl \
   Auto_Event.h \
@@ -476,7 +475,6 @@ nobase_include_HEADERS += \
   Containers_T.inl \
   Copy_Disabled.h \
   Countdown_Time.h \
-  Countdown_Time.inl \
   DEV.h \
   DEV.inl \
   DEV_Addr.h \
@@ -520,6 +518,7 @@ nobase_include_HEADERS += \
   Event_Handler_T.cpp \
   Event_Handler_T.h \
   Event_Handler_T.inl \
+  Exception_Macros.h \
   FIFO.h \
   FIFO.inl \
   FIFO_Recv.h \
@@ -697,6 +696,7 @@ nobase_include_HEADERS += \
   Message_Queue_T.h \
   Message_Queue_Vx.h \
   Message_Queue_Vx.inl \
+  Method_Object.h \
   Method_Request.h \
   Min_Max.h \
   Module.cpp \
@@ -736,7 +736,9 @@ nobase_include_HEADERS += \
   Null_Mutex.h \
   Null_Semaphore.h \
   Numeric_Limits.h \
-  Obstack.h \
+  OS.h \
+  OS.inl \
+  OS_Dirent.h \
   OS_Errno.h \
   OS_Errno.inl \
   OS_Log_Msg_Attributes.h \
@@ -811,6 +813,7 @@ nobase_include_HEADERS += \
   OS_NS_wctype.inl \
   OS_NS_wchar.inl \
   OS_QoS.h \
+  OS_String.h \
   OS_TLI.h \
   OS_TLI.inl \
   OS_Thread_Adapter.h \
@@ -831,6 +834,7 @@ nobase_include_HEADERS += \
   POSIX_Proactor.inl \
   Pagefile_Memory_Pool.h \
   Pagefile_Memory_Pool.inl \
+  Pair.h \
   Pair_T.cpp \
   Pair_T.h \
   Pair_T.inl \
@@ -876,6 +880,7 @@ nobase_include_HEADERS += \
   Recursive_Thread_Mutex.inl \
   Recyclable.h \
   Recyclable.inl \
+  Refcountable.h \
   Refcountable_T.cpp \
   Refcountable_T.h \
   Refcountable_T.inl \
@@ -984,6 +989,7 @@ nobase_include_HEADERS += \
   Static_Object_Lock.h \
   Stats.h \
   Stats.inl \
+  Strategies.h \
   Strategies_T.cpp \
   Strategies_T.h \
   Strategies_T.inl \
@@ -1004,6 +1010,8 @@ nobase_include_HEADERS += \
   Svc_Handler.h \
   Synch.h \
   Synch_Options.h \
+  Synch_T.cpp \
+  Synch_T.h \
   Synch_Traits.h \
   System_Time.h \
   TLI.h \
@@ -1063,10 +1071,9 @@ nobase_include_HEADERS += \
   Timer_Queue_T.cpp \
   Timer_Queue_T.h \
   Timer_Queue_T.inl \
+  Timer_Queuefwd.h \
   Timer_Wheel_T.cpp \
   Timer_Wheel_T.h \
-  Tokenizer_T.cpp \
-  Tokenizer_T.h \
   Timer_Hash.h \
   Timer_Heap.h \
   Timer_List.h \
@@ -1134,8 +1141,10 @@ nobase_include_HEADERS += \
   config-all.h \
   config-lite.h \
   config-macros.h \
+  config-minimal.h \
   config-win32-borland.h \
   config-win32-common.h \
+  config-win32-ghs.h \
   config-win32-msvc-7.h \
   config-win32-msvc-8.h \
   config-win32-msvc.h \

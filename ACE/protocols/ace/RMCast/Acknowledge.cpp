@@ -1,5 +1,6 @@
+// file      : ace/RMCast/Acknowledge.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
+// cvs-id    : $Id$
 
 #include "ace/Time_Value.h"     // ACE_Time_Value
 #include "ace/OS_NS_unistd.h"
@@ -7,6 +8,12 @@
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "Acknowledge.h"
+
+/*
+#include <iostream>
+using std::cerr;
+using std::endl;
+*/
 
 namespace ACE_RMCast
 {
@@ -272,7 +279,7 @@ namespace ACE_RMCast
 
       u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
-      Map::ENTRY* e = 0;
+      Map::ENTRY* e;
 
       if (hold_.find (from, e) == -1)
       {

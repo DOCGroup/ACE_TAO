@@ -23,6 +23,10 @@
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS */
 
+ACE_RCSID (PortableServer,
+           ServantRetentionStrategyRetain,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -57,7 +61,7 @@ namespace TAO
       name_str += poa->orb_core ().orbid ();
       name_str += '_';
       name_str += poa->the_name ();
-
+      
       active_object_map->monitor_->name (name_str.c_str ());
       active_object_map->monitor_->add_to_registry ();
 #endif /* TAO_HAS_MONITOR_POINTS */
@@ -375,7 +379,8 @@ namespace TAO
 
               ++this->waiting_servant_deactivation_;
 
-              this->poa_->servant_deactivation_condition ().wait ();
+              if (this->poa_->object_adapter ().enable_locking ())
+                this->poa_->servant_deactivation_condition ().wait ();
 
               --this->waiting_servant_deactivation_;
 
@@ -422,7 +427,8 @@ namespace TAO
 
               ++this->waiting_servant_deactivation_;
 
-              this->poa_->servant_deactivation_condition ().wait ();
+              if (this->poa_->object_adapter ().enable_locking ())
+                this->poa_->servant_deactivation_condition ().wait ();
 
               --this->waiting_servant_deactivation_;
 
@@ -747,6 +753,7 @@ namespace TAO
       return user_id._retn ();
     }
 
+#if !defined (CORBA_E_MICRO)
     void
     ServantRetentionStrategyRetain::activate_object_with_id (
       const PortableServer::ObjectId &id,
@@ -849,6 +856,7 @@ namespace TAO
       // invoke _remove_ref on it the same number of times.
       servant->_add_ref ();
     }
+#endif
 
     CORBA::Object_ptr
     ServantRetentionStrategyRetain::create_reference (
@@ -969,12 +977,6 @@ namespace TAO
     ServantRetentionStrategyRetain::type(void) const
     {
       return ::PortableServer::RETAIN;
-    }
-
-    TAO_Active_Object_Map *
-    ServantRetentionStrategyRetain::get_active_object_map() const
-    {
-      return this->active_object_map_.get();
     }
 
   }

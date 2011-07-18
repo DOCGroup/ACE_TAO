@@ -21,6 +21,10 @@
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
+ACE_RCSID (Codeset,
+           Codeset_Manager_i,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Descriptor::TAO_Codeset_Descriptor ()

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Transport_Acceptor.h"
@@ -8,6 +7,11 @@
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           Acceptor,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

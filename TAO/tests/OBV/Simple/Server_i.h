@@ -1,18 +1,23 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Server_i.h
- *
- *  $Id$
- *
- *  This class implements the Event_Types IDL interface.
- *
- *
- *  @author Torsten Kuepper derived from the Echo example TAO/example/Simple/echo of Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/OBV/Typed_Events
+//
+// = FILENAME
+//    Server_i.h
+//
+// = DESCRIPTION
+//    This class implements the Event_Types IDL interface.
+//
+// = AUTHOR
+//    Torsten Kuepper
+//    derived from the Echo example TAO/example/Simple/echo
+//    of Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ECHO_I_H
 #define ECHO_I_H
@@ -24,22 +29,25 @@ class Checkpoint_i : public POA_Checkpoint
 {
 public:
   // = Initialization and termination methods.
-  /// Constructor.
   Checkpoint_i (void);
+  // Constructor.
 
-  /// Destructor.
   ~Checkpoint_i (void);
+  // Destructor.
 
-  virtual void put_event (Event * e);
+  virtual void put_event (
+        Event * e
+  );
 
-  virtual void shutdown (void);
+  virtual void shutdown (
+    );
 
-  /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
+  // Set the ORB pointer.
 
 private:
-  /// ORB pointer.
   CORBA::ORB_var orb_;
+  // ORB pointer.
 };
 
 #endif /* ECHO_I_H */

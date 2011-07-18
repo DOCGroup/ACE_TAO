@@ -5,6 +5,8 @@
 #include "Client_Task.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID(Muxing, Client_Task, "$Id$")
+
 Client_Task::Client_Task (Test::Sender_ptr reply_gen,
                           Test::Receiver_ptr us,
                           ACE_Thread_Manager *thr_mgr,
@@ -36,6 +38,12 @@ Client_Task::svc (void)
       // this poorly implemented test used to take
       while (this->receiver_impl_->no_calls_ < 10)
         ACE_OS::sleep (1);
+
+      this->us_->shutdown ();
+      // give the processes an additional second to finish up any
+      // lagging invocations, cleanups etc.
+      ACE_OS::sleep (1);
+      this->sender_->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {

@@ -15,7 +15,7 @@
 #include "Message.idl"
 #include "History.idl"
 
-component Messenger {
+component Messenger { 
   attribute string subject;
 
   provides Runnable control;

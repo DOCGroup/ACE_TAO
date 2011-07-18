@@ -55,7 +55,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-    CosNotifyChannelAdmin::AND_OP;
+    CosNotifyChannelAdmin::OR_OP;
 
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
     ec->new_for_suppliers (ifgop, adminid);

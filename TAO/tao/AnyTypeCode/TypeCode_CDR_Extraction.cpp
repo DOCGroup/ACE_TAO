@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/TypeCode_CDR_Extraction.h"
@@ -28,6 +27,11 @@
 
 #include "ace/Array_Base.h"
 #include "ace/Value_Ptr.h"
+
+
+ACE_RCSID (AnyTypeCode,
+           TypeCode_CDR_Extraction,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -689,7 +693,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             CORBA::ULongLong label;
             if (!(cdr >> label))
               return false;
-
+ 
             typedef TypeCode::Case_T<CORBA::ULongLong,
                                      CORBA::String_var,
                                       CORBA::TypeCode_var> case_type;
@@ -1361,7 +1365,7 @@ namespace
     TAO::TypeCodeFactory::TC_Info_List recursive_tc;
     if (find_recursive_tc (id.in (), recursive_tc, infos))
       {
-        tc = CORBA::TypeCode::_duplicate(recursive_tc[0].type);
+        tc = recursive_tc[0].type;
       }
     else switch (kind)
       {

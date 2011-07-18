@@ -8,6 +8,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
+ACE_RCSID (Latency,
+           ping,
+           "$Id$")
+
 const ACE_TCHAR *ping_ior = ACE_TEXT ("file://ping.ior");
 const ACE_TCHAR *pong_ior = ACE_TEXT ("file://pong.ior");
 const ACE_TCHAR *ping_address = ACE_TEXT ("localhost:12345");
@@ -69,7 +73,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -123,11 +127,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       AVStreams::StreamCtrl_var stream_control =
         stream_control_impl._this ();
 
-      obj = orb->string_to_object (ping_ior);
+      obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ping_ior));
       AVStreams::MMDevice_var ping_sender =
         AVStreams::MMDevice::_narrow (obj.in ());
 
-      obj = orb->string_to_object (pong_ior);
+      obj = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (pong_ior));
       AVStreams::MMDevice_var pong_sender =
         AVStreams::MMDevice::_narrow (obj.in ());
 

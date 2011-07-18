@@ -16,8 +16,6 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 
-#include "ace/Get_Opt.h"
-
 /**
  * @class LB_server
  *
@@ -54,7 +52,6 @@ public:
 private:
 
   int write_ior_to_file (const char *);
-  int parse_args (int, ACE_TCHAR **);
 
 private:
 
@@ -71,5 +68,4 @@ private:
   int argc_;
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
-  const ACE_TCHAR *ior_output_file_;
 };

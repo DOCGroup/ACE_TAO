@@ -2,6 +2,8 @@
 
 #include "util.h"
 
+ACE_RCSID(stress_testing, util, "$Id$")
+
 URL::URL(char *input_buf) {
 
   char *buffer = new char[BUFSIZ];

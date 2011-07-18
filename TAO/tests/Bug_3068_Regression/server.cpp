@@ -8,6 +8,8 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
+ACE_RCSID (Bug_3068_Regression, server, "$Id$")
+
 const ACE_TCHAR *ior_output_file = 0;
 int iterations = 10;
 
@@ -32,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("-i <iterations>\n"), argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

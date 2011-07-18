@@ -5,7 +5,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-
+ACE_RCSID(BiDirectional, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

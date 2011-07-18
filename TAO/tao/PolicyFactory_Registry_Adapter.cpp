@@ -1,7 +1,12 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/PolicyFactory_Registry_Adapter.h"
+
+
+ACE_RCSID (tao,
+           PolicyFactory_Registry_Adapter,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

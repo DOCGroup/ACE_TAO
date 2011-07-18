@@ -51,10 +51,9 @@
 #define ACE_STRCASECMP_EQUIVALENT ::_stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
-#if defined (ACE_HAS_WINCE)
-# define ACE_FILENO_EQUIVALENT ::_fileno
-#else
-# define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
+
+#ifndef ACE_HAS_EXCEPTIONS
+# define ACE_HAS_EXCEPTIONS
 #endif
 
 // Windows Mobile 6 doesn't do sig_atomic_t, but maybe future versions will.
@@ -62,6 +61,7 @@
 #    define ACE_HAS_SIG_ATOMIC_T
 #  endif /* !Win CE 6.0 or less */
 
+#define ACE_HAS_STRERROR
 #define ACE_LACKS_STRPTIME
 
 // Evaluate this with a WinCE build; maybe things have improved since VC8.
@@ -78,6 +78,7 @@
 #define ACE_LACKS_STRRECVFD
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
+#define ACE_HAS_TEMPLATE_TYPEDEFS
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 // Platform provides ACE_TLI function prototypes.
@@ -136,13 +137,6 @@
 // At least for ACE_UNIMPLEMENTED_FUNC in class templates, this is needed to
 // explicitly instantiate a template that has ACE_UNIMPLEMENTED_FUNC.
 # define ACE_NEEDS_FUNC_DEFINITIONS
-
-// Windows Vista and Windows Server 2008 and newer do have native condition
-// variables
-#if defined (WIN32_WINNT) && (WIN32_WINNT >= 0x0600)
-# define ACE_HAS_WTHREADS_CONDITION_VARIABLE
-# undef ACE_LACKS_COND_T
-#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_10_H */

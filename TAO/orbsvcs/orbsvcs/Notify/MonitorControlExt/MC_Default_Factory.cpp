@@ -5,9 +5,6 @@
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxyPushSupplier.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorStructuredProxyPushSupplier.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorSequenceProxyPushSupplier.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -47,29 +44,6 @@ TAO_MC_Default_Factory::create (TAO_Notify_ConsumerAdmin*& admin)
                     CORBA::NO_MEMORY ());
 }
 
-void
-TAO_MC_Default_Factory::create (TAO_Notify_ProxyPushSupplier*& proxy)
-{
-  ACE_NEW_THROW_EX (proxy,
-                    TAO_MonitorProxyPushSupplier,
-                    CORBA::NO_MEMORY ());
-}
-
-void
-TAO_MC_Default_Factory::create (TAO_Notify_StructuredProxyPushSupplier*& proxy)
-{
-  ACE_NEW_THROW_EX (proxy,
-                    TAO_MonitorStructuredProxyPushSupplier,
-                    CORBA::NO_MEMORY ());
-}
-
-void
-TAO_MC_Default_Factory::create (TAO_Notify_SequenceProxyPushSupplier*& proxy)
-{
-  ACE_NEW_THROW_EX (proxy,
-                    TAO_MonitorSequenceProxyPushSupplier,
-                    CORBA::NO_MEMORY ());
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

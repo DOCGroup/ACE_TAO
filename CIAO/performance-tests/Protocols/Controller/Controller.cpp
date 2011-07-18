@@ -19,7 +19,7 @@ static int count_missed_end_deadlines = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 100;
-static const ACE_TCHAR *test_protocol = ACE_TEXT("IIOP");
+static const char *test_protocol = "IIOP";
 static int print_statistics = 1;
 static int number_of_connection_attempts = 20;
 static int enable_diffserv_code_points = 0;
@@ -172,9 +172,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->string_to_object (receiver_ior);
 
       CORBA::ULong test_protocol_tag = IOP::TAG_INTERNET_IOP;
-      if (ACE_OS::strcmp (test_protocol, ACE_TEXT("DIOP")) == 0)
+      if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
         test_protocol_tag = TAO_TAG_DIOP_PROFILE;
-      else if (ACE_OS::strcmp (test_protocol, ACE_TEXT("SCIOP")) == 0)
+      else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
         test_protocol_tag = TAO_TAG_SCIOP_PROFILE;
 
       Protocols::Sender_Controller::Test_Type test_type_tag = Protocols::Sender_Controller::PACED;

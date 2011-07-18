@@ -8,7 +8,6 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_sys_socket.h"
 
 const ssize_t Send_Size = 4*1024;
 const size_t Loops = 10;
@@ -46,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -113,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("(%P|%t) Client: ")
                            ACE_TEXT("%p\n %d"),
-                           ACE_TEXT("stream send"), ACE_ERRNO_GET),
+                           ACE_TEXT("stream send"), errno),
                           -1);
       }
     ACE_DEBUG ((LM_DEBUG,

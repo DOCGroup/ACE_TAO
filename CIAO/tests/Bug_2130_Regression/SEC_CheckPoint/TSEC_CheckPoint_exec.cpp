@@ -11,6 +11,7 @@
 #include "tao/LocalObject.h"
 #include <orbsvcs/CosNamingC.h>
 
+#include "ciao/CIAO_common.h"
 #include "ciao/Version.h"
 #include "ciao/Containers/Session/Session_Container.h"
 #include "TSEC_CheckPoint_exec.h"
@@ -433,8 +434,8 @@ Impl::TSEC_CheckPoint_exec_i::set_session_context
     throw CORBA::INTERNAL();
   }
 
-  CIAO_ENW_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
-    CIAO_ENW_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context::_narrow( Ctx );
+  CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context* p_checkPoint_Context =
+             CIDL_TSEC_CheckPoint_Impl::TSEC_CheckPoint_Context::_narrow( Ctx );
 
   if( !p_checkPoint_Context )
   {

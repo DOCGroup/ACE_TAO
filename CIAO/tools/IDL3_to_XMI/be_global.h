@@ -1,18 +1,21 @@
 /* -*- c++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_global.h
- *
- *  $Id$
- *
- *  Header file for class containing compiler back end global data.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO_IFR_BE_DLL
+//
+// = FILENAME
+//    be_global.h
+//
+// = DESCRIPTION
+//    Header file for class containing compiler back end global data.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef TAO_IFR_BE_GLOBAL_H
 #define TAO_IFR_BE_GLOBAL_H
@@ -26,19 +29,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class AST_Generator;
+
 // Defines a class containing all back end global data.
 
-/**
- * Storage of global data specific to the compiler back end
- */
 class CIAO_IDL3_TO_XMI_Export BE_GlobalData
 {
 public:
-  /// Constructor.
+  // = TITLE
+  //    BE_GlobalData
+  //
+  // = DESCRIPTION
+  //    Storage of global data specific to the compiler back end
+  //
   BE_GlobalData (void);
+  // Constructor.
 
-  /// Destructor.
   virtual ~BE_GlobalData (void);
+  // Destructor.
 
   // Data accessors.
   bool ir_filter (void) const;
@@ -56,24 +64,34 @@ public:
   bool local_only (void) const;
   void local_only (bool);
 
-  /// Parse args that affect the backend.
   void parse_args (long &i, char **av);
+  // Parse args that affect the backend.
 
-  /// Cleanup.
+  void prep_be_arg (char *s);
+  // Special BE arg call factored out of DRV_args.
+
+  void arg_post_proc (void);
+  // Checks made after parsing args.
+
+  void usage (void) const;
+  // Usage message for backend options.
+
+  AST_Generator *generator_init (void);
+  // Create an AST node generator.
+
   void destroy (void);
+  // Cleanup.
 
 private:
   bool ir_filter_;
 
-  /// Name of the IDL file we are processing.
   char *filename_;
+  // Name of the IDL file we are processing.
 
-  /**
-   * Directory where the generated file is to be
-   * kept. Default value is 0 for this string which means the current
-   * directory from which the <tao_picml> is called.
-   */
   char *output_dir_;
+  // Directory where the generated file is to be
+  // kept. Default value is 0 for this string which means the current
+  // directory from which the <tao_picml> is called.
 
   /// full path to dtd to be used.
   ACE_CString dtd_;

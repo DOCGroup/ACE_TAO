@@ -1,17 +1,20 @@
 /* -*- C++ -*- */
-//=============================================================================
-/**
- *  @file   Notify_Structured_Push_Consumer.h
- *
- *  $Id$
- *
- * A structured push consumer implementation.
- *
- *
- *  @author Chad Elliott <elliott_c@ociweb.com>
- */
-//=============================================================================
-
+// $Id$
+// ==========================================================================
+//
+// = LIBRARY
+//   TAO/orbsvcs/tests/Notify/Ordering
+//
+// = FILENAME
+//   Notify_Structured_Push_Consumer.h
+//
+// = DESCRIPTION
+//   A structured push consumer implementation.
+//
+// = AUTHOR
+//    Chad Elliott <elliott_c@ociweb.com>
+//
+// ==========================================================================
 #ifndef TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 #define TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 

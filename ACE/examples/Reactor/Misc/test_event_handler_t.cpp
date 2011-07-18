@@ -3,6 +3,10 @@
 #include "ace/Event_Handler_T.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(Misc, test_event_handler_t, "$Id$")
+
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+
 class ACE_Test_Sig_Handler
 {
 public:
@@ -37,3 +41,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                  &ACE_Test_Sig_Handler::signal_handler);
   return 0;
 }
+
+#else
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support template typedefs\n"), 1);
+}
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */

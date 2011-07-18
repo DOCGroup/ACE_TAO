@@ -1,13 +1,17 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   pong.h
- *
- *  $Id$
- *
- *  @author Carlos O'Ryan
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/orbsvcs/tests/AVStreams/Latency
+//
+// = FILENAME
+//   ping.h
+//
+// = AUTHOR
+//   Carlos O'Ryan
+//
+// ============================================================================
 
 #ifndef TAO_PONG_H
 #define TAO_PONG_H
@@ -35,8 +39,8 @@ public:
                             TAO_AV_Callback *&callback);
 
 private:
-  /// The callback object...
   Pong_Recv_Callback callback_;
+  // The callback object...
 };
 
 class Ping_Send_Callback : public TAO_AV_Callback
@@ -50,11 +54,11 @@ public:
                             void *&arg);
 
 private:
-  /// the timeout value
   ACE_Time_Value timeout_;
+  // the timeout value
 
-  /// Pre-allocate the message block to send...
   ACE_Message_Block frame_;
+  // Pre-allocate the message block to send...
   int count_;
 
 };
@@ -67,8 +71,8 @@ public:
                             TAO_AV_Callback *&callback);
 
 private:
-  /// The callback object...
   Ping_Send_Callback callback_;
+  // The callback object...
 };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A <TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> Reactive_Strategy;

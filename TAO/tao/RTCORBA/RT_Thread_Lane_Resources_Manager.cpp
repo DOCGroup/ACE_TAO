@@ -4,6 +4,10 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+ACE_RCSID (RTCORBA,
+           RT_Thread_Lane_Resources_Manager,
+           "$Id$")
+
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Acceptor_Registry.h"
@@ -78,10 +82,10 @@ TAO_RT_Thread_Lane_Resources_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_RT_Thread_Lane_Resources_Manager::close_all_transports (void)
+TAO_RT_Thread_Lane_Resources_Manager::cleanup_rw_transports (void)
 {
   // Shutdown default reactors.
-  this->default_lane_resources_->close_all_transports ();
+  this->default_lane_resources_->cleanup_rw_transports ();
 }
 
 int

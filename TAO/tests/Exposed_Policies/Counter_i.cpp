@@ -2,6 +2,8 @@
 
 #include "Counter_i.h"
 
+ACE_RCSID(tao, Counter_Servant, "$Id$")
+
 // Dtor-Ctor Implementation.
 
 Counter_Servant::Counter_Servant (Policy_Tester *policy_tester)

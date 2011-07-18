@@ -23,6 +23,10 @@
 
 #include "ace/Auto_Ptr.h"
 
+ACE_RCSID (DynamicAny,
+           DynAnyFactory,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor from typecode

@@ -1,16 +1,21 @@
-//=============================================================================
-/**
- *  @file    Network_Adapters_Test.cpp
- *
- *  $Id$
- *
- *  Tests the ICMP-echo support in ACE.
- *
- *
- *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il> Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Network_Adapters_Test.cpp
+//
+// = DESCRIPTION
+//    Tests the ICMP-echo support in ACE.
+//
+// = AUTHOR
+//    Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il>
+//    Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
+//
+// ============================================================================
 
 // We need this to be able to check for ACE_HAS_ICMP_SUPPORT
 #include "ace/config-all.h"
@@ -30,6 +35,10 @@
 #include "ace/OS_NS_signal.h"
 
 #include "Network_Adapters_Test.h"
+
+ACE_RCSID (tests,
+           Network_Adapters_Test,
+           "$Id$")
 
 /**
  * There are two major uses of the functionality:
@@ -62,7 +71,7 @@
  *
  * -p  IPv4 addresses of the remote CEs, which we are going to check
  *     (purpose 2), or they are 3rd points for the purpose 1,
- *     e.g. -p 192.168.5.120: 192.168.5.122: 192.168.5.125
+ *     e.g. “-p 192.168.5.120: 192.168.5.122: 192.168.5.125
  *
  * -w  milliseconds to wait for echo-reply, on lan 100-200 msec, on
  *     WAN may be 2000-5000 msec, for GPRS may reach 10000 - 20000
@@ -555,29 +564,25 @@ int
 Stop_Handler::open (void)
 {
   // Register the signal handler object to catch the signals.
-#if (SIGINT != 0)
   if (this->reactor ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
-                       ACE_TEXT ("register_handler for SIGINT"), SIGINT),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
+                       ACE_TEXT ("register_handler for SIGINT")),
                       -1);
-#endif /* SIGINT != 0 */
 
-#if (SIGTERM != 0)
   if (this->reactor ()->register_handler (SIGTERM, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
-                       ACE_TEXT ("register_handler for SIGTERM"), SIGTERM),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
+                       ACE_TEXT ("register_handler for SIGTERM")),
                       -1);
-#endif /* SIGTERM != 0 */
 
-#if (SIGQUIT != 0)
+#if ! defined (ACE_WIN32)
   if (this->reactor ()->register_handler (SIGQUIT, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p <%d>\n"),
-                       ACE_TEXT ("register_handler for SIGQUIT"), SIGQUIT),
+                       ACE_TEXT ("(%P|%t) Stop_Handler::open: %p\n"),
+                       ACE_TEXT ("register_handler for SIGQUIT")),
                       -1);
-#endif /* SIGQUIT != 0 */
+#endif /* #if ! defined (ACE_WIN32) */
   return 0;
 }
 

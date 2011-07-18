@@ -7,6 +7,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
+ACE_RCSID (tao,
+           Muxed_TMS,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
@@ -223,7 +227,7 @@ bool
 TAO_Muxed_TMS::idle_after_send (void)
 {
   // Irrespective of whether we are successful or not we need to
-  // return true. If *this* class is not successful in idling the
+  // return true. If *this* class is not successfull in idling the
   // transport no one can.
   if (this->transport_ != 0)
     (void) this->transport_->make_idle ();

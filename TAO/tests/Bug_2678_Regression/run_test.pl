@@ -6,79 +6,52 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
-
+$iorfile = PerlACE::LocalFile ('server.ior');
+$TARGETHOSTNAME = 'localhost';
+$port = 11000;
+$debug = 10;
 $endien = (pack('L', 0x41424344) eq 'ABCD' ? '_be' : '');
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+unlink $iorfile;
+
+if (PerlACE::is_vxworks_test()) {
+    $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
+    $SV = new PerlACE::ProcessVX ('server',
+                             '-ORBEndpoint ' .
+                             "iiop://$TARGETHOSTNAME" . ":$port " .
+                             "-ORBDebugLevel $debug");
 }
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-$TARGETHOSTNAME = $server->HostName ();
-$port = $server->RandomPort ();
-
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level " .
-                              "-ORBEndpoint iiop://$TARGETHOSTNAME:$port");
-
-$CL = $client->CreateProcess ("$^X dribble.pl",
-                              "--host=$TARGETHOSTNAME --port=$port " .
-                              "--stream=transport_data_dump$endien.dat " .
-                              "--layout=transport_data_dump$endien.layout");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+else {
+    $SV = new PerlACE::Process ('server',
+                             '-ORBEndpoint ' .
+                             "iiop://$TARGETHOSTNAME" . ":$port " .
+                             "-ORBDebugLevel $debug");
 }
+$SV->Spawn ();
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+my($cl) = system("$^X dribble.pl --host=$TARGETHOSTNAME --port=$port " .
+                 "--stream=transport_data_dump$endien.dat " .
+                 "--layout=transport_data_dump$endien.layout");
+if ($cl != 0) {
+    print STDERR "ERROR: client returned $cl\n";
+    ++$status;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$server = $SV->WaitKill (10);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $status = 1;
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    ++$status;
 }
 
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $status = 1;
-}
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
+unlink $iorfile;
 exit $status;

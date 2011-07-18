@@ -6,90 +6,76 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $status = 0;
 $srv_threads = '4';
 $cli_threads = '30';
+$baseior = "test.ior";
+$iorfile = PerlACE::LocalFile ($baseior);
+$srvdownfile = PerlACE::LocalFile ("server_terminated");
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+unlink $iorfile;
+unlink $srvdownfile;
 
-my $iorbase = "test.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$srvdownfile = "server_terminated";
-$server_srvdownfile = $server->LocalFile ($srvdownfile);
-
-$SV = $server->CreateProcess ("server",
-                              "-o $server_iorfile " .
-                              "-n $srv_threads");
-
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile -n $cli_threads");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("server", "-o $baseior -n $srv_threads");
 }
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+else {
+  $SV = new PerlACE::Process ("server", "-o $iorfile -n $srv_threads");
+}
+$CL = new PerlACE::Process ("client", "-k file://$iorfile -n $cli_threads");
+$CLS = new PerlACE::Process ("client", "-k file://$iorfile -x");
+
+$server = $SV->Spawn ();
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill ();
     exit 1;
 }
 
 $CL->Spawn ();
 #Client will not terminate on its own, kill it after 30 seconds
-$CL->TimedWait ($client->ProcessStartWaitInterval() + 15);
-$CL->Kill ();
+$CL->TimedWait (30);
+$CL->Kill (1);
+#The parameter '1' (above) indicates that an error return value should not
+#cause this test to fail.
 
 print "***Client has been killed***\n";
 
 #Server should still be running at this point, now start the client that asks
 #the server to shut itself down
 
-$CL->Arguments ("-k file://$client_iorfile -x");
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+$client = $CLS->SpawnWaitKill (15);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
 #Server should now be shutdown
-if ($server->WaitForFileTimed ($srvdownfile,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_srvdownfile>".
+if (PerlACE::waitforfile_timed ($srvdownfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$srvdownfile>".
         " -- server has not shut down cleanly.\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $SV->Kill ();
     exit 1;
 }
 
-$status_server = $SV->WaitKill ($server->ProcessStopWaitInterval());
+$server = $SV->WaitKill (15);
 
-if ($status_server != 0) {
-    print STDERR "ERROR: server returned $status_server\n";
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile ($iorbase);
-$client->DeleteFile ($iorbase);
-$server->DeleteFile ($srvdownfile);
+unlink $iorfile;
+unlink $srvdownfile;
 
-exit $status;
+exit $status

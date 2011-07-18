@@ -1,6 +1,6 @@
-// $Id$
-
 #include "Receiver_i.h"
+
+ACE_RCSID(Oneways_Invoking_Twoways, Receiver_i, "$Id$")
 
 Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
                         Test::Sender_ptr sender,
@@ -15,6 +15,8 @@ Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
 Receiver_i::~Receiver_i (void)
 {
 }
+
+
 
 CORBA::Long
 Receiver_i::receive_call (void)
@@ -37,6 +39,6 @@ void
 Receiver_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) About to invoke shutdown...\n"));
+              "(%P|%t) About to invoke shudown...\n"));
   this->orb_->shutdown (0);
 }

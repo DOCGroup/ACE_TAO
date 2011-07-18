@@ -58,7 +58,11 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if defined (ACE_HAS_OLD_MALLOC)
+typedef char * ACE_MALLOC_T;
+#else
 typedef void * ACE_MALLOC_T;
+#endif /* ACE_HAS_OLD_MALLOC */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -234,7 +238,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
 #   define ACE_throw_bad_alloc  AfxThrowMemoryException ()
 # else
-#   define ACE_throw_bad_alloc  return 0
+#   define ACE_throw_bad_alloc  throw ACE_bad_alloc ()
 # endif
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */

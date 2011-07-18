@@ -2,135 +2,106 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id$
 # -*- perl -*-
+# $Id$
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $locator   = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $activator = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $tao_imr   = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+use PerlACE::Run_Test;
 
 # The location of the implementation repository binaries
-my $imr_bin_path  = "";
+$imr_bin_path  = "../../ImplRepo_Service";
 
-my $imr_ior        = "impl.ior";
-my $activator_ior  = "activator.ior";
+# The location of the tao_imr IMR utility
+$tao_imr_bin_path = "$ENV{ACE_ROOT}/bin";
 
-my $locator_imr_iorfile   = $locator->LocalFile ($imr_ior);
-my $activator_iorfile     = $activator->LocalFile ($activator_ior);
-my $activator_imr_iorfile = $activator->LocalFile ($imr_ior);
-my $tao_imr_imr_iorfile   = $tao_imr->LocalFile ($imr_ior);
-$locator->DeleteFile ($imr_ior);
-$activator->DeleteFile ($activator_ior);
-$activator->DeleteFile ($imr_ior);
-$tao_imr->DeleteFile ($imr_ior);
+# IOR file names
+$imr_ior_file        = PerlACE::LocalFile("impl.ior");
+$activator_ior_file  = PerlACE::LocalFile("activator.ior");
+
+# Log file
+$log_file  = PerlACE::LocalFile("test_result.log");
+
+# The players in our little drama.
+$LOCATOR    = new PerlACE::Process("$imr_bin_path/ImplRepo_Service");
+$ACTIVATOR  = new PerlACE::Process("$imr_bin_path/ImR_Activator");
+$TAO_IMR    = new PerlACE::Process("$tao_imr_bin_path/tao_imr");
 
 # Run the IMR locator on a fixed port
-my $locator_port = $locator->RandomPort();
+$port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 
-$LC = $locator->CreateProcess ("../../ImplRepo_Service/tao_imr_locator",
-                               "-ORBdebuglevel $debug_level -o $locator_imr_iorfile ".
-                               "-ORBEndpoint iiop://:$locator_port");
+sub test_body
+{
+   unlink $imr_ior_file;
+   unlink $activator_ior_file;
+   unlink $log_file;
 
-$AC = $activator->CreateProcess ("../../ImplRepo_Service/tao_imr_activator",
-                                 "-ORBdebuglevel $debug_level -o $activator_iorfile ".
-                                 "-ORBInitRef ImplRepoService=file://$activator_imr_iorfile");
+   # Start the IMR locator to generate an IOR file for the server to use...
+   $LOCATOR->Arguments("-o $imr_ior_file -ORBEndpoint iiop://:$port");
+   $LOCATOR->Spawn ();
 
-$TI = $tao_imr->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr",
-                               "-ORBInitRef ImplRepoService=file://$tao_imr_imr_iorfile add \"\"");
+   if (PerlACE::waitforfile_timed ($imr_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
+   {
+      print STDERR "ERROR: cannot find $imr_ior_file\n";
+      $LOCATOR->Kill ();
+      return 1;
+   }
 
-sub test_body {
+   # Set the activator arguments
+   $activator_arguments = "-o $activator_ior_file -ORBInitRef ImplRepoService=file://$imr_ior_file";
 
-    $process_status = $LC->Spawn ();
+   # Start up the activator
+   $ACTIVATOR->Arguments ($activator_arguments);
+   $ACTIVATOR->Spawn ();
 
-    if ($process_status != 0) {
-        print STDERR "ERROR: locator returned $process_status\n";
-        return 1;
-    }
+   if (PerlACE::waitforfile_timed ($activator_ior_file, $PerlACE::wait_interval_for_process_creation) == -1)
+   {
+      print STDERR "ERROR: cannot find $activator_ior_file\n";
+      $ACTIVATOR->Kill ();
+      $LOCATOR->Kill ();
+      return 1;
+   }
 
-    if ($locator->WaitForFileTimed ($imr_ior,
-                                    $locator->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$locator_imr_iorfile>\n";
-        $LC->Kill (); $LC->TimedWait (1);
-        return 1;
-    }
+   # Redirect STDERR to a log file so that the ERROR
+   # message does not get printed to the terminal
+   open(SAVEERR, ">&STDERR");
+   open(STDERR, ">$log_file");
 
-    if ($locator->GetFile ($imr_ior) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$locator_imr_iorfile>\n";
-        $LC->Kill (); $LC->TimedWait (1);
-        return 1;
-    }
+   # Add the illegal persistent POA name to the IMR
+   $TAO_IMR->Arguments("-ORBInitRef ImplRepoService=file://$imr_ior_file add \"\"");
+   $result = $TAO_IMR->SpawnWaitKill (30);
 
-    if ($activator->PutFile ($imr_ior) == -1) {
-        print STDERR "ERROR: cannot set file <$activator_imr_iorfile>\n";
-        $LC->Kill (); $LC->TimedWait (1);
-        return 1;
-    }
+   # Close the log file and restore STDERR
+   close(STDERR);
+   open(STDERR, ">&SAVEERR");
 
-    if ($tao_imr->PutFile ($imr_ior) == -1) {
-        print STDERR "ERROR: cannot set file <$tao_imr_imr_iorfile>\n";
-        $LC->Kill (); $LC->TimedWait (1);
-        return 1;
-    }
-
-    $process_status = $AC->Spawn ();
-
-    if ($process_status != 0) {
-        print STDERR "ERROR: activator returned $process_status\n";
-        $LC->Kill (); $LC->TimedWait (1);
-        return 1;
-    }
-
-    if ($activator->WaitForFileTimed ($activator_ior,
-                                      $activator->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$activator_iorfile>\n";
-        $AC->Kill (); $AC->TimedWait (1);
-        $LC->Kill (); $LC->TimedWait (1);
-        return 1;
-    }
-
-    # Add the illegal persistent POA name to the IMR
-    $result = $TI->SpawnWaitKill ($tao_imr->ProcessStartWaitInterval() + 15);
-
-    # If the add of an empty string failed, then
-    # the test of the tao_imr succeeded.
-    if ($result != 0) {
-        $result = 0;
-    }
-    else {
-        $result = -1;
-    }
+   # If the add of an empty string failed, then
+   # the test of the tao_imr succeeded.
+   if ($result != 0) {
+     $result = 0;
+   }
+   else {
+      $result = -1;
+   }
 
    # Tidy up
-   $AC->TerminateWaitKill ($activator->ProcessStopWaitInterval());
-   $LC->TerminateWaitKill ($locator->ProcessStopWaitInterval());
+   $ACTIVATOR->TerminateWaitKill (5);
+   $LOCATOR->TerminateWaitKill (5);
    return $result;
 }
 
 # Run regression for bug #1437
-$status = test_body();
+$test_result = test_body();
 
-if ($status != 0) {
+if ($test_result != 0)
+{
    print STDERR "ERROR: Regression test for Bug #1437 failed\n";
 }
-else {
+else
+{
    print "Regression test for Bug #1437 passed.\n";
 }
+unlink $log_file;
+unlink $imr_ior_file;
+unlink $activator_ior_file;
 
-$locator->DeleteFile ($imr_ior);
-$activator->DeleteFile ($activator_ior);
-$activator->DeleteFile ($imr_ior);
-$tao_imr->DeleteFile ($imr_ior);
-
-exit $status;
+exit $test_result;

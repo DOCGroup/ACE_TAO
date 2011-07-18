@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/Asynch_Queued_Message.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -12,6 +9,10 @@
 #include "ace/Message_Block.h"
 #include "ace/Malloc_Base.h"
 #include "ace/High_Res_Timer.h"
+
+ACE_RCSID (tao,
+           Asynch_Queued_Message,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,9 +28,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   , abs_timeout_ (ACE_Time_Value::zero)
 {
   if (timeout != 0)// && *timeout != ACE_Time_Value::zero)
-    {
-      this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
-    }
+    this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
   // @@ Use a pool for these guys!!
   ACE_NEW (this->buffer_, char[this->size_]);
 

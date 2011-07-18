@@ -1,5 +1,4 @@
 #!/usr/bin/python
-#$Id$
 
 import sys
 import re

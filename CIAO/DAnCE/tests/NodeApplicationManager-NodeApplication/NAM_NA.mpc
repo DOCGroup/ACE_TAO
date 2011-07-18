@@ -1,0 +1,8 @@
+// $Id$
+project : dance, dance_deployment_svnt, dance_deployment_stub, dance_node_application_manager, dance_node_application, dance_logger {
+  exename   = NodeApplicationManagerNodeApplicationTest
+
+  Source_Files {
+    test.cpp
+  }
+}

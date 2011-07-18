@@ -6,13 +6,14 @@
 #include "testS.h"
 #include "ace/Synch.h"
 
-/**
- * Simpler Server implementation
- *
- * Implements the Simple_Server interface in test.idl
- */
 class Simple_Server_i : public POA_Simple_Server, public ACE_Event_Handler
 {
+  // = TITLE
+  //   Simpler Server implementation
+  //
+  // = DESCRIPTION
+  //   Implements the Simple_Server interface in test.idl
+  //
 public:
   Simple_Server_i (CORBA::ORB_ptr orb);
   // ctor

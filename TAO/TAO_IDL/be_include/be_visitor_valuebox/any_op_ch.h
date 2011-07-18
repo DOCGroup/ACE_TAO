@@ -1,42 +1,47 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    any_op_ch.h
- *
- *  $Id$
- *
- *  Concrete visitor for the valuebox node.
- *  This one provides code generation for the Any operators
- *
- *
- *  @author Gary Maxey
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the valuebox node.
+//    This one provides code generation for the Any operators
+//
+// = AUTHOR
+//    Gary Maxey
+//
+// ============================================================================
 
 #ifndef _BE_VALUEBOX_ANY_OP_CH_H_
 #define _BE_VALUEBOX_ANY_OP_CH_H_
 
-/**
- * @class be_visitor_valuebox_any_op_ch
- *
- * @brief be_visitor_valuebox_any_op_ch
- *
- * This is a concrete visitor for valueboxes that generates the Any
- * operator declarations.
- */
 class be_visitor_valuebox_any_op_ch : public be_visitor_valuebox
 {
+  //
+  // = TITLE
+  //   be_visitor_valuebox_any_op_ch
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor for valueboxes that generates the Any
+  //   operator declarations.
+  //
 
 public:
-  /// constructor
   be_visitor_valuebox_any_op_ch (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_valuebox_any_op_ch (void);
+  // destructor
 
-  /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);
+  // visit valuebox
 };
 
 #endif /* _BE_VALUEBOX_ANY_OP_CH_H_ */

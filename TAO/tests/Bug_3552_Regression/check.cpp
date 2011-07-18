@@ -3,6 +3,10 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "structC.h"
 
+ACE_RCSID (Recursive,
+           client,
+           "$Id$")
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

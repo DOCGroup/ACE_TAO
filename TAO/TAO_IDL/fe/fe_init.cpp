@@ -64,199 +64,455 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "ace/Env_Value_T.h"
-#include "ace/UUID.h"
-
-#include "utl_scoped_name.h"
-#include "utl_identifier.h"
-#include "global_extern.h"
-#include "fe_extern.h"
-
 #include "ast_module.h"
 #include "ast_predefined_type.h"
 #include "ast_generator.h"
 #include "ast_root.h"
+#include "utl_scoped_name.h"
+#include "utl_identifier.h"
+#include "global_extern.h"
+#include "fe_extern.h"
+#include "ace/Env_Value_T.h"
+#include "ace/UUID.h"
+
+ACE_RCSID (fe,
+           fe_init,
+           "$Id$")
 
 const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
 // Populate the global scope with all predefined entities.
 void
-fe_populate_global_scope (void)
+fe_populate_global_scope (AST_Module *m)
 {
   // No need to created a scoped name for the basic types, the
   // AST_PredefinedType constructor will do that.
 
   AST_PredefinedType *pdt = 0;
-  AST_Root *root =
-    AST_Root::narrow_from_scope (idl_global->root ());
-
-  Identifier void_id ("void");
-  UTL_ScopedName void_name (&void_id, 0);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_void,
-      &void_name);
-
-  root->fe_add_predefined_type (pdt);
-
-  /// Put this prefix in force while we're creating the
-  /// CORBA module and its contents.
-  char *prefix = ACE::strnew ("omg.org");
-  idl_global->pragma_prefixes ().push (prefix);
-
-  Identifier corba_id ("CORBA");
-  UTL_ScopedName sn (&corba_id, 0);
-
-  AST_Module *m =
-    idl_global->gen ()->create_module (root, &sn);
-
-  root->fe_add_module (m);
-  idl_global->corba_module (m);
-
-  pdt =
-    idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_long,
-      0);
-
+                            AST_PredefinedType::PT_long,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_ulong,
-      0);
-
+                            AST_PredefinedType::PT_ulong,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_longlong,
-      0);
-
+                            AST_PredefinedType::PT_longlong,
+                            0
+                          );
   m->fe_add_predefined_type(pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_ulonglong,
-      0);
-
+                            AST_PredefinedType::PT_ulonglong,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_short,
-      0);
-
+                            AST_PredefinedType::PT_short,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_ushort,
-      0);
-
+                            AST_PredefinedType::PT_ushort,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_float,
-      0);
-
+                            AST_PredefinedType::PT_float,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_double,
-      0);
-
+                            AST_PredefinedType::PT_double,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_longdouble,
-      0);
-
+                            AST_PredefinedType::PT_longdouble,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_char,
-      0);
-
+                            AST_PredefinedType::PT_char,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_wchar,
-      0);
-
+                            AST_PredefinedType::PT_wchar,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_octet,
-      0);
-
+                            AST_PredefinedType::PT_octet,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_any,
-      0);
-
+                            AST_PredefinedType::PT_any,
+                            0
+                          );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_boolean,
-      0);
+                            AST_PredefinedType::PT_boolean,
+                            0
+                          );
+  m->fe_add_predefined_type (pdt);
 
+  Identifier void_id ("void");
+  UTL_ScopedName void_name (&void_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_void,
+                            &void_name
+                          );
   m->fe_add_predefined_type (pdt);
 
   Identifier Object_id ("Object");
   UTL_ScopedName Object_name (&Object_id, 0);
-
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_object,
-      &Object_name);
-
+                            AST_PredefinedType::PT_object,
+                            &Object_name
+                          );
   m->fe_add_predefined_type (pdt);
 
 // Add these to make all keywords protected even in different spellings
 
-  Identifier ValueBase_id ("ValueBase");
-  UTL_ScopedName ValueBase_name (&ValueBase_id, 0);
-
+  Identifier attribute_id ("attribute");
+  UTL_ScopedName attribute_name (&attribute_id, 0);
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_value,
-      &ValueBase_name);
+                            AST_PredefinedType::PT_pseudo,
+                            &attribute_name
+                          );
+  m->fe_add_predefined_type (pdt);
 
+  Identifier case_id ("case");
+  UTL_ScopedName case_name (&case_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &case_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier const_id ("const");
+  UTL_ScopedName const_name (&const_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &const_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier context_id ("context");
+  UTL_ScopedName context_name (&context_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &context_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier default_id ("default");
+  UTL_ScopedName default_name (&default_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &default_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier enum_id ("enum");
+  UTL_ScopedName enum_name (&enum_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &enum_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier exception_id ("exception");
+  UTL_ScopedName exception_name (&exception_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &exception_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier in_id ("in");
+  UTL_ScopedName in_name (&in_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &in_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier out_id ("out");
+  UTL_ScopedName out_name (&out_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &out_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier inout_id ("inout");
+  UTL_ScopedName inout_name (&inout_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &inout_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier interface_id ("interface");
+  UTL_ScopedName interface_name (&interface_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &interface_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier module_id ("module");
+  UTL_ScopedName module_name (&module_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &module_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier oneway_id ("oneway");
+  UTL_ScopedName oneway_name (&oneway_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &oneway_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier raises_id ("raises");
+  UTL_ScopedName raises_name (&raises_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &raises_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier readonly_id ("readonly");
+  UTL_ScopedName readonly_name (&readonly_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &readonly_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier sequence_id ("sequence");
+  UTL_ScopedName sequence_name (&sequence_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &sequence_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier string_id ("string");
+  UTL_ScopedName string_name (&string_id, 0);
+  pdt =
+      idl_global->gen ()->create_predefined_type (
+                              AST_PredefinedType::PT_pseudo,
+                              &string_name
+                            );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier wstring_id ("wstring");
+  UTL_ScopedName wstring_name (&wstring_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &wstring_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier struct_id ("struct");
+  UTL_ScopedName struct_name (&struct_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &struct_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier switch_id ("switch");
+  UTL_ScopedName switch_name (&switch_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &switch_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier typedef_id ("typedef");
+  UTL_ScopedName typedef_name (&typedef_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &typedef_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier union_id ("union");
+  UTL_ScopedName union_name (&union_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &union_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier unsigned_id ("unsigned");
+  UTL_ScopedName unsigned_name (&unsigned_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &unsigned_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier TRUE_id ("TRUE");
+  UTL_ScopedName TRUE_name (&TRUE_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &TRUE_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier FALSE_id ("FALSE");
+  UTL_ScopedName FALSE_name (&FALSE_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &FALSE_name
+                         );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier abstract_id ("abstract");
+  UTL_ScopedName abstract_name (&abstract_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &abstract_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier custom_id ("custom");
+  UTL_ScopedName custom_name (&custom_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &custom_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier private_id ("private");
+  UTL_ScopedName private_name (&private_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &private_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier public_id ("public");
+  UTL_ScopedName public_name (&public_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &public_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier supports_id ("supports");
+  UTL_ScopedName supports_name (&supports_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &supports_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier truncatable_id ("truncatable");
+  UTL_ScopedName truncatable_name (&truncatable_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &truncatable_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier valuetype_id ("valuetype");
+  UTL_ScopedName valuetype_name (&valuetype_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_pseudo,
+                            &valuetype_name
+                          );
+  m->fe_add_predefined_type (pdt);
+
+  Identifier ValueBase_id ("ValueBase");
+  UTL_ScopedName ValueBase_name (&ValueBase_id, 0);
+  pdt =
+    idl_global->gen ()->create_predefined_type (
+                            AST_PredefinedType::PT_value,
+                            &ValueBase_name
+                          );
   m->fe_add_predefined_type (pdt);
 
   Identifier AbstractBase_id ("AbstractBase");
   UTL_ScopedName AbstractBase_name (&AbstractBase_id, 0);
-
   pdt =
     idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_abstract,
-      &AbstractBase_name);
-
+                            AST_PredefinedType::PT_abstract,
+                            &AbstractBase_name
+                          );
   m->fe_add_predefined_type (pdt);
-
-  Identifier TypeCode_id ("TypeCode");
-  UTL_ScopedName TypeCode_name (&TypeCode_id, 0);
-
-  pdt =
-    idl_global->gen ()->create_predefined_type (
-      AST_PredefinedType::PT_pseudo,
-      &TypeCode_name);
-
-  m->fe_add_predefined_type (pdt);
-
-  char *trash = 0;
-  idl_global->pragma_prefixes ().pop (trash);
-  ACE::strdelete (trash);
 }
 
 // Populate idl_global's hash map with upper case versions of
@@ -267,14 +523,12 @@ fe_populate_idl_keywords (void)
   static const char *keywords[] =
     {
       "ABSTRACT",
-      "ALIAS",
       "ANY",
       "ATTRIBUTE",
       "BOOLEAN",
       "CASE",
       "CHAR",
       "COMPONENT",
-      "CONNECTOR",
       "CONST",
       "CONSUMES",
       "CONTEXT",
@@ -298,7 +552,6 @@ fe_populate_idl_keywords (void)
       "INTERFACE",
       "LOCAL",
       "LONG",
-      "MIRRORPORT",
       "MODULE",
       "MULTIPLE",
       "NATIVE",
@@ -306,8 +559,6 @@ fe_populate_idl_keywords (void)
       "OCTET",
       "ONEWAY",
       "OUT",
-      "PORT",
-      "PORTTYPE",
       "PRIMARYKEY",
       "PRIVATE",
       "PROVIDES",
@@ -428,7 +679,7 @@ FE_populate (void)
   idl_global->scopes ().push (idl_global->root ());
 
   // Populate it with nodes for predefined types.
-  fe_populate_global_scope ();
+  fe_populate_global_scope (idl_global->root ());
 
   // Set flag to indicate we are processing the main file now.
   idl_global->set_in_main_file (true);
@@ -476,7 +727,7 @@ FE_store_env_include_paths (void)
        !iter.done (); iter.advance ())
     {
       iter.next (path_tmp);
-      idl_global->add_include_path (path_tmp->fast_rep (), false);
+      idl_global->add_include_path (path_tmp->fast_rep ());
     }
 }
 

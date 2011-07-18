@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    included.idl
- *
- *  $Id$
- *
- *  This file contains examples of IDL code that has
- *  caused problems in the past for the TAO IDL
- *  compiler. This test is to make sure the problems
- *  stay fixed.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    included.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
 
 #ifndef IDL_TEST_INCLUDED_IDL
 #define IDL_TEST_INCLUDED_IDL
@@ -49,23 +52,6 @@ module VT_Def
 valuetype IncludedBase
 {
   public sequence<long> DeprecatedMember;
-};
-
-// References to MyStructA in including.idl get the
-// forward declaration from lookup, and we were
-// getting empty typename generation in various places,
-// before overriding the visit methods for forward
-// declared structs and unions in the relevant visitors.
-module A
-{
-  struct MyStructA;
-  typedef sequence<MyStructA> MySeqA;
-
-  struct MyStructA
-  {
-   string str;
-   MySeqA recursive_member;
-  };
 };
 
 #endif /* IDL_TEST_INCLUDED_IDL */

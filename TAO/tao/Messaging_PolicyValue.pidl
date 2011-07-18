@@ -3,6 +3,8 @@
  *  @file Messaging_PolicyValue.pidl
  *
  *  $Id$
+ *
+ * This file is used to generate the code in Messaging_PolicyValueC.{h,cpp}
  */
 
 #ifndef TAO_MESSAGING_POLICYVALUE_PIDL

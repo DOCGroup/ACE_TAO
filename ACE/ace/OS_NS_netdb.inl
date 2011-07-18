@@ -42,6 +42,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR))
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
@@ -84,6 +86,10 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 # endif /* !ACE_LACKS_GETHOSTBYADDR */
 }
 
+#endif
+
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYADDR))
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyaddr_r (const char *addr,
                          int length,
@@ -101,12 +107,12 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
+# elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 
   if (0 == addr || '\0' == addr[0])
       return 0;
 
-#   if defined (AIX)
+#   if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -137,7 +143,6 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   else
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS)
-  ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyaddr() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
   //FUZZ: disable check_for_lack_ACE_OS
@@ -201,7 +206,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
                        struct hostent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-#   endif /* defined (AIX) */
+#   endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -227,6 +232,10 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   //FUZZ: enable check_for_lack_ACE_OS
 # endif /* ACE_LACKS_GETHOSTBYADDR_R */
 }
+
+#endif
+
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME))
 
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname (const char *name)
@@ -264,6 +273,10 @@ ACE_OS::gethostbyname (const char *name)
 # endif /* !ACE_LACKS_GETHOSTBYNAME */
 }
 
+#endif
+
+#if !(defined (ACE_VXWORKS) && defined (ACE_LACKS_GETHOSTBYNAME))
+
 ACE_INLINE struct hostent *
 ACE_OS::gethostbyname_r (const char *name,
                          struct hostent *result,
@@ -277,12 +290,13 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
-# elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
+# elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 
   if (0 == name || '\0' == name[0])
       return (struct hostent *)0;
 
-# if (defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS > 2))
+#   if defined (DIGITAL_UNIX) || \
+       (defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS > 2))
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
@@ -320,7 +334,6 @@ ACE_OS::gethostbyname_r (const char *name,
   else
     return (struct hostent *) 0;
 #   elif defined (ACE_VXWORKS)
-  ACE_UNUSED_ARG (h_errnop);
   // VxWorks 6.x has a threadsafe gethostbyname() which returns a heap-allocated
   // data structure which needs to be freed with hostentFree()
   //FUZZ: disable check_for_lack_ACE_OS
@@ -384,7 +397,7 @@ ACE_OS::gethostbyname_r (const char *name,
                        0);
   //FUZZ: enable check_for_lack_ACE_OS
 #     endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-#   endif /* defined (AIX) */
+#   endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 # elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -397,19 +410,17 @@ ACE_OS::gethostbyname_r (const char *name,
 # else
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (h_errnop);
 
-  // FUZZ: disable check_for_lack_ACE_OS
-  struct hostent *result2 = 0;
-  ACE_SOCKCALL (::gethostbyname (name),
-                struct hostent *,
-                0,
-                result2);
-  if (result2 == 0 && h_errnop)
-    *h_errnop = errno;
-  return result2;
+  //FUZZ: disable check_for_lack_ACE_OS
+  ACE_SOCKCALL_RETURN (::gethostbyname (name),
+                       struct hostent *,
+                       0);
   //FUZZ: enable check_for_lack_ACE_OS
-# endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
+# endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
+
+#endif
 
 ACE_INLINE struct hostent *
 ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
@@ -509,8 +520,8 @@ ACE_OS::getprotobyname_r (const char *name,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
-# if defined (AIX)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+# if defined (AIX) || defined (DIGITAL_UNIX)
   //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobyname_r (name, result, (struct protoent_data *) buffer) == 0)
     return result;
@@ -546,7 +557,7 @@ ACE_OS::getprotobyname_r (const char *name,
                        struct protoent *, 0);
     //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-# endif /* defined (AIX) */
+# endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
@@ -563,7 +574,7 @@ ACE_OS::getprotobyname_r (const char *name,
                        struct protoent *,
                        0);
   //FUZZ: enable check_for_lack_ACE_OS
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) !defined (UNIXWARE) */
 }
 
 ACE_INLINE struct protoent *
@@ -590,8 +601,8 @@ ACE_OS::getprotobynumber_r (int proto,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
-# if defined (AIX)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+# if defined (AIX) || defined (DIGITAL_UNIX)
   //FUZZ: disable check_for_lack_ACE_OS
   if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
     return result;
@@ -624,7 +635,7 @@ ACE_OS::getprotobynumber_r (int proto,
                        struct protoent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-# endif /* defined (AIX) */
+# endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #else
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (result);
@@ -633,7 +644,7 @@ ACE_OS::getprotobynumber_r (int proto,
   ACE_SOCKCALL_RETURN (::getprotobynumber (proto),
                        struct protoent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_INLINE struct servent *
@@ -674,8 +685,8 @@ ACE_OS::getservbyname_r (const char *svc,
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buf);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
-# if defined (AIX)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
+# if defined (AIX) || defined (DIGITAL_UNIX)
   ACE_OS::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -714,7 +725,7 @@ ACE_OS::getservbyname_r (const char *svc,
                        struct servent *, 0);
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
-# endif /* defined (AIX) */
+# endif /* defined (AIX) || defined (DIGITAL_UNIX) */
 #elif defined (ACE_HAS_NONCONST_GETBY)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (result);
@@ -733,7 +744,7 @@ ACE_OS::getservbyname_r (const char *svc,
                        struct servent *,
                        0);
   //FUZZ: enable check_for_lack_ACE_OS
-#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) */
+#endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,23 +1,30 @@
 // -*- C++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    NT_Naming_Server.cpp
- *
- *  $Id$
- *
- *  Driver program that runs the TAO Naming Service as a Windows NT
- *  Service.
- *
- *
- *  @author John Tucker <jtucker@infoglide.com> and Mike Vitalo <mvitalo@infoglide.com>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+//
+// = FILENAME
+//    NT_Naming_Server.cpp
+//
+//
+// = DESCRIPTION
+//    Driver program that runs the TAO Naming Service as a Windows NT
+//    Service.
+//
+// = AUTHORS
+//    John Tucker <jtucker@infoglide.com> and
+//    Mike Vitalo <mvitalo@infoglide.com>
+//
+// ============================================================================
 
-
-#include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_WIN32) || defined (ACE_LACKS_WIN32_SERVICES)
+
+#include "ace/Log_Msg.h"
 
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
@@ -38,13 +45,10 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP SERVICE_DEMAND_START
 
-/**
- * @class Options
- *
- * @brief Keeps track of the command-line options for this program.
- */
 class Options
 {
+  // = TITLE
+  //   Keeps track of the command-line options for this program.
 public:
   Options (void);
   ~Options (void);
@@ -57,7 +61,7 @@ private:
   void print_usage_and_die (void);
 
 private:
-  ACE_TCHAR progname[128];
+  char progname[128];
 
   int opt_install;
   int opt_remove;
@@ -81,7 +85,7 @@ Options::Options (void)
     opt_startup (0)
 {
   ACE_OS::strcpy (progname,
-                  ACE_TEXT("service"));
+                  "service");
   ACE::init ();
 }
 
@@ -94,14 +98,14 @@ void
 Options::print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT("Usage: %s")
-              ACE_TEXT(" -in -r -s -k -tn -d\n")
-              ACE_TEXT("  -i: Install this program as an NT service, with specified startup\n")
-              ACE_TEXT("  -r: Remove this program from the Service Manager\n")
-              ACE_TEXT("  -s: Start the service\n")
-              ACE_TEXT("  -k: Kill the service\n")
-              ACE_TEXT("  -t: Set startup for an existing service\n")
-              ACE_TEXT("  -d: Debug; run as a regular application\n"),
+              "Usage: %s"
+              " -in -r -s -k -tn -d\n"
+              "  -i: Install this program as an NT service, with specified startup\n"
+              "  -r: Remove this program from the Service Manager\n"
+              "  -s: Start the service\n"
+              "  -k: Kill the service\n"
+              "  -t: Set startup for an existing service\n"
+              "  -d: Debug; run as a regular application\n",
               progname,
               0));
   ACE_OS::exit (1);

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Parser_Registry.h"
@@ -10,6 +9,10 @@
 #if !defined(__ACE_INLINE__)
 #include "tao/Parser_Registry.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID (tao,
+           Parser_Registry,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

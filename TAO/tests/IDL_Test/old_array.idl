@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    old_array.idl
- *
- *  $Id$
- *
- *  Tests of array IDL constructs
- *
- *
- *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    old_array.idl
+//
+// = DESCRIPTION
+//    Tests of array IDL constructs
+//
+// = AUTHORS
+//    Andy Gokhale <gokhale@dre.vanderbilt.edu>
+//
+// ============================================================================
 
 #include "simple.idl"
 
@@ -20,14 +23,12 @@ module OldArray
   typedef char str22[22][2];
   typedef boolean boolarray[3][40];
 
-  typedef char char_17[17];
-  typedef char char_10_2[10][2];
 
   struct A
   {
     long a1;
-    char_17 a2;
-    char_10_2 a3;
+    char a2[17];
+    char a3[10][2];
   };
 
   struct B
@@ -53,15 +54,15 @@ module OldArray
     A op (in A a1,
           inout A a2,
           out A a3);
-
+          
     str22 op2 (in str22 a1,
                inout str22 a2,
                out str22 a3);
-
+               
     A_matrix op4 (in A a1,
                   inout A a2,
                   out A a3);
-
+    
     attribute str22 attribute_array;
   };
 };

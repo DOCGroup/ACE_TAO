@@ -1,10 +1,7 @@
 // $Id$
-/// Compliant with OMG 06-04-01 Section 10.3.1.2
 
 #if !defined (CCM_ENUMERATION_IDL)
 #define CCM_ENUMERATION_IDL
-
-#if !defined (CCM_LW)
 
 #include "ccm/CCM_Object.idl"
 
@@ -12,6 +9,8 @@ module Components
 {
   typeprefix Components "omg.org";
 
+  /// @@ Enumeration and DefaultEnumeration are only for EJB to CCM
+  /// mapping?  At any rate, we should be able to skip them for now.
   abstract valuetype Enumeration
   {
     boolean has_more_elements();
@@ -23,7 +22,4 @@ module Components
     private CCMObjectSeq objects;
   };
 };
-
-#endif
-
 #endif /* CCM_ENUMERATION_IDL */

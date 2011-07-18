@@ -1,24 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Dynamic_Test.cpp
- *
- *  $Id$
- *
- *  This tests the ACE_Dynamic class
- *
- *
- *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Dynamic_Test.cpp
+//
+// = DESCRIPTION
+//    This tests the ACE_Dynamic class
+//
+// = AUTHORS
+//    Johnny Willemsen  <jwillemsen@remedy.nl>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Dynamic.h"
 #include "ace/OS_Memory.h"
 
-
+ACE_RCSID(tests, Dynamic_Test, "$Id$")
 
 class A
 {
@@ -53,10 +56,10 @@ A::operator new (size_t n)
 
   if (dynamic_instance == 0)
     {
-      // If this ACE_TEST_ASSERT fails, it may be due to running of out TSS
+      // If this ACE_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_TEST_ASSERT (dynamic_instance != 0);
+      ACE_ASSERT (dynamic_instance != 0);
 
       ACE_throw_bad_alloc;
     }
@@ -78,10 +81,10 @@ A::operator new (size_t n, const ACE_nothrow_t&) throw()
 
   if (dynamic_instance == 0)
     {
-      // If this ACE_TEST_ASSERT fails, it may be due to running of out TSS
+      // If this ACE_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_TEST_ASSERT (dynamic_instance != 0);
+      ACE_ASSERT (dynamic_instance != 0);
 
       return 0;
     }

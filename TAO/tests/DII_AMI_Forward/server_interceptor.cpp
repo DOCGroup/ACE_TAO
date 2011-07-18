@@ -8,9 +8,7 @@
 #include "ace/Thread.h"
 
 ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor (void)
-  : myname_ ("ForwardTest_Interceptor"),
-    forward_location_ (CORBA::Object::_nil ()),
-    forward_location_done_ (false)
+  : myname_ ("ForwardTest_Interceptor")
 {
 }
 
@@ -76,8 +74,7 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
                   "Sending LOCATION_FORWARD, current thread %i\n",
                   ACE_Thread::self ()));
 
-      throw PortableInterceptor::ForwardRequest (
-        CORBA::Object::_duplicate (this->forward_location_.in ()));
+      throw PortableInterceptor::ForwardRequest (this->forward_location_);
     }
 
 }

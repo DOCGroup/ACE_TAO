@@ -11,7 +11,7 @@
 
 #include <algorithm>
 
-
+ACE_RCSID(ace, DLL, "$Id$")
 
   ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

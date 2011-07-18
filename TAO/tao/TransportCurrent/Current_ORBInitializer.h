@@ -30,7 +30,7 @@ namespace TAO
   {
 
     template <typename Impl>
-    class Current_ORBInitializer
+    class TAO_Transport_Current_Export Current_ORBInitializer
       : public Current_ORBInitializer_Base
     {
     public:

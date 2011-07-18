@@ -1,5 +1,5 @@
 // $Id$
 
 project: namingexe, iortable, install, rteventlogadmin_serv, valuetype {
-  exename   = tao_tls_rtevent
+  exename   = RTEvent_Logging_Service
 }

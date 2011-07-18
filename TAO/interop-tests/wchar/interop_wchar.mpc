@@ -8,7 +8,7 @@ project(*IDL): taoidldefaults, anytypecode {
   custom_only = 1
 }
 
-project(*Server): taoserver, negotiate_codesets {
+project(*Server): taoserver {
   after += *IDL
   Source_Files {
     interop_wchar_i.cpp

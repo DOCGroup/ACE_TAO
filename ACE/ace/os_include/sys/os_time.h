@@ -30,6 +30,10 @@
 #  include /**/ <sys/time.h>
 #endif /* !ACE_LACKS_SYS_TIME_H */
 
+#if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x620)
+#  include /**/ <time.h> // VxWorks 6.2 defined timeval in time.h
+#endif
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -37,7 +41,11 @@ extern "C"
 #endif /* __cplusplus */
 
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
+# if !defined (SCO)
   int gettimeofday (struct timeval *tp, void * = 0);
+# else
+  int gettimeofday (struct timeval *tp);
+# endif  /* !SCO */
 #elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
   int gettimeofday (struct timeval *tp, struct timezone * = 0);
 #elif defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY)

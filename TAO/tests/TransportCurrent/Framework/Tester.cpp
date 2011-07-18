@@ -5,6 +5,7 @@
 
 using namespace TAO;
 
+
 /// Test referencing the TC data outside of the context of an upcall,
 /// or a client-side interceptor
 

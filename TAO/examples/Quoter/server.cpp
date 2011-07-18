@@ -1,19 +1,22 @@
-//=============================================================================
-/**
- *  @file    server.cpp
- *
- *  $Id$
- *
- *  The Server for the Quoter Factory
- *
- *
- *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// $Id$
+// ============================================================================
+//
+// = FILENAME
+//    Quoter_Server.cpp
+//
+// = DESCRIPTION
+//    The Server for the Quoter Factory
+//
+// = AUTHOR
+//    Darrell Brunsch (brunsch@cs.wustl.edu)
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "server.h"
 #include "tao/ORB_Core.h"
+
+ACE_RCSID(Quoter, server, "$Id$")
 
 Quoter_Server::Quoter_Server (void)
   : num_of_objs_ (1),

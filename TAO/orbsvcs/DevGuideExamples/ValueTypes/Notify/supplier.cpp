@@ -3,6 +3,7 @@
 // This supplier requires that the Notify_Service is started with
 // -IOROutput notify.ior -channel -nonamesvc
 // at minimum.
+const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
 
 #include "Event_i.h"
 
@@ -17,50 +18,12 @@
 #include "ace/Event_Handler.h"
 #include <iostream>
 #include <stdexcept>
-#include "ace/Get_Opt.h"
-
-const ACE_TCHAR *ec_ior = ACE_TEXT("file://ec.ior");
-const ACE_TCHAR *hostname = ACE_TEXT("localhost");
-const ACE_TCHAR *port = ACE_TEXT("8888");
-//const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:h:p:"));
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ec_ior = get_opts.opt_arg ();
-        break;
-      case 'h':
-        hostname = get_opts.opt_arg ();
-        break;
-      case 'p':
-        port = get_opts.opt_arg ();
-        break;
-
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ec_ior> "
-                           "-h <host> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
-  return 0;
-}
-
 
 const ACE_Time_Value EVENT_DELAY(0, 10 * 1000);
 
 static MyEvent_var event_;
+
+const char* ec_ior = "file://ec.ior";
 
 class TestSupplier
 : public POA_CosEventComm::PushSupplier
@@ -196,9 +159,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
 
     CORBA::ORB_var orb = CORBA::ORB_init(ac, av);
 
-    if (parse_args (ac, av) != 0)
-      return 1;
-
     CORBA::ValueFactoryBase_var vfb = new MyEventFactory;
     CORBA::String_var id = _tc_MyEvent->id();
     orb->register_value_factory(id.in(), vfb);
@@ -208,14 +168,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
     PortableServer::POAManager_var mgr = poa->the_POAManager();
 
-    // "corbaloc::localhost:8888/NotifyEventChannelFactory"
-    ACE_CString notify_ior ("corbaloc::");
-    notify_ior += ACE_TEXT_ALWAYS_CHAR (hostname);
-    notify_ior += ":";
-    notify_ior += ACE_TEXT_ALWAYS_CHAR (port);
-    notify_ior += "/NotifyEventChannelFactory";
-
-    obj = orb->string_to_object(notify_ior.c_str());
+    obj = orb->string_to_object(notify_ior);
     CosNotifyChannelAdmin::EventChannelFactory_var ecf
       = CosNotifyChannelAdmin::EventChannelFactory::_narrow(obj.in());
     if (CORBA::is_nil(ecf.in()))

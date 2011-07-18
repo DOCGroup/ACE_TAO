@@ -8,13 +8,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
+PerlACE::add_lib_path ('../Generic_Servant/.');
+
 $iorbase = "poa.ior";
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$server->AddLibPath ('../Generic_Servant/.');
-$client->AddLibPath ('../Generic_Servant/.');
 
 $oneway = "";
 $iterations = 100;

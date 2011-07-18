@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @brief Handle the Response appropriately.
+ *  @brief Handle the Repsonse appropriately.
  */
 //=====================================================================
 

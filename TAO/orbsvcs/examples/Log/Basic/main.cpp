@@ -1,7 +1,10 @@
-// $Id$
-
 #include "TLS_Client.h"
 #include "ace/OS_main.h"
+
+ACE_RCSID (Basic,
+           main,
+           "$Id$")
+
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

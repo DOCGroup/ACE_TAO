@@ -189,7 +189,7 @@ namespace CORBA
     /// Assignment operator.
     Exception & operator = (const Exception & src);
 
-    /// Construct from a repository id.
+    /// Construct from a respository id.
     Exception (const char *repository_id, const char *local_name);
 
   private:

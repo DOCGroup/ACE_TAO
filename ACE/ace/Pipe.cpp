@@ -18,7 +18,7 @@
 #include "ace/Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
-
+ACE_RCSID(ace, Pipe, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,7 +39,7 @@ ACE_Pipe::open (int buffer_size)
 {
   ACE_TRACE ("ACE_Pipe::open");
 
-#if defined (ACE_LACKS_SOCKETPAIR)
+#if defined (ACE_LACKS_SOCKETPAIR) || defined (__Lynx__)
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
   ACE_SOCK_Connector connector;
@@ -254,20 +254,21 @@ ACE_Pipe::close (void)
 {
   ACE_TRACE ("ACE_Pipe::close");
 
-  int result = this->close_read ();
-  result |= this->close_write ();
+  int result = 0;
+
+  // Note that the following will work even if we aren't closing down
+  // sockets because <ACE_OS::closesocket> will just call <::close> in
+  // that case!
+
+  if (this->handles_[0] != ACE_INVALID_HANDLE)
+    result = ACE_OS::closesocket (this->handles_[0]);
+  this->handles_[0] = ACE_INVALID_HANDLE;
+
+  if (this->handles_[1] != ACE_INVALID_HANDLE)
+    result |= ACE_OS::closesocket (this->handles_[1]);
+  this->handles_[1] = ACE_INVALID_HANDLE;
+
   return result;
-}
-
-int
-ACE_Pipe::close_read (void)
-{
-  return this->close_handle (0);
-}
-
-int ACE_Pipe::close_write (void)
-{
-  return this->close_handle (1);
 }
 
 // Send N char *ptrs and int lengths.  Note that the char *'s precede

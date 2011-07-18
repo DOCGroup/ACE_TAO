@@ -6,6 +6,10 @@
 #include "Cookies.inl"
 #endif /* !defined INLINE */
 
+ACE_RCSID (ciao,
+           Cookies,
+           "$Id$")
+
 namespace CIAO
 {
   Cookie_Impl::Cookie_Impl (ptrdiff_t const &key)

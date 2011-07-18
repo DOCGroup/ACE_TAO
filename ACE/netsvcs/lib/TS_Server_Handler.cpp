@@ -7,6 +7,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Signal.h"
 
+ACE_RCSID(lib, TS_Server_Handler, "$Id$")
+
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -38,7 +40,7 @@ ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TRACE ("ACE_TS_Server_Acceptor::init");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Acceptor::init"));
 
   // Use the options hook to parse the command line arguments and set
   // options.
@@ -87,7 +89,7 @@ ACE_SVC_FACTORY_DEFINE (ACE_TS_Server_Acceptor)
 ACE_TS_Server_Handler::ACE_TS_Server_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::ACE_TS_Server_Handler");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::ACE_TS_Server_Handler"));
 }
 
 // Activate this instance of the ACE_TS_Server_Handler (called by the
@@ -96,7 +98,7 @@ ACE_TS_Server_Handler::ACE_TS_Server_Handler (ACE_Thread_Manager *tm)
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::open (void *)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::open");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::open"));
 
   ACE_INET_Addr client_addr;
 
@@ -108,7 +110,7 @@ ACE_TS_Server_Handler::open (void *)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
+              ACE_TEXT ("(%t) accepted connection from host %s on fd %d\n"),
               client_addr.get_host_name (),
               this->peer ().get_handle ()));
 
@@ -124,7 +126,7 @@ ACE_TS_Server_Handler::open (void *)
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::send_request");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::send_request"));
   void *buffer;
   ssize_t length = request.encode (buffer);
 
@@ -150,7 +152,7 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::abandon (void)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::abandon");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::abandon"));
 
   // Note we are using the time field to report the errno in case of
   // failure.
@@ -162,7 +164,7 @@ ACE_TS_Server_Handler::abandon (void)
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::handle_timeout");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::handle_timeout"));
   return this->abandon ();
 }
 
@@ -171,7 +173,7 @@ ACE_TS_Server_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 /* VIRTUAL */ ACE_HANDLE
 ACE_TS_Server_Handler::get_handle (void) const
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::get_handle");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::get_handle"));
   return this->peer ().get_handle ();
 }
 
@@ -180,7 +182,7 @@ ACE_TS_Server_Handler::get_handle (void) const
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::dispatch (void)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::dispatch"));
   // Get the system time and then create an ACE_Time_Request
   time_t t = ACE_OS::time (0);
   ACE_Time_Request rq (ACE_Time_Request::TIME_UPDATE, t);
@@ -193,7 +195,7 @@ ACE_TS_Server_Handler::dispatch (void)
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::recv_request (void)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::recv_request");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::recv_request"));
   ssize_t bytes_expected = this->time_request_.size ();
 
   // Since Time_Request messages are fixed size, read the entire
@@ -242,7 +244,7 @@ ACE_TS_Server_Handler::recv_request (void)
 /* VIRTUAL */ int
 ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::handle_input");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::handle_input"));
 
   if (this->recv_request () == -1)
     return -1;
@@ -252,7 +254,7 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
 
 ACE_TS_Server_Handler::~ACE_TS_Server_Handler (void)
 {
-  ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
+  ACE_TRACE (ACE_TEXT ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler"));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("closing down Handle %d\n"),
               this->get_handle ()));

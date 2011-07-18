@@ -113,7 +113,6 @@ namespace TAO
        */
       virtual int release_os_resources (void);
       virtual void pos_io_hook (int & return_value);
-      virtual int handle_write_ready (const ACE_Time_Value *timeout);
       //@}
 
     protected:

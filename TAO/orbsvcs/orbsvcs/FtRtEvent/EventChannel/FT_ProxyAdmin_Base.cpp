@@ -5,6 +5,11 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/PortableServer.h"
 
+
+ACE_RCSID (EventChannel,
+           FT_ProxyAdmin_Base,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 FT_ProxyAdmin_Base::FT_ProxyAdmin_Base(PortableServer::ServantBase* servant,

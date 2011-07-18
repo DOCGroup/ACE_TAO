@@ -1,24 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Conn_Test.cpp
- *
- *  $Id$
- *
- *   This is a test of the <ACE_Acceptor> and <ACE_Connector>
- *   classes. The test forks processes or spawns threads (depending
- *   upon the platform) and then executes client and server allowing
- *   them to connect and exchange data.  The test also illustrates
- *   how the <ACE_Strategy_Connector> works by showing how you can
- *   cache connections on the client.
- *
- *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *  @author Chris Cleeland <cleeland@cs.wustl.edu>
- *  @author and Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Conn_Test.cpp
+//
+// = DESCRIPTION
+//     This is a test of the <ACE_Acceptor> and <ACE_Connector>
+//     classes. The test forks processes or spawns threads (depending
+//     upon the platform) and then executes client and server allowing
+//     them to connect and exchange data.  The test also illustrates
+//     how the <ACE_Strategy_Connector> works by showing how you can
+//     cache connections on the client.
+//
+// = AUTHOR
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>,
+//    Chris Cleeland <cleeland@cs.wustl.edu>,
+//    and Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"
@@ -38,7 +41,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-
+ACE_RCSID(tests, Conn_Test, "$Id$")
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -73,8 +76,14 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
 
+#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
+#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>
+#else
+#define LOCK_SOCK_ACCEPTOR ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>, ACE_INET_Addr
+#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
 typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> >
+                             LOCK_SOCK_ACCEPTOR>
         ACCEPTOR;
 typedef ACE_Connector<Svc_Handler,
                       ACE_SOCK_CONNECTOR>
@@ -180,7 +189,7 @@ Svc_Handler::recv_data (void)
 
           while ((r_bytes = new_stream.recv (&c, 1)) > 0)
             {
-              ACE_TEST_ASSERT (*t == c);
+              ACE_ASSERT (*t == c);
 
               // We need to guard against cached connections, which
               // will send multiple sequences of letters from 'a' ->
@@ -745,7 +754,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("open")));
-      ACE_TEST_ASSERT (0);
+      ACE_ASSERT (0);
     }
   else
     {

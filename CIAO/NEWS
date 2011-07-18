@@ -1,550 +1,83 @@
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.3 and CIAO-1.0.4
-=======================================================
+PLANNED CHANGES BEFORE NEXT RELEASE
+===================================
 
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.2 and CIAO-1.0.3
-=======================================================
+This is advanced notification that the CIAO-0.6.7 release of CIAO will be
+the last release before a major refactoring is introduced into CIAO/DAnCE
+that will remove several features, with no planned replacement in
+their current form, such as:
 
-. DDS4CCM now compiles with OpenDDS integration enabled. This will not run
-  because several methods in the core of DDS4CCM are still commented out.
+.  ReDaC
+.  Shared Components
 
-. The display example has been upgraded to Qt4 and has been made functional
-  again
+Some features are being temporarily removed but with planned
+replacement in the near term:
 
-. The hello example has been updated to the latest implementation guidelines
+.  RTEC Integration
+.  Static Deployment
+.  TargetManager
+.  RepositoryManager
+.  Swapping container
 
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.1 and CIAO-1.0.2
-=======================================================
+PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
+===========================================================================
 
-. Generate servant code for facets and receptacles is now thread safe, the
-  code for consumers/publishers/emitters still have some thread safety issues
-  and a possible deadlock
+. Enhance Execution Manager and Domain Application Manager to make calls
+  on the Target Manager to get resource information.
 
-. Improved disconnect of connections in general and extended our test suite
-  for that
+. Enhance Node Manager to integrate resource monitoring capacity within
+  individual Nodes.
 
-. Restructured base projects for dds4ccm to make a clear distinction between
-  plain ndds and our idl to cpp wrapper around it
+. Add assembly-wide component activation/deactivation feature.
 
-. Validated with ndds 4.5drev03
+    - This should allow system deployers to specify the dependencies
+      among component instances within the assembly.
 
-. Added serialize_key_with_dispose and propagate_dispose_of_unregistered_instances
-  as BOOLEAN_TRUE to the DDS QoS xml file for several tests to always get
-  the key of the sample in the on_deletion callback
+    - Add support in DAnCE so DAnCE could enforce the order in which
+      components are to be activated within the assembly.
 
-. The logging service now supports custom backends.  These are enabled
-  using CIAO_LOG_BACKEND.  Please see the DAnCE NEWS file for more
-  details.  DDS4CCM also supports the custom backend service,
-  initialized with DDS4CCM_LOG_BACKEND.
+. Add AMI support in DAnCE toolchain to when the DomainApplicationManager
+  contacts node-level managers to deploy components, all the node-level
+  managers could performe the deployment concurrently.
 
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.0 and CIAO-1.0.1
-=======================================================
+. Integrate RT-CORBA 1.2 dynamic scheduling feature into CIAO, which
+  will allow the application developers to use dynamica scheduling
+  through meta-programming model.
 
-. Improved disconnect of Simplex/Multiple facets and receptacles.
-
-. Improved disconnect of consumers and publishers.
-
-. Resolved some memory leaks in the DDS4CCM library. Therefor a lot of tests were
-  rewritten, using the generated executor implementation.
-
-. Improved doxygen documentation.
-
-. Improved IDL to C++ wrapper for NDDS. Therefor one is able to create a NDDS only
-  application without using the DDS4CCM connector itself. See
-  $CIAO_ROOT/connectors/dds4ccm/examples/IDL2CPPWrapper for an example of such an
-  application.
-
-. Improved the DDS4CCM connector so that the user is able to implement his/her own
-  connector.
-  See $CIAO_ROOT/connectors/dds4ccm/tests/MultipleTemp/Connector/MultipleTemp_Connector_T.cpp/h
-  for an implementation of such a connector.
-
-. Improved the DDS4CCM connector so that it can handle more than one topic.
-  See $CIAO_ROOT/connectors/dds4ccm/tests/MultiTopic/ for an implementation
-  of such a connector.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.8.3 and CIAO-1.0.0
-=======================================================
-
-. Implemented 'LateBinding' in the DDS4CCM connector.
-  This means that the DDS entities will NOT be created and initialized
-  when the topic name is empty at deployment time (e.g. the topic_name
-  is empty in the deployment plan).
-  The DDS entities will be created and initialized once the topic name is
-  set at run time.
-
-. Reworked dds4ccm core to make it easier to implement custom dds4ccm
-  connectors. Any already written custom dds4ccm connectors will need to be
-  updated because of changes in the C++ template signature and the internal
-  classes.
-
-. Improved dds4ccm logging
-
-. AMI4CCM reply handler is now generated for any user component that uses
-  AMI4CCM, not with the AMI4CCM connector anymore
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.8.2 and CIAO-0.8.3
-=======================================================
-
-. Tests for the Component Implementation Framework have been added.
-  Because of this, two methods ('get_named_receptacles' and
-  'get_connections') off the receptacle interface were implemented
-  in the CCM core.
-
-. DAnCE has been made an entirely separate product from CIAO, and has
-  been moved from ACE_wrappers/TAO/CIAO/DAnCE to
-  ACE_wrappers/TAO/DAnCE.
-
-. A new option has been added to the TAO IDL compiler. This option
-  extends the -Gex option. When applying -Gexr, the TAO IDL compiler
-  will generate an extra method which retrieves the ACE_Reactor from
-  the ORB. One should use this option when an ACE_reactor. In code,
-  use 'this->reactor ()' to get the ACE_Reactor. A CORBA::INTERNAL
-  exception is thrown when the ACE_Reactor cannot be retrieved.
-  The goal of this method is to prevent memory leaks.
-
-. The DDS4CC connector now has its own logging level. This log level
-  can only be set using an environment variable, called DDS4CCM_LOG_LEVEL.
-  The following log levels are defined:
-    - DDS4CCM_LOG_LEVEL_ERROR           1
-    - DDS4CCM_LOG_LEVEL_CAST_ERROR      2
-    - DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN  3
-    - DDS4CCM_LOG_LEVEL_4               4 //unused
-    - DDS4CCM_LOG_LEVEL_5               5 //unused
-    - DDS4CCM_LOG_LEVEL_ACTION          6
-    - DDS4CCM_LOG_LEVEL_UNIMP_ACTION    7
-    - DDS4CCM_LOG_LEVEL_ACTION_STARTING 8
-    - DDS4CCM_LOG_LEVEL_CAST_SUCCESSFUL 9
-    - DDS4CCM_LOG_LEVEL_DDS_STATUS     10
-
-. Started the implementation of the Qos4CCM specification.
-  Therefor an Extension Container has been added to CIAO.
-  For now its possible to register the various interceptors
-  (Client, Server, Servant and Stub interceptors) with an Extension
-  Container (see $CIAO_ROOT/tests/COPI/Registration/Client).
-  At this moment, DAnCE is unable to deploy an Extension Container
-  'out of the box'. If the DANCE_DEPLOYS_EXTENSION_CONTAINER define
-  in config.h is set, DAnCE will deploy only Extension Containers
-  (and no Session Containers). In the future, DAnCE should be able
-  to deploy Extension Containers via a Deployment plan.
-
-. Added nddsmonitor as MPC feature to enable linking with the rtimonitor
-  library
-
-. Resolved several memory leaks in CIAO/DAnCE/DDS4CCM
-
-. The tao_idl option -Gex now also generates a member and implemented set/get
-  methods for attributes defined in components
-
-. Added mpc feature ccm_noevent which disable the CORBA event support in
-  the core libraries and generated code
-
-. Implemented disconnect for local facets
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.8.1 and CIAO-0.8.2
-=======================================================
-
-. Separate lifecycle of the dds4ccm connector and its facets
-
-. Improved dds4ccm logging
-
-. Fixed several memory leaks in CIAO and DAnCE
-
-. Destructors for component executors prior to this release were never
-  invoked.  This bug has been fixed, and component executors are now
-  properly destructed.
-
-. Installation handlers, deployment interceptors, and locality
-  configurators are now loaded at run-time instead of statically
-  configure at compile time.  This is accomplished with the use of
-  a locality configuration file passed on the command line.  Please
-  see CIAO/examples/Hello/descriptors/run_test_shs.pl and
-  DAnCE/tests/CIAO/Executor-Destructors/Component.cdp for examples of
-  how to pass this file to the locality manager.  The default locality
-  configuration is loaded from DAnCE/bin/ciao.localityconfig. Please
-  see documentation located in DAnCE/docs/localityManager-Plugins.txt.
-
-. Names for operations in the deployment interceptors have changed
-  slightly to remove the 'instance_' prefix on all operation
-  names. Please see DAnCE/DAnCE/DAnCE_DeploymentInterceptors.idl.
-
-. Deployment interceptors have a new operation that is invoked when
-  unexpected events occur.  This is currently only invoked when the
-  NodeApplication receives notification that a locality manager has
-  exited unexpectedly.
-
-. A locality configurator that sets the process priority has been
-  included.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.8.0 and CIAO-0.8.1
-=======================================================
-
-. Implemented _get_component for AMI4CCM
-
-. Implemented resetting of Query Conditions in the
-  DDS4CCM connector. This according to the beta 3
+. Update DAnCE IDL data structures and interfaces to comply with the
+  06-04-01 version of the DnC specification, and perform
+  interoperability testing with other DnC implementations.  Note this
+  work may change the functionality and semantics of some proprietary
+  DAnCE extensions, notably ReDaC, Shared Compoents, and RTEC
+  integration, and may even be absent until such a time as they
+  can be implemented in such a way as to not break copliance with the DnC
   specification.
 
-. Added a preliminary System Health and Status Service.  Please see
-  DAnCE/tools/System_Health.  This has two parts:  there is the
-  interceptor, which publishes instance status updates using a
-  strategizeable transport protocol (included in this release is a
-  simple CORBA transport plugin), and there is the dance_shs_daemon.
-  A test which uses the SHS service is
-  CIAO/examples/Hello/descriptors/run_test_shs.pl.
-
-. Added a new configuration plugin facility to the LocalityManager.
-  This faciliy will invoke configuration plugins based on
-  configProperties attached to an explicitly deployed LocalityManager
-  instance.  Included plugins are one for CPU Affinity, and another
-  for setting the locality manager process name.  Both work only under
-  Linux 2.6 and later.  Please see
-  DAnCE/tests/LocalityManager/ProcessName and
-  DAnCE/tests/LocalityManager/CPUAffinity for information on how to
-  use these plugins.
-
-. There is a known bug when running some of the LocalityManager tests
-  (DAnCE/tests/LocalityManager), in which an attempt to tear down a
-  locality manager with no installed components results in a memory
-  access violation.  This will be fixed in CIAO 0.8.2.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.9 and CIAO-0.8.0
-=======================================================
-
-. Generalized DDS4CCM connector support to allow user-defined
-  DDS4CCM connectors
-
-. Added support for structs in the deployment plan
-
-. Updated DDS4CCM to the beta 3 specification which includes
-  - explicit support for ContentFilterTopics
-  - porttype may contain attributes
-  - all sequence are now inout instead of out
-  - DDS vendors can deliver their own partial template specialization to
-    handle differences between vendors
-
-. Completed AMI4CCM support
-
-. Added tutorials for DDS4CCM and AMI4CCM
-
-. Updated Quoter tutorial for the latest CoSMIC release
-
-. The ACE_FOR_TAO MPC feature is not supported anymore for CIAO
-
-. The DeploymentInterceptor interfaces have been merged into
-  a single interface.
-
-. All currently defined interception points are currently invoked
-  at the locality level when deploying plans.
-
-. The NodeApplication and LocalitManager have been refactored to use
-  a thread pool based dispatching system for executing deployment actions.
-  This allows the NodeApplication to use multiple threads to spawn new
-  dance_locality_manager processes.  The LocalityManager will, for the
-  time being, be restricted to using only the ORB thread for dispatching
-  deployment events.
-
-. Most deployment errors are now passed to installed deployment interceptors.
-  DAnCE will include interceptors for extant semantics (first failure) and
-  initial support for best effort semantics, whereby deployment failures are
-  logged by otherwise ignored.
-
-. An Artifact Installation framework has been added to DAnCE and integrated
-  into the NodeApplication.
-  The framework provides a plugin system for installation handlers and a
-  pluggable local node installation repository/cache.
-  Installation handlers are selected based on the 'scheme' identifiers of
-  location URLs from installation artifact entities in the deployment plan.
-  Multiple installation schemes can be nested inside a single location URL
-  as <scheme>://<scheme>://<resource identification>.
-  The framework comes with 'file' and 'http' scheme installation handlers
-  and a simple local filesystem based installation repository/cache.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.8 and CIAO-0.7.9
-=======================================================
-
-. CIAO's default makefiles (traditional ACE/GNU, not autoconf/automake)
-  now support installation with "make install".
-  Please see the ACE-INSTALL.html file for instructions.
-
-. CIAO now enabled the LwCCM profile by default. This reduces the
-  size of the generated code and the core libraries significantly.
-  If you need any of the full CCM features, set ccm_lw=0 in your
-  default.features file.
-
-. Updated AMI4CCM naming and extended the test suite
-
-. DDS4CCM tests and examples now instantiate the CCM_DDS::Typed module which
-  gives us the DDS_Event and DDS_State connectors directly without requiring
-  the user to manually derive a connector from DDS_Event and/or DDS_State
-
-. The way attributes are set from the cdp file onto the components
-  has changed, any mismatch between the attribute datatype in IDL
-  and the CDP file will cause to a StartError
-
-. The interpretation of locality constraints in deployment plans has changed
-  slightly.  Previously, any components not explicitly included as part of
-  a locality group would be installed into their own, seperate locality.  Now
-  they will be installed into an arbitrarily chosen locality on the same node.
-
-. The first version of the DAnCE LocalityManager entity has been added to
-  the repository.  As such, launching components with ciao_componentserver
-  is no longer supported, and dance_locality_manager should be used instead
-  as the component server argument to dance_node_manager.
-
-. The way explicitly homed components are represented in deployment plans
-  has changed.  The <implementation> section needs to have an execParameter
-  with name "edu.vanderbilt.dre.DAnCE.ImplementationType" and value
-  "edu.vanderbilt.dre.CCM.HomedComponent".  The <instance> section needs
-  to have a configProperty with name "edu.vanderbilt.dre.CIAO.ComponentHomeId"
-  and value is the <name> field of the home that is managing that component.
-
-. The way component server processes are explicitly deployed and passed
-  command line arguments has changed.  The <implementation> field must
-  have an execParameter named "edu.vanderbilt.dre.DAnCE.ImplementationType"
-  and value "edu.vanderbilt.dre.DAnCE.LocalityManager".  To pass command
-  line arguments, the instance must have a configProperty named
-  "edu.vanderbilt.dre.DAnCE.LocalityArguments".
-
-. Connection of emits/publish/consume ports is no longer supported via
-  externalReference endpoints.  Simplex and multiplex facet/receptacle
-  connections continue to be supported.
-
-. DDS4CCM is compliant to the beta 2 specification, the next micro release
-  will be updated to match beta 3.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.7 and CIAO-0.7.8
-=======================================================
-
-. dance_plan_launcher has been extensively re-factored, resulting in several
-  new features:
-  1) dance_plan_launcher may now deploy locality-constrained plans directly to
-     a NodeManager.
-  2) dance_plan_launcher now has the ability to deploy CDR encoded deployment
-     plans in a portable manner.
-  3) dance_plan_launcher's command line options have been cleaned up to be
-     more intuitive. The major user-visible change is -q (for application
-     teardown) has been renamed -s.
-  4) Most plan_launcher business logic is encapsulated in an implementation
-     library that may be leveraved by users to write custom executor agents.
-
-. All DDS4CCM callbacks will be deliverd to the user component on the CCM
-  thread, not on the DDS thread. This does mean a small performance penalty,
-  if you don't want to get this threadswitch, define CIAO_DDS4CCM_CONTEXT_SWITCH
-  to zero in your config.h file
-
-. DDS4CCM uses a ContentFilteredTopic to implement the QueryFilter. If you
-  want to use DDS QueryCondition instead add DDS4CCM_USES_QUERY_CONDITION
-  as 1 to your config.h file
-
-. The user sequences in our DDS4CCM examples and tests have been updated to use
-  Seq as postfix instead of _Seq. The RTI DDS specific sequence is now named
-  with the RTISeq postfix
-
-. DDS4CCM doesn't work anymore with RTI DDS 4.4d, you will need to use at
-  least 4.5b version with an updated CCK
-
-. AMI4CCM has been partly implemented into TAO_IDL and the Hello example has been
-  updated. The naming conventions and exact code generated will be reviewed
-  after this micro release.
-
-. The DDS4CCM connectors do initialize themselves completely after creation,
-  this does mean that one DDS_Event connector has always 1 writer and 2 readers, also
-  when you just write samples and don't use read or listen. The latency performance
-  test shows current an overhead of 10% to 13%, but this does include the additional
-  readers.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.6 and CIAO-0.7.7
-=======================================================
-
-. Reworked MPC support for dds4ccm. If you want to use dds4ccm you need
-  to obtain the source distribution and for NDDS add dds4ccm_ndds=1 to
-  your default.features file and generate the project files
-
-. Implemented more dds wrapper calls in the dds4ccm library
-
-. All DDS4CCM connectors are now generated by tao_idl
-
-. Did major cleanup in DAnCE to reduce dependencies and code size
-
-. Fix bug with DAnCE logging that cause the dance_node_manager not
-  to log any messages
-
-. Extended dds4ccm test suite
-
-. Fixed -Glfa support
-
-. Added a new tool, dance_split_plan, which will allow a user
-  to split a deployment plan into locality-constrained CDR-encoded deployment
-  plans.
-
-. Added a new tool, dance_convert_plan, which will allow a user to validate
-  and optionally convert a XML encoded deployment plan into CDR.
-
-. CIAO and DAnCE logging are silent by default, no messages are printed anymore.
-  If you want to enable logging use the environment variables CIAO_LOG_LEVEL,
-  DANCE_LOG_LEVEL, CIAO_TRACE_ENABLE, DANCE_TRACE_ENABLE, DANCE_LOG_FILE,
-  and CIAO_LOG_FILE. For the executables we have the commandline arguments
-  -DAnCELogLevel, -DAnCETraceEnable, -DAnCELogFile, -CIAOLogLevel,
-  -CIAOTraceEnable, and -CIAOLogFile
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.5 and CIAO-0.7.6
-=======================================================
-
-. Added support for the environment variable DDS4CCM_NDDS_LOG_VERBOSITY.
-  This controls the ndds verbosity which is default set to silent
-
-. Added support for the DDS State and Event connector with all ports.
-  A set of tests has been added to test these connectors. We implement
-  now the biggest part of the recent OMG 09-10-25 specification
-
-. Extended AMI4CCM prototype with the latest ideas. The TAO_IDL compiler
-  has some hardcoded generation just for Hello example. It has to be
-  extended to generate the AMI4CCM connector and after that we can
-  remove the hardcoded generation with the real generation code
-
-. Added support for components/connectors with local interface. In the
-  cdp a deployRequirement has to be specified for any local connector
-
-. Use the templated module support for dds4ccm
-
-. Added suppor for #pragma ciao lem to handle the issues with the
-  include of the E.idl file
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.4 and CIAO-0.7.5
-=======================================================
-
-. Added rudimentary support for PlanLocality, which allows DAnCE to spawn
-  multiple CIAO processes per node.  Currently, only SameProcess
-  constraints are honored.  SameProcess constraints are honored by
-  creating a separate process per constraint as it appears in the
-  plan, with the appropriate component instances spawned in each
-  process.
-
-  Constraints are not rigerously checked by the runtime, so behaviour
-  when a component instance appears in multiple SameProcess
-  constraints is currently undefined.
-
-  Components not appearing in any constraint are placed in a default
-  component server process.
-
-. DDS4CCM has been updated to match the beta 2 spec. If you want use
-  a templated module, use TYPED_MODULE macro as helper until the
-  TAO_IDL compiler supports templated modules
-
-. Updated all DDS4CCM code/examples/tests to match beta 2
-
-. Added Shapes sender/receiver for DDS4CCM
-
-. The configProperty edu.vanderbilt.dre.CIAO.ComponentServer.Executable
-  can be used in the deployment plan to set a different ciao component
-  server executable
-
-. The configProperty edu.vanderbilt.dre.CIAO.ComponentServer.Args
-  can be used in the deployment plan to specify a set of additional
-  commandline arguments that are than passed to the ciao component
-  server
-
-. Added support for the environment variable DDS4CCM_DEFAULT_DOMAIN_ID
-  This influences the default domain id which is set by the connector.
-  All test deployment plans don't set a domain id, which cause problems
-  during testing because everyone is in the same domain. Each developer
-  and build system on the same network should have its own unique id
-  to get an isolated test environment.
-
-. DDS4CCM qos_profile attribute has to be used as library#profile. If
-  this is not set, we use default qos
-
-. Removed DDS4CCM monolotic connector because it was not in the spec
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.3 and CIAO-0.7.4
-=======================================================
-
-. Added second prototype of DDS4CCM that uses the RTI
-  CORBA Compatibility kit and a monolitic connector
-
-. Extended AMI4CCM prototype
-
-. Update all examples and tests for the changes in the -Glem
-  TAO_IDL option.  The behavior of this option has changed
-  dramatically, and will require that most user applications be
-  ported.  Previously, -Glem would cause the IDL compiler to generate
-  a E.idl file containing local executor mapping for all interfaces
-  provided as ports by any components in the main translation unit.
-  Therefore, files with interfaces, but no components defined will
-  have empty E.idl files generated.  Similarly, a file with no
-  interfaces defined, but with components defined would generate LEM
-  interfaces for interfaces provided by that component but not local
-  to the file in question.  While this behavior simplified a
-  rudimentary use case where interfaces would be provided by only one
-  component, more complicated use cases were much more difficult to
-  achieve.
-
-  The new behvior causes the IDL compiler to generate LEM IDL for all
-  interfaces within a given translation unit, regardless of whether or
-  not they are provided as ports by a component in the same
-  translation unit.  Futhermore, if a component provides an interface
-  that is not defined with the translation unit of that compoment, it
-  is required that the user provide a #include directive to the
-  appropriate E.idl file which contains the required LEM interface for
-  the interfaces provided as facets.
-
-  This new behavior is similar to the former behavior of -Glfa, and as
-  such the behavior of -Glfa has been changed to attempt to be
-  reflective of the old behavior of -Glem, and may be used as a
-  stopgap backwards compatibility measure.
-
-. In idl3_to_idl2 tool, replaced manual designation of IDL2-only
-  files and resulting generated include of undecorated filename
-  (using -x <filename> option) with a mechanism that does it
-  automatically. The -x option has been eliminated.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.2 and CIAO-0.7.3
-=======================================================
-
-. Added a first prototype of DDS4CCM
-
-. Added a first prototype of AMI4CCM
-
-. Made CIAO compiling with unicode enabled
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.1 and CIAO-0.7.2
-=======================================================
-
-. CIDL compiler, and .cidl files, have been eliminated. All
-  CIAO code generation is now handled by the TAO IDL compiler.
-  See $TAO_ROOT/docs/compiler.html for details.
-
-. DAnCE has been refactored in separate libraries to reduce
-  footprint and dependencies
-
-. Logging has been improved
-
-. IDL has been updated to match the official specifications
-
-. CIAO now also compiles on HPUX
-
-. Unicode improvements
-
-. Updated Quoter tutorial for all recent changes including
-  the latest CosMIC releases
-
-. Use the new feature of the TAO_IDL compiler to generate all
-  export files as part of the build step
-
-. Extended CIAO and DAnCE tests
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.7.0 and CIAO-0.7.1
-=======================================================
-
-. No user visible changes in this release.
-
-USER VISIBLE CHANGES BETWEEN CIAO-0.6.9 and CIAO-0.7.0
-=======================================================
-
-.  CIDLC compiler has new command line options:  --suppress-lem which will suppress
-   generation of the local executor mapping, --suppress-svnt which will suppress
-   generation of the servant code, --lem-enclosing-module which will generate the
-   local executor mapping inside a given module.
+. Implement Resource Allocation and Control Engine (RACE), which is a
+  component middleware framework built atop of CIAO/DAnCE that integrates
+  multiple resource allocation/control algorithms for (re)deploying and
+  (re)configuring component applications. RACE enables (1) system
+  developers to configure algorithms depending on the characteristics of
+  applications and operating environment, and (2) swapping in and swapping
+  out multiple algorithms to make different resource allocation and control
+  decisions, without handcrafting the mechanisms needed to (1) configure
+  the algorithms and (2) deploy the decisions made by the algorithms.
+
+. Implement support for more complex type initialization with XML.
+
+. Decouple dependencies to NodeApplication from other DAnCE tools.
+  These dependencies were added to support static configurator.  We
+  need to have these tools in both conventional version and static
+  configuration version.
+
+. Support tool-specific debug levels and added CIAO_DEBUG macros to
+  simplify adding debug printouts based on various tool-specific debug
+  levels.
+
+. Add support for querying for interface types to the
+  RepositoryManager.
+
+. Implement a planner to query the TargetManager and RepositoryManager
+  and generate deployment plans on the fly.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
 ======================================================
@@ -572,16 +105,16 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.6.8 and CIAO-0.6.9
    tutorial found at CIAO_ROOT/docs/tutorials/Quoter for details.
 
 .  DAnCE now supports connection endpoints realized by extra-plan
-   object references.
+   object references. 
 
 .  Support for shared components and ReDaC has been removed with no
-   immediate replacement planned.
+   immediate replacement planned. 
 
 .  Support for RTEC integration, RT-CCM, RepositoryManager,
    TargetManager, and staticly linked depoyment has not yet been ported
    to the new CIAO/DAnCE.
 
-.  CIAO/DAnCE now supports by Xerces 3.X and 2.X.
+.  CIAO/DAnCE now supports by Xerces 3.X and 2.X. 
 
 .  Note that CoSMIC support is not currently available for this version
    of CIAO/DAnCE.

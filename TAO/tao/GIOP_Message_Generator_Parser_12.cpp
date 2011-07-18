@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/GIOP_Message_Generator_Parser_12.h"
 #include "tao/GIOPC.h"
 #include "tao/GIOP_Utils.h"
@@ -14,6 +11,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 #include "tao/CDR.h"
+
+ACE_RCSID (tao,
+           GIOP_Message_Gen_Parser_12,
+           "$Id$")
 
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
@@ -34,12 +35,10 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
-  // Here are the Octet values for different policies. See the meaning
-  // of response_flags of RequestHeader_1_2 in the CORBA specification as
-  // to why the values below are used.
+  // Here are the Octet values for different policies
   // '00000000' for SYNC_NONE
   // '00000000' for SYNC_WITH_TRANSPORT
-  // '00000001' for SYNC_WITH_SERVER
+  // '00000010' for SYNC_WITH_SERVER
   // '00000011' for SYNC_WITH_TARGET
   // '00000011' for regular two ways, but if they are invoked via a
   // DII with INV_NO_RESPONSE flag set then we need to send '00000001'

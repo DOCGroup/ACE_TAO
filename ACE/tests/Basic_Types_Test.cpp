@@ -1,16 +1,20 @@
-//=============================================================================
-/**
- *  @file    Basic_Types_Test.cpp
- *
- *  $Id$
- *
- *  Checks the #defines in ace/Basic_Types.h, and a few other basics.
- *
- *
- *  @author David L. Levine <levine@cs.wustl.edu>
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Basic_Types_Test.cpp
+//
+// = DESCRIPTION
+//    Checks the #defines in ace/Basic_Types.h, and a few other basics.
+//
+// = AUTHOR
+//    David L. Levine <levine@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can
@@ -33,6 +37,8 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_unistd.h"
+
+ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 
 typedef void* (*a_function_pointer) (void*);
 
@@ -233,15 +239,31 @@ run_main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("ACE_SIZEOF_LONG_DOUBLE: %u%s"),
                    sizeof (long double), ACE_SIZEOF_LONG_DOUBLE);
 
+// Crays don't have 16-bit quantities, so don't even test for 16-bit values
+#if !defined(_UNICOS)
   errors += check (ACE_TEXT ("sizeof (ACE_INT16) is %u%s"),
                    sizeof (ACE_INT16), 2);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT16) is %u%s"),
                    sizeof (ACE_INT16), 2);
+#else /* ! _UNICOS */
+  errors += check (ACE_TEXT ("sizeof (ACE_INT16) is %u%s"),
+                   sizeof (ACE_INT16), 8);
+  errors += check (ACE_TEXT ("sizeof (ACE_UINT16) is %u%s"),
+                   sizeof (ACE_INT16), 8);
+#endif /* ! _UNICOS */
 
+// MPP Crays do have 32-bit quantities (short), though vector Crays don't
+#if !defined(_UNICOS) || defined(_CRAYMPP)
   errors += check (ACE_TEXT ("sizeof (ACE_INT32) is %u%s"),
                    sizeof (ACE_INT32), 4);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT32) is %u%s"),
                    sizeof (ACE_INT32), 4);
+#else /* ! _UNICOS */
+  errors += check (ACE_TEXT ("sizeof (ACE_INT32) is %u%s"),
+                   sizeof (ACE_INT32), 8);
+  errors += check (ACE_TEXT ("sizeof (ACE_UINT32) is %u%s"),
+                   sizeof (ACE_INT32), 8);
+#endif /* ! _UNICOS */
   errors += check (ACE_TEXT ("sizeof (ACE_UINT64) is %u%s"),
                    sizeof (ACE_UINT64), 8);
 
@@ -268,19 +290,10 @@ run_main (int, ACE_TCHAR *[])
       ++errors;
     }
 
-  ACE_UINT16 test_val = 123;
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("little endian\n")));
-  if (ACE_HTONS (test_val) == test_val)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Endian test: %d == %d but should be different\n"),
-                ACE_HTONS (test_val), test_val));
 #elif defined (ACE_BIG_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("big endian\n")));
-  if (ACE_HTONS (test_val) != test_val)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Endian test: %d != %d but should be equal\n"),
-                ACE_HTONS (test_val), test_val));
 #else
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("assertion failed: no ACE_*_ENDIAN definition!\n")));

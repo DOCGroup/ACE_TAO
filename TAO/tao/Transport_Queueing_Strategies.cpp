@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Transport_Queueing_Strategies.h"
@@ -7,6 +6,11 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_RCSID (tao,
+           Transport_Queueing_Strategies,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

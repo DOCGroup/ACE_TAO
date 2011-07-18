@@ -141,7 +141,7 @@ private:
   char** consumer_names_;
   CORBA::ULong* consumer_ipaddr_;
 
-  PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender_;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender_;
   // The sender
 
   TAO_EC_Simple_AddrServer addr_server_;
@@ -221,13 +221,13 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             unsigned int *seed);
+             ACE_RANDR_TYPE &seed);
   // This method connects the consumer to the EC.
 
   void close (void);
   // Disconnect from the EC.
 
-  void connect (unsigned int *seed);
+  void connect (ACE_RANDR_TYPE& seed);
   void disconnect (void);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
@@ -345,7 +345,7 @@ private:
   // The last time we changed our publication, so we don't change too
   // often.
 
-  PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver_;
+  TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver_;
   // This object reads the events and pushes them into the EC. Notice
   // that it can receive events from multiple Event Handlers.
 
@@ -357,7 +357,7 @@ private:
   // @@ TODO Eventually we may need several of this objects to handle
   // OS limitations on the number of multicast groups per socket.
 
-  unsigned int seed_;
+  ACE_RANDR_TYPE seed_;
   // The seed for a random number generator.
 
   CORBA::ULong subscription_change_period_;

@@ -55,13 +55,10 @@ else {
     $priority2 = 50;
 }
 
-# Hack for VxWorks platform.
-my $is_vxworks = $server->isa ("PerlACE::TestTarget_VxWorks");
-
 $server_args =
     "-ORBdebuglevel $debug_level "
     ."-ORBendpoint iiop:// "
-    .($is_vxworks ? "" : "-ORBendpoint shmiop:// ");
+    .(PerlACE::is_vxworks_test() ? "" : "-ORBendpoint shmiop:// ");
 
 $client_args =
     "-o file://$client_iorfile  "

@@ -11,11 +11,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID (Hello,
+           server,
+           "$Id$")
+
 const ACE_TCHAR *good_ior_file = ACE_TEXT ("good.ior");
 const ACE_TCHAR *bad_ior_file = ACE_TEXT ("bad.ior");
 const ACE_TCHAR *root_ior_file = ACE_TEXT("root.ior");
-const ACE_TCHAR *svc_conf_file = ACE_TEXT("multi_prot.conf");
-
 int load_advanced_resources =
 ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
@@ -45,10 +47,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
     else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-b")) == 0)
       {
         bad_ior_file = argv[++c];
-      }
-    else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-c")) == 0)
-      {
-        svc_conf_file = argv[++c];
       }
     else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-p")) == 0)
       {
@@ -85,14 +83,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
                          "usage:  %s "
                          "-g <goodiorfile> "
                          "-b <badiorfile> "
-                         "-c <svc_conf_file>"
                          "-p <port> "
                          "-v "
                          "\n",
                          argv [0]),
                         -1);
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -184,7 +181,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (host_form == multi_protocol)
     {
       extra[4] = ACE::strnew (ACE_TEXT ("-ORBSvcConf"));
-      extra[5] = ACE::strnew (svc_conf_file);
+      extra[5] = ACE::strnew (ACE_TEXT ("multi_prot.conf"));
     }
 
   ACE_TCHAR **largv = new ACE_TCHAR *[argc+num_extra];

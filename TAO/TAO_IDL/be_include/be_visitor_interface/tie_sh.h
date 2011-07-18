@@ -1,43 +1,49 @@
+//
+// $Id$
+//
 /* -*- c++ -*- */
-//=============================================================================
-/**
- *  @file    tie_sh.h
- *
- *  $Id$
- *
- *  Concrete visitor for the Interface node.
- *  This one provides the code generation for TIE classes
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_sh.h
+//
+// = DESCRIPTION
+//    Concrete visitor for the Interface node.
+//    This one provides the code generation for TIE classes
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #ifndef _BE_INTERFACE_TIE_SH_H_
 #define _BE_INTERFACE_TIE_SH_H_
 
-/**
- * @class be_visitor_interface_tie_sh
- *
- * @brief be_visitor_interface_tie_sh
- *
- * This is a concrete visitor to generate the server header for the TIE class
- */
 class be_visitor_interface_tie_sh : public be_visitor_interface
 {
+  //
+  // = TITLE
+  //   be_visitor_interface_tie_sh
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the server header for the TIE class
+  //
+  //
 public:
-  /// constructor
   be_visitor_interface_tie_sh (be_visitor_context *ctx);
+  // constructor
 
-  /// destructor
   ~be_visitor_interface_tie_sh (void);
+  // destructor
 
-  /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);
+  // set the right context and make a visitor
 
-  /// set the right context and make a visitor
   virtual int visit_component (be_component *node);
+  // set the right context and make a visitor
 
   static int method_helper (be_interface *,
                             be_interface *,

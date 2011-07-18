@@ -1,122 +1,70 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
+
+$iorbase = "server_ior";
+$server_ior   = PerlACE::LocalFile ("$iorbase");
+$clerk_ior    = PerlACE::LocalFile ("clerk_ior");
 
 $status = 0;
-$debug_level = '0';
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+# Make sure the files are gone, so we can wait on them.
+
+unlink $server_ior, $clerk_ior;
+
+if (PerlACE::is_vxworks_test()) {
+  $SV = new PerlACE::ProcessVX ("../../Time_Service/Time_Service_Server", "-o $iorbase");
 }
+else {
+  $SV = new PerlACE::Process ("../../Time_Service/Time_Service_Server", "-o $server_ior");
+}
+$CK = new PerlACE::Process ("../../Time_Service/Time_Service_Clerk", "-f $server_ior -o $clerk_ior -t 2");
+$CL = new PerlACE::Process ("client", "-f $clerk_ior");
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $clerk = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
+$SV->Spawn ();
 
-my $srv_ior = "server.ior";
-my $clk_ior = "clerk.ior";
-
-my $server_srv_ior = $server->LocalFile ($srv_ior);
-my $clerk_srv_ior  = $clerk->LocalFile($srv_ior);
-my $clerk_clk_ior  = $clerk->LocalFile($clk_ior);
-my $client_clk_ior = $client->LocalFile ($clk_ior);
-
-$server->DeleteFile($srv_ior);
-$clerk->DeleteFile($srv_ior);
-$clerk->DeleteFile($clk_ior);
-$client->DeleteFile($clk_ior);
-
-$SV = $server->CreateProcess ("../../Time_Service/tao_costime_server", "-o $server_srv_ior");
-$CK = $server->CreateProcess ("../../Time_Service/tao_costime_clerk",
-                              "-f $clerk_srv_ior -o $clerk_clk_ior -t 2");
-$CL = $client->CreateProcess ("client", "-f $client_clk_ior");
-
-$process_status = $SV->Spawn ();
-
-if ($process_status != 0) {
-    print STDERR "ERROR: server returned $process_status\n";
+if (PerlACE::waitforfile_timed ($server_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$server_ior>\n";
+    $SV->Kill ();
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($srv_ior,
-                                $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_srv_ior>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+$CK->Spawn ();
+
+if (PerlACE::waitforfile_timed ($clerk_ior, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$clerk_ior>\n";
+    $SV->Kill ();
+    $CK->Kill ();
     exit 1;
 }
 
-if ($server->GetFile ($srv_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_srv_ior>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+$client = $CL->SpawnWaitKill (60);
 
-if ($clerk->PutFile ($srv_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$clerk_srv_ior>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$process_status = $CK->Spawn ();
-
-if ($process_status != 0) {
-    print STDERR "ERROR: clerk returned $process_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($clerk->WaitForFileTimed ($clk_ior,
-                              $clerk->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$clerk_clk_ior>\n";
-    $CK->Kill (); $CK->TimedWait (1);
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($clerk->GetFile ($clk_ior) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$clerk_clk_ior>\n";
-    $CK->Kill (); $CK->TimedWait (1);
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-if ($client->PutFile ($clk_ior) == -1) {
-    print STDERR "ERROR: cannot set file <$client_clk_ior>\n";
-    $CK->Kill (); $CK->TimedWait (1);
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$process_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
-if ($process_status != 0) {
-    print STDERR "ERROR: server returned $process_status\n";
+$server = $SV->TerminateWaitKill (15);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
     $status = 1;
 }
 
-$process_status = $CK->TerminateWaitKill ($clerk->ProcessStopWaitInterval());
-if ($process_status != 0) {
-    print STDERR "ERROR: clerk returned $process_status\n";
+$clerk = $CK->TerminateWaitKill (15);
+
+if ($clerk != 0) {
+    print STDERR "ERROR: clerk returned $clerk\n";
     $status = 1;
 }
 
-$server->DeleteFile($srv_ior);
-$clerk->DeleteFile($srv_ior);
-$clerk->DeleteFile($clk_ior);
-$client->DeleteFile($clk_ior);
+unlink $server_ior, $clerk_ior;
 
 exit $status;

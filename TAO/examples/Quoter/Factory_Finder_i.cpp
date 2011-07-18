@@ -1,18 +1,18 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Factory_Finder_i.cpp
- *
- *  $Id$
- *
- *  A Factory Finder for the Quoter example. This example conforms
- *  to the CosLifeCycle Factory Finder notion.
- *
- *
- *  @author Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    FactoryFinder_i.cpp
+//
+// = DESCRIPTION
+//    A Factory Finder for the Quoter example. This example conforms
+//    to the CosLifeCycle Factory Finder notion.
+//
+// = AUTHOR
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "Factory_Finder_i.h"
 #include "QuoterC.h"
@@ -20,6 +20,10 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
+
+ACE_RCSID (Quoter,
+           Factory_Finder_i,
+           "$Id$")
 
 // Constructor
 Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)

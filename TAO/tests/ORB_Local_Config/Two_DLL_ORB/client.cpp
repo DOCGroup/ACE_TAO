@@ -7,6 +7,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
+ACE_RCSID(Hello, client, "$Id$")
+
 Client_Worker::Client_Worker ()
   : Abstract_Worker (ACE_TEXT ("file://test.ior"))
 {
@@ -37,102 +39,83 @@ Client_Worker::parse_args (int argc, ACE_TCHAR *argv[])
       break;
     }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
 int
 Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
 {
-  try
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+  if (parse_args (argc, argv) != 0)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
+                      1);
+
+  // Doing this dance to allow the server some time to come up.
+  CORBA::Object_ptr co = 0;
+  for (int attempts_left=5; attempts_left > 0; --attempts_left)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) Client is ready to proceed - awaiting the server ...\n")));
+    ACE_OS::sleep (1);
+
+    try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      co = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior_file_.c_str ()));
 
-      if (parse_args (argc, argv) != 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
-                          1);
-
-      // Doing this dance to allow the server some time to come up.
-      CORBA::Object_ptr co = 0;
-      for (int attempts_left = 5; attempts_left > 0; --attempts_left)
+      if (co == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) Client is ready to proceed - awaiting the server ...\n")));
-          ACE_OS::sleep (1);
+                      ACE_TEXT ("(%P|%t) Unable to obtain object reference yet. Retrying.\n")));
+          continue;
+        }
+      CORBA::Object_var tmp (co);
 
-          try
-            {
-              co = orb->string_to_object (ior_file_.c_str ());
+      Test::Hello_var hello =
+        Test::Hello::_narrow(tmp.in ());
 
-              if (co == 0)
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) Unable to obtain object reference yet. Retrying.\n")));
-                  continue;
-                }
-              CORBA::Object_var tmp (co);
+      if (CORBA::is_nil (hello.in ()))
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Nil Test::Hello reference <%s>. Retrying.\n"),
+                      ior_file_.c_str ()));
+          continue;
+        }
 
-              Test::Hello_var hello =
-                Test::Hello::_narrow(tmp.in ());
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Successfuly narrowed the Hello interface\n")));
 
-              if (CORBA::is_nil (hello.in ()))
-                {
-                  ACE_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) Nil Test::Hello reference <%s>. Retrying.\n"),
-                              ior_file_.c_str ()));
-                  continue;
-                }
+      CORBA::String_var the_string =
+        hello->get_string ();
 
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Successfuly narrowed the Hello interface\n")));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) String returned from the server <%C>\n"),
+                  the_string.in ()));
 
-              CORBA::String_var the_string =
-                hello->get_string ();
+      hello->shutdown ();
 
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) String returned from the server <%C>\n"),
-                          the_string.in ()));
+      attempts_left = 0; // We're done here!
 
-              hello->shutdown ();
-
-              attempts_left = 0; // We're done here!
-
-            }
-          catch (const CORBA::TRANSIENT& ex)
-            {
-              if (!attempts_left)
-                throw;
-
-              ex._tao_print_exception ("Temporary problem encountered");
-
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Client was too quick. Pausing ")
-                          ACE_TEXT ("while the server gets ready.\n")));
-              ACE_OS::sleep (5);
-            }
-          catch (const CORBA::Exception& ex)
-            {
-              ex._tao_print_exception("Unexpected CORBA exception caught");
-
-              if (!attempts_left)
-                throw;
-
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Pausing for a while.\n")));
-              ACE_OS::sleep (5);
-            }
-      }
-
-      orb->shutdown (0);
-
-      orb->destroy ();
     }
-  catch (const ::CORBA::Exception &e)
+    catch (const CORBA::TRANSIENT& ex)
     {
-      e._tao_print_exception("Client_Worker::test_main");
-      return 1;
+      if (!attempts_left)
+        throw;
+
+      ex._tao_print_exception ("Temporary problem encountered");
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Client was too quick. Pausing ")
+                  ACE_TEXT ("while the server gets ready.\n")));
+      ACE_OS::sleep (5);
     }
+  }
+
+  orb->shutdown (0);
+
+  orb->destroy ();
 
   return 0;
 }

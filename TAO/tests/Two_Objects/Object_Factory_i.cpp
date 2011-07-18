@@ -7,6 +7,9 @@
 #include "Object_Factory_i.h"
 #include "ace/Synch.h"
 
+ACE_RCSID(Test, Test, "$Id$")
+
+
 Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb, CORBA::ULong len)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     length_(len)
@@ -19,17 +22,16 @@ Object_Factory_i::create_first (void)
 {
   First_i *first_impl;
 
+  // @@ Dont you want to transfer ownership to the POA?
   ACE_NEW_THROW_EX (first_impl,
                     First_i (orb_.in(), two_way_done_ ),
                     CORBA::NO_MEMORY() );
-  // Ownership is transfered to the POA.
-  PortableServer::ServantBase_var safe (first_impl);
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
 
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in ());
+  PortableServer::POA_var root_poa =    
+    PortableServer::POA::_narrow (poa_object.in ()); 
 
   PortableServer::ObjectId_var id =
     root_poa->activate_object (first_impl);
@@ -52,14 +54,12 @@ Object_Factory_i::create_second (void)
                     Second_i (orb_.in(),
                               length_, two_way_done_),
                     CORBA::NO_MEMORY ());
-  // Ownership is transfered to the POA.
-  PortableServer::ServantBase_var safe (second_impl);
 
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
 
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in ());
+  PortableServer::POA_var root_poa =    
+    PortableServer::POA::_narrow (poa_object.in ()); 
 
   PortableServer::ObjectId_var id =
     root_poa->activate_object (second_impl);

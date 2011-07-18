@@ -26,12 +26,7 @@ use File::Basename;
 
 $config_list = new PerlACE::ConfigList;
 
-if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-  my $subdir = $PerlACE::Process::ExeSubDir;
-  $subdir =~ s/\/$//;
-  $ENV{'ACE_EXE_SUB_DIR'} = $subdir;
-}
-
+PerlACE::add_lib_path("$ENV{ACE_ROOT}/tests");
 
 ################################################################################
 
@@ -141,7 +136,7 @@ sub run_program ($@)
     }
 
     my $start_time = time();
-    $status = $P->SpawnWaitKill (300 + $target->ProcessStartWaitInterval());
+    $status = $P->SpawnWaitKill (400 + $target->ProcessStartWaitInterval());
     my $time = time() - $start_time;
 
     ### Check for problems
@@ -160,7 +155,7 @@ sub run_program ($@)
     check_log ($program);
 
     if ($config_list->check_config ('Codeguard')) {
-        check_codeguard_log ($program);
+    	check_codeguard_log ($program);
     }
     chdir $start_dir;
 }
@@ -337,9 +332,9 @@ sub check_log ($)
                         }
                         print STDERR "======= End Sublog File \n";
                     }
-                }
+		}
             }
-        }
+	}
     }
 }
 
@@ -390,7 +385,7 @@ sub delete_temp_files ()
 
 ################################################################################
 
-if (!getopts ('dhtvo:l:') || $opt_h) {
+if (!getopts ('dhtvo:') || $opt_h) {
     print "run_test.pl [-h] [-v] [-o <output file>] [-t file1 file2 ...]\n";
     print "\n";
     print "Runs the tests listed in run_test.lst\n";
@@ -399,7 +394,6 @@ if (!getopts ('dhtvo:l:') || $opt_h) {
     print "    -d         Debug mode (do not run tests)\n";
     print "    -h         Display this help\n";
     print "    -t         Runs all the tests passed via the cmd line\n";
-    print "    -l list    Load the list and run only those tests\n";
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
@@ -424,10 +418,6 @@ check_for_more_configs ();
 if (defined $opt_t) {
     @tests = @ARGV;
 }
-elsif (defined $opt_l) {
-    $config_list->load ("$opt_l");
-    @tests = $config_list->valid_entries ();
-}
 else {
     $config_list->load ("run_test.lst");
     @tests = $config_list->valid_entries ();
@@ -443,8 +433,6 @@ my($oh) = \*STDOUT;
 
 my $target = PerlACE::TestTarget::create_target (1);
 
-$target->AddLibPath("$ENV{ACE_ROOT}/tests");
-
 # Put needed files in place for targets that require them.
 #
 # Service_Config_Test needs service config file.
@@ -452,28 +440,18 @@ my $svc_conf_file = $target->LocalFile ("Service_Config_Test.conf");
 if ($target->PutFile ("Service_Config_Test.conf", $svc_conf_file) == -1) {
     print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
 }
-# Config_Test needs config ini file.
-my $conf_ini_file = $target->LocalFile ("Config_Test_Import_1.ini");
-if ($target->PutFile ("Config_Test_Import_1.ini", $conf_ini_file) == -1) {
-    print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
-}
-# Service_Config_Stream_Test needs service config file.
-$svc_conf_file = $target->LocalFile ("Service_Config_Stream_Test.conf");
-if ($target->PutFile ("Service_Config_Stream_Test.conf", $svc_conf_file) == -1) {
-    print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
-}
 
 foreach $test (@tests) {
-    if (defined $opt_d) {
-        print "Would run test $test now\n";
-    }
-    elsif ($config_list->check_config ('Purify')) {
-        purify_program ($test);
-    }
-    else {
-        run_program ($target, $test);
-    }
-    $target->GetStderrLog();
+  if (defined $opt_d) {
+    print "Would run test $test now\n";
+  }
+  elsif ($config_list->check_config ('Purify')) {
+    purify_program ($test);
+  }
+  else {
+    run_program ($target, $test);
+  }
+  $target->GetStderrLog();
 }
 
 check_resources ($oh) if (!defined $opt_d);

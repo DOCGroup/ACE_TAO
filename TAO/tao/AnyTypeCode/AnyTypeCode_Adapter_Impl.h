@@ -92,8 +92,6 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar);
 
-  virtual void insert_into_any (CORBA::Any * any, const std::string & value);
-
   virtual void insert_into_any (CORBA::Any * any, CORBA::Long value);
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Short value);

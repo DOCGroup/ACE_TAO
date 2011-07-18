@@ -10,19 +10,22 @@
 
 
 feature(vc_avoid_crt_secure_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9, vc10, nmake) {
     macros += _CRT_SECURE_NO_WARNINGS _CRT_SECURE_NO_DEPRECATE _CRT_NONSTDC_NO_DEPRECATE
   }
 }
 
 feature(!vc_scl_secure_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9, vc10, nmake) {
     macros += _SCL_SECURE_NO_WARNINGS
   }
 }
 
 feature(vc_avoid_this_in_initializer_warnings) {
-  specific(prop:microsoft) {
+  specific(vc8, vc9, vc10) {
     DisableSpecificWarnings += 4355
+  }
+  specific(nmake) {
+    compile_flags += /wd4355
   }
 }

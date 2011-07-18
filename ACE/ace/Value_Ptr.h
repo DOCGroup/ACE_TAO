@@ -103,6 +103,11 @@ namespace ACE
       return *this;
     }
 
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
+
+    // Compiler can't handle member templates so we lose converting
+    // copy operations.
+
     /// Converting copy constructor.
     template <typename U>
     Value_Ptr (Value_Ptr<U> const & other)
@@ -118,7 +123,11 @@ namespace ACE
       return *this;
     }
 
+#endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
+
   private:
+
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
 
     /// Copying method invoked when copy constructing.
     template <typename U>
@@ -127,8 +136,24 @@ namespace ACE
       return p ? VP_traits<U>::clone (p) : 0;
     }
 
+#else
+
+    // Compiler can't handle member templates so we lose converting
+    // copy operations.
+
+    /// Copying method invoked when copy constructing.
+    T * create_from (T const * p) const
+    {
+      return p ? VP_traits<T>::clone (p) : 0;
+    }
+
+#endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
+
   private:
+
+#ifndef ACE_LACKS_MEMBER_TEMPLATES
     template <typename U> friend class Value_Ptr;
+#endif  /* !ACE_LACKS_MEMBER_TEMPLATES */
 
     /// Object owned by this @c Value_Ptr.
     T * p_;

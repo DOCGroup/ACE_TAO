@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    bd_str_seq.cpp
- *
- *  $Id$
- *
- *  tests bounded string sequences
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    bd_str_seq.cpp
+//
+// = DESCRIPTION
+//    tests bounded string sequences
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "bd_str_seq.h"
+
+ACE_RCSID (Param_Test,
+           bd_str_seq,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Bounded_String_Sequence

@@ -1,122 +1,89 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
+# This is a Perl script that runs a Load Balancing service demo.
+# See README file for details about the demo.
+
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$status = 0;
-$debug_level = '0';
+# File used to pass load balancing service ior to its clients.
+$iorbase = "lb.ior";
+$iorfile = PerlACE::LocalFile("$iorbase");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
+unlink $iorfile;
+
+if (PerlACE::is_vxworks_test()) {
+  $LB = new PerlACE::ProcessVX ("load_balancer", "-o $iorbase");
 }
-
-my $balancer = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $server = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $client = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-
-my $iorbase = "server.ior";
-my $balancer_iorfile = $balancer->LocalFile ($iorbase);
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$balancer->DeleteFile($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$LB = $balancer->CreateProcess ("load_balancer", "-ORBdebuglevel $debug_level -o $balancer_iorfile");
-$SV = $server->CreateProcess ("server", "-i file://$server_iorfile");
-$CL = $client->CreateProcess ("client", "-i file://$client_iorfile -n 10");
+else {
+  $LB = new PerlACE::Process ("load_balancer", "-o $iorfile");
+}
+$SV = new PerlACE::Process ("server", "-i file://$iorfile");
+$CL = new PerlACE::Process ("client", "-i file://$iorfile -n 10");
 
 print STDERR "\n    Starting Load Balancing Server and Identity Server \n\n";
 
 # Run the load balancing server.
-$balancer_status = $LB->Spawn ();
+$lbserver = $LB->Spawn ();
 
-if ($balancer_status != 0) {
-    print STDERR "ERROR: balancer returned $balancer_status\n";
-    exit 1;
-}
-
-if ($balancer->WaitForFileTimed ($iorbase,
-                                 $balancer->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$balancer_iorfile>\n";
-    $LB->Kill (); $LB->TimedWait (1);
+if ($lbserver != 0) {
+    print STDERR "ERROR: load_balancer returned $lbserver\n";
     exit 1;
 }
 
-if ($balancer->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$balancer_iorfile>\n";
-    $LB->Kill (); $LB->TimedWait (1);
-    exit 1;
-}
-if ($server->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$server_iorfile>\n";
-    $LB->Kill (); $LB->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $LB->Kill (); $LB->TimedWait (1);
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: File containing Load Balancing Service ior,".
+        " <$iorfile>, cannot be found\n";
+    $LB->Kill ();
     exit 1;
 }
 
 # Run the identity server, which registers its objects with the load
 # balancing server.
-$server_status = $SV->Spawn ();
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    $LB->Kill (); $LB->TimedWait (1);
-    exit 1;
-}
+$SV->Spawn ();
+sleep ($PerlACE::wait_interval_for_process_creation);
 
-sleep ($server->ProcessStartWaitInterval());
 
 # Run tests, i.e., run client with different command line options.
 
 print STDERR "\n     Client using Round Robin Object Group (10 iterations): \n\n";
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$client = $CL->SpawnWaitKill (60);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $LB->Kill (); $LB->TimedWait (1);
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
+
+$CL->Arguments ("-r " . $CL->Arguments ());
 
 print STDERR "\n     Client using Random Object Group (10 iterations): \n\n";
-$CL->Arguments ("-r " . $CL->Arguments ());
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$client = $CL->SpawnWaitKill (60);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $LB->Kill (); $LB->TimedWait (1);
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$balancer_status = $LB->TerminateWaitKill ($balancer->ProcessStopWaitInterval());
-
-if ($balancer_status != 0) {
-    print STDERR "ERROR: server returned $balancer_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+# Clean up.
+$loadbalancer= $LB->TerminateWaitKill (15);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($loadbalancer != 0) {
+    print STDERR "ERROR: load balancer returned $loadbalancer\n";
     $status = 1;
 }
 
-$balancer->DeleteFile($iorbase);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+$server = $SV->TerminateWaitKill (15);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+unlink $iorfile;
 
 exit $status;

@@ -498,7 +498,7 @@ namespace CORBA
 TAO_AnyTypeCode_Export CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
 
-TAO_AnyTypeCode_Export CORBA::Boolean
+TAO_AnyTypeCode_Export CORBA::Boolean 
 operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc);
 
 #if defined (GEN_OSTREAM_OPS)
@@ -551,7 +551,7 @@ namespace TAO
                                  CORBA::TypeCode_var,
                                  CORBA::TypeCode_out,
                                  TAO::Objref_Traits<CORBA::TypeCode>,
-                                 TAO::Any_Insert_Policy_Stream>
+                                 TAO::Any_Insert_Policy_Stream <CORBA::TypeCode_ptr> >
   {
   };
 

@@ -45,6 +45,7 @@ class TAO_Export TAO_Collocation_Resolver
   : public ACE_Service_Object
 {
 public:
+
   /// Destructor.
   virtual ~TAO_Collocation_Resolver (void);
 

@@ -1,18 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_ss.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Interfaces in the server skeletons file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_ss.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Interfaces in the server skeletons file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "nr_extern.h"
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ss,
+           "$Id$")
+
 
 // ************************************************************
 // Interface visitor for server skeletons.
@@ -35,7 +46,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
       return 0;
     }
 
-  AST_Type *concrete = node->supports_concrete ();
+  AST_Interface *concrete = node->supports_concrete ();
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.
@@ -59,7 +70,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     this->generate_flat_name (node);
 
   *os << be_nl << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -79,7 +90,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
       << " (void)" << be_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 
 // @@@ (JP) I'm commenting out the copy constructor for now. The
 // declaration in the skeleton header file has been made private. These
@@ -112,7 +123,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     }
 
   *os << "ValueBase (rhs)" << be_uidt << be_uidt_nl
-      << "{}" << be_nl_2;
+      << "{}" << be_nl << be_nl;
 */
 
   *os << full_skel_name << "::~"

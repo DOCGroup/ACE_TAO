@@ -178,7 +178,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ::Stock::Cookie_var cookie =
         stock_distributor->subscribe_notifier (consumer.in (), priority_level);
 
-      consumer->cookie_ (cookie.in ());
+      consumer->cookie (cookie.in ());
 
       // Get the object reference to a StockQuoter that's been
       // activated at the appropriate priority.

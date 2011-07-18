@@ -1,6 +1,9 @@
-// $Id$
-
 #include "tao/DynamicInterface/ExceptionList.h"
+
+ACE_RCSID (DynamicInterface,
+           ExceptionList,
+           "$Id$")
+
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"
 
@@ -71,24 +74,24 @@ CORBA::ExceptionList::remove (CORBA::ULong)
 CORBA::ExceptionList_ptr
 CORBA::ExceptionList::_duplicate (void)
 {
-  this->_incr_refcount ();
+  this->_incr_refcnt ();
   return this;
 }
 
 void
 CORBA::ExceptionList::_destroy (void)
 {
-  this->_decr_refcount ();
+  this->_decr_refcnt ();
 }
 
 void
-CORBA::ExceptionList::_incr_refcount (void)
+CORBA::ExceptionList::_incr_refcnt (void)
 {
   ++this->ref_count_;
 }
 
 void
-CORBA::ExceptionList::_decr_refcount (void)
+CORBA::ExceptionList::_decr_refcnt (void)
 {
   CORBA::ULong const refcount = --this->ref_count_;
 

@@ -3,14 +3,16 @@
 #include "Consumer_Handler.h"
 #include "Consumer_Input_Handler.h"
 
-/**
- * Consumer driver for the Publish/Subscribe example.
- *
- * The Consumer holds the <Consumer_Input_Handler> and
- * <Cosumer_Handler> objects.
- */
+ACE_RCSID(Consumer, consumer, "$Id$")
+
 class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
+  // = TITLE
+  //    Consumer driver for the Publish/Subscribe example.
+  //
+  // = DESCRIPTION
+  //    The Consumer holds the <Consumer_Input_Handler> and
+  //    <Cosumer_Handler> objects.
 public:
   // = Initialization and termination methods.
   Consumer (void);

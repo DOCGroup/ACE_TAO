@@ -1,20 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    ub_str_seq.cpp
- *
- *  $Id$
- *
- *  tests unbounded string sequences
- *
- *
- *  @author   Aniruddha Gokhale
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/Param_Test
+//
+// = FILENAME
+//    ub_str_seq.cpp
+//
+// = DESCRIPTION
+//    tests unbounded string sequences
+//
+// = AUTHORS
+//      Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "helper.h"
 #include "ub_str_seq.h"
+
+ACE_RCSID (Param_Test,
+           ub_str_seq,
+           "$Id$")
 
 // ************************************************************************
 //               Test_String_Sequence

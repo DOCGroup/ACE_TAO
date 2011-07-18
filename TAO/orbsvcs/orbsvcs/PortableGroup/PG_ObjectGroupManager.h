@@ -185,21 +185,6 @@ public:
    */
   void generic_factory (TAO_PG_GenericFactory * generic_factory);
 
-  /// Get active or inactive member count in a group.
-  size_t member_count (
-    const PortableServer::ObjectId & oid, bool is_active);
-
-  /// Verify if the member is active from local cache.
-  bool is_alive (
-    const PortableServer::ObjectId & oid,
-    CORBA::Object_ptr member);
-
-  /// Remove the inactive members.
-  void remove_inactive_members ();
-
-  /// Validate all active members.
-  void validate_members (CORBA::ORB_ptr orb, const TimeBase::TimeT& timeout);
-
 protected:
 
   /// Underlying and non-locking implementation of the add_member()
@@ -228,8 +213,7 @@ protected:
     TAO_PG_ObjectGroup_Map_Entry * group_entry);
 
   /// get the position of the object_group_map_entry
-  /// -1 indicate group is not found.
-  int get_object_group_position (
+  size_t get_object_group_position (
     const TAO_PG_ObjectGroup_Array & groups,
     TAO_PG_ObjectGroup_Map_Entry * group_entry);
 
@@ -243,14 +227,6 @@ protected:
     CORBA::Object_ptr member);
 
 private:
-
-  /// Help function to get active or inactive member infos.
-  TAO_PG_MemberInfo_Set get_members (bool is_alive);
-
-  /// Ping the remote to verify the connections.
-  bool ping (CORBA::ORB_ptr orb,
-             CORBA::Object_var& obj,
-             const TimeBase::TimeT& tt);
 
   /// Reference to the POA that created the object group references.
   PortableServer::POA_var poa_;
@@ -270,8 +246,6 @@ private:
   /// Lock used to synchronize access to the underlying tables.
   TAO_SYNCH_MUTEX lock_;
 
-  /// The list of inactive members.
-  TAO_PG_MemberInfo_Set inactive_members_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

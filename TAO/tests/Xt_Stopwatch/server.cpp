@@ -3,6 +3,11 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (Xt_Stopwatch,
+           server,
+           "$Id$")
+
 #include "tao/XtResource/XtResource_Loader.h"
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
@@ -32,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

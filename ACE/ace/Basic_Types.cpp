@@ -1,10 +1,13 @@
-// $Id$
-
 #include "ace/Basic_Types.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Basic_Types.inl"
 #endif /* ! __ACE_INLINE__ */
+
+
+ACE_RCSID (ace,
+           Basic_Types,
+           "$Id$")
 
 
 #if defined (ACE_LACKS_LONGLONG_T) && !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)

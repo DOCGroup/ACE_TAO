@@ -177,9 +177,10 @@ private:
 class ACE_ETCL_Export ETCL_Union_Value : public ETCL_Constraint
 {
 public:
+  ETCL_Union_Value (void);
   ETCL_Union_Value (int sign,
                     ETCL_Constraint *integer);
-  explicit ETCL_Union_Value (ETCL_Constraint *string = 0);
+  ETCL_Union_Value (ETCL_Constraint *string);
   virtual ~ETCL_Union_Value (void);
 
   int sign (void) const;
@@ -197,8 +198,9 @@ private:
 class ACE_ETCL_Export ETCL_Union_Pos : public ETCL_Constraint
 {
 public:
-  ETCL_Union_Pos (ETCL_Constraint *union_value = 0,
-                  ETCL_Constraint *component = 0);
+  ETCL_Union_Pos (void);
+  ETCL_Union_Pos (ETCL_Constraint *union_value,
+                  ETCL_Constraint *component);
   virtual ~ETCL_Union_Pos (void);
 
   ETCL_Union_Value *union_value (void) const;
@@ -214,8 +216,9 @@ private:
 class ACE_ETCL_Export ETCL_Component_Pos : public ETCL_Constraint
 {
 public:
-  ETCL_Component_Pos (ETCL_Constraint *integer = 0,
-                      ETCL_Constraint *component = 0);
+  ETCL_Component_Pos (void);
+  ETCL_Component_Pos (ETCL_Constraint *integer,
+                      ETCL_Constraint *component);
   virtual ~ETCL_Component_Pos (void);
 
   ETCL_Literal_Constraint *integer (void) const;
@@ -231,8 +234,9 @@ private:
 class ACE_ETCL_Export ETCL_Component_Assoc : public ETCL_Constraint
 {
 public:
-  ETCL_Component_Assoc (ETCL_Constraint *identifier = 0,
-                        ETCL_Constraint *component = 0);
+  ETCL_Component_Assoc (void);
+  ETCL_Component_Assoc (ETCL_Constraint *identifier,
+                        ETCL_Constraint *component);
   virtual ~ETCL_Component_Assoc (void);
 
   ETCL_Identifier *identifier (void) const;
@@ -248,8 +252,9 @@ private:
 class ACE_ETCL_Export ETCL_Component_Array : public ETCL_Constraint
 {
 public:
-  ETCL_Component_Array (ETCL_Constraint *integer = 0,
-                        ETCL_Constraint *component = 0);
+  ETCL_Component_Array (void);
+  ETCL_Component_Array (ETCL_Constraint *integer,
+                        ETCL_Constraint *component);
   virtual ~ETCL_Component_Array (void);
 
   ETCL_Literal_Constraint *integer (void) const;
@@ -280,8 +285,9 @@ private:
 class ACE_ETCL_Export ETCL_Component : public ETCL_Constraint
 {
 public:
-  ETCL_Component (ETCL_Constraint *identifier = 0,
-                  ETCL_Constraint *component = 0);
+  ETCL_Component (void);
+  ETCL_Component (ETCL_Constraint *identifier,
+                  ETCL_Constraint *component);
   virtual ~ETCL_Component (void);
 
   ETCL_Identifier *identifier (void) const;
@@ -297,7 +303,8 @@ private:
 class ACE_ETCL_Export ETCL_Dot : public ETCL_Constraint
 {
 public:
-  explicit ETCL_Dot (ETCL_Constraint *component = 0);
+  ETCL_Dot (void);
+  ETCL_Dot (ETCL_Constraint *component);
   virtual ~ETCL_Dot (void);
 
   ETCL_Constraint *component (void) const;
@@ -311,7 +318,8 @@ private:
 class ACE_ETCL_Export ETCL_Eval : public ETCL_Constraint
 {
 public:
-  explicit ETCL_Eval (ETCL_Constraint *component = 0);
+  ETCL_Eval (void);
+  ETCL_Eval (ETCL_Constraint *component);
   virtual ~ETCL_Eval (void);
 
   ETCL_Constraint *component (void) const;
@@ -325,7 +333,8 @@ private:
 class ACE_ETCL_Export ETCL_Default : public ETCL_Constraint
 {
 public:
-  explicit ETCL_Default (ETCL_Constraint *component = 0);
+  ETCL_Default (void);
+  ETCL_Default (ETCL_Constraint *component);
   virtual ~ETCL_Default (void);
 
   ETCL_Constraint *component (void) const;
@@ -339,7 +348,8 @@ private:
 class ACE_ETCL_Export ETCL_Exist : public ETCL_Constraint
 {
 public:
-  explicit ETCL_Exist (ETCL_Constraint *component = 0);
+  ETCL_Exist (void);
+  ETCL_Exist (ETCL_Constraint *component);
   virtual ~ETCL_Exist (void);
 
   ETCL_Constraint *component (void) const;

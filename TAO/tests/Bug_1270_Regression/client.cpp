@@ -3,9 +3,12 @@
 #include "Echo.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
+
+ACE_RCSID(Bug_1270_Regression, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
@@ -60,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      PortableServer::ServantBase_var impl;
+      TAO::Utils::Servant_Var<Echo> impl;
       {
         Echo * tmp;
         // ACE_NEW_RETURN is the worst possible way to handle
@@ -87,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Echo_Caller_var server =
         Test::Echo_Caller::_narrow(tmp.in ());
 
-      if (CORBA::is_nil (server.in ()))
+      if (CORBA::is_nil (echo.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo_Caller reference <%s>\n",
@@ -110,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception caught in client:");
+      ex._tao_print_exception ("Exception caught:");
       return 1;
     }
 
@@ -139,6 +142,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }

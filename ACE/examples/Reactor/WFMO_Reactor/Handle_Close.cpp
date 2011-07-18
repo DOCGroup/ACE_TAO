@@ -1,20 +1,24 @@
-//=============================================================================
-/**
- *  @file    Handle_Close.cpp
- *
- *  $Id$
- *
- *
- *  This application tests whether handle_close gets called and if
- *  the correct masks are passed along.  The handler should get
- *  handle_close called for all three masks (READ, WRITE, and
- *  EXCEPT).
- *
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// $Id$
+//
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Handle_Close.cpp
+//
+// = DESCRIPTION
+//
+//    This application tests whether handle_close gets called and if
+//    the correct masks are passed along.  The handler should get
+//    handle_close called for all three masks (READ, WRITE, and
+//    EXCEPT).
+//
+// = AUTHOR
+//    Irfan Pyarali
+//
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
@@ -24,7 +28,7 @@
 #include "ace/Pipe.h"
 #include "ace/OS_main.h"
 
-
+ACE_RCSID(WFMO_Reactor, Handle_Close, "$Id: ")
 
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;
@@ -43,7 +47,7 @@ static int cancel_reads = 0;
 void
 write_to_pipe (ACE_Pipe &pipe)
 {
-  const char *data = "hello";
+  char *data = "hello";
   size_t len = ACE_OS::strlen (data);
 
   ssize_t result = ACE::send (pipe.write_handle (),

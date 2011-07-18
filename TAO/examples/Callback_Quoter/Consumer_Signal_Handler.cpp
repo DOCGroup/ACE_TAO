@@ -1,18 +1,22 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Consumer_Signal_Handler.cpp
- *
- *  $Id$
- *
- *  Implementation of the Consumer_Signal_Handler class.
- *
- *
- *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+//
+// = LIBRARY
+//    TAO/examples/Callback_Quoter
+//
+// = FILENAME
+//    Consumer_Input_Handler.cpp
+//
+// = DESCRIPTION
+//    Implementation of the Consumer_Signal_Handler class.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Consumer_Signal_Handler.h"
 

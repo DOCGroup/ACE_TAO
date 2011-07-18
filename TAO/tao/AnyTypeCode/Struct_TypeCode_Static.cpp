@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
@@ -14,6 +13,12 @@
 #endif  /* !__ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
+
+
+ACE_RCSID (AnyTypeCode,
+           Struct_TypeCode_Static,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

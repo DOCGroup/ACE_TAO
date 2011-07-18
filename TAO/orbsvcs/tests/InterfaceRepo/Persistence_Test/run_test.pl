@@ -1,15 +1,21 @@
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 # $Id$
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
 $persistent = "-p";
+
 $status = 0;
+
+$iorfile = "if_repo.ior";
+$backing_file = PerlACE::LocalFile ("ifr_default_backing_store");
+
+$init_ref = "-ORBInitRef InterfaceRepository=file://$iorfile";
 
 $debug = "";
 $query_opt = "-q";
@@ -24,124 +30,77 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
 }
 
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+unlink $iorfile;
+unlink $backing_file;
 
-my $iorbase = "if_repo.ior";
-my $backing_file = "ifr_default_backing_store";
+$IFR = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " -o $iorfile" . " $persistent");
+$T   = new PerlACE::Process ("Persistence_Test");
 
+print "Starting IFR_Service\n";
+$IFR->Spawn ();
 
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $server_backing_file = $server->LocalFile ($backing_file);
-my $client_iorfile = $client->LocalFile ($iorbase);
-$server->DeleteFile($iorbase);
-$server->DeleteFile($backing_file);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
-                              " -o $server_iorfile " .
-                              " $persistent");
-
-$CL = $client->CreateProcess ("Persistence_Test",
-                              "-ORBInitRef InterfaceRepository=file://$client_iorfile");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $IFR->Kill ();
+    unlink $backing_file;
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($backing_file);
-    exit 1;
-}
-
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($backing_file);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($backing_file);
-    exit 1;
-}
+$T->Arguments ($init_ref);
 
 print "Starting Persistence_Test\n";
+$test = $T->SpawnWaitKill (60);
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($test != 0) {
+    print STDERR "ERROR: populate test returned $test\n";
     $status = 1;
 }
 
 print "Terminating IFR_Service\n";
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server = $IFR->TerminateWaitKill (5);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: IFR returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+unlink $iorfile;
 
-$CL->Arguments ("-ORBInitRef InterfaceRepository=file://$client_iorfile $debug $query_opt");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($status == 1) {
+    print STDERR "ERROR: There is a problem during the first run\n";
+    unlink $backing_file;
     exit 1;
 }
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($backing_file);
+print "Starting IFR_Service\n";
+$IFR->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $IFR->Kill ();
+    unlink $backing_file;
     exit 1;
 }
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($backing_file);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $server->DeleteFile($backing_file);
-    exit 1;
-}
+$T->Arguments ("$init_ref $debug $query_opt");
 
 print "Starting Persistence_Test\n";
+$test = $T->SpawnWaitKill (60);
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
+if ($test != 0) {
+    print STDERR "ERROR: query test returned $test\n";
     $status = 1;
 }
 
 print "Terminating IFR_Service\n";
-$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+$server = $IFR->TerminateWaitKill (5);
 
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($server != 0) {
+    print STDERR "ERROR: IFR returned $server\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-$server->DeleteFile($backing_file);
+unlink $iorfile;
+unlink $backing_file;
 
 exit $status;

@@ -1,8 +1,10 @@
-// $Id$
-
 #include "LB_server.h"
 #include "Basic.h"
 #include "Simple.h"
+
+ACE_RCSID (Manage_object_group,
+           server,
+           "$Id$")
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -109,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      //lb_server.orb ()->shutdown (0);
+      lb_server.orb ()->shutdown (0);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 

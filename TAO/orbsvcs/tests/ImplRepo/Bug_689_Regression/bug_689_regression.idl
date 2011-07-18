@@ -4,6 +4,5 @@
 
 interface bug_689_regression
 {
-  void noop ();
   oneway void shutdown ();
 };

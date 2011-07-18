@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    manual.cpp
- *
- *  $Id$
- *
- *  Allows manual operations on local and remote tokens.
- *
- *
- *  @author Tim Harrison
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    manual.cpp
+//
+// = DESCRIPTION
+//    Allows manual operations on local and remote tokens.
+//
+// = AUTHOR
+//    Tim Harrison
+//
+// ============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
@@ -25,30 +28,28 @@
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-
+ACE_RCSID(manual, manual, "$Id$")
 
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
-/**
- * @class STDIN_Token
- *
- * @brief STDIN Token
- *
- * Translates STDIN commands to ACE Token commands.
- */
 class STDIN_Token : public ACE_Event_Handler
+  // = TITLE
+  //     STDIN Token
+  //
+  // = DESCRIPTION
+  //     Translates STDIN commands to ACE Token commands.
 {
 public:
-  /// Construction.
   STDIN_Token (void);
+  // Construction.
 
-  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
+  // Parse command-line arguments.
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Register with whatever event dispatcher is needed and run.
-  ///FUZZ: enable check_for_lack_ACE_OS
   int open (int argc, char *argv[]);
+  // Register with whatever event dispatcher is needed and run.
+  //FUZZ: enable check_for_lack_ACE_OS
 
   // = Event_Handler methods.
   int handle_input (ACE_HANDLE);
@@ -58,30 +59,30 @@ public:
 
 private:
 
-  /// Display options.
   void display_menu (void);
+  // Display options.
 
-  /// Get or make a proxy to <token> with a <tid> client id.
   ACE_Token_Proxy *get_proxy (const char *tid, const char *token, char type);
+  // Get or make a proxy to <token> with a <tid> client id.
 
-  /// Create a proxy to <token> with a <tid> client id.
   ACE_Token_Proxy *create_proxy (const char *token, char type);
+  // Create a proxy to <token> with a <tid> client id.
 
   // = Mapping from tid to Token_Collection.
-  /// COLLECTION maintains a mapping from tid to a collection.
   typedef ACE_Map_Manager<TID, ACE_Token_Collection *, ACE_Null_Mutex>
     COLLECTIONS;
+  // COLLECTION maintains a mapping from tid to a collection.
 
-  /// Allows iterations through collections_.
   typedef ACE_Map_Iterator<TID, ACE_Token_Collection *, ACE_Null_Mutex>
     COLLECTIONS_ITERATOR;
+  // Allows iterations through collections_.
 
-  /// Allows iterations through collections_.
   typedef ACE_Map_Entry<TID, ACE_Token_Collection *>
     COLLECTIONS_ENTRY;
+  // Allows iterations through collections_.
 
-  /// A collection for each <tid>.
   COLLECTIONS collections_;
+  // A collection for each <tid>.
 
   const char *server_host_;
   int server_port_;

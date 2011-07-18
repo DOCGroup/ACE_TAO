@@ -16,6 +16,11 @@
 #include "tao/debug.h"
 #include <ace/OS_NS_stdio.h>
 
+ACE_RCSID (PortableGroup,
+           PG_Object_Group_Manipulator,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Object_Group_Manipulator::PG_Object_Group_Manipulator ()
@@ -47,8 +52,8 @@ PortableServer::ObjectId * TAO::PG_Object_Group_Manipulator::convert_ogid_to_oid
   // 4294967295 -- Largest 32 bit unsigned integer
   char oid_str[11];
   ACE_OS::snprintf (oid_str, sizeof(oid_str),
-                    ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-                    static_cast<ACE_UINT32> (ogid));
+                   "%lu",
+                   static_cast<ACE_UINT32> (ogid));
   oid_str[sizeof(oid_str) - 1] = '\0';
 
   return PortableServer::string_to_ObjectId (oid_str);

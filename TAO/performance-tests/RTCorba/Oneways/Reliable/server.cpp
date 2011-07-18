@@ -6,19 +6,21 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 
+ACE_RCSID(Reliable, server, "$Id$")
+
 // IOR file name
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'o':
+      case 'f':
         ior_output_file = get_opts.opt_arg ();
         break;
 
@@ -26,13 +28,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <ior file> "
+                           "-f <ior file> "
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

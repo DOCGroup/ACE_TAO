@@ -76,8 +76,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
-AST_Decl::NodeType const
-AST_Typedef::NT = AST_Decl::NT_typedef;
+ACE_RCSID (ast,
+           ast_typedef,
+           "$Id$")
+
+AST_Typedef::AST_Typedef (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Type (),
+    pd_base_type (0),
+    owns_base_type_ (false)
+{
+}
 
 AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_ScopedName *n,
@@ -89,10 +99,16 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
               n),
     AST_Type (AST_Decl::NT_typedef,
               n),
-    AST_Field (AST_Decl::NT_typedef,
-               bt,
-               n)
+    pd_base_type (bt),
+    owns_base_type_ (false)
 {
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (AST_Decl::NT_array == nt || AST_Decl::NT_sequence == nt)
+    {
+      this->owns_base_type_ = true;
+      bt->anonymous (false);
+    }
 }
 
 AST_Typedef::~AST_Typedef (void)
@@ -121,7 +137,7 @@ AST_Typedef::primitive_base_type (void) const
 AST_Type *
 AST_Typedef::base_type (void) const
 {
-  return this->ref_type_;
+  return this->pd_base_type;
 }
 
 bool
@@ -133,7 +149,7 @@ AST_Typedef::legal_for_primary_key (void) const
 bool
 AST_Typedef::is_local (void)
 {
-  return this->ref_type_->is_local ();
+  return this->pd_base_type->is_local ();
 }
 
 bool
@@ -152,8 +168,17 @@ AST_Typedef::owns_base_type (bool val)
 void
 AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 {
+  if (this->is_local ())
+    {
+      this->dump_i (o, "(local) ");
+    }
+  else
+    {
+      this->dump_i (o, "(abstract) ");
+    }
+
   this->dump_i (o, "typedef ");
-  this->ref_type_->dump (o);
+  this->pd_base_type->dump (o);
   this->dump_i (o, " ");
   this->local_name ()->dump (o);
 }
@@ -162,7 +187,7 @@ AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 int
 AST_Typedef::compute_size_type (void)
 {
-  AST_Type *type = this->ref_type_;
+  AST_Type *type = this->base_type ();
 
   if (type == 0)
     {
@@ -190,8 +215,18 @@ AST_Typedef::ast_accept (ast_visitor *visitor)
 void
 AST_Typedef::destroy (void)
 {
-  this->AST_Field::destroy ();
+  if (this->owns_base_type_)
+    {
+      this->pd_base_type->destroy ();
+      delete this->pd_base_type;
+      this->pd_base_type = 0;
+    }
+
   this->AST_Type::destroy ();
 }
+
+// Data accessors.
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Typedef)

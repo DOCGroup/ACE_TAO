@@ -7,6 +7,11 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/SystemException.h"
 
+ACE_RCSID(DynamicInterface,
+          DII_Reply_Dispatcher,
+          "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.

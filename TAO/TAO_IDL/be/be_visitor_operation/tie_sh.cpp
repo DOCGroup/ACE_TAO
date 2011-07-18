@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    tie_sh.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for operations of the TIE class in the header
- *  file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    tie_sh.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for operations of the TIE class in the header
+//    file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation, 
+           tie_sh, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for server header for TIE class operations.
@@ -31,13 +41,6 @@ be_visitor_operation_tie_sh::~be_visitor_operation_tie_sh (void)
 int
 be_visitor_operation_tie_sh::visit_operation (be_operation *node)
 {
-  /// These implied IDL operations are not to be processed on
-  /// the skeleton side.
-  if (node->is_sendc_ami ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
@@ -53,8 +56,8 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype oro_visitor (&ctx);
@@ -69,8 +72,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
     }
 
   // STEP 2: generate the operation name.
-  *os << " " << this->ctx_->port_prefix ().c_str ()
-      << node->local_name ();
+  *os << " " << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing

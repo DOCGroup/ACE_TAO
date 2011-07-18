@@ -72,12 +72,12 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/libtao-doc/ziop
+HTML_OUTPUT           = html/tao/ziop
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = NO
+GENERATE_HTMLHELP     = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -125,19 +125,20 @@ PREDEFINED            = __ACE_INLINE__ \
                         ACE_END_VERSIONED_NAMESPACE_DECL \
                         TAO_BEGIN_VERSIONED_NAMESPACE_DECL \
                         TAO_END_VERSIONED_NAMESPACE_DECL \
-                        ACE_INLINE=inline \
-                        TAO_HAS_CORBA_MESSAGING=1
-EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER
+                        ACE_INLINE
+EXPAND_AS_DEFINED     = ACE_RCSID \
+                        ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER \
+                        ACE_THROW_SPEC
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to external references
+# Configuration::addtions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/libace-doc/ACE.tag=../../libace-doc \
-                        html/libtao-doc/TAO.tag=.. \
-                        html/libtao-doc/compression/TAO_Compression.tag=../compression
-GENERATE_TAGFILE      = html/libtao-doc/ziop/TAO_ZIOP.tag
+TAGFILES              = html/ace/ACE.tag=../../ace \
+                        html/tao/TAO.tag=.. \
+                        html/tao/compression/TAO_Compression.tag=../compression
+GENERATE_TAGFILE      = html/tao/ziop/TAO_ZIOP.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -151,17 +152,16 @@ PERL_PATH             = /usr/bin/perl
 HAVE_DOT              = YES
 CLASS_GRAPH           = YES
 COLLABORATION_GRAPH   = YES
-INCLUDE_GRAPH         = NO
-INCLUDED_BY_GRAPH     = NO
+INCLUDE_GRAPH         = YES
+INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 DOT_MULTI_TARGETS     = YES
-MAX_DOT_GRAPH_DEPTH   = 3
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to the search engine
+# Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
 SEARCHENGINE          = YES

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 
@@ -7,10 +6,14 @@
 #include "orbsvcs/SecurityC.h"
 #include "ace/SString.h"
 
+ACE_RCSID (Bug_1107_Regression,
+           client,
+           "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 const char *cert_file = "cacert.pem";
 
-int
+void
 insecure_invocation_test (CORBA::ORB_ptr orb,
                           CORBA::Object_ptr obj)
 {
@@ -46,7 +49,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
                   "nil.\n",
                   ior));
 
-      return 1;
+      throw CORBA::INTERNAL ();
     }
 
   try
@@ -61,17 +64,17 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
                   "(%P|%t) Received CORBA::NO_PERMISSION from "
                   "server, as expected.\n"));
 
-      return 0;
+      return;
     }
 
   ACE_ERROR ((LM_ERROR,
               "(%P|%t) ERROR: CORBA::NO_PERMISSION was not thrown.\n"
               "(%P|%t) ERROR: It should have been thrown.\n"));
 
-  return 1;
+  throw CORBA::INTERNAL ();
 }
 
-int
+void
 secure_invocation_test (CORBA::Object_ptr object)
 {
   Foo::Bar_var server =
@@ -84,15 +87,13 @@ secure_invocation_test (CORBA::Object_ptr object)
                   "nil.\n",
                   ior));
 
-      return 1;
+      throw CORBA::INTERNAL ();
     }
 
   // This invocation should return successfully.
   server->baz ();
 
   server->shutdown ();
-
-  return 0;
 }
 
 int
@@ -113,19 +114,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Usage:  %s "
-                           "-k <ior>"
+                           "-k <ior> "
                            "\n",
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
   bool set_cert_file = true;
   try
     {
@@ -165,54 +165,42 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // then result in a CORBA::NO_PERMISSION exception.
           //
           // The server is not shutdown by this test.
-          status = insecure_invocation_test (orb.in (), object.in ());
-          ACE_DEBUG ((LM_DEBUG,
-                      "insecure_invocation_test returned <%d>\n",
-                      status));
+          insecure_invocation_test (orb.in (), object.in ());
         }
 
       // This test uses the default secure SSLIOP settings to securely
       // invoke a method on the server.  No exception should occur.
       //
       // The server *is* shutdown by this test.
-      try
-        {
-          status = secure_invocation_test (object.in ());
-          ACE_DEBUG ((LM_DEBUG,
-                      "secure_invocation_test returned <%d>\n",
-                      status));
-        }
-      catch (CORBA::Exception const &ex)
-        {
-          if (set_cert_file)
-            {
-              ex._tao_print_exception ("Caught unexpected exception "
-                                       "(probable failure):");
-              status = 1;
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Caught an exception as expected due "
-                          "to the SSL_CERT_FILE environment "
-                          "variable not being set.\n"));
-            }
-        }
+      if (!set_cert_file)
+        ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+      secure_invocation_test (object.in ());
+      if (!set_cert_file)
+        ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception in main:");
-      return 1;
+      ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
+      if (set_cert_file)
+        {
+          ex._tao_print_exception ("Caught unexpected exception "
+                                   "(probable failure):");
+          return 1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "Caught an excep. as expected due "
+                                "to the SSL_CERT_FILE environment "
+                                "variable\nnot being set.\n"));
+          return 0;
+        }
     }
 
-  if (status == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n"
-                  "Bug_1107_Regression test passed.\n"));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              "\n"
+              "Bug_1107_Regression test passed.\n"));
 
-  return status;
+  return 0;
 }

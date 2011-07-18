@@ -1,6 +1,10 @@
-// $Id$
-
 #include "Simple.h"
+
+
+ACE_RCSID (Infrastructure_Controlled,
+           Simple,
+           "$Id$")
+
 
 Simple::Simple (void)
 {

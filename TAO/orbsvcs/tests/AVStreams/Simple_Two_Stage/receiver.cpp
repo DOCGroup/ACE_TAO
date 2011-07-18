@@ -86,7 +86,7 @@ Receiver_Callback::dump_samples (const char* file)
   ACE_DEBUG ((LM_DEBUG,
               "Dumping Stats.....\n"));
 
-  FILE* stats_file = ACE_OS::fopen (file, "wb");
+  FILE* stats_file = ACE_OS::fopen (file, "w");
 
   if (stats_file == 0)
     {

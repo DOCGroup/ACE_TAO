@@ -19,12 +19,13 @@
 //    http://www.dre.vanderbilt.edu/CIAO
 
 #include "Administrator_exec_i.h"
+#include "ciao/CIAO_common.h"
 
 // MY CODE
 #include <iostream>
 #include <string>
 
-namespace CIAO_Administrator_Impl
+namespace CIDL_Administrator_Impl
 {
   //==================================================================
   // Component Executor Implementation Class:   Administrator_exec_i

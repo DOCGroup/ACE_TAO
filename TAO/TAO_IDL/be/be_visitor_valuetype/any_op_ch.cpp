@@ -1,18 +1,28 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for a valuetype in the client
- *  header.
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for a valuetype in the client
+//    header.
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//    Boris Kolpackov <bosk@ipmce.ru>
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Valuetype visitor for generating Any operator declarations.
@@ -41,8 +51,8 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_module *module = 0;
 
@@ -81,9 +91,8 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
 
       be_util::gen_nested_namespace_end (os, module);
 
-      // Emit #else.
-      *os << be_nl_2
-          << "#else\n\n";
+      // emit #else
+      *os << "#else\n\n";
     }
 
   *os << be_global->core_versioning_begin () << be_nl;

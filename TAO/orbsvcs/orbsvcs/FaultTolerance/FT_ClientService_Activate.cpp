@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
 #include "orbsvcs/FaultTolerance/FT_ClientORBInitializer.h"
@@ -7,6 +5,8 @@
 #include "tao/Service_Callbacks.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID(FaultTolerance, FT_ClientService_Activate, "$Id$")
 
 static bool initialized = false;
 

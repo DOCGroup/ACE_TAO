@@ -1,22 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     ORB_destroy.cpp
- *
- *  $Id$
- *
- *   Simple ORB destruction test.
- *
- *
- *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/ORB_destroy
+//
+// = FILENAME
+//     ORB_destroy.cpp
+//
+// = DESCRIPTION
+//     Simple ORB destruction test.
+//
+// = AUTHOR
+//     Irfan Pyarali <irfan@cs.wustl.edu>
+//
+//=========================================================================
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Log_Msg.h"
+
+ACE_RCSID(ORB_destroy, ORB_destroy, "$Id$")
 
 int
 test_with_regular_poa_manager (int argc,

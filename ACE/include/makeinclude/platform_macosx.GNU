@@ -1,20 +1,21 @@
-# -*- Makefile -*-
 # $Id$
-
+# platform_macosx.GNU
 # support for Mac OS X 10.2 (jaguar), 10.3 (panther)
 # Note: /sw/lib & /sw/include are inserted for the convience of Fink
 #       users. Non-Fink users should simply create these directories to
 #       eliminate the warnings.
 
+exceptions ?= 1
 threads ?= 1
 debug ?= 1
 optimize ?= 0
 versioned_so ?= 0
+pipes ?= 1
 with_ld = macosx
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -Wno-long-double -I/sw/include
+CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -I/sw/include
 
 DCFLAGS         += -g
 DLD             = libtool
@@ -41,3 +42,5 @@ SOBUILD = -o $(VSHDIR)$*.dylib $<
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

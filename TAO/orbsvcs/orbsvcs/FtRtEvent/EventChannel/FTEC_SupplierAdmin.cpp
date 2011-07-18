@@ -6,6 +6,10 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
 #include "tao/Stub.h"
 
+ACE_RCSID (EventChannel,
+           TAO_FTEC_SupplierAdmin,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const FtRtecEventChannelAdmin::OperationType

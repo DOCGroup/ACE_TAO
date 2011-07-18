@@ -1,16 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes. This is a generic visitor.
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on interface.cpp from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes. This is a generic visitor.
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on interface.cpp from Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_valuetype,
+           valuetype,
+           "$Id$")
 
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -45,7 +56,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       // generated so that elements in the node's scope can use it
       // for code generation.
 
-      this->ctx_->scope (node);
+      this->ctx_->scope (node->decl ());
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -110,7 +121,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          "codegen for get_attribute failed\n"),
                         -1);
     }
-
+    
   get_op.destroy ();
 
   if (node->readonly ())
@@ -153,7 +164,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                          "codegen for set_attribute failed\n"),
                         -1);
     }
-
+    
   set_op.destroy ();
   rt.destroy ();
 
@@ -183,8 +194,8 @@ be_visitor_valuetype::visit_constant (be_constant *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-    case TAO_CodeGen::TAO_MODULE_OBV_CI:
-    case TAO_CodeGen::TAO_MODULE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
@@ -264,6 +275,8 @@ be_visitor_valuetype::visit_enum (be_enum *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
@@ -512,6 +525,8 @@ be_visitor_valuetype::visit_union (be_union *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
@@ -625,8 +640,8 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
         break;
       }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
-    case TAO_CodeGen::TAO_MODULE_OBV_CI:
-    case TAO_CodeGen::TAO_MODULE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
     case TAO_CodeGen::TAO_ROOT_IS:
@@ -685,9 +700,8 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         }
 
       be_field *field = be_field::narrow_from_decl (d);
-      be_attribute *attr = be_attribute::narrow_from_decl (d);
 
-      if (field == 0 || attr != 0)
+      if (!field)
         {
           continue;
         }
@@ -697,7 +711,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
-      this->ctx_->scope (node);
+      this->ctx_->scope (node->decl ());
 
       // Set the node to be visited.
       this->ctx_->node (field);
@@ -764,7 +778,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                                                      unsigned long &index)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_Type *parent = node->inherits_concrete ();
+  AST_ValueType *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
   if (parent != 0)
@@ -781,13 +795,9 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
        !si.is_done ();
        si.next())
     {
-      // be_attribute inherits from be_field
-      // so we have to also screen out attributes
       be_field *f = be_field::narrow_from_decl (si.item ());
-      be_attribute *attr =
-        be_attribute::narrow_from_decl (si.item ());
 
-      if (f == 0 || attr != 0)
+      if (f == 0)
         {
           continue;
         }
@@ -808,7 +818,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
                        &sn);
       ft->seen_in_operation (seen);
       visitor.visit_argument (&arg);
-
+      
       // AST_Argument inherits from AST_Field, which will destroy
       // its field type if it is anonymous - we don't want that.
       arg.be_decl::destroy ();
@@ -828,8 +838,8 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ()
@@ -909,14 +919,14 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to override _add_ref()
-  // and _remove_ref() by calling the one in DefaultValueRefCountBase
+  // and _remove_ref() by calling the one in DefaultValueRefCountBase 
   // to avoid ambiguity.
   if (node->n_supports () > 0)
     {
       return true;
     }
 
-  // VT needs RefCounter if it has concrete factory.
+  // VT needs RefCounter if it has concrete factory. 
   if (be_valuetype::FS_CONCRETE_FACTORY == node->determine_factory_style ())
     {
       return true;

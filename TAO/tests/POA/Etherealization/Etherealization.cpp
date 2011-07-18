@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Etherealization.cpp
- *
- *  $Id$
- *
- *   This program tests for deactivation and etherealization of
- *   reference counted and non reference counted servants.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/Etherealization
+//
+// = FILENAME
+//     Etherealization.cpp
+//
+// = DESCRIPTION
+//     This program tests for deactivation and etherealization of
+//     reference counted and non reference counted servants.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "testS.h"
 #include "ace/OS_NS_string.h"

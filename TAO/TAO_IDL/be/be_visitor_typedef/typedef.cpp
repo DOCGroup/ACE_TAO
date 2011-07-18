@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    typedef.cpp
- *
- *  $Id$
- *
- *  Generic visitor generating code for Typedefs
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    typedef.cpp
+//
+// = DESCRIPTION
+//    Generic visitor generating code for Typedefs
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_typedef, 
+           typedef, 
+           "$Id$")
 
 // ******************************************************
 // Generic typedef visitor.
@@ -89,12 +98,24 @@ be_visitor_typedef::visit_array (be_array *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_array_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_array_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_array - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -104,7 +125,7 @@ be_visitor_typedef::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_array - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 
@@ -159,6 +180,18 @@ be_visitor_typedef::visit_enum (be_enum *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_enum_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_enum_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_ROOT_CI:
       return 0; // nothing to be done
     default:
@@ -166,7 +199,7 @@ be_visitor_typedef::visit_enum (be_enum *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_enum - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -176,7 +209,7 @@ be_visitor_typedef::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_enum - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 
@@ -235,12 +268,24 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_sequence_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_sequence_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_sequence - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -250,7 +295,7 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_sequence - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 
@@ -312,12 +357,24 @@ be_visitor_typedef::visit_structure (be_structure *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_structure_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_structure_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_structure - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -327,7 +384,7 @@ be_visitor_typedef::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_structure - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 
@@ -388,12 +445,24 @@ be_visitor_typedef::visit_union (be_union *node)
         status = node->accept (&visitor);
         break;
       }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CH:
+      {
+        be_visitor_union_serializer_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_SERIALIZER_OP_CS:
+      {
+        be_visitor_union_serializer_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_typedef::"
                            "visit_union - "
-                           "Bad context state\n"),
+                           "Bad context state\n"), 
                           -1);
       }
     }
@@ -403,7 +472,7 @@ be_visitor_typedef::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_union - "
-                         "failed to accept visitor\n"),
+                         "failed to accept visitor\n"),  
                         -1);
     }
 

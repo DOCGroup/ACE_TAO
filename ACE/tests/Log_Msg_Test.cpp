@@ -1,21 +1,24 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Log_Msg_Test.cpp
- *
- *  $Id$
- *
- *   This program tests the <ACE_Log_Msg> class in various ways and
- *   also illustrates many of the features of the <ACE_Log_Msg> For
- *   instance, this program tests the <ACE_Log_Msg> abstraction wrt
- *   writing to stderr and to a file.  It also tests writing to user
- *   defined callback objects.
- *
- *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    Log_Msg_Test.cpp
+//
+// = DESCRIPTION
+//     This program tests the <ACE_Log_Msg> class in various ways and
+//     also illustrates many of the features of the <ACE_Log_Msg> For
+//     instance, this program tests the <ACE_Log_Msg> abstraction wrt
+//     writing to stderr and to a file.  It also tests writing to user
+//     defined callback objects.
+//
+// = AUTHOR
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "test_config.h"
 
@@ -30,10 +33,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_time.h"
-#include "ace/Time_Value.h"
-#include "ace/Thread.h"
+
+ACE_RCSID(tests, Log_Msg_Test, "$Id$")
 
 static void
 cleanup (void)
@@ -53,21 +54,21 @@ cause_error (void)
 class Logger : public ACE_Log_Msg_Callback
 {
 public:
-  /// Constructor sets whether we're testing "recursive" callback
-  /// logging!
   Logger (bool be_recursive = true);
+  // Constructor sets whether we're testing "recursive" callback
+  // logging!
 
-  /// Logging callback
   void log (ACE_Log_Record &log_record);
+  // Logging callback
 
   void verbose (bool be_verbose);
 
 private:
-  /// Flag for testing verbose logging.
   bool verbose_logging_;
+  // Flag for testing verbose logging.
 
-  /// Flag for testing recursive callback logging.
   bool recursive_;
+  // Flag for testing recursive callback logging.
 };
 
 void
@@ -240,7 +241,6 @@ test_log_msg_features (const ACE_TCHAR *program)
       size_t const index = i++;
       big[index] = alphabet[i % j];
     }
-  big[ACE_Log_Record::MAXLOGMSGLEN] = ACE_TEXT ('\0');
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big: %s\n"), big));
 
   // Exercise many different combinations of OSTREAM.
@@ -398,7 +398,7 @@ test_ostream (void)
                         1);
     }
 
-#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x680))
+#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x670))
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
@@ -476,17 +476,17 @@ class Log_Spec_Verify : public ACE_Log_Msg_Callback
 public:
   Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
-  /// Logging callback
   void log (ACE_Log_Record &log_record);
+  // Logging callback
 
   int  result ();
 
 private:
-  /// Count how many tests failed.
   int fail_;
+  // Count how many tests failed.
 
-  /// Count how many tests we run
   int tests_;
+  // Count how many tests we run
 
   bool recursive_;
 };
@@ -543,26 +543,6 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
               ++this->fail_;
             }
         }
-        else if (ACE_OS::strncmp (b, ACE_TEXT ("l5:"), 3) == 0)
-        {
-          b += 3;
-          switch (log_record.type())
-          {
-            case (LM_SHUTDOWN): expect = ACE_TEXT("S"); break;
-            case (LM_TRACE): expect = ACE_TEXT("T"); break;
-            case (LM_DEBUG): expect = ACE_TEXT("D"); break;
-            case (LM_INFO): expect = ACE_TEXT("I"); break;
-            case (LM_NOTICE): expect = ACE_TEXT("N"); break;
-            case (LM_WARNING): expect = ACE_TEXT("W"); break;
-            case (LM_STARTUP): expect = ACE_TEXT("U"); break;
-            case (LM_ERROR): expect = ACE_TEXT("E"); break;
-            case (LM_CRITICAL): expect = ACE_TEXT("C"); break;
-            case (LM_ALERT): expect = ACE_TEXT("A"); break;
-            case (LM_EMERGENCY): expect = ACE_TEXT("!"); break;
-            default: expect = ACE_TEXT("?"); break;
-          }
-
-        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -593,9 +573,9 @@ Log_Spec_Verify::result (void)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
 
-  if (this->tests_ != 15)
+  if (this->tests_ != 4)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 15!\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Exexpected number of %d tests run!\n"),
                 this->tests_));
     ++this->fail_;
   }
@@ -624,16 +604,6 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), nill_string));
   errno = ENOENT;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D\n")));
-  ACE_Time_Value tv = ACE_OS::gettimeofday ();
-  tv += ACE_Time_Value (25*60*60); // + 25 hours
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#D\n"), &tv));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#T\n"), &tv));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id %t\n")));
 
   Log_Spec_Verify  verifier;
 
@@ -647,31 +617,6 @@ test_format_specs (void)
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
   ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l4:%T")));
-
-  ACE_LOG_MSG->priority_mask (LM_SHUTDOWN |
-                              LM_TRACE |
-                              LM_DEBUG |
-                              LM_INFO |
-                              LM_NOTICE |
-                              LM_WARNING |
-                              LM_STARTUP |
-                              LM_ERROR |
-                              LM_CRITICAL |
-                              LM_ALERT |
-                              LM_EMERGENCY,
-                              ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ((LM_SHUTDOWN, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_TRACE, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_WARNING, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_STARTUP, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_ERROR, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_CRITICAL, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_ALERT, ACE_TEXT ("l5:%.1M")));
-  ACE_DEBUG ((LM_EMERGENCY, ACE_TEXT ("l5:%.1M")));
-
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (0);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);

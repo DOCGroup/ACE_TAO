@@ -2,8 +2,11 @@
 
 #include "Hello.h"
 #include "Server_Task.h"
+#include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+
+ACE_RCSID (Bug_1XXX_Regression, server, "$Id$")
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
@@ -43,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                               argv [0]),
             -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -72,15 +75,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
-                          -1);
+                          1);
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
-        return -1;
+        return 1;
 
-      PortableServer::ServantBase_var hello_impl(
+      TAO::Utils::Servant_Var<Hello> hello_impl(
           new Hello(orb.in(), simulate_crashes));
 
       PortableServer::ObjectId_var id =
@@ -100,7 +103,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
-                              -1);
+                              1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
@@ -129,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      return -1;
+      return 1;
     }
 
   return 0;

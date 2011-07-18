@@ -1,28 +1,40 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Field in the client stubs file.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    field_cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Field in the client stubs file.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_visitor_array/cdr_op_cs.h"
 #include "be_visitor_sequence/cdr_op_cs.h"
 #include "be_visitor_structure/cdr_op_cs.h"
 #include "be_visitor_union/cdr_op_cs.h"
 
+ACE_RCSID (be_visitor_field,
+           cdr_op_cs,
+           "$Id$")
+
+
 // **********************************************
 //  visitor for field in the client stubs file
 // **********************************************
 
 be_visitor_field_cdr_op_cs::be_visitor_field_cdr_op_cs (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
@@ -65,7 +77,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   // If the array is defined in this scope, we must generate
   // CDR stream operators for the array itself.
   if (!this->ctx_->alias ()
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -85,9 +97,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   // field.
 
   TAO_OutStream *os = this->ctx_->stream ();
-
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -109,7 +119,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       // For anonymous arrays ...
       // we have to generate a name for us that has an underscore
@@ -174,7 +184,7 @@ be_visitor_field_cdr_op_cs::visit_enum (be_enum *node)
   // If we are defined inside this scope, we must generate the
   /// CDR stream operators for us here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -193,8 +203,7 @@ be_visitor_field_cdr_op_cs::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -236,10 +245,9 @@ int
 be_visitor_field_cdr_op_cs::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -310,8 +318,7 @@ be_visitor_field_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -413,10 +420,9 @@ int
 be_visitor_field_cdr_op_cs::emit_valuetype_common (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
-  if (f == 0)
+  if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -461,8 +467,7 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -563,7 +568,7 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
   // If the sequence is defined in this scope, generate its
   // CDR stream operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -584,8 +589,7 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -629,8 +633,7 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -710,7 +713,7 @@ be_visitor_field_cdr_op_cs::visit_structure (be_structure *node)
   // If the struct is defined in this scope, generate its CDR stream
   // operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -731,8 +734,7 @@ be_visitor_field_cdr_op_cs::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -768,16 +770,6 @@ be_visitor_field_cdr_op_cs::visit_structure (be_structure *node)
     }
 
   return 0;
-}
-
-int
-be_visitor_field_cdr_op_cs::visit_structure_fwd (
-  be_structure_fwd *node)
-{
-  be_structure *s =
-    be_structure::narrow_from_decl (node->full_definition ());
-
-  return this->visit_structure (s);
 }
 
 int
@@ -805,7 +797,7 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
   // If the union is defined in this scope, generate its CDR stream
   // operators here.
   if (node->node_type () != AST_Decl::NT_typedef
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
@@ -826,8 +818,7 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -865,19 +856,11 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
   return 0;
 }
 
-int
-be_visitor_field_cdr_op_cs::visit_union_fwd (be_union_fwd *node)
-{
-  be_union *u =
-    be_union::narrow_from_decl (node->full_definition ());
-
-  return this->visit_union (u);
-}
-
 // ****************************************************************
 
 be_visitor_cdr_op_field_decl::be_visitor_cdr_op_field_decl (
-      be_visitor_context *ctx)
+    be_visitor_context *ctx
+  )
   : be_visitor_scope (ctx)
 {
 }
@@ -925,8 +908,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.
-  be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+  be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
     {
@@ -946,7 +928,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
                   NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
-      && node->is_child (this->ctx_->scope ()->decl ()))
+      && node->is_child (this->ctx_->scope ()))
     {
       // For anonymous arrays,
       // we have to generate a name for us that has an underscope

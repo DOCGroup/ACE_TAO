@@ -77,6 +77,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "nr_extern.h"
 
+ACE_RCSID (ast,
+           ast_constant,
+           "$Id$")
+
 // Static functions.
 
 // Convert a value from the enum AST_Expression::ExprType to a char *.
@@ -122,8 +126,17 @@ AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
   return 0;
 }
 
-AST_Decl::NodeType const
-AST_Constant::NT = AST_Decl::NT_const;
+// Constructor(s) and destructor.
+
+// Default constructor.
+AST_Constant::AST_Constant (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    pd_constant_value (0),
+    pd_et (AST_Expression::EV_none),
+    ifr_added_ (0)
+{
+}
 
 // Used in constructing AST_EnumVal nodes.
 AST_Constant::AST_Constant (AST_Expression::ExprType t,
@@ -207,7 +220,7 @@ AST_Constant::destroy (void)
       delete this->pd_constant_value;
       this->pd_constant_value = 0;
     }
-
+    
   this->AST_Decl::destroy ();
 }
 
@@ -299,5 +312,7 @@ AST_Constant::enum_full_name (void)
       return 0;
     }
 }
+
+
 
 IMPL_NARROW_FROM_DECL(AST_Constant)

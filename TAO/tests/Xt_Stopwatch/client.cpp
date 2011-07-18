@@ -3,8 +3,11 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Xt_Stopwatch, client, "$Id$")
+
 #include "Control.h"
 #include "Client.h"
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

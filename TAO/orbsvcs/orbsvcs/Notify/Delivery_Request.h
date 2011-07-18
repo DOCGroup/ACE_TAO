@@ -54,7 +54,7 @@ public:
 
   /// \brief A static "factory" method for use during restart.
   ///
-  /// \param routing_slip The routing slip to which the new Delivery Request should be attached.
+  /// \param routing_slip. The routing slip to which the new Delivery Request should be attached.
   /// \param request_id The id used to identify this Delivery Request to the Routing Slip.
   /// \param ecf The EventChannelFactory responsible for reloading this Delivery Method.
   /// \param cdr A CDR stream from which the peristent information for this Delivery Requect can be retrieved.

@@ -36,7 +36,7 @@ namespace TAO
    * Skeleton class template for operation "IN" arguments of fixed
    * size IDL types.
    */
-  template<typename S, template <typename> class Insert_Policy>
+  template<typename S, class Insert_Policy>
   class In_Fixed_Size_SArgument_T : public InArgument
   {
   public:
@@ -75,7 +75,7 @@ namespace TAO
    * @brief Template class for INOUT skeleton arg of fixed size IDL types.
    *
    */
-  template<typename S, template <typename> class Insert_Policy>
+  template<typename S, class Insert_Policy>
   class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
@@ -114,7 +114,7 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of fixed size IDL types.
    *
    */
-  template<typename S, template <typename> class Insert_Policy>
+  template<typename S, class Insert_Policy>
   class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
@@ -153,7 +153,7 @@ namespace TAO
    * @brief Template class for return skeleton value of fixed size IDL types.
    *
    */
-  template<typename S, template <typename> class Insert_Policy>
+  template<typename S, class Insert_Policy>
   class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
@@ -193,7 +193,7 @@ namespace TAO
    *
    */
   template<typename T,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   struct Fixed_Size_SArg_Traits_T
   {
     typedef T                                               ret_type;

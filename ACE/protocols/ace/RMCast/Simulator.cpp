@@ -1,5 +1,6 @@
+// file      : ace/RMCast/Simulator.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
+// cvs-id    : $Id$
 
 #include "ace/OS_NS_time.h"
 #include "Simulator.h"

@@ -6,92 +6,99 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use Env (ACE_ROOT);
 use lib "$ACE_ROOT/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
-$tg = PerlACE::TestTarget::create_target (1) || die "Create target for ns failed\n";
+$emior= PerlACE::LocalFile ("em.ior");
+unlink $emior;
+$plior= PerlACE::LocalFile ("pl.ior");
+unlink $plior;
 
-$embase = "em.ior";
-$plbase = "pl.ior";
+if (defined $ENV{'CIAO_ROOT'}) {
+  $CIAO_ROOT = $ENV{'CIAO_ROOT'};
+}
+else {
+  $CIAO_ROOT = "$ACE_ROOT/TAO/CIAO";
+}
 
-$emior= $tg->LocalFile ($embase);
-$tg->DeleteFile ($embase);
-$plior= $tg->LocalFile ($plbase);
-$tg->DeleteFile ($plior);
+if (defined $ENV{'DANCE_ROOT'}) {
+  $DANCE_ROOT = $ENV{'DANCE_ROOT'};
+}
+else {
+  $DANCE_ROOT = "$ACE_ROOT/TAO/CIAO/DAnCE";
+}
 
-$CIAO_ROOT = $ENV{'CIAO_ROOT'};
-$DANCE_ROOT = $ENV{'DANCE_ROOT'};
 
-$NA_cmd = $tg->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
+$NA = new PerlACE::Process ("$CIAO_ROOT/bin/ciao_componentserver");
+$NA_cmd = $NA->Executable ();
 
-$NA1 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$NA1 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:11000 -s $NA_cmd -n Administrator_Node");
 
-$NA2 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$NA2 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:22000 -s $NA_cmd -n First_Receiver_Node");
 
-$NA3 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$NA3 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:33000 -s $NA_cmd -n Second_Receiver_Node");
 
-$NA4 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_node_manager",
+$NA4 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_node_manager",
                              "-ORBEndpoint iiop://localhost:44000 -s $NA_cmd -n Messenger_Node");
 
 # Each Node Manager lauches a Node Application process.
 open(STDIN, "<admin.dat");
 $Ret1 = $NA1->Spawn ();
 if($Ret1 == -1) {
-    print STDERR "ERROR: Administrator returned <$Ret1>\n"
+  print STDERR "ERROR: Administrator returned <$Ret1>\n"
 }
 
 $Ret2 = $NA2->Spawn ();
 if($Ret2 == -1) {
-    print STDERR "ERROR: Receiver 1 returned <$Ret2>\n"
+  print STDERR "ERROR: Receiver 1 returned <$Ret2>\n"
 }
 
 $Ret3 =  $NA3->Spawn ();
 if($Ret3 == -1) {
-    print STDERR "ERROR: Receiver 2 returned <$Ret3>\n"
+  print STDERR "ERROR: Receiver 2 returned <$Ret3>\n"
 }
 
 $Ret4 =  $NA4->Spawn ();
 if($Ret4 == -1) {
-    print STDERR "ERROR: Messenger returned <$Ret4>\n"
+  print STDERR "ERROR: Messenger returned <$Ret4>\n"
 }
 
 #Start an Execution Manager
-$EM = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager", "-e$emior --cdd ApplicationNodeMap.cdd");
+$EM = new PerlACE::Process ("$DANCE_ROOT/bin/dance_execution_manager", "-e$emior --node-map ApplicationNodeMap.dat");
 
 $Ret5 = $EM->Spawn ();
 if($Ret5 == -1) {
-    print STDERR "ERROR: Execution Manager returned <$Ret5>\n"
+  print STDERR "ERROR: Execution Manager returned <$Ret5>\n"
 }
 
-if ($tg->WaitForFileTimed ($embase,
-                   $tg->ProcessStartWaitInterval ()) == -1) {
-    print STDERR "ERROR: cannot find file <$emior>\n";
-    $EM->Kill();
-    $tg->DeleteFile ($embase);
-    exit 1;
+if (PerlACE::waitforfile_timed ($emior, 5) == -1) {
+  print STDERR "ERROR: cannot find file <$emior>\n";
+  $EM->Kill();
+  unlink $emior;
+  exit 1;
 }
 
 sleep(5);
 #Start the plan  launcher
-$EX = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                          "-x Application-flattened.cdp -k file://$emior ");
+$EX = new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
+                            "-x Application-flattened_Unhomed.cdp -k file://$emior ");
 
 #Stop the plan launcher
-$EX2 = $tg->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                           "-k file://$emior -x Application-flattened.cdp -s");
+$EX2 = new PerlACE::Process ("$DANCE_ROOT/bin/dance_plan_launcher",
+                             "-k file://$emior -x Application-flattened_Unhomed.cdp");
 
 $Ret6 = $EX->Spawn ();
 if($Ret6 == -1) {
-    print STDERR "ERROR: plan launcher returned <$Ret6>\n"
+  print STDERR "ERROR: plan launcher returned <$Ret6>\n"
 }
 
 sleep(10);
 
 $Ret7 = $EX2->Spawn ();
 if($Ret7 == -1) {
-    print STDERR "ERROR: plan launcher (shutdown) returned <$Ret7>\n"
+  print STDERR "ERROR: plan launcher (shutdown) returned <$Ret7>\n"
 }
 
 sleep(5);
@@ -104,7 +111,7 @@ $EX->Kill();
 $EX2->Kill();
 $EM->Kill();
 
-$tg->DeleteFile ($embase);
-$tg->DeleteFile ($plior);
+unlink $emior;
+unlink $plior;
 
 exit 0;

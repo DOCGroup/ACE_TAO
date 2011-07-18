@@ -6,7 +6,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(ace, Dump, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

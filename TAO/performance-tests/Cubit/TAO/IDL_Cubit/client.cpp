@@ -14,6 +14,8 @@
 
 #include "tao/Strategies/advanced_resource.h"
 
+ACE_RCSID(IDL_Cubit, client, "$Id$")
+
 // This function runs the client test.
 
 int

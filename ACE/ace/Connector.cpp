@@ -24,33 +24,12 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler
  long id)
   : connector_ (connector)
   , svc_handler_ (sh)
-  , cleanup_svc_handler_ (0)
   , timer_id_ (id)
 {
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler");
 
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
-
-  if (this->svc_handler_ != 0 &&
-      this->svc_handler_->reference_counting_policy ().value () ==
-        ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
-    {
-      // If SVC_HANDLER is reference counted then NBCH holds a reference
-      // in cleanup_svc_handle_ which is both a pointer to SVC_HANDLER
-      // and a flag that triggers remove_reference in NBCH destructor.
-      this->cleanup_svc_handler_ = sh;
-      this->cleanup_svc_handler_->add_reference ();
-    }
-}
-
-template <class SVC_HANDLER>
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::~ACE_NonBlocking_Connect_Handler (void)
-{
-  if (this->cleanup_svc_handler_)
-    {
-      this->cleanup_svc_handler_->remove_reference ();
-    }
 }
 
 template <class SVC_HANDLER> SVC_HANDLER *
@@ -121,9 +100,9 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
       return false;
 
     // Remove from Reactor.
-    if (-1 == this->reactor ()->remove_handler (
+    if (this->reactor ()->remove_handler (
           h,
-          ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL))
+          ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
       return false;
   }
 
@@ -140,7 +119,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
 
   SVC_HANDLER *svc_handler = 0;
-  int const retval = this->close (svc_handler) ? 0 : -1;
+  int retval = this->close (svc_handler) ? 0 : -1;
 
   // Forward to the SVC_HANDLER the <arg> that was passed in as a
   // magic cookie during ACE_Connector::connect().  This gives the
@@ -166,25 +145,9 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
 
   // Close Svc_Handler.
   if (svc_handler != 0)
-    {
-      svc_handler->close (NORMAL_CLOSE_OPERATION);
-    }
+    svc_handler->close (NORMAL_CLOSE_OPERATION);
 
   return retval;
-}
-
-template <class SVC_HANDLER> int
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_close (ACE_HANDLE handle,
-                                                            ACE_Reactor_Mask m)
-{
-  // epoll on Linux will, at least sometimes, return EPOLLERR when a connect
-  // fails, triggering a total removal from the reactor. This is different from
-  // select()-based systems which select the fd for read on a connect failure.
-  // So just call handle_input() to rejoin common handling for a failed
-  // connect.
-  if (m == ACE_Event_Handler::ALL_EVENTS_MASK)
-    return this->handle_input (handle);
-  return -1;
 }
 
 template <class SVC_HANDLER> int
@@ -199,9 +162,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   if (svc_handler != 0)
-    {
-      connector.initialize_svc_handler (handle, svc_handler);
-    }
+    connector.initialize_svc_handler (handle, svc_handler);
 
   return retval;
 }
@@ -829,7 +790,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::open
   else if (this->creation_strategy_ == 0)
     {
       ACE_NEW_RETURN (this->creation_strategy_,
-                      CREATION_STRATEGY (0, r),
+                      CREATION_STRATEGY,
                       -1);
       this->delete_creation_strategy_ = true;
     }
@@ -887,8 +848,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::ACE_Strategy_Connecto
  ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> *conn_s,
  ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
  int flags)
-  : base_type (reactor),
-    creation_strategy_ (0),
+  : creation_strategy_ (0),
     delete_creation_strategy_ (false),
     connect_strategy_ (0),
     delete_connect_strategy_ (false),

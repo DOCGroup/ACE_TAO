@@ -6,6 +6,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Timeout, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;
@@ -94,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());

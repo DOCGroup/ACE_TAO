@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    union_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Union in the client inline file
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    union_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Union in the client inline file
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_union, 
+           union_ci, 
+           "$Id$")
 
 // ******************************************************
 // For client inline.
@@ -38,8 +47,8 @@ int be_visitor_union_ci::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl;
@@ -56,7 +65,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit_union - "
-                         "bad discriminant type\n"),
+                         "bad discriminant type\n"), 
                         -1);
     }
 
@@ -67,7 +76,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit union - "
-                         "codegen for discrminant failed\n"),
+                         "codegen for discrminant failed\n"), 
                         -1);
     }
 
@@ -78,7 +87,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_ci::"
                          "visit_union - "
-                         "codegen for scope failed\n"),
+                         "codegen for scope failed\n"), 
                         -1);
     }
 

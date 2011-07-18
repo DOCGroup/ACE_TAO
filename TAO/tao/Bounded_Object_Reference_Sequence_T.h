@@ -29,7 +29,6 @@ public:
   typedef object_type * value_type;
   typedef value_type const const_value_type;
   typedef object_t_var object_type_var;
-  typedef ::CORBA::ULong size_type;
 
   typedef details::object_reference_traits<object_type,object_type_var,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
@@ -52,48 +51,48 @@ public:
   {}
 
   /* Use default ctor, operator= and dtor */
-  /// @copydoc TAO::details::generic_sequence::maximum()
+  /// @copydoc details::generic_sequence::maximum
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
   }
-  /// @copydoc TAO::details::generic_sequence::release()
+  /// @copydoc details::generic_sequence::release
   inline CORBA::Boolean release() const {
     return impl_.release();
   }
-  /// @copydoc TAO::details::generic_sequence::length()
+  /// @copydoc details::generic_sequence::length
   inline CORBA::ULong length() const {
     return impl_.length();
   }
 
-  /// @copydoc TAO::details::generic_sequence::length()
+  /// @copydoc details::generic_sequence::length
   inline void length(CORBA::ULong length) {
     implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
-  /// @copydoc TAO::details::generic_sequence::operator[]
+  /// @copydoc details::generic_sequence::operator[]
   inline const_element_type operator[](CORBA::ULong i) const {
     return const_element_type (impl_[i], release());
   }
-  /// @copydoc TAO::details::generic_sequence::operator[]
+  /// @copydoc details::generic_sequence::operator[]
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  /// @copydoc TAO::details::generic_sequence::get_buffer()
+  /// @copydoc details::generic_sequence::get_buffer
   inline value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
-  /// @copydoc TAO::details::generic_sequence::replace()
+  /// @copydoc details::generic_sequence::replace
   inline void replace(
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release = false) {
     impl_.replace(MAX, length, data, release);
   }
-  /// @copydoc TAO::details::generic_sequence::get_buffer(CORBA::Boolean)
+  /// @copydoc details::generic_sequence::get_buffer(CORBA::Boolean)
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  /// @copydoc TAO::details::generic_sequence::swap
+  /// @copydoc details::generic_sequence::swap
   inline void swap(bounded_object_reference_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
@@ -125,56 +124,56 @@ public:
   typedef MM_Sequence_Reverse_Iterator<bounded_object_reference_sequence<object_t, object_t_var, MAX> > reverse_iterator;
   typedef Const_MM_Sequence_Reverse_Iterator<bounded_object_reference_sequence<object_t, object_t_var, MAX> > const_reverse_iterator;
 
-  /// Get an iterator that points to the beginning of the sequence.
+  // Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
   {
     return iterator (&this->impl_);
   }
 
-  /// Get a const iterator that points to the beginning of the sequence.
+  // Get a const iterator that points to the beginning of the sequence.
   const_iterator begin (void) const
   {
     return const_iterator (&this->impl_);
   }
 
-  /// Get an iterator that points to the end of the sequence.
+  // Get an iterator that points to the end of the sequence.
   iterator end (void)
   {
     return iterator (&this->impl_,
                      this->impl_.length ());
   }
 
-  /// Get a const iterator that points to the end of the sequence.
+  // Get a const iterator that points to the end of the sequence.
   const_iterator end (void) const
   {
     return const_iterator (&this->impl_,
                            this->impl_.length ());
   }
 
-  /// Get a reverse iterator that points to the end of the sequence.
+  // Get a reverse iterator that points to the end of the sequence.
   reverse_iterator rbegin (void)
   {
     return reverse_iterator (&this->impl_,
                              this->impl_.length () - 1);
   }
 
-  /// Get a const reverse iterator that points to the end of the sequence.
+  // Get a const reverse iterator that points to the end of the sequence.
   const_reverse_iterator rbegin (void) const
   {
     return const_reverse_iterator (&this->impl_,
                                    this->impl_.length () - 1);
   }
 
-  /// Get a reverse iterator that points to one before the beginning
-  /// of the sequence.
+  // Get a reverse iterator that points to one before the beginning
+  // of the sequence.
   reverse_iterator rend (void)
   {
     return reverse_iterator (&this->impl_,
                              -1);
   }
 
-  /// Get a const reverse iterator that points to one before the
-  /// beginning of the sequence.
+  // Get a const reverse iterator that points to one before the
+  // beginning of the sequence.
   const_reverse_iterator rend (void) const
   {
     return const_reverse_iterator (&this->impl_,

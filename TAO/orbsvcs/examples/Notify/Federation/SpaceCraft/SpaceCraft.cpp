@@ -2,6 +2,9 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
+
+#include "ace/OS.h"
+
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNotificationC.h"

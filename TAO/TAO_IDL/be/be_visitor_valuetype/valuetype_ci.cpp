@@ -1,17 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    valuetype_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Valuetypes in the client inline file
- *
- *
- *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    valuetype_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Valuetypes in the client inline file
+//
+// = AUTHOR
+//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_ci,
+           "$Id$")
 
 // **************************************************
 // Valuetype visitor for client inline.
@@ -42,27 +52,20 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "ACE_INLINE" << be_nl;
   *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
-
-  if (node->is_amh_excep_holder ())
-    {
-      *os << "  : exception (0)" << be_nl;
-    }
 
   if (node->truncatable())
     {
       *os << "{" << be_idt_nl
           << "this->is_truncatable_ = true;" << be_uidt_nl
-          << "}" << be_nl_2;
+          << "}" << be_nl << be_nl;
     }
   else
-    {
-      *os << "{}" << be_nl_2;
-    }
+    *os << "{}" << be_nl << be_nl;
 
 
   *os << "ACE_INLINE const char* " << be_nl

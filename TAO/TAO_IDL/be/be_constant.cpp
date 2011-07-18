@@ -1,23 +1,40 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    be_constant.cpp
- *
- *  $Id$
- *
- *  Extension of class AST_Constant that provides additional means for C++
- *  mapping.
- *
- *
- *  @author Copyright 1994-1995 by Sun Microsystems
- *  @author Inc. and Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    be_constant.cpp
+//
+// = DESCRIPTION
+//    Extension of class AST_Constant that provides additional means for C++
+//    mapping.
+//
+// = AUTHOR
+//    Copyright 1994-1995 by Sun Microsystems, Inc.
+//    and
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
 #include "be_constant.h"
 #include "be_visitor.h"
 #include "utl_scope.h"
 #include "nr_extern.h"
+
+ACE_RCSID (be,
+           be_constant,
+           "$Id$")
+
+be_constant::be_constant (void)
+  : COMMON_Base (),
+    AST_Decl (),
+    AST_Constant (),
+    be_decl ()
+{
+}
 
 be_constant::be_constant (AST_Expression::ExprType et,
                           AST_Expression *v,

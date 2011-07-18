@@ -3,11 +3,9 @@
 //
 // $Id$
 
-project(list_interfaces) : taoexe {
+project(list_interfaces) : aceexe {
   Source_Files {
     list_interfaces.cpp
-  }
-  IDL_Files {
   }
 }
 

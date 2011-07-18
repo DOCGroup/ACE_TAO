@@ -24,4 +24,4 @@ all rights reserved.
 == Warranty Information
 ==
 
-FaCE is provided 'as is' without warranties of any kind.
+FaCE is provided 'as is' without warranties of any kind.  

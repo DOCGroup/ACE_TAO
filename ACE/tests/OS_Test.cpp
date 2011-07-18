@@ -14,11 +14,6 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/ACE.h"
-//FUZZ: disable check_for_include_OS_h
-#include "ace/OS.h"
-//FUZZ: enable check_for_include_OS_h
-
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -30,9 +25,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_netdb.h"
 
-
+ACE_RCSID(tests, OS_Test, "$Id$")
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
@@ -40,13 +34,16 @@
    ? static_cast<void>(0)                                       \
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 
+// Simple helper to avoid comparing floating point values with ==
+template <typename T> bool is_equal (const T& a, const T& b)
+{
+  return !((a < b) || (a > b));
+}
+
 // Test ACE_OS::access() to be sure a file's existence is correctly noted.
 int
 access_test (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing access method\n")));
-
   int test_status = 0;
 
   int status = ACE_OS::access (ACE_TEXT ("missing_file.txt"), F_OK);
@@ -70,7 +67,7 @@ access_test (void)
 int
 rename_test (void)
 {
-#if defined (ACE_VXWORKS)
+#if defined (ACE_LACKS_RENAME) || defined (ACE_VXWORKS)
   // On VxWorks only some filesystem drivers support rename
   // and as we do not know which is used, skip the test here
   ACE_ERROR_RETURN ((LM_INFO,
@@ -177,7 +174,7 @@ rename_test (void)
     }
 
   return result;
-#endif /* ACE_VXWORKS */
+#endif /* ACE_LACKS_RENAME */
 }
 
 //
@@ -648,41 +645,6 @@ snprintf_test (void)
 }
 
 static int
-getpwnam_r_test (void)
-{
-  int result = 0;
-
-#if !defined (ACE_LACKS_PWD_FUNCTIONS)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getpwnam_r\n")));
-
-  struct passwd pwd;
-  struct passwd *pwd_ptr;
-  char buf[1024];
-
-  const char* login = getlogin ();
-  if (login == 0)
-    login = "root";
-
-  if (ACE_OS::getpwnam_r (login,
-                          &pwd,
-                          buf,
-                          sizeof (buf),
-                          &pwd_ptr) != 0)
-    {
-      result = 1;
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("getpwnam_r() failed\n")));
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" User '%s' has uid=%d and gid=%d\n"),
-                  pwd_ptr->pw_name, pwd_ptr->pw_uid, pwd_ptr->pw_gid));
-    }
-#endif
-
-  return result;
-}
-
-static int
 ctime_r_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
@@ -944,34 +906,6 @@ string_convert_test (void)
 #endif /* ACE_HAS_WCHAR */
 }
 
-// Test ACE_OS::strsignal()
-int
-strsignal_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing strsignal method\n")));
-
-  int test_status = 0;
-
-  const char* result = 0;
-
-  for (int i=-1; i < (ACE_NSIG + 1); ++i)
-    {
-      result = ACE_OS::strsignal (i);
-      if (result == 0)
-        {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("strsignal returned null\n")));
-          test_status = 1;
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Sig #%d: %C\n"), i, result));
-        }
-    }
-
-  return test_status;
-}
-
 // Test the methods for getting cpu info
 int
 cpu_info_test (void)
@@ -1172,60 +1106,6 @@ ace_ctype_test (void)
 }
 
 int
-ceilf_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing ceilf method\n")));
-
-  float values[]  = {-2.5, -1.5, 1.5, 2.5};
-  float results[] = {-2.0, -1.0, 2.0, 3.0};
-  float result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
-    {
-      result = ACE_OS::ceil (values [i]);
-      if (ACE::is_inequal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ceilf error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
-floorf_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing floorf method\n")));
-
-  float values[]  = {-2.5, -1.5, 1.5, 2.5};
-  float results[] = {-3.0, -2.0, 1.0, 2.0};
-  float result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
-    {
-      result = ACE_OS::floor (values [i]);
-      if (ACE::is_inequal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("floorf error: input %.1F, output %1F, expected %1F\n"),
-                      values [i], result, results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
 ceil_test (void)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1239,14 +1119,10 @@ ceil_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
       result = ACE_OS::ceil (values [i]);
-      if (ACE::is_inequal(result, results[i]))
+      if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          error_count++;
         }
     }
 
@@ -1267,68 +1143,10 @@ floor_test (void)
   for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
     {
       result = ACE_OS::floor (values [i]);
-      if (ACE::is_inequal(result, results[i]))
+      if (!is_equal(result, results[i]))
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
-ceill_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing ceill method\n")));
-
-  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  long double results[] = {-2.0, -1.0, 2.0, 3.0};
-  long double result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
-    {
-      result = ACE_OS::ceil (values [i]);
-      if (ACE::is_inequal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ceil error: input %.1F, output %1F, expected %1F\n"),
-                      values [i],
-                      result,
-                      results [i]));
-          ++error_count;
-        }
-    }
-
-  return error_count;
-}
-
-int
-floorl_test (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Testing floorl method\n")));
-
-  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  long double results[] = {-3.0, -2.0, 1.0, 2.0};
-  long double result = 0.0;
-  int error_count = 0;
-
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
-    {
-      result = ACE_OS::floor (values [i]);
-      if (ACE::is_inequal(result, results[i]))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"),
-                      values [i], result, results [i]));
-          ++error_count;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("floor error: input %.1F, output %1F, expected %1F\n"), values [i], result, results [i]));
+          error_count++;
         }
     }
 
@@ -1342,7 +1160,7 @@ log2_test (void)
               ACE_TEXT ("Testing log2 method\n")));
 
   double values[] = {1.0, 2.0, 4.0, 8.0, 1048576.0};
-  int const results[] = {0, 1, 2, 3, 20};
+  int results[] = {0, 1, 2, 3, 20};
   int result = 0;
   int error_count = 0;
 
@@ -1352,7 +1170,7 @@ log2_test (void)
       if (result != results [i])
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %.1F, output %d, expected %d\n"), values [i], result, results [i]));
-          ++error_count;
+          error_count++;
         }
     }
 
@@ -1381,16 +1199,10 @@ run_main (int, ACE_TCHAR *[])
     status = result;
 #endif /* !ACE_LACKS_VSNPRINTF || ACE_HAS_TRIO */
 
-  if ((result = getpwnam_r_test ()) != 0)
-    status = result;
-
   if ((result = ctime_r_test ()) != 0)
     status = result;
 
   if ((result = string_strsncpy_test ()) != 0)
-      status = result;
-
-  if ((result = strsignal_test ()) != 0)
       status = result;
 
   if ((result = cpu_info_test ()) != 0)
@@ -1399,22 +1211,10 @@ run_main (int, ACE_TCHAR *[])
   if ((result = pagesize_test ()) != 0)
       status = result;
 
-  if ((result = ceilf_test ()) != 0)
-      status = result;
-
-  if ((result = floorf_test ()) != 0)
-      status = result;
-
   if ((result = ceil_test ()) != 0)
       status = result;
 
   if ((result = floor_test ()) != 0)
-      status = result;
-
-  if ((result = ceill_test ()) != 0)
-      status = result;
-
-  if ((result = floorl_test ()) != 0)
       status = result;
 
   if ((result = log2_test ()) != 0)

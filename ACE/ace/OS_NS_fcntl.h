@@ -44,6 +44,10 @@ namespace ACE_OS {
              int cmd,
              long arg = 0);
 
+#if !defined (ACE_DEFAULT_OPEN_PERMS)
+#  define ACE_DEFAULT_OPEN_PERMS ACE_DEFAULT_FILE_PERMS
+#endif  /* ACE_DEFAULT_OPEN_PERMS */
+
   /// The O_APPEND flag is only partly supported on Win32. If you specify
   /// O_APPEND, then the file pointer will be positioned at the end of
   /// the file initially during open, but it is not re-positioned at

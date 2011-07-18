@@ -18,7 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MonitorManager::TAO_MonitorManager (void)
   : run_ (false)
-  , initialized_ (false)
 {
 }
 
@@ -48,47 +47,26 @@ TAO_MonitorManager::init (int argc, ACE_TCHAR* argv[])
       {
         case 'o':
           this->task_.ior_output_ = opts.opt_arg ();
-          if (TAO_debug_level > 7)
-            {
-              ACE_DEBUG((LM_INFO,
-                ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting IOR output file to: %s"),
-                  this->task_.ior_output_.c_str ()));
-            }
           break;
         case 0:
           if (ACE_OS::strcmp (opts.long_option (), orbarg) == 0)
             {
-              ACE_TCHAR * orbArgs = opts.opt_arg ();
-              if (TAO_debug_level > 7)
-                {
-                  ACE_DEBUG((LM_INFO,
-                    ACE_TEXT("(%P|%t) TAO_MonitorManager: Setting Orb arguments to: %s"),
-                      orbArgs));
-                }
-              this->task_.argv_.add (orbArgs);
+              this->task_.argv_.add (opts.opt_arg ());
             }
           else if (ACE_OS::strcmp (opts.long_option (), nonamesvc) == 0)
             {
-              if (TAO_debug_level > 7)
-                {
-                  ACE_DEBUG((LM_INFO,
-                    ACE_TEXT("(%P|%t) TAO_MonitorManager: Not using naming service")));
-                }
               this->task_.use_name_svc_ = false;
             }
           break;
         case ':':
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) TAO_MonitorManager: %s requires an argument\n"),
+                             ACE_TEXT ("%s requires an argument\n"),
                              opts.last_option ()),
-                             -1);
+                            -1);
       }
 
   // Force the ARGV_T to copy the elements added by the add() method
   this->task_.argv_.argv ();
-
-  // Rember that Monitor has been configured
-  this->initialized_ = true;
   return 0;
 }
 
@@ -125,7 +103,7 @@ TAO_MonitorManager::run (void)
                                   task_.argv_.argv (),
                                   task_.mc_orb_name_.c_str ());
 
-    if (!this->run_ && this->initialized_)
+    if (!this->run_)
       {
         this->run_ = true;
         activate = true;

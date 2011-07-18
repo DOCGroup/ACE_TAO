@@ -29,7 +29,6 @@
 #include "tao/Exception.h"
 #include "tao/PI_ForwardC.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
-#include "tao/ServerRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -47,7 +46,7 @@ namespace TAO
    *
    * @brief The base class for the invocation object
    *
-   * This class is the base of the invocation object hierarchy. This
+   * This class is the base of the invocation object hiererachy. This
    * hierarchy is classified  based on the type of invocation and the
    * mode of invocation. One of the objects from the hierarchy is
    * created on the stack for every invocation.
@@ -56,6 +55,7 @@ namespace TAO
    * are required for PortableInterceptors to function
    * correctly. Further this class also provides some helper and
    * accessor methods that are used by clients.
+   *
    */
   class TAO_Export Invocation_Base
   {
@@ -144,6 +144,7 @@ namespace TAO
     GIOP::ReplyStatusType reply_status_;
 
   private:
+
     Invocation_Base (const Invocation_Base&);
     Invocation_Base & operator= (const Invocation_Base &);
 
@@ -218,8 +219,7 @@ namespace TAO
 
   protected:
     /// The client requestor adapter
-    ClientRequestInterceptor_Adapter *cri_adapter_;
-    ServerRequestInterceptor_Adapter *sri_adapter_;
+    ClientRequestInterceptor_Adapter *adapter_;
 
     size_t stack_size_;
 

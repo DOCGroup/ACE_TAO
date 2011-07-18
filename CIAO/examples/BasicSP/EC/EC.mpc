@@ -1,45 +1,49 @@
 // $Id$
 
-project(EC_idl_gen): componentidldefaults, avoids_ccm_noevent {
+project(EC_stub_gen): ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
-  idlflags += -I.. \
-              -Wb,stub_export_macro=EC_STUB_Export \
-              -Wb,stub_export_include=EC_stub_export.h \
-              -Wb,skel_export_macro=EC_SVNT_Export \
-              -Wb,skel_export_include=EC_svnt_export.h \
-              -Wb,exec_export_macro=EC_EXEC_Export \
-              -Wb,exec_export_include=EC_exec_export.h
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
+  idlflags += -Wb,stub_export_macro=EC_STUB_Export
+  idlflags += -Wb,stub_export_include=EC_stub_export.h
+  idlflags += -Wb,skel_export_macro=EC_SVNT_Export
+  idlflags += -Wb,skel_export_include=EC_svnt_export.h
 
   IDL_Files {
     EC.idl
   }
 }
 
-project(EC_lem_gen) : ciaoidldefaults , avoids_ccm_noevent{
-  after += BasicSP_lem_gen EC_idl_gen
+project(EC_lem_gen) : ciaocidldefaults, ciaoidldefaults, avoids_ace_for_tao {
+  after += BasicSP_lem_gen
   custom_only = 1
+  cidlflags += -I $(CIAO_ROOT)/examples/BasicSP
 
+  idlflags += -I $(CIAO_ROOT)/examples/BasicSP
   idlflags  +=  -Wb,export_macro=EC_EXEC_Export \
                 -Wb,export_include=EC_exec_export.h \
-                -SS \
-                -I..
+                -SS
+
+  CIDL_Files {
+    EC.cidl
+  }
 
   IDL_Files {
     ECE.idl
   }
+
 }
 
-project(EC_stub): ccm_stub, avoids_ccm_noevent {
-  after += BasicSP_stub EC_idl_gen
+project(EC_stub): ccm_stub, avoids_ace_for_tao {
+  after += BasicSP_stub EC_stub_gen
   sharedname = EC_stub
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
   libpaths += ..
   libout = ../lib
   libpaths += ../lib
 
   libs += BasicSP_stub
 
-  dynamicflags += EC_STUB_BUILD_DLL
+  dynamicflags   = EC_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -54,18 +58,22 @@ project(EC_stub): ccm_stub, avoids_ccm_noevent {
   }
 
   Inline_Files {
+
   }
+
 }
 
-project(EC_exec) : ciao_executor, avoids_ccm_noevent {
-  after      += EC_stub EC_lem_gen
+project(EC_exec) : ciao_executor, avoids_ace_for_tao {
+  after      += EC_stub EC_lem_gen BasicSP_exec
+
   sharedname = EC_exec
   libs       += EC_stub BasicSP_stub
-  includes += ..
+  libs       += BasicSP_exec
+  includes += $(CIAO_ROOT)/examples/BasicSP
   libout = ../lib
   libpaths += ../lib
 
-  dynamicflags += EC_EXEC_BUILD_DLL
+  dynamicflags   = EC_EXEC_BUILD_DLL
 
   IDL_Files {
   }
@@ -85,17 +93,20 @@ project(EC_exec) : ciao_executor, avoids_ccm_noevent {
   }
 }
 
-project(EC_svnt) : ciao_servant, avoids_ccm_noevent {
+project(EC_svnt) : ciao_servant, avoids_ace_for_tao {
   after += BasicSP_svnt EC_exec
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
 
   sharedname = EC_svnt
 
   libs    += EC_stub EC_exec
   libs    += BasicSP_stub BasicSP_svnt
-  dynamicflags += EC_SVNT_BUILD_DLL
+  dynamicflags = EC_SVNT_BUILD_DLL
   libout = ../lib
   libpaths += ../lib
+
+  CIDL_Files {
+  }
 
   IDL_Files {
   }
@@ -110,13 +121,14 @@ project(EC_svnt) : ciao_servant, avoids_ccm_noevent {
     ECS.cpp
     EC_svnt.cpp
   }
+
 }
 
-project (EC_client) : ccm_stub , avoids_ccm_noevent{
+project (EC_client) : ccm_stub, avoids_ace_for_tao {
   after += EC_stub
   exename = client
   libs += EC_stub BasicSP_stub
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
   libout = ../lib
   libpaths += ../lib
 
@@ -124,6 +136,7 @@ project (EC_client) : ccm_stub , avoids_ccm_noevent{
   }
 
   Header_Files {
+
   }
 
   Source_Files {
@@ -131,13 +144,15 @@ project (EC_client) : ccm_stub , avoids_ccm_noevent{
   }
 
   Inline_Files {
+
   }
+
 }
 
-project (EC_controller) : ccm_stub, avoids_ccm_noevent {
+project (EC_controller) : ccm_stub, avoids_ace_for_tao {
   after += EC_stub
   exename = controller
-  includes += ..
+  includes += $(CIAO_ROOT)/examples/BasicSP
   libs += EC_stub BasicSP_stub
   libout = ../lib
   libpaths += ../lib
@@ -146,6 +161,7 @@ project (EC_controller) : ccm_stub, avoids_ccm_noevent {
   }
 
   Header_Files {
+
   }
 
   Source_Files {
@@ -153,5 +169,7 @@ project (EC_controller) : ccm_stub, avoids_ccm_noevent {
   }
 
   Inline_Files {
+
   }
+
 }

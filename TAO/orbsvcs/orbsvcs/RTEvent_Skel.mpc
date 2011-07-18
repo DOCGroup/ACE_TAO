@@ -3,7 +3,7 @@
 
 project(RTEvent_Skel) : orbsvcslib, orbsvcs_output, install, rtevent, portableserver {
   sharedname   = TAO_RTEvent_Skel
-  dynamicflags += TAO_RTEVENT_SKEL_BUILD_DLL
+  dynamicflags = TAO_RTEVENT_SKEL_BUILD_DLL
   tagchecks   += RTEvent
 
   IDL_Files {
@@ -22,10 +22,6 @@ project(RTEvent_Skel) : orbsvcslib, orbsvcs_output, install, rtevent, portablese
     RtecEventChannelAdminS.h
     RtecUDPAdminS.h
     Event/event_skel_export.h
-    RtecDefaultEventDataS_T.h
-    RtecEventCommS_T.h
-    RtecEventChannelAdminS_T.h
-    RtecUDPAdminS_T.h
   }
 
   Inline_Files {
@@ -36,10 +32,6 @@ project(RTEvent_Skel) : orbsvcslib, orbsvcs_output, install, rtevent, portablese
   }
 
   Template_Files {
-    RtecDefaultEventDataS_T.cpp
-    RtecEventCommS_T.cpp
-    RtecEventChannelAdminS_T.cpp
-    RtecUDPAdminS_T.cpp
   }
 
   Resource_Files{

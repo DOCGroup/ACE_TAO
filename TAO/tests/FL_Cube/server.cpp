@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "tao/FlResource/FlResource_Loader.h"
 
+ACE_RCSID(FL_Cube, server, "$Id$")
+
 #include <FL/Fl.H>
 
 const ACE_TCHAR *ior_output_file = 0;
@@ -30,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

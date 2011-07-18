@@ -13,6 +13,10 @@
 
 #include "orbsvcs/FTRTC.h"
 
+ACE_RCSID (EventChannel,
+           ForwardCtrlServerInterceptor,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr get_target(PortableInterceptor::ServerRequestInfo_ptr ri)

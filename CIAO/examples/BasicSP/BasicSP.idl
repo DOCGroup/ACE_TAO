@@ -14,8 +14,6 @@
 
 #include <Components.idl>
 
-#pragma ciao lem "BasicSPE.idl"
-
 // @@NOTE: Do we need a pragma prefix. Anyway its broken now in TAO..
 // #pragma prefix ""
 

@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
@@ -30,11 +29,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
 {
-  /**
-   * @class UUID_Node
-   *
-   * @brief Holds the MAC-address of the UUID.
-   */
+  /// Class to hold a MAC address
   class ACE_Export UUID_Node
   {
   public:
@@ -44,19 +39,30 @@ namespace ACE_Utils
     /// Type definition of the node.
     typedef u_char Node_ID[NODE_ID_SIZE];
 
-    /// Get the node id
-    Node_ID & node_ID (void);
+    /// Default constructor
+    UUID_Node (void);
 
     /**
-     * @overload
+     * Copy constructor.
+     *
+     * @param[in]         node          Source node.
      */
-    const Node_ID & node_ID (void) const;
+    UUID_Node (const UUID_Node & node);
 
-    /// Test for equality.
-    bool operator == (const UUID_Node & right) const;
+    Node_ID &node_ID (void);
+    const Node_ID &node_ID (void) const;
 
-    /// Test for inequality.
-    bool operator != (const UUID_Node & right) const;
+    void node_ID (Node_ID&);
+
+    ///// Equality Operations
+    bool operator == (const UUID_Node& right) const;
+    bool operator != (const UUID_Node& right) const;
+
+    ///// Relational Operations
+    //bool operator <  (const UUID_Node& right) const;
+
+    /// Assign the value of an existing node id to this object.
+    const UUID_Node & operator = (const UUID_Node & rhs);
 
   private:
     /// The value of the node id.
@@ -64,7 +70,7 @@ namespace ACE_Utils
   };
 
   /**
-   * @class ACE_UUID
+   *  @class ACE_UUID
    *
    * ACE_UUID represents a Universally Unique IDentifier (UUID) as
    * described in (the expired) INTERNET-DRAFT specification entitled
@@ -84,8 +90,6 @@ namespace ACE_Utils
   class ACE_Export UUID
   {
   public:
-    /// The size of a binary UUID.
-    enum { BINARY_SIZE = 16 };
 
     /// Constructor
     UUID (void);
@@ -113,10 +117,10 @@ namespace ACE_Utils
     u_char clock_seq_low (void) const;
     void clock_seq_low (u_char);
 
-    UUID_Node & node (void);
-    const UUID_Node & node (void) const;
+    UUID_Node* node (void);
+    const UUID_Node* node (void) const;
 
-    void node (const UUID_Node & node);
+    void node (const UUID_Node*);
 
     ACE_CString* thr_id (void);
     void thr_id (char*);
@@ -130,23 +134,22 @@ namespace ACE_Utils
     /// Set the value using a string
     void from_string (const ACE_CString& uuid_string);
 
-    /// NIL UUID
-    static const UUID NIL_UUID;
+    static UUID NIL_UUID;
 
     /// Equality Operations
-    bool operator == (const UUID &right) const;
-    bool operator != (const UUID &right) const;
+    bool operator== (const UUID &right) const;
+    bool operator!= (const UUID &right) const;
 
-    /// Compute a hash value for the UUID.
-    unsigned long hash (void) const;
+    /// Relational Operations
+    //bool operator<  (const UUID &right) const;
+    //bool operator>  (const UUID &right) const;
+    //bool operator<= (const UUID &right) const;
+    //bool operator>= (const UUID &right) const;
 
     /// Assign an existing UUID to this UUID.
     const UUID & operator = (const UUID & rhs);
 
   private:
-    /// Initialize the UUID
-    void init (void);
-
     /**
      * Helper method to convert from a string UUID.
      *
@@ -155,26 +158,13 @@ namespace ACE_Utils
     void from_string_i (const ACE_CString& uuid_string);
 
     /// Data Members for Class Attributes
-    struct data
-    {
-      /// Time low.
-      ACE_UINT32 time_low_;
+    ACE_UINT32 time_low_;
+    ACE_UINT16 time_mid_;
+    ACE_UINT16 time_hi_and_version_;
+    u_char clock_seq_hi_and_reserved_;
+    u_char clock_seq_low_;
 
-      /// Time mid.
-      ACE_UINT16 time_mid_;
-
-      /// Time high and version.
-      ACE_UINT16 time_hi_and_version_;
-
-      /// Clock sequence high and reserved space.
-      u_char clock_seq_hi_and_reserved_;
-
-      /// Clock sequence low.
-      u_char clock_seq_low_;
-
-      /// MAC-address within the UUID.
-      UUID_Node node_;
-    } uuid_;
+    UUID_Node node_;
 
     ACE_CString thr_id_;
     ACE_CString pid_;
@@ -196,14 +186,9 @@ namespace ACE_Utils
 
     enum {ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF};
 
-    /// Default constructor.
-    UUID_Generator(void);
-
-    /// Destructor.
+    UUID_Generator();
     ~UUID_Generator();
 
-    /// Initialize the UUID generator
-    /// @deprecated This method may go away in some future release.
     void init (void);
 
     /// Format timestamp, clockseq, and nodeID into an UUID of the
@@ -224,9 +209,11 @@ namespace ACE_Utils
     ACE_SYNCH_MUTEX* lock (void);
 
     /// Set a new locking strategy and return the old one.
-    void lock (ACE_SYNCH_MUTEX* lock, bool release_lock);
+    void lock (ACE_SYNCH_MUTEX* lock,
+               bool release_lock);
 
   private:
+
     /// The system time when that last uuid was generated.
     UUID_Time time_last_;
 
@@ -251,25 +238,19 @@ namespace ACE_Utils
 
     /// Obtain the system time in UTC as a count of 100 nanosecond intervals
     /// since 00:00:00.00, 15 October 1582 (the date of Gregorian reform to
-    /// the Christian calendar).
+  /// the Christian calendar).
     void get_systemtime( UUID_Time& timeNow);
 
     /// The UUID generator persistent state.
     UUID_State uuid_state_;
 
     ACE_SYNCH_MUTEX* lock_;
-
     bool destroy_lock_;
-
-    /// Initalization state of the generator.
-    bool is_init_;
   };
 
-  typedef ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>
-          UUID_GENERATOR;
-}
+  typedef ACE_Singleton<UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
 
-ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX)
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

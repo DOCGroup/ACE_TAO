@@ -28,7 +28,6 @@ public:
   typedef T_slice_ptr * const_value_type;
   typedef value_type & subscript_type;
   typedef value_type const & const_subscript_type;
-  typedef ::CORBA::ULong size_type;
 
   typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
   typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
@@ -54,7 +53,6 @@ public:
     return impl_.length();
   }
   inline void length(CORBA::ULong length) {
-    implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
   inline value_type const & operator[](CORBA::ULong i) const {
@@ -132,7 +130,7 @@ namespace TAO
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
     typedef TAO::Array_Traits<forany> array_traits;
     ::CORBA::ULong const length = source.length ();
-    if (length > source.maximum () || !(strm << length)) {
+    if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {

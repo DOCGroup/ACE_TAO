@@ -10,6 +10,11 @@
 #include "tao/Policy_Manager.h"
 #include "tao/SystemException.h"
 
+ACE_RCSID (RTCORBA,
+           RT_Stub,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
@@ -52,8 +57,7 @@ TAO_RT_Stub::parse_policies (void)
         {
           case RTCORBA::PRIORITY_MODEL_POLICY_TYPE:
             {
-              this->exposed_priority_model (policy_list[i]);
-            }
+              this->exposed_priority_model (policy_list[i]);            }
             break;
           case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE :
             {

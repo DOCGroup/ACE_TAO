@@ -24,7 +24,7 @@
 static TAO_Notify_Tests_StructuredPushSupplier* supplier_1 = 0;
 static int max_events = 20;
 static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
-static const ACE_TCHAR *notify2ior = ACE_TEXT ("notify2.ior");
+static const char* notify2ior = "notify2.ior";
 
 // ******************************************************************
 // Subroutine Section
@@ -78,7 +78,7 @@ public:
 int
 Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:d:f:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:d"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -92,10 +92,6 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
       ior_output_file = get_opts.optarg;
       break;
 
-    case 'f':
-      notify2ior = get_opts.optarg;
-      break;
-
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s "
@@ -105,7 +101,7 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
         -1);
   }
 
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -182,7 +178,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       static const int max = 20;
       int count = 0;
-      while(ACE_OS::access(ACE_TEXT_ALWAYS_CHAR(notify2ior), R_OK) == -1 && count < max)
+      while(ACE_OS::access(notify2ior, R_OK) == -1 && count < max)
         {
           ACE_OS::sleep (1);
           count++;

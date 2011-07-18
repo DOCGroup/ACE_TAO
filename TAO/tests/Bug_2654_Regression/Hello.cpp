@@ -1,17 +1,27 @@
+//
 // $Id$
-
+//
 #include "Hello.h"
 #include "ace/Task.h"
 
-ACE_THR_FUNC_RETURN killer (void *arg)
+class Killer : public ACE_Task_Base
 {
-  CORBA::ORB_var orb = reinterpret_cast<CORBA::ORB_ptr> (arg);
+public:
+  Killer (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
 
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) server exiting\n"));
-  orb->shutdown (1);
+  int svc (void)
+  {
+    ACE_DEBUG ((LM_DEBUG,"(%P|%t) server exiting\n"));
+    this->orb_->shutdown (1);
+    return 0;
+  }
 
-  return 0;
-}
+private:
+  CORBA::ORB_var orb_;
+};
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -37,10 +47,7 @@ Hello::method (CORBA::Short count)
       PortableServer::POA_var poa = this->_default_POA();
       PortableServer::POAManager_var mgr = poa->the_POAManager();
       mgr->hold_requests(false);
-      // Pass duplicated ptr to a thread and let the thread to free the reference.
-      CORBA::ORB_ptr orb = CORBA::ORB::_duplicate (this->orb_.in ());
-      ACE_Thread_Manager::instance()->spawn_n (1,
-                                               ACE_THR_FUNC (killer),
-                                               static_cast<void*> (orb));
+      Killer *k = new Killer (orb_.in ());
+      k->activate();
     }
 }

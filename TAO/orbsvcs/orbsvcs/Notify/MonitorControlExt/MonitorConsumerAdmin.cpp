@@ -3,12 +3,12 @@
 #include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
 
 #include "ace/Monitor_Size.h"
-#include "ace/Monitor_Base.h"
 
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
+#include "orbsvcs/Notify/ThreadPool_Task.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -32,7 +32,7 @@ public:
       {
         CosNotifyChannelAdmin::ConsumerAdmin_var admin =
           this->ec_->get_consumeradmin (this->id_);
-
+          
         if (!CORBA::is_nil (admin.in ()))
           {
             admin->destroy ();
@@ -45,7 +45,7 @@ public:
 
     return true;
   }
-
+   
 private:
   TAO_MonitorEventChannel* ec_;
   CosNotifyChannelAdmin::AdminID id_;
@@ -60,7 +60,18 @@ TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin (void)
 
 TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin (void)
 {
-  this->remove ();
+  // First, make sure we can get down to the real ec type.
+  TAO_MonitorEventChannel* ec =
+    dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
+    
+  if (ec != 0)
+    {
+      ec->unregister_statistic (this->stat_name_.c_str ());
+      ec->remove_consumeradmin (this->id ());
+      TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
+      cinstance->remove (this->control_name_);
+    }
+
   // The registry also manages this refcount. The pointer itself
   // should never be 0 since we throw an exception if anything
   // fails in allocation or registration.
@@ -74,14 +85,13 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
 {
   // Set up the statistic name, create it and register it
   this->stat_name_ = base + "/";
-  this->queue_size_stat_name_ =  stat_name_ +
-    NotifyMonitoringExt::EventChannelQueueSize;
+  this->stat_name_ += NotifyMonitoringExt::EventChannelQueueSize;
+  
   ACE_NEW_THROW_EX (this->queue_size_,
-                    Monitor_Base (this->queue_size_stat_name_.c_str (),
-                                  Monitor_Control_Types::MC_NUMBER),
+                    Size_Monitor (this->stat_name_.c_str ()),
                     CORBA::NO_MEMORY ());
-
-  if (!mec->register_statistic (this->queue_size_stat_name_, this->queue_size_))
+                    
+  if (!mec->register_statistic (this->stat_name_, this->queue_size_))
     {
       // The constructor sets the refcount to 1 so this call will
       // delete the pointer.
@@ -90,17 +100,15 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
       throw NotifyMonitoringExt::NameAlreadyUsed ();
     }
 
-  this->overflow_stat_name_ = stat_name_ +
-    NotifyMonitoringExt::EventChannelQueueOverflows;
-  ACE_NEW_THROW_EX (this->overflows_,
-                    Monitor_Base (this->overflow_stat_name_.c_str (),
-                                  Monitor_Control_Types::MC_COUNTER),
-                    CORBA::NO_MEMORY ());
-  if (!mec->register_statistic (this->overflow_stat_name_, this->overflows_))
+  // If we've successfully registered the statistic, hook us into the
+  // buffering strategy so it can let us know when the queue changes.
+  TAO_Notify_ThreadPool_Task* tpt =
+    dynamic_cast<TAO_Notify_ThreadPool_Task*> (this->get_worker_task ());
+    
+  if (tpt != 0)
     {
-      delete this->overflows_;
-      this->overflows_ = 0;
-      throw NotifyMonitoringExt::NameAlreadyUsed ();
+      TAO_Notify_Buffering_Strategy* bs = tpt->buffering_strategy ();
+      bs->set_tracker (this);
     }
 
   this->control_name_ = base;
@@ -111,13 +119,13 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
                                           this->id ()),
                     CORBA::NO_MEMORY ());
   TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
-
+  
   if (!cinstance->add (control))
     {
       delete control;
       ACE_ERROR ((LM_ERROR,
                   "Unable to add control: %s\n",
-                  this->control_name_.c_str ()));
+                  this->control_name_.c_str ()));                 
     }
 }
 
@@ -130,7 +138,7 @@ TAO_MonitorConsumerAdmin::obtain_named_notification_push_supplier (
   // First, make sure we can get down to the real ec type.
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-
+    
   if (ec == 0)
     {
       throw CORBA::INTERNAL ();
@@ -155,7 +163,7 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
   // First, make sure we can get down to the real ec type.
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-
+    
   if (ec == 0)
     {
       throw CORBA::INTERNAL ();
@@ -177,75 +185,16 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
 void
 TAO_MonitorConsumerAdmin::update_queue_count (size_t count)
 {
-  // NOTE: Formerly this code multiplied the count by an arbitrary and meaningless
-  // constant, and only updated the statistic when the count was non-zero.
-  this->queue_size_->receive (count);
-
-  if (this->child_ != 0)
+  if (this->queue_size_ != 0)
     {
-      this->child_->update_queue_count (count);
+      // The message blocks stored in this queue are of size
+      // zero.  However, each message block is a
+      // TAO_Notify_Event which has an associated set of data
+      // which can be used to estimate the amount of memory
+      // allocated to the message queue
+      this->queue_size_->receive (count * sizeof (TAO_Notify_Event));
     }
 }
-
-
-void
-TAO_MonitorConsumerAdmin::count_queue_overflow (
-  bool local_overflow,
-  bool global_overflow)
-{
-  // note that someday we may wish to distinguish between
-  // local and global overflows
-  this->overflows_->receive ((size_t)1);
-
-  if (this->child_ != 0)
-    {
-      this->child_->count_queue_overflow (local_overflow, global_overflow);
-    }
-}
-
-TAO_MonitorEventChannel *
-TAO_MonitorConsumerAdmin::get_ec (void) const
-{
-  TAO_MonitorEventChannel* ec = dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
-    throw CORBA::INTERNAL ();
-  return ec;
-}
-
-const ACE_CString &
-TAO_MonitorConsumerAdmin::stat_name (void)const
-{
-  return stat_name_;
-}
-
-
-void
-TAO_MonitorConsumerAdmin::destroy (void)
-{
-  this->remove ();
-  this->TAO_Notify_ConsumerAdmin::destroy ();
-}
-
-void
-TAO_MonitorConsumerAdmin::remove (void)
-{
-  // First, make sure we can get down to the real ec type
-  TAO_MonitorEventChannel* ec =
-    dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec != 0)
-    {
-      ec->unregister_statistic (this->queue_size_stat_name_);
-      ec->unregister_statistic (this->overflow_stat_name_);
-      ec->unregister_statistic (this->stat_name_);
-      ec->remove_consumeradmin (this->id ());
-      TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
-      cinstance->remove (this->control_name_);
-    }
-
-  // We don't own queue_size_, so we must not delete it
-}
-
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

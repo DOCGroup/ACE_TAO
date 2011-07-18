@@ -6,6 +6,10 @@
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
+ACE_RCSID (Service_Context_Manipulation,
+           server,
+           "$Id$")
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
 int
@@ -29,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -127,8 +131,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1, 1);
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

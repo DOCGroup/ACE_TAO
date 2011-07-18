@@ -1,11 +1,9 @@
-// -*- C++ -*-
-// $Id$
+//$Id$
 
 #include "tao/Connection_Handler.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Resume_Handle.h"
-#include "tao/Resume_Handle_Deferred.h"
 #include "tao/Transport.h"
 #include "tao/Wait_Strategy.h"
 
@@ -20,6 +18,10 @@
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (tao,
+           Connection_Handler,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
@@ -28,6 +30,11 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
     connection_pending_ (false),
     is_closed_ (false)
 {
+  // @todo: We need to have a distinct option/ method in the resource
+  // factory for this and TAO_Transport.
+  this->lock_ =
+    this->orb_core_->resource_factory ()->create_cached_connection_lock ();
+
   // Put ourselves in the connection wait state as soon as we get
   // created
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT,
@@ -36,6 +43,9 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 
 TAO_Connection_Handler::~TAO_Connection_Handler (void)
 {
+  // @@ TODO Use auto_ptr<>
+  delete this->lock_;
+
   //@@ CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK
 }
 
@@ -117,14 +127,16 @@ TAO_Connection_Handler::svc_i (void)
       max_wait_time = &current_timeout;
     }
 
-  TAO_Resume_Handle rh (this->orb_core_, ACE_INVALID_HANDLE);
+  TAO_Resume_Handle rh (this->orb_core_,
+                        ACE_INVALID_HANDLE);
 
   // We exit of the loop if
   // - If the ORB core is shutdown by another thread
   // - Or if the transport is null. This could happen if an error
   // occured.
   // - Or if during processing a return value of -1 is received.
-  while (!this->orb_core_->has_shutdown () && result >= 0)
+  while (!this->orb_core_->has_shutdown ()
+         && result >= 0)
     {
       // Let the transport know that it is used
       (void) this->transport ()->update_transport ();
@@ -158,7 +170,7 @@ TAO_Connection_Handler::svc_i (void)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - Connection_Handler::svc_i - end\n"));
+                 "TAO (%P|%t) - Connection_Handler::svc_i end\n"));
 
   return result;
 }
@@ -170,18 +182,21 @@ TAO_Connection_Handler::transport (TAO_Transport* transport)
 
   // Enable reference counting on the event handler.
   this->transport_->event_handler_i ()->reference_counting_policy ().value (
-      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
+      ACE_Event_Handler::Reference_Counting_Policy::ENABLED
+    );
 }
 
 int
-TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
+TAO_Connection_Handler::handle_output_eh (
+    ACE_HANDLE, ACE_Event_Handler * eh)
 {
   // Let the transport that it is going to be used
   (void) this->transport ()->update_transport ();
 
   // Instantiate the resume handle here.. This will automatically
   // resume the handle once data is written..
-  TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   eh->get_handle ());
 
   int return_value = 0;
   this->pre_io_hook (return_value);
@@ -191,12 +206,7 @@ TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
       return return_value;
     }
 
-  // The default constraints are to never block.
-  TAO::Transport::Drain_Constraints dc;
-  if (this->transport ()->handle_output (dc) == TAO_Transport::DR_ERROR)
-    {
-      return_value = -1;
-    }
+  return_value = this->transport ()->handle_output (0);
 
   this->pos_io_hook (return_value);
 
@@ -214,44 +224,12 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
   // If we can't process upcalls just return
   if (!this->transport ()->wait_strategy ()->can_process_upcalls ())
     {
-      ACE_Time_Value suspend_delay (0, 2000);
-
       if (TAO_debug_level > 6)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
                     "not going to handle_input on transport "
                     "because upcalls temporarily suspended on this thread\n",
                     this->transport()->id()));
-
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
-                  "scheduled to resume in %#T sec\n",
-                  eh->get_handle(),
-                  &suspend_delay));
-
-      // Using the heap to create the timeout handler, since we do not know
-      // which handle we will have to try to resume.
-      TAO_Resume_Handle_Deferred* prhd = 0;
-      ACE_NEW_RETURN (prhd,
-                     TAO_Resume_Handle_Deferred (this->orb_core_, eh),
-                     -1);
-      ACE_Event_Handler_var safe_handler (prhd);
-
-      int const retval = this->orb_core_->reactor()->schedule_timer (prhd, 0, suspend_delay);
-      if (retval == -1)
-        {
-          if (TAO_debug_level > 5)
-            ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
-                      "Error scheduling timer in %#T sec\n",
-                      eh->get_handle(),
-                      &suspend_delay));
-          return -1;
-        }
-
-      // Returning 0 causes the wait strategy to exit and the leader thread
-      // to enter the reactor's select() call.
       return 0;
     }
 
@@ -274,15 +252,15 @@ TAO_Connection_Handler::handle_input_internal (
   (void) this->transport ()->update_transport ();
 
   // Grab the transport id now and use the cached value for printing
-  // since the  transport could disappear by the time the thread
+  // since the  transport could dissappear by the time the thread
   // returns.
   size_t const t_id = this->transport ()->id ();
 
   if (TAO_debug_level > 6)
     {
-      ACE_HANDLE const handle = eh->get_handle();
+      ACE_HANDLE handle = eh->get_handle();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_internal, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d\n",
                   t_id, handle, h));
     }
@@ -306,28 +284,21 @@ TAO_Connection_Handler::handle_input_internal (
 
   if (TAO_debug_level > 6)
     {
-      ACE_HANDLE const handle = eh->get_handle ();
+      ACE_HANDLE handle = eh->get_handle ();
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input_internal, "
+                  "TAO (%P|%t) - Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, retval = %d\n",
                   t_id, handle, h, return_value));
     }
 
   if (return_value == -1)
-    {
-      resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
-    }
-
+    resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
   return return_value;
 }
 
 int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 {
-  if (this->is_closed_)
-    {
-      return 1;
-    }
 
   this->is_closed_ = true;
 
@@ -416,7 +387,7 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       ACE_DEBUG  ((LM_DEBUG,
                    "TAO (%P|%t) - Connection_Handler[%d]::"
-                   "close_connection_eh end\n",
+                   "close_connection_eh\n",
                    id));
     }
 
@@ -463,21 +434,26 @@ TAO_Connection_Handler::pos_io_hook (int &)
 }
 
 int
-TAO_Connection_Handler::close_handler (u_long)
+TAO_Connection_Handler::close_handler (u_long flags)
 {
-  if (!this->is_closed_)
-    {
-      this->is_closed_ = true;
+  this->is_closed_ = true;
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+                       this->orb_core_->leader_follower ());
 
-      this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
-                            this->orb_core_->leader_follower ());
+  // Save these for later.  It's possible that purge_entry() called on
+  // the transport could cause our own death.
+  bool pending = this->connection_pending_;
+  TAO_Transport* transport = this->transport ();
 
-      // If there was a pending connection cancel it.
-      this->cancel_pending_connection ();
+  // After calling this, it is unsafe to assume that this object has
+  // *NOT* been deleted!  Only if pending is true are we still around.
+  transport->purge_entry();
 
-      // Purge transport from cache if it's in cache.
-      this->transport ()->purge_entry();
-    }
+  // We only need to remove the reference from the transport if there
+  // were connections pending at the time that the handler is closed or
+  // the handler is being closed during a new connection.
+  if (pending || ACE_BIT_DISABLED(flags, CLOSE_DURING_NEW_CONNECTION))
+    transport->remove_reference ();
 
   return 0;
 }

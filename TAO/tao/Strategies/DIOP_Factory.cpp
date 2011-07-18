@@ -11,6 +11,10 @@
 
 #include "ace/OS_NS_strings.h"
 
+ACE_RCSID (Strategies,
+           DIOP_Factory,
+           "$Id$")
+
 static const char the_prefix[] = "diop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 #include "ace/Get_Opt.h"
 
@@ -7,6 +6,10 @@
 #include "Client_ORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
+
+ACE_RCSID (Request_Interceptor_Flow,
+           client,
+           "$Id$")
 
 const ACE_TCHAR *ior = 0;
 

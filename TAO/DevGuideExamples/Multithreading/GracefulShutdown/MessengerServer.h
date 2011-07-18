@@ -57,7 +57,7 @@ public:
       {
         char c;
         std::cin.get (c);
-        orb_->shutdown (true);
+        orb_->shutdown (1);
         return 0;
       }
   private:

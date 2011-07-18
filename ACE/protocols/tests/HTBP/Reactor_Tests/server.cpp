@@ -17,8 +17,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_netdb.h"
 
 unsigned port = 8088;
 const ACE_TCHAR *notifier_file = 0;
@@ -48,7 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

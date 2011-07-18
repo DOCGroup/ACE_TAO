@@ -31,6 +31,11 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h"
 
+ACE_RCSID (FT_ReplicationManager,
+           FT_ReplicationManager,
+           "$Id$")
+
+
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)    \
@@ -123,7 +128,7 @@ int TAO::FT_ReplicationManager::parse_args (int argc, ACE_TCHAR * argv[])
       break;
     }
   }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 

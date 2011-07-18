@@ -6,6 +6,8 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_time.h"
 
+
+
 JAWS_Cache_Object::JAWS_Cache_Object (const void *data, size_t size)
   : internal_ (0),
     data_ (data),
@@ -171,7 +173,7 @@ JAWS_Counted_Cache_Object::lock (void)
 unsigned int
 JAWS_Counted_Cache_Object::count_i (void) const
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
+  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
 
   return this->count_;
 }
@@ -179,18 +181,18 @@ JAWS_Counted_Cache_Object::count_i (void) const
 int
 JAWS_Counted_Cache_Object::acquire_i (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
+  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
 
-  ++this->new_count_;
+  this->new_count_++;
   return 0;
 }
 
 int
 JAWS_Counted_Cache_Object::release_i (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
+  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
 
-  --this->new_count_;
+  this->new_count_--;
   this->count_ = this->new_count_;
   return 0;
 }

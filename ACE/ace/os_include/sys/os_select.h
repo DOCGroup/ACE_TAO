@@ -44,7 +44,7 @@ extern "C"
 
 #if defined (ACE_LACKS_FD_MASK)
    typedef long fd_mask;
-#endif /* ACE_LACKS_FD_MASK */
+#endif /* __QNX__ */
 
 #if defined (ACE_WIN32)
    // This will help until we figure out everything:

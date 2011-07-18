@@ -186,6 +186,9 @@ typedef enum CMA_T_SCHED_POLICY {
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
 
+// Compiler/platform supports strerror ()
+#define ACE_HAS_STRERROR
+
 // Platform doesn't have truncate()
 #define ACE_LACKS_TRUNCATE
 
@@ -371,6 +374,9 @@ typedef enum CMA_T_SCHED_POLICY {
 // Compiler specific parts
 //=========================================================================
 
+// Compiler supports C++ exception handling
+#define ACE_HAS_EXCEPTIONS 1
+
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
@@ -386,6 +392,10 @@ typedef enum CMA_T_SCHED_POLICY {
 // Compiler's template mechanism must see source code (i.e.,
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
+
+// Compiler implements templates that support typedefs inside
+// of classes used as formal arguments to a template class.
+#define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Platform/Compiler supports a String class
 #define ACE_HAS_STRING_CLASS
@@ -417,7 +427,7 @@ typedef enum CMA_T_SCHED_POLICY {
 #if defined(USE_EXPLICIT_EXPORT)
 #define ACE_LACKS_INLINE_FUNCTIONS
 
-#define ACE_HAS_CUSTOM_EXPORT_MACROS 1
+#define ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_Proper_Export_Flag export$
 #define ACE_Proper_Import_Flag import$
 #define ACE_EXPORT_SINGLETON_DECLARATION(T) template class export$ T
@@ -430,6 +440,9 @@ typedef enum CMA_T_SCHED_POLICY {
 //=========================================================================
 // Build options
 //=========================================================================
+
+// Disable the inclusion of RCS ids in the generated code.
+#define ACE_USE_RCSID 0
 
 // For debugging problems in os calls (but this doesn't work too well
 // since output is not interleaved properly with output from ACE_TRACE

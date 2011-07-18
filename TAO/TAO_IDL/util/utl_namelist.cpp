@@ -74,6 +74,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_namelist.h"
 
+ACE_RCSID (util,
+           utl_namelist,
+           "$Id$")
+
 UTL_NameList::UTL_NameList (UTL_ScopedName *s,
                             UTL_NameList *cdr)
   : UTL_List (cdr),
@@ -107,7 +111,7 @@ UTL_NameList::destroy (void)
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
   this->pd_car_data = 0;
-
+  
   this->UTL_List::destroy ();
 }
 

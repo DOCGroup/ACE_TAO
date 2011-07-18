@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    discriminant_ci.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for discriminant of the union.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    discriminant_ci.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for discriminant of the union.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_union,
+           discriminant_ci,
+           "$Id$")
 
 // *************************************************************************
 // be_visitor_discriminant_ci - visitor for discriminant in client inline file
@@ -31,8 +41,8 @@ int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    this->ctx_->be_node_as_union ();
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -51,14 +61,14 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
   if (bu->default_value (dv) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_union_discriminant_ci::")
-                         ACE_TEXT ("visit_enum - ")
-                         ACE_TEXT ("computing default value failed\n")),
+                         "(%N:%l) be_visitor_union_discriminant_ci::"
+                         "visit_enum - "
+                         "computing default value failed\n"),
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -71,25 +81,29 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "this->_reset ();" << be_nl
           << "this->disc_ = ";
 
-      // We use one of the enum values that isn't used in this
-      // union if one is available.
-      UTL_ScopedName *sn = node->value_to_name (dv.u.enum_val);
+      be_type* dt =
+        be_type::narrow_from_decl (bu->disc_type ());
 
-      if (sn)
+      if (dt == 0)
         {
-          // The function value_to_name() takes care of adding
-          // any necessary scoping to the output.
-          *os << sn;
-        }
-      else
-        {
-          // Since CORBA defines enums to be 32bits, use -1 as the
-          // out-of-bounds value for the _default() function.
-          *os << "static_cast <" << bt->name () << "> (-1)";
+          return -1;
         }
 
-      *os << ";" << be_uidt_nl
-          << "}" << be_nl_2;
+      // Find where was the enum defined, if it was defined in the globa
+      // scope, then it is easy to generate the enum values....
+      be_scope* scope =
+        be_scope::narrow_from_scope (dt->defined_in ());
+
+      if (scope == 0)
+        {
+          *os << node->value_to_name (dv.u.enum_val);
+          return 0;
+        }
+
+      // The function value_to_name() takes care of adding
+      // any necessary scoping to the output.
+      *os << node->value_to_name (dv.u.enum_val);
+      *os << ";" << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
   // the set method
@@ -100,7 +114,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // the get method
   *os << "// Accessor to get the discriminant." << be_nl
@@ -120,9 +134,9 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   )
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
+    this->ctx_->be_node_as_union ();
 
-  be_type *bt = 0;
+  be_type *bt;
 
   if (this->ctx_->alias ())
     {
@@ -141,14 +155,14 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   if (bu->default_value (dv) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_union_discriminant_ci::")
-                         ACE_TEXT ("visit_enum - ")
-                         ACE_TEXT ("computing default value failed\n")),
+                         "(%N:%l) be_visitor_union_discriminant_ci::"
+                         "visit_enum - "
+                         "computing default value failed\n"),
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -166,43 +180,52 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
         {
         case AST_Expression::EV_short:
           *os << dv.u.short_val;
+
           break;
         case AST_Expression::EV_ushort:
           *os << dv.u.ushort_val;
+
           break;
         case AST_Expression::EV_long:
           *os << dv.u.long_val;
+
           break;
         case AST_Expression::EV_ulong:
           *os << dv.u.ulong_val;
+
           break;
         case AST_Expression::EV_char:
-          os->print ("'\\%o'", dv.u.char_val);
+          os->print ("'\\%d'", dv.u.char_val);
+          break;
+        case AST_Expression::EV_wchar:
+          os->print ("L'\\%d'", dv.u.wchar_val);
           break;
         case AST_Expression::EV_bool:
           *os << (dv.u.bool_val == 0 ? "false" : "true");
+
           break;
         case AST_Expression::EV_longlong:
           *os << dv.u.longlong_val;
+
           break;
         case AST_Expression::EV_ulonglong:
           *os << dv.u.ulonglong_val;
+
           break;
         default:
           // Error caught earlier.
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_union_discriminant_ci::")
-                             ACE_TEXT ("visit_predefined_type - ")
-                             ACE_TEXT ("bad or unimplemented ")
-                             ACE_TEXT ("discriminant type\n")),
-                            -1);
+                             "(%N:%l) be_visitor_union_discriminant_ci::"
+                             "visit_predefined_type - "
+                             "bad or unimplemented discriminant type\n"),
+                        -1);
         }
 
       *os << ";" << be_uidt_nl << "}";
     }
 
   // The set method.
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
@@ -210,7 +233,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // The get method.
   *os << "// Accessor to get the discriminant." << be_nl
@@ -235,9 +258,9 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_union_discriminant_ci::")
-                         ACE_TEXT ("visit_typedef - ")
-                         ACE_TEXT ("Bad primitive type\n")),
+                         "(%N:%l) be_visitor_union_discriminant_ci::"
+                         "visit_typedef - "
+                         "Bad primitive type\n"),
                         -1);
     }
 

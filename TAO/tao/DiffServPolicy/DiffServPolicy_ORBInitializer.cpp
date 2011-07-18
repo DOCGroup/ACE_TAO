@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h"
@@ -8,6 +7,10 @@
 #include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
+
+ACE_RCSID (DiffServPolicy,
+           DiffServPolicy_ORBInitializer,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

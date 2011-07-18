@@ -1,22 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    CC_test_utils.cpp
- *
- *  $Id$
- *
- *    This class provides a namespace for utility functions for the
- *    concurrency service test.
- *
- *
- *  @author   Torben Worm <tworm@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/orbsvcs/tests
+//
+// = FILENAME
+//    CC_test_utils.cpp
+//
+// = DESCRIPTION
+//      This class provides a namespace for utility functions for the
+//      concurrency service test.
+//
+// = AUTHORS
+//      Torben Worm <tworm@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
+
+ACE_RCSID(Concurrency, CC_test_utils, "$Id$")
 
 char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 {

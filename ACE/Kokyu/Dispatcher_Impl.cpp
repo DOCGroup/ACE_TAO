@@ -6,6 +6,8 @@
 #include "Dispatcher_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Kokyu, Dispatcher_Impl, "$Id$")
+
 namespace Kokyu
 {
 

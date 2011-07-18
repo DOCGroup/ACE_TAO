@@ -1,18 +1,18 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *   This is a client that uses oneways with buffering constraints
- *   and roundtrip timeout constraints.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+// ================================================================
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is a client that uses oneways with buffering constraints
+//     and roundtrip timeout constraints.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+// ================================================================
 
 #include "testC.h"
 
@@ -24,6 +24,8 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_RCSID(Timed_Buffered_Oneways, client, "$Id$")
 
 // Eager buffering option.
 static int eager_buffering = 0;
@@ -185,7 +187,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (IOR));
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object_no_policy = test::_narrow (object.in ());

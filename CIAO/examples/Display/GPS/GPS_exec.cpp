@@ -1,34 +1,29 @@
+
 // $Id$
 
 #include "GPS_exec.h"
+#include "ciao/CIAO_common.h"
 
 #include "ace/OS_NS_time.h"
 
 #define DISPLACEMENT 256
 
 // Operations from HUDisplay::position
-
-HUDisplay::GPS_position
-MyImpl::Position_Impl::posxy ()
+CORBA::Long
+MyImpl::Position_Impl::posx ()
 {
-  return component_.posxy();
+  return component_.posx();
 }
 
-CORBA::UShort
-MyImpl::Position_Impl::id ()
+CORBA::Long
+MyImpl::Position_Impl::posy ()
 {
-  return component_.id();
+  return component_.posy();
 }
 
-CORBA::Boolean
-MyImpl::Position_Impl::started ()
-{
-  return component_.started ();
-}
 
 /// Default constructor.
 MyImpl::GPS_exec_i::GPS_exec_i ()
-: id_(1), started_(false)
 {
   ACE_OS::srand ((u_int) ACE_OS::time ());
   this->positionx_ = ACE_OS::rand ();
@@ -41,61 +36,42 @@ MyImpl::GPS_exec_i::~GPS_exec_i ()
 }
 
 // Operations from HUDisplay::GPS
-HUDisplay::CCM_position_ptr
-MyImpl::GPS_exec_i::get_MyLocation ()
-{
-  ACE_DEBUG ((LM_DEBUG,
-                 "GPS_exec::get_MyLocation facet called by NavDisplay\n"));
-  return (new Position_Impl (*this));
-}
+  HUDisplay::CCM_position_ptr
+  MyImpl::GPS_exec_i::get_MyLocation ()
+  {
+//     ACE_DEBUG ((LM_DEBUG,
+//                 "GPS_exec::get_MyLocation called\n"));
+    return (new Position_Impl (*this));
+  }
 
 void
 MyImpl::GPS_exec_i::push_Refresh (HUDisplay::tick *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("GPS: Received Refresh Event from RateGen for GPS %u\n"),
-              this->id_));
+//   ACE_DEBUG ((LM_DEBUG,
+//               ACE_TEXT ("GPS: Received Refresh Event\n")));
 
   // Refresh position
   this->positionx_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
   this->positiony_ += ACE_OS::rand () % DISPLACEMENT - (DISPLACEMENT/2);
-  started_= true;
 
-  // Notify others
-  HUDisplay::tick_var event = new OBV_HUDisplay::tick ();
+  // Nitify others
+  HUDisplay::tick_var event = new OBV_HUDisplay::tick;
 
-  ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("GPS: Notify NavDisplay via Ready event.\n")));
   this->context_->push_Ready (event);
 }
 
-HUDisplay::GPS_position
-MyImpl::GPS_exec_i::posxy ()
+CORBA::Long
+MyImpl::GPS_exec_i::posx ()
 {
-  HUDisplay::GPS_position pos;
-  pos.pos_x =  this->positionx_;
-  pos.pos_y =  this->positiony_;
-  return pos;
+  return this->positionx_;
 }
 
-CORBA::UShort
-MyImpl::GPS_exec_i::id ()
+CORBA::Long
+MyImpl::GPS_exec_i::posy ()
 {
-  return this->id_;
+  return this->positiony_;
 }
 
-void
-MyImpl::GPS_exec_i::id (
-  CORBA::UShort id)
-{
-  this->id_ = id;
-}
-
-CORBA::Boolean
-MyImpl::GPS_exec_i::started ()
-{
-  return started_;
-}
 
 // Operations from Components::SessionComponent
 void
@@ -107,10 +83,8 @@ MyImpl::GPS_exec_i::set_session_context (Components::SessionContext_ptr ctx)
     HUDisplay::CCM_GPS_Context::_narrow (ctx);
 
   if (CORBA::is_nil (this->context_.in ()))
-    {
-      ACE_DEBUG ((LM_DEBUG, "MyImpl::GPS_exec_i::context is NIL !\n"));
-      throw CORBA::INTERNAL ();
-    }
+    throw CORBA::INTERNAL ();
+  // Urm, we actually discard exceptions thown from this operation.
 }
 
 void

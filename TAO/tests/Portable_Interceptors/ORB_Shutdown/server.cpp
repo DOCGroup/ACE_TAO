@@ -1,11 +1,16 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
+
 #include "test_i.h"
 #include "Server_ORBInitializer.h"
 #include "Server_Request_Interceptor.h"
+
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_stdio.h"
+
+
+ACE_RCSID (ORB_Shutdown,
+           server,
+           "$Id$")
 
 
 const ACE_TCHAR *ior_file = 0;

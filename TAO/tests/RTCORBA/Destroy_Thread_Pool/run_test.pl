@@ -19,7 +19,7 @@ if ($continuous) {
     $SV->Arguments("-ORBSvcConf continuous$PerlACE::svcconf_ext");
 }
 
-$server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+$server_status = $SV->SpawnWaitKill (60);
 
 if ($server_status != 0) {
     print STDERR "ERROR: test returned $server_status\n";

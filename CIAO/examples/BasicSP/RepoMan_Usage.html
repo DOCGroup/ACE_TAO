@@ -23,7 +23,7 @@ downloaded component lib files.</li> <P>
 <li>If you want to use CORBA <em>naming service</em> to get the RepoMan object reference, then please start naming
 service with multicast mode.</li> <P>
 <PRE>
-  $TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming -m 1
+  $TAO_ROOT/orbsvcs/Naming_Service/naming_service -m 1
 </PRE>
 
 <li>Build & start JAWS server.</li> <P>
@@ -43,12 +43,12 @@ about how to installed Packages into RepoMan.</li> <P>
 <OL>
 <li>Using ior file: </li>
 <PRE>
-Change the current directory into $DANCE_ROOT/bin
-RepositoryManagerDaemon -o
+Change the current directory into $CIAO_ROOT/DAnCE/RepositoryManager
+RepositoryManagerDaemon -o  
 </PRE>
 <li>Using Naming Service:</li>
 <PRE>
-Change the current directory into $DANCE_ROOT/bin
+Change the current directory into $CIAO_ROOT/DAnCE/RepositoryManager
 RepositoryManagerDaemon -v [NameofRM]
 </PRE>
 </OL>
@@ -62,45 +62,45 @@ RepositoryManagerDaemon -v [NameofRM]
 
 <li>Start ExecutionManager.</li> <P>
 <PRE>
-  $DANCE_ROOT/bin/dance_execution_manager -o EM.ior -i NodeManagerMap.dat
+  $CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i NodeManagerMap.dat
 </PRE>
 
 <li>Start plan_launcher.</li> <P>
 <OL>
 <li>Not using RepoMan:</li>
 <PRE>
-$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior
 </PRE>
 
 <li>Using ior file to get RepoMan, providing the name of one composite componemt:</li>
 <PRE>
-$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp
--a BasicSP
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp 
+-a BasicSP 
 -k file://EM.ior
 -l file://$CIAO_ROOT/DAnCE/RepositoryManager/RepositoryManagerDaemon.ior
 </PRE>
 
 <li>Using naming service to get RepoMan, providing the name of one composite componemt:</li>
 <PRE>
-$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp
--a BasicSP
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp 
+-a BasicSP 
 -k file://EM.ior
 -v [NameofRM]
 </PRE>
 
 <li>Using naming service to get RepoMan, providing the names of several individual componemts:</li>
 <PRE>
-$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp
--a BMClosedED+BMDevice+BMDisplay+EC
--k file://EM.ior
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp 
+-a BMClosedED+BMDevice+BMDisplay+EC 
+-k file://EM.ior 
 -v [NameofRM]
 </PRE>
 
 <li>Using naming service to get RepoMan, providing the types of several individual componemts:</li>
 <PRE>
-$DANCE_ROOT/bin/dance_plan_launcher -p flattened_deploymentplan.cdp
--e IDL:BasicSP/EC:1.0+IDL:BasicSP/BMDisplay:1.0+IDL:BasicSP/BMDevice:1.0+IDL:BasicSP/BMClosedED:1.0
--k file://EM.ior
+$CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp 
+-e IDL:BasicSP/EC:1.0+IDL:BasicSP/BMDisplay:1.0+IDL:BasicSP/BMDevice:1.0+IDL:BasicSP/BMClosedED:1.0 
+-k file://EM.ior 
 -v [NameofRM]
 </PRE>
 </OL>

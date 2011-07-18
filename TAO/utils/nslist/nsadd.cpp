@@ -1,28 +1,34 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    nsadd.cpp
- *
- *  $Id$
- *
- *  Naming Service add utility
- *
- *
- *  @author  Carlos O'Ryan  enhanced Nov 6
- *  @author 2002 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21 2006 Simon Massey <sma@prismtech.com>
- */
-//=============================================================================
-
+// ================================================================
+//
+// = LIBRARY
+//    utils
+//
+// = FILENAME
+//    nsadd.cpp
+//
+// = DESCRIPTION
+//    Naming Service add utility
+//
+// = AUTHOR
+//     Carlos O'Ryan
+//     enhanced Nov 6, 2002 Paul Caffrey <denginere@hotmail.com>
+//     redone   Jun 21 2006 Simon Massey <sma@prismtech.com>
+//
+// ================================================================
 
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
+CORBA::ORB_var orb;
 int showIOR = 0;
 int showNSonly = 0;
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
@@ -31,7 +37,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Contact the orb
-      orb = CORBA::ORB_init (argc, argv);
+      ACE_Argv_Type_Converter argcon (argcw, argvw);
+      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
+                             "");
 
       // Scan through the command line options
       bool
@@ -39,6 +47,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         quiet = false,
         rebind = false,
         context = false;
+      int
+        argc = argcon.get_argc ();
+      ACE_TCHAR
+        **argv = argcon.get_TCHAR_argv ();
       const ACE_TCHAR
         *const pname = argv[0];
       const ACE_TCHAR *nameService = 0;
@@ -366,7 +378,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 root_nc->bind (the_name, obj.in ());
             }
         }
-      orb->destroy ();
     }
   catch (const CosNaming::NamingContext::NotFound& nf)
     {
@@ -417,6 +428,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
+  orb->destroy ();
   return 0;
 }
 

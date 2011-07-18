@@ -74,7 +74,6 @@ class UTL_String;
 class UTL_Scope;
 class ast_visitor;
 class AST_Decl;
-class AST_Param_Holder;
 
 // Representation of expression values.
 
@@ -168,7 +167,9 @@ public:
           ACE_CDR::Long       lval;     // Contains long expression value.
           ACE_CDR::ULong      ulval;    // Contains unsigned long expr value.
           ACE_CDR::Boolean    bval;     // Contains boolean expression value.
+#if ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::LongLong   llval;   // Contains long long expr value.
+#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
 #if  defined (ACE_LACKS_UNSIGNEDLONGLONG_T) && ! defined (ACE_LACKS_LONGLONG_T)
           ACE_CDR::LongLong   ullval; // Contains unsigned long long expr value
 #elif ! defined (ACE_LACKS_LONGLONG_T)
@@ -203,13 +204,9 @@ public:
 
   AST_Expression (ACE_CDR::Long l);
 
-  AST_Expression (ACE_CDR::LongLong ll);
-
   AST_Expression (ACE_CDR::Boolean b);
 
   AST_Expression (ACE_CDR::ULong ul);
-
-  AST_Expression (ACE_CDR::ULongLong ull);
 
   AST_Expression (ACE_CDR::ULong,
                   ExprType t);
@@ -282,13 +279,10 @@ public:
   // Compare two AST_Expressions.
 
   bool operator== (AST_Expression *vc);
+
   long compare (AST_Expression *vc);
 
-  // Accessor for the member.
   AST_Decl *get_tdef (void) const;
-
-  // Accessor for the member.
-  AST_Param_Holder *param_holder (void) const;
 
 protected:
   // Evaluate different sets of operators.
@@ -331,10 +325,6 @@ private:
 
   AST_Decl *tdef;
   // Propagates aliased constant type.
-
-  AST_Param_Holder *param_holder_;
-  // Non-zero if we were created from a reference template param.
-
 private:
   // Fill out the lineno, filename and definition scope details.
   void fill_definition_details (void);

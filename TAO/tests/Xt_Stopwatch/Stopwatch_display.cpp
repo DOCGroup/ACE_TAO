@@ -1,7 +1,14 @@
 // $Id$
 
 #include "Stopwatch_display.h"
+
+
 #include "ace/OS_NS_stdio.h"
+
+ACE_RCSID (Xt_Stopwatch,
+           Stopwatch_display,
+           "$Id$")
+
 
 Stopwatch_display::Stopwatch_display (Widget &parent)
 {

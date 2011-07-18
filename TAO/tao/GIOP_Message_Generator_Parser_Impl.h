@@ -34,9 +34,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  *  This class can be done away with if we want to use the svc.conf
  *  file to load the right GIOP protocol. But that would require some
- *  work as we need to make sure that we have the behavior of lower
+ *  work as we need to make sure that we have the behaviours of lower
  *  versions in the higher versions.
  */
+
 class TAO_GIOP_Message_Generator_Parser_Impl
 {
 public:

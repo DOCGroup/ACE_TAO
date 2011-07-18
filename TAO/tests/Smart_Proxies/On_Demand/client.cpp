@@ -1,22 +1,27 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     client.cpp
- *
- *  $Id$
- *
- *   This is the client program that tests TAO's Smart Proxy extension.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/Smart_Proxy/On_Demand
+//
+// = FILENAME
+//     client.cpp
+//
+// = DESCRIPTION
+//     This is the client program that tests TAO's Smart Proxy extension.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+//=========================================================================
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID(Smart_Proxy, client, "$Id$")
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 

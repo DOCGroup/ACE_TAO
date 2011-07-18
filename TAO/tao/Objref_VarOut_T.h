@@ -59,7 +59,7 @@ public:
   TAO_Objref_Var_T<T> & operator= (const TAO_Objref_Var_T<T> &);
   T * operator-> (void) const;
 
-  /// Cast operators.
+  // Cast operators.
   operator T * const & () const;
   operator T *& ();
 
@@ -74,7 +74,7 @@ public:
   _out_type     out (void);
   _retn_type    _retn (void);
 
-  /// TAO extension.
+  // TAO extension.
   _retn_type    ptr (void) const;
 
 protected:
@@ -106,7 +106,7 @@ public:
   TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &p);
   TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &p);
 
-  /// Cast operator.
+  // Cast operator.
   operator T *& ();
 
   T *& ptr (void);

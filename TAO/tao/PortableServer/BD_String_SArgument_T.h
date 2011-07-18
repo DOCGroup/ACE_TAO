@@ -37,7 +37,7 @@ namespace TAO
    */
   template<typename S_var,
            size_t BOUND,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class In_BD_String_SArgument_T : public InArgument
   {
   public:
@@ -61,7 +61,7 @@ namespace TAO
    */
   template<typename S_var,
            size_t BOUND,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Inout_BD_String_SArgument_T : public InoutArgument
   {
   public:
@@ -86,7 +86,7 @@ namespace TAO
    */
   template<typename S_var,
            size_t BOUND,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Out_BD_String_SArgument_T : public OutArgument
   {
   public:
@@ -110,7 +110,7 @@ namespace TAO
    */
   template<typename S_var,
            size_t BOUND,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   class Ret_BD_String_SArgument_T : public RetArgument
   {
   public:
@@ -134,7 +134,7 @@ namespace TAO
    */
   template<typename T_var,
            size_t BOUND,
-           template <typename> class Insert_Policy>
+           class Insert_Policy>
   struct BD_String_SArg_Traits_T
   {
     typedef typename T_var::s_traits::char_type *       ret_type;

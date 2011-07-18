@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
@@ -21,13 +19,17 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/os_include/os_netdb.h"
 
+ACE_RCSID (SSLIOP,
+           SSLIOP_Connector,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ ()
 {
 }
 
@@ -477,9 +479,9 @@ TAO::SSLIOP::Connector::ssliop_connect (
         this->retrieve_credentials (resolver->stub (),
                                     svc_handler->peer ().ssl ());
 
-      ssl_endpoint->set_sec_attrs (qop, trust, credentials.in());
-
       safe_handler.release ();
+
+      ssl_endpoint->set_sec_attrs (qop, trust, credentials.in());
     }
 
   // Check the Cache first for connections
@@ -491,6 +493,19 @@ TAO::SSLIOP::Connector::ssliop_connect (
         == TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
     {
       // ...eliminate svc_handle memory leak...
+      // The make_svc_handler() method creates the service handler and
+      // bumps the #REFCOUNT# up one extra.  The extra reference count
+      // in TAO_Connect_Creation_Strategy::make_svc_handler() is
+      // needed in the case when connection completion is pending and
+      // we are going to wait on a variable in the handler to changes,
+      // signifying success or failure.  Note, that this increment
+      // cannot be done once the connect() returns since this might be
+      // too late if another thread pick up the completion and
+      // potentially deletes the handler before we get a chance to
+      // increment the reference count.
+      if (svc_handler)
+          svc_handler->remove_reference();
+
       ACE_Event_Handler_var
         safe_handler (svc_handler);
 
@@ -531,6 +546,17 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // ACE_Strategy_Connector (the "base_connector_").  This is
       // thread-safe and reentrant, hence no synchronization is
       // necessary.
+      //
+      // The make_svc_handler() method creates the service handler and
+      // bumps the #REFCOUNT# up one extra.  The extra reference count
+      // in TAO_Connect_Creation_Strategy::make_svc_handler() is
+      // needed in the case when connection completion is pending and
+      // we are going to wait on a variable in the handler to changes,
+      // signifying success or failure.  Note, that this increment
+      // cannot be done once the connect() returns since this might be
+      // too late if another thread pick up the completion and
+      // potentially deletes the handler before we get a chance to
+      // increment the reference count.
       if (svc_handler == 0 &&
           this->base_connector_.creation_strategy ()->make_svc_handler (
                svc_handler) != 0)
@@ -607,6 +633,20 @@ TAO::SSLIOP::Connector::ssliop_connect (
       result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
+
+      // base_connector_.connect() will increment the handler's
+      // #REFCOUNT# once more. This is not required as we already hold
+      // a reference to the handler, so we discard this second
+      // reference.
+      svc_handler->remove_reference ();
+
+      // There are three possibilities from calling connect(): (a)
+      // connection succeeds immediately - in this case, the
+      // #REFCOUNT# on the handler is two; (b) connection completion
+      // is pending - in this case, the #REFCOUNT# on the handler is
+      // also two; (c) connection fails immediately - in this case,
+      // the #REFCOUNT# on the handler is one since close() gets
+      // called on the handler.
 
       // Make sure that we always do a remove_reference
       ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
@@ -732,8 +772,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
           return 0;
         }
-
-      svc_handler_auto_ptr.release ();
     }
 
   return transport;

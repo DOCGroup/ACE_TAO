@@ -1,7 +1,11 @@
 // -*- C++ -*-
-// $Id$
 
 #include "orbsvcs/Security/Security_PolicyFactory.h"
+
+ACE_RCSID (Security,
+           Security_PolicyFactory,
+           "$Id$")
+
 #include "orbsvcs/Security/SL2_QOPPolicy.h"
 #include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
 

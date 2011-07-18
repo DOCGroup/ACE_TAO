@@ -2,6 +2,10 @@
 //$Id$
 //
 
+ACE_RCSID (be_visitor_interface,
+           direct_proxy_impl_ss,
+           "$Id$")
+
 be_visitor_interface_direct_proxy_impl_ss::
 be_visitor_interface_direct_proxy_impl_ss (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -24,16 +28,16 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
 
   this->ctx_->node (node);
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl
       << "//                 Direct Proxy  Implementation" << be_nl
-      << "//" << be_nl_2;
+      << "//" << be_nl << be_nl;
 
   // Destructor Implementation
   *os << node->full_direct_proxy_impl_name () << "::~"
       << node->direct_proxy_impl_name () << " (void)"
-      << be_nl << "{" << be_nl << "}" << be_nl_2;
+      << be_nl << "{" << be_nl << "}" << be_nl << be_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -44,7 +48,7 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
                         -1);
     }
 
-  *os << be_nl_2
+  *os << be_nl << be_nl
       << "//" << be_nl
       << "//           End Direct Proxy Implementation" << be_nl
       << "///////////////////////////////////////////////////////////////////////";
@@ -160,14 +164,10 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
 }
 
 int be_visitor_interface_direct_proxy_impl_ss::visit_component (
-    be_component *node)
+    be_component *node
+  )
 {
   return this->visit_interface (node);
 }
 
-int be_visitor_interface_direct_proxy_impl_ss::visit_connector (
-    be_connector *node)
-{
-  return this->visit_component (node);
-}
 

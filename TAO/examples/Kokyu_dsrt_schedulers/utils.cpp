@@ -1,7 +1,7 @@
 //$Id$
 
 #include "utils.h"
-#include "Kokyu/Kokyu.h"
+#include "Kokyu.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_string.h"
 

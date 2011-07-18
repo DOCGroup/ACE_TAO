@@ -1,23 +1,30 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   except.cpp
- *
- *  $Id$
- *
- * tests exception
- *
- *
- *  @author Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/Param_Test
+//
+// = FILENAME
+//   except.cpp
+//
+// = DESCRIPTION
+//   tests exception
+//
+// = AUTHORS
+//   Carlos O'Ryan
+//
+// ============================================================================
 
 #include "helper.h"
 #include "except.h"
 #include "tao/debug.h"
 
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
+
+ACE_RCSID (Param_Test,
+           except,
+           "$Id$")
 
 // ************************************************************************
 //               Test_Exception

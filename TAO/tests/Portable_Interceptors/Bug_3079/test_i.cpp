@@ -1,7 +1,10 @@
 // -*- C++ -*-
-// $Id$
 
 #include "test_i.h"
+
+ACE_RCSID (Redirection,
+           test_i,
+           "$Id$")
 
 test_i::test_i (CORBA::Short num,
                 CORBA::ORB_ptr orb)

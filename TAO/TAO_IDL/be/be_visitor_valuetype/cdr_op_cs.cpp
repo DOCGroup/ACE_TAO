@@ -1,18 +1,29 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Concrete visitor for valuetypes.
- *  This one provides code generation for the CDR operators.
- *
- *
- *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Concrete visitor for valuetypes.
+//    This one provides code generation for the CDR operators.
+//
+// = AUTHOR
+//    Boris Kolpackov <bosk@ipmce.ru>
+//    based on code from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    based on code from Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype_cdr_op_cs,
+           "$Id$")
 
 be_visitor_valuetype_cdr_op_cs::be_visitor_valuetype_cdr_op_cs (
     be_visitor_context *ctx
@@ -58,8 +69,8 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -81,7 +92,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << node->full_name () << "::_downcast)"
       << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator>> (" << be_idt << be_idt_nl
@@ -93,11 +104,11 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   *os << "return " << node->full_name ()
       << "::_tao_unmarshal (strm, _tao_valuetype);"
       << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;

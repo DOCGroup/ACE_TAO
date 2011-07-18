@@ -1,17 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    cdr_op_cs.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for CDR operators for structures
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    cdr_op_cs.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for CDR operators for structures
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_structure, 
+           cdr_op_cs, 
+           "$Id$")
 
 be_visitor_structure_cdr_op_cs::be_visitor_structure_cdr_op_cs (
     be_visitor_context *ctx
@@ -42,14 +51,14 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_cdr_op_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"),
+                         "codegen for scope failed\n"), 
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -73,12 +82,12 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_structure_cdr_op_cs::"
                          "visit_structure - "
-                         "codegen for scope failed\n"),
+                         "codegen for scope failed\n"), 
                         -1);
     }
 
   *os << ";" << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
+      << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
@@ -91,14 +100,14 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       *os << "strm";
     }
 
-  *os << "," << be_nl
+  *os << "," << be_nl 
       << node->name () << " &";
-
+      
   if (! node->is_local ())
     {
       *os << "_tao_aggregate";
     }
-
+    
   *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
@@ -116,9 +125,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_cdr_op_cs::"
                              "visit_structure - "
-                             "codegen for field decl scope failed\n"),
+                             "codegen for field decl scope failed\n"), 
                             -1);
-        }
+        }        
 
       *os << "return" << be_idt_nl;
 
@@ -127,7 +136,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_structure_cdr_op_cs"
                              "::visit_structure - "
-                             "codegen for scope failed\n"),
+                             "codegen for scope failed\n"), 
                             -1);
         }
 
@@ -138,7 +147,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (be_global->gen_ostream_operators ())
     {
-      node->gen_ostream_operator (os, false);
+      node->gen_ostream_operator (os);
     }
 
   *os << be_global->core_versioning_end () << be_nl;

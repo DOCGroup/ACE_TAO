@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
-*  @file    Reactor_Timer_Queue_Test.cpp
- *
- *  $Id$
- *
- *  This example tests the timer queue mechanism of ACE_Reactor.
- *
- *
- *  @author Nanbor Wang <nw1@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Reactor_Timer_Queue_Test
+//
+// = DESCRIPTION
+//    This example tests the timer queue mechanism of ACE_Reactor.
+//
+// = AUTHOR
+//    Nanbor Wang <nw1@cs.wustl.edu> and
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Thread_Manager.h"
@@ -22,7 +25,7 @@
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
 
-
+ACE_RCSID(Timer_Queue, Reactor_Timer_Queue_Test, "$Id$")
 
 void
 Reactor_Timer_Handler::set_timer_id (long tid)
@@ -31,9 +34,12 @@ Reactor_Timer_Handler::set_timer_id (long tid)
 }
 
 int
-Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &,
+Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
                                        const void *)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (tv);
+
   ACE_Time_Value txv = ACE_OS::gettimeofday ();
   ACE_DEBUG ((LM_DEBUG,
               "\nTimer #%d fired at %d.%06d (%T)!\n",
@@ -99,8 +105,11 @@ Input_Handler::cancel_timer (void *argument)
 }
 
 int
-Input_Handler::shutdown_timer (void *)
+Input_Handler::shutdown_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   this->done_ = 1;
   ACE_DEBUG ((LM_DEBUG,
               "Shutting down event loop\n"));
@@ -108,8 +117,11 @@ Input_Handler::shutdown_timer (void *)
 }
 
 int
-Input_Handler::list_timer (void *)
+Input_Handler::list_timer (void *argument)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (argument);
+
   ACE_Timer_Queue_Iterator &iter = this->tq_->iter ();
   ACE_DEBUG ((LM_DEBUG,
               "\n\nTimers in queue:\n"));

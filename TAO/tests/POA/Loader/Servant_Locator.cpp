@@ -1,21 +1,28 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Servant_Locator.cpp
- *
- *  $Id$
- *
- *   Implementation of ServantLocator class, used with a POA
- *   having a NON_RETAIN policy.
- *
- *
- *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//     TAO/examples/POA/Loader
+//
+// = FILENAME
+//     Servant_Locator.cpp
+//
+// = DESCRIPTION
+//     Implementation of ServantLocator class, used with a POA
+//     having a NON_RETAIN policy.
+//
+// = AUTHOR
+//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "Servant_Locator.h"
 #include "ace/OS_NS_string.h"
+
+ACE_RCSID (Loader,
+           Servant_Locator,
+           "$Id$")
 
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and

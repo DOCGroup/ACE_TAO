@@ -51,12 +51,14 @@ namespace TAO
                        CORBA::Short priority,
                        bool &wait_occurred_restart_call);
 
+#if !defined (CORBA_E_MICRO)
       virtual
       void
       activate_object_with_id (const PortableServer::ObjectId &id,
                                PortableServer::Servant servant,
                                CORBA::Short priority,
                                bool &wait_occurred_restart_call);
+#endif
 
       void deactivate_object (const PortableServer::ObjectId &id);
 
@@ -137,8 +139,6 @@ namespace TAO
 
       virtual int unbind_using_user_id (
         const PortableServer::ObjectId &user_id);
-
-      TAO_Active_Object_Map * get_active_object_map() const;
 
     private:
       auto_ptr<TAO_Active_Object_Map> active_object_map_;

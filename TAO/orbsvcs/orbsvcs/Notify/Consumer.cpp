@@ -6,6 +6,8 @@
 #include "orbsvcs/Notify/Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
+
 #include "orbsvcs/Notify/Timer.h"
 #include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/Method_Request_Event.h"
@@ -219,6 +221,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
             catch (const CORBA::Exception&)
               {
                 // todo is there something meaningful we can do here?
+                ;
               }
             break;
           }
@@ -498,15 +501,11 @@ TAO_Notify_Consumer::dispatch_pending (void)
 
 
 // virtual: this is the default, overridden for SequencePushConsumer
-// FUZZ: disable check_for_ACE_Guard
 bool
-TAO_Notify_Consumer::dispatch_from_queue (
-  Request_Queue & requests,
-  ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon)
+TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <TAO_SYNCH_MUTEX> & ace_mon)
 {
-// FUZZ: enable check_for_ACE_Guard
   bool result = true;
-  TAO_Notify_Method_Request_Event_Queueable * request = 0;
+  TAO_Notify_Method_Request_Event_Queueable * request;
   if (requests.dequeue_head (request) == 0)
     {
       ace_mon.release ();
@@ -589,8 +588,8 @@ TAO_Notify_Consumer::dispatch_from_queue (
   return result;
 }
 
-/// @todo: rather than is_error, use pacing interval so it will be configurable
-/// @todo: find some way to use batch buffering stratgy for sequence consumers.
+//@@todo: rather than is_error, use pacing interval so it will be configurable
+//@@todo: find some way to use batch buffering stratgy for sequence consumers.
 void
 TAO_Notify_Consumer::schedule_timer (bool is_error)
 {
@@ -748,8 +747,8 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
   {
     // The consumer may not connected or the consumer did
     // not provide a callback. In this case, the liveliness
-    // check should return true so it will be validated in
-    // next period.
+    // check should return true so it will be validated in 
+    // next period. 
     if (allow_nil_consumer)
       return true;
     else
@@ -789,12 +788,12 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
         for (CORBA::ULong i = 0; i < policy_list.length (); i++)
           policy_list[i]->destroy ();
 
-        do_liveliness_check
-          = (last_ping_ == ACE_Time_Value::zero ? true
+        do_liveliness_check 
+          = (last_ping_ == ACE_Time_Value::zero ? true 
           : now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_delay ());
       }
       else
-        do_liveliness_check =
+        do_liveliness_check = 
           now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
 
       if (CORBA::is_nil (rtt_obj_.in ()))
@@ -814,7 +813,7 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
   catch (CORBA::Exception& ex)
     {
       if (DEBUG_LEVEL > 0)
-      {
+      {        
         ex._tao_print_exception ("TAO_Notify_Consumer::is_alive: false");
       }
     }

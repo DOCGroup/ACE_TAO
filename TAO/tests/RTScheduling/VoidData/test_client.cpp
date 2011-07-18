@@ -15,8 +15,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_impl foo_i;
       int something = 28;
       foo_i.bar ((CORBA::VoidData) &something);
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

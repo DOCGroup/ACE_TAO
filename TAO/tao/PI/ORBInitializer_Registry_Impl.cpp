@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/ORBInitializer_Registry_Impl.h"
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/PI/PICurrent.h"
@@ -15,6 +13,11 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
+
+ACE_RCSID (PI,
+           ORBInitializer_Registry,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

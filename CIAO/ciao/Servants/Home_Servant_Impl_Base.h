@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ccm/CCM_HomeS.h"
-#include "ccm/CCM_StandardConfiguratorC.h"
+#include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
 {
@@ -41,24 +41,24 @@ namespace CIAO
     : public virtual POA_Components::CCMHome
   {
   public:
-    Home_Servant_Impl_Base (void);
+    Home_Servant_Impl_Base (Container_ptr c);
 
     virtual ~Home_Servant_Impl_Base (void);
 
     // Operations for CCMHome interface.
 
-#if !defined (CCM_LW)
-    virtual ::CORBA::IRObject_ptr get_component_def (void);
-#endif
+    virtual ::CORBA::IRObject_ptr  get_component_def (void);
 
-#if !defined (CCM_LW)
     virtual ::CORBA::IRObject_ptr get_home_def (void);
-#endif
-
-    /// Operation to set attributes on the home.
-    virtual void set_attributes (const Components::ConfigValues &descr);
 
     virtual void update_component_map (PortableServer::ObjectId &oid) = 0;
+
+  protected:
+    Container_var container_;
+
+  private:
+    /// Not to be used
+    Home_Servant_Impl_Base (void);
   };
 }
 

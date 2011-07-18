@@ -1,20 +1,23 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Excessive_Object_Deactivations.cpp
- *
- *  $Id$
- *
- *   This program tests for excessive deactivations of a servant.
- *   The test checks excessive deactivations in a POA with SYSTEM_ID
- *   and other POA with USER_ID.  The test also check for excessive
- *   deactivations during upcalls.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/Excessive_Object_Deactivations
+//
+// = FILENAME
+//     Excessive_Object_Deactivations.cpp
+//
+// = DESCRIPTION
+//     This program tests for excessive deactivations of a servant.
+//     The test checks excessive deactivations in a POA with SYSTEM_ID
+//     and other POA with USER_ID.  The test also check for excessive
+//     deactivations during upcalls.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "testS.h"
 

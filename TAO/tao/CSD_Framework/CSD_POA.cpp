@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/CSD_Framework/CSD_POA.h"
@@ -6,6 +5,10 @@
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID (CSD_Framework,
+           CSD_POA,
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_Framework/CSD_POA.inl"

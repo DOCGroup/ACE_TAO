@@ -1,7 +1,10 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/DynamicAny/DynValueBox_i.h"
+
+ACE_RCSID (DynamicAny,
+           DynValueBox_i,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

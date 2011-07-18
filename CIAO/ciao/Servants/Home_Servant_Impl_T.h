@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+
 #ifndef CIAO_HOME_SERVANT_IMPL_T_H
 #define CIAO_HOME_SERVANT_IMPL_T_H
 
@@ -26,10 +27,13 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "tao/PortableServer/Key_Adapters.h"
-#include "ciao/Containers/Container_BaseC.h"
 
 namespace CIAO
 {
+  class Container;
+  typedef Container *Container_ptr;
+  
+
   /**
    * @class Home_Servant_Impl
    *
@@ -40,32 +44,36 @@ namespace CIAO
    */
   template <typename BASE_SKEL,
             typename EXEC,
-            typename COMP_SVNT,
-            typename CONTAINER>
+            typename COMP_SVNT>
   class Home_Servant_Impl
     : public virtual BASE_SKEL,
       public virtual Home_Servant_Impl_Base
   {
   public:
     Home_Servant_Impl (typename EXEC::_ptr_type exe,
-                       typename CONTAINER::_ptr_type c,
+                       Container_ptr c,
                        const char *ins_name);
 
     virtual ~Home_Servant_Impl (void);
 
-    /// Operations for CCMHome interface.
+    // Operations for CCMHome interface.
+
     virtual void remove_component (Components::CCMObject_ptr comp);
 
-    /// Operations for keyless home interface.
-    virtual ::Components::CCMObject_ptr create_component (void);
+    // Operations for keyless home interface.
 
-    /// Operations for implicit home interface.
-    virtual typename COMP_SVNT::_stub_ptr_type create (void);
+    virtual ::Components::CCMObject_ptr create_component ();
 
-    virtual void update_component_map (PortableServer::ObjectId &oid);
+    // Operations for implicit home interface.
+
+    virtual typename COMP_SVNT::_stub_ptr_type create ();
+
+    virtual void
+    update_component_map (PortableServer::ObjectId &oid);
 
   protected:
-    /// CIAO-specific operations.
+    // CIAO-specific operations.
+
     typename COMP_SVNT::_stub_ptr_type
     _ciao_activate_component (typename COMP_SVNT::_exec_type::_ptr_type exe);
 
@@ -73,7 +81,7 @@ namespace CIAO
     _ciao_passivate_component (typename COMP_SVNT::_stub_ptr_type comp);
 
   protected:
-    ACE_CString ins_name_;
+    const char *ins_name_;
     typename EXEC::_var_type executor_;
 
     typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
@@ -86,10 +94,6 @@ namespace CIAO
     typedef OBJREF_MAP::iterator OBJ_ITERATOR;
 
     OBJREF_MAP objref_map_;
-
-    ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> serial_number_;
-
-    typename CONTAINER::_var_type container_;
   };
 }
 

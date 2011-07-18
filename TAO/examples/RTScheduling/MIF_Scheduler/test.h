@@ -28,6 +28,7 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
 
   int activate_task (void);
 
+  RTScheduling::Current_ptr current (void);
 
 /*   protected: */
 /*   /// task svc */
@@ -44,7 +45,7 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
   int min_priority_;
   RTScheduling::Current_var current_;
   MIF_DT_Creator* dt_creator_;
-  PortableServer::Servant_var<MIF_Scheduler> scheduler_;
+  MIF_Scheduler* scheduler_;
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;

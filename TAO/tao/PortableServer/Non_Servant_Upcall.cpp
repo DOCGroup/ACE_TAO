@@ -8,6 +8,10 @@
 # include "tao/PortableServer/Non_Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (PortableServer,
+           Non_Servant_Upcall,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -78,8 +82,10 @@ namespace TAO
                 }
             }
 
-          // Wakeup all waiting threads.
-          this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+          // If locking is enabled.
+          if (this->object_adapter_.enable_locking_)
+            // Wakeup all waiting threads.
+            this->object_adapter_.non_servant_upcall_condition_.broadcast ();
         }
     }
   }

@@ -11,7 +11,7 @@
 
 #include "ace/config-lite.h"
 
-namespace DAnCE
+namespace CIAO
 {
   namespace XMI
   {
@@ -77,7 +77,7 @@ namespace DAnCE
         CLASS,
         DATATYPE,
         PACKAGE,
-        __NULL,
+        _NULL,
         ATTR,
         PUBLIC,
         _PRIVATE,
@@ -102,7 +102,6 @@ namespace DAnCE
         CLASSIFIER,
         FROZEN,
         INIT_VAL,
-
         // Stereotypes
         ST_CONSUMES,
         ST_ANON_SEQ,
@@ -158,7 +157,6 @@ namespace DAnCE
         ST_INTF,
         ST_PRI_KEY,
         ST_ANY,
-        ST_NATIVE,
 
         MAX_LITERAL
       };

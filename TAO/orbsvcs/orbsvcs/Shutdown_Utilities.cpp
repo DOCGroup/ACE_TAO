@@ -3,6 +3,10 @@
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID(orbsvcs,
+          Shutdown_Utilities,
+          "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)

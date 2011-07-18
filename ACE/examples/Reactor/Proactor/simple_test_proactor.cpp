@@ -1,17 +1,20 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    simple_test_proactor.cpp
- *
- *  $Id$
- *
- *  Very simple version of test_proactor.cpp.
- *
- *
- *  @author Alexander Babu Arulanthu (alex@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    simple_test_proactor.cpp
+//
+// = DESCRIPTION
+//    Very simple version of test_proactor.cpp.
+//
+// = AUTHOR
+//    Alexander Babu Arulanthu (alex@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
@@ -21,7 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 
-
+ACE_RCSID(Proactor, test_proactor, "simple_test_proactor.cpp,v 1.1 1999/05/18 22:15:30 alex Exp")
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -30,51 +33,51 @@
 static ACE_TCHAR *file = ACE_TEXT("simple_test_proactor.cpp");
 static ACE_TCHAR *dump_file = ACE_TEXT("simple_output");
 
-/**
- * @class Simple_Tester
- *
- * @brief Simple_Tester
- *
- * The class will be created by main(). This class reads a block
- * from the file and write that to the dump file.
- */
 class Simple_Tester : public ACE_Handler
 {
+  // = TITLE
+  //
+  //     Simple_Tester
+  //
+  // = DESCRIPTION
+  //
+  //     The class will be created by main(). This class reads a block
+  // from the file and write that to the dump file.
 
 public:
-  /// Constructor.
   Simple_Tester (void);
+  // Constructor.
 
   ~Simple_Tester (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Open the operations and initiate read from the file.
-  ///FUZZ: enble check_for_lack_ACE_OS
   int open (void);
+  // Open the operations and initiate read from the file.
+  //FUZZ: enble check_for_lack_ACE_OS
 
 protected:
   // = These methods are called by the freamwork.
 
-  /// This is called when asynchronous reads from the socket complete.
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  // This is called when asynchronous reads from the socket complete.
 
-  /// This is called when asynchronous writes from the socket complete.
   virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
+  // This is called when asynchronous writes from the socket complete.
 
 private:
   int initiate_read_file (void);
 
-  /// rf (read file): for writing from the file.
   ACE_Asynch_Read_File rf_;
+  // rf (read file): for writing from the file.
 
-  /// ws (write File): for writing to the file.
   ACE_Asynch_Write_File wf_;
+  // ws (write File): for writing to the file.
 
-  /// File to read from.
   ACE_HANDLE input_file_;
+  // File to read from.
 
-  /// File for dumping data.
   ACE_HANDLE dump_file_;
+  // File for dumping data.
 
   // u_long file_offset_;
   // Current file offset
@@ -124,7 +127,7 @@ Simple_Tester::open (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Write_File::open"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Simple_Tester::open: Files and Asynch Operations opened successfully\n"));
+              "Simple_Tester::open: Files and Asynch Operations opened sucessfully\n"));
 
 
   // Start an asynchronous read file
@@ -147,7 +150,7 @@ Simple_Tester::initiate_read_file (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Read_File::read"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Simple_Tester:initiate_read_file: Asynch Read File issued successfully\n"));
+              "Simple_Tester:initiate_read_file: Asynch Read File issued sucessfully\n"));
 
   return 0;
 }

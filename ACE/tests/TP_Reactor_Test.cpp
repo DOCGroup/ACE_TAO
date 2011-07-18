@@ -1,50 +1,52 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    TP_Reactor_Test.cpp
- *
- *  $Id$
- *
- *  This program illustrates how the <ACE_TP_Reactor> can be used to
- *  implement an application that does various  operations.
- *  usage: TP_Reactor_Test
- *         -n number threads in the TP_Reactor thread pool
- *         -d duplex mode 1 (full-duplex) vs. 0 (half-duplex)
- *         -p port to listen(Server)/connect(Client)
- *         -h host to connect (Client mode)
- *         -s number of sender's instances ( Client mode)
- *         -b run client and server (both modes ) at the same time
- *         -v log level
- *            0 - log all messages
- *            1 - log only errors and unusual cases
- *         -i time to run in seconds
- *         -u show this message
- *
- *   The main differences between Thread_Pool_Reactor_Test.cpp and
- *   this test are:
- *
- *   1. Thread_Pool_Reactor_Test.cpp tests only handle_input()
- *   events on the server, whereas this one tests both handle_input() and
- *   handle_output() on both server and client, i.e., the receiver
- *   and sender are completely event-driven.
- *
- *   2. The receiver and sender in this test can work in full duplex
- *   mode, i.e., input and ouput events are processed independently.
- *   Half-duplex mode (request-reply) is also supported.
- *
- *   This test is therefore a bit more stressful than the
- *   Thread_Pool_Reactor.cpp for the ACE_TP_Reactor since same
- *   thread pool is shared between client and server.
- *
- *   This test is a "twin" of the Proactor_Test.cpp, so it can help for
- *   developers to provide independent of Reactor/Proactor solutions.
- *
- *
- *  @author   Alexander Libman <alibman@ihug.com.au>
- *  @author <alexl@rumblgroup.com>
- */
-//=============================================================================
-
+//============================================================================
+//
+// = LIBRARY
+//    tests
+//
+// = FILENAME
+//    TPReactor_test.cpp
+//
+// = DESCRIPTION
+//    This program illustrates how the <ACE_TP_Reactor> can be used to
+//    implement an application that does various  operations.
+//    usage: TP_Reactor_Test
+//           -n number threads in the TP_Reactor thread pool
+//           -d duplex mode 1 (full-duplex) vs. 0 (half-duplex)
+//           -p port to listen(Server)/connect(Client)
+//           -h host to connect (Client mode)
+//           -s number of sender's instances ( Client mode)
+//           -b run client and server (both modes ) at the same time
+//           -v log level
+//              0 - log all messages
+//              1 - log only errors and unusual cases
+//           -i time to run in seconds
+//           -u show this message
+//
+//     The main differences between Thread_Pool_Reactor_Test.cpp and
+//     this test are:
+//
+//     1. Thread_Pool_Reactor_Test.cpp tests only handle_input()
+//     events on the server, whereas this one tests both handle_input() and
+//     handle_output() on both server and client, i.e., the receiver
+//     and sender are completely event-driven.
+//
+//     2. The receiver and sender in this test can work in full duplex
+//     mode, i.e., input and ouput events are processed independently.
+//     Half-duplex mode (request-reply) is also supported.
+//
+//     This test is therefore a bit more stressful than the
+//     Thread_Pool_Reactor.cpp for the ACE_TP_Reactor since same
+//     thread pool is shared between client and server.
+//
+//     This test is a "twin" of the Proactor_Test.cpp, so it can help for
+//     developers to provide independent of Reactor/Proactor solutions.
+//
+// = AUTHOR
+//      Alexander Libman <alibman@ihug.com.au>,<alexl@rumblgroup.com>
+//
+//============================================================================
 
 #include "test_config.h"
 
@@ -65,7 +67,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 
-
+ACE_RCSID(TPReactor, TPReactor_Test, "TPReactor_Test.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
@@ -156,7 +158,7 @@ MyTask::create_reactor (void)
                     this->lock_,
                     -1);
 
-  ACE_TEST_ASSERT (this->my_reactor_ == 0);
+  ACE_ASSERT (this->my_reactor_ == 0);
 
   ACE_TP_Reactor * pImpl = 0;
 
@@ -246,8 +248,6 @@ MyTask::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask started\n")));
 
-  disable_signal (SIGPIPE, SIGPIPE);
-
   // signal that we are ready
   sem_.release (1);
 
@@ -268,7 +268,7 @@ Acceptor::Acceptor (void)
     total_w_  (0),
     total_r_  (0)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
      this->list_receivers_[i] =0;
@@ -286,7 +286,7 @@ Acceptor::stop (void)
   // this method can be called only after reactor event loop id done
   // in all threads
 
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
     {
@@ -298,7 +298,7 @@ Acceptor::stop (void)
 void
 Acceptor::on_new_receiver (Receiver &rcvr)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
   this->list_receivers_[rcvr.index_] = & rcvr;
   ACE_DEBUG ((LM_DEBUG,
@@ -309,7 +309,7 @@ Acceptor::on_new_receiver (Receiver &rcvr)
 void
 Acceptor::on_delete_receiver (Receiver &rcvr)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   this->sessions_--;
 
@@ -357,7 +357,7 @@ Acceptor::start (const ACE_INET_Addr &addr)
 int
 Acceptor::make_svc_handler (Receiver *&sh)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   if (sessions_ >= MAX_RECEIVERS)
     return -1;
@@ -421,7 +421,7 @@ Receiver::check_destroy (void)
 int
 Receiver::open (void *)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Reactor *TPReactor = ACE_Reactor::instance ();
 
@@ -479,7 +479,7 @@ Receiver::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Receiver::handle_input (ACE_HANDLE h)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -562,7 +562,7 @@ Receiver::handle_input (ACE_HANDLE h)
 int
 Receiver::handle_output (ACE_HANDLE h)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
   ACE_Message_Block *mb = 0;
@@ -627,7 +627,7 @@ Connector::Connector (void)
     total_w_  (0),
     total_r_  (0)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
      this->list_senders_[i] = 0;
@@ -646,7 +646,7 @@ Connector::stop ()
   // after reactor event loop id done
   // in all threads
 
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
     {
@@ -658,7 +658,7 @@ Connector::stop ()
 void
 Connector::on_new_sender (Sender & sndr)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
   this->sessions_++;
   this->list_senders_[sndr.index_] = &sndr;
   ACE_DEBUG ((LM_DEBUG,
@@ -669,7 +669,7 @@ Connector::on_new_sender (Sender & sndr)
 void
 Connector::on_delete_sender (Sender & sndr)
 {
-  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   this->sessions_--;
   this->total_snd_ += sndr.get_total_snd();
@@ -733,7 +733,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
 int
 Connector::make_svc_handler (Sender * & sh)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (this->mutex_);
 
   if (sessions_ >= MAX_SENDERS)
     return -1;
@@ -764,7 +764,7 @@ Sender::Sender (Connector* connector, size_t index)
   if (connector_ != 0)
     connector_->on_new_sender (*this);
 
-  ACE_OS::sprintf (send_buf_, "%s", data);
+  ACE_OS::sprintf (send_buf_ ,data);
 }
 
 
@@ -799,7 +799,7 @@ Sender::check_destroy (void)
 
 int Sender::open (void *)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Reactor * TPReactor = ACE_Reactor::instance ();
 
@@ -892,7 +892,7 @@ Sender::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Sender::handle_input (ACE_HANDLE h)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -959,7 +959,7 @@ Sender::handle_input (ACE_HANDLE h)
 int
 Sender::handle_output (ACE_HANDLE h)
 {
-  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
+  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
   ACE_Message_Block *mb = 0;
@@ -1118,7 +1118,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
+#if defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -1128,24 +1128,17 @@ disable_signal (int sigmin, int sigmax)
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
 
-  // Put the <signal_set>.
-# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-  // In multi-threaded application this is not POSIX compliant
-  // but let's leave it just in case.
-  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
-# else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
-# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+  //  Put the <signal_set>.
+  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT("Error: (%P | %t):%p\n"),
+                ACE_TEXT("pthread_sigmask failed")));
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);
-#endif /* ACE_LACKS_UNIX_SIGNALS */
+#endif /* ACE_HAS_PTHREADS_STD && !ACE_LACKS_PTHREAD_SIGMASK */
 
-  return 0;
+  return 1;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -1159,7 +1152,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (::parse_args (argc, argv) == -1)
     return -1;
 
-  disable_signal (SIGPIPE, SIGPIPE);
+  ::disable_signal (SIGPIPE, SIGPIPE);
 
   MyTask    task1;
   Acceptor  acceptor;

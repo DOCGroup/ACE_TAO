@@ -14,7 +14,6 @@ project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
     Constraint_Interpreter.cpp
     Constraint_Visitor.cpp
     CPU_Load_Monitor.cpp
-    FreeBSD_Network_Interface_Monitor.cpp
     Linux_Network_Interface_Monitor.cpp
     Memory_Usage_Monitor.cpp
     Monitor_Group.cpp
@@ -34,11 +33,7 @@ project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
     Monitor_Control_utils.h
   }
 
-  specific {
-    install_dir = ace/Monitor_Control
-  }
-
-  specific (prop:microsoft) {
+  specific (vc6, vc7, vc71, vc8, vc9, vc10, nmake) {
     lit_libs += pdh
   }
   verbatim (gnuace, local) {

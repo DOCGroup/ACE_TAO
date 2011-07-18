@@ -73,7 +73,7 @@ TAO_NS_FlatFileStream::open()
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
-                       ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
+                       errno, ACE_OS::strerror(errno)),
                       -1);
 #endif
   this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR(fdmode));
@@ -81,7 +81,7 @@ TAO_NS_FlatFileStream::open()
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot fdopen file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
-                       ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
+                       errno, ACE_OS::strerror(errno)),
                       -1);
   return 0;
 }

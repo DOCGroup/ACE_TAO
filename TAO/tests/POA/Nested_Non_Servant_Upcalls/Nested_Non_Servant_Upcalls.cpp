@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file     Nested_Non_Servant_Upcalls.cpp
- *
- *  $Id$
- *
- *   This program tests that nested non-servant upcalls are handled
- *   correctly.
- *
- *
- *  @author  Irfan Pyarali
- */
-//=============================================================================
-
+//========================================================================
+//
+// = LIBRARY
+//     TAO/tests/POA/Nested_Non_Servant_Upcalls
+//
+// = FILENAME
+//     Nested_Non_Servant_Upcalls.cpp
+//
+// = DESCRIPTION
+//     This program tests that nested non-servant upcalls are handled
+//     correctly.
+//
+// = AUTHOR
+//     Irfan Pyarali
+//
+//=========================================================================
 
 #include "testS.h"
 #include "ace/Task.h"

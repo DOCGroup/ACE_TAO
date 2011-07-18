@@ -6,165 +6,105 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
+use PerlACE::Run_Test;
 
+$iorbase = "altiiop.ior";
 $status = 0;
-$debug_level = '0';
-$quick = 0;
+@bogus_eps = ("-orbendpoint iiop://localhost:10200/hostname_in_ior=126.0.0.123",
+              "-orbendpoint iiop://localhost:10202/hostname_in_ior=126.0.0.124");
 
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    } elsif ($i eq '-quick') {
-        $quick = 1;
-    }
+if (PerlACE::is_vxworks_test()) {
+  $iorfile = $iorbase;
+  $valid_ep = "-orbendpoint iiop://".$ENV{'ACE_RUN_VX_TGTHOST'}.":10201";
+  $corbaloc = "corbaloc::126.0.0.123:10200,:".$ENV{'ACE_RUN_VX_TGTHOST'}.":10201,:126.0.0.124:10202/pcs_test";
+  $SV_ALT_IIOP = new PerlACE::ProcessVX ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
 }
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-
-my $TARGETHOSTNAME = $server->HostName ();
-my $port = $server->RandomPort ();
-my $port1 = $port + 1;
-my $port2 = $port + 2;
-
-my @bogus_eps = (
-    "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$port1/hostname_in_ior=126.0.0.123",
-    "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$port2/hostname_in_ior=126.0.0.124");
-my $corbaloc = "corbaloc:".
-    ":126.0.0.123:$port1,".
-    ":$TARGETHOSTNAME:$port,".
-    ":126.0.0.124:$port2/pcs_test";
-my $valid_ep = "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$port";
-
-my $iorbase = "server.ior";
-my $reactive_conf = "reactive$PerlACE::svcconf_ext";
-my $blocked_conf = "blocked$PerlACE::svcconf_ext";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-my $client_reactive_conf = $client->LocalFile ($reactive_conf);
-my $client_blocked_conf = $client->LocalFile ($blocked_conf);
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-$SV = $server->CreateProcess ("server",
-                              "-ORBdebuglevel $debug_level ".
-                              "-ORBUseSharedProfile 1 ".
-                              "-o $server_iorfile ".
-                              "$bogus_eps[0] $valid_ep $bogus_eps[1]");
-$CL = $client->CreateProcess ("client",
-                              "-ORBuseParallelConnects 1 ".
-                              "-k file://$client_iorfile");
-
-$server_status = $SV->Spawn ();
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
-    exit 1;
+else {
+  $valid_ep = "-orbendpoint iiop://localhost:10201";
+  $iorfile = PerlACE::LocalFile ($iorbase);
+  $corbaloc = "corbaloc::126.0.0.123:10200,:localhost:10201,:126.0.0.124:10202/pcs_test";
+  $SV_ALT_IIOP = new PerlACE::Process ("server", "-ORBUseSharedProfile 1 -o $iorfile $bogus_eps[0] $valid_ep $bogus_eps[1]");
 }
+unlink $iorfile;
 
-if ($server->WaitForFileTimed ($iorbase,
-                               $server->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+$CL_LF = new PerlACE::Process ("client", "-ORBuseParallelConnects 1 -k file://$iorfile");
+$CL_CORBALOC = new PerlACE::Process ("client", "-ORBUseSharedProfile 1 -ORBuseParallelConnects 1 -k $corbaloc");
+$CL_Reactive = new PerlACE::Process ("client", "-ORBSvcConf reactive.conf -ORBuseParallelConnects 1 -k file://$iorfile");
+$CL_Blocked = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -ORBuseParallelConnects 1 -k file://$iorfile");
+$CL_None = new PerlACE::Process ("client", "-ORBuseParallelConnects 0 -k file://$iorfile");
+if ($ARGV[0] eq '-quick')  {
+  $CL_Blocked = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -ORBuseParallelConnects 1 -k file://$iorfile -t");
+  $CL_None = new PerlACE::Process ("client", "-ORBuseParallelConnects 0 -k file://$iorfile -t");
 }
+$CL_Shutdown =  new PerlACE::Process ("client", "-ORBuseParallelConnects 1 -k file://$iorfile -x");
 
-if ($server->GetFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-if ($client->PutFile ($iorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+$SV_ALT_IIOP->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV_ALT_IIOP->Kill ();
+    $SV_ALT_IIOP->TimedWait (1);
     exit 1;
 }
 
 print "LF wait strategy test\n";
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client = $CL_LF->SpawnWaitKill (60);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print "\nLF wait strategy, corbaloc test\n";
 
-$CL->Arguments ("-ORBUseSharedProfile 1 -ORBuseParallelConnects 1 ".
-                "-k $corbaloc");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client = $CL_CORBALOC->SpawnWaitKill (60);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print "\nReactive wait strategy test\n";
 
-$CL->Arguments ("-ORBSvcConf $client_reactive_conf -ORBuseParallelConnects 1 ".
-                "-k file://$client_iorfile");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
+$client = $CL_Reactive->SpawnWaitKill (60);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print "\nBlocked wait strategy test\n";
 
-$quick_param = '';
-if ($quick) {
-    $quick_param = "-t";
-}
-$CL->Arguments ("-ORBSvcConf $client_blocked_conf -ORBuseParallelConnects 1 ".
-                "-k file://$client_iorfile $quick_param");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 585);
+$client = $CL_Blocked->SpawnWaitKill (600);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
 print "\nNo parallel connect test\n";
 
-$quick_param = '';
-if ($quick) {
-    $quick_param = "-t";
-}
-$CL->Arguments ("-ORBuseParallelConnects 0 ".
-                "-k file://$client_iorfile $quick_param");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 885);
+$client = $CL_None->SpawnWaitKill (900);
 
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$CL->Arguments ("-ORBuseParallelConnects 1 ".
-                "-k file://$client_iorfile -x");
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
-
-if ($client_status != 0) {
-    print STDERR "ERROR: client returned $client_status\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-$server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-if ($server_status != 0) {
-    print STDERR "ERROR: server returned $server_status\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
+$client = $CL_Shutdown->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+$server = $SV_ALT_IIOP->WaitKill (60);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 
 exit $status;

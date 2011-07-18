@@ -1,8 +1,5 @@
 // $Id$
 
-#ifndef TAO_MONITOR_MONITOR_TYPES_PIDL
-#define TAO_MONITOR_MONITOR_TYPES_PIDL
-
 #include "tao/TimeBase.pidl"
 #include "tao/StringSeq.pidl"
 
@@ -27,7 +24,6 @@ module Monitor
     double sum_of_squares;
     double minimum;
     double maximum;
-    double last;
   };
   enum DataType { DATA_NUMERIC, DATA_TEXT };
   union UData switch (DataType) {
@@ -50,5 +46,3 @@ module Monitor
   };
   typedef sequence<ConstraintStruct> ConstraintStructList;
 };
-
-#endif /* TAO_MONITOR_MONITOR_TYPES_PIDL */

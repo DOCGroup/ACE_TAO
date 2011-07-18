@@ -1,7 +1,9 @@
-// $Id$
-
 #include "orbsvcs/Log/Log_Flush_Handler.h"
 #include "orbsvcs/Log/Log_i.h"
+
+ACE_RCSID (Log,
+           Log_Flush_Handler,
+           "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

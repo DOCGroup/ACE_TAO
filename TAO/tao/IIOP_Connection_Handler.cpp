@@ -1,5 +1,3 @@
-// -*- C++ -*-
-// $Id$
 
 #include "tao/IIOP_Connection_Handler.h"
 
@@ -18,6 +16,10 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
+ACE_RCSID (tao,
+           IIOP_Connection_Handler,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
@@ -28,12 +30,10 @@ TAO_IIOP_Connection_Handler::add_reference (void)
   Reference_Count rc = TAO_IIOP_SVC_HANDLER::add_reference ();
   if (TAO_debug_level > 9)
     {
-      TAO_Transport *tport = this->transport ();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("add_reference, up to %d\n"),
-                  tport != 0 ? tport->id () : 0,
-                  rc));
+                  this->transport (), rc));
     }
   return rc;
 
@@ -48,9 +48,7 @@ TAO_IIOP_Connection_Handler::remove_reference (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
-                  ACE_TEXT("remove_reference, down to %d\n"),
-                  tport != 0 ? tport->id () : 0,
-                  rc));
+                  ACE_TEXT("remove_reference, down to %d\n"), tport, rc));
     }
   return rc;
 }
@@ -83,13 +81,10 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 
   if (TAO_debug_level > 9)
     {
-      TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
-                  ACE_TEXT("IIOP_Connection_Handler, ")
+                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d] ctor, ")
                   ACE_TEXT("this=%@\n"),
-                  tport != 0 ? tport->id () : 0,
-                  this));
+                  static_cast<TAO_Transport *> (specific_transport), this));
     }
 
   // store this pointer (indirectly increment ref count)
@@ -98,17 +93,6 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
-  if (TAO_debug_level > 9)
-    {
-      TAO_Transport *tport = this->transport ();
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
-                  ACE_TEXT("~IIOP_Connection_Handler, ")
-                  ACE_TEXT("this=%@, transport=%@\n"),
-                  tport != 0 ? tport->id () : 0,
-                  this,
-                  tport));
-    }
   delete this->transport ();
   int const result =
     this->release_os_resources ();
@@ -531,13 +515,8 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
-
-      // since the supplied host/port could be unresolvable, the assigning
-      // constructor of the INET addr should not be as it will emit an error
-      // if the underlying set fails. An unresolvable address in this case
-      // is OK, as it will only be used to find an already cached transport.
-      ACE_INET_Addr addr;
-      (void)addr.set(listen_point.port, listen_point.host.in ());
+      ACE_INET_Addr addr (listen_point.port,
+                          listen_point.host.in ());
 
       if (TAO_debug_level > 0)
         {
@@ -683,13 +662,6 @@ TAO_IIOP_Connection_Handler::abort (void)
         }
     }
 }
-
-int
-TAO_IIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *timeout)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), timeout);
-}
-
 
 //@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
 /*

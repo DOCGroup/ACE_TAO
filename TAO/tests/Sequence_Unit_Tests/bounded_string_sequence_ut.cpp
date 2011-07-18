@@ -8,7 +8,7 @@
  * @author Carlos O'Ryan
  */
 #define TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE \
-        "testing_range_checking.hpp"
+        "tests/Sequence_Unit_Tests/testing_range_checking.hpp"
 
 #include "testing_string_traits.hpp"
 #include "tao/String_Traits_T.h"
@@ -362,7 +362,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 
   status += myntester.test_all();
 
-#if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
+#if defined(ACE_HAS_WCHAR)
   typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
   typedef Tester<w_sequence> wTester;
   wTester mywtester;

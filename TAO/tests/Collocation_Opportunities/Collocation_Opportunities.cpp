@@ -6,6 +6,8 @@
 #include "tao/PortableServer/POA_Current.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 
+ACE_RCSID(Collocation_Opportunities, Collocation_Opportunities, "$Id$")
+
 class test_i :
   public POA_test
 {
@@ -256,7 +258,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->shutdown (1);
 
-      result = task.wait ();
+      result =
+        task.wait ();
       ACE_ASSERT (result != -1);
       ACE_UNUSED_ARG (result);
     }

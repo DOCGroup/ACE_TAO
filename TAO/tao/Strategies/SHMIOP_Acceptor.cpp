@@ -15,6 +15,10 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_ctype.h"
 
+ACE_RCSID (Strategies,
+           SHMIOP_Acceptor,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (void)
@@ -191,13 +195,11 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  if (port)
-    {
-      if (ACE_OS::ace_isdigit (*port) == 0)
-        return -1;                  // Port number must consist of digits
+  if (ACE_OS::ace_isdigit (*port) == 0)
+    return -1;                  // Port number must consist of digits
 
-      this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
-    }
+  if (port)
+    this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
 
   return this->open_i (orb_core, reactor);
 }

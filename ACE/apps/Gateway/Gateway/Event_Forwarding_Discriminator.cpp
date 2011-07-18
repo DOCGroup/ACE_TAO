@@ -5,6 +5,8 @@
 
 #include "Event_Forwarding_Discriminator.h"
 
+ACE_RCSID(Gateway, Event_Forwarding_Discriminator, "$Id$")
+
 // Bind the Event_Key to the INT_ID.
 
 int

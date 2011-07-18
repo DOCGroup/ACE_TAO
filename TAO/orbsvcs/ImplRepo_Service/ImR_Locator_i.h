@@ -150,7 +150,6 @@ private:
   bool read_only_;
   ACE_Time_Value startup_timeout_;
   ACE_Time_Value ping_interval_;
-  bool unregister_if_address_reused_;
 };
 
 #include /**/ "ace/post.h"

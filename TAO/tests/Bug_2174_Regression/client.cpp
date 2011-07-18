@@ -3,6 +3,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Bug_2174_Regression, client, "$Id$")
+
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 int min_timeout = 0;
 int max_timeout = 20;
@@ -29,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -51,7 +53,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior));
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());

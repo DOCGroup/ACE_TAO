@@ -1,18 +1,21 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Notifier_i.cpp
- *
- *  $Id$
- *
- * Implementation of the Notifier_i class. This class is the servant
- * object for the callback quoter server.
- *
- *
- *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===========================================================
+//
+// = LIBRARY
+//    TAO/examples/Callback_Quoter
+//
+// = FILENAME
+//    Notifier_i.cpp
+//
+// = DESCRIPTION
+//   Implementation of the Notifier_i class. This class is the servant
+//   object for the callback quoter server.
+//
+// = AUTHOR
+//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
+//
+// ===========================================================
 
 #include "Notifier_i.h"
 

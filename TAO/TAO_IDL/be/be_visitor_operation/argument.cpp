@@ -1,16 +1,26 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    argument.cpp
- *
- *  $Id$
- *
- *  Visitor that calls the visitor for arguments.
- *
- *
- *  @author Aniruddha Gokhale
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    argument.cpp
+//
+// = DESCRIPTION
+//    Visitor that calls the visitor for arguments.
+//
+// = AUTHOR
+//    Aniruddha Gokhale
+//
+// ============================================================================
+
+ACE_RCSID (be_visitor_operation,
+           argument,
+           "$Id$")
 
 // ************************************************************
 // Generic operation visitor to handle the pre/post
@@ -40,6 +50,7 @@ be_visitor_operation_argument::post_process (be_decl *bd)
     {
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
+    case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       if (!this->last_node (bd))
         {
           *os << "," << be_nl;
@@ -83,14 +94,13 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   // signature.
   be_visitor_context ctx (*this->ctx_);
 
-  // First grab the interface definition inside which this operation is
+  // first grab the interface definition inside which this operation is
   // defined. We need this since argument types may very well be declared
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
-  be_operation *op =
-    be_operation::narrow_from_scope (this->ctx_->scope ());
+  be_operation *op = this->ctx_->be_scope_as_operation ();
 
-  if (op == 0)
+  if (!op)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
@@ -134,6 +144,12 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
         break;
       }
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
+      {
+        be_visitor_args_marshal_ss visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       {
         be_visitor_args_marshal_ss visitor (&ctx);
         status = node->accept (&visitor);

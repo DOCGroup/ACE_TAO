@@ -15,6 +15,10 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+ACE_RCSID (IDL_Cubit,
+           Cubit_Client,
+           "Cubit_Client.cpp,v 1.31 1999/08/04 07:15:14 nanbor Exp")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
   static const char *Cubit_Client_Timeprobe_Description[] =
@@ -164,7 +168,7 @@ Cubit_Client::Cubit_Client (int shutdown)
 {
 }
 
-// Simple function that returns the subtraction of 117 from the
+// Simple function that returns the substraction of 117 from the
 // parameter.
 
 int

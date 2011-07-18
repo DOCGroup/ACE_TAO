@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/AnyTypeCode/ExceptionA.h"
@@ -15,6 +14,11 @@
 
 #include "ace/OS_NS_stdio.h"
 
+ACE_RCSID (AnyTypeCode,
+           Exception,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Specializations for CORBA::Exception Any operators.
@@ -22,7 +26,9 @@ namespace TAO
 {
   template<>
   void
-  Any_Dual_Impl_T<CORBA::Exception>::value (const CORBA::Exception & val)
+  Any_Dual_Impl_T<CORBA::Exception>::value (
+      const CORBA::Exception & val
+    )
   {
     this->value_ = val._tao_duplicate ();
   }
@@ -50,7 +56,8 @@ namespace TAO
   {
     try
       {
-        this->value_->_tao_decode (cdr);
+        this->value_->_tao_decode (cdr
+                                  );
 
         return true;
       }
@@ -71,18 +78,14 @@ namespace TAO
       const CORBA::Any &,
       _tao_destructor,
       CORBA::TypeCode_ptr,
-      const CORBA::Exception *&)
+      const CORBA::Exception *&
+    )
   {
     return false;
   }
 }
 
 // =======================================================================
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-namespace CORBA
-{
-#endif
 
 
 // Insertion of CORBA::Exception - copying.
@@ -93,7 +96,8 @@ operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
       any,
       CORBA::Exception::_tao_any_destructor,
       exception._tao_type (),
-      exception);
+      exception
+    );
 }
 
 // Insertion of CORBA::Exception - non-copying.
@@ -104,12 +108,9 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
       any,
       CORBA::Exception::_tao_any_destructor,
       exception->_tao_type (),
-      exception);
+      exception
+    );
 }
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
-}
-#endif
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

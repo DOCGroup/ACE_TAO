@@ -58,7 +58,7 @@ namespace TAO_Notify
     * \param id numeric id for this object
     * \param type string containing the unique type name for this class of objects
     * \param attrs a collection of name/value attributes
-    * \param changed true if this object's attributes have changed.
+    * \param change true if this object's attributes have changed.
     * \return bool want_all_children.  If true even changed children should be saved.
     */
     virtual bool begin_object (CORBA::Long id,
@@ -75,7 +75,9 @@ namespace TAO_Notify
     * \param type the type name for the class of the deleted child.
     *
     */
-    virtual void delete_child (CORBA::Long id, const ACE_CString & type)
+    virtual void delete_child (
+      CORBA::Long id,
+      const ACE_CString & type)
     {
       ACE_UNUSED_ARG (id);
       ACE_UNUSED_ARG (type);
@@ -86,7 +88,8 @@ namespace TAO_Notify
     * This function should be called to end the scope of the current object
     * and commit it to the persistent store.
     */
-    virtual void end_object (CORBA::Long id, const ACE_CString &type) = 0;
+    virtual void end_object (CORBA::Long id,
+      const ACE_CString &type) = 0;
 
     /**
      * \brief Close the saver.

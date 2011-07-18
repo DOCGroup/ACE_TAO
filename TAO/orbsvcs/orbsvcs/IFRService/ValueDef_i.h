@@ -19,7 +19,6 @@
 #define TAO_VALUEDEF_I_H
 
 #include "orbsvcs/IFRService/Contained_i.h"
-#include "orbsvcs/IFRService/Container_i.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/ifr_service_export.h"
 

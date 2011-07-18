@@ -1,68 +1,48 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -e -l ../lib -o ../lib -p Hello_Base Receiver"
+// This file is generated with "generate_component_mpc.pl Receiver"
 
-project(Hello_Base_Receiver_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+project(Hello_Receiver_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
   custom_only = 1
-  
   idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
               -Wb,stub_export_include=Receiver_stub_export.h \
               -Wb,skel_export_macro=RECEIVER_SVNT_Export \
-              -Wb,skel_export_include=Receiver_svnt_export.h \
-              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
-              -Wb,exec_export_include=Receiver_exec_export.h \
-              -Gxhex -Gxhsk -Gxhst 
+              -Wb,skel_export_include=Receiver_svnt_export.h
 
   IDL_Files {
     Receiver.idl
   }
 }
 
-project(Hello_Base_Receiver_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
-  after += Hello_Base_Receiver_idl_gen
+project(Hello_Receiver_cidl_gen) : ciaocidldefaults, avoids_ace_for_tao {
   custom_only = 1
-  idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
-              -Wb,stub_export_include=Receiver_lem_stub_export.h \
-              -SS -Gxhst 
+  cidlflags += --svnt-export-macro RECEIVER_SVNT_Export \
+               --svnt-export-include Receiver_svnt_export.h
+
+  CIDL_Files {
+    Receiver.cidl
+  }
+}
+
+project(Hello_Receiver_idle_gen) : ciaoidldefaults, avoids_ace_for_tao {
+  after += Hello_Receiver_cidl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=RECEIVER_EXEC_Export \
+              -Wb,export_include=Receiver_exec_export.h \
+              -SS
 
   IDL_Files {
     ReceiverE.idl
   }
 }
 
-project(Hello_Base_Receiver_lem_stub) : ccm_svnt, avoids_ccm_noevent {
-  after += Hello_Base_Receiver_lem_gen Hello_Base_Receiver_stub Hello_Base_stub Hello_Base_lem_stub
-  libs  += Hello_Base_stub Hello_Base_lem_stub Receiver_stub
-  
-  libpaths += ../lib
+project(Hello_Receiver_stub) : ccm_stub, avoids_ace_for_tao {
+  after += Hello_Receiver_idl_gen Hello_Base_stub
+  libs  += Hello_Base_stub
   libout = ../lib
-  sharedname = Receiver_lem_stub
-  dynamicflags += RECEIVER_LEM_STUB_BUILD_DLL
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    ReceiverEC.cpp
-  }
-
-  Header_Files {
-    ReceiverEC.h
-    Receiver_lem_stub_export.h
-  }
-
-  Inline_Files {
-    ReceiverEC.inl
-  }
-}
-
-project(Hello_Base_Receiver_stub) : ccm_stub, avoids_ccm_noevent {
-  after += Hello_Base_Receiver_idl_gen Hello_Base_stub Hello_Base_lem_stub
-  libs  += Hello_Base_stub Hello_Base_lem_stub
-  
   libpaths += ../lib
-  libout = ../lib
-  sharedname = Receiver_stub
-  dynamicflags += RECEIVER_STUB_BUILD_DLL
+
+  sharedname = Hello_Receiver_stub
+  dynamicflags   = RECEIVER_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -81,44 +61,50 @@ project(Hello_Base_Receiver_stub) : ccm_stub, avoids_ccm_noevent {
   }
 }
 
-project(Hello_Base_Receiver_exec) : ciao_executor, avoids_ccm_noevent {
-  after   += Hello_Base_lem_stub Hello_Base_Receiver_lem_stub Hello_Base_Receiver_stub
-  sharedname = Receiver_exec
-  libs += Hello_Base_lem_stub Receiver_stub Receiver_lem_stub Hello_Base_stub Hello_Base_lem_stub
-  
-  libpaths += ../lib
+project(Hello_Receiver_exec) : ciao_executor, avoids_ace_for_tao {
+  after   += Hello_Receiver_idle_gen Hello_Receiver_stub
+  sharedname = Hello_Receiver_exec
+  libs += Hello_Receiver_stub Hello_Base_stub
   libout = ../lib
-  dynamicflags += RECEIVER_EXEC_BUILD_DLL
+  libpaths += ../lib
+
+  dynamicflags   = RECEIVER_EXEC_BUILD_DLL
 
   IDL_Files {
   }
 
   Source_Files {
+    ReceiverEC.cpp
     Receiver_exec.cpp
   }
 
   Header_Files {
+    ReceiverEC.h
     Receiver_exec.h
     Receiver_exec_export.h
   }
 
   Inline_Files {
+    ReceiverEC.inl
   }
 }
 
 
-project(Hello_Base_Receiver_svnt) : ciao_servant, avoids_ccm_noevent  {
-  after      += Hello_Base_skel Hello_Base_lem_stub  Hello_Base_Receiver_lem_stub
-  sharedname  = Receiver_svnt
-  libs       += Receiver_stub Receiver_lem_stub  \
+project(Hello_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
+  after      += Hello_Base_skel Hello_Receiver_exec
+  sharedname  = Hello_Receiver_svnt
+  libs       += Hello_Receiver_exec \
+                Hello_Receiver_stub \
                 Hello_Base_skel \
-                Hello_Base_stub \
-                Hello_Base_lem_stub
-  
-  libpaths += ../lib
+                Hello_Base_stub
   libout = ../lib
-  dynamicflags += RECEIVER_SVNT_BUILD_DLL
-  
+  libpaths += ../lib
+
+  dynamicflags = RECEIVER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+  }
+
   IDL_Files {
   }
 

@@ -1,18 +1,27 @@
+//
+// $Id$
+//
 
-//=============================================================================
-/**
- *  @file    any_op_ch.cpp
- *
- *  $Id$
- *
- *  Visitor generating code for Any operators for a forward declared
- *  valuetype in the client header.
- *
- *
- *  @author Jeff Parsons
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    TAO IDL
+//
+// = FILENAME
+//    any_op_ch.cpp
+//
+// = DESCRIPTION
+//    Visitor generating code for Any operators for a forward declared
+//    valuetype in the client header.
+//
+// = AUTHOR
+//    Jeff Parsons
+//
+// ============================================================================
 
+ACE_RCSID (be_visitor_valuetype_fwd,
+           any_op_ch,
+           "$Id$")
 
 // ***************************************************************************
 // Generates Any operator declarations in the client header
@@ -53,8 +62,8 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_module *module = 0;
 
@@ -91,14 +100,11 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
           << node->local_name () << " *&);";
 
       be_util::gen_nested_namespace_end (os, module);
-
-      *os << be_nl
-          << be_global->core_versioning_end () << be_nl;
-
+      *os << be_global->core_versioning_end () << be_nl;
       // emit #else
       *os << "#else\n\n";
     }
-
+  
   *os << be_global->core_versioning_begin () << be_nl;
 
   *os << macro << " void"
@@ -110,7 +116,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   *os << macro << " ::CORBA::Boolean"
       << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
-
+  
   *os << be_global->core_versioning_end () << be_nl;
   if (module != 0)
     {

@@ -180,10 +180,13 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_LACKS_WCTYPE_H
 
 // Platform supports the POSIX regular expression library.
-// [Note Tandem NSK platform does have regular expression support but it
+// [Note Tandem NSK platform does have regular expresson support but it
 // does not follow the assumptions made by ACE.  To use it would need
 // to make some ACE modifications.]
 //#define ACE_HAS_REGEX
+
+// Compiler/platform supports strerror ()
+#define ACE_HAS_STRERROR
 
 // Platform doesn't have truncate()
 #define ACE_LACKS_TRUNCATE
@@ -336,6 +339,9 @@ typedef enum CMA_T_SCHED_POLICY {
 // Compiler specific parts
 //=========================================================================
 
+// Compiler supports C++ exception handling
+#define ACE_HAS_EXCEPTIONS
+
 // Compiler/platform has correctly prototyped header files
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
@@ -352,6 +358,10 @@ typedef enum CMA_T_SCHED_POLICY {
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+// Compiler implements templates that support typedefs inside
+// of classes used as formal arguments to a template class.
+#define ACE_HAS_TEMPLATE_TYPEDEFS
+
 // Platform has its standard c++ library in the namespace std.
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
@@ -365,6 +375,9 @@ typedef enum CMA_T_SCHED_POLICY {
 //=========================================================================
 // Build options
 //=========================================================================
+
+// Disable the inclusion of RCS ids in the generated code.
+#define ACE_USE_RCSID 0
 
 // For debugging problems in os calls (but this doesn't work too well
 // since output is not interleaved properly with output from ACE_TRACE

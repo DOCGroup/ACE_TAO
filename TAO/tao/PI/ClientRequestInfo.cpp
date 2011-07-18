@@ -4,6 +4,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+ACE_RCSID (PI,
+           ClientRequestInfo,
+           "$Id$")
+
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
 

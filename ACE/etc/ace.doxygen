@@ -35,8 +35,6 @@ DISTRIBUTE_GROUP_DOC  = YES
 TAB_SIZE              = 8
 ENABLED_SECTIONS      =
 SHORT_NAMES           = YES
-GENERATE_DEPRECATEDLIST = YES
-GENERATE_TODOLIST       = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -84,12 +82,12 @@ IGNORE_PREFIX         = ACE_
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/libace-doc
+HTML_OUTPUT           = html/ace
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = NO
+GENERATE_HTMLHELP     = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -131,37 +129,24 @@ MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = .
-PREDEFINED            = __ACE_INLINE__= \
-                        ACE_TEMPLATES_REQUIRE_SOURCE= \
-                        ACE_BEGIN_VERSIONED_NAMESPACE_DECL= \
-                        ACE_END_VERSIONED_NAMESPACE_DECL= \
-                        ACE_INLINE=inline \
-                        ACE_NAMESPACE_INLINE_FUNCTION=inline \
-                        ACE_Export= \
-                        ACE_HAS_THREADS= \
-                        ACE_HAS_AIO_CALLS= \
-                        ACE_WIN32= \
-                        ACE_HAS_WIN32_OVERLAPPED_IO= \
-                        ACE_HAS_ATM= \
-                        ACE_HAS_IPV6= \
-                        ACE_HAS_ATM= \
-                        ACE_HAS_DEV_POLL= \
-                        ACE_HAS_ICMP_SUPPORT=1 \
-                        ACE_HAS_TOKENS_LIBRARY= \
-                        ACE_HAS_WCHAR= \
-                        ACE_HAS_LOG_MSG_NT_EVENT_LOG= \
-                        ACE_HAS_TLI= \
-                        ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 \
-                        ACE_HAS_MONITOR_FRAMEWORK=1
-EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER
+PREDEFINED            = __ACE_INLINE__ \
+                        ACE_TEMPLATES_REQUIRE_SOURCE \
+                        ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
+                        ACE_END_VERSIONED_NAMESPACE_DECL \
+                        ACE_INLINE
+EXPAND_AS_DEFINED     = ACE_RCSID \
+			ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER \
+                        ACE_THROW_SPEC \
+                        ACE_T1 \
+                        ACE_T2
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to external references
+# Configuration::addtions related to external references
 #---------------------------------------------------------------------------
 
 TAGFILES              =
-GENERATE_TAGFILE      = html/libace-doc/ACE.tag
+GENERATE_TAGFILE      = html/ace/ACE.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -175,18 +160,16 @@ PERL_PATH             = /usr/bin/perl
 HAVE_DOT              = YES
 CLASS_GRAPH           = YES
 COLLABORATION_GRAPH   = YES
-INCLUDE_GRAPH         = NO
-INCLUDED_BY_GRAPH     = NO
+INCLUDE_GRAPH         = YES
+INCLUDED_BY_GRAPH     = YES
 GRAPHICAL_HIERARCHY   = YES
 DOT_MULTI_TARGETS     = YES
-MAX_DOT_GRAPH_DEPTH   = 3
-
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
 
 #---------------------------------------------------------------------------
-# Configuration::additions related to the search engine
+# Configuration::addtions related to the search engine
 #---------------------------------------------------------------------------
 
 SEARCHENGINE          = YES

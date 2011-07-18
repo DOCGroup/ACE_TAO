@@ -6,7 +6,7 @@
 #include "ace/Recyclable.inl"
 #endif /* __ACE_INLINE __ */
 
-
+ACE_RCSID(ace, Recyclable, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

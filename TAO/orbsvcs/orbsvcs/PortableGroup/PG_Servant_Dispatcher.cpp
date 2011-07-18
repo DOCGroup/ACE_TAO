@@ -3,6 +3,10 @@
 #include "orbsvcs/PortableGroup/GOA.h"
 #include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
 
+ACE_RCSID(PortableGroup,
+          PG_Servant_Dispatcher,
+          "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher (void)

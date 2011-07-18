@@ -9,6 +9,11 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Creation_Time.h"
 
+ACE_RCSID (Security,
+           SL2_SecurityManager,
+           "$Id$")
+
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::SecurityManager::SecurityManager (/* unknown */)
@@ -154,7 +159,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
 
   // Look up the target in access_map_; if there, return the value,
   // otherwise return the default value.
-  CORBA::Boolean access_decision = false;
+  CORBA::Boolean access_decision;
   if (this->access_map_.find (key, access_decision) == -1)
     {
       // Couldn't find the IOR in the map, so we use the default
@@ -246,7 +251,7 @@ TAO::Security::AccessDecision::add_object
                     "unexpectedly failed (errno=%d)\n",
                     hash.operator()(key),
                     allow_insecure_access,
-                    ACE_ERRNO_GET));
+                    errno));
       throw
         CORBA::NO_MEMORY(CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                   errno),
@@ -299,7 +304,7 @@ TAO::Security::AccessDecision::remove_object
                         "TAO (%P|%t): SL2_AccessDecision::remove_object(%x) "
                         " unexpected error during unbind from map (errno=%d\n)",
                         hash.operator()(key),
-                        ACE_ERRNO_GET));
+                        errno));
 
           throw CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
                                                                          errno),

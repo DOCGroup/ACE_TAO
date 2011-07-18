@@ -11,6 +11,10 @@
 #include "ace/Acceptor.h"
 #include "ace/OS_NS_strings.h"
 
+ACE_RCSID (EventChannel,
+           Fault_Detector_Loader,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC {
@@ -45,7 +49,7 @@ namespace FTRTEC {
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
     {
 #if (TAO_HAS_SCIOP == 1)
-      ACE_auto_ptr_reset(detector_, detector);
+      ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) SCTP not enabled. ",
@@ -55,7 +59,7 @@ namespace FTRTEC {
     }
     else {
       ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);
-      ACE_auto_ptr_reset(detector_, detector);
+      ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector);
     }
     return detector_->init(argc, argv);
   }

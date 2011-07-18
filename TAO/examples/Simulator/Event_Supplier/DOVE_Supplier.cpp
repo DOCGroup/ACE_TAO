@@ -1,21 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    DOVE_Supplier.cpp
- *
- *  $Id$
- *
- *  A wrapper around the event service initialization and
- *  marshalling
- *
- *
- *  @author Michael Kircher (mk1@cs.wustl.edu)
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = FILENAME
+//    DOVE_Supplier.cpp
+//
+// = DESCRIPTION
+//    A wrapper around the event service initialization and
+//    marshalling
+//
+// = AUTHOR
+//    Michael Kircher (mk1@cs.wustl.edu)
+//
+// ============================================================================
 
 #include "DOVE_Supplier.h"
 #include "tao/ORB_Core.h"
+
+ACE_RCSID (Event_Supplier,
+           DOVE_Supplier,
+           "$Id$")
 
 // Static pointer member initialization for Singleton.
 

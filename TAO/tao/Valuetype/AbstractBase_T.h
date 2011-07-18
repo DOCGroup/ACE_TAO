@@ -38,14 +38,16 @@ namespace TAO
 
     static T_ptr narrow (CORBA::AbstractBase_ptr,
                          const char *repo_id,
-                         Proxy_Broker_Factory);
+                         Proxy_Broker_Factory
+                        );
 
     static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
                                    Proxy_Broker_Factory);
 
     static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
                                    const char *repo_id,
-                                   Proxy_Broker_Factory);
+                                   Proxy_Broker_Factory
+                                  );
   };
 }
 

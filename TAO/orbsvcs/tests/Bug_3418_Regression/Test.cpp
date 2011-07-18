@@ -1,8 +1,10 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID (tests,
+           server,
+           "$Id$")
 
 // SSLIOP
 const ACE_TCHAR argStrB[] = ACE_TEXT("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");

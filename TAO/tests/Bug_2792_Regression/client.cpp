@@ -3,6 +3,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/StringSeqC.h"
 
+ACE_RCSID(Bug_2792_Regression,
+          client,
+          "$Id$")
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

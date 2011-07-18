@@ -1,6 +1,3 @@
-// -*- C++ -*-
-// $Id$
-
 #include "tao/LocateRequest_Invocation.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
@@ -16,47 +13,14 @@
 
 #include "ace/Countdown_Time.h"
 
+ACE_RCSID (tao,
+           LocateRequest_Invocation,
+           "$Id$")
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  /**
-   * @class First_Request_Guard
-   *
-   * @brief Auto pointer like class for first_request flag in transport.
-   *
-   * Since codeset service context is only sent in the first request it might
-   * happen that after LocateRequest (which doesn't include service context)
-   * no codeset negotiation happens in subsequent calls. In this respect
-   * LocateRequest is not the first request and thus First_Request_Guard
-   * restores first_request in transport to its original state.
-   */
-  class First_Request_Guard
-  {
-  public:
-    First_Request_Guard (TAO_Transport &transport);
-
-    ~First_Request_Guard (void);
-
-  private:
-    /// The transport that we guard.
-    TAO_Transport &transport_;
-
-    /// Original value of first_request from transport.
-    bool is_first_;
-  };
-
-  First_Request_Guard::First_Request_Guard (TAO_Transport &transport)
-    : transport_ (transport)
-  {
-    this->is_first_ = this->transport_.first_request ();
-  }
-
-  First_Request_Guard::~First_Request_Guard (void)
-  {
-    this->transport_.first_request_sent (this->is_first_);
-  }
-
   LocateRequest_Invocation::LocateRequest_Invocation (
       CORBA::Object_ptr otarget,
       Profile_Transport_Resolver &resolver,
@@ -106,9 +70,6 @@ namespace TAO
                         transport->output_cdr_lock (), TAO_INVOKE_FAILURE);
       TAO_OutputCDR &cdr = transport->out_stream ();
 
-      // This must restore first_request flag after message is sent.
-      First_Request_Guard fr_quard (*transport);
-
       TAO_Target_Specification tspec;
       this->init_target_spec (tspec, cdr);
 
@@ -126,7 +87,7 @@ namespace TAO
     countdown.update ();
 
     // For some strategies one may want to release the transport
-    // back to  cache. If the idling is successful let the
+    // back to  cache. If the idling is successfull let the
     // resolver about that.
     if (this->resolver_.transport ()->idle_after_send ())
       this->resolver_.transport_released ();
@@ -137,7 +98,7 @@ namespace TAO
 
     // For some strategies one may want to release the transport
     // back to  cache after receiving the reply. If the idling is
-    // successful let the resolver about that.
+    // successfull let the resolver about that.
     if (this->resolver_.transport ()->idle_after_reply ())
       this->resolver_.transport_released ();
 

@@ -6,25 +6,32 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::Run_Test;
 use Getopt::Std;
 
-@list= ( {
+@list= (
+        {
             dir_name => "1_Path_Period_0_Lanes",
             cmd => "perl run_all.pl --all",
-        }, {
+        },
+        {
             dir_name => "3_Path_Period_10ms_Lanes",
             cmd => "perl run_all.pl --all",
-        }, {
+        },
+        {
             dir_name => "Paths_vs_Throughput",
             cmd => "perl run_all.pl --all",
-        }, {
+        },
+        {
             dir_name => "Max_Throughput",
             cmd => "perl run_all.pl",
         },
   );
 
-for $test (@list) {
-    if (-d $test->{dir_name}) {
+for $test (@list)
+{
+    if (-d $test->{dir_name})
+    {
         print STDERR "Running $test->{dir_name} test\n";
 
         $cmd = "run_test.pl";
@@ -33,7 +40,8 @@ for $test (@list) {
 
         $status = system ("$test->{cmd}");
 
-        if ($status != 0) {
+        if ($status != 0)
+        {
             print STDERR "ERROR: $test->{dir_name} test returned $status\n";
         }
 

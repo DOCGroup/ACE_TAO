@@ -94,10 +94,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Create a local event channel and register it
     TAO_EC_Event_Channel_Attributes attributes (poa.in (), poa.in ());
-    PortableServer::Servant_var<TAO_EC_Event_Channel> ec_impl =
-      new TAO_EC_Event_Channel(attributes);
-    ec_impl->activate ();
-    PortableServer::ObjectId_var oid = poa->activate_object(ec_impl.in());
+    TAO_EC_Event_Channel ec_impl (attributes);
+    ec_impl.activate ();
+    PortableServer::ObjectId_var oid = poa->activate_object(&ec_impl);
     CORBA::Object_var ec_obj = poa->id_to_reference(oid.in());
     RtecEventChannelAdmin::EventChannel_var ec =
       RtecEventChannelAdmin::EventChannel::_narrow(ec_obj.in());
@@ -116,11 +115,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       admin->obtain_push_consumer();
 
     // Instantiate an EchoEventSupplier_i servant.
-    PortableServer::Servant_var<EchoEventSupplier_i> servant =
-      new EchoEventSupplier_i(orb.in());
+    EchoEventSupplier_i servant(orb.in());
 
     // Register it with the RootPOA.
-    oid = poa->activate_object(servant.in());
+    oid = poa->activate_object(&servant);
     CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
     RtecEventComm::PushSupplier_var supplier =
       RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
@@ -134,17 +132,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // This will be used by the sender object and the multicast
     // receiver.
     ACE_INET_Addr send_addr (port, address);
-    PortableServer::Servant_var<SimpleAddressServer> addr_srv_impl =
-      new SimpleAddressServer(send_addr);
+    SimpleAddressServer addr_srv_impl (send_addr);
 
     PortableServer::ObjectId_var addr_srv_oid =
-      poa->activate_object(addr_srv_impl.in());
+      poa->activate_object(&addr_srv_impl);
     CORBA::Object_var addr_srv_obj = poa->id_to_reference(addr_srv_oid.in());
     RtecUDPAdmin::AddrServer_var addr_srv =
       RtecUDPAdmin::AddrServer::_narrow(addr_srv_obj.in());
 
     // Create and initialize the sender object
-    PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
+    TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender =
                                 TAO_ECG_UDP_Sender::create();
     TAO_ECG_UDP_Out_Endpoint endpoint;
     if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1) {
@@ -166,7 +163,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     sender->connect (sub);
 
     // Create and initialize the receiver
-    PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
+    TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver =
                                       TAO_ECG_UDP_Receiver::create();
 
     // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
@@ -187,7 +184,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       auto_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
       mcast_eh->reactor (orb->orb_core ()->reactor ());
       mcast_eh->open (ec.in());
-      ACE_auto_ptr_reset(eh,mcast_eh.release());
+      ACE_AUTO_PTR_RESET(eh,mcast_eh.release(),ACE_Event_Handler);
       //eh.reset(mcast_eh.release());
     } else {
       auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
@@ -196,7 +193,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (udp_eh->open (local_addr) == -1) {
         std::cerr << "Cannot open EH" << std::endl;
       }
-      ACE_auto_ptr_reset(eh,udp_eh.release());
+      ACE_AUTO_PTR_RESET(eh,udp_eh.release(),ACE_Event_Handler);
       //eh.reset(udp_eh.release());
     }
 

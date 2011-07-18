@@ -2,6 +2,10 @@
 
 #include "ace/FoxReactor/FoxReactor.h"
 
+ACE_RCSID(ace, FoxReactor, "$Id$")
+
+#include "ace/Synch_T.h"
+
 FXDEFMAP(ACE_FoxReactor) ACE_FoxReactorMap[]={
   FXMAPFUNCS(SEL_IO_READ,0,MAXKEY,ACE_FoxReactor::onFileEvents),
   FXMAPFUNCS(SEL_IO_WRITE,0,MAXKEY,ACE_FoxReactor::onFileEvents),
@@ -133,8 +137,6 @@ long ACE_FoxReactor::onFileEvents(FXObject* /* ob */, FXSelector se, void* handl
     f=true;
   };
   if(f) dispatch (1, dispatch_set);
-
-  return 1;
 }
 
 long ACE_FoxReactor::onTimerEvents(FXObject* /* ob */, FXSelector /* sel */, void* /* handle */)
@@ -145,19 +147,19 @@ long ACE_FoxReactor::onTimerEvents(FXObject* /* ob */, FXSelector /* sel */, voi
 
   // Set next timeout signal
   this->reset_timeout ();
-
+  
   return 0;
 }
 
 int
 ACE_FoxReactor::register_handler_i (ACE_HANDLE handle,
-                                    ACE_Event_Handler *handler,
-                                    ACE_Reactor_Mask mask)
+                                 ACE_Event_Handler *handler,
+                                 ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_FoxReactor::register_handler_i");
 
-  int const result = ACE_Select_Reactor::register_handler_i (handle,
-                                                             handler, mask);
+  int result = ACE_Select_Reactor::register_handler_i (handle,
+                                                       handler, mask);
   if (result == -1)
     return -1;
 
@@ -179,15 +181,15 @@ ACE_FoxReactor::register_handler_i (ACE_HANDLE handle,
 
   if (condition != 0)
     {
-     fxapp->addInput(handle, condition, this, 0);
+     fxapp->addInput(handle,condition,this,0);
     }
   return 0;
 }
 
 int
 ACE_FoxReactor::register_handler_i (const ACE_Handle_Set &handles,
-                                    ACE_Event_Handler *handler,
-                                    ACE_Reactor_Mask mask)
+                                 ACE_Event_Handler *handler,
+                                 ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::register_handler_i (handles, handler, mask);
 }

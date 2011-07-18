@@ -1,22 +1,25 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    allocator.cpp
- *
- *  $Id$
- *
- * Compares the performance of a TSS allocator, with no locks, to
- * the global allocator (with locks) even in the abscence of
- * contention.
- * The idea behind this test is to measure the predictability of
- * each allocator, specially under the light of potential
- * fragmentation in the main allocator.
- *
- *
- *  @author Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/CDR
+//
+// = FILENAME
+//    allocator.cpp
+//
+// = DESCRIPTION
+//   Compares the performance of a TSS allocator, with no locks, to
+//   the global allocator (with locks) even in the abscence of
+//   contention.
+//   The idea behind this test is to measure the predictability of
+//   each allocator, specially under the light of potential
+//   fragmentation in the main allocator.
+//
+// = AUTHORS
+//   Carlos O'Ryan
+//
+// ============================================================================
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -24,44 +27,41 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
+ACE_RCSID(CDR, allocator, "$Id$")
+
 #define DEFAULT_BUFFER_SIZE 512
 
-/**
- * @class Application_Simulator
- *
- * Tries to simulate the behavior of an application: it randomly
- * acquires and releases memory, of variable sizes.
- * The intention is to produce some level of fragmentation in main
- * memory.
- */
 class Application_Simulator
 {
+  // = DESCRIPTION
+  //   Tries to simulate the behavior of an application: it randomly
+  //   acquires and releases memory, of variable sizes.
+  //   The intention is to produce some level of fragmentation in main
+  //   memory.
 
 public:
-  /// Constructor, limits the amount of fragmentation and memory this
-  /// class takes.
   Application_Simulator (int max_fragments,
                     int max_fragment_size);
+  // Constructor, limits the amount of fragmentation and memory this
+  // class takes.
 
-  /// Destructor, releases any memory left behind.
   ~Application_Simulator (void);
+  // Destructor, releases any memory left behind.
 
-  /**
-   * Simulate an upcall. The class allocates some memory and then
-   * releases some memory too, the amount of memory allocated and the
-   * number of allocations is random.
-   */
-  void upcall (unsigned int* seed);
+  void upcall (ACE_RANDR_TYPE& seed);
+  // Simulate an upcall. The class allocates some memory and then
+  // releases some memory too, the amount of memory allocated and the
+  // number of allocations is random.
 
 private:
-  /// The allocated buffers.
   char** buffers_;
+  // The allocated buffers.
 
-  /// The size of the <buffers_> array.
   int max_fragments_;
+  // The size of the <buffers_> array.
 
-  /// The maximum size of any element of <buffers_>
   int max_fragment_size_;
+  // The maximum size of any element of <buffers_>
 };
 
 int
@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int max_arguments = 16;
   int max_argument_size = 1024;
   int quiet = 0;
-  unsigned int seed = static_cast<unsigned int> (ACE_OS::time(0));
+  ACE_RANDR_TYPE seed = static_cast<ACE_RANDR_TYPE> (ACE_OS::time(0));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("tn:f:m:s:a:b:r:q"));
   int opt;
@@ -153,13 +153,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int* argument_sizes;
   ACE_NEW_RETURN (argument_sizes, int[max_arguments], 1);
 
-  int n = ACE_OS::rand_r (&seed) % max_arguments + 1;
+  int n = ACE_OS::rand_r (seed) % max_arguments + 1;
   for (int k = 0; k < n; ++k)
-    argument_sizes[k] = ACE_OS::rand_r (&seed) % max_argument_size + 1;
+    argument_sizes[k] = ACE_OS::rand_r (seed) % max_argument_size + 1;
 
   for (int i = 0; i < iterations; ++i)
     {
-      simulator.upcall (&seed);
+      simulator.upcall (seed);
 
       // @@ TODO this is the place to put the other allocators.
       ACE_High_Res_Timer cdr_encoding;
@@ -227,7 +227,7 @@ Application_Simulator::~Application_Simulator (void)
 }
 
 void
-Application_Simulator::upcall (unsigned int* seed)
+Application_Simulator::upcall (ACE_RANDR_TYPE& seed)
 {
   for (char** i = this->buffers_;
        i != this->buffers_ + this->max_fragments_;

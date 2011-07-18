@@ -1,4 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
+//
 // $Id$
 
 
@@ -16,6 +17,11 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
+
+
+ACE_RCSID(PortableGroup,
+          UIPMC_Connection_Handler,
+          "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -448,12 +454,6 @@ TAO_UIPMC_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
     }
 
   return 0;
-}
-
-int
-TAO_UIPMC_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
-{
-  return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

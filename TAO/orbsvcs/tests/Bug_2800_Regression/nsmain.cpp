@@ -4,10 +4,10 @@
 #include "Hello.h"
 #include "NsShutdown.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("ns.ior");
-const ACE_TCHAR *ior_shutdown_file = ACE_TEXT("shutdown.ior");
+const ACE_TCHAR *ior_output_file = ACE_TEXT("shutdown.ior");
 
 class TestTask : public ACE_Task_Base
 {
@@ -43,21 +43,17 @@ void TestTask::end()
 int
 TestTask::parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
       case 's':
-        ior_shutdown_file = get_opts.opt_arg ();
         shutdown_ns_ = true;
         break;
       }
-  // Indicates successful parsing of the command line
+  // Indicates sucessful parsing of the command line
   return 0;
 }
 
@@ -74,12 +70,12 @@ int TestTask::svc()
     // Wait for the Naming Service initialized.
     namingServiceB_.waitInit();
 
-    FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+    FILE *output_file= ACE_OS::fopen ("ns.ior", "w");
     if (output_file == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: ns.ior\n"),
                           1);
-    ACE_OS::fprintf (output_file, "%s", namingServiceA_.ior ());
+    ACE_OS::fprintf (output_file, "%s", ACE_TEXT_CHAR_TO_TCHAR (namingServiceA_.ior ()));
     ACE_OS::fclose (output_file);
 
     // Get reference to Root POA
@@ -146,11 +142,11 @@ int TestTask::svc()
     obj = poa->id_to_reference(shutdown_oid.in());
     CORBA::String_var ior = orb_->object_to_string (obj.in ());
 
-    output_file= ACE_OS::fopen (ior_shutdown_file, "w");
+    output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file %s for writing IOR: %C\n",
-                          ior_shutdown_file,
+                          ior_output_file,
                           ior.in ()),
                           1);
     ACE_OS::fprintf (output_file, "%s", ior.in ());

@@ -1,14 +1,19 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file   anyop.cpp
- *
- *  $Id$
- *
- *  @author Carlos O'Ryan
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//   TAO/tests/Param_Test
+//
+// = FILENAME
+//   anyop.cpp
+//
+// = DESCRIPTION
+//
+// = AUTHORS
+//   Carlos O'Ryan
+//
+// ============================================================================
 
 #include "param_testC.h"
 
@@ -21,6 +26,10 @@
 #include "tao/Stub.h"
 
 #include "ace/Get_Opt.h"
+
+ACE_RCSID (Param_Test,
+           anyop,
+           "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -181,7 +190,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
             CORBA::Double o;
 
-            if (!(any >>= o) || !ACE::is_equal (i, o))
+            if (!(any >>= o)
+                || i != o)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for CORBA::Double (%f,%f)\n",
@@ -262,9 +272,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 || o->c != i->c
                 || o->s != i->s
                 || o->o != i->o
-                || !ACE::is_equal (o->f, i->f)
+                || o->f != i->f
                 || o->b != i->b
-                || !ACE::is_equal (o->d, i->d))
+                || o->d != i->d)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Fixed_Struct "
@@ -278,9 +288,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 || o->c != i->c
                 || o->s != i->s
                 || o->o != i->o
-                || !ACE::is_equal (o->f, i->f)
+                || o->f != i->f
                 || o->b != i->b
-                || !ACE::is_equal (o->d, i->d))
+                || o->d != i->d)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for Fixed_Struct "

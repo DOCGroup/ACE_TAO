@@ -17,7 +17,11 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "ace/Strategies_T.h"
-#include "ace/OS_NS_strings.h"
+
+ACE_RCSID (HTIOP,
+           TAO_HTIOP_Connector,
+           "$Id$")
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -213,9 +217,6 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   this->connect_creation_strategy_->make_svc_handler (svc_handler);
   // we now have a connection handler that has an unconnected stream
 
-  // Make sure that we always do a remove_reference
-  ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
-
   svc_handler->peer().session(session);
   session->handler(svc_handler);
   ACE::HTBP::Channel *outbound = session->outbound();
@@ -231,6 +232,10 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   // At this point, the IIOP Connector has a result from an asynch connect
   // strategy, which does not apply here. Therefore the whole bit of logic
   // of dealing with a failed wait but an unclosed svc_handler is skipped.
+
+
+  // Regardless of success or failure, remove the extra #REFCOUNT#.
+  svc_handler->remove_reference ();
 
   if (closed) // would be result == -1 in IIOP_Connector
     {
@@ -294,7 +299,6 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
-  svc_handler_auto_ptr.release ();
   return transport;
 }
 

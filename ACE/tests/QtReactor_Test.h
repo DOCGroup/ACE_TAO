@@ -3,8 +3,8 @@
 #ifndef QTREACTOR_TEST_H
 #define QTREACTOR_TEST_H
 
-#include <QtGui/qapplication.h>
-#include <QtCore/qtimer.h>
+#include <qapplication.h>
+#include <qtimer.h>
 
 class QTestApplication: public QApplication
 {

@@ -28,8 +28,7 @@
 */
 struct Server_Info
 {
-  Server_Info (const ACE_CString& serverId,
-    const ACE_CString& name,
+  Server_Info (const ACE_CString& server_name,
     const ACE_CString& aname,
     const ACE_CString& cmdline,
     const ImplementationRepository::EnvironmentList& env,
@@ -47,9 +46,7 @@ struct Server_Info
   void reset();
 
   /// The name of the server.
-  ACE_CString server_id;
   ACE_CString name;
-
   /// The name of the activator in which this server runs
   ACE_CString activator;
   /// The command line startup command (program and arguments).

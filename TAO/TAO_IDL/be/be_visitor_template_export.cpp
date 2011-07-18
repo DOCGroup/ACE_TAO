@@ -21,6 +21,10 @@
 #include "be_predefined_type.h"
 #include "ace/Log_Msg.h"
 
+ACE_RCSID (be,
+           be_visitor_template_export,
+           "$Id$")
+
 be_visitor_template_export::be_visitor_template_export (
   be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -37,7 +41,7 @@ be_visitor_template_export::visit_root (be_root *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT";
 
@@ -108,9 +112,7 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
       << "template class " << be_global->stub_export_macro ()
       << " ";
 
-  if (node->gen_base_class_name (os,
-                                 "",
-                                 this->ctx_->scope ()->decl ()) == -1)
+  if (node->gen_base_class_name (os, "", this->ctx_->scope ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_template_export::"

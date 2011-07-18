@@ -7,6 +7,10 @@
 #include "Push_Web_ServerS.h"
 #include "Push_Iterator_Factory_i.h"
 
+ACE_RCSID (AMI_Observer,
+           server,
+           "$Id$")
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

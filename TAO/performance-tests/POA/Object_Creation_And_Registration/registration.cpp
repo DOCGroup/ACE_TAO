@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    registration.cpp
- *
- *  $Id$
- *
- *
- *  This test is used to measure the time it takes to register and
- *  activate an object in the POA.
- *
- *
- *  @author Irfan Pyarali
- */
-//=============================================================================
-
+// ================================================================
+//
+// = LIBRARY
+//    TAO/performance-tests/POA/Object_Creation_And_Registration
+//
+// = FILENAME
+//    registration.cpp
+//
+// = DESCRIPTION
+//
+//    This test is used to measure the time it takes to register and
+//    activate an object in the POA.
+//
+// = AUTHOR
+//    Irfan Pyarali
+//
+// ================================================================
 
 #include "testS.h"
 #include "tao/Server_Strategy_Factory.h"
@@ -64,12 +67,9 @@ inline int QuantifyStopRecordingData ()
 #endif /* ACE_WIN32 */
 #endif /* USING_QUANTIFY */
 
-/**
- * @class test_i
- *
- * @brief Oversimplified servant class
- */
 class test_i : public POA_test
+  // = TITLE
+  //     Oversimplified servant class
 {
 };
 

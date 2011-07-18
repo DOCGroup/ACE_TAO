@@ -91,7 +91,7 @@ public:
                                      UTL_ScopedName *n);
 
   virtual AST_Interface *create_interface (UTL_ScopedName *n,
-                                           AST_Type **ih,
+                                           AST_Interface **ih,
                                            long nih,
                                            AST_Interface **ih_flat,
                                            long nih_flat,
@@ -107,14 +107,14 @@ public:
                                          AST_Type *boxed_type);
 
   virtual AST_ValueType *create_valuetype (UTL_ScopedName *n,
-                                           AST_Type **inherits,
+                                           AST_Interface **inherits,
                                            long n_inherits,
-                                           AST_Type *inherits_concrete,
+                                           AST_ValueType *inherits_concrete,
                                            AST_Interface **inherits_flat,
                                            long n_inherits_flat,
-                                           AST_Type **supports_list,
+                                           AST_Interface **supports_list,
                                            long n_supports,
-                                           AST_Type *supports_concrete,
+                                           AST_Interface *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
                                            bool is_custom);
@@ -123,14 +123,14 @@ public:
                                                   bool abstract);
 
   virtual AST_EventType *create_eventtype (UTL_ScopedName *n,
-                                           AST_Type **inherits,
+                                           AST_Interface **inherits,
                                            long n_inherits,
-                                           AST_Type *inherits_concrete,
+                                           AST_ValueType *inherits_concrete,
                                            AST_Interface **inherits_flat,
                                            long n_inherits_flat,
-                                           AST_Type **supports_list,
+                                           AST_Interface **supports_list,
                                            long n_supports,
-                                           AST_Type *supports_concrete,
+                                           AST_Interface *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
                                            bool is_custom);
@@ -140,7 +140,7 @@ public:
 
   virtual AST_Component *create_component (UTL_ScopedName *n,
                                            AST_Component *base_component,
-                                           AST_Type **supports_list,
+                                           AST_Interface **supports_list,
                                            long n_supports,
                                            AST_Interface **supports_flat,
                                            long n_supports_flat);
@@ -150,8 +150,8 @@ public:
   virtual AST_Home *create_home (UTL_ScopedName *n,
                                  AST_Home *base_home,
                                  AST_Component *managed_component,
-                                 AST_Type *primary_key,
-                                 AST_Type **supports_list,
+                                 AST_ValueType *primary_key,
+                                 AST_Interface **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
                                  long n_supports_flat);
@@ -176,8 +176,7 @@ public:
                                            bool is_local,
                                            bool is_abstract);
 
-  virtual AST_Field *create_field (AST_Type *ft,
-                                   UTL_ScopedName *n,
+  virtual AST_Field *create_field (AST_Type *ft, UTL_ScopedName *n,
                                    AST_Field::Visibility vis =
                                      AST_Field::vis_NA);
 
@@ -220,18 +219,12 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Long v);
 
-  virtual AST_Expression *create_expr (ACE_CDR::LongLong v);
-
   virtual AST_Expression *create_expr (ACE_CDR::Boolean b);
-
-  virtual AST_Expression *create_expr (ACE_CDR::ULong v);
-
-  virtual AST_Expression *create_expr (ACE_CDR::ULongLong v);
 
   virtual AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr (UTL_String *s);
+  virtual AST_Expression *create_expr( UTL_String *s);
 
   virtual AST_Expression *create_expr (char *s);
 
@@ -268,71 +261,8 @@ public:
   // Create a node representing a native
   virtual AST_Native *create_native (UTL_ScopedName *n);
 
-  // Create a node representing a OBV or home factory construct
+  // Create a node representing a OBV factory construct
   virtual AST_Factory *create_factory (UTL_ScopedName *n);
-
-  // Create a node representing an home finder construct.
-  virtual AST_Finder *create_finder (UTL_ScopedName *n);
-
-  virtual
-  AST_PortType *create_porttype (UTL_ScopedName *n);
-
-  virtual
-  AST_Provides *create_provides (UTL_ScopedName *n,
-                                 AST_Type *provides_type);
-
-  virtual
-  AST_Uses *create_uses (UTL_ScopedName *n,
-                         AST_Type *uses_type,
-                         bool is_multiple);
-
-  virtual
-  AST_Publishes *create_publishes (UTL_ScopedName *n,
-                                   AST_Type *publishes_type);
-
-  virtual
-  AST_Emits *create_emits (UTL_ScopedName *n,
-                           AST_Type *emits_type);
-
-  virtual
-  AST_Consumes *create_consumes (UTL_ScopedName *n,
-                                 AST_Type *consumes_type);
-  virtual
-  AST_Extended_Port *create_extended_port (
-    UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
-
-  virtual
-  AST_Mirror_Port *create_mirror_port (
-    UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
-
-  virtual
-  AST_Connector *create_connector (
-    UTL_ScopedName *n,
-    AST_Connector *base_connector);
-
-  virtual
-  AST_Template_Module *create_template_module (
-    UTL_ScopedName *n,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
-
-  virtual
-  AST_Template_Module_Inst *create_template_module_inst (
-    UTL_ScopedName *n,
-    AST_Template_Module *ref,
-    FE_Utils::T_ARGLIST *template_args);
-
-  virtual
-  AST_Template_Module_Ref *create_template_module_ref (
-    UTL_ScopedName *n,
-    AST_Template_Module *ref,
-    UTL_StrList *param_refs);
-
-  virtual
-  AST_Param_Holder *create_param_holder (
-    UTL_ScopedName *parameter_name,
-    FE_Utils::T_Param_Info *info);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

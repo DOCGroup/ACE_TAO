@@ -24,11 +24,4 @@ TAO_Notify_Consumer::suspend (void)
   this->is_suspended_ = 1;
 }
 
-ACE_INLINE size_t
-TAO_Notify_Consumer::pending_count (void)
-{
-  return this->pending_events_->size();
-}
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

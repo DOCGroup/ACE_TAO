@@ -1,9 +1,10 @@
 //$Id$
 project : taolib_with_idl, csd_threadpool, avoids_corba_e_micro {
   sharedname   = CSD_PT_TestInf
-  dynamicflags += CSD_PT_TESTINF_BUILD_DLL
+  dynamicflags = CSD_PT_TESTINF_BUILD_DLL
   idlflags  += -Wb,export_macro=CSD_PT_TestInf_Export -Wb,export_include=TestInf/CSD_PT_TestInf_Export.h
-  includes += ..
+  includes += $(TAO_ROOT)/tao
+  includes += $(TAO_ROOT)/performance-tests/CSD_Strategy
 
   specific (automake) {
     includes += $(TAO_BUILDDIR)/performance-tests/CSD_Strategy

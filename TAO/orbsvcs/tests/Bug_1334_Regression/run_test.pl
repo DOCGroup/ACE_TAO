@@ -8,45 +8,27 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::TestTarget;
-
-$status = 0;
-$debug_level = '0';
-
-foreach $i (@ARGV) {
-    if ($i eq '-debug') {
-        $debug_level = '10';
-    }
-}
-
-my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+use PerlACE::Run_Test;
 
 # The NameService IOR file
 #
-$nsiorfile = "ns.ior";
-
-my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
-$ns->DeleteFile ($nsiorfile);
+$nsiorfile = PerlACE::LocalFile("ns.ior");
+unlink $nsiorfile;
 
 # The client process
 #
-$CLI = $ns->CreateProcess ("client");
+$CLIENT     = new PerlACE::Process(PerlACE::LocalFile("client"));
 
 # Fire up the Name Service
 #
-$NS = $ns->CreateProcess ("../../Naming_Service/tao_cosnaming",
-                          "-ORBDebugLevel $debug_level ".
-                          "-o $ns_nsiorfile");
-$NS_status = $NS->Spawn ();
-if ($NS_status != 0) {
-    print STDERR "ERROR: Name Service returned $NS_status\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-}
-if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$ns_nsiorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
+$NS   = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $nsiorfile");
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($nsiorfile, $PerlACE::wait_interval_for_process_creation) == -1)
+{
+   print STDERR "ERROR: cannot find Name Service IOR file <$nsiorfile>\n";
+   $NS->Kill (); $NS->TimedWait (1);
+   exit 1;
 }
 
 
@@ -54,33 +36,37 @@ if ($ns->WaitForFileTimed ($nsiorfile,$ns->ProcessStartWaitInterval()) == -1) {
 # the form <service name>IOR.
 # Expect it to succeed.
 #
-$ENV {'NameServiceIOR'} = "file://$ns_nsiorfile";
-$CLI->Arguments("");
-$CLI_status = $CLI->SpawnWaitKill ($ns->ProcessStartWaitInterval()+15);
-if ($CLI_status != 0) {
-    print STDERR "ERROR: Name Service not resolved by environment variable\n";
-    $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-    if ($NS_status != 0) {
-        print STDERR "ERROR: Closing Name Service returned $NS_status\n";
-    }
-    $ns->DeleteFile ($nsiorfile);
-    exit 1;
+$ENV {'NameServiceIOR'} = "file://$nsiorfile";
+$CLIENT->Arguments("");
+if ($CLIENT->SpawnWaitKill (30) != 0)
+{
+   print STDERR "ERROR: Name Service not resolved by environment variable\n";
+   $server = $NS->TerminateWaitKill (5);
+   if ($server != 0)
+   {
+       print STDERR "ERROR: Closing Name Service returned $server\n";
+       $status = 1;
+   }
+   unlink $nsiorfile;
+   exit 1;
 }
 
 # Now try it with a duff ior in the environment variable.
 # Expect it to fail.
 #
 $ENV {'NameServiceIOR'} = "Banana";
-$CLI->Arguments("");
-$CLI_status = $CLI->SpawnWaitKill ($ns->ProcessStartWaitInterval()+15);
-if ($CLI_status != 1) {
-    print STDERR "ERROR: Name Service resolved with duff environment\n";
-    $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-    if ($NS_status != 0) {
-        print STDERR "ERROR: Closing Name Service returned $NS_status\n";
-    }
-    $ns->DeleteFile ($nsiorfile);
-    exit 1;
+$CLIENT->Arguments("");
+if ($CLIENT->SpawnWaitKill (30) != 1)
+{
+   print STDERR "ERROR: Name Service resolved with duff environment\n";
+   $server = $NS->TerminateWaitKill (5);
+   if ($server != 0)
+   {
+       print STDERR "ERROR: Closing Name Service returned $server\n";
+       $status = 1;
+   }
+   unlink $nsiorfile;
+   exit 1;
 }
 
 # Now try with a duff ior in the environment variable but overridden by
@@ -88,26 +74,28 @@ if ($CLI_status != 1) {
 # Expect it to succeed.
 #
 $ENV {'NameServiceIOR'} = "Custard";
-$CLI->Arguments("-ORBInitRef NameService=file://$ns_nsiorfile");
-$CLI_status = $CLI->SpawnWaitKill ($ns->ProcessStartWaitInterval()+15);
-if ($CLI_status != 0) {
-    print STDERR "ERROR: Name Service not resolved by command line override\n";
-    $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-    if ($NS_status != 0) {
-        print STDERR "ERROR: Closing Name Service returned $NS_status\n";
-    }
-    $ns->DeleteFile ($nsiorfile);
-    exit 1;
+$CLIENT->Arguments("-ORBInitRef NameService=file://$nsiorfile");
+if ($CLIENT->SpawnWaitKill (30) != 0)
+{
+   print STDERR "ERROR: Name Service not resolved by command line override\n";
+   $server = $NS->TerminateWaitKill (5);
+   if ($server != 0)
+   {
+       print STDERR "ERROR: Closing Name Service returned $server\n";
+       $status = 1;
+   }
+   unlink $nsiorfile;
+   exit 1;
 }
 
 # Clean up and return
 #
-$NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
-if ($NS_status != 0) {
-    print STDERR "ERROR: Closing Name Service returned $NS_status\n";
+$server = $NS->TerminateWaitKill (5);
+if ($server != 0)
+{
+    print STDERR "ERROR: Closing Name Service returned $server\n";
     $status = 1;
 }
+unlink $nsiorfile;
 
-$ns->DeleteFile ($nsiorfile);
-
-exit $status;
+exit 0;

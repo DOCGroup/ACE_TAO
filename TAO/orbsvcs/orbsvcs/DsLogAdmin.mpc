@@ -13,7 +13,7 @@ project(DsLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_id
 
 project(DsLogAdmin) : orbsvcslib, orbsvcs_output, install {
   sharedname   = TAO_DsLogAdmin
-  dynamicflags += TAO_LOG_BUILD_DLL
+  dynamicflags = TAO_LOG_BUILD_DLL
   tagchecks   += Log
   after       += DsLogAdmin_IDL
 
@@ -52,7 +52,7 @@ project(DsLogAdmin) : orbsvcslib, orbsvcs_output, install {
 
 project(DsLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dslogadmin, portableserver {
   sharedname   = TAO_DsLogAdmin_Skel
-  dynamicflags += TAO_LOG_SKEL_BUILD_DLL
+  dynamicflags = TAO_LOG_SKEL_BUILD_DLL
   tagchecks   += Log
 
   IDL_Files {
@@ -85,7 +85,7 @@ project(DsLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dslogadmin, port
 
 project(DsLogAdmin_Serv) : orbsvcslib, orbsvcs_output, install, dslogadmin_skel, dynamicany, etcl, utils, svc_utils {
   sharedname   = TAO_DsLogAdmin_Serv
-  dynamicflags += TAO_LOG_SERV_BUILD_DLL
+  dynamicflags = TAO_LOG_SERV_BUILD_DLL
   tagchecks   += Log
 
   IDL_Files {

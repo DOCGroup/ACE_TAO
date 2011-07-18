@@ -32,9 +32,8 @@ public:
                 "Two-Way Message = %s\n",
                 message));
 
-    RTScheduling::Current::IdType_var id = this->current_->id ();
     RTScheduling::DistributableThread_var DT =
-      this->current_->lookup (id.in ());
+      this->current_->lookup (*(this->current_->id ()));
 
     DT->cancel ();
 
@@ -107,7 +106,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       test_impl (orb.in (),
                       current.in ()),
                       -1);
-      PortableServer::ServantBase_var safe (test_i);
 
       PortableServer::ObjectId_var id;
 
@@ -153,8 +151,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       orb->run ();
-
-      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

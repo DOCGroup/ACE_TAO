@@ -10,6 +10,8 @@
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
 
+ACE_RCSID(simple_server, Logging_Handler, "$Id$")
+
 // Default constructor.
 
 Logging_Handler::Logging_Handler (void)

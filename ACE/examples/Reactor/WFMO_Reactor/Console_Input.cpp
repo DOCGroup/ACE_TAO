@@ -1,19 +1,22 @@
+// $Id$
 
-//=============================================================================
-/**
- *  @file    Console_Input.cpp
- *
- *  $Id$
- *
- *
- *  This application tests the working of WFMO_Reactor when users
- *  are interested in console input.
- *
- *
- *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    examples
+//
+// = FILENAME
+//    Console_Input.cpp
+//
+// = DESCRIPTION
+//
+//    This application tests the working of WFMO_Reactor when users
+//    are interested in console input.
+//
+// = AUTHOR
+//    Irfan Pyarali <irfan@cs.wustl.edu>
+//
+// ============================================================================
 
 #include "ace/Reactor.h"
 #include "ace/OS_NS_unistd.h"
@@ -21,7 +24,7 @@
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
 
-
+ACE_RCSID(WFMO_Reactor, Console_Input, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {

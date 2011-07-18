@@ -46,8 +46,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Valuetype_Export TAO_ChunkInfo
 {
 public:
-  TAO_ChunkInfo (CORBA::Boolean do_chunking = false,
-                 CORBA::Long init_level = false);
+  TAO_ChunkInfo (CORBA::Boolean do_chunking = 0,
+                 CORBA::Long init_level = 0);
 
   /// Methods to support chunking.
   /// Note: These methods are called for both chunking and non-chunking
@@ -178,21 +178,17 @@ namespace CORBA
 
     /// Both used internally and are called from T::_tao_unmarshal ()
     static CORBA::Boolean _tao_unmarshal_pre (TAO_InputCDR &strm,
-                                              CORBA::ValueBase *&valuetype,
-                                              const char * const repo_id,
-                                              CORBA::Boolean& is_null_object,
-                                              CORBA::Boolean& is_indirected);
+                                              ValueBase *&,
+                                              const char * const repo_id);
 
     CORBA::Boolean _tao_unmarshal_post (TAO_InputCDR &strm);
 
     /// Check repository id for value box type against what is
     /// in the CDR stream.
     static CORBA::Boolean _tao_validate_box_type (
-                                          TAO_InputCDR &strm,
-                                          TAO_InputCDR &indirected_strm,
-                                          const char * const repo_id_expected,
-                                          CORBA::Boolean & null_object,
-                                          CORBA::Boolean & is_indirected);
+      TAO_InputCDR &strm,
+      const char * const repo_id_expected,
+      CORBA::Boolean & null_object);
 
 #if defined (GEN_OSTREAM_OPS)
 
@@ -239,22 +235,6 @@ namespace CORBA
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const = 0;
 
   private:
-
-    static CORBA::Boolean _tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
-                                                                TAO_InputCDR &indirected_strm);
-
-    static CORBA::Boolean _tao_unmarshal_value_indirection (TAO_InputCDR &strm,
-                                                            CORBA::ValueBase *&value);
-
-    static CORBA::Boolean _tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
-                                                              ACE_CString& repo_id);
-
-    static CORBA::Boolean _tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
-                                                                   ACE_CString& codebase_url);
-
-    static CORBA::Boolean _tao_write_repository_id (TAO_OutputCDR &strm,
-                                                    ACE_CString& id);
-
     /// Write some special values such as null value or indirection value.
     static CORBA::Boolean _tao_write_special_value(TAO_OutputCDR &strm,
                                               const CORBA::ValueBase * value);
@@ -270,22 +250,24 @@ namespace CORBA
 
     /// Read a single repository id from the CDR input stream,
     /// accounting for indirection.
-    static CORBA::Boolean _tao_read_repository_id (TAO_InputCDR& strm,
-                                                   ACE_CString& id);
+    static CORBA::Boolean _tao_read_repository_id (ACE_InputCDR& strm,
+                                                    Repository_Id_List& ids);
 
     ///  Read a list of repository ids from the CDR input stream,
     /// accounting for indirection
-    static CORBA::Boolean _tao_read_repository_id_list (TAO_InputCDR& strm,
+    static CORBA::Boolean _tao_read_repository_id_list (ACE_InputCDR& strm,
                                                     Repository_Id_List& ids);
-
-    /// Read a codebase url from the CDR input stream,
-    /// accounting for indirection.
-    static CORBA::Boolean _tao_read_codebase_url (TAO_InputCDR& strm,
-                                                  ACE_CString& codebase_url);
-
 
   private:
     ValueBase & operator= (const ValueBase &);
+
+#ifdef SUN_CC_HAS_PVFC_BUG
+    // Need ugly fix for sun cc "pure virtual function called" bug.
+  private:
+    unsigned long tao_sun_cc_pvfc_bug_fix_;
+
+#endif /* SUN_CC_HAS_PVFC_BUG */
+
   }; // ValueBase
 
   /// Valuetype-related type codes.
@@ -349,7 +331,7 @@ namespace TAO_OBV_GIOP_Flags
   const CORBA::Long Type_info_single  = 2;
   const CORBA::Long Type_info_list    = 6;
   const CORBA::Long Chunking_tag_sigbits = 0x00000008L;
-  const CORBA::Long Indirection_tag   = 0xFFFFFFFF;
+  const CORBA::Long Indirection_tag   = 0x7fffffffL;
   const CORBA::Long Null_tag          = 0x00000000L;
 
   TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
@@ -388,7 +370,7 @@ namespace TAO
                                  CORBA::ValueBase_var,
                                  CORBA::ValueBase_out,
                                  TAO::Value_Traits<CORBA::ValueBase>,
-                                 TAO::Any_Insert_Policy_Stream>
+                                 TAO::Any_Insert_Policy_Stream <CORBA::ValueBase *> >
   {
   };
 
