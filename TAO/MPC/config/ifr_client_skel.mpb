@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : taolib, anytypecode, ifr_client {
+project : taolib, portableserver, anytypecode, ifr_client {
   libs    += TAO_IFR_Client_skel
   after   += IFR_Client_skel
 }
