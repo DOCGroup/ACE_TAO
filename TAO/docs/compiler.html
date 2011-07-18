@@ -987,6 +987,20 @@ also receives other options that are specific to it.<p>
         with the <tt>gen_ostream</tt> feature turned on.</td>
   </tr>
 
+  <tr><a name="Gata">
+    <td><tt>-Gata</tt></td>
+
+    <td>Generate the AnyTypeCode_Adapter version of the Any insert policy</td>
+    <td>When generating arg traits instantiations, this option forces
+        (if Any support in general is not suppressed) the generation
+        of <code>Any_Insert_Policy_AnyTypeCode_Adapter</code> for the
+        last template parameter. This option is used when generating
+        arg traits for the sequences of basic types in the ORB, so 
+        their arg traits may be included in files generated from
+        application IDL whether Any support is suppressed in the
+        application IDL processing or not.</td>
+  </tr>
+
   <tr><a name="Gsv">
     <td><tt>-Gsv</tt></td>
 
