@@ -1,0 +1,94 @@
+This file describes the various enviornment variables and command line
+options used to configure the logging service in DAnCE.  In the case
+where both an enviornment variable and a command line option are
+available to a particular process, the value provided on the command
+line takes precidence.
+
+Preprocessor macro: DANCE_NTRACE
+
+If this macro is set to 1, function level tracing will be compiled in
+to DAnCE. Default is off.
+
+Preprocessor macro: DANCE_NLOGGING
+
+If defined, this macro will cause all logging statements to not be
+compiled in to the DAnCE toolchain.
+
+Preprocessor macro: DANCE_ERROR
+
+Defining this macro will replace the default error logging behavior in
+DAnCE.  For example, the following will disable all error logging in
+DAnCE:
+
+#define DANCE_ERROR(L, X) do {} while (0)
+
+Preprocessor macro: DANCE_DEBUG
+Defining this macro will replace the default debug logging behavior in
+DAnCE.  For example, the following will disable all debug logging in
+DAnCE:
+
+#define DANCE_DEBUG(L, X) do {} while (0)
+
+Preprocessor macro: DANCE_TRACE_LOG
+
+Defining this macro will replace the default logging behavior in DAnCE
+for the most detailed debug logging.  For example, the following will
+disable all detailed debug logging in DAnCE:
+
+#define DANCE_TRACE_LOG(L, X) do {} while (0)
+
+Environment Variable:  DANCE_LOG_LEVEL
+Command line option:  -DAnCELogLevel
+
+Values range from 0 to 10, with 1 being the default.  At zero level,
+no logging messages are printed at all.  At the 1 level, only those
+messages that cause a process to prematurely exit are printed.
+
+Environment Variable:  DANCE_TRACE_ENABLE
+Command line option:  -DAnCETraceEnable
+
+If present, this turns on function-level tracing in DAnCE, only if the
+toolchain was compiled with DANCE_NTRACE set to 0.
+
+Environment Variable:  DANCE_LOG_LEVEL
+Command line option:  -DAnCELogFile
+
+If present, this redirects all log messages to the nominated file.
+This will disable printing of log messages to standard error.
+
+Environment Variable:  DANCE_LOG_BACKEND
+Command line option:  -DAnCELogBackend
+
+If present, this will load as a dynamic service the nominated
+backend.  Note that the backend must be loaded via a svc.conf file,
+and the value of this environment variable must match a valid dynamic
+service identifier.
+
+
+RTI DDS Logging Backend for DAnCE
+==============================================
+The RTI DDS logging backend is an example backend for the DAnCE
+logging service that publishes log messages to DDS instead of standard
+error.  The command line options described below should be provided as
+part of the svc.conf file that configures the backend.
+
+Environment Variable:  DANCE_LOG_NDDS_TOPIC
+Command line option:  --topic
+
+Sets the topic that log messages are published to.
+
+Environment Variable:  DANCE_LOG_NDDS_DOMAIN
+Command line option:  --domain
+
+Sets the domain that the DDS entities are created in.
+
+Environment Variable:  DANCE_LOG_NDDS_QOS_FILE
+Command line option:  --qos-file
+
+Sets the XML QoS file loaded at run-time.
+
+Environment Variable:  DANCE_LOG_NDDS_NODE_NAME
+Command line option:  --node-name
+
+Sets the node name included as part of the log messages.
+

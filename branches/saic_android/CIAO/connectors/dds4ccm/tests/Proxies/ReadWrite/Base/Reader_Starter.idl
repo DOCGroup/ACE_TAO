@@ -1,0 +1,31 @@
+// $Id$
+
+/**
+ * @file Reader_Starter.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef READER_STARTER_IDL
+#define READER_STARTER_IDL
+
+#pragma ciao lem "Base/Reader_StarterE.idl"
+
+interface ReaderStarter
+{
+  enum assignment {
+    READ_USING_IDL_PROXY,
+    TAKE_USING_IDL_PROXY,
+    READ_USING_CPP_PROXY,
+    TAKE_USING_CPP_PROXY
+  };
+  void start_read (in assignment task);
+  void set_reader_properties (in unsigned short nr_keys,
+                              in unsigned short nr_iterations);
+};
+
+interface WriterRestarter
+{
+  void restart_write (in ReaderStarter::assignment task);
+};
+
+#endif /* SAMPLE_INFO_IDL */

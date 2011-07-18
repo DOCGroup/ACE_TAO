@@ -1,0 +1,1252 @@
+Mon Jul 18 06:37:53 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed server header start and end generation in case of
+          skeleton file suppression (-SS) to fix versioning bracketing
+          problems as a result of changed arg traits generation.
+
+Fri Jul 15 12:46:14 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+
+          Added missing check for suppress option before generating
+          skeleton arg traits, and made layout changes to both stub
+          and skeleton root visitors.
+
+Fri Jul 15 11:59:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Monitor/Monitor.h:
+          Fixed compile error
+
+Fri Jul 15 09:00:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_util.cpp:
+          Fixed layout of one of the help messages
+
+Fri Jul 15 08:33:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ifr_client_skel.mpb:
+        * MPC/config/ifrservice.mpb:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/EventPortDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IFR_Client/ifr_client_skel_export.h:
+          Generate a new IFR_Client_skel library that contains all
+          skeletons for the IFR_Client. This is generated under TAO/tao/IFR_Client
+          and than used by the IFRService
+
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.cpp:
+          Removed these files, it are generated files that shouldn't be in
+          the repository
+
+Fri Jul 15 07:29:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/AliasDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.h:
+        * orbsvcs/orbsvcs/IFRService/LocalInterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/NativeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/TypedefDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.h:
+          Layout changes
+
+Fri Jul 15 07:11:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+          Layout changes, removed hardcrafted arg_trait
+
+Thu Jul 14 19:49:02 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+
+          Removed arg traits instantiations and #includes from these
+          hand_crafted files.
+
+        * tao/tao.mpc:
+
+          - Added IDL compiler option to suppress Any operator
+            generation for Policy_Forward.pidl.
+
+          - Added new IDL compiler option (see below) to
+            suppress arg traits generation for ParameterMode.pidl.
+
+        * tests/Param_Test/Param_Test.mpc:
+
+          Added header and inline file lists.
+
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/be/be_attribute.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_valuebox.cpp:
+        * TAO_IDL/be/be_visitor_union.cpp:
+        * TAO_IDL/be/be_visitor_structure.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_valuebox.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+        * TAO_IDL/be_include/be_visitor_root/root_cs.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sh.h:
+        * TAO_IDL/be_include/be_visitor_root/root_ss.h:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_util.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          - Moved arg traits generation targets from the stub
+            and skeleton source files to the corresponding
+            header files. This checking addresses [BUGID:3969].
+
+          - Many changes to #include file generation logic,
+            since arg traits generation is now triggered from the IDL
+            declaration and not from its use as an operation argument.
+
+          - Added a new command line option -Sat to suppress
+            the generation of arg tratis altogether.
+
+        * tao/docs/compiler.html:
+
+          Added the new IDL compiler command line option to the table.
+
+Tue Jul 12 13:15:24 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added code generation of a preprocessor version check that
+          will output an error message if the generated file's version
+          doesn't match the IDL compiler's (TAO's) version. This fix
+          closes [BUGID:3979].
+
+Mon Jul 11 14:55:57 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * TAO_IDL/be/be_util.cpp:
+
+          Removed usage text for command line options that were
+          removed a long time ago.
+
+Fri Jul  8 14:57:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          Relocated the spot where a typedef node is marked as having
+          its arg traits instantiation generated. There is a use case
+          where the old location gave rise to infinite recursion and
+          a stack overflow. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for uncovering the bug and submitting
+          example IDL. This fix closes [BUGID:3978].
+
+        * tests/IDL_Test/interface.cpp:
+
+          Added the example IDL above to the test.
+
+Fri Jul  8 06:39:27 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.h:
+          Added some typedefs useful for template meta programming
+
+Mon Jul  4 11:02:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Fixed Coverity error
+
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+          Fixed mismatched delete as reported by Coverity
+
+Wed Jun 29 12:44:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Advanced/TO-DO:
+        * examples/Advanced/ch_21/client.cpp:
+        * examples/Quoter/Quoter_i.cpp:
+        * examples/Simple/bank/README:
+          Cleanup
+
+Wed Jun 29 11:27:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Simple/Client_i.h:
+        * tests/OBV/Simple/OBV_impl.h:
+        * tests/OBV/Simple/Server_i.h:
+        * tests/OBV/Simple/Server_i.cpp:
+        * tests/OBV/Simple/server.cpp:
+          Cleanup
+
+Wed Jun 29 11:13:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_Case_T.h:
+        * tao/Basic_Argument_T.h:
+        * tao/Invocation_Adapter.h:
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Generic_Sequence_T.h:
+          Layout changes
+
+        * tao/Object.cpp:
+          Fixed coverity errors
+
+        * tao/Incoming_Message_Stack.h:
+          Removed borland workaround
+
+Wed Jun 29 10:47:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Fixed coverity errors
+
+Mon Jun 27 10:28:15 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/CDR.h:
+        * tao/CDR.inl:
+          Added CDR streaming ops for std::wstring and helper classes
+          and streaming ops to extract bounded strings into std strings.
+
+Thu Jun 23 12:39:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Disable html help, seems doxygen now disables the search option
+          when html help is enabled
+
+Thu Jun 23 13:46:08 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.0.3 released.
+
+Wed Jun 22 18:25:21 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+        * tests/LongDouble/client.cpp:
+        * tests/IDL_Test/constants.idl:
+        * tests/IDL_Test/union.idl:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/ast/ast_constant.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * NEWS:
+
+          Reverted all changes related to support for long double
+          constants in IDL.
+
+Wed Jun 22 15:15:05 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+
+          Ensure the naming service can use the CSD_TP strategy if necessary.
+          Since the naming service is single threaded, it can become a
+          bottleneck when there is very heavy use.
+
+          The need for this change may also indicate a problem with the
+          CSD strategy implementation. It appears that the thread pool at
+          least is only initialized when the POA Manager is activated. If
+          A POA is created with using a POA Manager already in the active
+          state, the TP is not initialized. Alternatively this might be a
+          problem with the POA creation, that create_POA can be supplied a
+          POA Manager that is already been activated, and the new POA is
+          itself instantly active.
+
+Wed Jun 22 14:49:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/run_test.pl:
+        * orbsvcs/tests/Security/Big_Request/run_test.pl:
+          Added -clog and -slog to write a separate client and server log file
+          to disk
+
+Tue Jun 21 13:07:15 UTC 2011  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Fixed typo.
+
+Thu Jun 16 15:30:23 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+
+          Guarded out the long double constant set to the double max
+          value, for MinGW, which outputs a floating point error
+          for this value.
+
+Thu Jun 16 14:00:53 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/LongDouble/client.cpp:
+
+          Replaced '==' with equivalent '<' and '>' expressions for
+          a long double, some platoforms warn that '==' shouldn't
+          be used with floating point types.
+
+Thu Jun 16 07:56:54 UTC 2011  Simon Massey  <sma at prismtech dot com>
+
+        * orbsvcs/tests/Security/Big_Request/cacert.pem:
+        * orbsvcs/tests/Security/Big_Request/client_cert.pem:
+        * orbsvcs/tests/Security/Big_Request/client_key.pem:
+        * orbsvcs/tests/Security/Big_Request/server_cert.pem:
+        * orbsvcs/tests/Security/Big_Request/server_key.pem:
+
+          Updated certificates - Missed one.
+
+Wed Jun 15 14:36:54 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * orbsvcs/tests/Security/Bug_1107_Regression/cacert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client_cert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client_key.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server_cert.pem:
+        * orbsvcs/tests/Security/Bug_1107_Regression/server_key.pem:
+        * orbsvcs/tests/Security/Callback/cacert.pem:
+        * orbsvcs/tests/Security/Callback/client_cert.pem:
+        * orbsvcs/tests/Security/Callback/client_key.pem:
+        * orbsvcs/tests/Security/Callback/server_cert.pem:
+        * orbsvcs/tests/Security/Callback/server_key.pem:
+        * orbsvcs/tests/Security/Crash_Test/cacert.pem:
+        * orbsvcs/tests/Security/Crash_Test/client_cert.pem:
+        * orbsvcs/tests/Security/Crash_Test/client_key.pem:
+        * orbsvcs/tests/Security/Crash_Test/server_cert.pem:
+        * orbsvcs/tests/Security/Crash_Test/server_key.pem:
+        * orbsvcs/tests/Security/Null_Cipher/cacert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/client_cert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/client_key.pem:
+        * orbsvcs/tests/Security/Null_Cipher/server_cert.pem:
+        * orbsvcs/tests/Security/Null_Cipher/server_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+        * orbsvcs/tests/Security/mixed_security_test/cacert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_cert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_key.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_cert.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_key.pem:
+
+          Updated certificates.
+
+        * orbsvcs/tests/Security/cert:
+        * orbsvcs/tests/Security/cert/DOCCA:
+        * orbsvcs/tests/Security/cert/DOCCA/cacert.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/certs:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt.attr:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt.attr.old:
+        * orbsvcs/tests/Security/cert/DOCCA/index.txt.old:
+        * orbsvcs/tests/Security/cert/DOCCA/newcerts:
+        * orbsvcs/tests/Security/cert/DOCCA/newcerts/1000.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/newcerts/1001.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/private:
+        * orbsvcs/tests/Security/cert/DOCCA/private/cakey.pem:
+        * orbsvcs/tests/Security/cert/DOCCA/serial:
+        * orbsvcs/tests/Security/cert/DOCCA/serial.old:
+        * orbsvcs/tests/Security/cert/README:
+        * orbsvcs/tests/Security/cert/cacert.pem:
+        * orbsvcs/tests/Security/cert/client_cert.pem:
+        * orbsvcs/tests/Security/cert/client_key.pem:
+        * orbsvcs/tests/Security/cert/openssl.cnf:
+        * orbsvcs/tests/Security/cert/server_cert.pem:
+        * orbsvcs/tests/Security/cert/server_key.pem:
+
+          Added the full CA information used to sign the above certs.  These certs
+          are good for the next 20 years.
+
+        * orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
+        * orbsvcs/tests/Security/mixed_security_test/client_key_nopasswd.pem:
+        * orbsvcs/tests/Security/mixed_security_test/server_key_nopasswd.pem:
+
+          Removed these files.
+
+Wed Jun 15 08:54:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Reverted 3971 change, broke some CCM tests
+
+Tue Jun 14 13:12:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype.h:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+
+          Added code generation for AMH exception holder's default
+          constructor to initialize the CORBA::Exception* member
+          to 0. This fix closes [BUGID:3970].
+
+Tue Jun 14 12:18:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+          Only the methods for operations in local interfaces need to be
+          virtual. This reduces footprint and improves performance, this
+          fixes bugzilla 3971
+
+Fri Jun 10 19:08:19 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+          Used the recently added ACE_LONG_DOUBLE_FORMAT_SPECIFIER_ASCII
+          to generate long double literals portably.
+
+Fri Jun 10 12:41:00 UTC 2011  Simon Massey <sma at prismtech dot com>
+
+        * tests/MT_NoUpcall_Client_Leader/run_test.pl:
+
+          This test wasn't capable of exiting with an error, it was
+          always successful even if the test failed.
+
+        * tests/MT_NoUpcall_Client_Leader/client.cpp:
+        * tests/MT_NoUpcall_Client_Leader/server.cpp:
+
+          The mutex needed to be locked prior to worker thread creation
+          and the stop_condition.wait condition, then released after,
+          otherwise worker threads can signal prior to the server/client
+          being ready to deal with the event. Client needed to
+          pause before the issuing the shutdown request to the server
+          so as to allow it to finish its own worker thread.
+
+        * tests/MT_NoUpcall_Client_Leader/police.cpp:
+
+          The stat test in the loop was occationally detecting the creation
+          of the ior file before the contents had been written. Moving
+          the sleep after the stat and before the test allows the contents to
+          be output before allowing the client/server to use the ior it
+          has just detected.
+
+        * tests/MT_NoUpcall_Client_Leader/chatter.cpp:
+        * tests/MT_NoUpcall_Client_Leader/chatter.h:
+
+          Need to mutex control access to the two nrequests_ and nreplies_
+          counts, as the client has two concurrent worker threads competing
+          to update them, these counts also need to be volitile.
+
+Thu Jun  9 19:38:48 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+          Changed print format of long double literal to be conditional,
+          based on the existence of a native 16-byte long double, in
+          order to eliminate warnings of rhs and lhs type mismatch.
+
+Thu Jun  9 17:28:25 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+
+          Changed generated code to always use a constructor with an
+          ACE_CDR::LongDoubleAssign argument for long double constants.
+
+Thu Jun  9 07:05:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/client.cpp:
+        * orbsvcs/tests/Bug_2709_Regression/Client_Task.cpp:
+          Fixed gcc 4.6 warnings
+
+Thu Jun  9 01:09:40 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp (TAO_Notify_ThreadPool_Task::execute):
+          Fixed a memory leak that occurred when the enqueue() failed.
+          Thanks to Jochen Meier <gesammeltimusenet2009 at arcor dot de> for
+          reporting this and suggesting a fix.
+
+Mon Jun  6 19:53:54 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+
+          Restored the long double member back to the member union of
+          Any_Basic_Impl. A change suggested by Adam Mitz <mitza at
+          ociweb dot com> enabled the use of the LongDouble emulator
+          struct without constructors or assignment operators.
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+
+          Changed code generation for long double constant initialization,
+          when 16-byte native long double does not exist, to use the
+          new LongDoubleAssign struct in ACE_CDR.
+
+        * tests/IDL_Test/union.idl:
+
+          Added a test case of a union containing a long double, to
+          test that the generated union doesn't contain a member
+          with a constructor.
+
+Mon Jun  6 18:59:41 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+          Restored minimum significant digit suggestions for the format
+          string for double, and added them to the format string for
+          long double.
+
+Mon Jun  6 17:28:05 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+
+          Added a separate member for long doubles, rather than have
+          support for long doubles on all platforms disabled because
+          the struct that is now used for some long double representations
+          has a constructor.
+
+        * tests/DynAny_Test/test_dynany.cpp:
+
+          Reverted the change in
+
+          Fri Jun  3 18:54:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since that part of the test will work again.
+
+Mon Jun  6 15:06:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+          Extended DDS support
+
+Fri Jun  3 18:54:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * tao/AnyTypeCode/Any_Basic_Impl.h:
+
+          On platforms where native long doubles aren't 16 bytes,
+          eliminated case where an Any contains a CORBA::LongDouble.
+          The class contains a C++ union, which can't contain a
+          non-native LongDouble ( a struct) since it now has a constructor.
+          A fair tradeoff since in return for the recent changes to
+          ACE_CDR::LongDouble, we now have support for IDL constants
+          of type CORBA::LongDouble on all platforms.
+
+        * tests/DynAny_Test/test_dynany.cpp:
+
+          Similarly to the above item, eliminated the test for long
+          double on platforms where a non-native struct alternative
+          is used.
+
+Thu Jun  2 12:24:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+          - Fixed print format for long double, eliminated warnings.
+          - Added '#' flag to all floating point print formats, forces
+            printing of decimal point even if not present in IDL.
+
+Wed Jun  1 19:39:08 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/AST_Expression.h:
+        * TAO_IDL/ast/AST_Expression.cpp
+        * TAO_IDL/ast/AST_Constant.cpp
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+
+          Added support for long double constants in IDL.
+
+        * tests/IDL_Test/constants.idl:
+
+          Added test cases for long double constants.
+
+        * NEWS:
+
+          Added item about long double constant support.
+
+Wed Jun  1 09:46:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/client.cpp:
+        * tests/ORB_Local_Config/Two_DLL_ORB/server.cpp:
+          Fixed Coverity warnings regarding uncaught exceptions.
+
+Tue May 31 05:47:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+          Fixed gcc 4.6 warnings: variable was set but not used.
+
+Mon May 30 10:21:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Logging/Logger_i.cpp:
+          Resolved gcc 4.6 warning: variable may be used uninitialized
+          in this function
+
+Mon May 30 10:00:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+          Fixed compiler error on Windows.
+
+Mon May 30 06:39:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
+Fri May 27 14:35:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_2936_Regression/bug2936.cpp:
+        * tests/Bug_3926_Regression/Client_Request_Interceptor.cpp:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
+        * tests/POA/Bug_2511_Regression/server.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+          Code alignment.
+
+Fri May 27 14:13:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * tests/Bug_2677_Regression/DllORB.cpp:
+        * tests/Bug_2683_Regression/server.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
+Fri May 27 13:52:37 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+          Removed generation of holder_ member of an union, it is not used
+          at all
+
+Fri May 27 10:09:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/tests/IOR_MCast/client.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+          Statisfy Coverity and the GNU 4.6 gcc compiler. Using a
+          returned value either by using ACE_UNUSED_ARG or to print
+          in a log message.
+
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+          Fuzz.
+
+Fri May 27 09:14:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * orbsvcs/tests/Bug_3486_Regression/server.cpp:
+        * orbsvcs/tests/IOR_MCast/client.cpp:
+        * orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp:
+        * orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp:
+        * orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
+Thu May 26 15:25:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/fe/fe_utils.cpp:
+          tmp variable wasn't necessary. Removed it.
+
+Thu May 26 14:13:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/fe/fe_utils.cpp:
+        * tao/Strategies/COIOP_Acceptor.cpp:
+          Resolved gcc 4.6 warnings: variable was set but not used.
+
+Thu May 26 13:48:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Bounded_String.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Octet.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+          Catch uncaught exceptions in main.
+
+Thu May 26 13:11:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Generic_Sequence_T.h:
+          Added file name to doxygen documentation
+
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+          Resolved Coverity warning: catching a uncaught BAD_PARAM exception.
+
+Fri May 20 22:07:56 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * tao/AnyTypeCode/TAO_AnyTypeCode.rc:
+        * tao/Codeset/TAO_Codeset.rc:
+        * tao/PI/TAO_PI.rc:
+        * tao/PI_Server/TAO_PI_Server.rc:
+        * tao/Utils/TAO_Utils.rc:
+        * tao/ZIOP/TAO_ZIOP.rc:
+
+          Add resource files to get TAO version number on DLLs.
+
+Fri May 20 14:20:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Timeouts/test.mpc:
+          Added explicit idl project to get correct build order on VMS
+
+Thu May 19 14:53:55 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/QtTests/client.cpp:
+        * tests/QtTests/client.h:
+        * tests/QtTests/QtTests.mpc:
+        * tests/QtTests/server.cpp:
+        * tests/QtTests/test_i.h:
+        Adapted to qt4.
+
+Tue May 17 19:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/Indirection/MessengerServer.cpp:
+        * tests/Portable_Interceptors/Slot/driver.cpp:
+          Catch exceptions in main
+
+Tue May 17 11:32:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+          Layout changes to the generated code
+
+Fri May 13 08:04:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/Bounded_Basic_String_Sequence_T.h:
+        * tao/Bounded_Object_Reference_Sequence_T.h:
+        * tao/Bounded_Value_Sequence_T.h:
+        * tao/Unbounded_Basic_String_Sequence_T.h:
+        * tao/Unbounded_Object_Reference_Sequence_T.h:
+          Doxygen changes.
+
+Wed May 11 18:43:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjectKey_Table.h:
+        * tao/orbconf.h:
+        * tao/params.h:
+          Doxygen changes
+
+Wed May 11 13:35:28 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tao/QtResource/QtResource_Loader.h:
+        Changed for QT4 deprecated include QT/..
+
+Tue May 10 18:15:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ImR_Client.cpp:
+          changed variable name to not match method argument
+
+        * utils/catior/catior.cpp:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+        * utils/nslist/nslist.cpp:
+          Fixed coverity errors, not leak exceptions
+
+Tue May 10 06:15:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+          Fixed compile error.
+
+Mon May  9 19:10:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+          Fixed coverity errors
+
+Wed Apr 27 13:35:10 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO.mwc:
+          Exclude DAnCE, thanks to Remko Duppen <remko dot duppen at syntel dot nl>
+          for reporting this
+
+Tue Apr 26 13:12:03 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Layout changes generated code
+
+Tue Apr 26 13:04:11 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocation_Resolver.h:
+        * tao/Connect_Strategy.h:
+        * tao/Endpoint_Selector_Factory.h:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.h:
+        * tao/GIOP_Message_Generator_Parser_11.h:
+        * tao/GIOP_Message_Generator_Parser_Impl.h:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Utils.h:
+        * tao/GUIResource_Factory.h:
+        * tao/LF_Connect_Strategy.h:
+        * tao/LF_Follower.cpp:
+          Doxygen changes
+
+Tue Apr 26 12:50:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+        * tao/Thread_Lane_Resources.h:
+        * tao/Thread_Lane_Resources_Manager.h:
+        * tao/Thread_Per_Connection_Handler.h:
+        * tao/Transport.h:
+        * tao/Transport_Connector.h:
+        * tao/TypeCodeFactory_Adapter.h:
+          Doxygen changes
+
+Tue Apr 26 12:21:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Impl.h:
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Registry.h:
+        * tao/Adapter_Registry.h:
+        * tao/Bind_Dispatcher_Guard.h:
+        * tao/Blocked_Connect_Strategy.h:
+        * tao/Blocked_Connect_Strategy.cpp:
+        * tao/Cleanup_Func_Registry.h:
+        * tao/Collocated_Invocation.cpp:
+        * tao/LF_Event_Loop_Thread_Helper.inl:
+        * tao/LF_Follower_Auto_Adder.inl:
+        * tao/Leader_Follower.cpp:
+        * tao/Queued_Message.h:
+        * tao/Transport_Cache_Manager_T.cpp:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.h:
+          Doxygen changes
+
+Tue Apr 26 11:57:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.inl:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_Strategy.h:
+          Use explicit for single argument constructors, doxygen improvements
+
+Tue Apr 26 11:13:59 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_NoUpcall_Client_Leader/client.cpp:
+        * tests/MT_NoUpcall_Client_Leader/run_test.pl:
+        * tests/MT_NoUpcall_Client_Leader/server.cpp:
+          Make it possible to pass number of threads through the commandline
+
+Tue Apr 26 09:42:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.inl:
+          Use bool instead of int for several methods
+
+        * tao/Thread_Lane_Resources.cpp:
+          Simplied some code
+
+Tue Apr 26 09:26:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          MT_NoUpcall_Client_Leader shouldn't run when there is no messaging
+
+Tue Apr 26 09:00:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled some tests with CORBA/e micro
+
+        * tao/Connection_Handler.cpp:
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.cpp:
+          Use reference counting for deletion, also log an error and return -1
+          when schedule_timer fails, we have a critical error at that moment
+
+        * tao/Policy_Validator.cpp:
+        * tao/TAO_Singleton.cpp:
+        * tao/Leader_Follower.cpp:
+          Use %@ for logging pointers
+
+Fri Apr 22 12:41:53 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/tests/Bug_3418_Regression/b.conf:
+        * orbsvcs/tests/HTIOP/HT_Config.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/non-windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/non-windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/windows.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/windows.conf:
+        * orbsvcs/tests/Notify/Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/Lanes/notify.conf:
+        * performance-tests/Protocols/lksctp_params.conf:
+        * performance-tests/Protocols/sctp_params.conf:
+        * performance-tests/RTCorba/Thread_Pool/native-svc.conf:
+        * tests/Bug_3068_Regression/server.conf:
+        * tests/ORB_Local_Config/Bug_1459/m.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-empty.conf:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+          Fuzz: added $Id string
+
+Fri Apr 22 12:14:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.cpp:
+          Notify a specific event handler
+
+        * tao/Resume_Handle_Deferred.inl:
+          Removed this file, virtual methods may not be inline
+
+Fri Apr 22 11:56:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Resume_Handle_Deferred.h:
+        * tao/Resume_Handle_Deferred.inl:
+        * tao/Resume_Handle_Deferred.cpp:
+          We should only trigger the reactor
+
+        * tao/Transport.cpp:
+          Doxygen changes
+
+Fri Apr 22 07:28:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * DevGuideExamples/Multithreading/Reactive/svc.conf:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/server.conf:
+        * DevGuideExamples/RTCORBA/svc.conf:
+        * docs/tutorials/Quoter/Event_Service/ec.conf:
+        * examples/PluggableUDP/tests/Performance/svc.conf:
+        * examples/PluggableUDP/tests/SimplePerformance/svc.conf:
+        * examples/RTCORBA/Activity/client.conf:
+        * examples/RTCORBA/Activity/server.conf:
+        * examples/RTCORBA/Activity/svc.conf.client:
+        * examples/RTCORBA/Activity/svc.conf.server:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.client:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.server:
+        * examples/RTScheduling/MIF_Scheduler/svc.conf.client:
+        * examples/RTScheduling/MIF_Scheduler/svc.conf.server:
+        * orbsvcs/Concurrency_Service/svc.conf:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/supplier.conf:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/ec.conf:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/supplier.conf:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/notify.conf:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/nsclient.conf:
+        * orbsvcs/DevGuideExamples/ValueTypes/Notify/notify.conf:
+        * orbsvcs/Event_Service/svc.conf:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
+        * orbsvcs/TAO_Service/svc.conf:
+        * orbsvcs/examples/ImR/Combined_Service/dynserver.conf:
+        * orbsvcs/examples/ImR/Combined_Service/start_all.conf:
+        * orbsvcs/examples/Notify/Lanes/client.conf:
+        * orbsvcs/examples/Notify/Lanes/notify.conf:
+        * orbsvcs/examples/Notify/ThreadPool/client.conf:
+        * orbsvcs/examples/Notify/ThreadPool/notify.conf:
+        * orbsvcs/examples/RtEC/IIOPGateway/ec.conf:
+        * orbsvcs/examples/RtEC/IIOPGateway/gateway.conf:
+        * orbsvcs/examples/RtEC/Kokyu/svc.conf:
+        * orbsvcs/examples/RtEC/MCast/svc.conf:
+        * orbsvcs/examples/RtEC/Schedule/svc.conf:
+        * orbsvcs/examples/RtEC/Simple/ec.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_reactive.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_rtcorba.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_threaded.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.filter_null.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.filter_per_supplier.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_copy_on_read.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_copy_on_write.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_delayed.conf:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.locking_immediate.conf:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/roundtrip.conf:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/realtime.conf:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/realtime.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_reactive.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_rtcorba.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.dispatching_threaded.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_copy_on_read.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_copy_on_write.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_delayed.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.locking_immediate.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.supplier_filter_null.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/ec.supplier_filter_per_supplier.conf:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/roundtrip.conf:
+        * orbsvcs/tests/AVStreams/Component_Switching/components_svc.conf:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/svc.conf:
+        * orbsvcs/tests/Bug_2316_Regression/svc.conf:
+        * orbsvcs/tests/Bug_2377_Regression/svc.conf:
+        * orbsvcs/tests/Bug_2925_Regression/svc.conf:
+        * orbsvcs/tests/Bug_3387_Regression/NotSvc.conf:
+        * orbsvcs/tests/Bug_3418_Regression/m.conf:
+        * orbsvcs/tests/Bug_3444_Regression/diop_svc.conf:
+        * orbsvcs/tests/Bug_3444_Regression/miop_svc.conf:
+        * orbsvcs/tests/CosEvent/Basic/svc.pull.conf:
+        * orbsvcs/tests/CosEvent/Timeout/cosevent.conf:
+        * orbsvcs/tests/EC_MT_Mcast/svc.conf:
+        * orbsvcs/tests/EC_Mcast/svc.conf:
+        * orbsvcs/tests/EC_Throughput/ec.conf:
+        * orbsvcs/tests/Event/Basic/control.conf:
+        * orbsvcs/tests/Event/Basic/mt.svc.conf:
+        * orbsvcs/tests/Event/Basic/observer.conf:
+        * orbsvcs/tests/Event/Basic/svc.complex.conf:
+        * orbsvcs/tests/Event/Basic/svc.conf:
+        * orbsvcs/tests/Event/Mcast/Complex/consumer-ec.conf:
+        * orbsvcs/tests/Event/Mcast/Complex/supplier-ec.conf:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/supplier.conf:
+        * orbsvcs/tests/Event/Mcast/Two_Way/gateway.conf:
+        * orbsvcs/tests/Event/Performance/ec.list.conf:
+        * orbsvcs/tests/Event/Performance/ec.mt.conf:
+        * orbsvcs/tests/Event/Performance/ec.rb_tree.conf:
+        * orbsvcs/tests/Event/Performance/ec.st.conf:
+        * orbsvcs/tests/Event/Performance/latency.conf:
+        * orbsvcs/tests/Event/UDP/svc.conf:
+        * orbsvcs/tests/HTIOP/AMI/exclusive.conf:
+        * orbsvcs/tests/HTIOP/AMI/muxed.conf:
+        * orbsvcs/tests/ImplRepo/scale/client.conf:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/svc.conf:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/svc.conf:
+        * orbsvcs/tests/Miop/McastHello/svc.conf:
+        * orbsvcs/tests/Notify/Basic/notify.mt.conf:
+        * orbsvcs/tests/Notify/Basic/notify.reactive.conf:
+        * orbsvcs/tests/Notify/Basic/notify.rt.conf:
+        * orbsvcs/tests/Notify/Blocking/notify.conf:
+        * orbsvcs/tests/Notify/Bug_1385_Regression/notify.conf:
+        * orbsvcs/tests/Notify/Bug_1884_Regression/ecf.conf:
+        * orbsvcs/tests/Notify/Lanes/consumer.conf:
+        * orbsvcs/tests/Notify/Persistent_Filter/NS.conf:
+        * orbsvcs/tests/Notify/PluggableTopology/plugtop_ns.conf:
+        * orbsvcs/tests/Notify/Reconnecting/event.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_mt_topo.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_both.conf:
+        * orbsvcs/tests/Notify/Reconnecting/ns_st_topo.conf:
+        * orbsvcs/tests/Notify/ThreadPool/consumer.conf:
+        * orbsvcs/tests/Notify/ThreadPool/notify.conf:
+        * orbsvcs/tests/Notify/ThreadPool/supplier.conf:
+        * orbsvcs/tests/Notify/Validate_Client/notify.conf:
+        * orbsvcs/tests/Notify/XML_Persistence/svc.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/rt_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Notify_RTCORBA/notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/cos_notify.conf:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Paths_vs_Throughput/rt_notify.conf:
+        * orbsvcs/tests/Security/BiDirectional/client.conf:
+        * orbsvcs/tests/Security/BiDirectional/server.conf:
+        * orbsvcs/tests/Security/Bug_2908_Regression/client.conf:
+        * orbsvcs/tests/Security/Bug_2908_Regression/server.conf:
+        * orbsvcs/tests/Security/EndpointPolicy/svc.conf:
+        * orbsvcs/tests/Security/InsecureReferences/client.conf:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/client.conf:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.conf:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.conf:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.conf:
+        * orbsvcs/tests/Security/ssliop_CSD/csd.conf:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.conf:
+        * orbsvcs/tests/Security/ssliop_corbaloc/server.conf:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf:
+        * performance-tests/Protocols/altq.conf:
+        * performance-tests/Protocols/svc.conf:
+        * performance-tests/RTCorba/Thread_Pool/svc.conf:
+        * tests/AMI/muxed.conf:
+        * tests/AMI_Timeouts/svc.conf:
+        * tests/Bug_2186_Regression/server.conf:
+        * tests/Bug_2935_Regression/middle.conf:
+        * tests/Bug_3000_Regression/rw.conf:
+        * tests/Bug_3068_Regression/client.conf:
+        * tests/Bug_3163_Regression/server.conf:
+        * tests/Bug_3251_Regression/Bug_3251.conf:
+        * tests/Bug_3598a_Regression/svc.conf:
+        * tests/Bug_3630_Regression/TAO Conf File.conf:
+        * tests/Bug_3630_Regression/TAO_Conf_File.conf:
+        * tests/Bug_3683_Regression/svc.conf:
+        * tests/Bug_3801_Regression/exclusive.conf:
+        * tests/Bug_3801_Regression/muxed.conf:
+        * tests/Bug_3837_Regression/logger.conf:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/svc.conf:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/svc.conf:
+        * tests/CodeSets/simple/cs_test.conf:
+        * tests/CodeSets/simple/svc.conf:
+        * tests/CodeSets/simple/wcs_test.conf:
+        * tests/Collocation_Opportunities/svc.conf:
+        * tests/Exposed_Policies/svc.conf:
+        * tests/Leader_Followers/select_mt.conf:
+        * tests/Leader_Followers/tp.conf:
+        * tests/ORB_Local_Config/Bug_1459/a.conf:
+        * tests/ORB_Local_Config/Bug_1459/b.conf:
+        * tests/ORB_Local_Config/Bug_1459/d.conf:
+        * tests/ORB_Local_Config/Bug_1459/m1.conf:
+        * tests/ORB_Local_Config/Bug_3049/a.conf:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/primary-csd.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/primary-ssl.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-csd.conf:
+        * tests/ORB_Local_Config/Two_DLL_ORB/secondary-ssl.conf:
+        * tests/Oneway_Send_Timeouts/block_flush.conf:
+        * tests/Oneway_Send_Timeouts/lf_flush.conf:
+        * tests/Oneway_Send_Timeouts/reactive_flush.conf:
+        * tests/Optimized_Connection/oc_svc.conf:
+        * tests/POA/EndpointPolicy/multi_prot.conf:
+        * tests/POA/Explicit_Activation/alternate.conf:
+        * tests/Parallel_Connect_Strategy/blocked.conf:
+        * tests/Parallel_Connect_Strategy/reactive.conf:
+        * tests/RTCORBA/Banded_Connections/svc.conf:
+        * tests/RTCORBA/Bug_3382_Regression/svc.conf:
+        * tests/RTCORBA/Bug_3643_Regression/svc.conf.dynamic:
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Collocation/continuous.conf:
+        * tests/RTCORBA/Collocation/svc.conf:
+        * tests/RTCORBA/Destroy_Thread_Pool/continuous.conf:
+        * tests/RTCORBA/Dynamic_Thread_Pool/continuous.conf:
+        * tests/RTCORBA/Dynamic_Thread_Pool/svc.conf:
+        * tests/RTCORBA/Linear_Priority/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf:
+        * tests/RTCORBA/Persistent_IOR/continuous.conf:
+        * tests/RTCORBA/Policy_Combinations/svc.conf:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/continuous.conf:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/svc.conf:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/svc.conf:
+        * tests/RTCORBA/Server_Declared/continuous.conf:
+        * tests/RTCORBA/Server_Declared/svc.conf:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_iiop_shmiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_iiop_uiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf:
+        * tests/RTCORBA/Thread_Pool/continuous.conf:
+        * tests/RTCORBA/Thread_Pool/svc.conf:
+        * tests/TransportCurrent/Framework/client-static.conf:
+        * tests/TransportCurrent/Framework/client.conf:
+        * tests/TransportCurrent/Framework/server-static.conf:
+        * tests/TransportCurrent/Framework/server.conf:
+        * tests/TransportCurrent/IIOP/client_dynamic.conf:
+        * tests/TransportCurrent/IIOP/client_static.conf:
+        * tests/TransportCurrent/IIOP/server_dynamic.conf:
+        * tests/TransportCurrent/IIOP/server_static.conf:
+          Fuzz. Added lacking $Id string.
+
+Thu Apr 21 13:02:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Updated test list
+
+        * tests/AMI/mt_noupcall.conf:
+        * tests/AMI/run_mt_noupcall.pl:
+        * tests/AMI/run_test.pl:
+          New run_mt_noupcall, the existing script was using -ORBCollocation no
+          which doesn't work with AMI and mt_noupcall
+
+        * tests/AMI/simple_client.cpp:
+          Layout change
+
+Thu Apr 21 12:07:41 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Run AMI test with more options
+
+        * tests/AMI/exclusive.conf:
+        * tests/AMI/server.conf:
+          Added Id tag
+
+        * tests/AMI/mt_noupcall.conf:
+          New file for testing with mt_noupcall
+
+        * tests/AMI/run_test.pl:
+          Add option -mt_noupcall and give client/server separate debug levels
+
+Thu Apr 21 11:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Wait_On_LF_No_Upcall.cpp:
+          Log transport id
+
+Thu Apr 21 10:31:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp:
+          Use the orb core reactor which is the LF reactor
+
+Wed Apr 20 08:59:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+          Improved portability
+
+        * bin/tao_orb_tests.lst:
+          Added new test
+
+        * tao/Leader_Follower.h:
+          Layout change
+
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+          Fixed coverity errors
+
+        * tests/Bug_3531b_Regression:
+        * tests/Bug_3531b_Regression/Bug_3531b_Regression.mpc:
+        * tests/Bug_3531b_Regression/run_test.pl:
+        * tests/Bug_3531b_Regression/server.cpp:
+          New test
+
+Wed Apr 20 09:52:52 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.0.2 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
+ambiguous

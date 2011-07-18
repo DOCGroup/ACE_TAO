@@ -1,0 +1,31 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl) : taoclient {
+  IDL_Files {
+    time.idl
+  }
+  custom_only = 1
+}
+
+project(*client) : taoclient, anytypecode {
+  after += *idl
+  requires += corba_messaging
+  source_files {
+    timeC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*server) : taoserver {
+  after += *idl
+  source_files {
+    timeC.cpp
+    timeS.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
