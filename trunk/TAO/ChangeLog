@@ -1,3 +1,9 @@
+Mon Jul 18 19:01:17 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/ifr_client_skel.mpb:
+
+          Fix suggested by Johnny to get build order correct on windows.
+
 Mon Jul 18 18:22:55 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/IFR_Service/IFR_Service.cpp:
