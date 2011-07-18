@@ -1,3 +1,9 @@
+Mon Jul 18 18:22:55 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+
+          Fixed the include path for IFR_ComponentS.h
+
 Mon Jul 18 06:37:53 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

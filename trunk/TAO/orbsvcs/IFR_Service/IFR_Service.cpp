@@ -4,7 +4,7 @@
 #include "IFR_Service.h"
 #include "orbsvcs/IFRService/ComponentRepository_i.h"
 #include "orbsvcs/IFRService/Options.h"
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "tao/IFR_Client/IFR_ComponentsS.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
