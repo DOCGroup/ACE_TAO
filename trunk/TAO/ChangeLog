@@ -1,3 +1,34 @@
+Mon Jul 18 20:02:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+
+          Added new option to IDL compiler -Gata, which
+          generates arg traits instantiations using the
+          AnyTypeCode_Adapter version of the last template
+          parameter (if Any support is not suppressed). The
+          option is used when processing IDL for the 
+          sequences of basic types, so their arg traits
+          may be included by application whether or not
+          the application is suppressing Any support.
+
+        * tao/tao.mpc:
+
+          Added the new option to the basic sequence PIDL files.
+
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+        * tao/AnyTypeCode_Adapter.h:
+
+          Added new overloads to the AnyTypeCode_Adapter and
+          AnyTypeCode_Adapter_Impl classes, with the basic
+          type sequences as the second argument.
+
+        * docs/compiler.html:
+
+          Documented the new IDL compiler option.
+
 Mon Jul 18 19:01:17 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/ifr_client_skel.mpb:
