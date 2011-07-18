@@ -30,6 +30,10 @@
 #  include /**/ <sys/sem.h>
 #endif /* !ACE_LACKS_SYS_SEM_H */
 
+#if defined (ACE_HAS_ANDROID)
+# include <linux/sem.h>
+#endif
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
