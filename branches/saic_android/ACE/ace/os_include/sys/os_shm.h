@@ -30,6 +30,10 @@
 #  include /**/ <sys/shm.h>
 #endif /* !ACE_LACKS_SYS_SHM_H */
 
+#if defined (ACE_HAS_ANDROID) && defined (ACE_LACKS_SYS_SHM_H)
+#include <linux/shm.h>
+#endif
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

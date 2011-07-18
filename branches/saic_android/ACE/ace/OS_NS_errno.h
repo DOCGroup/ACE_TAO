@@ -82,6 +82,8 @@ private:
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 #  define ACE_ERRNO_TYPE ACE_CE_Errno
+#elif defined (ACE_HAS_ANDROID)
+#define ACE_ERRNO_TYPE volatile int
 #else
 #  define ACE_ERRNO_TYPE int
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
