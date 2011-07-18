@@ -207,8 +207,6 @@ fi
 # + Defines ACE_LACKS_WCSTOLL to 1 if platform lacks wcstoll()
 # + Defines ACE_WCSTOLL_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
-# + Defines ACE_LACKS_WCSTOLL_PROTOTYPE to 1 if platform lacks
-#   declaration for wcstoll().
 AC_DEFUN([ACE_FUNC_WCSTOLL],
 [ACE_CHECK_LACKS_FUNCS(wcstoll)
 if test $ac_cv_func_wcstoll = "no"; then
@@ -223,13 +221,6 @@ if test $ac_cv_func_wcstoll = "no"; then
 		      [Define to function that is equivalent to wcstoll()])
 	fi
     fi
-else
-    AC_CHECK_DECL([wcstoll], 
-	          [], 
-		  [AC_DEFINE([ACE_LACKS_WCSTOLL_PROTOTYPE], 1,
-			     [Define to 1 if platform lacks a declaration for wcstoll()])],
-                  [#include <stdlib.h>
-#include <wchar.h>])
 fi
 ])
 
@@ -237,8 +228,6 @@ fi
 # + Defines ACE_LACKS_WCSTOULL to 1 if platform lacks wcstoull()
 # + Defines ACE_WCSTOULL_EQUIVALENT to identifier name if platform
 #   has a equivalent function that differs in name only.
-# + Defines ACE_LACKS_WCSTOULL_PROTOTYPE to 1 if platform lacks
-#   declaration for wcstoull().
 AC_DEFUN([ACE_FUNC_WCSTOULL],
 [ACE_CHECK_LACKS_FUNCS(wcstoull)
 if test $ac_cv_func_wcstoull = "no"; then
@@ -253,13 +242,6 @@ if test $ac_cv_func_wcstoull = "no"; then
 		      [Define to function that is equivalent to wcstoull()])
 	fi
     fi
-else
-    AC_CHECK_DECL([wcstoull], 
-                  [], 
-		  [AC_DEFINE([ACE_LACKS_WCSTOULL_PROTOTYPE], 1,
-			     [Define to 1 if platform lacks a declaration for wcstoull()])],
-                  [#include <stdlib.h>
-#include <wchar.h>])
 fi
 ])
 

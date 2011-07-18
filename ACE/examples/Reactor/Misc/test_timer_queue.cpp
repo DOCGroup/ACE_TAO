@@ -8,7 +8,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(Misc, test_timer_queue, "$Id$")
+
 
 class Example_Handler : public ACE_Event_Handler
 {

@@ -11,7 +11,7 @@
 
 // Call-back function that invokes the appropriate decode function.
 
-int 
+int
 SM_Client::demux (char *packet,
                   int &packet_length)
 {
@@ -23,7 +23,7 @@ SM_Client::demux (char *packet,
 
 // Call-back function that invokes the appropriate encode function.
 
-int 
+int
 SM_Client::mux (char *packet, int &packet_length)
 {
   switch (Options::protocol_type)
@@ -49,12 +49,12 @@ SM_Client::mux (char *packet, int &packet_length)
                       -1);
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "%s: bad protocol\n",
                   Options::program_name));
       return -1;
     }
-  
+
   if (this->pm_client->encode (packet, packet_length) < 0)
     return -1;
   return 1;

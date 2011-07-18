@@ -16,7 +16,7 @@
 # endif /* ! MINIZIP_HAS_DLL */
 #endif /* MINIZIP_AS_STATIC_LIBS */
 
-#if defined (MINIZIP_HAS_DLL) 
+#if defined (MINIZIP_HAS_DLL)
 #  if (MINIZIP_HAS_DLL == 1) && defined (_WINDOWS)
 #    if defined (MINIZIP_BUILD_DLL)
 #      define MINIZIP_EXPORT  __declspec(dllexport)
@@ -28,6 +28,10 @@
 #  endif /* MINIZIP_HAS_DLL == 1 */
 #endif /* MINIZIP_HAS_DLL */
 
+#if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)))
+# define MINIZIP_UNUSED_ARG(a) (void) (a)
+#else
 # define MINIZIP_UNUSED_ARG(a) do {/* null */} while (&a == 0)
+#endif
 
 #endif /* MINIZIP_EXPORT_H */

@@ -14,8 +14,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(client, remote_stream_client_test, "$Id$")
-
 // Name of the program.
 static const ACE_TCHAR *program_name;
 

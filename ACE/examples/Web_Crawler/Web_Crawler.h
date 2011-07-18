@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Web_Crawler
-//
-// = FILENAME
-//    Web_Crawler.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Web_Crawler.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _WEB_CRAWLER_H
 #define _WEB_CRAWLER_H
@@ -27,36 +24,40 @@
 // Forward declaration.
 class URL_Visitor_Factory;
 
+/**
+ * @class Web_Crawler
+ *
+ * @brief An abstraction for a Web Crawler.
+ *
+ * This class is a Facade that organizes the other classes in the
+ * solution, which include a factory that creates a visitor,
+ * which in turn embodies the appropriate visitation strategy.
+ */
 class Web_Crawler
 {
-  // = TITLE
-  //    An abstraction for a Web Crawler.
-  //
-  // = DESCRIPTION
-  //    This class is a Facade that organizes the other classes in the
-  //    solution, which include a factory that creates a visitor,
-  //    which in turn embodies the appropriate visitation strategy.
 public:
   // = Initialization and termination methods.
+  /// Constructor.
   Web_Crawler (void);
-  // Constructor.
 
+  /// Destructor.
   ~Web_Crawler (void);
-  // Destructor.
 
+  /// Parses the command-line options and initializes the
+  /// <URL_Visitor_Factory>.
   int open (int argc, ACE_TCHAR *argv[]);
-  // Parses the command-line options and initializes the
-  // <URL_Visitor_Factory>.
 
+  /// Run the Web Crawler and carries out whatever visitation strategy
+  /// is configured.  Returns -1 on failure and 0 on success.
   int run (void);
-  // Run the Web Crawler and carries out whatever visitation strategy
-  // is configured.  Returns -1 on failure and 0 on success.
 
 private:
+  /**
+   * Pointer to a factory that creates visitors that explore URLs and
+   * perform various tasks.  Subclasses of <URL_Visitor_Factory>
+   * determine what happens during a visitation.
+   */
   URL_Visitor_Factory *url_visitor_factory_;
-  // Pointer to a factory that creates visitors that explore URLs and
-  // perform various tasks.  Subclasses of <URL_Visitor_Factory>
-  // determine what happens during a visitation.
 };
 
 #endif /* _WEB_CRAWLER_H */

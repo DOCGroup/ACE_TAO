@@ -19,7 +19,7 @@ public:
                              siginfo_t * = 0,
                              ucontext_t * = 0)
   {
-    ACE_TRACE (ACE_TEXT ("MySignalHandler::handle_signal"));
+    ACE_TRACE ("MySignalHandler::handle_signal");
 
     // Make sure the right handler was called back.
     ACE_ASSERT (signum == this->signum_);

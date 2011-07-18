@@ -1,11 +1,10 @@
+# -*- Makefile -*-
 # $Id$
 
 # debug = 1
 # optimize = 1
-# exceptions = 0
 
 winsock2 ?= 1
-exceptions ?= 0
 debug ?= 1
 optimize ?= 1
 threads ?= 1
@@ -37,7 +36,7 @@ SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
 PRELIB  = @true
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS)
 
 # Dmc doesn't have rwho
 rwho = 0

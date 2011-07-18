@@ -10,7 +10,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(Misc, test_signals_1, "$Id$")
+
 
 // Number of times to allow signal to execute until we quit.
 static size_t signal_count = 10;

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Malloc_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the position-independent <ACE_Malloc> memory
-//     manager using the <ACE_MMAP_Memory_Pool> and <ACE_Process_Mutex>.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Malloc_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the position-independent <ACE_Malloc> memory
+ *   manager using the <ACE_MMAP_Memory_Pool> and <ACE_Process_Mutex>.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Malloc_Test.h"
@@ -30,7 +27,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Malloc_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
+
 
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
@@ -100,6 +97,7 @@ myallocator (const void *base_addr = 0)
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
       // WinCE cannot do fixed base, ever.
+      ACE_UNUSED_ARG (base_addr);
       ACE_MMAP_Memory_Pool_Options options
         (0,
          ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
@@ -114,7 +112,7 @@ myallocator (const void *base_addr = 0)
       MALLOC *ptr = new MALLOC (MMAP_FILENAME,
                                 MUTEX_NAME,
                                 &options);
-      ACE_AUTO_PTR_RESET(static_allocator, ptr, MALLOC);
+      ACE_auto_ptr_reset (static_allocator, ptr);
     }
   return static_allocator.get ();
 }
@@ -126,6 +124,7 @@ init_test (const void *base_addr = 0)
   // file from the previous crash.
 #if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
   // WinCE cannot do fixed base, ever.
+  ACE_UNUSED_ARG (base_addr);
   ACE_MMAP_Memory_Pool_Options options
     (0,
      ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
@@ -201,8 +200,8 @@ initialize (MALLOC *allocator)
   long long_cont_1 = *lt->bpl_;
   long long_cont_2 = lt->bpl_[3];
 
-  ACE_ASSERT (long_cont_1 == 1000);
-  ACE_ASSERT (long_cont_2 == 1003);
+  ACE_TEST_ASSERT (long_cont_1 == 1000);
+  ACE_TEST_ASSERT (long_cont_2 == 1003);
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
@@ -221,8 +220,8 @@ initialize (MALLOC *allocator)
   long long_cont_3 = *lt->bpl_;
   long long_cont_4 = lt->bpl_[4];
 
-  ACE_ASSERT (long_cont_3 == 2000);
-  ACE_ASSERT (long_cont_4 == 2004);
+  ACE_TEST_ASSERT (long_cont_3 == 2000);
+  ACE_TEST_ASSERT (long_cont_4 == 2004);
 
   return data2;
 }
@@ -234,7 +233,7 @@ print (const char *process_name,
   for (Test_Data *t = data; t != 0; t = t->next_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("<<<< (%P) %s\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
+                  ACE_TEXT ("<<<< (%P) %C\ni1_ = %d, i2_ = %d, i3_ = %d, d1_ = %f\n"),
                   process_name,
                   t->i1_,
                   t->i2_,
@@ -278,7 +277,7 @@ parent (Test_Data *data)
     myalloc->free (small_buf[cntr]);
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   return 0;
 }
 
@@ -367,7 +366,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       MALLOC *myalloc = myallocator (PARENT_BASE_ADDR);
 
       Test_Data *data = initialize (myalloc);
-      ACE_ASSERT (data != 0);
+      ACE_TEST_ASSERT (data != 0);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) PARENT allocator at = %@, ")
@@ -376,7 +375,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   data));
       myalloc->dump ();
       int result = myalloc->bind ("foo", data);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
 
       ACE_Process p;
       pid_t pid = p.spawn (options);
@@ -393,7 +392,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("wait")), 1);
-      ACE_ASSERT (myalloc->ref_counter () == 1);
+      ACE_TEST_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_END_TEST;
       return 0;
@@ -406,7 +405,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       void *data = 0;
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
       int result = myalloc->find ("foo", data);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) CHILD allocator at = %@, ")

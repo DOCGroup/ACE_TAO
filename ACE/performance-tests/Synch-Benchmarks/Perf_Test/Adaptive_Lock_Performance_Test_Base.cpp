@@ -4,8 +4,6 @@
 #include "Performance_Test_Options.h"
 #include "Adaptive_Lock_Performance_Test_Base.h"
 
-ACE_RCSID(Synch_Benchmarks, Adaptive_Lock_Performance_Test_Base_, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 ACE_Lock *Adaptive_Lock_Performance_Test_Base::lock_ = 0;

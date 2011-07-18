@@ -63,7 +63,7 @@ namespace ACE
         this->user_ + this->wait_ + this->kernel_ + this->idle_;
       double delta_total = total - this->prev_total_;
 
-      if (delta_total == 0.0)
+      if (ACE::is_equal (delta_total, 0.0))
         {
           /// The system hasn't updated /proc/stat since the last call
           /// to update(), we must avoid dividing by 0.
@@ -85,7 +85,7 @@ namespace ACE
     {
       return CPU_Load_Monitor::default_name_;
     }
-    
+
     void
     CPU_Load_Monitor::clear_i (void)
     {
@@ -96,7 +96,7 @@ namespace ACE
       this->init ();
       this->Monitor_Base::clear_i ();
     }
-    
+
     void
     CPU_Load_Monitor::init (void)
     {
@@ -252,4 +252,3 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
-

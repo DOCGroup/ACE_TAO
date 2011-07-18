@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    performance_tests
-//
-// = FILENAME
-//    test_naming.cpp
-//
-// = DESCRIPTION
-//      This is an example to do performance testing of the Naming Service
-//      using both the normal Memory Pool as well as the light Memory Pool.
-//
-// = AUTHOR
-//    Prashant Jain
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_naming.cpp
+ *
+ *  $Id$
+ *
+ *    This is an example to do performance testing of the Naming Service
+ *    using both the normal Memory Pool as well as the light Memory Pool.
+ *
+ *
+ *  @author Prashant Jain
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/ACE.h"
@@ -24,9 +21,6 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID(Misc, test_naming, "$Id$")
-
 
 #define ACE_NS_MAX_ENTRIES 4000
 

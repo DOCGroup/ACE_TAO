@@ -1,27 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Intrusive_Auto_Ptr_Test
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
-//    implementation.
-//
-// = AUTHOR
-//    Iliyan Jeliazkov <iliyan@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Intrusive_Auto_Ptr_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
+ *  implementation.
+ *
+ *
+ *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(tests, Intrusive_Auto_Ptr_Test, "$Id$")
+
 
 class One {
 
@@ -79,25 +76,25 @@ int run_main (int, ACE_TCHAR *[])
   One *theone (new One(0));
 
   {
-    ACE_ASSERT (theone->has_refs (0));
-    ACE_ASSERT (!One::was_released ());
+    ACE_TEST_ASSERT (theone->has_refs (0));
+    ACE_TEST_ASSERT (!One::was_released ());
 
     ACE_Intrusive_Auto_Ptr<One> ip2(theone);
 
     {
-      ACE_ASSERT (theone->has_refs (1));
-      ACE_ASSERT (!One::was_released ());
+      ACE_TEST_ASSERT (theone->has_refs (1));
+      ACE_TEST_ASSERT (!One::was_released ());
 
       ACE_Intrusive_Auto_Ptr<One> ip2(theone);
-      ACE_ASSERT (theone->has_refs (2));
-      ACE_ASSERT (!One::was_released ());
+      ACE_TEST_ASSERT (theone->has_refs (2));
+      ACE_TEST_ASSERT (!One::was_released ());
     }
 
-    ACE_ASSERT (theone->has_refs (1));
-    ACE_ASSERT (!One::was_released ());
+    ACE_TEST_ASSERT (theone->has_refs (1));
+    ACE_TEST_ASSERT (!One::was_released ());
   }
 
-  ACE_ASSERT (One::was_released());
+  ACE_TEST_ASSERT (One::was_released());
 
   ACE_END_TEST;
   return 0;

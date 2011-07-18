@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Bug_2653_Regression_Test.cpp
-//
-// = DESCRIPTION
-//    This bug occurs when schedule_wakeup is called for a handle that does
-//    not already have an event handler registered. This can happen quite
-//    legitimately in multithreaded applications where one thread schedules
-//    the wakeup while another thread is handling the closure of the
-//    connection and unregistering.
-//
-// = AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Bug_2653_Regression_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This bug occurs when schedule_wakeup is called for a handle that does
+ *  not already have an event handler registered. This can happen quite
+ *  legitimately in multithreaded applications where one thread schedules
+ *  the wakeup while another thread is handling the closure of the
+ *  connection and unregistering.
+ *
+ *
+ *  @author Phil Mesnier <mesnier_p@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -29,7 +26,7 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Bug_2653_Regression_Test, "$Id$")
+
 
 static const char *message =
 "Hello there! Hope you get this message";
@@ -72,11 +69,9 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
   : ACE_Event_Handler (&reactor)
 {
   // Create the pipe.
-  bool ok = true;
   if (0 != this->other_pipe_.open () || 0 != this->pipe_.open())
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
-      ok = false;
     }
   else
     {
@@ -87,7 +82,6 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
                   ACE_Event_Handler::READ_MASK))
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
-          ok = false;
         }
 
       if (-1 == this->reactor ()->schedule_wakeup
@@ -95,14 +89,12 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
            ACE_Event_Handler::WRITE_MASK))
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("Schedule")));
-          ok = false;
         }
 
       // closing the other pipe sets up the spinner error.
       // leaving it open sets up the segv.
       if (close_other)
         this->other_pipe_.close();
-
     }
 }
 
@@ -117,13 +109,13 @@ Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
 
-#if defined (__OpenBSD__) || defined (ACE_VXWORKS) || defined (__Lynx__)
+#if defined (__OpenBSD__) || defined (ACE_VXWORKS)
   // All that we need written has been written, so don't
   // call handle_output again.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
                               ACE_Event_Handler::WRITE_MASK,
                               ACE_Reactor::CLR_MASK);
-#endif /* __OpenBSD__ || ACE_VXWORKS || __Lynx__ */
+#endif /* __OpenBSD__ || ACE_VXWORKS */
 
   return 0;
 }

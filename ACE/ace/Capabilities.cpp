@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Capabilities.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
@@ -8,11 +10,6 @@
 #endif /* !__ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"
-
-ACE_RCSID (ace,
-           Capabilities,
-           "$Id$")
-
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 

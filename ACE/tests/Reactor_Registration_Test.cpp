@@ -1,30 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Reactor_Registration_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test of registering handlers with the Reactor.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Reactor_Registration_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a test of registering handlers with the Reactor.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
 
-#include "tests/test_config.h"
+
+#include "test_config.h"
 #include "ace/Pipe.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/ACE.h"
-
-ACE_RCSID(tests, Reactor_Registration_Test, "$Id$")
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static const size_t message_size = 26;

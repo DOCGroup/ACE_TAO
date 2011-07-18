@@ -1,19 +1,8 @@
+# -*- Makefile -*-
 # $Id$
-#
+
 # LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
 # for example, add "VERSION=4.2.0" to your make invocation.
-
-#### NOTE:  It's best to create a file that includes this one, instead
-#### of symlinking it.  That way, you can easily override the default
-#### configuration.  For example, to configure for a PowerPC target, I
-#### use a include/makeinclude/platform_macros.GNU that contains the
-#### following lines (without comment markers):
-####
-####     LYNXTARGET = ppc
-####     include $(ACE_ROOT)/include/makeinclude/platform_lynxos.GNU
-####
-#### Similarly, the default VERSION and HOST_OS settings (see below)
-#### can be overridden for your particular platform.
 
 ifeq ($(shell uname -s),LynxOS)
   export VERSION=$(shell uname -r)
@@ -24,41 +13,57 @@ ifeq ($(shell uname -s),LynxOS)
 else
   CROSS-COMPILE = 1
 
-  #### The following may need to be customized for your host or target type.
-  #### Or, you can source the appropriate (for your shell) Lynx SETUP file
-  #### before running "make".
-
   ifeq (,$(VERSION))
     export VERSION = 4.0.0
   endif # VERSION
-
-  ifeq (,$(LYNXTARGET))
-    export LYNXTARGET = x86
-  endif # LYNXTARGET
-
-  ifeq (,$(OBJSFORMAT))
-    export OBJSFORMAT = elf
-  endif # OBJSFORMAT
-
-  ifeq (,$(HOST_OS))
-    export HOST_OS = linux
-  endif # HOST_OS
-
-  ifeq (,$(HOST_OS_REVISION))
-    export HOST_OS_REVISION = $(shell uname -r)
-  endif # HOST_OS_REVISION
-
-  ifeq (,$(ENV_PREFIX))
-    export ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
-  endif # ENV_PREFIX
-
-  ifeq (,$(findstring $(ENV_PREFIX),$(PATH)))
-    export PATH := $(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/bin:$(ENV_PREFIX)/cdk/$(HOST_OS)-$(OBJSFORMAT)-$(LYNXTARGET)/usr/bin:$(PATH)
-  endif # PATH
 endif # ! LynxOS
 
 LYNXOS_MAJOR = $(shell echo $(VERSION) | awk -F. '{print $$1;}')
 LYNXOS_MINOR = $(shell echo $(VERSION) | awk -F. '{print $$2;}')
+
+optimize ?= 1
+debug ?= 1
+threads ?= 1
+
+ifeq ($(threads),1)
+  FLAGS_C_CC += -mthreads
+  SOFLAGS += -mthreads
+endif
+
+ifeq ($(rpc),1)
+  LIBS    += -lrpc
+endif
+
+ifeq ($(shared_libs),1)
+  CPPFLAGS   += -DACE_HAS_SVR4_DYNAMIC_LINKING
+  FLAGS_C_CC += -mshared
+  SOFLAGS    += -mshared
+  LIBS       += -ldl
+  ifeq ($(CROSS-COMPILE),1)
+    LDFLAGS  += -Wl,-rpath-link,$(ACE_ROOT)/lib
+  endif
+endif
+
+ifeq (5.0.0,$(VERSION))
+  LIBS    += -lnetinet
+endif
+
+CC              = gcc
+CXX             = g++
+
+AR              = ar
+ARFLAGS         = ruv
+CPPFLAGS        += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
+DCFLAGS         += -g
+DCCFLAGS        += $(DCFLAGS)
+DLD             = $(CXX)
+LD              = $(CXX)
+OCFLAGS         += -O2
+OCCFLAGS        = $(OCFLAGS)
+PIC             = -fPIC
+PRELIB          = @true
+RANLIB          = @true
+SOFLAGS         += -shared
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
@@ -68,69 +73,18 @@ PLATFORM_X11_CPPFLAGS=
 PLATFORM_X11_LIBS=-lXp -lXpm -lXmu -lXext -lX11 -lSM -lICE
 PLATFORM_X11_LDFLAGS=
 
-PLATFORM_TCL_CPPFLAGS=
-PLATFORM_TCL_LIBS=-ltcl
+PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INC_DIR $$TCL_DEFS)
+PLATFORM_TCL_LIBS=-ltcl8.0
 PLATFORM_TCL_LDFLAGS=
 
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-PLATFORM_TK_LIBS=-ltk $(PLATFORM_X11_LIBS)
-PLATFORM_TK_LDFLAGS=
-
-shared_libs ?= 1
-optimize ?= 1
-debug ?= 1
-pipes ?= 1
-threads ?= 1
-exceptions ?= 1
-
-ifeq ($(threads),1)
-  CFLAGS  += -mthreads
-  SOFLAGS += -mthreads
-endif
-
-ifeq ($(rpc),1)
-  LIBS    += -lrpc
-endif
-
-ifeq ($(shared_libs),1)
-  CPPFLAGS += -DACE_HAS_SVR4_DYNAMIC_LINKING
-  LDFLAGS  += -mshared
-  LIBS     += -ldl
-else
-  LIBS     += -lnetinet -lnsl
-endif
-
-ifeq (5.0.0,$(VERSION))
-  LIBS    += -lbsd
-endif
-
-CC              = gcc
-CXX             = g++
-PIC             = -fPIC
-CFLAGS          += -Wpointer-arith -Wall -fsigned-char $(PIC)
-CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
-DCFLAGS         += -g
-DLD             = $(CXX)
-LD              = $(CXX)
-OCFLAGS         += -O2
-AR              = ar
-ARFLAGS         = ruv
-RANLIB          = @true
-SOFLAGS         += $(CPPFLAGS) -shared
-SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
-                  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-PRELIB          = @true
+PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS) $(PLATFORM_X11_CPPFLAGS)
+PLATFORM_TK_LIBS=-ltk8.0 $(PLATFORM_XT_LIBS) $(PLATFORM_X11_LIBS)
+PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
 
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
-
-ifeq ($(CXX_MAJOR_VERSION), 3)
-  LDFLAGS       += -L/usr/lib/thread
-endif
 
 # To save much disk space, strip all executables.  Comment the
 # following line out if you want to debug.  Or, add "POSTLINK="

@@ -27,10 +27,6 @@
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/os_limits.h"
 
-#if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x620)
-#  include /**/ <hostLib.h>
-#endif /* ACE_VXWORKS */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -40,7 +36,7 @@ extern "C"
 #if !defined (ACE_LACKS_NETDB_H)
 #  include /**/ <netdb.h>
 #endif /* !ACE_LACKS_NETDB_H */
-  
+
 #if defined (ACE_LACKS_HOSTENT)
 struct  hostent {
         char    *h_name;        /* official name of host */

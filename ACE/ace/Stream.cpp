@@ -4,6 +4,7 @@
 #ifndef ACE_STREAM_CPP
 #define ACE_STREAM_CPP
 
+
 //#include "ace/Module.h"
 #include "ace/Stream.h"
 
@@ -241,6 +242,17 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
   for (ACE_Module<ACE_SYNCH_USE> *mod = this->stream_head_;
        mod != 0;
        mod = mod->next ())
+  {
+#ifndef ACE_NLOGGING
+    if (ACE::debug ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("ACE_Stream::remove - comparing existing module :%s: with :%s:\n"),
+        mod->name (),
+        name));
+    }
+#endif
+
     if (ACE_OS::strcmp (mod->name (), name) == 0)
       {
         if (prev == 0) // Deleting ACE_Stream Head
@@ -248,11 +260,13 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
         else
           prev->link (mod->next ());
 
+        // Close down the module.
+        mod->close (flags);
+
         // Don't delete the Module unless the flags request this.
         if (flags != ACE_Module<ACE_SYNCH_USE>::M_DELETE_NONE)
           {
-            // Close down the module and release the memory.
-            mod->close (flags);
+            // Release the memory.
             delete mod;
           }
 
@@ -260,7 +274,9 @@ ACE_Stream<ACE_SYNCH_USE>::remove (const ACE_TCHAR *name,
       }
     else
       prev = mod;
+  }
 
+  ACE_DEBUG ((LM_WARNING,  ACE_TEXT ("ACE_Stream::remove failed to find module with name %s to remove\n"),name));
   return -1;
 }
 
@@ -434,7 +450,7 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
-  ACE_Message_Block *db;
+  ACE_Message_Block *db = 0;
 
   // Try to create a data block that contains the user-supplied data.
   ACE_NEW_RETURN (db,
@@ -448,12 +464,11 @@ ACE_Stream<ACE_SYNCH_USE>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
   // field.
   ACE_Message_Block *cb = 0;
 
-  ACE_NEW_RETURN (cb,
-                  ACE_Message_Block (sizeof ioc,
-                                     ACE_Message_Block::MB_IOCTL,
-                                     db,
-                                     (char *) &ioc),
-                  -1);
+  ACE_NEW_NORETURN (cb,
+                    ACE_Message_Block (sizeof ioc,
+                                       ACE_Message_Block::MB_IOCTL,
+                                       db,
+                                       (char *) &ioc));
   // @@ Michael: The old semantic assumed that cb returns == 0
   //             if no memory was available. We will now return immediately
   //             without release (errno is set to ENOMEM by the macro).

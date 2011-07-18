@@ -1,22 +1,18 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Malloc_Test.h
-//
-// = DESCRIPTION
-//    This class gets its own header file to work around AIX C++
-//    compiler "features" related to template instantiation...  It is
-//    only used by Malloc_Test.cpp.
-//
-// = AUTHOR
-//      Douglas C. Schmidt <schmidt@cs.wustl.edu>
+//=============================================================================
+/**
+ *  @file    Malloc_Test.h
+ *
+ *  $Id$
+ *
+ *  This class gets its own header file to work around AIX C++
+ *  compiler "features" related to template instantiation...  It is
+ *  only used by Malloc_Test.cpp.
+ *
+ *
+ *  @author   Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
 
-// ============================================================================
 
 #ifndef ACE_TESTS_MALLOC_TEST_H
 #define ACE_TESTS_MALLOC_TEST_H

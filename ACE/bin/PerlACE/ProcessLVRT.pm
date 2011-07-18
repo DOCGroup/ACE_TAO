@@ -197,7 +197,7 @@ sub Spawn ()
     }
     print STDERR "ERROR: can't $cmdline: " . $reply . "\n";
     $self->{TARGET}->{FTP}->delete($program);
-    $self->{TARGET}->NeedReboot;
+    # Not unless can't get the response.  $self->{TARGET}->NeedReboot;
     return -1;
 }
 
@@ -343,6 +343,15 @@ CHECK:
     }
 
     return -1;
+}
+
+###
+
+sub kill_all
+{
+  my $procmask = shift;
+  my $target = shift;
+  ## NOT IMPLEMENTED YET
 }
 
 1;

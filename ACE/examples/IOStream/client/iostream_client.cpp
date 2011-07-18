@@ -6,10 +6,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (client,
-           iostream_client,
-           "$Id$")
-
 // This client is a simple example of using the ACE_IOStream and
 // ACE_Streambuf_T templates to create an object based on ACE_*_Stream
 // classes, which mimic a C++ iostream.

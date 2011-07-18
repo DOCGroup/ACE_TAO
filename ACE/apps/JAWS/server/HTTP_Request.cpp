@@ -8,8 +8,6 @@
 #include "ace/OS_NS_pwd.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(server, HTTP_Request, "$Id$")
-
 const char *const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
 {
@@ -638,8 +636,9 @@ HTTP_Request::path (const char *uri_string)
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
               char pw_buf[BUFSIZ];
               struct passwd pw_struct;
-              if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf, sizeof (pw_buf))
-                  == 0)
+              struct passwd *pw_struct_ptr;
+              if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf,
+                                      sizeof (pw_buf), &pw_struct_ptr) == 0)
                 return 0;
               ACE_OS::strcpy (buf, pw_struct.pw_dir);
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */

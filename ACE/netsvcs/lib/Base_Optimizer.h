@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef BASE_OPTIMIZER_H
 #define BASE_OPTIMIZER_H
 
@@ -22,7 +21,6 @@
 
 /**
  * @class Base_Optimizer
- *
  *
  * Thanks to Nathan Myers and Fergus Henderson for this little
  * beauty.

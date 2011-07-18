@@ -10,11 +10,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (Misc,
-           test_XtReactor2,
-           "$Id$")
-
-
 #include <Xm/PushB.h>
 
 class Stdin : public ACE_Event_Handler

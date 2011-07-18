@@ -70,26 +70,22 @@ public:
    * programmers to check whether a specific feature has been
    * activated in the parser.
    */
-  virtual int getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-          = 0;
+  virtual int getFeature (const ACEXML_Char *name) = 0;
 
   /**
    * Look up the value of a property.
    */
-  virtual void * getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-    = 0;
+  virtual void * getProperty (const ACEXML_Char *name) = 0;
 
   /**
    * Parse an XML document.
    */
-  virtual void parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
-    = 0;
+  virtual void parse (ACEXML_InputSource *input) = 0;
 
   /**
    * Parse an XML document from a system identifier (URI).
    */
-  virtual void parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-        = 0;
+  virtual void parse (const ACEXML_Char *systemId) = 0;
 
   /**
    * Allow an application to register a content event handler.
@@ -114,16 +110,12 @@ public:
   /**
    * Activating or deactivating a feature.
    */
-  virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value ACEXML_ENV_ARG_DECL)
-    = 0;
+  virtual void setFeature (const ACEXML_Char *name, int boolean_value) = 0;
 
   /**
    * Set the value of a property.
    */
-  virtual void setProperty (const ACEXML_Char *name,
-                            void *value ACEXML_ENV_ARG_DECL)
-    = 0;
+  virtual void setProperty (const ACEXML_Char *name, void *value) = 0;
 };
 
 

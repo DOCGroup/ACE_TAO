@@ -1,7 +1,5 @@
 // $Id$
 
-#include "ace/OS.h"
-
 #include "SS_State_READ.h"
 #include "SS_State_PARSE.h"
 #include "SS_State_WRITE.h"

@@ -17,7 +17,7 @@
 #include "ace/OS_NS_string.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Stack_Trace_Test, "$Id$")
+
 
 /*
  * Ultra-basic test of stack trace.

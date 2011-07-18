@@ -103,7 +103,7 @@ static int allocate_chunks_chain (ACE_Message_Block *&head_mb,
         }
       else
         {
-          ACE_ASSERT (0);
+          ACE_TEST_ASSERT (0);
           return -1;
         }
     }
@@ -375,7 +375,7 @@ Receiver::Receiver (Acceptor * acceptor, int index)
       Receiver::writer_ = new Writer;
       if (!Receiver::writer_)
         {
-          ACE_ASSERT (0);
+          ACE_TEST_ASSERT (0);
           return;
         }
     }
@@ -401,7 +401,7 @@ Receiver::~Receiver (void)
 
   if (this->partial_chunk_)
     {
-      ACE_ASSERT (0); // should not be getting here
+      ACE_TEST_ASSERT (0); // should not be getting here
       this->partial_chunk_->release ();
     }
 }
@@ -449,7 +449,7 @@ Receiver::initiate_read_stream (void)
   ACE_Message_Block *head_mb = 0;
   if (-1 == allocate_chunks_chain (head_mb, number_of_new_chunks))
     {
-      ACE_ASSERT (0);
+      ACE_TEST_ASSERT (0);
       return -1;
     }
 
@@ -504,7 +504,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   // On disconnect (error or 0 transferred), transfer whatever we have.
 
   // at this stage there should not be anything there
-  ACE_ASSERT (!this->partial_chunk_);
+  ACE_TEST_ASSERT (!this->partial_chunk_);
 
   // first, remove the empty chunks
   remove_empty_chunks (mb);
@@ -557,7 +557,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
           if (!result.error ())
             this->initiate_read_stream ();
           else
-            ACE_ASSERT (0);
+            ACE_TEST_ASSERT (0);
         }
     }
   else if (mb && !Receiver::writer_)
@@ -775,7 +775,7 @@ Writer::initiate_write_file (void)
   // in the queues (1 to 2 chunks together), so let's force the merge size to 1.
   if (0 == merge_size)
     {
-      ACE_ASSERT (1 == odd_count && 1 >= even_count);
+      ACE_TEST_ASSERT (1 == odd_count && 1 >= even_count);
       merge_size = 1;
     }
 
@@ -871,7 +871,7 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   if (0 == this->receiver_count_ &&
       0 == this->io_count_)
     {
-      ACE_ASSERT (0 == this->odd_chain_ && 0 == this->even_chain_);
+      ACE_TEST_ASSERT (0 == this->odd_chain_ && 0 == this->even_chain_);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Writer::handle_write_file")
@@ -1155,7 +1155,7 @@ Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 int
 Sender::initiate_read_file (void)
 {
-  ACE_ASSERT (0 == this->file_offset_ % chunk_size);
+  ACE_TEST_ASSERT (0 == this->file_offset_ % chunk_size);
 
   static const size_t file_size = ACE_OS::filesize (input_file);
 
@@ -1169,14 +1169,14 @@ Sender::initiate_read_file (void)
 
   if (!relevant_number_of_chunks)
     {
-      ACE_ASSERT (0); // Just 2 C it coming
+      ACE_TEST_ASSERT (0); // Just 2 C it coming
       return 0;
     }
 
   ACE_Message_Block *head_mb = 0;
   if (-1 == allocate_chunks_chain (head_mb, relevant_number_of_chunks))
     {
-      ACE_ASSERT (0);
+      ACE_TEST_ASSERT (0);
       return -1;
     }
 
@@ -1292,9 +1292,9 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 
   if (result.error () == 0 && result.bytes_transferred () != 0)
     // verify sent all
-    ACE_ASSERT (0 == mb->total_length ());
+    ACE_TEST_ASSERT (0 == mb->total_length ());
   else
-    ACE_ASSERT (0);
+    ACE_TEST_ASSERT (0);
 
   free_chunks_chain (mb);
 
@@ -1395,7 +1395,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Simplify, initial read with zero size
       if (-1 == acceptor.open (addr, 0, 1))
         {
-          ACE_ASSERT (0);
+          ACE_TEST_ASSERT (0);
           return -1;
         }
     }
@@ -1404,7 +1404,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       if (-1 == connector.open (1, ACE_Proactor::instance ()))
         {
-          ACE_ASSERT (0);
+          ACE_TEST_ASSERT (0);
           return -1;
         }
 
@@ -1414,7 +1414,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       connector.set_address (addr);
       if (-1 == connector.connect (addr))
         {
-          ACE_ASSERT (0);
+          ACE_TEST_ASSERT (0);
           return -1;
         }
     }

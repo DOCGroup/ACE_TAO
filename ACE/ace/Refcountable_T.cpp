@@ -5,10 +5,6 @@
 
 #include "ace/Refcountable_T.h"
 
-ACE_RCSID (ace,
-           Refcountable_T,
-           "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Refcountable_T.inl"
 #endif /* __ACE_INLINE__ */

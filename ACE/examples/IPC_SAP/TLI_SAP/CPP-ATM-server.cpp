@@ -4,7 +4,7 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(TLI_SAP, CPP_ATM_server, "$Id$")
+
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 // ACE_TLI Server

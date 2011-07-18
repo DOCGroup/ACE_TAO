@@ -4,7 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Misc, test_sstring, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

@@ -191,7 +191,7 @@ private:
  * The ATTRIBUTES are the deciding factor for purging of entries
  * and should logically be included with the VALUE. Some ways of
  * doing this are: As being a member of the VALUE or VALUE being
- * ACE_Pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
+ * std::pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
  * class which can be plugged in and which decides the entries
  * to purge.
  */
@@ -291,7 +291,7 @@ private:
  * The ATTRIBUTES are the deciding factor for purging of entries
  * and should logically be included with the VALUE. Some ways of
  * doing this are: As being a member of the VALUE or VALUE being
- * ACE_Pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
+ * std::pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
  * class which can be plugged in and which decides the entries
  * to purge.
  */
@@ -384,7 +384,7 @@ private:
  * The ATTRIBUTES are the deciding factor for purging of entries
  * and should logically be included with the VALUE. Some ways of
  * doing this are: As being a member of the VALUE or VALUE being
- * ACE_Pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
+ * std::pair<x, ATTRIBUTES>. The CACHING_UTILITY is the
  * class which can be plugged in and which decides the entries
  * to purge.
  */

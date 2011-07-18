@@ -52,8 +52,6 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_Thread.h"
 
-ACE_RCSID(Misc, test_mutex, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 static const int DEFAULT_ITERATIONS = 100000000;

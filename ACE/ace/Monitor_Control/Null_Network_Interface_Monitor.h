@@ -44,7 +44,7 @@ namespace ACE
 
       /// Platform-specific implementation.
       void update_i (void);
-      
+
       /// Platform-specific reset.
       void clear_impl (void);
 

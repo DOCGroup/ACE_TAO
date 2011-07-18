@@ -52,8 +52,8 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
         ACE_Data_Block *data_block,
         int flags,
         ACE_Allocator* mb_allocator)
- : ACE_Message_Block (data_block, 
-                      flags, 
+ : ACE_Message_Block (data_block,
+                      flags,
                       mb_allocator),
    command_ (cmd), qos_info_ (qos_info)
 

@@ -8,7 +8,7 @@
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/Encoding.h"
 
-ACE_RCSID (common, HttpCharStream, "$Id$")
+
 
 /* Header FSM states. */
 static const int HDST_LINE1_PROTOCOL = 0;
@@ -123,7 +123,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   size_t b = 0;
   char const * buf = 0;
   size_t buflen = BUFSIZ;
-  
+
   for (;;)
     {
       buf = this->stream_->recv (buflen);
@@ -232,12 +232,12 @@ ACEXML_HttpCharStream::get_url (size_t& len)
         }
     }
  end_of_headers:
- 
+
   if (b == 0)
     {
       return -1;
     }
-    
+
   ++b;
   // Store the address of the beginning of data. We will use it to seek to
   // beginning of the data in the URL.
@@ -257,7 +257,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 
   this->data_offset_ =
     ACE_Utils::truncate_cast<ACE_OFF_T> (data_beg - this->stream_->recv());
-    
+
   // Forward to the beginning of data.
   if (this->stream_->seek (this->data_offset_, SEEK_SET) == -1)
     {
@@ -343,7 +343,7 @@ ACEXML_HttpCharStream::determine_encoding (void)
 
   char input[] = {0, 0, 0, 0};
   size_t const len = sizeof (input) / sizeof (input[0]);
-  
+
   size_t i = 0;
   for (; i < len && input[i] != static_cast<char> (EOF); ++i)
     input[i] = this->stream_->peek_char (i);

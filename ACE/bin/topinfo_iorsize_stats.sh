@@ -37,7 +37,7 @@ server_start_size=`cat /proc/$s_id/status | grep VmRSS | awk '{print $2}'`;
 
 # Just sleep for 2 seconds.
 sleep 2;
-# Check whether the server has started 
+# Check whether the server has started
 file="test.ior"
 if test -f $file
     then
@@ -46,11 +46,11 @@ if test -f $file
     c_id=$!;
     # Wait till all the invocations are done
     sleep 30;
-    # Get the size once the client has made sufficient invocations. 
+    # Get the size once the client has made sufficient invocations.
     s_invocations=`cat /proc/$s_id/status  | grep VmRSS | awk '{print $2}'`;
     let "actual_server_growth=${s_invocations}-${server_start_size}";
     if test $OPT == 1
-        then 
+        then
         echo $DATE $s_invocations >> $DEST/source/server_opt_ior_size.txt
         echo $DATE $actual_server_growth >> $DEST/source/opt_ior_size.txt
         else
@@ -59,7 +59,7 @@ if test -f $file
     fi
 
     # Kill the server and client. We will look at better ways of doing
-    # this later. 
+    # this later.
     kill -9 $c_id;
     kill -9 $s_id;
     rm -f $file

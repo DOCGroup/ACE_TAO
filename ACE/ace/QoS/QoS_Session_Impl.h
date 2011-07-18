@@ -115,7 +115,7 @@ public:
 
   //Set the source host
   virtual ACE_INET_Addr* source_addr (void) const;
-  
+
   /// Set the source port for this session.
   virtual void source_addr (ACE_INET_Addr* source_addr);
 
@@ -221,7 +221,7 @@ public:
 
   //Set the source host
   virtual ACE_INET_Addr* source_addr (void) const;
-  
+
   /// Set the source port for this session.
   virtual void source_addr (ACE_INET_Addr* source_addr);
 

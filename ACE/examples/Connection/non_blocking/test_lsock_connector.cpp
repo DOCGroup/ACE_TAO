@@ -19,7 +19,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 #include "ace/UNIX_Addr.h"
 #include "CPP-connector.h"
 
-ACE_RCSID(non_blocking, test_lsock_connector, "$Id$")
+
 
 typedef Peer_Handler<ACE_LSOCK_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_LSOCK_CONNECTOR> IPC_CLIENT;

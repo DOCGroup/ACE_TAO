@@ -11,7 +11,7 @@
 #include "ace/Connector.h"
 #include "ace/UPIPE_Addr.h"
 
-ACE_RCSID(misc, test_upipe, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

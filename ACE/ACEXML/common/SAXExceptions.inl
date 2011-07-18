@@ -11,25 +11,25 @@ ACEXML_SAXException::message (void) const
 ACEXML_INLINE void
 ACEXML_SAXException::_raise (void)
 {
-  ACEXML_RAISE (*this);
+  throw *this;
 }
 
 ACEXML_INLINE void
 ACEXML_SAXNotSupportedException::_raise (void)
 {
-  ACEXML_RAISE (*this);
+  throw *this;
 }
 
 ACEXML_INLINE void
 ACEXML_SAXNotRecognizedException::_raise (void)
 {
-  ACEXML_RAISE (*this);
+  throw *this;
 }
 
 ACEXML_INLINE void
 ACEXML_SAXParseException::_raise (void)
 {
-  ACEXML_RAISE (*this);
+  throw *this;
 }
 
 ACEXML_INLINE const ACEXML_Char *

@@ -35,6 +35,8 @@ DISTRIBUTE_GROUP_DOC  = YES
 TAB_SIZE              = 8
 ENABLED_SECTIONS      =
 SHORT_NAMES           = YES
+GENERATE_DEPRECATEDLIST = YES
+GENERATE_TODOLIST       = YES
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -72,12 +74,12 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/ace/rmcast
+HTML_OUTPUT           = html/libace-doc/rmcast
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
 HTML_ALIGN_MEMBERS    = YES
-GENERATE_HTMLHELP     = YES
+GENERATE_HTMLHELP     = NO
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -123,18 +125,16 @@ PREDEFINED            = __ACE_INLINE__ \
                         ACE_TEMPLATES_REQUIRE_SOURCE \
                         ACE_BEGIN_VERSIONED_NAMESPACE_DECL \
                         ACE_END_VERSIONED_NAMESPACE_DECL \
-                        ACE_INLINE
-EXPAND_AS_DEFINED     = ACE_RCSID \
-                        ACE_UNIMPLEMENTED_FUNC \
-                        ACE_CACHE_MAP_MANAGER \
-                        ACE_THROW_SPEC
+                        ACE_INLINE=inline
+EXPAND_AS_DEFINED     = ACE_UNIMPLEMENTED_FUNC \
+                        ACE_CACHE_MAP_MANAGER
 
 #---------------------------------------------------------------------------
-# Configuration::addtions related to external references
+# Configuration::additions related to external references
 #---------------------------------------------------------------------------
 
-TAGFILES              = html/ace/ACE.tag=..
-GENERATE_TAGFILE      = html/ace/rmcast/ACE_RMCast.tag
+TAGFILES              = html/libace-doc/ACE.tag=..
+GENERATE_TAGFILE      = html/libace-doc/rmcast/ACE_RMCast.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
@@ -148,16 +148,18 @@ PERL_PATH             = /usr/bin/perl
 HAVE_DOT              = YES
 CLASS_GRAPH           = YES
 COLLABORATION_GRAPH   = YES
-INCLUDE_GRAPH         = YES
-INCLUDED_BY_GRAPH     = YES
+INCLUDE_GRAPH         = NO
+INCLUDED_BY_GRAPH     = NO
 GRAPHICAL_HIERARCHY   = YES
 DOT_MULTI_TARGETS     = YES
+MAX_DOT_GRAPH_DEPTH   = 3
+
 # The tag DOT_PATH can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found on the path.
 DOT_PATH              =
 
 #---------------------------------------------------------------------------
-# Configuration::addtions related to the search engine
+# Configuration::additions related to the search engine
 #---------------------------------------------------------------------------
 
 SEARCHENGINE          = YES

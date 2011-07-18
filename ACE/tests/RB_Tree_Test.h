@@ -1,33 +1,32 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    RB_Tree_Test.cpp
-//
-// = DESCRIPTION
-//    Header file for a test to verify and illustrate the use of the
-//    ACE_RB_Tree ACE_RB_Tree_Iterator, and
-//    ACE_RB_Tree_Reverse_Iterator classes.
-//    iterator over each.
-//
-// = AUTHOR
-//    Chris Gill <cdgill@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    RB_Tree_Test.h
+ *
+ *  $Id$
+ *
+ *  Header file for a test to verify and illustrate the use of the
+ *  ACE_RB_Tree ACE_RB_Tree_Iterator, and
+ *  ACE_RB_Tree_Reverse_Iterator classes.
+ *  iterator over each.
+ *
+ *
+ *  @author Chris Gill <cdgill@cs.wustl.edu>
+ */
+//=============================================================================
 
+
+/**
+ * @class ACE_RB_Tree_Test
+ *
+ * @brief Implements a templatized test class for the RB_Tree ADT and its
+ * iterators.
+ *
+ */
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Test
 {
-  // = TITLE
-  //   Implements a templatized test class for the RB_Tree ADT and its
-  //   iterators.
-  //
-  // = DESCRIPTION
 
   //   To run the test class on a particular type instantiation of the
   //   RB_Tree, simply instantiate the test class template with the
@@ -44,69 +43,69 @@ public:
 
   // = Initialization and termination methods.
 
+  /// Constructor.
   ACE_RB_Tree_Test (int entry_count,
                     EXT_ID key_array [],
                     INT_ID item_array [],
                     int order_index []);
-  // Constructor.
 
+  /// Destructor.
   ~ACE_RB_Tree_Test (void);
-  // Destructor.
 
+  /// Run the individual interface and iteration tests in order.
   void run_test (void);
-  // Run the individual interface and iteration tests in order.
 
 private:
 
+  /// Tests stable and deprecated insertion interfaces.
   void test_tree_insertion (void);
-  // Tests stable and deprecated insertion interfaces.
 
+  /// Tests forward and reverse iteration after insertion in both
+  /// trees.
   void test_post_insertion_iteration (void);
-  // Tests forward and reverse iteration after insertion in both
-  // trees.
 
+  ///Tests forward and reverse partial iteration
   void test_partial_iteration(void);
-  //Tests forward and reverse partial iteration
 
+  /// Tests stable and deprecated deletion interfaces.
   void test_tree_deletion (void);
-  // Tests stable and deprecated deletion interfaces.
 
+  /// Tests forward and reverse iteration after deletions in both
+  /// trees.
   void test_post_deletion_iteration (void);
-  // Tests forward and reverse iteration after deletions in both
-  // trees.
 
+  /// Tree for testing stable interface.
   TREE stable_tree_;
-  // Tree for testing stable interface.
 
+  /// Forward iterator for tree for testing stable interface.
   ITERATOR stable_fwd_iter_;
-  // Forward iterator for tree for testing stable interface.
 
   ITERATOR part_fwd_iter_;
 
   REVERSE_ITERATOR part_rev_iter_;
 
+  /// Forward iterator for tree for testing stable interface.
   REVERSE_ITERATOR stable_rev_iter_;
-  // Forward iterator for tree for testing stable interface.
 
+  /// Tree for testing deprecated interface.
   TREE deprecated_tree_;
-  // Tree for testing deprecated interface.
 
+  /// Forward iterator for tree for testing deprecated interface.
   ITERATOR deprecated_fwd_iter_;
-  // Forward iterator for tree for testing deprecated interface.
 
+  /// Forward iterator for tree for testing deprecated interface.
   REVERSE_ITERATOR deprecated_rev_iter_;
-  // Forward iterator for tree for testing deprecated interface.
 
+  /// Number of entries in the key, item, and index arrays.
   int entry_count_;
-  // Number of entries in the key, item, and index arrays.
 
+  /// Array of EXT_IDs (keys) with which to test.
   EXT_ID *key_array_;
-  // Array of EXT_IDs (keys) with which to test.
 
+  /// Array of INT_IDs (items) with which to test.
   INT_ID *item_array_;
-  // Array of INT_IDs (items) with which to test.
 
+  /// Order of indices in the key and item arrays.
   int *order_index_;
-  // Order of indices in the key and item arrays.
 
 };

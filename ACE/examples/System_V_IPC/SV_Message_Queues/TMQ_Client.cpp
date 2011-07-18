@@ -10,7 +10,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(SV_Message_Queues, TMQ_Client, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

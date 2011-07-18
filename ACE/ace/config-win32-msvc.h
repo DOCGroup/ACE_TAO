@@ -22,10 +22,8 @@
 #endif /* ACE_CONFIG_WIN32_H */
 
 #define ACE_CC_NAME ACE_TEXT ("Visual C++")
-#ifndef ACE_USING_MCPP_PREPROCESSOR
-# define ACE_CC_PREPROCESSOR "CL.EXE"
-# define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
-#endif
+#define ACE_CC_PREPROCESSOR "CL.EXE"
+#define ACE_CC_PREPROCESSOR_ARGS "-nologo -E"
 
 #define ACE_CC_MAJOR_VERSION (_MSC_VER / 100 - 6)
 #define ACE_CC_MINOR_VERSION (_MSC_VER % 100)
@@ -133,13 +131,14 @@
 
 #define ACE_LACKS_ISBLANK
 #define ACE_LACKS_ISWBLANK
+#define ACE_LACKS_CORRECT_ISWPRINT_TAB
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines
 
-#if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
+#if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(__MINGW32__)
 #     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
 #     pragma warning(disable: 4134)  /* message map member fxn casts */
 #     pragma warning(disable: 4511)  /* private copy constructors are good to have */
@@ -157,7 +156,7 @@
 #     pragma warning(disable: 1744)  /* field of class type without a DLL interface used in a class with a DLL interface */
 #     pragma warning(disable: 1738)
 # endif
-#endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
+#endif /* !ALL_WARNINGS && _MSV_VER && !__MINGW32__ */
 
 // STRICT type checking in WINDOWS.H enhances type safety for Windows
 // programs by using distinct types to represent all the different

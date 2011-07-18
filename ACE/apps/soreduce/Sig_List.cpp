@@ -7,8 +7,6 @@
 #include "ace/OS_NS_string.h"
 #include "Sig_List.h"
 
-ACE_RCSID(src, Sig_List, "$Id$")
-
 //-----------------------------------------------------------------------------
 
 Sig_List::Sig_List (int cap)
@@ -36,7 +34,7 @@ Sig_List::add (const ACE_CString &s)
     return;
   modified_ = 1;
   if (has_nulls_)
-    for (int i = 0; i < size_; i++) 
+    for (int i = 0; i < size_; i++)
       if (array_[i] == 0) {
         array_[i] = new Signature (s);
         has_nulls_ --;
@@ -66,14 +64,14 @@ Sig_List::add (const Sig_List &other)
   }
   modified_ = 1;
   for (int i = 0; i < other.size_; i++)
-    if (other.array_[i] != 0 && 
-        this->index_of (other.array_[i]->name()) == -1) 
+    if (other.array_[i] != 0 &&
+        this->index_of (other.array_[i]->name()) == -1)
       {
-        if (!has_nulls_) 
+        if (!has_nulls_)
           array_[size_++] = other.array_[i]->dup();
         else
-          for (int i = 0; i < size_; i++) 
-            if (array_[i] == 0) 
+          for (int i = 0; i < size_; i++)
+            if (array_[i] == 0)
               {
                 array_[i] = other.array_[i]->dup();
                 has_nulls_ --;
@@ -104,7 +102,7 @@ Sig_List::remove_current ()
   array_[index_]->release();
   array_[index_] = 0;
   modified_ = 1;
-  if (index_ == size_ - 1) 
+  if (index_ == size_ - 1)
     size_--;
   else
     has_nulls_++;
@@ -150,7 +148,7 @@ Sig_List::next()
   return 0;
 }
 
-int 
+int
 Sig_List::hasmore ()
 {
   return index_ < size_;
@@ -174,7 +172,7 @@ Sig_List::modified()
         if (i != insert) {
           array_[insert] = array_[i];
           array_[i] = 0;
-        } 
+        }
         insert++;
       }
     size_ = insert+1;

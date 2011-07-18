@@ -1,16 +1,12 @@
 // $Id$
 
+#include "ace/Message_Queue.h"
 #include "ace/Message_Queue_NT.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Queue_NT.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (ace,
-           Message_Queue_NT,
-           "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,10 +29,13 @@ ACE_Message_Queue_NT::open (DWORD max_threads)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::open");
   this->max_cthrs_ = max_threads;
+  this->state_ = ACE_Message_Queue_Base::ACTIVATED;
   this->completion_port_ = ::CreateIoCompletionPort (ACE_INVALID_HANDLE,
                                                      0,
                                                      ACE_Message_Queue_Base::ACTIVATED,
                                                      max_threads);
+  if (this->completion_port_ == 0)
+    this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
   return (this->completion_port_ == 0 ? -1 : 0);
 }
 

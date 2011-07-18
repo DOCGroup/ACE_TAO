@@ -16,7 +16,7 @@
 #include "ace/Service_Gestalt.h"
 #include "test_config.h"
 
-ACE_RCSID(tests, Bug_3505_Regression_Test, "$Id$")
+
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(tests, test, "$Id$")
+
 
 static const int MAX_LEN = 80;
 

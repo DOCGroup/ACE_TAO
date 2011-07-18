@@ -1,29 +1,26 @@
-// $Id$
 
-//============================================================================
-//
-// = LIBRARY
-//     tests
-//
-// = FILENAME
-//     Auto_IncDec_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the Auto Increment/Decrement Class in
-//     ACE.
-//
-// = AUTHOR
-//     Edan Ayal <EdanA@cti2.com>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file     Auto_IncDec_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the Auto Increment/Decrement Class in
+ *   ACE.
+ *
+ *
+ *  @author  Edan Ayal <EdanA@cti2.com>
+ */
+//=============================================================================
 
-#include "tests/test_config.h"
+
+#include "test_config.h"
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Auto_IncDec_Test, "Auto_IncDec_Test.cpp, by Edan Ayal")
+
 
 #if defined (ACE_HAS_THREADS)
 
@@ -109,7 +106,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_ASSERT (current_threads_in_first_section.value () == 0
+  ACE_TEST_ASSERT (current_threads_in_first_section.value () == 0
               && current_threads_in_second_section.value () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -118,21 +115,21 @@ run_main (int, ACE_TCHAR *[])
   int counter = 0;
   {
     ACE_Auto_IncDec<int> Auto_IncDec1 (counter);
-    ACE_ASSERT (counter == 1);
+    ACE_TEST_ASSERT (counter == 1);
 
     ACE_Auto_IncDec<int> Auto_IncDec2 (counter);
-    ACE_ASSERT (counter == 2);
+    ACE_TEST_ASSERT (counter == 2);
 
     {
-      ACE_ASSERT (counter == 2);
+      ACE_TEST_ASSERT (counter == 2);
       ACE_Auto_IncDec<int> Auto_IncDec3 (counter);
-      ACE_ASSERT (counter == 3);
+      ACE_TEST_ASSERT (counter == 3);
     }
 
-    ACE_ASSERT (counter == 2);
+    ACE_TEST_ASSERT (counter == 2);
   }
 
-  ACE_ASSERT (counter == 0);
+  ACE_TEST_ASSERT (counter == 0);
 
 #endif /* ACE_HAS_THREADS */
 

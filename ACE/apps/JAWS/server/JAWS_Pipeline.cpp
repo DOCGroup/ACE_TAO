@@ -2,8 +2,6 @@
 
 #include "JAWS_Pipeline.h"
 
-ACE_RCSID(server, JAWS_Pipeline, "$Id$")
-
 JAWS_Pipeline::JAWS_Pipeline (void)
 {
 }

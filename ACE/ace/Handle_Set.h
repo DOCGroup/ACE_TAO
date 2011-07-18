@@ -58,7 +58,6 @@ public:
     MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
   };
 
-  // = Initialization methods.
   /// Constructor, initializes the bitmask to all 0s.
   ACE_Handle_Set (void);
 
@@ -196,10 +195,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// The <Handle_Set> we are iterating through.
+  /// The Handle_Set we are iterating through.
   const ACE_Handle_Set &handles_;
 
-  /// Index of the bit we're examining in the current <word_num_> word.
+  /// Index of the bit we're examining in the current word_num_() word.
 #if defined (ACE_WIN32)
   u_int handle_index_;
 #elif !defined (ACE_HAS_BIG_FD_SET)

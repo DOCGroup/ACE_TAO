@@ -15,7 +15,7 @@ UpcallHandler::timeout (PTimerQueue &,
                         int /* recurring_timer */,
                         const ACE_Time_Value &)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::timeout"));
+  ACE_TRACE ("UpcallHandler::timeout");
 
   return (*handler).handleEvent (arg);
 }
@@ -27,7 +27,7 @@ int
 UpcallHandler::cancellation (PTimerQueue &,
                              PCB *handler)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::cancellation"));
+  ACE_TRACE ("UpcallHandler::cancellation");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d has been cancelled\n"),
@@ -43,7 +43,7 @@ UpcallHandler::deletion (PTimerQueue &,
                          PCB *handler,
                          const void *)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::deletion"));
+  ACE_TRACE ("UpcallHandler::deletion");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d has been deleted\n"),
@@ -61,7 +61,7 @@ UpcallHandler::registration (PTimerQueue &,
                              PCB *handler,
                              const void *)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::registration"));
+  ACE_TRACE ("UpcallHandler::registration");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d has been registered.\n"),
@@ -80,7 +80,7 @@ UpcallHandler::preinvoke (PTimerQueue &,
                           const ACE_Time_Value &,
                           const void *&)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::preinvoke"));
+  ACE_TRACE ("UpcallHandler::preinvoke");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d is about to upcalled.\n"),
@@ -99,7 +99,7 @@ UpcallHandler::postinvoke (PTimerQueue &,
                            const ACE_Time_Value &,
                            const void *)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::postinvoke"));
+  ACE_TRACE ("UpcallHandler::postinvoke");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d returned from upcall.\n"),
@@ -114,7 +114,7 @@ UpcallHandler::cancel_type (PTimerQueue &,
                             int dont_call,
                             int &)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::cancel_type"));
+  ACE_TRACE ("UpcallHandler::cancel_type");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d has been cancelled\n"),
@@ -131,7 +131,7 @@ UpcallHandler::cancel_timer (PTimerQueue &,
                              int dont_call,
                              int)
 {
-  ACE_TRACE (ACE_TEXT ("UpcallHandler::cancel_timer"));
+  ACE_TRACE ("UpcallHandler::cancel_timer");
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Handler %d has been cancelled\n"),

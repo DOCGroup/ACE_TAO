@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Web_Crawler
-//
-// = FILENAME
-//    URL.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    URL.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef _URL_H
 #define _URL_H
@@ -32,31 +29,35 @@
 // Forward declaration.
 class URL_Visitor;
 
+/**
+ * @class URL
+ *
+ * @brief Base class for a URL.
+ *
+ * This class plays a role in the Visitor pattern.
+ */
 class URL
 {
-  // = TITLE
-  //    Base class for a URL.
-  //
-  // = DESCRIPTION
-  //    This class plays a role in the Visitor pattern.
 public:
+  /// Destructor.
   virtual ~URL (void);
-  // Destructor.
 
+  /**
+   * Accept the visitor, which will then perform a particular
+   * visitation strategy on the URL.  This method is part of the
+   * Visitor pattern.
+   */
   virtual int accept (URL_Visitor *visitor) = 0;
-  // Accept the visitor, which will then perform a particular
-  // visitation strategy on the URL.  This method is part of the
-  // Visitor pattern.
 
+  /// Send a <GET> command to fetch the contents in the URI from the
+  /// server.
   virtual ssize_t send_request (void) = 0;
-  // Send a <GET> command to fetch the contents in the URI from the
-  // server.
 
+  /// Returns the URL that we represent.
   virtual const ACE_URL_Addr &url_addr (void) const = 0;
-  // Returns the URL that we represent.
 
+  /// Returns the <Mem_Map_Stream>.
   virtual Mem_Map_Stream &stream (void);
-  // Returns the <Mem_Map_Stream>.
 
   // = Get/set the reply status.
   virtual const URL_Status &reply_status (void);
@@ -69,14 +70,14 @@ public:
 
 
 private:
+  /// Reply status of the URL.
   URL_Status reply_status_;
-  // Reply status of the URL.
 
+  /// Content-type of the URL.
   ACE_CString content_type_;
-  // Content-type of the URL.
 
+  /// Contents of the stream.
   Mem_Map_Stream stream_;
-  // Contents of the stream.
 };
 
 #endif /* _URL_H */

@@ -13,7 +13,7 @@
 #include "ace/SOCK_Dgram_Bcast.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SOCK_Dgram_Bcast, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -151,18 +151,9 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       if (hp == 0)
         return -1;
       else
-#if defined(_UNICOS)
-        {
-          ACE_UINT64 haddr;  // a place to put the address
-          char * haddrp = (char *) &haddr;  // convert to char pointer
-          ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
-          host_addr.sin_addr.s_addr = haddr;
-        }
-#else /* ! _UNICOS */
         ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr,
                         (char *) hp->h_addr,
                         hp->h_length);
-#endif /* ! _UNICOS */
     }
 
 
@@ -190,7 +181,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       // Silently skip link interfaces
       if (ifr->ifr_addr.sa_family == AF_LINK)
         continue;
-#endif /* __QNX__ */
+#endif /* __QNX__ || ACE_VXWORKS */
       // Compare host ip address with interface ip address.
       if (host_name)
         {

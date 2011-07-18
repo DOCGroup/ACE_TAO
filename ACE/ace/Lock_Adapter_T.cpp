@@ -16,17 +16,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This constructor isn't inlined, because SunPRO C++ 4.2 + patch
-// 104631-07 has trouble compiling TAO with it inline.
-template <class ACE_LOCKING_MECHANISM>
-ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
-  : lock_ (0),
-    delete_lock_ (true)
-{
-  ACE_NEW (this->lock_,
-           ACE_LOCKING_MECHANISM);
-}
-
 template <class ACE_LOCKING_MECHANISM>
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::~ACE_Lock_Adapter (void)
 {

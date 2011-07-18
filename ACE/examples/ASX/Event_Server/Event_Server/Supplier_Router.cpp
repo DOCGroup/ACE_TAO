@@ -7,7 +7,7 @@
 #include "Supplier_Router.h"
 #include "Options.h"
 
-ACE_RCSID(Event_Server, Supplier_Router, "$Id$")
+
 
 // Handle outgoing messages in a separate thread.
 

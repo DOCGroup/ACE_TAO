@@ -8,7 +8,7 @@
 #include "QoS_Util.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(QOS, QoS_Util,"$Id$")
+
 
 // constructor.
 QoS_Util::QoS_Util (int argc,

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(FIFO_SAP, FIFO_Msg_server, "$Id$")
+
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

@@ -9,8 +9,6 @@
 
 #include "agent_impl.h"
 
-ACE_RCSID(agent, agent_impl, "$Id$")
-
 agent_impl::agent_impl(unsigned short port, const char *rd, const char *wr) :
 sagent(port)
 {

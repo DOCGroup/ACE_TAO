@@ -5,8 +5,6 @@
 #include "Benchmark_Performance.h"
 #include "ace/Semaphore.h"
 
-ACE_RCSID(Synch_Benchmarks, sema_test, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Sema_Test : public Benchmark_Performance

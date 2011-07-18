@@ -1,9 +1,6 @@
 // $Id$
 
 #include "ace/OS_NS_sys_utsname.h"
-
-ACE_RCSID(ace, OS_NS_sys_utsname, "$Id$")
-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -81,11 +78,7 @@ ACE_OS::uname (ACE_utsname *name)
       char processor[bufsize] = "Unknown";
       char subtype[bufsize] = "Unknown";
 
-#   if defined (ghs)
-    WORD arch = sinfo.u.s.wProcessorArchitecture;
-#   else
     WORD arch = sinfo.wProcessorArchitecture;
-#   endif
 
       switch (arch)
         {
@@ -101,10 +94,17 @@ ACE_OS::uname (ACE_utsname *name)
             ACE_OS::strcpy (subtype, "Pentium Pro");
           else if (sinfo.wProcessorLevel == 7)  // I'm guessing here
             ACE_OS::strcpy (subtype, "Pentium II");
+          else
+            ACE_OS::sprintf (subtype, "%d", sinfo.wProcessorLevel);
           break;
         case PROCESSOR_ARCHITECTURE_MIPS:
           ACE_OS::strcpy (processor, "MIPS");
-          ACE_OS::strcpy (subtype, "R4000");
+          if (sinfo.wProcessorLevel == 3)
+            ACE_OS::strcpy (subtype, "R3000");
+          else if (sinfo.wProcessorLevel == 4)
+            ACE_OS::strcpy (subtype, "R4000");
+          else
+            ACE_OS::sprintf (subtype, "%d", sinfo.wProcessorLevel);
           break;
         case PROCESSOR_ARCHITECTURE_ALPHA:
           ACE_OS::strcpy (processor, "Alpha");
@@ -213,7 +213,7 @@ ACE_OS::uname (ACE_utsname *name)
 # endif /* ACE_LACKS_HOSTNAME */
 
 #elif defined (ACE_VXWORKS)
-  size_t maxnamelen = sizeof name->nodename;
+  size_t const maxnamelen = sizeof name->nodename;
   ACE_OS::strcpy (name->sysname, "VxWorks");
   ACE_OS::strcpy (name->release, kernelVersion());
   ACE_OS::strcpy (name->version, sysBspRev ());

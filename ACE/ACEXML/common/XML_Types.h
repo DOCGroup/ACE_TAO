@@ -30,7 +30,7 @@
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
 typedef wchar_t ACEXML_UTF16;
 # else
-typedef ACE_USHORT16 ACEXML_UTF16;
+typedef ACE_UINT16 ACEXML_UTF16;
 # endif /* ACE_HAS_WCHAR && ACE_SIZEOF_WCHAR == 2 */
 
 # if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 4)

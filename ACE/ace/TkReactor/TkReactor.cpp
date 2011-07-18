@@ -1,9 +1,8 @@
+// $Id$
 #include "ace/TkReactor/TkReactor.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-
-ACE_RCSID(ace, TkReactor, "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

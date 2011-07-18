@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #if defined (ACE_LACKS_ISWCTYPE)

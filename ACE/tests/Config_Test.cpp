@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Config_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that makes sure various classes in
-//      <ACE_Configuration> work correctly.
-//
-// = AUTHOR
-//    Michael Searles <msearles@base16.com>,
-//    Chris Hafey <chafey@stentor.com>, and
-//    Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Config_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that makes sure various classes in
+ *    <ACE_Configuration> work correctly.
+ *
+ *
+ *  @author Michael Searles <msearles@base16.com>
+ *  @author Chris Hafey <chafey@stentor.com>
+ *  @author and Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Config_Test.h"
@@ -28,7 +25,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Config_Test, "$Id$")
+
 
 static int
 test (ACE_Configuration *config,
@@ -560,7 +557,7 @@ run_tests (void)
 
   ACE_Configuration_Win32Registry RegConfig (root);
   {
-    int result = test (&RegConfig);
+    int const result = test (&RegConfig);
     if (result)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Win32 registry test root failed (%d)\n"),
@@ -573,8 +570,25 @@ run_tests (void)
   // Test Heap version
   ACE_Configuration_Heap heap_config;
 
-  if (heap_config.open ())
-    return 0;
+  if (heap_config.open () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open %p\n"),
+                       ACE_TEXT ("local-heap config")),
+                      -1);
+  if (heap_config.open () == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open heap allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open heap expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, ACE_ERRNO_GET),
+                        -1);
+    }
   {
     int result = test_subkey_path (&heap_config);
     if (result)
@@ -600,8 +614,37 @@ run_tests (void)
 
   if (pers_config.open (ACE_TEXT ("test.reg")))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open test.reg\n")),
+                       ACE_TEXT ("Cannot open %p\n"),
+                       ACE_TEXT ("test.reg")),
                       -1);
+  if (pers_config.open (ACE_TEXT ("test.reg")) == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(mmap) allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(mmap) expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, ACE_ERRNO_GET),
+                        -1);
+    }
+  if (pers_config.open () == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(new) allowed; bugzilla 3724\n")),
+                        -1);
+    }
+  else if (errno != EBUSY)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Re-open(new) expected EBUSY (%d), ")
+                         ACE_TEXT ("got %d: bugzilla 3724\n"),
+                         EBUSY, ACE_ERRNO_GET),
+                        -1);
+    }
 
   {
     int result = test (&pers_config);
@@ -1086,7 +1129,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                  sectionName.c_str (),
                                  0); // do not remove subsections.
 
-      sectionIndex++;
+      ++sectionIndex;
 
     }// end section while loop
 
@@ -1096,7 +1139,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
          (!original.enumerate_sections (originalRoot,
                                         sectionIndex,
                                         sectionName)))
-    sectionIndex++;
+    ++sectionIndex;
 
   rc = sectionIndex == 0;
 

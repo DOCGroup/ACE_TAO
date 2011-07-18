@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Singleton.h"
 

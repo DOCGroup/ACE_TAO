@@ -23,7 +23,7 @@
 
 #include "ace/Signal.h"
 
-ACE_RCSID(Threads, task_three, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

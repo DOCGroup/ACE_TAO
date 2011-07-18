@@ -4,7 +4,7 @@
 
 #include "JAWS/JAWS.h"
 
-ACE_RCSID(PROTOTYPE, HTTP_10, "$Id$")
+
 
 char *
 JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)

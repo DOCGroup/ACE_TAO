@@ -7,7 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(FIFO_SAP, FIFO_client, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

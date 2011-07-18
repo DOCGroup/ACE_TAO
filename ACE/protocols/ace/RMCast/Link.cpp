@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Link.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "ace/Time_Value.h"        // ACE_Time_Value
 #include "ace/OS_NS_stdio.h"
@@ -188,11 +187,7 @@ namespace ACE_RMCast
   {
     size_t max_packet_size (params_.max_packet_size ());
 
-    // This is wicked.
-    //
-    ACE_Auto_Ptr<char> holder (
-      reinterpret_cast<char*> (
-        operator new (max_packet_size + ACE_CDR::MAX_ALIGNMENT)));
+    ACE_Auto_Array_Ptr<char> holder (new char[max_packet_size + ACE_CDR::MAX_ALIGNMENT]);
 
     char* data = ACE_ptr_align_binary (holder.get (), ACE_CDR::MAX_ALIGNMENT);
 

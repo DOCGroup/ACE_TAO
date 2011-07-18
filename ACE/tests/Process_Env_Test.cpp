@@ -1,29 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Env_Test.cpp
-//
-// = DESCRIPTION
-//      This program tests the limits of the Windows CreateProcess
-//      environment buffer.
-//
-// = AUTHOR
-//    Chad Elliott <elliott_c@ociweb.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Env_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program tests the limits of the Windows CreateProcess
+ *    environment buffer.
+ *
+ *
+ *  @author Chad Elliott <elliott_c@ociweb.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/SString.h"
-
-ACE_RCSID(tests,
-          Process_Env_Test,
-          "$Id$")
 
 typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
                             void *ctx);

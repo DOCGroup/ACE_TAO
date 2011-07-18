@@ -17,11 +17,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (ace,
-           SString,
-           "SString.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
-
-
 // ************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -84,7 +79,7 @@ ACE_NS_WString::char_rep (void) const
     }
 }
 
-ACE_USHORT16 *
+ACE_UINT16 *
 ACE_NS_WString::ushort_rep (void) const
 {
   ACE_TRACE ("ACE_NS_WString::ushort_rep");
@@ -92,16 +87,16 @@ ACE_NS_WString::ushort_rep (void) const
     return 0;
   else
     {
-      ACE_USHORT16 *t = 0;
+      ACE_UINT16 *t = 0;
 
       ACE_NEW_RETURN (t,
-                      ACE_USHORT16[this->len_ + 1],
+                      ACE_UINT16[this->len_ + 1],
                       0);
 
       for (size_type i = 0; i < this->len_; ++i)
         // Note that this cast may lose data if wide chars are
         // actually used!
-        t[i] = (ACE_USHORT16)this->rep_[i];
+        t[i] = (ACE_UINT16)this->rep_[i];
 
       t[this->len_] = 0;
       return t;
@@ -130,7 +125,7 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
 }
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
-ACE_NS_WString::ACE_NS_WString (const ACE_USHORT16 *s,
+ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
                                 size_type len,
                                 ACE_Allocator *alloc)
   : ACE_WString (alloc)
@@ -332,212 +327,6 @@ ACE_SString::substring (size_type offset,
 }
 
 // ************************************************************
-
-ACE_Tokenizer::ACE_Tokenizer (ACE_TCHAR *buffer)
-  : buffer_ (buffer),
-    index_ (0),
-    preserves_index_ (0),
-    delimiter_index_ (0)
-{
-}
-
-int
-ACE_Tokenizer::delimiter (ACE_TCHAR d)
-{
-  if (delimiter_index_ == MAX_DELIMITERS)
-    return -1;
-
-  delimiters_[delimiter_index_].delimiter_ = d;
-  delimiters_[delimiter_index_].replace_ = 0;
-  delimiter_index_++;
-  return 0;
-}
-
-int
-ACE_Tokenizer::delimiter_replace (ACE_TCHAR d,
-                                  ACE_TCHAR replacement)
-{
-  // Make it possible to replace delimiters on-the-fly, e.g., parse
-  // string until certain token count and then copy rest of the
-  // original string.
-  for (int i = 0; i < delimiter_index_; i++)
-    if (delimiters_[i].delimiter_ == d)
-      {
-        delimiters_[i].replacement_ = replacement;
-        delimiters_[i].replace_ = 1;
-        return 0;
-      }
-
-  if (delimiter_index_ >= MAX_DELIMITERS)
-    return -1;
-
-  delimiters_[delimiter_index_].delimiter_ = d;
-  delimiters_[delimiter_index_].replacement_ = replacement;
-  delimiters_[delimiter_index_].replace_ = 1;
-  delimiter_index_++;
-  return 0;
-}
-
-int
-ACE_Tokenizer::preserve_designators (ACE_TCHAR start,
-                                     ACE_TCHAR stop,
-                                     int strip)
-{
-  if (preserves_index_ == MAX_PRESERVES)
-    return -1;
-
-  preserves_[preserves_index_].start_ = start;
-  preserves_[preserves_index_].stop_ = stop;
-  preserves_[preserves_index_].strip_ = strip;
-  preserves_index_++;
-  return 0;
-}
-
-int
-ACE_Tokenizer::is_delimiter (ACE_TCHAR d,
-                             int &replace,
-                             ACE_TCHAR &r)
-{
-  replace = 0;
-
-  for (int x = 0; x < delimiter_index_; x++)
-    if (delimiters_[x].delimiter_ == d)
-      {
-        if (delimiters_[x].replace_)
-          {
-            r = delimiters_[x].replacement_;
-            replace = 1;
-          }
-        return 1;
-      }
-
-  return 0;
-}
-
-int
-ACE_Tokenizer::is_preserve_designator (ACE_TCHAR start,
-                                       ACE_TCHAR &stop,
-                                       int &strip)
-{
-  for (int x = 0; x < preserves_index_; x++)
-    if (preserves_[x].start_ == start)
-      {
-        stop = preserves_[x].stop_;
-        strip = preserves_[x].strip_;
-        return 1;
-      }
-
-  return 0;
-}
-
-ACE_TCHAR *
-ACE_Tokenizer::next (void)
-{
-  // Check if the previous pass was the last one in the buffer.
-  if (index_ == -1)
-    {
-      index_ = 0;
-      return 0;
-    }
-
-  ACE_TCHAR replacement = 0;
-  int replace;
-  ACE_TCHAR *next_token;
-
-  // Skip all leading delimiters.
-  for (;;)
-    {
-      // Check for end of string.
-      if (buffer_[index_] == '\0')
-        {
-          // If we hit EOS at the start, return 0.
-          index_ = 0;
-          return 0;
-        }
-
-      if (this->is_delimiter (buffer_[index_],
-                              replace,
-                              replacement))
-        index_++;
-      else
-        break;
-    }
-
-  // When we reach this point, buffer_[index_] is a non-delimiter and
-  // not EOS - the start of our next_token.
-  next_token = buffer_ + index_;
-
-  // A preserved region is it's own token.
-  ACE_TCHAR stop;
-  int strip;
-  if (this->is_preserve_designator (buffer_[index_],
-                                    stop,
-                                    strip))
-    {
-      while (++index_)
-        {
-          if (buffer_[index_] == '\0')
-            {
-              index_ = -1;
-              goto EXIT_LABEL;
-            }
-
-          if (buffer_[index_] == stop)
-            break;
-        }
-
-      if (strip)
-        {
-          // Skip start preserve designator.
-          next_token += 1;
-          // Zap the stop preserve designator.
-          buffer_[index_] = '\0';
-          // Increment to the next token.
-          index_++;
-        }
-
-      goto EXIT_LABEL;
-    }
-
-  // Step through finding the next delimiter or EOS.
-  for (;;)
-    {
-      // Advance pointer.
-      index_++;
-
-      // Check for delimiter.
-      if (this->is_delimiter (buffer_[index_],
-                              replace,
-                              replacement))
-        {
-          // Replace the delimiter.
-          if (replace != 0)
-            buffer_[index_] = replacement;
-
-          // Move the pointer up and return.
-          index_++;
-          goto EXIT_LABEL;
-        }
-
-      // A preserve designator signifies the end of this token.
-      if (this->is_preserve_designator (buffer_[index_],
-                                        stop,
-                                        strip))
-        goto EXIT_LABEL;
-
-      // Check for end of string.
-      if (buffer_[index_] == '\0')
-        {
-          index_ = -1;
-          goto EXIT_LABEL;
-        }
-    }
-
-EXIT_LABEL:
-  return next_token;
-}
-
-// *************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template char ACE_String_Base<char>::NULL_String_;

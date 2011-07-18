@@ -2,7 +2,7 @@
 # $Id$
 #
 # This is the UNIX version of the one-button ACE tests.
-# Contributed originally by Michael Rueger <m_rueger@SYSCOMP.DE> and 
+# Contributed originally by Michael Rueger <m_rueger@SYSCOMP.DE> and
 # modified substantially by the DOC group.
 #
 # It also supports remote invocation on a CHORUS/ClassiX/MVME target.
@@ -213,7 +213,7 @@ for i in `cat run_tests_remote.lst | tr "\012" "$IFS"`; do
          test=$i;
         ;;
     esac
- 
+
 #  echo =****= $precond ===== $test;
 
     if test -z "$precond"; then

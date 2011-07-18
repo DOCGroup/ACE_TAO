@@ -12,7 +12,7 @@
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(SV_Semaphores, Semaphores_2, "$Id$")
+
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 

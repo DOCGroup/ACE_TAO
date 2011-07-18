@@ -6,8 +6,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(TLI_SAP, db_client, "$Id$")
-
 #if defined (ACE_HAS_TLI)
 const int MAXLINE = 255;
 

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Multicast_Manager.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Multicast_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _MULTICAST_MANAGER_H
 #define _MULTICAST_MANAGER_H
@@ -32,11 +29,14 @@ public:
   Host_Elem (const char *h_name, Host_Elem *n);
 };
 
+/**
+ * @class Multicast_Manager
+ *
+ * @brief This file handles all the operations upon host machines names
+ * and addresses.
+ */
 class Multicast_Manager
 {
-  // = TITLE
-  //   This file handles all the operations upon host machines names
-  //   and addresses.
 public:
   static void add_host (const char *host_name);
   static void checkoff_host (in_addr host_addr);

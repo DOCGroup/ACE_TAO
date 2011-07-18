@@ -88,7 +88,7 @@ namespace ACE
           this->value_ += (*current_instance)->value_;
         }
     }
-    
+
     void
     Windows_Multi_Instance_Monitor::clear_impl (void)
     {

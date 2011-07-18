@@ -11,8 +11,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -119,7 +117,5 @@ ACE_Event_Handler_T<T>::handle_signal (int signum, siginfo_t *s, ucontext_t *u)
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 #endif /* ACE_EVENT_HANDLER_T_CPP */

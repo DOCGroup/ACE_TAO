@@ -12,8 +12,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(client, local_pipe_client_test, "$Id$")
-
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // Name of the program.
 static ACE_TCHAR *program_name;

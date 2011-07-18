@@ -27,7 +27,7 @@ HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
       return;
     }
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_NORETURN (mb, ACE_Message_Block (1024));
   if (this->reader_.read (*mb, mb->space ()) != 0)
     {

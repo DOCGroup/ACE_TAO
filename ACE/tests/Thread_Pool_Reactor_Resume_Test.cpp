@@ -1,40 +1,37 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Pool_Reactor_Resume_Test.cpp
-//
-// = DESCRIPTION
-//      This program is an additional torture test of thread pool
-//      reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
-//      in $ACE_ROOT/tests. This test differs from the other one
-//      slightly. The TP reactor is instantiated with the
-//      with a value of 1 for the <resume_flag> argument. The server
-//      threads during the  handle_input call resumes the handle that
-//      would have been suspended by the reactor.
-//
-//      Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]
-//                [-s <server thr#>] [-c <client thr#>] [-d <delay>]
-//                [-i <client conn attempt#>] [-n <client request# per conn>]
-//
-//      Default value:
-//          <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
-//          <server thr#>:          ACE_MAX_THREADS
-//          <client thr#>:          ACE_MAX_ITERATIONS
-//          <client conn attempt#>: ACE_MAX_ITERATIONS
-//          <client req# per conn>: ACE_MAX_THREADS
-//          <delay>:                50 usec
-//
-// = AUTHOR
-//   Balachandran Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Pool_Reactor_Resume_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program is an additional torture test of thread pool
+ *    reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
+ *    in $ACE_ROOT/tests. This test differs from the other one
+ *    slightly. The TP reactor is instantiated with the
+ *    with a value of 1 for the <resume_flag> argument. The server
+ *    threads during the  handle_input call resumes the handle that
+ *    would have been suspended by the reactor.
+ *
+ *    Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]
+ *              [-s <server thr#>] [-c <client thr#>] [-d <delay>]
+ *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *
+ *    Default value:
+ *        <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
+ *        <server thr#>:          ACE_MAX_THREADS
+ *        <client thr#>:          ACE_MAX_ITERATIONS
+ *        <client conn attempt#>: ACE_MAX_ITERATIONS
+ *        <client req# per conn>: ACE_MAX_THREADS
+ *        <delay>:                50 usec
+ *
+ *
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include "tests/test_config.h"
+
+#include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
@@ -44,11 +41,11 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
-ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
-#include "tests/Thread_Pool_Reactor_Resume_Test.h"
+#include "Thread_Pool_Reactor_Resume_Test.h"
 typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 // Accepting end point.  This is actually "localhost:10010", but some
@@ -63,7 +60,7 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 // Default network parameters (MAX_BINDS and system buffers) are too small
 // for full test on some platforms; add platforms that can't handle too many
 // connection simultaneously here.
-#if defined (CHORUS) || defined (ACE_VXWORKS) || defined (ACE_HAS_PHARLAP)
+#if defined (ACE_VXWORKS) || defined (ACE_HAS_PHARLAP)
 #define ACE_LOAD_FACTOR /2
 #else
 #define ACE_LOAD_FACTOR
@@ -196,8 +193,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Errno is %d  and result is %d\n",
-                  errno, result));
+                  "(%t) Errno is %d and result is %d\n",
+                  ACE_ERRNO_GET, result));
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
                   this, fd));
@@ -310,7 +307,7 @@ worker (void *)
   int grp = ACE_Thread_Manager::instance ()->spawn_n (cli_thrno,
                                                       &cli_worker,
                                                       buf);
-  ACE_ASSERT (grp != -1);
+  ACE_TEST_ASSERT (grp != -1);
 
   ACE_Thread_Manager::instance ()->wait_grp (grp);
 

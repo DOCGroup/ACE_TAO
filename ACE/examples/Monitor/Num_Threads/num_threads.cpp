@@ -83,7 +83,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   STOP_PERIODIC_MONITORS;
 
   num_threads_monitor->remove_ref ();
-  
+
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
   return 0;

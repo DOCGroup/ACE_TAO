@@ -33,6 +33,7 @@ libACE_Monitor_Control_la_SOURCES = \
   CPU_Load_Monitor.cpp \
   Constraint_Interpreter.cpp \
   Constraint_Visitor.cpp \
+  FreeBSD_Network_Interface_Monitor.cpp \
   Linux_Network_Interface_Monitor.cpp \
   Memory_Usage_Monitor.cpp \
   Monitor_Group.cpp \
@@ -61,6 +62,7 @@ nobase_include_HEADERS = \
   CPU_Load_Monitor.h \
   Constraint_Interpreter.h \
   Constraint_Visitor.h \
+  FreeBSD_Network_Interface_Monitor.h \
   Linux_Network_Interface_Monitor.h \
   Memory_Usage_Monitor.h \
   Monitor_Control.h \

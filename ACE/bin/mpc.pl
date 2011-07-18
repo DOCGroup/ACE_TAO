@@ -20,8 +20,8 @@ use FindBin;
 use File::Spec;
 use File::Basename;
 
-my($basePath) = $FindBin::RealBin;
-my($baseName) = $FindBin::RealScript;
+my($basePath) = (defined $FindBin::RealBin ? $FindBin::RealBin :
+                                             File::Spec->rel2abs(dirname($0)));
 if ($^O eq 'VMS') {
   $basePath = File::Spec->rel2abs(dirname($0)) if ($basePath eq '');
   $basePath = VMS::Filespec::unixify($basePath);
@@ -64,5 +64,5 @@ sub getBasePath {
 # Main Section
 # ************************************************************
 
-my($driver) = new Driver($basePath, basename($0));
+my($driver) = new Driver($basePath, Driver::projects());
 exit($driver->run(@ARGV));

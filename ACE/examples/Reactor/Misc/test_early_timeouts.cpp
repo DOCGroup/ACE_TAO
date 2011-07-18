@@ -1,22 +1,19 @@
-// $Id$
 
-// ================================================================
-//
-// = LIBRARY
-//    examples/Reactor/Misc/
-//
-// = FILENAME
-//    test_early_timeouts.cpp
-//
-// = DESCRIPTION
-//    On some platforms, select() returns before the time value
-//    specified.  This tests counts the number of times this happens
-//    and the max early timeout.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ================================================================
+//=============================================================================
+/**
+ *  @file    test_early_timeouts.cpp
+ *
+ *  $Id$
+ *
+ *  On some platforms, select() returns before the time value
+ *  specified.  This tests counts the number of times this happens
+ *  and the max early timeout.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Handle_Set.h"
 #include "ace/Pipe.h"
@@ -25,7 +22,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_sys_select.h"
 
-ACE_RCSID(Misc, test_early_timeouts, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

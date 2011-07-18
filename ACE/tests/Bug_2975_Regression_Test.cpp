@@ -10,13 +10,9 @@
  */
 
 #include "ace/ACE.h"
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "ace/Service_Config.h"
 #include "ace/ARGV.h"
-
-ACE_RCSID (tests,
-           Bug_2975_Regression_Test,
-           "$Id$")
 
 int
 run_main (int, ACE_TCHAR *argv[])

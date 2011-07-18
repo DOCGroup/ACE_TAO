@@ -43,7 +43,7 @@ protected:
   void ResolveKey(wxTreeItemId Item, ACE_Configuration_Section_Key& Key);
 private:
   DECLARE_EVENT_TABLE()
-  
+
   ACE_Configuration*    m_pConfig;
   ValueListCtrl*        m_pListCtrl;
 };

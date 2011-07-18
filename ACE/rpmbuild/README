@@ -36,9 +36,9 @@ the following contents should be enough:
     cat > ~/.rpmmacros <<EOF
     %_topdir        %(echo ${HOME}/rpm)
     %_tmppath       %{_topdir}/tmp
-    
+
     %packager       Firstname Lastname <your.address@here>
-    
+
     # Have built RPMs land in RPMS/ instead of RPMS/<arch>/
     %_rpmfilename  %%{NAME}-%%{VERSION}-%%{RELEASE}.%%{ARCH}.rpm
     EOF
@@ -52,7 +52,7 @@ There are some important details:
 
 * The tarball name must have the ACE version in the name, for example:
 
-    ACE+TAO+CIAO-5.6.6.tar.bz2
+    ACE+TAO+CIAO-src-5.6.6.tar.bz2
 
 * The spec file inside the tarball
  (ACE_wrappers/rpmbuild/ace-tao.spec) must have the correct version
@@ -68,7 +68,7 @@ There are some important details:
     ACE_wrappers/ace/Version.h
     ACE_wrappers/TAO/tao/Version.h
     ACE_wrappers/TAO/CIAO/ciao/Version.h
-    
+
 
 Building the RPM
 ----------------------------------------------------------------

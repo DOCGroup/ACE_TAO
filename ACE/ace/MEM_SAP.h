@@ -42,11 +42,6 @@ class ACE_MEM_IO;
 class ACE_MEM_SAP_Node
 {
 public:
-//    friend class ACE_MEM_SAP;
-//    friend class ACE_Reactive_MEM_IO;
-//    friend class ACE_MT_MEM_IO;
-//    friend class ACE_MEM_IO;
-
   typedef ACE_Based_Pointer<ACE_MEM_SAP_Node> ACE_MEM_SAP_NODE_PTR;
 
   /// Initialize the node with its capacity.

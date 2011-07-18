@@ -16,4 +16,9 @@ project(gperf) : aceexe, install, crosscompile {
     Vectors.cpp
     Version.cpp
   }
+
+  verbatim(gnuace, postinstall) {
+"	@$(MKDIR) $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
+"	ln -sf $(INSTALL_PREFIX)/bin/ace_gperf $(DESTDIR)$(INSTALL_PREFIX)/share/ace/bin"
+  }
 }

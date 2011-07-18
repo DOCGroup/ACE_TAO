@@ -223,7 +223,7 @@ public:
 
   virtual int svc () {
     int stop = 0;
-    for (ACE_Message_Block *mb; !stop && getq (mb) != -1; ) {
+    for (ACE_Message_Block *mb = 0; !stop && getq (mb) != -1; ) {
       if (mb->msg_type () == ACE_Message_Block::MB_STOP)
         stop = 1;
       else
@@ -281,8 +281,8 @@ public:
     ACE_TCHAR timestamp_t[26];
     char timestamp[26]; // Max size of ctime_r() string.
     time_t time_secs (secs);
-    ACE_OS::ctime_r (&time_secs, 
-                     timestamp_t, 
+    ACE_OS::ctime_r (&time_secs,
+                     timestamp_t,
                      sizeof timestamp_t / sizeof (ACE_TCHAR));
     ACE_OS::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
     mblk->size (26); // Max size of ctime_r() string.

@@ -670,12 +670,12 @@ local int unzlocal_GetCurrentFileInfoInternal (unzFile file,
             else
                 err=UNZ_ERRNO;
         }
-      
+
         if ((file_info.size_file_extra>0) && (extraFieldBufferSize>0))
-        {   
+        {
             if (ZREAD(s->z_filefunc, s->filestream,extraField,uSizeRead)!=uSizeRead)
               err=UNZ_ERRNO;
-              
+
             lSeek += file_info.size_file_extra - uSizeRead;
         }
     }

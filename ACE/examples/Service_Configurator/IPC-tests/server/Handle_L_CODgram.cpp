@@ -4,8 +4,6 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-ACE_RCSID(server, Handle_L_CODgram, "$Id$")
-
 const ACE_TCHAR *Handle_L_CODgram::DEFAULT_RENDEZVOUS =
   ACE_TEXT ("/tmp/foo_codgram");
 

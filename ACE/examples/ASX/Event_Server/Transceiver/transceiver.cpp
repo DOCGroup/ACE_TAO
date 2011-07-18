@@ -15,10 +15,6 @@
 
 #include "transceiver.h"
 
-ACE_RCSID (Transceiver,
-           transceiver,
-           "$Id$")
-
 // Handle the command-line arguments.
 
 int

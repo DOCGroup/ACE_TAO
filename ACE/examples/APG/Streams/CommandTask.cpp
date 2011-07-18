@@ -26,7 +26,7 @@ int CommandTask::put (ACE_Message_Block *message,
 // Listing 04 code/ch18
 int CommandTask::process (Command *)
 {
-  ACE_TRACE (ACE_TEXT ("CommandTask::process()"));
+  ACE_TRACE ("CommandTask::process()");
   return Command::RESULT_FAILURE;
 }
 // Listing 04

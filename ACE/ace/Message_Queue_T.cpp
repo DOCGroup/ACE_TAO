@@ -9,6 +9,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"
 
+#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#include "ace/Message_Queue_NT.h"
+#endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -56,13 +60,13 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length (size_t ne
 }
 
 template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
-ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (size_t hwm,
-                                                                             size_t lwm,
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (size_t high_water_mark,
+                                                                             size_t low_water_mark,
                                                                              ACE_Notification_Strategy *ns)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex");
 
-  if (this->queue_.open (hwm, lwm, ns) == -1)
+  if (this->queue_.open (high_water_mark, low_water_mark, ns) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ACE_Message_Queue_Ex")));
 }
@@ -1695,7 +1699,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 
   // Wait for at least one item to become available.
 
-  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+  if (this->wait_not_empty_cond (timeout) == -1)
     return -1;
 
   first_item = this->head_;
@@ -1703,8 +1707,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (ACE_Message_Block *&first_i
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &,
-                                                      ACE_Time_Value *timeout)
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Time_Value *timeout)
 {
   int result = 0;
 
@@ -1730,8 +1733,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond
-    (ACE_Guard<ACE_SYNCH_MUTEX_T> &, ACE_Time_Value *timeout)
+ACE_Message_Queue<ACE_SYNCH_USE>::wait_not_empty_cond (ACE_Time_Value *timeout)
 {
   int result = 0;
 
@@ -1765,6 +1767,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1774,16 +1777,21 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
         return -1;
       }
 
-    if (this->wait_not_full_cond (ace_mon, timeout) == -1)
+    if (this->wait_not_full_cond (timeout) == -1)
       return -1;
 
     queue_count = this->enqueue_head_i (new_item);
-
     if (queue_count == -1)
       return -1;
 
-    this->notify ();
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
+
+  if (0 != notifier)
+    notifier->notify();
   return queue_count;
 }
 
@@ -1797,6 +1805,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1806,7 +1815,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
         return -1;
       }
 
-    if (this->wait_not_full_cond (ace_mon, timeout) == -1)
+    if (this->wait_not_full_cond (timeout) == -1)
       return -1;
 
     queue_count = this->enqueue_i (new_item);
@@ -1814,8 +1823,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
     if (queue_count == -1)
       return -1;
 
-    this->notify ();
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
+  if (0 != notifier)
+    notifier->notify ();
   return queue_count;
 }
 
@@ -1829,6 +1843,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1838,7 +1853,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
         return -1;
       }
 
-    if (this->wait_not_full_cond (ace_mon, timeout) == -1)
+    if (this->wait_not_full_cond (timeout) == -1)
       return -1;
 
     queue_count = this->enqueue_deadline_i (new_item);
@@ -1846,8 +1861,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline (ACE_Message_Block *new_item,
     if (queue_count == -1)
       return -1;
 
-    this->notify ();
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
+  if (0 != notifier)
+    notifier->notify ();
   return queue_count;
 }
 
@@ -1868,6 +1888,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   int queue_count = 0;
+  ACE_Notification_Strategy *notifier = 0;
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1877,7 +1898,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
         return -1;
       }
 
-    if (this->wait_not_full_cond (ace_mon, timeout) == -1)
+    if (this->wait_not_full_cond (timeout) == -1)
       return -1;
 
     queue_count = this->enqueue_tail_i (new_item);
@@ -1885,8 +1906,13 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
     if (queue_count == -1)
       return -1;
 
-    this->notify ();
+#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
+    this->monitor_->receive (this->cur_length_);
+#endif
+    notifier = this->notification_strategy_;
   }
+  if (0 != notifier)
+    notifier->notify ();
   return queue_count;
 }
 
@@ -1907,7 +1933,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&first_item,
       return -1;
     }
 
-  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+  if (this->wait_not_empty_cond (timeout) == -1)
     return -1;
 
   return this->dequeue_head_i (first_item);
@@ -1930,7 +1956,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio (ACE_Message_Block *&dequeued,
       return -1;
     }
 
-  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+  if (this->wait_not_empty_cond (timeout) == -1)
     return -1;
 
   return this->dequeue_prio_i (dequeued);
@@ -1953,7 +1979,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail (ACE_Message_Block *&dequeued,
       return -1;
     }
 
-  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+  if (this->wait_not_empty_cond (timeout) == -1)
     return -1;
 
   return this->dequeue_tail_i (dequeued);
@@ -1976,7 +2002,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline (ACE_Message_Block *&dequeued
       return -1;
     }
 
-  if (this->wait_not_empty_cond (ace_mon, timeout) == -1)
+  if (this->wait_not_empty_cond (timeout) == -1)
     return -1;
 
   return this->dequeue_deadline_i (dequeued);
@@ -1986,10 +2012,6 @@ template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::notify (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::notify");
-
-#if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-  this->monitor_->receive (this->cur_length_);
-#endif
 
   // By default, don't do anything.
   if (this->notification_strategy_ == 0)
@@ -2191,7 +2213,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head (ACE_Message_Block *&firs
     return result;
 
   // *now* it's appropriate to wait for an enqueued item
-  result = this->wait_not_empty_cond (ace_mon, timeout);
+  result = this->wait_not_empty_cond (timeout);
   if (result == -1)
     return result;
 

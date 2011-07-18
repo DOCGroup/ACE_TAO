@@ -1,46 +1,42 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests/SSL
-//
-// = FILENAME
-//    Thread_Pool_Reactor_Test.cpp
-//
-// = DESCRIPTION
-//      This program is a torture test of threaded SSL usage. It
-//      is based on the tests/Thread_Pool_Reactor_Test and adds
-//      SSL stuff submitted by Robert Handl <robert.handl@ehpt.com>.
-//      It starts by spawning several server threads waiting to handle
-//      events.  Several other client threads are spawned right after
-//      to initiate connections to server threads.  Each connection
-//      adds a new Svc_Handler into the TP_Reactor and sends out
-//      several "requests" to the server thread.  After the connection
-//      is closed, the Svc_Handler is removed from the TP_Reactor.
-//      Each message is treated as a separate request by the server so
-//      two consecutive requests might be serviced by two different
-//      threads.
-//
-//      Usage: Thread_Pool_Reactor_Test_SSL [-r <hostname:port#>]
-//                [-s <server thr#>] [-c <client thr#>] [-d <delay>]
-//                [-i <client conn attempt#>] [-n <client request# per conn>]
-//
-//      Default value:
-//          <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
-//          <server thr#>:          ACE_MAX_THREADS
-//          <client thr#>:          ACE_MAX_ITERATIONS
-//          <client conn attempt#>: ACE_MAX_ITERATIONS
-//          <client req# per conn>: ACE_MAX_THREADS
-//          <delay>:                50 usec
-//
-// = AUTHOR
-//      Irfan Pyarali <irfan@cs.wustl.edu> and
-//      Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Pool_Reactor_SSL_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program is a torture test of threaded SSL usage. It
+ *    is based on the tests/Thread_Pool_Reactor_Test and adds
+ *    SSL stuff submitted by Robert Handl <robert.handl@ehpt.com>.
+ *    It starts by spawning several server threads waiting to handle
+ *    events.  Several other client threads are spawned right after
+ *    to initiate connections to server threads.  Each connection
+ *    adds a new Svc_Handler into the TP_Reactor and sends out
+ *    several "requests" to the server thread.  After the connection
+ *    is closed, the Svc_Handler is removed from the TP_Reactor.
+ *    Each message is treated as a separate request by the server so
+ *    two consecutive requests might be serviced by two different
+ *    threads.
+ *
+ *    Usage: Thread_Pool_Reactor_Test_SSL [-r <hostname:port#>]
+ *              [-s <server thr#>] [-c <client thr#>] [-d <delay>]
+ *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *
+ *    Default value:
+ *        <hostname:port#>:       ACE_DEFAULT_RENDEZVOUS
+ *        <server thr#>:          ACE_MAX_THREADS
+ *        <client thr#>:          ACE_MAX_ITERATIONS
+ *        <client conn attempt#>: ACE_MAX_ITERATIONS
+ *        <client req# per conn>: ACE_MAX_THREADS
+ *        <delay>:                50 usec
+ *
+ *
+ *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
 
-#include "tests/test_config.h"
+
+#include "../test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
@@ -50,12 +46,12 @@
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
 #include "Thread_Pool_Reactor_SSL_Test.h"
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SSL_SOCK_ACCEPTOR>
+typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SSL_SOCK_Acceptor>
    ACCEPTOR;
 
 // Accepting end point.  This is actually "localhost:10010", but some
@@ -66,21 +62,14 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 // Total number of server threads.
 static size_t svr_thrno = ACE_MAX_THREADS;
 
-#if defined (CHORUS) // Add platforms that can't handle too many
-                     // connection simultaneously here.
-#define ACE_LOAD_FACTOR /2
-#else
-#define ACE_LOAD_FACTOR
-#endif
-
 // Total number of client threads.
-static size_t cli_thrno = ACE_MAX_THREADS ACE_LOAD_FACTOR;
+static size_t cli_thrno = ACE_MAX_THREADS;
 
 // Total connection attemps of a client thread.
-static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
+static size_t cli_conn_no = ACE_MAX_ITERATIONS;
 
 // Total requests a client thread sends.
-static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
+static size_t cli_req_no = ACE_MAX_THREADS;
 
 // Delay before a thread sending the next request (in msec.)
 static int req_delay = 50;
@@ -128,7 +117,7 @@ parse_arg (int argc, ACE_TCHAR *argv[])
 }
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
-  : ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
+  : ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_MT_SYNCH> (thr_mgr),
     nr_msgs_rcvd_(0)
 {
   // Make sure we use TP_Reactor with this class (that's the whole

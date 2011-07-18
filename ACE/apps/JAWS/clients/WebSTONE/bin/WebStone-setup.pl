@@ -58,7 +58,7 @@ sub gettestbed {
 	}
 	else {
 	    ( $textvalue, $thevalue ) = split( '=', $_ );
-	    ( $thevalue ) = split( '#', $thevalue);	    
+	    ( $thevalue ) = split( '#', $thevalue);
 	    $testbed{$textvalue} = $thevalue;
 	    push(@keylist, $textvalue);
 	}

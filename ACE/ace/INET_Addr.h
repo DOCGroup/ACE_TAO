@@ -71,15 +71,15 @@ public:
   explicit ACE_INET_Addr (u_short port_number,
                           ACE_UINT32 ip_addr = INADDR_ANY);
 
-  /// Uses <getservbyname> to create an ACE_INET_Addr from a
-  /// <port_name>, the remote @a host_name, and the @a protocol.
+  /// Uses getservbyname() to create an ACE_INET_Addr from a
+  /// @a port_name, the remote @a host_name, and the @a protocol.
   ACE_INET_Addr (const char port_name[],
                  const char host_name[],
                  const char protocol[] = "tcp");
 
   /**
-   * Uses <getservbyname> to create an ACE_INET_Addr from a
-   * <port_name>, an Internet @a ip_addr, and the @a protocol.  This
+   * Uses getservbyname() to create an ACE_INET_Addr from a
+   * @a port_name, an Internet @a ip_addr, and the @a protocol.  This
    * method assumes that @a ip_addr is in host byte order.
    */
   ACE_INET_Addr (const char port_name[],
@@ -133,7 +133,7 @@ public:
    * are converted into network byte order, otherwise they are assumed to be
    * in network byte order already and are passed straight through.
    *
-   * If <map> is non-zero and IPv6 support has been compiled in,
+   * If @a map is non-zero and IPv6 support has been compiled in,
    * then this address will be set to the IPv4-mapped IPv6 address of it.
    */
   int set (u_short port_number,
@@ -141,15 +141,15 @@ public:
            int encode = 1,
            int map = 0);
 
-  /// Uses <getservbyname> to initialize an ACE_INET_Addr from a
-  /// <port_name>, the remote @a host_name, and the @a protocol.
+  /// Uses getservbyname() to initialize an ACE_INET_Addr from a
+  /// @a port_name, the remote @a host_name, and the @a protocol.
   int set (const char port_name[],
            const char host_name[],
            const char protocol[] = "tcp");
 
   /**
-   * Uses <getservbyname> to initialize an ACE_INET_Addr from a
-   * <port_name>, an @a ip_addr, and the @a protocol.  This assumes that
+   * Uses getservbyname() to initialize an ACE_INET_Addr from a
+   * @a port_name, an @a ip_addr, and the @a protocol.  This assumes that
    * @a ip_addr is already in network byte order.
    */
   int set (const char port_name[],

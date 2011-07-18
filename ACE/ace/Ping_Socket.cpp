@@ -15,11 +15,6 @@
 # include "ace/Ping_Socket.inl"
 #endif  /* !__ACE_INLINE__ */
 
-
-ACE_RCSID (ace,
-           Ping_Socket,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Ping_Socket)
@@ -217,13 +212,9 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
   // Warning... using knowledge of IP header layout. This avoids a maze of
   // #if blocks for various systems. The first byte of the header has the
   // IP version in the left-most 4 bits and the length in the other 4 bits.
-#if 0
-  hlen1 = ip->ip_hl;                      // length of IP header
-#else
   hlen1 = static_cast<unsigned char>(*ptr);
   hlen1 <<= 4;                            // Bump the version off
   hlen1 >>= 4;                            // Zero-extended length remains
-#endif
   hlen1 <<= 2;                            // Now it counts bytes, not words
 
   icmp = (struct icmp *) (ptr + hlen1);   // start of ICMP header

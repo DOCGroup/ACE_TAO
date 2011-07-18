@@ -1,12 +1,16 @@
 // -*- MPC -*-
 // $Id$
 
-project(JAWS) : ace_output, acelib {
+project(JAWS) : install, ace_output, acelib {
   sharedname   = JAWS
-  dynamicflags = ACE_BUILD_SVC_DLL
+  dynamicflags += ACE_BUILD_SVC_DLL
   requires    += ace_filecache
   avoids      += uses_wchar
   avoids      += ace_for_tao
+
+  specific {
+    install_dir = JAWS/server
+  }
 
   Source_Files {
     HTTP_Server.cpp
@@ -18,7 +22,7 @@ project(JAWS) : ace_output, acelib {
     HTTP_Request.cpp
     HTTP_Response.cpp
     Parse_Headers.cpp
-    IO.cpp
+    JAWS_IO.cpp
   }
 }
 

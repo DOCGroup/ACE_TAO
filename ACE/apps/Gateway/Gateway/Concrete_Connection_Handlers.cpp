@@ -6,8 +6,6 @@
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
-ACE_RCSID(Gateway, Concrete_Connection_Handlers, "$Id$")
-
 Consumer_Handler::Consumer_Handler (const Connection_Config_Info &pci)
   : Connection_Handler (pci)
 {
@@ -612,7 +610,7 @@ Thr_Consumer_Handler::open (void *)
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
   // was inactive due to some problem and we've already got a thread.
-  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_SYNCH>::WAS_ACTIVE)
+  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_SYNCH>::ACTIVATED)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) spawning new thread\n"));
@@ -735,7 +733,7 @@ Thr_Supplier_Handler::open (void *)
   // Reactivate message queue.  If it was active then this is the
   // first time in and we need to spawn a thread, otherwise the queue
   // was inactive due to some problem and we've already got a thread.
-  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_SYNCH>::WAS_ACTIVE)
+  else if (this->msg_queue ()->activate () == ACE_Message_Queue<ACE_SYNCH>::ACTIVATED)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) spawning new thread\n"));

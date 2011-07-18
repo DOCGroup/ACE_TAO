@@ -1,20 +1,20 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = FILENAME
-//    Process_Strategy_Test.h
-//
-// = DESCRIPTION
-//    This file contains the definition of Counting_Service and
-//    Options.  Some compilers need it in a .h file for template
-//    instantiation (such as AIX C Set ++).
-//
-// = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu> and
-//    Kevin Boyle <kboyle@sanwafp.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Strategy_Test.h
+ *
+ *  $Id$
+ *
+ *  This file contains the definition of Counting_Service and
+ *  Options.  Some compilers need it in a .h file for template
+ *  instantiation (such as AIX C Set ++).
+ *
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Kevin Boyle <kboyle@sanwafp.com>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_PROCESS_STRATEGY_TEST_H
 #define ACE_TESTS_PROCESS_STRATEGY_TEST_H
@@ -30,44 +30,46 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies_T.h"
 
+/**
+ * @class Counting_Service
+ *
+ * @brief Reads and increments the count in a shared file.
+ *
+ * Objects of this class execute in a separate process as a
+ * result of the <ACE_Strategy_Acceptor> and
+ * <ACE_Process_Strategy>.
+ */
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-  // = TITLE
-  //     Reads and increments the count in a shared file.
-  //
-  // = DESCRIPTION
-  //     Objects of this class execute in a separate process as a
-  //     result of the <ACE_Strategy_Acceptor> and
-  //     <ACE_Process_Strategy>.
 {
 public:
+  /// Constructor.
   Counting_Service (ACE_Thread_Manager * = 0);
-  // Constructor.
 
+  /// Hook that is used to initialize the service (called by the
+  /// <ACE_Strategy_Acceptor::handle_input> Template Method).
   virtual int open (void *v);
-  // Hook that is used to initialize the service (called by the
-  // <ACE_Strategy_Acceptor::handle_input> Template Method).
 
 protected:
   // = Methods invoked via "pointer to method" table entry.
 
+  /// Handle the THREAD case.
   virtual int svc (void);
-  // Handle the THREAD case.
 
   // = Operations corresponding to requests from the client.
+  /// Execute the read operation on the file.
   int read (void);
-  // Execute the read operation on the file.
 
+  /// Execute the increment operation on the file.
   int inc (void);
-  // Execute the increment operation on the file.
 
   // = Hooks called by <Reactor> and <Strategy_Acceptor>.
 
+  /// Hook called by the <Reactor> when data arrives from the client.
   virtual int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE);
-  // Hook called by the <Reactor> when data arrives from the client.
 
+  /// Closing down
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
-  // Closing down
 };
 
 class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
@@ -89,19 +91,22 @@ public:
                                     void *arg = 0);
 };
 
+/**
+ * @class Options
+ *
+ * @brief Maintains the options for this program.
+ */
 class Options : public ACE_Event_Handler
-  // = TITLE
-  //     Maintains the options for this program.
 {
 public:
+  /// Constructor.
   Options (void);
-  // Constructor.
 
+  /// Destructor.
   ~Options (void);
-  // Destructor.
 
+  /// Read command-line arguments and initialize options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Read command-line arguments and initialize options.
 
   enum Concurrency_Type
   {
@@ -114,28 +119,28 @@ public:
   Concurrency_Type concurrency_type (void);
   void concurrency_type (Concurrency_Type);
 
+  /// Returns the file lock.
   ACE_File_Lock &file_lock (void);
-  // Returns the file lock.
 
+  /// Returns the filename that we're using as the lock.
   const ACE_TCHAR *filename (void);
-  // Returns the filename that we're using as the lock.
 
+  /// Returns the concurrency strategy.
   ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy (void);
-  // Returns the concurrency strategy.
 
 private:
+  /// Concurrency strategy that we're running.
   Concurrency_Type concurrency_type_;
-  // Concurrency strategy that we're running.
 
+  /// Lock for the counting file.
   ACE_File_Lock file_lock_;
-  // Lock for the counting file.
 
+  /// Activation strategy that either forks a new process or spawns a
+  /// new thread for each client connection.
   ACE_Concurrency_Strategy<Counting_Service> *concurrency_strategy_;
-  // Activation strategy that either forks a new process or spawns a
-  // new thread for each client connection.
 
+  /// Name of the counting file.
   ACE_TCHAR filename_[MAXPATHLEN + 1];
-  // Name of the counting file.
 };
 
 #endif /* ACE_TESTS_PROCESS_STRATEGY_TEST_H */

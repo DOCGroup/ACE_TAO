@@ -124,7 +124,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Listing 3 code/ch07
   TemperatureSensor *sensorOne =
     new TemperatureSensor ("Kitchen");
-  
+
   ACE_Reactor::instance ()->schedule_timer (temperatureMonitor,
                                             sensorOne,
                                             initialDelay,
@@ -135,7 +135,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Listing 4 code/ch07
   TemperatureSensor *sensorTwo =
     new TemperatureSensor ("Foyer");
-  
+
   ACE_Reactor::instance ()->schedule_timer (temperatureMonitor,
                                             sensorTwo,
                                             initialDelay,

@@ -1,8 +1,5 @@
+// $Id$
 #include "ace/Method_Request.h"
-
-ACE_RCSID (ace,
-           Method_Request,
-           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

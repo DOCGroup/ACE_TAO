@@ -2,7 +2,7 @@
 
 #include "Handle_L_FIFO.h"
 
-ACE_RCSID(server, Handle_L_FIFO, "$Id$")
+
 
 #if defined (SunOS4)
 extern "C"

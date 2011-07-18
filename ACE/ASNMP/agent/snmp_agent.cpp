@@ -1,6 +1,6 @@
 // $Id$
 
-// This server daemon processes SNMPv1 requests over MIB II System group 
+// This server daemon processes SNMPv1 requests over MIB II System group
 
 #include "snmp_agent.h"
 #include "agent_impl.h"  // actual implementation
@@ -8,9 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID(agent, snmp_agent, "$Id$")
-
-// module globals 
+// module globals
 #define SNMP_AGENT_PORT (161)
 #define WR_COM ACE_TEXT ("private")
 #define RD_COM ACE_TEXT ("public")
@@ -44,7 +42,7 @@ int snmp_agent::set_args(int argc, char *argv[])
   ACE_Get_Opt get_opt
     (argc, to_tchar.get_TCHAR_argv (), ACE_TEXT ("p:w:r:hv"));
 
-  for (int c; (c = get_opt ()) != -1; ) 
+  for (int c; (c = get_opt ()) != -1; )
     {
       switch (c)
         {
@@ -57,8 +55,8 @@ int snmp_agent::set_args(int argc, char *argv[])
         case 'r': // read community string
           rd = get_opt.optarg;
           break;
-        case 'h': // help & version info  
-        case 'v': 
+        case 'h': // help & version info
+        case 'v':
           ACE_DEBUG
             ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Example SNMP Version 1 Agent - ASNMP/ACE\n")));
@@ -67,7 +65,7 @@ int snmp_agent::set_args(int argc, char *argv[])
           return -1; // invalid arg
         }
     }
- 
+
    agent_ = new agent_impl(port,
                            ACE_TEXT_ALWAYS_CHAR (rd),
                            ACE_TEXT_ALWAYS_CHAR (wr)); // opens OS IO port
@@ -84,7 +82,7 @@ int snmp_agent::run()
   if (agent_->open_port()) {
     ACE_DEBUG((LM_DEBUG, "(%P|%t) open port %d failed\n", agent_->get_port()));
     return -1;
-  } 
+  }
 #endif
 
   // Run forever, processing SNMP requests.

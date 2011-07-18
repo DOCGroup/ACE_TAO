@@ -2,13 +2,8 @@
 
 #include "Locator_Request_Reply.h"
 
-ACE_RCSID(Caching, test_URL, "$Id$")
-
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int , ACE_TCHAR *[])
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   ACE_URL_Locator_Request original, derived;
 
   ACE_URL_Property_Seq ouch1(3);

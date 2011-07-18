@@ -15,7 +15,7 @@ int CommandStream::open (void *arg,
                          ACE_Module<ACE_MT_SYNCH> *head,
                          ACE_Module<ACE_MT_SYNCH> *tail)
 {
-  ACE_TRACE (ACE_TEXT ("CommandStream::open(peer)"));
+  ACE_TRACE ("CommandStream::open(peer)");
 
   if (this->inherited::open (arg, head, tail) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -76,7 +76,7 @@ int CommandStream::open (void *arg,
 // Listing 04 code/ch18
 Command *CommandStream::execute (Command *command)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb, ACE_Message_Block (command), 0);
   if (this->put (mb) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -35,7 +35,7 @@ sub html_begin {
 <IMG SRC="$wd/doc/webstone.gif" ALT="WebStone" BORDER=0 ></A>
 <H1>World Wide Web Server Benchmarking</H1>
 <DL>
-<DT><EM>If you have any questions, please read the 
+<DT><EM>If you have any questions, please read the
 <A HREF="$wd/doc/FAQ-webstone.html">WebStone FAQ</A>.</EM>
 <HR>
 EOF

@@ -44,7 +44,7 @@ namespace ACE
       void add_member (Monitor_Base* member);
 
       virtual void update (void);
-      
+
       /// These are overridden to be no-ops.
       virtual void receive (double data);
       virtual void receive (size_t data);

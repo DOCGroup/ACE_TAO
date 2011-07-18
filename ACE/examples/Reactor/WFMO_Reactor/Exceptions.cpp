@@ -1,27 +1,23 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Exceptions.cpp
-//
-// = DESCRIPTION
-//
-//    This test application tests the state of WFMO_Reactor when
-//    exceptions occurs when executing user callbacks.
-//
-//    The thread count in WFMO_Reactor is used to ensure that state of
-//    WFMO_Reactor is not fouled up when exceptions occur in user code.
-//    This example also shows how to write event loops that survive
-//    user exceptions
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Exceptions.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This test application tests the state of WFMO_Reactor when
+ *  exceptions occurs when executing user callbacks.
+ *
+ *  The thread count in WFMO_Reactor is used to ensure that state of
+ *  WFMO_Reactor is not fouled up when exceptions occur in user code.
+ *  This example also shows how to write event loops that survive
+ *  user exceptions
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -29,7 +25,7 @@
 
 #include "ace/WFMO_Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, Exceptions, "$Id$")
+
 
 class Event_Handler : public ACE_Event_Handler
 {

@@ -9,7 +9,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
 
-ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
+
 
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> TEST_MALLOC;
 

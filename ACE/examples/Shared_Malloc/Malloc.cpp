@@ -16,7 +16,7 @@
 #include "ace/Process_Mutex.h"
 #include "ace/Malloc_T.h"
 
-ACE_RCSID(Shared_Malloc, Malloc, "$Id$")
+
 
 // Strategic typedefs for memory allocation.
 

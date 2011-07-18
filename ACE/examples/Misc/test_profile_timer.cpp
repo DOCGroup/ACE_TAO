@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Misc, test_profile_timer, "$Id$")
+
 
 static const int DEFAULT_ITERATIONS = 100000000;
 

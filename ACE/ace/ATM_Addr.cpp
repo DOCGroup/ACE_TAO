@@ -15,7 +15,7 @@
 #include "ace/ATM_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, ATM_Addr, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

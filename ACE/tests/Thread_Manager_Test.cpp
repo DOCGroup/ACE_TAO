@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Thread_Manager_Test.cpp
-//
-// = DESCRIPTION
-//      This program tests the group management mechanisms provided by
-//      the <ACE_Thread_Manager>, including the group signal handling,
-//      group suspension and resumption, and cooperative thread
-//      cancellation mechanisms.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program tests the group management mechanisms provided by
+ *    the <ACE_Thread_Manager>, including the group signal handling,
+ *    group suspension and resumption, and cooperative thread
+ *    cancellation mechanisms.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
@@ -27,7 +23,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 
-ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Barrier.h"
@@ -331,7 +327,7 @@ run_main (int, ACE_TCHAR *[])
 #endif /* ACE_HAS_VXTHREADS */
                   );
 
-  ACE_ASSERT (grp_id != -1);
+  ACE_TEST_ASSERT (grp_id != -1);
   thread_start->wait ();
 
   // Wait for 1 second and then suspend every thread in the group.
@@ -402,17 +398,12 @@ run_main (int, ACE_TCHAR *[])
   thr_mgr->kill_grp (grp_id,
                      SIGINT);
 #elif !defined (ACE_HAS_PTHREADS_DRAFT4) && !defined(ACE_LACKS_PTHREAD_KILL)
-#if defined (CHORUS)
-  ACE_ASSERT (thr_mgr->kill_grp (grp_id,
-                                 SIGTHREADKILL) != -1);
-#else
-  ACE_ASSERT (thr_mgr->kill_grp (grp_id,
+  ACE_TEST_ASSERT (thr_mgr->kill_grp (grp_id,
                                  SIGINT) != -1);
-#endif /* CHORUS */
 #else
   if (thr_mgr->kill_grp (grp_id,
                          SIGINT) == -1)
-    ACE_ASSERT (errno == ENOTSUP);
+    ACE_TEST_ASSERT (errno == ENOTSUP);
 #endif /* ACE_HAS_WTHREADS */
 
   // Wait and then cancel all the threads.
@@ -421,7 +412,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) cancelling group\n")));
 
-  ACE_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
+  ACE_TEST_ASSERT (thr_mgr->cancel_grp (grp_id) != -1);
 
   // Perform a barrier wait until all the threads have shut down.
   // But, wait for a limited time, just in case.

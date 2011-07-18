@@ -4,7 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ACEXML/common/Mem_Map_Stream.h"
 
-ACE_RCSID(common, Mem_Map_Stream, "$Id$")
+
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
   : svc_handler_ (0)
@@ -124,7 +124,7 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
       this->get_pos_ = this->end_of_mapping_plus1_;
 
   this->recv_pos_ = this->get_pos_;
-  
+
   return
     ACE_Utils::truncate_cast<ACE_OFF_T> (
       this->recv_pos_ - reinterpret_cast<char *> (this->mem_map_.addr ()));

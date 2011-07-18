@@ -1,26 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    asnmp
-//
-// = FILENAME
-//    transaction.cpp
-//
-// = DESCRIPTION
-//  implements blocking SNMPv1 API using a simple state machine
-//   transactions over UDP/IP networks
-//
-// = AUTHOR
-//   Michael R MacFaden  mrm@cisco.com - remove v2c, async, rework for ACE
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    transaction.cpp
+ *
+ *  $Id$
+ *
+ *  implements blocking SNMPv1 API using a simple state machine
+ * transactions over UDP/IP networks
+ *
+ *
+ *  @author Michael R MacFaden  mrm@cisco.com - remove v2c
+ *  @author async
+ *  @author rework for ACE
+ */
+//=============================================================================
+
 
 #include "ace/Reactor.h"
 #include "asnmp/transaction.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID(asnmp, transaction, "$Id$")
 
 // pre: pdu, target report  valid() == 1
 // post: pdu sent out over the wire

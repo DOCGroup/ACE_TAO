@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Rwho_DB_Manager.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Rwho_DB_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _RWHO_DB_MANAGER_H
 #define _RWHO_DB_MANAGER_H
@@ -27,11 +24,14 @@
 
 #include "Protocol_Record.h"
 
+/**
+ * @class RWho_DB_Manager
+ *
+ * @brief This class returns the user/machine pairs one at a time from
+ * the rwho database.
+ */
 class RWho_DB_Manager
 {
-  // = TITLE
-  //   This class returns the user/machine pairs one at a time from
-  //   the rwho database.
 
 public:
   RWho_DB_Manager (void);

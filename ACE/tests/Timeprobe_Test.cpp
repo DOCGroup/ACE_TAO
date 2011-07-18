@@ -1,26 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Timeprobe_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test of ACE Timeprobes.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Timeprobe_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test of ACE Timeprobes.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 //#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
 
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -28,7 +25,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Timeprobe.h"
 
-ACE_RCSID(tests, Timeprobe_Test, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

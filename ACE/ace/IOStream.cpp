@@ -5,8 +5,6 @@
 
 #include "ace/IOStream.h"
 
-ACE_RCSID(ace, IOStream, "$Id$")
-
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #  include "ace/OS_NS_errno.h"

@@ -22,10 +22,6 @@
 #include "ace/os_include/os_typeinfo.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID (ace,
-           Process_Manager,
-           "$Id$")
-
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
 ACE_Process_Manager_cleanup (void *instance, void *arg)
@@ -261,11 +257,12 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
 {
   ACE_TRACE ("ACE_Process_Manager::ACE_Process_Manager");
 
-  if (this->open (size,
-                  r) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Process_Manager")));
+  if (this->open (size, r) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("ACE_Process_Manager")));
+    }
 }
 
 // Close up and release all resources.
@@ -846,7 +843,7 @@ ACE_Process_Manager::wait (pid_t pid,
           // WAIT_OBJECT_0 is a pointless comparison because
           // WAIT_OBJECT_0 is zero and DWORD is unsigned long, so this
           // test is skipped for Green Hills.  Same for mingw.
-# if defined (ghs) || defined (__MINGW32__) || defined (_MSC_VER)
+# if defined (__MINGW32__) || defined (_MSC_VER)
           ACE_ASSERT (result < WAIT_OBJECT_0 + this->current_count_);
 # else
           ACE_ASSERT (result >= WAIT_OBJECT_0
@@ -920,7 +917,7 @@ ACE_Process_Manager::wait (pid_t pid,
           for (ACE_Countdown_Time time_left (&tmo); ; time_left.update ())
             {
               pid = ACE_OS::waitpid (-1, status, WNOHANG);
-#   if defined (ACE_VXWORKS) && (ACE_VXWORKS >= 0x600)
+#   if defined (ACE_VXWORKS)
               if (pid > 0 || (pid == ACE_INVALID_PID && errno != EINTR))
 #   else
                 if (pid > 0 || pid == ACE_INVALID_PID)
@@ -971,22 +968,6 @@ ACE_Process_Manager::wait (pid_t pid,
     }
 
   return pid;
-}
-
-// Legacy method:
-
-int
-ACE_Process_Manager::reap (pid_t pid,
-                           ACE_exitcode *stat_loc,
-                           int options)
-{
-  ACE_TRACE ("ACE_Process_Manager::reap");
-
-  return this->wait (pid,
-                     (ACE_BIT_ENABLED (options, WNOHANG)
-                      ? ACE_Time_Value::zero
-                      : ACE_Time_Value::max_time),
-                     stat_loc);
 }
 
 // Notify either the process-specific handler or the generic handler.

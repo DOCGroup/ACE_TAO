@@ -10,10 +10,6 @@
 #include "ace/Time_Value.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-ACE_RCSID (SSL_SAP,
-           SSL_server_poll,
-           "$Id$")
-
 #if defined (ACE_HAS_POLL)
 
 #include "ace/SSL/SSL_SOCK_Stream.h"

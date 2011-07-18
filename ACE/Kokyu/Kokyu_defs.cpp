@@ -6,8 +6,6 @@
 #include "Kokyu_defs.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Kokyu, Kokyu_defs, "$Id$")
-
 namespace Kokyu
 {
    Dispatch_Command::~Dispatch_Command (void)

@@ -3,7 +3,7 @@
 #include "ace/Date_Time.h"
 #include "ace/streams.h"
 
-#include "examples/Monitor/MC_Test_Utilities.h"
+#include "MC_Test_Utilities.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

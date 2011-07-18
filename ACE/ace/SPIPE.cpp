@@ -8,7 +8,7 @@
 #include "ace/SPIPE.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, SPIPE, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

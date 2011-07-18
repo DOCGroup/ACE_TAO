@@ -6,10 +6,6 @@
 #include "ace/Auto_Event.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Auto_Event,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Auto_Event::ACE_Auto_Event (int initial_state,

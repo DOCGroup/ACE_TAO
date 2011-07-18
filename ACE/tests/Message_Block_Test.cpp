@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Message_Block_Test.cpp
-//
-// = DESCRIPTION
-//      This test program is a torture test that illustrates how
-//      <ACE_Message_Block> reference counting works in multi-threaded
-//      code.
-//
-// = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Message_Block_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test program is a torture test that illustrates how
+ *    <ACE_Message_Block> reference counting works in multi-threaded
+ *    code.
+ *
+ *
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -25,10 +22,6 @@
 #include "ace/Malloc_T.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
-
-ACE_RCSID (tests,
-           Message_Block_Test,
-           "$Id$")
 
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
@@ -54,21 +47,21 @@ static ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  /// Activate the task.
   Worker_Task (void);
-  // Activate the task.
 
+  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// for all other threads to complete this iteration.
   virtual int svc (void);
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
+  /// Allows the producer to pass messages to the <Message_Block>.
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  // Allows the producer to pass messages to the <Message_Block>.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Close hook.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual int close (u_long);
-  // Close hook.
-  //FUZZ: enable check_for_lack_ACE_OS
 };
 
 int
@@ -208,11 +201,11 @@ Worker_Task::svc (void)
             }
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n"),
+                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %d, text = \"%*s\"\n"),
                       count,
                       length,
                       mb->msg_priority (),
-                      length - 2, // remove the trailing "\n\0"
+                      (int)(length - 2), // remove the trailing "\n\0"
                       mb->rd_ptr ()));
         }
 
@@ -223,7 +216,7 @@ Worker_Task::svc (void)
         {
           //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, got NULL message, exiting\n"),
                       count, this->msg_queue ()->message_count ()));
           //FUZZ: enable check_for_NULL
           break;
@@ -248,7 +241,7 @@ static int
 produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   int status;
 
   // Send <n_iteration> messages through the pipeline.

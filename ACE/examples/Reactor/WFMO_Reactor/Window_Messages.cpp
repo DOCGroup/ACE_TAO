@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Window_Messages.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the Msg_WFMO_Reactor's ability to handle regular events
-//    and window messages.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Window_Messages.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the Msg_WFMO_Reactor's ability to handle regular events
+ *  and window messages.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -28,7 +24,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Auto_Event.h"
 
-ACE_RCSID(WFMO_Reactor, Window_Messages, "$Id$")
+
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -81,13 +77,13 @@ ACE_TMAIN (int, ACE_TCHAR*[])
   ACE_ASSERT (result == 0);
 
   ACE_Time_Value timeout (1);
-  result = 
+  result =
     ACE_Utils::truncate_cast<int> (
       ::SetTimer (0,                         // handle of window for timer messages
                   0,                             // timer identifier
                   timeout.msec (),               // time-out value
                   (TIMERPROC) &timer_callback)); // address of timer procedure
- 
+
   ACE_ASSERT (result != 0);
 
   ACE_Reactor::run_event_loop ();

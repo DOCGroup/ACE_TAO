@@ -193,6 +193,9 @@ sub usageAndExit {
         "                    is used as the email address.\n" .
         "       CL_USERNAME  This environment variable is used to override\n" .
         "                    the user name (obtained from the password file).\n" .
+        "       CL_CHANGELOG_FILE  This environment variable is used as the\n".
+        "                          [ChangeLog File] argument if none is given\n".
+        "                          on the command line.\n".
         "\n" .
         "       The user name and email address can be passed as a parameter to\n" .
         "       this script.  If either is not passed, then the script will try\n" .
@@ -240,7 +243,12 @@ foreach my $arg (@ARGV) {
 }
 
 if (!defined $file) {
-  $file = 'ChangeLog';
+  if (defined $ENV{CL_CHANGELOG_FILE}) {
+    $file = $ENV{CL_CHANGELOG_FILE};
+  }
+  else {
+    $file = 'ChangeLog';
+  }
 }
 if (!defined $name) {
   my(@pwd)    = ();

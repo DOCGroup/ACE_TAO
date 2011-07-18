@@ -170,7 +170,7 @@ void report_to(FILE *strm, hist_t *hist) {
           2*hist->sum*mean +
           hist->num_points*mean*mean) / (hist->num_points-1);
   ACE_OS::fprintf(strm, "variance: %g\n", variance);
-  if (hist->skew) 
+  if (hist->skew)
   {
     ACE_OS::fprintf(strm, "skew: %g\n", ((hist->sum3 -
                     3*hist->sum2*mean +
@@ -189,7 +189,7 @@ void report_to(FILE *strm, hist_t *hist) {
   ACE_OS::fprintf(strm, "num_bins: %d %g %g\n", hist->num_bins,hist->first,hist->last);
   if (hist->firstoptheader) {
      trace = hist->firstoptheader;
-     while(trace->next != 0) 
+     while(trace->next != 0)
      {
        ACE_OS::fprintf(strm, "%s: %s\n", trace->key, trace->value);
        trace = trace->next;
@@ -219,7 +219,7 @@ void report_to(FILE *strm, hist_t *hist) {
                   (double)hist->hs[hist->num_bins+1]/hist->num_points,
                   (double)histfloor(1000.0*sofar/hist->num_points)/1000.0);
 
-  if (hist->num_outer) 
+  if (hist->num_outer)
   {
     ACE_OS::fprintf(strm, "outliers:\n");
     for(i = 0; i < hist->num_outer; i++) ACE_OS::fprintf(strm, "\t%12.3f\n",

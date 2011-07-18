@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)
@@ -7,10 +9,6 @@
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (ace,
-           CDR_Base,
-           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -549,20 +547,22 @@ ACE_CDR::total_length (const ACE_Message_Block* begin,
   return l;
 }
 
-void
+int
 ACE_CDR::consolidate (ACE_Message_Block *dst,
                       const ACE_Message_Block *src)
 {
   if (src == 0)
-    return;
+    return 0;
 
-  size_t newsize =
+  size_t const newsize =
     ACE_CDR::first_size (ACE_CDR::total_length (src, 0)
                          + ACE_CDR::MAX_ALIGNMENT);
-  dst->size (newsize);
+
+  if (dst->size (newsize) == -1)
+    return -1;
 
 #if !defined (ACE_CDR_IGNORE_ALIGNMENT)
-  // We must copy the contents of <src> into the new buffer, but
+  // We must copy the contents of src into the new buffer, but
   // respecting the alignment.
   ptrdiff_t srcalign =
     ptrdiff_t(src->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
@@ -586,6 +586,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
       else
         dst->wr_ptr (i->length ());
     }
+  return 0;
 }
 
 #if defined (NONNATIVE_LONGLONG)
@@ -772,28 +773,5 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
   return ret;
 }
 #endif /* NONNATIVE_LONGDOUBLE */
-
-#if defined(_UNICOS) && !defined(_CRAYMPP)
-// placeholders to get things compiling
-ACE_CDR::Float::Float (void)
-{
-}
-
-ACE_CDR::Float::Float (const float & /* init */)
-{
-}
-
-ACE_CDR::Float &
-ACE_CDR::Float::operator= (const float & /* rhs */)
-{
-  return *this;
-}
-
-bool
-ACE_CDR::Float::operator!= (const ACE_CDR::Float & /* rhs */) const
-{
-  return false;
-}
-#endif /* _UNICOS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

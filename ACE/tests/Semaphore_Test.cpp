@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Semaphore Test
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Thread_Semaphore>
-//    implementation.
-//
-// = AUTHOR
-//    Darrell Brunsch <brunsch@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Semaphore_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Thread_Semaphore>
+ *  implementation.
+ *
+ *
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread_Semaphore.h"
@@ -26,7 +23,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Semaphore_Test, "$Id$")
+
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \

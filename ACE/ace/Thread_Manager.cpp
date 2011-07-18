@@ -15,10 +15,6 @@
 #include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Thread_Manager,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
@@ -529,10 +525,11 @@ ace_thread_manager_adapter (void *args)
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
   // Invoke the user-supplied function with the args.
-  void *status = thread_args->invoke ();
+  ACE_THR_FUNC_RETURN status = thread_args->invoke ();
 
   delete static_cast<ACE_Base_Thread_Adapter *> (thread_args);
-  return status;
+
+  return reinterpret_cast<void *> (status);
 }
 #endif
 
@@ -575,7 +572,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       this,
                                       new_thr_desc.get (),
                                       ACE_OS_Object_Manager::seh_except_selector(),
-                                      ACE_OS_Object_Manager::seh_except_handler()),
+                                      ACE_OS_Object_Manager::seh_except_handler(),
+                                      flags),
                   -1);
 # else
   ACE_NEW_RETURN (thread_args,
@@ -583,7 +581,8 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       args,
                                       (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                       this,
-                                      new_thr_desc.get ()),
+                                      new_thr_desc.get (),
+                                      flags),
                   -1);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
@@ -1068,7 +1067,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
       errno = ENOENT; \
       return -1; \
     } \
-  int result = OP (ptr, ARG); \
+  int const result = OP (ptr, ARG); \
   ACE_Errno_Guard error (errno); \
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor * td = 0; \
@@ -1719,7 +1718,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
 
-      for (ACE_Thread_Descriptor *td;
+      for (ACE_Thread_Descriptor *td = 0;
            this->thr_to_be_removed_.dequeue_head (td) != -1;
            )
         this->remove_thr (td, 1);

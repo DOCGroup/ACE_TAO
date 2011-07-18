@@ -11,7 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(SV_Message_Queues, MQ_Client, "$Id$")
+
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 

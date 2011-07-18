@@ -10,7 +10,7 @@
 #include "Peer_Router.h"
 #include "Options.h"
 
-ACE_RCSID(UPIPE_Event_Server, Peer_Router, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

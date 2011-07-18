@@ -39,6 +39,10 @@ endif
 ifeq (11.0,$(findstring 11.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
 endif
+ifeq (12.0,$(findstring 12.0,$(CXX_VERSION)))
+  CPPFLAGS += -std=c++0x
+  no_hidden_visibility ?= 0
+endif
 
 no_hidden_visibility ?= 1
 
@@ -54,22 +58,21 @@ ifeq ($(ipo),1)
   CPPFLAGS += -ipo
 endif
 
+
 CFLAGS  += -w1
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
+    CPPFLAGS  += -D_REENTRANT
 endif # threads
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
-DCFLAGS += -g
+CCFLAGS += $(CFLAGS) -ip
+DCFLAGS += -g -debug full
 DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
-  ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
-    LIBS += -lrt
-  endif
+  LIBS += -lrt
 endif
 
 OCFLAGS += -O3
@@ -94,7 +97,7 @@ ifeq ($(shared_libs), 1)
   ifneq ($static_libs_only), 1)
     LDFLAGS += -Wl,-E
     ifneq ($(no_hidden_visibility),1)
-      CCFLAGS += -fvisibility=hidden
+      CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     else
       CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
     endif # no_hidden_visibility
@@ -111,4 +114,3 @@ ifeq ($(threads),1)
        PRELIB = @true
     endif # ! PRELIB
 endif
-

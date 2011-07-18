@@ -1,58 +1,55 @@
 // -*- C++ -*-
 
-// $Id$
-
-// Copyright (C) 1989 Free Software Foundation, Inc.
-// written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
-
-// This file is part of GNU GPERF.
-
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+/**
+ * $Id$
+ *
+ * Copyright (C) 1989 Free Software Foundation, Inc.
+ * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *
+ * This file is part of GNU GPERF.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 
 #include "Gen_Perf.h"
-
-ACE_RCSID(src, Gen_Perf, "$Id$")
-
-#if defined (ACE_HAS_GPERF)
-
 #include "Vectors.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 
-// Current release version.
+/// Current release version.
 extern const char *version_string;
 
-// Reads input keys, possibly applies the reordering heuristic, sets
-// the maximum associated value size (rounded up to the nearest power
-// of 2), may initialize the associated values array, and determines
-// the maximum hash table size.  Note: using the random numbers is
-// often helpful, though not as deterministic, of course!
-
+/// Reads input keys, possibly applies the reordering heuristic, sets
+/// the maximum associated value size (rounded up to the nearest power
+/// of 2), may initialize the associated values array, and determines
+/// the maximum hash table size.  Note: using the random numbers is
+/// often helpful, though not as deterministic, of course!
 Gen_Perf::Gen_Perf (void)
-  : fewest_collisions (0),
-    num_done (1)
+  : max_hash_value (0),
+    fewest_collisions (0),
+    num_done (1),
+    union_set (0)
 {
 }
 
-// Merge two disjoint hash key multisets to form the ordered disjoint
-// union of the sets.  (In a multiset, an element can occur multiple
-// times).  Precondition: both set1 and set2 must be
-// ordered. Returns the length of the combined set.
-
+/// Merge two disjoint hash key multisets to form the ordered disjoint
+/// union of the sets.  (In a multiset, an element can occur multiple
+/// times).  Precondition: both set1 and set2 must be
+/// ordered. Returns the length of the combined set.
 int
 Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 {
@@ -85,11 +82,10 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
   return set3 - base;
 }
 
-// Sort the UNION_SET in increasing frequency of occurrence.  This
-// speeds up later processing since we may assume the resulting set
-// (Set_3, in this case), is ordered. Uses insertion sort, since the
-// UNION_SET is typically short.
-
+/// Sort the UNION_SET in increasing frequency of occurrence.  This
+/// speeds up later processing since we may assume the resulting set
+/// (Set_3, in this case), is ordered. Uses insertion sort, since the
+/// UNION_SET is typically short.
 void
 Gen_Perf::sort_set (char *union_set, int len)
 {
@@ -107,8 +103,7 @@ Gen_Perf::sort_set (char *union_set, int len)
     }
 }
 
-// Generate a keysig's hash value.
-
+/// Generate a keysig's hash value.
 int
 Gen_Perf::hash (List_Node *key_node)
 {
@@ -121,21 +116,22 @@ Gen_Perf::hash (List_Node *key_node)
   return sum;
 }
 
-// Find out how character value change affects successfully hash
-// items.  Returns FALSE if no other hash values are affected, else
-// returns TRUE.  Note that because Option.Get_Asso_Max is a power of
-// two we can guarantee that all legal Vectors::Asso_Values are
-// visited without repetition since Option.Get_Jump was forced to be
-// an odd value!
-
+/// Find out how character value change affects successfully hash
+/// items.  Returns FALSE if no other hash values are affected, else
+/// returns TRUE.  Note that because Option.Get_Asso_Max is a power of
+/// two we can guarantee that all legal Vectors::Asso_Values are
+/// visited without repetition since Option.Get_Jump was forced to be
+/// an odd value!
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  int original_char = Vectors::asso_values[(int) c];
-  int total_iterations;
+  int const original_char = Vectors::asso_values[(int) c];
+  int total_iterations = 0;
 
   if (!option[FAST])
-    total_iterations = option.asso_max ();
+    {
+      total_iterations = option.asso_max ();
+    }
   else
     {
       total_iterations = option.iterations ();
@@ -148,8 +144,6 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   for (int i = total_iterations - 1; i >= 0; --i)
     {
-      int collisions = 0;
-
       Vectors::asso_values[(int) c] =
         (Vectors::asso_values[(int) c]
          + (option.jump () ? option.jump () : ACE_OS::rand ()))
@@ -158,9 +152,10 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
       // Iteration Number array is a win, O(1) intialization time!
       this->char_search.reset ();
 
+      int collisions = 0;
+
       // See how this asso_value change affects previous keywords.  If
       // it does better than before we'll take it!
-
       for (List_Node *ptr = this->key_list.head;
            this->char_search.find (this->hash (ptr)) == 0
            || ++collisions < fewest_collisions;
@@ -169,14 +164,14 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
           if (ptr == curr)
             {
               fewest_collisions = collisions;
-              
+
               if (option[DEBUGGING])
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "- resolved after %d iterations",
                               total_iterations - i));
                 }
-                
+
               return 0;
             }
         }
@@ -184,18 +179,18 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   // Restore original values, no more tries.
   Vectors::asso_values[(int) c] = original_char;
+
   // If we're this far it's time to try the next character....
   return 1;
 }
 
-// Change a character value, try least-used characters first.
-
+/// Change a character value, try least-used characters first.
 int
 Gen_Perf::change (List_Node *prior, List_Node *curr)
 {
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
-                "collision on keyword #%d, prior = \"%s\", curr = \"%s\" hash = %d\n",
+                "collision on keyword #%d, prior = \"%C\", curr = \"%C\" hash = %d\n",
                 num_done,
                 prior->key,
                 curr->key,
@@ -207,7 +202,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 
   // Try changing some values, if change doesn't alter other values
   // continue normal action.
-  fewest_collisions++;
+  ++fewest_collisions;
 
   for (char *temp = union_set; *temp != '\0'; temp++)
     if (affects_prev (*temp, curr) == 0)
@@ -247,7 +242,7 @@ Gen_Perf::open (void)
     this->key_list.reorder ();
 
   int asso_value_max = option.asso_max ();
-  int non_linked_length = this->key_list.keyword_list_length ();
+  int const non_linked_length = this->key_list.keyword_list_length ();
 
   if (asso_value_max == 0)
     asso_value_max = non_linked_length;
@@ -269,7 +264,7 @@ Gen_Perf::open (void)
     }
   else
     {
-      int asso_value = option.initial_value ();
+      int const asso_value = option.initial_value ();
 
       // Initialize array if user requests non-zero default.
       if (asso_value)
@@ -316,9 +311,9 @@ Gen_Perf::open (void)
   return 0;
 }
 
-// For binary search, do normal string sort on the keys, and then
-// assign hash values from 0 to N-1. Then go ahead with the normal
-// logic that is there for perfect hashing.
+/// For binary search, do normal string sort on the keys, and then
+/// assign hash values from 0 to N-1. Then go ahead with the normal
+/// logic that is there for perfect hashing.
 int
 Gen_Perf::compute_binary_search (void)
 {
@@ -326,7 +321,7 @@ Gen_Perf::compute_binary_search (void)
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr;
+  List_Node *curr = 0;
   int hash_value;
   for (hash_value = 0, curr = this->key_list.head;
        curr != 0;
@@ -346,8 +341,8 @@ Gen_Perf::compute_linear_search (void)
   this->key_list.string_sort ();
 
   // Assign hash values.
-  List_Node *curr;
-  int hash_value;
+  List_Node *curr = 0;
+  int hash_value = 0;
   for (hash_value = 0, curr = this->key_list.head;
        curr != 0;
        curr = curr->next, hash_value++)
@@ -360,7 +355,7 @@ Gen_Perf::compute_linear_search (void)
 int
 Gen_Perf::compute_perfect_hash (void)
 {
-  List_Node *curr;
+  List_Node *curr = 0;
 
   for (curr = this->key_list.head;
        curr != 0;
@@ -412,16 +407,15 @@ Gen_Perf::compute_perfect_hash (void)
   return 0;
 }
 
-// Does the hard stuff....  Initializes the Bool Array, and attempts
-// to find a perfect function that will hash all the key words without
-// getting any duplications.  This is made much easier since we aren't
-// attempting to generate *minimum* functions, only perfect ones.  If
-// we can't generate a perfect function in one pass *and* the user
-// hasn't enabled the DUP option, we'll inform the user to try the
-// randomization option, use -D, or choose alternative key positions.
-// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
-// exponential in the number of keys.
-
+/// Does the hard stuff....  Initializes the Bool Array, and attempts
+/// to find a perfect function that will hash all the key words without
+/// getting any duplications.  This is made much easier since we aren't
+/// attempting to generate *minimum* functions, only perfect ones.  If
+/// we can't generate a perfect function in one pass *and* the user
+/// hasn't enabled the DUP option, we'll inform the user to try the
+/// randomization option, use -D, or choose alternative key positions.
+/// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
+/// exponential in the number of keys.
 int
 Gen_Perf::run (void)
 {
@@ -453,8 +447,7 @@ Gen_Perf::run (void)
   return 0;
 }
 
-// Prints out some diagnostics upon completion.
-
+/// Prints out some diagnostics upon completion.
 Gen_Perf::~Gen_Perf (void)
 {
   if (option[DEBUGGING])
@@ -476,4 +469,3 @@ Gen_Perf::~Gen_Perf (void)
   delete [] this->union_set;
 }
 
-#endif /* ACE_HAS_GPERF */

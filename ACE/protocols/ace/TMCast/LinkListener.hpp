@@ -1,6 +1,5 @@
-// file      : ACE_TMCast/LinkListener.hpp
+// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
 
 // OS primitives
 #include <ace/OS_NS_string.h>
@@ -15,15 +14,8 @@
 
 namespace ACE_TMCast
 {
-  //
-  //
-  //
   class LinkFailure : public virtual Message {};
 
-
-  //
-  //
-  //
   class LinkData : public virtual Message
   {
   public:
@@ -64,9 +56,6 @@ namespace ACE_TMCast
   ACE_Refcounted_Auto_Ptr<LinkData, ACE_Null_Mutex>
   LinkDataPtr;
 
-  //
-  //
-  //
   class LinkListener
   {
   private:
@@ -161,7 +150,9 @@ namespace ACE_TMCast
     }
 
   private:
+    // FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    // FUZZ: enable check_for_ACE_Guard
 
     ACE_hthread_t thread_;
     ACE_SOCK_Dgram_Mcast& sock_;

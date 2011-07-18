@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ACE_wrappers/examples/QOS
-//
-// = FILENAME
-//    Sender_QoS_Event_Handler.cpp
-//
-// = AUTHOR
-//    Vishal Kachroo <vishal@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sender_QoS_Event_Handler.cpp
+ *
+ *  $Id$
+ *
+ *  @author Vishal Kachroo <vishal@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "Sender_QoS_Event_Handler.h"
 #include "ace/Log_Msg.h"
@@ -118,9 +115,9 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "Getting QOS using ACE_OS::ioctl () succeeds.\n"));
 
-  char* msg = "Hello sent on a QoS enabled session !!\n";
+  const char* msg = "Hello sent on a QoS enabled session !!\n";
   iovec iov[1];
-  iov[0].iov_base = msg;
+  iov[0].iov_base = const_cast<char *>(msg);
   iov[0].iov_len = ACE_OS::strlen(msg);
 
   size_t bytes_sent = 0;
@@ -167,7 +164,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
                                                          25,
                                                          1)))
     {
-    case 1 : 
+    case 1 :
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind the new flow spec\n"
                          "The Flow Spec name already exists\n"),
@@ -212,7 +209,7 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Setting QOS succeeds.\n"));
-  
+
 
   // ACE_SOCK_Dgram_Mcast_QoS dgram_mcast_qos_;
   // ACE_QoS_Session *qos_session_;

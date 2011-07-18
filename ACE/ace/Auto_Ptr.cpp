@@ -9,7 +9,7 @@
 #include "ace/Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Auto_Ptr, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

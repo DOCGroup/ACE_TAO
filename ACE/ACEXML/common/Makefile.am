@@ -46,7 +46,6 @@ libACEXML_la_SOURCES = \
   Element_Def_Builder.cpp \
   Encoding.cpp \
   EntityResolver.cpp \
-  Env.cpp \
   ErrorHandler.cpp \
   Exception.cpp \
   FileCharStream.cpp \
@@ -104,8 +103,6 @@ nobase_include_HEADERS = \
   Element_Def_Builder.h \
   Encoding.h \
   EntityResolver.h \
-  Env.h \
-  Env.inl \
   ErrorHandler.h \
   Exception.h \
   Exception.inl \
@@ -130,7 +127,6 @@ nobase_include_HEADERS = \
   XMLFilterImpl.inl \
   XMLReader.h \
   XML_Codecs.h \
-  XML_Macros.h \
   XML_Types.h \
   XML_Util.h \
   ZipCharStream.h

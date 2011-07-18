@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    PMC_Flo.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PMC_Flo.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PMC_FLO_H
 #define _PMC_FLO_H
 
 #include "PM_Client.h"
 
+/**
+ * @class PMC_Flo
+ *
+ * @brief Provides the client's lookup table abstraction for `flo' users...
+ */
 class PMC_Flo : public PM_Client
 {
-  // = TITLE
-  //   Provides the client's lookup table abstraction for `flo' users...
 
 public:
   PMC_Flo (void);

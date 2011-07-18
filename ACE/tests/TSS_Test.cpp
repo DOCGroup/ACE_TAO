@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    TSS_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests thread specific storage of data. The ACE_TSS
-//     wrapper transparently ensures that the objects of this class
-//     will be placed in thread-specific storage. All calls on
-//     ACE_TSS::operator->() are delegated to the appropriate method
-//     in the Errno class.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TSS_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests thread specific storage of data. The ACE_TSS
+ *   wrapper transparently ensures that the objects of this class
+ *   will be placed in thread-specific storage. All calls on
+ *   ACE_TSS::operator->() are delegated to the appropriate method
+ *   in the Errno class.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -28,7 +25,7 @@
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
 
-ACE_RCSID(tests, TSS_Test, "$Id$")
+
 
 static u_int errors = 0;
 
@@ -163,12 +160,12 @@ worker (void *c)
       {
         // Use the guard to serialize access
         ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, 0));
-        ACE_ASSERT ((*tss_error)->flags () == ITERATIONS);
+        ACE_TEST_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
       // Demonstrate use of ACE_TSS_Type_Adapter to wrap built-in
       // types when used with ACE_TSS.  See DESCRIPTION of template
-      // class ACE_TSS_Type_Adapter in ace/Synch_T.h for what this
+      // class ACE_TSS_Type_Adapter for what this
       // should look like.  Unfortunately, some compilers have trouble
       // with the implicit type conversions.  Others have problems with
       // the *explicit* type conversions.

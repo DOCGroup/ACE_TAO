@@ -1,6 +1,5 @@
-// file      : ACE_TMCast/TransactionController.hpp
+// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
@@ -187,7 +186,7 @@ namespace ACE_TMCast
           // transfer payload
 
           size = send_->size ();
-          memcpy (payload, send_->payload (), size);
+          ACE_OS::memcpy (payload, send_->payload (), size);
 
           send_ = SendPtr ();
 
@@ -367,7 +366,9 @@ namespace ACE_TMCast
     }
 
   private:
+    // FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    // FUZZ: enable check_for_ACE_Guard
 
     bool trace_;
 

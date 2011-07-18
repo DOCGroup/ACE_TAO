@@ -1,22 +1,19 @@
-// $Id$
-// ===========================================================================
-//
-// = LIBRARY
-//     tests
-//
-// = FILENAME
-//    SOCK_Dgram.cpp
-//
-// = DESCRIPTION
-//     Tests that a call to open with an any address binds to the any address
-//     for the protocol passed in.
-//
-//     This test uses the same test setup as SOCK_Test.
-//
-// = AUTHOR
-//    Brian Buesker (bbuesker@qualcomm.com)
-//
-// ==========================================================================
+//=============================================================================
+/**
+ *  @file    SOCK_Dgram_Test.cpp
+ *
+ *  $Id$
+ *
+ *   Tests that a call to open with an any address binds to the any address
+ *   for the protocol passed in.
+ *
+ *   This test uses the same test setup as SOCK_Test.
+ *
+ *
+ *  @author Brian Buesker (bbuesker@qualcomm.com)
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

@@ -94,7 +94,7 @@ void AIO_Output_Handler::open
   reader_.open (*this, new_handle, 0, proactor ());
   writer_.open (*this, new_handle, 0, proactor ());
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW (mb, ACE_Message_Block (1));
   reader_.read (*mb, 1);
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);

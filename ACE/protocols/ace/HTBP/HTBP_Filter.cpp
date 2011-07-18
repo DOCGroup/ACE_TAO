@@ -9,7 +9,7 @@
 #include "HTBP_Filter.inl"
 #endif
 
-ACE_RCSID(HTBP,ACE_HTBP_Filter,"$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

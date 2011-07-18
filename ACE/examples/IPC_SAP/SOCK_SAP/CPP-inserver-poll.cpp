@@ -13,7 +13,7 @@
 #include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID(SOCK_SAP, CPP_inserver_poll, "$Id$")
+
 
 #if defined (ACE_HAS_POLL)
 

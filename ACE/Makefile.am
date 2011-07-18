@@ -28,8 +28,7 @@ endif
 SUBDIRS += \
         @protocols@ \
         websvcs \
-	@KOKYU@ \
-	@TAO@
+	@KOKYU@
 
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4

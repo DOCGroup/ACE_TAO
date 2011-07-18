@@ -1,11 +1,9 @@
+// $Id$
+
 #include "ace/Codecs.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
-
-ACE_RCSID (ace,
-           Codecs,
-           "$Id$")
 
 namespace
 {
@@ -71,7 +69,7 @@ ACE_Base64::encode (const ACE_Byte* input,
           result[pos++] = alphabet[bits & 0x3f];
           cols += 4;
           if (cols == max_columns) {
-            if (is_chunked) 
+            if (is_chunked)
               result[pos++] = '\n';
             cols = 0;
           }

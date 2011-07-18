@@ -13,10 +13,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace,
-          Timer_Hash_T,
-          "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>
@@ -423,14 +419,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (
                                      expired->get_interval ());
   ACE_ASSERT (h->orig_id_ != -1);
 
-#if 0
-  ACE_DEBUG ((LM_DEBUG, "Hash::reschedule() resets %d in slot %d where it's id is %d and token is %x\n",
-              expired->get_timer_value ().msec (),
-              h->pos_,
-              h->orig_id_,
-              h));
-#endif
-
   // Since schedule() above will allocate a new node
   // then here schedule <expired> for deletion. Don't call
   // this->free_node() because that will invalidate <h>
@@ -473,14 +461,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (
                                       future_time,
                                       interval);
   ACE_ASSERT (h->orig_id_ != -1);
-
-#if 0
-  ACE_DEBUG ((LM_DEBUG, "Hash::schedule() placing %d in slot %d where it's id is %d and token is %x\n",
-              future_time.msec (),
-              position,
-              h->orig_id_,
-              h));
-#endif
 
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[position]->earliest_time ()
@@ -810,23 +790,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
 
           ACE_ASSERT (h->pos_ == i);
 
-#if 0
-          ACE_DEBUG ((LM_DEBUG, "Hash::expire() expiring %d in slot %d where it's id is %d and token is %x\n",
-                      expired->get_timer_value ().msec (),
-                      h->pos_,
-                      h->orig_id_,
-                      h));
-#endif
-
           // Check if this is an interval timer.
           if (expired->get_interval () > ACE_Time_Value::zero)
             {
               // Make sure that we skip past values that have already
               // "expired".
-              do
-                expired->set_timer_value (expired->get_timer_value ()
-                                          + expired->get_interval ());
-              while (expired->get_timer_value () <= cur_time);
+              this->recompute_next_abs_interval_time (expired, cur_time);
 
               // Since this is an interval timer, we need to
               // reschedule it.

@@ -11,7 +11,7 @@ sure the run_test.pl works on all platforms
 - The run_test should return a non-zero value if the test failed
 - When an executable can't be spawned the test should directly exit and
   not wait for a fail to be created by that executable
-- The processes should suppor that files names are passed through
+- The processes should support that files names are passed through
   the commandline
 
 Following is an example
@@ -243,23 +243,16 @@ $client->DeleteFile($client_iorfile);
 exit $status;
 @endverbatim
 
-When you need the hostname the test is running on be aware of the
-fact that with VxWorks we do cross host testing, part of the test
-runs on the target, the other part on the host system. In your test
-program add functionality to handle a commandline argument to pass
-in the hostname of the target. In the run_test.pl script you can
-then use the following code as example.
+This example illustrates how to get the host name within the cross
+platform test. In your test program add functionality to handle a
+command line argument to pass the host name of the target. In the
+run_test.pl script you can use the following code as example.
 
 @verbatim
-$TARGETHOSTNAME = "localhost";
-if (PerlACE::is_vxworks_test()) {
-  $TARGETHOSTNAME = $ENV{'ACE_RUN_VX_TGTHOST'};
-  $SV = new PerlACE::ProcessVX ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
- }
- else {
-  $SV = new PerlACE::Process ("server", "-ORBEndpoint iiop://$TARGETHOSTNAME:43210");
- }
-$CL = new PerlACE::Process ("client", " -p 43210 -h $TARGETHOSTNAME");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $hostname = $server->HostName();
+$SV = $server->CreateProcess ("server", "-ORBEndpoint iiop://$hostname:43210");
+$CL = $server->CreateProcess ("client", " -p 43210 -h $hostname");
 @endverbatim
 
 And finally, we unlink any files that were created and then just

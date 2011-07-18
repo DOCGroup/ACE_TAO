@@ -13,16 +13,12 @@
 #endif
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
-#include /**/ <Iphlpapi.h>
+#include /**/ <iphlpapi.h>
 #endif
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (ace,
-           SOCK_Dgram_Mcast,
-           "$Id$")
 
 #include "ace/Log_Msg.h"
 
@@ -262,7 +258,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           size_t nr_subscribed = 0;
 # if defined(__linux__)
-          struct if_nameindex *intf;
+          struct if_nameindex *intf = 0;
 
           intf = ACE_OS::if_nameindex ();
 

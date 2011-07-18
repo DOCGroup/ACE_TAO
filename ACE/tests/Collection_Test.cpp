@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Collection_Test.cpp
-//
-// = DESCRIPTION
-//     This is a simple test of the ACE collection classes and its
-//     iterators.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Collection_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a simple test of the ACE collection classes and its
+ *   iterators.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 
-ACE_RCSID(tests, Collection_Test, "$Id$")
+
 
 #include "ace/Containers.h"
 #include "Collection_Test.h"
@@ -147,9 +144,9 @@ run_main (int, ACE_TCHAR *[])
     ARRAY array4;
     array4 = array2;
 
-    ACE_ASSERT (array1 == array2);
-    ACE_ASSERT (array1 == array3);
-    ACE_ASSERT (array1 == array4);
+    ACE_TEST_ASSERT (array1 == array2);
+    ACE_TEST_ASSERT (array1 == array3);
+    ACE_TEST_ASSERT (array1 == array4);
 
     {
       for (size_t i = 0;
@@ -158,7 +155,7 @@ run_main (int, ACE_TCHAR *[])
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       array1[i]));
-          ACE_ASSERT (array1[i] == 4);
+          ACE_TEST_ASSERT (array1[i] == 4);
         }
     }
 
@@ -170,7 +167,7 @@ run_main (int, ACE_TCHAR *[])
           iterator.next (data);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*data)));
-          ACE_ASSERT (*data == 4);
+          ACE_TEST_ASSERT (*data == 4);
           iterator.advance ();
         }
     }

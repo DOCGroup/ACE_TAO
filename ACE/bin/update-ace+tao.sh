@@ -26,8 +26,8 @@ tao_version=`version <TAO/VERSION TAO`
 if [ -z $ace_version ]; then echo No ACE version after update; exit 1; fi
 if [ -z $tao_version ]; then echo No TAO version after update; exit 1; fi
 
-echo Old software version tags: $old_ace_version $old_tao_version 
-echo New software version tags: $ace_version $tao_version 
+echo Old software version tags: $old_ace_version $old_tao_version
+echo New software version tags: $ace_version $tao_version
 
 # Conserve net bandwidth if no change was observed
 if [ $old_ace_version != $ace_version ] || [ x"$1"x = x"force"x ]; then

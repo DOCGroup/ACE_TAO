@@ -12,12 +12,6 @@ ACE_Intrusive_List<T>::is_empty (void) const
   return this->head_ == 0;
 }
 
-template<class T> ACE_INLINE bool
-ACE_Intrusive_List<T>::empty (void) const
-{
-  return this->is_empty ();
-}
-
 template<class T> ACE_INLINE T *
 ACE_Intrusive_List<T>::head (void) const
 {

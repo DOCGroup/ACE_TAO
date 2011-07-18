@@ -14,14 +14,14 @@
 //
 // ============================================================================
 
-#include "tests/test_config.h"
+#include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
-#include "tests/test_config.h"
+#include "test_config.h"
 
-ACE_RCSID(tests, Get_Opt_Test, "$Id$")
+
 
 /*
  * This is the heart of the test. It sets up the optstring, instantiates

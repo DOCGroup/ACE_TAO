@@ -34,7 +34,7 @@
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Dgram, CODgram, "$Id$")
+
 
 // Port used to receive for dgrams.
 static u_short port1;

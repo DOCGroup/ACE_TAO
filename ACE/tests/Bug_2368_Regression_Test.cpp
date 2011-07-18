@@ -15,10 +15,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
-ACE_RCSID (tests,
-           Bug_2368_Regression_Test,
-           "$Id$")
-
 static bool handleA_close_called = false;
 static bool handleB_close_called = false;
 

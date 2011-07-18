@@ -54,7 +54,7 @@ namespace
   {
   public:
 
-    randomize_element (T * array, size_t size, ACE_RANDR_TYPE seed)
+    randomize_element (T * array, size_t size, unsigned int seed)
       : array_ (array)
       , coefficient_ (static_cast<double> (size) / (RAND_MAX + 1.0f))
       , seed_ (seed)
@@ -66,7 +66,7 @@ namespace
     {
       size_t const index =
         static_cast<size_t> (
-          this->coefficient_ * ACE_OS::rand_r (this->seed_));
+          this->coefficient_ * ACE_OS::rand_r (&this->seed_));
 
       // Swap rather than assign so that we don't lose the original
       // value.
@@ -78,11 +78,11 @@ namespace
     // The array.
     T * const array_;
 
-    // Factor out the constant coefficient.  
+    // Factor out the constant coefficient.
     double const coefficient_;
 
     // Random number generator seed value.
-    ACE_RANDR_TYPE seed_;
+    unsigned int seed_;
 
   };
 
@@ -109,12 +109,12 @@ namespace
      ACE_Time_Value times[NUM_TIMES] = { ... };
      randomize (times,
                 NUM_TIMES,
-                static_cast<ACE_RANDR_TYPE> (ACE_OS::time (0L)));
+                static_cast<unsigned int> (ACE_OS::time (0L)));
     \endverbatim
    */
   template<typename T>
   void
-  randomize (T * array, size_t size, ACE_RANDR_TYPE seed = 0)
+  randomize (T * array, size_t size, unsigned int seed = 0)
   {
     // Randomize all elements of the array.
     std::for_each (array,

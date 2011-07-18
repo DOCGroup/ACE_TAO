@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use warnings;
 use strict;
 
-use lib '../../bin';
+use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 use Getopt::Long;
 use Pod::Usage;

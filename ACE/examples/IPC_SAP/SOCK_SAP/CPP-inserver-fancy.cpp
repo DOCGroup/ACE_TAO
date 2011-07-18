@@ -15,7 +15,7 @@
 
 #include "CPP-inserver-fancy.h"
 
-ACE_RCSID(SOCK_SAP, CPP_inserver_fancy, "$Id$")
+
 
 // Forward declaration.
 class Handler;

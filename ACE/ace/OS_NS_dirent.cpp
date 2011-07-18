@@ -2,7 +2,7 @@
 
 #include "ace/OS_NS_dirent.h"
 
-ACE_RCSID(ace, OS_NS_dirent, "$Id$")
+
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_dirent.inl"
@@ -21,9 +21,11 @@ ACE_OS::closedir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
-    ::FindClose (d->current_handle_);
+    {
+      ::FindClose (d->current_handle_);
+      d->current_handle_ = INVALID_HANDLE_VALUE;
+    }
 
-  d->current_handle_ = INVALID_HANDLE_VALUE;
   d->started_reading_ = 0;
   if (d->dirent_ != 0)
     {
@@ -122,8 +124,7 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
     }
   else
     {
-      int retval = ACE_TEXT_FindNextFile (d->current_handle_,
-                                          &d->fdata_);
+      int const retval = ACE_TEXT_FindNextFile (d->current_handle_, &d->fdata_);
       if (retval == 0)
         {
           // Make sure to close the handle explicitly to avoid a leak!
@@ -175,7 +176,6 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   ACE_DIRENT **vector = 0;
   ACE_DIRENT *dp = 0;
   int arena_size = 0;
-
   int nfiles = 0;
   int fail = 0;
 

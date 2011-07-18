@@ -20,7 +20,6 @@ CROSS-COMPILE = 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-exceptions ?= 1
 rtp ?= 1
 ifeq ($(rtp),0)
   pthread ?= 0
@@ -69,16 +68,13 @@ ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc.exe
+  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2.exe
 else
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl
   TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
-  CIDLC = $(HOST_ROOT)/TAO/CIAO/bin/cidlc
 endif
 TAO_IDL_DEP = $(TAO_IDL)
 TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
-CIDLC_DEP = $(CIDLC)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)
@@ -302,26 +298,13 @@ else
 endif
 endif
 endif
-
-# TEMPLATES_FLAG is set by platform_g++_common.GNU
-ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
-  CPPFLAGS += $(TEMPLATES_FLAG)
-endif
 endif  # TOOL_FAMILY == gnu
 
 ifeq ("$(TOOL_FAMILY)","diab")
-ifeq ($(exceptions),1)
   C++FLAGS += -Xexceptions
 else
-  C++FLAGS += -Xexceptions-off
-endif
-else
 ifeq ("$(TOOL_FAMILY)","gnu")
-ifeq ($(exceptions),1)
   C++FLAGS += -fexceptions
-else
-  C++FLAGS += -fno-exceptions
-endif
 endif
 endif
 
@@ -343,7 +326,7 @@ ifneq ($(optimize),1)
   CC_OPTIM_NORMAL =
 endif
 
-CCFLAGS         += $(C++FLAGS)
+CCFLAGS         += $(C++FLAGS) $(FLAGS_C_CC)
 
 ifeq (0,$(rtp))
 PIC              =

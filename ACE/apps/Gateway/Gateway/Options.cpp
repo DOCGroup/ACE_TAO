@@ -10,7 +10,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/os_include/os_fcntl.h"
 
-ACE_RCSID(Gateway, Options, "$Id$")
+
 
 // Static initialization.
 Options *Options::instance_ = 0;

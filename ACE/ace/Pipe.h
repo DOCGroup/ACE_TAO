@@ -65,6 +65,8 @@ public:
 
   /// Close down the pipe HANDLEs;
   int close (void);
+  int close_read (void);
+  int close_write (void);
 
   // = Accessors.
 
@@ -122,7 +124,7 @@ public:
    * This is an interface to ::readv, that doesn't use the struct
    * iovec explicitly.  The ... can be passed as an arbitrary number
    * of (char *ptr, int len) tuples.  However, the count N is the
-   * *total* number of trailing arguments, *not* a couple of the
+   * *total* number of trailing arguments, *not* a count of the
    * number of tuple pairs!
    */
   ssize_t recv (size_t n, ...) const;
@@ -152,6 +154,7 @@ public:
 
 private:
   ACE_HANDLE handles_[2];
+  int close_handle (int which);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -26,10 +26,6 @@
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "Refcounted_Auto_Ptr_Test.h"
 
-ACE_RCSID (tests,
-           Refcounted_Auto_Ptr_Test,
-           "$Id$")
-
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned int> Printer::current_instance_ (0);
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> Printer::instance_count_ (0);
 
@@ -294,7 +290,7 @@ static int n_loops = 10;
 // methods. See Bugzilla #1925 for history.
 
 typedef ACE_Refcounted_Auto_Ptr <Printer, ACE_Null_Mutex> Printer_Ptr;
- 
+
 static bool expect (const ACE_TCHAR *name,
                     const Printer_Ptr &ptr,
                     bool expect_null,
@@ -304,7 +300,7 @@ static bool expect (const ACE_TCHAR *name,
   if (ptr.null () != expect_null)
     {
       if (expect_null)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Expecting: %s null:: ")
                     ACE_TEXT ("Actual: Printer: %u; Count %d\n"),
                     name,

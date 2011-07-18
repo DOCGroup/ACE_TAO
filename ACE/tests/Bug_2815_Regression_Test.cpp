@@ -30,9 +30,6 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Select_Reactor.h"
 
-ACE_RCSID(tests,
-          Bug_2815_Regression_Test, "$Id$")
-
 class One_Shot_Handler;
 
 /**

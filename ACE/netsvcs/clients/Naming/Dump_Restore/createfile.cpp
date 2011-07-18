@@ -4,7 +4,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(Dump_Restore, createfile, "$Id$")
+
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

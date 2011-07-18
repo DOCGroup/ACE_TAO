@@ -12,10 +12,6 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 
-ACE_RCSID (tests,
-           Bug_3532_Regression_Test,
-           "$Id$")
-
 int
 run_main (int, ACE_TCHAR *[])
 {

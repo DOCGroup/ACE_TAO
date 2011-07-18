@@ -123,8 +123,8 @@ document</a>.</p><p>
 </thead><tbody>
   <tr>
     <th>DOC Group</th>
-    <td>Windows 2000, XP (MSVC++ 7.1, and 8);
-        many versions of Linux/Intel (many compilers), Linux/IA64 (GCC).
+    <td>Windows 2000, XP (MSVC++ 7.1, 8, 9, and 10);
+        many versions of Linux/Intel (many compilers).
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
         <a href="http://doc.ece.uci.edu/">UCI</a> and
@@ -153,13 +153,13 @@ document</a>.</p><p>
   <tr>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
-        TAO service offerings. We support AIX,  
-        CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, 
-        CBuilderX 1.0, Windows CE, MinGW, Microsoft Visual C++ 7.1/8/9, GCC,
-        Cygwin, VxWorks 5.5.x - 6.x (kernel and rtp), OpenVMS 8.2-1 &            8.3 on Alpha and IA64,
-        BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris, 
-        Tru64, SuSE Linux on Alpha/IA32/EM64T/IA64, RTEMS, QNX, LynxOS 4.0/4.2,
-        HPUX 11i v1/v2 32/64 bit on PA-RISC, and
+        TAO service offerings. We support AIX,
+        CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, Embarcadero C++ Builder 2010/XE,
+        Windows CE, MinGW, Microsoft Visual C++ 7.1/8/9/10, GCC,
+        Cygwin, VxWorks 6.x (kernel and rtp), OpenVMS 8.3 on IA64,
+        BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
+        Tru64, SuSE Linux on Alpha/IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
+        and
         HPUX 11i v2/v3 on IA64. The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
     </td>
@@ -227,13 +227,16 @@ supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 
 </p><p></p><hr><p>
 </p><h2><a name="installpre">Installation prerequisites</a></h2>
-<p>
-ACE (as well as TAO and CIAO) use MPC (MakeProjectCreator) to generate
-files used by all supported build tools (such as GNUmakefiles for UNIX based
-platforms, sln and vcproj files for VC71/VC8 and CodeGear makefiles) on various
-platforms. To help new users to bootstrap quickly the release bundles
-of ACE (as well as TAO and CIAO) include all needed files to use the build
+
+<p> ACE (as well as TAO and CIAO) use <A
+HREF="http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html">MPC</A>
+(MakeProjectCreator) to generate files used by all supported build
+tools (such as GNUmakefiles for UNIX based platforms, sln and vcproj
+files for VC71/VC8 and Embarcadero makefiles) on various platforms. To
+help new users to bootstrap quickly the release bundles of ACE (as
+well as TAO and CIAO) include all needed files to use the build
 instructions in this document.
+
 </p>
 <p>
 If it is necessary to generate
@@ -490,6 +493,21 @@ include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
       NOTE! There really is not a # character before 'include' in the
       platform_macros.GNU file. # is a comment character.
   </li>
+  <li>If you wish to install ACE (using &quot;make install&quot;), set the
+      installation prefix in platform_macros.GNU.
+<blockquote><code>
+INSTALL_PREFIX = /usr/local
+</code></blockquote>
+      Headers will be installed to $INSTALL_PREFIX/include, executables to
+      $INSTALL_PREFIX/bin, documentation and build system files to
+      $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib.  The library
+      directory can be customized by setting INSTALL_LIB (for example,
+      INSTALL_LIB=lib64).  With INSTALL_PREFIX set, RPATH will be enabled for
+      all executables and shared libraries.  To disable RPATH (for example,
+      if $INSTALL_PREFIX/$INSTALL_LIB is already a system-known location for
+      shared libraries such as those listed in /etc/ld.so.conf), set the make
+      macro install_rpath to 0 by adding install_rpath=0 to platform_macros.GNU.
+  </li>
   <li>Note that because ACE builds shared libraries, you'll need to set
       LD_LIBRARY_PATH (or equivalent for your platform) to the directory
       where binary version of the ACE library is built into. For example,
@@ -514,6 +532,9 @@ include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
       perfect hash function generator application in
       <code>$ACE_ROOT/apps/gperf</code>.
   </li>
+  <li>If you've set the INSTALL_PREFIX before building, now run
+<blockquote><code>% make install</code></blockquote>
+  </li>
   <li>If you need to regenerate the <code>ace/Svc_Conf_y.cpp</code> file,
       you'll need to
       get <a href="http://ftp.gnu.org/pub/gnu/bison/">GNU Bison</a>.
@@ -535,7 +556,7 @@ one will not clean up any old files, and trying to use the environment's
 
 <ul>
 <li><a href="#msvc">Microsoft Visual Studio</a></li>
-<li><a href="#codegear">CodeGear C++Builder</a></li>
+<li><a href="#codegear">Embarcadero C++Builder</a></li>
 <li><a href="#mingw">MinGW</a></li>
 <li><a href="#cygwin">Cygwin</a></li>
 </ul>
@@ -544,19 +565,18 @@ one will not clean up any old files, and trying to use the environment's
 </p><h3><a name="msvc">Building and Installing ACE on Windows with
 Microsoft Visual Studio</a></h3>
 
-<p>ACE contains project files for Microsoft Visual Studio .NET 2003 (VC7.1)
-and Visual Studio 2005 (VC8). Visual Studio 2005 supports building for
+<p>ACE contains project files for Microsoft Visual Studio .NET 2005 (VC8)
+, Visual Studio 2009 (VC9), and Visual Studio 2010 (VC10).
+Visual Studio 2005 supports building for
 desktop/server Windows as well as for Windows CE and Windows Mobile. Since
 not all users will be interested in the CE/Mobile capability, these platforms
 have separate solution and project files from the desktop/server Windows.
-Furthermore, VC7.1 and VC8 use different file formats but the same file
+Furthermore, VC7.1, VC8, VC9, and 10 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
 development and target platforms. The platform/name mapping is shown below.
 All solution files have a <code>.sln</code> suffix and all project files have
 a <code>.vcproj</code> suffix.</p>
-
-<p>Visual Studio 2008 (VC9) is also supported.</p>
 
 <p>
 The free Visual C++ 2008 Express Edition will work in place of the traditional
@@ -591,6 +611,11 @@ can be built with the compiler and linker included in the <a href="http://www.mi
   <tr>
     <th>VC9 for desktop/server</th>
     <td><i>name</i><code>_vc9</code>
+    </td>
+  </tr>
+  <tr>
+    <th>VC10 for desktop/server</th>
+    <td><i>name</i><code>_vc10</code>
     </td>
   </tr>
 </tbody></table>
@@ -769,7 +794,7 @@ include or library directories are specified using backslashes instead of forwar
 slashes.  If this occurs, the easiest way to fix it is to recreate it.</a></p>
 
 <hr align="left" width="50%"><p>&nbsp;</p>
-<h3><a name="codegear">Building and Installing ACE on Windows with CodeGear C++</a></h3>
+<h3><a name="codegear">Building and Installing ACE on Windows with Embarcadero C++</a></h3>
 
 If you are building for a machine without a network card, you may want
 to check <a href="#win32nonic">here</a> first. <p>
@@ -798,6 +823,8 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>set PATH=C:\ACE_wrappers\lib;C:\ACE_wrappers\bin;%PATH%</code><br>
       <br>
+  </li><li>Generate the bmake makefiles using <a href="#MPC">MPC</a>. Use the <code>bmake</code> project type for C++ Builder.
+      <br><br>
   </li><li>Change to the ACE_ROOT\ace directory.<br>
       <br>
   </li><li>Build release DLLs for ACE by going:<br>
@@ -819,7 +846,7 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       Set the environment variable below to build a version of ACE optimized
       for a certain CPU. For this there are special compiler flags
-      (-3/-4/-5/-6), see the CodeGear help for more info.<br>
+      (-3/-4/-5/-6), see the Embarcadero help for more info.<br>
       <code>set CPU_FLAG=-6</code><br>
       <br>
       You can then start the build with the command
@@ -834,7 +861,7 @@ to check <a href="#win32nonic">here</a> first. <p>
 
 Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bmak all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
 
-The Borland/CodeGear C++ Builder 4.0/5.0/6.0/2006/2007/2009 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
+The Borland/CodeGear/Embarcadero C++ Builder 4.0/5.0/6.0/2006/2007/2009/2010 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
 <b>ACE TESTS</b></p><p>
 
@@ -881,7 +908,7 @@ For our build we require the packages
 
 </p><ol>
 
-  <li> Install the MinGW tools into a common directory, say c:/mingw.
+  <li> Install the MinGW tools (including the MinGW Development toolkit) into a common directory, say c:/mingw.
       <br><br>
 
   </li><li> Install the MSYS tools into a common directory, say c:/msys.
@@ -928,6 +955,19 @@ For our build we require the packages
        before the previous one.
        <br><br>
 
+	   <p>
+       If you want to install ACE (using "make install") and want all the <tt>.pc</tt> files generated, 
+	   set the installation prefix in platform_macros.GNU.
+       </p><blockquote><code></code><pre>      INSTALL_PREFIX=/c/ACE
+       </pre></blockquote>
+	   Headers will be installed to $INSTALL_PREFIX/include, documentation and 
+	   build system files to $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib. With INSTALL_PREFIX set, RPATH will be enabled. 
+	   To disable RPATH (for example, if $INSTALL_PREFIX/$INSTALL_LIB is already 
+	   a system-known location for shared libraries), set the make macro 
+	   install_rpath to 0 by adding install_rpath=0 to platform_macros.GNU.
+	   
+       <br><br>
+
   </li><li> In the MSYS shell, change to the $ACE_ROOT/ace directory and
        run make:
 
@@ -946,6 +986,14 @@ For our build we require the packages
 
        </p><blockquote><code></code><pre>       % make static_libs=1
        </pre></blockquote>
+
+  </li><li> Run make install:
+  
+		<blockquote><code></code><pre>       % make install
+       </pre></blockquote>
+	   <p>
+       This should create <tt>ACE.pc</tt> to use with pkg-config.
+       </p>
 
   </li><li> <a name="mingwrunpath">
        The same rules for Win32 search of DLLs apply for MinGW. If you
@@ -1020,7 +1068,7 @@ setup selects by default:
        <blockquote><code></code><pre>       % export PATH=//c/cygwin/bin:$PATH
        </pre></blockquote>
 
-       or 
+       or
 
        <blockquote><code></code><pre>       % export PATH=/cygdrive/c/cygwin/bin:$PATH
        </pre></blockquote>
@@ -2067,7 +2115,7 @@ libraries.
             can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
             enabled.<p>
         </p></li><li>Enable IP multicast in ACE.  It is enabled by default in
-            <code>ace/config-linux-common.h</code>.  If you don't use
+            <code>ace/config-linux.h</code>.  If you don't use
             IP multicast, add <code>#define ACE_HAS_IP_MULTICAST 0</code>
             to your <code>ace/config.h</code> before building ACE.<p>
         </p></li><li>There must be a network interface that is up and supports
@@ -2463,6 +2511,29 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
         &lt;<a href="mailto:j.zorko@att.net">j.zorko@att.net</a>&gt; is
         only one of them.</p>
 
+</p></li><li><strong>iPhone/iPod Touch/iPad</strong><p>
+
+        </p><p>ACE builds and runs on the iPhone/iPod Touch/iPad Hardware
+        and Simulator. Keep in mind that ACE/TAO needs to be built
+        statically since Apple does not allow third party dynamic libraries
+        to be deployed on the hardware. The following are needed to build ACE:</p>
+
+        <p>1. The iPhone SDK.</p>
+        <p>2. When creating $ACE_ROOT/ace/config.h, include
+        config-macosx-iphone-hardware.h if you want to deploy on the
+        hardware, include config-macosx-iphone-simulator.h if you want
+        to deploy on the simulator. Even though those includes are named
+        after the iPhone, the includes work for iPhone/iPod Touch, and iPad.</p>
+        <p>3. You need to define two environment variables. The first is
+        IPHONE_TARGET. Set IPHONE_TARGET to SIMULATOR if you want to deploy
+        on SIMULATOR. Set IPHONE_TARGET to HARDWARE if you want to deploy on
+        the hardware device.</p>
+        <p>4. When creating $ACE_ROOT/include/makeinclude/platform_macros.GNU,
+        include 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_iphone.GNU'
+        in the file.</p>
+
+
+
 </li></ul>
 
 
@@ -2587,12 +2658,14 @@ well, try 'make realclean'.</p><p>
 <p></p><hr><p>
 </p><h1><a name="MPC">General MPC information</a></h1>
 
-The Makefile Project Creator (MPC) is a tool that takes platform and
+The <A HREF="
+http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html</A>
+Makefile Project Creator (MPC)</A> is a tool that takes platform and
 building tool generic files (mpc files) as input, which describe basic
 information needed to generate a "project" file for various build
 tools, including Make, NMake, Visual C++ 6, Visual C++ 7, etc.  Please
-see <a href="MPC/docs/USAGE">USAGE</a>, <a href="MPC/docs/README">README</a> for
-documentation on MPC.<P>
+see <a href="MPC/docs/USAGE">USAGE</a>, <a
+href="MPC/docs/README">README</a> for documentation on MPC.<P>
 
 A common usage for creating a Windows workspace containing just the
 core ACE and TAO libraries and executables is the following:

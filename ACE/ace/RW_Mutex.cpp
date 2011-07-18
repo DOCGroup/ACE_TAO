@@ -18,7 +18,7 @@
 
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, RW_Mutex, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

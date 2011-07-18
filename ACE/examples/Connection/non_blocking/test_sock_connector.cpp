@@ -6,7 +6,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "CPP-connector.h"
 
-ACE_RCSID(non_blocking, test_sock_connector, "$Id$")
+
 
 typedef Peer_Handler<ACE_SOCK_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR> IPC_CLIENT;

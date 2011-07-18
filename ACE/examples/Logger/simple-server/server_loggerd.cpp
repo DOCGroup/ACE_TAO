@@ -14,7 +14,7 @@
 #include "Logging_Acceptor.h"
 #include "Reactor_Singleton.h"
 
-ACE_RCSID(simple_server, server_loggerd, "$Id$")
+
 
 static sig_atomic_t finished = 0;
 

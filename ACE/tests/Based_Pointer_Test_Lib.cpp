@@ -1,28 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Based_Pointer_Test_Lib.cpp
-//
-// = DESCRIPTION
-//    This test confirms the function of the Based_Pointer_Repository
-//
-// = AUTHOR
-//    Steve Williams  <steve@telxio>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Based_Pointer_Test_Lib.cpp
+ *
+ *  $Id$
+ *
+ *  This test confirms the function of the Based_Pointer_Repository
+ *
+ *
+ *  @author Steve Williams  <steve@telxio>
+ */
+//=============================================================================
+
 
 #include "ace/ACE.h"
 #include "ace/svc_export.h"
 #include "ace/Based_Pointer_Repository.h"
-
-ACE_RCSID (tests,
-           Based_Pointer_Repository_DLL_Test,
-           "$Id$")
 
 #if defined (ACE_OPENVMS)
     // with OPENVMS symbol names > 31 cause us trouble with dlsym()

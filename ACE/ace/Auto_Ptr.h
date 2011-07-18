@@ -106,9 +106,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @brief Implements the draft C++ standard auto_ptr abstraction.
- * This version can be used instead of auto_ptr<T>, and obviates
- * the need for the ACE_AUTO_PTR_RESET macro on platforms like
- * VC6 where the auto_ptr<T> is broken.
+ * This version can be used instead of auto_ptr<T>
  */
 template <typename X>
 class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
@@ -208,18 +206,6 @@ ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-// Some platforms have an older version of auto_ptr
-// support, which lacks reset, and cannot be disabled
-// easily.  Portability to these platforms requires
-// use of the following ACE_AUTO_PTR_RESET macro.
-//
-// The TYPE macro parameter is no longer necessary but we leave it
-// around for backward compatibility.  This is also the reason why the
-// ACE_auto_ptr_reset function template is not called
-// ACE_AUTO_PTR_RESET.
-# define ACE_AUTO_PTR_RESET(AUTOPTR,NEWPTR,TYPE) \
-  ACE_auto_ptr_reset (AUTOPTR, NEWPTR);
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_Ptr.inl"

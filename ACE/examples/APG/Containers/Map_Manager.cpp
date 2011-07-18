@@ -29,7 +29,7 @@ private:
 // Listing 2 code/ch05
 int Map_Example::run (void)
 {
-  ACE_TRACE (ACE_TEXT ("Map_Example::run"));
+  ACE_TRACE ("Map_Example::run");
 
   // Corresponding KeyType objects are created on the fly.
   for (int i = 0; i < 100; i++)
@@ -64,7 +64,7 @@ int Map_Example::run (void)
 // Listing 3 code/ch05
 void Map_Example::iterate_forward (void)
 {
-  ACE_TRACE (ACE_TEXT ("Map_Example::iterate_forward"));
+  ACE_TRACE ("Map_Example::iterate_forward");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward iteration\n")));
   for (ACE_Map_Manager<KeyType,
@@ -83,7 +83,7 @@ void Map_Example::iterate_forward (void)
 
 void Map_Example::iterate_reverse (void)
 {
-  ACE_TRACE (ACE_TEXT ("Map_Example::iterate_reverse"));
+  ACE_TRACE ("Map_Example::iterate_reverse");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse iteration\n")));
   for (ACE_Map_Manager<KeyType,
                        DataElement,
@@ -101,7 +101,7 @@ void Map_Example::iterate_reverse (void)
 // Listing 4 code/ch05
 void Map_Example::remove_all (void)
 {
-  ACE_TRACE (ACE_TEXT ("Map_Example::remove_all"));
+  ACE_TRACE ("Map_Example::remove_all");
 
   // Note that we can't use the iterators here as they
   // are invalidated after deletions or insertions.

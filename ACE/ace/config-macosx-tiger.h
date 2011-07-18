@@ -76,9 +76,6 @@
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
-//Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
-#define ACE_HAS_SIG_MACROS
-
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
 
@@ -87,12 +84,8 @@
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
-//?
-#define ACE_LACKS_SIGSET
-
 #define ACE_NEEDS_SCHED_H
 
-// Use of <malloc.h> is deprecated.
 #define ACE_LACKS_MALLOC_H
 
 #define ACE_HAS_ALT_CUSERID
@@ -137,9 +130,6 @@
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H
@@ -211,6 +201,9 @@
 
 // gperf seems to need this
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+
+#define ACE_LACKS_UNSETENV
+#define ACE_LACKS_ISCTYPE
 
 #if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
 #error "Compiler must be upgraded, see http://developer.apple.com"

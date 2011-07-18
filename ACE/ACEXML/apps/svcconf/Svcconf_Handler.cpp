@@ -36,13 +36,13 @@ ACEXML_Svcconf_Handler::~ACEXML_Svcconf_Handler (void)
 void
 ACEXML_Svcconf_Handler::characters (const ACEXML_Char *,
                                     int,
-                                    int ACEXML_ENV_ARG_DECL_NOT_USED)
+                                    int)
 {
   // no-op
 }
 
 void
-ACEXML_Svcconf_Handler::endDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::endDocument (void)
 {
   // no-op
 }
@@ -50,7 +50,7 @@ ACEXML_Svcconf_Handler::endDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                     const ACEXML_Char *,
-                                    const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+                                    const ACEXML_Char *qName)
 {
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
@@ -70,13 +70,13 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
       if (svc_dll.open (active_info->path ()) == -1)
         {
           // build the error message
-          ACE_CString msg (ACE_TEXT ("Cannot locate DLL: '"));
-          msg += ACE_CString (ACE_TEXT (active_info->path ()));
-          msg += ACE_CString (ACE_TEXT ("' for entity '"));
-          msg += ACE_CString (ACE_TEXT (active_info->name ()));
-          msg += ACE_CString (ACE_TEXT ("'\n"));
+          ACE_TString msg (ACE_TEXT ("Cannot locate DLL: '"));
+          msg += ACE_TString (active_info->path ());
+          msg += ACE_TString (ACE_TEXT ("' for entity '"));
+          msg += ACE_TString (active_info->name ());
+          msg += ACE_TString (ACE_TEXT ("'\n"));
 
-          ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+          throw ACEXML_SAXException (msg.c_str ());
         }
 
       void *(*func) (ACE_Service_Object_Exterminator *) = 0;
@@ -90,13 +90,13 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
       if (func == 0)
         {
           // build the error message
-          ACE_CString msg (ACE_TEXT ("Cannot locate init function: '"));
-          msg += ACE_CString (ACE_TEXT (active_info->init_func ()));
-          msg += ACE_CString (ACE_TEXT ("' for entity '"));
-          msg += ACE_CString (ACE_TEXT (active_info->name ()));
-          msg += ACE_CString (ACE_TEXT ("'\n"));
+          ACE_TString msg (ACE_TEXT ("Cannot locate init function: '"));
+          msg += ACE_TString (active_info->init_func ());
+          msg += ACE_TString (ACE_TEXT ("' for entity '"));
+          msg += ACE_TString (active_info->name ());
+          msg += ACE_TString (ACE_TEXT ("'\n"));
 
-          ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+          throw ACEXML_SAXException (msg.c_str ());
         }
       symbol = (*func)(&gobbler); // target object created in the loaded DLL.
 
@@ -122,12 +122,12 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
               delete stp;
 
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Expecting Stream type in stream header"));
-              msg += ACE_CString (ACE_TEXT (" for entity '"));
-              msg += ACE_CString (ACE_TEXT (active_info->name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Expecting Stream type in stream header"));
+              msg += ACE_TString (ACE_TEXT (" for entity '"));
+              msg += ACE_TString (active_info->name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           this->stream_svc_type_ =
@@ -160,12 +160,12 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   || this->stream_->push (mt) == -1)
                 {
                   // build the error message
-                  ACE_CString msg (ACE_TEXT ("Error initializing module"));
-                  msg += ACE_CString (ACE_TEXT (" for entity '"));
-                  msg += ACE_CString (ACE_TEXT (active_info->name ()));
-                  msg += ACE_CString (ACE_TEXT ("'\n"));
+                  ACE_TString msg (ACE_TEXT ("Error initializing module"));
+                  msg += ACE_TString (ACE_TEXT (" for entity '"));
+                  msg += ACE_TString (active_info->name ());
+                  msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
 
 
@@ -192,12 +192,12 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                   delete stype;
 
                   // build the error message
-                  ACE_CString msg (ACE_TEXT ("Failed to initialize dynamic service"));
-                  msg += ACE_CString (ACE_TEXT (" for entity '"));
-                  msg += ACE_CString (ACE_TEXT (active_info->name ()));
-                  msg += ACE_CString (ACE_TEXT ("'\n"));
+                  ACE_TString msg (ACE_TEXT ("Failed to initialize dynamic service"));
+                  msg += ACE_TString (ACE_TEXT (" for entity '"));
+                  msg += ACE_TString (active_info->name ());
+                  msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           this->parsed_info_.reset ();
@@ -228,12 +228,12 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                                   this->parsed_info_.init_params ()) == -1)
                 {
                   // build the error message
-                  ACE_CString msg (ACE_TEXT ("Failed to initialize static service"));
-                  msg += ACE_CString (ACE_TEXT (" for entity '"));
-                  msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-                  msg += ACE_CString (ACE_TEXT ("'\n"));
+                  ACE_TString msg (ACE_TEXT ("Failed to initialize static service"));
+                  msg += ACE_TString (ACE_TEXT (" for entity '"));
+                  msg += ACE_TString (this->parsed_info_.name ());
+                  msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           this->parsed_info_.reset ();
@@ -268,7 +268,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char *)
 {
   // no-op
 }
@@ -276,14 +276,14 @@ ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char * ACEXML_ENV_ARG_DEC
 void
 ACEXML_Svcconf_Handler::ignorableWhitespace (const ACEXML_Char *,
                                              int,
-                                             int ACEXML_ENV_ARG_DECL_NOT_USED)
+                                             int)
 {
   // no-op
 }
 
 void
 ACEXML_Svcconf_Handler::processingInstruction (const ACEXML_Char *,
-                                               const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                               const ACEXML_Char *)
 {
   // no-op
 }
@@ -295,13 +295,13 @@ ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* locator)
 }
 
 void
-ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char *)
 {
   // no-op
 }
 
 void
-ACEXML_Svcconf_Handler::startDocument ( ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::startDocument (void)
 {
   // no-op
 }
@@ -310,35 +310,35 @@ void
 ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
                                       const ACEXML_Char *,
                                       const ACEXML_Char *qName,
-                                      ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+                                      ACEXML_Attributes *alist)
 {
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
-      this->get_dynamic_attrs (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_dynamic_attrs (alist);
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("initializer")) == 0)
     {
-      this->get_initializer_attrs (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_initializer_attrs (alist);
 
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("static")) == 0)
     {
-      this->get_static_attrs (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_static_attrs (alist);
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("stream")) == 0)
     {
-      this->get_stream_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_stream_id (alist);
 
       if (ACE_Service_Repository::instance()->find
           (this->stream_info_.name (),
            (const ACE_Service_Type **) &this->stream_svc_type_) == -1)
         {
           // build the error message
-          ACE_CString msg (ACE_TEXT ("Cannot find stream '"));
-          msg += ACE_CString (ACE_TEXT (this->stream_info_.name ()));
-          msg += ACE_CString (ACE_TEXT ("'\n"));
+          ACE_TString msg (ACE_TEXT ("Cannot find stream '"));
+          msg += ACE_TString (this->stream_info_.name ());
+          msg += ACE_TString (ACE_TEXT ("'\n"));
 
-          ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+          throw ACEXML_SAXException (msg.c_str ());
         }
       this->stream_ =   this->stream_svc_type_ == 0
         ? 0
@@ -359,7 +359,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("resume")) == 0)
     {
-      this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_id (alist);
       if (this->in_module_)
         {
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Resume %s in stream %s\n"),
@@ -372,11 +372,11 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           if (mt == 0)
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Can't locate module '"));
-              msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Can't locate module '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           mt->resume ();
@@ -388,19 +388,19 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           if (ACE_Service_Config::resume (this->parsed_info_.name ()) == -1)
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Resume failed"));
-              msg += ACE_CString (ACE_TEXT (" for entity '"));
-              msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Resume failed"));
+              msg += ACE_TString (ACE_TEXT (" for entity '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
       this->parsed_info_.reset ();
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("suspend")) == 0)
     {
-      this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_id (alist);
       if (this->in_module_)
         {
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Suspend %s in stream %s\n"),
@@ -413,11 +413,11 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           if (mt == 0)
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Can't locate module '"));
-              msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Can't locate module '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           mt->suspend ();
@@ -429,19 +429,19 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           if (ACE_Service_Config::suspend (this->parsed_info_.name ()) == -1)
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Suspend failed"));
-              msg += ACE_CString (ACE_TEXT (" for entity '"));
-              msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Suspend failed"));
+              msg += ACE_TString (ACE_TEXT (" for entity '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
       this->parsed_info_.reset ();
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("remove")) == 0)
     {
-      this->get_id (alist ACEXML_ENV_ARG_PARAMETER);
+      this->get_id (alist);
       if (this->in_module_)
         {
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Remove %s in stream %s\n"),
@@ -454,11 +454,11 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           if (mt == 0)
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Can't locate module '"));
-              msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Can't locate module '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
 
           this->stream_->remove (mt);
@@ -470,12 +470,12 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
           if (ACE_Service_Config::remove (this->parsed_info_.name ()) == -1)
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Remove failed"));
-              msg += ACE_CString (ACE_TEXT (" for entity '"));
-              msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Remove failed"));
+              msg += ACE_TString (ACE_TEXT (" for entity '"));
+              msg += ACE_TString (this->parsed_info_.name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW (ACEXML_SAXException (msg.c_str ()));
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
       this->parsed_info_.reset ();
@@ -495,7 +495,7 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 
 void
 ACEXML_Svcconf_Handler::startPrefixMapping (const ACEXML_Char *,
-                                            const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                            const ACEXML_Char *)
 {
   // No-op.
 }
@@ -505,7 +505,7 @@ ACEXML_Svcconf_Handler::startPrefixMapping (const ACEXML_Char *,
 void
 ACEXML_Svcconf_Handler::notationDecl (const ACEXML_Char *,
                                       const ACEXML_Char *,
-                                      const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                      const ACEXML_Char *)
 {
   // No-op.
 }
@@ -514,7 +514,7 @@ void
 ACEXML_Svcconf_Handler::unparsedEntityDecl (const ACEXML_Char *,
                                             const ACEXML_Char *,
                                             const ACEXML_Char *,
-                                            const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                            const ACEXML_Char *)
 {
   // No-op.
 }
@@ -523,7 +523,7 @@ ACEXML_Svcconf_Handler::unparsedEntityDecl (const ACEXML_Char *,
 
 ACEXML_InputSource *
 ACEXML_Svcconf_Handler::resolveEntity (const ACEXML_Char *,
-                                       const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                       const ACEXML_Char *)
 {
   // No-op.
   return 0;
@@ -535,7 +535,7 @@ ACEXML_Svcconf_Handler::resolveEntity (const ACEXML_Char *,
    * Receive notification of a recoverable error.
    */
 void
-ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
               this->locator_->getLineNumber(),
@@ -544,7 +544,7 @@ ACEXML_Svcconf_Handler::error (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_
 }
 
 void
-ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
               this->locator_->getLineNumber(),
@@ -553,7 +553,7 @@ ACEXML_Svcconf_Handler::fatalError (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_
 }
 
 void
-ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line :%d col: %d ", this->locator_->getSystemId(),
               this->locator_->getLineNumber(),
@@ -562,7 +562,7 @@ ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex ACEXML_ENV_ARG_DEC
 }
 
 int
-ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
@@ -574,21 +574,20 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_D
         else
           {
             // build the error message
-            ACE_CString msg (ACE_TEXT ("Invalid stream attribute '"));
-            msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-            msg += ACE_CString (ACE_TEXT ("' for entity '"));
-            msg += ACE_CString (ACE_TEXT (this->stream_info_.name ()));
-            msg += ACE_CString (ACE_TEXT ("'\n"));
+            ACE_TString msg (ACE_TEXT ("Invalid stream attribute '"));
+            msg += ACE_TString (alist->getQName (i));
+            msg += ACE_TString (ACE_TEXT ("' for entity '"));
+            msg += ACE_TString (this->stream_info_.name ());
+            msg += ACE_TString (ACE_TEXT ("'\n"));
 
-            ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                 -1);
+            throw ACEXML_SAXException (msg.c_str ());
           }
       }
   return 0;
 }
 
 int
-ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
@@ -600,22 +599,21 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
         else
           {
             // build the error message
-            ACE_CString msg (ACE_TEXT ("Invalid attribute '"));
-            msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-            msg += ACE_CString (ACE_TEXT ("', expecting 'id'"));
-            msg += ACE_CString (ACE_TEXT (" for entity '"));
-            msg += ACE_CString (ACE_TEXT (this->parsed_info_.name ()));
-            msg += ACE_CString (ACE_TEXT ("'\n"));
+            ACE_TString msg (ACE_TEXT ("Invalid attribute '"));
+            msg += ACE_TString (alist->getQName (i));
+            msg += ACE_TString (ACE_TEXT ("', expecting 'id'"));
+            msg += ACE_TString (ACE_TEXT (" for entity '"));
+            msg += ACE_TString (this->parsed_info_.name ());
+            msg += ACE_TString (ACE_TEXT ("'\n"));
 
-            ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                            -1);
+            throw ACEXML_SAXException (msg.c_str ());
           }
       }
   return 0;
 }
 
 int
-ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     {
@@ -641,15 +639,14 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
               else
                 {
                   // build the error message
-                  ACE_CString msg (ACE_TEXT ("Invalid attribute value '"));
-                  msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-                  msg += ACE_CString (ACE_TEXT ("', expecting 'active' or 'inactive'"));
-                  msg += ACE_CString (ACE_TEXT (" for entity '"));
-                  msg += ACE_CString (ACE_TEXT (info->name ()));
-                  msg += ACE_CString (ACE_TEXT ("'\n"));
+                  ACE_TString msg (ACE_TEXT ("Invalid attribute value '"));
+                  msg += ACE_TString (alist->getQName (i));
+                  msg += ACE_TString (ACE_TEXT ("', expecting 'active' or 'inactive'"));
+                  msg += ACE_TString (ACE_TEXT (" for entity '"));
+                  msg += ACE_TString (info->name ());
+                  msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                       -1);
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           else if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("type")) == 0)
@@ -669,26 +666,25 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
               else
                 {
                   // build the error message
-                  ACE_CString msg (ACE_TEXT ("Invalid Service_Object attribute value'"));
-                  msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-                  msg += ACE_CString (ACE_TEXT ("' for entity '"));
-                  msg += ACE_CString (ACE_TEXT (info->name ()));
-                  msg += ACE_CString (ACE_TEXT ("'\n"));
+                  ACE_TString msg (ACE_TEXT ("Invalid Service_Object attribute value'"));
+                  msg += ACE_TString (alist->getQName (i));
+                  msg += ACE_TString (ACE_TEXT ("' for entity '"));
+                  msg += ACE_TString (info->name ());
+                  msg += ACE_TString (ACE_TEXT ("'\n"));
 
-                  ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()),
-                                  -1);
+                  throw ACEXML_SAXException (msg.c_str ());
                 }
             }
           else
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Invalid attribute'"));
-              msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-              msg += ACE_CString (ACE_TEXT ("' for entity '"));
-              msg += ACE_CString (ACE_TEXT (info->name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Invalid attribute'"));
+              msg += ACE_TString (alist->getQName (i));
+              msg += ACE_TString (ACE_TEXT ("' for entity '"));
+              msg += ACE_TString (info->name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
     }
@@ -696,7 +692,7 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_A
 }
 
 int
-ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     {
@@ -720,13 +716,13 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_E
           else
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Invalid initializer attribute'"));
-              msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-              msg += ACE_CString (ACE_TEXT ("' for entity '"));
-              msg += ACE_CString (ACE_TEXT (info->name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Invalid initializer attribute'"));
+              msg += ACE_TString (alist->getQName (i));
+              msg += ACE_TString (ACE_TEXT ("' for entity '"));
+              msg += ACE_TString (info->name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
     }
@@ -734,7 +730,7 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist ACEXML_E
 }
 
 int
-ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL)
+ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist)
 {
   if (alist != 0)
     {
@@ -754,13 +750,13 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_AR
           else
             {
               // build the error message
-              ACE_CString msg (ACE_TEXT ("Invalid static attribute '"));
-              msg += ACE_CString (ACE_TEXT (alist->getQName (i)));
-              msg += ACE_CString (ACE_TEXT ("' for entity '"));
-              msg += ACE_CString (ACE_TEXT (info->name ()));
-              msg += ACE_CString (ACE_TEXT ("'\n"));
+              ACE_TString msg (ACE_TEXT ("Invalid static attribute '"));
+              msg += ACE_TString (alist->getQName (i));
+              msg += ACE_TString (ACE_TEXT ("' for entity '"));
+              msg += ACE_TString (info->name ());
+              msg += ACE_TString (ACE_TEXT ("'\n"));
 
-              ACEXML_THROW_RETURN (ACEXML_SAXException (msg.c_str ()), -1);
+              throw ACEXML_SAXException (msg.c_str ());
             }
         }
     }

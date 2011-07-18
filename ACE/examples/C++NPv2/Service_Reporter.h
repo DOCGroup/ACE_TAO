@@ -27,7 +27,7 @@ protected:
 
   // Reactor hook methods.
   virtual int handle_input (ACE_HANDLE);
-  virtual ACE_HANDLE get_handle () const 
+  virtual ACE_HANDLE get_handle () const
   { return acceptor_.get_handle (); }
 
 private:

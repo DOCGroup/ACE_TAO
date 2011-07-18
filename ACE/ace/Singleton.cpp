@@ -19,10 +19,6 @@
 #include "ace/Guard_T.h"
 #include "ace/os_include/os_typeinfo.h"
 
-ACE_RCSID (ace,
-           Singleton,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE, class ACE_LOCK> void

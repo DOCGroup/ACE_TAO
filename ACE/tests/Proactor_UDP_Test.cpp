@@ -15,10 +15,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Proactor_UDP_Test,
-           "$Id$")
-
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
@@ -113,13 +109,11 @@ public:
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
 
-
 // Function to remove signals from the signal mask.
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#ifndef ACE_WIN32
-
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -129,19 +123,25 @@ disable_signal (int sigmin, int sigmax)
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
 
-  //  Put the <signal_set>.
-  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("pthread_sigmask failed")));
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_UNIX_SIGNALS */
 
-  return 1;
+  return 0;
 }
-
 
 // *************************************************************
 //  MyTask is ACE_Task resposible for :
@@ -199,7 +199,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     this->lock_,
                     -1);
 
-  ACE_ASSERT (this->proactor_ == 0);
+  ACE_TEST_ASSERT (this->proactor_ == 0);
 
 #if defined (ACE_WIN32)
 
@@ -344,6 +344,7 @@ MyTask::svc (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask started\n")));
 
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   // signal that we are ready
   sem_.release (1);
@@ -742,7 +743,8 @@ struct Session_Data
 {
   ACE_INT32 direction_;     // 0 == Start, 1 == Ack
   ACE_INT32 addr_;          // Network byte order, must be IPv4
-  ACE_INT16 port_;          // UDP port, network byte order
+  ACE_UINT16 port_;         // UDP port, network byte order
+  Session_Data() { ACE_OS::memset (this, 0, sizeof(*this)); }
 };
 
 // Master is the server-side receiver of session establishment requests.
@@ -814,8 +816,6 @@ Master::~Master (void)
 void
 Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 {
-  bool restart_recv = true;
-
   // We should only receive Start datagrams with valid addresses to reply to.
   if (result.success ())
     {
@@ -884,7 +884,6 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("All expected sessions are up\n")));
-                  restart_recv = false;
                 }
             }
           else
@@ -1204,7 +1203,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
     else
       mb->release ();
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
@@ -1300,7 +1299,7 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
           this->initiate_read ();
       }
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
@@ -1335,6 +1334,7 @@ Connector::Connector (TestData *tester)
 int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
+  ACE_OS::sleep(3);  // Let Master get going
   if (num > MAX_CLIENTS)
     num = MAX_CLIENTS;
 
@@ -1847,7 +1847,7 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
           this->initiate_read ();
       }
 
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }
@@ -1974,7 +1974,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
       }
 
     mb->release ();
-    this->io_count_--;
+    --this->io_count_;
     if (this->io_count_ > 0)
       return;
   }

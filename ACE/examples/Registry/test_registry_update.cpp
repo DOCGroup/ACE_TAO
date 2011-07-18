@@ -22,7 +22,7 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID(Registry, test_registry_update, "$Id$")
+
 
 // Name for application's naming context
 static ACE_Registry::Name application_context_name;

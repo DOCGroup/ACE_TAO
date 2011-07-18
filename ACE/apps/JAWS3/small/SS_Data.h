@@ -4,7 +4,6 @@
 #ifndef TERA_SS_DATA_H
 #define TERA_SS_DATA_H
 
-#include "ace/OS.h"
 #include "ace/FILE_IO.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"

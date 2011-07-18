@@ -26,7 +26,7 @@
 
 #if !defined (ACE_LACKS_NETINET_TCP_H)
 # include /**/ <netinet/tcp.h>
-#endif /* !ACE_LACKS_NETIINET_TCP_H */
+#endif /* !ACE_LACKS_NETINET_TCP_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

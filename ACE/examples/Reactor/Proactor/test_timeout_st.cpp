@@ -1,37 +1,37 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_timeout_st.cpp
-//
-// = DESCRIPTION
-//
-//    This example application shows how to write event loops that
-//    handle events for some fixed amount of time. This is the single
-//    threaded version of the test_timeout.cpp application.
-//
-// = AUTHOR
-//    Irfan Pyarali and Alexander Babu Arulanthu
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_timeout_st.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This example application shows how to write event loops that
+ *  handle events for some fixed amount of time. This is the single
+ *  threaded version of the test_timeout.cpp application.
+ *
+ *
+ *  @author Irfan Pyarali and Alexander Babu Arulanthu
+ */
+//=============================================================================
+
 
 #include "ace/Proactor.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(Proactor, test_timeout, "$Id$")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
+/**
+ * @class Timeout_Handler
+ *
+ * @brief Generic timeout handler.
+ */
 class Timeout_Handler : public ACE_Handler
 {
-  // = TITLE
-  //     Generic timeout handler.
 
 public:
   Timeout_Handler (void)
@@ -51,11 +51,11 @@ public:
     }
 
 private:
+  /// Sequence number for the timeouts.
   int count_;
-  // Sequence number for the timeouts.
 
+  /// Starting time of the test.
   ACE_Time_Value start_time_;
-  // Starting time of the test.
 };
 
 

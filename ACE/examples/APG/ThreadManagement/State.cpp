@@ -19,8 +19,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Main Thread running\n")));
 // Listing 1 code/ch13
   HA_CommandHandler handler;
-  int result = handler.activate (THR_NEW_LWP | 
-                                 THR_JOINABLE |  
+  int result = handler.activate (THR_NEW_LWP |
+                                 THR_JOINABLE |
                                  THR_SUSPENDED);
   ACE_ASSERT (result == 0);
 
@@ -34,6 +34,6 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
               handler.grp_id ()));
   handler.resume ();
   handler.wait ();
-// Listing 1 
+// Listing 1
   return 0;
 }

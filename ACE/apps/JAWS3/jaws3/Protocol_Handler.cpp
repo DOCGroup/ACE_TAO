@@ -29,7 +29,7 @@ JAWS_Protocol_Handler::~JAWS_Protocol_Handler (void)
 }
 
 
-int 
+int
 JAWS_Protocol_Handler::service (void)
 {
   if (this->state_ == 0)

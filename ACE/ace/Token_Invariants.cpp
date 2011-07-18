@@ -1,13 +1,11 @@
+// $Id$
+
 #include "ace/Token_Invariants.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Object_Manager.h"
 #include "ace/os_include/os_typeinfo.h"
-
-ACE_RCSID (ace,
-           Token_Invariants,
-           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

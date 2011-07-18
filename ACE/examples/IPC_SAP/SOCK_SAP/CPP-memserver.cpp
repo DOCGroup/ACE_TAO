@@ -10,7 +10,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"
 
-ACE_RCSID(SOCK_SAP, CPP_inserver, "$Id$")
+
 
 static int
 run_event_loop (u_short port)

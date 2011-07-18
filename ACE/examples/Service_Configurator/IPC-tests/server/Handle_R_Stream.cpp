@@ -2,8 +2,6 @@
 
 #include "Handle_R_Stream.h"
 
-ACE_RCSID(server, Handle_R_Stream, "$Id$")
-
 #if defined (SunOS4)
 extern "C"
 {

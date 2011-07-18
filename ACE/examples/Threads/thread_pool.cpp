@@ -18,7 +18,7 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
-ACE_RCSID(Threads, thread_pool, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
@@ -104,7 +104,7 @@ Thread_Pool::svc (void)
 
   for (;; count++)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) in iteration %d before getq ()\n",

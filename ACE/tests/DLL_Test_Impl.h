@@ -1,17 +1,14 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    DLL_Test_Impl.h
-//
-// = AUTHOR
-//     Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DLL_Test_Impl.h
+ *
+ *  $Id$
+ *
+ *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef ACE_TESTS_DLL_TEST_IMPL_H
 #define ACE_TESTS_DLL_TEST_IMPL_H
@@ -23,30 +20,32 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Hello_Impl
+ *
+ * @brief The Hello class in the dynamically linkable library.
+ *
+ * This class is used in this example to show how a library can
+ * be loaded on demand and its methods called on getting the
+ * symbols from the library.
+ */
 class Hello_Impl : public Hello
 {
-  // = TITLE
-  //    The Hello class in the dynamically linkable library.
-  //
-  // = DESCRIPTION
-  //    This class is used in this example to show how a library can
-  //    be loaded on demand and its methods called on getting the
-  //    symbols from the library.
 public:
+  /// Constructor
   Hello_Impl (void);
-  // Constructor
 
+  /// Destructor
   ~Hello_Impl (void);
-  // Destructor
 
+  /// See the documentation in the base class
   void say_next (void);
-  // See the documentation in the base class
 
+  /// Uses ACE::strnew() to allocate the returned string.
   ACE_TCHAR *new_info (void);
-  // Uses ACE::strnew() to allocate the returned string.
 
+  /// Uses ACE_OS::malloc() to allocate the returned string.
   ACE_TCHAR *malloc_info (void);
-  // Uses ACE_OS::malloc() to allocate the returned string.
 
   // Overload the new/delete opertors so the object will be
   // created/deleted using the memory allocator associated with the

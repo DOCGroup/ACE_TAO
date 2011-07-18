@@ -22,8 +22,7 @@ ACEXML_SAXPrint_Handler::~ACEXML_SAXPrint_Handler (void)
 void
 ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
                                      size_t,
-                                     size_t
-                                     ACEXML_ENV_ARG_DECL_NOT_USED)
+                                     size_t)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s"),
@@ -31,7 +30,7 @@ ACEXML_SAXPrint_Handler::characters (const ACEXML_Char *cdata,
 }
 
 void
-ACEXML_SAXPrint_Handler::endDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::endDocument (void)
 {
 
 
@@ -41,8 +40,7 @@ ACEXML_SAXPrint_Handler::endDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
                                      const ACEXML_Char *,
-                                     const ACEXML_Char *qName
-                                     ACEXML_ENV_ARG_DECL_NOT_USED)
+                                     const ACEXML_Char *qName)
 {
 
 
@@ -54,8 +52,7 @@ ACEXML_SAXPrint_Handler::endElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *
-                                           ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *)
 {
 //   ACE_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
@@ -65,7 +62,7 @@ ACEXML_SAXPrint_Handler::endPrefixMapping (const ACEXML_Char *
 void
 ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char * cdata,
                                               int,
-                                              int ACEXML_ENV_ARG_DECL_NOT_USED)
+                                              int)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s"),
@@ -76,8 +73,7 @@ ACEXML_SAXPrint_Handler::ignorableWhitespace (const ACEXML_Char * cdata,
 
 void
 ACEXML_SAXPrint_Handler::processingInstruction (const ACEXML_Char *target,
-                                                const ACEXML_Char *data
-                                                ACEXML_ENV_ARG_DECL_NOT_USED)
+                                                const ACEXML_Char *data)
 {
 
 
@@ -96,8 +92,7 @@ ACEXML_SAXPrint_Handler::setDocumentLocator (ACEXML_Locator * locator)
 }
 
 void
-ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name
-                                        ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name)
 {
 
 
@@ -107,7 +102,7 @@ ACEXML_SAXPrint_Handler::skippedEntity (const ACEXML_Char *name
 }
 
 void
-ACEXML_SAXPrint_Handler::startDocument (ACEXML_ENV_SINGLE_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::startDocument (void)
 {
 
 
@@ -119,8 +114,7 @@ void
 ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
                                        const ACEXML_Char *,
                                        const ACEXML_Char *qName,
-                                       ACEXML_Attributes *alist
-                                       ACEXML_ENV_ARG_DECL_NOT_USED)
+                                       ACEXML_Attributes *alist)
 {
 
 
@@ -141,7 +135,7 @@ ACEXML_SAXPrint_Handler::startElement (const ACEXML_Char *,
 
 void
 ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
-                                             const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                             const ACEXML_Char *)
 {
 //   ACE_DEBUG ((LM_DEBUG,
 //               ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
@@ -155,7 +149,7 @@ ACEXML_SAXPrint_Handler::startPrefixMapping (const ACEXML_Char * ,
 void
 ACEXML_SAXPrint_Handler::notationDecl (const ACEXML_Char *,
                                        const ACEXML_Char *,
-                                       const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                       const ACEXML_Char *)
 {
   // No-op.
 }
@@ -164,7 +158,7 @@ void
 ACEXML_SAXPrint_Handler::unparsedEntityDecl (const ACEXML_Char *,
                                              const ACEXML_Char *,
                                              const ACEXML_Char *,
-                                             const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                             const ACEXML_Char *)
 {
   // No-op.
 }
@@ -173,7 +167,7 @@ ACEXML_SAXPrint_Handler::unparsedEntityDecl (const ACEXML_Char *,
 
 ACEXML_InputSource *
 ACEXML_SAXPrint_Handler::resolveEntity (const ACEXML_Char *,
-                                        const ACEXML_Char * ACEXML_ENV_ARG_DECL_NOT_USED)
+                                        const ACEXML_Char *)
 {
   // No-op.
   return 0;
@@ -185,8 +179,7 @@ ACEXML_SAXPrint_Handler::resolveEntity (const ACEXML_Char *,
  * Receive notification of a recoverable error.
  */
 void
-ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex
-                                ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
@@ -196,8 +189,7 @@ ACEXML_SAXPrint_Handler::error (ACEXML_SAXParseException & ex
 }
 
 void
-ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex
-                                     ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),
@@ -207,8 +199,7 @@ ACEXML_SAXPrint_Handler::fatalError (ACEXML_SAXParseException & ex
 }
 
 void
-ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex
-                                  ACEXML_ENV_ARG_DECL_NOT_USED)
+ACEXML_SAXPrint_Handler::warning (ACEXML_SAXParseException & ex)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: line: %d col: %d ",
               (this->locator_->getSystemId() == 0 ? this->fileName_ : this->locator_->getSystemId()),

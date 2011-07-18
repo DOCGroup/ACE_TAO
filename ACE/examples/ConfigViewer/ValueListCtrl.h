@@ -10,9 +10,9 @@ public:
   ///////////////////////////////////////////
   // Initializers
   ///////////////////////////////////////////
-  ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition, 
-        const wxSize& size = wxDefaultSize, long style = wxLC_ICON, 
-        const wxValidator& validator = wxDefaultValidator, 
+  ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize, long style = wxLC_ICON,
+        const wxValidator& validator = wxDefaultValidator,
         const wxString& name = "listCtrl");
   virtual ~ValueListCtrl();
 

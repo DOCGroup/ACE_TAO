@@ -99,7 +99,7 @@ sub start_html_server {
 sub process_html_request {
         local($request, $command, $script, $magic, $url, $peer);
         local(%args);
- 
+
         #
         # Parse the command and URL. Update the default file prefix.
         #
@@ -109,12 +109,12 @@ sub process_html_request {
         if ($command eq "" || $command eq "QUIT") {
                 return;
         }
- 
+
         #($junk, $script) = split(/\//, $url, 2);
         #($script, $html_script_args) = split(',', $script, 2);
         #($HTML_CWD = "file:$script") =~ s/\/[^\/]*$//;
         $script = $url;
- 
+
         while (<CLIENT>) {
                 last if (/^\s+$/);
         }
@@ -130,7 +130,7 @@ sub process_html_request {
 		get_file($script);
 		}
         } elsif ($command eq "POST") {
- 
+
         	print $request if $debug;
 		flush;
                 #
@@ -148,20 +148,20 @@ sub process_html_request {
                                 $html_post_attributes .= (/%([0-9][0-9A-Z])/) ?
                                         pack('c',hex($1)) : $_;
                         }
-                        %args = ('_junk_', split(/\n([^=]+)=/, $html_post_attributes));                  
+                        %args = ('_junk_', split(/\n([^=]+)=/, $html_post_attributes));
                         delete $args{'_junk_'};
                         for (keys %args) {
                                 print "\$$_ = $args{$_}\n" if $debug;
                                 ${$_} = $args{$_};
                         }
                         perl_html_script($script);
-                } else { 
+                } else {
                         &bad_html_form($script);
                 }
         } else {
                 &bad_html_command($request);
         }
-}       
+}
 
 
 #
@@ -169,7 +169,7 @@ sub process_html_request {
 #
 sub bad_html_command {
         local($request) = @_;
- 
+
         print CLIENT <<EOF
 <HTML>
 <HEAD>
@@ -184,13 +184,13 @@ The command <TT>$request<TT> was not recognized.
 EOF
 ;
 }
- 
+
 #
 # Execute PERL script
 #
 sub perl_html_script {
         local($script) = @_;
- 
+
         if (! -e $script) {
                 print CLIENT <<EOF
 <HTML>
@@ -229,7 +229,7 @@ EOF
 #
 sub bad_html_form {
         local($script) = @_;
- 
+
         print CLIENT <<EOF
 <HTML>
 <HEAD>
@@ -238,14 +238,14 @@ sub bad_html_form {
 </HEAD>
 <BODY>
 <H1>No attribute list</H1>
- 
+
 No attribute list was found.
 </BODY>
 </HTML>
 EOF
 ;
 }
- 
+
 #
 # Give them something to read while the server is initializing.
 #
@@ -286,7 +286,7 @@ EOF
 	open(FILE, $file);
 	while (<FILE>) {
 		print CLIENT $_;
-	}	
+	}
 	close(FILE);
 
 	print CLIENT <<EOF

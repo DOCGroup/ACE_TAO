@@ -21,7 +21,7 @@
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL && ACE_HAS_THREADS */
 
-ACE_RCSID(ace, Sched_Params, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

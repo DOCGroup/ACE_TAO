@@ -4,7 +4,6 @@
 
 ACE_OPENVMS = 1
 versioned_so ?= 0
-exceptions ?= 1
 debug ?= 1
 optimize ?= 0
 threads ?= 1

@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Stack.h
+// $Id$
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
 
 #ifndef ACE_RMCAST_STACK_H
 #define ACE_RMCAST_STACK_H

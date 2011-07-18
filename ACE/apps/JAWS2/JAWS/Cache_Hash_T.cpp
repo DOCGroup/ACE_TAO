@@ -139,7 +139,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::bind (const EXT_ID &ext_id,
 
   if (this->hashtable_[hash_idx] == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
       if (this->new_cachebucket (hash_idx) == -1)
         return -1;
@@ -161,7 +161,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::trybind (const EXT_ID &ext_id,
 
   if (this->hashtable_[hash_idx] == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
       if (this->new_cachebucket (hash_idx) == -1)
         return -1;
@@ -185,7 +185,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::rebind (const EXT_ID &ext_id,
 
   if (this->hashtable_[hash_idx] == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, -1);
 
       if (this->new_cachebucket (hash_idx) == -1)
         return -1;

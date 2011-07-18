@@ -1,8 +1,6 @@
+// $Id$
+
 #include "ace/Connection_Recycling_Strategy.h"
-
-
-ACE_RCSID(ace, Connection_Recycling_Strategy, "$Id$")
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

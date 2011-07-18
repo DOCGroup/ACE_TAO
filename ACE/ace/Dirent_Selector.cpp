@@ -9,10 +9,6 @@
 #include "ace/OS_NS_dirent.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID (ace,
-           Dirent_Selector,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Construction/Destruction

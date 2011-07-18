@@ -19,7 +19,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(Threads, manual_event, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = 0;

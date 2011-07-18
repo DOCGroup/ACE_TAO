@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Message_Queue.h"
+#include "ace/Copy_Disabled.h"
 #include "ace/Condition_Thread_Mutex.h"
 
 /// Define to be compatible with the terminology in the POSA2 book!
@@ -35,7 +36,8 @@ class ACE_Method_Request;
 /**
  * @class ACE_Activation_Queue
  *
- * @brief Reifies a method into a request.  Subclasses typically
+ * @brief
+ * Reifies a method into a request.  Subclasses typically
  * represent necessary state and behavior.
  *
  * Maintains a priority-ordered queue of ACE_Method_Request objects.
@@ -47,10 +49,9 @@ class ACE_Method_Request;
  *
  * @sa ACE_Method_Request
  */
-class ACE_Export ACE_Activation_Queue
+class ACE_Export ACE_Activation_Queue : private ACE_Copy_Disabled
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   /**
    * Initializes a new activation queue.
@@ -138,12 +139,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-
-private:
-
-  // = Prevent copying and assignment.
-  ACE_Activation_Queue (const ACE_Activation_Queue &);
-  void operator= (const ACE_Activation_Queue &);
 
 protected:
 

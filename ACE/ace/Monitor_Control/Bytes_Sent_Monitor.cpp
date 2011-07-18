@@ -24,7 +24,9 @@ namespace ACE
             /// Scan format for /proc/net/dev
 #elif defined (ACE_HAS_KSTAT)
       , Solaris_Network_Interface_Monitor (ACE_TEXT ("obytes"))
-#elif defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__) 
+#elif defined (__FreeBSD__) || defined (__Lynx__)
+      , FreeBSD_Network_Interface_Monitor (ACE_TEXT ("obytes"))
+#elif defined (__NetBSD__) || defined (__OpenBSD__)
       , BSD_Network_Interface_Monitor (ACE_TEXT ("obytes"))
 #endif
     {}
@@ -33,7 +35,7 @@ namespace ACE
     Bytes_Sent_Monitor::update (void)
     {
       this->update_i ();
-      
+
       /// On some platforms, value_ is an ACE_UINT64.
       this->receive (static_cast<double> (this->value_));
     }
@@ -43,7 +45,7 @@ namespace ACE
     {
       return Bytes_Sent_Monitor::default_name_;
     }
-    
+
     void
     Bytes_Sent_Monitor::clear_i (void)
     {
@@ -56,5 +58,3 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
-
-

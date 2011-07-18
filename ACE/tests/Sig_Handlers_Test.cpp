@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Sig_Handlers_Test.cpp
-//
-// = DESCRIPTION
-//    This is a simple program that tests whether the ACE_Sig_Handlers
-//    class works properly.  To run this test, start the application
-//    and then type ^C.  If everything is working properly the test
-//    will shutdown gracefully.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@dre.vanderbilt.edu> and Andreas Drescher <ace at anticat dot ch>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Sig_Handlers_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This is a simple program that tests whether the ACE_Sig_Handlers
+ *  class works properly.  To run this test, start the application
+ *  and then type ^C.  If everything is working properly the test
+ *  will shutdown gracefully.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu> and Andreas Drescher <ace at anticat dot ch>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -28,7 +25,7 @@
 #include "ace/Assert.h"
 #include "ace/SString.h"
 
-ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
+
 
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {
@@ -46,12 +43,12 @@ public:
 
   ~Test_SIGINT_Handler()
   {
-    ACE_ASSERT (Test_SIGINT_Handler::handle_signal_count_ == Test_SIGINT_Handler::registration_count_);
+    ACE_TEST_ASSERT (Test_SIGINT_Handler::handle_signal_count_ == Test_SIGINT_Handler::registration_count_);
   }
 
   virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
   {
-    ACE_ASSERT (signal == SIGINT);
+    ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Handler (%u) - %s\n"),
                 this,
@@ -85,7 +82,7 @@ public:
 
   virtual int handle_signal (int signal, siginfo_t *, ucontext_t *)
   {
-    ACE_ASSERT (signal == SIGINT);
+    ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u)\n"),
                 this));

@@ -2,8 +2,6 @@
 
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (ace, OS_NS_unistd, "$Id$")
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_unistd.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -19,21 +17,10 @@ ACE_RCSID (ace, OS_NS_unistd, "$Id$")
 #include "ace/os_include/sys/os_pstat.h"
 #include "ace/os_include/sys/os_sysctl.h"
 
-#if defined (ACE_NEEDS_FTRUNCATE)
-extern "C" int
-ftruncate (ACE_HANDLE handle, long len)
-{
-  struct flock fl;
-  fl.l_whence = 0;
-  fl.l_len = 0;
-  fl.l_start = len;
-  fl.l_type = F_WRLCK;
-
-  return ACE_OS::fcntl (handle, F_FREESP, reinterpret_cast <long> (&fl));
-}
-#endif /* ACE_NEEDS_FTRUNCATE */
-
-/*****************************************************************************/
+#if defined ACE_HAS_VXCPULIB
+# include "vxCpuLib.h"
+# include "cpuset.h"
+#endif /* ACE_HAS_VXCPULIB */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,6 +51,10 @@ ACE_OS::argv_to_string (int argc,
                         bool substitute_env_args,
                         bool quote_args)
 {
+#if defined (ACE_LACKS_STRENVDUP)
+  ACE_UNUSED_ARG (substitute_env_args);
+#endif /* ACE_LACKS_STRENVDUP */
+
   if (argc <= 0 || argv == 0 || argv[0] == 0)
     return 0;
 
@@ -127,7 +118,8 @@ ACE_OS::argv_to_string (int argc,
                   ++quotes;
             }
           argv_p[i] =
-            (ACE_TCHAR *) ACE_OS::malloc (ACE_OS::strlen (temp) * sizeof (ACE_TCHAR) + quotes + 3);
+            (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (temp) + quotes + 3)
+                                          * sizeof (ACE_TCHAR));
           if (argv_p[i] == 0)
             {
               ACE_OS::free (argv_p);
@@ -378,6 +370,8 @@ ACE_OS::num_processors (void)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return sys_info.dwNumberOfProcessors;
+#elif defined (ACE_HAS_VXCPULIB)
+  return vxCpuConfiguredGet();
 #elif defined (_SC_NPROCESSORS_CONF)
   return ::sysconf (_SC_NPROCESSORS_CONF);
 #elif defined (ACE_HAS_SYSCTL)
@@ -418,6 +412,20 @@ ACE_OS::num_processors_online (void)
       mask >>= 1;
     }
   return active_processors;
+#elif defined (ACE_HAS_VXCPULIB)
+  long num_cpu = 0;
+  cpuset_t cpuset;
+  CPUSET_ZERO (cpuset);
+  cpuset = vxCpuEnabledGet();
+  unsigned int const maxcpu = vxCpuConfiguredGet();
+  for (unsigned int i =0; i < maxcpu; i++)
+    {
+      if (CPUSET_ISSET (cpuset, i))
+        {
+          ++num_cpu;
+        }
+    }
+  return num_cpu;
 #elif defined (_SC_NPROCESSORS_ONLN)
   return ::sysconf (_SC_NPROCESSORS_ONLN);
 #elif defined (ACE_HAS_SYSCTL)
@@ -741,6 +749,10 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                         ACE_TCHAR **&argv,
                         bool substitute_env_args)
 {
+#if defined (ACE_LACKS_STRENVDUP)
+  ACE_UNUSED_ARG (substitute_env_args);
+#endif /* ACE_LACKS_STRENVDUP */
+
   // Reset the number of arguments
   argc = 0;
 

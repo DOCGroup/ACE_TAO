@@ -38,17 +38,13 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::ULong uinteger
-  )
-  : type_ (ACE_ETCL_UNSIGNED)
+    ACE_CDR::ULong uinteger) : type_ (ACE_ETCL_UNSIGNED)
 {
   this->op_.uinteger_ = uinteger;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Long integer
-  )
-  : type_ (ACE_ETCL_SIGNED)
+    ACE_CDR::Long integer) : type_ (ACE_ETCL_SIGNED)
 {
   this->op_.integer_ = integer;
 }
@@ -62,17 +58,13 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Double doub
-  )
-  : type_ (ACE_ETCL_DOUBLE)
+    ACE_CDR::Double doub) : type_ (ACE_ETCL_DOUBLE)
 {
   this->op_.double_ = doub;
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    const char* str
-  )
-  : type_ (ACE_ETCL_STRING)
+    const char* str) : type_ (ACE_ETCL_STRING)
 {
   this->op_.str_ = ACE::strnew (str);
 }
@@ -194,7 +186,7 @@ ETCL_Literal_Constraint::operator== (const ETCL_Literal_Constraint & rhs)
       return_value = (ACE_OS::strcmp ((const char*) *this, (const char*) rhs) == 0);
       break;
     case ACE_ETCL_DOUBLE:
-      return_value = (ACE_CDR::Double) *this == (ACE_CDR::Double) rhs;
+      return_value = ACE::is_equal ((ACE_CDR::Double) *this, (ACE_CDR::Double) rhs);
       break;
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
@@ -365,9 +357,9 @@ ETCL_Literal_Constraint::operator/ (const ETCL_Literal_Constraint & rhs)
     {
     case ACE_ETCL_DOUBLE:
       {
-        if ((ACE_CDR::Double) rhs == 0.0)
+        if (ACE::is_equal ((ACE_CDR::Double) rhs, 0.0))
           return ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
-        
+
         ACE_CDR::Double result = (ACE_CDR::Double) *this / (ACE_CDR::Double) rhs;
         return ETCL_Literal_Constraint ((ACE_CDR::Double) result);
       }

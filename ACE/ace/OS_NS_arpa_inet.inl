@@ -29,9 +29,7 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   ACE_UNUSED_ARG (addr);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::inet_ntoa (addr),
-                     char *,
-                     0);
+  ACE_OSCALL_RETURN (::inet_ntoa (addr), char *, 0);
 #endif
 }
 

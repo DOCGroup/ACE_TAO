@@ -50,19 +50,17 @@ public:
   /**
    * Set the attribute type.
    */
-  virtual int setAttType (const ATT_TYPE type ACEXML_ENV_ARG_DECL);
+  virtual int setAttType (const ATT_TYPE type);
 
   /**
    * Insert an element for NOTATION or ENUMERATION type attribute.
    */
-  virtual int insertList (const ACEXML_Char *Name ACEXML_ENV_ARG_DECL);
+  virtual int insertList (const ACEXML_Char *Name);
 
   /**
    * Set default attribute declaration.
    */
-  virtual int setDefault (const DEFAULT_DECL def,
-                          const ACEXML_Char *value ACEXML_ENV_ARG_DECL)
-    ;
+  virtual int setDefault (const DEFAULT_DECL def, const ACEXML_Char *value);
 
   /**
    * Check validity of the current attribute definition being built.

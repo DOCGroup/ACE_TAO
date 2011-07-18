@@ -95,8 +95,7 @@ template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *p,
                                          const ACE_nothrow_t&) throw()
 {
-  ACE_TRACE
-    ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete(nothrow)");
+  ACE_TRACE("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete(nothrow)");
   ::delete [] static_cast <char *> (p);
 }
 #endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
@@ -302,7 +301,11 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close (ACE_HANDLE,
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_close");
 
-  this->destroy ();
+  if (this->reference_counting_policy ().value () ==
+      ACE_Event_Handler::Reference_Counting_Policy::DISABLED)
+    {
+      this->destroy ();
+    }
 
   return 0;
 }

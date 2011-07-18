@@ -21,7 +21,7 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
-ACE_RCSID(ace, Pagefile_Memory_Pool, "$Id$")
+
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 #if !defined (ACE_HAS_WINCE)
@@ -93,6 +93,10 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
       && ACE_OS::strlen (this->backing_store_name_) < sizeof this->backing_store_name_)
       ACE_OS::strcat (this->backing_store_name_,
                       ACE_TEXT ("_"));
+}
+
+ACE_Pagefile_Memory_Pool::~ACE_Pagefile_Memory_Pool (void)
+{
 }
 
 void *

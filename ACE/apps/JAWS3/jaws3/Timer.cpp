@@ -2,7 +2,7 @@
 
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
-#endif 
+#endif
 
 #include "jaws3/Timer.h"
 #include "jaws3/Task_Timer.h"
