@@ -853,6 +853,9 @@ public:
   bool gen_arg_traits (void) const;
   void gen_arg_traits (bool val);
 
+  bool gen_anytypecode_adapter (void) const;
+  void gen_anytypecode_adapter (bool val);
+
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
 
@@ -1213,6 +1216,10 @@ private:
 
   /// Are we generating arg traits template instantiations?
   bool gen_arg_traits_;
+
+  /// Generating arg traits in the ORB for the basic type
+  /// sequences requires the AnyTypeCode_Adapter class.
+  bool gen_anytypecode_adapter_;
 };
 
 #endif /* _BE_GLOBAL_H */

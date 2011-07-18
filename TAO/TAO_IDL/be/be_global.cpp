@@ -148,7 +148,8 @@ BE_GlobalData::BE_GlobalData (void)
     tab_size_ (2),
     alt_mapping_ (false),
     in_facet_servant_ (false),
-    gen_arg_traits_ (true)
+    gen_arg_traits_ (true),
+    gen_anytypecode_adapter_ (false)
 {
 }
 
@@ -2519,6 +2520,18 @@ BE_GlobalData::gen_arg_traits (bool val)
   this->gen_arg_traits_ = val;
 }
 
+bool
+BE_GlobalData::gen_anytypecode_adapter (void) const
+{
+  return this->gen_anytypecode_adapter_;
+}
+
+void
+BE_GlobalData::gen_anytypecode_adapter (bool val)
+{
+  this->gen_anytypecode_adapter_ = val;
+}
+
 unsigned long
 BE_GlobalData::tab_size (void) const
 {
@@ -3263,6 +3276,12 @@ BE_GlobalData::parse_args (long &i, char **av)
                       );
                   }
               }
+          }
+        else if (av[i][2] == 'a' && av[i][3] == 't' && av[i][4] == 'a')
+          {
+            // Generate the AnyTypeCode_Adapter version of the Any insert
+            // policy - used with the sequences of basic types in the ORB.
+            be_global->gen_anytypecode_adapter (true);
           }
         else
           {

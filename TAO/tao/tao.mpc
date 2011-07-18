@@ -44,7 +44,7 @@ project(TAO_Core_idl) : tao_versioning_idl_defaults, gen_ostream, install, pidl_
   }
 
   IDL_Files {
-    idlflags += -Sci -Gse
+    idlflags += -Sci -Gse -Gata
     BooleanSeq.pidl >> AnyTypeCode/BooleanSeqA.h AnyTypeCode/BooleanSeqA.cpp
     CharSeq.pidl >> AnyTypeCode/CharSeqA.h AnyTypeCode/CharSeqA.cpp
     DoubleSeq.pidl >> AnyTypeCode/DoubleSeqA.h AnyTypeCode/DoubleSeqA.cpp

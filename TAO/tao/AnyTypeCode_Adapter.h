@@ -39,6 +39,22 @@ namespace CORBA
 
   class Policy;
   typedef Policy *Policy_ptr;
+
+  class BooleanSeq;
+  class OctetSeq;
+  class CharSeq;
+  class WCharSeq;
+  class ShortSeq;
+  class UShortSeq;
+  class LongSeq;
+  class ULongSeq;
+  class LongLongSeq;
+  class ULongLongSeq;
+  class FloatSeq;
+  class DoubleSeq;
+  class LongDoubleSeq;
+  class StringSeq;
+  class WStringSeq;
 }
 
 /**
@@ -136,6 +152,36 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

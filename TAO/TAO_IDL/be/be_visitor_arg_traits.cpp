@@ -170,7 +170,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
           << "TAO::Objref_Traits<" << node->name () << ">";
     }
 
-  *os << "," << be_nl << this->insert_policy()
+  *os << "," << be_nl << this->insert_policy ()
       << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -1240,7 +1240,14 @@ be_visitor_arg_traits::insert_policy (void)
 {
   if (be_global->any_support ())
     {
-      return "TAO::Any_Insert_Policy_Stream";
+      if (be_global->gen_anytypecode_adapter ())
+        {
+          return "TAO::Any_Insert_Policy_AnyTypeCode_Adapter";
+        }
+      else
+        {
+          return "TAO::Any_Insert_Policy_Stream";
+        }
     }
   else
     {
