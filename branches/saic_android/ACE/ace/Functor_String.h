@@ -25,6 +25,7 @@
 
 #include /**/ "ace/ACE_export.h"
 #include "ace/SStringfwd.h"
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,8 +41,6 @@ template <class TYPE> class ACE_Equal_To;
 template <class TYPE> class ACE_Less_Than;
 
 /**
- * @class ACE_Equal_To<ACE_CString>
- *
  * @brief Function object for determining whether two ACE_CStrings are
  * equal.
  */
@@ -55,8 +54,6 @@ public:
 
 
 /**
- * @class ACE_Hash<ACE_CString>
- *
  * @brief Function object for hashing a ACE_CString
  */
 template<>
@@ -69,8 +66,6 @@ public:
 
 
 /**
- * @class ACE_Less_Than<ACE_CString>
- *
  * @brief Function object for determining whether the first const string
  * is less than the second const string.
  */
@@ -83,13 +78,49 @@ public:
                    const ACE_CString &rhs) const;
 };
 
+/**
+ * @brief Function object for determining whether two std::strings are
+ * equal.
+ */
+template<>
+class ACE_Export ACE_Equal_To<std::string>
+{
+public:
+  int operator () (const std::string &lhs,
+                   const std::string &rhs) const;
+};
+
+
+/**
+ * @brief Function object for hashing a std::string
+ */
+template<>
+class ACE_Export ACE_Hash<std::string>
+{
+public:
+  /// Calls ACE::hash_pjw
+  unsigned long operator () (const std::string &lhs) const;
+};
+
+
+/**
+ * @brief Function object for determining whether the first const string
+ * is less than the second const string.
+ */
+template<>
+class ACE_Export ACE_Less_Than<std::string>
+{
+public:
+  /// Simply calls std::string::compare
+  int operator () (const std::string &lhs,
+                   const std::string &rhs) const;
+};
+
 
 #if defined (ACE_USES_WCHAR)
 
 /**
- * @class ACE_Equal_To<ACE_WString>
- *
- * @brief Function object for determining whether two ACE_CStrings are
+ * @brief Function object for determining whether two ACE_WStrings are
  * equal.
  */
 template<>
@@ -102,8 +133,6 @@ public:
 
 
 /**
- * @class ACE_Hash<ACE_WString>
- *
  * @brief Function object for hashing a ACE_WString
  */
 template<>
@@ -115,10 +144,8 @@ public:
 };
 
 /**
- * @class ACE_Less_Than<ACE_WString>
- *
- * @brief Function object for determining whether the first const string
- * is less than the second const string.
+ * @brief Function object for determining whether the first const wstring
+ * is less than the second const wstring.
  */
 template<>
 class ACE_Export ACE_Less_Than<ACE_WString>

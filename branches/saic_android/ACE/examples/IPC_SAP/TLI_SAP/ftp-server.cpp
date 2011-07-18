@@ -6,7 +6,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
 
-ACE_RCSID(TLI_SAP, ftp_server, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 

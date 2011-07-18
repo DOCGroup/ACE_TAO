@@ -12,7 +12,8 @@ TARGETS_LOCAL  = \
 	profile.local \
 	optimize.local \
 	install.local \
-	deinstall.local \
+	binout.local \
+	clean_binout.local \
 	clean_binaries.local \
 	clean_idl_stubs.local \
 	clean.local \

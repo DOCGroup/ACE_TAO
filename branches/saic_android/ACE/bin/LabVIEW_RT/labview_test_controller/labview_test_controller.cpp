@@ -25,7 +25,7 @@
 // Windows code, not ACE, so we stick to the Microsoft way...
 // FUZZ: disable check_for_NULL
 
-// This is plain Windows code, not ACE. Therefore we disable 
+// This is plain Windows code, not ACE. Therefore we disable
 // the check for ACE_OS
 // FUZZ: disable check_for_lack_ACE_OS
 
@@ -44,8 +44,8 @@ static const char *format_errmsg (unsigned int errcode, const char *prefix);
 static const char *LogName = "acetao.log";
 static HANDLE logf = INVALID_HANDLE_VALUE;
 
-BOOL APIENTRY DllMain( HANDLE hModule, 
-                       DWORD  ul_reason_for_call, 
+BOOL APIENTRY DllMain( HANDLE hModule,
+                       DWORD  ul_reason_for_call,
                        LPVOID lpReserved
                       )
 {

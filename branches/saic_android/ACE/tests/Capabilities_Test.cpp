@@ -1,28 +1,25 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Capabilities_Test.cpp
-//
-// = DESCRIPTION
-//      This is a test that makes sure the <ACE_Capabililties> class
-//      works correctly.
-//
-// = AUTHOR
-//    Arturo Montes <mitosys@colomsat.net.co>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Capabilities_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a test that makes sure the <ACE_Capabililties> class
+ *    works correctly.
+ *
+ *
+ *  @author Arturo Montes <mitosys@colomsat.net.co>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Capabilities.h"
 
-ACE_RCSID(tests, Capabilities_Test, "$Id$")
+
 
 static const ACE_TCHAR config[] = ACE_TEXT ("Capabilities_Test.cfg");
 

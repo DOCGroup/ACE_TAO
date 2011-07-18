@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    gateway
-//
-// = FILENAME
-//    Connection_Handler_Connector.h
-//
-// = AUTHOR
-//    Doug Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Connection_Handler_Connector.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _IO_HANDLER_CONNECTOR
 #define _IO_HANDLER_CONNECTOR
@@ -26,12 +23,15 @@
 #include "ace/SOCK_Connector.h"
 #include "Connection_Handler.h"
 
+/**
+ * @class Connection_Handler_Connector
+ *
+ * @brief A concrete factory class that setups connections to peerds
+ * and produces a new Connection_Handler object to do the dirty
+ * work...
+ */
 class Connection_Handler_Connector : public ACE_Connector<Connection_Handler, ACE_SOCK_CONNECTOR>
 {
-  // = TITLE
-  //     A concrete factory class that setups connections to peerds
-  //     and produces a new Connection_Handler object to do the dirty
-  //     work...
 public:
   Connection_Handler_Connector (void);
 

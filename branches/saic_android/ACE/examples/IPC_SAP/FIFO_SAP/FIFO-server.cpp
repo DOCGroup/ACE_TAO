@@ -6,7 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID(FIFO_SAP, FIFO_server, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

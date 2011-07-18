@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    SPIPE_Test.cpp
-//
-// = DESCRIPTION
-//      This is a simple test of Named Pipes that uses
-//      ACE_SPIPE_Acceptor and ACE_SPIPE_Connector classes. The test
-//      forks two processes or spawns two threads (depending upon the
-//      platform) and then executes the client and server allowing
-//      them to use the named pipe to exchange data. No user input is
-//      required as far as command line arguments are concerned.
-//
-// = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SPIPE_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This is a simple test of Named Pipes that uses
+ *    ACE_SPIPE_Acceptor and ACE_SPIPE_Connector classes. The test
+ *    forks two processes or spawns two threads (depending upon the
+ *    platform) and then executes the client and server allowing
+ *    them to use the named pipe to exchange data. No user input is
+ *    required as far as command line arguments are concerned.
+ *
+ *
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread.h"
@@ -30,7 +27,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, SPIPE_Test, "SPIPE_Test.cpp,v 4.36 2002/03/06 21:48:03 nanbor Exp")
+
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES)
 # define TEST_HAS_STREAM_PIPES
@@ -125,7 +122,7 @@ server (void *)
 
   while (new_stream.recv (buf, 1) > 0)
     {
-      ACE_ASSERT (*t == buf[0]);
+      ACE_TEST_ASSERT (*t == buf[0]);
       t++;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
@@ -158,7 +155,7 @@ server (void *)
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
           break;
         }
-      ACE_ASSERT (*t == buf[0]);
+      ACE_TEST_ASSERT (*t == buf[0]);
     }
 
   // Wait for the client to stream in the buffer one byte at a time.
@@ -170,7 +167,7 @@ server (void *)
   if (new_stream.recv (buf, sizeof(buf)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
   else
-    ACE_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
+    ACE_TEST_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();

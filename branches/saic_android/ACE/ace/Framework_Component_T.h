@@ -52,9 +52,9 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// This macro should be called in the instance() method
-// of the Concrete class that will be managed.  Along
-// with the appropriate template instantiation.
+/// This macro should be called in the instance() method
+/// of the Concrete class that will be managed.  Along
+/// with the appropriate template instantiation.
 #define ACE_REGISTER_FRAMEWORK_COMPONENT(CLASS, INSTANCE) \
         ACE_Framework_Repository::instance ()->register_component \
           (new ACE_Framework_Component_T<CLASS> (INSTANCE));

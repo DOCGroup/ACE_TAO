@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Protocol_Manager.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Protocol_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PROTOCOL_MANAGER_H
 #define _PROTOCOL_MANAGER_H
@@ -27,11 +24,14 @@
 #include "Search_Struct.h"
 #include "Protocol_Record.h"
 
+/**
+ * @class Protocol_Manager
+ *
+ * @brief A base class that consolidates friend management functionality
+ * shared by both clients and servers.
+ */
 class Protocol_Manager
 {
-  // = TITLE
-  //   A base class that consolidates friend management functionality
-  //   shared by both clients and servers.
 public:
   Protocol_Manager (void);
   virtual ~Protocol_Manager (void);

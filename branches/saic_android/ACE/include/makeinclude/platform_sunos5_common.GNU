@@ -21,8 +21,7 @@ endif
 kstat ?= 1
 ifeq ($(kstat),1)
   # Unguard the raw monitor code and link the system lib.
-  CFLAGS        += -DACE_HAS_KSTAT
-  CCFLAGS       += -DACE_HAS_KSTAT
+  FLAGS_C_CC    += -DACE_HAS_KSTAT
   LIBS          += -lkstat
 endif
 

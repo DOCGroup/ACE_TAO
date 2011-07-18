@@ -6,10 +6,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (Shared_Malloc,
-           Options,
-           "$Id$")
-
 // Static Singleton instance.
 Options *Options::instance_ = 0;
 

@@ -3,7 +3,6 @@
 
 project {
   Define_Custom(pkgconfig) {
-    automatic = 0
-    inputext = .in
+    inputext = .pc.in
   }
 }

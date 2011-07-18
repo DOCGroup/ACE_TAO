@@ -14,7 +14,7 @@
 # include "ace/Trace.h"
 #endif /* ACE_HAS_TRACE */
 
-ACE_RCSID(ace, Naming_Context, "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Naming_Context.inl"
@@ -626,7 +626,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
                          "\t[-b base address]\n"
                          "\t[-v] (verbose)\n"
                          "\t[-r] (use Win32 Registry)\n",
-                         argv[0]);
+                         ACE_TEXT_ALWAYS_CHAR (argv[0]));
         /* NOTREACHED */
         break;
       }

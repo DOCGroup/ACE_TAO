@@ -3,7 +3,7 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 
-ACE_RCSID(JAWS, Data_Block, "$Id$")
+
 
 JAWS_Data_Block::JAWS_Data_Block (void)
   : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE),

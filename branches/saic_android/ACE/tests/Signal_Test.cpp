@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Signal_Test.cpp
-//
-// = DESCRIPTION
-//      This program tests the signal handling capabilities of ACE on
-//      various OS platforms that support sending signals between
-//      processes.
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Signal_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program tests the signal handling capabilities of ACE on
+ *    various OS platforms that support sending signals between
+ *    processes.
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
@@ -28,8 +25,10 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/SString.h"
 
-ACE_RCSID(tests, Signal_Test, "$Id$")
+
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
@@ -102,7 +101,7 @@ handle_signal (int signum)
 #endif
         int const result = ACE_OS::kill (child_pid,
                                          SIGTERM);
-        ACE_ASSERT (result != -1);
+        ACE_TEST_ASSERT (result != -1);
 
         return -1;
       }
@@ -234,7 +233,7 @@ worker_child (void *arg)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p\n"),
                           ACE_TEXT ("kill")));
-              ACE_ASSERT (result != -1);
+              ACE_TEST_ASSERT (result != -1);
             }
         }
     }
@@ -248,7 +247,7 @@ worker_child (void *arg)
           // We need to do this to dislodge the signal handling thread if
           // it hasn't shut down on its own accord yet.
           int const result = ACE_OS::kill (ACE_OS::getpid (), SIGINT);
-          ACE_ASSERT (result != -1);
+          ACE_TEST_ASSERT (result != -1);
         }
     }
   ACE_DEBUG ((LM_DEBUG,
@@ -277,7 +276,7 @@ worker_parent (void *arg)
   // so we need to indicate that it's the child.
   const ACE_TCHAR *t = ACE_TEXT (".")
                        ACE_DIRECTORY_SEPARATOR_STR
-                       ACE_TEXT ("Signal_Test")
+                       ACE_TEXT ("%sSignal_Test")
                        ACE_PLATFORM_EXE_SUFFIX
                        ACE_TEXT (" -c");
   l_argv[0] = const_cast <ACE_TCHAR *> (t);
@@ -287,7 +286,15 @@ worker_parent (void *arg)
   ACE_ARGV argv (l_argv);
 
   // Generate a command-line!
-  options.command_line (argv.buf ());
+  ACE_TString exe_sub_dir;
+  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
+  if (subdir_env)
+    {
+      exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
+      exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
+    }
+
+  options.command_line (argv.buf (), exe_sub_dir.c_str ());
   ACE_Process pm;
 
   child_pid = pm.spawn (options);
@@ -352,7 +359,7 @@ run_test (ACE_THR_FUNC worker,
                 (worker,
                   reinterpret_cast <void *> (handle_signals_synchronously),
                   THR_DETACHED);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
 
       if (handle_signals_in_separate_thread)
         {
@@ -363,7 +370,7 @@ run_test (ACE_THR_FUNC worker,
             (synchronous_signal_handler,
              0,
              THR_DETACHED);
-          ACE_ASSERT (result != -1);
+          ACE_TEST_ASSERT (result != -1);
         }
       else
         {
@@ -372,7 +379,7 @@ run_test (ACE_THR_FUNC worker,
 
       // Wait for the thread(s) to finish.
       result = ACE_Thread_Manager::instance ()->wait ();
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
     }
   else
 #else
@@ -473,6 +480,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 1: handle signals synchronously in a separate thread\n")));
 
+#ifdef ACE_HAS_THREADS
       ++test_number;
       // Run the parent logic for the signal test, first by handling
       // signals synchronously in a separate thread.
@@ -487,6 +495,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) **** test 3: handle signals asynchronously in this thread\n")));
+#else
+      test_number += 2;
+#endif /* ACE_HAS_THREADS */
 
       ++test_number;
       // And finally by handling asynchronously signals in this thread.

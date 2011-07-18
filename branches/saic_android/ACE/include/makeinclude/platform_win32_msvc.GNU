@@ -116,7 +116,7 @@ CXXFLAGS = $(CFLAGS)
 RC_INCLUDE_FLAG = -I
 RC_OUTPUT_FLAG = -fo
 SYSTEMLIBS += advapi32.lib user32.lib
-MSVC_LINK = $(LD) $(SYSTEMLIBS) $(MSVC_LDFLAGS) $(patsubst -L%,-libpath:%, $(subst /,\,$(LDFLAGS))) $(patsubst -l%,%.lib,$(ACE_SHLIBS)) $(LIBS) -out:$@
+MSVC_LINK = $(LD) $(SYSTEMLIBS) $(MSVC_LDFLAGS) $(patsubst %\,%,$(patsubst -L%,-libpath:%, $(subst /,\,$(LDFLAGS)))) $(patsubst -l%,%.lib,$(ACE_SHLIBS)) $(LIBS) -out:$@
 define SOLINK.cc.override
 $(MSVC_LINK) $(MSVC_DLLFLAGS) $^
 	mt -nologo -manifest $@.manifest -outputresource:$@\;2

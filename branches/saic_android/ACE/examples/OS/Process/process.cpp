@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    process.cpp
-//
-// = DESCRIPTION
-//    This example tests the <ACE_Process>.  For more info, check the
-//    README file in this directory.
-//
-// = AUTHOR
-//    Tim Harrison <harrison@cs.wustl.edu>.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    process.cpp
+ *
+ *  $Id$
+ *
+ *  This example tests the <ACE_Process>.  For more info, check the
+ *  README file in this directory.
+ *
+ *
+ *  @author Tim Harrison <harrison@cs.wustl.edu>.
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_fcntl.h"
@@ -29,8 +26,9 @@
 #include "ace/Time_Value.h"
 #include "ace/SString.h"
 #include "ace/Truncate.h"
+#include "ace/Tokenizer_T.h"
 
-ACE_RCSID(Process, process, "$Id$")
+
 
 #if defined (ACE_WIN32)
 #define EXEC_NAME ACE_TEXT ("MORE.COM")
@@ -318,9 +316,11 @@ win32_test_ls (void)
       return;
     }
 
+  ACE_TCHAR cmd_line[8];
+  ACE_OS::strncpy (cmd_line, ACE_TEXT ("-a"), sizeof (cmd_line));
   BOOL fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("c:\\Utils\\bin\\ls.exe"),
-                            ACE_TEXT ("-a"),
+                            cmd_line,
                             0, // No process attributes.
                             0, // No thread attributes.
                             TRUE, // Allow handle inheritance.
@@ -429,9 +429,11 @@ win32_spawn_environment_process (void)
 
   ACE_TEXT_FreeEnvironmentStrings (existing_environment);
 
+  ACE_TCHAR cmd_line[16];
+  ACE_OS::strncpy (cmd_line, ACE_TEXT ("process -g"), sizeof (cmd_line));
   BOOL fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe"),
-                            ACE_TEXT ("process -g"),
+                            cmd_line,
                             0, // No process attributes.
                             0, // No thread attributes.
                             TRUE, // Allow handle inheritance.
@@ -568,6 +570,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ::test_wait ();
 
 #if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (&win32_test_ls);
+
   if (environment_string != 0)
     win32_spawn_environment_process ();
 #endif /* ACE_WIN32 */

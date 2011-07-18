@@ -21,7 +21,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "test_config.h"
 
-ACE_RCSID (tests, ARGV_Test, "$Id$")
+
 
 static void
 consume_arg (int argc, ACE_TCHAR *argv[])

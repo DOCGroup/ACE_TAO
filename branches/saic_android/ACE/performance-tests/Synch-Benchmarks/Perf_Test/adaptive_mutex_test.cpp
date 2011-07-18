@@ -5,8 +5,6 @@
 #include "Adaptive_Lock_Performance_Test_Base.h"
 #include "ace/Lock_Adapter_T.h"
 
-ACE_RCSID(Synch_Benchmarks, adaptive_mutex_test, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Adaptive_Mutex_Test : public Adaptive_Lock_Performance_Test_Base

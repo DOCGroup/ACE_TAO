@@ -102,43 +102,37 @@ public:
    */
   virtual void characters (const ACEXML_Char *ch,
                            int start,
-                           int length ACEXML_ENV_ARG_DECL)
-    ;
+                           int length);
 
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (ACEXML_ENV_SINGLE_ARG_DECL)
-    ;
+  virtual void endDocument (void);
 
   /*
    * Receive notification of the end of an element.
    */
   virtual void endElement (const ACEXML_Char *namespaceURI,
                            const ACEXML_Char *localName,
-                           const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
-    ;
+                           const ACEXML_Char *qName);
 
   /*
    * End the scope of a prefix-URI mapping.
    */
-  virtual void endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL)
-    ;
+  virtual void endPrefixMapping (const ACEXML_Char *prefix);
 
   /*
    * Receive notification of ignorable whitespace in element content.
    */
   virtual void ignorableWhitespace (const ACEXML_Char *ch,
                                     int start,
-                                    int length ACEXML_ENV_ARG_DECL)
-    ;
+                                    int length);
 
   /*
    * Receive notification of a processing instruction.
    */
   virtual void processingInstruction (const ACEXML_Char *target,
-                                      const ACEXML_Char *data ACEXML_ENV_ARG_DECL)
-    ;
+                                      const ACEXML_Char *data);
 
   /*
    * Receive an object for locating the origin of SAX document events.
@@ -148,13 +142,12 @@ public:
   /*
    * Receive notification of a skipped entity.
    */
-  virtual void skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
-    ;
+  virtual void skippedEntity (const ACEXML_Char *name);
 
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (ACEXML_ENV_SINGLE_ARG_DECL)
+  virtual void startDocument (void)
     ;
 
   /*
@@ -163,15 +156,13 @@ public:
   virtual void startElement (const ACEXML_Char *namespaceURI,
                              const ACEXML_Char *localName,
                              const ACEXML_Char *qName,
-                             ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
-    ;
+                             ACEXML_Attributes *atts);
 
   /*
    * Begin the scope of a prefix-URI Namespace mapping.
    */
   virtual void startPrefixMapping (const ACEXML_Char *prefix,
-                                   const ACEXML_Char *uri ACEXML_ENV_ARG_DECL)
-    ;
+                                   const ACEXML_Char *uri);
 
   // *** Methods inherit from ACEXML_DTDHandler.
 
@@ -180,8 +171,7 @@ public:
    */
   virtual void notationDecl (const ACEXML_Char *name,
                              const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-    ;
+                             const ACEXML_Char *systemId);
 
   /*
    * Receive notification of an unparsed entity declaration event.
@@ -189,8 +179,7 @@ public:
   virtual void unparsedEntityDecl (const ACEXML_Char *name,
                                    const ACEXML_Char *publicId,
                                    const ACEXML_Char *systemId,
-                                   const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
-    ;
+                                   const ACEXML_Char *notationName);
 
   // Methods inherit from ACEXML_EnitityResolver.
 
@@ -198,54 +187,50 @@ public:
    * Allow the application to resolve external entities.
    */
   virtual ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
-    ;
+                                             const ACEXML_Char *systemId);
 
   // Methods inherit from ACEXML_ErrorHandler.
 
   /*
    * Receive notification of a recoverable error.
    */
-  virtual void error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-    ;
+  virtual void error (ACEXML_SAXParseException &exception);
 
   /*
    * Receive notification of a non-recoverable error.
    */
-  virtual void fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-    ;
+  virtual void fatalError (ACEXML_SAXParseException &exception);
 
   /*
    * Receive notification of a warning.
    */
-  virtual void warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
-    ;
+  virtual void warning (ACEXML_SAXParseException &exception);
 
 protected:
   /**
    * Get the only attribute in <stream> or <streamdef>.
    */
-  int get_stream_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL);
+  int get_stream_id (ACEXML_Attributes *alist);
 
   /**
    * Get the only attribute in <resume>, <suspend>, <remove>
    */
-  int get_id (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL);
+  int get_id (ACEXML_Attributes *alist);
 
   /**
    * Get the dynamic tag attributes.
    */
-  int get_dynamic_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL);
+  int get_dynamic_attrs (ACEXML_Attributes *alist);
 
   /**
    * Get the initializer tag attributes.
    */
-  int get_initializer_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL);
+  int get_initializer_attrs (ACEXML_Attributes *alist);
 
   /**
    * Get the static tag attributes.
    */
-  int get_static_attrs (ACEXML_Attributes *alist ACEXML_ENV_ARG_DECL);
+  int get_static_attrs (ACEXML_Attributes *alist);
 
 private:
   /// We are parsing a stream definition

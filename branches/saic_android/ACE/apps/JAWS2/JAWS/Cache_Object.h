@@ -6,12 +6,11 @@
 #ifndef JAWS_CACHE_OBJECT_H
 #define JAWS_CACHE_OBJECT_H
 
-#include "ace/Lock_Adapter_T.h"
-#include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Malloc.h"
 #include "ace/RW_Thread_Mutex.h"
-
+#include "ace/Lock_Adapter_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;

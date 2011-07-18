@@ -1,31 +1,28 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MT_Reference_Counted_Event_Handler_Test.cpp
-//
-// = DESCRIPTION
-//
-//    This test tries to represents what happens in the ORB wrt to
-//    event handlers, reactors, timer queues, threads, and connection
-//    caches, minus the other complexities.  The following reactors
-//    are tested: Select, TP, WFMO, and Dev Poll (if enabled).
-//
-//    The test checks proper use and shutting down of client-side
-//    event handlers when it is used by invocation threads and/or
-//    event loop threads.  Server-side event handlers are either
-//    threaded or reactive. A purger thread is introduced to check the
-//    connection recycling and cache purging.  Nested upcalls are also
-//    tested.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MT_Reference_Counted_Event_Handler_Test.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  This test tries to represents what happens in the ORB wrt to
+ *  event handlers, reactors, timer queues, threads, and connection
+ *  caches, minus the other complexities.  The following reactors
+ *  are tested: Select, TP, WFMO, and Dev Poll (if enabled).
+ *
+ *  The test checks proper use and shutting down of client-side
+ *  event handlers when it is used by invocation threads and/or
+ *  event loop threads.  Server-side event handlers are either
+ *  threaded or reactive. A purger thread is introduced to check the
+ *  connection recycling and cache purging.  Nested upcalls are also
+ *  tested.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -43,7 +40,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, MT_Reference_Counted_Event_Handler_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
@@ -108,6 +105,39 @@ static int test_configs[][5] =
     // { 1, 1, 1, 1, 1, }, // No need for nested upcalls without event loop being used by the receiver.
   };
 
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+  sigset_t signal_set;
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    ACE_OS::sigaddset (&signal_set, i);
+
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+
+  return 0;
+}
+
 /* Replication of the ACE_Pipe class.  Only difference is that this
    class always uses two sockets to create the pipe, even on platforms
    that support pipes. */
@@ -119,8 +149,8 @@ public:
   Pipe (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE read_handle (void) const;
 
@@ -214,8 +244,8 @@ public:
   ssize_t send_message (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   void close (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle_;
 
@@ -361,8 +391,8 @@ public:
   int svc (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int close (u_long flags);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   int handle_input (ACE_HANDLE);
 
@@ -420,6 +450,8 @@ Receiver::svc (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%t) Receiver::svc commencing, handle = %d\n"),
               this->handle_));
+
+  disable_signal (SIGPIPE, SIGPIPE);
 
   while (result != -1)
     {
@@ -522,10 +554,10 @@ public:
              int nested_upcalls);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int connect (ACE_HANDLE &client_handle,
                ACE_HANDLE &server_handle,
                int run_receiver_thread);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_Thread_Manager &thread_manager_;
 
@@ -569,7 +601,7 @@ Connector::connect (ACE_HANDLE &client_handle,
         ACE_OS::sleep (pipe_retry_timeout);
     }
 
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   Receiver *receiver =
@@ -593,7 +625,7 @@ Connector::connect (ACE_HANDLE &client_handle,
       ACE_Event_Handler_var safe_receiver (receiver);
     }
 
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   client_handle =
@@ -643,7 +675,7 @@ Connection_Cache::add_connection (Sender *sender)
 
   // Make sure that the state of the connection cache is as
   // expected. <sender> should not be already in the cache.
-  ACE_ASSERT (this->find (sender) == -1);
+  ACE_TEST_ASSERT (this->find (sender) == -1);
 
   int empty_index =
     this->find (0);
@@ -798,7 +830,7 @@ Invocation_Thread::create_connection (void)
     connector.connect (client_handle,
                        server_handle,
                        this->run_receiver_thread_);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   // Create a new sender.
@@ -830,7 +862,7 @@ Invocation_Thread::create_connection (void)
                                      sender,
                                      ACE_Event_Handler::READ_MASK);
 #if 0
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 #else
   if (result != 0)
@@ -847,6 +879,8 @@ Invocation_Thread::svc (void)
   int connection_counter = 0;
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Invocation_Thread::svc commencing\n")));
+
+  disable_signal (SIGPIPE, SIGPIPE);
 
   for (int message_counter = 1;; ++message_counter)
     {
@@ -865,7 +899,7 @@ Invocation_Thread::svc (void)
               // connection has been created.
               int result =
                 this->new_connection_event_.signal ();
-              ACE_ASSERT (result == 0);
+              ACE_TEST_ASSERT (result == 0);
               ACE_UNUSED_ARG (result);
 
               ++connection_counter;
@@ -983,13 +1017,15 @@ Close_Socket_Thread::svc (void)
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Close_Socket_Thread::svc commencing\n")));
 
+  disable_signal (SIGPIPE, SIGPIPE);
+
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
       // Wait for the new connection to be established.
       int result =
         this->new_connection_event_.wait (&timeout,
                                           0);
-      ACE_ASSERT (result == 0 ||
+      ACE_TEST_ASSERT (result == 0 ||
                   (result == -1 && errno == ETIME));
 
       if (result == -1 &&
@@ -1061,6 +1097,8 @@ Event_Loop_Thread::svc (void)
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Event_Loop_Thread::svc commencing\n")));
 
+  disable_signal (SIGPIPE, SIGPIPE);
+
   while (!this->reactor_.reactor_event_loop_done ())
     {
       this->reactor_.handle_events ();
@@ -1101,6 +1139,8 @@ Purger_Thread::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Purger_Thread::svc commencing\n")));
+
+  disable_signal (SIGPIPE, SIGPIPE);
 
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
@@ -1172,7 +1212,7 @@ testing (ACE_Reactor *reactor,
 
   result =
     invocation_thread.activate ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   // Create the thread for closing the server socket.
   Close_Socket_Thread close_socket_thread (thread_manager,
@@ -1182,7 +1222,7 @@ testing (ACE_Reactor *reactor,
                                            run_receiver_thread);
   result =
     close_socket_thread.activate ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   global_event_loop_thread_variable = 0;
 
@@ -1196,7 +1236,7 @@ testing (ACE_Reactor *reactor,
 
       result =
         event_loop_thread.activate ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
     }
 
   // Create a thread to run the purger.
@@ -1207,12 +1247,12 @@ testing (ACE_Reactor *reactor,
     {
       result =
         purger_thread.activate ();
-      ACE_ASSERT (result == 0);
+      ACE_TEST_ASSERT (result == 0);
     }
 
   // Wait for threads to exit.
   result = thread_manager.wait ();
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   // Set the global variable to zero again because the
   // event_loop_thread exists on the stack and now
@@ -1384,17 +1424,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
-#if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
-  // There's really no way to deal with this in a portable manner, so
-  // we just have to suck it up and get preprocessor conditional and
-  // ugly.
-  //
-  // Impractical to have each call to the ORB protect against the
-  // implementation artifact of potential writes to dead connections,
-  // as it'd be way expensive.  Do it here; who cares about SIGPIPE in
-  // these kinds of applications, anyway?
-  (void) ACE_OS::signal (SIGPIPE, (ACE_SignalHandler) SIG_IGN);
-#endif /* SIGPIPE */
+  disable_signal (SIGPIPE, SIGPIPE);
 
   int ignore_nested_upcalls = 1;
   int perform_nested_upcalls = 0;

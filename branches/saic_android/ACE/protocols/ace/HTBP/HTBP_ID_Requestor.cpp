@@ -9,10 +9,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/UUID.h"
 
-ACE_RCSID(HTBP,
-          ACE_HTBP_ID_Requestor,
-          "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TString ACE::HTBP::ID_Requestor::htid_;
@@ -83,10 +79,10 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
 {
   char *buffer;
   ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
+  ACE_Auto_Array_Ptr<char> guard (buffer);
   ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",
                    ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
   int result = cli_stream->send_n (buffer,ACE_OS::strlen(buffer));
-  delete [] buffer;
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
@@ -101,7 +97,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();
 
-  ACE_Guard<ACE_SYNCH_MUTEX> guard (ACE::HTBP::ID_Requestor::htid_lock_);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, ACE::HTBP::ID_Requestor::htid_lock_, 0);
 
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();

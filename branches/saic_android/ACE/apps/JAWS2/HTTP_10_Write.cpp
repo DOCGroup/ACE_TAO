@@ -9,7 +9,7 @@
 
 #include "HTTP_10_Request.h"
 
-ACE_RCSID(PROTOTYPE, HTTP_10_Write, "$Id$")
+
 
 // --------------- WRITE TASK ----------------------
 

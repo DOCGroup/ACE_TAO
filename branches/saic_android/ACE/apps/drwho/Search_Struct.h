@@ -1,29 +1,29 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    Search_Struct.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Search_Struct.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _SEARCH_STRUCT_H
 #define _SEARCH_STRUCT_H
 
 #include "Protocol_Record.h"
 
+/**
+ * @class Search_Struct
+ *
+ * @brief Provides an "Abstract Base Class" lookup table abstraction that
+ * stores and manipulates friend records.
+ */
 class Search_Struct
 {
-  // = TITLE
-  //   Provides an "Abstract Base Class" lookup table abstraction that
-  //   stores and manipulates friend records.
 public:
   Search_Struct (void);
   virtual ~Search_Struct (void);

@@ -1,29 +1,26 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Tokens_Test.cpp
-//
-// = DESCRIPTION
-//     This application tests the ACE Token library including local
-//     and remote readers/writer and mutex locks, and token
-//     collections.  This is accomplished with the ACE Token Invariant
-//     utilities that allow and application to check that
-//     readers/writer and mutex lock invariants are always satisfied.
-//     Throughout this test, ACE_ASSERTs are used in conjunction with
-//     Token Invariant operations, so that errors are reported using
-//     the ACE tests convention.  This application performs a local
-//     test and then fork_execs a token server and performs the same
-//     test remotely.
-//
-// = AUTHOR
-//    Tim Harrison <harrison@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Tokens_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This application tests the ACE Token library including local
+ *   and remote readers/writer and mutex locks, and token
+ *   collections.  This is accomplished with the ACE Token Invariant
+ *   utilities that allow and application to check that
+ *   readers/writer and mutex lock invariants are always satisfied.
+ *   Throughout this test, ACE_TEST_ASSERTs are used in conjunction with
+ *   Token Invariant operations, so that errors are reported using
+ *   the ACE tests convention.  This application performs a local
+ *   test and then fork_execs a token server and performs the same
+ *   test remotely.
+ *
+ *
+ *  @author Tim Harrison <harrison@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Process.h"
@@ -36,7 +33,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, Tokens_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -88,7 +85,7 @@ run_thread (void *vp)
           return (void *) -1;
         }
 
-      ACE_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
+      ACE_TEST_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
                   (TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1));
 
       ACE_DEBUG ((LM_DEBUG,
@@ -111,7 +108,7 @@ run_thread (void *vp)
           return (void *) -1;
         }
 
-      ACE_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
+      ACE_TEST_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
                   TOKEN_INVARIANTS::instance ()->acquired (tp->token2_) == 1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -235,7 +232,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = ACE_OS::access (token_exe, F_OK);
   if (status == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 token_exe));
   else

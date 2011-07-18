@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   examples
-//
-// = FILENAME
-//   ex3.cpp
-//
-// = DESCRIPTION
-//    Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for intra-process
-//    communication.  This example uses char buffers as input/output
-//    interface to the <ACE_UPIPE_Stream>.
-//
-// = AUTHOR
-//    Gerhard Lenzer and Prashant Jain.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   ex3.cpp
+ *
+ *  $Id$
+ *
+ *  Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for intra-process
+ *  communication.  This example uses char buffers as input/output
+ *  interface to the <ACE_UPIPE_Stream>.
+ *
+ *
+ *  @author Gerhard Lenzer and Prashant Jain.
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 #include "ace/UPIPE_Connector.h"
@@ -24,7 +21,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_time.h"
 
-ACE_RCSID(UPIPE_SAP, ex3, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

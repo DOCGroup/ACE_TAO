@@ -35,25 +35,12 @@ typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// Simplify later usage by defining typedefs.
-#if (1)
 # include "ace/Hash_Map_Manager_T.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex> MAP_MANAGER;
 ACE_END_VERSIONED_NAMESPACE_DECL
-#else
-# include "ace/Map_Manager.h"
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex> MAP_MANAGER;
-ACE_END_VERSIONED_NAMESPACE_DECL
-#endif /* 0 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/// @deprecated Deprecated typedefs.  Use the map's traits instead.
-typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
-typedef MAP_MANAGER::ENTRY MAP_ENTRY;
-
 
 /**
  * @class ACE_Name_Space_Map
@@ -148,13 +135,13 @@ public:
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Local_Name_Space or bind a new name to the context, if it
-   * didn't exist yet. (Wide charcter strings interface).
+   * didn't exist yet. (Wide character strings interface).
    */
   virtual int rebind (const ACE_NS_WString &name,
                       const ACE_NS_WString &value,
                       const char *type = "");
 
-  /// Delete a name from a ACE_Local_Name_Space (Wide charcter strings
+  /// Delete a name from a ACE_Local_Name_Space (Wide character strings
   /// Interface).
   virtual int unbind (const ACE_NS_WString &name);
   virtual int unbind_i (const ACE_NS_WString &name);

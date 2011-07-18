@@ -111,10 +111,11 @@ class ACE_Map_Reverse_Iterator;
 /**
  * @class ACE_Map_Manager
  *
- * @brief Define a map abstraction that associates <EXT_ID>s with
- * <INT_ID>s.
+ * @brief
+ * Define a map abstraction that associates EXT_IDs with
+ * INT_IDs.
  *
- * The <EXT_ID> must support <operator==>.  This constraint can
+ * The EXT_ID must support @c operator==.  This constraint can
  * be alleviated via template specialization, as shown in the
  * $ACE_ROOT/tests/Conn_Test.cpp test.
  * This class uses an ACE_Allocator to allocate memory.  The
@@ -122,7 +123,7 @@ class ACE_Map_Reverse_Iterator;
  * ACE_Allocator with a persistable memory pool.
  * This implementation of a map uses an array, which is searched
  * linearly.  For more efficient searching you should use the
- * <ACE_Hash_Map_Manager>.
+ * ACE_Hash_Map_Manager.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Manager
@@ -195,7 +196,7 @@ public:
 
   /**
    * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
-   * map then behaves just like <bind>.  Otherwise, store the old
+   * map then behaves just like bind().  Otherwise, store the old
    * values of @a int_id into the "out" parameter and rebind the new
    * parameters.
    * @retval 0 If a new entry is bound successfully.
@@ -261,12 +262,12 @@ public:
   size_t total_size (void) const;
 
   /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
+   * Returns a reference to the underlying ACE_LOCK.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the ACE_Atomic_Op with an
    * ACE_Recursive_Mutex or ACE_Process_Mutex, or if you need to
    * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * @note The right name would be lock, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex (void);
 
@@ -568,8 +569,8 @@ protected:
  * ACE_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the ACE_Map_Manager's
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_GUARD or ACE_READ_GUARD on the ACE_Map_Manager's
+ * internal lock, which is accessible via its mutex() method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
@@ -615,8 +616,8 @@ public:
  * ACE_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the ACE_Map_Manager's
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_GUARD or ACE_READ_GUARD on the ACE_Map_Manager's
+ * internal lock, which is accessible via its mutex() method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Const_Iterator : public ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
@@ -662,8 +663,8 @@ public:
  * ACE_Map_Manager it is iterating upon since locking is
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
- * ACE_Guard or ACE_Read_Guard on the ACE_Map_Manager's
- * internal lock, which is accessible via its <mutex> method.
+ * ACE_GUARD or ACE_READ_GUARD on the ACE_Map_Manager's
+ * internal lock, which is accessible via its mutex() method.
  */
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Reverse_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>

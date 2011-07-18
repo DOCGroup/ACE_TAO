@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Activation_Queue.h"
 
 #if !defined (__ACE_INLINE__)
@@ -8,10 +10,6 @@
 #include "ace/Method_Request.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Time_Value.h"
-
-ACE_RCSID (ace,
-           Activation_Queue,
-           "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

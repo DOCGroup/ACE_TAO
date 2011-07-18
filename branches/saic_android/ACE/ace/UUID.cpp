@@ -15,99 +15,17 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
 
-ACE_RCSID (ace,
-           UUID,
-           "$Id$")
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
 {
-  UUID_Node::UUID_Node (void)
-  {
-    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
-      node_ID_[i] = 0;
-  }
+  // NIL version of the UUID
+  const UUID UUID::NIL_UUID;
 
-  UUID_Node::UUID_Node (const UUID_Node & node)
-  {
-    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
-      this->node_ID_[i] = node.node_ID_[i];
-  }
-
-  UUID_Node::Node_ID &
-  UUID_Node::node_ID (void)
-  {
-    return node_ID_;
-  }
-
-  const UUID_Node::Node_ID &
-  UUID_Node::node_ID (void) const
-  {
-    return node_ID_;
-  }
-
-  void
-  UUID_Node::node_ID (Node_ID& node_ID)
-  {
-    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
-      node_ID_[i] = node_ID[i];
-  }
-
-  const UUID_Node &
-  UUID_Node::operator = (const UUID_Node & rhs)
-  {
-    // Check for self assignment.
-    if (this == &rhs)
-      return *this;
-
-    // Copy the content of the node id.
-    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
-      this->node_ID_[i] = rhs.node_ID_[i];
-
-    return *this;
-  }
-
-  UUID UUID::NIL_UUID;
-
-  /// Construct a nil UUID. Such a UUID has every one of it's data
-  /// elements set to zero.
-  UUID::UUID (void)
-    : time_low_ (0),
-      time_mid_ (0),
-      time_hi_and_version_ (0),
-      clock_seq_hi_and_reserved_ (0),
-      clock_seq_low_ (0)
-  {
-
-  }
-
-  /// Construct a UUID from a string representation of an UUID.
   UUID::UUID (const ACE_CString& uuid_string)
-    : time_low_ (0),
-      time_mid_ (0),
-      time_hi_and_version_ (0),
-      clock_seq_hi_and_reserved_ (0),
-      clock_seq_low_ (0)
   {
+    this->init ();
     this->from_string_i (uuid_string);
-  }
-
-  UUID::UUID (const UUID &right)
-    : time_low_ (right.time_low_),
-      time_mid_ (right.time_mid_),
-      time_hi_and_version_ (right.time_hi_and_version_),
-      clock_seq_hi_and_reserved_ (right.clock_seq_hi_and_reserved_),
-      clock_seq_low_ (right.clock_seq_low_),
-      node_ (right.node_)
-  {
-
-  }
-
-  UUID::~UUID (void)
-  {
-
   }
 
   const UUID &
@@ -115,94 +33,96 @@ namespace ACE_Utils
   {
     if (this != &rhs)
       {
-        // Copy the values of the UUID.
-        this->time_low_ = rhs.time_low_;
-        this->time_mid_ = rhs.time_mid_;
-        this->time_hi_and_version_ = rhs.time_hi_and_version_;
-        this->clock_seq_hi_and_reserved_ = rhs.clock_seq_hi_and_reserved_;
-        this->clock_seq_low_ = rhs.clock_seq_low_;
-        this->node_ = rhs.node_;
+        // Reset the string version of the UUID a string version
+        // exist, and the UUID is not equal to the old UUID.
+        if (0 != this->as_string_.get ())
+          {
+            if (0 == rhs.as_string_.get () || *this != rhs)
+              this->as_string_.reset ();
+          }
 
-        // Delete the string version of the UUID.
-        this->as_string_.reset (0);
+        // Copy the contents of the UUID.
+        ACE_OS::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
+
+        /// @todo We should create an UUID_Ex class for UUIDs that
+        ///       contain the thread id and process id.
+        this->thr_id_ = rhs.thr_id_;
+        this->pid_ = rhs.pid_;
       }
+
     return *this;
   }
 
-  const ACE_CString*
-  UUID::to_string (void) const
+  const ACE_CString * UUID::to_string (void) const
   {
-    /// Only compute the string representation once.
-    if (this->as_string_.get () == 0)
+    // Compute the string representation only once.
+    if (0 != this->as_string_.get ())
+      return this->as_string_.get ();
+
+    // Get a buffer exactly the correct size. Use the nil UUID as a
+    // gauge.  Don't forget the trailing nul.
+    ACE_Auto_Array_Ptr <char> auto_clean;
+    size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
+    char *buf = 0;
+
+    if (36 == UUID_STRING_LENGTH)
       {
-        // Get a buffer exactly the correct size. Use the nil UUID as a
-        // gauge.  Don't forget the trailing nul.
-        ACE_Auto_Array_Ptr <char> auto_clean;
-        size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
-        char *buf = 0;
-
-        if ((thr_id_.length () != 0) && (pid_.length () != 0))
-          {
-            UUID_STRING_LENGTH += 2; //for '-'
-            ACE_NEW_RETURN (buf,
-                            char[UUID_STRING_LENGTH + 1],
-                            0);
-
-            // Let the auto array pointer manage the buffer.
-            auto_clean.reset (buf);
-
-            ACE_OS::sprintf (buf,
-                             "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x-%s-%s",
-                             this->time_low_,
-                             this->time_mid_,
-                             this->time_hi_and_version_,
-                             this->clock_seq_hi_and_reserved_,
-                             this->clock_seq_low_,
-                             (this->node_.node_ID ()) [0],
-                             (this->node_.node_ID ()) [1],
-                             (this->node_.node_ID ()) [2],
-                             (this->node_.node_ID ()) [3],
-                             (this->node_.node_ID ()) [4],
-                             (this->node_.node_ID ()) [5],
-                             thr_id_.c_str (),
-                             pid_.c_str ()
-                             );
-          }
-        else
-          {
-            ACE_NEW_RETURN (buf,
-                            char[UUID_STRING_LENGTH + 1],
-                            0);
-
-            // Let the auto array pointer manage the buffer.
-            auto_clean.reset (buf);
-
-            ACE_OS::sprintf (buf,
-                             "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
-                             this->time_low_,
-                             this->time_mid_,
-                             this->time_hi_and_version_,
-                             this->clock_seq_hi_and_reserved_,
-                             this->clock_seq_low_,
-                             (this->node_.node_ID ()) [0],
-                             (this->node_.node_ID ()) [1],
-                             (this->node_.node_ID ()) [2],
-                             (this->node_.node_ID ()) [3],
-                             (this->node_.node_ID ()) [4],
-                             (this->node_.node_ID ()) [5]
-                             );
-          }
-
-        // Save the string.
-        ACE_CString * as_string = 0;
-
-        ACE_NEW_RETURN (as_string,
-                        ACE_CString (buf, UUID_STRING_LENGTH),
+        ACE_NEW_RETURN (buf,
+                        char[UUID_STRING_LENGTH + 1],
                         0);
 
-        this->as_string_.reset (as_string);
+        // Let the auto array pointer manage the buffer.
+        auto_clean.reset (buf);
+
+        ACE_OS::sprintf (buf,
+                         "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
+                         this->uuid_.time_low_,
+                         this->uuid_.time_mid_,
+                         this->uuid_.time_hi_and_version_,
+                         this->uuid_.clock_seq_hi_and_reserved_,
+                         this->uuid_.clock_seq_low_,
+                         (this->uuid_.node_.node_ID ()) [0],
+                         (this->uuid_.node_.node_ID ()) [1],
+                         (this->uuid_.node_.node_ID ()) [2],
+                         (this->uuid_.node_.node_ID ()) [3],
+                         (this->uuid_.node_.node_ID ()) [4],
+                         (this->uuid_.node_.node_ID ()) [5]);
+      }
+    else
+      {
+        UUID_STRING_LENGTH += 2; //for '-'
+        ACE_NEW_RETURN (buf,
+                        char[UUID_STRING_LENGTH + 1],
+                        0);
+
+        // Let the auto array pointer manage the buffer.
+        auto_clean.reset (buf);
+
+        ACE_OS::sprintf (buf,
+                         "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x-%s-%s",
+                         this->uuid_.time_low_,
+                         this->uuid_.time_mid_,
+                         this->uuid_.time_hi_and_version_,
+                         this->uuid_.clock_seq_hi_and_reserved_,
+                         this->uuid_.clock_seq_low_,
+                         (this->uuid_.node_.node_ID ()) [0],
+                         (this->uuid_.node_.node_ID ()) [1],
+                         (this->uuid_.node_.node_ID ()) [2],
+                         (this->uuid_.node_.node_ID ()) [3],
+                         (this->uuid_.node_.node_ID ()) [4],
+                         (this->uuid_.node_.node_ID ()) [5],
+                         thr_id_.c_str (),
+                         pid_.c_str ());
       }
 
+    // Save the string.
+    ACE_CString * as_string = 0;
+
+    ACE_NEW_RETURN (as_string,
+                    ACE_CString (buf, UUID_STRING_LENGTH),
+                    0);
+
+    this->as_string_.reset (as_string);
     return this->as_string_.get ();
   }
 
@@ -315,20 +235,18 @@ namespace ACE_Utils
           }
       }
 
-    this->time_low_ = static_cast<ACE_UINT32> (time_low);
-    this->time_mid_ = static_cast<ACE_UINT16> (time_mid);
-    this->time_hi_and_version_ = static_cast<ACE_UINT16> (time_hi_and_version);
-    this->clock_seq_hi_and_reserved_ = static_cast<u_char> (clock_seq_hi_and_reserved);
-    this->clock_seq_low_ = static_cast<u_char> (clock_seq_low);
+    this->uuid_.time_low_ = static_cast<ACE_UINT32> (time_low);
+    this->uuid_.time_mid_ = static_cast<ACE_UINT16> (time_mid);
+    this->uuid_.time_hi_and_version_ = static_cast<ACE_UINT16> (time_hi_and_version);
+    this->uuid_.clock_seq_hi_and_reserved_ = static_cast<u_char> (clock_seq_hi_and_reserved);
+    this->uuid_.clock_seq_low_ = static_cast<u_char> (clock_seq_low);
 
-    UUID_Node::Node_ID node_id;
-    for (int i = 0; i < UUID_Node::NODE_ID_SIZE; ++i)
-      node_id[i] = static_cast<u_char> (node[i]);
-
-    this->node_.node_ID (node_id);
+    for (size_t i = 0; i < UUID_Node::NODE_ID_SIZE; ++ i)
+      this->uuid_.node_.node_ID ()[i] = static_cast <u_char> (node[i]);
 
     // Support varient 10- only
-    if ((this->clock_seq_hi_and_reserved_ & 0xc0) != 0x80 && (this->clock_seq_hi_and_reserved_ & 0xc0) != 0xc0)
+    if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) != 0x80 &&
+        (this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) != 0xc0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "ACE_UUID::from_string_i - "
@@ -337,7 +255,7 @@ namespace ACE_Utils
       }
 
     /// Support versions 1, 3, and 4 only
-    ACE_UINT16 V1 = this->time_hi_and_version_;
+    ACE_UINT16 V1 = this->uuid_.time_hi_and_version_;
 
     if ((V1 & 0xF000) != 0x1000 &&
         (V1 & 0xF000) != 0x3000 &&
@@ -349,7 +267,7 @@ namespace ACE_Utils
         return;
       }
 
-    if ((this->clock_seq_hi_and_reserved_ & 0xc0) == 0xc0)
+    if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) == 0xc0)
       {
         if (uuid_string.length () == NIL_UUID.to_string ()->length ())
           {
@@ -370,15 +288,16 @@ namespace ACE_Utils
       }
   }
 
-  UUID_Generator::UUID_Generator ()
+  UUID_Generator::UUID_Generator (void)
     : time_last_ (0),
-      destroy_lock_ (true)
+      destroy_lock_ (true),
+      is_init_ (false)
   {
-    ACE_NEW (lock_,
-             ACE_SYNCH_MUTEX);
+    ACE_NEW (lock_, ACE_SYNCH_MUTEX);
+    this->init ();
   }
 
-  UUID_Generator::~UUID_Generator ()
+  UUID_Generator::~UUID_Generator (void)
   {
     if (destroy_lock_)
       delete lock_;
@@ -387,24 +306,19 @@ namespace ACE_Utils
   void
   UUID_Generator::init (void)
   {
+    if (this->is_init_)
+      return;
+
     ACE_OS::macaddr_node_t macaddress;
-    int result = ACE_OS::getmacaddress (&macaddress);
+    int const result = ACE_OS::getmacaddress (&macaddress);
 
     UUID_Node::Node_ID node_id;
-    if (result != -1)
-      {
-//         ACE_DEBUG ((LM_DEBUG,
-//                     "%02X-%02X-%02X-%02X-%02X-%02X\n",
-//                     macaddress.node [0],
-//                     macaddress.node [1],
-//                     macaddress.node [2],
-//                     macaddress.node [3],
-//                     macaddress.node [4],
-//                     macaddress.node [5]));
 
-        ACE_OS::memcpy (&node_id,
+    if (-1 != result)
+      {
+        ACE_OS::memcpy (node_id,
                         macaddress.node,
-                        sizeof (node_id));
+                        UUID_Node::NODE_ID_SIZE);
       }
     else
       {
@@ -421,13 +335,18 @@ namespace ACE_Utils
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *lock_);
       uuid_state_.timestamp = time_last_;
-      uuid_state_.node.node_ID (node_id);
+
+      ACE_OS::memcpy (uuid_state_.node.node_ID (),
+                      node_id,
+                      UUID_Node::NODE_ID_SIZE);
     }
+
+    this->is_init_ = true;
   }
 
   void
-  UUID_Generator::generate_UUID (UUID& uuid,ACE_UINT16 version,
-                                u_char variant)
+  UUID_Generator::
+  generate_UUID (UUID& uuid, ACE_UINT16 version, u_char variant)
   {
     UUID_Time timestamp;
     ACE_UINT16 clock_sequence;
@@ -450,7 +369,7 @@ namespace ACE_Utils
 
     cseqHAV |= variant;
     uuid.clock_seq_hi_and_reserved (cseqHAV);
-    uuid.node (& (uuid_state_.node));
+    uuid.node (uuid_state_.node);
 
     if (variant == 0xc0)
       {
@@ -469,7 +388,7 @@ namespace ACE_Utils
   UUID*
   UUID_Generator::generate_UUID (ACE_UINT16 version, u_char variant)
   {
-    UUID* uuid;
+    UUID* uuid = 0;
     ACE_NEW_RETURN (uuid,
                     UUID,
                     0);
@@ -555,7 +474,7 @@ namespace ACE_Utils
     now.to_usec (time);
     time = time * 10;
     timestamp = time + timeOffset;
-}
+  }
 
   ACE_SYNCH_MUTEX*
   UUID_Generator::lock (void)
@@ -564,8 +483,7 @@ namespace ACE_Utils
   }
 
   void
-  UUID_Generator::lock (ACE_SYNCH_MUTEX* lock,
-                        bool release_lock)
+  UUID_Generator::lock (ACE_SYNCH_MUTEX* lock, bool release_lock)
   {
     if (this->destroy_lock_)
       delete this->lock_;
@@ -573,12 +491,11 @@ namespace ACE_Utils
     this->lock_ = lock;
     this->destroy_lock_ = release_lock;
   }
-
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
-  ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
+  template ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
+  ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

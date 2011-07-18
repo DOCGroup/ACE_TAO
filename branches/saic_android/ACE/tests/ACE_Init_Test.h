@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    ACE_Init_Test.h
-//
-// = DESCRIPTION
-//   Main header file for the ACE_INIT_TEST application.
-//
-// = AUTHOR
-//    Steve Huston <shuston@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ACE_Init_Test.h
+ *
+ *  $Id$
+ *
+ * Main header file for the ACE_INIT_TEST application.
+ *
+ *
+ *  @author Steve Huston <shuston@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef AFX_ACE_INIT_TEST_H__64FDC9FE_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 #define AFX_ACE_INIT_TEST_H__64FDC9FE_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
@@ -30,10 +27,13 @@
 
 #include "ACE_Init_Test_Resource.h" // main symbols
 
+/**
+ * @class CACE_Init_TestApp
+ *
+ * @brief See ACE_Init_Test.cpp for the implementation of this class
+ */
 class CACE_Init_TestApp : public CWinApp
 {
-  // = TITLE
-  //   See ACE_Init_Test.cpp for the implementation of this class
 public:
   CACE_Init_TestApp (void);
 
@@ -41,8 +41,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CACE_Init_TestApp)
 public:
+  ///}}AFX_VIRTUAL
   virtual BOOL InitInstance();
-  //}}AFX_VIRTUAL
 
   // Implementation
 

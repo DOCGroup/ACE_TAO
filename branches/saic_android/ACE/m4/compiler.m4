@@ -161,6 +161,9 @@ dnl @todo Clean up / consolidate these conditionals
          ;;
        aCC)
          CFLAGS = "${CFLAGS:-} -Ae"
+         # We want support for long long; without this the feature checks
+         # for wcstoll et al detect the function but it won't compile.
+         CXXFLAGS="$CXXFLAGS -ext"
          # -AA has been available since aC++ x.27 (2001?) - if using a
          # compiler without this support, must --enable_stdcpplib=no.
          if test "$ace_user_enable_stdcpplib" = yes; then

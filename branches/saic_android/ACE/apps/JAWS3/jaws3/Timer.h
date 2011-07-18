@@ -87,7 +87,7 @@ public:
 private:
 
   JAWS_Timer_Impl *impl_;
-  
+
 };
 
 

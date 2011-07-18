@@ -1,22 +1,18 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Suspended_Removals.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the Reactor's ability to handle removal of suspended
-//    handles.
-//
-// = AUTHOR
-//    Irfan Pyarali
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Suspended_Removals.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the Reactor's ability to handle removal of suspended
+ *  handles.
+ *
+ *
+ *  @author Irfan Pyarali
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -25,7 +21,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
-ACE_RCSID(WFMO_Reactor, Suspended_Removals, "$Id$")
+
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -48,6 +44,11 @@ public:
                                      size_t handles_to_be_resumed,
                                      size_t handles_to_be_deleted)
   {
+    ACE_UNUSED_ARG (wfmo_reactor);  // for release builds where ACE_ASSERT is noop
+    ACE_UNUSED_ARG (handles_to_be_added);
+    ACE_UNUSED_ARG (handles_to_be_suspended);
+    ACE_UNUSED_ARG (handles_to_be_resumed);
+    ACE_UNUSED_ARG (handles_to_be_deleted);
     ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_added_ == handles_to_be_added);
     ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_suspended_ == handles_to_be_suspended);
     ACE_ASSERT (wfmo_reactor.handler_rep_.handles_to_be_resumed_ == handles_to_be_resumed);

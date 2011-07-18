@@ -206,7 +206,7 @@ template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::GET_i (const KEY &key, JAWS_Cache_Object *&object)
 {
-  int result = this->hash_->find (key, object);
+  int const result = this->hash_->find (key, object);
 
   if (result == 0)
     this->TAKE (object);
@@ -355,7 +355,7 @@ template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::GET (const KEY &key, JAWS_Cache_Object *&object)
 {
-  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g,this->lock_, -1);
 
   return this->GET_i (key, object);
 }
@@ -364,7 +364,7 @@ template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::PUT (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
 {
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
+  ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g,this->lock_, -1);
 
   return this->PUT_i (key, data, size, obj);
 }
@@ -452,68 +452,34 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (obj == 0)
     return -1;
 
-#if 0
-  if (obj->size ()/1024 > this->maxobjsize_)
+  ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g, this->lock_, -1);
+
+  int result = obj->release ();
+
+  if (result == 0)
     {
-      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
-
-      int result = obj->release ();
-      if (result == 0)
+      if (obj->count () == 0)
         {
-          if (obj->count () == 0)
-            {
-              KEY *key = (KEY *) obj->internal ();
-#ifdef ENTERA_VERBOSE_TRACE
-              cerr << "*** drop large unbinding: " << key << endl;
-#endif
-              result = this->hash_->unbind (*key);
-              if (result == 0)
-                {
-                  if (this->heap_->remove (obj->heap_item ()) == -1)
-                    cerr << "*** drop large heap remove failed: " << endl;
-                  this->factory_->destroy (obj);
-                  delete key;
-                  obj = 0;
-                  result = 1;
-                }
-              else
-                cerr << "*** drop large hash unbind failed: " << key << endl;
-            }
+          KEY *key = (KEY *) obj->internal ();
+          this->factory_->destroy (obj);
+          delete key;
+          obj = 0;
+          result = 1;
         }
-      return result;
+      else
+        {
+          result = this->DROP_i (obj);
+        }
     }
-#endif /* 0 */
 
-  {
-    ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
-
-    int result = obj->release ();
-
-    if (result == 0)
-      {
-        if (obj->count () == 0)
-          {
-            KEY *key = (KEY *) obj->internal ();
-            this->factory_->destroy (obj);
-            delete key;
-            obj = 0;
-            result = 1;
-          }
-        else
-          {
-            result = this->DROP_i (obj);
-          }
-      }
-
-    return result;
-  }
+  return result;
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::FLUSH (void)
 {
-  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> g (this->lock_);
+  ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g, this->lock_, -1);
 
   return this->FLUSH_i ();
 }
@@ -528,7 +494,7 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
   if (this->manager_ == 0)
     this->manager_ = Cache_Manager_Singleton::instance ();
 
-  int result = this->manager_->GET (key, this->object_);
+  int const result = this->manager_->GET (key, this->object_);
   if (result == -1)
     this->object_ = 0;
 }

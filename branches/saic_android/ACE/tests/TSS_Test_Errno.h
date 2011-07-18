@@ -1,33 +1,35 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = FILENAME
-//    TSS_Test_Errno.h
-//
-// = DESCRIPTION
-//    This file contains the definition of Errno.  Some compilers need
-//    it in a .h file for template instantiation (such as AIX C Set
-//    ++).
-//
-// = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    TSS_Test_Errno.h
+ *
+ *  $Id$
+ *
+ *  This file contains the definition of Errno.  Some compilers need
+ *  it in a .h file for template instantiation (such as AIX C Set
+ *  ++).
+ *
+ *
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 
+/**
+ * @class Errno
+ *
+ * @brief Define a simple Errno abstraction
+ *
+ * This class gets its own header file to work around AIX C++
+ * compiler "features" related to template instantiation...  It is
+ * only used by TSS_Test.cpp.
+ */
 class Errno
 {
-  // = TITLE
-  //    Define a simple Errno abstraction
-  //
-  // = DESCRIPTION
-  //    This class gets its own header file to work around AIX C++
-  //    compiler "features" related to template instantiation...  It is
-  //    only used by TSS_Test.cpp.
 public:
   Errno()
   {

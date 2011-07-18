@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined(_WIN32) 
+#if !defined(_WIN32)
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -9,7 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
 
-ACE_RCSID(IO_tests, IO_Test, "$Id$")
+
 
 
 
@@ -35,13 +35,13 @@ Slow_Read_Write_Test::Slow_Read_Write_Test (const char *name,
 {
 }
 
-int 
+int
 Slow_Read_Write_Test::run_test (int iterations,
                                 FILE *input_fp,
                                 FILE *output_fp)
 {
-  ACE_HANDLE ifd = fileno (input_fp);
-  ACE_HANDLE ofd = fileno (output_fp);
+  ACE_HANDLE ifd = ACE_OS::fileno (input_fp);
+  ACE_HANDLE ofd = ACE_OS::fileno (output_fp);
 
   this->tm_.start ();
 
@@ -58,7 +58,7 @@ Slow_Read_Write_Test::run_test (int iterations,
 
   this->tm_.stop ();
   return 0;
-}  
+}
 
 Stdio_Test::Stdio_Test (const char *name,
                         ACE_Profile_Timer &tm)
@@ -66,7 +66,7 @@ Stdio_Test::Stdio_Test (const char *name,
 {
 }
 
-int 
+int
 Stdio_Test::run_test (int iterations,
                       FILE *input_fp,
                       FILE *output_fp)
@@ -85,7 +85,7 @@ Stdio_Test::run_test (int iterations,
     }
   this->tm_.stop ();
   return 0;
-}  
+}
 
 Block_Read_Write_Test::Block_Read_Write_Test (const char *name,
                                               ACE_Profile_Timer &tm)
@@ -93,13 +93,13 @@ Block_Read_Write_Test::Block_Read_Write_Test (const char *name,
 {
 }
 
-int 
+int
 Block_Read_Write_Test::run_test (int iterations,
                                  FILE *input_fp,
                                  FILE *output_fp)
 {
-  int ifd = fileno (input_fp);
-  int ofd = fileno (output_fp);
+  ACE_HANDLE ifd = ACE_OS::fileno (input_fp);
+  ACE_HANDLE ofd = ACE_OS::fileno (output_fp);
 
   this->tm_.start ();
 
@@ -119,7 +119,7 @@ Block_Read_Write_Test::run_test (int iterations,
 
   this->tm_.stop ();
   return 0;
-}  
+}
 
 Block_Fread_Fwrite_Test::Block_Fread_Fwrite_Test (const char *name,
                                                   ACE_Profile_Timer &tm)
@@ -127,7 +127,7 @@ Block_Fread_Fwrite_Test::Block_Fread_Fwrite_Test (const char *name,
 {
 }
 
-int 
+int
 Block_Fread_Fwrite_Test::run_test (int iterations,
                                    FILE *input_fp,
                                    FILE *output_fp)
@@ -151,7 +151,7 @@ Block_Fread_Fwrite_Test::run_test (int iterations,
 
   this->tm_.stop ();
   return 0;
-}  
+}
 
 Mmap1_Test::Mmap1_Test (const char *name,
                         ACE_Profile_Timer &tm)
@@ -159,12 +159,12 @@ Mmap1_Test::Mmap1_Test (const char *name,
 {
 }
 
-int 
+int
 Mmap1_Test::run_test (int iterations,
                       FILE *input_fp,
                       FILE *output_fp)
 {
-  ACE_Mem_Map map_input (fileno (input_fp));
+  ACE_Mem_Map map_input (ACE_OS::fileno (input_fp));
   void *src = map_input.addr ();
 
   if (src == MAP_FAILED)
@@ -175,21 +175,21 @@ Mmap1_Test::run_test (int iterations,
 
       while (--iterations >= 0)
       {
-        if (ACE_OS::write (fileno (output_fp),
+        if (ACE_OS::write (ACE_OS::fileno (output_fp),
                            src,
                            map_input.size ()) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%C"),
                              this->name ()),
                             -1);
-        ACE_OS::lseek (fileno (output_fp),
+        ACE_OS::lseek (ACE_OS::fileno (output_fp),
                        0,
                        SEEK_SET);
       }
 
       this->tm_.stop ();
     }
-  
+
   if (map_input.unmap () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%C"),
@@ -197,7 +197,7 @@ Mmap1_Test::run_test (int iterations,
                       -1);
   else
     return 0;
-}  
+}
 
 Mmap2_Test::Mmap2_Test (const char *name,
                         ACE_Profile_Timer &tm)
@@ -205,14 +205,14 @@ Mmap2_Test::Mmap2_Test (const char *name,
 {
 }
 
-int 
+int
 Mmap2_Test::run_test (int iterations,
                       FILE *input_fp,
                       FILE *output_fp)
 {
-  ACE_Mem_Map map_input (fileno (input_fp));
+  ACE_Mem_Map map_input (ACE_OS::fileno (input_fp));
   int size = map_input.size ();
-  ACE_Mem_Map map_output (fileno (output_fp),
+  ACE_Mem_Map map_output (ACE_OS::fileno (output_fp),
                           size,
                           PROT_WRITE,
                           MAP_SHARED);
@@ -230,11 +230,11 @@ Mmap2_Test::run_test (int iterations,
 
       this->tm_.stop ();
     }
-  
-  if (map_input.unmap () == -1 
+
+  if (map_input.unmap () == -1
       || map_output.unmap () == -1)
     return -1;
   else
     return 0;
-}  
+}
 #endif

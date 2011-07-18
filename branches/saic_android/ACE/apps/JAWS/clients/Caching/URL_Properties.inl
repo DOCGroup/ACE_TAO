@@ -5,7 +5,7 @@
 ACE_INLINE size_t
 ACE_WString_Helper::size (const ACE_WString &wstr)
 {
-  return (wstr.length () + 1) * sizeof (ACE_USHORT16);
+  return (wstr.length () + 1) * sizeof (ACE_UINT16);
 }
 
 ACE_INLINE
@@ -16,8 +16,8 @@ ACE_URL_Property::ACE_URL_Property (const char *name, const char *value)
 }
 
 ACE_INLINE
-ACE_URL_Property::ACE_URL_Property (const ACE_USHORT16 *name,
-                                    const ACE_USHORT16 *value)
+ACE_URL_Property::ACE_URL_Property (const ACE_UINT16 *name,
+                                    const ACE_UINT16 *value)
   : name_ (name),
     value_ (value)
 {
@@ -81,7 +81,7 @@ ACE_URL_Property::name (const char *n)
 }
 
 ACE_INLINE void
-ACE_URL_Property::name (const ACE_USHORT16 *n)
+ACE_URL_Property::name (const ACE_UINT16 *n)
 {
   this->name_ = ACE_WString (n);
 }
@@ -105,7 +105,7 @@ ACE_URL_Property::value (const char *v)
 }
 
 ACE_INLINE void
-ACE_URL_Property::value (const ACE_USHORT16 *v)
+ACE_URL_Property::value (const ACE_UINT16 *v)
 {
   this->value_ = ACE_WString (v);
 }
@@ -116,7 +116,7 @@ ACE_URL_Property::size (void) const
 {
   size_t len = 2;
     len += this->name_.length () + this->value_.length ();
-  return len * sizeof (ACE_USHORT16);
+  return len * sizeof (ACE_UINT16);
 }
 
 ACE_INLINE
@@ -179,7 +179,7 @@ ACE_URL_Offer::url (void) const
 }
 
 ACE_INLINE void
-ACE_URL_Offer::url (const ACE_USHORT16 *url)
+ACE_URL_Offer::url (const ACE_UINT16 *url)
 {
   this->url_ = ACE_WString (url);
 }

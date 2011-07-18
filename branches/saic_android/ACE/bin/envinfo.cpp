@@ -5,7 +5,7 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_sys_utsname.h"
 
-ACE_RCSID(bin, envinfo, "$Id$")
+
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

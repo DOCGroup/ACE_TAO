@@ -149,7 +149,7 @@ private:
     /// and we'll have to check for that).
     const ACE_Dumpable_Ptr dumper_;
 
-    Tuple (void) : dumper_(0) {}
+    Tuple (void) : this_ (0), dumper_(0) {}
   };
 
   /// Singleton instance of this class.

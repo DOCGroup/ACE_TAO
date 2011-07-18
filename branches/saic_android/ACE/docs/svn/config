@@ -81,8 +81,14 @@ enable-auto-props = yes
 ### is typically done by setting the enable-auto-props option.
 [auto-props]
 *.aspx=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.install=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.docs=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.sgml=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.manpages=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cpp=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cxx=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.patch=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.dpatch=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cc=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.C=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.c=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -95,6 +101,8 @@ enable-auto-props = yes
 *.cs=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.java=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.idl=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.idl3=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.idl3p=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pidl=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.cidl=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.html=svn:eol-style=native;svn:keywords=Author Date Id Revision
@@ -143,6 +151,7 @@ enable-auto-props = yes
 *.yy=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.conf=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.pem=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.xme=svn:eol-style=native;svn:keywords=Author Date Id Revision
 Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision
 README=svn:eol-style=native;svn:keywords=Author Date Id Revision
 "Makefile"="svn:eol-style=native;svn:keywords=Author Date Id Revision"

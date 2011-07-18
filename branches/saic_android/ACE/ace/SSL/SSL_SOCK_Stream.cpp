@@ -15,10 +15,6 @@
 #include "SSL_SOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ACE_SSL,
-           SSL_SOCK_Stream,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)

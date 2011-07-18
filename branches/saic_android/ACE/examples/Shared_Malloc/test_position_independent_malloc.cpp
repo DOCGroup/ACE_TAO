@@ -14,7 +14,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 
-ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
+
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 typedef ACE_PI_Control_Block CONTROL_BLOCK;

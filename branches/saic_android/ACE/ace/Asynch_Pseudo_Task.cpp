@@ -5,8 +5,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_signal.h"
 
-ACE_RCSID(ace, Asynch_Pseudo_Task, "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task ()

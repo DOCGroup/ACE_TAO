@@ -44,17 +44,11 @@
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
-#     define ACE_HAS_TEMPLATE_TYPEDEFS
 #     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
-#  if defined (ACE_HAS_EXCEPTIONS)
-#    define ACE_HAS_NEW_NOTHROW
-#  else
-     // See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h:
-#    define _RWSTD_NO_EXCEPTIONS 1
-#  endif /* ! ACE_HAS_EXCEPTIONS */
+#   define ACE_HAS_NEW_NOTHROW
 # elif (__SUNPRO_CC == 0x420) || (__SUNPRO_CC == 0x410)
 # define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __SUNPRO_CC >= 0x500 */
@@ -67,24 +61,9 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
-  // ACE_HAS_EXCEPTIONS precludes -noex in
-  // include/makeinclude/platform_macros.GNU.  But beware, we have
-  // seen problems with exception handling on multiprocessor
-  // UltraSparcs:  threaded executables core dump when threads exit.
-  // This problem does not seem to appear on single-processor UltraSparcs.
-  // And, it is solved with the application of patch
-  //   104631-02 "C++ 4.2: Jumbo Patch for C++ 4.2 on Solaris SPARC"
-  // to Sun C++ 4.2.
-  // To provide optimum performance, ACE_HAS_EXCEPTIONS is disabled by
-  // default.  It can be enabled by adding "exceptions=1" to the "make"
-  // invocation.  See include/makeinclude/platform_sunos5_sunc++.GNU
-  // for details.
-
-#  if defined (ACE_HAS_EXCEPTIONS)
-     // If exceptions are enabled and we are using Sun/CC then
-     // <operator new> throws an exception instead of returning 0.
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#  endif /* ACE_HAS_EXCEPTIONS */
+// If exceptions are enabled and we are using Sun/CC then
+// <operator new> throws an exception instead of returning 0.
+#define ACE_NEW_THROWS_EXCEPTIONS
 
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
@@ -116,10 +95,10 @@
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
+
 # include "ace/config-g++-common.h"
+
 # define ACE_HAS_HI_RES_TIMER
-  // Denotes that GNU has cstring.h as standard, to redefine memchr().
-# define ACE_HAS_GNU_CSTRING_H
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
@@ -132,33 +111,15 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-#elif defined (ghs)
+# if (__GNUC__ < 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ <= 3))
+#   define ACE_LACKS_STD_WSTRING  1
+# endif
 
-# if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
-    // ACE_MT_SAFE is #defined below, for all compilers.
-#   if !defined (_REENTRANT)
-    /* If you want to disable threading, comment out the following
-       line.  Or, add -DACE_MT_SAFE=0 to your CFLAGS, e.g., using
-       make threads=0. */
-#     define _REENTRANT
-#   endif /* _REENTRANT */
-# endif /* !ACE_MT_SAFE */
-
-# define ACE_CONFIG_INCLUDE_GHS_COMMON
-# include "ace/config-ghs-common.h"
-
-  // To avoid warning about inconsistent declaration between Sun's
-  // stdlib.h and Green Hills' ctype.h.
-# include <stdlib.h>
-
-  // IOStream_Test never halts with Green Hills 1.8.9.
-# define ACE_LACKS_ACE_IOSTREAM
-
-#else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
+#else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-sunos5.5.h
 #  endif /* __cplusplus */
-#endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
+#endif /* ! __SUNPRO_CC && ! __GNUG__ */
 
 #if !defined (__ACE_INLINE__)
 // @note If you have link problems with undefined inline template
@@ -264,9 +225,6 @@
 // Platform supports STREAM pipes.
 #define ACE_HAS_STREAM_PIPES
 
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
-
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -282,8 +240,7 @@
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H
 
-// Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST
+#define ACE_HAS_STRSIGNAL
 
 // SunOS 5.5.x does not support mkstemp
 #define ACE_LACKS_MKSTEMP
@@ -292,12 +249,6 @@
 #if !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION - 0 >= 4))
 #  define ACE_HAS_CHARPTR_SHMDT
 #endif
-
-// Platform has posix getpwnam_r
-#if (defined (_POSIX_C_SOURCE) && _POSIX_C_SOURCE - 0 >= 199506L) || \
-    defined(_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_GETPWNAM_R
-#endif /* _POSIX_C_SOURCE || _POSIX_PTHREAD_SEMANTICS */
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 1)
 #if defined (_REENTRANT) || \
@@ -374,16 +325,7 @@
 # define ACE_CC_MAJOR_VERSION (__SUNPRO_CC >> 8)
 # define ACE_CC_MINOR_VERSION (__SUNPRO_CC & 0x00ff)
 # define ACE_CC_BETA_VERSION  (0)
-#elif defined (__GNUG__)
-# define ACE_CC_MAJOR_VERSION __GNUC__
-# define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-# define ACE_CC_BETA_VERSION  (0)
-# if __GNUC_MINOR__ >= 90
-#   define ACE_CC_NAME ACE_TEXT ("egcs")
-# else
-#   define ACE_CC_NAME ACE_TEXT ("g++")
-# endif /* __GNUC_MINOR__ */
-#endif /* __GNUG__ */
+#endif /* __SUNPRO_CC */
 
 #if defined (i386) && (_FILE_OFFSET_BITS==32)
 # define ACE_HAS_X86_STAT_MACROS

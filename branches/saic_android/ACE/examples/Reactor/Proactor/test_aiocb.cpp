@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    proactor
-//
-// = FILENAME
-//    test_aiocb.cpp
-//
-// = DESCRIPTION
-//    Checkout $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp,
-//    which is the ACE'ified version of this program. 
-// 
-// = COMPILE and RUN
-//    % CC -g -o test_aiocb -lrt test_aiocb.cpp
-//    % ./test_aiocb
-// 
-// = AUTHOR
-//    Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_aiocb.cpp
+ *
+ *  $Id$
+ *
+ *  Checkout $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp,
+ *  which is the ACE'ified version of this program.
+ *
+ * = COMPILE and RUN
+ *  % CC -g -o test_aiocb -lrt test_aiocb.cpp
+ *  % ./test_aiocb
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
@@ -39,32 +36,32 @@
 class Test_Aio
 {
 public:
+  /// Default constructor.
   Test_Aio (void);
-  // Default constructor.
 
+  /// Initting the output file and the buffer.
   int init (void);
-  // Initting the output file and the buffer.
 
+  /// Doing the testing stuff.
   int do_aio (void);
-  // Doing the testing stuff.
 
+  /// Destructor.
   ~Test_Aio (void);
-  // Destructor.
 private:
+  /// Output file descriptor.
   int out_fd_;
-  // Output file descriptor.
 
+  /// For writing to the file.
   struct aiocb *aiocb_write_;
-  // For writing to the file.
 
+  /// Reading stuff from the file.
   struct aiocb *aiocb_read_;
-  // Reading stuff from the file.
 
+  /// The buffer to be written to the out_fd.
   char *buffer_write_;
-  // The buffer to be written to the out_fd.
 
+  /// The buffer to be read back from the file.
   char *buffer_read_;
-  // The buffer to be read back from the file.
 };
 
 Test_Aio::Test_Aio (void)
@@ -146,7 +143,7 @@ Test_Aio::do_aio (void)
   // the completion for the first one.
   if (aio_read (this->aiocb_read_) < 0)
     perror ("aio_read");
-  
+
   // Wait for the completion on aio_suspend.
   struct aiocb *list_aiocb[2];
   list_aiocb [0] = this->aiocb_write_;
@@ -214,7 +211,7 @@ Test_Aio::do_aio (void)
 
   cout << "Both the AIO operations done." << endl;
   cout << "The buffer is :" << this->buffer_read_ << endl;
-  
+
   return 0;
 }
 
@@ -229,11 +226,11 @@ main (int argc, char **argv)
               "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n");
       return -1;
     }
-  
+
   if (test_aio.do_aio () != 0)
     {
       printf ("AIOCB test failed:\n"
-              "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n"); 
+              "ACE_POSIX_AIOCB_PROACTOR may not work in this platform\n");
       return -1;
     }
   printf ("AIOCB test successful:\n"

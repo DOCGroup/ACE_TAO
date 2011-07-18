@@ -1,24 +1,21 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Cached_Conn_Test.cpp
-//
-// = DESCRIPTION
-//    The test illustrates how the <ACE_Strategy_Connector> works by
-//    showing how you can cache connections on the client using
-//    different caching strategies. Also how connections can be purged
-//    explicitly and implicitly if needed from the connection cache
-//    maintained by the connector.
-//
-// = AUTHOR
-//    Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Cached_Conn_Test.cpp
+ *
+ *  $Id$
+ *
+ *  The test illustrates how the <ACE_Strategy_Connector> works by
+ *  showing how you can cache connections on the client using
+ *  different caching strategies. Also how connections can be purged
+ *  explicitly and implicitly if needed from the connection cache
+ *  maintained by the connector.
+ *
+ *
+ *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef CACHED_CONNECT_TEST
 #define CACHED_CONNECT_TEST
@@ -44,10 +41,10 @@
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
 
-ACE_RCSID(tests, Cached_Conn_Test, "$Id$")
+
 
 typedef size_t ATTRIBUTES;
-typedef ACE_Pair<Svc_Handler *, ATTRIBUTES>
+typedef std::pair<Svc_Handler *, ATTRIBUTES>
         CACHED_HANDLER;
 typedef ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
         ACE_ADDR;
@@ -153,8 +150,6 @@ static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
 // more iterations to get to the handle limit.
 #if defined (ACE_WIN32)
 static int iterations = 2000;
-#elif defined (__Lynx__)
-static int iterations = 134;
 #else
 static int iterations = 200;
 #endif /* ACE_WIN32 */

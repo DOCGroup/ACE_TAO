@@ -21,14 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/XML_Macros.h"
-
-#if defined (ACE_USES_NATIVE_EXCEPTIONS)
-# define ACEXML_RAISE(EXCEPTION) throw EXCEPTION
-#else
-# define ACEXML_RAISE(EXCEPTION)
-#endif
-
 
 /**
  * @class ACEXML_Exception Exception.h "ACEXML/common/Exception.h"

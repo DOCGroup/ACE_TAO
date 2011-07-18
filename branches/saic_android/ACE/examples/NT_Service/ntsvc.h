@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/NT_Service
-//
-// = FILENAME
-//    ntsvc.h
-//
-// = DESCRIPTION
-//      This is the definition of the sample NT Service class.  This example
-//      only runs on Win32 platforms.
-//
-// = AUTHOR
-//    Gonzalo Diethelm and Steve Huston
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    ntsvc.h
+ *
+ *  $Id$
+ *
+ *    This is the definition of the sample NT Service class.  This example
+ *    only runs on Win32 platforms.
+ *
+ *
+ *  @author Gonzalo Diethelm and Steve Huston
+ */
+//=============================================================================
+
 
 #ifndef NTSVC_H_
 #define NTSVC_H_
@@ -37,20 +34,20 @@ public:
 
   ~Service (void);
 
+  /// We override <handle_control> because it handles stop requests
+  /// privately.
   virtual void handle_control (DWORD control_code);
-  // We override <handle_control> because it handles stop requests
-  // privately.
 
+  /// We override <handle_exception> so a 'stop' control code can pop
+  /// the reactor off of its wait.
   virtual int  handle_exception (ACE_HANDLE h);
-  // We override <handle_exception> so a 'stop' control code can pop
-  // the reactor off of its wait.
 
+  /// This is a virtual method inherited from ACE_NT_Service.
   virtual int svc (void);
-  // This is a virtual method inherited from ACE_NT_Service.
 
+  /// Where the real work is done:
   virtual int handle_timeout (const ACE_Time_Value& tv,
                               const void *arg = 0);
-  // Where the real work is done:
 
 private:
   typedef ACE_NT_Service inherited;

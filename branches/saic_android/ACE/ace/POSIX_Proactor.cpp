@@ -82,10 +82,6 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
 
   os_id_ = ACE_OS_HPUX;   // set family
 
-#elif defined(__sgi)
-
-  os_id_ = ACE_OS_IRIX;   // set family
-
 #elif defined(__OpenBSD)
 
   os_id_ = ACE_OS_OPENBSD; // set family
@@ -519,39 +515,6 @@ ACE_POSIX_Proactor::create_asynch_timer
                   0);
   return implementation;
 }
-
-#if 0
-int
-ACE_POSIX_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
-{
-  // Perform a non-blocking "poll" for all the I/O events that have
-  // completed in the I/O completion queue.
-
-  ACE_Time_Value timeout (0, 0);
-  int result = 0;
-
-  for (;;)
-    {
-      result = this->handle_events (timeout);
-      if (result != 0 || errno == ETIME)
-        break;
-    }
-
-  // If our handle_events failed, we'll report a failure to the
-  // Reactor.
-  return result == -1 ? -1 : 0;
-}
-
-int
-ACE_POSIX_Proactor::handle_close (ACE_HANDLE handle,
-                                  ACE_Reactor_Mask close_mask)
-{
-  ACE_UNUSED_ARG (close_mask);
-  ACE_UNUSED_ARG (handle);
-
-  return this->close ();
-}
-#endif /* 0 */
 
 void
 ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
@@ -1239,11 +1202,14 @@ ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result *asynch_res
   transfer_count = 0;
 
   // Get the error status of the aio_ operation.
-  error_status  = aio_error (asynch_result);
+  // The following aio_ptr anathema is required to work around a bug in an over-aggressive
+  // optimizer in GCC 4.1.2.
+  aiocb *aio_ptr (asynch_result);
+  error_status  = aio_error (aio_ptr);
   if (error_status == EINPROGRESS)
     return 0;  // not completed
 
-  ssize_t op_return = aio_return (asynch_result);
+  ssize_t op_return = aio_return (aio_ptr);
   if (op_return > 0)
     transfer_count = static_cast<size_t> (op_return);
   // else transfer_count is already 0, error_status reports the error.
@@ -1425,16 +1391,18 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   const ACE_TCHAR *ptype = 0;
 
   // Start IO
-
+  // The following aio_ptr anathema is required to work around a bug in
+  // the optimizer for GCC 4.1.2
+  aiocb * aio_ptr (result);
   switch (result->aio_lio_opcode )
     {
     case LIO_READ :
       ptype = ACE_TEXT ("read ");
-      ret_val = aio_read (result);
+      ret_val = aio_read (aio_ptr);
       break;
     case LIO_WRITE :
       ptype = ACE_TEXT ("write");
-      ret_val = aio_write (result);
+      ret_val = aio_write (aio_ptr);
       break;
     default:
       ptype = ACE_TEXT ("?????");

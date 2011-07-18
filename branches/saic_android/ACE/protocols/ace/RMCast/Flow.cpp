@@ -1,19 +1,13 @@
-// file      : ace/RMCast/Flow.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #include "Flow.h"
 
+#include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"   // sleep
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "ace/os_include/os_math.h" // exp
-
-/*
-#include <iostream>
-using std::cerr;
-using std::endl;
-*/
 
 namespace ACE_RMCast
 {
@@ -57,9 +51,9 @@ namespace ACE_RMCast
         }
       }
 
-      if (cap_tput_ != 0.0
-          && current_tput_ != 0.0
-          && current_tput_ > cap_tput_)
+      if (!ACE::is_equal (cap_tput_, 0.0) &&
+          !ACE::is_equal (current_tput_, 0.0) &&
+          current_tput_ > cap_tput_)
       {
         double dev = (current_tput_ - cap_tput_) / current_tput_;
 
@@ -118,10 +112,10 @@ namespace ACE_RMCast
 
         nak_time_ = nak_time;
 
-        if (cap_tput_ == 0.0)
+        if (ACE::is_equal (cap_tput_, 0.0))
           cap_tput_ = current_tput_;
 
-        if (cap_tput_ != 0.0)
+        if (!ACE::is_equal (cap_tput_, 0.0))
         {
           cap_tput_ = cap_tput_ - cap_tput_ / 6.0;
 

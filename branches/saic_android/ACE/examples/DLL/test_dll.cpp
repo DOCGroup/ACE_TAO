@@ -8,7 +8,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(DLL, test_dll, "$Id$")
+
 
 typedef Magazine* (*Magazine_Creator) (void);
 

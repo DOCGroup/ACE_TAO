@@ -1,3 +1,33 @@
+Wed Aug  4 16:24:42 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/Bool_Array.h:
+        * src/Gen_Perf.h:
+        * src/Key_List.h:
+        * src/Options.h:
+        * src/gperf.mpc:
+          Don't use a seperate library, we can't embed gperf as shared library
+          because it has a GPL license
+
+        * src/gperf_export.h:
+          Removed this file.
+
+Mon Jul 13 15:32:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/Bool_Array.h:
+        * src/Vectors.h:
+          Doxygen changes
+
+Sun Jun 28 03:20:00 UTC 2008  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * src/*.{h,cpp}:
+          Use doxygen comment tags, small code improvements
+
+        * src/gperf.mpc:
+          Build a shared library that can later be used by gperf
+
+        * src/gperf_export.h:
+          New file
+
 Wed Jul 02 11:30:00 UTC 2008  Simon Massey  <sma at prismtech dot com>
 
         * src/Key_List.cpp:
@@ -44,7 +74,7 @@ Tue Mar 14 21:08:12 UTC 2006  jiang,shanshan <shanshan.jiang@vanderbilt.edu>
           conditional expression", "conversion from some type to another type, possible
           loss of data", "local variable may be used without having been initialized" and
           so on.
-          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for 
+          Thanks to Lukas Gruetzmacher <gruetzmacher at ais-dresden dot de> for
           motivating the fix to these "VC level 4 warnings".
 
 Wed Jan  4 22:55:24 UTC 2006  J.T. Conklin  <jtc@acorntoolworks.com>
@@ -77,12 +107,12 @@ Sat Apr 30 10:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Apr 29 09:08:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* src/Key_List.cpp (output_binary_search_function): Added a
+        * src/Key_List.cpp (output_binary_search_function): Added a
 
-	  do {/* null */} while (&base == 0);
+          do {/* null */} while (&base == 0);
 
-	  to silence warnings on some compilers.  Thanks to Frank Pilhofer
- 	  <fp@mc.com>.
+          to silence warnings on some compilers.  Thanks to Frank Pilhofer
+          <fp@mc.com>.
 
 Fri Aug  5 15:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
@@ -94,16 +124,16 @@ Fri Aug  5 15:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
 
 Fri Apr 23 21:18:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* src/Options.h (operator !=):
-	* src/Options.cpp (operator !=):
+        * src/Options.h (operator !=):
+        * src/Options.cpp (operator !=):
 
-	  Changed return type to bool, as is the norm in modern C++.
+          Changed return type to bool, as is the norm in modern C++.
 
 Tue Jan 20 17:13:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* version.texi: Something in the autoconf build thought it wise to
-	  update the date in this file. It matches the last modification
-	  date of gperf.texi.
+        * version.texi: Something in the autoconf build thought it wise to
+          update the date in this file. It matches the last modification
+          date of gperf.texi.
 
 Thu Jun 19 14:52:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -116,49 +146,49 @@ Thu Jun 19 14:52:05 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Jun 17 11:38:36 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* src/Key_List.cpp (output_lookup_array):
-	* src/Gen_Perf.cpp (run):
-	* src/Key_List.cpp (already_determined):
-	* src/List_Node.cpp (List_Node): Added casts to prevent GCC 3.3
-	  from complaining about stupid stuff...  Thanks to Bala for
- 	  reporting this.
+        * src/Key_List.cpp (output_lookup_array):
+        * src/Gen_Perf.cpp (run):
+        * src/Key_List.cpp (already_determined):
+        * src/List_Node.cpp (List_Node): Added casts to prevent GCC 3.3
+          from complaining about stupid stuff...  Thanks to Bala for
+          reporting this.
 
 Sun Jul 28 17:04:54 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* src/gperf.cpp (main): Only generate the timestamps if the
-	  DEBUGGING option ('-d') is enabled.  Thanks to Kier Schmitt
- 	  <SchmittKC@kpt.nuwc.navy.mil> for this suggestion.
+        * src/gperf.cpp (main): Only generate the timestamps if the
+          DEBUGGING option ('-d') is enabled.  Thanks to Kier Schmitt
+          <SchmittKC@kpt.nuwc.navy.mil> for this suggestion.
 
 Tue Feb 26 23:15:47 2002  Ossama Othman  <ossama@uci.edu>
 
-	* gperf.texi:
+        * gperf.texi:
 
-	  Added missing "@dircategory" entry.  It is required for proper
-	  installation when using `install-info'.
+          Added missing "@dircategory" entry.  It is required for proper
+          installation when using `install-info'.
 
-	  Use "@direntry" instead of "{START,END}-INFO-DIR-ENTRY"
-	  directly.
+          Use "@direntry" instead of "{START,END}-INFO-DIR-ENTRY"
+          directly.
 
-	* gperf.info:
+        * gperf.info:
 
-	  Regenerated this file.
+          Regenerated this file.
 
 Mon Jan 14 14:43:53 2002  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/Makefile:
-	  Re-generate dependencies.
+        * tests/Makefile:
+          Re-generate dependencies.
 
 Mon Dec 24 12:47:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* src/Options.cpp:
-	  Add temporary fix until something better shows up, at least it
-	  compiles this way!
+        * src/Options.cpp:
+          Add temporary fix until something better shows up, at least it
+          compiles this way!
 
 Sat Sep 22 09:06:10 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* src/Makefile: Removed the rules.lib.GNU file since it didn't
-	  seem to be needed and was causing problems for MinGW.  Thanks to
- 	  Jeff McNiel <JMcNiel@datacrit.com> for reporting this.
+        * src/Makefile: Removed the rules.lib.GNU file since it didn't
+          seem to be needed and was causing problems for MinGW.  Thanks to
+          Jeff McNiel <JMcNiel@datacrit.com> for reporting this.
 
 Wed Sep 19 02:29:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -1118,7 +1148,7 @@ Mon Apr  8 18:17:04 1991  Doug Schmidt  (schmidt at net4.ics.uci.edu)
         * Boy, it has been a *long* time since I hacked this puppy.  Let's
           see, I'm about to add long-overdue support for case-insensitive
           string comparisons to gperf's generated output code.  We are
-          going to employ the hitherto unused option -I to indicte this!
+          going to employ the hitherto unused option -I to indicate this!
 
 Thu Jun 28 16:17:27 1990  Doug Schmidt  (schmidt at brilliant)
 
@@ -1964,7 +1994,7 @@ Sun Jan 15 15:12:09 1989  Doug Schmidt  (schmidt at crimee.ics.uci.edu)
           is now computed in Key_List::Read_Keys, and thus
           Key_List::Print_Min_Max doesn't need to bother.
 
-        * Modifed the key position iterator scheme in options.cc to
+        * Modified the key position iterator scheme in options.cc to
           eliminate the need for member function Options::Advance.
           Now, the Options::Get function performs the advancement
           automatically, obviating the need for an extra function call.
@@ -2133,7 +2163,7 @@ Thu Jan  5 22:46:34 1989  Doug Schmidt  (schmidt at siam.ics.uci.edu)
         * Added a check in Key_List::Output for the special case where
           the keys used are 1,$.  It is possible to generate more
           efficient C code in this case.
-	
+
 Local Variables:
 mode: change-log
 add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))

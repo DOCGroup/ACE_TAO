@@ -12,10 +12,8 @@
 #include "ace/Signal.h"
 #include "ace/Auto_Ptr.h"
 
-#include "IO.h"
+#include "JAWS_IO.h"
 #include "HTTP_Server.h"
-
-ACE_RCSID(server, HTTP_Server, "$Id$")
 
 // class is overkill
 class JAWS
@@ -228,7 +226,7 @@ Synch_Thread_Pool_Task::svc (void)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
                            ACE_TEXT ("HTTP_Acceptor::accept")), -1);
 
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                       -1);
@@ -334,7 +332,7 @@ Thread_Per_Request_Task::open (void *)
 int
 Thread_Per_Request_Task::svc (void)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                   -1);
   //Synch_HTTP_Handler_Factory factory;

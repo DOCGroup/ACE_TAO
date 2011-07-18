@@ -3,7 +3,7 @@
 
 project(Kokyu) : acelib, ace_output, install {
   sharedname  = Kokyu
-  dynamicflags = KOKYU_BUILD_DLL
+  dynamicflags += KOKYU_BUILD_DLL
 
   Source_Files {
     Dispatcher_Impl.cpp
@@ -13,12 +13,17 @@ project(Kokyu) : acelib, ace_output, install {
     Kokyu_defs.cpp
   }
 
+  Header_Files {
+    *.h
+  }
+
   Template_Files {
     Kokyu_dsrt.cpp
     DSRT_Direct_Dispatcher_Impl_T.cpp
     DSRT_Dispatcher_Impl_T.cpp
     DSRT_Dispatch_Item_T.cpp
     DSRT_Sched_Queue_T.cpp
+    DSRT_CV_Dispatcher_Impl_T.cpp
   }
 
   Pkgconfig_Files {

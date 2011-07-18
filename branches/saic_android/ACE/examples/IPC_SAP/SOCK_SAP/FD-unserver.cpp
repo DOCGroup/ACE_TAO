@@ -10,7 +10,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(SOCK_SAP, FD_unserver, "$Id$")
+
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

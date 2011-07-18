@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    PMS_Ruser.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PMS_Ruser.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PMS_RUSER_H
 #define _PMS_RUSER_H
 
 #include "PM_Server.h"
 
+/**
+ * @class PMS_Ruser
+ *
+ * @brief Provides the server's lookup table abstraction for `ruser' users...
+ */
 class PMS_Ruser : public PM_Server
 {
-  // = TITLE
-  //   Provides the server's lookup table abstraction for `ruser' users...
 
 public:
   PMS_Ruser (void);

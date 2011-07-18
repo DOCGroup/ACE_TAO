@@ -43,12 +43,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_WIN32)
 #  include "ace/Barrier.h"
 #  include "ace/Thread.h"
 #endif
-
-ACE_RCSID(Misc, pingpong, "$Id$")
 
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
@@ -80,8 +78,10 @@ Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
     pid_ (ACE_OS::getpid ()),
     handle_ (f)
 {
-  *((int *) this->buf_) = (int) this->pid_;
-  *((int *) (this->buf_ + sizeof (int))) = 0;
+  int *pi_buf = (int *) this->buf_;
+  *(pi_buf) = (int) this->pid_;
+  pi_buf = (int *) (this->buf_ + sizeof (int));
+  *(pi_buf) = 0;
   ACE_OS::strcpy (this->buf_ + (2 * sizeof (int)), b);
   this->buf_[this->buflen_ - 1] = '\n';
   this->buf_[this->buflen_] = '\0';
@@ -209,10 +209,8 @@ run_svc (ACE_HANDLE handle)
   if (reactor.register_handler (callback,
                                 ACE_Event_Handler::READ_MASK
                                 | ACE_Event_Handler::WRITE_MASK) == -1
-#if !defined (CHORUS)
       || reactor.register_handler (SIGINT,
                                    callback) == -1
-#endif /* CHORUS */
       || reactor.schedule_timer (callback,
                                  0,
                                  SHUTDOWN_TIME) == -1)
@@ -232,7 +230,7 @@ run_svc (ACE_HANDLE handle)
                   ACE_TEXT ("handle_events")));
 }
 
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_WIN32)
 static ACE_Barrier barrier (3);
 
 static void *
@@ -270,7 +268,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Pipe pipe (handles);
   //FUZZ: enable check_for_lack_ACE_OS
 
-#if defined (ACE_WIN32) || defined (CHORUS)
+#if defined (ACE_WIN32)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker),
                          (void *) handles[0],
                          THR_DETACHED) == -1

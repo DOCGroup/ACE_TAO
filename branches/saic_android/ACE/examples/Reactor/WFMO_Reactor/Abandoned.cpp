@@ -1,22 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Abandoned.cpp
-//
-// = DESCRIPTION
-//
-//    Tests the WFMO_Reactor's ability to handle abandoned mutexes.
-//
-// = AUTHOR
-//
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Abandoned.cpp
+ *
+ *  $Id$
+ *
+ *
+ *  Tests the WFMO_Reactor's ability to handle abandoned mutexes.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -27,7 +23,7 @@
 #include "ace/Process_Mutex.h"
 #include "ace/Auto_Event.h"
 
-ACE_RCSID(WFMO_Reactor, Abandoned, "$Id$")
+
 
 class Event_Handler : public ACE_Event_Handler
 {

@@ -12,10 +12,6 @@
 #include "ace/Service_Repository.h"
 #include "ace/Reactor.h"
 
-ACE_RCSID (Perf_Test,
-           Performance_Test,
-           "$Id$")
-
 Performance_Test::Performance_Test (void)
   : n_lwps_ (0),
     orig_n_lwps_ (0)

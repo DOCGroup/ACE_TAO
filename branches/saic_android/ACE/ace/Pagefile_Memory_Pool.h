@@ -67,6 +67,9 @@ public:
   ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                             const OPTIONS *options = 0);
 
+  /// Destructor
+  virtual ~ACE_Pagefile_Memory_Pool (void);
+
   /// Ask system for initial chunk of shared memory.
   void *init_acquire (size_t nbytes,
                       size_t &rounded_bytes,

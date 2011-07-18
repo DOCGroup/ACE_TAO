@@ -28,18 +28,18 @@ namespace ACE
       this->access_kstats (this->value_);
       this->value_ -= this->start_;
     }
-    
+
     void
     Solaris_Network_Interface_Monitor::clear_impl (void)
     {
       this->init ();
     }
-    
+
     void
     Solaris_Network_Interface_Monitor::init (void)
     {
       unsigned long i;
-    
+
       for (i = 0UL; i < MAX_LO_INTERFACES; ++i)
         {
           this->value_array_lo_[i] = 0UL;
@@ -52,7 +52,7 @@ namespace ACE
 
       this->access_kstats (this->start_);
     }
-    
+
     void
     Solaris_Network_Interface_Monitor::access_kstats (
       ACE_UINT64 &which_member)
@@ -80,24 +80,24 @@ namespace ACE
                 {
                   continue;
                 }
-                
+
               unsigned long ks_instance = this->kstat_->ks_instance;
-                
+
               if (ACE_OS::strcmp (this->kstat_->ks_module, "lo") == 0)
                 {
                   /// Interfaces 'lo' have only packet counters.
-                  if (this->lookup_str_ == ACE_TEXT ("obytes") 
+                  if (this->lookup_str_ == ACE_TEXT ("obytes")
                       || this->lookup_str_ == ACE_TEXT ("rbytes"))
                     {
                       continue;
                     }
-                    
+
                   status = this->check_ks_module (ks_instance,
                                                   MAX_LO_INTERFACES,
                                                   "MAX_LO_INTERFACES",
                                                   this->value_array_lo_,
                                                   which_member);
-                      
+
                   if (status == -1)
                     {
                       /// Unrecoverable error, diagnostic already output.
@@ -108,7 +108,7 @@ namespace ACE
                     {
                       /// The kstat_id changed underneath us, start over.
                       break;
-                    }                   
+                    }
                 }
               else if (ACE_OS::strcmp (this->kstat_->ks_module, "hme") == 0
                        || ACE_OS::strcmp (this->kstat_->ks_module, "bge") == 0)
@@ -118,7 +118,7 @@ namespace ACE
                                                   "MAX_HME_INTERFACES",
                                                   this->value_array_hme_,
                                                   which_member);
-                      
+
                   if (status == -1)
                     {
                       /// Unrecoverable error, diagnostic already output.
@@ -132,11 +132,11 @@ namespace ACE
                     }
                 }
             }
-            
+
           if (this->kstat_)
             {
               this->kstat_id_ = kstat_chain_update (this->kstats_);
-              
+
               if (! this->kstat_id_ > 0)
                 {
                   ACE_ERROR ((LM_ERROR, "kstat is is not > 0.\n"));
@@ -148,7 +148,7 @@ namespace ACE
               break;
             }
         }
-        
+
       status = kstat_close (this->kstats_);
 
       if (status != 0)
@@ -157,7 +157,7 @@ namespace ACE
                       ACE_TEXT ("closing kstats file failed\n")));
         }
     }
-    
+
     int
     Solaris_Network_Interface_Monitor::check_ks_module (
       const unsigned long ks_instance,
@@ -187,30 +187,30 @@ namespace ACE
           /// This return value restarts the walk as described above.
           return 1;
         }
-        
+
       kstat_named_t *value =
         (kstat_named_t *) kstat_data_lookup (
           this->kstat_,
           ACE_TEXT_ALWAYS_CHAR (this->lookup_str_.rep ()));
-          
+
       if (value == 0)
         {
           /// Just return and let the calling FOR loop advance.
           return 0;
         }
-          
+
       if (value->data_type != KSTAT_DATA_UINT32)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Wrong data type.\n"),
                             -1);
         }
-      
-      /// Guard against overflow.  
+
+      /// Guard against overflow.
       value_array[ks_instance] +=
         value->value.ui32
         - static_cast<ACE_UINT32> (value_array[ks_instance]);
-            
+
       which_member += value_array[ks_instance];
 
       return 0;

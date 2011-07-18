@@ -2,7 +2,7 @@
 
 #include "ace/TLI_Connector.h"
 
-ACE_RCSID(ace, TLI_Connector, "$Id$")
+
 
 #if defined (ACE_HAS_TLI)
 

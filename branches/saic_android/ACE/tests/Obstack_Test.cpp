@@ -1,27 +1,23 @@
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Obtack_Test.cpp
-//
-// = DESCRIPTION
-//    Checks the functionality of ACE_Obstack<T>
-//
-// = AUTHOR
-//    Steve Huston  <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Obstack_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Checks the functionality of ACE_Obstack<T>
+ *
+ *
+ *  @author Steve Huston  <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Obstack.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(tests, Obstack_Test, "$Id$")
+
 
 
 int run_main (int, ACE_TCHAR *[])

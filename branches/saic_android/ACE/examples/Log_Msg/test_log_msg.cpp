@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Log_Msg
-//
-// = FILENAME
-//    test_log_msg.cpp
-//
-// = DESCRIPTION
-//     This program tests the ACE_Log_Msg abstraction and demontrates
-//     several common use cases.
-//
-// = AUTHOR
-//    Douglas Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_log_msg.cpp
+ *
+ *  $Id$
+ *
+ *   This program tests the ACE_Log_Msg abstraction and demontrates
+ *   several common use cases.
+ *
+ *
+ *  @author Douglas Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_main.h"
 
@@ -26,7 +23,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_RCSID(Log_Msg, test_log_msg, "$Id$")
+
 
 static void
 cleanup (void)

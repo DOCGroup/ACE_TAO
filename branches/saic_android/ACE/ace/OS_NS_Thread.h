@@ -433,7 +433,7 @@ public:
   int ref_count_;
 
   /// Indicate that a reader is trying to upgrade
-  int important_writer_;
+  bool important_writer_;
 
   /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;
@@ -527,7 +527,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_recursive_thread_mutex_t
  *
- * @brief Implement a thin C++ wrapper that allows nested acquisition
+ * @brief
+ * Implement a thin C++ wrapper that allows nested acquisition
  * and release of a mutex that occurs in the same thread.
  *
  * This implementation is based on an algorithm sketched by Dave
@@ -551,8 +552,8 @@ public:
   ACE_thread_t owner_id_;
 };
 
-// Since recursive mutex is emulated, the state saving needs to be handled
-// in ACE as well. These members save those from ACE_recursive_thread_mutex_t.
+/// Since recursive mutex is emulated, the state saving needs to be handled
+/// in ACE as well. These members save those from ACE_recursive_thread_mutex_t.
 struct ACE_recursive_mutex_state
 {
   int nesting_level_;
@@ -679,9 +680,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Thread_ID
  *
- * @brief Defines a platform-independent thread ID class.  Note that
- *  this class should be defined within the scope of a thread, rather
- *  than at global scope!
+ * @brief
+ * Defines a platform-independent thread ID class.  Note that
+ * this class should be defined within the scope of a thread, rather
+ * than at global scope!
  */
 class ACE_Export ACE_Thread_ID
 {
@@ -695,7 +697,10 @@ public:
   ACE_Thread_ID (void);
 
   /// Copy constructor.
-  ACE_Thread_ID (const ACE_Thread_ID &rhs);
+  ACE_Thread_ID (const ACE_Thread_ID &id);
+
+  /// Assignment operator
+  ACE_Thread_ID& operator= (const ACE_Thread_ID&id);
 
   /// Get the thread id.
   ACE_thread_t id (void) const;
@@ -757,18 +762,18 @@ typedef int ACE_pri_t;
 #   else
   typedef int ACE_idtype_t;
 #   endif /* ACE_HAS_IDTYPE_T */
-#   if defined (ACE_HAS_STHREADS) || defined (DIGITAL_UNIX)
+#   if defined (ACE_HAS_STHREADS)
 #     if defined (ACE_LACKS_PRI_T)
     typedef int pri_t;
 #     endif /* ACE_LACKS_PRI_T */
   typedef id_t ACE_id_t;
 #     define ACE_SELF P_MYID
   typedef pri_t ACE_pri_t;
-#   else  /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
+#   else  /* ! ACE_HAS_STHREADS */
   typedef long ACE_id_t;
 #     define ACE_SELF (-1)
   typedef short ACE_pri_t;
-#   endif /* ! ACE_HAS_STHREADS && ! DIGITAL_UNIX */
+#   endif /* ! ACE_HAS_STHREADS */
 #endif /* !defined (ACE_WIN32) */
 
 # if defined (ACE_HAS_TSS_EMULATION)
@@ -1018,22 +1023,11 @@ private:
 
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
 
-// Support non-scalar thread keys, such as with some POSIX
-// implementations, e.g., MVS.
-# if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-#   define ACE_KEY_INDEX(OBJ,KEY) \
-  u_int OBJ; \
-  ACE_OS::memcpy (&OBJ, &KEY, sizeof (u_int))
-# else
-#   define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
-# endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_mutex_lock_cleanup_adapter)
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
 
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
@@ -1283,7 +1277,7 @@ namespace ACE_OS {
                   const ACE_Time_Value &timeout);
 
   /**
-   * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
+   * If @a timeout == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
    * this method attempts to acquire a lock, but gives up if the lock
    * has not been acquired by the given time, in which case it returns
    * -1 with an @c ETIME errno on platforms that actually support timed
@@ -1307,7 +1301,7 @@ namespace ACE_OS {
   int mutex_trylock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
-  /// mutexes, <abandoned> is set to 1 and 0 is returned.
+  /// mutexes, @a abandoned is set to 1 and 0 is returned.
   extern ACE_Export
   int mutex_trylock (ACE_mutex_t *m,
                      int &abandoned);
@@ -1405,7 +1399,7 @@ namespace ACE_OS {
   int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
   //@}
 
-  /// Find the schedling class ID that corresponds to the class name.
+  /// Find the scheduling class ID that corresponds to the class name.
   extern ACE_Export
   int scheduling_class (const char *class_name, ACE_id_t &);
 
@@ -1504,7 +1498,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_continue (ACE_hthread_t target_thread);
 
-  /*
+  /**
    * Creates a new thread having @a flags attributes and running @a func
    * with @a args (if @a thread_adapter is non-0 then @a func and @a args
    * are ignored and are obtained from @a thread_adapter).  @a thr_id
@@ -1551,8 +1545,7 @@ namespace ACE_OS {
                   const char** thr_name = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_equal (ACE_thread_t t1,
-                 ACE_thread_t t2);
+  int thr_equal (ACE_thread_t t1, ACE_thread_t t2);
 
   extern ACE_Export
   void thr_exit (ACE_THR_FUNC_RETURN status = 0);
@@ -1572,21 +1565,18 @@ namespace ACE_OS {
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   ACE_NAMESPACE_INLINE_FUNCTION
   /// for internal use only.  Applications should call thr_getspecific
-  int thr_getspecific_native (ACE_OS_thread_key_t key,
-                              void **data);
+  int thr_getspecific_native (ACE_OS_thread_key_t key, void **data);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_getspecific (ACE_thread_key_t key,
-                       void **data);
+  int thr_getspecific (ACE_thread_key_t key, void **data);
 
 #if defined (ACE_HAS_VXTHREADS)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_HAS_VXTHREADS */
-  int thr_join (ACE_hthread_t waiter_id,
-                ACE_THR_FUNC_RETURN *status);
+  int thr_join (ACE_hthread_t waiter_id, ACE_THR_FUNC_RETURN *status);
 
 #if defined (ACE_HAS_VXTHREADS)
   extern ACE_Export
@@ -1604,7 +1594,7 @@ namespace ACE_OS {
    * defined, this is the thread-id. For linux-threads, when
    * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
    * linux-threads a thread is seen as a process, it does the job.
-   * @param cpu_set_size The size of the cpu_mask
+   * @param cpu_set_size The size of the cpu_mask, in bytes.
    * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
    * thread to the "CPU 0", etc
    */
@@ -1621,7 +1611,7 @@ namespace ACE_OS {
    * defined, this is the thread-id. For linux-threads, when
    * ACE_HAS_SCHED_SETAFFINITY defined, it expects a process-id. Since for
    * linux-threads a thread is seen as a process, it does the job.
-   * @param cpu_set_size The size of the cpu_mask
+   * @param cpu_set_size The size of the cpu_mask, in bytes.
    * @param cpu_mask Is a bitmask of CPUs to bind to, e.g value 1 binds the
    * thread to the "CPU 0", etc
    */
@@ -1630,11 +1620,8 @@ namespace ACE_OS {
                         size_t cpu_set_size,
                         const cpu_set_t * cpu_mask);
 
-  /**
-   * @note the "inst" arg is deprecated.  It will be ignored.
-   */
   extern ACE_Export
-  int thr_key_detach (ACE_thread_key_t key, void * inst);
+  int thr_key_detach (ACE_thread_key_t key);
 
   extern ACE_Export
   int thr_key_used (ACE_thread_key_t key);
@@ -1643,17 +1630,12 @@ namespace ACE_OS {
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// @internal Applications should call thr_keycreate
   extern ACE_Export
-  int thr_keycreate_native (ACE_OS_thread_key_t *key,
-                     ACE_THR_C_DEST);
+  int thr_keycreate_native (ACE_OS_thread_key_t *key, ACE_THR_C_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-  /**
-   * @note the "inst" arge is deprecated.  It will be ignored.
-   */
   extern ACE_Export
-  int thr_keycreate (ACE_thread_key_t *key,
-                     ACE_THR_C_DEST,
-                     void *inst = 0);
+  int thr_keycreate (ACE_thread_key_t *key, ACE_THR_C_DEST);
+
 # else
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// @internal Applications should call thr_keycreate instead
@@ -1661,13 +1643,9 @@ namespace ACE_OS {
   int thr_keycreate_native (ACE_OS_thread_key_t *key,
                      ACE_THR_DEST);
 #   endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  /**
-   * @note the "inst" arge is deprecated.  It will be ignored.
-   */
+
   extern ACE_Export
-  int thr_keycreate (ACE_thread_key_t *key,
-                     ACE_THR_DEST,
-                     void *inst = 0);
+  int thr_keycreate (ACE_thread_key_t *key, ACE_THR_DEST);
 
 # endif /* ACE_HAS_THR_C_DEST */
 
@@ -1681,8 +1659,7 @@ namespace ACE_OS {
   int thr_keyfree (ACE_thread_key_t key);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_kill (ACE_thread_t thr_id,
-                int signum);
+  int thr_kill (ACE_thread_t thr_id, int signum);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t thr_min_stack (void);
@@ -1696,21 +1673,19 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   const char* thr_name (void);
 
+  /// State is THR_CANCEL_ENABLE or THR_CANCEL_DISABLE
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_setcancelstate (int new_state,
-                          int *old_state);
+  int thr_setcancelstate (int new_state, int *old_state);
 
+  /// Type is THR_CANCEL_DEFERRED or THR_CANCEL_ASYNCHRONOUS
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_setcanceltype (int new_type,
-                         int *old_type);
+  int thr_setcanceltype (int new_type, int *old_type);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_setconcurrency (int hint);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_setprio (ACE_hthread_t ht_id,
-                   int priority,
-                   int policy = -1);
+  int thr_setprio (ACE_hthread_t ht_id, int priority, int policy = -1);
 
   extern ACE_Export
   int thr_setprio (const ACE_Sched_Priority prio);
@@ -1718,18 +1693,14 @@ namespace ACE_OS {
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// @internal Applications should call thr_setspecific
   extern ACE_Export
-  int thr_setspecific_native (ACE_OS_thread_key_t key,
-                              void *data);
+  int thr_setspecific_native (ACE_OS_thread_key_t key, void *data);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
   extern ACE_Export
-  int thr_setspecific (ACE_thread_key_t key,
-                       void *data);
+  int thr_setspecific (ACE_thread_key_t key, void *data);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_sigsetmask (int how,
-                      const sigset_t *nsm,
-                      sigset_t *osm);
+  int thr_sigsetmask (int how, const sigset_t *nsm, sigset_t *osm);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_suspend (ACE_hthread_t target_thread);

@@ -1,27 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Object_Manager_Test.cpp
-//
-// = DESCRIPTION
-//    Tests the basic functions of the ACE_Object_Manager.
-//
-// = AUTHOR
-//    David L. Levine <levine@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Object_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests the basic functions of the ACE_Object_Manager.
+ *
+ *
+ *  @author David L. Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
 #include "ace/OS_Memory.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(tests, Object_Manager_Test, "$Id$")
+
 
 static u_int *ip;
 

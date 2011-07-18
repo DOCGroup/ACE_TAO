@@ -1,7 +1,7 @@
 // $Id$
 
 // Ideally this file should enable all features, and the configure script
-// would enable or disable the cooresponding automake conditionals.  More
+// would enable or disable the corresponding automake conditionals.  More
 // work is required to make this a reality.
 
 automake=1

@@ -182,14 +182,14 @@ public:
 private:
   void ACE_Get_Opt_Init (const ACE_TCHAR *optstring);
 public:
-  ACE_INLINE ACE_Get_Opt (int argc,
+  ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                const ACE_TCHAR *optstring = ACE_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
-  ACE_INLINE ACE_Get_Opt (int argc,
+  ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                const char *optstring,
                int skip_args = 1,

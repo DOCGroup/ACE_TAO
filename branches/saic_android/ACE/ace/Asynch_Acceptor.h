@@ -211,11 +211,6 @@ public:
   /// Set bytes to be read with the <accept> call.
   virtual void bytes_to_read (size_t new_value);
 
-  /// @deprecated address_size() assumes IPv4 use, so is not always valid.
-  /// This method will be removed after ACE 5.5. Internal uses have been
-  /// changes to base needed sizes on the addr_family_ member.
-  static size_t address_size (void);
-
 protected:
 
   /// This is called when an outstanding accept completes.

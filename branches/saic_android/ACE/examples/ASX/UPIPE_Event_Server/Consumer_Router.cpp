@@ -6,7 +6,7 @@
 #include "Consumer_Router.h"
 #include "Options.h"
 
-ACE_RCSID(UPIPE_Event_Server, Consumer_Router, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
@@ -133,7 +133,7 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
     return -1;
   else
     ACE_OS::strncpy (*strp, module_name, length);
-    
+
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (module_name));
 }
 

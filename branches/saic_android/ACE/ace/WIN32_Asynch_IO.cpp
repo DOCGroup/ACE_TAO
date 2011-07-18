@@ -2,10 +2,6 @@
 
 #include "ace/WIN32_Asynch_IO.h"
 
-ACE_RCSID (ace,
-           Win32_Asynch_IO,
-           "$Id$")
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
     (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1))
 
@@ -847,11 +843,13 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                   -1);
 
   // Shared write
-  int return_val = this->shared_write (result);
+  int const return_val = this->shared_write (result);
 
   // Upon errors
   if (return_val == -1)
-    delete result;
+    {
+      delete result;
+    }
 
   return return_val;
 }
@@ -1024,8 +1022,10 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
                                result,
                                0);
   if (initiate_result == 0)
-    // Immediate success: the OVERLAPPED will still get queued.
-    return 0;
+    {
+      // Immediate success: the OVERLAPPED will still get queued.
+      return 0;
+    }
 #else
   initiate_result = ::WriteFile (result->handle (),
                                  result->message_block ().rd_ptr (),
@@ -3644,7 +3644,9 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 
     do
       {
-        if (msg_len >= 0 && iovcnt < ACE_IOV_MAX)
+        //if (msg_len >= 0 && iovcnt < ACE_IOV_MAX)
+        // msg_len >= 0 is always true since msg_len is unsigned
+        if (iovcnt < ACE_IOV_MAX)
           {
             u_long this_chunk_length;
             if (msg_len > ULONG_MAX)

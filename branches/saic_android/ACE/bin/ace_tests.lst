@@ -16,3 +16,4 @@ protocols/tests/HTBP/ping/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWor
 protocols/tests/HTBP/Send_Recv_Tests/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT
 protocols/tests/HTBP/Send_Large_Msg/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT
 protocols/tests/HTBP/Reactor_Tests/run_test.pl: !NO_UUID !nsk !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT
+tests/non_mpc_makefile/Bug_3708_Regression.pl: !ARCH

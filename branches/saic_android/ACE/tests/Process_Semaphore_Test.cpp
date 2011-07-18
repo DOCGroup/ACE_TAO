@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Process_Semaphore_Test.cpp
-//
-// = DESCRIPTION
-//    Tests an ACE Semaphore shared between multiple child processes.
-//
-// = AUTHOR
-//    Martin Corino <mcorino@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Process_Semaphore_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests an ACE Semaphore shared between multiple child processes.
+ *
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Mutex.h"
@@ -33,8 +30,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_dirent.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/SString.h"
 
-ACE_RCSID(tests, Process_Semaphore_Test, "Process_Semaphore_Test.cpp,v 4.42 2003/12/26 21:59:35 shuston Exp")
+
 
 #if !defined (ACE_LACKS_FORK)
 static int iterations = 10;
@@ -88,7 +87,7 @@ acquire_release (void)
 #endif
 
   // Make sure the constructor succeeded
-  ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
+  ACE_TEST_ASSERT (ACE_LOG_MSG->op_status () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Begin ping-pong\n")));
@@ -119,7 +118,7 @@ acquire_release (void)
     wait.sec (wait.sec () + 3); // timeout in 3 secs
 
     if (sema_pong.acquire (wait))
-        ACE_ASSERT(errno == ETIME);
+        ACE_TEST_ASSERT(errno == ETIME);
     else
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquired pong without release()\n")));
@@ -154,7 +153,7 @@ acquire_release (void)
 
     if (sema_ping.acquire (wait))
     {
-        ACE_ASSERT(errno == ETIME);
+        ACE_TEST_ASSERT(errno == ETIME);
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquiring pong timed out\n")));
     }
@@ -189,11 +188,20 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_START_TEST (ACE_TEXT ("Process_Semaphore_Test"));
 
+      ACE_TString exe_sub_dir;
+      const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
+      if (subdir_env)
+        {
+          exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
+          exe_sub_dir += ACE_DIRECTORY_SEPARATOR_STR;
+        }
+
       ACE_Process_Options options;
       options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                            ACE_TEXT ("Process_Semaphore_Test")
+                            ACE_TEXT ("%sProcess_Semaphore_Test")
                             ACE_PLATFORM_EXE_SUFFIX
                             ACE_TEXT (" -c -i %d"),
+                            exe_sub_dir.c_str(),
                             iterations);
 
       // Spawn a child process that will contend for the
@@ -202,7 +210,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       // Spawn the child process.
       int result = child.spawn (options);
-      ACE_ASSERT (result != -1);
+      ACE_TEST_ASSERT (result != -1);
       ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
                 child.getpid ()));
@@ -212,7 +220,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
-      ACE_ASSERT (child.wait (&child_status) != -1);
+      ACE_TEST_ASSERT (child.wait (&child_status) != -1);
       if (child_status == 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Child %d finished ok\n"),

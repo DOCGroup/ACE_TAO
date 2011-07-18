@@ -81,7 +81,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
     {
       return -1;
     }
-    
+
   if (ACE::debug ())
     {
       // Build a CDR stream from the log record data.
@@ -98,7 +98,7 @@ int Logging_Handler::write_log_record (ACE_Message_Block *mblk)
       cdr >> log_record;  // Finally extract the <ACE_log_record>.
       log_record.print (mblk->rd_ptr (), 1, cerr);
     }
-  
+
   return ACE_Utils::truncate_cast<int> (mblk->total_length ());
 }
 

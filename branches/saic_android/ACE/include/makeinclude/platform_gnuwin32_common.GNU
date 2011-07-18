@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 # $Id$
 
 ifneq ($(mingw32),1)
@@ -10,14 +11,32 @@ ifneq ($(mingw32),1)
   endif
 endif
 
-GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
+# Choose your target CPU (by default we set it to pentiumpro. In your
+# platform_macros.GNU file you can override this to pentium, i486 or i386
+TCPU ?= pentiumpro
+
+# Cygwin/MinGW doesn't allow to add the version number of ACE to the dll name
+# because ace.dll.6.0.1 isn't a valid dll name
+versioned_so = 0
+
+# Cygwin/MinGW doesn't have rwho
+rwho = 0
+
+# Disable auto-import warnings. The Cygwin/MinGW linker has a problem
+# with imports
+# See https://sourceforge.net/tracker/?func=detail&atid=102435&aid=683455&group_id=2435
+# for the details why to do this.
+LDFLAGS += -Wl,--enable-auto-import
+
+no_hidden_visibility ?= 1
 
 winsock2 ?= 1
-exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
-pipes ?= 1
+
+cpumodelflag ?= 0
+tunemodelflag ?= 1
 
 # When building shared libraries
 ifeq ($(shared_libs), 1)
@@ -27,50 +46,34 @@ ifeq ($(shared_libs), 1)
 endif
 
 ifeq ($(debug),0)
-CFLAGS += -DNDEBUG
+  CPPFLAGS += -DNDEBUG
 endif
 
-CC      = gcc
-CXX     = g++
-RC      = windres
-DLLTOOL = dlltool
-
-RC_OUTPUT_FLAG = -o
-
-ifeq (2.9,$(findstring 2.9,$(GNUWIN32_CXX_VERSION)))
-  MODEL_FLAGS += -mcpu=$(TCPU)
-else
-  MODEL_FLAGS += -mtune=$(TCPU)
-endif
-
-CFLAGS += -Wpointer-arith
 ifeq ($(threads),1)
-  CFLAGS += -mthreads
+  FLAGS_C_CC += -mthreads
 endif # threads
 
-CFLAGS += $(MODEL_FLAGS)
+CC      = ${COMPARCH}gcc
+CXX     = ${COMPARCH}g++
+RC      = ${COMPARCH}windres
+DLLTOOL = ${COMPARCH}dlltool
+AR      = ${COMPARCH}ar
+RANLIB  = ${COMPARCH}ranlib
 
-EXEEXT = .exe
-
-DCFLAGS += -g
-DLD     = $(CXX)
-LD      = $(CXX)
-
-ifeq ($(mingw32),1)
-ifeq ($(winsock2),1)
-LIBS    += -lws2_32 -lmswsock
-endif
-LIBS    += -lwsock32 -lnetapi32
-endif
-
-OCFLAGS += -O3
-PIC        =
-AR         = ar
+DCFLAGS    += -g
+DLD        = $(CXX)
+LD         = $(CXX)
+OCFLAGS    += -O3
 ARFLAGS    = rsuv
-RANLIB     = ranlib
 SOEXT      = dll
-SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
-SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+EXEEXT     = .exe
+RC_OUTPUT_FLAG = -o
+
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+
+SHLIBBUILD = $(DLLTOOL) --dllname $@ --output-lib $@.a $(VSHOBJS) && \
+  $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
+  -shared -o $@ $(LDFLAGS) $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
 
 PLATFORM_FL_CPPFLAGS  ?=
 PLATFORM_FL_LIBS      ?= -lfltk -lfltk_forms -lfltk_gl -lfltk_images
@@ -84,39 +87,9 @@ PLATFORM_WX_CPPFLAGS  ?= $(shell wx-config --cxxflags) -I/usr/local/include
 PLATFORM_WX_LIBS      ?= $(shell wx-config --libs)
 PLATFORM_WX_LDFLAGS   ?= $(shell wx-config --ldflags)
 
-# The sed below is to strip comments on the .def file,
-# to workaround to a bug in ld.
-SHLIBBUILD = \
-  $(RM) $(VSHDIR)/$@.def.old $(VSHDIR)/$@.def; \
-  $(DLLTOOL) --export-all --output-def $(VSHDIR)/$@.def --dllname $@ \
-    $(VSHOBJS) \
-  && mv $(VSHDIR)/$@.def $(VSHDIR)/$@.def.old \
-  && sed 's/;.*$$//g' < $(VSHDIR)/$@.def.old > $(VSHDIR)/$@.def \
-  && $(SOLINK.cc) -Wl,--enable-auto-image-base -Wl,--out-implib,$@.a \
-    -shared -o $@ $(LDFLAGS) -Wl,$(VSHDIR)/$@.def \
-    $(VSHOBJS) $(ACE_SHLIBS) $(LIBS)
-
-PRELIB  = @true
-
 # Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-ifeq ($(GXX_4_OR_BETTER), 1)
-  no_attributes ?= 1
-  wall ?= 1
-else
-  no_attributes ?= 0
-  wall ?= 0
-endif
-
-ifeq ($(no_attributes), 1)
-  CFLAGS += -Wno-attributes
-endif
-
-ifeq ($(wall),1)
-  CFLAGS += -Wall -W
-endif
-
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+PRELIB = @true

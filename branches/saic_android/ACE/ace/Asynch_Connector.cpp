@@ -221,32 +221,6 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
   remote_address.set (reinterpret_cast<sockaddr_in *> (&remote_addr),
                       remote_size);
 
-#if 0
-  // @@ Just debugging.
-  char local_address_buf  [BUFSIZ];
-  char remote_address_buf [BUFSIZ];
-
-  if (local_address.addr_to_string (local_address_buf,
-                                    sizeof local_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%m:can't obtain local_address's address string"));
-
-  ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Connector<HANDLER>::parse_address : "
-              "Local address %s\n",
-              local_address_buf));
-
-  if (remote_address.addr_to_string (remote_address_buf,
-                                     sizeof remote_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%m:can't obtain remote_address's address string"));
-
-  ACE_DEBUG ((LM_DEBUG,
-              "ACE_Asynch_Connector<HANDLER>::parse_address : "
-              "Remote address %s\n",
-              remote_address_buf));
-#endif /* 0 */
-
   return;
 }
 

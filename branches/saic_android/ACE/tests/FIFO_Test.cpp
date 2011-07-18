@@ -1,23 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    FIFO_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of basic ACE_FIFO_* class functionality.
-//     The test forks two processes or spawns two threads (depending
-//     upon the platform) and then tests various data exchange
-//     scenarios.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FIFO_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of basic ACE_FIFO_* class functionality.
+ *   The test forks two processes or spawns two threads (depending
+ *   upon the platform) and then tests various data exchange
+ *   scenarios.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -32,7 +29,7 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
-ACE_RCSID(tests, SOCK_Test, "$Id$")
+
 
 #if !defined (ACE_LACKS_MKFIFO)
 

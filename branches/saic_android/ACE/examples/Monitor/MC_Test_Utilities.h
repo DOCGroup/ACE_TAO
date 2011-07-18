@@ -21,7 +21,7 @@
 
 #include "ace/Monitor_Control_Types.h"
 
-#include "examples/Monitor/MC_Test_Utilities_export.h"
+#include "MC_Test_Utilities_export.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

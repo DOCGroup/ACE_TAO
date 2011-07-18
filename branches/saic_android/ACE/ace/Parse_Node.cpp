@@ -1,3 +1,4 @@
+// $Id$
 #include "ace/Parse_Node.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
@@ -11,9 +12,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/ARGV.h"
 
-ACE_RCSID (ace,
-           Parse_Node,
-           "$Id$")
+#include <list>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,10 +44,21 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_Stream_Type *st =
       dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (sst->type ()));
 
-  for (const ACE_Static_Node *module = dynamic_cast<const ACE_Static_Node*> (this->mods_);
+  // The modules were linked as popped off the yacc stack, so they're in
+  // reverse order from the way they should be pushed onto the stream.
+  // So traverse mods_ and and reverse the list, then iterate over it to push
+  // the modules in the stream in the correct order.
+  std::list<const ACE_Static_Node *> mod_list;
+  const ACE_Static_Node *module;
+  for (module = dynamic_cast<const ACE_Static_Node*> (this->mods_);
        module != 0;
        module = dynamic_cast<ACE_Static_Node*> (module->link()))
+    mod_list.push_front (module);
+
+  std::list<const ACE_Static_Node *>::const_iterator iter;
+  for (iter = mod_list.begin (); iter != mod_list.end (); ++iter)
     {
+      module = *iter;
       ACE_ARGV args (module->parameters ());
 
       const ACE_Service_Type *mst = module->record (config);
@@ -64,6 +74,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
                           module->name ()));
             }
           ++yyerrno;
+          continue;     // Don't try anything else with this one
         }
 
       ACE_Module_Type const * const mt1 =

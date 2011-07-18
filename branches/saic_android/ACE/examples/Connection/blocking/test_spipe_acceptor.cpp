@@ -4,7 +4,7 @@
 
 #include "SPIPE-acceptor.h"
 
-ACE_RCSID(blocking, test_spipe_acceptor, "$Id$")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 

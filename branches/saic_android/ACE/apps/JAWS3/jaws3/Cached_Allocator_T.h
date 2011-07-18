@@ -70,7 +70,7 @@ class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
 //   This class enables caching of dynamically allocated,
 //   fixed-sized classes.
 {
-public: 
+public:
 
   JAWS_TSS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
 

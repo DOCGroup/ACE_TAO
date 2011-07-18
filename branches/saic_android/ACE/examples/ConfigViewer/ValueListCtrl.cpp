@@ -22,7 +22,7 @@ ValueListCtrl::ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos
   InsertColumn(1, "Type");
   InsertColumn(2, "Data");
 }
-  
+
 ValueListCtrl::~ValueListCtrl()
 {
 }
@@ -137,7 +137,7 @@ void ValueListCtrl::OnModify(wxCommandEvent& event)
 
         Value = Dlg.GetUINTValue();
         m_pConfig->set_integer_value(m_Key, Name, Value);
-        
+
       }
       break;
     case ACE_Configuration::BINARY:
@@ -163,7 +163,7 @@ void ValueListCtrl::OnDelete(wxCommandEvent& event)
     return ;
   }
   wxString Text = GetItemText(Item);
-  m_pConfig->remove_value(m_Key, Text); 
+  m_pConfig->remove_value(m_Key, Text);
   DeleteItem(Item);
 }
 

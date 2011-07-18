@@ -14,7 +14,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_fcntl.h"
 
-ACE_RCSID(FIFO_SAP, FIFO_test, "$Id$")
+
 
 #define PERMS                   0666
 #define EXEC_NAME               "more"

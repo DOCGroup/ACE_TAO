@@ -206,8 +206,7 @@ public:
 
 protected:
   /// Open is shared by this and by <LSOCK_Dgram>.
-  int shared_open (const ACE_Addr &local,
-                   int protocol_family);
+  int shared_open (const ACE_Addr &local, int protocol_family);
 
   /// Create a multicast addr/if pair, in format useful for system calls.
   /// If mreq param is NULL, just verify the passed addr/interface specs.

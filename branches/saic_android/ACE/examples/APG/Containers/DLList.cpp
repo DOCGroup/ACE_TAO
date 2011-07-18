@@ -24,7 +24,7 @@ public:
 int
 ListTest::run (void)
 {
-  ACE_TRACE (ACE_TEXT ("ListTest::run"));
+  ACE_TRACE ("ListTest::run");
 
   // Create a list and insert 100 elements.
   MyList list1;
@@ -67,7 +67,7 @@ ListTest::run (void)
 void
 ListTest::destroyList (MyList& list)
 {
-  ACE_TRACE (ACE_TEXT ("ListTest::destroyList"));
+  ACE_TRACE ("ListTest::destroyList");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Destroying data elements\n")));
 
@@ -85,7 +85,7 @@ ListTest::destroyList (MyList& list)
 void
 ListTest::displayList (MyList& list)
 {
-  ACE_TRACE (ACE_TEXT ("ListTest::displayList"));
+  ACE_TRACE ("ListTest::displayList");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward iteration\n")));
   ACE_DLList_Iterator<DataElement> iter (list);

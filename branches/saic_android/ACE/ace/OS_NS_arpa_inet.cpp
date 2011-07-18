@@ -3,8 +3,6 @@
 
 #include "ace/OS_NS_arpa_inet.h"
 
-ACE_RCSID(ace, OS_NS_arpa_inet, "$Id$")
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_arpa_inet.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -36,7 +34,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       addr->s_addr = ip_addr;  // Network byte ordered
       return 1;
     }
-#elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670)
+#elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x680)
   // inet_aton() returns OK (0) on success and ERROR (-1) on failure.
   // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
   ::errnoSet(0);

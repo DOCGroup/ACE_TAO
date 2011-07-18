@@ -8,8 +8,6 @@
 #include "ace/Signal.h"
 #include "Peer.h"
 
-ACE_RCSID(Peer, Peer, "$Id$")
-
 Peer_Handler::Peer_Handler (void)
   : connection_id_ (-1),  // Maybe it's better than 0.
     msg_frag_ (0),
@@ -116,7 +114,7 @@ Peer_Handler::transmit_stdin (void)
   int result = 0;
   if (this->connection_id_ != -1)
     {
-      ACE_Message_Block *mb;
+      ACE_Message_Block *mb = 0;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (sizeof (Event)),
@@ -551,7 +549,7 @@ Peer_Handler::await_connection_id (void)
 int
 Peer_Handler::subscribe (void)
 {
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (sizeof (Event)),

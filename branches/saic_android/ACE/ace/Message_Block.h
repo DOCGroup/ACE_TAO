@@ -241,8 +241,8 @@ public:
   /**
    * Delete all the resources held in the message.
    *
-   * Note that <release()> is designed to release the continuation
-   * chain; the destructor is not. See <release()> for details.
+   * @note Note that release() is designed to release the continuation
+   * chain; the destructor is not. See release() for details.
    */
   virtual ~ACE_Message_Block (void);
 
@@ -505,8 +505,8 @@ public:
 
   /**
    * Set the number of bytes in the top-level Message_Block,
-   * reallocating space if necessary.  However, the <rd_ptr_> and
-   * <wr_ptr_> remain at the original offsets into the buffer, even if
+   * reallocating space if necessary.  However, the @c rd_ptr_ and
+   * @c wr_ptr_ remain at the original offsets into the buffer, even if
    * it is reallocated.  Returns 0 if successful, else -1.
    */
   int size (size_t length);
@@ -717,7 +717,7 @@ public:
    */
   char *mark (void) const;
 
-  // = Message size is the total amount of space alloted.
+  // = Message size is the total amount of space allotred.
 
   /// Get the total amount of allotted space in the message.  The amount of
   /// allotted space may be less than allocated space.
@@ -762,11 +762,11 @@ public:
   ACE_Data_Block *release (ACE_Lock *lock = 0);
 
   // = Message flag accessors and mutators.
-  /// Bitwise-or the <more_flags> into the existing message flags and
+  /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   ACE_Message_Block::Message_Flags set_flags (ACE_Message_Block::Message_Flags more_flags);
 
-  /// Clear the message flag bits specified in <less_flags> and return
+  /// Clear the message flag bits specified in @a less_flags and return
   /// the new value.
   ACE_Message_Block::Message_Flags clr_flags (ACE_Message_Block::Message_Flags less_flags);
 
@@ -803,7 +803,7 @@ protected:
    * Decrease the reference count, but don't delete the object.
    * Returns 0 if the object should be removed.
    * If @a lock is equal to the locking strategy then we assume that
-   * the lock is beign held by the current thread; this is used to
+   * the lock is being held by the current thread; this is used to
    * release all the data blocks in a chain while holding a single
    * lock.
    */
@@ -843,7 +843,7 @@ protected:
 
   /**
    * Reference count for this ACE_Data_Block, which is used to avoid
-   * deep copies (i.e., <clone>).  Note that this pointer value is
+   * deep copies (i.e., clone()).  Note that this pointer value is
    * shared by all owners of the <Data_Block>'s data, i.e., all the
    * ACE_Message_Blocks.
    */

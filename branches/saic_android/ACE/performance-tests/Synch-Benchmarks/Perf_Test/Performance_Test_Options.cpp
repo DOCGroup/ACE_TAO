@@ -4,8 +4,6 @@
 #include "Performance_Test_Options.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Synch_Benchmarks, Performance_Test_Options, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 // Manages the options.
 Performance_Test_Options performance_test_options;

@@ -3,7 +3,7 @@
 #include "ace/Priority_Reactor.h"
 #include "ace/Malloc_T.h"
 
-ACE_RCSID(ace, Priority_Reactor, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

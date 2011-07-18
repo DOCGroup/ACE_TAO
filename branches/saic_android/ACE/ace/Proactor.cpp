@@ -17,11 +17,6 @@
 #endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
 
 
-ACE_RCSID (ace,
-           Proactor,
-           "$Id$")
-
-
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Framework_Component.h"

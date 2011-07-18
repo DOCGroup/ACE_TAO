@@ -1,6 +1,5 @@
-// file      : ace/RMCast/Retransmit.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
+// $Id$
 
 #ifndef ACE_RMCAST_RETRANSMIT_H
 #define ACE_RMCAST_RETRANSMIT_H

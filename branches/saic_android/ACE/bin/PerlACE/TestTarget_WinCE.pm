@@ -18,6 +18,7 @@ use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
 use File::Copy;
 use Cwd;
+use English;
 
 our @ISA = qw(PerlACE::TestTarget);
 
@@ -105,10 +106,22 @@ sub LocalFile {
     return $newfile;
 }
 
+sub AddLibPath ($) {
+    my $self = shift;
+    my $dir = shift;
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "Adding libpath $dir\n";
+    }
+    PerlACE::add_lib_path ($dir);
+}
+
 sub CreateProcess {
   my $self = shift;
-  my $process = new PerlACE::ProcessVX ($self, @_);
-  return $process;
+if ($OSNAME eq "MSWin32") {
+  my $process = new PerlACE::ProcessVX ($self, @_);  return $process;
+} else {
+  my $process = new PerlACE::ProcessVX (@_, $self);  return $process;
+}
 }
 
 # Need a reboot when this target is destroyed.
@@ -164,6 +177,13 @@ sub DeleteFile ($)
       print STDERR "delete $newfile\n";
     }
     unlink ("$newfile");
+}
+
+sub KillAll ($)
+{
+    my $self = shift;
+    my $procmask = shift;
+    PerlACE::ProcessVX::kill_all ($procmask, $self);
 }
 
 1;

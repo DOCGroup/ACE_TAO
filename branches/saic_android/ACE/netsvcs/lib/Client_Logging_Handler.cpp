@@ -16,10 +16,6 @@
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
 
-ACE_RCSID(lib,
-          Client_Logging_Handler,
-          "$Id$")
-
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle)
   : logging_output_ (output_handle)
 {
@@ -35,7 +31,6 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
 }
 
 // This is called when a <send> to the logging server fails...
-
 int
 ACE_Client_Logging_Handler::handle_signal (int signum,
                                            siginfo_t *,
@@ -48,7 +43,6 @@ ACE_Client_Logging_Handler::handle_signal (int signum,
 }
 
 // This function is called every time a client connects to us.
-
 int
 ACE_Client_Logging_Handler::open (void *)
 {
@@ -91,7 +85,6 @@ ACE_Client_Logging_Handler::get_handle (void) const
 }
 
 // Receive a logging record from an application.
-
 int
 ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
@@ -135,9 +128,9 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   int flags = 0;
 
   // We've got a framed IPC mechanism, so we can just to a <recv>.
-  int result = spipe.recv (&header_msg,
-                           (ACE_Str_Buf *) 0,
-                           &flags);
+  ssize_t result = spipe.recv (&header_msg,
+                               (ACE_Str_Buf *) 0,
+                               &flags);
 
   if (result < 0 || header_msg.len == 0)
     {
@@ -241,7 +234,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                        &payload_msg,
                        &flags);
 
-  if (result < 0 || payload_msg.len != length)
+  if (result < 0 || payload_msg.len != (int)length)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%p\n"),
@@ -307,7 +300,6 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
 // Receive a logging record from an application send via a non-0
 // MSG_BAND...  This just calls handle_input().
-
 int
 ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
 {
@@ -315,7 +307,6 @@ ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
 }
 
 // Called when object is removed from the ACE_Reactor
-
 int
 ACE_Client_Logging_Handler::close (u_long)
 {
@@ -607,11 +598,11 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                    this->local_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Can't connect to logging server %s on port %d: ")
+                  ACE_TEXT ("Can't connect to logging server %C on port %d: ")
                   ACE_TEXT ("%m, using stderr\n"),
                   this->server_addr_.get_host_name (),
                   this->server_addr_.get_port_number (),
-                  errno));
+                  ACE_ERRNO_GET));
 
       if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
         // If we can't connect to the server then we'll send the logging
@@ -628,7 +619,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                           -1);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Client Logging Daemon is connected to Server ")
-                  ACE_TEXT ("Logging Daemon %s on port %d on handle %u\n"),
+                  ACE_TEXT ("Logging Daemon %C on port %d on handle %u\n"),
                   server_addr.get_host_name (),
                   server_addr.get_port_number (),
                   stream.get_handle ()));
@@ -681,7 +672,7 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR *local_addr_cstr = local_addr_str.rep ();
       if (-1 == local_addr_.string_to_addr (ACE_TEXT_ALWAYS_CHAR (local_addr_cstr)))
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), local_addr_cstr));
-      delete local_addr_cstr;
+      delete [] local_addr_cstr;
     }
 
   if (this->server_addr_.set (this->server_port_,

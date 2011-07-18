@@ -120,10 +120,6 @@ public:
   /// Returns 0 if successful, else -1.
   int get_local_addr (ACE_MEM_Addr &) const;
 
-  /// Accessor to the mmap options.
-  /// @deprecated This method has been deprecated.
-  ACE_MEM_SAP::MALLOC_OPTIONS& malloc_options (void);
-
   // = Meta-type info
   typedef ACE_MEM_Addr PEER_ADDR;
   typedef ACE_MEM_Stream PEER_STREAM;

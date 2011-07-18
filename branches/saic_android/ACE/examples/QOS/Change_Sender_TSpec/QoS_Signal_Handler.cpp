@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "QoS_Signal_Handler.h"
 
-ACE_RCSID(QOS, QoS_Signal_Handler,"$Id$")
+
 
 // constructor.
 QoS_Signal_Handler::QoS_Signal_Handler (ACE_QoS_Session *qos_session)

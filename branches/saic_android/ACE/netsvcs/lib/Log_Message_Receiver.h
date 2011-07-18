@@ -79,7 +79,7 @@
 //  be possible to write more complex LMRs, like one that creates
 //  a new log file each day or keeps a fixed size, round robin,
 //  log file. It should also be possible to have separate LMRs
-//  of the same type that uses differnt log files.
+//  of the same type that uses different log files.
 //
 // ==========================================================================//
 
@@ -175,7 +175,7 @@ private:
  * @brief Implementation with reference count.
  */
 template<ACE_SYNCH_DECL>
-class Log_Message_Receiver_Impl
+class Log_Message_Receiver_Impl : private ACE_Copy_Disabled
 {
 public:
   // Methods for handling reference count and instance lifetime
@@ -183,8 +183,7 @@ public:
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
 
-  void log_record (const ACE_TCHAR *hostname,
-                   ACE_Log_Record &record);
+  void log_record (const ACE_TCHAR *hostname, ACE_Log_Record &record);
 
   void log_output(const ACE_TCHAR *hostname,
                   ACE_Log_Record &record,
@@ -195,7 +194,6 @@ protected:
   ~Log_Message_Receiver_Impl (void);
 
   /// Attributes
-  typedef ACE_Guard<ACE_SYNCH_MUTEX_T> Guard;
   int count_;
   ACE_SYNCH_MUTEX_T print_lock_;
 
@@ -203,10 +201,6 @@ private:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_SYNCH_MUTEX_T copy_lock_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-
-  // = Not implemeted
-  ACE_UNIMPLEMENTED_FUNC (Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &rhs))
-  ACE_UNIMPLEMENTED_FUNC (void operator=(const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &rhs))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

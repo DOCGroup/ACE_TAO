@@ -1,19 +1,16 @@
-// $Id$
-//============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    High_Res_Timer_Test.cpp
-//
-// = DESCRIPTION
-//    Simple test of ACE_High_Res_Timer.
-//
-// = AUTHOR
-//    David L. Levine <levine@cs.wustl.edu>
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    High_Res_Timer_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Simple test of ACE_High_Res_Timer.
+ *
+ *
+ *  @author David L. Levine <levine@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -22,7 +19,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(tests, High_Res_Timer_Test, "$Id$")
+
 
 static
 u_int
@@ -59,12 +56,16 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
                                    ? (microinterval - nanointerval)
                                    : (nanointerval - microinterval));
   if (nanointerval == 0)
-    nanointerval = 1;      // Prevent divide-by-zero
+    {
+      nanointerval = 1;      // Prevent divide-by-zero
+    }
   ACE_hrtime_t const promille_difference =
     difference * 1000 / nanointerval;
 
   if ((promille_difference < threshold) || (difference < 1500))
-    return 0;
+    {
+      return 0;
+    }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("The microseconds * 1000 of %Q ")
@@ -113,16 +114,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   u_int iterations = 1;
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("i:"));
-  for (int c; (c = getopt ()) != -1; )
+  ACE_Get_Opt getoptarg (argc, argv, ACE_TEXT ("i:"));
+  for (int c; (c = getoptarg ()) != -1; )
     {
-      //FUZZ: enable check_for_lack_ACE_OS
-
       switch (c)
         {
         case 'i':
-          iterations = ACE_OS::atoi (getopt.opt_arg ());
+          iterations = ACE_OS::atoi (getoptarg.opt_arg ());
           break;
         }
     }
@@ -135,10 +133,10 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       for (u_int j = 0; j < iterations; ++j)
         {
-          const ACE_Time_Value interval (0, intervals[i]);
+          ACE_Time_Value const interval (0, intervals[i]);
           ACE_hrtime_t nanoseconds;
           ACE_hrtime_t microseconds;
-          const ACE_Time_Value measured = time_interval (interval,
+          ACE_Time_Value const measured = time_interval (interval,
                                                          nanoseconds,
                                                          microseconds);
           time_t const interval_usec =

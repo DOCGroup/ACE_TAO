@@ -1,28 +1,28 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    PM_Server.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    PM_Server.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _PM_SERVER_H
 #define _PM_SERVER_H
 
 #include "Protocol_Manager.h"
 
+/**
+ * @class PM_Server
+ *
+ * @brief Handle the server's lookup table abstraction.
+ */
 class PM_Server : public Protocol_Manager
 {
-  // = TITLE
-  //   Handle the server's lookup table abstraction.
 
 public:
   PM_Server (void);

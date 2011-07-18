@@ -7,7 +7,7 @@ project: aceexe {
   // in MPC builds
   requires += dummy_label
   requires += wince
-  lit_libs += aygshell
+  lit_libs += aygshell commctrl
 
   Source_Files {
     FaCE.cpp

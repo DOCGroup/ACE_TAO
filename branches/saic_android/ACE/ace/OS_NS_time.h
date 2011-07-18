@@ -36,11 +36,6 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-# if defined (ACE_HAS_BROKEN_R_ROUTINES)
-#   undef ctime_r
-#   undef asctime_r
-# endif /* ACE_HAS_BROKEN_R_ROUTINES */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Type-safe, and unsigned.
@@ -196,10 +191,6 @@ namespace ACE_OS
 #endif
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
-# if defined (difftime)
-#   undef difftime
-# endif /* difftime */
-
 #if !defined (ACE_LACKS_DIFFTIME)
   ACE_NAMESPACE_INLINE_FUNCTION
 #else
@@ -233,17 +224,12 @@ namespace ACE_OS
   int nanosleep (const struct timespec *requested,
                  struct timespec *remaining = 0);
 
-# if defined (ACE_HAS_POWERPC_TIMER) && defined (ghs)
-  extern ACE_Export
-  void readPPCTimeBase (u_long &most,
-                        u_long &least);
-# endif /* ACE_HAS_POWERPC_TIMER && ghs */
-
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strftime (char *s,
                    size_t maxsize,
                    const char *format,
-                   const struct tm *timeptr);
+                   const struct tm *timeptr)
+    ACE_GCC_FORMAT_ATTRIBUTE (strftime, 3, 0);
 
   /**
    * strptime wrapper. Note that the struct @a tm will always be set to
@@ -267,10 +253,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   time_t time (time_t *tloc = 0);
-
-# if defined (timezone)
-#   undef timezone
-# endif /* timezone */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long timezone (void);

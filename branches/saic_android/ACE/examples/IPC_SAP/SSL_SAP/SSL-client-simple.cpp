@@ -20,11 +20,6 @@
 
 #include "SSL-client-simple.h"
 
-ACE_RCSID (SSL_SAP,
-           SSL_client_simple,
-           "$Id$")
-
-
 Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
@@ -222,8 +217,6 @@ Options::oneway_client_test (void)
   // locking.
   size_t iteration = 0;
 
-  // Keep track of return value.
-  int result = 0;
   ACE_INT32 len =
     ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ());
 
@@ -246,7 +239,6 @@ Options::oneway_client_test (void)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send_n")));
-        result = -1;
         break;
       }
 
@@ -271,9 +263,6 @@ Options::twoway_client_test (void)
   // This variable is allocated off the stack to obviate the need for
   // locking.
   size_t iteration = 0;
-
-  // Keep track of return value.
-  int result = 0;
 
   // Timer business.
   ACE_High_Res_Timer timer;
@@ -310,7 +299,6 @@ Options::twoway_client_test (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("send_n")));
-            result = -1;
             break;
           }
         // Receive the reply from the server.  Normally, it just sends
@@ -320,7 +308,6 @@ Options::twoway_client_test (void)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("recv")));
-            result = -1;
             break;
           }
 

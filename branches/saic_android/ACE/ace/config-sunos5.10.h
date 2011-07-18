@@ -61,4 +61,6 @@
 # define ACE_HAS_VOID_PTR_SCTP_GETPADDRS
 #endif
 
+#define ACE_HAS_SOLARIS_ATOMIC_LIB
+
 #endif /* ACE_CONFIG_H */

@@ -5,8 +5,6 @@
 
 #include "URL_Locator.h"
 
-ACE_RCSID(Caching, URL_Locator, "$Id$")
-
 const char * const
 ACE_URL_Locator::opname[] =
 // Human readable operation name

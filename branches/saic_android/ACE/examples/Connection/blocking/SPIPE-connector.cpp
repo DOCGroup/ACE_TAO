@@ -7,13 +7,12 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
-#include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
-ACE_RCSID(blocking, SPIPE_connector, "$Id$")
+
 
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)
@@ -33,7 +32,7 @@ Peer_Handler::open (void *)
   if (iterations_ == 0)
     {
       this->display_menu ();
-      
+
       if (ACE_Event_Handler::register_stdin_handler (
             this,
             ACE_Reactor::instance (),
@@ -99,7 +98,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
                                  ACE_TEXT ("close")),
                                 1);
             }
-            
+
           return -1;
         }
       else
@@ -107,7 +106,7 @@ Peer_Handler::handle_input (ACE_HANDLE)
           this->display_menu ();
         }
     }
-      
+
   return 0;
 }
 
@@ -133,7 +132,7 @@ Peer_Handler::display_menu (void)
 
 IPC_Client::IPC_Client (void)
   : iterations_ (0),
-    done_handler_ (ACE_Sig_Handler_Ex (ACE_Proactor::end_event_loop))
+    done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }

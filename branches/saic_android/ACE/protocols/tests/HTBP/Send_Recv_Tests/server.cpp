@@ -1,34 +1,30 @@
-// $Id$
 
-// ===========================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Send_Recv_Test.cpp
-//
-// = DESCRIPTION This is a test of the <ACE_SOCK>'s various send and
-// receive methods, over HTBP.  The test forks two processes or spawns
-// two threads (depending upon the platform) and then executes client
-// and server allowing them to connect and exchange data in ways
-// designed to exercise the send and recv functions.
-//
-//     Right now, it primarily tests the iov-like send and recv
-//     functions, but others should be added to completely cover the
-//     possible scenarios.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    server.cpp
+ *
+ *  $Id$
+ *
+ * receive methods, over HTBP.  The test forks two processes or spawns
+ * two threads (depending upon the platform) and then executes client
+ * and server allowing them to connect and exchange data in ways
+ * designed to exercise the send and recv functions.
+ *
+ *   Right now, it primarily tests the iov-like send and recv
+ *   functions, but others should be added to completely cover the
+ *   possible scenarios.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
 #include "ace/HTBP/HTBP_Environment.h"
 
-#include "ace/OS.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
@@ -36,6 +32,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/os_include/os_netdb.h"
 
 // Change to non-zero if test fails
 static int Test_Result = 0;
@@ -77,7 +75,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates sucessful parsing of the command line
+  // Indicates successful parsing of the command line
   return 0;
 }
 

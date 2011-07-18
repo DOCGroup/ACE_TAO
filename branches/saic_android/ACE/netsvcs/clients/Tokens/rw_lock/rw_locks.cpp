@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    rw_locks.cpp
-//
-// = DESCRIPTION
-//    test_rw_locks shows how to use ACE_Local_RLock, ACE_Local_WLock,
-//    ACE_Remote_RLock, and ACE_Remote_WLock.
-//
-// = AUTHOR
-//    Tim Harrison
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    rw_locks.cpp
+ *
+ *  $Id$
+ *
+ *  test_rw_locks shows how to use ACE_Local_RLock, ACE_Local_WLock,
+ *  ACE_Remote_RLock, and ACE_Remote_WLock.
+ *
+ *
+ *  @author Tim Harrison
+ */
+//=============================================================================
+
 
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
@@ -25,7 +22,7 @@
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-ACE_RCSID(rw_lock, rw_locks, "$Id$")
+
 
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 

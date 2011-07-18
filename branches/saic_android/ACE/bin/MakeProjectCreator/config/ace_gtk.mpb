@@ -4,7 +4,7 @@
 project {
   macros   += ACE_HAS_GTK
 
-  // Depends on configration from include/makeinclude/platform_*.GNU
+  // Depends on configuration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {
     CPPFLAGS += $(PLATFORM_GTK_CPPFLAGS)
     LIBS += $(PLATFORM_GTK_LIBS)

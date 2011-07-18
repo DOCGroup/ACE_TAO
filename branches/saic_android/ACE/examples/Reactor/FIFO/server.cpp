@@ -8,7 +8,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stropts.h"
 
-ACE_RCSID(FIFO, server, "$Id$")
+
 
 class FIFO_Recv_Handler : public ACE_Event_Handler
 {

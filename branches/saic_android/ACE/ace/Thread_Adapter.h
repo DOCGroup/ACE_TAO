@@ -56,6 +56,7 @@ public:
                       , ACE_SEH_EXCEPT_HANDLER selector = 0,
                       ACE_SEH_EXCEPT_HANDLER handler = 0
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                      , long cancel_flags = 0
                       );
 
   /**
@@ -69,21 +70,17 @@ public:
   ACE_Thread_Manager *thr_mgr (void);
 
 protected:
-
   /// Ensure that this object must be allocated on the heap.
   ~ACE_Thread_Adapter (void);
 
 private:
-
   /// Called by invoke, mainly here to separate the SEH stuff because
   /// SEH on Win32 doesn't compile with local vars with destructors.
   virtual ACE_THR_FUNC_RETURN invoke_i (void);
 
 private:
-
   /// Optional thread manager.
   ACE_Thread_Manager *thr_mgr_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

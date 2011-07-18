@@ -82,10 +82,12 @@ private:
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 #  define ACE_ERRNO_TYPE ACE_CE_Errno
+#  define ACE_ERRNO_GET ACE_CE_Errno::instance ()->operator int()
 #elif defined (ACE_HAS_ANDROID)
-#define ACE_ERRNO_TYPE volatile int
+#  define ACE_ERRNO_TYPE volatile int
 #else
 #  define ACE_ERRNO_TYPE int
+#  define ACE_ERRNO_GET errno
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

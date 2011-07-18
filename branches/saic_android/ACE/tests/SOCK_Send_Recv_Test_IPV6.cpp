@@ -119,7 +119,7 @@ client (void *arg)
       Test_Result = 1;
     }
   else
-    ACE_ASSERT (len == 255);
+    ACE_TEST_ASSERT (len == 255);
 
   //*******************   TEST 2   ******************************
   //
@@ -140,7 +140,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
                   len));
     }
-  ACE_ASSERT (len == 255);
+  ACE_TEST_ASSERT (len == 255);
 
   for (i = 0; i < 255; i++)
     if (buffer2[i] != buffer[i])
@@ -161,7 +161,7 @@ client (void *arg)
 
   ssize_t sent;
   char buff[Test3_Send_Size];
-  ACE_ASSERT (cli_stream.enable (ACE_NONBLOCK) != -1);
+  ACE_TEST_ASSERT (cli_stream.enable (ACE_NONBLOCK) != -1);
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
@@ -237,7 +237,7 @@ server (void *arg)
       Test_Result = 1;
     }
 
-  ACE_ASSERT (len == 255);
+  ACE_TEST_ASSERT (len == 255);
   for (i = 0; i < 255; i++)
     if (buffer[i] != i)
       {
@@ -260,7 +260,7 @@ server (void *arg)
                        189,
                        &buffer[231],
                        24);
-  ACE_ASSERT (len == 255);
+  ACE_TEST_ASSERT (len == 255);
 
   //*******************   TEST 3   ******************************
   //

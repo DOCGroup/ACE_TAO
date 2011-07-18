@@ -2,22 +2,20 @@
 
 #include "stats.h"
 
-ACE_RCSID(stress_testing, stats, "$Id$")
-
 Stats::Stats(int size) {
   throughput_ = new float[size];
   latency_ = new float[size];
   thread_count_ = size;
   init_fini_ = new Init_Fini_t[2*size];
-  for(int i = 0; i < size; i++) 
+  for(int i = 0; i < size; i++)
     throughput_[i] = latency_[i] = 0;
 }
-  
+
 void Stats::log(int id, float throughput, float latency) {
   throughput_[id] = throughput;
   latency_[id] = latency;
 }
-  
+
 // Unused for now.
 void Stats::print(char *message) {
 
@@ -28,7 +26,7 @@ void Stats::print(char *message) {
   // time(&ltime);
 
   // ACE_OS::ctime_r(&ltime, time_buf, sizeof time_buf);
-    
+
   // if(ACE_OS::gettimeofday() == -1) {
   //   perror("gettimeofday");
   // }
@@ -44,7 +42,7 @@ int comp(const void *a, const void *b) {
 
   return (A->timestamp < B->timestamp) ? -1 : (A->timestamp > B->timestamp);
 }
-  
+
 
 void Stats::output() {
   int i;
@@ -57,7 +55,7 @@ void Stats::output() {
   for(i = 0; i < 2*thread_count_; i++) {
     //    cerr << " " << ((init_fini_[i].type == THREAD_START) ? "START": "END") << " " << init_fini_[i].timestamp.sec() << "." << init_fini_[i].timestamp.usec() << endl;
     if(init_fini_[i].type == THREAD_START) {
-      if(++thread_peak > max) 
+      if(++thread_peak > max)
         max = thread_peak;
     }
     else thread_peak--;
@@ -85,4 +83,4 @@ void Stats::i_am_done(int id) {
 
 }
 
-  
+

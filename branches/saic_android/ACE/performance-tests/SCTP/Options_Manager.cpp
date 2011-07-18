@@ -461,7 +461,8 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
   // Show usage message.  KEEP THE DEFAULTS DISPLAYED HERE IN SYNC
   // WITH THE DEFAULTS SET AT THE BEGINNING OF THE CONSTRUCTOR.
 
-  ACE_OS::fprintf (out, "%s - Measures round trip latency statistics of ACE synchronous\n", __program_name);
+  ACE_OS::fprintf (out, "%s - Measures round trip latency statistics of ACE synchronous\n",
+                   ACE_TEXT_ALWAYS_CHAR (__program_name));
   // indent past program name
   for (unsigned int i=0;i<ACE_OS::strlen(__program_name);++i)
     ACE_OS::fprintf (out, " ");
@@ -473,7 +474,8 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
     ACE_OS::fprintf (out, "   messaging (SOCK_SEQPACK) using unmarshalled ACE_CDR::Octet.\n");
   }
 
-  ACE_OS::fprintf (out, "USAGE: %s [ -<flag> [<val>] | --<name> [<val>] ]...\n\n", __program_name);
+  ACE_OS::fprintf (out, "USAGE: %s [ -<flag> [<val>] | --<name> [<val>] ]...\n\n",
+                   ACE_TEXT_ALWAYS_CHAR (__program_name));
 
   if (!ACE_OS::strcmp (ACE_TEXT ("client-opts"), opts_set)){
     ACE_OS::fprintf (out,   "  Flag  Args           Option-Name                 Default\n"

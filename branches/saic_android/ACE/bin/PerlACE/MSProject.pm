@@ -200,34 +200,34 @@ sub LINKOptions ($)
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
-    return %{$self->{CONFIGS}}->{$config}->{LINK}; 
+
+    return %{$self->{CONFIGS}}->{$config}->{LINK};
 }
 
 sub Libs($)
 {
     my $self = shift;
     my $config = shift;
-    
+
     if (!defined $config) {
         print STDERR "Error: No configuration specified\n";
         return;
     }
-    
+
     return %{$self->{CONFIGS}}->{$config}->{LIBS};
 }
 
 sub UsesTAOIDL ()
 {
     my $self = shift;
-    
+
     return $self->{TAOIDL};
 }
 
 sub Compiler ()
 {
     my $self = shift;
-    
+
     return $self->{COMPILER};
 }
 
@@ -251,24 +251,24 @@ sub Load ()
 
     while (<$fh>) {
         if (m/^\#.*Project File - Name=\"([^\"]*)\"/) {
-            $self->{NAME} = $1;    
+            $self->{NAME} = $1;
         }
-        
+
         if (m/^\#.*Format Version (.*)/) {
             $self->{VERSION} = $1;
         }
 
         # Check for configurations
-        
+
         if (m/^\!.*IF  \"\$\(CFG\)\" == \".* - (.*)$\"/) {
             $config = $1;
         }
         elsif (m/^\!ENDIF$/) {
             $config = "";
         }
-        
+
         # Check for directories
-        
+
         if (m/\# PROP Output_Dir \"(.*)\"/) {
             %{$self->{CONFIGS}}->{$config}->{OUTPUTDIR} = $1;
         }
@@ -278,12 +278,12 @@ sub Load ()
         elsif (m/\# PROP Target_Dir \"(.*)\"/) {
             %{$self->{CONFIGS}}->{$config}->{TARGETDIR} = $1;
         }
-        
+
         # Look at CPP options
-        
+
         if (m/\# ADD BASE CPP(.*)$/ || m/\# ADD CPP(.*)$/) {
             my @flags = split (/ \//, $1);
-            
+
             foreach my $flag (@flags) {
                 if ($flag && %{$self->{CONFIGS}}->{$config}->{CPP} !~ m/$flag/) {
                     %{$self->{CONFIGS}}->{$config}->{CPP} .= " /$flag";
@@ -292,66 +292,66 @@ sub Load ()
         }
         elsif (m/\# SUBTRACT CPP(.*)$/ || m/\# SUBTRACT BASE CPP(.*)$/) {
             my @flags = split (/ \//, $1);
-            
+
             foreach my $flag (@flags) {
                 if ($flag && %{$self->{CONFIGS}}->{$config}->{CPP} =~ m/$flag/) {
                     %{$self->{CONFIGS}}->{$config}->{CPP} =~ s/ \/$flag//g;
                 }
             }
         }
-        
+
         # Look at LINK32 options
-        
-        if (m/\# ADD BASE LINK32(.*)$/ || m/\# ADD LINK32(.*)$/ 
+
+        if (m/\# ADD BASE LINK32(.*)$/ || m/\# ADD LINK32(.*)$/
             || m/\# ADD BASE LIB32(.*)$/ || m/\# ADD LIB32(.*)$/) {
             my @flags = split (/ \//, $1);
-            
+
             foreach my $flag (@flags) {
                 my $found = 0;
                 my @libs = split (/ /, $flag);
-                
+
                 foreach my $lib (@libs) {
                     if ($lib =~ m/\.lib$/) {
                         if (%{$self->{CONFIGS}}->{$config}->{LIBS} !~ m/\Q$lib\E/) {
                             %{$self->{CONFIGS}}->{$config}->{LIBS} .= " $lib";
                         }
                         $found = 1;
-                    }                 
+                    }
                 }
-                
+
                 if (!$found && $flag) {
                     my $shortflag = $flag;
                     if ($flag =~ m/^(.*)\:/) {
                         $shortflag = $1;
                     }
-                    
+
                     if (%{$self->{CONFIGS}}->{$config}->{LINK} !~ m/ \/$shortflag/) {
                         %{$self->{CONFIGS}}->{$config}->{LINK} .= " /$flag";
                     }
                 }
             }
         }
-        elsif (m/\# SUBTRACT BASE LINK32(.*)$/ || m/\# SUBTRACT LINK32(.*)$/ 
+        elsif (m/\# SUBTRACT BASE LINK32(.*)$/ || m/\# SUBTRACT LINK32(.*)$/
                || m/\# SUBTRACT BASE LIB32(.*)$/ || m/\# SUBTRACT LIB32(.*)$/) {
             my @flags = split (/ \//, $1);
-            
+
             foreach my $flag (@flags) {
                 my $shortflag = $flag;
                 if ($flag =~ m/^(.*)\:/) {
                     $shortflag = $1;
                 }
-                
+
                 if ($flag && %{$self->{CONFIGS}}->{$config}->{LINK} =~ m/ (\/$shortflag\:[^ ]*)/) {
                     %{$self->{CONFIGS}}->{$config}->{LINK} =~ s/ \Q$1\E//ig;
                 }
             }
         }
-        
+
         if (m/^\# Name \".* - (.*)\"/ && defined %{$self->{CONFIGS}}->{"Unknown"}) {
             %{$self->{CONFIGS}}->{$1} = %{$self->{CONFIGS}}->{"Unknown"};
             delete %{$self->{CONFIGS}}->{"Unknown"};
         }
-        
+
         if (m/tao\_idl/ && m/\$\(InputName\)\.idl/ || m/tao\_idl/ && m/\$\(InputPath\)/) {
             $self->{TAOIDL} = 1;
         }
@@ -368,12 +368,12 @@ sub Build ($)
 {
     my $self = shift;
     my ($config) = @_;
-    
-    my $command = $self->Compiler () . " " . $self->Filename () 
+
+    my $command = $self->Compiler () . " " . $self->Filename ()
                   . " /USEENV"
                   . " /MAKE \"" . $self->Name ()
                   . " - " . $config . "\"";
-                  
+
     system $command;
 }
 
@@ -381,12 +381,12 @@ sub Clean ($)
 {
     my $self = shift;
     my ($config) = @_;
-    
-    my $command = $self->Compiler () . " " . $self->Filename () 
+
+    my $command = $self->Compiler () . " " . $self->Filename ()
                   . " /USEENV"
                   . " /MAKE \"" . $self->Name ()
                   . " - " . $config . "\" /CLEAN";
-                  
+
     system $command;
 }
 

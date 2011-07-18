@@ -1,8 +1,14 @@
+
 // -*- MPC -*-
 // $Id$
 
 project {
-  specific(vc7, vc71, vc8, vc9, vc10) {
+  avoids += cross_compile
+
+  specific(prop:microsoft) {
+    nocross = 1
+  }
+  specific(cdt6) {
     nocross = 1
   }
   verbatim(gnuace, circuit) {

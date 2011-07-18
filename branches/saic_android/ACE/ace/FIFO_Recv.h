@@ -36,7 +36,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_FIFO_Recv : public ACE_FIFO
 {
 public:
-  // = Initialization methods.
+  /// @name Initialization methods.
+  ///
+  /// Note that @c ACE_NONBLOCK will be added to any @a flags value passed.
+  /// This causes the open to succeed even if no writer has yet opened the
+  /// fifo. There is no way to disable this behavior.
+  ///
+  /// @arg persistent  Means "open fifo for writing, as well as
+  /// reading."  This ensures that the fifo never gets EOF, even if there
+  /// aren't any writers at the moment!
+  //@{
+
   /// Default constructor.
   ACE_FIFO_Recv (void);
 
@@ -53,8 +63,9 @@ public:
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,
             LPSECURITY_ATTRIBUTES sa = 0);
+  //@}
 
-  /// Close down the named pipe.
+  /// Close down the fifo.
   int close (void);
 
   /// Recv @a buf of up to @a len bytes.

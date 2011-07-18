@@ -3,7 +3,7 @@
 
 
 project: qt {
-  // Depends on configration from include/makeinclude/platform_*.GNU
+  // Depends on configuration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {
     CPPFLAGS += $(PLATFORM_QT_CPPFLAGS)
     LIBS += $(PLATFORM_QT_LIBS)
@@ -21,7 +21,7 @@ project: qt {
     pure_libs += $(ACE_QT_LIBS)
   }
 
-  specific(vc71, vc8, vc9, vc10, nmake) {
+  specific(prop:microsoft) {
     lit_libs -= qt-mt$(QT_VERSION)
     pure_libs += $(PLATFORM_QT_LIBS)
   }

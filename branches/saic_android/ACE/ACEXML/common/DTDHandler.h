@@ -19,7 +19,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/Env.h"
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
@@ -59,7 +58,7 @@ public:
    */
   virtual void notationDecl (const ACEXML_Char *name,
                              const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
+                             const ACEXML_Char *systemId)
         = 0;
 
   /**
@@ -68,8 +67,7 @@ public:
   virtual void unparsedEntityDecl (const ACEXML_Char *name,
                                    const ACEXML_Char *publicId,
                                    const ACEXML_Char *systemId,
-                                   const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
-        = 0;
+                                   const ACEXML_Char *notationName) = 0;
 };
 
 

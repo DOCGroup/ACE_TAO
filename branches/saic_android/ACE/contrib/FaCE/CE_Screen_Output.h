@@ -11,6 +11,7 @@
 #define CE_Screen_Output_h
 
 #include <windows.h>
+#include <stdio.h>
 
 const wchar_t endl[] = L"\r\n";
 const wchar_t tab[]  = L"\t";

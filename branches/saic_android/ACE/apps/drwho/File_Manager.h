@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    drwho
-//
-// = FILENAME
-//    File_Manager.h
-//
-// = AUTHOR
-//    Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    File_Manager.h
+ *
+ *  $Id$
+ *
+ *  @author Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef _FILE_MANAGER_H
 #define _FILE_MANAGER_H
@@ -27,13 +24,16 @@
 
 #include "ace/Mem_Map.h"
 
+/**
+ * @class File_Manager
+ *
+ * @brief This class provides a file ADT for our friends info.
+ */
 class File_Manager
 {
-  // = TITLE
-  //   This class provides a file ADT for our friends info.
 public:
+  /// Constructor.
   File_Manager (void);
-  // Constructor.
 
   int open_file (const char *filename);
   void get_login_and_real_name (const char *&login_name,

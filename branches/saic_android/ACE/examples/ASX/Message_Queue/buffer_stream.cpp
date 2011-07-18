@@ -19,7 +19,7 @@
 #include "ace/Task.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(Message_Queue, buffer_stream, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

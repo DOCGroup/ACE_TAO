@@ -6,8 +6,6 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
-ACE_RCSID(Synch_Benchmarks, adaptive_recursive_lock_test, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Adaptive_Recursive_Lock_Test : public Adaptive_Lock_Performance_Test_Base

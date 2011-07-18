@@ -10,10 +10,6 @@
 
 #include "Client_Test.h"
 
-ACE_RCSID (Client,
-           main,
-           "$Id$")
-
 int
 ACE_TMAIN (int, ACE_TCHAR *argv[])
 {

@@ -141,7 +141,7 @@ int CLD_Handler::handle_input (ACE_HANDLE handle)
           mblk->release ();
         }
     }
-    
+
   return -1; // Error return.
 }
 
@@ -237,7 +237,7 @@ int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
 int CLD_Handler::close () {
   ACE_Message_Block *shutdown_message = 0;
   ACE_NEW_RETURN
-    (shutdown_message, 
+    (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
   msg_queue_.enqueue_tail (shutdown_message);
   return thr_mgr_.wait ();
@@ -292,7 +292,7 @@ int CLD_Connector::connect
 
   if (connector.connect (handler->peer (), remote_addr) == -1)
     return -1;
-  else if (handler->open (this) == -1) 
+  else if (handler->open (this) == -1)
   { handler->handle_close (); return -1; }
   handler_ = handler;
   remote_addr_ = remote_addr;

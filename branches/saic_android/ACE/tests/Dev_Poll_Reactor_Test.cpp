@@ -21,11 +21,6 @@
 
 #include "test_config.h"
 
-ACE_RCSID (tests,
-           Dev_Poll_Reactor_Test,
-           "$Id$")
-
-
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
 #include "ace/OS_NS_signal.h"
@@ -102,7 +97,7 @@ Client::Client (void)
 int
 Client::open (void *)
 {
-  //  ACE_ASSERT (this->reactor () != 0);
+  //  ACE_TEST_ASSERT (this->reactor () != 0);
 
   if (this->reactor ()
       && this->reactor ()->register_handler (
@@ -191,7 +186,16 @@ Client::handle_close (ACE_HANDLE handle,
               handle,
               mask));
 
-  return 0;
+  // There is no point in running reactor after this client is closed.
+  if (this->reactor ()->end_reactor_event_loop () == 0)
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("(%t) Successful client reactor shutdown.\n")));
+  else
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("Failed client reactor shutdown")));
+
+  return SVC_HANDLER::handle_close (handle, mask);
 }
 
 // ----------------------------------------------------
@@ -301,11 +305,9 @@ Server::handle_close (ACE_HANDLE handle,
                   handle,
                   this->get_handle (),
                   mask));
-
-      return this->peer ().close ();
     }
 
-  return 0;
+  return SVC_HANDLER::handle_close (handle, mask);
 }
 
 // ----------------------------------------------------
@@ -441,9 +443,46 @@ public:
 
 // ----------------------------------------------------
 
+static int
+disable_signal (int sigmin, int sigmax)
+{
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
+  sigset_t signal_set;
+  if (ACE_OS::sigemptyset (&signal_set) == - 1)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Error: (%P|%t):%p\n"),
+                ACE_TEXT ("sigemptyset failed")));
+
+  for (int i = sigmin; i <= sigmax; i++)
+    ACE_OS::sigaddset (&signal_set, i);
+
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
+#else
+  ACE_UNUSED_ARG (sigmin);
+  ACE_UNUSED_ARG (sigmax);
+#endif /* ACE_LACKS_UNIX_SIGNALS */
+
+  return 0;
+}
+
+// ----------------------------------------------------
+
 ACE_THR_FUNC_RETURN
 server_worker (void *p)
 {
+  disable_signal (SIGPIPE, SIGPIPE);
+
   const unsigned short port = *(static_cast<unsigned short *> (p));
 
   ACE_INET_Addr addr;
@@ -510,11 +549,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Dev_Poll_Reactor_Test"));
 
   // Make sure we ignore SIGPIPE
-  sigset_t sigsetNew[1];
-  sigset_t sigsetOld[1];
-  ACE_OS::sigemptyset (sigsetNew);
-  ACE_OS::sigaddset (sigsetNew, SIGPIPE);
-  ACE_OS::sigprocmask (SIG_BLOCK, sigsetNew, sigsetOld);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Dev_Poll_Reactor dp_reactor;
   dp_reactor.restart (1);          // Restart on EINTR

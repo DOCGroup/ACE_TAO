@@ -4,7 +4,6 @@
 #ifndef JAWS_CONCURRENCY_T_H
 #define JAWS_CONCURRENCY_T_H
 
-// This gets me the ACE template defines without having to #include "ace/OS.h".
 #include "ace/config-lite.h"
 
 class JAWS_Protocol_Handler;

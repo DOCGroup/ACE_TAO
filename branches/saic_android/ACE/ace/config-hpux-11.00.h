@@ -24,15 +24,7 @@
 // aC++...
 
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
-#    ifndef ACE_USING_MCPP_PREPROCESSOR
-#     define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
-#    endif
-// Compiler supports C++ exception handling. It's on by default. If the
-// +noeh compiler option is used to disable exceptions, the compiler defines
-// __HPACC_NOEH.
-#    if !defined (__HPACC_NOEH)
-#      define ACE_HAS_EXCEPTIONS 1
-#    endif
+#  define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
 // If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
 // The -AA option enables the 2.0 standard C++ library. If not used, then
@@ -56,10 +48,6 @@
        // aren't in std::
 #      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
-
-// Compiler implements templates that support typedefs inside of classes
-// used as formal arguments to a template class.
-#    define ACE_HAS_TEMPLATE_TYPEDEFS
 
 #    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
@@ -217,13 +205,6 @@
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
 
-/* Platform supports "position-independent" features provided by
-   ACE_Based_Pointer<>. */
-#define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
-
-/* Platform supports POSIX getpwnam_r() function */
-#define ACE_HAS_POSIX_GETPWNAM_R 1
-
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
@@ -284,16 +265,10 @@
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-/* Platform/compiler supports _sys_errlist symbol */
-#define ACE_HAS_SYS_ERRLIST 1
-
 #define ACE_HAS_UALARM
 
 // Platform supports ucontext_t (which is used in the extended signal API).
 #define ACE_HAS_UCONTEXT_T
-
-// Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR
 
 // Platform/compiler supports void * as second parameter to gettimeofday().
 #define ACE_HAS_VOIDPTR_GETTIMEOFDAY
@@ -337,12 +312,12 @@
 #define ACE_LACKS_SUSECONDS_T
 #define ACE_LACKS_SYS_SYSCTL_H
 
-// @@ TODO: It looks like HP-UX provides strtoll, strtoull, wcstoll and
-//          wcstoull but some more work is needed to plug them in correctly.
-#define ACE_LACKS_STRTOLL
-#define ACE_LACKS_WCSTOLL
-#define ACE_LACKS_STRTOULL
-#define ACE_LACKS_WCSTOULL
+#if !(defined(__STDC_EXT__) || defined(_INCLUDE_LONGLONG) || defined(_INCLUDE_STDC__SOURCE_199901))
+#  define ACE_LACKS_STRTOLL
+#  define ACE_LACKS_WCSTOLL
+#  define ACE_LACKS_STRTOULL
+#  define ACE_LACKS_WCSTOULL
+#endif
 
 #define ACE_LACKS_ISWASCII
 
@@ -367,6 +342,7 @@
 
 #define ACE_HAS_3_PARAM_READDIR_R
 
+#define ACE_LACKS_STRUCT_LIFNUM
 
 //////////////////////////////////////////////////////////////////////////
 //

@@ -30,7 +30,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Logging_Strategy
  *
- * @brief This class provides a way to dynamically configure the ACE logging
+ * @brief
+ * This class provides a way to dynamically configure the ACE logging
  * mechanism at run time as well as enable the mechanisms for limiting
  * log file size and log file backup/rotation capability.
  *
@@ -100,6 +101,22 @@ public:
                               const void* arg);
 
   /**
+   * This function helps to cancel timer events for this logging strategy
+   * in reactor during shutdown.
+   */
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask);
+
+  /**
+   * Reactor accessors. If reactor changes then we need remove this
+   * event handler from previous reactor and scheduler for timer events
+   * in a new one.
+   */
+  virtual void reactor (ACE_Reactor *r);
+
+  virtual ACE_Reactor * reactor (void) const;
+
+  /**
    * Parse arguments provided in svc.conf file.
    * @arg '-f' Pass in the flags (such as OSTREAM, STDERR, LOGGER, VERBOSE,
    *           SILENT, VERBOSE_LITE) used to control logging.
@@ -154,16 +171,16 @@ protected:
   /// Program name to be used for %n format specifier.
   ACE_TCHAR *program_name_;
 
-  /// If non-0 then wipeout the logfile, otherwise append to it.
-  /// Default value is 0.
+  /// If true then wipeout the logfile, otherwise append to it.
+  /// Default value is false.
   bool wipeout_logfile_;
 
-  /// If non-0 we have a maximum number of log files we can write.
-  /// Default value is 0, i.e., no maximum number.
+  /// If true we have a maximum number of log files we can write.
+  /// Default value is false, i.e., no maximum number.
   bool fixed_number_;
 
-  /// If non-0 we order the files as we rotate them.  Default value
-  /// is 0, i.e., we do not rotate files by default.
+  /// If true we order the files as we rotate them.  Default value
+  /// is false, i.e., we do not rotate files by default.
   bool order_files_;
 
   /// This tells us in what file we last wrote. It will be increased
@@ -189,6 +206,8 @@ protected:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE_EXPORT(ACE, ACE_Logging_Strategy)
 
 ACE_FACTORY_DECLARE (ACE, ACE_Logging_Strategy)
 

@@ -18,9 +18,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// All methods in this class are inline, so there is no
-// need to import or export on Windows. -- CAE 12/18/2003
-
 /**
  * @class ACE_Null_Barrier
  *

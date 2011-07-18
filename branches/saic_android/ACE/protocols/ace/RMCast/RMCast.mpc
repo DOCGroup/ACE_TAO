@@ -4,7 +4,11 @@
 project(RMCast) : acelib, ace_output, install, threads {
   avoids = ace_for_tao
   sharedname   = ACE_RMCast
-  dynamicflags = ACE_RMCAST_BUILD_DLL
+  dynamicflags += ACE_RMCAST_BUILD_DLL
+
+  specific {
+    install_dir = ace/RMCast
+  }
 
   Pkgconfig_Files {
     ACE_RMCast.pc.in

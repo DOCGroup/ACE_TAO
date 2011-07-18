@@ -96,13 +96,13 @@ public: // Should be protected:
    * the stream. To do this, the message is put onto the task next in
    * the stream after this task's sibling.
    *
-   * @param ACE_Message_Block  Pointer to the block that is used in the reply.
-   * @param timeout  The absolute time at which the put operation used to
-   *                 send the message block to the next module in the stream
-   *                 will time out. If 0, this call blocks until it can be
-   *                 completed.
+   * @param mb Pointer to the block that is used in the reply.
+   * @param tv The absolute time at which the put operation used to
+   *           send the message block to the next module in the stream
+   *           will time out. If 0, this call blocks until it can be
+   *           completed.
    */
-  int reply (ACE_Message_Block *, ACE_Time_Value *timeout = 0);
+  int reply (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
 
   /**
    * Transfer message to the adjacent ACE_Task in a ACE_Stream.  Note
@@ -110,13 +110,6 @@ public: // Should be protected:
    * time.
    */
   int put_next (ACE_Message_Block *msg, ACE_Time_Value *timeout = 0);
-
-  /**
-   * Tests whether we can enqueue a message without blocking.  
-   *
-   * @deprecated This method is deprecated and will go away in the future.
-   */
-  int can_put (ACE_Message_Block *);
 
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated

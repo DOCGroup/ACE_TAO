@@ -11,13 +11,13 @@ class JAWS_IO;
 class JAWS_IO_Handler;
 class JAWS_IO_Handler_Factory;
 
+/**
+ * Policy mechanism for choosing different concurrency models.
+ *
+ * Given some (unspecified) state, decides what the concurrency
+ * model should be.  (For now, we always return the same model.)
+ */
 class JAWS_Export JAWS_Dispatch_Policy
-  // = TITLE
-  //     Policy mechanism for choosing different concurrency models.
-  //
-  // = DESCRIPTION
-  //     Given some (unspecified) state, decides what the concurrency
-  //     model should be.  (For now, we always return the same model.)
 {
 public:
   JAWS_Dispatch_Policy (void);

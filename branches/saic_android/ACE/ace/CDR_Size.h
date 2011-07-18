@@ -13,7 +13,7 @@
  * The current implementation assumes that the host has 1-byte,
  * 2-byte and 4-byte integral types, and that it has single
  * precision and double precision IEEE floats.
- * Those assumptions are pretty good these days, with Crays beign
+ * Those assumptions are pretty good these days, with Crays being
  * the only known exception.
  *
  *

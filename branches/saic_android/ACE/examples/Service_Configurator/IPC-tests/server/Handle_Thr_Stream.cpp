@@ -11,8 +11,6 @@
 #include "ace/TLI_Acceptor.h"
 #include "Handle_Thr_Stream.h"
 
-ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_time.h"
@@ -58,7 +56,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::info (ACE_TCHAR **strp,
     {
       ACE_OS::strncpy (*strp, buf, length);
     }
-    
+
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
 }
 

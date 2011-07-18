@@ -35,8 +35,6 @@
 #    include "ace/config-win32-borland.h"
 #elif defined (_MSC_VER)
 #    include "ace/config-win32-msvc.h"
-#elif defined (ghs)
-#    include "ace/config-win32-ghs.h"
 #elif defined (ACE_HAS_CEGCC) //need to be prior to MINGW32
 #    include "ace/config-win32-cegcc.h"
 #elif defined (__MINGW32__)

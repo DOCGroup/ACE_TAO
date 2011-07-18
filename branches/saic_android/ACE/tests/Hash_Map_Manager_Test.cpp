@@ -1,24 +1,20 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Hash_Map_Manager_Test.cpp
-//
-// = DESCRIPTION
-//      This test illustrates the use of <ACE_Hash_Map_Manager> to
-//      maintain a hash table using strings.  In addition, it also
-//      illustrates how the <ACE_Static_Allocator> works in
-//      conjunction with the <ACE_Hash_Map_Manager>.
-//
-// = AUTHOR
-//    James Hu <jxh@cs.wustl.edu> and
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Hash_Map_Manager_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This test illustrates the use of <ACE_Hash_Map_Manager> to
+ *    maintain a hash table using strings.  In addition, it also
+ *    illustrates how the <ACE_Static_Allocator> works in
+ *    conjunction with the <ACE_Hash_Map_Manager>.
+ *
+ *
+ *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "STL_algorithm_Test_T.h"
@@ -26,7 +22,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
+
 
 static const size_t STRING_TABLE_ENTRIES = 3 * 2;
 static const size_t MAX_HASH = 6;
@@ -202,7 +198,7 @@ run_test (void)
                          ACE_TEXT ("bind"),
                          string_table[i].key_), -1);
 
-  const ACE_TCHAR *entry;
+  const ACE_TCHAR *entry = 0;
 
   // Check the <find> operation.
   for (i = 0; string_table[i].key_ != 0; i++)

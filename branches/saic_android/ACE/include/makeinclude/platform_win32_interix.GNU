@@ -1,37 +1,43 @@
+# -*- Makefile -*-
 # $Id$
 
 # platform_win32_interix.GNU
 
-#versioned_so = 1
+versioned_so ?= 0
 
-exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
 
-CC          = gcc
-CXX		= g++
+CC              = gcc
+CXX             = g++
 
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CFLAGS          += -W -Wall -Wpointer-arith -pipe -frepo
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG) -D_ALL_SOURCE
+CPPFLAGS        += -D_ALL_SOURCE
 DCFLAGS         += -g
-LDFLAGS	    += -L /usr/lib -L$(ACE_ROOT)/lib -ldl -lc -dynamic
 DLD             = $(CXX)
-LD		    = $(CXX)
-LIBS            +=
+LD              = $(CXX)
+LIBS            += -ldl
+OCFLAGS         += -O2
+PIC             =
 AR              = ar
-ARFLAGS         = ruvs
+ARFLAGS         = ruv
 RANLIB          = ranlib
+LN_S            = cp
 
-SOFLAGS += $(CPPFLAGS) -shared -i -W1,-E -W1,-Bsymbolic
-#SOBUILD = $(COMPILE.cc) -o $(VSHDIR)$*.so  $<
-PRELIB = @echo
+SOFLAGS         += -shared
+SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
+PRELIB          = @echo
 
 ifeq ($(threads),1)
-LDFLAGS         += -lpthread
-#CFLAGS          += -D_THREAD_SAFE -D_REENTRANT -DACE_HAS_THREADS
-CFLAGS          += -D_REENTRANT -DACE_HAS_THREADS
+  LDFLAGS       += -lpthread
+  CFLAGS        += -D_THREAD_SAFE -DACE_HAS_THREADS
 endif # threads
 
+PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
+PLATFORM_X11_LIBS=-lX11
+PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
+
+# Test for template instantiation, add to SOFLAGS if versioned_so set,
+# add -E to LDFLAGS if using GNU ld
+#
+#include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

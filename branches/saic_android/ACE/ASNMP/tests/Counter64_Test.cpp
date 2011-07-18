@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Counter64_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Counter64 class. An Object
-//  representing an ASN.1 Counter64 SMI 64 bit Integer SYNTAX.
-// (SNMPv2c)
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Counter64_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Counter64 class. An Object
+ *  representing an ASN.1 Counter64 SMI 64 bit Integer SYNTAX.
+ * (SNMPv2c)
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -41,8 +38,6 @@ DAMAGES.
 #include "ace/OS_main.h"
 #include "asnmp/ctr64.h"
 #include "test_config.h"
-
-ACE_RCSID(tests, Counter64_Test, "$Id$")
 
 // TODO: verify this with ACE folks
 #if defined(_WIN32)
@@ -108,7 +103,7 @@ static void TestCounter64()
 
   Counter64 c6;
   c6.assign(ld);
-  ACE_ASSERT(c6.to_long_double() == ld);
+  ACE_ASSERT(ACE::is_equal(c6.to_long_double(), ld));
 
   Counter64 c7(ull);
   ACE_ASSERT(c7 == ull);

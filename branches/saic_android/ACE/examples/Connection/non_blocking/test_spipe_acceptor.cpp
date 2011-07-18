@@ -6,12 +6,6 @@
 
 #include "CPP-acceptor.h"
 
-
-ACE_RCSID (non_blocking,
-           test_spipe_acceptor,
-           "$Id$")
-
-
 #if !defined (ACE_WIN32)
 typedef Svc_Handler<ACE_SPIPE_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_SPIPE_ACCEPTOR> IPC_SERVER;

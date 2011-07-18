@@ -38,7 +38,7 @@ JAWS_FILE::mem_map (int length,
 {
   if (this->map_ == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
       if (this->map_ == 0)
         {

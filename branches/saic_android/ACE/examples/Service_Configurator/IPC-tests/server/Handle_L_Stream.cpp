@@ -2,8 +2,6 @@
 
 #include "Handle_L_Stream.h"
 
-ACE_RCSID(server, Handle_L_Stream, "$Id$")
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Static variables.

@@ -9,7 +9,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 
-ACE_RCSID(SPIPE_SAP, NPClient, "$Id$")
+
 
 #if defined (ACE_WIN32)
 #define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\") ACE_TEXT (X)

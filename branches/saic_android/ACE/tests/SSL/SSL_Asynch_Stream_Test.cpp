@@ -1,35 +1,32 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests/SSL
-//
-// = FILENAME
-//    SSL_Asynch_Stream_Test.cpp
-//
-// = DESCRIPTION
-//      This program is a functionality test of ACE_SSL_Asynch_Stream.
-//      It demonstrates one proper use case of ACE_SSL_Asynch_Stream in the
-//      Proactor framework and validates its basic functionality.
-//
-//      Usage: SSL_Asynch_Stream_Test [-r <hostname:port#>]
-//                [-t <num threads>] [-d <delay>]
-//                [-i <client conn attempt#>] [-n <client request# per conn>]
-//
-//      Default value:
-//          <hostname:port#>:       ACE_DEFAULT_SERVER_HOST:ACE_DEFAULT_PORT
-//          <num threads>:          ACE_MAX_THREADS
-//          <client conn attempt#>: ACE_MAX_ITERATIONS
-//          <client req# per conn>: 20
-//          <delay>:                0 usec
-//
-// = AUTHOR
-//      Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    SSL_Asynch_Stream_Test.cpp
+ *
+ *  $Id$
+ *
+ *    This program is a functionality test of ACE_SSL_Asynch_Stream.
+ *    It demonstrates one proper use case of ACE_SSL_Asynch_Stream in the
+ *    Proactor framework and validates its basic functionality.
+ *
+ *    Usage: SSL_Asynch_Stream_Test [-r <hostname:port#>]
+ *              [-t <num threads>] [-d <delay>]
+ *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *
+ *    Default value:
+ *        <hostname:port#>:       ACE_DEFAULT_SERVER_HOST:ACE_DEFAULT_PORT
+ *        <num threads>:          ACE_MAX_THREADS
+ *        <client conn attempt#>: ACE_MAX_ITERATIONS
+ *        <client req# per conn>: 20
+ *        <delay>:                0 usec
+ *
+ *
+ *  @author   Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
 
-#include "tests/test_config.h"
+
+#include "../test_config.h"
 #include "ace/Default_Constants.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
@@ -44,7 +41,7 @@
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
-ACE_RCSID(tests, SSL_Asynch_Stream_Test, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS) && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
   // This only works on Win32 platforms and on Unix platforms
@@ -123,18 +120,11 @@ static const ACE_TCHAR *rendezvous = \
 // Total number of proactor threads.
 static size_t num_threads = ACE_MAX_THREADS;
 
-#if defined (CHORUS) // Add platforms that can't handle too many
-                     // connection simultaneously here.
-#define ACE_LOAD_FACTOR /2
-#else
-#define ACE_LOAD_FACTOR
-#endif
-
 // Number of client connections to attempt.
-static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
+static size_t cli_conn_no = ACE_MAX_ITERATIONS;
 
 // Number of requests each client connection sends.
-static size_t cli_req_no = ACE_MAX_THREADS ACE_LOAD_FACTOR;
+static size_t cli_req_no = ACE_MAX_THREADS;
 
 // Delay before a thread sending the next request (in msec.)
 static int req_delay = 0;
@@ -146,8 +136,7 @@ static const char *test_string = "SSL_Asynch_Stream_Test!";
 static int
 disable_signal (int sigmin, int sigmax)
 {
-#ifndef ACE_WIN32
-
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
@@ -157,17 +146,24 @@ disable_signal (int sigmin, int sigmax)
   for (int i = sigmin; i <= sigmax; i++)
     ACE_OS::sigaddset (&signal_set, i);
 
-  //  Put the <signal_set>.
-  if (ACE_OS::pthread_sigmask (SIG_BLOCK, &signal_set, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("pthread_sigmask failed")));
+  // Put the <signal_set>.
+# if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // In multi-threaded application this is not POSIX compliant
+  // but let's leave it just in case.
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+# else
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+# endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Error: (%P|%t): %p\n"),
+                       ACE_TEXT ("SIG_BLOCK failed")),
+                      -1);
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_UNIX_SIGNALS */
 
-  return 1;
+  return 0;
 }
 
 static void
@@ -451,6 +447,9 @@ proactor_loop (void *)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Start handling events.\n")));
 
+  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
+  disable_signal (SIGPIPE, SIGPIPE);
+
   int result =
     ACE_Proactor::instance ()->proactor_run_event_loop ();
   if (result == -1)
@@ -470,6 +469,9 @@ start_clients (void *)
   // Client thread function.
   ACE_INET_Addr addr (rendezvous);
   ACE_SSL_SOCK_Connector connect;
+
+  disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
+  disable_signal (SIGPIPE, SIGPIPE);
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {

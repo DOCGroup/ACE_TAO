@@ -339,13 +339,11 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
 #endif /* ACE_WIN32 */
 }
 
-#if !defined (ACE_LACKS_CLEARERR)
 ACE_INLINE void
 ACE_OS::clearerr (FILE* fp)
 {
   ace_clearerr_helper (fp);
 }
-#endif /* !ACE_LACKS_CLEARERR */
 
 #if !defined (ACE_LACKS_CUSERID)
 ACE_INLINE char *
@@ -370,7 +368,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-  BOOL result = GetUserNameA (user, (u_long *) &maxlen);
+  BOOL const result = GetUserNameA (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
@@ -461,7 +459,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
   ACE_UNUSED_ARG (maxlen);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_WIN32)
-  BOOL result = GetUserNameW (user, (u_long *) &maxlen);
+  BOOL const result = GetUserNameW (user, (u_long *) &maxlen);
   if (result == FALSE)
     ACE_FAIL_RETURN (0);
   else
@@ -544,14 +542,6 @@ ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fflush");
-#if defined (ACE_VXWORKS)
-  if (fp == 0)
-    {
-      // Do not allow fflush(0) on VxWorks
-      return 0;
-    }
-#endif /* ACE_VXWORKS */
-
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int, -1);
 }
 
@@ -588,6 +578,16 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetws (buf, size, fp), wchar_t *, 0);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
+
+ACE_INLINE ACE_HANDLE
+ACE_OS::fileno (FILE *stream)
+{
+#if defined ACE_FILENO_EQUIVALENT
+  return (ACE_HANDLE)ACE_FILENO_EQUIVALENT (stream);
+#else
+  return ace_fileno_helper (stream);
+#endif
+}
 
 #if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
@@ -805,12 +805,7 @@ ACE_OS::rename (const char *old_name,
                 const char *new_name,
                 int flags)
 {
-# if defined (ACE_LACKS_RENAME)
-  ACE_UNUSED_ARG (old_name);
-  ACE_UNUSED_ARG (new_name);
-  ACE_UNUSED_ARG (flags);
-  ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE)
   // Win CE is always wide-char.
   ACE_UNUSED_ARG (flags);
   if (0 == ::MoveFile (ACE_TEXT_CHAR_TO_TCHAR (old_name),
@@ -827,10 +822,10 @@ ACE_OS::rename (const char *old_name,
   if (::MoveFileExA (old_name, new_name, flags) == 0)
     ACE_FAIL_RETURN (-1);
   return 0;
-# else /* ACE_LACKS_RENAME */
+# else
   ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
-# endif /* ACE_LACKS_RENAME */
+# endif /* ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -839,12 +834,7 @@ ACE_OS::rename (const wchar_t *old_name,
                 const wchar_t *new_name,
                 int flags)
 {
-# if defined (ACE_LACKS_RENAME)
-  ACE_UNUSED_ARG (old_name);
-  ACE_UNUSED_ARG (new_name);
-  ACE_UNUSED_ARG (flags);
-  ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_WINCE)
+# if defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (flags);
   if (::MoveFileW (old_name, new_name) == 0)
     ACE_FAIL_RETURN (-1);
@@ -862,11 +852,11 @@ ACE_OS::rename (const wchar_t *old_name,
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
-# else /* ACE_LACKS_RENAME */
+# else
   ACE_Wide_To_Ascii nold_name (old_name);
   ACE_Wide_To_Ascii nnew_name (new_name);
   return ACE_OS::rename (nold_name.char_rep (), nnew_name.char_rep (), flags);
-# endif /* ACE_LACKS_RENAME */
+# endif /* ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -1011,7 +1001,9 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
       defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
-      defined (ACE_HAS_VSWPRINTF) || defined (ACE_WIN32_VC9) || \
+      defined (ACE_HAS_VSWPRINTF) || \
+      (defined (ACE_WIN32_VC10) && !defined (ACE_HAS_WINCE)) || \
+      (defined (ACE_WIN32_VC9) && !defined (ACE_HAS_WINCE)) || \
       (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
       _MSC_FULL_VER > 140050000)
 
@@ -1054,11 +1046,11 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
   result = ::_vsnprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
-  if (result == static_cast<int> (maxlen))
+  if (result == static_cast<int> (maxlen) && maxlen > 0)
     buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
-  if (result == -1)
+  if (result == -1 && maxlen > 0)
     buffer[maxlen-1] = '\0';
 # endif
   // In out-of-range conditions, C99 defines vsnprintf() to return the number
@@ -1102,25 +1094,23 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
   result = ::_vsnwprintf (buffer, maxlen, format, ap);
 
   // Win32 doesn't regard a full buffer with no 0-terminate as an overrun.
-  if (result == static_cast<int> (maxlen))
+  if (result == static_cast<int> (maxlen) && maxlen > 0)
     buffer[maxlen-1] = '\0';
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
-  if (result == -1)
+  if (result == -1 && maxlen > 0)
     buffer[maxlen-1] = '\0';
 # else
   result = vswprintf (buffer, maxlen, format, ap);
 #endif
 
-  // In out-of-range conditions, C99 defines vsnprintf() to return the number
-  // of characters that would have been written if enough space was available.
-  // Earlier variants of the vsnprintf() (e.g. UNIX98) defined it to return
-  // -1. This method follows the C99 standard, but needs to guess at the
-  // value; uses maxlen + 1.
+  // In out-of-range conditions, C99 defines vsnprintf() to return the
+  // number of characters that would have been written if enough space
+  // was available.  Earlier variants of the vsnprintf() (e.g. UNIX98)
+  // defined it to return -1. This method follows the C99 standard,
+  // but needs to guess at the value; uses maxlen + 1.
   if (result == -1)
-    {
-      result = static_cast <int> (maxlen + 1);
-    }
+    result = static_cast <int> (maxlen + 1);
 
   return result;
 

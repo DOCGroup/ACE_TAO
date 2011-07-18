@@ -57,15 +57,13 @@ ACE_OS::waitpid (pid_t pid,
 
   // Don't try to get the process exit status if wait failed so we can
   // keep the original error code intact.
-  switch (::WaitForSingleObject (phandle,
-                                 blocking_period))
+  switch (::WaitForSingleObject (phandle, blocking_period))
     {
     case WAIT_OBJECT_0:
       if (status != 0)
         // The error status of <GetExitCodeProcess> is nonetheless
         // not tested because we don't know how to return the value.
-        ::GetExitCodeProcess (phandle,
-                              status);
+        ::GetExitCodeProcess (phandle, status);
       break;
     case WAIT_TIMEOUT:
       errno = ETIME;

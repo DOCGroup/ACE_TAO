@@ -1,8 +1,5 @@
+// $Id$
 #include "SSL_Asynch_Stream.h"
-
-ACE_RCSID (ACE_SSL,
-           SSL_Asynch_Stream,
-           "$Id$")
 
 // This only works on platforms with Asynchronous IO support.
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
@@ -505,7 +502,7 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake (void)
               return -1;
             }
         }
-      return 1;  
+      return 1;
     }
 
   if (this->flags_ & SF_REQ_SHUTDOWN)

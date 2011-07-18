@@ -171,7 +171,13 @@ sub IgnoreExeSubDir
 {
     my $self = shift;
 
-    if (@_ != 0) {
+    # If we have -Config ARCH, do not set IGNOREEXESUBDIR, since with ARCH
+    # all executables (even those in $ACE_ROOT/bin, etc.) are located in the
+    # architecture-specific subdirectory.
+    if (@_ != 0 && !grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+        $self->{IGNOREEXESUBDIR} = shift;
+    }
+    elsif (@_ != 0 && $self->{EXECUTABLE} =~ /perl$/) {
         $self->{IGNOREEXESUBDIR} = shift;
     }
 
@@ -228,6 +234,9 @@ sub Spawn ()
     my $state = 0;
     my $cmdline = "";
     my $executable = "";
+
+    my $chdir_needed = 0;
+    my $curdir_bak;
 
     if (defined $self->{PURIFY_CMD}) {
         my $orig_cmdline = $self->CommandLine ();
@@ -286,16 +295,40 @@ sub Spawn ()
         $cmdline = "cmd /C start /B /WAIT $self->{WINCE_CTL} $pocket_device_opts -m NAME=start_test.cmd;WAIT=401000; -e"
     }
     elsif (defined $ENV{'ACE_TEST_WINDOW'}) {
-      $state = ($ENV{'ACE_TEST_WINDOW'} =~ /\/k/i ? CREATE_NEW_CONSOLE : DETACHED_PROCESS);
-      $executable = $ENV{'ComSpec'};
-      $cmdline = $ENV{'ACE_TEST_WINDOW'} . ' ' . $self->CommandLine();
+        $state = ($ENV{'ACE_TEST_WINDOW'} =~ /\/k/i ? CREATE_NEW_CONSOLE : DETACHED_PROCESS);
+        $executable = $ENV{'ComSpec'};
+        $cmdline = $ENV{'ACE_TEST_WINDOW'} . ' ' . $self->CommandLine();
     }
     else {
         $executable = $self->Executable ();
         $cmdline = $self->CommandLine ();
+        if ((defined $self->{TARGET}) && ($ENV{'ACE_ROOT'} ne $self->{TARGET}->ACE_ROOT ())) {
+          $chdir_needed = 1;
+          $curdir_bak = cwd ();
+          chdir (dirname ($executable));
+        }
     }
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print "$executable $cmdline\n";
+    }
+    my %backup_ENV = %ENV;
+    # update environment for target
+    if (defined $self->{TARGET}) {
+        if (!defined $self->{TARGET}->{REMOTE_SHELL}) {
+            my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
+            while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print "INFO: adding target environment $env_key=$env_value\n";
+                }
+                $ENV{$env_key} = $env_value;
+            }
+        }
+        if ($self->{TARGET}->{LIBPATH}) {
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print "INFO: adding target libpath ".$self->{TARGET}->{LIBPATH}."\n";
+            }
+            PerlACE::add_lib_path ($self->{TARGET}->{LIBPATH});
+        }
     }
     my $status = Win32::Process::Create ($self->{PROCESS},
                                          $executable,
@@ -303,7 +336,10 @@ sub Spawn ()
                                          ($state == 0 ? 1 : 0),
                                          $state,
                                          '.');
-
+    %ENV = %backup_ENV;
+    if ($chdir_needed) {
+      chdir ($curdir_bak);
+    }
     if ($status == 0) {
         print STDERR "ERROR: Spawn failed for <", $self->CommandLine (), ">\n";
         return -1;
@@ -414,6 +450,28 @@ sub TimedWait ($)
     my($self) = shift;
     my($timeout) = shift;
     return $self->Wait($timeout);
+}
+
+###
+
+sub kill_all
+{
+  my $procmask = shift;
+  my $target = shift;
+  my $pid = -1;
+  for my $line (`tasklist /nh /fo csv`) {
+    # find matching process line
+    if ($line =~ /$procmask/) {
+      # find process PID
+      if ($line =~ /^\"[^\"]+\",\"(\d+)\",/) {
+        $pid = $1;
+        Win32::Process::KillProcess ($pid, 0); # kill process
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+          print STDERR "INFO: Killed process at [$line]\n"
+        }
+      }
+    }
+  }
 }
 
 1;

@@ -7,7 +7,7 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID(ace, Manual_Event, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

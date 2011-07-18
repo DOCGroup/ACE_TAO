@@ -8,6 +8,7 @@
 #include "ace/Task.h"
 #include "ace/Containers.h"
 #include "ace/Synch.h"
+#include "ace/Condition_T.h"
 
 // Listing 4 code/ch16
 class Follower
@@ -47,7 +48,7 @@ class LF_ThreadPool : public ACE_Task<ACE_MT_SYNCH>
 public:
   LF_ThreadPool () : shutdown_(0), current_leader_(0)
   {
-    ACE_TRACE (ACE_TEXT ("LF_ThreadPool::TP"));
+    ACE_TRACE ("LF_ThreadPool::TP");
   }
 
   virtual int svc (void);
@@ -66,13 +67,13 @@ private:
 
   int leader_active (void)
   {
-    ACE_TRACE (ACE_TEXT ("LF_ThreadPool::leader_active"));
+    ACE_TRACE ("LF_ThreadPool::leader_active");
     return this->current_leader_ != 0;
   }
 
   void leader_active (ACE_thread_t leader)
   {
-    ACE_TRACE (ACE_TEXT ("LF_ThreadPool::leader_active"));
+    ACE_TRACE ("LF_ThreadPool::leader_active");
     this->current_leader_ = leader;
   }
 
@@ -96,7 +97,7 @@ private:
 int
 LF_ThreadPool::svc (void)
 {
-  ACE_TRACE (ACE_TEXT ("LF_ThreadPool::svc"));
+  ACE_TRACE ("LF_ThreadPool::svc");
   while (!done ())
     {
       become_leader ();  // Block until this thread is the leader.
@@ -124,7 +125,7 @@ LF_ThreadPool::svc (void)
 int
 LF_ThreadPool::become_leader (void)
 {
-  ACE_TRACE (ACE_TEXT ("LF_ThreadPool::become_leader"));
+  ACE_TRACE ("LF_ThreadPool::become_leader");
 
   ACE_GUARD_RETURN
     (ACE_Thread_Mutex, leader_mon, this->leader_lock_, -1);
@@ -150,7 +151,7 @@ LF_ThreadPool::become_leader (void)
 Follower*
 LF_ThreadPool::make_follower (void)
 {
-  ACE_TRACE (ACE_TEXT ("LF_ThreadPool::make_follower"));
+  ACE_TRACE ("LF_ThreadPool::make_follower");
 
   ACE_GUARD_RETURN
     (ACE_Thread_Mutex, follower_mon, this->followers_lock_, 0);
@@ -164,7 +165,7 @@ LF_ThreadPool::make_follower (void)
 int
 LF_ThreadPool::elect_new_leader (void)
 {
-  ACE_TRACE (ACE_TEXT ("LF_ThreadPool::elect_new_leader"));
+  ACE_TRACE ("LF_ThreadPool::elect_new_leader");
 
   ACE_GUARD_RETURN
     (ACE_Thread_Mutex, leader_mon, this->leader_lock_, -1);
@@ -198,7 +199,7 @@ LF_ThreadPool::elect_new_leader (void)
 void
 LF_ThreadPool::process_message (ACE_Message_Block *mb)
 {
-  ACE_TRACE (ACE_TEXT ("LF_ThreadPool::process_message"));
+  ACE_TRACE ("LF_ThreadPool::process_message");
   int msgId;
   ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
   mb->release ();
@@ -223,7 +224,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::sleep (2);
   ACE_Time_Value tv (1L);
 
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(int)), -1);

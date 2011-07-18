@@ -5,7 +5,7 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(TLI_SAP, CPP_ATM_client, "$Id$")
+
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 

@@ -11,7 +11,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Timer_List_T, "$Id$")
+
 
 // Default Constructor
 

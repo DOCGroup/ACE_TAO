@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Address_Test.cpp
-//
-// = DESCRIPTION
-//  Test all the member functions of the Address family:
-//  GenAddress, MacAddress, IpxAddress, IpAddress, UdpAddress
-//  all which derive from abstract base class Address.
-//
-// = AUTHOR
-//    Michael R. MacFaden <mrm@cisco.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Address_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Test all the member functions of the Address family:
+ *  GenAddress, MacAddress, IpxAddress, IpAddress, UdpAddress
+ *  all which derive from abstract base class Address.
+ *
+ *
+ *  @author Michael R. MacFaden <mrm@cisco.com>
+ */
+//=============================================================================
+
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -43,8 +40,6 @@ DAMAGES.
 #include "ace/OS_NS_string.h"
 #include "asnmp/address.h"
 #include "test_config.h"
-
-ACE_RCSID(tests, Address_Test, "$Id$")
 
 // test the GenAddress interface
 /*

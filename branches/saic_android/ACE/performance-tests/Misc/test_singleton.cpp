@@ -36,8 +36,6 @@
 
 #include "test_singleton.h"
 
-ACE_RCSID(Misc, test_singleton, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 static const int DEFAULT_ITERATIONS = 100000000;
@@ -167,7 +165,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 template ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX> *
   ACE_Singleton<DC_Singleton, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
-
 
 #else
 int

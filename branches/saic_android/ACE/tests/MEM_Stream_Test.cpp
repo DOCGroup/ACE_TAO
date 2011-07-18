@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    MEM_Stream_Test.cpp
-//
-// = DESCRIPTION
-//     This is a test of the <ACE_MEM_Acceptor> and
-//     <ACE_MEM_Connector> classes.
-//
-// = AUTHOR
-//    Nanbor Wang <nanbor@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    MEM_Stream_Test.cpp
+ *
+ *  $Id$
+ *
+ *   This is a test of the <ACE_MEM_Acceptor> and
+ *   <ACE_MEM_Connector> classes.
+ *
+ *
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -32,7 +29,7 @@
 #include "ace/Singleton.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
+
 
 #if (defined (ACE_HAS_THREADS) || defined (ACE_HAS_PROCESS_SPAWN)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
@@ -186,9 +183,9 @@ run_client (u_short port,
 
   ACE_TCHAR buf[MAXPATHLEN];
 
-  for (ssize_t cntr = 0; cntr < NUMBER_OF_ITERATIONS; cntr ++)
+  for (size_t cntr = 0; cntr < NUMBER_OF_ITERATIONS; cntr ++)
     {
-      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SSIZE_T_FORMAT_SPECIFIER,
+      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SIZE_T_FORMAT_SPECIFIER,
                        cntr);
 
       ssize_t slen = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);

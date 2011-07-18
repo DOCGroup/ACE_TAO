@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 void
-ACE::HTBP::Session::reconnect ()
+ACE::HTBP::Session::reconnect () const
 {
   if (!this->closed_ && this->proxy_addr_)
     {

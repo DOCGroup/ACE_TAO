@@ -26,26 +26,20 @@ ACEXML_Svcconf_Parser::ACEXML_Svcconf_Parser ()
   this->parser_.setDTDHandler (&this->svcconf_handler_);
   this->parser_.setErrorHandler (&this->svcconf_handler_);
   this->parser_.setEntityResolver (&this->svcconf_handler_);
-  ACEXML_TRY_NEW_ENV
+  try
     {
       this->parser_.setFeature (ACE_TEXT ("http://xml.org/sax/features/validation"),
-                                0
-                                ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_TRY_CHECK;
+                                0);
     }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
+  catch (const ACEXML_SAXException& ex)
     {
       ex.print ();              // Can't do much except printing the error.
-      return;
     }
-  ACEXML_ENDTRY;
 }
 
 ACEXML_Svcconf_Parser::~ACEXML_Svcconf_Parser ()
 {
-
 }
-
 
 int
 ACEXML_Svcconf_Parser::parse_file (const ACE_TCHAR file[])
@@ -66,17 +60,15 @@ ACEXML_Svcconf_Parser::parse_file (const ACE_TCHAR file[])
 
   this->input_stream_.setCharStream (fstm);
 
-  ACEXML_TRY_NEW_ENV
+  try
     {
-      this->parser_.parse (&this->input_stream_ ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_TRY_CHECK;
+      this->parser_.parse (&this->input_stream_);
     }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
+  catch (const ACEXML_SAXException& ex)
     {
       ex.print ();
       return -1;
     }
-  ACEXML_ENDTRY;
   return 0;
 }
 
@@ -94,12 +86,11 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
                        "input stream.\n"), -1);
 
   this->input_stream_.setCharStream (stm);
-  ACEXML_TRY_NEW_ENV
+  try
     {
-      this->parser_.parse (&this->input_stream_ ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_TRY_CHECK;
+      this->parser_.parse (&this->input_stream_);
     }
-  ACEXML_CATCH (ACEXML_SAXException, ex)
+  catch (const ACEXML_SAXException& ex)
     {
       // If there was a problem parsing the stream, set the errno
       // to EINVAL to indicate to upper levels that the stream was
@@ -108,17 +99,7 @@ ACEXML_Svcconf_Parser::parse_string (const ACE_TCHAR str[])
       ex.print ();
       return -1;
     }
-  ACEXML_ENDTRY;
   return 0;
 }
-
-#else
-
-#  if defined (_AIX) && \
-     (defined (__IBMCPP__) && (__IBMCPP__ >= 500) && (__IBMCPP__ < 600))
-// This simply shuts up the AIX linker that complains there are no
-// csects or exported symbols when building with Visual Age C++ 5.
-extern "C" void ace_shut_up_aix_ld (void) {};
-#  endif /* AIX && __IBMCPP__ == 500 */
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */

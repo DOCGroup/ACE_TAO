@@ -7,40 +7,40 @@
 
 template <class T, class ACE_LOCK> char *
 JAWS_Cached_Allocator<T, ACE_LOCK>::get_next_pool (char *pool)
-{   
+{
   char *next = 0;
   char *next_indirect = pool + (this->pool_size_);
   ACE_OS::memcpy (&next, next_indirect, sizeof (char *));
   return next;
-}   
-    
+}
+
 template <class T, class ACE_LOCK> void
 JAWS_Cached_Allocator<T, ACE_LOCK>::set_next_pool (char *pool, char *next_pool)
-{   
+{
   char *next_indirect = pool + (this->pool_size_);
   ACE_OS::memcpy (next_indirect, &next_pool, sizeof (char *));
-}   
-    
+}
+
 template <class T, class ACE_LOCK> void
 JAWS_Cached_Allocator<T, ACE_LOCK>::extend_pool (void)
-{   
+{
   char *new_pool = 0;
   ACE_NEW (new_pool, char[this->pool_size_ + sizeof (char *)]);
-    
+
   for (size_t c = 0; c < (this->pool_size_ / sizeof (T)); c++)
     {
       void* placement = new_pool + c * sizeof(T);
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
       this->set_next_pool (new_pool, 0);
     }
-    
+
   if (this->pool_head_ == 0)
     this->pool_head_ = this->pool_tail_ = new_pool;
-  else  
+  else
     this->set_next_pool (this->pool_tail_, new_pool);
-    
+
   this->pool_tail_ = new_pool;
-}   
+}
 
 template <class T, class ACE_LOCK>
 JAWS_Cached_Allocator<T, ACE_LOCK>::JAWS_Cached_Allocator (size_t n_chunks)

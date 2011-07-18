@@ -1,11 +1,9 @@
+// $Id$
+
 #ifndef ACE_PI_MALLOC_CPP
 #define ACE_PI_MALLOC_CPP
 
 #include "ace/PI_Malloc.h"
-
-ACE_RCSID (ace,
-           PI_Malloc,
-           "$Id$")
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 

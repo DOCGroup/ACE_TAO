@@ -4,8 +4,6 @@
 #include "Benchmark_Performance.h"
 #include "ace/Basic_Types.h"
 
-ACE_RCSID(Synch_Benchmarks, Benchmark_Performance, "$Id$")
-
 #if defined (ACE_HAS_THREADS)
 
 // Global variables (used by the dynamically linked services).

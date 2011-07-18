@@ -16,7 +16,7 @@ public:
   ~SOCK (void) { ACE_REMOVE_OBJECT; }
 
   void dump (void) const {
-    ACE_OS::fprintf (stderr, "hello from SOCK = %@\n", this);
+    ACE_DEBUG ((LM_DEBUG, "hello from SOCK = %@\n", this));
   }
 
   // ...
@@ -29,7 +29,7 @@ public:
   ~SOCK_Acceptor (void) { ACE_REMOVE_OBJECT; }
 
   void dump (void) const {
-    ACE_OS::fprintf (stderr, "hello from SOCK_Acceptor = %@\n", this);
+    ACE_DEBUG ((LM_DEBUG, "hello from SOCK_Acceptor = %@\n", this));
   }
 
   // ...
@@ -42,7 +42,7 @@ public:
   ~SOCK_Stream (void) { ACE_REMOVE_OBJECT; }
 
   void dump (void) const {
-    ACE_OS::fprintf (stderr, "hello from SOCK_Stream = %@\n", this);
+    ACE_DEBUG ((LM_DEBUG, "hello from SOCK_Stream = %@\n", this));
   }
 
   // ...

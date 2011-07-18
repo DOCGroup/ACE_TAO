@@ -3,7 +3,7 @@
 
 #include "ace/MEM_Connector.h"
 
-ACE_RCSID(ace, MEM_Connector, "$Id$")
+
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 

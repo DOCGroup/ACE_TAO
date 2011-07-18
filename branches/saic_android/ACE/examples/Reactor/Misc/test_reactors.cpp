@@ -8,7 +8,7 @@
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(Misc, test_reactors, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 

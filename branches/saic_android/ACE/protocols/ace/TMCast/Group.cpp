@@ -1,17 +1,17 @@
-// file      : ACE_TMCast/Group.cpp
+// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
 
 #include "Group.hpp"
 
 #include <typeinfo>
 
 // OS primitives
-#include <ace/OS.h>
 #include <ace/OS_NS_stdlib.h>
 #include <ace/Synch.h>
 #include <ace/Time_Value.h>
 #include <ace/SOCK_Dgram_Mcast.h>
+#include <ace/Condition_T.h>
+#include <ace/OS_NS_sys_time.h>
 
 #include "Messaging.hpp"
 
@@ -298,7 +298,9 @@ namespace ACE_TMCast
     ACE_Thread_Mutex mutex_;
     ACE_Condition<ACE_Thread_Mutex> cond_;
 
+// FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+// FUZZ: enable check_for_ACE_Guard
 
     char id_[Protocol::MEMBER_ID_LENGTH];
 
@@ -429,7 +431,7 @@ namespace ACE_TMCast
           {
             Recv* data = dynamic_cast<Recv*> (m.get ());
 
-            if (size < data->size ()) 
+            if (size < data->size ())
               throw Group::InsufficienSpace ();
 
             ACE_OS::memcpy (msg, data->payload (), data->size ());
@@ -463,7 +465,9 @@ namespace ACE_TMCast
     ACE_Condition<ACE_Thread_Mutex> send_cond_;
     ACE_Condition<ACE_Thread_Mutex> recv_cond_;
 
+    // FUZZ: disable check_for_ACE_Guard
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
+    // FUZZ: enable check_for_ACE_Guard
 
     bool failed_;
 

@@ -5,8 +5,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "HTTP_Config.h"
 
-ACE_RCSID(server, HTTP_Config, "$Id$")
-
 // static HTTP_Config_Info config_info;
 
 HTTP_Config_Info *HTTP_Config::instance_ = 0;

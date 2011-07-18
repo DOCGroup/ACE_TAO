@@ -6,12 +6,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
-use PerlACE::Run_Test;
+use PerlACE::TestTarget;
 
-$TEST = new PerlACE::Process ("test");
+my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-$status = $TEST->SpawnWaitKill (20);
+$SV = $server->CreateProcess ("test");
 
-$status = 1 if ($status < 0);
+$test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
-exit $status;
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
+}
+
+exit 0;
+

@@ -38,7 +38,8 @@ typedef unsigned long ACE_Reactor_Mask;
 /**
  * @class ACE_Event_Handler
  *
- * @brief Provides an abstract interface for handling various types of
+ * @brief
+ * Provides an abstract interface for handling various types of
  * I/O, timer, and signal events.
  *
  * Subclasses read/write input/output on an I/O descriptor,
@@ -94,9 +95,9 @@ public:
 
   // = Get/set priority
 
-  // Priorities run from MIN_PRIORITY (which is the "lowest priority")
-  // to MAX_PRIORITY (which is the "highest priority").
   /// Get the priority of the Event_Handler.
+  /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
+  /// to MAX_PRIORITY (which is the "highest priority").
   virtual int priority (void) const;
 
   /// Set the priority of the Event_Handler.
@@ -124,10 +125,10 @@ public:
   /// Called when a process exits.
   virtual int handle_exit (ACE_Process *);
 
-  /// Called when a <handle_*()> method returns -1 or when the
-  /// <remove_handler> method is called on an ACE_Reactor.  The
+  /// Called when a handle_*() method returns -1 or when the
+  /// remove_handler() method is called on an ACE_Reactor.  The
   /// @a close_mask indicates which event has triggered the
-  /// <handle_close> method callback on a particular @a handle.
+  /// handle_close() method callback on a particular @a handle.
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
@@ -145,17 +146,17 @@ public:
       /// The application takes responsibility of resuming the handler
       ACE_APPLICATION_RESUMES_HANDLER
     };
+
   /**
    * Called to figure out whether the handler needs to resumed by the
    * reactor or the application can take care of it. The default
    * value of 0 would be returned which would allow the reactor to
    * take care of resumption of the handler. The application can
    * return a value more than zero and decide to resume the handler
-   * themseleves.
+   * themselves.
    *
-   * @note This method is only useful for the ACE_TP_Reactor. Sad
-   * that we have to have this method in a class that is supposed to
-   * be used across different components in ACE.
+   * @note This method has an affect only when used with the
+   * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
   virtual int resume_handler (void);
 
@@ -178,8 +179,8 @@ public:
    * non-sockets (such as ACE_STDIN).  This is commonly used in
    * situations where the Reactor is used to demultiplex read events
    * on ACE_STDIN on UNIX.  Note that @a event_handler must be a
-   * subclass of ACE_Event_Handler.  If the <get_handle> method of
-   * this event handler returns <ACE_INVALID_HANDLE> we default to
+   * subclass of ACE_Event_Handler.  If the get_handle() method of
+   * this event handler returns ACE_INVALID_HANDLE we default to
    * reading from ACE_STDIN.
    */
   static ACE_THR_FUNC_RETURN read_adapter (void *event_handler);
@@ -194,7 +195,7 @@ public:
                                      ACE_Thread_Manager *thr_mgr,
                                      int flags = THR_DETACHED);
 
-  /// Performs the inverse of the <register_stdin_handler> method.
+  /// Performs the inverse of the register_stdin_handler() method.
   static int remove_stdin_handler (ACE_Reactor *reactor,
                                    ACE_Thread_Manager *thr_mgr);
 
@@ -239,7 +240,8 @@ public:
   /**
    * @class Reference_Counting_Policy
    *
-   * @brief This policy dictates the reference counting requirements
+   * @brief
+   * This policy dictates the reference counting requirements
    * for the handler.
    *
    * This policy allows applications to configure whether it wants the
@@ -367,7 +369,7 @@ public:
   ACE_Notification_Buffer (ACE_Event_Handler *eh,
                            ACE_Reactor_Mask mask);
 
-  /// Default dtor.
+  /// Default destructor.
   ~ACE_Notification_Buffer (void);
 
   /// Pointer to the Event_Handler that will be dispatched

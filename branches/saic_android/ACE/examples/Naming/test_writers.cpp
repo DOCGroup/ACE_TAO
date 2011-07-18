@@ -6,8 +6,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Naming, test_writers, "$Id$")
-
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int i;

@@ -29,10 +29,10 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
+    $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
-    $self->{TARGET} = shift;
     if (!defined $PerlACE::ProcessVX::WAIT_DELAY_FACTOR) {
         $PerlACE::ProcessVX::WAIT_DELAY_FACTOR = 3;
     }
@@ -165,6 +165,15 @@ sub Spawn ()
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
             @cmds[$cmdnr++] = 'C putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
         }
+        if (defined $self->{TARGET}) {
+            my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
+            while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print "INFO: adding target environment $env_key=$env_value\n";
+                }
+                @cmds[$cmdnr++] = 'C putenv("' . $env_key. '=' . $env_value . '")';
+            }
+        }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
             @cmds[$cmdnr++] = 'C memShow()';
@@ -192,7 +201,7 @@ sub Spawn ()
         my(@unload_commands);
         if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
           my $vxtest_file = $program . '.vxtest';
-          if (handle_vxtest_file($vxtest_file, \@load_commands, \@unload_commands)) {
+          if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
               @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
               push @cmds, @load_commands;
               $cmdnr += scalar @load_commands;
@@ -219,6 +228,15 @@ sub Spawn ()
 
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
             @cmds[$cmdnr++] = 'putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
+        }
+        if (defined $self->{TARGET}) {
+            my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
+            while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print "INFO: adding target environment $env_key=$env_value\n";
+                }
+                @cmds[$cmdnr++] = 'putenv("' . $env_key. '=' . $env_value . '")';
+            }
         }
 
         @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
@@ -270,8 +288,6 @@ if (!$t->open()) {
 my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
 my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
 
-$t->print("\n");
-
 if (defined $target_login)  {
   $t->waitfor('/VxWorks login: $/');
   $t->print("$target_login");
@@ -282,20 +298,19 @@ if (defined $target_password)  {
   $t->print("$target_password");
 }
 
-$t->print("\n");
 # wait for the prompt
-my $blk;
-my $buf;
+my $buf = '';
 my $prompt1 = '-> $';
-while ($blk = $t->get) {
-  printf $blk;
+while (1) {
+  my $blk = $t->get;
+  print $blk;
   $buf .= $blk;
   if ($buf =~ /$prompt1/) {
     last;
   }
 }
 if ($buf !~ /$prompt1/) {
-  die "ERROR: Didn't got prompt but got <$buf> <$blk>";
+  die "ERROR: Didn't got prompt but got <$buf>";
 }
 my $i = 0;
 my @lines;
@@ -304,10 +319,10 @@ while($i < $cmdnr) {
     print @cmds[$i]."\n";
   }
   if ($t->print (@cmds[$i++])) {
-    my $blk;
-    my $buf;
-    while ($blk = $t->get) {
-      printf $blk;
+    my $buf = '';
+    while (1) {
+      my $blk = $t->get;
+      print $blk;
       $buf .= $blk;
       if ($buf =~ /$prompt/) {
         last;
@@ -409,6 +424,5 @@ sub Kill ()
 
     $self->{RUNNING} = 0;
 }
-
 
 1;

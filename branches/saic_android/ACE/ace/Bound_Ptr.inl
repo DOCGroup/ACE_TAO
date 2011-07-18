@@ -67,7 +67,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
       counter->obj_ref_count_ = -1;
 
     if (--counter->self_ref_count_ == 0)
-      // Since counter contains the lock held by the ACE_Guard, the
+      // Since counter contains the lock held by the guard, the
       // guard needs to be released before freeing the memory holding
       // the lock. So save the pointer to free, then release, then
       // free.
@@ -112,7 +112,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK>* c
     ACE_GUARD (ACE_LOCK, guard, counter->lock_);
 
     if (--counter->self_ref_count_ == 0)
-      // Since counter contains the lock held by the ACE_Guard, the
+      // Since counter contains the lock held by the guard, the
       // guard needs to be released before freeing the memory holding
       // the lock. So save the pointer to free, then release, then
       // free.

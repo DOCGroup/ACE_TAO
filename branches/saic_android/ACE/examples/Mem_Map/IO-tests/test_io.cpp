@@ -11,7 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
 
-ACE_RCSID(IO_tests, test_io, "$Id$")
+
 
 #if !defined(_WIN32)
 

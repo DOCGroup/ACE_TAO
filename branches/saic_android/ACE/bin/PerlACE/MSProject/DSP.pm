@@ -11,12 +11,12 @@ our @ISA = ("PerlACE::MSProject");
 
 # Constructor
 
-sub new  
+sub new
 {
     my $proto = shift;
     my $class = ref ($proto) || $proto;
     my $self = $class->SUPER::new (@_);
-    
+
     $self->{COMPILER} = "msdev.com";
 
     bless ($self, $class);

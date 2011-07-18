@@ -93,8 +93,6 @@ struct rusage
 #include <sys/resource.h>
 #endif
 
-ACE_RCSID(C, new_ttcp, "$Id$")
-
 struct sockaddr_in sinme;
 struct sockaddr_un sunme;
 struct sockaddr_in sinhim;

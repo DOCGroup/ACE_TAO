@@ -1,23 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    test_proactor3.cpp
-//
-// = DESCRIPTION
-//    This program illustrates how the <ACE_Proactor> can be used to
-//    implement an application that does various asynchronous
-//    operations.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//    modified by  Alexander Libman <alibman@baltimore.com>
-//    from original test_proactor.cpp
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_proactor3.cpp
+ *
+ *  $Id$
+ *
+ *  This program illustrates how the <ACE_Proactor> can be used to
+ *  implement an application that does various asynchronous
+ *  operations.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu> modified by  Alexander Libman <alibman@baltimore.com> from original test_proactor.cpp
+ */
+//=============================================================================
+
 
 #include "ace/Signal.h"
 
@@ -39,7 +35,7 @@
 
 #include "ace/Task.h"
 
-ACE_RCSID(Proactor, test_proactor, "test_proactor.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
+
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
@@ -88,10 +84,13 @@ static int threads = 1;
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
+/**
+ * @class MyTask:
+ *
+ * @brief MyTask plays role for Proactor threads pool
+ */
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   MyTask plays role for Proactor threads pool
 public:
   MyTask (void) : threads_ (0), proactor_ (0) {}
 
@@ -111,7 +110,7 @@ private:
 void
 MyTask::create_proactor (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
 
   if (threads_ == 0)
     {
@@ -158,7 +157,7 @@ MyTask::create_proactor (void)
 void
 MyTask::delete_proactor (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   if (--threads_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Delete Proactor\n"));
@@ -193,23 +192,23 @@ public:
   ~Receiver (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// This is called after the new connection has been accepted.
+  ///FUZZ: enable check_for_lack_ACE_OS
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
-  // This is called after the new connection has been accepted.
-  //FUZZ: enable check_for_lack_ACE_OS
 
   static long get_number_sessions (void) { return sessions_; }
 
 protected:
   // These methods are called by the framework
 
+  /// This is called when asynchronous <read> operation from the socket
+  /// complete.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous <read> operation from the socket
-  // complete.
 
+  /// This is called when an asynchronous <write> to the file
+  /// completes.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when an asynchronous <write> to the file
-  // completes.
 
 private:
   int  initiate_read_stream (void);
@@ -230,14 +229,14 @@ Receiver::Receiver (void)
   : handle_ (ACE_INVALID_HANDLE),
     io_count_ (0)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   sessions_++;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
 }
 
 Receiver::~Receiver (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   sessions_--;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%d\n", sessions_));
@@ -248,7 +247,7 @@ int
 Receiver::check_destroy (void)
 {
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+    ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
     if (io_count_ > 0)
       return 1;
@@ -284,7 +283,7 @@ Receiver::open (ACE_HANDLE handle,
 int
 Receiver::initiate_read_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
@@ -308,7 +307,7 @@ Receiver::initiate_read_stream (void)
 int
 Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
   if (nbytes <= 0)
     {
       mb.release ();
@@ -375,8 +374,8 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
   check_destroy ();
 }
@@ -412,24 +411,27 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
   check_destroy ();
 }
 
+/**
+ * @class Sender
+ *
+ * @brief Sends welcome messages receives them back.
+ */
 class Sender : public ACE_Handler
 {
-  // = TITLE
-  //   Sends welcome messages receives them back.
 public:
   Sender (void);
   ~Sender (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
   void close (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_HANDLE handle (void) const;
   virtual void handle (ACE_HANDLE);
@@ -437,28 +439,28 @@ public:
 protected:
   // These methods are called by the freamwork
 
+  /// This is called when asynchronous reads from the socket complete
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous reads from the socket complete
 
+  /// This is called when asynchronous writes from the socket complete
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
-  // This is called when asynchronous writes from the socket complete
 
 private:
 
   int initiate_read_stream (void);
   int initiate_write_stream (void);
 
+  /// Network I/O handle
   ACE_SOCK_Stream stream_;
-  // Network I/O handle
 
+  /// ws (write stream): for writing to the socket
   ACE_Asynch_Write_Stream ws_;
-  // ws (write stream): for writing to the socket
 
+  /// rs (read file): for reading from the socket
   ACE_Asynch_Read_Stream rs_;
-  // rs (read file): for reading from the socket
 
+  /// Welcome message
   ACE_Message_Block welcome_message_;
-  // Welcome message
 
   ACE_Recursive_Thread_Mutex mutex_;
   long io_count_;
@@ -537,7 +539,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 int
 Sender::initiate_write_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
   welcome_message_.rd_ptr(welcome_message_.base ());
   welcome_message_.wr_ptr(welcome_message_.base ());
@@ -556,7 +558,7 @@ Sender::initiate_write_stream (void)
 int
 Sender::initiate_read_stream (void)
 {
-  ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
+  ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
@@ -615,8 +617,8 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
 }
 
@@ -659,8 +661,8 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     }
 
   {
-    ACE_Guard<ACE_Recursive_Thread_Mutex> locker (mutex_);
-    io_count_--;
+    ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
+    --io_count_;
   }
 }
 

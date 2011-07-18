@@ -16,8 +16,6 @@
 #define ACE_NULL_CONDITION_H
 #include /**/ "ace/pre.h"
 
-// All methods in this class are inline, so there is no
-// need to import or export on Windows. -- CAE 12/18/2003
 #include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

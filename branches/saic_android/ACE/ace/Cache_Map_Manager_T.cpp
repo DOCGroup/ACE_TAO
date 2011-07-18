@@ -24,11 +24,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Iterator)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Reverse_Iterator)
 
-#define ACE_T1 class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES
-#define ACE_T2 KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES
-
-template <ACE_T1>
-ACE_Cache_Map_Manager<ACE_T2>::ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
                                                       size_t size,
                                                       ACE_Allocator *alloc)
   : caching_strategy_ (caching_s)
@@ -40,28 +37,28 @@ ACE_Cache_Map_Manager<ACE_T2>::ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_
 
 }
 
-template <ACE_T1>
-ACE_Cache_Map_Manager<ACE_T2>::~ACE_Cache_Map_Manager (void)
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES>
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::~ACE_Cache_Map_Manager (void)
 {
   this->close ();
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::open (size_t length,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::open (size_t length,
                                      ACE_Allocator *alloc)
 {
   return this->map_.open (length,
                           alloc);
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::close (void)
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::close (void)
 {
   return this->map_.close ();
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::bind (const KEY &key,
                                      const VALUE &value)
 {
   // Insert an entry which has the <key> and the <cache_value> which
@@ -77,7 +74,7 @@ ACE_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
     {
 
       int result = this->caching_strategy_.notify_bind (bind_result,
-                                                        cache_value.second ());
+                                                        cache_value.second);
 
       if (result == -1)
         {
@@ -96,8 +93,8 @@ ACE_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
 }
 
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
                                        const VALUE &value)
 {
   CACHE_VALUE cache_value (value,
@@ -133,8 +130,8 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
 }
 
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
                                        const VALUE &value,
                                        VALUE &old_value)
 {
@@ -180,8 +177,8 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   return rebind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
                                        const VALUE &value,
                                        KEY &old_key,
                                        VALUE &old_value)
@@ -229,8 +226,8 @@ ACE_Cache_Map_Manager<ACE_T2>::rebind (const KEY &key,
   return rebind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::trybind (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::trybind (const KEY &key,
                                         VALUE &value)
 {
   CACHE_VALUE cache_value (value,
@@ -271,8 +268,8 @@ ACE_Cache_Map_Manager<ACE_T2>::trybind (const KEY &key,
   return trybind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
                                      VALUE &value)
 {
   // Lookup the key and populate the <value>.
@@ -285,7 +282,7 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
     {
 
       int result = this->caching_strategy_.notify_find (find_result,
-                                                        cache_value.second ());
+                                                        cache_value.second);
 
       // Unless the find and notification operations go thru, this
       // method is not successful.
@@ -301,7 +298,7 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
           if (rebind_result == -1)
             find_result = -1;
           else
-            value = cache_value.first ();
+            value = cache_value.first;
 
         }
 
@@ -310,8 +307,8 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key,
   return find_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key)
 {
   // Lookup the key and populate the <value>.
   CACHE_VALUE cache_value;
@@ -348,8 +345,8 @@ ACE_Cache_Map_Manager<ACE_T2>::find (const KEY &key)
 }
 
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key)
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key)
 {
   // Remove the entry from the cache.
   CACHE_VALUE cache_value;
@@ -361,7 +358,7 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key)
     {
 
       int result = this->caching_strategy_.notify_unbind (unbind_result,
-                                                          cache_value.second ());
+                                                          cache_value.second);
 
       if (result == -1)
         unbind_result = -1;
@@ -371,8 +368,8 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key)
   return unbind_result;
 }
 
-template <ACE_T1> int
-ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> int
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key,
                                        VALUE &value)
 {
   // Remove the entry from the cache.
@@ -397,8 +394,8 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
   return unbind_result;
 }
 
-template <ACE_T1> void
-ACE_Cache_Map_Manager<ACE_T2>::dump (void) const
+template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> void
+ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   this->map_.dump ();
@@ -406,9 +403,6 @@ ACE_Cache_Map_Manager<ACE_T2>::dump (void) const
   this->caching_strategy_.dump ();
 #endif /* ACE_HAS_DUMP */
 }
-
-#undef ACE_T1
-#undef ACE_T2
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::~ACE_Cache_Map_Iterator (void)

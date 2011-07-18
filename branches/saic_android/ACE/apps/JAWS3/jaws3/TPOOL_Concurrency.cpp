@@ -5,7 +5,7 @@
 
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
-#endif 
+#endif
 
 #include "jaws3/TPOOL_Concurrency.h"
 #include "jaws3/Protocol_Handler.h"

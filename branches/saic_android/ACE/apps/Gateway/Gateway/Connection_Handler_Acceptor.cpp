@@ -5,8 +5,6 @@
 #include "Event_Channel.h"
 #include "Connection_Handler_Acceptor.h"
 
-ACE_RCSID(Gateway, Connection_Handler_Acceptor, "$Id$")
-
 int
 Connection_Handler_Acceptor::make_svc_handler (Connection_Handler *&ch)
 {

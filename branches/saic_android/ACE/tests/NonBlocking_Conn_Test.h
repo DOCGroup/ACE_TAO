@@ -1,25 +1,22 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    NonBlocking_Conn_Test.cpp
-//
-// = DESCRIPTION
-//    This test checks for the proper working of the following:
-//    - blocking connections
-//    - blocking connections with timeouts
-//    - non-blocking connections
-//    - non-blocking connections without waiting for completions
-//    - non-blocking connections with timeouts
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@oomworks.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    NonBlocking_Conn_Test.h
+ *
+ *  $Id$
+ *
+ *  This test checks for the proper working of the following:
+ *  - blocking connections
+ *  - blocking connections with timeouts
+ *  - non-blocking connections
+ *  - non-blocking connections without waiting for completions
+ *  - non-blocking connections with timeouts
+ *
+ *
+ *  @author Irfan Pyarali <irfan@oomworks.com>
+ */
+//=============================================================================
+
 
 #ifndef NONBLOCKING_CONN_TEST_H
 #define NONBLOCKING_CONN_TEST_H
@@ -33,11 +30,18 @@ public:
 
   enum Connection_Status
     {
-      SUCCEEDED,
-      FAILED
+      Conn_SUCCEEDED,
+      Conn_FAILED
     };
 
-  Svc_Handler (void);
+  enum Completion_Status
+    {
+      Comp_YES,
+      Comp_NO,
+      Comp_IGNORE
+    };
+
+  Svc_Handler (bool is_ref_counted = false);
 
   void connection_status (Connection_Status &status,
                           int &completion_counter);
@@ -49,6 +53,7 @@ public:
 
   Connection_Status *status_;
   int *completion_counter_;
+  bool is_ref_counted_;
 };
 
 #endif /* NONBLOCKING_CONN_TEST_H */

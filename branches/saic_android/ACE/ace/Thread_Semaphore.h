@@ -62,8 +62,6 @@ public:
 template <class T> class ACE_Malloc_Lock_Adapter_T;
 
 /**
- * @class ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
- *
  * @brief Template specialization of ACE_Malloc_Lock_Adapter_T for
  * ACE_Thread_Semaphore.
  *

@@ -17,10 +17,6 @@
 #include "SSL_SOCK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ACE_SSL,
-           SSL_SOCK_Connector,
-           "$Id$")
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
@@ -75,7 +71,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   ACE_Countdown_Time countdown ((timeout == 0 ? 0 : &t));
 
   int status;
-  
+
   do
     {
       // These handle sets are used to set up for whatever SSL_connect
@@ -142,7 +138,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             {
               status = -1;
             }
-            
+
           break;
 
         default:

@@ -1,22 +1,19 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Task_Ex_Test.cpp
-//
-// = DESCRIPTION
-//    This test program illustrates the ACE_Task_Ex class which has the ACE_Message_Queue_Ex
-//    that has the capability to hold user-defined messages instead of ACE_Message_Block
-//
-//
-// = AUTHOR
-//    Kobi Cohen-Arazi <kobi-co@barak-online.net>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Task_Ex_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test program illustrates the ACE_Task_Ex class which has the ACE_Message_Queue_Ex
+ *  that has the capability to hold user-defined messages instead of ACE_Message_Block
+ *
+ *
+ *
+ *  @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "Task_Ex_Test.h"
@@ -24,7 +21,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tests, Task_Test_Ex, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
 
@@ -46,8 +43,8 @@ class Consumer : public ACE_Task_Ex<ACE_MT_SYNCH, User_Defined_Msg>
 public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// activate/spawn the threads.
+  ///FUZZ: enable check_for_lack_ACE_OS
   int open (void*);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   /// svc thread entry point
   virtual int svc (void);
@@ -73,7 +70,7 @@ int Consumer::svc ()
   User_Defined_Msg* pMsg=0;
   while(this->getq (pMsg)!=-1)
   {
-    ACE_ASSERT (pMsg!=0);
+    ACE_TEST_ASSERT (pMsg!=0);
     auto_ptr<User_Defined_Msg> pAuto(pMsg);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
@@ -93,7 +90,7 @@ int Consumer::svc ()
 ACE_THR_FUNC_RETURN producer (void *arg)
 {
   Consumer* c = static_cast<Consumer*> (arg);
-  ACE_ASSERT(c!=0);
+  ACE_TEST_ASSERT(c!=0);
   if (c==0)
   {
     ACE_ERROR((LM_ERROR,

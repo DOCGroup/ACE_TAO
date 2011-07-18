@@ -41,8 +41,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * The Remote_Token_Proxy class implements the mechanisms for
  * distributed token operations.  It is similar to the
  * ACE_Token_Proxy.
- * = BUGS
- * Distributed sleep_hooks have not been implemented.  <owner_id>
+ * @todo
+ * Distributed sleep_hooks have not been implemented. <owner_id>
  * is not implemented.
  */
 class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
@@ -56,8 +56,8 @@ public:
 
   /**
    * Same as Token_Proxy. @a name is the string uniquely identifying
-   * the token.  <ignore_deadlock> can be 1 to disable deadlock
-   * notifications.  <debug> prints debug messages.
+   * the token.  @a ignore_deadlock can be 1 to disable deadlock
+   * notifications.  @a debug prints debug messages.
    */
   int open (const ACE_TCHAR *name,
             int ignore_deadlock = 0,
@@ -88,7 +88,7 @@ public:
 
   /**
    * Try to acquire the distributed token.  If the token is already
-   * held, the call returns without queueing the caller as a waiter.
+   * held, the call returns without queuing the caller as a waiter.
    * Returns 0 on success (the token was acquired), and -1 with
    * EWOULDBLOCK if the token was already held.
    */
@@ -98,7 +98,7 @@ public:
    * Renew the token by offering to release it if there are any other
    * waiters, otherwise get the token back immediately.  This renew
    * has the same semantics as ACE_Local_Mutex release.  It is
-   * semantically equivalent to <release> followed by <acquire>, but
+   * semantically equivalent to release() followed by acquire(), but
    * it is faster.  options contains the timeout value used if renew
    * blocks.  As with acquire, the timer is maintained at the token
    * server.  If there are waiters and requeue_position == -1, the
@@ -120,10 +120,9 @@ public:
   virtual int release (ACE_Synch_Options &options =
                        ACE_Synch_Options::synch);
 
-  /// Become interface compliant for ACE_Guard<>.  This has no
+  /// Become interface compliant for our guards.  This has no
   /// functionality.
-  virtual int remove (ACE_Synch_Options &options =
-                      ACE_Synch_Options::synch);
+  virtual int remove (ACE_Synch_Options &options = ACE_Synch_Options::synch);
 
   /// Override the default to do nothing.
   virtual void token_acquired (ACE_TPQ_Entry *);
@@ -288,7 +287,7 @@ public:
   /// Factory Method that creates a new SOCK Stream.
   virtual ACE_SOCK_Stream *make_TSS_TYPE (void) const;
 
-  /// Inheritence and operator overloading don't mix.  Redefine this
+  /// Inheritance and operator overloading don't mix.  Redefine this
   /// from ACE_TSS so that we can use it.
   operator ACE_SOCK_Stream *(void);
 

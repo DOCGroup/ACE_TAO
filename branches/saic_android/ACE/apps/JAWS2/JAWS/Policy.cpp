@@ -5,7 +5,7 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/IO_Acceptor.h"
 
-ACE_RCSID(JAWS, Policy, "$Id$")
+
 
 JAWS_Dispatch_Policy::JAWS_Dispatch_Policy (void)
 {

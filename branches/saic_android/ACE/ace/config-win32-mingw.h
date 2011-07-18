@@ -14,14 +14,8 @@
 #  error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
-#define ACE_CC_NAME ACE_TEXT ("g++")
 #define ACE_CC_PREPROCESSOR "cpp"
 #define ACE_CC_PREPROCESOR_ARGS ""
-
-// Why all this is not in config-g++-common.h?
-#define ACE_CC_MAJOR_VERSION __GNUC__
-#define ACE_CC_MINOR_VERSION __GNUC_MINOR__
-#define ACE_CC_BETA_VERSION (0)
 
 #if !defined(__MINGW32__)
 #  error You do not seem to be using mingw32
@@ -55,16 +49,13 @@
 # undef ACE_LACKS_USECONDS_T
 #endif
 
-#undef ACE_LACKS_SIGSET
 #undef ACE_HAS_WTOF
 
-#define ACE_LACKS_SIGSET_DEFINITIONS
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_STRPTIME
-#define ACE_HAS_STRERROR
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_SYS_MSG_H
@@ -87,6 +78,8 @@
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_PDH_H
 #define ACE_LACKS_PDHMSG_H
+#define ACE_LACKS_STRTOK_R
+#define ACE_LACKS_LOCALTIME_R
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
@@ -101,6 +94,8 @@
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"
 
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
+
+#define ACE_DLL_PREFIX ACE_TEXT ("lib")
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW_H */

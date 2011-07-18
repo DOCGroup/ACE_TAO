@@ -7,10 +7,6 @@
 #include "ace/Service_Config.h"
 #include "CPP-acceptor.h"
 
-ACE_RCSID (non_blocking,
-           test_tli_acceptor,
-           "$Id$")
-
 #if defined (ACE_HAS_TLI)
 typedef Svc_Handler<ACE_TLI_STREAM> SVC_HANDLER;
 typedef IPC_Server<SVC_HANDLER, ACE_TLI_ACCEPTOR> IPC_SERVER;

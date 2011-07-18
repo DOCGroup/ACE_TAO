@@ -23,7 +23,7 @@ Gadget_Part_Impl::Gadget_Part_Impl (Gadget_ptr owner,
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Part_Impl constructor\n"));
 }
-  
+
 Gadget_Part_Impl::~Gadget_Part_Impl (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Gadget_Part_Impl destructor\n"));

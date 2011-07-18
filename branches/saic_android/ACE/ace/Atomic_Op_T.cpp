@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef ACE_ATOMIC_OP_T_CPP
 #define ACE_ATOMIC_OP_T_CPP
 
@@ -19,8 +21,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op_Ex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
-
-ACE_RCSID(ace, Atomic_Op_T, "$Id$")
 
 // *************************************************
 template <class ACE_LOCK, class TYPE> ACE_LOCK &

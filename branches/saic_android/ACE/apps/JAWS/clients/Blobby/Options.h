@@ -1,21 +1,18 @@
 /* -*- C++ -*- */
-// $Id$
 
-//============================================================================
-//
-// = LIBRARY
-//    JAWS
-//
-// = FILENAME
-//    Options.h
-//
-// = DESCRIPTION
-//     Options is an Singleton for blobby
-//
-// = AUTHOR
-//    Prashant Jain and Sumedh Mungee
-//
-//============================================================================
+//=============================================================================
+/**
+ *  @file    Options.h
+ *
+ *  $Id$
+ *
+ *   Options is an Singleton for blobby
+ *
+ *
+ *  @author Prashant Jain and Sumedh Mungee
+ */
+//=============================================================================
+
 
 #ifndef ACE_BLOBBY_OPTIONS_H
 #define ACE_BLOBBY_OPTIONS_H
@@ -33,39 +30,39 @@
 class Options
 {
 public:
+  /// Returns the singleton instance
   static Options *instance (void);
-  // Returns the singleton instance
 
+  /// parses commandline arguments
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  // parses commandline arguments
 
+  /// Hostname to connect to
   ACE_TCHAR *hostname_;
-  // Hostname to connect to
 
+  /// Port number to use
   u_short port_;
-  // Port number to use
 
+  /// Filename to upload/download
   ACE_TCHAR *filename_;
-  // Filename to upload/download
 
+  /// number of bytes to read/write
   int length_;
-  // number of bytes to read/write
 
+  /// offset to read/write
   int offset_;
-  // offset to read/write
 
+  /// "r" means download (read), and "w" means upload (write).
   char operation_;
-  // "r" means download (read), and "w" means upload (write).
 
+  /// turns on verbosity
   int debug_;
-  // turns on verbosity
 
 protected:
   Options (void);
   // protected constructor, singleton
 
+  /// the singleton
   static Options *instance_;
-  // the singleton
 };
 
 #endif /* ACE_BLOBBY_OPTIONS_H */

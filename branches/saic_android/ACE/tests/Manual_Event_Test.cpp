@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Manual_Event Test
-//
-// = DESCRIPTION
-//    This test verifies the functionality of the <ACE_Manual_Event>
-//    implementation.
-//
-// = AUTHOR
-//    Martin Corino <mcorino@remedy.nl>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Manual_Event_Test.cpp
+ *
+ *  $Id$
+ *
+ *  This test verifies the functionality of the <ACE_Manual_Event>
+ *  implementation.
+ *
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Manual_Event.h"
@@ -27,7 +24,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
 
-ACE_RCSID(tests, Manual_Event_Test, "$Id$")
+
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \

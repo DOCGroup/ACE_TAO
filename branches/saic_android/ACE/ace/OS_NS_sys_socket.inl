@@ -104,7 +104,7 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
   ACE_UNUSED_ARG (addrlen);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x640)
-  // VxWorks clears the sin_port member after a succesfull bind when
+  // VxWorks clears the sin_port member after a successful bind when
   // sin_addr != INADDR_ANY, so after the bind we do retrieve the
   // original address so that user code can safely check the addr
   // after the bind. See bugzilla 3107 for more details
@@ -572,10 +572,21 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
   ACE_UNUSED_ARG (flags);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
-                               buf,
-                               static_cast<int> (len),
-                               flags), ssize_t, -1);
+  ssize_t result = ::send ((ACE_SOCKET) handle,
+                           buf,
+                           static_cast<int> (len),
+                           flags);
+  if (result == -1)
+    {
+      ACE_OS::set_errno_to_wsa_last_error();
+      if (errno != ENOBUFS)
+        return -1;
+
+      ACE_SOCKCALL_RETURN(send_partial_i(handle, buf, len, flags), ssize_t, -1);
+    }
+  else
+    return result;
+
 #else
   ssize_t const ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
 
@@ -761,7 +772,18 @@ ACE_OS::sendv (ACE_HANDLE handle,
   if (result == SOCKET_ERROR)
     {
       ACE_OS::set_errno_to_wsa_last_error ();
-      return -1;
+      if ((errno != ENOBUFS) ||
+          (bytes_sent != 0))
+        {
+          return -1;
+        }
+      result = sendv_partial_i(handle, buffers, n);
+      if (result == SOCKET_ERROR)
+        {
+          ACE_OS::set_errno_to_wsa_last_error ();
+          return -1;
+        }
+      bytes_sent = static_cast<DWORD>(result);
     }
 # else
   for (int i = 0; i < n; ++i)
@@ -875,7 +897,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                 -1,
                 result);
 #if defined (WSAEOPNOTSUPP)
-  if (result == -1 && errno == WSAEOPNOTSUPP)
+  if (result == -1 && (errno == WSAEOPNOTSUPP || errno == WSAENOPROTOOPT))
 #else
   if (result == -1)
 #endif /* WSAEOPNOTSUPP */

@@ -50,25 +50,4 @@ ACE_Condition_Thread_Mutex::mutex (void)
   return this->mutex_;
 }
 
-#if 0
-template <class MUTEX> void
-ACE_Process_Condition<MUTEX>::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-// ACE_TRACE ("ACE_Process_Condition<MUTEX>::dump");
-
-  ACE_Condition<MUTEX>::dump ();
-#endif /* ACE_HAS_DUMP */
-}
-
-template <class MUTEX>
-ACE_Process_Condition<MUTEX>::ACE_Process_Condition (MUTEX &m,
-                                                     const ACE_TCHAR *name,
-                                                     void *arg)
-  : ACE_Condition<MUTEX> (m, USYNC_PROCESS, name, arg)
-{
-// ACE_TRACE ("ACE_Process_Condition<MUTEX>::ACE_Process_Condition");
-}
-#endif /* 0 */
-
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,29 +1,24 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples/Threads/
-//
-// = FILENAME
-//    task_five.cpp
-//
-// = DESCRIPTION
-//   Stress testing thread creation and thread cancellation using
-//   ACE_Task.
-//
-// = AUTHOR
-//    Author: Detlef Becker <Detlef.Becker@med.siemens.de>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    task_five.cpp
+ *
+ *  $Id$
+ *
+ * Stress testing thread creation and thread cancellation using
+ * ACE_Task.
+ *
+ *
+ *  @author Author: Detlef Becker <Detlef.Becker@med.siemens.de>
+ */
+//=============================================================================
+
 
 
 #include "ace/OS_main.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(Threads, task_five, "$Id$")
 
 static const int DEFAULT_TASKS = 100;
 static const int DEFAULT_ITERATIONS = 10;
@@ -49,8 +44,8 @@ public:
   int svc (void);
   int close (u_long);
 
+  ///FUZZ: enable check_for_lack_ACE_OS
   int shutdown (void);
-  //FUZZ: enable check_for_lack_ACE_OS
 
   int synch (void);
 };

@@ -121,7 +121,7 @@ JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
               task->putq (mb);
               result = -1;
             }
- 
+
         }
     }
 

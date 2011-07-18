@@ -18,9 +18,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/Env.h"
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
@@ -62,7 +62,7 @@ public:
    */
   virtual int setElementName (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
-                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+                              const ACEXML_Char *qName)
         = 0;
 
   /**
@@ -70,7 +70,7 @@ public:
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setContentType (CONTENT_TYPE type ACEXML_ENV_ARG_DECL)
+  virtual int setContentType (CONTENT_TYPE type)
         = 0;
 
   /**
@@ -78,7 +78,7 @@ public:
    */
   virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+                                  const ACEXML_Char *qName)
         = 0;
 
   /**
@@ -91,7 +91,7 @@ public:
    *
    * @retval 0 on success.
    */
-  virtual int endChildGroup (CARDINALITY card ACEXML_ENV_ARG_DECL) = 0;
+  virtual int endChildGroup (CARDINALITY card) = 0;
 
   /**
    * Set the type of current child group to Choice.
@@ -118,7 +118,7 @@ public:
    */
   virtual int insertElement  (const ACEXML_Char *namespaceURI,
                               const ACEXML_Char *localName,
-                              const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+                              const ACEXML_Char *qName)
         = 0;
 
   /**

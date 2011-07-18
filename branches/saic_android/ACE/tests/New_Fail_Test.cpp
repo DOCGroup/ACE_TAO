@@ -1,34 +1,31 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    New_Fail_Test.cpp
-//
-// = DESCRIPTION
-//    Checks to be sure that a failed ACE_NEW[_RETURN | _NORETURN] doesn't end
-//    up throwing an exception up to the caller.
-//
-//    Note that this test doesn't get a real attempt on platforms which:
-//      1. Are known to throw exceptions when 'new' runs out of resources,
-//      2. Are built with exceptions disabled.
-//    In these cases, the test puts a message in the log noting that a failed
-//    new will throw an exception, and trust that the user accepts that risk.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    New_Fail_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Checks to be sure that a failed ACE_NEW[_RETURN | _NORETURN] doesn't end
+ *  up throwing an exception up to the caller.
+ *
+ *  Note that this test doesn't get a real attempt on platforms which:
+ *    1. Are known to throw exceptions when 'new' runs out of resources,
+ *    2. Are built with exceptions disabled.
+ *  In these cases, the test puts a message in the log noting that a failed
+ *  new will throw an exception, and trust that the user accepts that risk.
+ *
+ *
+ *  @author Steve Huston <shuston@riverace.com>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
 
-ACE_RCSID(tests, New_Fail_Test, "$Id$")
+
 
 #if (!defined (__SUNPRO_CC) && !defined (__GNUG__)) || \
   defined (ACE_HAS_EXCEPTIONS)
@@ -117,7 +114,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == 0);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
@@ -128,7 +125,7 @@ run_main (int, ACE_TCHAR *[])
                         ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
                         i,
                         ACE_TEXT ("got"),
-                        errno));
+                        ACE_ERRNO_GET));
         }
 
       // Free the memory to try ACE_NEW_RETURN
@@ -152,7 +149,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == 0);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
@@ -163,7 +160,7 @@ run_main (int, ACE_TCHAR *[])
                         ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
                         i,
                         ACE_TEXT ("got"),
-                        errno));
+                        ACE_ERRNO_GET));
         }
       while (i >= 0)
         delete [] blocks[i--];
@@ -185,7 +182,7 @@ run_main (int, ACE_TCHAR *[])
         }
       else
         {
-          ACE_ASSERT (blocks[i] == 0);
+          ACE_TEST_ASSERT (blocks[i] == 0);
           if (errno == ENOMEM)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("ACE_NEW_NORETURN failed properly at block %d\n"),
@@ -196,7 +193,7 @@ run_main (int, ACE_TCHAR *[])
                         ACE_TEXT ("expected ENOMEM, %p (%d)\n"),
                         i,
                         ACE_TEXT ("got"),
-                        errno));
+                        ACE_ERRNO_GET));
         }
       while (i >= 0)
         delete [] blocks[i--];

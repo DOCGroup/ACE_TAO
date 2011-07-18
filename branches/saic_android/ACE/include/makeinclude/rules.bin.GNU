@@ -34,7 +34,6 @@ PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 
 CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
 
-CHORUSLINK ?=
 VXWORKSLINK ?=
 using_aix_vacpp ?=
 

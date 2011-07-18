@@ -1,20 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Pipe_Test.cpp
-//
-// = DESCRIPTION
-//    Tests the construction of multiple pipes in a process.
-//
-// = AUTHOR
-//    Irfan Pyarali <irfan@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Pipe_Test.cpp
+ *
+ *  $Id$
+ *
+ *  Tests the construction of multiple pipes in a process.
+ *
+ *
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_config.h"
 #include "ace/Pipe.h"
@@ -24,8 +21,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
-
-ACE_RCSID(tests, Pipe_Test, "$Id$")
 
 // Indicates whether we should close the pipe or not.
 static int close_pipe = 1;
@@ -82,10 +77,10 @@ open_pipe (ACE_Pipe &pipe,
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
   int result = pipe.open ();
 
-  ACE_ASSERT (result != -1);
+  ACE_TEST_ASSERT (result != -1);
   result = pipe.read_handle () != ACE_INVALID_HANDLE
     && pipe.write_handle () != ACE_INVALID_HANDLE;
-  ACE_ASSERT (result == 1);
+  ACE_TEST_ASSERT (result == 1);
 
   if (close_pipe)
     pipe.close ();

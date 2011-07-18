@@ -16,9 +16,10 @@ DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
 BIN_UNCHECKED    = <%exename%>
 <%endif%>
-<%if(staticname || sharedname)%>
 
 LIB_PREFIX      ?= lib
+<%if(need_staticflags)%>
+static_libs_only ?= 1
 <%endif%>
 <%if(staticname)%>
 
@@ -36,11 +37,14 @@ static_libs_only = 1
 SHLIB_UNCHECKED  = $(LIB_PREFIX)<%libname_prefix%><%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
-<%if(tao || ciao)%>
+<%if(tao || ciao || dance)%>
 
 TAO_ROOT  ?= $(ACE_ROOT)/TAO
 <%if(ciao)%>
 CIAO_ROOT ?= $(TAO_ROOT)/CIAO
+<%endif%>
+<%if(dance)%>
+DANCE_ROOT ?= $(TAO_ROOT)/DAnCE
 <%endif%>
 <%endif%>
 
@@ -86,16 +90,7 @@ TAO_IDL = <%tao_idl%>
 TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
 <%endif%>
 <%if(tao_idlflags)%>
-TAO_IDLFLAGS = <%tao_idlflags%>
-<%endif%>
-<%if(cidlc)%>
-CIDLC = <%cidlc%>
-<%endif%>
-<%if(cidlc_dep)%>
-CIDLC_DEP = <%cidlc_dep%>$(EXEEXT)
-<%endif%>
-<%if(cidlc_flags)%>
-CIDLC_FLAGS = <%cidlc_flags%>
+TAO_IDLFLAGS = <%tao_idlflags%><%if(!compares(vms_old_make, 1))%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))<%endif%>
 <%endif%>
 <%if(xsc_bin)%>
 XSC_BIN = <%xsc_bin%>
@@ -112,6 +107,12 @@ TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
 <%if(tao_idl3_to_idl2_dep)%>
 TAO_IDL3_TO_IDL2_DEP = <%tao_idl3_to_idl2_dep%>$(EXEEXT)
 <%endif%>
+<%if(tao_idl3_to_xmi)%>
+TAO_IDL3_TO_XMI = <%tao_idl3_to_xmi%>
+<%endif%>
+<%if(tao_idl3_to_xmi_dep)%>
+TAO_IDL3_TO_XMI_DEP = <%tao_idl3_to_xmi_dep%>$(EXEEXT)
+<%endif%>
 
 <%if(exename)%>
 PRJ_TYPE = rtp
@@ -121,7 +122,8 @@ PRJ_TYPE = library
 
 <%if(exename)%>
 <%if(install)%>
-INSBIN ?= <%install%>
+COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
+INSBIN ?= <%if(compares(vms_old_make, 1))%><%install%><%else%>$(call COLLAPSE_SLASHES,<%install%>)<%endif%>
 <%endif%>
 ifeq ($(INSBIN),.)
   ifeq ($(CURDIR),)
@@ -139,10 +141,15 @@ else
   endif
 <%endif%>
 endif
-OUTPUT_DIRECTORY = $(INSBIN)
+<%if(install)%>
+OUTPUT_DIRECTORY = $(if $(ARCH),$(if $(INSBIN),$(INSBIN)/$(ARCH)),$(INSBIN))
+<%else%>
+OUTPUT_DIRECTORY = $(if $(ARCH),./$(ARCH))
+<%endif%>
 <%else%>
 <%if(dllout || libout)%>
-INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+COLLAPSE_SLASHES = $(if $(findstring //,$(1)),$(call COLLAPSE_SLASHES,$(subst //,/,$(1))),$(1))
+INSLIB ?= <%if(compares(vms_old_make, 1))%><%if(dllout)%><%dllout%><%else%><%libout%><%endif%><%else%>$(call COLLAPSE_SLASHES,<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>)<%endif%>
 <%endif%>
 ifeq ($(INSLIB),.)
   ifeq ($(CURDIR),)
@@ -167,21 +174,22 @@ VSHDIR = <%targetoutdir%>.shobj/
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-<%if(!dds && version)%>
 
-ifeq ($(versioned_so),1)
-  SOVERSION = .<%version%>
-endif # versioned_so
-
-<%endif%>
-<%if(dds)%>
-include $(DDS_ROOT)/rules.dds.GNU
-<%endif%>
+<%marker(extension)%>
 <%if(ciao)%>
 include $(CIAO_ROOT)/rules.ciao.GNU
 <%endif%>
+<%if(dance)%>
+include $(DANCE_ROOT)/rules.dance.GNU
+<%endif%>
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
+<%endif%>
+
+<%if(version)%>
+GNUACE_PROJECT_VERSION = <%version%>
+<%else%>
+GNUACE_PROJECT_VERSION ?= $(ACE_VERSION)
 <%endif%>
 
 <%if(resource_files)%>
@@ -210,9 +218,10 @@ all: $(TEMPINCDIR)
 endif
 
 ifneq ($(OUTPUT_DIRECTORY),)
-all: $(OUTPUT_DIRECTORY)
-$(OUTPUT_DIRECTORY):
-	-@$(MKDIR) "$(OUTPUT_DIRECTORY)"
+.PHONY: create_output_directory.local
+all: create_output_directory.local
+create_output_directory.local:
+	-@$(MKDIR) "$(OUTPUT_DIRECTORY)" $(ACE_NUL_STDERR)
 endif
 
 <%if(sharedname || staticname || exename)%>
@@ -225,7 +234,7 @@ else
   ifeq ($(findstring k, $(MAKEFLAGS)),k)
     LIBCHECK = 1
   else
-    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/lib$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
+    LIBCHECK ?= $(filter-out $(foreach lib,<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>,$(findstring $(lib),$(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%><%libpath%>/<%targetoutdir%> <%endif%><%libpath%> $(if $(ARCH),<%libpath%>/$(ARCH)) <%endfor%>/usr/lib /usr/lib64 $(INSLIB),$(wildcard $(libpath)/$(LIB_PREFIX)$(lib).* $(libpath)/$(lib).lib)))),<%foreach(libs)%><%libname_prefix%><%lib%><%fornotlast(" ")%><%endfor%>)
     ifeq ($(LIBCHECK),)
       LIBCHECK = 1
     endif
@@ -350,6 +359,9 @@ ifneq ($(<%avoid%>),1)
 <%endfor%>
 ifeq ($(LIBCHECK), 1)
 BIN    = $(BIN_UNCHECKED)$(EXEEXT)
+ifdef ARCH
+  ARCH_BIN = $(ARCH)/$(BIN)
+endif #ARCH
 else
   all: lib_warning
 endif
@@ -378,10 +390,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 <%if(exename)%>
 
-ifneq ($(OUTPUT_DIRECTORY),)
-ifneq ($(OUTPUT_DIRECTORY),.)
+ifneq ($(INSBIN),)
+ifneq ($(INSBIN),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
-  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(VAR)$(EXEEXT))
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/$(if $(ARCH),$(ARCH)/)%$(VAR)$(EXEEXT))
 endif
 endif
 
@@ -444,7 +456,7 @@ endif
 ifeq ($(VXWORKSLINK),1)
 LDLIBPATH     =<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 else
-LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%><%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
+LDFLAGS      +=<%foreach(libpaths)%> <%if(targetoutdir)%>-L<%libpath%>/<%targetoutdir%> <%endif%>-L<%libpath%> $(if $(ARCH),-L<%libpath%>/$(ARCH))<%endfor%><%if(linkflags)%> <%linkflags%><%endif%>
 endif
 <%endif%>
 <%if(includes)%>
@@ -481,19 +493,26 @@ endif
 #----------------------------------------------------------------------------
 <%marker(local)%>
 lib_warning:
-	@echo <%project_name%> will not be built due to the following missing library:
-	@echo $(LIBCHECK)
+	@echo <%project_name%> will not be built due to the following missing library: $(LIBCHECK) >&2
 
 <%if(requires)%>
+<%foreach(requires)%>
+ifneq ($(<%require%>),1)
+requires_disabled_macros += <%require%>
+endif
+<%endfor%>
 require_warning:
-	@echo <%project_name%> will not be built due to one of the following disabled make macros:
-	@echo<%foreach(requires)%> <%require%><%endfor%>
+	@echo <%project_name%> will not be built due to the following disabled make macros: $(requires_disabled_macros)>&2
 
 <%endif%>
 <%if(avoids)%>
+<%foreach(avoids)%>
+ifeq ($(<%avoid%>),1)
+avoids_enabled_macros += <%avoid%>
+endif
+<%endfor%>
 avoid_warning:
-	@echo <%project_name%> will not be built due to one of the following enabled make macros:
-	@echo<%foreach(avoids)%> <%avoid%><%endfor%>
+	@echo <%project_name%> will not be built due to the following enabled make macros: $(avoids_enabled_macros)>&2
 
 <%endif%>
 <%if(custom_types)%>
@@ -506,13 +525,14 @@ ifeq ($(wildcard /usr/bin/test), /usr/bin/test)
 endif
 endif
 
+SPACE = $(should_be_unset) $(should_be_unset)
 <%foreach(custom_types)%>
 <%if(custom_type->libpath)%>
-DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
-LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
-SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
-LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
-PATH              := $(PATH):<%custom_type->libpath%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
@@ -534,28 +554,17 @@ ifeq ($(wildcard $(GENERATED_DIRTY)), $(GENERATED_DIRTY))
     ## If all of the generated files are there, then we need to check
     ## and make sure that the generated files are up-to-date.  If they are not
     ## then we need the special rule.
-    ifneq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->input_file%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%> echo 0),)
+    ifeq ($(shell<%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%custom_type->input_file%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null ||<%endfor%> echo 0),)
       .NOTPARALLEL:
-<%if(flag_overrides(custom_type->input_file, dependent))%>
+<%if(flag_overrides(custom_type->input_file, dependent) || custom_type->dependent || flag_overrides(custom_type->input_file, dependent_libs) || custom_type->dependent_libs)%>
     else
       ## By this point, all of the generated files are here and up-to-date
       ## with respect to the source file.  Now we need to make sure that
       ## they are up-to-date with respect to the generation tool.  If the tool
       ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%dep%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
+      ifeq ($(shell<%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null ||<%endfor%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null ||<%endfor%><%endfor%><%endif%><%endif%><%if(flag_overrides(custom_type->input_file, dependent_libs))%><%foreach(dep_lib, flag_overrides(custom_type->input_file, dependent_libs))%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT))<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null ||<%endfor%><%endfor%><%else%><%if(custom_type->dependent_libs)%><%foreach(custom_type->dependent_libs)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) "<%if(compares(vms_old_make, 1))%><%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT))<%endif%>" -nt "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>" 2> /dev/null ||<%endfor%><%endfor%><%endif%><%endif%> echo 0),)
         .NOTPARALLEL:
       endif
-<%else%>
-<%if(custom_type->dependent)%>
-    else
-      ## By this point, all of the generated files are here and up-to-date
-      ## with respect to the source file.  Now we need to make sure that
-      ## they are up-to-date with respect to the generation tool.  If the tool
-      ## is newer than the generated files, then we need the special rule.
-      ifneq ($(shell<%foreach(custom_type->dependent)%><%foreach(custom_type->input_file->output_files)%> $(TEST_EXE) <%custom_type->dependent%> -nt <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%> 2> /dev/null &&<%endfor%><%endfor%> echo 0),)
-        .NOTPARALLEL:
-      endif
-<%endif%>
 <%endif%>
     endif
   else
@@ -566,13 +575,13 @@ else
 endif
 <%endif%>
 <%endfor%>
-<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%> <%custom_type->input_file->dependencies%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%> <%flag_overrides(custom_type->input_file, dependent)%><%else%><%if(custom_type->dependent)%> <%custom_type->dependent%><%endif%><%endif%>
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->input_file->dependencies)%><%foreach(custom_type->input_file->dependencies)%> <%if(contains(custom_type->input_file->dependencie, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%custom_type->input_file->dependencie%>)<%else%><%custom_type->input_file->dependencie%><%endif%><%endfor%><%endif%><%if(flag_overrides(custom_type->input_file, dependent))%><%foreach(dep, flag_overrides(custom_type->input_file, dependent))%> <%if(contains(dep, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dep%><%else%>$(call ADD_ARCH,<%dep%>)<%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent)%><%foreach(custom_type->dependent)%> <%if(contains(custom_type->dependent, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%custom_type->dependent%><%else%>$(call ADD_ARCH,<%custom_type->dependent%>)<%endif%><%endif%><%endfor%><%endif%><%endif%>
 <%if(flag_overrides(custom_type->input_file, gendir))%>
 <%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%>
 	$(MKDIR) <%flag_overrides(custom_type->input_file, gendir)%>
 <%endif%>
 <%endif%>
-	<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> $@<%else%><%custom_type->input_file%><%endif%>
+	<%if(compares(vms_old_make, 1))%><%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%><%else%>$(if $(findstring ",<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>),<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>,$(call ADD_QUOTE,$(call ADD_ARCH,<%if(flag_overrides(custom_type->input_file, command))%><%flag_overrides(custom_type->input_file, command)%><%else%><%custom_type->command%><%endif%>)))<%endif%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%if(custom_type->output_option)%><%custom_type->input_file%> <%custom_type->output_option%> $@<%else%><%custom_type->input_file%><%endif%>
 <%if(flag_overrides(custom_type->input_file, postcommand))%>
 <%foreach(custom_type->input_file)%>
 	<%flag_overrides(custom_type->input_file, postcommand)%>
@@ -590,6 +599,14 @@ endif
 	@echo '#include "<%pch_header%>"' > temp.$$$$ && cat <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%> >> temp.$$$$ && mv temp.$$$$ <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->source_output_file)%><%else%><%custom_type->input_file->source_output_file%><%endif%>
 <%endfor%>
 <%endif%>
+<%endif%>
+
+<%if(flag_overrides(custom_type->input_file, dependent_libs) || custom_type->dependent_libs)%>
+ifneq ($(static_libs_only),1)
+ifneq ($(CROSS-COMPILE),1)
+<%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>:<%if(flag_overrides(custom_type->input_file, dependent_libs))%><%foreach(dep_lib, flag_overrides(custom_type->input_file, dependent_libs))%> <%if(contains(dep_lib, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT))<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(dep_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(dep_lib)%>.$(SOEXT))<%endif%><%endif%><%endfor%><%else%><%if(custom_type->dependent_libs)%><%foreach(custom_type->dependent_libs)%> <%if(contains(custom_type->dependent_lib, [\s\$]))%>$(subst $(SPACE),\$(SPACE),<%if(compares(vms_old_make, 1))%><%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT))<%endif%>)<%else%><%if(compares(vms_old_make, 1))%><%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT)<%else%>$(call ADD_ARCH,<%dirname(custom_type->dependent_lib)%>/$(LIB_PREFIX)<%libname_prefix%><%basename(custom_type->dependent_lib)%>.$(SOEXT))<%endif%><%endif%><%endfor%><%endif%><%endif%>
+endif
+endif
 <%endif%>
 
 <%endif%>
@@ -652,12 +669,12 @@ ifneq ($(VXWORKSLINK),1)
 <%if(libs && libpaths)%>
 ifeq ($(static_libs_only), 1)
   ifeq ($(use_dep_libs), 1)
-    DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/lib$(lib).a)))
+    DEPLIBS = $(foreach lib,<%foreach(libs)%> <%libname_prefix%><%lib%><%endfor%> <%lit_libs%>, $(foreach libpath,<%foreach(libpaths)%><%if(targetoutdir)%> <%libpath%>/<%targetoutdir%><%endif%> <%libpath%><%endfor%>, $(wildcard $(libpath)/$(LIB_PREFIX)$(lib).$(LIBEXT))))
   endif
 endif
 
 <%endif%>
-$(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
+$(VBIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
   ifneq (,$(LINK.cc.override))
 	$(LINK.cc.override)
   else
@@ -675,17 +692,129 @@ endif
 <%endif%>
 
 __prebuild__:
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 <%if(prebuild)%>
 	@<%eval(prebuild)%>
 <%else%>
 	@-:
 <%endif%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 
 <%if(postbuild)%>
 all: __postbuild__
 
 __postbuild__:
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 	@<%eval(postbuild)%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 
 <%endif%>
+
+.PHONY: install
+install: <%if(postbuild)%>__postbuild__<%else%>all<%endif%>
+INSTALL_LIB ?= lib
+ifneq ($(INSTALL_PREFIX),)
+ifneq ($(install_rpath),0)
+LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
+endif
+endif
+
+<%if(install_this_target)%>
+PRJINST_OPTIONS ?=
+INST_DIR ?= <%if(install_dir)%>/<%install_dir%><%else%>/$(notdir $(PWD))<%endif%>
+COMMA = ,
+SPACE = $(should_be_unset) $(should_be_unset)
+INSTALLER ?= $(MPC_ROOT)/prj_install.pl
+CUSTOM_INST_TAGS = $(sort <%custom_install%> <%foreach(custom_types)%><%foreach(custom_type->input_files)%><%if(custom_type->input_file->output_files)%><%custom_type%> <%endif%><%endfor%><%endfor%>)
+
+<%if(staticname || sharedname)%>
+<%if(install_headers)%>
+LIB_INST_TAGS = header_files template_files$(if $(findstring 1,$(inline)), inline_files)$(if $(CUSTOM_INST_TAGS), $(CUSTOM_INST_TAGS))
+LIB_INST_LOCATIONS = $(foreach tag,$(LIB_INST_TAGS),-b $(tag)=include$(INST_DIR))
+
+<%else%>
+ifeq ($(shared_libs),1)
+<%endif%>
+INST_TAGS = lib_output$(if $(LIB_INST_TAGS), $(LIB_INST_TAGS))
+INST_LOCATIONS = $(LIB_INST_LOCATIONS) -o lib_output=$(INSTALL_LIB)
+<%if(!install_headers)%>
+endif
+<%endif%>
+
+<%else%>
+<%if(exename)%>
+INST_TAGS = exe_output
+INST_LOCATIONS = -o exe_output=bin
+
+<%else%>
+INST_TAGS = $(CUSTOM_INST_TAGS)<%if(custom_inst_tags)%> <%custom_inst_tags%><%endif%>
+INST_LOCATIONS = $(foreach tag,$(INST_TAGS),-b $(tag)=include$(INST_DIR))
+
+<%endif%>
+<%endif%>
+DATA_INST_TAGS = <%foreach(custom_types)%><%if(compares(custom_type, installdata_files))%><%if(custom_type->input_files)%>installdata_files<%endif%><%endif%><%endfor%>
+INST_LOCATIONS += $(if $(DATA_INST_TAGS),-x installdata_files -b installdata_files=share$(INST_DIR))
+INST_TAGS := $(INST_TAGS)$(if $(DATA_INST_TAGS), $(DATA_INST_TAGS))
+
+ifeq ($(INSTALLER),/prj_install.pl)
+INSTALLER = $(ACE_ROOT)/MPC/prj_install.pl
+endif
+
+ifeq ($(LIBCHECK),1)
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
+install:
+ifeq ($(INST_TAGS),)
+	@echo Nothing to install.
+else
+ifeq ($(INSTALL_PREFIX),)
+	@echo The variable INSTALL_PREFIX must be set to install.
+	@echo If binaries are already built and you want to use RPATH,
+	@echo they must be rebuilt after changing INSTALL_PREFIX.
+	@false
+else
+	perl -ne'if (/^#END MPC-Generated Install Info/) {exit 0}' \
+	  -e'elsif (/^#BEGIN MPC-Generated Install Info/) {$$ok=1}' \
+	  -e'elsif ($$ok && s/^#//) {print}' $(MAKEFILE) | \
+	$(INSTALLER) -i -s $(subst $(SPACE),$(COMMA),$(INST_TAGS)) \
+	  $(INST_LOCATIONS) $(if $(ARCH),-d $(ARCH)) $(PRJINST_OPTIONS) \
+	  $(DESTDIR)$(INSTALL_PREFIX)
+<%foreach(custom_types)%>
+<%if(compares(custom_type, pkgconfig_files))%>
+<%if(custom_type->input_files)%>
+	$(ACE_ROOT)/bin/ace_install_pkgconfig.pl <%custom_type->input_files%> --destdir "$(DESTDIR)" --prefix $(INSTALL_PREFIX) --libdir $(INSTALL_LIB) --libs "$(LIBS)" --version $(GNUACE_PROJECT_VERSION)<%foreach(pkgconfig_variables)%> --custom "<%pkgconfig_variable%>"<%endfor%>
+<%endif%>
+<%endif%>
+<%endfor%>
+<%marker(postinstall)%>
+endif
+endif
+<%foreach(requires avoids)%>
+endif
+<%endfor%>
+endif
+
+#BEGIN MPC-Generated Install Info
+<%genins%>
+#END MPC-Generated Install Info
+<%endif%>
+
 <%marker(bottom)%>

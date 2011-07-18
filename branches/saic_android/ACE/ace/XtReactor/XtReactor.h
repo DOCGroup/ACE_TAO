@@ -101,8 +101,17 @@ protected:
   virtual int remove_handler_i (const ACE_Handle_Set &handles,
                                 ACE_Reactor_Mask);
 
-  /// Removes an Xt handle.
-  virtual void remove_XtInput (ACE_HANDLE handle);
+  /// Suspend the <Event_Handler> associated with @a handle
+  virtual int suspend_i (ACE_HANDLE handle);
+
+  /// Resume the <Event_Handler> associated with @a handle
+  virtual int resume_i (ACE_HANDLE handle);
+
+  /// Synchronize XtInputHandler for @a handle
+  virtual void synchronize_XtInput(ACE_HANDLE handle);
+
+  /// Compute needed Xt condition by looking at base class wait set.
+  virtual int compute_Xt_condition(ACE_HANDLE handle);
 
   /// Wait for events to occur.
   virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,

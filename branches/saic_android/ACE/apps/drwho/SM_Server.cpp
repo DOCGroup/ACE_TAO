@@ -9,7 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-int 
+int
 SM_Server::demux (char *packet, int &packet_length)
 {
   switch (GET_PACKET_TYPE (packet))
@@ -35,7 +35,7 @@ SM_Server::demux (char *packet, int &packet_length)
                       -1);
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "%s: bad protocol\n",
                   Options::program_name));
       return -1;
@@ -53,7 +53,7 @@ SM_Server::demux (char *packet, int &packet_length)
   return 1;
 }
 
-int 
+int
 SM_Server::mux (char *packet,
                 int &packet_length)
 {

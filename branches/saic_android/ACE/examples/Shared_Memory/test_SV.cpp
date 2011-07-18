@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Shared_Memory, test_SV, "$Id$")
+
 
 #define SHMSZ 27
 #define SHM_KEY (key_t) 5678

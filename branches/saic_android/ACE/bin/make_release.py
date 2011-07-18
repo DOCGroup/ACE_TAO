@@ -1,4 +1,5 @@
-#!/usr/local/bin/python2.5
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 # @file make_release.py
 # @author William R. Otte <wotte@dre.vanderbilt.edu>
@@ -9,6 +10,10 @@ from __future__ import with_statement
 from time import strftime
 import pysvn
 import re
+import tempfile
+import shutil
+import subprocess
+import shlex
 
 ##################################################
 #### Global variables
@@ -45,7 +50,7 @@ release_date = strftime (# ie: Mon Jan 23 00:35:37 CST 2006
 
 """ This is a regex that detects files that SHOULD NOT have line endings
 converted to CRLF when being put into a ZIP file """
-bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf)$")
+bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
 
 
 ##################################################
@@ -67,7 +72,7 @@ def svn_login_callback (realm, username, may_save):
 def svn_log_message_callback ():
     """ Callback used by the svn library to generate log messages
     for operations such as copy """
-    return (True, "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
+    return (True, "ChangeLogTag: %s  %s  <%s>" % (release_date, signature, mailid))
 
 svn_client = pysvn.Client ()
 svn_client.callback_get_login = svn_login_callback
@@ -102,15 +107,20 @@ def parse_args ():
 
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
-                       default="https://svn.dre.vanderbilt.edu/DOC/")
+                       default=None)
+                       # By default get repo root from working copy
+                       # default="https://svn.dre.vanderbilt.edu/DOC/")
+
+    parser.add_option ("--mpc_root", dest="mpc_root", action="store",
+                       help="Specify an alternate MPC repository root",
+                       default=None)
+                       # By default get repo root from MPC root in working copy
 
     parser.add_option ("-n", dest="take_action", action="store_false",
                        help="Take no action", default=True)
     parser.add_option ("--verbose", dest="verbose", action="store_true",
                        help="Print out actions as they are being performed",
                        default=False)
-    parser.add_option ("--override-host", dest="override_host", action="store_true",
-                       help="Override the default release host.  Not reccomended", default=False)
     (options, arguments) = parser.parse_args ()
 
     if options.action is None:
@@ -163,12 +173,6 @@ def check_environment ():
         print "ERROR: Must define MAILID environment to your email address for changelogs."
         return False
 
-    from socket import gethostname
-
-    if ((not opts.override_host) and gethostname () != "anduril.dre.vanderbilt.edu"):
-        print "ERROR: Must run script on anduril.dre.vanderbilt.edu"
-        return False
-
     return True
 
 def vprint (string):
@@ -185,10 +189,11 @@ def commit (files):
     """ Commits the supplied list of files to the repository. """
     vprint ("Committing the following files: " + " ".join (files))
 
-    rev = svn_client.checkin (files,
-                              "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
+    if opts.take_action:
+        rev = svn_client.checkin (files,
+                                  "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
 
-    print "Checked in files, resuling in revision ", rev.number
+        print "Checked in files, resuling in revision ", rev.number
 
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
@@ -202,11 +207,25 @@ def check_workspace ():
         raise
 
     try:
-        rev = svn_client.update (doc_root + "ACE/MPC")
+        rev = svn_client.update (doc_root + "/ACE/MPC")
         print "Successfully updated MPC working copy to revision "
     except:
-        print "Unable to update the MPC workspace at " + doc_root + "/MPC"
+        print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
         raise
+
+    # By default retrieve repo root from working copy
+    if opts.repo_root is None:
+        info = svn_client.info2 (doc_root + "/ACE")[0]
+        opts.repo_root = info[1]["repos_root_URL"]
+
+    # By default retrieve MPC root from working copy
+    if opts.mpc_root is None:
+        info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
+        opts.mpc_root = info[1]["repos_root_URL"]
+
+    vprint ("Repos root URL = " + opts.repo_root + "\n")
+    vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
+
 
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
@@ -243,7 +262,7 @@ def update_version_files (component):
     version_header = """
 // -*- C++ -*-
 // $Id$
-// This is file was automatically generated by \$ACE_ROOT/bin/make_release.
+// This is file was automatically generated by \$ACE_ROOT/bin/make_release.py
 
 #define %s_MAJOR_VERSION %s
 #define %s_MINOR_VERSION %s
@@ -293,6 +312,144 @@ def update_version_files (component):
     return retval
 
 
+def update_spec_file ():
+
+    global comp_versions, opts
+
+    with open (doc_root + "/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
+        new_spec = ""
+        for line in spec_file.readlines ():
+            if line.find ("define ACEVER ") is not -1:
+                line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
+            if line.find ("define TAOVER ") is not -1:
+                line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
+            if line.find ("define CIAOVER ") is not -1:
+                line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
+            if line.find ("define DANCEVER ") is not -1:
+                line = "%define DANCEVER " + comp_versions["DAnCE_version"] + "\n"
+            if line.find ("define is_major_ver") is not -1:
+                if opts.release_type == "beta":
+                    line = "%define is_major_ver 0\n"
+                else:
+                    line = "%define is_major_ver 1\n"
+
+            new_spec += line
+
+        if opts.take_action:
+            spec_file.seek (0)
+            spec_file.truncate (0)
+            spec_file.writelines (new_spec)
+        else:
+            print "New spec file:"
+            print "".join (new_spec)
+
+    return [doc_root + "/ACE/rpmbuild/ace-tao.spec"]
+
+def update_debianbuild ():
+    """ Updates ACE_ROOT/debian directory.
+    - renames all files with version nrs in name to new scheme.
+    - updates version nrs in file debian/control
+    Currently ONLY ACE & TAO stuff is handled here """
+
+    global comp_versions
+
+    import glob
+    import re
+    from os.path import basename
+    from os.path import dirname
+    from os.path import join
+
+    files = list ()
+    prev_ace_ver = None
+    prev_tao_ver = None
+
+    # rename files
+    mask = re.compile ("(libace|libkokyu|libtao)(.*)(\d+\.\d+\.\d+)(.*)")
+    tao = re.compile ("tao", re.IGNORECASE)
+
+    for fname in glob.iglob(doc_root + '/ACE/debian/*'):
+        print "Considering " + fname
+        match = None
+
+        fbase = basename (fname)
+
+        match = mask.search (fbase)
+        fnewname = None
+        if match is not None:
+            if tao.search (fbase) is not None:
+                fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["TAO_version"] + match.group (4))
+                prev_tao_ver = match.group (3)
+            else:
+                fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4))
+                prev_ace_ver = match.group (3)
+
+        print prev_ace_ver
+#        print prev_tao_var
+
+        if fnewname is not None:
+            if opts.take_action:
+                svn_client.move (fname, fnewname)
+            else:
+                print "Rename: " + fname + " to " + fnewname + "\n"
+
+            files.append (fname)
+            files.append (fnewname)
+
+            print "Appending " + fname + " and " + fnewname
+
+    # update debianbuild/control
+    def update_ver (match):
+        if match.group (1) == 'libtao':
+            return match.group (1) + match.group (2) + comp_versions["TAO_version"] + match.group (4)
+        else:
+            return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
+
+    with open (doc_root + "/ACE/debian/debian.control", 'r+') as control_file:
+        new_ctrl = ""
+        for line in control_file.readlines ():
+            if re.search ("^(Package|Depends|Suggests):", line) is not None:
+                line = mask.sub (update_ver, line)
+            elif re.search ('^Replaces:', line) is not None:
+                print comp_versions["ACE_version"]
+                line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
+
+            new_ctrl += line
+
+        if opts.take_action:
+            control_file.seek (0)
+            control_file.truncate (0)
+            control_file.writelines (new_ctrl)
+        else:
+            print "New control file:"
+            print "".join (new_ctrl)
+
+    files.append (doc_root + "/ACE/debian/debian.control")
+
+    # rewrite debian/dsc
+    dsc_lines = """Format: 1.0
+Source: ACE+TAO+CIAO-src-%s
+Version: %s
+Binary: ace
+Maintainer: Johnny Willemsen  <jwillemsen@remedy.nl>
+Architecture: any
+Build-Depends: gcc, make, g++, debhelper (>= 5), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.4.7), zlib1g-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen, graphviz
+Files:
+ 65b34001c9605f056713a7e146b052d1 46346654 ACE+TAO+CIAO-src-%s.tar.gz
+
+""" % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
+    if opts.take_action:
+        with open (doc_root + "/ACE/debian/ace.dsc", 'r+') as dsc_file:
+            dsc_file.seek (0)
+            dsc_file.truncate (0)
+            dsc_file.writelines (dsc_lines)
+    else:
+        print "New dsc file:\n"
+        print dsc_lines
+
+    files.append (doc_root + "/ACE/debian/ace.dsc")
+
+    return files
+
 def get_and_update_versions ():
     """ Gets current version information for each component,
     updates the version files, creates changelog entries,
@@ -302,14 +459,21 @@ def get_and_update_versions ():
         get_comp_versions ("ACE")
         get_comp_versions ("TAO")
         get_comp_versions ("CIAO")
+        get_comp_versions ("DAnCE")
 
         files = list ()
         files += update_version_files ("ACE")
         files += update_version_files ("TAO")
         files += update_version_files ("CIAO")
+        files += update_version_files ("DAnCE")
         files += create_changelog ("ACE")
         files += create_changelog ("TAO")
         files += create_changelog ("CIAO")
+        files += create_changelog ("DAnCE")
+        files += update_spec_file ()
+        files += update_debianbuild ()
+
+        print "Committing " + str(files)
 
         commit (files)
     except:
@@ -326,7 +490,7 @@ def create_changelog (component):
     # generate our changelog entry
     changelog_entry = """%s  %s  <%s>
 
-\t* %s version %s released.
+        * %s version %s released.
 
 """ % (release_date, signature, mailid,
        component,
@@ -405,16 +569,32 @@ def get_comp_versions (component):
         elif opts.release_type == "beta":
             comp_versions[component + "_beta"] += 1
 
-    if opts.release_type == "beta":
-        comp_versions [component + "_version"] = \
-                      str (comp_versions[component + "_major"])  + '.' + \
-                      str (comp_versions[component + "_minor"])  + '.' + \
-                      str (comp_versions[component + "_beta"])
-    else:
-        comp_versions [component + "_version"] = \
-                      str (comp_versions[component + "_major"])  + '.' + \
-                      str (comp_versions[component + "_minor"])
+    #if opts.release_type == "beta":
+    comp_versions [component + "_version"] = \
+        str (comp_versions[component + "_major"])  + '.' + \
+        str (comp_versions[component + "_minor"])  + '.' + \
+        str (comp_versions[component + "_beta"])
+    # else:
+    #     comp_versions [component + "_version"] = \
+    #                   str (comp_versions[component + "_major"])  + '.' + \
+    #                   str (comp_versions[component + "_minor"])
 
+
+def update_latest_tag (which, branch):
+    """ Update one of the Latest_* tags externals to point the new release """
+    global opts
+    root_anon = re.sub ("^https:", "svn:", opts.repo_root)
+    propval = """ACE_wrappers %s/tags/%s/ACE
+ACE_wrappers/TAO %s/tags/%s/TAO
+ACE_wrappers/TAO/CIAO %s/tags/%s/CIAO
+ACE_wrappers/TAO/DAnCE %s/tags/%s/DAnCE
+""" % ((root_anon, branch) * 4)
+    tagname = "Latest_" + which
+    temp = tempfile.gettempdir () + "/" + tagname
+    svn_client.checkout (opts.repo_root + "/tags/" + tagname, temp, False)
+    svn_client.propset ("svn:externals", propval, temp)
+    svn_client.checkin (temp, "Updating for release " + branch)
+    shutil.rmtree (temp, True)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
@@ -423,13 +603,30 @@ def tag ():
     branch = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                         comp_versions["ACE_minor"],
                                         comp_versions["ACE_beta"])
-    # Tag middleware
-    svn_client.copy (opts.repo_root + "/Middleware/trunk",
-                     opts.repo_root + "/Middleware/tags/" + branch)
 
-    # Tag MPC
-    svn_client.copy (opts.repo_root + "/MPC/trunk",
-                     opts.repo_root + "/MPC/tags/" + branch)
+    if opts.take_action:
+        # Tag middleware
+        svn_client.copy (opts.repo_root + "/trunk",
+                        opts.repo_root + "/tags/" + branch)
+
+        # Tag MPC
+        svn_client.copy (opts.mpc_root + "/trunk",
+                        opts.mpc_root + "/tags/" + branch)
+
+        # Update latest tag
+        if opts.release_type == "major":
+            update_latest_tag ("Major", branch)
+        elif opts.release_type == "minor":
+            update_latest_tag ("Minor", branch)
+        elif opts.release_type == "beta":
+            update_latest_tag ("Beta", branch)
+            update_latest_tag ("Micro", branch)
+            if comp_versions["ACE_beta"] == 1:
+                    update_latest_tag ("BFO", branch)
+    else:
+        print "Creating tags:\n"
+        print opts.repo_root + "/trunk -> " + opts.repo_root + "/tags/" + branch + "\n"
+        print opts.mpc_root + "/trunk -> " + opts.mpc_root + "/tags/" + branch + "\n"
 
 ##################################################
 #### Packaging methods
@@ -455,6 +652,10 @@ def export_wc (stage_dir):
     svn_client.export (doc_root + "/CIAO",
                        stage_dir + "/ACE_wrappers/TAO/CIAO")
 
+    print ("Exporting DAnCE")
+    svn_client.export (doc_root + "/DAnCE",
+                       stage_dir + "/ACE_wrappers/TAO/DAnCE")
+
 
 def update_packages (text_files, bin_files, stage_dir, package_dir):
     import os
@@ -474,7 +675,8 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
 
     # Zip binary files
     print "\tAdding binary files to zip...."
-    instream, outstream = os.popen2 ("xargs zip " + zip_base_args + zip_file)
+    p = subprocess.Popen (shlex.split ("xargs zip " + zip_base_args + zip_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    instream, outstream = (p.stdin, p.stdout)
 
     instream.write (bin_files)
 
@@ -486,7 +688,8 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     os.wait ()
 
     print "\tAdding text files to zip....."
-    instream, outstream = os.popen2 ("xargs zip " + zip_base_args + zip_text_args + zip_file)
+    p = subprocess.Popen (shlex.split ("xargs zip " + zip_base_args + zip_text_args + zip_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    instream, outstream = (p.stdin, p.stdout)
 
     instream.write (text_files)
 
@@ -499,11 +702,16 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
 
     # Tar files
     print "\tAdding to tar file...."
-    instream, outstream = os.popen2 ("xargs tar " + tar_args + tar_file)
+    if (not os.path.exists (tar_file)):
+        open(tar_file, 'w').close ()
 
+    p = subprocess.Popen (shlex.split ("xargs tar " + tar_args + tar_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    instream, outstream = (p.stdin, p.stdout)
     instream.write (' ' + bin_files + ' ' + text_files)
 
     instream.close ()
+
+    print outstream.read ()
     outstream.close ()
 
     os.wait ()
@@ -589,9 +797,9 @@ def create_file_lists (base_dir, prefix, exclude):
                 continue
             else:
                 if bin_regex.search (fullitem) is not None:
-                    bin_files.append (os.path.join (prefix, fullitem))
+                    bin_files.append ('"' + os.path.join (prefix, fullitem) + '"')
                 else:
-                    text_files.append (os.path.join (prefix, fullitem))
+                    text_files.append ('"' + os.path.join (prefix, fullitem) + '"')
 
     return (text_files, bin_files)
 
@@ -626,14 +834,13 @@ def package (stage_dir, package_dir, decorator):
         pass # swallow any errors
 
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
-                                               "ACE_wrappers", ["TAO", "autom4te.cache"])
+                                               "ACE_wrappers", ["TAO"])
 
 #    write_file_lists ("fACE" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
                      "\n".join (bin_files),
                      stage_dir,
                      package_dir)
-
 
     move_packages ("ACE" + decorator, stage_dir, package_dir)
 
@@ -642,7 +849,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                                     "ACE_wrappers/TAO", ["CIAO", "autom4te.cache"])
+                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -654,9 +861,24 @@ def package (stage_dir, package_dir, decorator):
 
     text_files = list ()
     bin_files = list ()
+
+    # for DAnCE:
+    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/DAnCE"),
+                                               "ACE_wrappers/TAO/DAnCE", [])
+
+#    write_file_lists ("fTAO" + decorator, text_files, bin_files)
+    update_packages ("\n".join (text_files),
+                     "\n".join (bin_files),
+                     stage_dir,
+                     package_dir)
+
+    move_packages ("ACE+TAO+DAnCE" + decorator, stage_dir, package_dir)
+
+    text_files = list ()
+    bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                                     "ACE_wrappers/TAO/CIAO", "")
+                                               "ACE_wrappers/TAO/CIAO", [])
 
 #    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -680,6 +902,7 @@ def generate_workspaces (stage_dir):
     os.putenv ("MPC_ROOT", os.path.join (stage_dir, "ACE_wrappers", "MPC"))
     os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
     os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
+    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "DAnCE"))
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
@@ -687,36 +910,25 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
+    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
 
-    static_vc71_option = ' -static -name_modifier *_vc71_Static -apply_project -exclude TAO/CIAO '
-    static_vc71_option += mpc_option
-
-    static_vc8_option = ' -static -name_modifier *_vc8_Static -apply_project -exclude TAO/CIAO '
-    static_vc8_option += mpc_option
-
-    static_vc9_option = ' -static -name_modifier *_vc9_Static -apply_project -exclude TAO/CIAO '
-    static_vc9_option += mpc_option
-
+    vc10_option = ' -name_modifier *_vc10 '
     vc9_option = ' -name_modifier *_vc9 '
     vc8_option = ' -name_modifier *_vc8 '
-    vc71_option = ' -name_modifier *_vc71 '
-
-    # Build option string for VC8 platforms
-    ce_option = ' -name_modifier *_vc8_WinCE -features "uses_wchar=1,wince=1" '
-    ce_option += ' -value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' '
-    ce_option += ' -value_template platforms+=\'"Smartphone 2003 (ARMV4)"\' '
-    ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\' '
-    ce_option += ' -value_template platforms+=\'"Windows Mobile 5.0 Smartphone SDK (ARMV4I)"\' '
-    ce_option += ' -value_template platforms+=\'"Windows Mobile 6 Standard SDK (ARMV4I)"\' '
-    ce_option += ' -value_template platforms+=\'"Windows Mobile 6 Professional SDK (ARMV4I)"\' '
 
     redirect_option = str ()
     if not opts.verbose:
         redirect_option = " >> ../mpc.log 2>&1"
 
     # Generate GNUmakefiles
+    print "\tBootstrapping autotools support"
+    ex ("bin/bootstrap " + redirect_option)
+
     print "\tGenerating GNUmakefiles...."
     ex (mpc_command + " -type gnuace " + exclude_option + mpc_option + redirect_option)
+
+    print "\tGenerating VC10 solutions..."
+    ex (mpc_command + " -type vc10 " + mpc_option + vc10_option + redirect_option)
 
     print "\tGenerating VC9 solutions..."
     ex (mpc_command + " -type vc9 " + mpc_option + vc9_option + redirect_option)
@@ -724,29 +936,8 @@ def generate_workspaces (stage_dir):
     print "\tGenerating VC8 solutions..."
     ex (mpc_command + " -type vc8 " + mpc_option + vc8_option + redirect_option)
 
-    print "\tGenerating VC8 Windows CE solutions..."
-    ex (mpc_command + " -type vc8 " + mpc_option + ce_option + redirect_option)
-
-    print "\tGenerating VC71 solutions..."
-    ex (mpc_command + " -type vc71 " + mpc_option + vc71_option + redirect_option)
-
-    print "\tGenerating Borland makefiles"
-    ex (mpc_command + " -type bmake " + mpc_option + exclude_option + redirect_option)
-
-    print "\tGenerating VC71 Static solutions"
-    ex (mpc_command + " -type vc71 " + static_vc71_option + redirect_option)
-
-    print "\tGenerating VC8 Static solutions"
-    ex (mpc_command + " -type vc8 " + static_vc8_option + redirect_option)
-
-    print "\tGenerating VC9 Static solutions"
-    ex (mpc_command + " -type vc9 " + static_vc9_option + redirect_option)
-
-    print "\tBootstrapping autotools support"
-    ex ("bin/bootstrap " + redirect_option)
-
     print "\tCorrecting permissions for all generated files..."
-    ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name 'GNUmake*' | xargs chmod 0644")
+    ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name '*.vcxproj' -or -name '*.filters' -or -name 'GNUmake*' | xargs chmod 0644")
 
 def create_kit ():
     """ Creates kits """
@@ -759,6 +950,7 @@ def create_kit ():
     get_comp_versions ("ACE")
     get_comp_versions ("TAO")
     get_comp_versions ("CIAO")
+    get_comp_versions ("DAnCE")
 
     print "Creating working directories...."
     stage_dir, package_dir = make_working_directories ()

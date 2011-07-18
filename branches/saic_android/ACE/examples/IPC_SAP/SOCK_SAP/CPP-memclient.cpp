@@ -15,7 +15,7 @@
 #include "ace/High_Res_Timer.h"
 
 
-ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")
+
 
 static int
 run_client (void)

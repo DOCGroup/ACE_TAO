@@ -5,6 +5,7 @@
 
 #include "ace/Task.h"
 #include "ace/Synch.h"
+#include "ace/Condition_T.h"
 
 // Listing 1 code/ch12
 class HA_Device_Repository

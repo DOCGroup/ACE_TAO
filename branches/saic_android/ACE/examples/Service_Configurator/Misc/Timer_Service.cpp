@@ -4,7 +4,7 @@
 #include "Timer_Service.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(Misc, Timer_Service, "$Id$")
+
 
 Timer_Service_1::Timer_Service_1 (void)
 {

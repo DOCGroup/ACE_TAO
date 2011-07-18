@@ -28,7 +28,7 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   m_pInstance = this;
 
   // Create a persistent heap based configuration
-  
+
   ACE_Configuration_Heap* pHeapConfig = new ACE_Configuration_Heap;
   pHeapConfig->open();
   m_pConfig = pHeapConfig;
@@ -40,12 +40,12 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   m_pSplitter = new wxSplitterWindow(this, -1);
   wxSize sz( m_pSplitter->GetSize() );
   sz.SetWidth(sz.GetWidth() / 2);
-  
+
   // List Control
   m_pListCtrl = new ValueListCtrl(m_pSplitter, -1, wxDefaultPosition, sz);
 
   // Tree Control
-  m_pTreeCtrl = new ConfigTreeCtrl(m_pSplitter, FRAME_TREE, wxDefaultPosition, sz, 
+  m_pTreeCtrl = new ConfigTreeCtrl(m_pSplitter, FRAME_TREE, wxDefaultPosition, sz,
                   wxTR_EDIT_LABELS | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
   m_pTreeCtrl->SetpListCtrl(m_pListCtrl);
 
@@ -54,7 +54,7 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   m_pSplitter->SplitVertically(m_pTreeCtrl, m_pListCtrl);
   m_pSplitter->SetMinimumPaneSize(100);
   m_pSplitter->SetSashPosition(size.GetWidth() / 3);
-  
+
   // create a menu bar
   wxMenu *menuFile = new wxMenu("", wxMENU_TEAROFF);
   menuFile->Append(FILE_NEW_PERSISTENT_HEAP, "New Persistent Heap", "Create a new persistent heap");

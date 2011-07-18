@@ -1,9 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/TLI.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

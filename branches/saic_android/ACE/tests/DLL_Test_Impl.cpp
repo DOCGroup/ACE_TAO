@@ -1,30 +1,23 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    DLL_Test.cpp
-//
-// = DESCRIPTION
-//    This test illustrates the use of <ACE_DLL> wrapper class.
-//
-// = AUTHOR
-//    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    DLL_Test_Impl.cpp
+ *
+ *  $Id$
+ *
+ *  This test illustrates the use of <ACE_DLL> wrapper class.
+ *
+ *
+ *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "DLL_Test_Impl.h"
 #include "ace/ACE.h"
 #include "ace/OS_Errno.h"
 #include "ace/svc_export.h"
 #include "ace/OS_NS_string.h"
-
-ACE_RCSID (tests,
-           DLL_Test_Impl,
-           "$Id$")
 
 Hello_Impl::Hello_Impl (void)
 {

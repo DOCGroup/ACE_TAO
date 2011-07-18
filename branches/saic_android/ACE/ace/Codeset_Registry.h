@@ -33,10 +33,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_DCE_CODESET_REGISTRY)
-#include /**/ <dce/rpc.h>
-#endif /* ACE_HAS_DCE_CODESET_REGISTRY */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Codeset_Registry

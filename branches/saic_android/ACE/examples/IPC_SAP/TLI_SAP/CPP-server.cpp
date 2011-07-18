@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(TLI_SAP, CPP_server, "$Id$")
+
 
 #if defined (ACE_HAS_TLI)
 // ACE_TLI Server

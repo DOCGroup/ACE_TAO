@@ -28,6 +28,26 @@ ACE_Less_Than<ACE_CString>::operator () (const ACE_CString &lhs,
   return (lhs < rhs);
 }
 
+ACE_INLINE unsigned long
+ACE_Hash<std::string>::operator () (const std::string &t) const
+{
+  return ACE::hash_pjw (t.c_str (), t.length ());
+}
+
+
+ACE_INLINE int
+ACE_Equal_To<std::string>::operator () (const std::string &lhs,
+                                        const std::string &rhs) const
+{
+  return lhs == rhs;
+}
+
+ACE_INLINE int
+ACE_Less_Than<std::string>::operator () (const std::string &lhs,
+                                         const std::string &rhs) const
+{
+  return (lhs < rhs);
+}
 
 #if defined (ACE_USES_WCHAR)
 ACE_INLINE unsigned long

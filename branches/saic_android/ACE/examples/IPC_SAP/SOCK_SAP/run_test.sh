@@ -9,7 +9,7 @@ user=`whoami`
 iterations=1000
 
 if [ $# -ne 1 ]; then
-  echo $usage; 
+  echo $usage;
   exit 1
 fi
 threads=$1;

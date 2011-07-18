@@ -7,8 +7,6 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Signal.h"
 
-ACE_RCSID(Gateway, Event_Channel, "$Id$")
-
 Event_Channel::~Event_Channel (void)
 {
 }

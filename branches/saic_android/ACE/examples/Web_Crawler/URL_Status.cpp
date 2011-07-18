@@ -3,7 +3,7 @@
 
 #include "URL_Status.h"
 
-ACE_RCSID(Web_Crawler, URL_Status, "$Id$")
+
 
 URL_Status::URL_Status (STATUS_CODE code)
   : status_ (code)

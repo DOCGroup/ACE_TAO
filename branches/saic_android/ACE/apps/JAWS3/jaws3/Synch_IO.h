@@ -6,7 +6,7 @@
 
 #include "ace/Singleton.h"
 
-#include "jaws3/IO.h"
+#include "jaws3/Jaws_IO.h"
 
 class JAWS_Export JAWS_Synch_IO : public JAWS_IO_Impl
 {

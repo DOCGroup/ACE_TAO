@@ -7,7 +7,6 @@
 
 #include <ace/Event_Handler.h>
 #include <ace/Log_Msg.h>
-#include <ace/OS.h>
 #include <ace/Reactor.h>
 #include <ace/Signal.h>
 #include <ace/streams.h>
@@ -45,7 +44,7 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     ACE_NEW_NORETURN (acceptHandler, AcceptHandler(&reactor));
     if (acceptHandler == 0)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
-                        ACE_TEXT ("accept handler. (errno = %i: %m)\n"), errno), -1);
+                        ACE_TEXT ("accept handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 
     // open the accept handler
     if (acceptHandler->open() == -1) {

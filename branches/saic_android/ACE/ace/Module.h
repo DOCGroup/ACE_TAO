@@ -43,22 +43,22 @@ public:
     /// Indicates that the flags have not been set
     M_FLAGS_NOT_SET = 0,
 
-    /// Indicates that <close> should delete the writer Task.
+    /// Indicates that close() should delete the writer Task.
     M_DELETE_READER = 1,
 
-    /// Indicates that <close> should delete the reader Task.
+    /// Indicates that close() should delete the reader Task.
     M_DELETE_WRITER = 2,
 
-    /// Indicates that <close> deletes the Tasks.
+    /// Indicates that close() deletes the Tasks.
     /**
      * Don't change this value without updating the same enum in class
      * ACE_Stream...
-     * The <M_DELETE_READER> and <M_DELETE_WRITER> flags may be or'ed
+     * The M_DELETE_READER and M_DELETE_WRITER flags may be or'ed
      * together.
      */
     M_DELETE = 3,
 
-    /// Indicates that <close> should not delete any Tasks.
+    /// Indicates that close() should not delete any Tasks.
     M_DELETE_NONE = 4
   };
 };
@@ -94,8 +94,8 @@ public:
               int flags = M_DELETE);
 
   /**
-   * Initialize the module with <module_name> as its identity
-   * and <reader> and <writer> as its tasks.  Previously register
+   * Initialize the module with @a module_name as its identity
+   * and @a reader> and @a writer as its tasks.  Previously register
    * reader or writers or closed down and deleted according to the
    * value of flags_.  Should not be called from within
    * <ACE_Task::module_closed>.
@@ -174,7 +174,7 @@ public:
 
 private:
   /// Implements the close operation for either the reader or the
-  /// writer task (depending on <which>).
+  /// writer task (depending on @a which).
   int close_i (int which, int flags);
 
   /// Pair of Tasks that form the "read-side" and "write-side" of the

@@ -1,21 +1,18 @@
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Driver.cpp
-//
-// = DESCRIPTION
-//    This code builds an abstraction to factor out common code for
-//    the different implementations of the Timer_Queue.
-//
-// = AUTHOR
-//    Douglas Schmidt      <schmidt@cs.wustl.edu> &&
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Driver.cpp
+ *
+ *  $Id$
+ *
+ *  This code builds an abstraction to factor out common code for
+ *  the different implementations of the Timer_Queue.
+ *
+ *
+ *  @author Douglas Schmidt      <schmidt@cs.wustl.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #if !defined (_DRIVER_CPP_)
 #define _DRIVER_CPP_
@@ -26,7 +23,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Driver.h"
 
-ACE_RCSID(Timer_Queue, Driver, "$Id$")
+
 
 // constructor
 

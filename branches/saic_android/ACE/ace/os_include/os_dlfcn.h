@@ -49,13 +49,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (_M_UNIX)
-  int _dlclose (void *);
-  char *_dlerror (void);
-  void *_dlopen (const char *, int);
-  void * _dlsym (void *, const char *);
-#endif /* _M_UNIX */
-
 /* Set the proper handle type for dynamically-loaded libraries. */
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */

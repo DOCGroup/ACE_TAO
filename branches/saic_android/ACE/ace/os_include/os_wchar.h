@@ -41,14 +41,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if defined (ACE_LACKS_WCSTOLL_PROTOTYPE)
-  long long wcstoll (const wchar_t *, wchar_t **, int);
-#endif /* ACE_LACKS_WCSTOLL_PROTOTYPE */
-
-#if defined (ACE_LACKS_WCSTOULL_PROTOTYPE)
-  unsigned long long wcstoull (const wchar_t *, wchar_t **, int);
-#endif /* ACE_LACKS_WCSTOULL_PROTOTYPE */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

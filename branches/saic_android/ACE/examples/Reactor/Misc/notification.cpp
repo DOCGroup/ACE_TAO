@@ -8,15 +8,10 @@
 #include "ace/Signal.h"
 #include "ace/Truncate.h"
 
-ACE_RCSID(Misc, notification, "$Id$")
+
 
 #if defined (ACE_HAS_THREADS)
-#if defined (CHORUS)
-// Chorus does not have signal, so we'll stop after a number of rounds.
-#define MAX_ITERATIONS 3
-#else
 #define MAX_ITERATIONS 10000
-#endif /* CHORUS */
 
 class Thread_Handler : public ACE_Event_Handler
 {

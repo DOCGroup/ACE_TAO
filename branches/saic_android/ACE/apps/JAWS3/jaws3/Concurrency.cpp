@@ -21,7 +21,7 @@ typedef ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>
         JAWS_Empty_Message_Block;
 
 
-int 
+int
 JAWS_Concurrency_Impl::svc (void)
 {
   JAWS_Protocol_Handler *ph;
@@ -75,7 +75,7 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 {
   return this->impl_->putq (ph);
 }
-  
+
 
 int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>

@@ -17,6 +17,7 @@ use strict;
 use PerlACE::TestTarget;
 use PerlACE::ProcessVX;
 use Cwd;
+use English;
 
 our @ISA = qw(PerlACE::TestTarget);
 
@@ -25,17 +26,27 @@ our @ISA = qw(PerlACE::TestTarget);
 # ******************************************************************
 
 sub LocalFile {
-  my($self, $file) = @_;
-  if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-    print STDERR "LocalFile is $file\n";
-  }
-  return $file;
+    my($self, $file) = @_;
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "LocalFile is $file\n";
+    }
+    return $file;
+}
+
+sub AddLibPath ($) {
+    my $self = shift;
+    my $dir = shift;
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "Adding libpath $dir\n";
+    }
+    PerlACE::add_lib_path ($dir);
 }
 
 sub CreateProcess {
-  my $self = shift;
-  my $process = new PerlACE::ProcessVX (@_, $self, );
-  return $process;
+    my $self = shift;
+    my $process = new PerlACE::ProcessVX (@_);
+    $process->{TARGET} = $self;
+    return $process;
 }
 
 # Need a reboot when this target is destroyed.
@@ -69,6 +80,13 @@ sub WaitForFileTimed ($)
     }
     my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
     return PerlACE::waitforfile_timed ($newfile, $timeout);
+}
+
+sub KillAll ($)
+{
+    my $self = shift;
+    my $procmask = shift;
+    PerlACE::ProcessVX::kill_all ($procmask, $self);
 }
 
 1;

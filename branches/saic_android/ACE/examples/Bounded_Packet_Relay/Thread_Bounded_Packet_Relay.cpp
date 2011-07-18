@@ -1,27 +1,17 @@
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    examples
-//
-// = FILENAME
-//    Thread_Bounded_Packet_Relay.cpp
-//
-// = DESCRIPTION
-//    Method definitions for the threaded-bounded packet relay class.
-//
-// = AUTHORS
-//    Chris Gill           <cdgill@cs.wustl.edu>  and
-//    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
-//
-//    Based on the Timer Queue Test example written by
-//
-//    Carlos O'Ryan        <coryan@cs.wustl.edu>  and
-//    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
-//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Thread_Bounded_Packet_Relay.cpp
+ *
+ *  $Id$
+ *
+ *  Method definitions for the threaded-bounded packet relay class.
+ *
+ *
+ *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
@@ -34,7 +24,7 @@ typedef Thread_Bounded_Packet_Relay_Driver::MYCOMMAND DRIVER_CMD;
 typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> HANDLER_CMD;
 typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> SEND_HANDLER_CMD;
 
-ACE_RCSID(Bounded_Packet_Relay, Thread_Bounded_Packet_Relay, "$Id$")
+
 
 // Constructor.
 
@@ -84,7 +74,7 @@ Text_Input_Device_Wrapper::create_input_message (void)
 {
 
   // Construct a new message block to send.
-  ACE_Message_Block *mb;
+  ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (read_length_),
                   0);

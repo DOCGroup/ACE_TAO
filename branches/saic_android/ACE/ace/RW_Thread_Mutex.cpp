@@ -18,7 +18,7 @@
 
 #include "ace/Guard_T.h"
 
-ACE_RCSID(ace, RW_Thread_Mutex, "$Id$")
+
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
