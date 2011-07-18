@@ -515,44 +515,44 @@ TAO_CodeGen::start_server_header (const char *fname)
                                    server_hdr);
     }
 
-  /// These are generated regardless, so we put it before the 
+  /// These are generated regardless, so we put it before the
   /// check below.
   if (be_global->gen_arg_traits ())
     {
       this->gen_skel_arg_file_includes (this->server_header_);
     }
 
-  // If we are suppressing skel file generation, bail after generating the
-  // copyright text and an informative message.
-  if (!be_global->gen_skel_files ())
+  if (be_global->gen_skel_files ())
     {
+      // Some compilers don't optimize the #ifndef header include
+      // protection, but do optimize based on #pragma once.
+      *this->server_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+                            << "# pragma once\n"
+                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+
+      this->gen_skel_hdr_includes ();
+
+      if (be_global->skel_export_include () != 0)
+        {
+          *this->server_header_ << "\n\n#include /**/ \""
+                                << be_global->skel_export_include ()
+                                << "\"";
+
+          // Generate the TAO_EXPORT_MACRO macro.
+          *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
+          *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
+          *this->server_header_ << "#endif\n";
+          *this->server_header_ << "#define TAO_EXPORT_MACRO "
+                                << be_global->skel_export_macro ();
+        }
+    }
+  else
+    {
+      // If we are suppressing skel file generation, bail after generating the
+      // copyright text and an informative message.
       *this->server_header_ << be_nl_2
                             << "// Skeleton file generation suppressed with "
                             << "command line option -SS";
-
-      return 0;
-    }
-
-  // Some compilers don't optimize the #ifndef header include
-  // protection, but do optimize based on #pragma once.
-  *this->server_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                        << "# pragma once\n"
-                        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
-
-  this->gen_skel_hdr_includes ();
-
-  if (be_global->skel_export_include () != 0)
-    {
-      *this->server_header_ << "\n\n#include /**/ \""
-                            << be_global->skel_export_include ()
-                            << "\"";
-
-      // Generate the TAO_EXPORT_MACRO macro.
-      *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
-      *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
-      *this->server_header_ << "#endif\n";
-      *this->server_header_ << "#define TAO_EXPORT_MACRO "
-                            << be_global->skel_export_macro ();
     }
 
   // Begin versioned namespace support after initial headers have been
@@ -1639,14 +1639,14 @@ TAO_CodeGen::end_server_header (void)
 {
   TAO_OutStream *os = this->server_header_;
 
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *os << be_global->versioning_end ();
+
   /// Otherwise just generate the post_include(), if any,
   /// and the #endif.
   if (be_global->gen_skel_files ())
     {
-      // End versioned namespace support.  Do not place include directives
-      // before this.
-      *os << be_global->versioning_end ();
-
       // Insert the template header.
       if (be_global->gen_tie_classes ())
         {
