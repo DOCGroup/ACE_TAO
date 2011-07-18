@@ -1,3 +1,10 @@
+Mon Jul 18 06:37:53 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Changed server header start and end generation in case of
+          skeleton file suppression (-SS) to fix versioning bracketing
+          problems as a result of changed arg traits generation.
+
 Fri Jul 15 12:46:14 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_root/root_sh.cpp:
