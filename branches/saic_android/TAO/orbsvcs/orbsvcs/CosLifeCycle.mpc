@@ -1,0 +1,83 @@
+// -*- MPC -*-
+// $Id$
+
+project(CosLifeCycle_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults {
+  custom_only = 1
+  idlflags   += -Wb,stub_export_macro=TAO_LifeCycle_Export -Wb,stub_export_include=orbsvcs/LifeCycle/lifecycle_export.h -Wb,skel_export_macro=TAO_LifeCycle_Skel_Export -Wb,skel_export_include=orbsvcs/LifeCycle/lifecycle_skel_export.h
+
+  IDL_Files {
+    CosLifeCycle.idl
+    LifeCycleService.idl
+  }
+}
+
+project(CosLifeCycle) : orbsvcslib, orbsvcs_output, install, naming {
+  sharedname   = TAO_CosLifeCycle
+  dynamicflags = TAO_LIFECYCLE_BUILD_DLL
+  tagchecks   += LifeCycle
+  after += CosLifeCycle_IDL
+
+  IDL_Files {
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    CosLifeCycleC.cpp
+    LifeCycleServiceC.cpp
+  }
+
+  Header_Files {
+    CosLifeCycleC.h
+    LifeCycleServiceC.h
+    LifeCycle/lifecycle_export.h
+  }
+
+  Inline_Files {
+    CosLifeCycleC.inl
+    LifeCycleServiceC.inl
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosLifeCycle.pc.in
+  }
+}
+
+project(CosLifeCycle_Skel) : orbsvcslib, orbsvcs_output, install, lifecycle, portableserver {
+  sharedname   = TAO_CosLifeCycle_Skel
+  dynamicflags = TAO_LIFECYCLE_SKEL_BUILD_DLL
+  tagchecks   += LifeCycle
+
+  IDL_Files {
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    CosLifeCycleS.cpp
+    LifeCycleServiceS.cpp
+  }
+
+  Header_Files {
+    CosLifeCycleS.h
+    LifeCycleServiceS.h
+    LifeCycle/lifecycle_skel_export.h
+  }
+
+  Inline_Files {
+    CosLifeCycleS.inl
+    LifeCycleServiceS.inl
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosLifeCycle_Skel.pc.in
+  }
+}

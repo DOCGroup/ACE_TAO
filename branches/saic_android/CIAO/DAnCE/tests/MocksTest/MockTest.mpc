@@ -1,0 +1,28 @@
+// -*- MPC -*-
+// $Id$
+
+project(*MockTest): dance, taoserver, naming, dance_mocks {
+  requires += ofccm                   
+  exename   = MockTest
+  after    += MockObject
+  
+  Source_Files {
+    MocksTest.cpp
+  }
+  
+}
+
+project(*MockObject): dance_mocks{
+  requires += ofccm                   
+  sharedname  = MockObject
+  dynamicflags = MOCKTEST_BUILD_DLL
+  
+  Source_Files {
+    MockObjectHome.cpp
+  } 
+  
+  Header_Files {
+    MockObjectHome.h
+  }
+}
+

@@ -1,0 +1,64 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n Protocols"
+
+project(Protocols_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PROTOCOLS_STUB_Export \
+              -Wb,stub_export_include=Protocols_stub_export.h \
+              -Wb,skel_export_macro=PROTOCOLS_SKEL_Export \
+              -Wb,skel_export_include=Protocols_skel_export.h
+
+  IDL_Files {
+    Protocols.idl
+  }
+}
+
+project(Protocols_stub) : ccm_stub, avoids_ace_for_tao {
+  after += Protocols_idl_gen
+
+  sharedname = Protocols_stub
+  dynamicflags   = PROTOCOLS_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ProtocolsC.cpp
+  }
+
+  Header_Files {
+    ProtocolsC.h
+    Protocols_stub_export.h
+  }
+
+  Inline_Files {
+    ProtocolsC.inl
+  }
+}
+
+
+project(Protocols_skel) : ciao_executor, avoids_ace_for_tao {
+  after      +=  Protocols_stub
+  sharedname  = Protocols_skel
+  libs       += Protocols_stub
+
+  dynamicflags = PROTOCOLS_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ProtocolsS.cpp
+  }
+
+  Header_Files {
+    ProtocolsS.h
+    Protocols_skel_export.h
+  }
+
+  Inline_Files {
+    ProtocolsS.inl
+  }
+}
+
+

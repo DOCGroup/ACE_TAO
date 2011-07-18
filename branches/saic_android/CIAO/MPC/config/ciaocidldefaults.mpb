@@ -1,0 +1,36 @@
+// -*- MPC -*-
+// $Id$
+
+project: build_files {
+  after += CIDLC
+  // Set the cidl compiler and flags as template values
+  specific {
+    cidlc      = $(CIAO_ROOT)/bin/cidlc
+    cidlc_dep  = $(CIAO_ROOT)/bin/cidlc
+    cidlc_flags = -I $(CIAO_ROOT) \
+                  -I$(CIAO_ROOT)/DAnCE \
+                  -I$(CIAO_ROOT)/ciao \
+                  -I$(CIAO_ROOT)/ccm \
+                  -I$(TAO_ROOT) \
+                  -I$(TAO_ROOT)/tao \
+                  -I$(TAO_ROOT)/orbsvcs
+  }
+
+  Define_Custom(CIDL) {
+    automatic         = 0
+    dependent         = $(CIDLC_DEP)
+    command           = $(CIDLC)
+    commandflags      = $(CIDLC_FLAGS)
+    inputext          = .cidl
+    source_outputext  = _svnt.cpp
+    header_outputext  = _svnt.h
+    generic_outputext = E.idl
+    keyword cidlflags = commandflags
+
+
+    optional (documentation_outputext) {
+      commandflags (--gen-desc-file) = _Impl.ccd
+    }
+
+  }
+}

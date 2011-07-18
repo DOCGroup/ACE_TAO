@@ -1,0 +1,18 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04-reduce-opt.dpatch by Thomas Girard <thomas.g.girard@free.fr>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: drop -O3 default optimization level
+
+@DPATCH@
+--- ACE_wrappers.orig/m4/compiler.m4
++++ ACE_wrappers/m4/compiler.m4
+@@ -234,7 +234,7 @@
+            CXXFLAGS="$CXXFLAGS"
+            ACE_CXXFLAGS="$ACE_CXXFLAGS"
+            DCXXFLAGS="$DCXXFLAGS"
+-           OCXXFLAGS="-O3"
++           OCXXFLAGS=""
+          fi
+          ;;
+      esac

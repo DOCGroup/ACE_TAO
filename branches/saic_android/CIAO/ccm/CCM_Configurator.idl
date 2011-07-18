@@ -1,0 +1,20 @@
+// $Id$
+
+#if !defined (CCM_CONFIGURATOR_IDL)
+#define CCM_CONFIGURATOR_IDL
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  exception WrongComponentType {};
+
+  interface CCMObject;
+
+  interface Configurator
+  {
+    void configure (in CCMObject comp)
+      raises (WrongComponentType);
+  };
+};
+#endif /* CCM_CONFIGURATOR_IDL */

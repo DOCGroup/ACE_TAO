@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : dance, dance_node_application_manager, dance_deployment_svnt, naming_serv {
+  after += Node_Manager_Module
+  libs  += DAnCE_NodeManager
+}

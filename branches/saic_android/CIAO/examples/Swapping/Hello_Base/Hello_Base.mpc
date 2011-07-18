@@ -1,0 +1,67 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -n -e -u Swapping Hello_Base"
+
+project(Swapping_Hello_Base_idl_gen) : ciaoidldefaults, anytypecode, avoids_ace_for_tao {
+  custom_only = 1
+  idlflags +=  \
+              -Wb,stub_export_macro=HELLO_BASE_STUB_Export \
+              -Wb,stub_export_include=Hello_Base_stub_export.h \
+              -Wb,skel_export_macro=HELLO_BASE_SKEL_Export \
+              -Wb,skel_export_include=Hello_Base_skel_export.h
+
+  IDL_Files {
+    Hello_Base.idl
+  }
+}
+
+project(Swapping_Hello_Base_stub) : ccm_stub, avoids_ace_for_tao {
+  after += Swapping_Hello_Base_idl_gen
+  libs  +=
+
+  sharedname = Swapping_Hello_Base_stub
+  dynamicflags   = HELLO_BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Hello_BaseC.cpp
+  }
+
+  Header_Files {
+    Hello_BaseC.h
+    Hello_Base_stub_export.h
+  }
+
+  Inline_Files {
+    Hello_BaseC.inl
+  }
+}
+
+
+project(Swapping_Hello_Base_skel) : ciao_executor, avoids_ace_for_tao {
+  after      +=  Swapping_Hello_Base_stub
+  sharedname  = Swapping_Hello_Base_skel
+  libs       += Swapping_Hello_Base_stub
+
+
+  dynamicflags = HELLO_BASE_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Hello_BaseS.cpp
+  }
+
+  Header_Files {
+    Hello_BaseS.h
+    Hello_Base_skel_export.h
+  }
+
+  Inline_Files {
+    Hello_BaseS.inl
+  }
+}
+
+

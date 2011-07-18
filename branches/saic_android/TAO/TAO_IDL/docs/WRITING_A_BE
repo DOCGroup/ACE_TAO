@@ -1,0 +1,1350 @@
+OMG INTERFACE DEFINITION LANGUAGE COMPILER FRONT END PROTOCOLS
+==============================================================
+
+INTRODUCTION
+------------
+
+Welcome to the publicly available source release of SunSoft's
+implementation of the compiler front end (CFE) for OMG Interface Definition
+Language!
+
+This document explains how to use the release to create a fully functional
+OMG Interface Definition Language to target language compiler for your
+selected target system configuration. The section OVERVIEW explains this
+document's structure.
+
+CONTEXT
+-------
+
+The implementation has three parts:
+
+1. A main program driving the compilation process
+2. A parser and attendant utilities for converting the IDL input into
+   an internal form
+3. One or more back ends which take as input the internal form representing
+   the IDL input, and which produce output in a target language and target
+   format
+
+The release contains components 1 and 2, and a demonstration implementation
+of component 3. To use this release, you
+
+- write a back end which takes the internal representation of the parsed input
+  and translates it to the target language and format. You may replace or
+  modify the demonstration back end provided.
+- link the back end with the provided main program and parser sources
+  to produce a complete compiler.
+
+OVERVIEW
+--------
+
+This document does not explain IDL nor does it introduce IDL features. 
+For this information, refer to the OMG CORBA specification, available by
+anonymous FTP from omg.org.
+
+This document does not explain C++, except to demonstrate how it is
+used to construct the CFE. The ARM by Stroustrup and Ellis provides a
+thorough explanation of C++.
+
+This document consists of two independent parts. The first part
+s all CFE supported protocols and the required
+application programmer's interface entry points that a conformant 
+BE must provide. The second part steps through the process of
+constructing a working BE.
+
+The first part describes:
+
+- The compilation process
+- The Abstract Syntax Tree (AST) internal representation of parsed IDL
+  input
+- How access to member data fields is managed
+- How the AST is generated from the IDL input (Generator protocol)
+- How definition scopes are nested and how name lookup works
+- The narrowing mechanism
+- How definition scopes are managed and how nodes are added to scopes
+- How BEs get control during the AST construction process (Add protocol)
+- The inheritance scheme used by the AST and how it affects BEs
+- How errors are handled and reported
+- How the CFE is initialized
+- How the command line arguments are parsed
+- What global variables and functions are provided
+- What API is required to be supported by a BE in order to link
+  with the CFE
+- What files must be included in each BE file
+
+The second part describes
+
+- The API to be supplied by each BE
+- How to subclass from the AST to add BE specific functionality
+- How to subclass from the Generator protocol to create BE specific
+  extended AST nodes
+- How to write constructors for the derived BE classes
+- How to use the Add protocol to store BE specific information
+- How to maintain BE specific information which applies to the entire
+  AST generated from the IDL input
+- How to use data members in your BE
+- How to build a complete compiler
+
+PART I. FEATURES OF THE CFE
+-=========================-
+
+THE COMPILATION PROCESS
+-----------------------
+
+The OMG IDL compiler operates as follows:
+
+- Parses command line arguments. If an option is directed at a
+  BE, an appropriate operation provided by the BE is invoked to process
+  the option.
+- Performs global initialization.
+- Forks a copy of the compiler for each file specified as input.
+- An ANSI-compatible preprocessor preprocesses the IDL input.
+- Parses the file using the CFE parser, and constructs an AST describing the
+  IDL input.
+- Prints the AST for verification, if requested.
+- Invokes the BE to process the AST and produce the output
+  characteristic of that BE.
+
+ABSTRACT SYNTAX TREE
+--------------------
+
+The AST (Abstract Syntax Tree) is the primary mechanism for communication
+between a BE and the CFE. It consists of a tree of instances of classes
+defined in the CFE or refinements of those classes as defined in a BE.
+The class hierarchy of the AST closely resembles the structure of the IDL
+syntax. Most AST classes have direct equivalents in IDL constructs.
+
+The UTL_Scope class defines common functionality for definition scope
+management and name lookup. This is explained in a following section.
+UTL_Scope is defined in include/utl_scope.hh and implemented in
+util/utl_scope.cc.
+
+The AST provides the following classes:
+
+AST_Decl	    Base of the AST class hierarchy. Each class in the AST
+		    inherits from AST_Decl. Defined in include/ast_decl.hh
+		    and implemented in ast/ast_decl.cc
+
+AST_Type	    Common base class for all classes which represent IDL
+		    type constructs. Defined in include/ast_type.hh and
+		    implemented in ast/ast_type.cc. Inherits from AST_Decl.
+
+AST_ConcreteType    Common base class for all classes which represent IDL
+		    types other than interfaces. Defined in the file
+		    include/ast_concrete_type.hh and implemented in
+		    ast/ast_concrete_type.cc. Inherits from AST_Type.
+
+AST_PredefinedType  Instances of this class represent all predefined types
+		    such as long, char and so forth. Defined in the file
+		    include/ast_predefined_type.hh and implemented in
+		    ast/ast_predefined_type.cc. Inherits from
+		    AST_ConcreteType.
+
+AST_Module	    Represents the IDL module construct. Defined in the
+		    file include/ast_module.hh and implemented in
+		    ast/ast_module.cc. Inherits from AST_Decl and
+		    UTL_Scope.
+
+AST_Root	    Represents the root of the abstract syntax tree being
+		    constructed. Is a subclass of AST_Module. Can be
+		    subclassed in BEs to store information associated with
+		    the entire AST. Defined in the file include/ast_root.hh
+		    and implemented in ast/ast_root.cc. Inherits from
+		    AST_Module.
+
+AST_Interface	    Represents the IDL interface construct. Defined in
+		    include/ast_interface.hh and implemented in the file
+		    ast/ast_interface.cc. Inherits from AST_Type and
+		    UTL_Scope.
+
+AST_InterfaceFwd    Represents a forward declaration of an IDL interface.
+		    Defined in include/ast_interface_fwd.hh and implemented
+		    in ast/ast_interface_fwd.cc. Inherits from AST_Decl.
+
+AST_Attribute	    Represents an IDL attribute construct. Defined in
+		    include/ast_attribute.hh and implemented in the file
+		    ast/ast_attribute.cc. Inherits from AST_Decl.
+
+AST_Exception	    Represents an IDL exception construct. Defined in
+		    include/ast_exception.hh and implemented in the file
+		    ast/ast_exception.cc. Inherits from AST_Decl.
+
+AST_Structure	    Represents an IDL struct construct. Defined in the file
+		    include/ast_structure.hh and implemented in the file
+		    ast/ast_structure.cc. Inherits from AST_ConcreteType
+		    and UTL_Scope.
+
+AST_Field	    Represents a field in an IDL struct or exception
+		    construct. Defined in include/ast_field.hh and
+		    implemented in ast/ast_field.cc. Inherits from
+		    AST_Decl.
+
+AST_Operation	    Represents an IDL operation construct. Defined in the
+		    file include/ast_operation.hh and implemented in
+		    ast/ast_operation.cc. Inherits from AST_Decl and
+		    UTL_Scope.
+
+AST_Argument	    Represents an argument to an IDL operation construct.
+		    Defined in include/ast_argument.hh and implemented in
+		    ast/ast_argument.cc. Inherits from AST_Field.
+
+AST_Union	    Represents an IDL union construct. Defined in
+		    include/ast_union.hh and implemented in
+		    ast/ast_union.cc. Inherits from AST_ConcreteType and
+		    from UTL_Scope.
+
+AST_UnionBranch	    Represents an individual branch in an IDL union
+		    construct. Defined in include/ast_union_branch.hh and
+		    implemented in ast/ast_union_branch.cc. Inherits from
+		    AST_Field.
+
+AST_UnionLabel	    Represents the label of an individual branch in an IDL
+		    union construct. Defined in include/ast_union_label.hh
+		    and implemented in ast/ast_union_label.cc
+
+AST_Constant	    Represents an IDL constant construct. Defined in
+		    include/ast_constant.hh and implemented in the file
+		    ast/ast_constant.cc. Inherits from AST_Decl.
+
+AST_Enum	    Represents an IDL enum construct. Defined in the file
+		    include/ast_enum.hh and implemented in ast/ast_enum.cc.
+		    Inherits from AST_ConcreteType and UTL_Scope.
+
+AST_EnumVal	    Represents an enumerator in an IDL enum construct.
+		    Defined in include/ast_enum_val.hh and implemented in
+		    ast/ast_enum_val.cc. Inherits from AST_Constant.
+
+AST_Sequence	    Represents an IDL sequence construct. Defined in
+		    include/ast_sequence.hh and implemented in
+		    ast/ast_sequence.cc. Inherits from AST_Decl.
+
+AST_String	    Represents an IDL string construct. Defined in the file
+		    include/ast_string.hh and implemented in
+		    ast/ast_string.cc. Inherits from AST_Decl.
+
+AST_Array	    Represents an array modifier to the type of an IDL
+		    field or typedef declaration. Defined in the file
+		    include/ast_array.hh and implemented in
+		    ast/ast_array.cc. Inherits from AST_Decl.
+
+AST_Typedef	    Represents an IDL typedef construct. Defined in the file
+		    include/ast_typedef.hh and implemented in
+		    ast/ast_typedef.cc. Inherits from AST_Decl.
+
+AST_Expression	    Represents an IDL expression. Defined in the file
+		    include/ast_expression.hh and implemented in
+		    ast/ast_expression.cc.
+
+AST_Root	    A subclass of AST_Module, an instance of this class
+		    is used to represent the distinguished root node of
+		    the AST. Defined in include/ast_root.hh and implemented
+		    in ast/ast_root.cc. Inherits from AST_Module.
+
+
+USING INSTANCE DATA
+-------------------
+
+The AST classes define member data fields in addition to defining
+operations on instances. These member data fields are all private, to allow
+only the instance in which they are stored direct access. Other objects
+(including other instances of the same class) can obtain access to the
+member data fields of an instance through accessor functions. These
+accessor functions allow retrieval of the data, and in some cases update
+functions are also provided to store new values.
+
+There are several reasons why this approach is taken. First, it hides the
+actual implementation of the member data fields from outside the class. For
+example, a Thermometer class would not expose whether its temperature
+reading is stored in Farenheit or Celsius units, and it could allow access
+through either unit method.
+
+Second, protecting access to member data in this manner restricts the
+ability to update it to the instance itself, save where update functions
+are explicitly provided. This makes for more reliable implementations,
+since the manipulation of the data is isolated in the class implementation
+itself.
+
+Third, wrapping a function call around access to member data allows such
+access and update operations to be protected in a multithreaded
+environment. While the CFE itself is not multithreaded and the access
+operations as currently defined do no special work to protect against
+mutliple conflicting access operations, this may be changed in a future
+version. Moving the CFE to a multithreaded environment without protecting
+access to member data in this manner would be extremely difficult.
+
+The protocol defined in the CFE is that member data fields are all private
+and have names which start with the prefix "pd_" (denoting Private Data).
+The access functions have names which are the same as the name of the field
+sans the prefix. For example, AST_Decl has a field pd_defined_in and an
+access function defined_in().
+
+The update functions have names starting with "set_" followed by the name
+of the corresponding access function. Thus, AST_Decl defines a function
+set_in_main_file(boolean) which sets the pd_in_main_file data member's
+value to the boolean provided.
+
+GENERATION OF THE AST
+---------------------
+
+The CFE generates the abstract syntax tree after parsing IDL
+input. The nodes of the AST are defined by classes introduced in the
+previous section, or by subclasses thereof as defined by each BE. In
+writing the CFE, we were faced with the following problem: how to generate
+the AST containing nodes of the derived classes as defined in each BE
+without knowledge of the types and conventions of these BE classes.
+
+One alternative was to define a naming scheme which predetermines the names
+of each subclass a BE can define. The AST would then be generated by
+calling an appropriate constructor on the BE derived class. This scheme
+suffers from some shortcomings:
+
+- It breaks the modularity of the compiler and imports knowledge about
+  types defined in a BE into the CFE, where this information does not belong.
+- It restricts a compiler to having only one BE loaded at a time because the
+  names of these classes can be in use in only one BE at a time.
+- It requires a BE to provide derived classes for all AST classes, even for
+  those classes where the BE adds no functionality.
+
+The mechanism we chose is different. We define the AST_Generator class
+which has an operation for each constructor defined on each AST class. The
+operation takes arguments appropriate to the constructor, invokes it and
+returns the created AST node, using the type known to the CFE. All such
+operations on the generator are declared virtual. The names of all
+operations start with "create_" and contain the name of the construct.
+Thus, an operation which invokes a constructor of an AST_Module is named
+create_module. AST_Generator is defined in include/ast_generator.hh and
+implemented in ast/ast_generator.cc.
+
+If a BE derives from any AST class, it must also derive from the
+AST_Generator class and redefine the relevant operations to invoke
+constructors of the BE provided class instead of the AST provided class.
+For example, if BE_Module is a subclass of AST_Module in a BE, the BE would
+also define BE_Generator and redefine create_module to call the constructor
+of BE_Module instead of that provided by AST_Module.
+
+During initialization, the CFE causes an instance of the BE derived
+generator to be created and saved. This is explained in the section on
+REQUIRED ENTRY POINTS SUPPLIED BY A BE. During parsing, actions in the Yacc
+grammar invoke operations on the saved instance to create new nodes for the
+AST as it is being built. These operations invoke constructors for BE
+derived classes or for AST provided classes if they were not overridden.
+
+DEFINITION SCOPES
+-----------------
+
+IDL is a nested scoped language. The scoping rules are defined by the CORBA
+spec and closely follow those of C++.
+
+Scope management is implemented in two classes provided in the utilities
+library, UTL_Scope and UTL_Stack. UTL_Scope manages associations between
+names and AST nodes, and UTL_Stack manages scope nesting and entry and exit
+from definition scopes as the parse is proceeding. UTL_Scope is defined in
+include/utl_scope.hh and implemented in util/utl_scope.cc. UTL_Stack is
+defined in include/utl_stack.hh and implemented in util/utl_stack.cc.
+
+During initialization, the CFE creates an instance of UTL_Stack and saves
+it. During parsing, as definition scopes are entered and exited, AST nodes
+are pushed onto, or popped from, the stack represented by the saved
+instances. Nodes on the stack are stored as instances of UTL_Scope. Section
+THE NARROWING MECHANISM explains how to obtain the real type of a node
+retrieved from the stack.
+
+All definition scopes are linked in a tree rooted in the distinguished AST
+root node. This linkage is implemented by UTL_Scope and AST_Decl. The
+linkage is a permanent record of the scope nesting while the stack is a
+dynamic record which at each instant represents the current state of the
+parse.
+
+The nesting information is used to do name lookup. IDL uses scoped names  
+which are concatenations of definition scope names ending with individual
+construct names. For example, in
+
+	  interface a {
+		    struct b {
+			   long c;
+		    };
+		    const long k = 23;
+		    struct s {
+			   long ar[k];
+		    };
+	   };
+
+the name a::b::c represents the long field in the struct b inside the
+interface a.
+
+Lookup is performed by searching down the linkage chain for the first component
+of the name, then, when found, recursively resolving the remaining
+components in the scope defined by the first component. Lookup is relative
+to the scope of use; in the above example, k could also have been referred to
+as a::k within the struct s.
+
+Nodes are stored in a definition scope as instances of AST_Decl. Thus, name
+lookup returns instances of AST_Decl. The next section, THE NARROWING
+MECHANISM, explains how to obtain the real type of a node retrieved from a
+definition scope.
+
+THE NARROWING MECHANISM
+-----------------------
+
+Here we give only a cursory explanation of how narrowing works. We
+concentrate on defining the problem and showing how to use our narrowing
+mechanism. The narrowing mechanism is defined in include/idl_narrow.hh.
+
+As explained above, nodes are stored on the scope stack as instances of
+UTL_Scope, and inside definition scopes as instances of AST_Decl. Also,
+nodes are linked in a nesting tree as instances of AST_Decl. Given a node
+retrieved from the stack or a definition scope, one is faced with the task
+of obtaining its real class. C++ does not currently provide an implicit
+mechanism for narrowing to a derived class, so the CFE defines its own
+mechanism. This mechanism requires some work on your part as BE implementor
+and requires some explicit code to be written when it is to be used.
+
+The class AST_Decl defines an enum whose members encode specific AST node
+classes. AST_Decl provides an accessor function, node_type(), which
+retrieves a member of the enum representing the AST type of the node. Thus,
+if an instance of AST_Decl really is an instance of AST_Module, the
+node_type() accessor returns AST_Decl::NT_module.
+
+The class UTL_Scope also provides an accessor function, scope_node_type(),
+which returns a member of the enum encoding the actual type of the node.
+Thus, given an UTL_Scope instance which is really an instance of
+AST_Operation, scope_node_type() would return AST_Decl::NT_op.
+
+Perusing the header files for classes provided by the AST, you will note
+the use of some macros defined in include/idl_narrow.hh. These macros
+define the explicit narrowing mechanism:
+
+DEF_NARROW_METHODSx(<class name>,<parent_x>) for x equal to 0,1,2 or 3,
+defines a narrowing method for the specified class which has 0,1,2 or 3
+immediate base classes from which it inherits. For example, ast_module.hh
+which defines AST_Module contains the following line:
+
+      DEF_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope)
+
+This is because AST_Module inherits directly from AST_Decl and UTL_Scope.
+
+DEF_NARROW_FROM_DECL(<class name>) appears in class definitions for classes
+which are derived from AST_Decl and which can be stored in a definition
+scope. This macro declares a static operation narrow_from_decl(AST_Decl *)
+on the class in which it appears. The operation returns the provided
+instance as an instance of <class name> if it can be narrowed, or NULL.
+
+DEF_NARROW_FROM_SCOPE(<class name>) appears in class definitions of classes
+which are derived from UTL_Scope and which can be stored on the scope
+stack. This macro declares a static operation narrow_from_scope(UTL_Scope *) 
+on the class in which it appears. The operation returns the provided
+instance as an instance of <class name> if it can be narrowed, or NULL.
+
+Now look in the files implementing these classes. You will note occurrences
+of the following macros:
+
+IMPL_NARROW_METHODSx(<class name>,<parent_x>) for x equal to 0,1,2 or 3,
+implements a narrowing method for the specified class which has 0,1,2 or 3
+immediate base classes from which it inherits. For example, ast_module.cc
+which implements AST_Module contains the following line:
+
+      IMPL_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope)
+
+IMPL_NARROW_FROM_DECL(<class name>) implements a method to narrow from an
+instance of AST_Decl to an instance of <class name> as defined above.
+
+IMPL_NARROW_FROM_SCOPE(<class name>) implements a method to narrow from an
+instance of UTL_Scope to an instance of <class name> as defined above.
+
+To put it all together: In the file ast_module.hh, you will find:
+
+  // Narrowing
+  DEF_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope);
+  DEF_NARROW_FROM_DECL(AST_Module);
+  DEF_NARROW_FROM_SCOPE(AST_Module);
+
+In the file ast_module.cc, you will see:
+
+/*
+ * Narrowing methods
+ */
+IMPL_NARROW_METHODS2(AST_Module, AST_Decl, UTL_Scope)
+IMPL_NARROW_FROM_DECL(AST_Module)
+IMPL_NARROW_FROM_SCOPE(AST_Module)
+
+The CFE uses narrowing internally to obtain the correct type of nodes in
+the AST. The CFE contains many code fragments such as the following:
+
+	  AST_Decl *d = get_an_AST_Decl_from_somewhere();
+	  AST_Module *m;
+	  ...
+	  if (d->node_type() == AST_Decl::NT_module) {
+	    m = AST_Module::narrow(d);
+	    if (m == NULL) {	// Narrow failed
+	      ...
+	    } else {		// Success, do normal processing
+	      ...
+	    }
+	  }
+	  ...
+
+Similar code implements narrowing instances of UTL_Scope to their actual
+types.
+
+In your BE classes which derive from UTL_Scope you must include a line
+defining how to narrow from a scope, so:
+
+	 DEF_NARROW_FROM_SCOPE(<your BE class>)
+
+and similarly for your BE classes which derive from AST_Decl.
+
+The narrowing mechanism is defined only for narrowing from AST_Decl and
+UTL_Scope. If your BE class inherits directly from one or more classes
+which themselves are derived from AST_Decl and/or UTL_Scope, you must
+include a line
+
+	DEF_NARROW_METHODSx(<your class name>,<parent 1>,<parent 2>)
+
+To make this concrete, here is what you'd write in a definition of BE_union
+which inherits from AST_Union:
+
+        DEF_NARROW_METHODS1(BE_Union, AST_Union);
+	DEF_NARROW_FROM_DECL(BE_Union);
+	DEF_NARROW_FROM_SCOPE(BE_Union);
+
+and in the implementation file of BE_Union:
+
+/*
+ * Narrowing methods:
+ */
+IMPL_NARROW_METHODS1(BE_Union, AST_Union)
+IMPL_NARROW_FROM_DECL(BE_Union)
+IMPL_NARROW_FROM_SCOPE(BE_Union)
+
+Then, in BE code which expects to see an instance of your derived BE_Union
+class, you will write:
+
+	  AST_Decl *d = get_an_AST_Decl_from_somewhere();
+	  BE_Union *u;
+	  ...
+	  if (d->node_type() == AST_Decl::NT_union) {
+	    u = BE_Union::narrow_from_decl(d);
+	    if (u == NULL) {	// Narrow failed
+	      ...
+	    } else {		// Success, do normal processing
+	      ...
+	    }
+	  }
+	  ...
+
+
+SCOPE MANAGEMENT
+----------------
+
+Instances of classes which are derived from UTL_Scope implement definition
+scopes. A definition scope can contain any kind of AST node as long as it
+is derived from AST_Decl. However, specific kinds of definition scopes such
+as interfaces and unions can contain only a restricted subset of all AST
+node types.
+
+UTL_Scope provides operations to add instances of each AST provided class
+to a definition scope. The names of these operations are constructed by
+prepending the string "add_" to the name of the IDL construct. So, to add
+an interface to a definition scope, invoke the operation add_interface.
+The operations are all defined virtual and are intended to be overridden in
+classes derived from UTL_Scope.
+
+If the node was successfully added to the definition scope, the node is
+returned as the result. Otherwise the node is not added to the definition
+scope and NULL is returned.
+
+All add operation implementations in UTL_Scope return NULL. Thus,
+only the operations which implement legal additions to a specific kind of
+definition scope must be overridden in the implementation of that
+definition scope. For example, in AST_Module the add_interface operation is
+overridden to add the provided instance of AST_Interface to the scope and
+to return the provided instance if the addition was successful. Operations
+which were not overridden return NULL to indicate that the addition is
+illegal in this context. For example, in AST_Operation the definition of
+add_interface is not overridden since it is illegal to store an interface
+inside an operation definition scope.
+
+The add operations are invoked in the actions in the Yacc grammar. The
+following fragment is a representative example of code using the add
+operations:
+
+	AST_Constant *d = construct_a_new_constant();
+	...
+	if (current_scope->add_constant(d) == NULL) { // Failed
+	   ...
+	} else {				      // Succeeded
+	  ...
+	}
+
+BE INTERACTION DURING THE PARSING PROCESS
+-----------------------------------------
+
+The add operations can be overridden in BE derived classes to let the BE
+perform additional house-keeping work during the process of constructing
+the AST. For example, a BE could keep separate lists of interfaces as they
+are being added to a module.
+
+If you override an add operation in your BE, you must invoke the overridden
+operation in the superclass of your derived class to allow the CFE to
+perform its own house-keeping tasks. A good rule is to invoke the operation
+on the superclass before you do your own processing; then, if the
+superclass operation returns NULL, this indicates that the addition failed
+and your own code should immediately return NULL. An example explains this:
+
+AST_Interface *
+BE_Module::add_interface(AST_Interface *i)
+{
+  if (AST_Module::add_interface(i) == NULL)	// Failed, bail out!
+    return NULL;
+  ...	   					// Do your own work here
+  return i;					// Return success indication   
+}
+
+We strongly advise you to only define add operations that override add
+operations provided by the AST classes. Add operations which
+do not override equivalent operations in the AST in effect
+extend the semantics of the language accepted by the compiler. For
+example, the CFE does not have an add_interface operation on
+AST_Operation. If you were to define one in your BE_Operation class,
+the resulting compiler would allow an interface to be
+stored in an operation definition scope. The current CORBA specification
+does not allow this.
+
+AST INHERITANCE SCHEME
+----------------------
+
+The AST classes all use public virtual inheritance to construct the
+inheritance tree. This ensures that a class may appear several times in the
+inheritance tree through different paths and the derived class's instances
+will have only one copy of the inherited class's data.
+
+The use of public virtual inheritance has several important effects on how
+a BE is constructed. We explain those effects below.
+
+First, you must define a default constructor for your BE class, since
+your class may be used as a virtual base class of some other class. In this 
+case the compiler may want to call a default constructor for your class. It
+is a good idea to have a default constructor anyway, even if you do not
+plan to subclass your BE class, since for most C++ compilers this causes
+the code to be smaller. Your default constructor should initialize all
+constant data members. Additionally, it may initialize any non-constant
+data member whose value must be set before the first time the instance is
+used.
+
+Second, the constructor of your BE derived class must explicitly call all
+constructors of virtual base classes which perform useful work. For
+example, if a class in the AST from which your BE class inherits has an
+initializer for a data member, you must call that constructor. This rule is
+discussed in detail in the C++ ARM. An example may help here.
+
+Suppose you define a class BE_attribute which inherits from AST_Attribute.
+Its constructor should be as follows:
+
+    BE_Attribute::BE_Attribute(boolean ro,
+			       AST_Type *ft,
+			       UTL_ScopedName *n,
+			       UTL_StrList *p)
+		: AST_Attribute(ro, ft, n, p),
+		  AST_Field(ft, n, p),
+		  AST_Decl(AST_Decl::NT_attr, n, p)
+    {
+    }
+
+The calls to the constructors of AST_Attribute, AST_Field and AST_Decl are
+needed because these constructors do useful initializations on their
+classes. 
+
+Note that there is some redundancy in the data passed to these
+constructors. We chose to preserve this redundancy since it should be
+possible to create BEs which subclass only some of the classes supplied by
+the AST. This means that the constructors on each class provided by the AST
+should take arguments which are sufficient to construct the instance if
+the AST class is the most derived one.
+
+The code supplied with this release contains a demonstration BE which
+subclasses all the AST provided classes. The constructors for each class
+provided by the BE are found in the file be/be_classes.cc.
+
+INITIALIZATION
+--------------
+
+The following steps take place at initialization:
+
+- The global data instance is created, stored in idl_global and filled with
+  default values (in driver/drv_init.cc).
+- The command line arguments are parsed (in driver/drv_args.cc).
+- For each IDL input file, a copy of the compiler process is forked (in
+  driver/drv_fork.cc).
+- The IDL input is preprocessed (in driver/drv_preproc.cc).
+- FE initialization stage 1 is done: the scopes stack is created and stored
+  in the global data variable idl_global->scopes() field (in fe/fe_init.cc).
+- BE_init is called to create the generator instance and the returned
+  instance is stored in the global data variable idl_global->gen() field.
+- FE initialization stage 2 is done: the global scope is created, pushed on
+  the scopes stack and populated with predefined types (in fe/fe_init.cc).
+
+GLOBAL STATE AND ENTRY POINTS
+-----------------------------
+
+The CFE has one global variable named idl_global, which stores an instance
+of a class IDL_GlobalData as explained below:
+
+The CFE defines a class IDL_GlobalData which defines the global
+information used in a specific run of the compiler. IDL_GlobalData is
+defined in include/idl_global.hh and implemented in the file
+util/utl_global.cc.
+
+Initialization creates an instance of this class and stores it in the value
+of the global variable idl_global. Thus, the individual pieces of
+information stored in the instance are accessible everywhere.
+
+ERROR HANDLING
+--------------
+
+All error handling is defined by a class provided by the CFE, UTL_Error.
+This class is defined in include/utl_error.hh and implemented in the file
+util/utl_error.cc. The class provides several methods for reporting
+specific errors as well as generic error reporting methods taking zero to
+three arguments.
+
+The CFE instantiates the class and stores the instance as part of the
+global state, accessible as idl_global->err(). Thus, to cause an error
+report, you would write code similar to the following:
+
+	if (error condition found)
+	   idl_global->err()->specific_error_message(arg1, ..);
+
+or
+
+	if (error condition found)
+	  idl_global->err()->generic_error_message(flag, arg1, ..);
+
+The flag argument is one of the predefined error conditions found in the
+enum at the head of the UTL_Error class definition. The arguments to the
+specific error message routine are defined by the signature of that
+routine. The arguments to a generic error message routine are always
+instances of AST_Decl.
+
+The running count of errors is accessible as idl_global->err_count(). If
+the value returned by this operation is non-zero after the IDL input has
+been parsed, the BE is not invoked.
+
+HANDLING OF COMMAND LINE ARGUMENTS
+----------------------------------
+
+Defined command line arguments are specified in the document CLI, in this
+directory. The CFE calls the required BE API entry point BE_prep_arg to
+process arguments passed within a -Wb flag.
+
+REQUIRED ENTRY POINTS SUPPLIED BY A BE
+--------------------------------------
+
+The following API entry points must be supplied by a BE in order to
+successfully link with the CFE:
+
+extern "C" AST_Generator   *BE_init();
+
+       Creates an instance of the generator object and returns it. Note
+       that the global scope is not yet set up and the scopes stack is
+       empty when this routine is called.
+
+extern "C" void		   BE_produce();
+
+       Called by the compiler main program after the IDL input has been
+       successfully parsed and processed. The job of this routine is to
+       carry out the specific function of the BE. The AST is accessible as
+       the value of idl_global->root().
+
+extern "C" void	    	   BE_prep_arg(char *, idl_bool);
+
+       Called to process an argument passed in with a -Wb flag. The boolean
+       will always be FALSE.
+
+extern "C" void	      	   BE_abort();
+
+       Called when the CFE decides to abort the compilation. Can be used in
+       a BE to clean up after itself, e.g. remove temporary files or
+       directories it created while the parse was in progress.
+
+extern "C" void	      	   BE_version();
+
+       Called when a -V argument is processed. This should produce a
+       message for the user identifying the BE that is loaded and its
+       version information.
+
+PART II. WRITING A BACK END
+-=========================-
+
+REQUIRED API THAT EACH BE MUST SUPPORT
+--------------------------------------
+
+Below are the API entry points that each BE must supply in order to use the
+CFE framework. This is a repeat of the BE API section:
+
+extern "C" AST_Generator   *BE_init();
+
+       Creates an instance of the generator object and returns it. Note
+       that the scopes stack is still not set up at the time this routine
+       is called.
+
+extern "C" void		   BE_produce();
+
+       Called by the compiler main program after the IDL input has been
+       successfully parsed and processed. The job of this routine is to
+       carry out the specific function of the BE. The AST is accessible as
+       the value of idl_global->root().
+
+extern "C" void	    	   BE_prep_arg(char *, boolean);
+
+       Called to process an argument passed in with a -Wb flag. The boolean
+       will always be FALSE.
+
+extern "C" void	      	   BE_abort();
+
+       Called when the CFE decides to abort the compilation. Can be used in
+       a BE to clean up after itself, e.g. remove temporary files or
+       directories it created while the parse was in progress.
+
+extern "C" void	      	   BE_version();
+
+       Called when a -V argument is processed. This should produce a
+       message for the user identifying the BE that is loaded and its
+       version information.
+
+WHAT FILES TO INCLUDE
+---------------------
+
+To use the CFE, each implementation file of your BE must include the
+following two header files:
+
+#include  <idl.hh>
+#include  <idl_extern.hh>
+
+Following this, you can include any header files needed by your BE.
+
+HOW TO SUBCLASS THE AST
+-----------------------
+
+Your BE may subclass from any of the classes provided by the AST. Your
+class should use public virtual inheritance to ensure that only one copy of
+the class's data members is present in each instance. Read the section on
+HOW TO WRITE CONSTRUCTORS to learn about additional considerations that you
+must take into account when writing constructors for your BE classes.
+
+HOW TO SUBCLASS THE GENERATOR TO CREATE BE ENHANCED AST NODES
+-------------------------------------------------------------
+
+Your BE subclasses from classes provided by the AST. To ensure that
+instances of these classes are constructed when the AST is built, you must
+also subclass AST_Generator and return an instance of your subclass from
+the call to BE_init.
+
+The AST_Generator class provides operations to create instances of all
+classes defined in the AST. For example, the operation to create an
+AST_Attribute node is as follows:
+
+	AST_Attribute *
+	AST_Generator::create_attribute(...)
+	{
+	  return new AST_Attribute(...);
+	}
+
+In your BE_Generator subclass of AST_Generator, you will override methods
+for creation of nodes of all AST classes which you have subclassed. Thus,
+if your BE has a class BE_Attribute which is a subclass of AST_Attribute,
+your BE_Generator class definition has to override the create_attribute
+method to ensure that instances of BE_Attribute are created.
+
+The definition of the overriden operations should call the constructor of
+the derived class and return the new node as an instance of the inherited
+class. Thus, the implementation of create_attribute is as follows:
+
+	AST_Attribute *
+	BE_Generator::create_attribute(...)
+	{
+	  return new BE_Attribute(...);
+	}
+
+The Yacc grammar actions call create_xxx operations on the generator
+instance stored in the global variable idl_global->gen() field. By storing
+an instance of your derived generator class BE_Generator you ensure that
+instances of the BE classes you defined will be created.
+
+HOW TO WRITE CONSTRUCTORS FOR BE CLASSES
+----------------------------------------
+
+As mentioned above, the AST uses public virtual inheritance to derive the
+AST class hierarchy. This has two important effects on how you write a BE,
+specifically how you write constructors for derived BE classes.
+
+First, you must define a default constructor for your BE class, since
+your class may be used as a virtual base class of some other class. In that
+case the compiler may want to call a default constructor for your class. It
+is a good idea to have a default constructor anyway, even if you do not
+plan to subclass your BE class, since for most C++ compilers this causes
+the code to be smaller. Your default constructor should initialize all
+constant data members. Additionally, it may initialize any non-constant
+data member whose value must be set before the first time the instance is
+used.
+
+Second, the constructor for your BE class must explicitly call all
+constructors of virtual base classes which do some useful work. For
+example, if a class in the AST from which your BE class inherits, directly
+or indirectly, has an initializer for a data member, your BE class's
+constructor must call the AST class's constructor. This is discussed
+extensively in the C++ ARM.
+
+Below is a list showing how to write constructors for subclasses of each
+class provided by the BE. For each AST class we show a definition of a
+constructor for a derived class which calls all neccessary constructors on
+AST classes:
+
+AST_Argument:
+
+	BE_Argument::BE_Argument(AST_Argument::Direction d,
+				 AST_Type *ft,
+				 UTL_ScopedName *n,
+				 UTL_StrList *p)
+		   : AST_Argument(d, ft, n, p),
+		     AST_Field(AST_Decl::NT_argument, ft, n, p),
+		     AST_Decl(AST_Decl::NT_argument, n, p)
+	{
+	}
+
+AST_Array:
+
+	BE_Array::BE_Array(UTL_ScopedName *n,
+			   unsigned long nd,
+			   UTL_ExprList *ds)
+		: AST_Array(n, nd, ds),
+		  AST_Decl(AST_Decl::NT_array, n, NULL)
+
+	{
+	}
+
+AST_Attribute:
+
+	BE_Attribute::BE_Attribute(boolean ro,
+				   AST_Type *ft,
+				   UTL_ScopedName *n,
+				   UTL_StrList *p)
+		    : AST_Attribute(ro, ft, n, p),
+		      AST_Field(AST_Decl::NT_attr, ft, n, p),
+		      AST_Decl(AST_Decl::NT_attr, n, p)
+	{
+	}
+
+AST_ConcreteType:
+
+	BE_ConcreteType::BE_ConcreteType(AST_Decl::NodeType nt,
+					 UTL_ScopedName *n,
+					 UTL_StrList *p)
+		       : AST_Decl(nt, n, p)
+	{
+	}
+
+AST_Constant:
+
+	BE_Constant::BE_Constant(AST_Expression::ExprType t,
+				 AST_Expression *v,
+				 UTL_ScopedName *n,
+				 UTL_StrList *p)
+		   : AST_Constant(t, v, n, p),
+		     AST_Decl(AST_Decl::NT_const, n, p)
+	{
+	}
+
+AST_Decl:
+
+	BE_Decl::BE_Decl(AST_Decl::NodeType nt,
+			 UTL_ScopedName *n,
+			 UTL_StrList *p)
+	       : AST_Decl(nt, n, p)
+	{
+	}
+
+AST_Enum:
+
+	BE_Enum::BE_Enum(UTL_ScopedName *n,
+			 UTL_StrList *p)
+	       : AST_Enum(n, p),
+		 AST_Decl(AST_Decl::NT_enum, n, p),
+		 UTL_Scope(AST_Decl::NT_enum)
+	{
+	}
+
+AST_EnumVal:
+
+	BE_EnumVal::BE_EnumVal(unsigned long v,
+			       UTL_ScopedName *n,
+			       UTL_StrList *p)
+		  : AST_EnumVal(v, n, p),
+		    AST_Constant(AST_Expression::EV_ulong,
+		    		 AST_Decl::NT_enum_val,
+				 new AST_Expression(v),
+				 n,
+				 p),
+		    AST_Decl(AST_Decl::NT_enum_val, n, p)
+	{
+	}
+
+AST_Exception:
+
+	BE_Exception::BE_Exception(UTL_ScopedName *n,
+				   UTL_StrList *p)
+		    : AST_Decl(AST_Decl::NT_except, n, p),
+		      AST_Structure(AST_Decl::NT_except, n, p),
+		      UTL_Scope(AST_Decl::NT_except)
+	{
+	}
+
+AST_Field:
+
+	BE_Field::BE_Field(AST_Type *ft,
+			   UTL_ScopedName *n,
+			   UTL_StrList *p)
+		: AST_Field(ft, n, p),
+		  AST_Decl(AST_Decl::NT_field, n, p)
+	{
+	}
+
+AST_Interface:
+
+	BE_Interface::BE_Interface(UTL_ScopedName *n,
+				   AST_Interface **ih,
+				   long nih,
+				   UTL_StrList *p)
+		    : AST_Interface(n, ih, nih, p),
+		      AST_Decl(AST_Decl::NT_interface, n, p),
+		      UTL_Scope(AST_Decl::NT_interface)
+	{
+	}
+
+AST_InterfaceFwd:
+
+	BE_InterfaceFwd::BE_InterfaceFwd(UTL_ScopedName *n,
+					 UTL_StrList *p)
+		       : AST_InterfaceFwd(n, p),
+			 AST_Decl(AST_Decl::NT_interface_fwd, n, p)
+	{
+	}
+
+AST_Module:
+
+	BE_Module::BE_Module(UTL_ScopedName *n,
+			     UTL_StrList *p)
+		 : AST_Decl(AST_Decl::NT_module, n, p),
+		   UTL_Scope(AST_Decl::NT_module)
+	{
+	}
+
+AST_Operation:
+
+	BE_Operation::BE_Operation(AST_Type *rt,
+				   AST_Operation::Flags fl,
+				   UTL_ScopedName *n,
+				   UTL_StrList *p)
+		    : AST_Operation(rt, fl, n, p),
+		      AST_Decl(AST_Decl::NT_op, n, p),
+		      UTL_Scope(AST_Decl::NT_op)
+	{
+	}
+
+AST_PredefinedType:
+
+	BE_PredefinedType::BE_PredefinedType(
+				AST_PredefinedType::PredefinedType *pt,
+				UTL_ScopedName *n,
+				UTL_StrList *p)
+			 : AST_PredefinedType(pt, n, p),
+			   AST_Decl(AST_Decl::NT_pre_defined, n, p)
+	{
+	}
+
+AST_Root:
+
+	BE_Root::BE_Root(UTL_ScopedName *n, UTL_StrList *p)
+	       : AST_Module(n, p),
+	         AST_Decl(AST_Decl::NT_module, n, p),
+		 UTL_Scope(AST_Decl::NT_module)
+	{
+	}
+
+
+AST_Sequence:
+
+	BE_Sequence::BE_Sequence(AST_Expression *ms, AST_Type *bt)
+		   : AST_Sequence(ms, bt),
+		     AST_Decl(AST_Decl::NT_sequence,
+		     	      new UTL_ScopedName(new String("sequence"), NULL),
+			      NULL)
+	{
+	}
+
+AST_String:
+
+	BE_String::BE_String(AST_Expression *ms)
+		 : AST_String(ms),
+		   AST_Decl(AST_Decl::NT_string,
+		   	    new UTL_ScopedName(new String("string"), NULL),
+			    NULL)
+	{
+	}
+
+AST_Structure:
+
+	BE_Structure::BE_Structure(UTL_ScopedName *n,
+				   UTL_StrList *p)
+		    : AST_Decl(AST_Decl::NT_struct, n, p),
+		      UTL_Scope(AST_Decl::NT_struct)
+	{
+	}
+
+AST_Type:
+
+	BE_Type::BE_Type(AST_Decl::NodeType nt,
+			 UTL_ScopedName *n,
+			 UTL_StrList *p)
+	       : AST_Decl(nt, n, p)
+	{
+	}
+
+AST_Typedef:
+
+	BE_Typedef::BE_Typedef(AST_Type *bt,
+			       UTL_ScopedName *n,
+			       UTL_StrList *p)
+		  : AST_Typedef(bt, n, p),
+		    AST_Decl(AST_Decl::NT_typedef, n, p)
+	{
+	}
+
+AST_Union:
+
+	BE_Union::BE_Union(AST_ConcreteType *dt,
+			   UTL_ScopedName *n,
+			   UTL_StrList *p)
+		: AST_Union(dt, n, p),
+		  AST_Structure(AST_Decl::NT_union, n, p),
+		  AST_Decl(AST_Decl::NT_union, n, p),
+		  UTL_Scope(AST_Decl::NT_union)
+	{
+	}
+
+AST_UnionBranch:
+
+	BE_UnionBranch::BE_UnionBranch(AST_UnionLabel *fl,
+				       AST_Type *ft,
+				       UTL_ScopedName *n,
+				       UTL_StrList *p)
+		      : AST_UnionBranch(fl, ft, n, p),
+		        AST_Field(ft, n, p),
+			AST_Decl(AST_Decl::NT_union_branch, n, p)
+	{
+	}
+
+AST_UnionLabel:
+
+	BE_UnionLabel::BE_UnionLabel(AST_UnionLabel::UnionLabel lk,
+				     AST_Expression *lv)
+		     : AST_UnionLabel(lk, lv)
+	{
+	}
+
+HOW TO USE THE ADD PROTOCOL
+---------------------------
+
+As explained the section SCOPE MANAGEMENT, the CFE manages scopes by
+calling type-specific functions to add new nodes to the scope to be
+augmented. These functions can be overridden in your BE classes to do work
+specific to your BE class. For example, in a BE_module class, you might
+override add_interface to do additional work.
+
+The protocol defined by the "add_" functions is that they return NULL to
+indicate failure. They return the node that was added (and which was given
+as an argument) if the operation succeeded. Your functions in your BE class
+should follow the same protocol.
+
+The "add_" functions defined in the BE must call the overridden function in
+the base class defind in the CFE in order for the CFE scope management
+mechanism to work.  Otherwise, the CFE does not get an opportunity to
+augment its scopes with the new node to be added. It is good practice to
+call the overridden "add_" function as the first action in your BE
+function, because the success or failure of the CFE operation indicates
+whether your function should complete its task or abort early.
+
+Here is an example. Suppose you have defined a class BE_module which
+inherits from AST_Module. You may wish to override the add_interface
+function as follows:
+
+	 class BE_Module : public virtual AST_Module
+	 {
+	 	....
+		/*
+		 * ADD protocol
+		 */
+		virtual AST_Interface	*add_interface(AST_Interface *);
+		...
+	};
+
+The implementation of this function would look something like the following:
+
+    AST_Interface *
+    BE_Module::add_interface(AST_Interface *new_in)
+    {
+    	/*
+	 * Check that the CFE operation succeeds. If it returns
+	 * NULL, stop any further work
+	 */
+	if (AST_Module::add_interface(new_in) == NULL)
+	  return NULL;
+	/*
+	 * OK, non-NULL, this means the BE can do its own work here
+	 */
+	...
+	/*
+	 * Finally, don't forget to return the argument to indicate
+	 * success
+	 */
+	return new_in;
+    }	  
+
+HOW TO MAINTAIN BE SPECIFIC INFORMATION
+---------------------------------------
+
+The CFE provides a special class AST_Root, a subclass of AST_Module. An
+instance of the AST_Root class is used as the distinguished root of the
+abstract syntax tree built during a parse.
+
+Your BE can subclass BE_Root from AST_Root and override the create_root
+operation in your BE_Generator class derived from AST_Generator. This will
+cause the CFE to create an instance of your BE_Root class as the root of
+the tree being constructed.
+
+You can use the instance of the BE_Root class as a convenient place to
+store information specific to an individual tree. For example, you could
+add operations on the BE_Root class to count how many nodes of each class
+are created.
+
+HOW TO USE MEMBER DATA
+----------------------
+
+As explained above, the AST classes provide access and update functions for
+manipulating data members. Your BE classes must use these functions when
+they require access to data members defined in the AST classes, since the
+data members themselves are private.
+
+It is good practice to follow the same scheme in your BE classes. Make all
+data members private. Prepend the names of all such fields with "pd_".
+Define access functions with names equal to the name of the field without the
+prefix. Define update functions according to need by prepending the name of
+the access function with the prefix "set_".
+
+Using these techniques will allow your BE to enjoy the same benefits that
+are imparted onto the CFE. Your BE will be easier to move to a
+multithreaded environment and its data members will be better protected and
+hidden.
+
+HOW TO BUILD A COMPLETE COMPILER
+--------------------------------
+
+We now have all information needed to write a BE and to link it in with the
+CFE, to produce a complete IDL compiler.
+
+The following assumes that your BE will be stored in the "be" directory
+under the "release" directory. See the document ROADMAP for an explanation
+of the directory structure of the source release. If you decide to use a
+different directory to store your BE, you may have to modify the CPP_FLAGS in
+"idl_make_vars" in the top-level directory to allow your BE to find the
+include files it needs. You will also need to modify several targets in
+the Makefile in the top-level directory to correctly compile your BE into a
+library and to correctly link it in with the CFE to produce a complete
+compiler.
+
+You can get started quickly on writing your BE by modifying the sources
+found in the "demo_be" directory. The Makefile supports all the the targets
+that are needed to build a complete system and the maintenance target
+"clean" which assists in keeping the files and directories tidy. The files
+provided in the "demo_be" directory also provide all the API entry points
+that are mandated by this document.
+
+To build a complete compiler, invoke "make" or "make all" in the top-level
+directory. This will compile your BE and all the CFE sources, if this is
+the first invocation. On subsequent invocations this will recompile only
+the modified files. You will rarely if at all modify the CFE sources, so
+the overhead of compiling the CFE is incurred only the first time. To build
+just your BE, you can invoke "make all" or "make" in the "demo_be"
+directory. You can also, from the top-level directory, invoke "make
+demo_be/libbe.a".
+
+HOW TO OBTAIN ASSISTANCE
+------------------------
+
+First, read all the documents provided. If you have unanswered questions,
+mail them to
+
+	idl-cfe@sun.com
+
+Sun does not promise to support the IDL CFE source release in any manner.
+However, we will attempt to answer questions and correct problems as time
+allows.
+
+NOTE:
+
+SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
+trademarks or registered trademarks of Sun Microsystems, Inc.
+
+COPYRIGHT NOTICE
+----------------
+
+Copyright 1992, 1993, 1994 Sun Microsystems, Inc.  Printed in the United
+States of America.  All Rights Reserved.
+
+This product is protected by copyright and distributed under the following
+license restricting its use.
+
+The Interface Definition Language Compiler Front End (CFE) is made
+available for your use provided that you include this license and copyright
+notice on all media and documentation and the software program in which
+this product is incorporated in whole or part. You may copy and extend
+functionality (but may not remove functionality) of the Interface
+Definition Language CFE without charge, but you are not authorized to
+license or distribute it to anyone else except as part of a product or
+program developed by you or with the express written consent of Sun
+Microsystems, Inc. ("Sun").
+
+The names of Sun Microsystems, Inc. and any of its subsidiaries or
+affiliates may not be used in advertising or publicity pertaining to
+distribution of Interface Definition Language CFE as permitted herein.
+
+This license is effective until terminated by Sun for failure to comply
+with this license.  Upon termination, you shall destroy or return all code
+and documentation for the Interface Definition Language CFE.
+
+INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED AS IS WITH NO WARRANTIES OF
+ANY KIND INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS
+FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, OR ARISING FROM A COURSE OF
+DEALING, USAGE OR TRADE PRACTICE.
+
+INTERFACE DEFINITION LANGUAGE CFE IS PROVIDED WITH NO SUPPORT AND WITHOUT
+ANY OBLIGATION ON THE PART OF Sun OR ANY OF ITS SUBSIDIARIES OR AFFILIATES
+TO ASSIST IN ITS USE, CORRECTION, MODIFICATION OR ENHANCEMENT.
+
+SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES SHALL HAVE NO LIABILITY WITH
+RESPECT TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY
+INTERFACE DEFINITION LANGUAGE CFE OR ANY PART THEREOF.
+
+IN NO EVENT WILL SUN OR ANY OF ITS SUBSIDIARIES OR AFFILIATES BE LIABLE FOR
+ANY LOST REVENUE OR PROFITS OR OTHER SPECIAL, INDIRECT AND CONSEQUENTIAL
+DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+Use, duplication, or disclosure by the government is subject to
+restrictions as set forth in subparagraph (c)(1)(ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
+52.227-19.
+
+Sun, Sun Microsystems and the Sun logo are trademarks or registered
+trademarks of Sun Microsystems, Inc.
+
+SunSoft, Inc.  
+2550 Garcia Avenue 
+Mountain View, California  94043

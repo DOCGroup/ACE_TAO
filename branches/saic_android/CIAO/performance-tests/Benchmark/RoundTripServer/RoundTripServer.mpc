@@ -1,0 +1,22 @@
+// $Id$
+project (RoundTrip_server) : strategies, ciao_executor, avoids_ace_for_tao {
+  exename = server
+  after += Benchmark_skel
+  libs    += Benchmark_stub Benchmark_skel
+  libpaths += ..
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    server.cpp
+    LatencyTest.cpp
+  }
+  
+  Header_Files {
+    LatencyTest.h
+  }
+  
+  Inline_Files {
+  }
+}
