@@ -92,7 +92,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
 
   char name[ACE_MAX_USERID];
+
+#ifndef ACE_LACKS_CUSERID
   ACE_OS::cuserid (name);
+#else
+  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error: ::cuserid is not supported on this platform\n")),
+                     -1);
+#endif
 
   if (sd.send (name,
                ACE_OS::strlen (name) + 1,

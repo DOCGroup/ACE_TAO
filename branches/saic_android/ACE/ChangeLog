@@ -1,3 +1,18 @@
+Tue Jul 19 20:15:51 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-android.h:
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * include/makeinclude/platform_android.GNU:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/Thread_Attrs_Test.cpp:
+
+          Various android fixes.
+
 Tue Jul 19 18:22:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/config-android.h:

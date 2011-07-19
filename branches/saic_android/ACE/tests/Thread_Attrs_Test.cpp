@@ -64,7 +64,7 @@ Cancel_Check::Cancel_Check (bool enable, bool async)
 int
 Cancel_Check::svc (void)
 {
-#if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int state;
   pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &state);
   if (state == PTHREAD_CANCEL_ENABLE && !this->enable_req_)

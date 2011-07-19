@@ -15,8 +15,12 @@ Handle_L_Stream::~Handle_L_Stream (void)
 ACE_INLINE
 Handle_L_Stream::Handle_L_Stream (void)
 {
+#ifndef ACE_LACKS_CUSERID
   if (Handle_L_Stream::login_name == 0)
     Handle_L_Stream::login_name = ACE_OS::cuserid (Handle_L_Stream::login);
+#else
+  ACE_ERROR ((LM_ERROR, "Error: cuserid is not supported on this platform"));
+#endif
 }
 
 ACE_INLINE int

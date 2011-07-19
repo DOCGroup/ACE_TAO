@@ -31,6 +31,9 @@
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_HAS_LINUX_SEM_H
 #define ACE_HAS_LINUX_SHM_H
+#define ACE_LACKS_CUSERID
+#define ACE_LACKS_GETHOSTENT
+
 // I'm not sure if this is correct
 #define ACE_LACKS_RWLOCK_T
 
@@ -62,8 +65,6 @@ typedef unsigned long fd_mask;
 #undef ACE_SCANDIR_CMP_USES_VOIDPTR
 #endif
 
-#define ACE_LACKS_CUSERID
-
 #ifdef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 #undef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 #endif
@@ -88,7 +89,6 @@ typedef unsigned long fd_mask;
 #undef ACE_HAS_LINUX_SYSINFO
 #endif
 
-#define ACE_LACKS_CUSERID
 #define ACE_LACKS_PWD_FUNCTIONS
 
 #define ACE_ERRNO_TYPE volatile int

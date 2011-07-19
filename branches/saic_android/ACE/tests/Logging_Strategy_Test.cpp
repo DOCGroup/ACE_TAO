@@ -212,9 +212,11 @@ get_statistics (ACE_TCHAR *f_name)
                   ACE_TEXT ("      File size (B): %d\n"),
                   buf.st_size));
 
+      time_t time = static_cast <time_t> (buf.st_mtime);
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("      Time modified : %s\n"),
-                  ACE_OS::ctime (&buf.st_mtime)));
+                  ACE_OS::ctime (&time)));
     }
 
   return buf.st_mtime;
