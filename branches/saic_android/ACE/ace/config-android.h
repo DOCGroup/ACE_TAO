@@ -26,11 +26,27 @@
 #define ACE_LACKS_SYS_SYSCTL_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_TEMPLATES_REQUIRE_SOURCE
+#define ACE_LACKS_RAND_R
+#define ACE_LACKS_WCSTOLL
+#define ACE_LACKS_WCSTOULL
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+
+// I'm not sure if this is correct
+#define ACE_LACKS_RWLOCK_T
 
 /* This type is mandatory, but Android doesn't define it. */
 typedef unsigned long fd_mask;
 
 #include "ace/config-linux.h"
+
+#ifdef ACE_HAS_CLOCK_SETTIME
+#undef ACE_HAS_CLOCK_SETTIME
+#endif
+
+// epoll lacks some features on Android
+#ifdef ACE_HAS_EVENT_POLL
+#undef ACE_HAS_EVENT_POLL
+#endif
 
 # if defined(ACE_IMPORT_SINGLETON_DECLARATION)
 # undef ACE_IMPORT_SINGLETON_DECLARATION
@@ -50,7 +66,7 @@ typedef unsigned long fd_mask;
 
 #ifdef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 #undef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
-#endif 
+#endif
 
 #ifdef ACE_HAS_UALARM
 #undef ACE_HAS_UALARM
@@ -74,5 +90,7 @@ typedef unsigned long fd_mask;
 
 #define ACE_LACKS_CUSERID
 #define ACE_LACKS_PWD_FUNCTIONS
+
+#define ACE_ERRNO_TYPE volatile int
 
 #endif/* ACE_CONFIG_ANDROID_H*/
