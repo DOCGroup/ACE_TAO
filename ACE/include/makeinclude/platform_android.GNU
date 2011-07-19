@@ -1,14 +1,20 @@
 # $Id$
 static_libs_only=1
 ssl=0
+inline=0
 
-HOST_PREBUILT :=/Users/frohnhoefere/Android/android-toolchain
-NDK_HOME :=/Users/frohnhoefere/Android/android-ndk-r5b
-SYSROOT := $(HOST_PREBUILT)/sysroot
+# HOST_PREBUILT :=/Users/frohnhoefere/Android/android-toolchain
+NDK_HOME := /opt/android-ndk-r6
+ANDROID_ARCH ?= arm
+ANDROID_PLATFORM ?= android-8
+SYSROOT := $(NDK_HOME)/platforms/$(ANDROID_PLATFORM)/arch-$(ANDROID_ARCH)
 
 CC_FLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 
 CPP_FLAGS += \
+       --sysroot=$(SYSROOT) \
+       -I$(NDK_HOME)/sources/cxx-stl/gnu-libstdc++/include \
+       -I$(NDK_HOME)/sources/cxx-stl/gnu-libstdc++/libs/armeabi/include \
        -fpic \
        -ffunction-sections \
        -funwind-tables \
@@ -30,7 +36,7 @@ CPP_FLAGS += \
        -DANDROID \
        -g
 
-SOFLAGS += $(NDK_HOME)/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libstdc++.a 
+SOFLAGS += $(NDK_HOME)/sources/cxx-stl/gnu-libstdc++/libs/armeabi/libstdc++.a
 
 LDFLAGS := \
 	--sysroot=$(SYSROOT) \
@@ -43,7 +49,7 @@ POSTLINK := \
 	$(SOFLAGS)
 
 CC=arm-linux-androideabi-g++ $(CPP_FLAGS)
-CXX=arm-linux-androideabi-g++ $(CPP_FLAGS)	
+CXX=arm-linux-androideabi-g++ $(CPP_FLAGS)
 AR=arm-linux-androideabi-ar
 STRIP=arm-linux-androideabi-strip
 RANLIB=arm-linux-androideabi-ranlib
