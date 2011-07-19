@@ -2,7 +2,6 @@
 #ifndef ACE_CONFIG_ANDROID_H
 #define ACE_CONFIG_ANDROID_H
 
-#define ACE_HAS_ANDROID
 #define ACE_HAS_NET_IF_DL_H
 #define ACE_SIZEOF_LONG_DOUBLE 8
 #define ACE_LACKS_UCONTEXT_H
@@ -30,7 +29,8 @@
 #define ACE_LACKS_WCSTOLL
 #define ACE_LACKS_WCSTOULL
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-
+#define ACE_HAS_LINUX_SEM_H
+#define ACE_HAS_LINUX_SHM_H
 // I'm not sure if this is correct
 #define ACE_LACKS_RWLOCK_T
 
