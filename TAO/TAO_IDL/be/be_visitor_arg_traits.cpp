@@ -156,13 +156,13 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << " " << this->S_ << "Arg_Traits<"
+      << " " << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << "_ptr," << be_nl
-      << node->name () << "_var," << be_nl
-      << node->name () << "_out";
+      << "::" << node->name () << "_ptr," << be_nl
+      << "::" << node->name () << "_var," << be_nl
+      << "::" << node->name () << "_out";
 
   if (ACE_OS::strlen (this->S_) == 0)
     {
@@ -254,13 +254,13 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
   os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<"
+      << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << " *," << be_nl
-      << node->name () << "_var," << be_nl
-      << node->name () << "_out";
+      << "::" << node->name () << " *," << be_nl
+      << "::" << node->name () << "_var," << be_nl
+      << "::" << node->name () << "_out";
 
   // The SArgument classes don't need the traits parameter (yet?)
   if (ACE_OS::strlen (this->S_) == 0)
@@ -317,13 +317,13 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
   os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<"
+      << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << " *," << be_nl
-      << node->name () << "_var," << be_nl
-      << node->name () << "_out";
+      << "::" << node->name () << " *," << be_nl
+      << "::" << node->name () << "_var," << be_nl
+      << "::" << node->name () << "_out";
 
   // The SArgument classes don't need the traits parameter (yet?)
   if (ACE_OS::strlen (this->S_) == 0)
@@ -683,12 +683,12 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   *os << be_nl_2
       << "template<>" << be_nl
-      << "class " << this->S_ << "Arg_Traits<" << sn << ">"
+      << "class " << this->S_ << "Arg_Traits< ::" << sn << ">"
       << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << (use_vec ? "Vector_" : "Var_Size_")
       << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << sn << "," << be_nl
+      << "::" << sn << "," << be_nl
       << this->insert_policy () << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -851,17 +851,17 @@ be_visitor_arg_traits::visit_array (be_array *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<"
+      << this->S_ << "Arg_Traits< ::"
       << node->name () << "_tag>" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Array_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name ()
+      << "::" << node->name ()
       << (node->size_type () == AST_Type::VARIABLE ? "_out" : "_var")
       << "," << be_nl;
 
-  *os << node->name () << "_forany";
+  *os << "::" << node->name () << "_forany";
 
   *os << "," << be_nl << this->insert_policy();
 
@@ -900,12 +900,12 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<"
+      << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
   *os << "Basic_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl
+      << "::" << node->name () << "," << be_nl
       << this->insert_policy() << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -943,14 +943,15 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<"
+      << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl;
 
-  *os << node->name () << "," << be_nl << this->insert_policy() << be_uidt_nl
+  *os << "::" << node->name () << "," << be_nl\
+      << this->insert_policy () << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -1053,13 +1054,14 @@ be_visitor_arg_traits::visit_union (be_union *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<"
+      << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
   *os << (node->size_type () == AST_Type::FIXED ? "Fixed" : "Var")
       << "_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << "," << be_nl << this->insert_policy();
+      << "::" << node->name () << "," << be_nl
+      << this->insert_policy ();
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
