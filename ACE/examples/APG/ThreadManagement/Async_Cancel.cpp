@@ -29,6 +29,7 @@ public:
   {
     cancel_state new_state;
 
+#ifndef ACE_LACKS_PTHREAD_CANCEL
     // Set the cancel state to asynchronous and enabled.
     new_state.cancelstate = PTHREAD_CANCEL_ENABLE;
     new_state.canceltype  = PTHREAD_CANCEL_ASYNCHRONOUS;
@@ -37,6 +38,13 @@ public:
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("cancelstate")), -1);
     return 0;
+
+#else
+
+    ACE_ERROR ((LM_ERROR, "Pthread_cancel is not supported on this platform.\n"));
+    return -1;
+
+#endif
   }
 };
 // Listing 1

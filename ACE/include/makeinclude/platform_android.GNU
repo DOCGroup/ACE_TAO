@@ -3,11 +3,18 @@ static_libs_only=1
 ssl=0
 inline=0
 
+# We don't have rwho.
+rwho = 0
+
 # HOST_PREBUILT :=/Users/frohnhoefere/Android/android-toolchain
 NDK_HOME := /opt/android-ndk-r6
 ANDROID_ARCH ?= arm
 ANDROID_PLATFORM ?= android-8
 SYSROOT := $(NDK_HOME)/platforms/$(ANDROID_PLATFORM)/arch-$(ANDROID_ARCH)
+
+ifeq ($(ANDROID_ARCH), arm)
+  CROSS-COMPILE=1
+endif
 
 CC_FLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 
