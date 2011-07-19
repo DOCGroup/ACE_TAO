@@ -1,3 +1,18 @@
+Tue Jul 19 13:25:22 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          Added global scope double colons to code generation of
+          arg traits template plate arg names. Some builds had
+          confusion, thinking that the name was scoped inside the
+          TAO namespace.
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Added #include generation check for valuetypes/valueboxes
+          when generating the proper arg traits base class
+          includes.
+
 Mon Jul 18 20:02:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:

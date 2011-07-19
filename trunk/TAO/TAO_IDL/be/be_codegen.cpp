@@ -3028,6 +3028,7 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
   this->gen_cond_file_include (
     idl_global->non_local_iface_seen_
       || idl_global->non_local_fwd_iface_seen_
+      || idl_global->valuetype_seen_
       || be_global->ami_call_back ()
       || be_global->gen_amh_classes ()
       || be_global->ami4ccm_call_back (),
