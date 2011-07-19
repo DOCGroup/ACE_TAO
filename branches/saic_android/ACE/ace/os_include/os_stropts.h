@@ -71,10 +71,6 @@
 #  include /**/ <ioLib.h>
 #endif /* ACE_VXWORKS */
 
-#if defined (ACE_HAS_ANDROID)
-#include <sys/socket.h>
-#endif
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

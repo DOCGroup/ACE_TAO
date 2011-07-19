@@ -1,3 +1,12 @@
+Tue Jul 19 18:22:23 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-android.h:
+        * ace/os_include/os_stropts.h:
+        * ace/os_include/sys/os_sem.h:
+        * ace/os_include/sys/os_shm.h:
+
+          Got rid of ACE_HAS_ANDROID.
+
 Tue Jul 19 18:01:43 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/OS_NS_errno.h:

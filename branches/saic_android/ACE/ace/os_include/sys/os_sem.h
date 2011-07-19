@@ -30,7 +30,7 @@
 #  include /**/ <sys/sem.h>
 #endif /* !ACE_LACKS_SYS_SEM_H */
 
-#if defined (ACE_HAS_ANDROID)
+#if defined (ACE_HAS_LINUX_SEM_H)
 # include <linux/sem.h>
 #endif
 

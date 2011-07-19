@@ -30,7 +30,7 @@
 #  include /**/ <sys/shm.h>
 #endif /* !ACE_LACKS_SYS_SHM_H */
 
-#if defined (ACE_HAS_ANDROID) && defined (ACE_LACKS_SYS_SHM_H)
+#if defined (ACE_HAS_LINUX_SHM_H)
 #include <linux/shm.h>
 #endif
 
