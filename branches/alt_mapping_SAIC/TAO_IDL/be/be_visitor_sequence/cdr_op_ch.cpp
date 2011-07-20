@@ -54,24 +54,20 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node);
-  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
-
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // If we're an anonymous sequence, we must protect against
-  // being declared more than once.
-  if (tdef == 0)
-    {
-      *os << "\n\n#if !defined _TAO_CDR_OP_"
-          << node->flat_name () << "_H_"
-          << "\n#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
-    }
+  AST_Type *bt = node->base_type ()->unaliased_type ();
 
   bool alt = be_global->alt_mapping ();
 
   *os << be_global->core_versioning_begin ();
+
+  // The guard should be generated to prevent multiple declarations,
+  // since a sequence of a given element type may be typedef'd
+  // more than once.
+
+  os->gen_ifdef_macro (bt->flat_name (), "seq_cdr_op_ch", false);
 
   *os << be_nl_2
       << be_global->stub_export_macro () << " ::CORBA::Boolean"
@@ -98,14 +94,10 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
           << be_uidt;
     }
 
+  os->gen_endif ();
+
   *os << be_nl
       << be_global->core_versioning_end () << be_nl;
-
-  if (tdef == 0)
-    {
-      *os << "\n\n#endif /* _TAO_CDR_OP_"
-          << node->flat_name () << "_H_ */";
-    }
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

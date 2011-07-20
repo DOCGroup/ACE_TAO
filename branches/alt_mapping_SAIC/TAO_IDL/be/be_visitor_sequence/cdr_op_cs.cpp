@@ -49,19 +49,20 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  be_type *bt =
-    be_type::narrow_from_decl (node->base_type ());
-
-  if (!bt)
+  AST_Type *bt = node->base_type ()->unaliased_type ();
+  AST_String *str = AST_String::narrow_from_decl (bt);
+  
+  // Generating sequences as typedefs of std::vector classes
+  // means that unbounded sequences with the same element type
+  // are not unique types to the C++ compiler. String sequences
+  // are a common problem, so we check for an inclusion and skip
+  // the operator definition if found.
+  if (str != 0 && str->width () == 1 && idl_global->imported_string_seq_seen_)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_sequence_cdr_op_cs::"
-                         "visit_sequence - "
-                         "Bad base type\n"),
-                        -1);
+      return 0;
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the CDR << and >> operator defns.
 
@@ -73,7 +74,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       int status =
           this->gen_anonymous_base_type (
-              bt,
+              be_type::narrow_from_decl (bt),
               TAO_CodeGen::TAO_ROOT_CDR_OP_CS
             );
 
@@ -90,14 +91,17 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
     << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  *os << "#if !defined _TAO_CDR_OP_"
-      << node->flat_name () << "_CPP_" << be_nl
-      << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
-      << be_nl;
-
   bool alt = be_global->alt_mapping ();
 
   *os << be_global->core_versioning_begin () << be_nl;
+
+  // The guard should be generated to prevent multiple declarations,
+  // since a sequence of a given element type may be typedef'd
+  // more than once.
+
+  os->gen_ifdef_macro (bt->flat_name (), "seq_cdr_op_cs", false);
+
+  *os << be_nl_2;
 
   AST_PredefinedType *pdt =
     AST_PredefinedType::narrow_from_decl (bt);
@@ -298,11 +302,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       node->gen_ostream_operator (os, false);
     }
 
-  *os << be_nl << be_global->core_versioning_end ();
+  os->gen_endif ();
 
-  *os << be_nl
-      << "#endif /* _TAO_CDR_OP_"
-      << node->flat_name () << "_CPP_ */";
+  *os << be_nl << be_global->core_versioning_end ();
 
   node->cli_stub_cdr_op_gen (1);
   return 0;

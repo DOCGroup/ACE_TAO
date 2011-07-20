@@ -2,7 +2,7 @@
 
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/ProvidesDef_i.h"
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "tao/IFR_Client/IFR_ComponentsS.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 

@@ -42,7 +42,19 @@ be_string::be_string (AST_Decl::NodeType nt,
     be_type (nt,
              n)
 {
-  idl_global->string_seen_ = true;
+  if (!this->imported ())
+    {
+      idl_global->string_seen_ = true;
+
+      if (v->ev ()->u.ulval != 0)
+        {
+          idl_global->bd_string_seen_ = true;
+        }
+      else
+        {
+          idl_global->ub_string_seen_ = true;
+        }
+    }
 }
 
 // Overridden method.
@@ -165,7 +177,5 @@ be_string::destroy (void)
   this->be_type::destroy ();
   this->AST_String::destroy ();
 }
-
-
 
 IMPL_NARROW_FROM_DECL (be_string)

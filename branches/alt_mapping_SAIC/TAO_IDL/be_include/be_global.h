@@ -850,6 +850,12 @@ public:
   bool in_facet_servant (void) const;
   void in_facet_servant (bool val);
 
+  bool gen_arg_traits (void) const;
+  void gen_arg_traits (bool val);
+
+  bool gen_anytypecode_adapter (void) const;
+  void gen_anytypecode_adapter (bool val);
+
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
 
@@ -1205,8 +1211,15 @@ private:
   /// Are we generating STL types?
   bool alt_mapping_;
 
-  /// Are we generating a facet servant?
+  /// Are we in the act of generating a facet servant?
   bool in_facet_servant_;
+
+  /// Are we generating arg traits template instantiations?
+  bool gen_arg_traits_;
+
+  /// Generating arg traits in the ORB for the basic type
+  /// sequences requires the AnyTypeCode_Adapter class.
+  bool gen_anytypecode_adapter_;
 };
 
 #endif /* _BE_GLOBAL_H */

@@ -51,12 +51,10 @@ public:
   virtual ~TAO_TypedefDef_i (void);
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe ()
-;
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i ()
-;
+  virtual CORBA::Contained::Description *describe_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

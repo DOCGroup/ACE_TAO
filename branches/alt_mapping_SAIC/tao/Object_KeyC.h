@@ -26,10 +26,10 @@
  **/
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_codegen.cpp:146
+// w:\tao\tao_idl\be\be_codegen.cpp:150
 
-#ifndef _TAO_PIDL_OBJECT_KEYC_PZW4T3_H_
-#define _TAO_PIDL_OBJECT_KEYC_PZW4T3_H_
+#ifndef _TAO_PIDL_OBJECT_KEYC_13ALDY_H_
+#define _TAO_PIDL_OBJECT_KEYC_13ALDY_H_
 
 #include /**/ "ace/pre.h"
 
@@ -49,10 +49,21 @@
 #include <vector>
 
 #include "tao/Basic_Types.h"
+#include "tao/Arg_Traits_T.h"
+#include "tao/Basic_Arguments.h"
+#include "tao/Special_Basic_Arguments.h"
+#include "tao/Any_Insert_Policy_T.h"
+#include "tao/Fixed_Size_Argument_T.h"
+#include "tao/Var_Size_Argument_T.h"
+#include /**/ "tao/Version.h"
 #include /**/ "tao/Versioned_Namespace.h"
 #include "ace/streams.h"
 
 #include "tao/OctetSeqC.h"
+
+#if TAO_MAJOR_VERSION != 2 || TAO_MINOR_VERSION != 0 || TAO_BETA_VERSION != 3
+#error This file should be regenerated with TAO_IDL from version 2.0.3
+#endif
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -80,6 +91,29 @@ namespace TAO
 } // module TAO
 
 // TAO_IDL - Generated from
+// w:\tao\tao_idl\be\be_visitor_arg_traits.cpp:68
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+// Arg traits specializations.
+namespace TAO
+{
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
+
+// TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_visitor_traits.cpp:60
 
 
@@ -101,7 +135,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_codegen.cpp:1589
+// w:\tao\tao_idl\be\be_codegen.cpp:1581
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

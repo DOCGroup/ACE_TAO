@@ -53,6 +53,7 @@
 #define _IFR_BASE_IDL_
 
 #include "tao/orb_types.pidl"
+#include "tao/StringSeq.pidl"
 #include "tao/Typecode_types.pidl"
 
 module CORBA
@@ -232,7 +233,12 @@ module CORBA
   };
 
   typedef sequence <UnionMember> UnionMemberSeq;
-  typedef sequence <Identifier> EnumMemberSeq;
+
+  // typedef sequence<Identifier> EnumMemberSeq;
+  // Generating sequences as typedefs of std::vector classes
+  // means that unbounded sequences with the same element type
+  // are not unique types to the C++ compiler.
+  typedef CORBA::StringSeq EnumMemberSeq;
 
   interface Container : IRObject
   {

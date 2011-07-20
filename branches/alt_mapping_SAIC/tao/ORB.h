@@ -19,6 +19,9 @@
 
 #include /**/ "ace/pre.h"
 
+#include <vector>
+#include <string>
+
 #include "tao/UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -29,8 +32,6 @@
 #include "tao/objectid.h"
 #include "tao/VarOut_T.h"
 #include "tao/Pseudo_VarOut_T.h"
-//#include "tao/Seq_Var_T.h"
-//#include "tao/Seq_Out_T.h"
 #include "tao/Sequence_T.h"
 #include "tao/Policy_ForwardC.h"
 #include "tao/ServicesC.h"
@@ -66,10 +67,13 @@ class TAO_ORB_Core;
 
 namespace CORBA
 {
-  class EnumMemberSeq;
-  class StructMemberSeq;
-  class UnionMemberSeq;
-  class ValueMemberSeq;
+  struct StructMember;
+  struct UnionMember;
+  struct ValueMember;
+  typedef std::vector<std::string> EnumMemberSeq;
+  typedef std::vector<StructMember> StructMemberSeq;
+  typedef std::vector<UnionMember> UnionMemberSeq;
+  typedef std::vector<ValueMember> ValueMemberSeq;
   typedef StringSeq ORB_ObjectIdList;
 
   class Object;

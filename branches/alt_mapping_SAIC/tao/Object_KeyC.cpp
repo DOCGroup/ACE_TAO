@@ -26,7 +26,7 @@
  **/
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_codegen.cpp:363
+// w:\tao\tao_idl\be\be_codegen.cpp:375
 
 
 #include "Object_KeyC.h"
@@ -34,29 +34,6 @@
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
-// TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_arg_traits.cpp:68
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-// Arg traits specializations.
-namespace TAO
-{
-}
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 
 

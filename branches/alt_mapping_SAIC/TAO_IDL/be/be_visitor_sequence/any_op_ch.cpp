@@ -54,7 +54,10 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   bool alt = be_global->alt_mapping ();
 
+  AST_Type *bt = node->base_type ()->unaliased_type ();
+
   be_module *module = 0;
+
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -82,8 +85,15 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
           be_util::gen_nested_namespace_begin (os, module);
 
+          // The guard should be generated to prevent multiple declarations,
+          // since a sequence of a given element type may be typedef'd
+          // more than once.
+
+          os->gen_ifdef_macro (bt->flat_name (), "seq_any_op_ch", false);
+
           // Generate the Any <<= and >>= operators.
-          *os << macro
+          *os << be_nl_2
+              << macro
               << " void"
               << " operator<<= ( ::CORBA::Any &, const ::"
               << name.c_str ()
@@ -110,6 +120,8 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
               << name.c_str ()
               << " *&);";
 
+          os->gen_endif ();
+
           be_util::gen_nested_namespace_end (os, module);
 
           // Emit #else.
@@ -120,8 +132,15 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
+  // The guard should be generated to prevent multiple declarations,
+  // since a sequence of a given element type may be typedef'd
+  // more than once.
+
+  os->gen_ifdef_macro (bt->flat_name (), "seq_any_op_ch", false);
+
   // Generate the Any <<= and >>= operators.
-  *os << macro
+  *os << be_nl_2
+      << macro
       << " void"
       << " operator<<= ( ::CORBA::Any &, const "
       << name.c_str ()
@@ -147,6 +166,8 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       << " operator>>= (const ::CORBA::Any &, const "
       << name.c_str ()
       << " *&);";
+
+  os->gen_endif ();
 
   *os << be_global->core_versioning_end () << be_nl;
 

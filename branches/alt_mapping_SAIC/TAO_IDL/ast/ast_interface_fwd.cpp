@@ -92,6 +92,11 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
   // interface node is not yet defined (n_inherits < 0), so some operations
   // will fail.
   this->pd_full_definition = dummy;
+
+  if (! dummy->is_local ())
+    {
+      idl_global->non_local_fwd_iface_seen_ = true;
+    }
 }
 
 AST_InterfaceFwd::~AST_InterfaceFwd (void)

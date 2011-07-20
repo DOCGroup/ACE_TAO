@@ -37,13 +37,18 @@ be_valuebox::be_valuebox (AST_Type *boxed_type,
   // Always the case (according to C++ mapping specification).
   this->size_type (AST_Type::VARIABLE);
 
-  // Set the flag  that says we have a valuetype in this IDL file.
-  // This allows the correct #include to be generated (see be_codegen.cpp).
-  idl_global->valuebase_seen_ = true;
+  if (!this->imported ())
+    {
+      // Set the flag  that says we have a valuetype in this IDL file.
+      // This allows the correct #include to be generated (see be_codegen.cpp).
+      idl_global->valuebase_seen_ = true;
 
-  // Set the flag that says we have a valuetype in this IDL file.
-  // This allows the correct #include to be generated (see be_codegen.cpp).
-  idl_global->valuetype_seen_ = true;
+      // Set the flag that says we have a valuetype in this IDL file.
+      // This allows the correct #include to be generated (see be_codegen.cpp).
+      idl_global->valuetype_seen_ = true;
+
+      idl_global->var_size_decl_seen_ = true;
+    }
 }
 
 // Accept a visitor.

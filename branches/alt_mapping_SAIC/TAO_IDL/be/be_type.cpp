@@ -20,6 +20,7 @@
 #include "be_codegen.h"
 #include "be_helper.h"
 #include "be_extern.h"
+#include "be_util.h"
 
 #include "ast_valuetype.h"
 #include "ast_sequence.h"

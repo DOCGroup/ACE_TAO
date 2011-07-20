@@ -17,6 +17,7 @@
 #include "be_attribute.h"
 #include "be_type.h"
 #include "be_visitor.h"
+#include "be_util.h"
 
 #include "global_extern.h"
 
@@ -46,8 +47,7 @@ be_attribute::be_attribute (bool ro,
     {
       // For the return types of the two operations
       // generated from this attribute.
-      this->set_arg_seen_bit (be_type::narrow_from_decl (ft));
-      idl_global->basic_arg_seen_ = true;
+      be_util::set_arg_seen_bit (be_type::narrow_from_decl (ft));
     }
 }
 
