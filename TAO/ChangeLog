@@ -1,3 +1,12 @@
+Wed Jul 20 18:53:29 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface:
+
+          Removed an unnecessary 'seen' flag for arg traits, it was
+          not only unneeded, but also pulling in #includes in the
+          *S.h file that wouldn't compile if the IDL contains
+          valuetypes and no non-local interfaces.
+
 Tue Jul 19 13:25:22 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:
