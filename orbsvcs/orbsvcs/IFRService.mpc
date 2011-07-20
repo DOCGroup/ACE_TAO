@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(IFRService) : orbsvcslib, orbsvcs_output, install, typecodefactory, svc_utils, iortable {
+project(IFRService) : orbsvcslib, orbsvcs_output, install, typecodefactory, svc_utils, iortable, ifr_client_skel {
   avoids      += ace_for_tao uses_wchar   // Requires ace/Configuration
   sharedname   = TAO_IFRService
   dynamicflags += TAO_IFRSERVICE_BUILD_DLL
@@ -23,10 +23,6 @@ project(IFRService) : orbsvcslib, orbsvcs_output, install, typecodefactory, svc_
   }
 
   Template_Files {
-    IFRService/IFR_BaseS_T.cpp
-    IFRService/IFR_BasicS_T.cpp
-    IFRService/IFR_ComponentsS_T.cpp
-    IFRService/IFR_ExtendedS_T.cpp
     IFRService/IFR_Service_Utils_T.cpp
   }
 }

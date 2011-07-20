@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "ace/Log_Msg.h"
+
 #include "be_array.h"
 #include "be_enum.h"
 #include "be_exception.h"
@@ -45,7 +47,6 @@
 
 #include "be_visitor_sequence.h"
 #include "be_visitor_context.h"
-#include "ace/Log_Msg.h"
 
 #include "be_visitor_sequence/any_op_ch.cpp"
 #include "be_visitor_sequence/any_op_cs.cpp"

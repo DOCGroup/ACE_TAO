@@ -36,12 +36,6 @@ be_visitor_root_ss::visit_root (be_root *node)
                         -1);
     }
 
-  if (this->gen_arg_traits (node) == -1)
-    {
-      /// Error message already output.
-      return -1;
-    }
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,42 +88,6 @@ be_visitor_root_ss::init (void)
 
   // set stream
   this->ctx_->stream (tao_cg->server_skeletons ());
-  return 0;
-}
-
-int
-be_visitor_root_ss::gen_arg_traits (be_root *node)
-{
-  be_visitor_context ctx = *this->ctx_;
-  be_visitor_arg_traits arg_visitor ("S", &ctx);
-  int status = node->accept (&arg_visitor);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_ss::")
-                         ACE_TEXT ("gen_arg_traits - failed to ")
-                         ACE_TEXT ("generate skeleton arg traits\n")),
-                        -1);
-    }
-
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
-    {
-      be_visitor_arg_traits arg_visitor ("", &ctx);
-      status = node->accept (&arg_visitor);
-
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_root_ss::")
-                             ACE_TEXT ("gen_arg_traits - failed to ")
-                             ACE_TEXT ("generate collocated ")
-                             ACE_TEXT ("skeleton arg traits\n")),
-                            -1);
-        }
-    }
-
   return 0;
 }
 

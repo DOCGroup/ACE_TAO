@@ -13,6 +13,9 @@
  */
 //=============================================================================
 
+#include "utl_identifier.h"
+#include "utl_exceptlist.h"
+
 #include "be_argument.h"
 #include "be_array.h"
 #include "be_attribute.h"
@@ -42,8 +45,6 @@
 #include "be_valuetype_fwd.h"
 #include "be_helper.h"
 #include "be_extern.h"
-#include "utl_identifier.h"
-#include "utl_exceptlist.h"
 #include "be_util.h"
 
 #include "be_visitor_valuetype.h"

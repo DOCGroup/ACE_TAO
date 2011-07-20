@@ -49,60 +49,40 @@ public:
   virtual ~TAO_ArrayDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry.
-  virtual void destroy ()
-;
+  virtual void destroy ();
 
-  virtual void destroy_i ()
-;
+  virtual void destroy_i ();
 
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
-  virtual CORBA::TypeCode_ptr type_i ()
-;
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::ULong length ()
-;
+  virtual CORBA::ULong length ();
 
-  CORBA::ULong length_i ()
-;
+  CORBA::ULong length_i ();
 
-  virtual void length (
-      CORBA::ULong length)
-;
+  virtual void length (CORBA::ULong length);
 
-  void length_i (
-      CORBA::ULong length)
-;
+  void length_i (CORBA::ULong length);
 
-  virtual CORBA::TypeCode_ptr element_type ()
-;
+  virtual CORBA::TypeCode_ptr element_type ();
 
-  CORBA::TypeCode_ptr element_type_i ()
-;
+  CORBA::TypeCode_ptr element_type_i ();
 
-  virtual CORBA::IDLType_ptr element_type_def ()
-;
+  virtual CORBA::IDLType_ptr element_type_def ();
 
-  CORBA::IDLType_ptr element_type_def_i ()
-;
+  CORBA::IDLType_ptr element_type_def_i ();
 
-  virtual void element_type_def (
-      CORBA::IDLType_ptr element_type_def)
-;
+  virtual void element_type_def (CORBA::IDLType_ptr element_type_def);
 
-  void element_type_def_i (
-      CORBA::IDLType_ptr element_type_def)
-;
+  void element_type_def_i (CORBA::IDLType_ptr element_type_def);
 
 private:
   /// Destroys an anonymous non-primitive element type.
-  void destroy_element_type ()
-;
+  void destroy_element_type ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

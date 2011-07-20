@@ -45,16 +45,13 @@ public:
   virtual ~TAO_NativeDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind ()
-;
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type ()
-;
+  virtual CORBA::TypeCode_ptr type ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i ()
-;
+  virtual CORBA::TypeCode_ptr type_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

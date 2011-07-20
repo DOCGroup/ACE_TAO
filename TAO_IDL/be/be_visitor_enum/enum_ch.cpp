@@ -52,10 +52,9 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
    if (this->visit_scope (node) == 1)
      {
        ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) be_visitor_enum_ch::"
-                          "visit_enum - "
-                          "scope generation failed\n"
-                          ),
+                          ACE_TEXT ("be_visitor_enum_ch::")
+                          ACE_TEXT ("visit_enum - ")
+                          ACE_TEXT ("scope generation failed\n")),
                          -1);
      }
 
@@ -74,11 +73,10 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
       if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_enum_ch::"
-                             "visit_enum - "
-                             "TypeCode declaration failed\n"
-                             ),
-                            -1);
+                              ACE_TEXT ("be_visitor_enum_ch::")
+                              ACE_TEXT ("visit_enum - ")
+                              ACE_TEXT ("TypeCode declaration failed\n" )),
+                             -1);
         }
     }
 

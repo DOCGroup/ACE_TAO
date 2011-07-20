@@ -36,16 +36,6 @@ be_visitor_root_cs::visit_root (be_root *node)
                         -1);
     }
 
-
-  if (this->gen_arg_traits (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_root_cs::")
-                         ACE_TEXT ("visit_root - failed to ")
-                         ACE_TEXT ("generate stub arg traits\n")),
-                        -1);
-    }
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -109,14 +99,6 @@ be_visitor_root_cs::init (void)
   /// Initialize the stream.
   this->ctx_->stream (tao_cg->client_stubs ());
   return 0;
-}
-
-int
-be_visitor_root_cs::gen_arg_traits (be_root *node)
-{
-  be_visitor_context ctx = *this->ctx_;
-  be_visitor_arg_traits arg_visitor ("", &ctx);
-  return node->accept (&arg_visitor);
 }
 
 int

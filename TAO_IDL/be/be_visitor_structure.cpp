@@ -12,6 +12,8 @@
  */
 //=============================================================================
 
+#include "ace/Log_Msg.h"
+
 #include "be_field.h"
 #include "be_structure.h"
 #include "be_helper.h"
@@ -24,7 +26,6 @@
 #include "be_visitor_field.h"
 #include "be_visitor_typecode.h"
 #include "be_visitor_context.h"
-#include "ace/Log_Msg.h"
 
 #include "be_visitor_structure/structure.cpp"
 #include "be_visitor_structure/structure_ch.cpp"

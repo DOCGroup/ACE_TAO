@@ -39,6 +39,19 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
+  AST_Type *bt = node->base_type ()->unaliased_type ();
+  AST_String *str = AST_String::narrow_from_decl (bt);
+  
+  // Generating sequences as typedefs of std::vector classes
+  // means that unbounded sequences with the same element type
+  // are not unique types to the C++ compiler. String sequences
+  // are a common problem, so we check for an inclusion and skip
+  // the operator definition if found.
+  if (str != 0 && str->width () == 1 && idl_global->imported_string_seq_seen_)
+    {
+      return 0;
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl_2
@@ -50,15 +63,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   // These are no-ops for now, so we just generate them and return
   if (be_global->alt_mapping () && node->max_size ()->ev ()->u.ulval == 0)
     {
-      be_type *bt =
-        be_type::narrow_from_decl (node->base_type ());
-
-      if (bt->node_type () == AST_Decl::NT_typedef)
-        {
-          be_typedef *td = be_typedef::narrow_from_decl (bt);
-          bt = td->primitive_base_type ();
-        }
-
       enum type_category
       {
         ANY_VALUE,
@@ -103,7 +107,13 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
             }
         }
         
-      *os << be_nl
+      // The guard should be generated to prevent multiple declarations,
+      // since a sequence of a given element type may be typedef'd
+      // more than once.
+
+      os->gen_ifdef_macro (bt->flat_name (), "seq_any_op_cs", false);
+
+      *os << be_nl_2
           << "void operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
           << "const " << node->name  ()
@@ -116,7 +126,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         case ANY_OBJREF:
           *os << "insert_objref_vector<"
               << bt->full_name () << "_ptr> (";
- ACE_DEBUG ((LM_DEBUG, "objref: %s\n", bt->local_name ()->get_string ()));
+ 
           break;
         case ANY_ARRAY:
           *os << "insert_array_vector<"
@@ -129,7 +139,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         default:
           *os << "insert_value_vector<"
               << bt->full_name () << "> (";
- ACE_DEBUG ((LM_DEBUG, "default: %s\n", bt->local_name ()->get_string ()));
+ 
           break;
         }
 
@@ -172,6 +182,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "_tao_any," << be_nl
           << "_tao_elem);" << be_uidt << be_uidt << be_uidt_nl
           << "}";
+
+      os->gen_endif ();
 
       *os << be_nl
           << be_global->core_versioning_end () << be_nl;
@@ -216,6 +228,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   be_typedef *td = this->ctx_->tdef ();
 
   be_module *module = 0;
+
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -243,8 +256,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
           be_util::gen_nested_namespace_begin (os, module);
 
+          // The guard should be generated to prevent multiple declarations,
+          // since a sequence of a given element type may be typedef'd
+          // more than once.
+
+          os->gen_ifdef_macro (bt->flat_name (), "any_op_cs", false);
+
           // Copying insertion.
-          *os << be_nl
+          *os << be_nl_2
               << "// Copying insertion." << be_nl
               << "void operator<<= (" << be_idt << be_idt_nl
               << "::CORBA::Any &_tao_any," << be_nl
@@ -313,6 +332,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << ");" << be_uidt << be_uidt << be_uidt_nl
               << "}";
 
+          os->gen_endif ();
+
           be_util::gen_nested_namespace_end (os, module);
 
           // Emit #else.
@@ -323,8 +344,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
+  // The guard should be generated to prevent multiple declarations,
+  // since a sequence of a given element type may be typedef'd
+  // more than once.
+
+  os->gen_ifdef_macro (bt->flat_name (), "any_op_cs", false);
+
   // Copying insertion.
-  *os << be_nl
+  *os << be_nl_2
       << "// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
@@ -392,6 +419,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
+
+  os->gen_endif ();
 
   *os << be_global->core_versioning_end () << be_nl;
 

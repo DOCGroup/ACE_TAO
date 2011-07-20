@@ -7,6 +7,22 @@
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include "tao/AnyTypeCode/BooleanSeqA.h"
+#include "tao/AnyTypeCode/OctetSeqA.h"
+#include "tao/AnyTypeCode/CharSeqA.h"
+#include "tao/AnyTypeCode/WCharSeqA.h"
+#include "tao/AnyTypeCode/ShortSeqA.h"
+#include "tao/AnyTypeCode/UShortSeqA.h"
+#include "tao/AnyTypeCode/LongSeqA.h"
+#include "tao/AnyTypeCode/ULongSeqA.h"
+#include "tao/AnyTypeCode/LongLongSeqA.h"
+#include "tao/AnyTypeCode/ULongLongSeqA.h"
+#include "tao/AnyTypeCode/FloatSeqA.h"
+#include "tao/AnyTypeCode/DoubleSeqA.h"
+#include "tao/AnyTypeCode/LongDoubleSeqA.h"
+#include "tao/AnyTypeCode/StringSeqA.h"
+#include "tao/AnyTypeCode/WStringSeqA.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define STANDARD_EXCEPTION_LIST \
@@ -168,6 +184,97 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::
 
 void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value)
+{
+  (*any) <<= value;
+}
+
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value)
 {
   (*any) <<= value;
 }

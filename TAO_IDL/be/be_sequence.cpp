@@ -63,15 +63,23 @@ be_sequence::be_sequence (AST_Expression *v,
   // Always the case.
   this->has_constructor (true);
 
-  // Don't want to set any bits below for imported nodes.
   if (this->imported ())
     {
+      AST_String *str = AST_String::narrow_from_decl (t);
+
+      if (str != 0 && str->width () == 1)
+        {
+          idl_global->imported_string_seq_seen_ = true;
+        }
+
+      // Don't want to set any other bits for imported nodes.
       return;
     }
 
   // This one gets set for all sequences, in addition to any specialized
   // one that may get set below.
   idl_global->seq_seen_ = true;
+  idl_global->var_size_decl_seen_ = true;
 
   // Don't need the return value - just set the member.
   (void) this->managed_type ();

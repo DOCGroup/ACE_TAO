@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ANYTYPECODE_ADAPTER_IMPL_H
 #define TAO_ANYTYPECODE_ADAPTER_IMPL_H
 
@@ -123,6 +122,36 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value);
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value);
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value);
 };
 
 
@@ -133,8 +162,6 @@ static int TAO_Requires_TAO_AnyTypeCode_Adapter_Impl =
   TAO_AnyTypeCode_Adapter_Impl::Initializer ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ANYTYPECODE_ADAPTER_IMPL_H */

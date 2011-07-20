@@ -369,7 +369,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_valuetype_ch::")
-                             ACE_TEXT ("visit_structure - ")
+                             ACE_TEXT ("visit_valuetype - ")
                              ACE_TEXT ("TypeCode declaration failed\n")),
                             -1);
         }

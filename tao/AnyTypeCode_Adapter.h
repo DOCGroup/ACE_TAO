@@ -27,6 +27,7 @@
 #include "tao/Basic_Types.h"
 
 #include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,6 +40,22 @@ namespace CORBA
 
   class Policy;
   typedef Policy *Policy_ptr;
+
+  typedef std::vector<Boolean> BooleanSeq;
+  typedef std::vector<Octet> OctetSeq;
+  typedef std::vector<Char> CharSeq;
+  typedef std::vector<WChar> WCharSeq;
+  typedef std::vector<Short> ShortSeq;
+  typedef std::vector<UShort> UShortSeq;
+  typedef std::vector<Long> LongSeq;
+  typedef std::vector<ULong> ULongSeq;
+  typedef std::vector<LongLong> LongLongSeq;
+  typedef std::vector<ULongLong> ULongLongSeq;
+  typedef std::vector<Float> FloatSeq;
+  typedef std::vector<Double> DoubleSeq;
+  typedef std::vector<LongDouble> LongDoubleSeq;
+  typedef std::vector<std::string> StringSeq;
+  typedef std::vector<WChar *> WStringSeq;
 }
 
 /**
@@ -136,6 +153,36 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

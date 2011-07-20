@@ -14,6 +14,10 @@
 #define TAO_TYPECODEFACTORY_ADAPTER_H
 
 #include /**/ "ace/pre.h"
+
+#include <vector>
+#include <string>
+
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -32,10 +36,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-  class EnumMemberSeq;
-  class StructMemberSeq;
-  class UnionMemberSeq;
-  class ValueMemberSeq;
+  struct StructMember;
+  struct UnionMember;
+  struct ValueMember;
+  typedef std::vector<std::string> EnumMemberSeq;
+  typedef std::vector<StructMember> StructMemberSeq;
+  typedef std::vector<UnionMember> UnionMemberSeq;
+  typedef std::vector<ValueMember> ValueMemberSeq;
 
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
   typedef TAO_Pseudo_Out_T<TypeCode> TypeCode_out;
