@@ -107,14 +107,15 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
       free_list_ (ACE_PURE_FREE_LIST),
       chunk_size_ (chunk_size)
 {
+  ACE_ASSERT (chunk_size > 0);
   chunk_size = ACE_MALLOC_ROUNDUP (chunk_size, ACE_MALLOC_ALIGN);
-  ACE_NEW (this->pool_, char[n_chunks * chunk_size_]);
+  ACE_NEW (this->pool_, char[n_chunks * chunk_size]);
 
   for (size_t c = 0;
        c < n_chunks;
        c++)
     {
-      void* placement = this->pool_ + c * chunk_size_;
+      void *placement = this->pool_ + c * chunk_size;
 
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<char>);
     }
