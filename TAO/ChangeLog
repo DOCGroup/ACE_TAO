@@ -1,3 +1,9 @@
+Sat Jul 23 22:40:39 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+
+          Fuzz fix.
+
 Sat Jul 23 14:55:15 UTC 2011  Phil Mesnier <mesnier_p@ociweb.com>
 
         * TAO/tao/IFR_Client/IFR_Client.mpc
@@ -39,7 +45,7 @@ Mon Jul 18 20:02:59 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
           generates arg traits instantiations using the
           AnyTypeCode_Adapter version of the last template
           parameter (if Any support is not suppressed). The
-          option is used when processing IDL for the 
+          option is used when processing IDL for the
           sequences of basic types, so their arg traits
           may be included by application whether or not
           the application is suppressing Any support.
