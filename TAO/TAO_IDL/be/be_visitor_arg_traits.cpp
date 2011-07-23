@@ -693,7 +693,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
- 
+
   return 0;
 }
 
