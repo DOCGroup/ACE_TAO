@@ -15,7 +15,7 @@ PCB::~PCB()
 
 int PCB::handleEvent (const void *arg)
 {
-  ACE_TRACE ("PCB::handle_timeout");
+  ACE_TRACE ("PCB::handleEvent");
 
   const int *val = static_cast<const int*> (arg);
   ACE_ASSERT ((*val) == timerID_);
