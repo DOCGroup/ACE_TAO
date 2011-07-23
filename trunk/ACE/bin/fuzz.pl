@@ -1708,6 +1708,14 @@ sub check_for_bad_ace_trace()
                     $class = "";
                     $function = $1;
                 }
+                elsif (m/^class (.*)\s*:/) {
+                    $class = $1;
+                    $function = "";
+                }
+                elsif (m/^class (.*)\s*$/) {
+                    $class = $1;
+                    $function = "";
+                }
 
                 # print "TRACE_CHECK. Class = $class\n";
 
@@ -1722,7 +1730,7 @@ sub check_for_bad_ace_trace()
                     # reduce the classname
                     if ($class =~ m/([^\s][^\<^\s]*)\s*\</) {
                         $class = $1;
-                    }
+                   }
 
                     # print "TRACE_CHECK. Found a trace. Class = $class\n";
 

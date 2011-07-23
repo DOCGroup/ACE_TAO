@@ -1,3 +1,16 @@
+Sat Jul 23 22:37:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-win64.h:
+        * examples/APG/Timers/PCB.cpp:
+        
+          Fuzz fixes.
+        
+        * bin/fuzz.pl:
+
+          Enhanced the check for ACE_TRACE messages so that it works
+          correctly with class definitions such as those found in 
+          examples/APG/ThreadPools/Futures.cpp.
+
 Fri Jul 22 12:29:59 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Malloc_T.cpp: Fixed ACE_Dynamic_Cached_Allocator so that it
@@ -22,9 +35,9 @@ Mon Jul 18 11:44:16 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
 Mon Jul 11 00:39:05 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
-        * examples/APG/ThreadPools/Futures.cpp (class Manager): 
-        * examples/APG/Containers/Stacks.cpp (StackExample::run): 
-        * examples/APG/Containers/Allocator.cpp (StackExample::run): 
+        * examples/APG/ThreadPools/Futures.cpp (class Manager):
+        * examples/APG/Containers/Stacks.cpp (StackExample::run):
+        * examples/APG/Containers/Allocator.cpp (StackExample::run):
         * examples/APG/Timers/PCB.cpp (PCB::handleClose): Fixed a mismatch in ACE_TRACE.
 
 Sat Jul  9 19:07:20 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
@@ -71,20 +84,20 @@ Sat Jul  9 19:07:20 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
           netsvcs/lib/TS_Clerk_Handler.cpp,
           netsvcs/lib/TS_Server_Handler.cpp,
           tests/Bug_3878_Regression_Test.cpp,
-          tests/Thread_Timer_Queue_Adapter_Test.cpp: Fixed all the 
+          tests/Thread_Timer_Queue_Adapter_Test.cpp: Fixed all the
           ACE_TRACE statements similar to
-  
-          ACE_TRACE( ACE_TEXT( "sometext" ) ); 
-  
+
+          ACE_TRACE( ACE_TEXT( "sometext" ) );
+
           and
-  
+
           ACE_TRACE( "some"
-                     "text" ); 
-  
+                     "text" );
+
           to
-  
+
           ACE_TRACE( "sometext" );
-  
+
           Thanks to Espen Harlinn <espen at harlinn dot no> for this fix,
           which fixes bugid 3976.
 
