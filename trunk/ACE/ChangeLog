@@ -1,14 +1,18 @@
+Sun Jul 24 04:27:10 UTC 2011  Phil Mesnier  <mesnier_p@>
+
+        * examples/APG/Streams/Answerer.cpp:
+
 Sat Jul 23 22:37:24 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/config-win64.h:
         * examples/APG/Timers/PCB.cpp:
-        
+
           Fuzz fixes.
-        
+
         * bin/fuzz.pl:
 
           Enhanced the check for ACE_TRACE messages so that it works
-          correctly with class definitions such as those found in 
+          correctly with class definitions such as those found in
           examples/APG/ThreadPools/Futures.cpp.
 
 Fri Jul 22 12:29:59 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
