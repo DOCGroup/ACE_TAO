@@ -138,7 +138,7 @@ class EncodeMessage : public BasicTask
 protected:
   virtual int process (Message *message)
   {
-    ACE_TRACE ("ReleaseDevice::process()");
+    ACE_TRACE ("EncodeMessage::process()");
 
     ACE_FILE_Addr &incoming = message->addr ();
     ACE_FILE_Addr addr = this->get_message_destination (message);
