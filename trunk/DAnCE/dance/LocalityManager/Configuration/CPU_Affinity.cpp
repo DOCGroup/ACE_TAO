@@ -36,9 +36,9 @@ namespace DAnCE
   {
 #if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
 # if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
-    char *affinity;
+    const char *extracted_affinity;
 
-    if (! (prop.value >>= CORBA::Any::to_string (affinity, 0)))
+    if (! (prop.value >>= CORBA::Any::to_string (extracted_affinity, 0)))
       {
         DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                      (LM_ERROR, DLINFO
@@ -47,8 +47,8 @@ namespace DAnCE
         throw ::Deployment::StartError (prop.name.in (),
                                         "Unable to extract CPU affinity string");
       }
-
-    ACE_Auto_Basic_Array_Ptr<char> safe_affinity (affinity);
+    
+    char *affinity = ACE_OS::strdup (extracted_affinity);
 
     ACE_Tokenizer_T<char> tokenizer(affinity);
     tokenizer.delimiter (',');
@@ -81,6 +81,8 @@ namespace DAnCE
                                             "All affinity values should be greater than 0");
           }
       }
+    
+    ACE_OS::free (affinity);
 
     pid_t const pid = ACE_OS::getpid ();
 

@@ -58,7 +58,7 @@ namespace DAnCE
                       props->length ()));
         this->props_ = props;
 
-        PLUGIN_MANAGER::instance ()->set_configuration (*props);
+        PLUGIN_MANAGER::instance ()->set_configuration (this->props_.in ());
       }
 
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
@@ -83,7 +83,7 @@ namespace DAnCE
         config.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (i->c_str ()));
       }
 
-    if (this->props_)
+    if (CORBA::is_nil (this->props_))
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
                                                 *this->props_,
