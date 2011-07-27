@@ -183,6 +183,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+		     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -198,6 +199,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+		     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -213,6 +215,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+		     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -228,6 +231,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+		     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -248,6 +252,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+		     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -278,6 +283,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+		     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
