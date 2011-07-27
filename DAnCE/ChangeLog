@@ -1,3 +1,10 @@
+Wed Jul 27 08:45:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+        Fixes to address crashing issues on some platforms.
+
 Sun Jul 10 16:21:29 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * docs/Error_Documentation/index.html:
