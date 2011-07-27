@@ -121,9 +121,9 @@ public class PDDLtoSAN
 					
 					int this_count = all_count++;
 					
-					n.write_SAN_to_xml("output\\"+this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-san.xml");
-					n.write_TM_to_xml("output\\"+this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-tm.xml");
-					n.write_goals_to_file("output\\"+this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-goals");
+					n.write_SAN_to_xml(this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-san.xml");
+					n.write_TM_to_xml(this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-tm.xml");
+					n.write_goals_to_file(this_count+"_"+domain.getDomainName()+"_"+problem.getProblemName()+"-goals");
 				}
 			}
 			
