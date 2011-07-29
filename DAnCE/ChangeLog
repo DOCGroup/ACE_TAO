@@ -1,3 +1,9 @@
+Fri Jul 29 14:18:54 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+
+          unfuzz.
+
 Wed Jul 27 08:45:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
