@@ -1,3 +1,9 @@
+Fri Jul 29 14:17:56 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ciao/Containers/Container_Base_T.cpp:
+
+          unfuzz.
+
 Wed Jul 27 08:42:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Containers/Container_Base_T.cpp:
@@ -647,8 +653,10 @@ Tue May 10 12:38:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/Display/NavDisplay/NavDisplay_exec.cpp:
         * examples/Display/NavDisplay/NavDisplay.idl:
         * examples/Display/NavDisplay/NavDisplay_exec.h:
-        Made test  working again with GUI display, using one or more GPS devices.
-        Used only QT4, removed qt3support. Not yet tested on Windows.
+
+          Made test working again with GUI display, using one or more GPS
+          devices.  Used only QT4, removed qt3support. Not yet tested on
+          Windows.
 
         * examples/Display/descriptors/basicNodeDaemon.pl:
         * examples/Display/descriptors/flattened_deploymentplan.cdp:
@@ -656,6 +664,8 @@ Tue May 10 12:38:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/Display/GPS/GPS_tracing_exec.cpp:
         * examples/Display/GPS/GPS_tracing_exec.h:
         Deleted this files. Not used anymore.
+
+          Deleted this files. Not used anymore.
 
         * examples/Display/descriptors/deploymentplanmore.cdp:
         * examples/Display/descriptors/run_test_one_contr.pl:
@@ -666,10 +676,15 @@ Tue May 10 12:38:37 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * examples/Display/descriptors/run_test_one.pl:
         Added scripts for running GUI test (one and more) and test_all_in_one for testsuite.
 
+          Added scripts for running GUI test (one and more) and
+          test_all_in_one for testsuite.
+
 Tue May 10 06:25:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
-          Resolved coverity errors/warnings. Check pointer if nil before using it.
+
+          Resolved coverity errors/warnings. Check pointer if nil before
+          using it.
 
 Mon May  9 10:58:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
