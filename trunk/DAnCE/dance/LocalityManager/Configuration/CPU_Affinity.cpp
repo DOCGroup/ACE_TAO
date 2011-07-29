@@ -47,7 +47,7 @@ namespace DAnCE
         throw ::Deployment::StartError (prop.name.in (),
                                         "Unable to extract CPU affinity string");
       }
-    
+
     char *affinity = ACE_OS::strdup (extracted_affinity);
 
     ACE_Tokenizer_T<char> tokenizer(affinity);
@@ -81,7 +81,7 @@ namespace DAnCE
                                             "All affinity values should be greater than 0");
           }
       }
-    
+
     ACE_OS::free (affinity);
 
     pid_t const pid = ACE_OS::getpid ();
