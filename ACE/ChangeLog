@@ -1,3 +1,20 @@
+Sun Jul 31 11:14:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Don't generate man pages, not used
+
+        * debian/*:
+          Pull in latest version from debian packaging
+
+        * protocols/ace/INet/ACE_INet.pc.in:
+        * protocols/ace/INet/ACE_INet_SSL.pc.in:
+        * protocols/ace/INet/inet.mpc:
+        * protocols/ace/INet/inet_ssl.mpc:
+          Added pc.in files
+
+        * etc/ace_man.doxygen:
+          Removed this file.
+
 Sat Jul 30 13:11:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-windows.h:

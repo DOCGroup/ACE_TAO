@@ -54,6 +54,11 @@ project(INet) : acelib, ace_output, install {
   specific {
     install_dir = ace/INet
   }
+
+  Pkgconfig_Files {
+    ACE_INet.pc.in
+  }
+
 }
 
 // This project will be generated with and without ssl=1 feature
