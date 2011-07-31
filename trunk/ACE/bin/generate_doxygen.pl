@@ -44,7 +44,6 @@ if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
 }
 
 @ACE_DOCS = ('ace',
-             'ace_man',
              'ace_rmcast',
              'ace_ssl',
              'ace_qos',
