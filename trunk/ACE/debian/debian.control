@@ -3,10 +3,11 @@ Section: devel
 Priority: optional
 Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Pau Garcia i Quiles <pgquiles@elpauer.org>, Marek Brudka <mbrudka@aster.pl>
-Build-Depends: debhelper (>= 7), libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.5), libfox-1.6-dev, zlib1g-dev, libzzip-dev, liblzo2-dev, docbook-to-man, bzip2, libbz2-dev, doxygen, graphviz
-Standards-Version: 3.9.1
-Vcs-Svn: svn://svn.debian.org/svn/pkg-ace/trunk
-Vcs-Browser: http://svn.debian.org/wsvn/pkg-ace/trunk
+DM-Upload-Allowed: yes
+Build-Depends: debhelper (>= 8), libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.5), libfox-1.6-dev, zlib1g-dev, libzzip-dev, liblzo2-dev, docbook-to-man, bzip2, libbz2-dev, doxygen, graphviz
+Standards-Version: 3.9.2
+Vcs-Git: git://anonscm.debian.org/pkg-ace/pkg-ace.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-ace/pkg-ace.git;a=summary
 Homepage: http://www.cs.wustl.edu/~schmidt/ACE.html
 
 Package: mpc-ace
@@ -15,16 +16,16 @@ Depends: ${perl:Depends}, ${misc:Depends}
 Recommends: make
 Replaces: libace-dev (= 5.6.3-4)
 Suggests: libace-dev, pkg-config
-Description: makefile, project and workspace creator
- This package contains the Makefile, Project and Workspace Creator (MPC)
+Description: makefile, project, and workspace creator
+ This package contains the Makefile, Project, and Workspace Creator (MPC)
  as distributed with the ACE toolkit.
  .
- MPC generates platform and compiler specific files to automate the
+ MPC generates platform- and compiler-specific files to automate the
  compilation process.
  .
  The following programs are included:
-  * mpc-ace, generating project files for a single target
-  * mwc-ace, generating workspace files for a set of projects
+  * mpc-ace: generates project files for a single target
+  * mwc-ace: generates workspace files for a set of projects
 
 Package: libace-6.0.3
 Architecture: any
@@ -34,20 +35,12 @@ Description: C++ network programming framework
  This package contains the ADAPTIVE Communication Environment (ACE)
  framework.
  .
- It provides platform independent C++ wrappers for interprocess
- communication:
-  * signals
-  * pipes
-  * sockets
-  * message queues
-  * semaphores
-  * shared memory
- as well as thread, process management routines and much more.
+ It provides platform independent C++ wrappers for all forms of IPC,
+ thread- and process-management routines, and much more.
  .
- Moreover, it defines patterns for common communication tasks. Beyond
- these:
-  * Reactor, to handle event demultiplexing and dispatching
-  * Proactor, for asynchronous I/O driven programs
+ Moreover, it defines patterns for common communication tasks.
+  * Reactor: handles event demultiplexing and dispatching
+  * Proactor: for asynchronous I/O driven programs
 
 Package: libace-dev
 Architecture: any
@@ -55,7 +48,7 @@ Section: libdevel
 Depends: libace-6.0.3 (= ${binary:Version}), ${misc:Depends}
 Suggests: libace-doc, libtao-dev, pkg-config
 Replaces: mpc-ace (<< 5.6.3-4)
-Description: C++ network programming framework development files
+Description: C++ network programming framework - development files
  This package contains the header files and static library for the ACE
  framework.
 
@@ -65,7 +58,7 @@ Section: doc
 Depends: ${misc:Depends}
 Suggests: libace-dev
 Recommends: doc-base
-Description: C++ network programming framework documentation
+Description: C++ network programming framework - documentation
  This package contains the ACE overview documentation, tutorials,
  examples, and information regarding upstream development.
 
@@ -80,8 +73,8 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.0.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.0.3d), ${misc:Depends}
-Description: ACE secure socket layer library development files
+Depends: libace-ssl-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 0.9.7d), ${misc:Depends}
+Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
 
@@ -93,14 +86,14 @@ Description: ACE reliable multicast library
  The RMCast library is a reliable source-ordered multicast protocol
  implementation.
  .
- It uses sequence number for re-ordering, duplicate suppression and
- loss detection of messages.
+ It uses sequence numbers on messages to ensure ordering, loss
+ detection, and suppression of duplicates.
 
 Package: libace-rmcast-dev
 Architecture: any
 Section: libdevel
 Depends: libace-rmcast-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE reliable multicast library development files
+Description: ACE reliable multicast library - development files
  This package contains the header files and static library for the ACE
  reliable multicast library.
 
@@ -109,17 +102,17 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE transactional multicast library
- The TMCast library is a transaction multicast protocol
+ The TMCast library is a transactional multicast protocol
  implementation.
  .
  Each message is delivered to multicast group members as a
- transaction: an atomic, consistent and isolated action.
+ transaction: an atomic, consistent, and isolated action.
 
 Package: libace-tmcast-dev
 Architecture: any
 Section: libdevel
 Depends: libace-tmcast-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE transactional multicast library development files
+Description: ACE transactional multicast library - development files
  This package contains the header files and static library for the ACE
  transactional multicast library.
 
@@ -138,7 +131,7 @@ Package: libace-htbp-dev
 Architecture: any
 Section: libdevel
 Depends: libace-htbp-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE protocol over HTTP tunneling library development files
+Description: ACE protocol over HTTP tunneling library - development files
  This package contains the header files and static library for the ACE
  HTBP library.
 
@@ -146,45 +139,46 @@ Package: libace-inet-6.0.3
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ACE library for Inet protocol clients
- ACE addon library for Inet protocol clients (and possibly servers
- at some point) like http://, ftp:// etc
+Description: ACE Inet protocol library
+ This package provides an ACE addon library for clients (and possibly
+ servers at some point) using Inet protocols, such as HTTP or FTP.
 
 Package: libace-inet-dev
 Architecture: any
 Section: libdevel
 Depends: libace-inet-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE library for Inet protocol clients development files
- ACE addon library for Inet protocol clients (and possibly servers
- at some point) like http://, ftp:// etc
+Description: ACE Inet protocol library - development files
+ This package contains the header files and static library for the ACE
+ Inet protocol library.
 
 Package: libace-inet-ssl-6.0.3
 Architecture: any
 Section: libs
-Depends: libace-inet-6.0.1, libace-ssl-6.0.3, ${shlibs:Depends}, ${misc:Depends}
-Description: ACE library for Inet protocol clients with SSL support
- ACE addon library for Inet protocol clients (and possibly servers
- at some point) which support SSL like https://, ftps:// etc
+Depends: libace-inet-6.0.3, libace-ssl-6.0.3, ${shlibs:Depends}, ${misc:Depends}
+Description: ACE SSL-enabled Inet protocol library
+ This package provides an ACE addon library for clients (and possibly
+ servers at some point) using Inet protocols which support SSL, such as
+ HTTPS or FTPS.
 
 Package: libace-inet-ssl-dev
 Architecture: any
 Section: libdevel
 Depends: libace-inet-ssl-6.0.3 (= ${binary:Version}), libace-inet-dev (= ${binary:Version}), libace-ssl-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE library for Inet protocol clients with SSL support development files
- ACE addon library for Inet protocol clients (and possibly servers
- at some point) which support SSL like https://, ftps:// etc
+Description: ACE SSL-enabled Inet protocol library - development files
+ This package contains the header files and static library for the ACE
+ SSL-enabled Inet protocol library.
 
 Package: ace-gperf
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: gperf-ace (<< 5.7.7-1)
+Breaks: gperf-ace (<< 5.7.7-1)
 Replaces: gperf-ace (<< 5.7.7-1)
 Description: ACE perfect hash function generator
  ace_gperf is the ACE version of gperf.
  .
  Both ace_gperf and gperf were written by the same author, and have
  basically the same options and functionality. ace_gperf simply takes
- advantage of the some of the features provided by the ACE library.
+ advantage of some of the features provided by the ACE library.
 
 Package: gperf-ace
 Architecture: all
@@ -211,7 +205,7 @@ Architecture: any
 Section: libdevel
 Replaces: libace-dev (<< 5.7.7-4)
 Depends: libacexml-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE SAX based XML parsing library development files
+Description: ACE SAX based XML parsing library - development files
  This package contains the header files and static library for the ACE
  XML parsing library.
 
@@ -219,7 +213,7 @@ Package: libkokyu-6.0.3
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: libtao-2.0.1, libtao-orbsvcs-2.0.3
+Suggests: libtao-2.0.3, libtao-orbsvcs-2.0.3
 Description: ACE scheduling and dispatching library
  Kokyu is a library designed to provide flexible scheduling and
  dispatching services.
@@ -231,7 +225,7 @@ Package: libkokyu-dev
 Architecture: any
 Section: libdevel
 Depends: libkokyu-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE scheduling and dispatching library development files
+Description: ACE scheduling and dispatching library - development files
  This package contains the header files and static library for the ACE
  scheduling and dispatching library.
 
@@ -245,17 +239,17 @@ Description: ACE-GUI reactor integration for Qt
  Window System. Each of these extends the ACE_Select_Reactor to work
  with a specific toolkit. By using these reactors, your GUI
  application can remain single threaded yet still respond to both GUI
- events, such as button presses, any your own application events.
+ events, such as button presses, and your own application events.
  .
  The ACE_QtReactor extends both the ACE_Select_Reactor and the
- Trolltech Qt library's QObjects class. Rather then using select(),
+ Trolltech Qt library's QObjects class. Rather than using select(),
  the QtWaitForMultipleEvents() function is used.
 
 Package: libace-qtreactor-dev
 Architecture: any
 Section: libdevel
 Depends: libace-qtreactor-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libqt4-dev, ${misc:Depends}
-Description: ACE-GUI reactor integration for Qt development files
+Description: ACE-GUI reactor integration for Qt - development files
  This package contains header files and static library for the ACE-Qt
  reactor integration.
 
@@ -266,10 +260,10 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt
  Recognizing the need to write reactor-based GUI applications, the ACE
  community has created several reactor extensions for use with X
- Window System.  Each of these extends the ACE_Select_Reactor to work
- with a specific toolkit.  By using these reactors, your GUI
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
  application can remain single threaded yet still respond to both GUI
- events, such as button presses, any your own application events.
+ events, such as button presses, and your own application events.
  .
  The ACE_XtReactor extends both the ACE_Select_Reactor and the X
  Toolkit library function XtWaitForMultipleEvents().
@@ -277,8 +271,8 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.0.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.0.3), ${misc:Depends}
-Description: ACE-GUI reactor integration for Xt development files
+Depends: libace-xtreactor-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 4.3.0), ${misc:Depends}
+Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
 
@@ -289,20 +283,20 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE-GUI reactor integration for Tk
  Recognizing the need to write reactor-based GUI applications, the ACE
  community has created several reactor extensions for use with X
- Window System.  Each of these extends the ACE_Select_Reactor to work
- with a specific toolkit.  By using these reactors, your GUI
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
  application can remain single threaded yet still respond to both GUI
- events, such as button presses, any your own application events.
+ events, such as button presses, and your own application events.
  .
  The ACE_TkReactor provides reactor functionality around the popular
- Tcl/Tk library.  The underlying Tcl/Tk method used is
+ Tcl/Tk library. The underlying Tcl/Tk method used is
  Tcl_DoOneEvent().
 
 Package: libace-tkreactor-dev
 Architecture: any
 Section: libdevel
 Depends: libace-tkreactor-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 8.5), ${misc:Depends}
-Description: ACE-GUI reactor integration for Tk development files
+Description: ACE-GUI reactor integration for Tk - development files
  This package contains header files and static library for the ACE-Tk
  reactor integration.
 
@@ -313,10 +307,10 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE-GUI reactor integration for Fl
  Recognizing the need to write reactor-based GUI applications, the ACE
  community has created several reactor extensions for use with X
- Window System.  Each of these extends the ACE_Select_Reactor to work
- with a specific toolkit.  By using these reactors, your GUI
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
  application can remain single threaded yet still respond to both GUI
- events, such as button presses, any your own application events.
+ events, such as button presses, and your own application events.
  .
  The ACE_FlReactor integrates with the FastLight toolkit's Fl::wait()
  method.
@@ -324,8 +318,8 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.0.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.0.3), ${misc:Depends}
-Description: ACE-GUI reactor integration for Fl development files
+Depends: libace-flreactor-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 1.1.4), ${misc:Depends}
+Description: ACE-GUI reactor integration for Fl - development files
  This package contains header files and static library for the ACE-Fl
  reactor integration.
 
@@ -339,7 +333,7 @@ Description: ACE-GUI reactor integration for FOX
  Window System. Each of these extends the ACE_Select_Reactor to work
  with a specific toolkit. By using these reactors, your GUI
  application can remain single threaded yet still respond to both GUI
- events, such as button presses, any your own application events.
+ events, such as button presses, and your own application events.
  .
  The ACE_FoxReactor integrates with the FOX toolkit.
 
@@ -347,7 +341,7 @@ Package: libace-foxreactor-dev
 Architecture: any
 Section: libdevel
 Depends: libace-foxreactor-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
-Description: ACE-GUI reactor integration for FOX development files
+Description: ACE-GUI reactor integration for FOX - development files
  This package contains header files and static library for the ACE-FOX
  reactor integration.
 
@@ -357,7 +351,7 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE based CORBA ORB core libraries
  The ACE ORB (TAO) is an open-source Common Object Request Broker
- Architecture (CORBA) 2.x-compliant Object Request Broker (ORB).  It
+ Architecture (CORBA) 2.x-compliant Object Request Broker (ORB). It
  supports real-time extensions.
  .
  This package contains TAO core libraries.
@@ -368,9 +362,9 @@ Section: libdevel
 Replaces: libtao-orbsvcs-dev (<< 5.7.7-4)
 Depends: libtao-2.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Suggests: libtao-doc, libtao-orbsvcs-dev
-Description: ACE based CORBA ORB core libraries development files
- This package contains the header files for TAO.  Due to the size of
- the static libs (> 400MB) they have been left out.
+Description: ACE based CORBA ORB core libraries - development files
+ This package contains the header files for TAO. Due to the size of
+ the static libraries (over 400MB) they have been left out.
 
 Package: libtao-doc
 Architecture: all
@@ -378,7 +372,7 @@ Section: doc
 Depends: libace-doc (= ${source:Version}), ${misc:Depends}
 Suggests: libtao-dev
 Recommends: doc-base
-Description: ACE based CORBA ORB core libraries documentation
+Description: ACE based CORBA ORB core libraries - documentation
  This package contains the TAO overview documentation, tutorials,
  examples, and information regarding upstream development.
 
@@ -394,16 +388,16 @@ Architecture: any
 Section: libdevel
 Replaces: libtao-dev (<< 5.7.7-4)
 Depends: libtao-orbsvcs-2.0.3 (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO CORBA services development files
+Description: TAO CORBA services - development files
  This package contains the header files for the TAO CORBA services.
  .
- Due to the size of the static libs (> 400MB) they have been left out.
- The examples and some documentation have been included as well.
+ The examples and some documentation have been included as well, but the
+ static libraries have been left out due to their size (over 400MB).
 
 Package: libtao-qtresource-2.0.3
 Architecture: any
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: TAO-GUI reactor integration for Qt
  The Qt resource factory integrates ACE QtReactor into TAO ORB
  reactor.
@@ -412,7 +406,7 @@ Package: libtao-qtresource-dev
 Architecture: any
 Section: libdevel
 Depends: libtao-qtresource-2.0.3 (= ${binary:Version}), libace-qtreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO-GUI reactor integration for Qt development files
+Description: TAO-GUI reactor integration for Qt - development files
  This package contains header files and static library for the TAO-Qt
  reactor integration.
 
@@ -428,7 +422,7 @@ Package: libtao-xtresource-dev
 Architecture: any
 Section: libdevel
 Depends: libtao-xtresource-2.0.3 (= ${binary:Version}), libace-xtreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO-GUI reactor integration for Xt development files
+Description: TAO-GUI reactor integration for Xt - development files
  This package contains header files and static library for the TAO-Xt
  reactor integration.
 
@@ -444,7 +438,7 @@ Package: libtao-flresource-dev
 Architecture: any
 Section: libdevel
 Depends: libtao-flresource-2.0.3 (= ${binary:Version}), libace-flreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO-GUI reactor integration for Fl development files
+Description: TAO-GUI reactor integration for Fl - development files
  This package contains header files and static library for the TAO-Fl
  reactor integration.
 
@@ -460,7 +454,7 @@ Package: libtao-tkresource-dev
 Architecture: any
 Section: libdevel
 Depends: libtao-tkresource-2.0.3 (= ${binary:Version}), libace-tkreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO-GUI reactor integration for Tk development files
+Description: TAO-GUI reactor integration for Tk - development files
  This package contains header files and static library for the TAO-Tk
  reactor integration.
 
@@ -476,31 +470,31 @@ Package: libtao-foxresource-dev
 Architecture: any
 Section: libdevel
 Depends: libtao-foxresource-2.0.3 (= ${binary:Version}), libace-foxreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO-GUI reactor integration for FOX development files
+Description: TAO-GUI reactor integration for FOX - development files
  This package contains header files and static library for the TAO-FOX
  reactor integration.
 
 Package: tao-idl
 Architecture: any
-Depends: libtao-2.0.3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: g++, libtao-2.0.3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: TAO IDL to C++ compiler
- This package provides a Interface Definition Language (IDL) to C++
+ This package provides an Interface Definition Language (IDL) to C++
  compiler.
  .
- Use tao_idl to generate stubs and skeletons to call or implement
- CORBA distributed objects in C++.
+ tao_idl generates stubs and skeletons used to call or implement CORBA
+ distributed objects in C++.
 
 Package: tao-ifr
 Architecture: any
-Depends: libtao-2.0.3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: g++, libtao-2.0.3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: TAO interface repository
  CORBA-aware programs can contact an interface repository to get
- objects interfaces at run-time. Then they can use the Dynamic
+ objects' interfaces at run-time. Then they can use the Dynamic
  Invocation Interface (DII) mechanism to invoke requests on those
  objects.
  .
  This package includes the following programs:
-  * IFR_Service: interface repository server
+  * tao_ifr_service: interface repository server
   * tao_ifr: feeds in the interface repository
 
 Package: tao-imr
@@ -510,8 +504,8 @@ Description: TAO implementation repository
  An implementation repository activates CORBA servers on demand.
  .
  This package includes the following programs:
-  * ImplRepo_Service: the main server; delegates call to activators
-  * ImR_Activator: activates and shuts servers down on demand
+  * tao_imr_locator: the main server; delegates calls to activators
+  * tao_imr_activator: activates and shuts servers down on demand
   * tao_imr: registers servers for later activation
 
 Package: tao-ft
@@ -521,9 +515,9 @@ Description: TAO fault tolerant services
  TAO supports Fault Tolerance for CORBA Objects.
  .
  This package includes three FT CORBA infrastructure components:
-  * Fault_Detector that monitors a process or a host
-  * Fault_Notifier that receives fault reports from detectors
-  * FT_ReplicationManager that manages object groups
+  * tao_fault_detector: monitors a process or a host
+  * tao_fault_notifier: receives fault reports from detectors
+  * tao_ft_replicationmanager: manages object groups
 
 Package: tao-utils
 Architecture: any
@@ -531,22 +525,23 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: tao-cosnaming
 Description: TAO naming service and IOR utilities
  This package includes programs to query or control a CORBA naming
- service, and to dump an IOR.
+ service, and to dump an Interoperable Object Reference.
  .
  The following programs are included:
-  * tao_nslist, to list naming context and object bindings
-  * tao_nsadd, to create bindings
-  * tao_nsdel, to remove bindings
-  * tao_catior, to dump the content of an Interoperable Object Reference
+  * tao_nslist: lists naming context and object bindings
+  * tao_nsadd: creates bindings
+  * tao_nsdel: removes bindings
+  * tao_catior: dumps the contents of an IOR
 
 Package: tao-cosnaming
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-naming (<< 5.7.7-1)
+Breaks: tao-naming (<< 5.7.7-1)
 Replaces: tao-naming (<< 5.7.7-1)
 Recommends: tao-utils
 Description: TAO naming service
- TAO implementation of CORBA interoperable naming service (INS).
+ The TAO naming service implements the CORBA interoperable naming
+ service (INS).
  .
  A naming service provides a location service for CORBA objects.
  Given a name, it will return the Interoperable Object Reference (IOR)
@@ -566,7 +561,7 @@ Description: TAO naming service (transitional package)
 Package: tao-costrading
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-trading (<< 5.7.7-1)
+Breaks: tao-trading (<< 5.7.7-1)
 Replaces: tao-trading (<< 5.7.7-1)
 Description: TAO trading service
  TAO implementation of CORBA trading service.
@@ -589,7 +584,7 @@ Description: TAO trading service (transitional package)
 Package: tao-cosevent
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-event (<< 5.7.7-1)
+Breaks: tao-event (<< 5.7.7-1)
 Replaces: tao-event (<< 5.7.7-1)
 Description: TAO event service
  An event service creates channels where suppliers and consumers can
@@ -614,8 +609,8 @@ Package: tao-rtevent
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: TAO real-time event service
- Another TAO implementation of CORBA event service. For more
- information on CORBA event service have a look at tao-cosevent
+ This package provides another TAO implementation of CORBA event service.
+ For more information on CORBA event service have a look at the tao-cosevent
  package.
  .
  This version does not support the Pull style but provides a real-time
@@ -628,28 +623,25 @@ Package: tao-ftrtevent
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: TAO fault-tolerant real-time event service
- TAO fault-tolerant, real-time CORBA event service. For more
- information on CORBA event service have a look at tao-cosevent
+ This package provides TAO's fault-tolerant, real-time CORBA event service.
+ For more information on CORBA event service have a look at the tao-cosevent
  package.
  .
  This package contains:
-  * ftrt_eventservice, the fault-tolerant event channel
-  * ftrtec_factory_service, spawning ftrt_eventservice processes
-  * ftrtec_gateway_service, relaying events to FT CORBA unaware clients
+  * ftrt_eventservice: fault-tolerant event channel
+  * ftrtec_factory_service: spawns ftrt_eventservice processes
+  * ftrtec_gateway_service: relays events to FT CORBA unaware clients
 
 Package: tao-cosnotification
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-notify (<< 5.7.7-1)
+Breaks: tao-notify (<< 5.7.7-1)
 Replaces: tao-notify (<< 5.7.7-1)
 Description: TAO notification service
- A notification service enhances an event service. For more
- information on CORBA event service have a look at tao-cosevent
- package.
- .
- The notification service adds:
-  * quality of service control on reliability and speed
-  * event filtering
+ A notification service enhances an event service, providing event
+ filtering and Quality Of Service control on reliability and speed.
+ For more information on CORBA event service have a look at the
+ tao-cosevent package.
  .
  This package contains:
   * tao_cosnotification
@@ -666,20 +658,21 @@ Package: tao-load
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: TAO load balancing service
- TAO implementation of OMG Load Balancing and Monitoring
- specification.
+ The TAO load balancer implements the OMG Load Balancing and
+ Monitoring specification.
  .
  This package provides:
-  * LoadManager, that distributes loads across objects
-  * LoadMonitor, that monitors and reports loads to a manager
+  * tao_loadmanager: distributes loads across objects
+  * tao_loadmonitor: monitors and reports loads to a manager
 
 Package: tao-tls
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-log (<< 5.7.7-1)
+Breaks: tao-log (<< 5.7.7-1)
 Replaces: tao-log (<< 5.7.7-1)
 Description: TAO telecom log services
- TAO implementations of CORBA telecom log service.
+ The TAO telecom log services implement the OMG Telecom Log Service
+ specification.
  .
  Four separate services are provided:
   * tao_tls_basic
@@ -699,22 +692,22 @@ Package: tao-scheduling
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: TAO scheduling service
- TAO implementation of CORBA scheduling service.
+ TAO scheduling implements CORBA scheduling services.
  .
  This package contains:
-  * Scheduling_Service
-  * Dump_Schedule
+  * tao_cosscheduling
+  * tao_dump_schedule
 
 Package: tao-cosconcurrency
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-concurrency (<< 5.7.7-1)
+Breaks: tao-concurrency (<< 5.7.7-1)
 Replaces: tao-concurrency (<< 5.7.7-1)
 Description: TAO concurrency service
  A concurrency service provides a mechanism to acquire and release
  locks in a distributed system.
  .
- TAO version does not support transactions.
+ The TAO version does not support transactions.
 
 Package: tao-concurrency
 Architecture: all
@@ -727,13 +720,13 @@ Description: TAO concurrency service (transitional package)
 Package: tao-coslifecycle
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-lifecycle (<< 5.7.7-1)
+Breaks: tao-lifecycle (<< 5.7.7-1)
 Replaces: tao-lifecycle (<< 5.7.7-1)
 Description: TAO lifecycle service
- The CORBA lifecycle service allows clients to create, delete, copy
+ The CORBA lifecycle service allows clients to create, delete, copy,
  and move objects.
  .
- This package contains the TAO implementation of such service.
+ This package contains a TAO implementation.
 
 Package: tao-lifecycle
 Architecture: all
@@ -746,15 +739,14 @@ Description: TAO lifecycle service (transitional package)
 Package: tao-costime
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: tao-time (<< 5.7.7-1)
+Breaks: tao-time (<< 5.7.7-1)
 Replaces: tao-time (<< 5.7.7-1)
 Description: TAO time service
  A time service offers globally synchronized time to clients.
  .
  This package contains two programs:
-  * tao_costime_clerk, answering client requests
-  * tao_costime_server, queried by clerks to keep their time
-    synchronized
+  * tao_costime_clerk: answers client requests
+  * tao_costime_server: synchronizes querying clerks
 
 Package: tao-time
 Architecture: all
@@ -772,15 +764,15 @@ Description: ACE network service implementations
  distributed system tasks such as logging, naming, locking, and time
  synchronization.
  .
- This package contains driver program and exemplary configuration
- files that links the various ACE network services together, either
- statically or dynamically, to form complete server programs.
+ This package contains driver programs and example configuration
+ files to link the various ACE network services together, either
+ statically or dynamically, and form complete server programs.
 
-Package: libnetsvcs-6.0.1
+Package: libnetsvcs-6.0.3
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ACE network service implementations
+Description: ACE network service implementations - libraries
  ACE network services provide reusable components for common
  distributed system tasks such as logging, naming, locking, and time
  synchronization.
@@ -790,8 +782,8 @@ Description: ACE network service implementations
 Package: libnetsvcs-dev
 Architecture: any
 Section: libdevel
-Depends: libnetsvcs-6.0.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
-Description: ACE network service implementations
+Depends: libnetsvcs-6.0.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE network service implementations - development files
  ACE network services provide reusable components for common
  distributed system tasks such as logging, naming, locking, and time
  synchronization.

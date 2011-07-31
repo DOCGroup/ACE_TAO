@@ -1,2 +1,2 @@
-../../ACE_wrappers/netsvcs/servers/ace_netsvcs usr/bin
-../../ACE_wrappers/netsvcs/servers/svc.conf* usr/share/ace-netsvcs
+../../netsvcs/servers/ace_netsvcs usr/bin
+../../netsvcs/servers/svc.conf* usr/share/ace-netsvcs

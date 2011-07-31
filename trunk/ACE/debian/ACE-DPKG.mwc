@@ -2,6 +2,8 @@
 
 workspace {
   exclude {
+    .pc
+
     TAO
     performance-tests
 

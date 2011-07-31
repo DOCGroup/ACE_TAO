@@ -71,8 +71,8 @@ usr/include/tao/ETCL
 usr/lib/libTAO_ETCL.so
 usr/include/tao/Monitor
 usr/lib/libTAO_Monitor.so
-../../ACE_wrappers/TAO/MPC/config        usr/lib/ace/TAO/MPC
-../../ACE_wrappers/TAO/rules.tao.GNU     usr/lib/ace/TAO
+../../TAO/MPC/config        usr/lib/ace/TAO/MPC
+../../TAO/rules.tao.GNU     usr/lib/ace/TAO
 usr/lib/libTAO_IFR_BE.so
 usr/lib/libTAO_IDL_FE.so
 usr/lib/libTAO_IDL_BE.so

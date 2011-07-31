@@ -2,8 +2,7 @@
 
 workspace {
   exclude {
-    CIAO
-    DAnCE
+    .pc
     examples
     orbsvcs/examples
 
