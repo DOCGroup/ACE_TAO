@@ -25,4 +25,9 @@ project(INet_SSL) : acelib, ace_output, install, inet, ssl {
   specific {
     install_dir = ace/INet
   }
+
+  Pkgconfig_Files {
+    ACE_INet_SSL.pc.in
+  }
+
 }
