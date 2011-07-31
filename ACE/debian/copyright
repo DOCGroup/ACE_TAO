@@ -15,126 +15,114 @@ Copyright: © 1993-2011 Douglas C. Schmidt and his research group at
              Washington University, University of California, Irvine,
              and Vanderbilt University
 License: other-BSD
- Copyright and Licensing Information for ACE(TM), TAO(TM), CIAO(TM), and
- CoSMIC(TM)
- 
- [1]ACE(TM), [2]TAO(TM), [3]CIAO(TM), and [4]CoSMIC(TM) (henceforth
- referred to as "DOC software") are copyrighted by [5]Douglas C.
- Schmidt and his [6]research group at [7]Washington University,
- [8]University of California, Irvine, and [9]Vanderbilt University,
- Copyright (c) 1993-2008, all rights reserved. Since DOC software is
- open-source, freely available software, you are free to use, modify,
- copy, and distribute--perpetually and irrevocably--the DOC software
- source code and object code produced from the source, as well as copy
- and distribute modified versions of this software. You must, however,
- include this copyright statement along with any code built using DOC
- software that you release. No copyright statement needs to be provided
- if you just ship binary executables of your software products.
- 
- You can use DOC software in commercial and/or binary software releases
- and are under no obligation to redistribute any of your source code
- that is built using DOC software. Note, however, that you may not do
- anything to the DOC software code, such as copyrighting it yourself or
- claiming authorship of the DOC software code, that will prevent DOC
- software from being distributed freely using an open-source
- development model. You needn't inform anyone that you're using DOC
- software in your software, though we encourage you to let [10]us know
- so we can promote your project in the [11]DOC software success
- stories.
- 
- The [12]ACE, [13]TAO, [14]CIAO, and [15]CoSMIC web sites are
- maintained by the [16]DOC Group at the [17]Institute for Software
- Integrated Systems (ISIS) and the [18]Center for Distributed Object
- Computing of Washington University, St. Louis for the development of
- open-source software as part of the open-source software community. By
- submitting comments, suggestions, code, code snippets, techniques
- (including that of usage) and algorithms (collectively
- ``Submissions''), submitters acknowledge that they have the right to
- do so, that any such Submissions are given freely and unreservedly,
- and that they waive any claims to copyright or ownership. In addition,
- submitters acknowledge that any such Submission might become part of
- the copyright maintained on the overall body of code that comprises
- the DOC software. By making a Submission, submitter agree to these
- terms. Moreover, submitters acknowledge that the incorporation or
- modification of such Submissions is entirely at the discretion of the
- moderators of the open-source DOC software projects or their
- designees.
- 
- Submissions are provided by the submitter ``as is'' with no warranties
- whatsoever, including any warranty of merchantability, noninfringement
- of third party intellectual property, or fitness for any particular
- purpose. In no event shall the submitter be liable for any direct,
- indirect, special, exemplary, punitive, or consequential damages,
- including without limitation, lost profits, even if advised of the
- possibility of such damages. Likewise, DOC software is provided as is
- with no warranties of any kind, including the warranties of design,
- merchantability, and fitness for a particular purpose,
- noninfringement, or arising from a course of dealing, usage or trade
- practice. Washington University, UC Irvine, Vanderbilt University,
- their employees, and students shall have no liability with respect to
- the infringement of copyrights, trade secrets or any patents by DOC
- software or any part thereof. Moreover, in no event will Washington
- University, UC Irvine, or Vanderbilt University, their employees, or
- students be liable for any lost revenue or profits or other special,
- indirect and consequential damages.
- 
- DOC software is provided with no support and without any obligation on
- the part of Washington University, UC Irvine, Vanderbilt University,
- their employees, or students to assist in its use, correction,
- modification, or enhancement. A [19]number of companies around the
- world provide commercial support for DOC software, however.
- 
- DOC software is Y2K-compliant, as long as the underlying OS platform
- is Y2K-compliant. Likewise, DOC software is compliant with the new US
- daylight savings rule passed by Congress as "The Energy Policy Act of
- 2005," which established new daylight savings times (DST) rules for
- the United States that expand DST as of March 2007. Since DOC software
- obtains time/date and calendaring information from operating systems
- users will not be affected by the new DST rules as long as they
- upgrade their operating systems accordingly.
- 
- The names ACE(TM), TAO(TM), CIAO(TM), CoSMIC(TM), Washington
- University, UC Irvine, and Vanderbilt University, may not be used to
- endorse or promote products or services derived from this source
- without express written permission from Washington University, UC
- Irvine, or Vanderbilt University. Further, products or services
- derived from this source may not be called ACE(TM), TAO(TM), CIAO(TM),
- or CoSMIC(TM) nor may the name Washington University, UC Irvine, or
- Vanderbilt University appear in their names, without express written
- permission from Washington University, UC Irvine, and Vanderbilt
- University.
- 
- If you have any suggestions, additions, comments, or questions, please
- let [20]me know.
- 
- [21]Douglas C. Schmidt
-  _________________________________________________________________
+  Copyright and Licensing Information for ACE(TM), TAO(TM), CIAO(TM),
+  DAnCE(TM), and CoSMIC(TM)
 
- Back to the [22]ACE home page.
- 
- References
-  1. http://www.cs.wustl.edu/~schmidt/ACE.html
-  2. http://www.cs.wustl.edu/~schmidt/TAO.html
-  3. http://www.dre.vanderbilt.edu/CIAO/
-  4. http://www.dre.vanderbilt.edu/cosmic/
-  5. http://www.dre.vanderbilt.edu/~schmidt/
-  6. http://www.cs.wustl.edu/~schmidt/ACE-members.html
-  7. http://www.wustl.edu/
-  8. http://www.uci.edu/
-  9. http://www.vanderbilt.edu/
- 10. mailto:doc_group@cs.wustl.edu
- 11. http://www.cs.wustl.edu/~schmidt/ACE-users.html
- 12. http://www.cs.wustl.edu/~schmidt/ACE.html
- 13. http://www.cs.wustl.edu/~schmidt/TAO.html
- 14. http://www.dre.vanderbilt.edu/CIAO/
- 15. http://www.dre.vanderbilt.edu/cosmic/
- 16. http://www.dre.vanderbilt.edu/
- 17. http://www.isis.vanderbilt.edu/
- 18. http://www.cs.wustl.edu/~schmidt/doc-center.html
- 19. http://www.cs.wustl.edu/~schmidt/commercial-support.html
- 20. mailto:d.schmidt@vanderbilt.edu
- 21. http://www.dre.vanderbilt.edu/~schmidt/
- 22. http://www.cs.wustl.edu/ACE.html
+   [1]ACE(TM), [2]TAO(TM), [3]CIAO(TM), DAnCE(TM), and [4]CoSMIC(TM)
+   (henceforth referred to as "DOC software") are copyrighted by
+   [5]Douglas C. Schmidt and his [6]research group at [7]Washington
+   University, [8]University of California, Irvine, and [9]Vanderbilt
+   University, Copyright (c) 1993-2011, all rights reserved. Since DOC
+   software is open-source, freely available software, you are free to
+   use, modify, copy, and distribute--perpetually and irrevocably--the
+   DOC software source code and object code produced from the source, as
+   well as copy and distribute modified versions of this software. You
+   must, however, include this copyright statement along with any code
+   built using DOC software that you release. No copyright statement
+   needs to be provided if you just ship binary executables of your
+   software products.
+
+   You can use DOC software in commercial and/or binary software releases
+   and are under no obligation to redistribute any of your source code
+   that is built using DOC software. Note, however, that you may not
+   misappropriate the DOC software code, such as copyrighting it yourself
+   or claiming authorship of the DOC software code, in a way that will
+   prevent DOC software from being distributed freely using an
+   open-source development model. You needn't inform anyone that you're
+   using DOC software in your software, though we encourage you to let
+   [10]us know so we can promote your project in the [11]DOC software
+   success stories.
+
+   The [12]ACE, [13]TAO, [14]CIAO, [15]DAnCE, and [16]CoSMIC web sites
+   are maintained by the [17]DOC Group at the [18]Institute for Software
+   Integrated Systems (ISIS) and the [19]Center for Distributed Object
+   Computing of Washington University, St. Louis for the development of
+   open-source software as part of the open-source software community.
+   Submissions are provided by the submitter ``as is'' with no warranties
+   whatsoever, including any warranty of merchantability, noninfringement
+   of third party intellectual property, or fitness for any particular
+   purpose. In no event shall the submitter be liable for any direct,
+   indirect, special, exemplary, punitive, or consequential damages,
+   including without limitation, lost profits, even if advised of the
+   possibility of such damages. Likewise, DOC software is provided as is
+   with no warranties of any kind, including the warranties of design,
+   merchantability, and fitness for a particular purpose,
+   noninfringement, or arising from a course of dealing, usage or trade
+   practice. Washington University, UC Irvine, Vanderbilt University,
+   their employees, and students shall have no liability with respect to
+   the infringement of copyrights, trade secrets or any patents by DOC
+   software or any part thereof. Moreover, in no event will Washington
+   University, UC Irvine, or Vanderbilt University, their employees, or
+   students be liable for any lost revenue or profits or other special,
+   indirect and consequential damages.
+
+   DOC software is provided with no support and without any obligation on
+   the part of Washington University, UC Irvine, Vanderbilt University,
+   their employees, or students to assist in its use, correction,
+   modification, or enhancement. A [20]number of companies around the
+   world provide commercial support for DOC software, however. DOC
+   software is Y2K-compliant, as long as the underlying OS platform is
+   Y2K-compliant. Likewise, DOC software is compliant with the new US
+   daylight savings rule passed by Congress as "The Energy Policy Act of
+   2005," which established new daylight savings times (DST) rules for
+   the United States that expand DST as of March 2007. Since DOC software
+   obtains time/date and calendaring information from operating systems
+   users will not be affected by the new DST rules as long as they
+   upgrade their operating systems accordingly.
+
+   The names ACE(TM), TAO(TM), CIAO(TM), DAnCE(TM), CoSMIC(TM),
+   Washington University, UC Irvine, and Vanderbilt University, may not
+   be used to endorse or promote products or services derived from this
+   source without express written permission from Washington University,
+   UC Irvine, or Vanderbilt University. This license grants no permission
+   to call products or services derived from this source ACE(TM),
+   TAO(TM), CIAO(TM), DAnCE(TM), or CoSMIC(TM), nor does it grant
+   permission for the name Washington University, UC Irvine, or
+   Vanderbilt University to appear in their names.
+
+   If you have any suggestions, additions, comments, or questions, please
+   let [21]me know.
+
+   [22]Douglas C. Schmidt
+     _________________________________________________________________
+
+   Back to the [23]ACE home page.
+
+References
+
+   1. http://www.cs.wustl.edu/~schmidt/ACE.html
+   2. http://www.cs.wustl.edu/~schmidt/TAO.html
+   3. http://www.dre.vanderbilt.edu/CIAO/
+   4. http://www.dre.vanderbilt.edu/cosmic/
+   5. http://www.dre.vanderbilt.edu/~schmidt/
+   6. http://www.cs.wustl.edu/~schmidt/ACE-members.html
+   7. http://www.wustl.edu/
+   8. http://www.uci.edu/
+   9. http://www.vanderbilt.edu/
+  10. mailto:doc_group@cs.wustl.edu
+  11. http://www.cs.wustl.edu/~schmidt/ACE-users.html
+  12. http://www.cs.wustl.edu/~schmidt/ACE.html
+  13. http://www.cs.wustl.edu/~schmidt/TAO.html
+  14. http://www.dre.vanderbilt.edu/CIAO/
+  15. http://www.dre.vanderbilt.edu/~schmidt/DOC_ROOT/DAnCE/
+  16. http://www.dre.vanderbilt.edu/cosmic/
+  17. http://www.dre.vanderbilt.edu/
+  18. http://www.isis.vanderbilt.edu/
+  19. http://www.cs.wustl.edu/~schmidt/doc-center.html
+  20. http://www.cs.wustl.edu/~schmidt/commercial-support.html
+  21. mailto:d.schmidt@vanderbilt.edu
+  22. http://www.dre.vanderbilt.edu/~schmidt/
+  23. http://www.cs.wustl.edu/ACE.html
 
 Files: apps/gperf/*
 Copyright: © 1989 Free Software Foundation, Inc.
@@ -142,7 +130,7 @@ License: GPL-2+
  On Debian systems the full text of the GNU General Public License (Version 2)
  can be found in the `/usr/share/common-licenses/GPL-2' file.
 
-Files: ACE_wrappers/MPC/*
+Files: MPC/*
 Copyright: © 2003-2006 OCI. St. Louis MO USA
 License: other-BSD
  MPC (Licensed Product) is protected by copyright, and is distributed under
@@ -199,7 +187,7 @@ License: other-BSD
  
  MPC copyright OCI. St. Louis MO USA, 2003-2006
 
-Files: ACE_wrappers/contrib/minizip/*.[ch]
+Files: contrib/minizip/*.[ch]
 Copyright: © 1998-2005 Gilles Vollant
 License: ZLIB
  This software is provided 'as-is', without any express or implied
@@ -218,42 +206,10 @@ License: ZLIB
     misrepresented as being the original software.
  3. This notice may not be removed or altered from any source distribution.
 
-Files: ACE_wrappers/contrib/utility/*
-Copyright: © 2002-2003 Boris Kolpackov
-License: other-BSD
- This software or documentation is provided 'as-is', without any
- express or implied warranty.  In no event will the author or contributors
- be held liable for any damages arising from the use of this software
- or documentation.
- 
- Permission is granted to anyone to use this software or documentation
- for any purpose, including commercial applications, and to alter it and
- redistribute it freely, subject to the following restrictions:
- 
- 1. The origin of this software or documentation must not be
-    misrepresented; you must not claim that you wrote the original
-    software or documentation. If you use this software or
-    documentation in a product, an acknowledgment in the product
-    documentation would be appreciated but is not required.
- 
- 2. Altered source versions must be plainly marked as such, and must
-    not be misrepresented as being the original software or documentation.
-    Altered source versions may be contributed back to the author to be
-    integrated into the original software or documentation at the 
-    author's discretion.
- 
- 3. Neither this notice or reference to it nor any copyright, author or
-    contributor clause may be removed from or altered in any software 
-    source distribution or documentation covered by this license.
- 
- 4. Neither the name of the author, nor the names of contributors may be
-   used to endorse or promote products derived from this software or
-   documentation without specific prior written permission.
-
-Files: ACE_wrappers/TAO/TAO_IDL/*
-       ACE_wrappers/*/drv_*_ifr.*
-       ACE_wrappers/*/be_produce.cpp
-       ACE_wrappers/*/be_extern.h
+Files: TAO/TAO_IDL/*
+       TAO/orbsvcs/IFR_Service/drv_*_ifr.*
+       TAO/*/be_produce.cpp
+       TAO/*/be_extern.h
 Copyright: © 1992-1995 Sun Micosystems, Inc
 License: other
  COPYRIGHT
@@ -319,25 +275,25 @@ License: other
  SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
  trademarks or registered trademarks of Sun Microsystems, Inc.
 
-Files: ACE_wrappers/TAO/tao/DynamicInterface/Unknown_User_Exception.h
-       ACE_wrappers/TAO/tao/DynamicInterface/ExceptionList.h
-       ACE_wrappers/TAO/tao/DynamicInterface/Request.h
-       ACE_wrappers/TAO/tao/DynamicInterface/Server_Request.h
-       ACE_wrappers/TAO/tao/default_ports.h
-       ACE_wrappers/TAO/tao/Stub.h
-       ACE_wrappers/TAO/tao/corba.h
-       ACE_wrappers/TAO/tao/GIOP_Message_Base.h
-       ACE_wrappers/TAO/tao/Stub.cpp
-       ACE_wrappers/TAO/tao/Object.h
-       ACE_wrappers/TAO/tao/TAO_Server_Request.h
-       ACE_wrappers/TAO/tao/CDR.h
-       ACE_wrappers/TAO/tao/orbconf.h
-       ACE_wrappers/TAO/tao/AnyTypeCode/Marshal.cpp
-       ACE_wrappers/TAO/tao/AnyTypeCode/append.cpp
-       ACE_wrappers/TAO/tao/AnyTypeCode/NVList.h
-       ACE_wrappers/TAO/tao/Object.cpp
-       ACE_wrappers/TAO/tao/Principal.h
-       ACE_wrappers/TAO/tao/Principal.cpp
+Files: TAO/tao/DynamicInterface/Unknown_User_Exception.h
+       TAO/tao/DynamicInterface/ExceptionList.h
+       TAO/tao/DynamicInterface/Request.h
+       TAO/tao/DynamicInterface/Server_Request.h
+       TAO/tao/default_ports.h
+       TAO/tao/Stub.h
+       TAO/tao/corba.h
+       TAO/tao/GIOP_Message_Base.h
+       TAO/tao/Stub.cpp
+       TAO/tao/Object.h
+       TAO/tao/TAO_Server_Request.h
+       TAO/tao/CDR.h
+       TAO/tao/orbconf.h
+       TAO/tao/AnyTypeCode/Marshal.cpp
+       TAO/tao/AnyTypeCode/append.cpp
+       TAO/tao/AnyTypeCode/NVList.h
+       TAO/tao/Object.cpp
+       TAO/tao/Principal.h
+       TAO/tao/Principal.cpp
 Copyright: © 1995 Sun Microsystems, Inc
 License: other
  This notice applies to all files in this software distribution that
@@ -407,13 +363,13 @@ License: other
  2550 Garcia Avenue 
  Mountain View, California  94043
 
-Files: ACE_wrappers/ace/OS_NS_unistd.inl (swab function)
+Files: ace/OS_NS_unistd.inl (swab function)
 Copyright: © 1994-2006 Red Hat, Inc.
 License: BSD-3
 
-Files: ACE_wrappers/ace/UTF32_Encoding_Converter.cpp
-       ACE_wrappers/ace/UTF16_Encoding_Converter.cpp
-       ACE_wrappers/ace/UTF16_Encoding_Converter.inl
+Files: ace/UTF32_Encoding_Converter.cpp
+       ace/UTF16_Encoding_Converter.cpp
+       ace/UTF16_Encoding_Converter.inl
 Copyright: © 2001-2004 Unicode, Inc.
 License: other
  Limitations on Rights to Redistribute This Code
@@ -424,7 +380,7 @@ License: other
  for internal or external distribution as long as this notice
  remains attached.
 
-Files: ACE_wrappers/apps/JAWS3/*
+Files: apps/JAWS3/*
 Copyright: © 2000 James Hu and Entera, Inc.
 License: other
  Copyright and Licensing Information for JAWS Adaptive Web Server,
@@ -484,7 +440,7 @@ License: other
  Entera, Inc.
  jxh@entera.com
 
-Files: ACE_wrappers/apps/JAWS/clients/WebSTONE/*
+Files: apps/JAWS/clients/WebSTONE/*
 Copyright: © 1995 Silicon Graphics, Inc.
 License: other
  This file and all files contained in this directory are 
@@ -503,7 +459,7 @@ License: other
  profits or other special, indirect and consequential damages, even if 
  Silicon Graphics, Inc. has been advised of the possibility of such damages.
 
-Files: ACE_wrappers/ASNMP/*
+Files: ASNMP/*
 Copyright: © 1996 Hewlett-Packard Company
            © 1988, 1989, 1991, 1992 Carnegie Mellon University
            © 1997 Cisco Systems, Inc.
@@ -573,7 +529,7 @@ License: other-BSD
  DAMAGES.
  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-Files: ACE_wrappers/ace/OS_NS_wchar.cpp (wcs*_emulation functions)
+Files: ace/OS_NS_wchar.cpp (wcs*_emulation functions)
 Copyright: © 1991, 1993 The Regents of the University of California
 License: BSD-4
  Copyright (c) 1991, 1993
@@ -610,7 +566,7 @@ License: BSD-4
  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  SUCH DAMAGE.
 
-Files: ACE_wrappers/ace/Get_Opt.cpp
+Files: ace/Get_Opt.cpp
 Copyright: © 1987, 1993, 1994 The Regents of the University of California
            © 2000 The NetBSD Foundation, Inc.
 License: BSD-4
@@ -681,9 +637,9 @@ License: BSD-4
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
 
-Files: ACE_wrappers/examples/C++NPv1
-       ACE_wrappers/examples/C++NPv2
-       ACE_wrappers/examples/APG
+Files: examples/C++NPv1
+       examples/C++NPv2
+       examples/APG
 Copyright: © 2001, 2003 Addison Wesley
 License: other
  All of the files in these directories are copyright Addison Wesley,
