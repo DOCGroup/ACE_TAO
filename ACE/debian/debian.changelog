@@ -1,3 +1,61 @@
+ace (6.0.3-1) experimental; urgency=low
+
+  [ Thomas Girard ]
+  * Drop obsolete patch multiarch.dpatch.
+  * Really install NEWS file with libace-ssl.
+  * Convert to format 3.0 (quilt):
+    o Drop dpatch dependency
+    o Do not repackage upstream tarball
+    o rework patches 90 and 91 so that they can be applied before building
+  * Convert debian/rules to debhelper level 8.
+  * Convert patches to DEP3 format.
+  * debian/watch: use ACE+TAO-src-*.tar.bz2 since we don't package CIAO.
+  * Port to GNU/Hurd.
+  * Make tao-idl and tao-ifr depend on g++; we need cpp for preprocessing.
+  * Change descriptions to match new binary names.
+  * Replace Conflicts:/Replaces: with Breaks:/Replaces:, following lintian
+    recommendation.
+  * Register ace-netsvcs documentation with doc-base (again, thanks lintian).
+
+  [ Pau Garcia i Quiles ]
+  * New upstream patch release. Closes: #628572.
+  * Drop patch 11-promote-QtResource-to-qt4
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Wed, 27 Jul 2011 15:34:32 +0200
+
+ace (6.0.1-3) unstable; urgency=low
+
+  * Convert to format 3.0 (quilt):
+    o Drop dpatch dependency
+    o Do not repackage upstream tarball
+  * Convert debian/rules to debhelper level 8.
+  * Port to GNU/Hurd.
+  * debian/watch: use ACE+TAO-src-*.tar.bz2 since we don't package CIAO.
+  * debian/patches/multiarch.dpatch: change detection of librt.so to use
+    getconf so that it does not break with multiarch locations.
+    Closes: #629657.
+  * debian/NEWS.Debian: mention that SSL v2 was removed from Debian
+    packages.
+  * Enhance package descriptions. Thanks to Gerfried Fuchs for the
+    report, and to Justin B Rye from debian-l10n-english@ for
+    his changes. Closes: #599549.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon, 20 Jun 2011 21:05:52 +0200
+
+ace (6.0.1-2) unstable; urgency=low
+
+  [ Thomas Girard ]
+  * Import into git.
+  * debian/control: change Vcs-* accordingly.
+  * Restore lost changelog entries, thanks to git!
+  * Add DM-Upload-Allowed: yes to debian/control.
+  * Bump Standards-Version: to 3.9.2.
+
+  [ Pau Garcia i Quiles ]
+  * Disable SSLv2 by adding patch 35_disable_sslv2 (Closes: #622074)
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 01 May 2011 13:02:17 +0200
+
 ace (6.0.1-1) unstable; urgency=low
 
   [ Pau Garcia i Quiles ]
@@ -324,6 +382,25 @@ ace (5.5.6-1) experimental; urgency=low
     * changed URL in copyright to new one.
 
  -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 15 Mar 2007 22:12:29 +0000
+
+ace (5.4.7-13) unstable; urgency=low
+
+  * Rename packages:
+    o libace5.4.7c2a to libace5.4.7ldbl (Closes: #430244)
+    o libtao1.4.7c2a to libtao1.4.7ldbl (Closes: #430307)
+    for ldbl128 transition.
+  * Use debian/compat instead of DH_COMPAT.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 06 Sep 2007 09:52:34 +0000
+
+ace (5.4.7-12) unstable; urgency=low
+
+  * debian/control: tao-naming recommends tao-utils (Closes: #393032).
+  * debian/libtao-dev.install: add libTAO.so symlink (Closes: #396303).
+  * debian/patches/20-check-_REENTRANT.dpatch: do not automatically
+    define _REENTRANT (Closes: #380739).
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun,  5 Nov 2006 11:14:00 +0100
 
 ace (5.4.7-11) unstable; urgency=low
 
