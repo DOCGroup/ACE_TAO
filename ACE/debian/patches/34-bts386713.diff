@@ -1,0 +1,389 @@
+Description: Hardcode TAO library names so that dynamic loading works
+ ACE allows to dynamically load a library with ACE_DYNAMIC_SERVICE_DIRECTIVE
+ macro, and this mechanism is used to load some TAO libraries when needed. The
+ name used in macro invocations is the short library name, i.e. libfoo.so.
+ .
+ Debian usually ships libfoo.so symlinks in -dev packages. So to make the
+ dynamic loading work without the need for the -dev package being installed,
+ we use long names (libfoo-x.y.z.so) in the macro invocation.
+Forwarded: not-needed
+Author: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Last-Update: 2011-06-26
+
+--- a/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
++++ b/TAO/orbsvcs/orbsvcs/PortableGroup/PortableGroup_ORBInitializer.cpp
+@@ -10,7 +10,7 @@
+ 
+ static const char pg_poa_factory_name[] = "TAO_GOA";
+ static const ACE_TCHAR pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+-  "TAO_GOA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");
++  "TAO_GOA", "libTAO_PortableGroup-2.0.3.so", "_make_TAO_PG_Object_Adapter_Factory", "");
+ 
+ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+ 
+--- a/TAO/orbsvcs/tests/Bug_3486_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Bug_3486_Regression/server.cpp
+@@ -18,7 +18,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNamingService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNamingService",
+-  "TAO_CosNaming_Serv",
++  "libTAO_CosNaming_Serv-2.0.3.so",
+   "_make_TAO_Naming_Loader",
+   ""
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_2926_Regression/server.cpp
+@@ -20,7 +20,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_CosNotification_Serv",
++  "libTAO_CosNotification_Serv-2.0.3.so",
+   "_make_TAO_CosNotify_Service",
+   ""
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp
+@@ -23,7 +23,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_CosNotification_Serv",
++  "libTAO_CosNotification_Serv-2.0.3.so",
+   "_make_TAO_CosNotify_Service",
+   "-UseSeparateDispatchingORB 1"
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_3646b_Regression/server.cpp
+@@ -20,7 +20,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_Notify_Service",
++  "libTAO_Notify_Service-2.0.3.so",
+   "_make_TAO_Notify_Service_Driver",
+   "-NoNameSvc -RunThreads 0"
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp
+@@ -23,7 +23,7 @@
+ 
+ ACE_TCHAR scpc_loadNotifyService[max_length] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_Notify_Service",
++  "libTAO_Notify_Service-2.0.3.so",
+   "_make_TAO_Notify_Service_Driver",
+   "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%s:%s/NameService -IORoutput %s"
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_3646d_Regression/server.cpp
+@@ -20,7 +20,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_Notify_Service",
++  "libTAO_Notify_Service-2.0.3.so",
+   "_make_TAO_Notify_Service_Driver",
+   "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 10 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
+ );
+@@ -29,7 +29,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNameService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNamingService",
+-  "TAO_CosNaming_Serv",
++  "libTAO_CosNaming_Serv-2.0.3.so",
+   "_make_TAO_Naming_Loader",
+   "testNameService testNameService -ORBId testDllOrb -m 0 -o naming.ior"
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_3663_Regression/server.cpp
+@@ -20,7 +20,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_Notify_Service",
++  "libTAO_Notify_Service-2.0.3.so",
+   "_make_TAO_Notify_Service_Driver_INCORRECT",
+   "-NoNameSvc -RunThreads 0"
+ );
+--- a/TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp
++++ b/TAO/orbsvcs/tests/Notify/Bug_3688b_Regression/server.cpp
+@@ -24,7 +24,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNameService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNamingService",
+-  "TAO_CosNaming_Serv",
++  "libTAO_CosNaming_Serv-2.0.3.so",
+   "_make_TAO_Naming_Loader",
+   "testNameService testNameService -ORBId testDllOrb -m 0 -o naming.ior"
+ );
+@@ -34,7 +34,7 @@
+ 
+ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+   "testNotifyService",
+-  "TAO_Notify_Service",
++  "libTAO_Notify_Service-2.0.3.so",
+   "_make_TAO_Notify_Service_Driver",
+   "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 1 -ORBInitRef NameService=file://naming.ior -IORoutput notify.ior"
+ );
+--- a/TAO/tao/Codeset/Codeset_Manager_i.cpp
++++ b/TAO/tao/Codeset/Codeset_Manager_i.cpp
+@@ -353,7 +353,7 @@
+   if (fact == 0)
+     ACE_Service_Config::process_directive
+       (ACE_DYNAMIC_SERVICE_DIRECTIVE ("UTF8_Latin1_Factory",
+-                                      "TAO_Codeset",
++                                      "libTAO_Codeset-2.0.3.so",
+                                       "_make_TAO_UTF8_Latin1_Factory",
+                                       ""));
+   else
+@@ -370,7 +370,7 @@
+   if (fact == 0)
+     ACE_Service_Config::process_directive
+       (ACE_DYNAMIC_SERVICE_DIRECTIVE ("UTF16_BOM_Factory",
+-                                      "TAO_Codeset",
++                                      "libTAO_Codeset-2.0.3.so",
+                                       "_make_TAO_UTF16_BOM_Factory",
+                                       ""));
+   else
+--- a/TAO/tao/CSD_Framework/CSD_ORBInitializer.cpp
++++ b/TAO/tao/CSD_Framework/CSD_ORBInitializer.cpp
+@@ -10,7 +10,7 @@
+ static const ACE_TCHAR csd_poa_factory_directive[] =
+   ACE_DYNAMIC_SERVICE_DIRECTIVE(
+     "TAO_CSD_Object_Adapter_Factory",
+-    "TAO_CSD_Framework",
++    "libTAO_CSD_Framework-2.0.3.so",
+     "_make_TAO_CSD_Object_Adapter_Factory",
+     "");
+ 
+--- a/TAO/tao/ORB_Core.cpp
++++ b/TAO/tao/ORB_Core.cpp
+@@ -1651,7 +1651,7 @@
+     {
+       this->configuration ()->process_directive (
+         ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
+-                                      "TAO_PI",
++                                      "libTAO_PI-2.0.3.so",
+                                       "_make_TAO_PolicyFactory_Loader",
+                                       ""));
+       loader =
+@@ -1703,7 +1703,7 @@
+     {
+       this->configuration ()->process_directive (
+         ACE_DYNAMIC_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
+-                                       "TAO_PI",
++                                       "libTAO_PI-2.0.3.so",
+                                        "_make_ORBInitializer_Registry",
+                                        ""));
+       this->orbinitializer_registry_ =
+@@ -2455,7 +2455,7 @@
+     {
+       this->configuration ()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("TypeCodeFactory",
+-                                       "TAO_TypeCodeFactory",
++                                       "libTAO_TypeCodeFactory-2.0.3.so",
+                                        "_make_TAO_TypeCodeFactory_Loader",
+                                        ""));
+       loader =
+@@ -2488,7 +2488,7 @@
+     {
+       this->configuration()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
+-                                       "TAO_CodecFactory",
++                                       "libTAO_CodecFactory-2.0.3.so",
+                                        "_make_TAO_CodecFactory_Loader",
+                                        ""));
+       loader =
+@@ -2515,7 +2515,7 @@
+     {
+       this->configuration()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("Compression",
+-                                       "TAO_Compression",
++                                       "libTAO_Compression-2.0.3.so",
+                                        "_make_TAO_Compression_Loader",
+                                        ""));
+       loader =
+@@ -2541,7 +2541,7 @@
+     {
+       this->configuration()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
+-                                       "TAO_PortableServer",
++                                       "libTAO_PortableServer-2.0.3.so",
+                                        "_make_TAO_POA_Current_Factory",
+                                        ""));
+       loader =
+@@ -2570,7 +2570,7 @@
+     {
+       this->configuration ()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("PICurrent_Loader",
+-                                       "TAO_PI",
++                                       "libTAO_PI-2.0.3.so",
+                                        "_make_TAO_PICurrent_Loader",
+                                        ""));
+       loader =
+@@ -2601,7 +2601,7 @@
+     {
+       this->configuration ()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("DynamicAny_Loader",
+-                                       "TAO_DynamicAny",
++                                       "libTAO_DynamicAny-2.0.3.so",
+                                        "_make_TAO_DynamicAny_Loader",
+                                        ""));
+       loader =
+@@ -2628,7 +2628,7 @@
+     {
+       this->configuration()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("IORManip_Loader",
+-                                       "TAO_IORManip",
++                                       "libTAO_IORManip-2.0.3.so",
+                                        "_make_TAO_IORManip_Loader",
+                                        ""));
+       loader =
+@@ -2654,7 +2654,7 @@
+     {
+       this->configuration ()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_IORTable",
+-                                       "TAO_IORTable",
++                                       "libTAO_IORTable-2.0.3.so",
+                                        "_make_TAO_Table_Adapter_Factory",
+                                        ""));
+       factory =
+@@ -2689,7 +2689,7 @@
+     {
+       this->configuration ()->process_directive
+         (ACE_DYNAMIC_SERVICE_DIRECTIVE("Monitor_Init",
+-                                       "TAO_Monitor",
++                                       "libTAO_Monitor-2.0.3.so",
+                                        "_make_TAO_Monitor_Init",
+                                        ""));
+       loader =
+--- a/TAO/tao/ORBInitializer_Registry.cpp
++++ b/TAO/tao/ORBInitializer_Registry.cpp
+@@ -48,7 +48,7 @@
+       {
+         ACE_Service_Config::process_directive (
+           ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
+-                                        "TAO_PI",
++                                        "libTAO_PI-2.0.3.so",
+                                         "_make_ORBInitializer_Registry",
+                                         ""));
+         orbinitializer_registry_ =
+--- a/TAO/tao/params.cpp
++++ b/TAO/tao/params.cpp
+@@ -55,7 +55,7 @@
+   , poa_factory_name_ ("TAO_Object_Adapter_Factory")
+   , poa_factory_directive_
+       (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory",
+-                                     "TAO_PortableServer",
++                                     "libTAO_PortableServer-2.0.3.so",
+                                      "_make_TAO_Object_Adapter_Factory",
+                                      ""))
+   , forward_invocation_on_object_not_exist_ (false)
+--- a/TAO/tao/PI/ORBInitInfo.cpp
++++ b/TAO/tao/PI/ORBInitInfo.cpp
+@@ -117,7 +117,7 @@
+         {
+           ACE_Service_Config::process_directive (
+             ACE_DYNAMIC_SERVICE_DIRECTIVE("CodecFactory",
+-                                          "TAO_CodecFactory",
++                                          "libTAO_CodecFactory-2.0.3.so",
+                                           "_make_TAO_CodecFactory_Loader",
+                                           ""));
+           loader =
+--- a/TAO/tao/PortableServer/LifespanStrategyPersistent.cpp
++++ b/TAO/tao/PortableServer/LifespanStrategyPersistent.cpp
+@@ -79,7 +79,7 @@
+             {
+               ACE_Service_Config::process_directive (
+                 ACE_DYNAMIC_SERVICE_DIRECTIVE(
+-                  "ImR_Client_Adapter", "TAO_ImR_Client",
++                  "ImR_Client_Adapter", "libTAO_ImR_Client-2.0.3.so",
+                   "_make_ImR_Client_Adapter_Impl", ""));
+ 
+               adapter =
+--- a/TAO/tao/RTCORBA/RT_ORBInitializer.cpp
++++ b/TAO/tao/RTCORBA/RT_ORBInitializer.cpp
+@@ -38,7 +38,7 @@
+ static const ACE_TCHAR rt_poa_factory_directive[] =
+   ACE_DYNAMIC_SERVICE_DIRECTIVE(
+     "TAO_RT_Object_Adapter_Factory",
+-    "TAO_RTPortableServer",
++    "libTAO_RTPortableServer-2.0.3.so",
+     "_make_TAO_RT_Object_Adapter_Factory",
+     "");
+ 
+--- a/TAO/tao/TAO_Internal.cpp
++++ b/TAO/tao/TAO_Internal.cpp
+@@ -611,7 +611,7 @@
+             ACE_Service_Config::process_directive (
+               ACE_DYNAMIC_SERVICE_DIRECTIVE (
+                 "TAO_Codeset",
+-                "TAO_Codeset",
++                "libTAO_Codeset-2.0.3.so",
+                 "_make_TAO_Codeset_Manager_Factory",
+                 ""));
+ 
+--- a/TAO/tests/DLL_ORB/client.cpp
++++ b/TAO/tests/DLL_ORB/client.cpp
+@@ -30,7 +30,7 @@
+   if (ACE_Service_Config::process_directive (
+         ACE_DYNAMIC_SERVICE_DIRECTIVE(
+           "Client_Module",
+-          "Test_Client_Module",
++          "libTest_Client_Module-2.0.3.so",
+           "_make_Test_Client_Module",
+           "-k file://test.ior")) != 0)
+     {
+--- a/TAO/tests/ORB_Local_Config/Bug_2612/Test.cpp
++++ b/TAO/tests/ORB_Local_Config/Bug_2612/Test.cpp
+@@ -13,7 +13,7 @@
+   // each parameter CANNOT be split into multiple quoted strings "line1" "nextline" with the expectation that
+   // they will be join together. Hence the long parameter 4.
+   ACE_DYNAMIC_SERVICE_DIRECTIVE ("testDllOrb",
+-                                 "DllOrb",
++                                 "DllOrb.so",
+                                  "_make_DllOrb",
+ "DllOrb -t 1 -ORBGestalt Local -ORBDebugLevel 3 -ORBId testORB -ORBInitRef NameService=file:///tmp/test-ns.ior -ORBDottedDecimalAddresses 1"
+                                  );
+--- a/TAO/tests/ORB_Local_Config/Service_Dependency/Test.cpp
++++ b/TAO/tests/ORB_Local_Config/Service_Dependency/Test.cpp
+@@ -153,7 +153,7 @@
+     {
+       one->process_directive (
+         ACE_DYNAMIC_SERVICE_DIRECTIVE("ORBInitializer_Registry",
+-                                      "TAO_PI",
++                                      "libTAO_PI-2.0.3.so",
+                                       "_make_ORBInitializer_Registry",
+                                       ""));
+       oir =
+@@ -252,7 +252,7 @@
+ 
+   one->process_directive
+     (ACE_DYNAMIC_SERVICE_DIRECTIVE("PolicyFactory_Loader",
+-                                   "TAO_PI",
++                                   "libTAO_PI-2.0.3.so",
+                                    "_make_TAO_PolicyFactory_Loader",
+                                    ""));
+ 
+@@ -292,7 +292,7 @@
+ 
+     int result = one->process_directive
+       (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
+-                                     "TAO_Codeset",
++                                     "libTAO_Codeset-2.0.3.so",
+                                      "_make_TAO_Codeset_Manager_Factory",
+                                      ""));
+     if (result != 0)
+--- a/TAO/tests/TransportCurrent/Framework/simple.cpp
++++ b/TAO/tests/TransportCurrent/Framework/simple.cpp
+@@ -56,7 +56,7 @@
+ #if !defined (TAO_AS_STATIC_LIBS)
+           int ret = ACE_Service_Config::process_directive
+             (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
+-                                           "TAO_Transport_Current",
++                                           "libTAO_Transport_Current-2.0.3.so",
+                                            "_make_TAO_Transport_Current_Loader",
+                                            ""));
+           ACE_ASSERT (ret == 0);
