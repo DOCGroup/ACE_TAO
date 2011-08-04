@@ -1772,6 +1772,67 @@ symbols will be created and the build will huge in size. The debug
 symbols are necessary when you want to debug your code.</p>
 
 <p></p><hr align="left" width="50%">
+
+<p></p><h2><a name="android">Building and Installing ACE on Android</a></h2>
+<p>ACE can be built for Android by using the Android Native Development 
+Kit's <b>standalone toolchain</b>.  The compilation creates native binaries, 
+not the standard Android Java applications.  The native binary applications
+that use ACE can be run by either a shell or using the Java Runtime exec
+operation.</p>
+
+<p>Due to Android's library loading restrictions, static linking is necessary
+ for all included libraries.</p>
+
+<p>Compilation requires using the NDK's standalone toolchain for it's
+exception and RTTI support.  The standard NDK compiler is not identified
+ as supporting exceptions or RTTI, as of NDK r5c.</p>
+
+<p>It is not recommended to perform the build on a Windows host.  Using the
+NDK r5c, compilation issues were encountered on Windows XP, when the compiler
+failed to recognize the name difference between the ACE file Signal.h and
+the system file signal.h.</p>
+
+<p>You should be able to follow the instructions above to build ACE 
+and applications that use it.  Use the
+<a href="#unix_traditional">Unix  traditional instructions</a> above to build
+ACE and the applications that use it.  Building TAO for Android requires
+cross compiling the code.<p>
+
+<p>Basic steps to build
+<ul>
+  <li>Setup up the standalone compiler toolchain by following the
+ instructions provided with the Android NDK.</li>
+  <li>If building TAO, build the ACE and TAO tools (<code>ace_gperf</code> and
+ <code>tao_idl</code>) for the compiling host.  Follow the cross compilation setup instructions provide
+ in $TAO_ROOT/TAO-INSTALL.html.  Search for "Using cross compilation".</li>
+  <ul>
+    <li>Setup the Android build<ul>
+      <li>Create <code>ace/config.h</code>:  <i>#include "ace/config-linux-android.h"</i></li>
+      <li>Create <code>include/makeinclude/platform_macros.GNU</code>:<ul>
+        <li>Set the CC, CXX, AR values to the standalone toolchain compilers and archiver.</li>
+        <li>Include the <code>include/makeinclude/platform_linux_android.GNU</code> file.</li>
+        <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
+        </ul>
+      </li>
+      </ul>
+    </li>
+    <li>Generate makefiles (if necessary).</li>
+    <li>Build with GNU make.</li>
+  </ul>
+</ul>
+</p>
+
+<p>Native applications using the ACE library can be installed onto devices by
+several different methods.  The files can be include as assets of Java
+application and can be written by the Java application into it's executable
+program directory.  The native application can be downloaded by a Java
+application and written into the Java applications executable program
+directory.  The native application can also be uploaded using the Software
+Development Kit's ADB tool.  This method requires uploading the native
+application to a directory that allows execution and having any output
+directed to a writable directory.</p>
+
+<p></p><hr align="left" width="50%">
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
 

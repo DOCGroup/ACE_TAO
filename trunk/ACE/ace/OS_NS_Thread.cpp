@@ -4082,6 +4082,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           }
         }
 
+#       if !defined (ACE_LACKS_SETINHERITSCHED)
       // *** Set scheduling explicit or inherited
       if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED)
           || ACE_BIT_ENABLED (flags, THR_EXPLICIT_SCHED))
@@ -4095,6 +4096,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
               return -1;
             }
         }
+#       endif /* ACE_LACKS_SETINHERITSCHED */
 #   else /* ACE_LACKS_SETSCHED */
       ACE_UNUSED_ARG (priority);
 #   endif /* ACE_LACKS_SETSCHED */
