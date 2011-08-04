@@ -4,7 +4,7 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_HAS_PTHREADS)
+#if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
 // Only works on Pthreads...
 
 // Listing 1 code/ch13

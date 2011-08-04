@@ -216,6 +216,29 @@ namespace ACE_OS
   struct tm *localtime_r (const time_t *clock,
                           struct tm *res);
 
+#if defined (ACE_USES_ULONG_FOR_STAT_TIME)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_TCHAR *ctime (const unsigned long *t);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_TCHAR *ctime_r (const unsigned long *clock, ACE_TCHAR *buf, int buflen);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  struct tm *gmtime (const unsigned long *clock);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  struct tm *gmtime_r (const unsigned long *clock,
+                       struct tm *res);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  struct tm *localtime (const unsigned long *clock);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  struct tm *localtime_r (const unsigned long *clock,
+                       struct tm *res);
+#endif
+
+
   // Get the current time.
   extern ACE_Export
   time_t mktime (struct tm *timeptr);
