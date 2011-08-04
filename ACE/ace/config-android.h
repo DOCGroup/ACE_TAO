@@ -18,7 +18,7 @@
 
 // the android definition of struct stat{} uses
 // unsigned long rather than time_t for st_[acm]time
-// members of the stat struct used to report file 
+// members of the stat struct used to report file
 // status details.
 #define ACE_USES_ULONG_FOR_STAT_TIME
 
