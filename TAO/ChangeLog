@@ -1,3 +1,16 @@
+Thu Aug  4 15:47:33 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO-INSTALL.html:
+        
+          Added note about building for Android. 
+
+        * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
+        
+          Additional compiler macro added to build on Android.
+        
+          Thanks to Trevor Fields of OCI for doing the heavy lifting
+          for porting TAO to Android.
+
 Sat Jul 23 22:40:39 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:

@@ -62,7 +62,7 @@ struct string_sequence_test_helpers<char>
   }
 };
 
-#if defined(_GLIBCPP_VERSION) && !defined(_GLIBCPP_USE_WCHAR_T)
+#if defined(_GLIBCPP_VERSION) && !defined(_GLIBCPP_USE_WCHAR_T) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
 # define TAO_LACKS_WCHAR_CXX_STDLIB
 #endif
 
