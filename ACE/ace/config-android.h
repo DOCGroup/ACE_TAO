@@ -5,23 +5,68 @@
 // The following configuration file is designed to work for Linux
 // platforms using GNU C++.
 
-#ifndef ACE_CONFIG_LINUX_H
-#define ACE_CONFIG_LINUX_H
+#ifndef ACE_CONFIG_ANDROID_H
+#define ACE_CONFIG_ANDROID_H
 #include /**/ "ace/pre.h"
+
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SSIZE_T
+// system errorno is a volatile int
+#define ACE_HAS_VOLATILE_ERRNO
+
+#define ACE_HAS_PTHREADS_UNIX98_EXT
+
+// the android definition of struct stat{} uses
+// unsigned long rather than time_t for st_[acm]time
+// members of the stat struct used to report file 
+// status details.
+#define ACE_USES_ULONG_FOR_STAT_TIME
+
+#define ACE_LACKS_NEW_H
+#define ACE_LACKS_SEARCH_H
+#define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_SYS_MSG_H
+#define ACE_LACKS_SYS_SHM_H
+#define ACE_LACKS_SYS_SYSCTL_H
+#define ACE_LACKS_UCONTEXT_H
+
+#define ACE_LACKS_CUSERID
+#define ACE_LACKS_FD_MASK
+#define ACE_LACKS_GETHOSTENT
+#define ACE_LACKS_GETLOADAVG
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_LOG2
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#define ACE_LACKS_PWD_FUNCTIONS
+#define ACE_LACKS_PTHREAD_CANCEL
+#define ACE_LACKS_SEEKDIR
+#define ACE_LACKS_SEMBUF_T
+#define ACE_LACKS_SETINHERITSCHED
+#define ACE_LACKS_STRRECVFD
+#define ACE_LACKS_SWAB
+#define ACE_LACKS_SYSV_SHMEM
+#define ACE_LACKS_TELLDIR
+#define ACE_LACKS_WCSTOLL
+#define ACE_LACKS_WCSTOULL
+
+#define ACE_LACKS_RAND_R
+
+// Android Standalone compiler std library does not include
+// wide character support
+// Used in tests/Sequence_Unit_Tests/string_sequence_tester.hpp
+# define TAO_LACKS_WCHAR_CXX_STDLIB
+
+
 
 #if !defined (ACE_MT_SAFE)
 #  define ACE_MT_SAFE 1
 #endif
 
-#if !defined (__ACE_INLINE__)
-#  define __ACE_INLINE__
-#endif /* ! __ACE_INLINE__ */
+#define ACE_PLATFORM_CONFIG config-linux-android.h
 
-#if !defined (ACE_PLATFORM_CONFIG)
-#define ACE_PLATFORM_CONFIG config-linux.h
-#endif
-
-#define ACE_HAS_BYTESEX_H
+//remove#define ACE_HAS_BYTESEX_H
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
@@ -59,7 +104,7 @@
 // library.  Disable AIO in single-threaded builds.
 #if defined (ACE_HAS_THREADS)
 #  define ACE_HAS_CLOCK_GETTIME
-#  define ACE_HAS_CLOCK_SETTIME
+//remove#  define ACE_HAS_CLOCK_SETTIME
 #else
 #  undef ACE_HAS_AIO_CALLS
 #endif
@@ -177,7 +222,7 @@
 
 #define ACE_HAS_SIGSUSPEND
 
-#define ACE_HAS_UALARM
+//remove#define ACE_HAS_UALARM
 
 #define ACE_HAS_STRSIGNAL
 
@@ -260,7 +305,7 @@
 #if (__GLIBC__ < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 10)
 // Although the scandir man page says otherwise, this setting is correct.
 // The setting was fixed in 2.10, so do not use the hack after that.
-#define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+//remove#define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
 #endif
 
 // A conflict appears when including both <ucontext.h> and
@@ -268,7 +313,7 @@
 //#define ACE_HAS_PROC_FS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC
+//remove#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
@@ -285,7 +330,7 @@
 #define ACE_HAS_SIG_ATOMIC_T
 
 // Compiler/platform defines a union semun for SysV shared memory.
-#define ACE_HAS_SEMUN
+//remove#define ACE_HAS_SEMUN
 
 #define ACE_HAS_POSIX_TIME
 
@@ -345,7 +390,7 @@
 # include "ace/config-posix-nonetworking.h"
 #else
 # define ACE_HAS_NETLINK
-# define ACE_HAS_GETIFADDRS
+//remove# define ACE_HAS_GETIFADDRS
 #endif
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
@@ -366,9 +411,10 @@
 # if !defined (ACE_LACKS_LINUX_VERSION_H)
 #  include <linux/version.h>
 # endif /* !ACE_LACKS_LINUX_VERSION_H */
-# if (LINUX_VERSION_CODE > KERNEL_VERSION (2,6,0))
-#  define ACE_HAS_EVENT_POLL
-# endif
+// Android does not have EPOLLONESHOT yet
+//# if (LINUX_VERSION_CODE > KERNEL_VERSION (2,6,0))
+//#  define ACE_HAS_EVENT_POLL
+//# endif
 #endif
 
 
@@ -383,4 +429,4 @@
 
 #include /**/ "ace/post.h"
 
-#endif /* ACE_CONFIG_LINUX_H */
+#endif /* ACE_CONFIG_ANDROID_H */

@@ -47,6 +47,10 @@
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
 # define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
+#elif defined (ANDROID)
+# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("/sdcard/log/")
+# define ACE_LOG_DIRECTORY ACE_TEXT ("/sdcard/log/")
+# define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #else
 # define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("log/")
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log/")

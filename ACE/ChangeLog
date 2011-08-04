@@ -1,3 +1,35 @@
+Thu Aug  4 15:03:16 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_errno.h:
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_time.inl:
+        * ace/config-linux.h:
+        * ace/config-android.h:
+        * include/makeinclude/platform_linux_android.GNU:
+
+          Added configuration files and minor changes to allow building
+          for Android using the Android Native Development Kit's standalone
+          tool chain. http://developer.android.com/sdk/ndk/index.html
+          Android is not a completely tested platform and automated testing
+          does not work for it currently. Thanks to Trevor Fields of OCI 
+          for doing the heavy lifting on preparing these changes.
+
+        * examples/APG/ThreadManagement/Async_Cancel.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.inl:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+
+          Add wrappers necessary to get them working with Android.
+        
+        * tests/Thread_Attrs_Test.cpp:
+        * tests/test_config.h:
+        
+          Minor changes for running tests on Android.
+
 Sun Jul 31 11:14:23 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:
