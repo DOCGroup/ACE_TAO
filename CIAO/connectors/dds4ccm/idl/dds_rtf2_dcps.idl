@@ -11,4 +11,8 @@
 # include "connectors/dds4ccm/idl/ndds/ndds_dcps.idl"
 #endif
 
+#if (CIAO_DDS4CCM_SPLICE==1)
+# include "dds_dcps.idl"
+#endif
+
 #endif
