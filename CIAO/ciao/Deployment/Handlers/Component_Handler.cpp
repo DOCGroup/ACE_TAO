@@ -547,8 +547,9 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Component_Handler_i::instance_configured - "
-                        "Caught CORBA Exception: %C\n",
-                        ex._info ().c_str ()));
+                        "Caught CORBA Exception: %C for instance <%C>\n",
+                        ex._info ().c_str (),
+                        plan.instance[instanceRef].name.in ()));
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
                                         ex._info ().c_str ());
       }
@@ -556,7 +557,8 @@ namespace CIAO
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Component_Handler_i::instance_configured - "
-                        "Caught C++ Exception\n"));
+                        "Caught C++ Exception for instance <%C>\n",
+                        plan.instance[instanceRef].name.in ()));
         throw ::Deployment::StartError (plan.instance[instanceRef].name.in (),
                                         "Unknown C++ exception");
 
