@@ -136,10 +136,17 @@ be_visitor_root_cs::gen_any_ops (be_root *node)
 int
 be_visitor_root_cs::gen_cdr_ops (be_root *node)
 {
-  be_visitor_context ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
-  be_visitor_root_cdr_op visitor (&ctx);
-  return node->accept (&visitor);
+  int status = 0;
+
+  if (be_global->cdr_support ())
+    {
+      be_visitor_context ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
+      be_visitor_root_cdr_op visitor (&ctx);
+      status = node->accept (&visitor);
+    }
+
+  return status;
 }
 
 

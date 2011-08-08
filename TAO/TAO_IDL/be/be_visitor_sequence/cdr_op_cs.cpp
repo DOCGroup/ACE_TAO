@@ -74,8 +74,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       int status =
           this->gen_anonymous_base_type (
               bt,
-              TAO_CodeGen::TAO_ROOT_CDR_OP_CS
-            );
+              TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
 
       if (status == -1)
         {

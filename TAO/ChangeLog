@@ -1,13 +1,30 @@
+Mon Aug  8 09:01:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_connector/connector_dds_exh.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added support for -Scdr which suppresses the CDR streaming operations.
+          This safes footprint when we are using IDL defined types, but these
+          are not intended to be send through remote CORBA interfaces
+
 Thu Aug  4 15:47:33 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO-INSTALL.html:
-        
-          Added note about building for Android. 
+
+          Added note about building for Android.
 
         * tests/Sequence_Unit_Tests/string_sequence_tester.hpp:
-        
+
           Additional compiler macro added to build on Android.
-        
+
           Thanks to Trevor Fields of OCI for doing the heavy lifting
           for porting TAO to Android.
 
