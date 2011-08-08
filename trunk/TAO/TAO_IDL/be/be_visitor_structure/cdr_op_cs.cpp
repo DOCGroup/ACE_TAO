@@ -49,7 +49,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -58,8 +58,8 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_aggregate" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << node->name () << " &_tao_aggregate)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   be_visitor_context new_ctx (*this->ctx_);
@@ -99,8 +99,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
       *os << "_tao_aggregate";
     }
 
-  *os << be_uidt_nl
-      << ")" << be_uidt_nl
+  *os << ")" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (node->is_local ())
@@ -144,6 +143,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_stub_cdr_op_gen (true);
+
   return 0;
 }
 
