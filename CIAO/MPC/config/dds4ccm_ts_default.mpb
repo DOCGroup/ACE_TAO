@@ -22,7 +22,6 @@ feature(dds4ccm_coredx) : dds4ccm, coredx_ts_defaults, coredxlib {
 }
 
 feature(dds4ccm_ndds) : dds4ccm, ndds_idltocpp_ts_defaults {
-  idlflags += -Scdr
 }
 
 feature(!dds4ccm_opendds) {
