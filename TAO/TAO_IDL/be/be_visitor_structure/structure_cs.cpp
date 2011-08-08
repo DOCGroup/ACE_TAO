@@ -60,8 +60,8 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
       *os << "void " << be_nl
           << node->name ()
           << "::_tao_any_destructor (" << be_idt << be_idt_nl
-          << "void *_tao_void_pointer" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << "void *_tao_void_pointer)" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
           << "static_cast<" << node->local_name ()
