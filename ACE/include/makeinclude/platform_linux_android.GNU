@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 # $Id$
 
-# This file should allow ACE to be built for Android 2.3.1 (API Level 9) 
+# This file should allow ACE to be built for Android 2.3.1 (API Level 9)
 # or greater, by cross compiling on Linux.
 
 # The standalone gcc compilers in NDK r5c have issues with the visibility.
@@ -28,7 +28,7 @@ LDFLAGS += -Wl,--fix-cortex-a8
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 
-FLAGS_C_CC += -W -Wall -Wpointer-arith
+FLAGS_C_CC += -W -Wall -Wpointer-arith -Wno-psabi
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
