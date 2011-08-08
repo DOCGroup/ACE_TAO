@@ -1,3 +1,8 @@
+Mon Aug  8 14:28:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:
+          Disable cdr streaming
+
 Mon Aug  8 10:59:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:

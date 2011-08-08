@@ -11,7 +11,7 @@ project(Shapes_ShapeType_conn_idl_gen) : connectoridldefaults, dds4ccm {
               -Wb,svnt_export_include=Shapes_ShapeType_conn_svnt_export.h \
               -Wb,conn_export_macro=SHAPES_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=Shapes_ShapeType_conn_conn_export.h \
-              -I .. -o GeneratedCode
+              -I .. -o GeneratedCode -Scdr
 
 
   IDL_Files {
@@ -35,9 +35,9 @@ project(Shapes_ShapeType_conn_lem_gen) : ciaoidldefaults, dds4ccm {
 }
 
 project(Shapes_ShapeType_conn_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += Shapes_ShapeType_conn_lem_gen Shapes_ShapeType_conn_stub Shapes_ShapeType_msg_stub 
+  after += Shapes_ShapeType_conn_lem_gen Shapes_ShapeType_conn_stub Shapes_ShapeType_msg_stub
 
-  libs  += Shapes_ShapeType_msg_stub Shapes_ShapeType_conn_stub 
+  libs  += Shapes_ShapeType_msg_stub Shapes_ShapeType_conn_stub
   libpaths += ../lib
   libout = ../lib
 
@@ -93,9 +93,9 @@ project(Shapes_ShapeType_conn_stub) : ccm_stub, dds4ccm_base {
 }
 
 project(Shapes_ShapeType_conn_exec) : ciao_executor, dds4ccm_impl {
-  after   += Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_conn_stub 
+  after   += Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_conn_stub
 
-  libs += Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_msg_stub 
+  libs += Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_msg_stub
   libpaths += ../lib
   libout = ../lib
 
@@ -122,9 +122,9 @@ project(Shapes_ShapeType_conn_exec) : ciao_executor, dds4ccm_impl {
 
 
 project(Shapes_ShapeType_conn_svnt) : ciao_servant, dds4ccm_impl {
-  after += Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_conn_exec Shapes_ShapeType_conn_stub 
+  after += Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_conn_exec Shapes_ShapeType_conn_stub
 
-  libs += Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_msg_stub Shapes_ShapeType_conn_exec 
+  libs += Shapes_ShapeType_conn_stub Shapes_ShapeType_conn_lem_stub Shapes_ShapeType_msg_stub Shapes_ShapeType_conn_exec
   libpaths += ../lib
   libout = ../lib
 
