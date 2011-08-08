@@ -1,3 +1,8 @@
+Mon Aug  8 09:04:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ndds_idltocpp.mpb:
+          Don't generate CDR streaming operations
+
 Mon Aug  8 08:35:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ndds_idltocpp.mpb:
