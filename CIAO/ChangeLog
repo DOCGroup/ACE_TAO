@@ -1,3 +1,12 @@
+Mon Aug  8 08:35:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/ndds_idltocpp.mpb:
+          Don't generate arg traits, not needed for datatypes that are only
+          are intended to go through local interfaces
+
+        * connectors/dds4ccm/idl/dds_rtf2_dcps.idl:
+          Add include open OpenSplice
+
 Fri Jul 29 14:17:56 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ciao/Containers/Container_Base_T.cpp:
