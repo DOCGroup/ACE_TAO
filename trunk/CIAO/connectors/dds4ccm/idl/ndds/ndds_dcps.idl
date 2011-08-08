@@ -532,6 +532,11 @@ module DDS {
         long max_samples;
         long max_instances;
         long max_samples_per_instance;
+#if (CIAO_DDS4CCM_NDDS==1)
+        long initial_samples;
+        long initial_instances;
+        long instance_hash_buckets;
+#endif
     };
 
     struct EntityFactoryQosPolicy {
