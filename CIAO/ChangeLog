@@ -1,3 +1,9 @@
+Mon Aug  8 10:57:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/convertors/ResourceLimitsQosPolicy.h:
+          Provide access to some RTI specific QoS values
+
 Mon Aug  8 10:53:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Handlers/Component_Handler.cpp:
