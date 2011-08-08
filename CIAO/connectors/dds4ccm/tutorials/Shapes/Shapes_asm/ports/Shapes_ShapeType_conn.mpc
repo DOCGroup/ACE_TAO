@@ -11,7 +11,7 @@ project(Shapes_ShapeType_conn_idl_gen) : connectoridldefaults, dds4ccm {
               -Wb,svnt_export_include=Shapes_ShapeType_conn_svnt_export.h \
               -Wb,conn_export_macro=SHAPES_CONNECTOR_CONN_Export \
               -Wb,conn_export_include=Shapes_ShapeType_conn_conn_export.h \
-              -I .. -o GeneratedCode -Scdr
+              -I .. -o GeneratedCode
 
 
   IDL_Files {
