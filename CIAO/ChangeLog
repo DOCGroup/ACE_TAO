@@ -1,3 +1,8 @@
+Mon Aug  8 10:59:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Improved logging
+
 Mon Aug  8 10:57:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
