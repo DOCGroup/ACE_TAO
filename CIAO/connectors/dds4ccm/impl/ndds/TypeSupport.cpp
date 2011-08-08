@@ -181,13 +181,13 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "DDS_TypeSupport_i::register_type - "
-                        "Won't register factory for type %C since it already exist\n",
+                        "Won't register factory for type <%C> since it already exist\n",
                         type));
           return false;
         }
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "DDS_TypeSupport_i::register_type - "
-                    "Registered factory for type %C and participant <%@>\n",
+                    "Registered factory for type <%C> and participant <%@>\n",
                     type, dp));
 
       return register_factory_i (type, f, dp);
@@ -203,7 +203,7 @@ namespace CIAO
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                     "DDS_TypeSupport_i::unregister_type - "
-                    "Unregistered factory for type %C and participant <%@>\n",
+                    "Unregistered factory for type <%C> and participant <%@>\n",
                     type, dp));
       return f;
     }
@@ -229,7 +229,7 @@ namespace CIAO
 
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "DDS_TypeSupport_i::create_datawriter - "
-                    "Error creating DDSDataWriter for type %C\n", type));
+                    "Error creating DDSDataWriter for type <%C>\n", type));
 
       return ::DDS::DataWriter::_nil ();
     }
@@ -247,14 +247,14 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "DDS_TypeSupport_i::create_datareader - "
-                        "Created DDSDataReader for type %C\n", type));
+                        "Created DDSDataReader for type <%C>\n", type));
 
           return f->create_datareader (dr, dp, sub);
         }
 
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                     "DDS_TypeSupport_i::create_datareader - "
-                    "Error creating DDSDataReader for type %C\n", type));
+                    "Error creating DDSDataReader for type <%C>\n", type));
 
       return ::DDS::DataReader::_nil ();
     }
