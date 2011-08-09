@@ -56,22 +56,38 @@ extern "C"
 #if defined (ACE_WIN32)
    // Dynamic loading-related types - used for dlopen and family.
    typedef HINSTANCE ACE_SHLIB_HANDLE;
-#  define ACE_SHLIB_INVALID_HANDLE 0
-#  define ACE_DEFAULT_SHLIB_MODE 0
+#  if !defined (ACE_SHLIB_INVALID_HANDLE)
+#    define ACE_SHLIB_INVALID_HANDLE 0
+#  endif /* ACE_SHLIB_INVALID_HANDLE */
+#  if !defined (ACE_DEFAULT_SHLIB_MODE)
+#    define ACE_DEFAULT_SHLIB_MODE 0
+#  endif /* ACE_DEFAULT_SHLIB_MODE */
 #elif defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
    typedef void *ACE_SHLIB_HANDLE;
-#  define ACE_SHLIB_INVALID_HANDLE 0
+#  if !defined (ACE_SHLIB_INVALID_HANDLE)
+#    define ACE_SHLIB_INVALID_HANDLE 0
+#  endif /* ACE_SHLIB_INVALID_HANDLE */
    // This is needed to for dynamic_cast to work properly on objects passed to
    // libraries.
-#  define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
+#  if !defined (ACE_DEFAULT_SHLIB_MODE)
+#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
+#  endif
 #elif defined (__hpux)
    typedef shl_t ACE_SHLIB_HANDLE;
-#  define ACE_SHLIB_INVALID_HANDLE 0
-#  define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED | DYNAMIC_PATH
+#  if !defined (ACE_SHLIB_INVALID_HANDLE)
+#    define ACE_SHLIB_INVALID_HANDLE 0
+#  endif /* ACE_SHLIB_INVALID_HANDLE */
+#  if !defined (ACE_DEFAULT_SHLIB_MODE)
+#    define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED | DYNAMIC_PATH
+#  endif /* ACE_DEFAULT_SHLIB_MODE */
 #else /* !ACE_WIN32 && !ACE_HAS_SVR4_DYNAMIC_LINKING && !__hpux */
    typedef void *ACE_SHLIB_HANDLE;
-#  define ACE_SHLIB_INVALID_HANDLE 0
-#  define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+#  if !defined (ACE_SHLIB_INVALID_HANDLE)
+#    define ACE_SHLIB_INVALID_HANDLE 0
+#  endif /* ACE_SHLIB_INVALID_HANDLE */
+#  if !defined (ACE_DEFAULT_SHLIB_MODE)
+#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+#  endif /* ACE_DEFAULT_SHLIB_MODE */
 #endif /* ACE_WIN32 */
 
 #if !defined (RTLD_LAZY)
