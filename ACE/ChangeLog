@@ -1,3 +1,12 @@
+Tue Aug  9 17:28:15 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/patches/series:
+          Updated because of removed files
+
+        * debian/patches/16-ace-inet-pkgconfig-files.diff:
+        * debian/patches/prevent_doxygen_ace_manpages.diff:
+          Removed these files, integrated into trunk
+
 Tue Aug  9 17:17:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_dlfcn.h:
