@@ -1,3 +1,8 @@
+Tue Aug  9 14:56:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+          Removed OpenDDS include that no longer exists
+
 Mon Aug  8 14:28:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_conn.mpc:

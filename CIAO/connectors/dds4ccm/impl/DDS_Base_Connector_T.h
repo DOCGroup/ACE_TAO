@@ -11,7 +11,6 @@
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #elif (CIAO_DDS4CCM_OPENDDS==1)
 #include "dds/DCPS/Service_Participant.h"
-#include "dds/DCPS/transport/framework/TheTransportFactory.h"
 #endif
 #include "dds4ccm/impl/logger/Logger_Service.h"
 #include "ace/Copy_Disabled.h"
