@@ -1,3 +1,27 @@
+Wed Aug 10 19:02:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+
+          Updated the text related to installing for Android.
+
+        * include/makeinclude/platform_android_linux.GNU:
+
+          Added this file.
+
+        * include/makeinclude/platform_linux_android.GNU:
+
+          Removed this file.
+
+          Renamed the file to be consistent with others, now the name is
+          target platform first followed by the build-specific name. The
+          settings for cross compilation are now configured inside this
+          platform file, using som assumptions for architecture.
+
+          The build for the arm architecture works, but it looks like x86
+          still needs work by the NDK team, it was just added in their r6
+          release. I've submitted a bug report to the android team with a
+          suggested patch.
+
 Wed Aug 10 17:14:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32.h:
