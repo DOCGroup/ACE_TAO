@@ -1,3 +1,11 @@
+Wed Aug 10 12:43:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/dds4ccm_conf.h:
+          When the thread switch feature is enabled in DDS4CCM, we do require
+          the user to have ACE_HAS_REACTOR_NOTIFICATION_QUEUE to be enabled.
+          Without this option we could overflow the ACE reactor queue leading
+          to blocking
+
 Wed Aug 10 09:27:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:

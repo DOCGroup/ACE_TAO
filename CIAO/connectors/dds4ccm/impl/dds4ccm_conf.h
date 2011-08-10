@@ -27,6 +27,10 @@
 #  define CIAO_DDS4CCM_CONTEXT_SWITCH 1
 #endif /* CIAO_DDS4CCM_CONTEXT_SWITCH */
 
+#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1) && !defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+#  error For using the context swtich ACE_HAS_REACTOR_NOTIFICATION_QUEUE must be defined
+#endif
+
 #if (CIAO_DDS4CCM_NDDS==1)
 #define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
