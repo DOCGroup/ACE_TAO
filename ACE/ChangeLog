@@ -1,3 +1,11 @@
+Wed Aug 10 20:15:40 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACE-INSTALL.html:
+        * NEWS:
+
+          Add a note about support for Android in the news, and add more
+          detail to the installation steps.
+
 Wed Aug 10 19:02:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ACE-INSTALL.html:

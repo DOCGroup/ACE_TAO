@@ -3,6 +3,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.0.3 and ACE-6.0.4
 
 . Removed support for C++ Builder
 
+. Added support for building with the Android NDK, at least r5c. This
+  is currently available for linux host platforms.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.2 and ACE-6.0.3
 ====================================================
 
