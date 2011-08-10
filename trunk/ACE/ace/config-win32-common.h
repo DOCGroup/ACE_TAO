@@ -586,6 +586,9 @@
 // Looks like Win32 has a non-const swab function
 #define ACE_HAS_NONCONST_SWAB
 
+// gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
+#define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
+
 // If we are using winsock2 then the SO_REUSEADDR feature is broken
 // SO_REUSEADDR=1 behaves like SO_REUSEPORT=1. (SO_REUSEPORT is an
 // extension to sockets on some platforms)
