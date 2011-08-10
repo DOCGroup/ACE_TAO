@@ -38,21 +38,7 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
   int argc = 0 ;
   ACE_TCHAR** argv = 0;
   this->participant_factory_ = TheParticipantFactoryWithArgs (argc, argv);
-  OpenDDS::DCPS::set_DCPS_debug_level  (10);
-#ifndef ACE_AS_STATIC_LIBS
-  if (ACE_Service_Config::current()->find(ACE_TEXT("DCPS_SimpleTcpLoader"))
-        < 0 /* not found (-1) or suspended (-2) */)
-    {
-      static const ACE_TCHAR directive[] =
-        ACE_TEXT("dynamic DCPS_SimpleTcpLoader Service_Object * ")
-        ACE_TEXT("SimpleTcp:_make_DCPS_SimpleTcpLoader() \"-type SimpleTcp\"");
-      ACE_Service_Config::process_directive(directive);
-    }
-#endif
-  OpenDDS::DCPS::TransportIdType transport_impl_id = 1;
-  this->transport_impl_ =
-    TheTransportFactory->create_transport_impl (
-    transport_impl_id, "SimpleTcp", OpenDDS::DCPS::AUTO_CONFIG);
+//  OpenDDS::DCPS::set_DCPS_debug_level  (10);
 #endif
 }
 
@@ -64,6 +50,12 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
                 "Connector has been destructed\n"));
+#if (CIAO_DDS4CCM_OPENDDS==1)
+//  this->domain_participant_->delete_contained_entities();
+//  this->participant_factory_->delete_participant(this->domain_participant_.in());
+//  TheTransportFactory->release();
+//  TheServiceParticipant->shutdown ();
+#endif
 }
 
 template <typename CCM_TYPE>
@@ -367,17 +359,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }
-#if (CIAO_DDS4CCM_OPENDDS==1)
-  OpenDDS::DCPS::AttachStatus const status =
-    this->transport_impl_->attach (publisher);
-  if (status != OpenDDS::DCPS::ATTACH_OK)
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_Base_Connector_T::init_publisher - "
-                    "Error: Unable to attach publisher.\n"));
-      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-    }
-#endif
 }
 
 template <typename CCM_TYPE>
@@ -425,18 +406,6 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
     }
-
-#if (CIAO_DDS4CCM_OPENDDS==1)
-  OpenDDS::DCPS::AttachStatus const status =
-    this->transport_impl_->attach (subscriber);
-  if (status != OpenDDS::DCPS::ATTACH_OK)
-    {
-      DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_Base_Connector_T::init_subscriber - "
-                    "Error: Unable to attach subscriber.\n"));
-      throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
-    }
-#endif
 }
 
 /**
