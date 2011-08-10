@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.0.3 and ACE-6.0.4
 ====================================================
 
+. Removed support for C++ Builder
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.2 and ACE-6.0.3
 ====================================================
 
