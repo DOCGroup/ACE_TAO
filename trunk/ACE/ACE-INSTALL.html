@@ -1780,6 +1780,13 @@ not the standard Android Java applications.  The native binary applications
 that use ACE can be run by either a shell or using the Java Runtime exec
 operation.</p>
 
+<p>The standalone toolchain must be set for a platform of android-9 or later. From your NDK root directory you can use their <code>make-standalone-toolchain.sh</code> script to set this up. For example:</p>
+<code>./build/tools/make-standalone-toolchain.sh --toolchain=arm-linux-androideabi-4.4.3 --arch=arm --platform=android-9 --install-dir=../arm_tools</code>
+<p>To set up an arm-specific tool chain. With the release of NDK r6, x86 targets are supported, so the setup command for that would be:</p>
+<code>./build/tools/make-standalone-toolchain.sh --toolchain=x86-4.4.3 --arch=x86 --platform=android-9 --install-dir=../x86_tools</code>
+<p>
+The bin directory under the installed standalone toolchain dir must be added to your $PATH</p>
+
 <p>Due to Android's library loading restrictions, static linking is necessary
  for all included libraries.</p>
 
@@ -1808,22 +1815,25 @@ cross compiling the code.<p>
   <ul>
     <li>Setup the Android build<ul>
       <li>Create <code>ace/config.h</code>:  <i>#include "ace/config-android.h"</i></li>
-      <li>Create <code>include/makeinclude/platform_macros.GNU</code>:<ul>
-        <li>set options for debug and optimized builds</li>
-        <li>inline is forced on as are static libs and no-hidden-visibility</li>
-        <li>Include the <code>include/makeinclude/platform_android_linux.GNU</code> file.</li>
-        <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
-        <li>ensure the following environment variables are set:
-          <ul>
-            <li>$ANDROID_ARCH - either arm or x86. Note that x86 is only available in r6 and greater, and is still experimental. ANDROID_ARCH will be set to arm by default.</li>
-            <li>$NDK - the path to the android native development kit</li>
-            <li>$SDK - the path to the android software development kit</li>
-            <li>$SYSROOT - the platform/arch directory. This will be set to $NDK/platforms/arch_$ANDROID_ARCH by default. </li>
-            <li>$HOST_ROOT - the path to the native TAO_IDL & gperf tools</li>
-          </ul>
+      <li>Create <code>include/makeinclude/platform_macros.GNU</code>:
+        <ul>
+          <li>set options for debug and optimized builds</li>
+          <li>inline is forced on as are static libs and no-hidden-visibility</li>
+          <li>Include the <code>include/makeinclude/platform_android_linux.GNU</code> file.</li>
+          <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
         </ul>
-      </li>
+      <li>Ensure the following environment variables are set:
+        <ul>
+          <li>$ANDROID_ARCH - either arm or x86. Note that x86 is only available in r6 and greater, and is still experimental. ANDROID_ARCH will be set to arm by default.</li>
+          <li>$NDK - the path to the android native development kit</li>
+          <li>$SDK - the path to the android software development kit</li>
+          <li>$SYSROOT - the platform/arch directory. This defaults to <code>$NDK/platforms/android-9/arch_$ANDROID_ARCH</code>. </li>
+          <li>$HOST_ROOT - the path to the native TAO_IDL & gperf tools</li>
+          <li>$NDK_TOOLS - the path to the standalone toolchain created as shown above.</li>
+          <li>$PATH - must include <code>$NDK_TOOLS/bin</code>.</li>
+        </ul>
       </ul>
+    </li>
     </li>
     <li>Generate makefiles (if necessary).</li>
     <li>Build with GNU make.</li>
