@@ -1,3 +1,9 @@
+Wed Aug 10 12:18:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Notification_Queue.inl:
+        * ace/Service_Config.h:
+          Layout changes
+
 Wed Aug 10 11:45:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:

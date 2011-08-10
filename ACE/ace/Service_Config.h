@@ -159,8 +159,8 @@ template<>
 class ACE_Export ACE_Threading_Helper<ACE_Thread_Mutex>
 {
 public:
-  ACE_Threading_Helper ();
-  ~ACE_Threading_Helper ();
+  ACE_Threading_Helper (void);
+  ~ACE_Threading_Helper (void);
 
   void set (void*);
   void* get (void);
@@ -178,8 +178,8 @@ template<>
 class ACE_Export ACE_Threading_Helper<ACE_Null_Mutex>
 {
 public:
-  ACE_Threading_Helper ();
-  ~ACE_Threading_Helper ();
+  ACE_Threading_Helper (void);
+  ~ACE_Threading_Helper (void);
 
   void set (void*);
   void* get (void);
