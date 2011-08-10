@@ -1,3 +1,10 @@
+Wed Aug 10 12:41:18 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macros.h:
+          Enable ACE_HAS_REACTOR_NOTIFICATION_QUEUE by default, it gives
+          much better performance and also doesn't suffer the issue that them
+          reactor queue can get full
+
 Wed Aug 10 12:18:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Notification_Queue.inl:
