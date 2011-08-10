@@ -22,6 +22,8 @@
 // NOTE: Please do not add anything besides #include's here.  Put other stuff
 //       (definitions, etc.) in the included headers
 
+#include "ace/config-win32-common.h"
+
 // Include the config-win32-* file specific to the compiler
 #if defined (_MSC_VER)
 #    include "ace/config-win32-msvc.h"
