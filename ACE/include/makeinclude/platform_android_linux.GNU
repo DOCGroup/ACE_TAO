@@ -4,27 +4,51 @@
 # This file should allow ACE to be built for Android 2.3.1 (API Level 9)
 # or greater, by cross compiling on Linux.
 
-# The standalone gcc compilers in NDK r5c have issues with the visibility.
-no_hidden_visibility ?= 1
+# The standalone gcc compilers in NDK r6 have issues with the visibility.
+no_hidden_visibility = 1
+
+# as of NDK r6 inlining and static libs are required
+inline = 1
+static_libs_only=1
 
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
+#This is a cross compiled build, $HOST_ROOT must point to local build tools
+TAO_IDL := $(HOST_ROOT)/bin/tao_idl
+TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
+TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
 
-ifeq ($(insure),0)
-  CC  ?= arm-linux-androideabi-gcc
-  CXX ?= arm-linux-androideabi-g++
-  CXX_FOR_VERSION_TEST ?= $(CXX)
-  AR ?= arm-linux-androideabi-ar
+
+#Standalone toolchain required.
+#Required environment variables are
+#$NDK - install directory for android NDK, at least r5c
+#$SDK - install directory for android SDK
+#$SYSROOT - $NDK/platform/android-9
+#$TOOLCHAIN/bin in path, $TOOLCHAIN is root of standalone toolchain
+#
+#Toolchain defaults to arm architecture
+ANDROID_ARCH ?= arm
+
+SYSROOT ?= $(NDK)/platforms/android-9/arch-$(ANDROID_ARCH)
+
+ifeq ($(ANDROID_ARCH),arm)
+  CROSS_COMPILE=arm-linux-androideabi-
 else
-  CXX_FOR_VERSION_TEST ?= arm-linux-androideabi-g++
+  ifeq ($(ANDROID_ARCH),x86)
+    CROSS_COMPILE=i686-android-linux-
+  else
+    CROSS_COMPILE=unknown-android-arch-
+  endif
 endif
 
 # fix this
 pipes ?= 1
 
 # NDK says required for working around a CPU bug in some Cortex-A8 implementations
+ifeq ($(ANDROID_ARCH),arm)
 LDFLAGS += -Wl,--fix-cortex-a8
+endif
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 
