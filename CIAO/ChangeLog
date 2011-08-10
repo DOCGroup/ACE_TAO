@@ -1,3 +1,8 @@
+Wed Aug 10 09:27:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Removed OpenDDS code that is not needed anymore
+
 Tue Aug  9 14:56:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
