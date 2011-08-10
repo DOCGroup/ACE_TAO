@@ -956,16 +956,16 @@ For our build we require the packages
        <br><br>
 
 	   <p>
-       If you want to install ACE (using "make install") and want all the <tt>.pc</tt> files generated, 
+       If you want to install ACE (using "make install") and want all the <tt>.pc</tt> files generated,
 	   set the installation prefix in platform_macros.GNU.
        </p><blockquote><code></code><pre>      INSTALL_PREFIX=/c/ACE
        </pre></blockquote>
-	   Headers will be installed to $INSTALL_PREFIX/include, documentation and 
-	   build system files to $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib. With INSTALL_PREFIX set, RPATH will be enabled. 
-	   To disable RPATH (for example, if $INSTALL_PREFIX/$INSTALL_LIB is already 
-	   a system-known location for shared libraries), set the make macro 
+	   Headers will be installed to $INSTALL_PREFIX/include, documentation and
+	   build system files to $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib. With INSTALL_PREFIX set, RPATH will be enabled.
+	   To disable RPATH (for example, if $INSTALL_PREFIX/$INSTALL_LIB is already
+	   a system-known location for shared libraries), set the make macro
 	   install_rpath to 0 by adding install_rpath=0 to platform_macros.GNU.
-	   
+
        <br><br>
 
   </li><li> In the MSYS shell, change to the $ACE_ROOT/ace directory and
@@ -988,7 +988,7 @@ For our build we require the packages
        </pre></blockquote>
 
   </li><li> Run make install:
-  
+
 		<blockquote><code></code><pre>       % make install
        </pre></blockquote>
 	   <p>
@@ -1774,8 +1774,8 @@ symbols are necessary when you want to debug your code.</p>
 <p></p><hr align="left" width="50%">
 
 <p></p><h2><a name="android">Building and Installing ACE on Android</a></h2>
-<p>ACE can be built for Android by using the Android Native Development 
-Kit's <b>standalone toolchain</b>.  The compilation creates native binaries, 
+<p>ACE can be built for Android by using the Android Native Development
+Kit's <b>standalone toolchain</b>.  The compilation creates native binaries,
 not the standard Android Java applications.  The native binary applications
 that use ACE can be run by either a shell or using the Java Runtime exec
 operation.</p>
@@ -1792,7 +1792,7 @@ NDK r5c, compilation issues were encountered on Windows XP, when the compiler
 failed to recognize the name difference between the ACE file Signal.h and
 the system file signal.h.</p>
 
-<p>You should be able to follow the instructions above to build ACE 
+<p>You should be able to follow the instructions above to build ACE
 and applications that use it.  Use the
 <a href="#unix_traditional">Unix  traditional instructions</a> above to build
 ACE and the applications that use it.  Building TAO for Android requires
@@ -1807,11 +1807,20 @@ cross compiling the code.<p>
  in $TAO_ROOT/TAO-INSTALL.html.  Search for "Using cross compilation".</li>
   <ul>
     <li>Setup the Android build<ul>
-      <li>Create <code>ace/config.h</code>:  <i>#include "ace/config-linux-android.h"</i></li>
+      <li>Create <code>ace/config.h</code>:  <i>#include "ace/config-android.h"</i></li>
       <li>Create <code>include/makeinclude/platform_macros.GNU</code>:<ul>
-        <li>Set the CC, CXX, AR values to the standalone toolchain compilers and archiver.</li>
-        <li>Include the <code>include/makeinclude/platform_linux_android.GNU</code> file.</li>
+        <li>set options for debug and optimized builds</li>
+        <li>inline is forced on as are static libs and no-hidden-visibility</li>
+        <li>Include the <code>include/makeinclude/platform_android_linux.GNU</code> file.</li>
         <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
+        <li>ensure the following environment variables are set:
+          <ul>
+            <li>$ANDROID_ARCH - either arm or x86. Note that x86 is only available in r6 and greater, and is still experimental. ANDROID_ARCH will be set to arm by default.</li>
+            <li>$NDK - the path to the android native development kit</li>
+            <li>$SDK - the path to the android software development kit</li>
+            <li>$SYSROOT - the platform/arch directory. This will be set to $NDK/platforms/arch_$ANDROID_ARCH by default. </li>
+            <li>$HOST_ROOT - the path to the native TAO_IDL & gperf tools</li>
+          </ul>
         </ul>
       </li>
       </ul>
