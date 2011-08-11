@@ -49,21 +49,33 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Topic_i::set_listener");
 
-      // Delete the previously set listener
-      DDSTopicListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
-      listener = 0;
+      // Retrieve the previously set listener
+      DDSTopicListener *old_listener = this->rti_entity ()->get_listener ();
 
-      this->topic_listener_ = ::DDS::TopicListener::_duplicate (a_listener);
-
+      DDSTopicListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (listener,
-                            DDS_TopicListener_i (this, a_listener),
+                            DDS_TopicListener_i (
+                              this,
+                              a_listener),
                             ::CORBA::NO_MEMORY ());
-
         }
-      return this->rti_entity ()->set_listener (listener, mask);
+
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          this->topic_listener_ = ::DDS::TopicListener::_duplicate (a_listener);
+          delete old_listener;
+        }
+
+      return retcode;
     }
 
     ::DDS::TopicListener_ptr
