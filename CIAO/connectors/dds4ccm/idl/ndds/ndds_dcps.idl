@@ -420,6 +420,43 @@ module DDS {
     const QosPolicyId_t LIFESPAN_QOS_POLICY_ID             = 21;
     const QosPolicyId_t DURABILITYSERVICE_QOS_POLICY_ID    = 22;
 
+#if (CIAO_DDS4CCM_NDDS==1)
+    /* --- Extension QoS policies: --- */
+    const QosPolicyId_t WIREPROTOCOL_QOS_POLICY_ID      = 1000;
+    const QosPolicyId_t DISCOVERY_QOS_POLICY_ID      = 1001;
+    const QosPolicyId_t DATAREADERRESOURCELIMITS_QOS_POLICY_ID = 1003;
+    const QosPolicyId_t DATAWRITERRESOURCELIMITS_QOS_POLICY_ID = 1004;
+    const QosPolicyId_t DATAREADERPROTOCOL_QOS_POLICY_ID = 1005;
+    const QosPolicyId_t DATAWRITERPROTOCOL_QOS_POLICY_ID = 1006;
+    const QosPolicyId_t DOMAINPARTICIPANTRESOURCELIMITS_QOS_POLICY_ID = 1007;
+    const QosPolicyId_t EVENT_QOS_POLICY_ID = 1008;
+    const QosPolicyId_t DATABASE_QOS_POLICY_ID = 1009;
+    const QosPolicyId_t RECEIVERPOOL_QOS_POLICY_ID = 1010;
+    const QosPolicyId_t DISCOVERYCONFIG_QOS_POLICY_ID = 1011;
+    const QosPolicyId_t EXCLUSIVEAREA_QOS_POLICY_ID = 1012;
+    const QosPolicyId_t USEROBJECT_QOS_POLICY_ID = 1013;
+    const QosPolicyId_t SYSTEMRESOURCELIMITS_QOS_POLICY_ID = 1014;
+    const QosPolicyId_t TRANSPORTSELECTION_QOS_POLICY_ID = 1015;
+    const QosPolicyId_t TRANSPORTUNICAST_QOS_POLICY_ID = 1016;
+    const QosPolicyId_t TRANSPORTMULTICAST_QOS_POLICY_ID = 1017;
+    const QosPolicyId_t TRANSPORTBUILTIN_QOS_POLICY_ID = 1018;
+    const QosPolicyId_t TYPESUPPORT_QOS_POLICY_ID = 1019;
+    const QosPolicyId_t PROPERTY_QOS_POLICY_ID = 1020;
+    const QosPolicyId_t PUBLISHMODE_QOS_POLICY_ID = 1021;
+    const QosPolicyId_t ASYNCHRONOUSPUBLISHER_QOS_POLICY_ID = 1022;
+    const QosPolicyId_t ENTITYNAME_QOS_POLICY_ID = 1023;
+    const QosPolicyId_t SERVICE_QOS_POLICY_ID = 1025;
+    const QosPolicyId_t BATCH_QOS_POLICY_ID = 1026;
+    const QosPolicyId_t PROFILE_QOS_POLICY_ID = 1027;
+    const QosPolicyId_t LOCATORFILTER_QOS_POLICY_ID = 1028;
+    const QosPolicyId_t MULTICHANNEL_QOS_POLICY_ID = 1029;
+    const QosPolicyId_t TRANSPORTENCAPSULATION_QOS_POLICY_ID = 1030;
+    const QosPolicyId_t PUBLISHERPROTOCOL_QOS_POLICY_ID = 1031;
+    const QosPolicyId_t SUBSCRIBERPROTOCOL_QOS_POLICY_ID = 1032;
+    const QosPolicyId_t TOPICPROTOCOL_QOS_POLICY_ID = 1033;
+    const QosPolicyId_t DOMAINPARTICIPANTPROTOCOL_QOS_POLICY_ID = 1034;
+#endif
+
     typedef sequence<octet> OctetSeq;
     struct UserDataQosPolicy {
         OctetSeq value;
@@ -511,21 +548,56 @@ module DDS {
         Duration_t max_blocking_time;
     };
 
-   enum DestinationOrderQosPolicyKind {
+    enum DestinationOrderQosPolicyKind {
         BY_RECEPTION_TIMESTAMP_DESTINATIONORDER_QOS,
         BY_SOURCE_TIMESTAMP_DESTINATIONORDER_QOS
     };
+
+#if (CIAO_DDS4CCM_NDDS==1)
+    enum DestinationOrderQosPolicyScopeKind {
+        INSTANCE_SCOPE_DESTINATIONORDER_QOS,
+        TOPIC_SCOPE_DESTINATIONORDER_QOS
+    };
+#endif
+
+#if (CIAO_DDS4CCM_NDDS==1)
+    enum DataWriterResourceLimitsInstanceReplacementKind {
+      UNREGISTERED_INSTANCE_REPLACEMENT,
+      ALIVE_INSTANCE_REPLACEMENT,
+      DISPOSED_INSTANCE_REPLACEMENT,
+      ALIVE_THEN_DISPOSED_INSTANCE_REPLACEMENT,
+      DISPOSED_THEN_ALIVE_INSTANCE_REPLACEMENT,
+      ALIVE_OR_DISPOSED_INSTANCE_REPLACEMENT
+    };
+#endif
+
     struct DestinationOrderQosPolicy {
         DestinationOrderQosPolicyKind kind;
+#if (CIAO_DDS4CCM_NDDS==1)
+        DestinationOrderQosPolicyScopeKind scope;
+        Duration_t source_timestamp_tolerance;
+#endif
     };
 
     enum HistoryQosPolicyKind {
         KEEP_LAST_HISTORY_QOS,
         KEEP_ALL_HISTORY_QOS
     };
+
+#if (CIAO_DDS4CCM_NDDS==1)
+    enum RefilterQosPolicyKind {
+        NONE_REFILTER_QOS,
+        ALL_REFILTER_QOS,
+        ON_DEMAND_REFILTER_QOS
+    };
+#endif
+
     struct HistoryQosPolicy {
         HistoryQosPolicyKind kind;
         long depth;
+#if (CIAO_DDS4CCM_NDDS==1)
+        RefilterQosPolicyKind refilter;
+#endif
     };
 
     struct ResourceLimitsQosPolicy {
@@ -546,6 +618,45 @@ module DDS {
     struct WriterDataLifecycleQosPolicy {
         boolean autodispose_unregistered_instances;
     };
+
+#if (CIAO_DDS4CCM_NDDS==1)
+    struct DataReaderResourceLimitsQosPolicy {
+      long max_remote_writers;
+      long max_remote_writers_per_instance;
+      long max_samples_per_remote_writer;
+      long max_infos;
+      long initial_remote_writers;
+      long initial_remote_writers_per_instance;
+      long initial_infos;
+      long initial_outstanding_reads;
+      long max_outstanding_reads;
+      long max_samples_per_read;
+      boolean disable_fragmentation_support;
+      long max_fragmented_samples;
+      long initial_fragmented_samples;
+      long max_fragmented_samples_per_remote_writer;
+      long max_fragments_per_sample;
+      boolean dynamically_allocate_fragmented_samples;
+      long max_total_instances;
+      long max_remote_virtual_writers_per_instance;
+      long initial_remote_virtual_writers_per_instance;
+      long max_query_condition_filters;
+    };
+#endif
+
+#if (CIAO_DDS4CCM_NDDS==1)
+    struct DataWriterResourceLimitsQosPolicy {
+      long initial_concurrent_blocking_threads;
+      long max_concurrent_blocking_threads;
+      long max_remote_reader_filters;
+      long initial_batches;
+      long max_batches;
+      long cookie_max_length;
+      DataWriterResourceLimitsInstanceReplacementKind instance_replacement;
+      boolean replace_empty_instances;
+      boolean autoregister_instances;
+    };
+#endif
 
     struct ReaderDataLifecycleQosPolicy {
         Duration_t autopurge_nowriter_samples_delay;
@@ -604,6 +715,10 @@ module DDS {
         OwnershipQosPolicy                   ownership;
         OwnershipStrengthQosPolicy           ownership_strength;
         WriterDataLifecycleQosPolicy         writer_data_lifecycle;
+
+#if (CIAO_DDS4CCM_NDDS==1)
+        DataWriterResourceLimitsQosPolicy    writer_resource_limits;
+#endif
     };
 
     struct PublisherQos {
@@ -627,6 +742,10 @@ module DDS {
         OwnershipQosPolicy                   ownership;
         TimeBasedFilterQosPolicy             time_based_filter;
         ReaderDataLifecycleQosPolicy         reader_data_lifecycle;
+
+#if (CIAO_DDS4CCM_NDDS==1)
+        DataReaderResourceLimitsQosPolicy    reader_resource_limits;
+#endif
     };
 
     struct SubscriberQos {
