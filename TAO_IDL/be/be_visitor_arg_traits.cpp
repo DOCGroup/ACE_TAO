@@ -678,17 +678,6 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  AST_Type *bt = node->base_type ()->unaliased_type ();
-
-  std::string guard_suffix =
-    std::string ("Seq_") + std::string (this->S_) + std::string ("arg_traits");
-
-  // The guard should be generated to prevent multiple declarations,
-  // since a sequence of a given element type may be typedef'd
-  // more than once.
-
-  os->gen_ifdef_macro (bt->flat_name (), guard_suffix.c_str (), false);
-
   bool use_vec = (node->unbounded () && be_global->alt_mapping ());
   UTL_ScopedName *sn = alias->name ();
 
@@ -705,8 +694,6 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       << "{" << be_nl
       << "};";
 
-  os->gen_endif ();
- 
   return 0;
 }
 

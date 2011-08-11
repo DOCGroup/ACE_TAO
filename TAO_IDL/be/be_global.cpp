@@ -91,6 +91,7 @@ BE_GlobalData::BE_GlobalData (void)
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
     any_support_ (true),
+    cdr_support_ (true),
     tc_support_ (true),
     obv_opt_accessor_ (0),
     gen_impl_files_ (false),
@@ -1519,6 +1520,18 @@ bool
 BE_GlobalData::any_support (void) const
 {
   return this->any_support_;
+}
+
+void
+BE_GlobalData::cdr_support (bool val)
+{
+  this->cdr_support_ = val;
+}
+
+bool
+BE_GlobalData::cdr_support (void) const
+{
+  return this->cdr_support_;
 }
 
 void
@@ -3350,6 +3363,11 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // No stub inline.
                 be_global->gen_client_stub (false);
+              }
+            else if (av[i][3] == 'd' && av[i][4] == 'r')
+              {
+                // No cdr support.
+                be_global->cdr_support (false);
               }
             else
               {

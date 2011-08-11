@@ -53,32 +53,35 @@ be_visitor_traits::~be_visitor_traits (void)
 int
 be_visitor_traits::visit_root (be_root *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  *os << be_nl
-      << be_global->core_versioning_begin ();
-
-  *os << be_nl
-      << "// Traits specializations." << be_nl
-      << "namespace TAO" << be_nl
-      << "{" << be_idt;
-
-  if (this->visit_scope (node) == -1)
+  if (be_global->gen_arg_traits ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_traits::"
-                         "visit_root - visit scope failed\n"),
-                        -1);
+      TAO_OutStream *os = this->ctx_->stream ();
+
+      *os << be_nl_2
+          << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
+      *os << be_nl
+          << be_global->core_versioning_begin ();
+
+      *os << be_nl
+          << "// Traits specializations." << be_nl
+          << "namespace TAO" << be_nl
+          << "{" << be_idt;
+
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "(%N:%l) be_visitor_traits::"
+                            "visit_root - visit scope failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt_nl
+          << "}";
+
+      *os << be_global->core_versioning_end () << be_nl;
     }
-
-  *os << be_uidt_nl
-      << "}";
-
-  *os << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }

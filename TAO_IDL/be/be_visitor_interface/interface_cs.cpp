@@ -47,11 +47,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   AST_Component *c = AST_Component::narrow_from_decl (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  if (node->is_defined ())
+  if (node->is_defined () && be_global->gen_arg_traits ())
     {
+      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
       *os << be_nl_2
           << "// Traits specializations for " << node->name () << ".";
 
