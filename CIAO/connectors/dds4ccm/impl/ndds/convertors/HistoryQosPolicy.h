@@ -16,6 +16,7 @@ operator<<= (::DDS::HistoryQosPolicy &ddsqos, const ::DDS_HistoryQosPolicy & qos
 {
   ddsqos.kind = static_cast < ::DDS::HistoryQosPolicyKind> (qos.kind);
   ddsqos.depth = qos.depth;
+  ddsqos.refilter = static_cast < ::DDS::RefilterQosPolicyKind> (qos.refilter);
 }
 
 inline void
@@ -23,6 +24,7 @@ operator<<= (::DDS_HistoryQosPolicy &ddsqos, const ::DDS::HistoryQosPolicy & qos
 {
   ddsqos.kind = static_cast < ::DDS_HistoryQosPolicyKind> (qos.kind);
   ddsqos.depth = qos.depth;
+  ddsqos.refilter = static_cast < ::DDS_RefilterQosPolicyKind> (qos.refilter);
 }
 
 #endif /* DDS4CCM_HISTORYQOSPOLICY_H */

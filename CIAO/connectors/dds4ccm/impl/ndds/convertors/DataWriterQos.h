@@ -24,6 +24,7 @@
 #include "OwnershipQosPolicy.h"
 #include "OwnershipStrengthQosPolicy.h"
 #include "WriterDataLifecycleQosPolicy.h"
+#include "DataWriterResourceLimitsQosPolicy.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -45,6 +46,7 @@ operator<<= (::DDS::DataWriterQos &ddsqos, const ::DDS_DataWriterQos & qos)
   ddsqos.ownership <<= qos.ownership;
   ddsqos.ownership_strength <<= qos.ownership_strength;
   ddsqos.writer_data_lifecycle <<= qos.writer_data_lifecycle;
+  ddsqos.writer_resource_limits <<= qos.writer_resource_limits;
 }
 
 inline void
@@ -65,6 +67,7 @@ operator<<= (::DDS_DataWriterQos &ddsqos, const ::DDS::DataWriterQos & qos)
   ddsqos.ownership <<= qos.ownership;
   ddsqos.ownership_strength <<= qos.ownership_strength;
   ddsqos.writer_data_lifecycle <<= qos.writer_data_lifecycle;
+  ddsqos.writer_resource_limits <<= qos.writer_resource_limits;
 }
 
 #endif /* DDS4CCM_DATAWRITERQOS_H */
