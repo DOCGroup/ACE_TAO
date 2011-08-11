@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.3 and CIAO-1.0.4
 =======================================================
 
+. The thread switch feature in DDS4CCM now requires that
+  ACE_HAS_REACTOR_NOTIFICATION_QUEUE is enabled.
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.2 and CIAO-1.0.3
 =======================================================
 
