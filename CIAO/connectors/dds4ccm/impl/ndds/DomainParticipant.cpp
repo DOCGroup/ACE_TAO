@@ -872,20 +872,33 @@ namespace CIAO
                 ::DDS::DomainParticipantListener_ptr a_listener,
                 ::DDS::StatusMask mask)
     {
-      // Delete the previously set listener
-      DDSDomainParticipantListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
+      DDS4CCM_TRACE ("DDS_DomainParticipant_i::set_listener");
 
-      ::DDSDomainParticipantListener * ccm_dds_impl_list = 0;
+      // Retrieve the previously set listener
+      DDSDomainParticipantListener *old_listener = this->rti_entity ()->get_listener ();
+
+      DDSDomainParticipantListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
-          ACE_NEW_THROW_EX (ccm_dds_impl_list,
+          ACE_NEW_THROW_EX (listener,
                             DDS_DomainParticipantListener_i (a_listener),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->rti_entity ()->set_listener (ccm_dds_impl_list, mask);
-    }
 
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          delete old_listener;
+        }
+
+      return retcode;
+    }
 
     ::DDS::DomainParticipantListener_ptr
     DDS_DomainParticipant_i::get_listener (void)
