@@ -21,6 +21,7 @@
 #include "OwnershipQosPolicy.h"
 #include "TimeBasedFilterQosPolicy.h"
 #include "ReaderDataLifecycleQosPolicy.h"
+#include "DataReaderResourceLimitsQosPolicy.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
 
@@ -39,6 +40,7 @@ operator<<= (::DDS::DataReaderQos &ddsqos, const ::DDS_DataReaderQos & qos)
   ddsqos.ownership <<= qos.ownership;
   ddsqos.time_based_filter <<= qos.time_based_filter;
   ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
+  ddsqos.reader_resource_limits <<= qos.reader_resource_limits;
 }
 
 inline void
@@ -56,6 +58,7 @@ operator<<= (::DDS_DataReaderQos &ddsqos, const ::DDS::DataReaderQos & qos)
   ddsqos.ownership <<= qos.ownership;
   ddsqos.time_based_filter <<= qos.time_based_filter;
   ddsqos.reader_data_lifecycle <<= qos.reader_data_lifecycle;
+  ddsqos.reader_resource_limits <<= qos.reader_resource_limits;
 }
 
 #endif /* DDS4CCM_DATAREADERQOS_H */

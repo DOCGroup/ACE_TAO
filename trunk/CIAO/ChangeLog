@@ -1,3 +1,14 @@
+Thu Aug 11 11:04:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderResourceLimitsQosPolicy.h:
+        * connectors/dds4ccm/impl/ndds/convertors/DataWriterQos.h:
+        * connectors/dds4ccm/impl/ndds/convertors/DataWriterResourceLimitsQosPolicy.h:
+        * connectors/dds4ccm/impl/ndds/convertors/DestinationOrderQosPolicy.h:
+        * connectors/dds4ccm/impl/ndds/convertors/HistoryQosPolicy.h:
+          Extended IDL QoS representation with several NDDS specific fields
+
 Thu Aug 11 07:01:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/dds4ccm_conf.h:

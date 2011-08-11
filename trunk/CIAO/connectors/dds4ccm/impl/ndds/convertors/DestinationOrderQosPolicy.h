@@ -16,12 +16,16 @@ inline void
 operator<<= (::DDS::DestinationOrderQosPolicy &ddsqos, const ::DDS_DestinationOrderQosPolicy & qos)
 {
   ddsqos.kind = static_cast < ::DDS::DestinationOrderQosPolicyKind> (qos.kind);
+  ddsqos.scope = static_cast < ::DDS::DestinationOrderQosPolicyScopeKind> (qos.scope);
+  ddsqos.source_timestamp_tolerance <<= qos.source_timestamp_tolerance;
 }
 
 inline void
 operator<<= (::DDS_DestinationOrderQosPolicy &ddsqos, const ::DDS::DestinationOrderQosPolicy & qos)
 {
   ddsqos.kind = static_cast < ::DDS_DestinationOrderQosPolicyKind> (qos.kind);
+  ddsqos.scope = static_cast < ::DDS_DestinationOrderQosPolicyScopeKind> (qos.scope);
+  ddsqos.source_timestamp_tolerance <<= qos.source_timestamp_tolerance;
 }
 
 #endif /* DDS4CCM_DESTINATIONORDERQOSPOLICY_H */
