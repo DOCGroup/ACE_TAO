@@ -1,3 +1,9 @@
+Thu Aug 11 18:55:10 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * NEWS:
+
+          Edited existing entry about generation of argument traits.
+
 Mon Aug  8 14:26:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
