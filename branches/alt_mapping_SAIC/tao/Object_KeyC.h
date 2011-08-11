@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // w:\tao\tao_idl\be\be_codegen.cpp:150
 
-#ifndef _TAO_PIDL_OBJECT_KEYC_13ALDY_H_
-#define _TAO_PIDL_OBJECT_KEYC_13ALDY_H_
+#ifndef _TAO_PIDL_OBJECT_KEYC_NYHQMR_H_
+#define _TAO_PIDL_OBJECT_KEYC_NYHQMR_H_
 
 #include /**/ "ace/pre.h"
 
@@ -114,7 +114,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
-// w:\tao\tao_idl\be\be_visitor_traits.cpp:60
+// w:\tao\tao_idl\be\be_visitor_traits.cpp:62
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

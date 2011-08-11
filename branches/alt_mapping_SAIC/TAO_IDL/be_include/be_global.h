@@ -593,6 +593,12 @@ public:
   /// Check Any support.
   bool any_support (void) const;
 
+  /// Set cdr support.
+  void cdr_support (bool);
+
+  /// Check cdr support.
+  bool cdr_support (void) const;
+
   /// Set TypeCode support.
   void tc_support (bool);
 
@@ -1027,6 +1033,9 @@ private:
 
   /// do we support Any operators?
   bool any_support_;
+
+  /// do we support cdr?
+  bool cdr_support_;
 
   /// do we support typecodes?
   bool tc_support_;
