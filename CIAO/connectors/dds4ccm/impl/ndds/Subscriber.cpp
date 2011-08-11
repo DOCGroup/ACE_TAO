@@ -430,18 +430,32 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_listener");
 
-      // Delete the previously set listener
-      DDSSubscriberListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
-      listener = 0;
+      // Retrieve the previously set listener
+      DDSSubscriberListener *old_listener = this->rti_entity ()->get_listener ();
 
+      DDSSubscriberListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (listener,
-                            DDS_SubscriberListener_i (a_listener, this->dp_.in ()),
+                            DDS_SubscriberListener_i (
+                              a_listener,
+                              this->dp_.in ()),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->rti_entity ()->set_listener (listener, mask);
+
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          delete old_listener;
+        }
+
+      return retcode;
     }
 
 

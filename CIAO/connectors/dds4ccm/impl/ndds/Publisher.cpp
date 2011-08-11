@@ -251,19 +251,32 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::set_listener");
 
-      // Delete the previously set listener
-      DDSPublisherListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
-      listener = 0;
+      // Retrieve the previously set listener
+      DDSPublisherListener *old_listener = this->rti_entity ()->get_listener ();
 
-      DDS_PublisherListener_i * ccm_dds_impl_list  = 0;
+      DDSPublisherListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
-          ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            DDS_PublisherListener_i (a_listener, this->dp_.in ()),
+          ACE_NEW_THROW_EX (listener,
+                            DDS_PublisherListener_i (
+                              a_listener,
+                              this->dp_.in ()),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->rti_entity ()->set_listener (ccm_dds_impl_list, mask);
+
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          delete old_listener;
+        }
+
+      return retcode;
     }
 
 
