@@ -73,6 +73,7 @@ namespace CIAO
                         ACE_TEXT ("Publisher on DataWriter seems to be NIL\n")));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
+
       Coherent_Changes_Guard guard (
         pub.in (),
         this->is_coherent_write_);

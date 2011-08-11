@@ -79,8 +79,8 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-      ACE_UNUSED_ARG (qos);
       DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      ccm_dds_qos <<= qos;
       return this->rti_entity ()->create_datareader (topic,
                                                ccm_dds_qos,
                                                ccm_dds_drl,
@@ -94,8 +94,8 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-      ACE_UNUSED_ARG (qos);
       DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      ccm_dds_qos <<= qos;
       return this->rti_entity ()->create_datareader (topic,
                                                ccm_dds_qos,
                                                ccm_dds_drl,
@@ -405,7 +405,7 @@ namespace CIAO
       const ::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_qos");
-      ::DDS_SubscriberQos ccm_dds_qos;
+      ::DDS_SubscriberQos ccm_dds_qos = DDS_SUBSCRIBER_QOS_DEFAULT;
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->get_qos (ccm_dds_qos);
     }
@@ -416,7 +416,7 @@ namespace CIAO
       ::DDS::SubscriberQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::get_qos");
-      ::DDS_SubscriberQos ccm_dds_qos;
+      ::DDS_SubscriberQos ccm_dds_qos = DDS_SUBSCRIBER_QOS_DEFAULT;
       ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
@@ -504,7 +504,7 @@ namespace CIAO
       const ::DDS::DataReaderQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_default_datareader_qos");
-      ::DDS_DataReaderQos ccm_dds_qos;
+      ::DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_default_datareader_qos (ccm_dds_qos);
     }
@@ -515,7 +515,7 @@ namespace CIAO
       ::DDS::DataReaderQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::get_default_datareader_qos");
-      ::DDS_DataReaderQos ccm_dds_qos;
+      ::DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
       ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
@@ -528,8 +528,8 @@ namespace CIAO
       const ::DDS::TopicQos & a_impl_qos)
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::copy_from_topic_qos");
-      ::DDS_DataReaderQos ccm_dds_qos;
-      ::DDS_TopicQos ccm_dds_topic_qos;
+      ::DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      ::DDS_TopicQos ccm_dds_topic_qos = DDS_TOPIC_QOS_DEFAULT;
 
       ccm_dds_qos <<= a_datareader_qos;
       ccm_dds_topic_qos <<= a_impl_qos;

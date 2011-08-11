@@ -39,7 +39,7 @@ namespace CIAO
     ::DDS::DataWriter_ptr
     DDS_Publisher_i::create_datawriter (
       ::DDS::Topic_ptr a_topic,
-      const ::DDS::DataWriterQos &,
+      const ::DDS::DataWriterQos &qos,
       ::DDS::DataWriterListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
@@ -63,6 +63,7 @@ namespace CIAO
                             ::CORBA::NO_MEMORY ());
         }
       DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
+      ccm_dds_qos <<= qos;
       DDSDataWriter *ccm_dds_dw = this->rti_entity ()->create_datawriter (
                                                             topic->get_rti_entity (),
                                                             ccm_dds_qos,
@@ -225,7 +226,7 @@ namespace CIAO
     DDS_Publisher_i::set_qos (const ::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::set_qos");
-      ::DDS_PublisherQos ccm_dds_qos;
+      ::DDS_PublisherQos ccm_dds_qos = DDS_PUBLISHER_QOS_DEFAULT;
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
@@ -235,7 +236,7 @@ namespace CIAO
     DDS_Publisher_i::get_qos (::DDS::PublisherQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::get_qos");
-      ::DDS_PublisherQos ccm_dds_qos;
+      ::DDS_PublisherQos ccm_dds_qos = DDS_PUBLISHER_QOS_DEFAULT;
       ccm_dds_qos <<= qos;
       ::DDS::ReturnCode_t retcode = this->rti_entity ()->
               get_qos (ccm_dds_qos);
@@ -349,7 +350,7 @@ namespace CIAO
     DDS_Publisher_i::set_default_datawriter_qos (const ::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::set_default_datawriter_qos");
-      ::DDS_DataWriterQos ccm_dds_qos;
+      ::DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_default_datawriter_qos (ccm_dds_qos);
     }
@@ -359,7 +360,7 @@ namespace CIAO
     DDS_Publisher_i::get_default_datawriter_qos (::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::get_default_datawriter_qos");
-      ::DDS_DataWriterQos ccm_dds_qos;
+      ::DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
       ::DDS::ReturnCode_t retcode =
             this->rti_entity ()->get_default_datawriter_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
@@ -372,8 +373,8 @@ namespace CIAO
                                               const ::DDS::TopicQos & a_impl_qos)
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::copy_from_topic_qos");
-      ::DDS_DataWriterQos ccm_dds_qos;
-      ::DDS_TopicQos ccm_dds_topic_qos;
+      ::DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
+      ::DDS_TopicQos ccm_dds_topic_qos = DDS_TOPIC_QOS_DEFAULT;
 
       ccm_dds_qos <<= a_dataimpl_qos;
       ccm_dds_topic_qos <<= a_impl_qos;
