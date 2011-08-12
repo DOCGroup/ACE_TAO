@@ -42,7 +42,7 @@ namespace CIAO
     DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_qos (const ::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_qos");
-      ::DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
+      ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
@@ -52,7 +52,7 @@ namespace CIAO
     DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::get_qos (::DDS::DataWriterQos & qos)
     {
       DDS4CCM_TRACE ("DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::get_qos");
-      ::DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
+      ::DDS_DataWriterQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
