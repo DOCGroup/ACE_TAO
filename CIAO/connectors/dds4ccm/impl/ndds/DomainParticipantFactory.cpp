@@ -32,6 +32,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::create_participant");
 
+      ACE_UNUSED_ARG (qos);
+
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "DDS_DomainParticipantFactory_i::create_participant - "
                     "Start creating domain participant for domain <%d>\n",
@@ -52,11 +54,9 @@ namespace CIAO
 
       if (!dds_dp)
         {
-          DDS_DomainParticipantQos ccm_dds_qos = DDS_PARTICIPANT_QOS_DEFAULT;
-          ccm_dds_qos <<= qos;
           dds_dp = DDSDomainParticipantFactory::get_instance ()->
                       create_participant (domain_id,
-                                          ccm_dds_qos,
+                                          DDS_PARTICIPANT_QOS_DEFAULT,
                                           ccm_dds_dpl,
                                           mask);
 
@@ -294,7 +294,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::"
         "set_default_participant_qos");
-      DDS_DomainParticipantQos ccm_dds_qos = DDS_PARTICIPANT_QOS_DEFAULT;
+      DDS_DomainParticipantQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->
         set_default_participant_qos (ccm_dds_qos);
@@ -307,7 +307,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::"
         "get_default_participant_qos");
-      DDS_DomainParticipantQos ccm_dds_qos = DDS_PARTICIPANT_QOS_DEFAULT;
+      DDS_DomainParticipantQos ccm_dds_qos;
       ::DDS::ReturnCode_t retcode =
         DDSDomainParticipantFactory::get_instance ()->
           get_default_participant_qos (ccm_dds_qos);

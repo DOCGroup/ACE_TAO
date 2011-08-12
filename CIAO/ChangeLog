@@ -1,3 +1,13 @@
+Fri Aug 12 07:24:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+          Reverted change of yesterday, breaks the dds4ccm tests that don't
+          have a QoS file
+
 Thu Aug 11 13:34:51 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Writer_T.cpp:
