@@ -1,3 +1,9 @@
+Sun Aug 14 10:44:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Added support for inline, thanks to Thomas Lockhart for providing
+          the patch
+
 Wed Aug 10 20:15:40 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ACE-INSTALL.html:
