@@ -1,3 +1,20 @@
+Sun Aug 14 10:32:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipant.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+        * connectors/dds4ccm/impl/ndds/Publisher.cpp:
+        * connectors/dds4ccm/impl/ndds/Subscriber.cpp:
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+        * connectors/dds4ccm/impl/ndds/TypeSupport.cpp:
+          Improved support for creating DDS entities with a OoS directly.
+          Because not all vendor specific extensions are available through
+          the IDL to C++ wrapper we first have to retrieve the QoS and than
+          only change the QoS that are available through the IDL to C++
+          wrapper. This way we set at least valid values for the vendor
+          specific extensions
+
 Fri Aug 12 07:24:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/ndds/DataWriter_T.cpp:
