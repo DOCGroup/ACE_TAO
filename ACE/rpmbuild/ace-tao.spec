@@ -16,6 +16,7 @@
 #                    --without xt       (No xt support)
 #                    --without fox      (No fox support)
 #                    --without qt       (No qt support)
+#                    --without inline   (Code inlining disabled)
 
 #
 # Read: If neither macro exists, then add the default definition.
@@ -29,6 +30,7 @@
 %{!?_with_xt: %{!?_without_xt: %define _without_xt --without-xt}}
 %{!?_with_fox: %{!?_without_fox: %define _without_fox --without-fox}}
 %{!?_with_qt: %{!?_without_qt: %define _without_qt --without-qt}}
+%{!?_with_inline: %{!?_without_inline: %define _without_inline 0}}
 #
 # Read: It's an error if both or neither required options exist.
 %{?_with_rnq: %{?_without_rnq: %{error: both _with_rnq and _without_rnq}}}
@@ -41,6 +43,7 @@
 %{?_with_xt: %{?_without_xt: %{error: both _with_xt and _without_xt}}}
 %{?_with_fox: %{?_without_fox: %{error: both _with_fox and _without_fox}}}
 %{?_with_qt: %{?_without_qt: %{error: both _with_qt and _without_qt}}}
+%{?_with_inline: %{?_without_inline: %{error: both _with_inline and _without_inline}}}
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
@@ -851,8 +854,20 @@ EOF
 
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 ssl = 1
+EOF
+
+%if %{?_with_inline:1}%{!?_with_inline:0}
+%define inline -D__ACE_INLINE__ -U__ACE_NO_INLINE__
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
+inline = 1
+EOF
+%else
+%define inline
+%define inline -D__ACE_NO_INLINE__ -U__ACE_INLINE__
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 inline = 0
 EOF
+%endif
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
@@ -1096,7 +1111,8 @@ BASEHDR=`find \
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
         echo '#include <'$j'>' | \
-        g++ -I . \
+        g++ %{inline} \
+            -I . \
             -I protocols \
             -I TAO \
             -I TAO/orbsvcs \
@@ -2580,3 +2596,10 @@ fi
 %doc TAO/README
 
 %endif
+
+
+%changelog
+* Thu Aug 11 2011 Thomas Lockhart <lockhart@fourpalms.org> 6.0.3-54
+- Parameterize code inlining. Defaults to not inlining which was the previous behavior.
+- Implement the rpmbuild options "--with inline" and "--without inline".
+
