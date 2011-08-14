@@ -39,7 +39,7 @@ namespace CIAO
     ::DDS::DataWriter_ptr
     DDS_Publisher_i::create_datawriter (
       ::DDS::Topic_ptr a_topic,
-      const ::DDS::DataWriterQos &,
+      const ::DDS::DataWriterQos &qos,
       ::DDS::DataWriterListener_ptr a_listener,
       ::DDS::StatusMask mask)
     {
@@ -62,7 +62,17 @@ namespace CIAO
                             DDS_DataWriterListener_i (a_listener, 0),
                             ::CORBA::NO_MEMORY ());
         }
-      DDS_DataWriterQos ccm_dds_qos = DDS_DATAWRITER_QOS_DEFAULT;
+      DDS_DataWriterQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datawriter_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Publisher_i"
+                       "::create_datawriter - "
+                       "Error: Unable to retrieve default datawriter qos\n"));
+          return ::DDS::DataWriter::_nil ();
+        }
+      ccm_dds_qos <<= qos;
       DDSDataWriter *ccm_dds_dw = this->rti_entity ()->create_datawriter (
                                                             topic->get_rti_entity (),
                                                             ccm_dds_qos,
@@ -226,6 +236,15 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::set_qos");
       ::DDS_PublisherQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Publisher_i"
+                       "::set_qos - "
+                       "Error: Unable to retrieve publisher qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
@@ -237,8 +256,7 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_Publisher_i::get_qos");
       ::DDS_PublisherQos ccm_dds_qos;
       ccm_dds_qos <<= qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->
-              get_qos (ccm_dds_qos);
+      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -350,6 +368,15 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::set_default_datawriter_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datawriter_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Publisher_i"
+                       "::set_default_datawriter - "
+                       "Error: Unable to retrieve default datawriter qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_default_datawriter_qos (ccm_dds_qos);
     }
@@ -369,7 +396,7 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     DDS_Publisher_i::copy_from_topic_qos (::DDS::DataWriterQos & a_dataimpl_qos,
-                                              const ::DDS::TopicQos & a_impl_qos)
+                                          const ::DDS::TopicQos & a_impl_qos)
     {
       DDS4CCM_TRACE ("DDS_Publisher_i::copy_from_topic_qos");
       ::DDS_DataWriterQos ccm_dds_qos;

@@ -222,7 +222,7 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "DDS_TypeSupport_i::create_datawriter - "
-                        "Created DDSDataWriter for type %C\n", type));
+                        "Created DDSDataWriter for type <%C>\n", type));
 
           return f->create_datawriter (dw, dp, pub);
         }

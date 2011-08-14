@@ -730,9 +730,17 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::set_qos");
 
-      ::DDS_DataReaderQos ddsqos;
-      ddsqos <<= qos;
-      return this->rti_entity ()->set_qos (ddsqos);
+      ::DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DataReader_T<TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_qos - "
+                        "Error: Unable to retrieve qos\n"));
+          return retcode;
+        }
+      ccm_dds_qos <<= qos;
+      return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -742,9 +750,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_qos");
 
-      ::DDS_DataReaderQos ddsqos;
-      ::DDS_ReturnCode_t const retval = this->rti_entity ()->get_qos (ddsqos);
-      qos <<= ddsqos;
+      ::DDS_DataReaderQos ccm_dds_qos;
+      ccm_dds_qos <<= qos;
+      ::DDS_ReturnCode_t const retval = this->rti_entity ()->get_qos (ccm_dds_qos);
+      qos <<= ccm_dds_qos;
       return retval;
     }
 

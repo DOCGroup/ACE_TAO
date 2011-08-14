@@ -32,8 +32,6 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::create_participant");
 
-      ACE_UNUSED_ARG (qos);
-
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION_STARTING, (LM_TRACE, DDS4CCM_INFO
                     "DDS_DomainParticipantFactory_i::create_participant - "
                     "Start creating domain participant for domain <%d>\n",
@@ -54,9 +52,20 @@ namespace CIAO
 
       if (!dds_dp)
         {
+          DDS_DomainParticipantQos ccm_dds_qos;
+          DDS_ReturnCode_t retcode = DDSDomainParticipantFactory::get_instance()->get_default_participant_qos (ccm_dds_qos);
+          if (retcode != DDS_RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                          "DDS_DomainParticipantFactory_i"
+                          "::create_participant - "
+                          "Error: Unable to retrieve default participant qos\n"));
+              return ::DDS::DomainParticipant::_nil ();
+            }
+          ccm_dds_qos <<= qos;
           dds_dp = DDSDomainParticipantFactory::get_instance ()->
                       create_participant (domain_id,
-                                          DDS_PARTICIPANT_QOS_DEFAULT,
+                                          ccm_dds_qos,
                                           ccm_dds_dpl,
                                           mask);
 
@@ -75,7 +84,7 @@ namespace CIAO
           ACE_NEW_THROW_EX (retval,
                             DDS_DomainParticipant_i (dds_dp),
                             ::CORBA::NO_MEMORY ());
-          DDS_ReturnCode_t retcode = dds_dp->enable ();
+          retcode = dds_dp->enable ();
           if (retcode != DDS_RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
@@ -295,6 +304,15 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::"
         "set_default_participant_qos");
       DDS_DomainParticipantQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = DDSDomainParticipantFactory::get_instance()->get_default_participant_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_DomainParticipantFactory_i"
+                      "::set_default_participant_qos - "
+                      "Error: Unable to retrieve default participant qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->
         set_default_participant_qos (ccm_dds_qos);
@@ -315,13 +333,21 @@ namespace CIAO
       return retcode;
     }
 
-
     ::DDS::ReturnCode_t
     DDS_DomainParticipantFactory_i::set_qos (
       const ::DDS::DomainParticipantFactoryQos & qos)
     {
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::set_qos");
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = DDSDomainParticipantFactory::get_instance ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                      "DDS_DomainParticipantFactory_i"
+                      "::set_qos - "
+                      "Error: Unable to retrieve participant factory qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return DDSDomainParticipantFactory::get_instance ()->set_qos (ccm_dds_qos);
     }
@@ -333,6 +359,7 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_DomainParticipantFactory_i::get_qos");
       DDS_DomainParticipantFactoryQos ccm_dds_qos;
+      ccm_dds_qos <<= qos;
       ::DDS::ReturnCode_t retcode =
         DDSDomainParticipantFactory::get_instance ()->get_qos (ccm_dds_qos);
       ccm_dds_qos <<= qos;
@@ -342,7 +369,7 @@ namespace CIAO
 
     ::DDS::ReturnCode_t
     DDS_DomainParticipantFactory_i::set_default_participant_qos_with_profile (
-                                                        const char * qos_profile)
+      const char * qos_profile)
     {
       char * lib_name = get_library_name(qos_profile);
       char * prof_name = get_profile_name(qos_profile);
