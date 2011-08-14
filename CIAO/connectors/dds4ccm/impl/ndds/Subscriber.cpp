@@ -79,12 +79,22 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-      ACE_UNUSED_ARG (qos);
-      DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::create_datareader - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return 0;
+        }
+
+      ccm_dds_qos <<= qos;
       return this->rti_entity ()->create_datareader (topic,
-                                               ccm_dds_qos,
-                                               ccm_dds_drl,
-                                               mask);
+                                                     ccm_dds_qos,
+                                                     ccm_dds_drl,
+                                                     mask);
     }
 
     DDSDataReader *
@@ -94,8 +104,17 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-      ACE_UNUSED_ARG (qos);
-      DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::create_datareader - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return 0;
+        }
+      ccm_dds_qos <<= qos;
       return this->rti_entity ()->create_datareader (topic,
                                                ccm_dds_qos,
                                                ccm_dds_drl,
@@ -369,14 +388,14 @@ namespace CIAO
       ::DDS::ViewStateMask view_states,
       ::DDS::InstanceStateMask instance_states)
     {
-      DDS4CCM_TRACE ("DDS_Subscriber_i::set_qos");
+      DDS4CCM_TRACE ("DDS_Subscriber_i::get_datareaders");
       ::DDSDataReaderSeq dds_readers;
 
       ::DDS_ReturnCode_t retcode =
         this->rti_entity ()->get_datareaders (dds_readers,
-                                        sample_states,
-                                        view_states,
-                                        instance_states);
+                                              sample_states,
+                                              view_states,
+                                              instance_states);
       if (retcode == DDS_RETCODE_OK)
         {
           readers.length (dds_readers.length ());
@@ -406,6 +425,15 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::set_qos - "
+                       "Error: Unable to retrieve subscriber qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->get_qos (ccm_dds_qos);
     }
@@ -417,7 +445,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::get_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      ccm_dds_qos <<= qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -505,10 +534,18 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_default_datareader_qos");
       ::DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::set_default_datareader_qos - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_default_datareader_qos (ccm_dds_qos);
     }
-
 
     ::DDS::ReturnCode_t
     DDS_Subscriber_i::get_default_datareader_qos (
@@ -530,12 +567,21 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_Subscriber_i::copy_from_topic_qos");
       ::DDS_DataReaderQos ccm_dds_qos;
       ::DDS_TopicQos ccm_dds_topic_qos;
+      DDS_ReturnCode_t retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::copy_from_topic_qos - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return retcode;
+        }
 
       ccm_dds_qos <<= a_datareader_qos;
       ccm_dds_topic_qos <<= a_impl_qos;
-      ::DDS::ReturnCode_t retcode =
+      retcode =
           this->rti_entity ()->copy_from_topic_qos (ccm_dds_qos,
-                                             ccm_dds_topic_qos);
+                                                    ccm_dds_topic_qos);
       a_datareader_qos <<= ccm_dds_qos;
       return retcode;
     }

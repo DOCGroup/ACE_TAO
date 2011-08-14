@@ -43,6 +43,14 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_qos - "
+                        "Error: Unable to retrieve qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
