@@ -16,7 +16,6 @@
  *    3) a test/usage example of ACE_Message_Queue_Vx
  *    4) a test of the message counting in a message queue under load.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author David L. Levine <levine@cs.wustl.edu>
  *  @author and Douglas C. Schmidt <schmidt@vanderbilt.edu>
