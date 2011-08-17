@@ -1,10 +1,14 @@
+Wed Aug 17 13:54:12 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Message_Block.cpp:
+
 Mon Aug 15 14:41:24 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Block.cpp: Replaced the recursive version of
           ACE_Message_Block::clone() with a non-recursive version to avoid
           problems when there are large numbers of message blocks.  Thanks
           to Andrew Metcalfe <andrew dot metcalfe at ccur dot com> for
-          reporting this and suggesting the fix, which was provided by 
+          reporting this and suggesting the fix, which was provided by
           Eric Frias <efrias at syncad dot com>.
 
 Sun Aug 14 10:44:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>

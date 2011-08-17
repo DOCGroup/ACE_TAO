@@ -1178,7 +1178,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
   ACE_Message_Block *new_previous_message_block = 0;
   ACE_Message_Block *new_root_message_block = 0;
 
-  do 
+  do
     {
       // Get a pointer to a "cloned"<ACE_Data_Block> (will copy the
       // values rather than increment the reference count).
@@ -1260,7 +1260,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
 
       new_previous_message_block = new_message_block;
       old_message_block = old_message_block->cont();
-    } 
+    }
   while (old_message_block != 0);
 
   return new_root_message_block;
