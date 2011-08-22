@@ -1,3 +1,13 @@
+Mon Aug 22 15:39:52 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/client-key.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-cert.pem:
+        * orbsvcs/tests/Security/BiDirectional/ssl/server-key.pem:
+
+          Regenerated these certs so the test works.
+
 Thu Aug 11 18:55:10 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * NEWS:
