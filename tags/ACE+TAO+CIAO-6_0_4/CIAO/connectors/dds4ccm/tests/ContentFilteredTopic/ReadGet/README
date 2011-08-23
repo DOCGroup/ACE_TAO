@@ -1,0 +1,75 @@
+This test will test whether the ContentFilteredTopic
+on the DDS_Get and DDS_Read port works and that these ContentFilteredTopics are
+not shared among the ports.
+
+The sender writes a number of samples to DDS and informs the receiver the amount
+of samples written. The samples will stay in DDS (KEEP_ALL).
+The receiver than starts reading the samples.
+
+This test will also test whether the parameters can be changed and if so, whether
+they were changed correctly.
+
+The Sender writes a number of keys (adjustable by deployment plan) each with
+20 iterations (fixed) to DDS.
+
+#The test consists of three runs:
+1. No samples are written. Just test whether the correct exception is thrown and
+   that the filters are set correctly.
+2. The sender writes no. keys * 20 iterations to DDS and informs the Receiver
+   that these samples were written. Once read, the Receiver will set a new set of
+   query parameters. After that it'll inform the Sender that the next bunch of
+   samples can be written to DDS.
+3. Once written, the sender again will inform the Receiver that the samples were
+   written upon which the Receiver will start reading.
+
+#The following actions are taken by the Receiver component:
+1. Each run, it'll poll whether the last sample is received.
+2. If received, it performs the following tasks:
+  a. Invoke get_one on the getter of the Getter and get sample by sample.
+  b. Invoke the read_all on the reader of the Getter port.
+  c. Invoke the read_all on the reader of the Reader port.
+3. Everytime a unexpected sample is received an error message is written.
+4. Afterwards a status message is shown whether the correct number of samples
+   were read.
+
+#Queries:
+The queries are set by the deployment plan.
+The query expression for the getter (pull_observer_filter) looks like this:
+  ( (iteration > %0) AND (iteration < %1) )
+The query expression for the reader (passive_observer_filter) looks like this:
+  ( (iteration < %0) OR (iteration > %1) )
+
+The parameters during the second run are 2 and 5
+The parameters during the third run are 22 and 34
+
+#Regarding the received number of samples:
+
+- Get actions
+The Getter port should receive 2 samples during the second run and 11 during the
+third run but since all samples of the last key are read when polling for the
+latest sample in DDS and the Getter will only get unread samples, the getter
+should get (#keys - 1) * (2 + 11).
+
+- Read actions
+* On the reader port
+The amount of data read on the reader port depends on the number of iterations
+written.
+
+Filtered out during the second run : 2, 3, 4 and 5 (4 samples)
+Filtered out during the third run : 22-34 (13 samples)
+
+Since the reader also reads read samples, the samples read during the second run
+will also be read during the third run. So the total number of samples on the
+Reader port will be :
+  ((this->iterations_ - 4) * this->keys_ * 2) +
+  ((this->iterations_ - 13) * this->keys_)
+
+There'll be also a read action on the Getter port. This'll result in the same amount
+of samples as on the Getter port but the samples of the second run will be read
+twice and we don't need to decrement the number of keys with one since the Reader
+reads also read samples. The following formule determines the number of samples on
+the Getter port:
+  Filtered in during the second run : 3 and 4 (2 samples)
+  Filtered in during the third run : 22-34 (11 samples)
+
+  ((2 + 2 + 11) * this->keys_);

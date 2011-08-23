@@ -1,0 +1,23 @@
+/**
+ * @file ObjectIdList.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the CORBA::ORB::ObjectIdList related
+ * types.
+ */
+
+#ifndef TAO_CORBA_ORB_OBJECTIDLIST_PIDL
+#define TAO_CORBA_ORB_OBJECTIDLIST_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef string ORB_ObjectId;
+  typedef sequence<ORB_ObjectId> ORB_ObjectIdList;
+};
+
+#endif /* TAO_CORBA_ORB_OBJECTIDLIST_PIDL */
+
+

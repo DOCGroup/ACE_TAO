@@ -1,0 +1,68 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+  <!ENTITY applname "tao_tls_basic">
+  <!ENTITY revision "$Revision$">
+  <!ENTITY man_tao_orb_options "<citerefentry><refentrytitle>TAO_ORB_Options</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_tls_notify "<citerefentry><refentrytitle>tao_tls_notify</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_tls_event "<citerefentry><refentrytitle>tao_tls_event</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_tls_rtevent "<citerefentry><refentrytitle>tao_tls_rtevent</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_naming_service "<citerefentry><refentrytitle>tao_cosnaming</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY tao_cosnaming "<application>tao_cos_naming</application>">
+  <!ENTITY tao_tls_basic "<application>tao_tls_basic</application>">
+  <!ENTITY seealso "&man_tao_orb_options;, &man_tao_tls_notify;, &man_tao_tls_event;, &man_tao_tls_rtevent;, &man_naming_service;">
+  <!ENTITY year "1999">
+  <!ENTITY username "David Hanvey">
+  <!ENTITY useremail "<email>&lt;d.hanvey@qub.ac.uk&gt;</email>">
+]>
+<refentry>
+  <refmeta>
+    <refentrytitle>TAO_TLS_BASIC</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>&applname;</refname>
+    <refpurpose>TAO Basic Telecom Log Service</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>SYNOPSIS</title>
+    <cmdsynopsis>
+      <command>&applname;</command>
+      <group><arg>-ORBoptions</arg></group>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+    <para>
+      &applname; is an event-unaware implementation of the Telecom Log Service.
+    </para>
+    <para>
+      The Telecom Log Service specification may be found on the OMG
+      website at <ulink
+      url="http://www.omg.org/cgi-bin/doc?telecom/99-05-01"></ulink>.
+    </para>
+    <para>
+     &applname; requires a running &tao_cosnaming; and registers with
+     it as `BasicLogFactory'.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>OPTIONS</title>
+    <para>
+      The program follows the usual TAO ORB command line syntax. See
+      &man_tao_orb_options;.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>BUGS</title>
+    <para>
+      Currently all Logs records are stored in memory.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>&seealso;</para>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>&username; &useremail;</para>
+  </refsect1>
+</refentry>
