@@ -1,3 +1,7 @@
+Tue Aug 23 19:01:44 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.4 released.
+
 Thu Aug 18 01:31:48 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Message_Block.cpp:
