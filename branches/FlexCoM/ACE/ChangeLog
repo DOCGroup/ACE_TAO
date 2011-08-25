@@ -1,3 +1,38 @@
+Thu Aug 25 22:21:16 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * .:
+
+        * ChangeLogs/ChangeLog-2011a:
+
+        * ace/OS.h:
+        * ace/config-macosx-iphone-hardware.h:
+
+        * bin/MakeProjectCreator/config:
+
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp:
+
+        * include/makeinclude/platform_linux.GNU:
+
+        * rpmbuild/ace-tao-init-suse/tao:
+
+        * rpmbuild/ace-tao-init-suse/tao/tao-cosconcurrency:
+        * rpmbuild/ace-tao-init-suse/tao/tao-cosevent:
+        * rpmbuild/ace-tao-init-suse/tao/tao-cosnaming:
+        * rpmbuild/ace-tao-init-suse/tao/tao-cosnotification:
+        * rpmbuild/ace-tao-init-suse/tao/tao-costrading:
+        * rpmbuild/ace-tao-init-suse/tao/tao-rtevent:
+
+        * rpmbuild/etc:
+
+        * rpmbuild/etc/logrotate.d:
+        * rpmbuild/etc/tao:
+
+        * tests:
+
+        Nothing!
+
 Mon Jun 20 17:39:01 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Basic_Types.h:
