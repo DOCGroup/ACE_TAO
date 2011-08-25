@@ -1,3 +1,10 @@
+Thu Aug 25 22:12:24 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+
+        * dance/FaultCorrelationManager/FaultCorrelationManager_export.h:
+
+          Removed this file.
+
 Thu Aug 25 22:10:13 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
 
         * .:
