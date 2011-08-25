@@ -55,6 +55,10 @@ namespace DAnCE
 
       void add_node_manager (const char *name, const char *ior);
 
+      // This one derived from ExecutionManagerDaemon interface
+      // for shutdowning DAnCE agent
+      virtual void shutdown (::Deployment::AMH_ExecutionManagerResponseHandler_ptr _tao_rh);
+      
       void load_cdd (const ACE_TCHAR *filename);
 
       class PreparePlanCompletionHandler

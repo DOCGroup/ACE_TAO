@@ -268,6 +268,16 @@ ExecutionManager_Impl::destroyManager (::Deployment::AMH_ExecutionManagerRespons
     }
 }
 
+// This one derived from ExecutionManagerDaemon interface
+// for shutdowning DAnCE agent
+void
+ExecutionManager_Impl::shutdown (::Deployment::AMH_ExecutionManagerResponseHandler_ptr _tao_rh)
+{
+  DANCE_TRACE ("ExecutionManager_Impl::shutdown");
+  this->orb_->shutdown();
+}
+
+
 void
 ExecutionManager_Impl::add_node_manager (const char *name, const char *ior)
 {
