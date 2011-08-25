@@ -29,8 +29,7 @@ class ForwardingAgent_i;
 
 /// Client side ORB initializer.
 class LWFT_Client_Export Client_ORBInitializer
-  : public virtual PortableInterceptor::ORBInitializer,
-    public virtual TAO_Local_RefCounted_Object
+  : public virtual PortableInterceptor::ORBInitializer
 {
 public:
 

@@ -6,9 +6,10 @@
 
 interface HostMonitor
 {
-  boolean register_process (in string process_id,
-                            in string hostname,
-                            in long port);
+  boolean register_process (in string process_id, 
+                            in string hostname, 
+                            in long _port);
+
   boolean unregister_process (in string process_id);
 
   // returns a different port number every time on which the

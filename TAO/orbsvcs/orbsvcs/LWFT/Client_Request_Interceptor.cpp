@@ -82,7 +82,7 @@ Client_Request_Interceptor::receive_exception (
       tag = reinterpret_cast <char *> ( mytag->component_data.get_buffer ());
       ACE_CString new_string = CORBA::string_dup (tag);
       CORBA::Object_var forward = this->agent_->next_member (tag);
-      ACE_THROW (PortableInterceptor::ForwardRequest (forward.in ())); 
+      throw (PortableInterceptor::ForwardRequest (forward.in ())); 
     }
   catch (CORBA::BAD_PARAM&)
     {

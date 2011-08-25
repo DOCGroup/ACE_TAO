@@ -5,7 +5,9 @@
 #include "StateSynchronizationAgent.idl"
 #include "FaultNotification.idl"
 
-typedef sequence<string> HostList;
+#include "tao/StringSeq.pidl"
+
+typedef ::CORBA::StringSeq HostList;
 
 struct RankListConstraint
 {

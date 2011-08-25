@@ -1,3 +1,33 @@
+Thu Aug 25 22:13:56 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * .:
+
+        * MPC/config/lwft_client.mpb:
+        * MPC/config/lwft_dds.mpb:
+        * MPC/config/lwft_server.mpb:
+
+        * TAO_IDL:
+
+        * orbsvcs/IFR_Service:
+
+        * orbsvcs/orbsvcs/LWFT/AppSideReg.cpp:
+        * orbsvcs/orbsvcs/LWFT/Client_ORBInitializer.h:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.h:
+        * orbsvcs/orbsvcs/LWFT/Client_Request_Interceptor.cpp:
+        * orbsvcs/orbsvcs/LWFT/FaultNotification.idl:
+        * orbsvcs/orbsvcs/LWFT/HostMonitor.idl:
+        * orbsvcs/orbsvcs/LWFT/IOR_Interceptor.h:
+        * orbsvcs/orbsvcs/LWFT/IOR_Interceptor.cpp:
+        * orbsvcs/orbsvcs/LWFT/LWFT_Server_Init.cpp:
+        * orbsvcs/orbsvcs/LWFT/ObjectReferenceFactory.cpp:
+        * orbsvcs/orbsvcs/LWFT/ReplicationManager.idl:
+        * orbsvcs/orbsvcs/LWFT/ServerORBInitializer.h:
+        * orbsvcs/orbsvcs/LWFT/ServerORBInitializer.cpp:
+
+        * tao/RTScheduling/RTScheduler.pidl:
+
+        Finished CORFU merger. Testing remains!
+
 Wed Jun 22 18:37:13 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
 
         * orbsvcs/LWFT_Service:

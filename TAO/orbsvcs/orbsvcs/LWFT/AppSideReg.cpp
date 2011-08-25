@@ -126,8 +126,7 @@ AppSideReg::register_process (void)
     }
   catch (CORBA::Exception &ex)
     {
-      ACE_PRINT_EXCEPTION (ex,
-                           "AppSideReg: A CORBA exception was raised:");
+      ACE_DEBUG ((LM_ERROR, "AppSideReg: A CORBA exception was raised:"));
       return -1;
     }
   catch (...)

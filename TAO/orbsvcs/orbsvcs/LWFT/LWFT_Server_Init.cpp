@@ -53,7 +53,7 @@ LWFT_Server_Init::Initializer (void)
     }
   catch (CORBA::Exception& ex)
     {
-      ACE_PRINT_EXCEPTION (ex, "LWFT_Server_Init::init: ");
+      ACE_DEBUG ((LM_ERROR, "LWFT_Server_Init::init: "));
     }
     
   return 0;
