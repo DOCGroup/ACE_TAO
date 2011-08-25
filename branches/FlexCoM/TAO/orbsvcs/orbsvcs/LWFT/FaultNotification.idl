@@ -3,9 +3,11 @@
 #ifndef FAULTNOTIFICATION_IDL
 #define FAULTNOTIFICATION_IDL
 
+#include "tao/StringSeq.pidl"
+
 module FLARE {
 
-  typedef sequence<string> ApplicationList;
+  typedef ::CORBA::StringSeq ApplicationList;
 
   interface FaultNotification {
     void app_failure (in string host,

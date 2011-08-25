@@ -7,10 +7,6 @@
 #include "tao/Profile.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Hello,
-           ObjectReferenceFactory,
-           "$Id$")
-
 ObjectReferenceFactory::ObjectReferenceFactory (
   PortableInterceptor::ObjectReferenceFactory * old_orf)
   : old_orf_ (old_orf)

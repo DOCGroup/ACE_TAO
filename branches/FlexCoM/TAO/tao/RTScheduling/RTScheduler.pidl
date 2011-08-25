@@ -19,6 +19,7 @@
 #include "tao/PI_Server/ServerRequestInfo.pidl"
 #include "tao/PortableInterceptor.pidl"
 #include "tao/PI/PIForwardRequest.pidl"
+#include "tao/StringSeq.pidl"
 
 module CORBA
 {
@@ -106,7 +107,7 @@ module RTScheduling
         readonly attribute CORBA::Policy scheduling_parameter;
         readonly attribute CORBA::Policy implicit_scheduling_parameter;
 
-        typedef sequence<string> NameList;
+        typedef ::CORBA::StringSeq NameList;
 
         readonly attribute NameList      current_scheduling_segment_names;
             // Ordered from innermost segment name

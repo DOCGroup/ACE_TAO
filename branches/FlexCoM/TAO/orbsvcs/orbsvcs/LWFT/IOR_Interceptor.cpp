@@ -5,9 +5,6 @@
 #include "ObjectReferenceFactory.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (Hello,
-           IOR_Interceptor,
-           "$Id$")
 
 IOR_Interceptor::IOR_Interceptor (void)
 {
