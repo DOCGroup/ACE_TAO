@@ -1,0 +1,16 @@
+// $Id$
+
+#ifndef FAULTCORRELATIONMANAGER_IDL
+#define FAULTCORRELATIONMANAGER_IDL
+
+#include "orbsvcs/orbsvcs/LWFT/FaultNotification.idl"
+#include "dance/Deployment/Deployment_ExecutionManager.idl"
+
+module DAnCE 
+{
+  interface FaultCorrelationManager : FLARE::FaultNotification, Deployment::ExecutionManager {
+    void stop_failover_unit (in string fou_id);
+  };
+};
+
+#endif /* FAULTCORRELATIONMANAGER_IDL */

@@ -1,3 +1,40 @@
+Thu Aug 25 22:10:13 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * .:
+        * DAnCE-INSTALL.html:
+        * DAnCE_TAO.mwc:
+        * dance:
+
+        * dance/Deployment/DAnCE_Loader.h:
+        * dance/Deployment/Deployment_ExecutionManager.idl:
+        * dance/Deployment/Deployment_common.h:
+
+        * dance/ExecutionManager/ExecutionManager_Impl.h:
+        * dance/ExecutionManager/ExecutionManager_Impl.cpp:
+        * dance/ExecutionManager/ExecutionManager_Module.cpp:
+
+        * dance/FaultCorrelationManager:
+
+        * dance/FaultCorrelationManager/FaultCorrelationManager.idl:
+        * dance/FaultCorrelationManager/FaultCorrelationManager.mpc:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_Exec.cpp:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_Impl.h:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_Impl.cpp:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_Module.h:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_Module.cpp:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_Module_export.h:
+        * dance/FaultCorrelationManager/FaultCorrelationManager_export.h:
+
+        * dance/RepositoryManager:
+
+        * etc/DAnCE.doxygen:
+
+        * rules.dance.GNU:
+
+        * tools/Config_Handlers:
+
+        Finished CORFU merger. Testing remains!
+
 Wed Jul  6 21:48:20 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
 
         * tests/FTComponents:

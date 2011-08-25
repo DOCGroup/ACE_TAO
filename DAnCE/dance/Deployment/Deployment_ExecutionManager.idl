@@ -14,6 +14,9 @@ module Deployment {
     DomainApplicationManagers getManagers ();
     void destroyManager (in DomainApplicationManager manager)
                         raises (StopError);
+
+    // Shutdown the daemon process.
+    void shutdown ();
   };
 };
 

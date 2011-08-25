@@ -272,8 +272,8 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
         }
       catch (CORBA::Exception&)
         {
-          DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
-                       (LM_DEBUG,
+          DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                       (LM_ERROR,
                         DLINFO ACE_TEXT("DomainNC context not found!\n")));
         }
 

@@ -1,0 +1,72 @@
+project (DAnCE_FaultCorrelationManager_idl): dancelib_with_idl, dance_output, valuetype, gen_ostream, \
+      dance_deployment_stub, install {
+  after += Deployment_ExecutionManager_stub
+  custom_only = 1
+  idlflags     += -Wb,stub_export_macro=FaultCorrelationManager_stub_Export
+  idlflags     += -Wb,stub_export_include=FaultCorrelationManager_stub_export.h
+  idlflags     += -Wb,skel_export_macro=FaultCorrelationManager_svnt_Export
+  idlflags     += -Wb,skel_export_include=FaultCorrelationManager_svnt_export.h
+
+  IDL_Files {
+    FaultCorrelationManager.idl
+  }
+}
+
+project (DAnCE_FaultCorrelationManager_stub): dancelib_with_idl, dance_output, dance_executionmanager_stub, messaging, dance_deployment_stub, install, taolib_with_idl {
+  after += DAnCE_FaultCorrelationManager_idl Deployment_ExecutionManager_idl
+  sharedname = DAnCE_FaultCorrelationManager_stub 
+  libs += DAnCE_ExecutionManager_stub LWFT_ReplicationManager TAO
+
+  dynamicflags = FAULTCORRELATIONMANAGER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Header_Files {
+  }
+
+  Source_Files {
+    FaultCorrelationManagerC.cpp
+  }
+}
+
+project (DAnCE_FaultCorrelationManager_svnt): dancelib_with_idl, dance_output, dance_executionmanager_skel, messaging, dance_deployment_skel, install, taolib_with_idl {
+  after += DAnCE_FaultCorrelationManager_idl 
+  sharedname = DAnCE_FaultCorrelationManager_svnt
+  libs += DAnCE_FaultCorrelationManager_stub DAnCE_ExecutionManager_skel LWFT_ReplicationManager TAO   
+
+  dynamicflags = FAULTCORRELATIONMANAGER_SVNT_BUILD_DLL EXECUTIONMANAGER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }  
+  
+  Header_Files {
+  }
+
+  Source_Files {
+    FaultCorrelationManagerS.cpp
+  }
+}
+
+project(FaultCorrelationManager_Module) : ciaolib_with_idl, dancelib_with_idl, dance_executionmanager_skel, dance_deployment_skel, naming_serv, lwft_client, utils {
+  after += DAnCE_FaultCorrelationManager_svnt
+  sharedname = FaultCorrelationManager
+  libs += DAnCE_FaultCorrelationManager_svnt
+
+  dynamicflags = FAULTCORRELATIONMANAGER_BUILD_DLL FAULTCORRELATIONMANAGER_MODULE_BUILD_DLL
+
+  Source_Files {
+    FaultCorrelationManager_Impl.cpp
+    FaultCorrelationManager_Module.cpp
+  }
+}
+
+project(FaultCorrelationManager_Exec) : utils, dance_exe, dancelib_with_idl, taolib_with_idl, naming_serv, dance_logger {
+  exename = fcm
+  after += FaultCorrelationManager_Module
+  libs += DAnCE_FaultCorrelationManager_svnt FaultCorrelationManager
+
+  Source_Files {
+    FaultCorrelationManager_Exec.cpp
+  }
+}
