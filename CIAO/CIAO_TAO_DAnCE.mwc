@@ -9,6 +9,7 @@ workspace {
   $(ACE_ROOT)/contrib
   $(TAO_ROOT)/TAO_IDL
   $(TAO_ROOT)/tao
+  $(TAO_ROOT)/orbsvcs/orbsvcs/LWFT/LWFT.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
   $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc

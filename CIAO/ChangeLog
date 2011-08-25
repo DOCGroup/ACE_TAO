@@ -1,3 +1,204 @@
+Thu Aug 25 21:44:42 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
+
+        * .:
+        * CIAO-INSTALL.html:
+        * CIAO.mwc:
+        * CIAO_DAnCE.mwc:
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        * COPYING:
+        * MPC:
+        * NEWS:
+        * bin:
+
+        * bin/ciao_tests.lst:
+
+        * ciao:
+
+        * ciao/Base/CIAO_Properties.idl:
+
+        * connectors:
+
+        * connectors/ami4ccm:
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/doc:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/ports:
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/doc:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/ports:
+
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/doc:
+        * connectors/ami4ccm/tutorials/Hello/Hello_asm/ports:
+
+        * connectors/dds4ccm:
+
+        * connectors/dds4ccm/examples/Hello/descriptors/1_to_5.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Receivers.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_Senders.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/5_to_1.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/ReceiverOnly.cdp:
+        * connectors/dds4ccm/examples/Hello/descriptors/SenderOnly.cdp:
+
+        * connectors/dds4ccm/tests:
+
+        * docs:
+
+        * docs/fm:
+
+        * docs/fm/CIAO-1.gif:
+        * docs/fm/CIAO-10.gif:
+        * docs/fm/CIAO-11.gif:
+        * docs/fm/CIAO-12.gif:
+        * docs/fm/CIAO-13.gif:
+        * docs/fm/CIAO-14.gif:
+        * docs/fm/CIAO-15.gif:
+        * docs/fm/CIAO-16.gif:
+        * docs/fm/CIAO-17.gif:
+        * docs/fm/CIAO-18.gif:
+        * docs/fm/CIAO-19.gif:
+        * docs/fm/CIAO-2.gif:
+        * docs/fm/CIAO-20.gif:
+        * docs/fm/CIAO-21.gif:
+        * docs/fm/CIAO-22.gif:
+        * docs/fm/CIAO-23.gif:
+        * docs/fm/CIAO-24.gif:
+        * docs/fm/CIAO-25.gif:
+        * docs/fm/CIAO-26.gif:
+        * docs/fm/CIAO-27.gif:
+        * docs/fm/CIAO-28.gif:
+        * docs/fm/CIAO-29.gif:
+        * docs/fm/CIAO-3.gif:
+        * docs/fm/CIAO-30.gif:
+        * docs/fm/CIAO-31.gif:
+        * docs/fm/CIAO-32.gif:
+        * docs/fm/CIAO-33.gif:
+        * docs/fm/CIAO-34.gif:
+        * docs/fm/CIAO-35.gif:
+        * docs/fm/CIAO-36.gif:
+        * docs/fm/CIAO-37.gif:
+        * docs/fm/CIAO-4.gif:
+        * docs/fm/CIAO-5.gif:
+        * docs/fm/CIAO-6.gif:
+        * docs/fm/CIAO-7.gif:
+        * docs/fm/CIAO-8.gif:
+        * docs/fm/CIAO-9.gif:
+        * docs/fm/CIAO.css:
+        * docs/fm/CIAO.fm:
+        * docs/fm/CIAO.htm:
+        * docs/fm/images:
+
+        * docs/fm/images/CIAO_Component_Container_and_CORBA.eps:
+        * docs/fm/images/CIAO_Component_Container_and_CORBA.sxd:
+        * docs/fm/images/CIAO_Components_Administrator_Highlight.eps:
+        * docs/fm/images/CIAO_Components_Administrator_Highlight.sxd:
+        * docs/fm/images/CIAO_Components_Messenger_Highlight.eps:
+        * docs/fm/images/CIAO_Components_Messenger_Highlight.sxd:
+        * docs/fm/images/CIAO_Components_Messenger_Runnable_Highlight.eps:
+        * docs/fm/images/CIAO_Components_Messenger_Runnable_Highlight.sxd:
+        * docs/fm/images/CIAO_Components_Receiver_Highlight.eps:
+        * docs/fm/images/CIAO_Components_Receiver_Highlight.sxd:
+        * docs/fm/images/CIAO_Descriptors_Administrator.eps:
+        * docs/fm/images/CIAO_Descriptors_Administrator.sxd:
+        * docs/fm/images/CIAO_Descriptors_Application.eps:
+        * docs/fm/images/CIAO_Descriptors_Application.sxd:
+        * docs/fm/images/CIAO_Descriptors_Messenger.eps:
+        * docs/fm/images/CIAO_Descriptors_Messenger.sxd:
+        * docs/fm/images/CIAO_Descriptors_Messenger_Assembly.eps:
+        * docs/fm/images/CIAO_Descriptors_Messenger_Assembly.sxd:
+        * docs/fm/images/CIAO_Descriptors_Receiver.eps:
+        * docs/fm/images/CIAO_Descriptors_Receiver.sxd:
+        * docs/fm/images/CIAO_Generic_Component_Diagram.eps:
+        * docs/fm/images/CIAO_Generic_Component_Diagram.sxd:
+        * docs/fm/images/CIAO_IDL3_to_IDL2_Files.eps:
+        * docs/fm/images/CIAO_IDL3_to_IDL2_Files.sxd:
+        * docs/fm/images/CIAO_IDL_CIDL_Files.eps:
+        * docs/fm/images/CIAO_IDL_CIDL_Files.sxd:
+        * docs/fm/images/CIAO_IDL_CIDL_Files_CIDL_Highlight.eps:
+        * docs/fm/images/CIAO_IDL_CIDL_Files_CIDL_Highlight.sxd:
+        * docs/fm/images/CIAO_MessengerHome_Class_Diagram.eps:
+        * docs/fm/images/CIAO_MessengerHome_Class_Diagram.sxd:
+        * docs/fm/images/CIAO_Messenger_Class_Diagram.eps:
+        * docs/fm/images/CIAO_Messenger_Class_Diagram.sxd:
+        * docs/fm/images/CIAO_Messenger_Component_Diagram.eps:
+        * docs/fm/images/CIAO_Messenger_Component_Diagram.sxd:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram.eps:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram.sxd:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_All_Connections_Highlight.eps:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_All_Connections_Highlight.sxd:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_All_Nodes_Highlight.eps:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_All_Nodes_Highlight.sxd:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_Connection_Highlight.eps:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_Connection_Highlight.sxd:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_Node_Highlight.eps:
+        * docs/fm/images/CIAO_Messenger_Deployment_Diagram_Node_Highlight.sxd:
+        * docs/fm/images/CIAO_Messenger_IDL_Generated_Class_Diagram.eps:
+        * docs/fm/images/CIAO_Messenger_IDL_Generated_Class_Diagram.sxd:
+        * docs/fm/images/CIAO_Messenger_Interaction_Diagram.eps:
+        * docs/fm/images/CIAO_Messenger_Interaction_Diagram.sxd:
+        * docs/fm/images/CIAO_Roadmap_01.eps:
+        * docs/fm/images/CIAO_Roadmap_01.sxd:
+        * docs/fm/images/CIAO_Roadmap_02.eps:
+        * docs/fm/images/CIAO_Roadmap_02.sxd:
+        * docs/fm/images/CIAO_Roadmap_03.eps:
+        * docs/fm/images/CIAO_Roadmap_03.sxd:
+        * docs/fm/images/CIAO_Roadmap_04.eps:
+        * docs/fm/images/CIAO_Roadmap_04.sxd:
+        * docs/fm/images/CIAO_Roadmap_05.eps:
+        * docs/fm/images/CIAO_Roadmap_05.sxd:
+        * docs/fm/images/CIAO_Roadmap_06.eps:
+        * docs/fm/images/CIAO_Roadmap_06.sxd:
+        * docs/fm/images/CIAO_Roadmap_07.eps:
+        * docs/fm/images/CIAO_Roadmap_07.sxd:
+        * docs/fm/images/CIAO_Roadmap_08.eps:
+        * docs/fm/images/CIAO_Roadmap_08.sxd:
+        * docs/fm/images/CIAO_Roadmap_09.eps:
+        * docs/fm/images/CIAO_Roadmap_09.sxd:
+        * docs/fm/images/CIAO_Roadmap_Overview.eps:
+        * docs/fm/images/CIAO_Roadmap_Overview.sxd:
+        * docs/fm/images/CIAO_Runnable_Class_Diagram.eps:
+        * docs/fm/images/CIAO_Runnable_Class_Diagram.sxd:
+        * docs/fm/images/OCILOGO_bw_book.eps:
+
+        * etc/ciao.doxygen:
+
+        * examples:
+
+        * examples/DevGuideExamples:
+
+        * examples/Null_Component/descriptors/run_test.pl:
+
+        * performance-tests:
+        * rules.ciao.GNU:
+        * tests:
+
+        * tests/Bug_3817_Regression/Bar.idl:
+        * tests/Bug_3817_Regression/Bar.mpc:
+
+        * tests/DAnCE/Components/ProcessColocation.idl:
+        * tests/DAnCE/Components/ProcessColocation.mpc:
+        * tests/DAnCE/Components/SimpleLocalProvider.idl:
+        * tests/DAnCE/Components/SimpleLocalProvider.mpc:
+        * tests/DAnCE/Components/SimpleLocalProvider_exec.h:
+        * tests/DAnCE/Components/SimpleLocalProvider_exec.cpp:
+        * tests/DAnCE/Components/SimpleLocalUser.idl:
+        * tests/DAnCE/Components/SimpleLocalUser.mpc:
+        * tests/DAnCE/Components/SimpleLocalUser_exec.h:
+        * tests/DAnCE/Components/SimpleLocalUser_exec.cpp:
+
+        * tests/DAnCE/ExecutionManager-Deployments/SimpleProcessColocation.cdp:
+        * tests/DAnCE/ExecutionManager-Deployments/SimpleProcessColocation_2.cdp:
+
+        * tests/DAnCE/NodeManager-Deployments/LocalSimplexConnectionExplicitHome.cdp:
+        * tests/DAnCE/NodeManager-Deployments/SimpleProcessColocation.cdp:
+        * tests/DAnCE/NodeManager-Deployments/SimpleProcessColocation_2.cdp:
+
+        * tests/IDL_Test/Reused_Facet_Interface/Reused_Facet_Interface.mpc:
+
+        * tools:
+
+        Finished CORFU merger. Testing remains!
+
 Wed Jul  6 20:44:46 UTC 2011  Akshay V. Dabholkar  <aky@dre.vanderbilt.edu>
 
         * ciao/Deployment/Handlers/Container_Handler.cpp:
