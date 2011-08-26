@@ -192,6 +192,8 @@ TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   }
   // Delete outside the mutex, because it may take a long time.
   tmp->_decr_refcnt ();
+
+  delete this->copy;
 }
 
 // ****************************************************************

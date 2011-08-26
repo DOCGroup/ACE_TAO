@@ -55,17 +55,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result= 0;
   ACE_DEBUG (( LM_DEBUG, "Start\n" ));
-  // init orb
-  CORBA::ORB_var the_orb =
-    CORBA::ORB_init (argc, argv);
-
-  if (parse_args (argc, argv) == -1)
-    {
-      return -1;
-    }
 
   try
     {
+      // init orb
+      CORBA::ORB_var the_orb =
+        CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) == -1)
+          return -1;
+
       ACE_DEBUG (( LM_DEBUG, "Get IFR\n" ));
       CORBA::Object_var objref =
         the_orb->string_to_object (ifr_ior_file);

@@ -98,9 +98,18 @@ struct Tester
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
-  Tester mytester;
 
-  status += mytester.test_stream();
+  try
+    {
+      Tester mytester;
+
+      status += mytester.test_stream();
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }

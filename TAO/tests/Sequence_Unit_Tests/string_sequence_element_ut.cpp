@@ -12,6 +12,7 @@
 #include "tao/String_Sequence_Element_T.h"
 #include "tao/String_Manager_T.h"
 #include "tao/CORBA_String.h"
+#include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -398,12 +399,22 @@ struct Tester
 };
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
-             {
-              int status = 0;
-              Tester <char> char_tester;
-              status += char_tester.test_all ();
-              Tester <char> wchar_tester;
-              status += wchar_tester.test_all ();
-              return status;
-             }
+{
+  int status = 0;
+
+  try
+    {
+      Tester <char> char_tester;
+      status += char_tester.test_all ();
+      Tester <char> wchar_tester;
+      status += wchar_tester.test_all ();
+    }
+  catch (const ::CORBA::Exception& ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
+
+  return status;
+}
 
