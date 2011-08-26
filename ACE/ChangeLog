@@ -1,3 +1,11 @@
+Fri Aug 26 15:59:19 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iphone-hardware.h:
+        * ace/config-macosx-iphone-simulator.h:
+
+          Updated these files to use Mac OS-X Lion as the build host. Also, fixed
+          some minor typos.
+
 Wed Aug 24 13:06:17 UTC 2011  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * ace/Message_Block.cpp: Replaced the recursive version of
