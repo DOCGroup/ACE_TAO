@@ -21,21 +21,29 @@ namespace
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+  try
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-  if (argc != 2)
-  {
-    ACE_DEBUG ((LM_ERROR, "Usage: %s <ior>\n", argv[0]));
-    return -1;
-  }
+      if (argc != 2)
+        {
+          ACE_DEBUG ((LM_ERROR, "Usage: %s <ior>\n", argv[0]));
+          return -1;
+        }
 
-  CORBA::Object_var obj = orb->string_to_object (argv[1]);
-  InvokeMe_var server = InvokeMe::_narrow (obj.in ());
+      CORBA::Object_var obj = orb->string_to_object (argv[1]);
+      InvokeMe_var server = InvokeMe::_narrow (obj.in ());
 
-  always Shutdown( server.in () ); // When goes out of scope!
-  server->invoke_me ();
-  ACE_DEBUG ((LM_DEBUG, "\n"));
-  server->invoke_me ();
+      always Shutdown( server.in () ); // When goes out of scope!
+      server->invoke_me ();
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+      server->invoke_me ();
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("ERROR : unexpected CORBA exception caught : ");
+      return 1;
+    }
 
   return 0;
 }

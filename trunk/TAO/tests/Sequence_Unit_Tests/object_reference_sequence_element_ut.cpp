@@ -10,7 +10,10 @@
  */
 #include "testing_object_reference_traits.hpp"
 #include "mock_reference.hpp"
+
 #include "tao/Object_Reference_Sequence_Element_T.h"
+#include "tao/SystemException.h"
+
 #include "test_macros.h"
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
@@ -286,14 +289,21 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
-
-  status += test_assignment_from_var_release_true ();
-  status += test_assignment_from_var_release_false ();
-  status += test_assignment_from_var_throw ();
-  status += test_assignment_from_element_release_true ();
-  status += test_assignment_from_element_release_false ();
-  status += test_assignment_from_reference_release_true ();
-  status += test_assignment_from_reference_release_false ();
+  try
+    {
+      status += test_assignment_from_var_release_true ();
+      status += test_assignment_from_var_release_false ();
+      status += test_assignment_from_var_throw ();
+      status += test_assignment_from_element_release_true ();
+      status += test_assignment_from_element_release_false ();
+      status += test_assignment_from_reference_release_true ();
+      status += test_assignment_from_reference_release_false ();
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }

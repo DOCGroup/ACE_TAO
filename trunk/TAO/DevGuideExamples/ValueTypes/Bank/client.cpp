@@ -92,6 +92,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[]) {
     std::cerr << e << std::endl;
     return 1;
   }
+  catch (const std::runtime_error &e) {
+    std::cerr << e.what() << std::endl;
+  }
 
   return 0;
 }

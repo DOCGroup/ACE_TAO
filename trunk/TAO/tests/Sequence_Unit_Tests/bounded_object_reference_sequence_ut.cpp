@@ -373,17 +373,25 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   int status = 0;
   Tester mytester;
 
-  status += mytester.test_default_constructor();
-  status += mytester.test_buffer_constructor_release_true();
-  status += mytester.test_buffer_constructor_release_false();
-  status += mytester.test_copy_constructor_from_default();
-  status += mytester.test_copy_constructor();
-  status += mytester.test_copy_constructor_throw_duplicate();
-  status += mytester.test_set_length_less_than_maximum();
-  status += mytester.test_set_length_more_than_maximum();
-  status += mytester.test_replace_release_true();
-  status += mytester.test_replace_release_false();
-  status += mytester.test_replace_release_default();
+  try
+    {
+      status += mytester.test_default_constructor();
+      status += mytester.test_buffer_constructor_release_true();
+      status += mytester.test_buffer_constructor_release_false();
+      status += mytester.test_copy_constructor_from_default();
+      status += mytester.test_copy_constructor();
+      status += mytester.test_copy_constructor_throw_duplicate();
+      status += mytester.test_set_length_less_than_maximum();
+      status += mytester.test_set_length_more_than_maximum();
+      status += mytester.test_replace_release_true();
+      status += mytester.test_replace_release_false();
+      status += mytester.test_replace_release_default();
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }

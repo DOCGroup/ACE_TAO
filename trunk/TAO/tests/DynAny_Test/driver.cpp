@@ -27,23 +27,33 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Driver driver;
-
-  // initialize the driver
-  if (driver.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) driver.cpp - "
-                       "Driver initialization failed\n"),
-                      -1);
-
-  // run the tests
-  int error_count = driver.run ();
-  if (error_count != 0)
+  int error_count = 0;
+  try
     {
-        ACE_ERROR ((LM_ERROR,
-                    "(%N:%l) driver.cpp - "
-                    "%d tests failed\n",
-                    error_count));
+      Driver driver;
+
+      // initialize the driver
+      if (driver.init (argc, argv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "(%N:%l) driver.cpp - "
+                          "Driver initialization failed\n"),
+                          -1);
+
+      // run the tests
+      error_count = driver.run ();
+      if (error_count != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%N:%l) driver.cpp - "
+                      "%d tests failed\n",
+                      error_count));
+        }
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Caught unexpected CORBA exception:");
+
+      ++error_count;
     }
 
   return error_count;

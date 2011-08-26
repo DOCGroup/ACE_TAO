@@ -316,16 +316,24 @@ struct Tester
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
-  {
-    Tester tester;
-    status += tester.test_all ();
-  }
+  try
+    {
+      {
+        Tester tester;
+        status += tester.test_all ();
+      }
 
-  {
-    typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
-    common tester;
-    status += tester.test_all ();
-  }
+      {
+        typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
+        common tester;
+        status += tester.test_all ();
+      }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }
