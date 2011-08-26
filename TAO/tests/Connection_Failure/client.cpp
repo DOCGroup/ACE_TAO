@@ -29,7 +29,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "_narrow() to non-existent object failed correctly.  Test succeeded.\n"));
       return 0;
     }
-
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+    }
   // Should not reach here.
   ACE_ERROR_RETURN ((LM_ERROR,
                      "_narrow() succeeded to non-existent object when it should not have...\n"),

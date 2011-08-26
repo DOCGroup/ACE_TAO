@@ -1,3 +1,54 @@
+Fri Aug 26 11:09:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * DevGuideExamples/ValueTypes/Bank/client.cpp:
+        * examples/AMH/Sink_Server/client.cpp:
+        * examples/Event_Comm/supplier.cpp:
+        * examples/Simple/bank/server.cpp:
+        * examples/Simple/echo/server.cpp:
+        * examples/Simple/grid/server.cpp:
+        * examples/Simple/time/server.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/test_idl.cpp:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/test.cpp:
+        * tests/Bug_1383_Regression/SimpleClient.cpp:
+        * tests/Bug_3506_Regression/client.cpp:
+        * tests/Bug_3548_Regression/client.cpp:
+        * tests/CDR/allocator.cpp:
+        * tests/Connection_Failure/client.cpp:
+        * tests/DII_AMI_Forward/client.cpp:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/OBV/ValueBox/client.cpp:
+        * tests/POA/EndpointPolicy/server.cpp:
+        * tests/POA/Loader/server.cpp:
+        * tests/Param_Test/driver.cpp:
+        * tests/Portable_Interceptors/AdvSlot/client.cpp:
+        * tests/Portable_Interceptors/AdvSlot/server.cpp:
+        * tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:
+        * tests/Portable_Interceptors/AdvSlotExt/client.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+        * tests/RTScheduling/VoidData/test_client.cpp:
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_sequence_cdr_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+        * utils/nslist/nslist.cpp:
+          Fixed issues regarding exceptions which are not caught.
+
 Tue Aug 23 18:19:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

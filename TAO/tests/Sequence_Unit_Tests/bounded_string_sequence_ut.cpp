@@ -356,18 +356,26 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
 
-  typedef TAO::bounded_basic_string_sequence<char, MAXIMUM> s_sequence;
-  typedef Tester<s_sequence> nTester;
-  nTester myntester;
+  try
+    {
+      typedef TAO::bounded_basic_string_sequence<char, MAXIMUM> s_sequence;
+      typedef Tester<s_sequence> nTester;
+      nTester myntester;
 
-  status += myntester.test_all();
+      status += myntester.test_all();
 
 #if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
-  typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
-  typedef Tester<w_sequence> wTester;
-  wTester mywtester;
-  status += mywtester.test_all();
+      typedef TAO::bounded_basic_string_sequence<CORBA::WChar, MAXIMUM> w_sequence;
+      typedef Tester<w_sequence> wTester;
+      wTester mywtester;
+      status += mywtester.test_all();
 #endif
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }

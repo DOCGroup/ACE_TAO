@@ -70,14 +70,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Initialize server daemon.
   Supplier supplier;
 
-  if (supplier.init (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "supplier init failed"),
-                      1);
+  try
+    {
 
-  // Loop forever handling events.
-  supplier.run ();
+      if (supplier.init (argc, argv) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          "%p\n",
+                          "supplier init failed"),
+                          1);
+
+      // Loop forever handling events.
+      supplier.run ();
+    }
+  catch (const ::CORBA::Exception &e)
+    {
+      e._tao_print_exception ("Caught unexpected CORBA exception : ");
+      return 1;
+    }
 
   return 0;
 }
