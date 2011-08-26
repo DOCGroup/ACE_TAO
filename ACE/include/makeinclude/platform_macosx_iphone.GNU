@@ -30,8 +30,8 @@ endif
   rwho = 0
 endif
 
-CC:=$(IPHONE_PLATFORM)/usr/bin/gcc
-CXX:=$(IPHONE_PLATFORM)/usr/bin/g++
+CC:=$(IPHONE_PLATFORM)/usr/bin/clang
+CXX:=$(IPHONE_PLATFORM)/usr/bin/clang++
 AR:=$(IPHONE_PLATFORM)/usr/bin/ar
 RANLIB:=$(IPHONE_PLATFORM)/usr/bin/ranlib
 DLD = $(CXX)
