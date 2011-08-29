@@ -1,3 +1,11 @@
+Mon Aug 29 07:20:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+          Fixed runtime issues in orbsvcs.
+
+        * tests/OBV/ValueBox/client.cpp:
+          Fixed runtime issues.
+
 Fri Aug 26 11:09:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * DevGuideExamples/ValueTypes/Bank/client.cpp:
