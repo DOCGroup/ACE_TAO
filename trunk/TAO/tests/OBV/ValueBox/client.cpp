@@ -679,10 +679,6 @@ int test_boxed_sequence_invocations (Test * test_object)
       OBV_VERITY ((*p3)[1] == (*p1)[1]*5);
       OBV_VERITY ((*p3)[2] == (*p1)[2]*5);
       OBV_VERITY ((*p3)[3] == (*p1)[3]*5);
-
-      p1->_remove_ref ();
-      p2->_remove_ref ();
-      p3->_remove_ref ();
     }
   catch (const CORBA::Exception& ex)
     {
