@@ -1,3 +1,13 @@
+Tue Aug 30 14:40:01 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Allow the user to specify the location of XCode. This is helpful
+          when there are multiple versions of XCode installed on the machine.
+          To specify the location of XCode, use XCODE_ROOT environment variable.
+          If XCODE_ROOT is not specified, the location of XCode is assumed to be
+          located at the default installation directory (which is /Developer).
+
 Fri Aug 26 16:02:13 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
