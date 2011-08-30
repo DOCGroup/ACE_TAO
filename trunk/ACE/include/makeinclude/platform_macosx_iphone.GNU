@@ -4,8 +4,6 @@ static_libs_only=1
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
-ifneq(,$(XCODE_ROOT))
-
 ifneq (,$(XCODE_ROOT))
   XCODE:=$(XCODE_ROOT)
 else
