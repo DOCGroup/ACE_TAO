@@ -4,7 +4,13 @@ static_libs_only=1
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
 
-XCODE:=/Developer
+ifneq(,$(XCODE_ROOT))
+
+ifneq (,$(XCODE_ROOT))
+  XCODE:=$(XCODE_ROOT)
+else
+  XCODE:=/Developer
+endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
   IPHONE_PLATFORM:=$(XCODE)/Platforms/iPhoneSimulator.platform/Developer
