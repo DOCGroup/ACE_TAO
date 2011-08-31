@@ -1,3 +1,18 @@
+Wed Aug 31 11:33:39 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-iOS-hardware.h:
+        * ace/config-macosx-iOS-simulator.h:
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Renamed the files from iphone to iOS since this is what apple
+          calls the platform these days. 
+
+        * ace/config-macosx-iphone-hardware.h:
+        * ace/config-macosx-iphone-simulator.h:
+        * include/makeinclude/platform_macosx_iphone.GNU:
+
+          Removed these files.
+
 Tue Aug 30 14:40:01 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iphone.GNU:
