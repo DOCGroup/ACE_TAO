@@ -93,6 +93,10 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, const std::string & value);
 
+#if !defined(ACE_LACKS_STD_WSTRING)
+  virtual void insert_into_any (CORBA::Any * any, const std::wstring & value);
+#endif /* ACE_LACKS_STD_WSTRING */
+
   virtual void insert_into_any (CORBA::Any * any, CORBA::Long value);
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::Short value);

@@ -1,3 +1,11 @@
+Thu Sep  1 09:59:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+        * tao/AnyTypeCode_Adapter.h:
+        * tao/Basic_Arguments.h:
+          Added support for std::wstring
+
 Thu Sep  1 06:31:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/BD_String_SArgument_T.cpp:
