@@ -3,12 +3,13 @@
 #ifndef TAO_VECTOR_SARGUMENT_T_CPP
 #define TAO_VECTOR_SARGUMENT_T_CPP
 
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #include "tao/PortableServer/Vector_SArgument_T.h"
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Vector_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
