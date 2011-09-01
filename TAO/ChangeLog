@@ -1,3 +1,17 @@
+Thu Sep  1 06:31:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/BD_String_SArgument_T.cpp:
+        * tao/PortableServer/Basic_SArgument_T.cpp:
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+        * tao/PortableServer/Fixed_Size_SArgument_T.cpp:
+        * tao/PortableServer/Object_SArgument_T.cpp:
+        * tao/PortableServer/Special_Basic_SArgument_T.cpp:
+        * tao/PortableServer/UB_String_SArgument_T.cpp:
+        * tao/PortableServer/Var_Array_SArgument_T.cpp:
+        * tao/PortableServer/Var_Size_SArgument_T.cpp:
+        * tao/PortableServer/Vector_SArgument_T.cpp:
+          Fixed coverity issues
+
 Mon Aug 29 07:20:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
