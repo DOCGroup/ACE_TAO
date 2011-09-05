@@ -13,7 +13,7 @@ rm *Builds.txt
 ./diff-builds-and-group-fixed-tests-only.sh
 
 MAILTO="devo-group@list.isis.vanderbilt.edu"
-MAIL="mail -S smtp=zimbra.remedy.nl"
+MAIL="mail -S smtp=mail.remedy.nl"
 MAILFROM="jwillemsen@remedy.nl"
 
 MAIL_ATTACHMENTS=
