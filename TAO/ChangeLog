@@ -1,3 +1,8 @@
+Tue Sep  6 11:45:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.h:
+          Fixed problem with versioned namespace support
+
 Tue Sep  6 08:14:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any.h:
