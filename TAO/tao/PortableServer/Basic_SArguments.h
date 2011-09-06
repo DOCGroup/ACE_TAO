@@ -139,6 +139,16 @@ namespace TAO
         TAO::Any_Insert_Policy_Stream>
   {
   };
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  template<>
+  class TAO_PortableServer_Export SArg_Traits<std::wstring>
+    : public Basic_SArg_Traits_T<
+        std::wstring,
+        TAO::Any_Insert_Policy_Stream>
+  {
+  };
+#endif
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
