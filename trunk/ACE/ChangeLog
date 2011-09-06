@@ -1,3 +1,9 @@
+Tue Sep  6 09:36:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed rnq option, that is now default, added versioned namespace
+          support
+
 Wed Aug 31 11:43:13 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iOS.GNU:
