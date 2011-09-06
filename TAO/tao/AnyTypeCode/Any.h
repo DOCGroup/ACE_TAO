@@ -308,6 +308,10 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Object_ptr);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Object_ptr *);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const std::string &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::string *);
+#if !defined(ACE_LACKS_STD_WSTRING)
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const std::wstring &);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, std::wstring *);
+#endif
 
 /// Typesafe extraction.
 
@@ -339,6 +343,10 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        std::string &);
+#if !defined(ACE_LACKS_STD_WSTRING)
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
+                                       std::wstring &);
+#endif
 
 #ifdef ACE_ANY_OPS_USE_NAMESPACE
 }

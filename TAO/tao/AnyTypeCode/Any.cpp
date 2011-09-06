@@ -527,8 +527,22 @@ operator <<= (CORBA::Any &any, const std::string & str)
 void
 operator <<= (CORBA::Any &, std::string *)
 {
-  // TODO
+  // @todo
 }
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+void
+operator <<= (CORBA::Any &any, const std::wstring & str)
+{
+  any <<= str.c_str ();
+}
+
+void
+operator <<= (CORBA::Any &, std::wstring *)
+{
+  // @todo
+}
+#endif
 
 // Extraction: these are safe and hence we have to check that the
 // typecode of the Any is equal to the one we are trying to extract
@@ -744,6 +758,18 @@ operator >>= (const CORBA::Any &any, std::string &str)
   ACE::strdelete (const_cast <char *> (buf));
   return flag;
 }
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+CORBA::Boolean
+operator >>= (const CORBA::Any &any, std::wstring &str)
+{
+  const wchar_t *buf = 0;
+  CORBA::Boolean const flag = any >>= buf;
+  str.assign (buf);
+  ACE::strdelete (const_cast <wchar_t *> (buf));
+  return flag;
+}
+#endif
 
 #ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
