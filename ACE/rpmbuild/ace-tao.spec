@@ -29,7 +29,7 @@
 %{!?_with_xt: %{!?_without_xt: %define _without_xt --without-xt}}
 %{!?_with_fox: %{!?_without_fox: %define _without_fox --without-fox}}
 %{!?_with_qt: %{!?_without_qt: %define _without_qt --without-qt}}
-%{!?_with_inline: %{!?_without_inline: %define _without_inline 0}}
+%{!?_with_inline: %{!?_without_inline: %define _without_inline --without-inline}}
 %{!?_with_versioned: %{!?_without_versioned: %define _without_versioned 0}}
 #
 # Read: It's an error if both or neither required options exist.
@@ -966,52 +966,8 @@ EOF
 # Need to regenerate all of the GNUMakefiles ...
 bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc
 
-MAKECMD="make %{?_smp_mflags}"
-
-# build ACE components
-for ace_comp in \
-    ace \
-    Kokyu \
-    ACEXML \
-    apps/gperf \
-    protocols;
-do
-    $MAKECMD -C $ACE_ROOT/$ace_comp;
-done
-
-# build TAO components
-$MAKECMD -C $TAO_ROOT/TAO_IDL
-$MAKECMD -C $TAO_ROOT/tao
-
-# Instead of "$MAKECMD -C $TAO_ROOT/orbsvcs" use the list from
-# $ACE_ROOT/orbsvcs/GNUmakefile less the performance-tests, tests and
-# examples.
-for orbsvcs_comp in \
-    TAO_Service \
-    orbsvcs \
-    Trading_Service \
-    Time_Service \
-    Scheduling_Service \
-    Notify_Service \
-    Naming_Service \
-    Logging_Service \
-    LoadBalancer \
-    LifeCycle_Service \
-    ImplRepo_Service \
-    IFR_Service \
-    Fault_Notifier \
-    Fault_Detector \
-    FT_ReplicationManager \
-    FTRT_Event_Service \
-    Event_Service \
-    Dump_Schedule \
-    CosEvent_Service \
-    Concurrency_Service;
-do
-    $MAKECMD -C $TAO_ROOT/orbsvcs/$orbsvcs_comp;
-done
-
-$MAKECMD -C $TAO_ROOT/utils
+# Make everything that we have generated for
+make %{?_smp_mflags} -C $TAO_ROOT
 
 %endif
 
