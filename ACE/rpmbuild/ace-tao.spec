@@ -5,22 +5,21 @@
 
 # Conditional build
 # Default values are
-#                    --with rnq         (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#                    --with ipv6        (IPv6 support)
-#                    --with opt         (Optimized build)
-#                    --with zlib        (Zlib compressor)
-#                    --with bzip2       (Bzip2 compressor)
-#                    --without autoconf (Use MPC to build)
-#                    --without fltk     (No ftlk support)
-#                    --without tk       (No tk support)
-#                    --without xt       (No xt support)
-#                    --without fox      (No fox support)
-#                    --without qt       (No qt support)
-#                    --without inline   (Code inlining disabled)
+#                    --with ipv6         (IPv6 support)
+#                    --with opt          (Optimized build)
+#                    --with zlib         (Zlib compressor)
+#                    --with bzip2        (Bzip2 compressor)
+#                    --without autoconf  (Use MPC to build)
+#                    --without fltk      (No ftlk support)
+#                    --without tk        (No tk support)
+#                    --without xt        (No xt support)
+#                    --without fox       (No fox support)
+#                    --without qt        (No qt support)
+#                    --without inline    (Code inlining disabled)
+#                    --without versioned (Versioned namespace)
 
 #
 # Read: If neither macro exists, then add the default definition.
-%{!?_with_rnq: %{!?_without_rnq: %define _with_rnq --with-rnq}}
 %{!?_with_ipv6: %{!?_without_ipv6: %define _with_ipv6 --with-ipv6}}
 %{!?_with_opt: %{!?_without_opt: %define _with_opt --with-opt}}
 %{!?_with_zlib: %{!?_without_zlib: %define _with_zlib --with-zlib}}
@@ -31,9 +30,9 @@
 %{!?_with_fox: %{!?_without_fox: %define _without_fox --without-fox}}
 %{!?_with_qt: %{!?_without_qt: %define _without_qt --without-qt}}
 %{!?_with_inline: %{!?_without_inline: %define _without_inline 0}}
+%{!?_with_versioned: %{!?_without_versioned: %define _without_versioned 0}}
 #
 # Read: It's an error if both or neither required options exist.
-%{?_with_rnq: %{?_without_rnq: %{error: both _with_rnq and _without_rnq}}}
 %{?_with_ipv6: %{?_without_ipv6: %{error: both _with_ipv6 and _without_ipv6}}}
 %{?_with_opt: %{?_without_opt: %{error: both _with_opt and _without_opt}}}
 %{?_with_zlib: %{?_without_zlib: %{error: both _with_zlib and _without_zlib}}}
@@ -44,6 +43,7 @@
 %{?_with_fox: %{?_without_fox: %{error: both _with_fox and _without_fox}}}
 %{?_with_qt: %{?_without_qt: %{error: both _with_qt and _without_qt}}}
 %{?_with_inline: %{?_without_inline: %{error: both _with_inline and _without_inline}}}
+%{?_with_versioned: %{?_without_versioned: %{error: both _with_versioned and _without_versioned}}}
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
@@ -832,13 +832,6 @@ cat >> $ACE_ROOT/ace/config.h << EOF
 EOF
 %endif
 
-# If rnq support is indicated insert some lines into the config.h file
-%if %{?_with_rnq:1}%{!?_with_rnq:0}
-cat >> $ACE_ROOT/ace/config.h << EOF
-#define ACE_HAS_REACTOR_NOTIFICATION_QUEUE
-EOF
-%endif
-
 # Include platform include
 cat >> $ACE_ROOT/ace/config.h << EOF
 #include "ace/config-linux.h"
@@ -950,6 +943,11 @@ zlib = 1
 EOF
 %endif
 
+%if %{?_with_versioned:1}%{!?_with_versioned:0}
+cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
+versioned_namespace = 1
+EOF
+%endif
 
 # We don't use default.features to enable ipv6 cause it conflicts w/
 # the config.h generated version.  Config.h is superior because it is
