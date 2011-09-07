@@ -251,32 +251,34 @@ int Snmp::trap( Pdu &pdu, UdpTarget &target)
 // length string removes the override.
 void Snmp::override_host_name(const char* name)
 {
-        if (name)
-        {
-                ACE_OS::strncpy(host_name_, name, MAXHOSTNAMELEN);
-                host_name_[MAXHOSTNAMELEN-1] = 0;
-        }
-        else {
-                host_name_[0] = 0;
-        }
+  if (name)
+  {
+    ACE_OS::strncpy(host_name_, name, MAXHOSTNAMELEN);
+    host_name_[MAXHOSTNAMELEN-1] = 0;
+  }
+  else {
+    host_name_[0] = 0;
+  }
 }
 
 // Returns the current host name in the supplied string.
 void Snmp::get_host_name(char* name, int len)
 {
-        if (name)
-        {
-                if (ACE_OS::strlen(host_name_) > 0)
-                {
-                        ACE_OS::strncpy(name, host_name_, len);
-                        name[len-1] = 0;
-                }
-                else
-                {
-                        if (ACE_OS::hostname(name, len-1) == -1)
-                                name[0] = 0;
-                }
-        }
+  if (name)
+  {
+    if (ACE_OS::strlen(host_name_) > 0)
+    {
+      ACE_OS::strncpy(name, host_name_, len);
+      name[len-1] = 0;
+    }
+    else
+    {
+      if (ACE_OS::hostname(name, len-1) == -1)
+        name[0] = 0;
+    }
+  }
 }
 
-Snmp_Result::~Snmp_Result() {}
+Snmp_Result::~Snmp_Result()
+{
+}

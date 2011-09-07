@@ -48,32 +48,32 @@
  */
 class ASNMP_Export Gauge32: public SnmpUInt32
 {
-  public:
-     /// constructor with a value
-     Gauge32( const unsigned long i = 0);
+public:
+  /// constructor with a value
+  Gauge32( const unsigned long i = 0);
 
-     /// copy constructor
-     Gauge32 ( const Gauge32 &g);
+  /// copy constructor
+  Gauge32 ( const Gauge32 &g);
 
-     /// destructor for a Gauge32 (ensure that Value::~Value() is overridden)
-     ~Gauge32();
+  /// destructor for a Gauge32 (ensure that Value::~Value() is overridden)
+  ~Gauge32();
 
-     /// syntax type
-     SmiUINT32 get_syntax();
+  /// syntax type
+  SmiUINT32 get_syntax();
 
-     /// create a new instance of this Value
-     SnmpSyntax *clone() const;
+  /// create a new instance of this Value
+  SnmpSyntax *clone() const;
 
-     /// overloaded assignment
-     Gauge32& operator=( const Gauge32 &uli);
+  /// overloaded assignment
+  Gauge32& operator=( const Gauge32 &uli);
 
-     /// overloaded assignment
-     Gauge32& operator=( const unsigned long i);
+  /// overloaded assignment
+  Gauge32& operator=( const unsigned long i);
 
-     /// otherwise, behave like an unsigned int
-     operator unsigned long();
+  /// otherwise, behave like an unsigned int
+  operator unsigned long();
 
-     /// copy an instance of this Value
-     SnmpSyntax& operator=( SnmpSyntax &val);
+  /// copy an instance of this Value
+  SnmpSyntax& operator=( SnmpSyntax &val);
 };
 #endif //GAUGE_

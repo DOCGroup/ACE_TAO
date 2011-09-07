@@ -150,43 +150,42 @@ public:
   /// return fomatted version of this object
   const char *to_string();
 
+protected:
+  /// pointer to array of Vbs
+  Vb *vbs_[MAX_VBS];
 
-  protected:
-    /// pointer to array of Vbs
-    Vb *vbs_[MAX_VBS];
+  /// count of Vbs
+  int vb_count_;
 
-    /// count of Vbs
-    int vb_count_;
+  /// SMI error status
+  int error_status_;
 
-    /// SMI error status
-    int error_status_;
+  /// SMI error index
+  int error_index_;
 
-    /// SMI error index
-    int error_index_;
+  /// valid boolean status of object construction
+  /// SMI request id
+  int validity_;
+  unsigned long request_id_;
 
-    /// valid boolean status of object construction
-    /// SMI request id
-    int validity_;
-    unsigned long request_id_;
+  /// derived at run time based on request type
+  unsigned short pdu_type_;
 
-    /// derived at run time based on request type
-    unsigned short pdu_type_;
+  /**
+    * a timestamp associated with an infor
+    * for notify Pdu objects only
+    * traps & notifies
+    */
+  TimeTicks notify_timestamp_;
 
-    /**
-     * a timestamp associated with an infor
-     * for notify Pdu objects only
-     * traps & notifies
-     */
-    TimeTicks notify_timestamp_;
+  /// an id
+  Oid notify_id_;
 
-    /// an id
-    Oid notify_id_;
+  Oid notify_enterprise_;
 
-    Oid notify_enterprise_;
-
-   private:
-   /// buffer for to_string()
-   char *output_;
+private:
+  /// buffer for to_string()
+  char *output_;
 };
 
 
@@ -197,22 +196,22 @@ public:
  */
 class ASNMP_Export VbIter
 {
-   public:
-   /// default constructor
-   VbIter(Pdu& pdu);
+public:
+  /// default constructor
+  VbIter(Pdu& pdu);
 
-   /// returns 1 if ok, else 0 if none left
-   int next(Vb& vb);
+  /// returns 1 if ok, else 0 if none left
+  int next(Vb& vb);
 
-  private:
-   /// disallow copy constructor use
-   VbIter(const VbIter&);
+private:
+  /// disallow copy constructor use
+  VbIter(const VbIter&);
 
-   /// current object in list
-   int idx_;
+  /// current object in list
+  int idx_;
 
-   /// ptr to pdu being interated over
-   Pdu *pdu_;
+  /// ptr to pdu being interated over
+  Pdu *pdu_;
 };
 
 #endif //PDU_CLS_

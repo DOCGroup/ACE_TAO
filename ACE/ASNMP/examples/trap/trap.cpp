@@ -7,8 +7,6 @@
  *
  *  Sample application demonstrating synchronous Snmp::trap API
  *  to send to an SNMP Version 1 trap listener app.
- *
- *
  */
 //=============================================================================
 
