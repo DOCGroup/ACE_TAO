@@ -129,8 +129,10 @@ be_util::prep_be_arg (char *s)
   static const char arg_include[]          = "export_include=";
   static const char skel_arg_macro[]       = "skel_export_macro=";
   static const char skel_arg_include[]     = "skel_export_include=";
+  static const char skel_arg_file[]        = "skel_export_file=";
   static const char stub_arg_macro[]       = "stub_export_macro=";
   static const char stub_arg_include[]     = "stub_export_include=";
+  static const char stub_arg_file[]        = "stub_export_file=";
   static const char anyop_arg_macro[]      = "anyop_export_macro=";
   static const char anyop_arg_include[]    = "anyop_export_include=";
   static const char exec_arg_macro[]       = "exec_export_macro=";
@@ -180,6 +182,11 @@ be_util::prep_be_arg (char *s)
           char* val = arg + sizeof (skel_arg_include) - 1;
           be_global->skel_export_include (val);
         }
+      else if (ACE_OS::strstr (arg, skel_arg_file) == arg)
+        {
+          char* val = arg + sizeof (skel_arg_file) - 1;
+          be_global->skel_export_file (val);
+        }
       else if (ACE_OS::strstr (arg, stub_arg_macro) == arg)
         {
           char* val = arg + sizeof (stub_arg_macro) - 1;
@@ -189,6 +196,11 @@ be_util::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (stub_arg_include) - 1;
           be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, stub_arg_file) == arg)
+        {
+          char* val = arg + sizeof (stub_arg_file) - 1;
+          be_global->stub_export_file (val);
         }
       else if (ACE_OS::strstr (arg, anyop_arg_macro) == arg)
         {
@@ -387,6 +399,11 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Wb,stub_export_file=<filename>\t\tsets export ")
+      ACE_TEXT ("file for client only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Wb,skel_export_macro=<macro name>\t\tsets export ")
       ACE_TEXT ("macro for server files only\n")
     ));
@@ -394,6 +411,11 @@ be_util::usage (void)
       LM_DEBUG,
       ACE_TEXT (" -Wb,skel_export_include=<include path>\t\tsets export ")
       ACE_TEXT ("include file for server only\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,skel_export_file=<include path>\t\tsets export ")
+      ACE_TEXT ("file for server only\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
