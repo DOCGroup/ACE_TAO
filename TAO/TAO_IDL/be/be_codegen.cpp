@@ -1976,11 +1976,11 @@ void
 TAO_CodeGen::gen_export_files (void)
 {
   if (be_global->gen_stub_export_hdr_file ()
-      && be_global->stub_export_macro ()  != 0
-      && be_global->stub_export_include () != 0)
+      && be_global->stub_export_macro () != 0
+      && (be_global->stub_export_include () != 0 || be_global->stub_export_file () != 0))
     {
       this->gen_export_file (
-        be_global->stub_export_include (),
+        (be_global->stub_export_file () != 0) ? be_global->stub_export_file () : be_global->stub_export_include (),
         be_global->stub_export_macro (),
         "stub");
     }
@@ -1990,7 +1990,7 @@ TAO_CodeGen::gen_export_files (void)
       && be_global->skel_export_include () != 0)
     {
       this->gen_export_file (
-        be_global->skel_export_include (),
+        (be_global->skel_export_file () != 0) ? be_global->skel_export_file () : be_global->skel_export_include (),
         be_global->skel_export_macro (),
         "skel",
         true);
@@ -2334,8 +2334,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       "tao/ORB_Constants.h",
       this->client_header_
     );
-
-  // Conditionally included.
 
   // DDS/DCPS zero-copy read sequence type support.
   if (idl_global->dcps_support_zero_copy_read ())

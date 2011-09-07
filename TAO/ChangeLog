@@ -1,3 +1,14 @@
+Wed Sep  7 17:27:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/modules/IDLHelper.pm:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_global.h:
+          Added skel_export_file and stub_export_file to define an explicit
+          filename for these export files that are different than the stub/skel
+          export_include which could be a full path. This fixes bugzilla 3980
+
 Tue Sep  6 11:45:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Base.h:
