@@ -31,7 +31,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_CodecFactory_Export TAO_CodecFactory_Loader
+class TAO_CODECFACTORY_Export TAO_CodecFactory_Loader
   : public TAO_Object_Loader
 {
 public:
@@ -48,7 +48,7 @@ static int
 TAO_Requires_CodecFactory_Initializer = TAO_CodecFactory_Loader::Initializer ();
 
 ACE_STATIC_SVC_DECLARE (TAO_CodecFactory_Loader)
-ACE_FACTORY_DECLARE (TAO_CodecFactory, TAO_CodecFactory_Loader)
+ACE_FACTORY_DECLARE (TAO_CODECFACTORY, TAO_CodecFactory_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

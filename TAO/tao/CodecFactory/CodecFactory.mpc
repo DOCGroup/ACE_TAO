@@ -3,18 +3,19 @@ project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   IDL_Files {
     idlflags += -Gp -Gd -Sci -SS -Sorb -Sal -GX \
-                -Wb,export_macro=TAO_CodecFactory_Export \
-                -Wb,export_include=tao/CodecFactory/codecfactory_export.h \
+                -Wb,stub_export_macro=TAO_CODECFACTORY_Export \
+                -Wb,stub_export_include=tao/CodecFactory/codecfactory_export.h \
+                -Wb,stub_export_file=codecfactory_export.h \
                 -Wb,include_guard=TAO_CODECFACTORY_SAFE_INCLUDE \
                 -Wb,safe_include=tao/CodecFactory/CodecFactory.h \
-                -iC tao/CodecFactory
+                -iC tao/CodecFactory -Gxhst
     idlflags -= -Sa -St
     IOP_Codec.pidl
   }
 
   IDL_Files {
     idlflags += -Sci -SS -Sorb -Sa -GX \
-                -Wb,export_macro=TAO_CodecFactory_Export \
+                -Wb,export_macro=TAO_CODECFACTORY_Export \
                 -Wb,export_include=tao/CodecFactory/codecfactory_export.h \
                 -Wb,unique_include=tao/CodecFactory/CodecFactory.h \
                 -iC CodecFactory
