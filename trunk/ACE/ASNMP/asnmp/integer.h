@@ -49,45 +49,44 @@
  */
 class ASNMP_Export SnmpUInt32 : public SnmpSyntax
 {
+public:
+  /// default constructor
+  SnmpUInt32 (const unsigned long i = 0);
 
-  public:
-     /// default constructor
-     SnmpUInt32 (const unsigned long i = 0);
+  /// copy constructor
+  SnmpUInt32( const SnmpUInt32 &c);
 
-     /// copy constructor
-     SnmpUInt32( const SnmpUInt32 &c);
+  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
+  virtual ~SnmpUInt32();
 
-     /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-     virtual ~SnmpUInt32();
+  /// syntax type
+  virtual SmiUINT32 get_syntax();
 
-     /// syntax type
-     virtual SmiUINT32 get_syntax();
+  /// overloaded assignment
+  SnmpUInt32& operator=( const unsigned long i);
 
-     /// overloaded assignment
-     SnmpUInt32& operator=( const unsigned long i);
+  /// overloaded assignment
+  SnmpUInt32& operator=( const SnmpUInt32 &uli);
 
-     /// overloaded assignment
-     SnmpUInt32& operator=( const SnmpUInt32 &uli);
+  /// otherwise, behave like an unsigned long int
+  operator unsigned long();
 
-     /// otherwise, behave like an unsigned long int
-     operator unsigned long();
+  /// get a printable ASCII value
+  virtual const char *to_string();
 
-     /// get a printable ASCII value
-     virtual const char *to_string();
+  /// create a new instance of this Value
+  virtual SnmpSyntax *clone() const;
 
-     /// create a new instance of this Value
-     virtual SnmpSyntax *clone() const;
+  /// copy an instance of this Value
+  SnmpSyntax& operator=( SnmpSyntax &val);
 
-     /// copy an instance of this Value
-     SnmpSyntax& operator=( SnmpSyntax &val);
+  /// did object construct properly
+  int valid() const;
 
-     /// did object construct properly
-     int valid() const;
-
-  protected:
-    /// contain string representation of object
-    int valid_flag;
-    char output_buffer[INTOUTBUF];
+protected:
+  /// contain string representation of object
+  int valid_flag;
+  char output_buffer[INTOUTBUF];
 };
 
 
@@ -99,44 +98,44 @@ class ASNMP_Export SnmpUInt32 : public SnmpSyntax
    */
 class ASNMP_Export SnmpInt32 : public SnmpSyntax
 {
-  public:
-     /// constructor with value
-     SnmpInt32 (const long i = 0);
+public:
+  /// constructor with value
+  SnmpInt32 (const long i = 0);
 
-     /// constructor with value
-     SnmpInt32 (const SnmpInt32 &c);
+  /// constructor with value
+  SnmpInt32 (const SnmpInt32 &c);
 
-     /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-     virtual ~SnmpInt32();
+  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
+  virtual ~SnmpInt32();
 
-     /// syntax type
-     virtual SmiUINT32 get_syntax();
+  /// syntax type
+  virtual SmiUINT32 get_syntax();
 
-     /// overloaded assignment
-     SnmpInt32& operator=( const long i);
+  /// overloaded assignment
+  SnmpInt32& operator=( const long i);
 
-     /// overloaded assignment
-     SnmpInt32& operator=( const SnmpInt32 &li);
+  /// overloaded assignment
+  SnmpInt32& operator=( const SnmpInt32 &li);
 
-     /// otherwise, behave like a long int
-     operator long();
+  /// otherwise, behave like a long int
+  operator long();
 
-     /// create a new instance of this Value
-     SnmpSyntax *clone() const;
+  /// create a new instance of this Value
+  SnmpSyntax *clone() const;
 
-     /// copy an instance of this Value
-     SnmpSyntax& operator=( SnmpSyntax &val);
+  /// copy an instance of this Value
+  SnmpSyntax& operator=( SnmpSyntax &val);
 
-     /// get a printable ASCII value
-     const char *to_string();
+  /// get a printable ASCII value
+  const char *to_string();
 
-     /// logical state of object
-     int valid() const;
+  /// logical state of object
+  int valid() const;
 
- protected:
-    /// contain string representation of object
-    int valid_flag;
-    char output_buffer[INTOUTBUF];
+rotected:
+  /// contain string representation of object
+  int valid_flag;
+  char output_buffer[INTOUTBUF];
 };
 
 #endif

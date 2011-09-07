@@ -41,9 +41,12 @@ public:
   int process_requests();
 
 private:
-  UdpTarget tgt_;  // this agent's read, write community strings
-  int get_response(Vb& vb);     // set values for a "get" cmd
-  ACE_High_Res_Timer agent_clock_; // agent "uptime" ticks reported in 1/100 second
+  /// this agent's read, write community strings
+  UdpTarget tgt_;
+  /// set values for a "get" cmd
+  int get_response(Vb& vb);
+  /// agent "uptime" ticks reported in 1/100 second
+  ACE_High_Res_Timer agent_clock_;
 };
 
 #endif /* AGENT_IMPL_H */

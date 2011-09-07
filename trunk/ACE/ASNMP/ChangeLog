@@ -1,3 +1,22 @@
+Wed Sep  7 09:13:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * README:
+        * agent/agent_impl.h:
+        * asnmp/address.h:
+        * asnmp/counter.h:
+        * asnmp/gauge.h:
+        * asnmp/integer.h:
+        * asnmp/pdu.h:
+        * asnmp/sagent.h:
+        * asnmp/smival.h:
+        * asnmp/snmp.cpp:
+        * asnmp/target.h:
+        * asnmp/timetick.h:
+        * asnmp/transaction.h:
+        * asnmp/wpdu.h:
+        * examples/trap/trap.cpp:
+          Layout changes
+
 Mon Apr  6 09:57:22 UTC 2009  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * asnmp/wpdu.cpp:
