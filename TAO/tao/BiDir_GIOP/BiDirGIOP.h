@@ -38,7 +38,7 @@ class TAO_BiDirPolicy_Validator;
  * @brief Class that loads the BiDir library.
  */
 
-class TAO_BiDirGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
+class TAO_BIDIRGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
 
@@ -69,7 +69,7 @@ TAO_Requires_BiDirGIOP_Initializer = TAO_BiDirGIOP_Loader::Initializer ();
 
 
 ACE_STATIC_SVC_DECLARE (TAO_BiDirGIOP_Loader)
-ACE_FACTORY_DECLARE (TAO_BiDirGIOP, TAO_BiDirGIOP_Loader)
+ACE_FACTORY_DECLARE (TAO_BIDIRGIOP, TAO_BiDirGIOP_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
