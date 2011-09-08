@@ -13,11 +13,6 @@ static_libs_only ?= 1
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
-#This is a cross compiled build, $HOST_ROOT must point to local build tools
-TAO_IDL := $(HOST_ROOT)/bin/tao_idl
-TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
-TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
-
 #Standalone toolchain required.
 #Required environment variables are
 #$NDK - install directory for android NDK, at least r5c
@@ -105,4 +100,3 @@ ifeq ($(threads),1)
        PRELIB = @true
     endif # ! PRELIB
 endif
-
