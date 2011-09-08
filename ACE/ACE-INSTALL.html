@@ -1786,7 +1786,10 @@ operation.</p>
 <code>./build/tools/make-standalone-toolchain.sh --toolchain=x86-4.4.3 --arch=x86 --platform=android-9 --install-dir=../x86_tools</code>
 <p>
 The bin directory under the installed standalone toolchain dir must be added to your $PATH</p>
-
+<p>
+When using the Android NDK on a 64bit Linux system you have to install the
+following 32bit packages: <code>libstdc++.i686 glibc.i686</code>
+</p>
 <p>Due to Android's library loading restrictions, static linking is necessary
  for all included libraries.</p>
 
