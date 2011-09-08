@@ -1,3 +1,8 @@
+Thu Sep  8 17:46:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-android.h:
+          Further cleanup and improvements
+
 Thu Sep  8 17:32:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/TP_Reactor.h:
