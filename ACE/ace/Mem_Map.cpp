@@ -93,6 +93,12 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     {
       // Set length to file_request or size_t max.
       this->length_ = ACE_Utils::truncate_cast<size_t> (current_file_length - offset);
+#if defined (ACE_MMAP_NO_ZERO)
+      if (this->length_ == 0)
+        {
+          this->length_ = ACE_OS::getpagesize ();
+        }
+#endif
     }
   else
     {

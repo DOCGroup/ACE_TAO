@@ -1,3 +1,15 @@
+Thu Sep  8 17:48:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdlib.cpp:
+          Fixed compile warnings
+
+        * ace/OS_NS_Thread.inl:
+          Added check for ACE_LACKS_CONDATTR
+
+        * ace/Mem_Map.cpp:
+          When ACE_MMAP_NO_ZERO is defined, when the length if zero we
+          default to the pagesize
+
 Thu Sep  8 17:46:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-android.h:
