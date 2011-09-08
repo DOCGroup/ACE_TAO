@@ -910,7 +910,7 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
       break;
     if (c >= base)
       break;
-    if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+    if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
       any = -1;
     else {
       any = 1;
@@ -978,7 +978,7 @@ ACE_OS::strtoull_emulation (const char *nptr,
         break;
       if (c >= base)
         break;
-      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
         any = -1;
       else
         {
@@ -1048,7 +1048,7 @@ ACE_OS::wcstoull_emulation (const wchar_t *nptr,
         break;
       if (c >= base)
         break;
-      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
         any = -1;
       else
         {
