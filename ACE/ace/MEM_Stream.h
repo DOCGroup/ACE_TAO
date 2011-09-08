@@ -13,7 +13,10 @@
 
 #ifndef ACE_MEM_STREAM_H
 #define ACE_MEM_STREAM_H
+
 #include /**/ "ace/pre.h"
+
+#include /**/ "ace/ACE_export.h"
 
 #include "ace/MEM_IO.h"
 

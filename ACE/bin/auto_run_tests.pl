@@ -240,6 +240,7 @@ foreach my $test_lst (@file_list) {
                 }
 
                 print "\nauto_run_tests_finished: $test Time:$time"."s Result:$result\n";
+                print "==============================================================================\n";
             }
         }
     }
