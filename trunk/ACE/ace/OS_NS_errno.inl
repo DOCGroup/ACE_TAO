@@ -17,8 +17,8 @@ ACE_OS::last_error (void)
   // C++ socket wrapper facades.  On Windows, some things that would
   // use errno on UNIX require ::GetLastError(), so this method tries
   // to shield the rest of ACE from having to know about this.
-  int lerror = ::GetLastError ();
-  int lerrno = errno;
+  int const lerror = ::GetLastError ();
+  int const lerrno = errno;
   return lerrno == 0 ? lerror : lerrno;
 #else
   return errno;

@@ -131,7 +131,7 @@ private:
 
   /// Flag that indicate whether the thread that created this object
   /// owns the token or not. A value of false indicates that this class
-  /// hasnt got the token (and hence the thread) and a value of true
+  /// hasn't got the token (and hence the thread) and a value of true
   /// vice-versa.
   bool owner_;
 

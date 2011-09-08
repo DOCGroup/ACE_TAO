@@ -1,3 +1,37 @@
+Thu Sep  8 17:32:48 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/TP_Reactor.h:
+          Typo fixed
+
+        * ace/Process_Manager.cpp:
+          Layout changes
+
+        * ace/config-sunos5.5.h:
+          Removed old comment
+
+        * ace/Signal.h:
+          Doxygen cleanup
+
+        * ace/OS_NS_errno.inl:
+          Const changes
+
+        * ace/OS_NS_errno.h:
+          Only define ACE_ERRNO_TYPE when it is not defined yet, that way we
+          can just set it in config-android.h
+
+        * ace/config-android.h:
+          Cleanup and set various defines needed to get correct runtime
+          behavior
+
+        * bin/PerlACE/Process_VMS.pm:
+          Chorus support removal
+
+        * bin/PerlACE/README:
+          Layout changes
+
+        * include/makeinclude/platform_android.GNU:
+          Further cleanup
+
 Thu Sep  8 17:20:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_android.GNU:
