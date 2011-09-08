@@ -103,7 +103,7 @@ sub Spawn ()
 
     my $program = $self->Executable ();
     my $cwdrel = dirname ($program);
-    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"} : $ENV{"ACE_ROOT"};
+    my $prjroot = defined $ENV{'ACE_RUN_VX_PRJ_ROOT'} ? $ENV{'ACE_RUN_VX_PRJ_ROOT'} : $ENV{'ACE_ROOT'};
     if (length ($cwdrel) > 0) {
         $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
     }
@@ -124,32 +124,32 @@ sub Spawn ()
     my $cmdnr = 0;
     my $arguments = "";
     my $prompt = '';
-    my $exesubdir = defined $ENV{"ACE_RUN_VX_EXE_SUBDIR"} ? $ENV{"ACE_RUN_VX_EXE_SUBDIR"} : "";
+    my $exesubdir = defined $ENV{'ACE_RUN_VX_EXE_SUBDIR'} ? $ENV{'ACE_RUN_VX_EXE_SUBDIR'} : "";
 
-    if (defined $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"}) {
-      if (defined $ENV{"ACE_RUN_VX_STARTUP_SCRIPT_ROOT"}) {
+    if (defined $ENV{'ACE_RUN_VX_STARTUP_SCRIPT'}) {
+      if (defined $ENV{'ACE_RUN_VX_STARTUP_SCRIPT_ROOT'}) {
         @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_STARTUP_SCRIPT_ROOT'} . '"';
       }
-      @cmds[$cmdnr++] = '< ' . $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"};
+      @cmds[$cmdnr++] = '< ' . $ENV{'ACE_RUN_VX_STARTUP_SCRIPT'};
     }
 
-    if (defined $ENV{"ACE_RUN_VX_STARTUP_COMMAND"}) {
-      @cmds[$cmdnr++] = $ENV{"ACE_RUN_VX_STARTUP_COMMAND"};
+    if (defined $ENV{'ACE_RUN_VX_STARTUP_COMMAND'}) {
+      @cmds[$cmdnr++] = $ENV{'ACE_RUN_VX_STARTUP_COMMAND'};
     }
 
-        @cmds[$cmdnr++] = 'cd ' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . "/" . $exesubdir;
-        @cmds[$cmdnr++] = 'set TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel;
+        @cmds[$cmdnr++] = 'cd ' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . "/" . $exesubdir;
+        @cmds[$cmdnr++] = 'set TMPDIR=' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel;
 
         if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
-            @cmds[$cmdnr++] = 'set ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"};
+            @cmds[$cmdnr++] = 'set ACE_DEBUG=' . $ENV{'ACE_RUN_ACE_DEBUG'};
         }
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
-            @cmds[$cmdnr++] = 'set TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"};
+            @cmds[$cmdnr++] = 'set TAO_ORB_DEBUG=' . $ENV{'ACE_RUN_TAO_ORB_DEBUG'};
         }
 
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
-            @cmds[$cmdnr++] = 'set ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"};
+            @cmds[$cmdnr++] = 'set ACE_LD_SEARCH_PATH=' . $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'};
         }
 
         my(@load_commands);
@@ -193,52 +193,52 @@ sub Spawn ()
 my $telnet_port = $ENV{'ACE_RUN_VX_TGT_TELNET_PORT'};
 my $telnet_host = $ENV{'ACE_RUN_VX_TGT_TELNET_HOST'};
 if (!defined $telnet_host)  {
-  $telnet_host = $ENV{'ACE_RUN_VX_TGTHOST'};
+    $telnet_host = $ENV{'ACE_RUN_VX_TGTHOST'};
 }
 if (!defined $telnet_port)  {
-  $telnet_port = 23;
+    $telnet_port = 23;
 }
 my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
 if (!defined $t) {
-  die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
+    die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
 }
 $t->open();
 
 my $ok = false;
 my $buf = '';
 while (1) {
-  my $blk = $t->get;
-  print $blk;
-  $buf .= $blk;
-  if ($buf =~ /$prompt/) {
-    $ok = true;
-    last;
-  }
+    my $blk = $t->get;
+    print $blk;
+    $buf .= $blk;
+    if ($buf =~ /$prompt/) {
+        $ok = true;
+        last;
+    }
 }
 if ($ok) {
-  my $i = 0;
-  my @lines;
-  while($i < $cmdnr) {
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print @cmds[$i]."\n";
-    }
-    if ($t->print (@cmds[$i++])) {
-      my $buf = '';
-      while (1) {
-        my $blk = $t->get;
-        printf $blk;
-        $buf .= $blk;
-        if ($buf =~ /$prompt/) {
-          last;
+    my $i = 0;
+    my @lines;
+    while($i < $cmdnr) {
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print @cmds[$i]."\n";
         }
-      }
-    } else {
-      print $t->errmsg;
+        if ($t->print (@cmds[$i++])) {
+            my $buf = '';
+            while (1) {
+                my $blk = $t->get;
+                printf $blk;
+                $buf .= $blk;
+                if ($buf =~ /$prompt/) {
+                    last;
+                }
+            }
+        } else {
+            print $t->errmsg;
+        }
     }
-  }
 }
 else {
-  die "ERROR: No prompt appeared\n";
+    die "ERROR: No prompt appeared\n";
 }
 $t->close();
 sleep(2);
@@ -298,18 +298,18 @@ sub Wait ($)
     my $self = shift;
     my $timeout = shift;
     if (!defined $timeout || $timeout < 0) {
-      $timeout = INFINITE;
+        $timeout = INFINITE;
     } else {
-      $timeout = $timeout * 1000 * $PerlACE::ProcessVX::WAIT_DELAY_FACTOR;
+        $timeout = $timeout * 1000 * $PerlACE::ProcessVX::WAIT_DELAY_FACTOR;
     }
 
     my $result = 0;
 
     if ($self->{RUNNING}) {
-      $result = Win32::Process::Wait ($self->{PROCESS}, $timeout);
-      if ($result == 0) {
-        return -1;
-      }
+        $result = Win32::Process::Wait ($self->{PROCESS}, $timeout);
+        if ($result == 0) {
+            return -1;
+        }
     }
     Win32::Process::GetExitCode ($self->{PROCESS}, $result);
     if ($result != 0) {
@@ -335,35 +335,34 @@ sub Kill ()
 
 sub handle_vxtest_file
 {
-  my $self = shift;
-  my $vxtestfile = shift;
-  my $vx_ref = shift;
-  my $unld_ref = shift;
-  my $fh = new FileHandle;
+    my $self = shift;
+    my $vxtestfile = shift;
+    my $vx_ref = shift;
+    my $unld_ref = shift;
+    my $fh = new FileHandle;
 
-  if (defined $self->{TARGET} && $self->{TARGET}->SystemLibs())
-    {
-      my @tokens = split(/;/, $self->{TARGET}->SystemLibs());
-      foreach my $token (@tokens) {
-        push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/" . $token . " .";
-      }
+    if (defined $self->{TARGET} && $self->{TARGET}->SystemLibs()) {
+        my @tokens = split(/;/, $self->{TARGET}->SystemLibs());
+        foreach my $token (@tokens) {
+            push @$vx_ref, "copy " . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/lib/" . $token . " .";
+        }
     }
-  if (!$PerlACE::Static) {
-    if (open ($fh, $vxtestfile)) {
-      my $line1 = <$fh>;
-      chomp $line1;
-      while(<$fh>) {
-        $line1 = $_;
-        chomp $line1;
-        push @$vx_ref, "copy " . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/lib/$line1" . "d.dll .";
-        unshift @$unld_ref, "del $line1" . "d.dll";
-      }
-      close $fh;
-    } else {
-      return 0;
+    if (!$PerlACE::Static) {
+        if (open ($fh, $vxtestfile)) {
+            my $line1 = <$fh>;
+            chomp $line1;
+            while(<$fh>) {
+                $line1 = $_;
+                chomp $line1;
+                push @$vx_ref, "copy " . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/lib/$line1" . "d.dll .";
+                unshift @$unld_ref, "del $line1" . "d.dll";
+            }
+            close $fh;
+        } else {
+            return 0;
+        }
     }
-  }
-  return 1;
+    return 1;
 }
 
 
