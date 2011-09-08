@@ -1,6 +1,14 @@
 Thu Sep  8 13:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
+          Added another 32bit package for Android
+
+        * docs/bczar/bczar.html:
+          Added some packages
+
+Thu Sep  8 13:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
           Documented which 32bit packages need to be installed on a 64bit
           linux host for the Android port
 

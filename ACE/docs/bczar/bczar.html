@@ -33,7 +33,7 @@
       <li>
         Keep an eye on the <a href="http://www.dre.vanderbilt.edu/Stats">footprint and
           performance</a> stats. Any abnormal changes should be brought to the
-        attention of the developer resposible for it or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu">
+        attention of the developer responsible for it or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu">
           devo group</a>.
       <li>
       Keep the builds ticking. Any red on the "Last Finished" column in the
@@ -107,7 +107,7 @@
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git</code></li>
+            <li><code>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git glibc.i686 libstdc++.i686 ncurses-libs.i686</code></li>
           </ul>
         </li>
         <li>
@@ -205,11 +205,11 @@
       <li>
         Create the kits by executing<br>
         <code>ACE/bin/make_release.py --kit</code><br>
-        This will take somewhere arround 2-4 hours to complete.
+        This will take somewhere around 2-4 hours to complete.
         <ul>
           <li>
             These commands only tags and creates the kits for the software itself, not
-            documentation, this can be started in parrellel with this activity.
+            documentation, this can be started in parallel with this activity.
           </li>
           <li>
             The kits end up in <tt>$DOC_ROOT/packages</tt></li>
@@ -246,7 +246,7 @@
       </code>
       <li>
         After the repository is tagged you can also start generating the doxygen
-        documentation in parrellel with the kit generation above.<br>
+        documentation in parallel with the kit generation above.<br>
         <ul>
           <li>
             Login to a release system you prepared with the same packages as above:<br>
@@ -295,7 +295,7 @@
       </li>
       <li>
         <code>cd $ACE_ROOT</code><br>
-        <code>nohup $ACE_ROOT/bin/generate_rel_manpages &</code><br>
+        <code>$ACE_ROOT/bin/generate_rel_manpages</code><br>
         When this is ready copy the resulting files using<br>
         <code>scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution</code>
       </li></ul>
@@ -422,7 +422,7 @@
         Update in the autobuild archive the file configs/scoreboard/releases.xml with
         the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.theaceorb.nl  Remember to do a changelog entry.</li>
       <li>
-        Update the ACE_wrappers repo (remember to create a changelog entry, and possiably archive the old changelog to the changelog directory if this has become too long):<ul>
+        Update the ACE_wrappers repo (remember to create a changelog entry, and possibly archive the old changelog to the changelog directory if this has become too long):<ul>
         <li>docs/Download.html to show the new release. Make sure you refer to the
         previous_versions directory, that way we can exactly track how many people
         download a specific version.</li>
@@ -491,7 +491,7 @@
       <li>Install your public key to the different machines you have frequent access
       to avoid typing password.</li>
       <li>Update this page if you have any more tips for future build czars :-). This
-      page is in svn under <code>ACE_wrappres/docs/bczar/bczar.html</code></li>
+      page is in svn under <code>ACE_wrappers/docs/bczar/bczar.html</code></li>
     </p></ol>
     <hr>
     <Center>
