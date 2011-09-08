@@ -48,8 +48,6 @@ ifeq ($(ANDROID_ARCH),arm)
 LDFLAGS += -Wl,--fix-cortex-a8
 endif
 
-CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
-
 FLAGS_C_CC += -W -Wall -Wpointer-arith -Wno-psabi
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
