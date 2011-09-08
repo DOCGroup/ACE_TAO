@@ -1,3 +1,20 @@
+Thu Sep  8 08:16:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Lib_Find.cpp:
+          Add support for ACE_DEFAULT_TEMP_DIR
+
+        * ace/MEM_Stream.h:
+          Added missing export include
+
+        * ace/OS_NS_unistd.cpp:
+          Added ACE_HAS_NONCONST_PWRITE
+
+        * ace/Select_Reactor_Base.cpp:
+          Layout change
+
+        * include/makeinclude/platform_android_linux.GNU:
+          Use ?= to make an override possible from platform_macros.GNU
+
 Thu Sep  8 08:14:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ConfigList.pm:

@@ -608,7 +608,13 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
   const char *tmpdir = ACE_OS::getenv ("TMPDIR");
 
   if (tmpdir == 0)
-    tmpdir = "/tmp";
+    {
+#if defined (ACE_DEFAULT_TEMP_DIR)
+      tmpdir = ACE_DEFAULT_TEMP_DIR;
+#else
+      tmpdir = "/tmp";
+#endif
+    }
 
   size_t len = ACE_OS::strlen (tmpdir);
 
