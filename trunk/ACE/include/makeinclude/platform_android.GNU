@@ -18,7 +18,6 @@ TAO_IDL := $(HOST_ROOT)/bin/tao_idl
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
 TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
 
-
 #Standalone toolchain required.
 #Required environment variables are
 #$NDK - install directory for android NDK, at least r5c

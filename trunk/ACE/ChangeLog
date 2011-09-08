@@ -1,3 +1,13 @@
+Thu Sep  8 17:16:26 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+        * docs/bczar/bczar.html:
+          Another 32bit package for android
+
+        * include/makeinclude/platform_android.GNU:
+        * include/makeinclude/platform_android_linux.GNU:
+          Renamed to platform_android.GNU
+
 Thu Sep  8 13:20:55 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
