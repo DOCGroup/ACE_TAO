@@ -263,6 +263,8 @@
 // Platform supplies scandir()
 #define ACE_HAS_SCANDIR
 
+#define ACE_MMAP_NO_ZERO
+
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 
