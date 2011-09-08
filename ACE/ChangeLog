@@ -1,3 +1,25 @@
+Thu Sep  8 08:14:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ConfigList.pm:
+        * bin/PerlACE/Process.pm:
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/ProcessLVRT.pm:
+        * bin/PerlACE/ProcessVX.pm:
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/ProcessVX_Win32.pm:
+        * bin/PerlACE/ProcessWinCE.pm:
+        * bin/PerlACE/ProcessWinCE_Unix.pm:
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Process_VMS.pm:
+        * bin/PerlACE/Process_Win32.pm:
+        * bin/PerlACE/Run_Test.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+        * bin/PerlACE/TestTarget_LVRT.pm:
+        * bin/PerlACE/TestTarget_VxWorks.pm:
+        * bin/PerlACE/TestTarget_WinCE.pm:
+          Extensions to run automatically tests on an Android emulator
+
 Tue Sep  6 09:36:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:

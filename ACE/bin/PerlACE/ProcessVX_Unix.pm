@@ -86,34 +86,34 @@ sub DESTROY
 # This is run by the child process which was forked from Spawn().
 sub expect_telnet
 {
-  my($host, $port, $prompt, $cmdsRef) = @_;
-  my $pid = open(EXP, "|expect -f -") or die "ERROR: Could not run 'expect'";
-  $SIG{'TERM'} = sub {         # If the parent wants to Kill() this process,
-    kill 'TERM', $pid;         # send a SIGTERM to the expect process and
-    $SIG{'TERM'} = 'DEFAULT';  # then go back to the normal handler for TERM
-    kill 'TERM', $$;           # and invoke it.
-  };
-  print EXP <<EOT;
+    my($host, $port, $prompt, $cmdsRef) = @_;
+    my $pid = open(EXP, "|expect -f -") or die "ERROR: Could not run 'expect'";
+    $SIG{'TERM'} = sub {           # If the parent wants to Kill() this process,
+        kill 'TERM', $pid;         # send a SIGTERM to the expect process and
+        $SIG{'TERM'} = 'DEFAULT';  # then go back to the normal handler for TERM
+        kill 'TERM', $$;           # and invoke it.
+    };
+    print EXP <<EOT;
 set timeout -1
 spawn telnet $host $port
 expect -re "$prompt"
 EOT
-  # target login and password are not currently implemented
-  for my $cmd (@$cmdsRef) {
-    my $cmdEsc = $cmd;
-    $cmdEsc =~ s/\"/\\\"/g; # escape quotes
-    print EXP <<EOT;
+    # target login and password are not currently implemented
+    for my $cmd (@$cmdsRef) {
+        my $cmdEsc = $cmd;
+        $cmdEsc =~ s/\"/\\\"/g; # escape quotes
+        print EXP <<EOT;
 send "$cmdEsc\r"
 expect -re "$prompt"
 EOT
-  }
-  print EXP <<EOT;
+    }
+    print EXP <<EOT;
 send "exit\r"
 expect -re "Au revoir!"
 exit 0
 EOT
-  close EXP;
-  waitpid $pid, 0;
+    close EXP;
+    waitpid $pid, 0;
 }
 
 
@@ -151,7 +151,7 @@ sub Spawn ()
 
     my $program = $self->Executable ();
     my $exe_cwdrel = dirname ($program);
-    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"} : $ENV{"ACE_ROOT"};
+    my $prjroot = defined $ENV{'ACE_RUN_VX_PRJ_ROOT'} ? $ENV{'ACE_RUN_VX_PRJ_ROOT'} : $ENV{'ACE_ROOT'};
     $exe_cwdrel = cwd() if length ($exe_cwdrel) == 0;
     $exe_cwdrel = File::Spec->abs2rel($exe_cwdrel, $prjroot);
     my $cwdrel = File::Spec->abs2rel(cwd(), $prjroot);
@@ -161,47 +161,47 @@ sub Spawn ()
     my $cmdnr = 0;
     my $arguments = "";
     my $prompt = '';
-    my $exesubdir = defined $ENV{"ACE_RUN_VX_EXE_SUBDIR"} ? $ENV{"ACE_RUN_VX_EXE_SUBDIR"} : "";
+    my $exesubdir = defined $ENV{'ACE_RUN_VX_EXE_SUBDIR'} ? $ENV{'ACE_RUN_VX_EXE_SUBDIR'} : "";
 
-    if (defined $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"}) {
-      if (defined $ENV{"ACE_RUN_VX_STARTUP_SCRIPT_ROOT"}) {
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_STARTUP_SCRIPT_ROOT'} . '"';
-      }
-      @cmds[$cmdnr++] = '< ' . $ENV{"ACE_RUN_VX_STARTUP_SCRIPT"};
+    if (defined $ENV{'ACE_RUN_VX_STARTUP_SCRIPT'}) {
+        if (defined $ENV{'ACE_RUN_VX_STARTUP_SCRIPT_ROOT'}) {
+            $cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_STARTUP_SCRIPT_ROOT'} . '"';
+        }
+        $cmds[$cmdnr++] = '< ' . $ENV{'ACE_RUN_VX_STARTUP_SCRIPT'};
     }
 
-    if (defined $ENV{"ACE_RUN_VX_STARTUP_COMMAND"}) {
-      @cmds[$cmdnr++] = $ENV{"ACE_RUN_VX_STARTUP_COMMAND"};
+    if (defined $ENV{'ACE_RUN_VX_STARTUP_COMMAND'}) {
+        $cmds[$cmdnr++] = $ENV{'ACE_RUN_VX_STARTUP_COMMAND'};
     }
 
     if ($PerlACE::VxWorks_RTP_Test) {
-        @cmds[$cmdnr++] = 'cmd';
-        if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $self->{SET_VX_DEFGW}) {
-            @cmds[$cmdnr++] = "C mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
+        $cmds[$cmdnr++] = 'cmd';
+        if ( defined $ENV{'ACE_RUN_VX_TGTSVR_DEFGW'} && $self->{SET_VX_DEFGW}) {
+            $cmds[$cmdnr++] = "C mRouteAdd(\"0.0.0.0\", \"" . $ENV{'ACE_RUN_VX_TGTSVR_DEFGW'} . "\", 0,0,0)";
             $PerlACE::ProcessVX::VxDefGw = 0;
         }
 
-        if (defined $ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}) {
+        if (defined $ENV{'ACE_RUN_VX_TGT_STARTUP_SCRIPT'}) {
             my(@start_commands);
-            if (handle_startup_script ($ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}, \@start_commands)) {
+            if (handle_startup_script ($ENV{'ACE_RUN_VX_TGT_STARTUP_SCRIPT'}, \@start_commands)) {
                 push @cmds, @start_commands;
                 $cmdnr += scalar @start_commands;
             }
          }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
-        @cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
+        $cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+        $cmds[$cmdnr++] = 'C putenv("TMPDIR=' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
-            @cmds[$cmdnr++] = 'C putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+            $cmds[$cmdnr++] = 'C putenv("ACE_DEBUG=' . $ENV{'ACE_RUN_ACE_DEBUG'} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
-            @cmds[$cmdnr++] = 'C putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+            $cmds[$cmdnr++] = 'C putenv("TAO_ORB_DEBUG=' . $ENV{'ACE_RUN_TAO_ORB_DEBUG'} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
-            @cmds[$cmdnr++] = 'C putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
+            $cmds[$cmdnr++] = 'C putenv("ACE_LD_SEARCH_PATH=' . $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'} . '")';
         }
         if (defined $self->{TARGET}) {
             my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
@@ -209,27 +209,27 @@ sub Spawn ()
                 if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                     print "INFO: adding target environment $env_key=$env_value\n";
                 }
-                @cmds[$cmdnr++] = 'C putenv("' . $env_key. '=' . $env_value . '")';
+                $cmds[$cmdnr++] = 'C putenv("' . $env_key. '=' . $env_value . '")';
             }
         }
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
-            @cmds[$cmdnr++] = 'C memShow()';
+            $cmds[$cmdnr++] = 'C memShow()';
         }
 
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
-        @cmds[$cmdnr++] = $cmdline;
+        $cmds[$cmdnr++] = $cmdline;
         $prompt = '\[vxWorks \*\]\# $';
     }
     if ($PerlACE::VxWorks_Test) {
-        if ( defined $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} && $PerlACE::ProcessVX::VxDefGw) {
-            @cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{"ACE_RUN_VX_TGTSVR_DEFGW"} . "\", 0,0,0)";
+        if ( defined $ENV{'ACE_RUN_VX_TGTSVR_DEFGW'} && $PerlACE::ProcessVX::VxDefGw) {
+            $cmds[$cmdnr++] = "mRouteAdd(\"0.0.0.0\", \"" . $ENV{'ACE_RUN_VX_TGTSVR_DEFGW'} . "\", 0,0,0)";
             $PerlACE::ProcessVX::VxDefGw = 0;
         }
 
-        if (defined $ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}) {
+        if (defined $ENV{'ACE_RUN_VX_TGT_STARTUP_SCRIPT'}) {
             my(@start_commands);
-            if (handle_startup_script ($ENV{"ACE_RUN_VX_TGT_STARTUP_SCRIPT"}, \@start_commands)) {
+            if (handle_startup_script ($ENV{'ACE_RUN_VX_TGT_STARTUP_SCRIPT'}, \@start_commands)) {
                 push @cmds, @start_commands;
                 $cmdnr += scalar @start_commands;
             }
@@ -238,34 +238,34 @@ sub Spawn ()
         my(@load_commands);
         my(@unload_commands);
         if (!$PerlACE::Static && !$PerlACE::VxWorks_RTP_Test) {
-          my $vxtest_file = $program . '.vxtest';
-          if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
-              @cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
-              push @cmds, @load_commands;
-              $cmdnr += scalar @load_commands;
-          } else {
-              print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
-              return -1;
-          }
+            my $vxtest_file = $program . '.vxtest';
+            if (handle_vxtest_file($self, $vxtest_file, \@load_commands, \@unload_commands)) {
+                  $cmds[$cmdnr++] = "cd \"$ENV{'ACE_RUN_VX_TGTSVR_ROOT'}/lib\"";
+                  push @cmds, @load_commands;
+                  $cmdnr += scalar @load_commands;
+            } else {
+                print STDERR "ERROR: Cannot find <", $vxtest_file, ">\n";
+                return -1;
+            }
         }
 
-        @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $exe_cwdrel . "/" . $exesubdir . '"';
-        @cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{"ACE_RUN_VX_TGTSVR_ROOT"} . "/" . $cwdrel . '")';
+        $cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $exe_cwdrel . "/" . $exesubdir . '"';
+        $cmds[$cmdnr++] = 'putenv("TMPDIR=' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '")';
 
         if (defined $ENV{'ACE_RUN_VX_CHECK_RESOURCES'}) {
-            @cmds[$cmdnr++] = 'memShow()';
+            $cmds[$cmdnr++] = 'memShow()';
         }
 
         if (defined $ENV{'ACE_RUN_ACE_DEBUG'}) {
-            @cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{"ACE_RUN_ACE_DEBUG"} . '")';
+            $cmds[$cmdnr++] = 'putenv("ACE_DEBUG=' . $ENV{'ACE_RUN_ACE_DEBUG'} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_TAO_ORB_DEBUG'}) {
-            @cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{"ACE_RUN_TAO_ORB_DEBUG"} . '")';
+            $cmds[$cmdnr++] = 'putenv("TAO_ORB_DEBUG=' . $ENV{'ACE_RUN_TAO_ORB_DEBUG'} . '")';
         }
 
         if (defined $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'}) {
-            @cmds[$cmdnr++] = 'putenv("ACE_LD_SEARCH_PATH=' . $ENV{"ACE_RUN_ACE_LD_SEARCH_PATH"} . '")';
+            $cmds[$cmdnr++] = 'putenv("ACE_LD_SEARCH_PATH=' . $ENV{'ACE_RUN_ACE_LD_SEARCH_PATH'} . '")';
         }
         if (defined $self->{TARGET}) {
             my $x_env_ref = $self->{TARGET}->{EXTRA_ENV};
@@ -273,11 +273,11 @@ sub Spawn ()
                 if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                     print "INFO: adding target environment $env_key=$env_value\n";
                 }
-                @cmds[$cmdnr++] = 'putenv("' . $env_key. '=' . $env_value . '")';
+                $cmds[$cmdnr++] = 'putenv("' . $env_key. '=' . $env_value . '")';
             }
         }
 
-        @cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
+        $cmds[$cmdnr++] = 'ld <'. $program . $PerlACE::ProcessVX::ExeExt;
         $cmdline = $program . $PerlACE::ProcessVX::ExeExt . ' ' . $self->{ARGUMENTS};
         if (defined $self->{ARGUMENTS}) {
             ($arguments = $self->{ARGUMENTS})=~ s/\"/\\\"/g;
@@ -285,19 +285,18 @@ sub Spawn ()
             $arguments = ",\"" . $arguments . "\"";
         }
         if (defined $ENV{'ACE_RUN_VX_TGTSRV_WORKINGDIR'}) {
-            @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSRV_WORKINGDIR'} . '"';
+            $cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSRV_WORKINGDIR'} . '"';
         } else {
-            @cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
+            $cmds[$cmdnr++] = 'cd "' . $ENV{'ACE_RUN_VX_TGTSVR_ROOT'} . "/" . $cwdrel . '"';
         }
-        @cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
-        @cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
+        $cmds[$cmdnr++] = 'ace_vx_rc = vx_execae(ace_main' . $arguments . ')';
+        $cmds[$cmdnr++] = 'unld "'. $program . $PerlACE::ProcessVX::ExeExt . '"';
         push @cmds, @unload_commands;
         $cmdnr += scalar @unload_commands;
         $prompt = '-> $';
     }
 
-    FORK:
-    {
+    FORK: {
         if ($self->{PROCESS} = fork) {
             #parent here
             bless $self;
@@ -307,85 +306,85 @@ sub Spawn ()
             my $telnet_port = $ENV{'ACE_RUN_VX_TGT_TELNET_PORT'};
             my $telnet_host = $ENV{'ACE_RUN_VX_TGT_TELNET_HOST'};
             if (!defined $telnet_host)  {
-              $telnet_host = $ENV{'ACE_RUN_VX_TGTHOST'};
+                $telnet_host = $ENV{'ACE_RUN_VX_TGTHOST'};
             }
             if (!defined $telnet_port)  {
                 $telnet_port = 23;
             }
             if (defined $ENV{'ACE_RUN_VX_USE_EXPECT'}) {
-              expect_telnet($telnet_host, $telnet_port, $prompt, \@cmds);
-              sleep(2);
-              exit;
+                expect_telnet($telnet_host, $telnet_port, $prompt, \@cmds);
+                sleep(2);
+                exit;
             }
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
                 print "Opening telnet connection <" . $telnet_host . ":". $telnet_port . ">\n";
             }
             my $t = new Net::Telnet(Timeout => 600, Errmode => 'return', Host => $telnet_host, Port => $telnet_port);
             if (!defined $t) {
-              die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
+                die "ERROR: Telnet failed to <" . $telnet_host . ":". $telnet_port . ">";
             }
             my $retries = 10;
             while ($retries--) {
-              if (!$t->open()) {
-                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-                  print "Couldn't open telnet connection; sleeping then retrying\n";
+                if (!$t->open()) {
+                    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                        print "Couldn't open telnet connection; sleeping then retrying\n";
+                    }
+                    if ($retries == 0) {
+                        die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
+                    }
+                    sleep(5);
+                } else {
+                    last;
                 }
-                if ($retries == 0) {
-                  die "ERROR: Telnet open to <" . $telnet_host . ":". $telnet_port . "> " . $t->errmsg;
-                }
-                sleep(5);
-              } else {
-                last;
-              }
             }
 
             my $target_login = $ENV{'ACE_RUN_VX_LOGIN'};
             my $target_password = $ENV{'ACE_RUN_VX_PASSWORD'};
 
             if (defined $target_login)  {
-              $t->waitfor('/VxWorks login: $/');
-              $t->print("$target_login");
+                $t->waitfor('/VxWorks login: $/');
+                $t->print("$target_login");
             }
 
             if (defined $target_password)  {
-              $t->waitfor('/Password: $/');
-              $t->print("$target_password");
+                $t->waitfor('/Password: $/');
+                $t->print("$target_password");
             }
 
             my $buf = '';
             # wait for the prompt
             my $prompt1 = '->[\ ]$';
             while (1) {
-              my $blk = $t->get;
-              print $blk;
-              $buf .= $blk;
-              if ($buf =~ /$prompt1/) {
-                last;
-              }
+                my $blk = $t->get;
+                print $blk;
+                $buf .= $blk;
+                if ($buf =~ /$prompt1/) {
+                    last;
+                }
             }
             if ($buf !~ /$prompt1/) {
-              die "ERROR: Didn't got prompt but got <$buf>";
+                die "ERROR: Didn't got prompt but got <$buf>";
             }
             my $i = 0;
             my @lines;
             while($i < $cmdnr) {
-              if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-                print @cmds[$i]."\n";
-              }
-              if ($t->print (@cmds[$i++])) {
-                # After each command wait for the prompt
-                my $buf = '';
-                while (1) {
-                  my $blk = $t->get;
-                  print $blk;
-                  $buf .= $blk;
-                  if ($buf =~ /$prompt/) {
-                    last;
-                  }
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print $cmds[$i]."\n";
                 }
-              } else {
-                print $t->errmsg;
-              }
+                if ($t->print ($cmds[$i++])) {
+                    # After each command wait for the prompt
+                    my $buf = '';
+                    while (1) {
+                        my $blk = $t->get;
+                        print $blk;
+                        $buf .= $blk;
+                        if ($buf =~ /$prompt/) {
+                            last;
+                        }
+                    }
+                } else {
+                    print $t->errmsg;
+                }
             }
             $t->close();
             sleep(2);
@@ -494,9 +493,9 @@ sub Wait ($)
     my $self = shift;
     my $timeout = shift;
     if (!defined $timeout || $timeout < 0) {
-      waitpid ($self->{PROCESS}, 0);
+        waitpid ($self->{PROCESS}, 0);
     } else {
-      return TimedWait($self, $timeout);
+        return TimedWait($self, $timeout);
     }
 
 }
@@ -507,7 +506,7 @@ sub TimedWait ($)
     my $timeout = shift;
 
     if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
-      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+        $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
     }
 
     while ($timeout-- != 0) {

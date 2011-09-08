@@ -72,7 +72,7 @@ sub new
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
-    $self->{VALGRIND_CMD} = $ENV{"ACE_RUN_VALGRIND_CMD"};
+    $self->{VALGRIND_CMD} = $ENV{'ACE_RUN_VALGRIND_CMD'};
 
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
          if (defined $self->{PURIFY_CMD}) {
@@ -214,16 +214,14 @@ sub Spawn ()
         }
     }
 
-    {
-        $self->{PROCESS} = VmsProcess::Spawn $self->{EXECUTABLE}, $self->{ARGUMENTS};
-        if ($self->{PROCESS}) {
-            #parent here
-            bless $self;
-        }
-        else {
-            # weird fork error
-            print STDERR "ERROR: Can't spawn <" . $self->CommandLine () . ">: $!\n";
-        }
+    $self->{PROCESS} = VmsProcess::Spawn $self->{EXECUTABLE}, $self->{ARGUMENTS};
+    if ($self->{PROCESS}) {
+        #parent here
+        bless $self;
+    }
+    else {
+        # weird fork error
+        print STDERR "ERROR: Can't spawn <" . $self->CommandLine () . ">: $!\n";
     }
     $self->{RUNNING} = 1;
     return 0;
@@ -360,9 +358,9 @@ sub TimedWait ($)
 
 sub kill_all
 {
-  my $procmask = shift;
-  my $target = shift;
-  ## NOT IMPLEMENTED YET
+    my $procmask = shift;
+    my $target = shift;
+    ## NOT IMPLEMENTED YET
 }
 
 1;

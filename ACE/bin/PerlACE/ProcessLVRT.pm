@@ -349,9 +349,9 @@ CHECK:
 
 sub kill_all
 {
-  my $procmask = shift;
-  my $target = shift;
-  ## NOT IMPLEMENTED YET
+    my $procmask = shift;
+    my $target = shift;
+    ## NOT IMPLEMENTED YET
 }
 
 1;
