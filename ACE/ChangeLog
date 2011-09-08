@@ -190,7 +190,7 @@ Wed Aug 10 19:02:21 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
           Renamed the file to be consistent with others, now the name is
           target platform first followed by the build-specific name. The
           settings for cross compilation are now configured inside this
-          platform file, using som assumptions for architecture.
+          platform file, using some assumptions for architecture.
 
           The build for the arm architecture works, but it looks like x86
           still needs work by the NDK team, it was just added in their r6
