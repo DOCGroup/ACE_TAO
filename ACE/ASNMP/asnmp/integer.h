@@ -132,7 +132,7 @@ public:
   /// logical state of object
   int valid() const;
 
-rotected:
+protected:
   /// contain string representation of object
   int valid_flag;
   char output_buffer[INTOUTBUF];
