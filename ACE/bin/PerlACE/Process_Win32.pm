@@ -3,7 +3,7 @@
 
 use PerlACE::Run_Test;
 
-package PerlACE::Process;
+package PerlACE::Process_Win32;
 
 use strict;
 use Win32::Process;
@@ -46,8 +46,8 @@ sub new
     $self->{IGNOREEXESUBDIR} = 0;
     $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
-    $self->{PURIFY_CMD} = $ENV{"ACE_RUN_PURIFY_CMD"};
-    $self->{PURIFY_OPT} = $ENV{"ACE_RUN_PURIFY_OPT"};
+    $self->{PURIFY_CMD} = $ENV{'ACE_RUN_PURIFY_CMD'};
+    $self->{PURIFY_OPT} = $ENV{'ACE_RUN_PURIFY_OPT'};
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
         if (defined $self->{PURIFY_CMD}) {
             $PerlACE::Process::WAIT_DELAY_FACTOR = 10;
@@ -56,7 +56,7 @@ sub new
             $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
         }
     }
-    $self->{WINCE_CTL} = $ENV{"ACE_WINCE_TEST_CONTROLLER"};
+    $self->{WINCE_CTL} = $ENV{'ACE_WINCE_TEST_CONTROLLER'};
 
     bless ($self, $class);
     return $self;
@@ -116,9 +116,9 @@ sub Executable
     # If the target's config has a different ACE_ROOT, rebase the executable
     # from $ACE_ROOT to the target's root.
     if (defined $self->{TARGET} &&
-        $self->{TARGET}->ACE_ROOT() ne $ENV{"ACE_ROOT"}) {
+        $self->{TARGET}->ACE_ROOT() ne $ENV{'ACE_ROOT'}) {
         $executable = File::Spec->rel2abs($executable);
-        $executable = File::Spec->abs2rel($executable, $ENV{"ACE_ROOT"});
+        $executable = File::Spec->abs2rel($executable, $ENV{'ACE_ROOT'});
         $executable = $self->{TARGET}->ACE_ROOT() . "/$executable";
     }
 
@@ -214,7 +214,7 @@ sub Spawn ()
 
     if (!defined $self->{EXECUTABLE}) {
         print STDERR "ERROR: Cannot Spawn: No executable specified\n";
-	    return -1;
+        return -1;
     }
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
@@ -290,8 +290,8 @@ sub Spawn ()
         print SCRIPT "del 1:\\log\\$testname*.txt\n";
         close SCRIPT;
 
-        $executable = $ENV{"ComSpec"};
-        my $pocket_device_opts = $ENV{"ACE_PCE_DEVICE"};
+        $executable = $ENV{'ComSpec'};
+        my $pocket_device_opts = $ENV{'ACE_PCE_DEVICE'};
         $cmdline = "cmd /C start /B /WAIT $self->{WINCE_CTL} $pocket_device_opts -m NAME=start_test.cmd;WAIT=401000; -e"
     }
     elsif (defined $ENV{'ACE_TEST_WINDOW'}) {
@@ -456,22 +456,22 @@ sub TimedWait ($)
 
 sub kill_all
 {
-  my $procmask = shift;
-  my $target = shift;
-  my $pid = -1;
-  for my $line (`tasklist /nh /fo csv`) {
-    # find matching process line
-    if ($line =~ /$procmask/) {
-      # find process PID
-      if ($line =~ /^\"[^\"]+\",\"(\d+)\",/) {
-        $pid = $1;
-        Win32::Process::KillProcess ($pid, 0); # kill process
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-          print STDERR "INFO: Killed process at [$line]\n"
+    my $procmask = shift;
+    my $target = shift;
+    my $pid = -1;
+    for my $line (`tasklist /nh /fo csv`) {
+        # find matching process line
+        if ($line =~ /$procmask/) {
+            # find process PID
+            if ($line =~ /^\"[^\"]+\",\"(\d+)\",/) {
+                $pid = $1;
+                Win32::Process::KillProcess ($pid, 0); # kill process
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print STDERR "INFO: Killed process at [$line]\n"
+                }
+            }
         }
-      }
     }
-  }
 }
 
 1;

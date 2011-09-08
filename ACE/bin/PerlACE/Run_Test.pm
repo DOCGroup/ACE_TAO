@@ -42,15 +42,20 @@ if ($PerlACE::LabVIEW_RT_Test) {
 
 $PerlACE::WinCE_Test = $config->check_config("WINCE");
 if ($PerlACE::WinCE_Test) {
-if ($OSNAME eq "MSWin32") {
-    require PerlACE::ProcessWinCE;
-} else {
-    require PerlACE::ProcessWinCE_Unix;
+    if ($OSNAME eq "MSWin32") {
+        require PerlACE::ProcessWinCE;
+    } else {
+        require PerlACE::ProcessWinCE_Unix;
+    }
 }
+
+$PerlACE::Android_Test = $config->check_config("ANDROID");
+if ($PerlACE::Android_Test) {
+    require PerlACE::ProcessAndroid;
 }
 
 # Figure out the svc.conf extension
-$svcconf_ext = $ENV{"ACE_RUNTEST_SVCCONF_EXT"};
+$svcconf_ext = $ENV{'ACE_RUNTEST_SVCCONF_EXT'};
 if (!defined $svcconf_ext) {
     $svcconf_ext = ".conf";
 }
@@ -58,11 +63,11 @@ if (!defined $svcconf_ext) {
 # Default timeout.  NSCORBA needs more time for process start up.
 $wait_interval_for_process_creation = (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 60 : 15);
 if ($^O eq 'VMS') {
-  $wait_interval_for_process_creation *= 3;
+    $wait_interval_for_process_creation *= 3;
 }
 elsif ($^O eq 'nto') {
-  ## QNX can be slow to start processes
-  $wait_interval_for_process_creation += 5;
+    ## QNX can be slow to start processes
+    $wait_interval_for_process_creation += 5;
 }
 
 $wait_interval_for_process_shutdown = (($PerlACE::VxWorks_Test or $PerlACE::VxWorks_RTP_Test) ? 30 : 10);
@@ -99,102 +104,100 @@ sub rebase_path {
 sub VX_HostFile($)
 {
     my $file = shift;
-    return rebase_path ($file, $ENV{"ACE_ROOT"}, $ENV{"HOST_ROOT"});
+    return rebase_path ($file, $ENV{'ACE_ROOT'}, $ENV{'HOST_ROOT'});
 }
 
 # Returns a random port within the range of 10002 - 32767
 sub random_port {
-  return (int(rand($$)) % 22766) + 10002;
+    return (int(rand($$)) % 22766) + 10002;
 }
 
 # Returns a unique id, uid for unix, last digit of IP for NT
 sub uniqueid
 {
-  if ($^O eq "MSWin32")
-  {
-    my $uid = 1;
+    if ($^O eq "MSWin32") {
+        my $uid = 1;
 
-    open (IPNUM, "ipconfig|") || die "Can't run ipconfig: $!\n";
+        open (IPNUM, "ipconfig|") || die "Can't run ipconfig: $!\n";
 
-    while (<IPNUM>)
-    {
-      if (/Address/)
-      {
-        $uid = (split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/))[4];
-      }
+        while (<IPNUM>) {
+            if (/Address/) {
+                $uid = (split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/))[4];
+            }
+        }
+
+        close IPNUM;
+
+        return $uid;
     }
-
-    close IPNUM;
-
-    return $uid;
-  }
-  else
-  {
-    return $>;
-  }
+    else {
+        return $>;
+    }
 }
 
 # Waits until a file exists
 sub waitforfile
 {
-  local($file) = @_;
-  sleep 1 while (!(-e $file && -s $file));
+    local($file) = @_;
+    sleep 1 while (!(-e $file && -s $file));
 }
 
 sub waitforfile_timed
 {
-  my $file = shift;
-  my $maxtime = shift;
-  $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
+    my $file = shift;
+    my $maxtime = shift;
+    $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ?
+                  $PerlACE::ProcessVX::WAIT_DELAY_FACTOR :
+                  $PerlACE::Process::WAIT_DELAY_FACTOR);
 
-  while ($maxtime-- != 0) {
-    if (-e $file && -s $file) {
-      return 0;
+    while ($maxtime-- != 0) {
+        if (-e $file && -s $file) {
+            return 0;
+        }
+        sleep 1;
     }
-    sleep 1;
-  }
-  return -1;
+    return -1;
 }
 
 sub check_n_cleanup_files
 {
-  my $file = shift;
-  my @flist = glob ($file);
+    my $file = shift;
+    my @flist = glob ($file);
 
-  my $cntr = 0;
-  my $nfile = scalar(@flist);
+    my $cntr = 0;
+    my $nfile = scalar(@flist);
 
-  if ($nfile != 0) {
-    for (; $cntr < $nfile; $cntr++) {
-      print STDERR "File <$flist[$cntr]> exists but should be cleaned up\n";
+    if ($nfile != 0) {
+        for (; $cntr < $nfile; $cntr++) {
+            print STDERR "File <$flist[$cntr]> exists but should be cleaned up\n";
+        }
+        unlink @flist;
     }
-    unlink @flist;
-  }
 }
 
 sub generate_test_file
 {
-  my $file = shift;
-  my $size = shift;
+    my $file = shift;
+    my $size = shift;
 
-  while ( -e $file ) {
-    $file = $file."X";
-  }
+    while ( -e $file ) {
+        $file = $file."X";
+    }
 
-  my $data = "abcdefghijklmnopqrstuvwxyz";
-  $data = $data.uc($data)."0123456789";
+    my $data = "abcdefghijklmnopqrstuvwxyz";
+    $data = $data.uc($data)."0123456789";
 
-  open( INPUT, "> $file" ) || die( "can't create input file: $file" );
-  for($i=62; $i < $size ; $i += 62 ) {
-    print INPUT $data;
-  }
-  $i -= 62;
-  if ($i < $size) {
-    print INPUT substr($data, 0, $size-$i);
-  }
-  close(INPUT);
+    open( INPUT, "> $file" ) || die( "can't create input file: $file" );
+    for($i=62; $i < $size ; $i += 62 ) {
+        print INPUT $data;
+    }
+    $i -= 62;
+    if ($i < $size) {
+        print INPUT substr($data, 0, $size-$i);
+    }
+    close(INPUT);
 
-  return $file;
+    return $file;
 }
 
 sub is_labview_rt_test()
@@ -234,13 +237,13 @@ sub add_lib_path {
     # Set the library path supporting various platforms.
     foreach my $env ('PATH', 'DYLD_LIBRARY_PATH', 'LD_LIBRARY_PATH',
                      'SHLIB_PATH') {
-      add_path($env, $value);
-      if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-        add_path($env, $value . '/' . $PerlACE::Process::ExeSubDir);
-      }
+        add_path($env, $value);
+        if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+            add_path($env, $value . '/' . $PerlACE::Process::ExeSubDir);
+        }
     }
 
-    if (defined $ENV{"HOST_ROOT"}) {
+    if (defined $ENV{'HOST_ROOT'}) {
         add_path('PATH', VX_HostFile ($value));
         add_path('LD_LIBRARY_PATH', VX_HostFile ($value));
         add_path('LIBPATH', VX_HostFile ($value));
@@ -248,79 +251,86 @@ sub add_lib_path {
     }
 }
 
-sub check_privilege_group {
-  if ($^O eq 'hpux') {
-    my($access) = 'RTSCHED';
-    my($status) = 0;
-    my($getprivgrp) = '/bin/getprivgrp';
+sub check_privilege_group
+{
+    if ($^O eq 'hpux') {
+        my($access) = 'RTSCHED';
+        my($status) = 0;
+        my($getprivgrp) = '/bin/getprivgrp';
 
-    if (-x $getprivgrp) {
-      if (open(GPG, "$getprivgrp |")) {
-        while(<GPG>) {
-          if (index($_, $access) >= 0) {
-            $status = 1;
-          }
+        if (-x $getprivgrp) {
+            if (open(GPG, "$getprivgrp |")) {
+                while(<GPG>) {
+                    if (index($_, $access) >= 0) {
+                          $status = 1;
+                    }
+                }
+                close(GPG);
+            }
         }
-        close(GPG);
-      }
-    }
 
-    if (!$status) {
-      print STDERR "WARNING: You must have $access privileges to run this test.\n",
-                   "         Run \"man 1m setprivgrp\" for more information.\n";
-      exit(0);
+        if (!$status) {
+            print STDERR
+              "WARNING: You must have $access privileges to run this test.\n",
+              "         Run \"man 1m setprivgrp\" for more information.\n";
+            exit(0);
+        }
     }
-  }
 }
 
 # waits until it finds a matching regular expression in a file
 #  escape metacharacters in the text to wait for
-sub waitforfileoutput {
-  my $file = shift;
-  my $waittext = shift;
+sub waitforfileoutput
+{
+    my $file = shift;
+    my $waittext = shift;
 
-  if (-e $file && -s $file) {
-    open (DATA, $file);
-    while (my $line = <DATA>) {
-      if ($line =~ /($waittext)/) {
-        close(DATA);
-        return 0;
-      }
-    }
-    close(DATA);
-  }
-  sleep 1;
-}
-
-sub waitforfileoutput_timed {
-  my $file = shift;
-  my $waittext = shift;
-  my $maxtime = shift;
-
-  $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ? $PerlACE::ProcessVX::WAIT_DELAY_FACTOR : $PerlACE::Process::WAIT_DELAY_FACTOR);
-
-  while ($maxtime-- != 0) {
     if (-e $file && -s $file) {
-      open (DATA, $file);
-      while (my $line = <DATA>) {
-        if ($line =~ /($waittext)/) {
-          close(DATA);
-          return 0;
+        open (DATA, $file);
+        while (my $line = <DATA>) {
+            if ($line =~ /($waittext)/) {
+                close(DATA);
+                return 0;
+            }
         }
-      }
-      close(DATA);
+        close(DATA);
     }
     sleep 1;
-  }
-  return -1;
 }
 
-sub GetArchDir {
-  my $dir = shift;
-  if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
-    return $dir . $PerlACE::Process::ExeSubDir;
-  }
-  return $dir;
+sub waitforfileoutput_timed
+{
+    my $file = shift;
+    my $waittext = shift;
+    my $maxtime = shift;
+
+    $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ?
+                  $PerlACE::ProcessVX::WAIT_DELAY_FACTOR :
+                  $PerlACE::Process::WAIT_DELAY_FACTOR);
+
+    while ($maxtime-- != 0) {
+        if (-e $file && -s $file) {
+              open (DATA, $file);
+              while (my $line = <DATA>) {
+                  if ($line =~ /($waittext)/) {
+                      close(DATA);
+                      return 0;
+                  }
+              }
+              close(DATA);
+        }
+        sleep 1;
+    }
+    return -1;
+}
+
+sub GetArchDir
+{
+    my $dir = shift;
+    if (grep(($_ eq 'ARCH'), @PerlACE::ConfigList::Configs)) {
+        return $dir . $PerlACE::Process::ExeSubDir;
+    }
+    return $dir;
 }
 
 # Add PWD to the load library path

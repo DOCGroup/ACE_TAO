@@ -68,16 +68,16 @@ sub new
     }
     $self->{FSROOT} = $fsroot;
 
-    $self->{REBOOT_CMD} = $ENV{"ACE_REBOOT_LVRT_CMD"};
+    $self->{REBOOT_CMD} = $ENV{'ACE_REBOOT_LVRT_CMD'};
     if (!defined $self->{REBOOT_CMD}) {
         $self->{REBOOT_CMD} = 'I_Need_A_Reboot_Command';
     }
-    $self->{REBOOT_TIME} = $ENV{"ACE_LVRT_REBOOT_TIME"};
+    $self->{REBOOT_TIME} = $ENV{'ACE_LVRT_REBOOT_TIME'};
     if (!defined $self->{REBOOT_TIME}) {
         $self->{REBOOT_TIME} = 200;
     }
 
-    $self->{REBOOT_TIME} = $ENV{"ACE_RUN_LVRT_REBOOT_TIME"};
+    $self->{REBOOT_TIME} = $ENV{'ACE_RUN_LVRT_REBOOT_TIME'};
     if (!defined $self->{REBOOT_TIME}) {
         $self->{REBOOT_TIME} = 200;
     }
