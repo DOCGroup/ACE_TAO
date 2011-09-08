@@ -5,12 +5,11 @@
 # or greater, by cross compiling on Linux.
 
 # The standalone gcc compilers in NDK r6 have issues with the visibility.
-no_hidden_visibility = 1
+no_hidden_visibility ?= 1
 
 # as of NDK r6 inlining and static libs are required
-inline = 1
-static_libs_only=1
-
+inline ?= 1
+static_libs_only ?= 1
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 

@@ -262,7 +262,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Set the database name using mktemp to generate a unique file name
       name_options->database (ACE_OS::mktemp (temp_file));
     }
-
   if (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -270,7 +269,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                          ACE_TEXT ("failed")),
                         -1);
     }
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time to test %d iterations using %s\n"),
               ACE_NS_MAX_ENTRIES, name_options->use_registry () ?
               ACE_TEXT ("Registry") : ACE_TEXT ("ACE")));
