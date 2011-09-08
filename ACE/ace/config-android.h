@@ -137,47 +137,9 @@
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
 #endif /* ! __powerpc__  && ! __ia64 */
 
-// Then glibc/libc5 specific parts
-
-#if defined(__GLIBC__)
-# if (__GLIBC__  < 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ < 3)
-#   define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
-#   define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
-#   define ACE_LACKS_ISCTYPE
-# endif
-# define ACE_HAS_SOCKLEN_T
-# define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-
-  // glibc defines both of these, used in OS_String.
-# if defined (_GNU_SOURCE)
-#   define ACE_HAS_STRNLEN
-#   define ACE_HAS_WCSNLEN
-
-  // This is probably not a 100%-sure-fire check... Red Hat Linux 9
-  // and Enterprise Linux 3 and up have a new kernel that can send signals
-  // across threads. This was not possible prior because there was no real
-  // difference between a process and a thread. With this, the
-  // ACE_POSIX_SIG_Proactor is the only chance of getting asynch I/O working.
-  // There are restrictions, such as all socket operations being silently
-  // converted to synchronous by the kernel, that make aio a non-starter
-  // for most Linux platforms at this time. But we'll start to crawl...
-#   define ACE_POSIX_SIG_PROACTOR
-# endif
-
-  // To avoid the strangeness with Linux's ::select (), which modifies
-  // its timeout argument, use ::poll () instead.
-# define ACE_HAS_POLL
-
-# define ACE_HAS_SIGINFO_T
-# define ACE_LACKS_SIGINFO_H
-# define ACE_HAS_UCONTEXT_T
-# define ACE_HAS_SIGTIMEDWAIT
-
-#else  /* ! __GLIBC__ */
-    // Fixes a problem with some non-glibc versions of Linux...
-#   define ACE_LACKS_MADVISE
-#   define ACE_LACKS_MSG_ACCRIGHTS
-#endif /* ! __GLIBC__ */
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SOCKLEN_T
+#define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 
 #define ACE_HAS_LSEEK64
 //#define ACE_LACKS_LSEEK64_PROTOTYPE
@@ -300,10 +262,6 @@
 
 // Platform supplies scandir()
 #define ACE_HAS_SCANDIR
-
-// A conflict appears when including both <ucontext.h> and
-// <sys/procfs.h> with recent glibc headers.
-//#define ACE_HAS_PROC_FS
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
