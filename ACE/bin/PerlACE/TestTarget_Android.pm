@@ -215,33 +215,8 @@ sub start_target ()
     }
     system ( $cmd );
 
-    $self->copy_ace_config_files ();
-
     $self->{RUNNING} = 1;
     return 0;
-}
-
-sub copy_ace_config_files ()
-{
-    my $self = shift;
-    my $cdir = getcwd ();
-
-    chdir ("$ENV{'ACE_ROOT'}/tests");
-
-    my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
-
-    my @conf_files = glob ("*.{lst,ini,conf}");
-    foreach my $conf_file (@conf_files) {
-        my $src = "$ENV{'ACE_ROOT'}/tests/$conf_file";
-        my $dest = "$self->{FSROOT}/tests/$conf_file";
-
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print STDERR "Copying $src to emulator ($dest)\n";
-        }
-        my $cmd = "$adb_process" . ' push '. "$src $dest";
-        system ( $cmd );
-    }
-    chdir ("$cdir");
 }
 
 sub ProcessStartWaitInterval ($)
