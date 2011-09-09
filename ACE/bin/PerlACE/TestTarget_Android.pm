@@ -63,8 +63,7 @@ sub DESTROY
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Killing the Android emulator\n";
         }
-        $self->KillAll ('emulator-arm');
-        $self->KillAll ('emulator');
+        $self->KillAll ('emulator*');
         $self->KillAll ('adb');
     }
 }
@@ -316,7 +315,7 @@ sub KillAll ($)
         }
     }
     else {
-        my $cmd_killall = "killall $procmask";
+        my $cmd_killall = "killall -q $procmask";
         system ( $cmd_killall );
         sleep (5);
     }
