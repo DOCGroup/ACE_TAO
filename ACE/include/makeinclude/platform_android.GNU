@@ -88,9 +88,6 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 OCFLAGS ?= -O3
 OCCFLAGS ?= -O3
 
-CFLAGS  += $(FLAGS_C_CC)
-CCFLAGS += $(FLAGS_C_CC) $(TEMPLATES_FLAG)
-
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>

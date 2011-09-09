@@ -1,3 +1,11 @@
+Fri Sep  9 07:19:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.h:
+          Doxygen changes
+
+        * include/makeinclude/platform_android.GNU:
+          Prevent flags being listed twice
+
 Thu Sep  8 17:48:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp:
