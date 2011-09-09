@@ -239,11 +239,16 @@ sub copy_log ()
     my $test = basename ($program);
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
     my $fsroot_target = $ENV{'ANDROID_FS_ROOT'};
+    my $silent;
+
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = "2> /dev/null"
+    }
 
     # copy the log back to the host sytem
     my $cmd_copy_log = $adb_process . ' pull ' .
                        $fsroot_target . '/tests/log/' . $test . '.log ' .
-                       $ENV{'ACE_ROOT'}. '/tests/log/' . $test . '.log';
+                       $ENV{'ACE_ROOT'}. '/tests/log/' . $test . '.log $silent';
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
         print STDERR "Pull log from target : $cmd_copy_log\n";
     }
