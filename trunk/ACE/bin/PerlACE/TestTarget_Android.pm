@@ -320,5 +320,26 @@ sub KillAll ($)
     }
 }
 
+sub PutFile ($)
+{
+    my $self = shift;
+    my $src = shift;
+    my $dest = shift;
+
+    my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
+
+    my $cmd = "$adb_process" . ' push '. "$src $dest";
+
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "PutFile cmd: $cmd\n";
+    }
+
+    system ( $cmd );
+    if ($? != 0) {
+        return -1;
+    }
+    return 0;
+}
+
 1;
 
