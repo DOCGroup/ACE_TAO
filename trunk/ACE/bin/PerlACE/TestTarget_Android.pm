@@ -59,10 +59,11 @@ sub DESTROY
 {
     my $self = shift;
     if ($self->{RUNNING} == 1) {
-        # kill the emulator. No need to shutdown cracefully.
+        # kill the emulator. No need to shutdown gracefully.
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Killing the Android emulator\n";
         }
+        $self->KillAll ('emulator-arm');
         $self->KillAll ('emulator');
         $self->KillAll ('adb');
     }
