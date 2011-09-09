@@ -1,3 +1,10 @@
+Fri Sep  9 19:19:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Don't copy all config files, if we need files on a target, the test
+          script should copy them
+
 Fri Sep  9 19:15:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/TestTarget_Android.pm:
