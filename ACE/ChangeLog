@@ -1,3 +1,12 @@
+Fri Sep  9 21:34:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Fixed a bug introduced in the previous commit to this file:
+          Thu Sep  8 08:14:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          The bug prevented any tests from running on Win32.
+
 Fri Sep  9 19:31:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessAndroid.pm:
