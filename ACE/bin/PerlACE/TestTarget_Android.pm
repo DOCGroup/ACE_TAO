@@ -239,6 +239,11 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
+    my $silent;
+
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = "2> /dev/null"
+    }
 
     if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
         $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
@@ -257,7 +262,7 @@ sub WaitForFileTimed ($)
 
     my $cmd_copy_ior = $adb_process . ' pull ' . $newfile . ' ' .
                           File::Spec->tmpdir() . '/' .
-                          basename ($newfile);
+                          basename ($newfile) . ' $silent';
 
     while ($timeout-- != 0) {
         # copy the ior back to the host sytem
