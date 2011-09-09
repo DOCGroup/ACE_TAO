@@ -1224,7 +1224,7 @@ protected:
                             const ACE_CDR::ULong *x);
 
   /// Efficiently read @a length elements of size @a size each from
-  /// <input> into <x>; the data must be aligned to <align>.
+  /// @a input into @a x; the data must be aligned to @a align.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
                                size_t size,
@@ -1232,9 +1232,9 @@ protected:
                                ACE_CDR::ULong length);
 
   /**
-   * Efficiently write @a length elements of size @a size from <x> into
-   * <output>. Before inserting the elements enough padding is added
-   * to ensure that the elements will be aligned to <align> in the
+   * Efficiently write @a length elements of size @a size from @a x into
+   * @a output. Before inserting the elements enough padding is added
+   * to ensure that the elements will be aligned to @a align in the
    * stream.
    */
   ACE_CDR::Boolean write_array (ACE_OutputCDR& output,
@@ -1244,10 +1244,10 @@ protected:
                                 ACE_CDR::ULong length);
 
   /**
-   * Exposes the stream implementation of <adjust>, this is useful in
+   * Exposes the stream implementation of @a adjust, this is useful in
    * many cases to minimize memory allocations during marshaling.
    * On success @a buf will contain a contiguous area in the CDR stream
-   * that can hold @a size bytes aligned to <align>.
+   * that can hold @a size bytes aligned to @a align.
    * Results
    */
   int adjust (ACE_OutputCDR& out,
