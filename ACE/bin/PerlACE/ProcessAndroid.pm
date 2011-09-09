@@ -354,34 +354,6 @@ sub copy_executable ()
         }
         copy_vxtest_files ($self, $vxtest_file);
     }
-    copy_conf_files ($self, $program);
-}
-
-sub copy_conf_files ()
-{
-    my $self = shift;
-    my $program = shift;
-
-    my ($test, $dir, $suffix) = fileparse($program);
-
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print STDERR "Try copy config files from $ENV{'ACE_ROOT'}/$dir\n";
-    }
-
-    my $cdir = getcwd ();
-
-    chdir ("$ENV{'ACE_ROOT'}/$dir");
-
-    my @conf_files = glob ("*.{lst,ini,conf}");
-    foreach my $conf_file (@conf_files) {
-        my $src = "$ENV{'ACE_ROOT'}/$dir$conf_file";
-        my $dest = "$self->{FSROOT}/$dir$conf_file";
-
-        if ($self->PutFile ($src, $dest) == -1) {
-            print STDERR "Unable to copy $src to emulator\n";
-        }
-    }
-    chdir ($cdir);
 }
 
 sub copy_vxtest_files ()
