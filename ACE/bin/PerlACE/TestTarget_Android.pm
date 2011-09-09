@@ -327,7 +327,7 @@ sub PutFile ($)
     my $dest = shift;
     my $silent;
 
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
       $silent = "2> /dev/null"
     }
 
