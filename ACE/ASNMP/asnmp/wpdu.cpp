@@ -124,7 +124,6 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
      return SNMP_CLASS_INVALID_NOTIFYID;
   }
 
-
   raw_pdu->specific_type=0;
 
   // TODO: object should emit numeric instead of this kind of mess...
@@ -380,8 +379,7 @@ int wpdu::get_pdu(Pdu& pdu, snmp_version& version)
   if (iovec_.iov_len == 0)
     return -1; // NO DATA
 
-  snmp_pdu *raw_pdu;
-  raw_pdu = cmu_snmp::pdu_create(0);
+  snmp_pdu *raw_pdu = cmu_snmp::pdu_create(0);
   if (!raw_pdu) {
     return SNMP_CLASS_RESOURCE_UNAVAIL;
   }

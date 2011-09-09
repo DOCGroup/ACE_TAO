@@ -41,7 +41,7 @@ How does ASNMP differ from SNMP?
   ASNMP has less global namespace pollution by moving all non-class
   functions into interface classes or made into static locals.
 
-  An agent inteface has been added (asnmp/sagent.h) so both agents
+  An agent intefarce has been added (asnmp/sagent.h) so both agents
   and managers can use this class library. A trivial agent
   exists in ASNMP/agent/
 
