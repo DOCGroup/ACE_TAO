@@ -1,3 +1,8 @@
+Fri Sep  9 11:26:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_android.GNU:
+          Android doesn't have rwho
+
 Fri Sep  9 07:19:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Stream.h:
