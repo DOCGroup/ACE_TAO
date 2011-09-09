@@ -13,6 +13,9 @@ static_libs_only ?= 1
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
+#No rwho on Android
+rwho = 0
+
 #Standalone toolchain required.
 #Required environment variables are
 #$NDK - install directory for android NDK, at least r5c
