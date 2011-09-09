@@ -325,10 +325,15 @@ sub PutFile ($)
     my $self = shift;
     my $src = shift;
     my $dest = shift;
+    my $silent;
+
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = "2> /dev/null"
+    }
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-    my $cmd = "$adb_process" . ' push '. "$src $dest";
+    my $cmd = "$adb_process" . ' push '. "$src $dest $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "PutFile cmd: $cmd\n";
