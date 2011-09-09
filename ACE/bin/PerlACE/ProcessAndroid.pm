@@ -23,7 +23,7 @@ sub new
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
 
-    # Only set argument when they are realy supplied via the
+    # Only set argument when they are really supplied via the
     # CreateProcess call. If the weren't supplied, an error like
     # Process_Android::HASH (0x...) is generated.
     if (@_ == 2) {
