@@ -1,3 +1,8 @@
+Fri Sep  9 19:15:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/TestTarget_Android.pm:
+          Try to kill emulator and emulator-arm
+
 Fri Sep  9 11:26:45 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_android.GNU:
