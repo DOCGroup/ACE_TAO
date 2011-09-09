@@ -149,7 +149,7 @@ sub start_target ()
         $avd_options = $ENV{'ANDROID_AVD_OPTIONS'};
     }
 
-    $self->KillAll ("emulator");
+    $self->KillAll ("emulator*");
     # create the AVD again
     # my $create_cmd = "$android_process" . ' -s create avd -f -n ' . "$avd_name $android_create_avd_options";
 
@@ -315,9 +315,8 @@ sub KillAll ($)
         }
     }
     else {
-        my $cmd_killall = "killall -q $procmask";
+        my $cmd_killall = "killall -q -r $procmask";
         system ( $cmd_killall );
-        sleep (5);
     }
 }
 
