@@ -3,7 +3,7 @@
 
 use PerlACE::Run_Test;
 
-package PerlACE::Process_Win32;
+package PerlACE::Process;
 
 use strict;
 use Win32::Process;
