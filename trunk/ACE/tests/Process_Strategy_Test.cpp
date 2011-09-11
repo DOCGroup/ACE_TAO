@@ -103,7 +103,6 @@ Process_Strategy::Process_Strategy (size_t n_processes,
 
 // Destructor.  g++ 2.7.2.3 gets very confused ("Internal compiler
 // error") without it.
-
 Process_Strategy::~Process_Strategy (void)
 {
 }
