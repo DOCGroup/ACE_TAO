@@ -257,8 +257,8 @@ sub remove_executable ()
   my $test = basename ($program);
   my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-  my $cmd = $adb_process . ' shell rm ' . $fsroot_target. '/tests/' . $test;
-  my $rm_log = $adb_process . ' shell rm ' . $fsroot_target. '/tests/log/' . $test . '.log';
+  my $cmd = $adb_process . ' shell rm ' . $fsroot_target. $test;
+  my $rm_log = $adb_process . ' shell rm ' . $fsroot_target. '/log/' . $test . '.log';
 
   if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "Start to execute : $cmd\n";
