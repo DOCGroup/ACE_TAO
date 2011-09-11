@@ -344,7 +344,6 @@ sub PutFile ($)
 {
     my $self = shift;
     my $src = shift;
-    my $dest = shift;
     my $silent;
 
     if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
@@ -353,7 +352,7 @@ sub PutFile ($)
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-    my $targetfile = $self->LocalFile ($dest);
+    my $targetfile = $self->LocalFile ($src);
     my $cmd = "$adb_process" . ' push '. "$src $targetfile $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
