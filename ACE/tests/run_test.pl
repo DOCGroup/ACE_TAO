@@ -204,8 +204,9 @@ sub check_log ($)
     # found in the SSL subdirectory.
     local $the_program = basename($program);
     local $log = "log/".$the_program.$log_suffix;
+    local $target_log = $target->LocalFile ($log);
 
-    if ($target->GetFile ($log) == -1) {
+    if ($target->GetFile ($target_log) == -1) {
         print STDERR "ERROR: cannot retrieve file <$log>\n";
     }
 
