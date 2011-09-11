@@ -19,7 +19,7 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
-    $self->{IGNOREHOSTROOT} = 0;
+    $self->{IGNORE/ExeHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
 
@@ -61,17 +61,36 @@ sub Executable
         $self->{EXECUTABLE} = shift;
     }
 
-    my $prjroot = $ENV{'ACE_ROOT'};
     my $executable = $self->{EXECUTABLE};
 
-    if (length ($executable) > 0) {
-        $executable = File::Spec->abs2rel( cwd(), $prjroot );
-    }
-    else {
-        $executable = File::Spec->abs2rel( $executable, $prjroot );
+    # If the target's config has a different ACE_ROOT, rebase the executable
+    # from $ACE_ROOT to the target's root.
+    if (defined $self->{TARGET} &&
+          $self->{TARGET}->ACE_ROOT() ne $ENV{'ACE_ROOT'}) {
+        $executable = PerlACE::rebase_path ($executable,
+                                            $ENV{'ACE_ROOT'},
+                                            $self->{TARGET}->ACE_ROOT());
     }
 
-    $executable = $executable . '/' . $self->{EXECUTABLE};
+    if ($self->{IGNOREHOSTROOT} == 0) {
+        if (PerlACE::is_vxworks_test()) {
+            $executable = PerlACE::VX_HostFile ($executable);
+        }
+    }
+
+    if ($self->{IGNOREEXESUBDIR}) {
+        return $executable;
+    }
+
+    my $basename = basename ($executable);
+    my $dirname = dirname ($executable).'/';
+
+    my $subdir = $PerlACE::Process::ExeSubDir;
+    if (defined $self->{TARGET} && defined $self->{TARGET}->{EXE_SUBDIR}) {
+        $subdir = $self->{TARGET}->{EXE_SUBDIR};
+    }
+
+    $executable = $dirname . $subdir . $basename;
 
     return $executable;
 }
