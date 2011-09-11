@@ -381,7 +381,7 @@ sub GetFile ($)
     my $cmd = "$adb_process" . ' pull '. "$remote_file $local_file $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print STDERR "PutFile cmd: $cmd\n";
+      print STDERR "GetFile cmd: $cmd\n";
     }
 
     system ( $cmd );
