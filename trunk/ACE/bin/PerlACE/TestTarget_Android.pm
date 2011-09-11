@@ -1,4 +1,4 @@
-F#! /usr/bin/perl
+#! /usr/bin/perl
 package PerlACE::TestTarget_Android;
 
 # ******************************************************************
