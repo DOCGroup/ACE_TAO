@@ -122,6 +122,7 @@ sub run_program ($@)
         print STDERR "Error: Can\'t chdir to $dir for $path\n";
         return;
     }
+
     unlink <log/$program*.log>;
     unlink "core";
 
@@ -157,7 +158,7 @@ sub run_program ($@)
 
     print "\nauto_run_tests_finished: tests/$program $arguments Time:$time"."s Result:$status\n";
 
-    check_log ($program);
+    check_log ($target, $program);
 
     if ($config_list->check_config ('Codeguard')) {
         check_codeguard_log ($program);
@@ -193,6 +194,7 @@ sub purify_program ($)
 
 sub check_log ($)
 {
+    my $target = shift;
     my $program = shift;
 
     ### Check the logs
@@ -202,6 +204,10 @@ sub check_log ($)
     # found in the SSL subdirectory.
     local $the_program = basename($program);
     local $log = "log/".$the_program.$log_suffix;
+
+    if ($target->GetFile ($log) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$log>\n";
+    }
 
     if (-e "core") {
         print STDERR "Error: $program dumped core\n";
