@@ -258,17 +258,11 @@ sub remove_executable ()
   my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
   my $cmd = $adb_process . ' shell rm ' . $fsroot_target. $test;
-  my $rm_log = $adb_process . ' shell rm ' . $fsroot_target. '/log/' . $test . '.log';
 
   if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "Start to execute : $cmd\n";
   }
   system ( $cmd );
-
-  if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print STDERR "Start to execute : $rm_log\n";
-  }
-  system ( $rm_log );
 }
 
 sub Spawn ()
