@@ -365,5 +365,31 @@ sub PutFile ($)
     return 0;
 }
 
+sub GetFile ($)
+{
+    my $self = shift;
+    my $remote_file = shift;
+    my $local_file = shift;
+    my $silent;
+
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = "2> /dev/null"
+    }
+
+    my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
+
+    my $cmd = "$adb_process" . ' pull '. "$remote_file $local_file $silent";
+
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "PutFile cmd: $cmd\n";
+    }
+
+    system ( $cmd );
+    if ($? != 0) {
+        return -1;
+    }
+    return 0;
+}
+
 1;
 
