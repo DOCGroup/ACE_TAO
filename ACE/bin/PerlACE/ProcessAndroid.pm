@@ -341,11 +341,9 @@ sub copy_executable ()
     my $fsroot_target = $ENV{'ANDROID_FS_ROOT'};
 
     my $program = $self->Executable ();
-    my $exe_cwdrel = dirname ($program);
     my $exe = "$fsroot_target/$program";
-    $exe_cwdrel = cwd() if length ($exe_cwdrel) == 0;
 
-    $self->PutFile ("$ENV{'ACE_ROOT'}/$program", $exe);
+    $self->PutFile ("$program", $exe);
 
     if ($PerlACE::Static == 0) {
         my $vxtest_file = "$ENV{'ACE_ROOT'}/$program" . '.vxtest';
