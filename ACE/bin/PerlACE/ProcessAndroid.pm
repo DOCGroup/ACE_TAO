@@ -19,7 +19,7 @@ sub new
 
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
-    $self->{IGNORE/ExeHOSTROOT} = 0;
+    $self->{IGNOREHOSTROOT} = 0;
     $self->{PROCESS} = undef;
     $self->{EXECUTABLE} = shift;
 
