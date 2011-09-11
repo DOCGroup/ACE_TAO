@@ -1,3 +1,8 @@
+Sun Sep 11 18:02:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+          Fixed executable method
+
 Fri Sep  9 21:34:26 UTC 2011  Adam Mitz  <mitza@ociweb.com>
 
         * bin/PerlACE/Process_Win32.pm:
