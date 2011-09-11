@@ -353,7 +353,8 @@ sub PutFile ($)
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-    my $cmd = "$adb_process" . ' push '. "$src $dest $silent";
+    my $targetfile = $self->LocalFile ($dest);
+    my $cmd = "$adb_process" . ' push '. "$src $targetfile $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "PutFile cmd: $cmd\n";
@@ -379,7 +380,8 @@ sub GetFile ($)
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-    my $cmd = "$adb_process" . ' pull '. "$remote_file $local_file $silent";
+    my $targetfile = $self->LocalFile ($remote_file);
+    my $cmd = "$adb_process" . ' pull '. "$targetfile $local_file $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "GetFile cmd: $cmd\n";
