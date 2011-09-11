@@ -1,3 +1,12 @@
+Sun Sep 11 18:11:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+          Don't copy any log files here, that has to be done in the test
+          script
+
+        * tests/run_test.pl:
+          Get the log file from the target before analyzing it
+
 Sun Sep 11 18:02:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessAndroid.pm:
