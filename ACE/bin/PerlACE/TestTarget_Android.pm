@@ -85,7 +85,7 @@ sub LocalFile
         $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
     }
 
-    my $newfile = $self->{FSROOT} . "/" . $cwdrel . "/" . $file;
+    my $newfile = $self->{FSROOT} . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
         print STDERR "Android LocalFile for $file is $newfile\n";
     }
