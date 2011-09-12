@@ -1,3 +1,11 @@
+Mon Sep 12 11:16:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-android.h:
+          Android doesn't have icmp support
+
+        * docs/bczar/bczar.html:
+          Added telnet
+
 Sun Sep 11 18:11:08 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessAndroid.pm:
