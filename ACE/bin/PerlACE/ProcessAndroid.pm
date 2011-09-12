@@ -252,12 +252,18 @@ sub IgnoreHostRoot
 sub remove_executable ()
 {
   my $self = shift;
+  my $silent;
+
+  if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+    $silent = "2> /dev/null"
+  }
+
   my $fsroot_target = $ENV{'ANDROID_FS_ROOT'};
   my $program = $self->Executable ();
   my $test = basename ($program);
   my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-  my $cmd = $adb_process . ' shell rm ' . $fsroot_target . "/" . $test;
+  my $cmd = $adb_process . ' shell rm ' . $fsroot_target . "/" . $test . " " . $silent;
 
   if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "Start to execute : $cmd\n";
@@ -333,7 +339,6 @@ sub copy_executable ()
     my $self = shift;
 
     my $fsroot_target = $ENV{'ANDROID_FS_ROOT'};
-
     my $program = $self->Executable ();
     my $exe = "$fsroot_target/$program";
 
