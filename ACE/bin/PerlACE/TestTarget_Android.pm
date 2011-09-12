@@ -128,6 +128,11 @@ sub start_target ()
     # For now, we're assuming one target (avd) is running in the test environment.
     # Need to change this when more than one avd's need to start
     my $self = shift;
+    my $silent;
+
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = "2> /dev/null"
+    }
 
     if (! defined ($ENV{'ANDROID_SDK_ROOT'})) {
         print STDERR "Error: Android SDK root not defined.\n";
@@ -207,8 +212,7 @@ sub start_target ()
 
     # AVD is up and running and ready to spawn executables.
     # First some preparation.
-
-    my $cmd = $adb_process . ' shell "mkdir ' . $self->{FSROOT} . '/tmp"';
+    my $cmd = $adb_process . ' shell "mkdir ' . $self->{FSROOT} . '/tmp "' . $silent;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
         print STDERR "Start to execute : $cmd\n";
     }
@@ -290,7 +294,7 @@ sub DeleteFile ($)
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
     my $targetfile = $self->LocalFile ($file);
-    my $cmd = "$adb_process" . ' shell rm '. "$targetfile" . "$silent";
+    my $cmd = "$adb_process" . ' shell rm '. "$targetfile" . "$silent"m;
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "DeleteFile cmd: $cmd\n";
