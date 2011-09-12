@@ -285,16 +285,10 @@ sub DeleteFile ($)
 {
     my $self = shift;
     my $file = shift;
-    my $silent;
-
-    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
-      $silent = "2> /dev/null"
-    }
-
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
     my $targetfile = $self->LocalFile ($file);
-    my $cmd = "$adb_process" . ' shell rm '. "$targetfile" . "$silent";
+    my $cmd = "$adb_process" . ' shell rm '. "$targetfile";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "DeleteFile cmd: $cmd\n";
