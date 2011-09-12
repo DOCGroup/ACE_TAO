@@ -319,8 +319,6 @@
 
 #define ACE_HAS_VOIDPTR_MMAP
 
-#define ACE_HAS_ICMP_SUPPORT 1
-
 #define ACE_HAS_VASPRINTF
 
 // According to man pages Linux uses different (compared to UNIX systems) types
