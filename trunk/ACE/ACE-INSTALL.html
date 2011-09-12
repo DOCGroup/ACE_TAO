@@ -159,8 +159,8 @@ document</a>.</p><p>
         Cygwin, VxWorks 6.x (kernel and rtp), OpenVMS 8.3 on IA64,
         BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
         Tru64, SuSE Linux on Alpha/IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
-        and
-        HPUX 11i v2/v3 on IA64. The Intel C++ compiler is supported on
+        HPUX 11i v2/v3 on IA64, and Android (android-9).
+        The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
@@ -259,6 +259,7 @@ The following sections explain how to build ACE on:
 <li><a href="#unix">UNIX</a></li>
 <li><a href="#win32">Windows (including MinGW and Cygwin)</a></li>
 <li><a href="#vxworks">VxWorks</a></li>
+<li><a href="#android">Android</a></li>
 <li><a href="#interix">Interix</a></li>
 <li><a href="#rtems">RTEMS</a></li>
 </ul>
@@ -1822,17 +1823,15 @@ cross compiling the code.<p>
         <ul>
           <li>set options for debug and optimized builds</li>
           <li>inline is forced on as are static libs and no-hidden-visibility</li>
-          <li>Include the <code>include/makeinclude/platform_android_linux.GNU</code> file.</li>
+          <li>Include the <code>include/makeinclude/platform_android.GNU</code> file.</li>
           <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
         </ul>
       <li>Ensure the following environment variables are set:
         <ul>
           <li>$ANDROID_ARCH - either arm or x86. Note that x86 is only available in r6 and greater, and is still experimental. ANDROID_ARCH will be set to arm by default.</li>
           <li>$NDK - the path to the android native development kit</li>
-          <li>$SDK - the path to the android software development kit</li>
           <li>$SYSROOT - the platform/arch directory. This defaults to <code>$NDK/platforms/android-9/arch-$ANDROID_ARCH</code>. </li>
           <li>$HOST_ROOT - the path to the native TAO_IDL & gperf tools</li>
-          <li>$NDK_TOOLS - the path to the standalone toolchain created as shown above.</li>
           <li>$PATH - must include <code>$NDK_TOOLS/bin</code>.</li>
         </ul>
       </ul>
@@ -1855,6 +1854,7 @@ application to a directory that allows execution and having any output
 directed to a writable directory.</p>
 
 <p></p><hr align="left" width="50%">
+<br/>
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
 
