@@ -155,24 +155,6 @@ sub start_target ()
     }
 
     $self->KillAll ("emulator*");
-    # create the AVD again
-    # my $create_cmd = "$android_process" . ' -s create avd -f -n ' . "$avd_name $android_create_avd_options";
-
-    # if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-    #     print STDERR "Create emulator cmd : $create_cmd\n";
-    # }
-
-    # system ( $create_cmd );
-
-    # if ($? != 0) {
-    #     print STDERR "failed to execute: $!\n";
-    # }
-    # else {
-    #    print "AVD CREATED\n";
-    # }
-
-    # AVD created -> run the avd
-    # since the emulator process blocks, we need to fork this process.
 
     FORK: {
         if ($self->{PROCESS} = fork) {
@@ -220,22 +202,6 @@ sub start_target ()
 
     $self->{RUNNING} = 1;
     return 0;
-}
-
-sub ProcessStartWaitInterval ($)
-{
-    my $self = shift;
-    my $wait_interval = $self->{PROCESS_START_WAIT_INTERVAL};
-
-    return $wait_interval;
-}
-
-sub ProcessStopWaitInterval ($)
-{
-    my $self = shift;
-    my $wait_interval = $self->{PROCESS_STOP_WAIT_INTERVAL};
-
-    return $wait_interval;
 }
 
 sub WaitForFileTimed ($)
