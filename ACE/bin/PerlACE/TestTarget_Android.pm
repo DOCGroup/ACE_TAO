@@ -142,11 +142,12 @@ sub start_target ()
         print STDERR "Error: Android AVD name not defined.\n";
         return 0;
     }
+    my $avd_name = $ENV{'ANDROID_AVD_NAME'};
     my $android_process = $ENV{'ANDROID_SDK_ROOT'} . "/tools/android";
     my $avd_process = $ENV{'ANDROID_SDK_ROOT'} . "/tools/emulator";
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
+    my $user_data_image = $ENV{'ANDROID_SDK_HOME'} . ".android/avd/" . $avd_name . ".avd/userdata.img";
 
-    my $avd_name = $ENV{'ANDROID_AVD_NAME'};
     my $avd_options = "-noaudio -no-window -wipe-data";
 
     if (defined ($ENV{'ANDROID_AVD_OPTIONS'})) {
@@ -163,6 +164,15 @@ sub start_target ()
         }
         elsif (defined $self->{PROCESS}) {
            #child here
+           my $user_image_cmd = "rm -f " . $user_data_image;
+           if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+               print STDERR "Removing user data image: $user_image_cmd\n";
+           }
+
+           system ( $user_image_cmd );
+           if ($? != 0) {
+               print STDERR "failed to execute: $!\n";
+           }
 
            my $avd_cmd = "$avd_process" .' -avd ' .  "$avd_name $avd_options";
            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
