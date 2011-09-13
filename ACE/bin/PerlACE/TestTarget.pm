@@ -28,8 +28,11 @@ sub create_target
     my $target = undef;
     my $envname = "DOC_TEST_\U$component";
     if (!exists $ENV{$envname}) {
-        $target = new PerlACE::TestTarget("default");
-        return $target;
+        $envname = "DOC_TEST_DEFAULT";
+        if (!exists $ENV{$envname}) {
+          $target = new PerlACE::TestTarget("default");
+          return $target;
+        }
     }
     my $config_name = $ENV{$envname};
     # There's a configuration name; use it to look up the platform.
