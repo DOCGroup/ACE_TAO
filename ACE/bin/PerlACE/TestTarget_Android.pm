@@ -248,7 +248,7 @@ sub WaitForFileTimed ($)
         # copy the ior back to the host sytem
         if (system ( $cmd_copy_ior ) == 0) {
             if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-                print STDERR "Pull ior succeeded\n";
+                print STDERR "Pull $newfile succeeded\n";
             }
             return 0;
         }
