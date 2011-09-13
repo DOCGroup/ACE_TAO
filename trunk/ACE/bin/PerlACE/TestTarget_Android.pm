@@ -146,7 +146,7 @@ sub start_target ()
     my $android_process = $ENV{'ANDROID_SDK_ROOT'} . "/tools/android";
     my $avd_process = $ENV{'ANDROID_SDK_ROOT'} . "/tools/emulator";
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
-    my $user_data_image = $ENV{'ANDROID_SDK_HOME'} . ".android/avd/" . $avd_name . ".avd/userdata.img";
+    my $user_data_image = $ENV{'ANDROID_SDK_HOME'} . "/.android/avd/" . $avd_name . ".avd/userdata.img";
 
     my $avd_options = "-noaudio -no-window -wipe-data";
 
