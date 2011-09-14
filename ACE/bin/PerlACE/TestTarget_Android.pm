@@ -96,10 +96,12 @@ sub AddLibPath ($)
 {
     my $self = shift;
     my $dir = shift;
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print STDERR "Adding libpath $dir\n";
+    if ($PerlACE::Static == 0) {
+      if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+          print STDERR "Adding libpath $dir\n";
+      }
+      PerlACE::add_lib_path ($dir);
     }
-    PerlACE::add_lib_path ($dir);
 }
 
 sub CreateProcess
