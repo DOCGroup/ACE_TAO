@@ -1,3 +1,10 @@
+Wed Sep 14 07:34:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          When we can't find the service config file output a message that
+          has error in it, so that the scoreboard parser also detects those
+          errors
+
 Wed Sep  7 18:07:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CodecFactory/CodecFactory.h:
