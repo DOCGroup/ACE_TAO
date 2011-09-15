@@ -14,7 +14,7 @@ $status = 0;
 $debug_level = '0';
 $test_port = 12345;
 $management_port = 12346;
-$client_conf = $target->LocalFile ("lf_flush.conf");
+$conf_file = "lf_flush.conf";
 $flush_strategy = "LF";
 
 foreach $i (@ARGV) {
@@ -22,17 +22,25 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
     elsif ($i eq '-blocking') {
-        $client_conf = "block_flush.conf";
+        $conf_file = $block_flush;
         $flush_strategy = "BLOCKING";
     }
     elsif ($i eq '-reactive') {
-        $client_conf = "reactive_flush.conf";
+        $conf_file = $reactive_flush;
         $flush_strategy = "REACTIVE";
     }
     else {
         print STDERR "ERROR: Unknown option: $i\n";
         exit 1;
     }
+}
+
+$client_conf = $target->LocalFile ($conf_file);
+
+if ($target->PutFile ($conf_file) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
 }
 
 my $test_opts = "-s \'-ORBEndpoint iiop://localhost:$test_port -ORBEndpoint " .
