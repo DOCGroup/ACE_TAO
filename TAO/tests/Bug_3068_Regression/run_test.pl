@@ -26,8 +26,21 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-my $server_conf = $server->LocalFile ("server.conf");
-my $client_conf = $client->LocalFile ("client.conf");
+my $server_conf_base = "server.conf";
+my $client_conf_base = "client.conf";
+my $server_conf = $server->LocalFile ($server_conf_base);
+my $client_conf = $client->LocalFile ($client_conf_base);
+
+if ($server->PutFile ($server_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+if ($client->PutFile ($client_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
