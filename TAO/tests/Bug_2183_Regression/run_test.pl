@@ -15,9 +15,12 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 # The server IOR file
 $iorbase = "server.ior";
-
-$server_conf = $server->LocalFile ("server.conf");
 $server_ior_file = $server->LocalFile ($iorbase);
+
+# The server configuration file
+$server_conf_file = "server.conf";
+$server_conf = $server->LocalFile ($server_conf_file);
+
 $server->DeleteFile ($iorbase);
 
 # The client and server processes
@@ -28,6 +31,13 @@ if ($^O == 'VMS') {
 }
 
 $port = '15000';
+
+# copy the configuation file
+if ($server->PutFile ($server_conf_file) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    return 1;
+}
 
 $SV = $server->CreateProcess ("server",
                               "-o $server_ior_file " .
