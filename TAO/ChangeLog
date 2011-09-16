@@ -1,3 +1,15 @@
+Fri Sep 16 07:02:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3163_Regression/run_test.pl:
+        * tests/Bug_3630_Regression/run_test.pl:
+        * tests/Bug_3683_Regression/run_test.pl:
+          Copy only those configuration files that are needed by the targets.
+          We don't want to solve this in the test framework; the script knows
+          which configuration files should be copied.
+        
+        * tests/Bug_3630_Regression/server.cpp:
+          Added \n
+
 Thu Sep 15 07:42:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/AMI/run_test.pl:
@@ -8,7 +20,7 @@ Thu Sep 15 07:42:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * tests/Leader_Followers/run_test.pl:
         * tests/Oneway_Send_Timeouts/run_test.pl:
           Copy only those configuration files that are needed by the targets.
-          We don't want to solve this in the test framework; the script knows 
+          We don't want to solve this in the test framework; the script knows
           which configuration files should be copied.
 
 Wed Sep 14 07:34:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>

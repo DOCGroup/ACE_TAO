@@ -26,8 +26,16 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
+my $clientconf = "svc.conf";
+my $clientconffile = $client->LocalFile ($clientconf);
+
+if ($client->PutFile ($clientconf) == -1) {
+    print STDERR "ERROR: cannot set file <$clientconffile>\n";
+    exit 1;
+}
+
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-f $client_iorfile -x -ORBSvcConf svc.conf -p 16");
+$CL = $client->CreateProcess ("client", "-f $client_iorfile -x -ORBSvcConf $clientconffile -p 16");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
