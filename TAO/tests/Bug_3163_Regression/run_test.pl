@@ -21,12 +21,21 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "server.ior";
-my $svcconf = "server.conf";
 my $server_iorfile = $server->LocalFile ($iorbase);
+
+my $svcconf = "server.conf";
 my $server_svcconf = $server->LocalFile ($svcconf);
+
 my $client_iorfile = $client->LocalFile ($iorbase);
+
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
+
+if ($server->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcconf>\n";
+    exit 1;
+}
+
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile -ORBStdProfileComponents 0 -ORBSvcConf $server_svcconf");
 $CL = $client->CreateProcess ("client", "-v 131401 -k file://$client_iorfile");
