@@ -13,8 +13,20 @@ my $exit_status = 0;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-my $client_conf = $server->LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
-my $server_conf = $server->LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
+my $client_conf_base = "mt_noupcall$PerlACE::svcconf_ext";
+my $client_conf = $server->LocalFile ($client_conf_base);
+if ($client->PutFile ($client_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    exit 1;
+}
+
+
+my $server_conf_base = "mt_noupcall$PerlACE::svcconf_ext";
+my $server_conf = $server->LocalFile ($server_conf_base);
+if ($client->PutFile ($server_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    exit 1;
+}
 
 $debug_level = '0';
 foreach $i (@ARGV) {
