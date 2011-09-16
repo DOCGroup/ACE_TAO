@@ -1,3 +1,14 @@
+Fri Sep 16 12:01:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl:
+        * tests/CSD_Collocation/run_test.pl:
+        * tests/Connection_Purging/run_test.pl:
+        * tests/Hang_Shutdown/run_test.pl:
+        * tests/LongUpcalls/run_test.pl:
+          Copy only those configuration files that are needed by the targets.
+          We don't want to solve this in the test framework; the script knows
+          which configuration files should be copied.
+
 Fri Sep 16 07:55:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Faults/run_test.pl:

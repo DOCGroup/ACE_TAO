@@ -50,8 +50,16 @@ $client->DeleteFile($iorbase);
 ################################
 print STDERR "===== Client with RW handler\n";
 
+my $svcconf = "client.conf";
+my $client_svcfile = $client->LocalFile ($svcconf);
+
+if ($client->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_svcfile>\n";
+    exit 1;
+}
+
 $SV2 = $server->CreateProcess ("server");
-$CL2 = $client->CreateProcess ("client", " -ORBSvcConf client.conf");
+$CL2 = $client->CreateProcess ("client", " -ORBSvcConf $client_svcfile");
 
 $SV2->Spawn ();
 
