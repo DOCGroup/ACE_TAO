@@ -23,9 +23,7 @@ my $middle = PerlACE::TestTarget::create_target (3) || die "Create target 3 fail
 
 my $iorbase = "server.ior";
 my $midiorbase = "middle.ior";
-my $svcconf = "server$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
-my $server_svcfile = $server->LocalFile ($svcconf);
 my $client_iorfile = $client->LocalFile ($iorbase);
 my $client_midiorfile = $client->LocalFile ($midiorbase);
 my $middle_iorfile = $middle->LocalFile ($iorbase);
@@ -35,6 +33,14 @@ $client->DeleteFile($iorbase);
 $client->DeleteFile($midiorbase);
 $middle->DeleteFile($iorbase);
 $middle->DeleteFile($midiorbase);
+
+my $svcconf = "server$PerlACE::svcconf_ext";
+my $server_svcfile = $server->LocalFile ($svcconf);
+if ($server->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcfile>\n";
+    exit 1;
+}
+
 
 ###############################################################################
 print STDERR "################ Default ORB Config###############\n";
