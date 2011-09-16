@@ -32,7 +32,14 @@ $client1->DeleteFile($iorbase);
 $client2->DeleteFile($iorbase);
 $client3->DeleteFile($iorbase);
 
-my $server_conf = $server->LocalFile ("server$PerlACE::svcconf_ext");
+my $server_conf_base = "server$PerlACE::svcconf_ext";
+my $server_conf = $server->LocalFile ($server_conf_base);
+
+# Copy the configuration file to the target.
+if ($server->PutFile ($server_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level -ORBSvcConf $server_conf " .

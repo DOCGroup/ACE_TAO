@@ -24,9 +24,7 @@ my $client2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 fai
 my $client3 = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
 my $iorbase = "server.ior";
-my $svcconf = "server$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
-my $server_svcfile = $server->LocalFile ($svcconf);
 my $client1_iorfile = $client1->LocalFile ($iorbase);
 my $client2_iorfile = $client2->LocalFile ($iorbase);
 my $client3_iorfile = $client3->LocalFile ($iorbase);
@@ -34,6 +32,15 @@ $server->DeleteFile($iorbase);
 $client1->DeleteFile($iorbase);
 $client2->DeleteFile($iorbase);
 $client3->DeleteFile($iorbase);
+
+my $svcconf = "server$PerlACE::svcconf_ext";
+my $server_svcfile = $server->LocalFile ($svcconf);
+
+# Copy the configuration file to the target.
+if ($server->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcfile>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level ".

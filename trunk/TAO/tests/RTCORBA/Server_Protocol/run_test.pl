@@ -19,10 +19,21 @@ $client->DeleteFile($iorbase);
 
 $status = 0;
 
-$server_reverse_conf     = $server->LocalFile ("server_reverse$PerlACE::svcconf_ext");
-$server_iiop_uiop_conf   = $server->LocalFile ("server_iiop_uiop$PerlACE::svcconf_ext");
-$server_iiop_shmiop_conf = $server->LocalFile ("server_iiop_shmiop$PerlACE::svcconf_ext");
-$server_reverse_nt_conf  = $server->LocalFile ("server_reverse_nt$PerlACE::svcconf_ext");
+$server_reverse_conf_base = "server_reverse$PerlACE::svcconf_ext";
+$server_reverse_conf = $server->LocalFile ($server_reverse_conf_base);
+
+$server_iiop_uiop_conf_base = "server_iiop_uiop$PerlACE::svcconf_ext";
+$server_iiop_uiop_conf = $server->LocalFile ($server_iiop_uiop_conf_base);
+
+# Copy configuration files to the target.
+if ($server->PutFile ($server_reverse_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_reverse_conf>\n";
+    exit 1;
+}
+if ($server->PutFile ($server_iiop_uiop_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_iiop_uiop_conf>\n";
+    exit 1;
+}
 
 # Configurations for all tests to be run.
 @server_opts =
@@ -44,8 +55,26 @@ $server_reverse_nt_conf  = $server->LocalFile ("server_reverse_nt$PerlACE::svcco
              "* Overriding ORB Default Server Protocol Policy in the POA\n"
              ."          (POA Server Protocol set to UIOP only): \n");
 
+
+
 # UIOP only available on Unix.  Substitute with alternative tests on Windows.
 if ($^O eq "MSWin32" || $^O eq "VMS") {
+    $server_iiop_shmiop_conf_base = "server_iiop_shmiop$PerlACE::svcconf_ext";
+    $server_iiop_shmiop_conf = $server->LocalFile ($server_iiop_shmiop_conf_base);
+
+    $server_reverse_nt_conf_base = "server_reverse_nt$PerlACE::svcconf_ext";
+    $server_reverse_nt_conf  = $server->LocalFile ($server_reverse_nt_conf_base);
+
+    # Copy the configuration files
+    if ($server->PutFile ($server_iiop_shmiop_conf_base) == -1) {
+        print STDERR "ERROR: cannot set file <$server_iiop_shmiop_conf>\n";
+        exit 1;
+    }
+    if ($server->PutFile ($server_reverse_nt_conf_base) == -1) {
+        print STDERR "ERROR: cannot set file <$server_reverse_nt_conf>\n";
+        exit 1;
+    }
+
     @server_opts =
         ("-ORBSndSock 54321 -ORBendpoint iiop://",
 
