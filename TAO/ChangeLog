@@ -1,3 +1,14 @@
+Fri Sep 16 07:37:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Connect_Strategy_Test/run_test.pl:
+        * tests/MT_BiDir/run_test.pl:
+        * tests/MT_Server/run_test.pl:
+        * tests/No_Server_MT_Connect_Test/run_test.pl:
+        * tests/RTCORBA/Server_Protocol/run_test.pl:
+          Copy only those configuration files that are needed by the targets.
+          We don't want to solve this in the test framework; the script knows
+          which configuration files should be copied.
+
 Fri Sep 16 07:02:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3163_Regression/run_test.pl:
@@ -6,7 +17,7 @@ Fri Sep 16 07:02:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
           Copy only those configuration files that are needed by the targets.
           We don't want to solve this in the test framework; the script knows
           which configuration files should be copied.
-        
+
         * tests/Bug_3630_Regression/server.cpp:
           Added \n
 

@@ -32,12 +32,29 @@ $client1->DeleteFile($iorbase);
 $client2->DeleteFile($iorbase);
 $client3->DeleteFile($iorbase);
 
+# Initialize and copy the client configuration files
+my $client2_conf_base = "reactor$PerlACE::svcconf_ext";
+my $client2_conf = $client2->LocalFile ($client2_conf_base);
+
+if ($client2->PutFile ($client2_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client2_conf>\n";
+    exit 1;
+}
+
+my $client3_conf_base = "blocked$PerlACE::svcconf_ext";
+my $client3_conf = $client3->LocalFile ($client3_conf_base);
+
+if ($client3->PutFile ($client3_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client3_conf>\n";
+    exit 1;
+}
+
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 $CL1 = $client1->CreateProcess ("client", "-k file://$client1_iorfile -x");
 # Use a single thread in this test, because the strategy is only for
 # single threaded cases
-$CL2 = $client2->CreateProcess ("client", "-ORBSvcConf reactor$PerlACE::svcconf_ext -n 1 -k file://$client2_iorfile");
-$CL3 = $client3->CreateProcess ("client", "-ORBSvcConf blocked$PerlACE::svcconf_ext -k file://$client3_iorfile");
+$CL2 = $client2->CreateProcess ("client", "-ORBSvcConf $client2_conf -n 1 -k file://$client2_iorfile");
+$CL3 = $client3->CreateProcess ("client", "-ORBSvcConf $client3_conf -k file://$client3_iorfile");
 
 $server_status = $SV->Spawn ();
 
