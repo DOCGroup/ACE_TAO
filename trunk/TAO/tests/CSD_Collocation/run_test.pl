@@ -9,8 +9,14 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+
 my $svcconf = "svc.conf.csd";
 my $server_svcconf = $server->LocalFile ($svcconf);
+if ($server->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcconf>\n";
+    exit 1;
+}
+
 
 $SV = $server->CreateProcess ("Collocation",  "-ORBSvcConf $server_svcconf");
 
