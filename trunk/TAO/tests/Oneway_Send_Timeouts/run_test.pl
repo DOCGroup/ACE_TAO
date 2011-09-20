@@ -22,11 +22,11 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
     elsif ($i eq '-blocking') {
-        $conf_file = $block_flush;
+        $conf_file = "block_flush.conf";
         $flush_strategy = "BLOCKING";
     }
     elsif ($i eq '-reactive') {
-        $conf_file = $reactive_flush;
+        $conf_file = "reactive_flush.conf";
         $flush_strategy = "REACTIVE";
     }
     else {
@@ -39,7 +39,6 @@ $client_conf = $target->LocalFile ($conf_file);
 
 if ($target->PutFile ($conf_file) == -1) {
     print STDERR "ERROR: cannot set file <$client_conf>\n";
-    $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
 
