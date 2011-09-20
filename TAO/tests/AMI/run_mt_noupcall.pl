@@ -11,7 +11,12 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$client_conf = $client->LocalFile ("mt_noupcall$PerlACE::svcconf_ext");
+$client_conf_base = "mt_noupcall$PerlACE::svcconf_ext";
+$client_conf = $client->LocalFile ($client_conf_base);
+if ($client->PutFile ($client_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    exit 1;
+}
 
 $server_debug_level = '0';
 $client_debug_level = '0';
