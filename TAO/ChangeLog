@@ -1,3 +1,8 @@
+Tue Sep 20 06:27:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Oneway_Send_Timeouts/run_test.pl:
+          Fixed runtime issues
+
 Fri Sep 16 12:01:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl:
