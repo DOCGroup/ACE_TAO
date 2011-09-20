@@ -1,3 +1,11 @@
+Tue Sep 20 06:43:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/AMI/run_mt_noupcall.pl:
+        * tests/MT_Client/run_test.pl:
+          Copy only those configuration files that are needed by the targets.
+          We don't want to solve this in the test framework; the script knows
+          which configuration files should be copied.
+
 Tue Sep 20 06:27:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Oneway_Send_Timeouts/run_test.pl:

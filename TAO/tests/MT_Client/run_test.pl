@@ -43,6 +43,10 @@ $client->DeleteFile($iorbase);
 
 $server_conf1 = $server->LocalFile ($server_conf);
 
+if ($server->PutFile ($server_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf1>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level " .
