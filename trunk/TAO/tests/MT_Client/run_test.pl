@@ -15,16 +15,14 @@ $conf = $PerlACE::svcconf_ext;
 
 $client_process = "client";
 
-$client_conf = "client.global" . $conf;
+$client_conf = "client" . $conf;
 $server_conf = "server" . $conf;
 
 $threads = '4';
 $iterations = '1000';
 
 foreach $i (@ARGV) {
-    if ($i eq '-tss') {
-        $client_conf = "client.tss" . $PerlACE::svcconf_ext;
-    } elsif ($i eq '-debug') {
+    if ($i eq '-debug') {
         $debug_level = '10';
     } elsif ($i eq '-creation') {
         $client_process = 'orb_creation';
