@@ -431,9 +431,7 @@ TAO_PropertySet::define_property (const char *property_name,
   CosProperty_Hash_Key hash_key (property_name);
   CosProperty_Hash_Value hash_value (property_value,
                                      CosPropertyService::normal);
-  COSPROPERTY_HASH_ENTRY *entry_ptr;
-  //CosProperty_Hash_Key old_key;
-  //CosProperty_Hash_Value old_value;
+  COSPROPERTY_HASH_ENTRY *entry_ptr = 0;
 
   int ret = this->hash_table_.bind (hash_key,
                                     hash_value,
