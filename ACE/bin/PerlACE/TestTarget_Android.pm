@@ -198,11 +198,31 @@ sub start_target ()
        }
     }
 
-    my $wait_cmd = $adb_process . ' wait-for-device';
-    system ( $wait_cmd );
-    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-        print STDERR "Emulator is running <$self->{PROCESS}> -> start the tests.\n";
+    eval {
+        my $timeout = 30;
+        if (defined ($ENV{'ANDROID_SDK_ROOT'})) {
+            $timeout = $ENV{'DOC_TEST_DEFAULT_ADB_WAIT_FOR_DEVICE_TIMEOUT'};
+        }
+
+        local $SIG{ALRM} = sub { die "alarm\n" }; # NB: \n required
+        alarm $timeout;
+        # start the waiting...
+        my $wait_cmd = $adb_process . ' wait-for-device';
+        system ( $wait_cmd );
+        # reset alarm
+        alarm 0;
+    };
+
+    if ($@) {
+        # timed out
+        exit unless $@ eq "alarm\n";   # propagate unexpected errors
     }
+    else {
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Emulator is running <$self->{PROCESS}> -> start the tests.\n";
+        }
+    }
+
 
     # AVD is up and running and ready to spawn executables.
     # First some preparation.
