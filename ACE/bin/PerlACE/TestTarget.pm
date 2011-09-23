@@ -156,6 +156,12 @@ sub GetConfigSettings ($)
     } else {
         $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
     }
+    $env_name = $env_prefix.'ADB_WAIT_FOR_DEVICE_TIMEOUT';
+    if (exists $ENV{$env_name}) {
+        $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT} = $ENV{$env_name};
+    } else {
+        $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT} = 120;
+    }
     $env_name = $env_prefix.'HOSTNAME';
     if (exists $ENV{$env_name}) {
         $self->{HOSTNAME} = $ENV{$env_name};
@@ -316,6 +322,13 @@ sub ProcessStopWaitInterval ($)
     my $self = shift;
     return $self->{PROCESS_STOP_WAIT_INTERVAL};
 }
+
+sub AdbWaitForDeviceTimeout ($)
+{
+    my $self = shift;
+    return $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT};
+}
+
 
 sub LocalFile ($)
 {
