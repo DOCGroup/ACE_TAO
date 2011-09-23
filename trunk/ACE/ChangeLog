@@ -1,3 +1,10 @@
+Fri Sep 23 12:45:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Created a special method for the ADB timeout environment
+          variable.
+
 Fri Sep 23 09:25:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/PerlACE/TestTarget_Android.pm:
