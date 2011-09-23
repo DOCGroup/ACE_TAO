@@ -199,10 +199,7 @@ sub start_target ()
     }
 
     eval {
-        my $timeout = 30;
-        if (defined ($ENV{'ANDROID_SDK_ROOT'})) {
-            $timeout = $ENV{'DOC_TEST_DEFAULT_ADB_WAIT_FOR_DEVICE_TIMEOUT'};
-        }
+        my $timeout = $self->AdbWaitForDeviceTimeout ();
 
         local $SIG{ALRM} = sub { die "alarm\n" }; # NB: \n required
         alarm $timeout;
