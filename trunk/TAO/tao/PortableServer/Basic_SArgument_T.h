@@ -140,7 +140,6 @@ namespace TAO
     typedef inout_type                  inout_arg_type;
     typedef out_type                    out_arg_type;
     typedef out_type                    ret_arg_type;
-
   };
 }
 

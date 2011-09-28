@@ -375,26 +375,26 @@ public:
   typedef Generic_Sequence_Reverse_Iterator<generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> > reverse_iterator;
   typedef Const_Generic_Sequence_Reverse_Iterator<generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS> > const_reverse_iterator;
 
-  // Get an iterator that points to the beginning of the sequence.
+  /// Get an iterator that points to the beginning of the sequence.
   iterator begin (void)
   {
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (this);
   }
 
-  // Get a const iterator that points to the beginning of the sequence.
+  /// Get a const iterator that points to the beginning of the sequence.
   const_iterator begin (void) const
   {
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (this);
   }
 
-  // Get an iterator that points to the end of the sequence.
+  /// Get an iterator that points to the end of the sequence.
   iterator end (void)
   {
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::iterator (this,
       this->length_);
   }
 
-  // Get a const iterator that points to the end of the sequence.
+  /// Get a const iterator that points to the end of the sequence.
   const_iterator end (void) const
   {
     return typename generic_sequence<T, ALLOCATION_TRAITS, ELEMENT_TRAITS>::const_iterator (this,
