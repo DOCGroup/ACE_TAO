@@ -29,6 +29,7 @@ project(BiDir_GIOP) : taolib, tao_output, install, pi, taoidldefaults {
 
   Header_Files {
     *.h
+    bidirgiop_export.h
     BiDirPolicyC.h
     BiDirPolicyS.h
   }
