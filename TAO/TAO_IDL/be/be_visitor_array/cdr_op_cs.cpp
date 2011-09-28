@@ -176,8 +176,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << fname << "_forany &_tao_array" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << fname << "_forany &_tao_array)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -194,8 +194,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << fname << "_forany &_tao_array" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << fname << "_forany &_tao_array)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   if (bt->accept (this) == -1)
@@ -503,8 +503,8 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
         }
     }
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl;
+  *os << ");" << be_uidt
+      << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
 }
