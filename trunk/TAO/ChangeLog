@@ -1,3 +1,9 @@
+Wed Sep 28 12:35:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+          Layout changes to the generated code
+
 Wed Sep 28 12:34:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3683_Regression/Echo_i.h:
