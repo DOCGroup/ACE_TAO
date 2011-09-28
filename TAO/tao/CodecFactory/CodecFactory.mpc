@@ -39,6 +39,7 @@ project(CodecFactory) : taolib, tao_output, install, anytypecode, taoidldefaults
   }
 
   Header_Files {
+    codecfactory_export.h
     *.h
     IOP_CodecA.h
     IOP_CodecC.h
