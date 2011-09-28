@@ -1,3 +1,9 @@
+Wed Sep 28 12:39:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+          Layout changes and cleanup
+
 Wed Sep 28 12:37:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Persistent_Grid/Grid_i.h:
