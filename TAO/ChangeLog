@@ -1,3 +1,12 @@
+Wed Sep 28 12:34:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3683_Regression/Echo_i.h:
+          Remove workaround
+
+        * tests/IDL_Test/typedef.idl:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+          Layout changes
+
 Wed Sep 28 12:31:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/HandleExhaustion/run_test.pl:
