@@ -1,3 +1,15 @@
+Wed Sep 28 12:42:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Generic_Sequence_T.h:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+          Doxygen changes
+
+        * tao/Object.cpp:
+        * tao/PortableServer/Basic_SArgument_T.h:
+        * tao/DynamicAny/DynAny_i.h:
+          Layout changes
+
 Wed Sep 28 12:39:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
