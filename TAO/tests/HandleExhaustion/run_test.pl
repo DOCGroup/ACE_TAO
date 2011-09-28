@@ -62,6 +62,11 @@ if ($server_status != 0) {
     $status = 1;
 }
 
+if ($server->GetFile ($logbase) == -1) {
+    print STDERR "ERROR: cannot retrieve file <$server_logfile>\n";
+    exit 1;
+}
+
 if ($status == 0) {
     if (open(FH, $server_logfile)) {
         my $error_achieved = 0;
