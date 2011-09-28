@@ -96,8 +96,7 @@ private:
    */
   MAP_MANAGER_TYPE hash_map_;
 
-  /// Keeping g++2.7.2
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const AccountManager_i &))
+  void operator= (const AccountManager_i &)
 };
 
 #endif /* ACCOUNTMANAGER_I_H */

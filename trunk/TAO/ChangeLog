@@ -1,3 +1,12 @@
+Wed Sep 28 12:37:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Persistent_Grid/Grid_i.h:
+        * examples/Simple/bank/AccountManager_i.h:
+        * examples/Simple/echo/Echo_i.h:
+        * examples/Simple/grid/Grid_i.h:
+        * examples/Simple/time/Time_i.h:
+          Layout changes, remove workarounds
+
 Wed Sep 28 12:35:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
