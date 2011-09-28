@@ -313,8 +313,7 @@ public:
                            const char * format_name);
 
   virtual void set_dev_params (const char * flowName,
-                               const CosPropertyService::Properties & new_params)
-;
+                               const CosPropertyService::Properties & new_params);
 
 protected:
   /// checks whether the flowname is  in the flow_spec.
