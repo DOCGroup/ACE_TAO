@@ -66,8 +66,7 @@ private:
   /// Hold the pool of name pool_name_
   pool_t *pool_t_;
 
-  /// Keeping g++2.7.2
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Grid_Factory_i &))
+  void operator= (const Grid_Factory_i &);
 };
 
 
@@ -86,11 +85,8 @@ public:
   /// Constructor
   Grid_i (void);
 
-  Grid_i (CORBA::Short,
-          CORBA::Short,
-          pool_t *);
-
-  // Constructor.
+  /// Constructor.
+  Grid_i (CORBA::Short, CORBA::Short, pool_t *);
 
   /// Destructor
   ~Grid_i (void);
