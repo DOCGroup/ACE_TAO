@@ -1,3 +1,18 @@
+Wed Sep 28 11:39:31 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Bug_2241_Regression:
+        * tests/Bug_2241_Regression/Bug_2241_Regression.mpc:
+        * tests/Bug_2241_Regression/Client_Task.h:
+        * tests/Bug_2241_Regression/Client_Task.cpp:
+        * tests/Bug_2241_Regression/Collocated_Test.cpp:
+        * tests/Bug_2241_Regression/Hello.h:
+        * tests/Bug_2241_Regression/Hello.cpp:
+        * tests/Bug_2241_Regression/Server_Task.h:
+        * tests/Bug_2241_Regression/Server_Task.cpp:
+        * tests/Bug_2241_Regression/Test.idl:
+        * tests/Bug_2241_Regression/run_test.pl:
+        * bin/tao_orb_tests.lst:
+        New test for '-ORBCollocationStrategy direct'  
+        
 Sun Sep 25 17:02:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Parallel_Connect_Strategy/run_test.pl:

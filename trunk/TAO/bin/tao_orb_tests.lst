@@ -84,6 +84,7 @@ TAO/tests/Bug_2186_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_2188_Regression/run_test.pl:
 TAO/tests/Bug_2201_Regression/run_test.pl:
 TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS
+TAO/tests/Bug_2241_Regression/run_test.pl: !ST
 TAO/tests/Bug_2243_Regression/run_test.pl:
 TAO/tests/Bug_2289_Regression/run_test.pl:
 TAO/tests/Bug_2319_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !FIXED_BUGS_ONLY
