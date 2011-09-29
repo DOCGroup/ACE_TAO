@@ -45,41 +45,39 @@
  * @brief Define RFC1155 TimeTicks Data object
  */
 class ASNMP_Export TimeTicks : public SnmpUInt32
-
 {
+public:
+  TimeTicks( const unsigned long i = 0);
 
-  public:
-     TimeTicks( const unsigned long i = 0);
+  /// copy constructor
+  TimeTicks( const TimeTicks &t);
 
-     /// copy constructor
-     TimeTicks( const TimeTicks &t);
+  /// destructor
+  ~TimeTicks();
 
-     /// destructor
-     ~TimeTicks();
+  /// syntax type
+  SmiUINT32 get_syntax();
 
-     /// syntax type
-     SmiUINT32 get_syntax();
+  /// get a printable ASCII value
+  const char *to_string();
 
-     /// get a printable ASCII value
-     const char *to_string();
+  /// create a new instance of this Value
+  SnmpSyntax *clone() const;
 
-     /// create a new instance of this Value
-     SnmpSyntax *clone() const;
+  /// copy an instance of this Value
+  SnmpSyntax& operator=(SnmpSyntax &val);
 
-     /// copy an instance of this Value
-     SnmpSyntax& operator=(SnmpSyntax &val);
+  /// overloaded assignment
+  TimeTicks& operator=( const TimeTicks &uli);
 
-     /// overloaded assignment
-     TimeTicks& operator=( const TimeTicks &uli);
+  /// overloaded assignment
+  TimeTicks& operator=( const unsigned long int i);
 
-     /// overloaded assignment
-     TimeTicks& operator=( const unsigned long int i);
+  /// otherwise, behave like an unsigned long
+  operator unsigned long();
 
-     /// otherwise, behave like an unsigned long
-     operator unsigned long();
-
-  protected:
-    /// for storing printed form
-    char output_buffer[TICKOUTBUF];
+protected:
+  /// for storing printed form
+  char output_buffer[TICKOUTBUF];
 };
 #endif // TIMETICKS_

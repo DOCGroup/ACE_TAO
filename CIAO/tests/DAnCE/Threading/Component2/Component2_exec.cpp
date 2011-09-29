@@ -26,6 +26,7 @@
  **/
 
 #include "Component2_exec.h"
+#include "tao/Messaging/Messaging.h"
 
 namespace CIAO_Threading_Component2_Impl
 {
@@ -53,11 +54,56 @@ namespace CIAO_Threading_Component2_Impl
     ACE_DEBUG ((LM_DEBUG, "prov_interface_2_exec_i::invoke_on_interface_2 - "
                           "Call received -> invoking 'invoke_on_interface_1' on Component1\n"));
 
+    ::CORBA::Object_var ccm_object =
+      this->ciao_context_->get_CCM_object();
+    ::CORBA::ORB_var orb;
+    if (! ::CORBA::is_nil (ccm_object.in ()))
+      {
+        orb = ccm_object->_get_orb ();
+      }
+
+    CORBA::Object_var object =
+      orb->resolve_initial_references ("PolicyCurrent");
+
+    CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent::_narrow (object.in ());
+
+    TimeBase::TimeT timeout_period = 100 * 100000;
+
+    CORBA::Any timeout_as_any;
+    timeout_as_any <<= timeout_period;
+
+    CORBA::PolicyList policy_list (1);
+    policy_list.length (1);
+    policy_list[0] =
+      orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                  timeout_as_any);
+
+    policy_current->set_policy_overrides (policy_list,
+                                          CORBA::ADD_OVERRIDE);
+
+    policy_list[0]->destroy();
+
     ::Threading::interface_1_var interface_1 =
       this->ciao_context_->get_connection_use_interface_1 ();
-    interface_1->invoke_on_interface_1 ();
-    ACE_DEBUG ((LM_DEBUG, "prov_interface_2_exec_i::invoke_on_interface_2 - "
-                          "Is not blocking!!\n"));
+
+    bool except = false;
+    try
+      {
+        interface_1->invoke_on_interface_1 ();
+      }
+    catch (const CORBA::TIMEOUT&)
+      {
+        except = true;
+        ACE_DEBUG ((LM_DEBUG,
+                    "invoke_on_interface_1 ping received an expected except.\n"));
+      }
+
+    if (!except)
+      {
+        ACE_DEBUG ((LM_DEBUG, "ERROR prov_interface_2_exec_i::invoke_on_interface_2 - "
+                              "Is not blocking!!\n"));
+      }
   }
 
   /**

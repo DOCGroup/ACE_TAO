@@ -193,31 +193,40 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc > 1 && ACE_OS::strcasecmp (argv[1],ACE_TEXT("-csv")) == 0)
     use_csv = true;
 
-  stringseq_time_test(100, false);
-  stringseq_time_test(1000, false);
+  try
+    {
+      stringseq_time_test(100, false);
+      stringseq_time_test(1000, false);
 
-  stringseq_time_test(100, true);
-  stringseq_time_test(1000, true);
-
-
-  seqstrseq_time_test(100, 1, false);
-  seqstrseq_time_test(100, 10, false);
-  seqstrseq_time_test(1000, 10, false);
-
-  seqstrseq_time_test(100, 1, true);
-  seqstrseq_time_test(100, 10, true);
-  seqstrseq_time_test(1000, 10, true);
+      stringseq_time_test(100, true);
+      stringseq_time_test(1000, true);
 
 
-  big_time_test(10, 1, 10, false);
-  big_time_test(10, 1, 10, false);
-  big_time_test(10, 10, 10, false);
-  big_time_test(100, 1, 10, false);
+      seqstrseq_time_test(100, 1, false);
+      seqstrseq_time_test(100, 10, false);
+      seqstrseq_time_test(1000, 10, false);
 
-  big_time_test(10, 1, 10, true);
-  big_time_test(10, 1, 10, true);
-  big_time_test(10, 10, 10, true);
-  big_time_test(100, 1, 10, true);
+      seqstrseq_time_test(100, 1, true);
+      seqstrseq_time_test(100, 10, true);
+      seqstrseq_time_test(1000, 10, true);
+
+
+      big_time_test(10, 1, 10, false);
+      big_time_test(10, 1, 10, false);
+      big_time_test(10, 10, 10, false);
+      big_time_test(100, 1, 10, false);
+
+      big_time_test(10, 1, 10, true);
+      big_time_test(10, 1, 10, true);
+      big_time_test(10, 10, 10, true);
+      big_time_test(100, 1, 10, true);
+    }
+  catch (CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("MAIN: Unexpected CORBA exception caught:");
+      return 1;
+    }
+
 
   return 0;
 }

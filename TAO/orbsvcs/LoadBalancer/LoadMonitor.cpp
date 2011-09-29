@@ -279,14 +279,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                reactor,
                                timer_id);
 
-      CosLoadBalancing::LoadManager_ptr tmp;;
-
-      if (timer_id == -1)
-        tmp = load_manager.in ();   // PULL monitoring
-      else
-        tmp = CosLoadBalancing::LoadManager::_nil ();  // PUSH
-                                                       // monitoring
-
 #if defined (linux) && defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_monitor,
                                                   orb.in ()) == -1)
@@ -325,6 +317,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // ensure graceful shutdown of the LoadMonitor so that
       // LoadMonitors registered with the LoadManager can be
       // deregistered.
+      CosLoadBalancing::LoadManager_ptr tmp;
+
+      if (timer_id == -1)
+        tmp = load_manager.in ();   // PULL monitoring
+      else
+        tmp = CosLoadBalancing::LoadManager::_nil ();  // PUSH
+                                                       // monitoring
       TAO_LB_Monitor_Signal_Handler signal_handler (
          orb.in (),
          root_poa.in (),

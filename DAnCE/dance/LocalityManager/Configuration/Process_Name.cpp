@@ -36,14 +36,14 @@ namespace DAnCE
   {
 #if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
 # if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,9))
-    CORBA::String_var pname;
+    const char *pname;
 
     prop.value >>= CORBA::Any::to_string (pname, 0);
     unsigned long arg (0);
 
     ACE_Auto_Basic_Array_Ptr<char> safe_array;
 
-    if (!(ACE_OS::strlen (pname.in ()) <= 16))
+    if (!(ACE_OS::strlen (pname) <= 16))
       {
         char *tmp (0);
         ACE_NEW_THROW_EX (tmp,
@@ -52,13 +52,13 @@ namespace DAnCE
 
         safe_array.reset (tmp);
 
-        ACE_OS::strncpy (tmp, pname.in (), 15);
+        ACE_OS::strncpy (tmp, pname, 15);
         tmp[15] = '\0';
 
         arg = reinterpret_cast<unsigned long> (tmp);
       }
     else
-      arg = reinterpret_cast<unsigned long> (pname.in ());
+      arg = reinterpret_cast<unsigned long> (pname);
 
     int const retval = ::prctl (PR_SET_NAME, arg);
 
@@ -67,7 +67,7 @@ namespace DAnCE
         std::stringstream str;
         ACE_Auto_Basic_Array_Ptr<char> safe_error (ACE_OS::strerror (ACE_OS::last_error ()));
 
-        str << "Unable to set process name to <" << pname.in () << ">: "
+        str << "Unable to set process name to <" << pname << ">: "
             << safe_error.get ();
         std::string message = str.str ();
 
@@ -76,7 +76,7 @@ namespace DAnCE
                       ACE_TEXT ("Process_Name::configure - %C\n"),
                       message.c_str ()));
 
-        throw ::Deployment::StartError (prop.name.in (),
+        throw ::Deployment::StartError (prop.name,
                                         message.c_str ());
       }
 
@@ -84,7 +84,7 @@ namespace DAnCE
 #endif
 #endif
 
-    throw ::Deployment::StartError (prop.name.in (),
+    throw ::Deployment::StartError (prop.name,
                                     "Setting process name not supported on this platform");
   }
 }

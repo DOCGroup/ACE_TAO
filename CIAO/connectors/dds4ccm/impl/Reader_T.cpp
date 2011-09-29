@@ -26,7 +26,7 @@ namespace CIAO
     ::DDS::InstanceHandle_t
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::check_handle (
       const VALUE_TYPE& an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       ::DDS::InstanceHandle_t const lookup_hnd =
           this->dds_reader ()->lookup_instance (an_instance);
@@ -96,7 +96,7 @@ namespace CIAO
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_w_instance (
       SEQ_VALUE_TYPE & data,
       ::DDS::SampleInfoSeq & sample_info,
-      const ::DDS::InstanceHandle_t & lookup_hnd)
+      DDS_INSTANCE_HANDLE_T_IN lookup_hnd)
     {
       DDS4CCM_TRACE ("Reader_T::read_w_instance");
 
@@ -247,7 +247,7 @@ namespace CIAO
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::read_one_last (
       VALUE_TYPE& an_instance,
       ::CCM_DDS::ReadInfo_out info,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       ::DDS::InstanceHandle_t const lookup_hnd =
         this->check_handle (an_instance, instance_handle);
@@ -285,7 +285,7 @@ namespace CIAO
       const VALUE_TYPE& an_instance,
       SEQ_VALUE_TYPE& instances,
       ::CCM_DDS::ReadInfoSeq& infos,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       ::DDS::InstanceHandle_t const lookup_hnd =
         this->check_handle (an_instance, instance_handle);
@@ -326,6 +326,13 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("Reader_T::set_dds_reader");
       this->dds_reader_ = TYPED_DDS_READER::_narrow (dr);
+      if (!::CORBA::is_nil (dr) && ::CORBA::is_nil (this->dds_reader_.in ()))
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Reader_T::set_dds_reader - "
+                        "narrow failed.\n"));
+          throw ::CORBA::INTERNAL ();
+        }
       this->condition_manager_ = condition_manager;
     }
 
@@ -348,8 +355,8 @@ namespace CIAO
         }
       else
         {
-          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG,
-                        "CIAO::DDS4CCM::Reader_T - "
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "Reader_T::dds_reader - "
                         "Throwing BAD_INV_ORDER.\n"));
           throw ::CORBA::BAD_INV_ORDER ();
         }

@@ -72,7 +72,13 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete");
 
   BaseConnector::configuration_complete ();
-  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  ::CORBA::String_var typesupport_name;
+#if (CIAO_DDS4CCM_NDDS==1)
+  typesupport_name = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+  typename DDS_TYPE::type_support type;
+  typesupport_name = type.get_type_name ();
+#endif
 
   if (::CORBA::is_nil (this->topic_.in ()))
     {
@@ -81,7 +87,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
       this->init_topic (this->domain_participant_.in (),
                         this->topic_.inout () ,
                         this->topic_name_.in (),
-                        typesupport_name);
+                        typesupport_name.in ());
     }
   this->init_subscriber (this->domain_participant_.in (),
                          this->subscriber_.inout ());
@@ -151,9 +157,16 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_remove (void)
                           topic.in ());
     }
 
-  const char* typesupport_name = DDS_TYPE::type_support::get_type_name ();
+  ::CORBA::String_var typesupport_name;
+#if (CIAO_DDS4CCM_NDDS==1)
+  typesupport_name = ::CORBA::string_dup (DDS_TYPE::type_support::get_type_name ());
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+  typename DDS_TYPE::type_support type;
+  typesupport_name = type.get_type_name ();
+#endif
+
   this->unregister_type (this->domain_participant_.in (),
-                         typesupport_name);
+                         typesupport_name.in ());
 
   ::DDS::Subscriber_var subscriber = this->subscriber_._retn ();
   if (! CORBA::is_nil (subscriber.in ()))
@@ -182,7 +195,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::register_type");
 
-  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_ERROR;
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_DomainParticipant_i *part =
     dynamic_cast< CIAO::NDDS::DDS_DomainParticipant_i * > (participant);
@@ -195,16 +208,25 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::register_type (
       throw ::CORBA::INTERNAL ();
     }
 
-  typedef ::CIAO::NDDS::DDS_TypeFactory_T <DDS_TYPE, SEQ_TYPE> dds_type_factory;
-  ::CIAO::NDDS::DDS_TypeFactory_i * factory = 0;
+  dds_type_factory *factory = 0;
   ACE_NEW_THROW_EX (factory,
                     dds_type_factory (),
                     ::CORBA::NO_MEMORY ());
 
-  ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant);
+  if (! ::CIAO::NDDS::DDS_TypeSupport_i::register_type (typesupport_name, factory, participant))
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    ACE_TEXT ("DDS_TopicBase_Connector_T::register_type - ")
+                    ACE_TEXT ("Type <%C> is already registered.\n"),
+                    typesupport_name));
+      delete factory;
+    }
 
   retcode = DDS_TYPE::type_support::register_type(
     part->get_rti_entity (), typesupport_name);
+#else
+  typename DDS_TYPE::type_support::_var_type ts = new typename DDS_TYPE::type_support;
+  retcode = ts->register_type (participant, typesupport_name);
 #endif
   if (retcode != ::DDS::RETCODE_OK)
     {
@@ -226,10 +248,15 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::unregister_type (
   const char * typesupport_name)
 {
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T::unregister_type");
+
 #if (CIAO_DDS4CCM_NDDS==1)
   ::CIAO::NDDS::DDS_TypeFactory_i * factory =
     ::CIAO::NDDS::DDS_TypeSupport_i::unregister_type (typesupport_name, participant);
+
   delete factory;
+#else
+  ACE_UNUSED_ARG (participant);
+  ACE_UNUSED_ARG (typesupport_name);
 #endif
 }
 

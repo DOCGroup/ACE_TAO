@@ -259,13 +259,13 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
   // Now reverse the string to get the correct result
 
   while (e > b)
-  {
-    wchar_t temp = *e;
-    *e = *b;
-    *b = temp;
-    ++b;
-    --e;
-  }
+    {
+      wchar_t temp = *e;
+      *e = *b;
+      *b = temp;
+      ++b;
+      --e;
+    }
 
   return string;
 }
@@ -910,7 +910,7 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
       break;
     if (c >= base)
       break;
-    if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+    if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
       any = -1;
     else {
       any = 1;
@@ -978,7 +978,7 @@ ACE_OS::strtoull_emulation (const char *nptr,
         break;
       if (c >= base)
         break;
-      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
         any = -1;
       else
         {
@@ -1048,7 +1048,7 @@ ACE_OS::wcstoull_emulation (const wchar_t *nptr,
         break;
       if (c >= base)
         break;
-      if (any < 0 || acc > cutoff || acc == cutoff && c > cutlim)
+      if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
         any = -1;
       else
         {

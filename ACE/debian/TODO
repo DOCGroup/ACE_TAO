@@ -5,15 +5,21 @@
    o package websvcs library?
    o create man pages for ace/tao binaries
  * rewrite the patch to load TAO libraries by SONAME and RFC it
- * add cpp dependency to tao_idl
  * install .mpc files?
  * What about REACTOR_NOTIFICATION_QUEUE?
  * fltk and gl
- * Build location leaks in generated documentation
-
-= MWC and MPC =
- * some makefile are not regenerated (e.g. JAWS). Seems like a bug.
+ * subj using PROBLEM-REPORT-FORM for reportbug?
 
 = CIAO =
- * to restore
- * autoconf support
+ * to restore?
+ * autoconf support is missing
+
+= autoconf =
+ * to restore?
+
+= Hurd =
+ * Test programs
+
+= Documentation =
+ * Build location leaks in generated documentation.
+ * ACEXML doc is not packaged.

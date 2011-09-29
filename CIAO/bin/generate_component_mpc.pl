@@ -21,6 +21,7 @@ sub VERSION_MESSAGE {
     print $output  "    -p         Dependent component name\n";
     print $output  "    -l         Dependent component path (libpaths)\n";
     print $output  "    -o         Component output path (libout)\n";
+    print $output  "    -I         Include path for all projects (IDL/cpp)\n";
     print $output  "    -n         Suppress component make/project\n";
     print $output  "    -c         Create a client makefile\n";
     print $output  "    -u         Unique project name prefix (if not defined, name for -p flag will be used). \n";
@@ -34,7 +35,7 @@ sub VERSION_MESSAGE {
 %options=();
 $Getopt::Std::STANDARD_HELP_VERSION = true;
 
-if (!getopts ('henp:o:c:u:b:l:', \%options) || defined $options{h}) {
+if (!getopts ('henp:o:c:u:b:l:I:', \%options) || defined $options{h}) {
     VERSION_MESSAGE (STDERR);
     exit (1);
 }
@@ -61,6 +62,11 @@ if (defined $options{l}) {
 if (defined $options{o}) {
     $lib_out = 'libout = ' . "$options{o}";
     $exe_out = 'exeout = ' . "$options{o}";
+}
+
+if (defined $options{I}) {
+    $include_paths_cpp = 'includes += ' . "$options{I}";
+    $include_paths_idl = '-I ' . "$options{I}";
 }
 
 if (defined $options{b}) {
@@ -118,6 +124,7 @@ if (defined $options{c}) {
   exename = '."$options{c}".'
   after += '."$unique_prefix"."$com_name".'_stub
   libs  += '."$com_name".'_stub '."$stub_depend"."
+  $include_paths_cpp"."
   $lib_paths"."
   $exe_out".'
   IDL_Files {
@@ -143,7 +150,7 @@ project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults' . "$base_pr
   custom_only = 1
   idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_LEM_STUB_Export \
               -Wb,stub_export_include='."$com_name".'_lem_stub_export.h \
-              -SS -Gxhst
+              -SS -Gxhst '."$include_paths_idl".'
 
   IDL_Files {'."
     $com_name".'E.idl
@@ -153,6 +160,7 @@ project('."$unique_prefix"."$com_name".'_lem_gen) : ciaoidldefaults' . "$base_pr
 project('."$unique_prefix"."$com_name".'_lem_stub) : ccm_svnt' . "$base_projs" . '{
   after += '."$unique_prefix"."$com_name".'_lem_gen '."$unique_prefix"."$com_name".'_stub '."$stub_depend".'
   libs  += '."$stub_depend".' '."$com_name".'_stub'."
+  $include_paths_cpp"."
   $lib_paths"."
   $lib_out".'
   sharedname = '."$com_name".'_lem_stub
@@ -183,6 +191,7 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_executor' . "$base_projs" 
   after   += '. "$options{p}" . '_lem_stub ' . "$unique_prefix"."$com_name".'_lem_stub '."$unique_prefix"."$com_name".'_stub
   sharedname = '."$com_name".'_exec
   libs += '."$options{p}" . '_lem_stub ' . "$com_name".'_stub '."$com_name".'_lem_stub '."$stub_depend
+  $include_paths_cpp"."
   $lib_paths"."
   $lib_out".'
   dynamicflags += '."$UCOM_NAME".'_EXEC_BUILD_DLL
@@ -272,8 +281,8 @@ $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
 project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults' . "$base_projs" . '{
-  custom_only = 1
-  '."$cli_idlflags".'
+  custom_only = 1'."
+  $cli_idlflags $include_paths_idl".'
 
   IDL_Files {
     '."$com_name".'.idl
@@ -283,6 +292,7 @@ project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults' . "$ba
 project('."$unique_prefix"."$com_name".'_stub) : '."$cli_base". "$base_projs" . '{
   after += '."$unique_prefix"."$com_name".'_idl_gen '."$stub_depend".'
   libs  += '."$stub_depend"."
+  $include_paths_cpp"."
   $lib_paths"."
   $lib_out".'
   sharedname = '."$com_name".'_stub
@@ -310,6 +320,7 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base". "$base_
   after      += '."$svr_p_after "."$svr_after".' '."$unique_prefix"."$com_name".'_lem_stub'.'
   sharedname  = '."$com_name"."$svr_suffix".'
   libs       += '."$svr_libs $svr_plibs
+  $include_paths_cpp"."
   $lib_paths"."
   $lib_out".'
   dynamicflags += '."$UCOM_NAME"."$USVR_SUFFIX".'_BUILD_DLL

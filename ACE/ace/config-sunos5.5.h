@@ -4,7 +4,7 @@
 // This configuration file is designed to work for SunOS 5.5 platforms
 // using the following compilers:
 //   * Sun C++ 4.2 and later (including 5.x), patched as noted below
-//   * g++ 2.7.2 and later, including egcs
+//   * g++
 //   * Green Hills 1.8.8 and later
 
 #ifndef ACE_CONFIG_H
@@ -110,6 +110,10 @@
 #     define _REENTRANT
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
+
+# if (__GNUC__ < 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ <= 3))
+#   define ACE_LACKS_STD_WSTRING  1
+# endif
 
 #else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */

@@ -18,6 +18,12 @@ using namespace std;
 #define MSVC_71_OR_OLDER
 #endif
 
+// clang version 2.9 crashes when trying to compile the test
+// http://llvm.org/bugs/show_bug.cgi?id=9643
+#ifdef __clang__
+#define MSVC_71_OR_OLDER
+#endif
+
 #ifndef MSVC_71_OR_OLDER
 template<template<typename U, typename = std::allocator<U> > class container, typename DT>
 container<DT> initializer(const DT &d)

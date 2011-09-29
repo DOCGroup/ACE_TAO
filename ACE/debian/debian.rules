@@ -4,14 +4,11 @@
 # written February 2002 by Ossama Othman <ossama@debian.org>
 # Modified August 2003 by Brian Nelson <pyro@debian.org>
 # Copyright (C) 2004  Raphael Bossek <bossekr@debian.org>
-# Copyright © 2005-2010 Thomas Girard <thomas.g.girard@free.fr>
+# Copyright © 2005-2011 Thomas Girard <thomas.g.girard@free.fr>
 
-INSTALL_755 := install -o root -g root -m 755
-
-ACE_SUBDIR := ACE_wrappers
-ACE_ARCHIVE := $(shell ls -1 ACE+TAO+CIAO-src-*.tar.bz2 2>/dev/null || echo ace-archive-missing)
 MWCFLAGS := -type gnuace -noreldefs
-ACE_MAKE_FLAGS := versioned_so=2
+DSO_MAKE_FLAG := versioned_so=2
+INSTALL_FLAGS := DESTDIR=$(CURDIR)/debian/tmp INSTALL_PREFIX=/usr install_rpath=0 $(DSO_MAKE_FLAG)
 
 MAN1 := debian/ace_netsvcs.1 \
 	debian/tao_catior.1 \
@@ -28,171 +25,110 @@ MAN1 := debian/ace_netsvcs.1 \
 DT := debian/tmp
 
 DOXYGEN_FILES_TO_REMOVE := -name '*.md5' -o \
-                           -name '*.dot' -o \
-                           -name '*.idx' -o \
                            -name '*.map' -o \
-                           -name '*.tag' -o \
-                           -name 'index.hh?'
+                           -name '*.tag'
 
-export ACE_ROOT := $(shell pwd)/$(ACE_SUBDIR)
+# Package names, used when overriding dh_installchangelogs
+ALL_PACKAGES := $(shell dh_listpackages)
+ALL_TAO      := $(filter tao% libtao%,$(ALL_PACKAGES))
+ALL_ACEXML   := $(filter libacexml%,$(ALL_PACKAGES))
+
+export ACE_ROOT := $(shell pwd)
 export MPC_ROOT := $(ACE_ROOT)/MPC
 export TAO_ROOT := $(ACE_ROOT)/TAO
-export CIAO_ROOT := $(TAO_ROOT)/CIAO
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 export QTDIR := /usr/share/qt4
 
-# This dpatches are only a place holders. The `prepatch' and `postbuild' targets stops
-# here by default.
-PREPATCH_MARK := 50-prepatch-dummy-mark.dpatch
-POST_BUILD_MARK := 75-post-build-dummy-mark.dpatch
-UNTIL_BUILD := $(PREPATCH_MARK)
-UNTIL_POST_BUILD := $(POST_BUILD_MARK)
+.PHONY: build
+build %:
+	dh $@
 
-.NOTPARALLEL: debian/mpc-ace.sgml debian/%.1 prepatch extract doxygen clean install build binary-indep binary-arch binary
-.PHONY: doxygen patch unpatch prepatch extract build clean binary-indep binary-arch binary install source diff configure
-
-extract: extract-stamp
-extract-stamp: $(ACE_ARCHIVE)
-	tar -xjf $<
+# Implement our own configure machinery; it will copy Debian specific
+# configuration before launching MPC to generate ACE+TAO GNUmakefile
+override_dh_auto_configure:
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
-	cp debian/config.h $(ACE_ROOT)/ace/config.h
+	cp debian/config*.h $(ACE_ROOT)/ace/
 	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
-	# We need to delete this one to prevent an empty library generation
-	rm -f $(ACE_ROOT)/ace/ace_qt3reactor.mpc
-	touch $@
-
-debian/mpc-ace.sgml: ACE_wrappers/MPC/docs/MPC.sgml
-	sed -e 's/mpc\.pl/mpc-ace/g' -e 's/mwc\.pl/mwc-ace/g' $< > $@
-
-debian/%.1: debian/%.sgml
-	docbook-to-man $< > $@
-
-# Prepare a ACE_wrappers directory where most of the patches are applied.
-prepatch: prepatch-stamp
-prepatch-stamp: extract-stamp
-	dpatch apply-until $(UNTIL_BUILD)
-	touch $@
-
-pl-stamp: prepatch-stamp
-	for fn in `find "$(ACE_ROOT)" -name "*.pl"`; do (echo '#!/usr/bin/perl'; cat "$$fn") > "$${fn}T"; mv "$${fn}T" "$$fn"; chmod a+x "$$fn"; done
-	touch $@
-
-configure: configure-stamp
-configure-stamp: prepatch-stamp pl-stamp
 	cp debian/ACE-DPKG.mwc $(ACE_ROOT)
-	cd $(ACE_ROOT) &&  ./bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
+	cd $(ACE_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
 	cp debian/TAO-DPKG.mwc $(TAO_ROOT)
-	cd $(TAO_ROOT) &&  ./../bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
+	cd $(TAO_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) TAO-DPKG.mwc
+
+override_dh_auto_build: build-stamp manpages-stamp doxygen-stamp
+
+build-stamp:
+	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
+	$(MAKE) -C $(TAO_ROOT) $(DSO_MAKE_FLAG)
 	touch $@
 
-patch: patch-stamp
-patch-stamp: configure-stamp
-	dpatch apply-until $(UNTIL_POST_BUILD)
-	touch $@
-
-unpatch:
-	dpatch deapply-all
-	rm -rf patch-stamp debian/patched
-
-doxygen: doxygen-stamp
-doxygen-stamp: build-stamp
-	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_ciao
-	find $(ACE_ROOT)/html/libace-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
-	find $(ACE_ROOT)/html/libtao-doc $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
-#	Somehow search/ is still generated, even if we don't want it.
-	find $(ACE_ROOT)/html -type d -name search | xargs -r rm -Rf
-	touch $@
-
-build: build-stamp manpages-stamp
-build-stamp: patch-stamp
-	dh_testdir
-	cd $(ACE_ROOT) && $(MAKE) $(ACE_MAKE_FLAGS)
-	cd $(TAO_ROOT) && $(MAKE) $(ACE_MAKE_FLAGS)
-	touch $@
-
-manpages-stamp: $(MAN1)
-	touch $@
-
-clean:
-	dh_testdir
-	rm -rf $(ACE_SUBDIR) debian/patched $(MAN1) *-stamp debian/mpc-ace.sgml
-	dh_clean
-
-post-build-patch: post-build-patch-stamp
-post-build-patch-stamp: build-stamp
-	dpatch apply-all
-	touch $@
-
-
-install: post-build-patch
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-#	Install all files in debian/tmp
-	cd $(ACE_ROOT) && $(MAKE) install DESTDIR=$(CURDIR)/$(DT)/ INSTALL_PREFIX=/usr install_rpath=0 $(ACE_MAKE_FLAGS)
-	cd $(TAO_ROOT) && $(MAKE) install DESTDIR=$(CURDIR)/$(DT)/ INSTALL_PREFIX=/usr install_rpath=0 $(ACE_MAKE_FLAGS)
-
+override_dh_auto_install:
+	$(MAKE) -C $(ACE_ROOT) install $(INSTALL_FLAGS)
+	$(MAKE) -C $(TAO_ROOT) install $(INSTALL_FLAGS)
 	mkdir -p $(DT)/usr/share/man/man1
 	cp $(ACE_ROOT)/apps/gperf/ace_gperf.1 $(DT)/usr/share/man/man1
-
 #	Relocate .idl and .pidl files
 	cd $(DT) && for f in $$(find usr/include -name '*.idl' -o -name '*.pidl') ; do \
 	   g=$$(echo $${f%%include*}share/idl/$${f##*usr/include/}) ; \
 	   mkdir -p $$(dirname $$g) ; \
 	   mv $$f $$g ; \
 	   done
-
 #	We provide scripts replacement for tao_idl and tao_ifr; they
 #	automatically define ACE_ROOT and TAO_ROOT
 	mkdir -p $(DT)/usr/lib/ace/TAO
 	mv $(DT)/usr/bin/tao_idl $(DT)/usr/bin/tao_ifr $(DT)/usr/lib/ace/TAO
+	cp debian/tao_idl debian/tao_ifr $(DT)/usr/bin
 
-	$(INSTALL_755) -D debian/tao_idl $(DT)/usr/bin/tao_idl
-	$(INSTALL_755) -D debian/tao_ifr $(DT)/usr/bin/tao_ifr
+override_dh_auto_clean:
+	[ -f $(ACE_ROOT)/GNUmakefile ] && $(MAKE) -C $(ACE_ROOT) realclean $(DSO_MAKE_FLAG) || true
+	[ -f $(TAO_ROOT)/GNUmakefile ] && $(MAKE) -C $(TAO_ROOT) realclean $(DSO_MAKE_FLAG) || true
+	find $(ACE_ROOT) -name 'GNUmakefile*' -o -name '.depend.*' | xargs -r rm
+	rm -f $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	rm -f $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+	rm -f $(ACE_ROOT)/ace/config.h $(ACE_ROOT)/ace/config-hurd.h
+	rm -f $(ACE_ROOT)/ACE-DPKG.mwc $(TAO_ROOT)/TAO-DPKG.mwc
+	rm -f debian/*.1 debian/mpc-ace.sgml
+	rm -Rf $(ACE_ROOT)/html/libace-doc $(ACE_ROOT)/html/libtao-doc $(ACE_ROOT)/html/libacexml-doc
+	rm -f *-stamp
+# Remove stubs that get generated during TAO compilation but for some reason
+# are not removed on make realclean
+	rm -f `cat debian/TOREMOVE`
 
-	dh_install --sourcedir=$(DT) --list-missing
+override_dh_compress:
+	dh_compress -Xexamples -Xtutorials
 
-binary-indep: build install doxygen-stamp
-	dh_testdir -i
-	dh_testroot -i
-	dh_installdocs -i
+# Add --list-missing to make sure we don't miss new binaries
+override_dh_install:
+	dh_install --list-missing
 
+# ACE+TAO has different changelogs. Use the right one in every package.
+override_dh_installchangelogs:
+	dh_installchangelogs -pace-gperf -pgperf-ace apps/gperf/ChangeLog
+	dh_installchangelogs -pmpc-ace MPC/ChangeLog
+	dh_installchangelogs $(addprefix -p,$(ALL_TAO)) TAO/ChangeLog
+	dh_installchangelogs $(addprefix -p,$(ALL_ACEXML)) ACEXML/ChangeLog
+	dh_installchangelogs --remaining-packages ChangeLog
+
+override_dh_fixperms:
+	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.client
 	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.server
 	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/Simulator/DOVEBrowser/make.bat
-	chmod -x debian/libtao-doc/usr/share/doc/libtao-doc/examples/RTCORBA/Activity/svc.conf.client
+	find debian -name '*.pl' | xargs -r sed -i -e '1i#!/usr/bin/perl'
+	dh_fixperms
 
-	dh_installman -i
-	dh_installchangelogs -i $(ACE_ROOT)/ChangeLog
-	dh_perl -i
-	dh_link -i
-	dh_compress -i -Xexamples -Xtutorials
-	dh_fixperms -i
-	dh_installdeb -i
-	dh_gencontrol -i
-	dh_md5sums -i
-	dh_builddeb -i
+debian/mpc-ace.sgml: MPC/docs/MPC.sgml
+	sed -e 's/mpc\.pl/mpc-ace/g' -e 's/mwc\.pl/mwc-ace/g' $< > $@
 
-binary-arch: build install
-	dh_testdir -a
-	dh_testroot -a
-	dh_installdocs -a -A
-	dh_installman -a
-	dh_installinfo -pace-gperf $(ACE_ROOT)/apps/gperf/ace_gperf.info
-	dh_installchangelogs -a $(ACE_ROOT)/ChangeLog
-	dh_installchangelogs -pace-gperf $(ACE_ROOT)/apps/gperf/ChangeLog
-	dh_strip -a
-	dh_link -a
-	dh_compress -a
-	dh_fixperms -a
-	dh_makeshlibs -a -V
-	dh_installdeb -a
-	dh_shlibdeps -a -l `ls -1 debian/lib*.install | sed -e 's#\(.*\)\.install#\1/usr/lib#' | tr '\n' ':' | sed -e 's#:$$##'`
-	dh_gencontrol -a
-	dh_md5sums -a
-	dh_builddeb -a
+debian/%.1: debian/%.sgml
+	docbook-to-man $< > $@
 
-source diff:
-	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+.PHONY: doxygen
+doxygen: doxygen-stamp
+doxygen-stamp:
+	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_ciao -exclude_dance
+	find $(ACE_ROOT)/html $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
+	touch $@
 
-binary: binary-indep binary-arch
+.PHONY: manpages
+manpages: manpages-stamp
+manpages-stamp: $(MAN1)
+	touch $@

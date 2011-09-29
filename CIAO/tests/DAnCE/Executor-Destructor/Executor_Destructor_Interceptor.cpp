@@ -12,6 +12,9 @@ namespace DAnCE
   // Implementation skeleton constructor
   Executor_Destructor::Executor_Destructor (void)
   {
+    dance_test::Exec_Dest_Status * tmp =
+      dance_test::EXEC_DEST_STATUS::instance ();
+    ACE_UNUSED_ARG (tmp);
   }
 
   // Implementation skeleton destructor
@@ -34,6 +37,9 @@ namespace DAnCE
                         i->c_str ()));
           }
       }
+
+    this->instance_ids_.clear ();
+    dance_test::EXEC_DEST_STATUS::close ();
   }
 
   void

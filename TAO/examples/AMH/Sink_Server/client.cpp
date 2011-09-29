@@ -7,24 +7,30 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-  Client_Task task (argc, argv);
-
-  if (task.parse_args () != 1)
+  try
     {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      ACE_OS::exit (1);
+      Client_Task task (argc, argv);
+
+      if (task.parse_args () != 1)
+        {
+          ACE_OS::exit (1);
+        }
+
+      task.try_RT_scheduling ();
+
+      if (task.narrow_servant (orb.in()) != 1)
+        {
+          ACE_OS::exit (1);
+        }
+
+      task.run_test();
     }
-
-  task.try_RT_scheduling ();
-
-  if (task.narrow_servant (orb.in()) != 1)
+  catch (const ::CORBA::Exception &ex)
     {
-        ACE_OS::exit (1);
+      ex._tao_print_exception ("ERROR : Unexpected CORBA exception caugth :");
     }
-
-  task.run_test();
 
   return 0;
 }

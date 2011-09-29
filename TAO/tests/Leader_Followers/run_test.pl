@@ -24,11 +24,15 @@ my $iorbase = "lf.ior";
 my $tp_conf_base = "tp$PerlACE::svcconf_ext";
 my $select_mt_conf_base = "select_mt$PerlACE::svcconf_ext";
 
+# init server configuration files
 my $server_tp_conf_file = $server->LocalFile ($tp_conf_base);
 my $server_select_mt_conf_file = $server->LocalFile ($select_mt_conf_base);
+
+# init client configuration files
 my $client_tp_conf_file = $client->LocalFile ($tp_conf_base);
 my $client_select_mt_conf_file = $client->LocalFile ($select_mt_conf_base);
 
+# init ior files
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
@@ -175,6 +179,29 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $multi = 1;
         $single = 1;
     }
+}
+
+# Copy configuration files to the targets
+if ($server->PutFile ($tp_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_tp_conf_file>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    return 1;
+}
+if ($server->PutFile ($select_mt_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$server_select_mt_conf_file>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    return 1;
+}
+
+if ($client->PutFile ($tp_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client_tp_conf_file>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    return 1;
+}
+if ($client->PutFile ($select_mt_conf_base) == -1) {
+    print STDERR "ERROR: cannot set file <$client_select_mt_conf_file>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    return 1;
 }
 
 if ($single == 1) {

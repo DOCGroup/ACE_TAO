@@ -39,8 +39,10 @@ BE_GlobalData::BE_GlobalData (void)
   : changing_standard_include_files_ (1),
     skel_export_macro_ (0),
     skel_export_include_ (0),
+    skel_export_file_ (0),
     stub_export_macro_ (0),
     stub_export_include_ (0),
+    stub_export_file_ (0),
     anyop_export_macro_ (0),
     anyop_export_include_ (0),
     exec_export_macro_ (0),
@@ -91,6 +93,7 @@ BE_GlobalData::BE_GlobalData (void)
     skel_output_dir_ (0),
     anyop_output_dir_ (0),
     any_support_ (true),
+    cdr_support_ (true),
     tc_support_ (true),
     obv_opt_accessor_ (0),
     gen_impl_files_ (false),
@@ -147,7 +150,9 @@ BE_GlobalData::BE_GlobalData (void)
     gen_lem_force_all_ (false),
     tab_size_ (2),
     alt_mapping_ (false),
-    in_facet_servant_ (false)
+    in_facet_servant_ (false),
+    gen_arg_traits_ (true),
+    gen_anytypecode_adapter_ (false)
 {
 }
 
@@ -784,6 +789,19 @@ BE_GlobalData::skel_export_include (const char *s)
 }
 
 const char*
+BE_GlobalData::skel_export_file (void) const
+{
+  return this->skel_export_file_;
+}
+
+void
+BE_GlobalData::skel_export_file (const char *s)
+{
+  ACE::strdelete (this->skel_export_file_);
+  this->skel_export_file_ = ACE::strnew (s);
+}
+
+const char*
 BE_GlobalData::stub_export_macro (void) const
 {
   if (this->stub_export_macro_ == 0)
@@ -812,6 +830,19 @@ BE_GlobalData::stub_export_include (const char *s)
 {
   ACE::strdelete (this->stub_export_include_);
   this->stub_export_include_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::stub_export_file (void) const
+{
+  return this->stub_export_file_;
+}
+
+void
+BE_GlobalData::stub_export_file (const char *s)
+{
+  ACE::strdelete (this->stub_export_file_);
+  this->stub_export_file_ = ACE::strnew (s);
 }
 
 const char*
@@ -1520,6 +1551,18 @@ BE_GlobalData::any_support (void) const
 }
 
 void
+BE_GlobalData::cdr_support (bool val)
+{
+  this->cdr_support_ = val;
+}
+
+bool
+BE_GlobalData::cdr_support (void) const
+{
+  return this->cdr_support_;
+}
+
+void
 BE_GlobalData::tc_support (bool val)
 {
   this->tc_support_ = val;
@@ -1801,6 +1844,10 @@ BE_GlobalData::dds_impl (char const * const val)
     {
       this->dds_impl_ = OPENDDS;
     }
+  else if (tmp == "coredx")
+    {
+      this->dds_impl_ = COREDX;
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -1838,11 +1885,17 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->skel_export_include_);
   this->skel_export_include_ = 0;
 
+  ACE::strdelete (this->skel_export_file_);
+  this->skel_export_file_ = 0;
+
   ACE::strdelete (this->stub_export_macro_);
   this->stub_export_macro_ = 0;
 
   ACE::strdelete (this->stub_export_include_);
   this->stub_export_include_ = 0;
+
+  ACE::strdelete (this->stub_export_file_);
+  this->stub_export_file_ = 0;
 
   ACE::strdelete (this->anyop_export_macro_);
   this->anyop_export_macro_ = 0;
@@ -2500,6 +2553,30 @@ void
 BE_GlobalData::in_facet_servant (bool val)
 {
   this->in_facet_servant_ = val;
+}
+
+bool
+BE_GlobalData::gen_arg_traits (void) const
+{
+  return this->gen_arg_traits_;
+}
+
+void
+BE_GlobalData::gen_arg_traits (bool val)
+{
+  this->gen_arg_traits_ = val;
+}
+
+bool
+BE_GlobalData::gen_anytypecode_adapter (void) const
+{
+  return this->gen_anytypecode_adapter_;
+}
+
+void
+BE_GlobalData::gen_anytypecode_adapter (bool val)
+{
+  this->gen_anytypecode_adapter_ = val;
 }
 
 unsigned long
@@ -3247,6 +3324,12 @@ BE_GlobalData::parse_args (long &i, char **av)
                   }
               }
           }
+        else if (av[i][2] == 'a' && av[i][3] == 't' && av[i][4] == 'a')
+          {
+            // Generate the AnyTypeCode_Adapter version of the Any insert
+            // policy - used with the sequences of basic types in the ORB.
+            be_global->gen_anytypecode_adapter (true);
+          }
         else
           {
             ACE_ERROR ((
@@ -3265,6 +3348,10 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Suppress Any support for local interfaces.
                 be_global->gen_local_iface_anyops (false);
+              }
+            else if (av[i][3] == 't')
+              {
+                be_global->gen_arg_traits (false);
               }
             else
               {
@@ -3310,6 +3397,11 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // No stub inline.
                 be_global->gen_client_stub (false);
+              }
+            else if (av[i][3] == 'd' && av[i][4] == 'r')
+              {
+                // No cdr support.
+                be_global->cdr_support (false);
               }
             else
               {

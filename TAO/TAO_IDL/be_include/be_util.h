@@ -21,6 +21,7 @@
 
 class TAO_OutStream;
 class be_module;
+class be_type;
 class AST_Decl;
 class AST_Generator;
 
@@ -63,6 +64,9 @@ public:
   /// Called from various places.
   static const char *
   get_output_path (bool for_anyop, bool for_skel);
+
+  // Called by each node upon construction.
+  static void set_arg_seen_bit (be_type *);
 };
 
 #endif // if !defined

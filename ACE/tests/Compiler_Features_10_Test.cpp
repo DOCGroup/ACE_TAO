@@ -133,18 +133,22 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_10_Test"));
-
-  {
-    // ... start the test fresh ...
-    reset_counts();
-    // Let's try to build a simple object and destroy it, without any
-    // exceptions raised ...
-    May_Pop m1(false);
-    // ... two instances of the base class should be created ...
-    check_constructor_count(2, __FILE__, __LINE__);
-    // ... but only one instance is destroyed at this point ...
-    check_destructor_count(1, __FILE__, __LINE__);
-  }
+  try
+    {
+      // ... start the test fresh ...
+      reset_counts();
+      // Let's try to build a simple object and destroy it, without any
+      // exceptions raised ...
+      May_Pop m1(false);
+      // ... two instances of the base class should be created ...
+      check_constructor_count(2, __FILE__, __LINE__);
+      // ... but only one instance is destroyed at this point ...
+      check_destructor_count(1, __FILE__, __LINE__);
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Unexpected exception caught\n")));
+    }
   // ... now both instances are gone ...
   check_destructor_count(2, __FILE__, __LINE__);
 

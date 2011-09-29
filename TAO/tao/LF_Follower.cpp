@@ -23,7 +23,7 @@ int
 TAO_LF_Follower::signal (void)
 {
   // We *must* remove ourselves from the list of followers, otherwise
-  // we could get signalled twice: to wake up as a follower and as the
+  // we could get signaled twice: to wake up as a follower and as the
   // next leader.
   // The follower may not be there if the reply is received while
   // the consumer is not yet waiting for it (i.e. it send the

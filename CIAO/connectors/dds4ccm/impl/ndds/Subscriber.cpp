@@ -79,12 +79,22 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-      ACE_UNUSED_ARG (qos);
-      DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::create_datareader - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return 0;
+        }
+
+      ccm_dds_qos <<= qos;
       return this->rti_entity ()->create_datareader (topic,
-                                               ccm_dds_qos,
-                                               ccm_dds_drl,
-                                               mask);
+                                                     ccm_dds_qos,
+                                                     ccm_dds_drl,
+                                                     mask);
     }
 
     DDSDataReader *
@@ -94,8 +104,17 @@ namespace CIAO
                   ::DDS::StatusMask mask,
                    const ::DDS::DataReaderQos & qos)
     {
-      ACE_UNUSED_ARG (qos);
-      DDS_DataReaderQos ccm_dds_qos = DDS_DATAREADER_QOS_DEFAULT;
+      DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::create_datareader - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return 0;
+        }
+      ccm_dds_qos <<= qos;
       return this->rti_entity ()->create_datareader (topic,
                                                ccm_dds_qos,
                                                ccm_dds_drl,
@@ -112,12 +131,18 @@ namespace CIAO
       char * lib_name = get_library_name(qos_profile);
       char * prof_name = get_profile_name(qos_profile);
 
-      DDSDataReader * dr = this->rti_entity ()->create_datareader_with_profile (
+      DDSDataReader * dr = 0;
+
+      if (lib_name != 0 && prof_name != 0)
+        {
+          dr = this->rti_entity ()->create_datareader_with_profile (
                                                             topic,
                                                             lib_name,
                                                             prof_name,
                                                             ccm_dds_drl,
                                                             mask);
+        }
+
       ACE_OS::free (lib_name);
       ACE_OS::free (prof_name);
 
@@ -133,11 +158,18 @@ namespace CIAO
     {
       char * lib_name = get_library_name (qos_profile);
       char * prof_name = get_profile_name (qos_profile);
-      DDSDataReader * dr = this->rti_entity ()->create_datareader_with_profile (topic,
+
+      DDSDataReader * dr = 0;
+
+      if (lib_name != 0 && prof_name != 0)
+        {
+          dr = this->rti_entity ()->create_datareader_with_profile (topic,
                                                             lib_name,
                                                             prof_name,
                                                             ccm_dds_drl,
                                                             mask);
+        }
+
       ACE_OS::free (lib_name);
       ACE_OS::free (prof_name);
       return dr;
@@ -356,14 +388,14 @@ namespace CIAO
       ::DDS::ViewStateMask view_states,
       ::DDS::InstanceStateMask instance_states)
     {
-      DDS4CCM_TRACE ("DDS_Subscriber_i::set_qos");
+      DDS4CCM_TRACE ("DDS_Subscriber_i::get_datareaders");
       ::DDSDataReaderSeq dds_readers;
 
       ::DDS_ReturnCode_t retcode =
         this->rti_entity ()->get_datareaders (dds_readers,
-                                        sample_states,
-                                        view_states,
-                                        instance_states);
+                                              sample_states,
+                                              view_states,
+                                              instance_states);
       if (retcode == DDS_RETCODE_OK)
         {
           readers.length (dds_readers.length ());
@@ -393,6 +425,15 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::set_qos - "
+                       "Error: Unable to retrieve subscriber qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->get_qos (ccm_dds_qos);
     }
@@ -404,7 +445,8 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::get_qos");
       ::DDS_SubscriberQos ccm_dds_qos;
-      ::DDS::ReturnCode_t retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      ccm_dds_qos <<= qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
       qos <<= ccm_dds_qos;
       return retcode;
     }
@@ -417,18 +459,32 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_listener");
 
-      // Delete the previously set listener
-      DDSSubscriberListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
-      listener = 0;
+      // Retrieve the previously set listener
+      DDSSubscriberListener *old_listener = this->rti_entity ()->get_listener ();
 
+      DDSSubscriberListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (listener,
-                            DDS_SubscriberListener_i (a_listener, this->dp_.in ()),
+                            DDS_SubscriberListener_i (
+                              a_listener,
+                              this->dp_.in ()),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->rti_entity ()->set_listener (listener, mask);
+
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          delete old_listener;
+        }
+
+      return retcode;
     }
 
 
@@ -478,10 +534,18 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DDS_Subscriber_i::set_default_datareader_qos");
       ::DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::set_default_datareader_qos - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_default_datareader_qos (ccm_dds_qos);
     }
-
 
     ::DDS::ReturnCode_t
     DDS_Subscriber_i::get_default_datareader_qos (
@@ -503,12 +567,21 @@ namespace CIAO
       DDS4CCM_TRACE ("DDS_Subscriber_i::copy_from_topic_qos");
       ::DDS_DataReaderQos ccm_dds_qos;
       ::DDS_TopicQos ccm_dds_topic_qos;
+      DDS_ReturnCode_t retcode = this->rti_entity ()->get_default_datareader_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                       "DDS_Subscriber_i"
+                       "::copy_from_topic_qos - "
+                       "Error: Unable to retrieve default datareader qos\n"));
+          return retcode;
+        }
 
       ccm_dds_qos <<= a_datareader_qos;
       ccm_dds_topic_qos <<= a_impl_qos;
-      ::DDS::ReturnCode_t retcode =
+      retcode =
           this->rti_entity ()->copy_from_topic_qos (ccm_dds_qos,
-                                             ccm_dds_topic_qos);
+                                                    ccm_dds_topic_qos);
       a_datareader_qos <<= ccm_dds_qos;
       return retcode;
     }

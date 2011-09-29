@@ -44,13 +44,13 @@ namespace CIAO
       virtual void read_one_last (
         VALUE_TYPE& an_instance,
         ::CCM_DDS::ReadInfo_out info,
-        const ::DDS::InstanceHandle_t & instance_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle);
 
       virtual void read_one_all (
         const VALUE_TYPE& an_instance,
         SEQ_VALUE_TYPE& instances,
         ::CCM_DDS::ReadInfoSeq& infos,
-        const ::DDS::InstanceHandle_t & instance_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle);
 
       virtual ::CCM_DDS::QueryFilter *query (void);
 
@@ -74,7 +74,7 @@ namespace CIAO
 
       ::DDS::InstanceHandle_t check_handle (
         const VALUE_TYPE& an_instance,
-        const ::DDS::InstanceHandle_t & instance_handle);
+        DDS_INSTANCE_HANDLE_T_IN instance_handle);
 
       void convert_data (
         const SEQ_VALUE_TYPE& all_data,
@@ -90,7 +90,7 @@ namespace CIAO
       void read_w_instance (
         SEQ_VALUE_TYPE& data,
         ::DDS::SampleInfoSeq & sample_info,
-        const ::DDS::InstanceHandle_t & lookup_hnd);
+        DDS_INSTANCE_HANDLE_T_IN lookup_hnd);
 
       void return_loan (
         SEQ_VALUE_TYPE& data,

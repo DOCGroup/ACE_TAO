@@ -93,7 +93,7 @@ namespace CIAO
     void
     Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::update_i (
       const VALUE_TYPE& an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle,
+      DDS_INSTANCE_HANDLE_T_IN instance_handle,
       ::CCM_DDS::DataNumber_t index)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_i");
@@ -113,7 +113,7 @@ namespace CIAO
     void
     Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::update_one (
       const VALUE_TYPE& an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::update_one");
       ::DDS::InstanceHandle_t hnd = instance_handle;
@@ -125,10 +125,10 @@ namespace CIAO
         {
           // Check explicitly if the instance handle matches the instance, this
           // is not checked by RTI DDS
-          ::DDS::InstanceHandle_t const instance_handle =
+          ::DDS::InstanceHandle_t const instance_handle_l =
               this->dds_writer ()->lookup_instance (an_instance);
 
-          if (hnd != instance_handle)
+          if (hnd != instance_handle_l)
             {
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }
@@ -144,7 +144,7 @@ namespace CIAO
     void
     Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_i (
       const VALUE_TYPE& an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle,
+      DDS_INSTANCE_HANDLE_T_IN instance_handle,
       ::CCM_DDS::DataNumber_t index)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_i");
@@ -173,7 +173,7 @@ namespace CIAO
     void
     Updater_T<UPDATER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::delete_one (
       const VALUE_TYPE& an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Updater_T::delete_one");
       ::DDS::InstanceHandle_t hnd = instance_handle;
@@ -185,10 +185,10 @@ namespace CIAO
         {
           // Check explicitly if the instance handle matches the instance, this
           // is not checked by RTI DDS
-          ::DDS::InstanceHandle_t const instance_handle =
+          ::DDS::InstanceHandle_t const l_instance_handle =
               this->dds_writer ()->lookup_instance (an_instance);
 
-          if (hnd != instance_handle)
+          if (hnd != l_instance_handle)
             {
               throw ::CCM_DDS::InternalError (::DDS::RETCODE_BAD_PARAMETER, 0);
             }

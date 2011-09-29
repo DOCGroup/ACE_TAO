@@ -40,7 +40,9 @@ namespace ACE
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
       void* dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
+      ACE_UNUSED_ARG (dummy);
       dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
+      ACE_UNUSED_ARG (dummy);
 
       unsigned long iface_value = 0UL;
       ACE_UINT32 iface_index = 0UL;
@@ -97,7 +99,9 @@ namespace ACE
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
       void* dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
+      ACE_UNUSED_ARG (dummy);
       dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
+      ACE_UNUSED_ARG (dummy);
 
       unsigned long iface_value = 0UL;
       ACE_UINT32 iface_index = 0UL;

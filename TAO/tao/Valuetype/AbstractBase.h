@@ -118,8 +118,8 @@ namespace CORBA
 
     /// Return the equivalent object reference.
     /**
-     * The object is not refcounted. The caler should not put this in
-     * a var or some such thing. The memory is owned by <this>
+     * The object is not refcounted. The caller should not put this in
+     * a var or some such thing. The memory is owned by @c this
      * object.
      */
     CORBA::Object_ptr equivalent_objref (void);
@@ -157,7 +157,7 @@ namespace CORBA
 
     /// Our equivalent CORBA::Object version
     /// @todo We may at some point of time should probably cache a
-    /// version of  CORBA::ValueBase
+    /// version of CORBA::ValueBase
     CORBA::Object_var equivalent_obj_;
   };
 

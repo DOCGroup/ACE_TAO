@@ -103,8 +103,8 @@ namespace DAnCE
           {
             DANCE_ERROR (DANCE_LOG_EMERGENCY,
                          (LM_EMERGENCY, DLINFO
-                          "Logger_Service::init - "
-                          "Unable to load backend %s\n",
+                          ACE_TEXT ("Logger_Service::init - ")
+                          ACE_TEXT ("Unable to load backend %s\n"),
                           this->backend_.c_str ()));
             return -1;
           }

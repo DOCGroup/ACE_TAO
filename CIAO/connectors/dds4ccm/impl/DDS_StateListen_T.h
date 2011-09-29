@@ -10,6 +10,7 @@
 
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
+#include "dds4ccm/impl/DataReaderStateListener_T.h"
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 class DDS_StateListen_T

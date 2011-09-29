@@ -17,7 +17,7 @@ project (Shapes_ShapeType_msg_stub) : taoidldefaults, dds4ccm_ts_default, Shapes
     Shapes_ShapeType_msg.idl
   }
 
-  opendds_ts_flags += --export=SHAPES_BASE_MSG_Export
+  opendds_ts_flags += --export=SHAPES_MSG_STUB_Export
 
   DDSGenerator_Files {
     Shapes_ShapeType_msg.idl

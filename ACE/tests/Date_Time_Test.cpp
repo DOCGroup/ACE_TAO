@@ -16,8 +16,6 @@
 #include "ace/Date_Time.h"
 #include "test_config.h"
 
-
-
 static ACE_Date_Time static_dt;   // Making sure it doesn't crash.
 
 int

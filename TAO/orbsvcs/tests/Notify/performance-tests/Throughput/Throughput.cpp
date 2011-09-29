@@ -203,7 +203,7 @@ Notify_Throughput::~Notify_Throughput ()
 {
   this->orb_->shutdown (0);
 
-  delete payload_;
+  delete[] payload_;
 }
 
 int

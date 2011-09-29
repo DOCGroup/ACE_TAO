@@ -69,7 +69,7 @@ public:
   void set_upcall_thread (void);
 
   /// Is there any thread running as a leader?
-  int leader_available (void) const;
+  bool leader_available (void) const;
 
   /// A server thread is making a request.
   void set_client_thread (void);
@@ -107,8 +107,8 @@ public:
   /// model
   void set_client_leader_thread (ACE_thread_t thread_ID);
 
-  /// checks if we are a leader thread
-  int is_client_leader_thread (void) const;
+  /// Checks if we are a leader thread
+  bool is_client_leader_thread (void) const;
 
   /**
    * A leader thread is relinquishing its role, unless there are more
@@ -117,7 +117,7 @@ public:
    */
   int elect_new_leader (void);
 
-  /** @name Follower creation/destructions
+  /** @name Follower creation/destruction
    *
    * The Leader/Followers set acts as a factory for the Follower
    * objects.  Followers are used to represent a thread blocked
@@ -157,9 +157,9 @@ public:
 
   /// Checks if there are any followers available
   /**
-   * @return 1 if there follower set is not empty
+   * @return true if there follower set is not empty
    */
-  int follower_available (void) const;
+  bool follower_available (void) const;
 
   //@}
 
@@ -176,7 +176,7 @@ public:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
 
   /// Check if there are any client threads running
-  int has_clients (void) const;
+  bool has_clients (void) const;
 
   /// Accesor to the reactor
   ACE_Reactor *reactor (void);
@@ -205,7 +205,7 @@ private:
    *
    */
   //@{
-  /// Remote a follower from the Followers set and promote it to the
+  /// Remove a follower from the Followers set and promote it to the
   /// leader role.
   /**
    * This is a helper routine for elect_new_leader(), after verifying

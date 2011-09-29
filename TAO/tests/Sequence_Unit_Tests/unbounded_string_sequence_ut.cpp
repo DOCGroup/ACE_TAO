@@ -511,19 +511,27 @@ struct Tester
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
-  {
-    typedef Tester<unbounded_basic_string_sequence <char> > nTester;
-    nTester ntester;
-    status += ntester.test_all ();
-  }
+  try
+    {
+      {
+        typedef Tester<unbounded_basic_string_sequence <char> > nTester;
+        nTester ntester;
+        status += ntester.test_all ();
+      }
 
 #if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
-  {
-    typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
-    wTester wtester;
-    status += wtester.test_all ();
-  }
+      {
+        typedef Tester<unbounded_basic_string_sequence <CORBA::WChar> > wTester;
+        wTester wtester;
+        status += wtester.test_all ();
+      }
 #endif
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }

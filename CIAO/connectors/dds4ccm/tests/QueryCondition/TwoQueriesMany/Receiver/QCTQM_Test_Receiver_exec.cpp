@@ -386,7 +386,6 @@ namespace CIAO_QCTQM_Test_Receiver_Impl
   {
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("GET ALL  run %d: \n"), run));
-
     ACE_OS::sleep (3);
 
     ::QCTQM_Test::QueryConditionTestConnector::Getter_var getter =

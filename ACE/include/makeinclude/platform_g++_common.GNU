@@ -54,6 +54,10 @@ ifeq ($(gprof),1)
   LDFLAGS += -pg
 endif
 
+ifeq ($(c++0x),1)
+  CCFLAGS += --std=c++0x
+endif
+
 ifeq ($(gcov),1)
   FLAGS_C_CC += -fprofile-arcs -ftest-coverage
 endif

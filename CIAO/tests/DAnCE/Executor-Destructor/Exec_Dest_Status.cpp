@@ -18,7 +18,7 @@ namespace dance_test
 
   Exec_Dest_Status::~Exec_Dest_Status (void)
   {
-
+    this->instances_.clear ();
   }
 
   void

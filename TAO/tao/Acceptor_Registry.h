@@ -55,7 +55,7 @@ typedef TAO_Acceptor** TAO_AcceptorSetIterator;
  * All loaded ESIOP or GIOP acceptor bridges must register with
  * this object.
  *
- * This class maintains a list os acceptor factories for all loaded ORB
+ * This class maintains a list of acceptor factories for all loaded ORB
  * protocols. There is one Acceptor_Registry per ORB_Core.
  */
 class TAO_Export TAO_Acceptor_Registry : private ACE_Copy_Disabled

@@ -154,6 +154,9 @@
 #  PLATFORM_SCTP_LIBS
 #               Platform libraries required for SCTP
 #  PRELINK      Executable to precede linking, such as quantify
+#  PREPROCESS.c Command to preprocess C
+#  PREPROCESS.cc
+#               Command to preprocess C++
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
 #               The base directory in which Pure products will produce
@@ -925,9 +928,13 @@ PRELINK ?=
 POSTLINK ?=
 PURELINK ?=
 MVCMD ?=
+PREPROCESS_OPT ?= -E
+PREPROCESS_SUFFIX ?= i
 
 COMPILE.c       = $(CC) $(CFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS) -c
+PREPROCESS.c   ?= $(CC) $(PREPROCESS_OPT) $(CFLAGS) $(CPPFLAGS)
+PREPROCESS.cc  ?= $(CXX) $(PREPROCESS_OPT) $(CCFLAGS) $(CPPFLAGS)
 RC ?=
 
 COMPILE.rc      = $(RC) $(RCFLAGS)

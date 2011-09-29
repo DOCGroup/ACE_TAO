@@ -29,12 +29,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Get_Opt.h"
-#include "ace/Process_Mutex.h"
-#include "ace/Signal.h"
-#include "ace/Barrier.h"
-#include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
@@ -92,6 +86,12 @@ namespace {
 
     return current + 1;
   }
+
+#if defined (ACE_LACKS_IOVEC)
+  typedef u_long buffer_len;
+#else
+  typedef size_t buffer_len;
+#endif /* ACE_LACKS_IOVEC */
 
 #if defined (ACE_WIN32)
   int beforeVersion(const DWORD majorVersion,
@@ -198,12 +198,12 @@ namespace {
 
   struct IovecGuard
   {
-    IovecGuard(const int count, const int slot, const u_long max);
+    IovecGuard(const int count, const int slot, const buffer_len max);
     ~IovecGuard();
     char* getBufferAtOffset(const ssize_t offset);
 
     const int iovcnt_;
-    u_long totalBytes_;
+    buffer_len totalBytes_;
     iovec* iov_;
     static const int ALL_SLOTS = -1;
   };
@@ -256,7 +256,7 @@ typedef ACE_Connector<Svc_Handler,
                       ACE_SOCK_CONNECTOR> CONNECTOR;
 
 
-IovecGuard::IovecGuard(const int count, const int slot, const u_long max)
+IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
   : iovcnt_(count),
     totalBytes_(0)
 {
@@ -276,7 +276,7 @@ IovecGuard::IovecGuard(const int count, const int slot, const u_long max)
     {
       iov_[i].iov_base = totalBuffer;
       totalBuffer += iov_[i].iov_len;
-      for (u_long j = 0; j < iov_[i].iov_len; ++j)
+      for (u_long j = 0; j < static_cast<u_long>(iov_[i].iov_len); ++j)
         {
           char *charbase = static_cast<char *>(iov_[i].iov_base);
           charbase[j] = expChar;
@@ -327,13 +327,12 @@ Svc_Handler::send_data (void)
   bool successful = true;
   bool win32_test = false;
   const int testType = processENOBUFS();
-  const ACE_TCHAR *send_desc = "";
+  const ACE_TCHAR *send_desc = ACE_TEXT ("");
   ssize_t result = 0;
   if (testType == 0)
     {
-      ssize_t tryThreshold = 0x7fff;
+      buffer_len tryThreshold = 0x7fff;
       ssize_t thresholdActualSend = -1;
-      int retry = 0;
       const ssize_t MAX =
         static_cast<ssize_t>(
           (static_cast<unsigned long long>(1) <<
@@ -342,12 +341,12 @@ Svc_Handler::send_data (void)
       const unsigned int startShift = 4;
       unsigned int shift = startShift;
       unsigned int trailingMask = 0xffff;
-      while (tryThreshold < MAX)
+      while (static_cast<ssize_t>(tryThreshold) < MAX)
         {
-          IovecGuard all(1, 0, static_cast<u_long>(tryThreshold));
+          IovecGuard all(1, 0, tryThreshold);
           thresholdActualSend =
             this->send(all, ACE_TEXT ("identifying threshold"), true, true);
-          if (thresholdActualSend <= tryThreshold/2 + 1)
+          if (thresholdActualSend <= static_cast<ssize_t>(tryThreshold)/2 + 1)
             if (shift <= 1)
               break;
             else
@@ -362,17 +361,16 @@ Svc_Handler::send_data (void)
             shift /= 2;
 
           tryThreshold = (tryThreshold << shift) | trailingMask;
-          retry = 0;
           ACE_OS::sleep(0);
         }
 
 #if defined (ACE_WIN32)
       win32_test = true;
-      // THis test only applies to win32 platforms, on systems with
+      // This test only applies to win32 platforms, on systems with
       // sane sendv impls, this is not a problem.
-      if (thresholdActualSend != tryThreshold/2 + 1)
+      if (thresholdActualSend != static_cast<ssize_t>(tryThreshold)/2 + 1)
         {
-          if (tryThreshold == MAX)
+          if (static_cast<ssize_t>(tryThreshold) == MAX)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) was not able to identify a point ")
                         ACE_TEXT ("where ACE_OS::sendv does not send a ")
@@ -394,7 +392,7 @@ Svc_Handler::send_data (void)
         }
 #endif /* ACE_WIN32 */
 
-      u_long overThreshold = static_cast<u_long>(tryThreshold);
+      buffer_len overThreshold = tryThreshold;
       if (ACE::debug())
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) identified a buffer with %d bytes ")
@@ -404,7 +402,7 @@ Svc_Handler::send_data (void)
 #if !defined (ACE_WIN32) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
       {
-        u_long underThreshold = (overThreshold + 1) / 2;
+        buffer_len underThreshold = (overThreshold + 1) / 2;
         // verify that if the total buffer is too large that partial is sent
         IovecGuard all(2, IovecGuard::ALL_SLOTS, underThreshold);
         send_desc = ACE_TEXT ("2 iovecs combined to be too large");
@@ -434,9 +432,9 @@ Svc_Handler::send_data (void)
       }
 
       {
-        IovecGuard small(2, 0, overThreshold);
+        IovecGuard small_iov(2, 0, overThreshold);
         send_desc = ACE_TEXT ("large iovec followed by small iovec");
-        result = this->send(small, send_desc, true);
+        result = this->send(small_iov, send_desc, true);
         if (!(result > 0))
           {
             ACE_ERROR ((LM_ERROR,
@@ -539,14 +537,14 @@ Svc_Handler::send_data (void)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
       {
-        IovecGuard small(2, 0, 0x0fffffff);
+        IovecGuard small_iov(2, 0, 0x0fffffff);
         send_desc =  ACE_TEXT ("large iovec followed by small iovec");
-        result = this->send(small, send_desc, true, true);
-        if (result < 0 || static_cast<u_long>(result) != small.totalBytes_)
+        result = this->send(small_iov, send_desc, true, true);
+        if (result < 0 || static_cast<u_long>(result) != small_iov.totalBytes_)
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %s: expected %d, got %d\n"),
-                        send_desc, small.totalBytes_, result));
+                        send_desc, small_iov.totalBytes_, result));
             successful = false;
           }
       }
@@ -669,7 +667,7 @@ Svc_Handler::send (IovecGuard& iovec_array,
                     send_func_name, send_desc, errno));
       return -1;
     }
-  u_long sent_bytes = static_cast<u_long>(actual_send_status);
+  buffer_len sent_bytes = static_cast<buffer_len>(actual_send_status);
   if (sent_bytes >= iovec_array.totalBytes_)
     {
 #if defined (ACE_WIN32)
@@ -718,8 +716,8 @@ Svc_Handler::send (IovecGuard& iovec_array,
     }
 #endif /* ACE_WIN32 */
 
-  size_t send_remainder =
-    static_cast<size_t>(iovec_array.totalBytes_) - actual_send_status;
+  buffer_len send_remainder =
+    iovec_array.totalBytes_ - static_cast<buffer_len>(actual_send_status);
   char* offset = iovec_array.getBufferAtOffset(actual_send_status);
   ssize_t send_status;
   while (send_remainder > 0)

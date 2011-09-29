@@ -180,9 +180,10 @@ namespace CIAO
 
         CIAO_ERROR (1,
                     (LM_ERROR,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+                     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -195,9 +196,10 @@ namespace CIAO
 
         CIAO_ERROR (1,
                     (LM_ERROR,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+                     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -210,9 +212,10 @@ namespace CIAO
 
         CIAO_ERROR (1,
                     (LM_ERROR,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+                     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -225,9 +228,10 @@ namespace CIAO
 
         CIAO_ERROR (1,
                     (LM_ERROR,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+                     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -245,9 +249,10 @@ namespace CIAO
 
         CIAO_ERROR (1,
                     (LM_ERROR,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+                     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -256,11 +261,11 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
-                      "Executor DLL [%C] successfully opened\n",
-                       entity,
-                       primary_artifact));
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
+                     "Executor DLL [%C] successfully opened\n",
+                     entity,
+                     primary_artifact));
       }
 
     if (servant_dll.open (ACE_TEXT_CHAR_TO_TCHAR (servant_artifact),
@@ -278,6 +283,7 @@ namespace CIAO
                       CLINFO
                       "Container_i::prepare_installation <%C> - "
                      "ERROR: %C\n",
+                     entity,
                      err.str ().c_str ()));
 
         throw CIAO::Installation_Failure (name, err.str ().c_str ());
@@ -286,11 +292,11 @@ namespace CIAO
       {
         CIAO_DEBUG (9,
                     (LM_TRACE,
-                      CLINFO
-                      "Container_i::prepare_installation <%C> - "
-                      "Servant DLL [%C] successfully openend\n",
-                      entity,
-                      servant_artifact));
+                     CLINFO
+                     "Container_i::prepare_installation <%C> - "
+                     "Servant DLL [%C] successfully openend\n",
+                     entity,
+                     servant_artifact));
       }
   }
 

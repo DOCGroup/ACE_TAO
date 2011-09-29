@@ -501,4 +501,8 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_DEPRECATED
 #endif
 
+#ifndef ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+# define ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+#endif
+
 #endif /* ACE_CONFIG_MACROS_H */

@@ -231,17 +231,24 @@ TAO_Connection_Handler::handle_input_eh (ACE_HANDLE h, ACE_Event_Handler *eh)
                   &suspend_delay));
 
       // Using the heap to create the timeout handler, since we do not know
-      // which handle we will have to try to resume. The destructor, called from
-      // handle_close() will self delete (destruct)
+      // which handle we will have to try to resume.
       TAO_Resume_Handle_Deferred* prhd = 0;
       ACE_NEW_RETURN (prhd,
-                     TAO_Resume_Handle_Deferred (this->orb_core_,
-                                                 eh->get_handle()),
+                     TAO_Resume_Handle_Deferred (this->orb_core_, eh),
                      -1);
+      ACE_Event_Handler_var safe_handler (prhd);
 
-      this->orb_core_->reactor()->schedule_timer (prhd,
-                                                  0,
-                                                  suspend_delay);
+      int const retval = this->orb_core_->reactor()->schedule_timer (prhd, 0, suspend_delay);
+      if (retval == -1)
+        {
+          if (TAO_debug_level > 5)
+            ACE_ERROR ((LM_ERROR,
+                      "TAO (%P|%t) - Connection_Handler[%d]::handle_input_eh, "
+                      "Error scheduling timer in %#T sec\n",
+                      eh->get_handle(),
+                      &suspend_delay));
+          return -1;
+        }
 
       // Returning 0 causes the wait strategy to exit and the leader thread
       // to enter the reactor's select() call.

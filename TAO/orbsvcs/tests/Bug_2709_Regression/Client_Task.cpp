@@ -80,6 +80,8 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
                               remote_server.in (),
                               new_ref.in ());
 
+  ACE_UNUSED_ARG (retval);
+
   return new_ref._retn ();
 }
 

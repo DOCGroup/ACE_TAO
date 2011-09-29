@@ -15,8 +15,15 @@ Handle_L_Stream::~Handle_L_Stream (void)
 ACE_INLINE
 Handle_L_Stream::Handle_L_Stream (void)
 {
-  if (Handle_L_Stream::login_name == 0)
+  if (Handle_L_Stream::login_name == 0) {
+#if !defined(ACE_LACKS_CUSERID)
     Handle_L_Stream::login_name = ACE_OS::cuserid (Handle_L_Stream::login);
+#else
+    Handle_L_Stream::login[0] = '.';
+    Handle_L_Stream::login[1] = '\0';
+    Handle_L_Stream::login_name = Handle_L_Stream::login;
+#endif
+  }
 }
 
 ACE_INLINE int

@@ -206,15 +206,12 @@ namespace CIAO
 
       void set_rti_entity (::DDSDataReader* dr, ::DDS::DomainParticipant_ptr dp);
 
-      ::DDS::StatusMask get_mask (void);
-
       ::DDSDataReader * get_rti_entity (void);
 
     private:
       TYPED_DDS_READER * rti_entity_;
       ::DDS::DomainParticipant_var dp_;
       ::DDS::Subscriber_var sub_;
-      ::DDS::StatusMask lst_mask_;
 
       TYPED_DDS_READER * rti_entity (void);
 

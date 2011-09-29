@@ -95,7 +95,6 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager_Factory
   : public ACE_Service_Object
 {
 public:
-
   /// Virtual destructor.
   virtual ~TAO_Thread_Lane_Resources_Manager_Factory (void);
 

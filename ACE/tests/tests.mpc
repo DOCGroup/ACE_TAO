@@ -459,6 +459,13 @@ project(Bug_3943_Regression_Test) : acetest {
   }
 }
 
+project(Bug_3974_Regression_Test) : acetest {
+  exename = Bug_3974_Regression_Test
+  Source_Files {
+    Bug_3974_Regression_Test.cpp
+  }
+}
+
 project(Cache Map Manager Test) : acetest {
   exename = Cache_Map_Manager_Test
   Source_Files {
@@ -933,6 +940,13 @@ project(Message Queue Test) : acetest {
   exename = Message_Queue_Test
   Source_Files {
     Message_Queue_Test.cpp
+  }
+  verbatim(gnuace,local) {
+    # Needs a larger heap on AIX to avoid overwriting stacks in the counting
+    # part of the test.
+    ifdef AIX_VERS
+      LDFLAGS += -bmaxdata:0x20000000
+    endif
   }
 }
 
@@ -1946,6 +1960,14 @@ project(Bug_3334_Regression_Test) : acetest {
   exename = Bug_3334_Regression_Test
   Source_Files {
     Bug_3334_Regression_Test.cpp
+  }
+}
+
+project(Bug_3912_Regression_Test) : acetest {
+  after  += Service_Config_Stream_DLL
+  exename = Bug_3912_Regression_Test
+  Source_Files {
+    Bug_3912_Regression_Test.cpp
   }
 }
 

@@ -26,7 +26,7 @@ namespace CIAO
     void
     Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::write_i (
       const VALUE_TYPE& datum,
-      const ::DDS::InstanceHandle_t& instance_handle,
+      DDS_INSTANCE_HANDLE_T_IN instance_handle,
       ::CCM_DDS::DataNumber_t index)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_i");
@@ -47,7 +47,7 @@ namespace CIAO
     void
     Writer_T<WRITER_TYPE, TYPED_DDS_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::write_one (
       const VALUE_TYPE & an_instance,
-      const ::DDS::InstanceHandle_t & instance_handle)
+      DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
       DDS4CCM_TRACE ("CIAO::DDS4CCM::Writer_T::write_one");
 
@@ -73,6 +73,7 @@ namespace CIAO
                         ACE_TEXT ("Publisher on DataWriter seems to be NIL\n")));
           throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
         }
+
       Coherent_Changes_Guard guard (
         pub.in (),
         this->is_coherent_write_);

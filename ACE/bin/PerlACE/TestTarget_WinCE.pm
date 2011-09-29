@@ -52,16 +52,16 @@ sub new
     }
     $self->{FSROOT} = $fsroot;
 
-    $self->{REBOOT_CMD} = $ENV{"ACE_REBOOT_LVRT_CMD"};
+    $self->{REBOOT_CMD} = $ENV{'ACE_REBOOT_LVRT_CMD'};
     if (!defined $self->{REBOOT_CMD}) {
         $self->{REBOOT_CMD} = 'I_Need_A_Reboot_Command';
     }
-    $self->{REBOOT_TIME} = $ENV{"ACE_LVRT_REBOOT_TIME"};
+    $self->{REBOOT_TIME} = $ENV{'ACE_LVRT_REBOOT_TIME'};
     if (!defined $self->{REBOOT_TIME}) {
         $self->{REBOOT_TIME} = 200;
     }
 
-    $self->{REBOOT_TIME} = $ENV{"ACE_RUN_LVRT_REBOOT_TIME"};
+    $self->{REBOOT_TIME} = $ENV{'ACE_RUN_LVRT_REBOOT_TIME'};
     if (!defined $self->{REBOOT_TIME}) {
         $self->{REBOOT_TIME} = 200;
     }
@@ -92,7 +92,7 @@ sub LocalFile {
     my $self = shift;
     my $file = shift;
     my $cwdrel = $file;
-    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"}  : $ENV{"ACE_ROOT"};
+    my $prjroot = defined $ENV{'ACE_RUN_VX_PRJ_ROOT'} ? $ENV{'ACE_RUN_VX_PRJ_ROOT'}  : $ENV{'ACE_ROOT'};
     if (length ($cwdrel) > 0) {
         $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
     }
@@ -106,7 +106,8 @@ sub LocalFile {
     return $newfile;
 }
 
-sub AddLibPath ($) {
+sub AddLibPath ($)
+{
     my $self = shift;
     my $dir = shift;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
@@ -115,13 +116,14 @@ sub AddLibPath ($) {
     PerlACE::add_lib_path ($dir);
 }
 
-sub CreateProcess {
-  my $self = shift;
-if ($OSNAME eq "MSWin32") {
-  my $process = new PerlACE::ProcessVX ($self, @_);  return $process;
-} else {
-  my $process = new PerlACE::ProcessVX (@_, $self);  return $process;
-}
+sub CreateProcess
+{
+    my $self = shift;
+    if ($OSNAME eq "MSWin32") {
+        my $process = new PerlACE::ProcessVX ($self, @_);  return $process;
+    } else {
+        my $process = new PerlACE::ProcessVX (@_, $self);  return $process;
+    }
 }
 
 # Need a reboot when this target is destroyed.
@@ -146,7 +148,7 @@ sub WaitForFileTimed ($)
     my $file = shift;
     my $timeout = shift;
     my $cwdrel = $file;
-    my $prjroot = defined $ENV{"ACE_RUN_VX_PRJ_ROOT"} ? $ENV{"ACE_RUN_VX_PRJ_ROOT"}  : $ENV{"ACE_ROOT"};
+    my $prjroot = defined $ENV{'ACE_RUN_VX_PRJ_ROOT'} ? $ENV{'ACE_RUN_VX_PRJ_ROOT'}  : $ENV{'ACE_ROOT'};
     if (length ($cwdrel) > 0) {
         $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
     }
@@ -155,7 +157,7 @@ sub WaitForFileTimed ($)
     }
     my $newfile = $self->{HOST_ROOT} . "/" . $cwdrel . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print STDERR "WinCE waits for $newfile timeout $timeout\n";
+        print STDERR "WinCE waits for $newfile timeout $timeout\n";
     }
     return PerlACE::waitforfile_timed ($newfile, $timeout);
 }
@@ -174,7 +176,7 @@ sub DeleteFile ($)
     my $file = shift;
     my $newfile = $self->LocalFile($file);
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-      print STDERR "delete $newfile\n";
+        print STDERR "delete $newfile\n";
     }
     unlink ("$newfile");
 }

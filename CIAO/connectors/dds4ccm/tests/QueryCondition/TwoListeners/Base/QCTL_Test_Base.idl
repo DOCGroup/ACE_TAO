@@ -9,6 +9,10 @@
 #define QUERY_CONDITION_TWO_LISTENERS_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/QCTL_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/QCTL_Test_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "QueryConditionTwoListenersTest"
+#pragma DCPS_DATA_KEY "QueryConditionTwoListenersTest key"
 
 struct QueryConditionTwoListenersTest {
   string key; //@key

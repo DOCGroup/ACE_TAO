@@ -48,76 +48,84 @@ Server_Worker::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
 {
-  // Making sure there are no stale ior files to confuse a client
-  ACE_OS::unlink (ior_file_.c_str ());
+  try
+    {
+      // Making sure there are no stale ior files to confuse a client
+      ACE_OS::unlink (ior_file_.c_str ());
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_var poa_object =
-    orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (poa_object.in ());
 
-  if (CORBA::is_nil (root_poa.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Panic: nil RootPOA\n")),
+      if (CORBA::is_nil (root_poa.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) Panic: nil RootPOA\n")),
+                          1);
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager ();
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
+      Hello *hello_impl;
+      ACE_NEW_RETURN (hello_impl,
+                      Hello (orb.in ()),
                       1);
 
-  PortableServer::POAManager_var poa_manager =
-    root_poa->the_POAManager ();
+      PortableServer::ServantBase_var owner_transfer (hello_impl);
 
-  if (parse_args (argc, argv) != 0)
-    return 1;
+      PortableServer::ObjectId_var id =
+        root_poa->activate_object (hello_impl);
 
-  Hello *hello_impl;
-  ACE_NEW_RETURN (hello_impl,
-                  Hello (orb.in ()),
-                  1);
+      CORBA::Object_var hello_obj =
+        root_poa->id_to_reference (id.in ());
 
-  PortableServer::ServantBase_var owner_transfer (hello_impl);
+      Test::Hello_var hello =
+        Test::Hello::_narrow (hello_obj.in ());
 
-  PortableServer::ObjectId_var id =
-    root_poa->activate_object (hello_impl);
+      CORBA::String_var ior =
+        orb->object_to_string (hello.in ());
 
-  CORBA::Object_var hello_obj =
-    root_poa->id_to_reference (id.in ());
+      poa_manager->activate ();
 
-  Test::Hello_var hello =
-    Test::Hello::_narrow (hello_obj.in ());
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server activated POA manager\n")));
 
-  CORBA::String_var ior =
-    orb->object_to_string (hello.in ());
+      // Output the IOR to the <ior_output_file>
+      FILE *output_file= ACE_OS::fopen (ior_file_.c_str (), "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) Cannot open output file %s for writing IOR: %C"),
+                          ior_file_.c_str (),
+                          ior.in ()),
+                          1);
+      ACE_OS::fprintf (output_file, "%s", ior.in ());
+      ACE_OS::fclose (output_file);
 
-  poa_manager->activate ();
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server entering the event loop\n")));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server activated POA manager\n")));
+      orb->run ();
 
-  // Output the IOR to the <ior_output_file>
-  FILE *output_file= ACE_OS::fopen (ior_file_.c_str (), "w");
-  if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Cannot open output file %s for writing IOR: %C"),
-                       ior_file_.c_str (),
-                       ior.in ()),
-                      1);
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server exiting the event loop\n")));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server entering the event loop\n")));
+      root_poa->destroy (1, 1);
 
-  orb->run ();
+      // During normal test execution the ORB would have been destroyed
+      // by a request from the client.
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server exiting the event loop\n")));
+      //  orb->shutdown (0);
 
-  root_poa->destroy (1, 1);
-
-  // During normal test execution the ORB would have been destroyed
-  // by a request from the client.
-
-  //  orb->shutdown (0);
-
-  orb->destroy ();
+      orb->destroy ();
+    }
+  catch (const ::CORBA::Exception &e)
+    {
+      e._tao_print_exception("Server_Worker::test_main");
+      return 1;
+    }
 
   return 0;
 }

@@ -577,7 +577,7 @@ public:
    * following methods with the semantics documented below.
    */
   /**
-   * Initialising the messaging object. This would be used by the
+   * Initializing the messaging object. This would be used by the
    * connector side. On the acceptor side the connection handler
    * would take care of the messaging objects.
    */
@@ -603,7 +603,7 @@ public:
   virtual bool post_connect_hook (void);
 
   /// Memory management routines.
-  /*
+  /**
    * Forwards to event handler.
    */
   ACE_Event_Handler::Reference_Count add_reference (void);

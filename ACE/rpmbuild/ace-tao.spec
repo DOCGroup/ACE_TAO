@@ -1,48 +1,49 @@
 # Set the version number here.
-%define ACEVER  6.0.1
-%define TAOVER  2.0.1
-%define CIAOVER 1.0.1
+%define ACEVER  6.0.4
+%define TAOVER  2.0.4
+%define CIAOVER 1.0.4
 
 # Conditional build
 # Default values are
-#                    --with rnq         (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#                    --with ipv6        (IPv6 support)
-#                    --with opt         (Optimized build)
-#                    --with zlib        (Zlib compressor)
-#                    --with bzip2       (Bzip2 compressor)
-#                    --without autoconf (Use MPC to build)
-#                    --without fltk     (No ftlk support)
-#                    --without tk       (No tk support)
-#                    --without xt       (No xt support)
-#                    --without fox      (No fox support)
-#                    --without qt       (No qt support)
+#                    --with ipv6         (IPv6 support)
+#                    --with opt          (Optimized build)
+#                    --with zlib         (Zlib compressor)
+#                    --with bzip2        (Bzip2 compressor)
+#                    --without autoconf  (Use MPC to build)
+#                    --without fltk      (No ftlk support)
+#                    --without tk        (No tk support)
+#                    --without xt        (No xt support)
+#                    --without fox       (No fox support)
+#                    --without qt        (No qt support)
+#                    --without inline    (Code inlining disabled)
+#                    --without versioned (Versioned namespace)
 
 #
 # Read: If neither macro exists, then add the default definition.
-%{!?_with_rnq: %{!?_without_rnq: %define _with_rnq --with-rnq}}
 %{!?_with_ipv6: %{!?_without_ipv6: %define _with_ipv6 --with-ipv6}}
 %{!?_with_opt: %{!?_without_opt: %define _with_opt --with-opt}}
 %{!?_with_zlib: %{!?_without_zlib: %define _with_zlib --with-zlib}}
 %{!?_with_bzip2: %{!?_without_bzip2: %define _with_bzip2 --with-bzip2}}
-%{!?_with_autoconf: %{!?_without_autoconf: %define _without_autoconf --without-autoconf}}
 %{!?_with_ftlk: %{!?_without_ftlk: %define _without_ftlk --without-ftlk}}
 %{!?_with_tk: %{!?_without_tk: %define _without_tk --without-tk}}
 %{!?_with_xt: %{!?_without_xt: %define _without_xt --without-xt}}
 %{!?_with_fox: %{!?_without_fox: %define _without_fox --without-fox}}
 %{!?_with_qt: %{!?_without_qt: %define _without_qt --without-qt}}
+%{!?_with_inline: %{!?_without_inline: %define _without_inline --without-inline}}
+%{!?_with_versioned: %{!?_without_versioned: %define _without_versioned 0}}
 #
 # Read: It's an error if both or neither required options exist.
-%{?_with_rnq: %{?_without_rnq: %{error: both _with_rnq and _without_rnq}}}
 %{?_with_ipv6: %{?_without_ipv6: %{error: both _with_ipv6 and _without_ipv6}}}
 %{?_with_opt: %{?_without_opt: %{error: both _with_opt and _without_opt}}}
 %{?_with_zlib: %{?_without_zlib: %{error: both _with_zlib and _without_zlib}}}
 %{?_with_bzip2: %{?_without_bzip2: %{error: both _with_bzip2 and _without_bzip2}}}
-%{?_with_autoconf: %{?_without_autoconf: %{error: both _with_autoconf and _without_autoconf}}}
 %{?_with_fltk: %{?_without_fltk: %{error: both _with_fltk and _without_fltk}}}
 %{?_with_tk: %{?_without_tk: %{error: both _with_tk and _without_tk}}}
 %{?_with_xt: %{?_without_xt: %{error: both _with_xt and _without_xt}}}
 %{?_with_fox: %{?_without_fox: %{error: both _with_fox and _without_fox}}}
 %{?_with_qt: %{?_without_qt: %{error: both _with_qt and _without_qt}}}
+%{?_with_inline: %{?_without_inline: %{error: both _with_inline and _without_inline}}}
+%{?_with_versioned: %{?_without_versioned: %{error: both _with_versioned and _without_versioned}}}
 
 %{!?skip_make:%define skip_make 0}
 %{!?make_nosrc:%define make_nosrc 0}
@@ -70,13 +71,10 @@ Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-
 Source1:      ace-tao-rpmlintrc
 BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 %define _extension .gz
-BuildRequires: redhat-rpm-config elfutils sendmail
-%endif
 
-%if 0%{?suse_version}
-%define _extension .gz
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+BuildRequires: redhat-rpm-config elfutils sendmail
 %endif
 
 %if !0%{?suse_version}
@@ -382,7 +380,7 @@ Summary:        ACE_QtReactor for use with Qt library
 Version:        %{ACEVER}
 Group:          Development/Libraries/C and C++
 Requires:       ace = %{ACEVER}
-Requires:       qt
+Requires:       qt4
 
 %description -n ace-qtreactor
 
@@ -400,7 +398,7 @@ Version:        %{ACEVER}
 Group:          Development/Libraries/C and C++
 Requires:       ace-devel = %{ACEVER}
 Requires:       ace-qtreactor = %{ACEVER}
-Requires:       qt-devel
+Requires:       qt4-devel
 
 %description -n ace-qtreactor-devel
 
@@ -809,7 +807,7 @@ export ACE_ROOT=$(pwd)
 export MPC_ROOT=$ACE_ROOT/MPC
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$CIAO_ROOT/DAnCE
+export DANCE_ROOT=$TAO_ROOT/DAnCE
 export LD_LIBRARY_PATH=$ACE_ROOT/lib
 
 # Dump the g++ versions, in case the g++ version is broken we can
@@ -823,24 +821,14 @@ cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
 
 %else
 
-%if %{?_with_autoconf:0}%{!?_with_autoconf:1}
-
 cat > $ACE_ROOT/ace/config.h << EOF
 EOF
 
 # If ipv6 support is indicated insert some lines into the config.h file
-#
 %if %{?_with_ipv6:1}%{!?_with_ipv6:0}
 cat >> $ACE_ROOT/ace/config.h << EOF
 #define ACE_HAS_IPV6
 #define ACE_USES_IPV4_IPV6_MIGRATION
-EOF
-%endif
-
-# If rnq support is indicated insert some lines into the config.h file
-%if %{?_with_rnq:1}%{!?_with_rnq:0}
-cat >> $ACE_ROOT/ace/config.h << EOF
-#define ACE_HAS_REACTOR_NOTIFICATION_QUEUE
 EOF
 %endif
 
@@ -860,6 +848,19 @@ EOF
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 ssl = 1
 EOF
+
+%if %{?_with_inline:1}%{!?_with_inline:0}
+%define inline -D__ACE_INLINE__ -U__ACE_NO_INLINE__
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
+inline = 1
+EOF
+%else
+%define inline
+%define inline -D__ACE_NO_INLINE__ -U__ACE_INLINE__
+cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
+inline = 0
+EOF
+%endif
 
 %if %{?_with_xt:1}%{!?_with_xt:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
@@ -888,7 +889,7 @@ EOF
 
 %if %{?_with_qt:1}%{!?_with_qt:0}
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
-qt = 1
+qt4 = 1
 gl = 1
 ace_qt4reactor = 1
 tao_qt4resource = 1
@@ -942,6 +943,11 @@ zlib = 1
 EOF
 %endif
 
+%if %{?_with_versioned:1}%{!?_with_versioned:0}
+cat >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
+versioned_namespace = 1
+EOF
+%endif
 
 # We don't use default.features to enable ipv6 cause it conflicts w/
 # the config.h generated version.  Config.h is superior because it is
@@ -960,106 +966,9 @@ EOF
 # Need to regenerate all of the GNUMakefiles ...
 bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc
 
-MAKECMD="make %{?_smp_mflags}"
+# Make everything that we have generated for
+make %{?_smp_mflags} -C $TAO_ROOT
 
-# build ACE components
-for ace_comp in \
-    ace \
-    Kokyu \
-    ACEXML \
-    apps/gperf \
-    protocols;
-do
-    $MAKECMD -C $ACE_ROOT/$ace_comp;
-done
-
-# build TAO components
-$MAKECMD -C $TAO_ROOT/TAO_IDL
-$MAKECMD -C $TAO_ROOT/tao
-
-# Instead of "$MAKECMD -C $TAO_ROOT/orbsvcs" use the list from
-# $ACE_ROOT/orbsvcs/GNUmakefile less the performance-tests, tests and
-# examples.
-for orbsvcs_comp in \
-    TAO_Service \
-    orbsvcs \
-    Trading_Service \
-    Time_Service \
-    Scheduling_Service \
-    Notify_Service \
-    Naming_Service \
-    Logging_Service \
-    LoadBalancer \
-    LifeCycle_Service \
-    ImplRepo_Service \
-    IFR_Service \
-    Fault_Notifier \
-    Fault_Detector \
-    FT_ReplicationManager \
-    FTRT_Event_Service \
-    Event_Service \
-    Dump_Schedule \
-    CosEvent_Service \
-    Concurrency_Service;
-do
-    $MAKECMD -C $TAO_ROOT/orbsvcs/$orbsvcs_comp;
-done
-
-$MAKECMD -C $TAO_ROOT/utils
-
-%else
-
-autoreconf -fi
-
-mkdir -p objdir && cd objdir
-
-%if %{?_with_opt:0}%{!?_with_opt:1}
-export CFLAGS="${CFLAGS:-%optflags} -O0"
-export CXXFLAGS="${CXXFLAGS:-%optflags} -O0"
-%else
-export CFLAGS="${CFLAGS:-%optflags}"
-export CXXFLAGS="${CXXFLAGS:-%optflags}"
-%endif
-
-../configure --build=%{_build} --host=%{_host} \
-        --target=%{_target_platform} \
-        --program-prefix=%{?_program_prefix} \
-        --prefix=%{_prefix} \
-        --exec-prefix=%{_exec_prefix} \
-        --bindir=%{_bindir} \
-        --sbindir=%{_sbindir} \
-        --sysconfdir=%{_sysconfdir} \
-        --datadir=%{_datadir} \
-        --includedir=%{_includedir} \
-        --libdir=%{_libdir} \
-        --libexecdir=%{_libexecdir} \
-        --localstatedir=%{_localstatedir} \
-        --sharedstatedir=%{_sharedstatedir} \
-        --mandir=%{_mandir} \
-        --infodir=%{_infodir} \
-%if %{?_with_ipv6:1}%{!?_with_ipv6:0}
-        --enable-ipv4-ipv6 \
-        --enable-ipv6     \
-%endif
-%if %{?_with_rnq:1}%{!?_with_rnq:0}
-        --enable-ace-reactor-notification-queue \
-%endif
-%if %{?_with_qt:1}%{!?_with_qt:0}
-        --enable-qt-reactor \
-%endif
-%if %{?_with_tk:1}%{!?_with_tk:0}
-        --enable-tk-reactor \
-%endif
-%if %{?_with_xt:1}%{!?_with_xt:0}
-        --enable-xt-reactor \
-%endif
-%if %{?_with_fl:1}%{!?_with_fl:0}
-        --enable-fl-reactor \
-%endif
-
-make %{?jobs:-j%jobs}
-
-%endif
 %endif
 
 # ================================================================
@@ -1075,7 +984,7 @@ make %{?jobs:-j%jobs}
 export ACE_ROOT=$(pwd)
 export TAO_ROOT=$ACE_ROOT/TAO
 export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$CIAO_ROOT/DAnCE
+export DANCE_ROOT=$TAO_ROOT/DAnCE
 
 # ---------------- Runtime Components ----------------
 
@@ -1156,7 +1065,8 @@ BASEHDR=`find \
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
         echo '#include <'$j'>' | \
-        g++ -I . \
+        g++ %{inline} \
+            -I . \
             -I protocols \
             -I TAO \
             -I TAO/orbsvcs \
@@ -2640,3 +2550,10 @@ fi
 %doc TAO/README
 
 %endif
+
+
+%changelog
+* Thu Aug 11 2011 Thomas Lockhart <lockhart@fourpalms.org> 6.0.3-54
+- Parameterize code inlining. Defaults to not inlining which was the previous behavior.
+- Implement the rpmbuild options "--with inline" and "--without inline".
+

@@ -39,6 +39,9 @@ run_main (int, ACE_TCHAR *[])
   const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
   const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
 
+  // test protection against overflows
+  // ACE_TEST_ASSERT( ACE_Time_Value(max_time_t,ACE_ONE_SECOND_IN_USECS) != ACE_Time_Value(ACE_Numeric_Limits<time_t>::min()) );
+
   // test saturated result
   tv1.set (max_time_t - 1, 499999);
   tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time

@@ -89,11 +89,11 @@ sub load ($)
 
     while (<$fh>) {
         chomp;
-	       if (/^\s*$/ || /^#/) {
+        if (/^\s*$/ || /^#/) {
             next;
         }
         # compress white space
-	      s/\s+/ /g;
+        s/\s+/ /g;
 
         my $entry = '';
         my $configs = '';
@@ -104,7 +104,7 @@ sub load ($)
         $entry =~ s/\s+$//;
 
         push @{$self->{ENTRIES}}, $entry;
-	      if (defined $configs) {
+        if (defined $configs) {
             @{$self->{CONFIGS}->{$entry}} =  split (" ", $configs);
         }
     }

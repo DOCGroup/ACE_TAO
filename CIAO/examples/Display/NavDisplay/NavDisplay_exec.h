@@ -55,9 +55,18 @@ namespace MyImpl
 
     virtual void
     ccm_remove (void);
+
+    //attribute operations
+
+    virtual CORBA::Long number_of_GPS ();
+    virtual void number_of_GPS (CORBA::Long number_of_GPS);
+
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
+    // Needed for compatability with NavDisplayGUI
+    CORBA::Long number_of_GPS_;
+
   };
 
   /**

@@ -27,7 +27,23 @@
 #  define CIAO_DDS4CCM_CONTEXT_SWITCH 1
 #endif /* CIAO_DDS4CCM_CONTEXT_SWITCH */
 
+#if (CIAO_DDS4CCM_CONTEXT_SWITCH == 1) && !defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+#  error For using the DDS4CCM context switch ACE_HAS_REACTOR_NOTIFICATION_QUEUE must be defined
+#endif
+
+#if (CIAO_DDS4CCM_NDDS==1)
 #define DDS_INSTANCE_HANDLE_T_IN const ::DDS::InstanceHandle_t &
 #define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
-
+#define DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("length <%d> - isValid <%d>")
+#define DDS_INSTANCE_HANDLE_LOG(X) X.length, X.isValid
+#define DDS_INSTANCE_HANDLE_VALID(X) X.isValid
+#define DDS_INSTANCE_HANDLE_INVALID(X) !X.isValid
+#elif (CIAO_DDS4CCM_OPENDDS==1)
+#define DDS_INSTANCE_HANDLE_T_IN ::DDS::InstanceHandle_t
+#define DDS_INSTANCE_HANDLE_T_RETN ::DDS::InstanceHandle_t
+#define DDS_INSTANCE_HANDLE_FORMAT_SPECIFIER ACE_TEXT ("<%d>")
+#define DDS_INSTANCE_HANDLE_LOG(X) X
+#define DDS_INSTANCE_HANDLE_VALID(X) true
+#define DDS_INSTANCE_HANDLE_INVALID(X) false
+#endif
 #endif /* DDS4CCM_CONF_H_ */

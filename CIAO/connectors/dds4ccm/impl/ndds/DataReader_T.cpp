@@ -38,7 +38,6 @@ namespace CIAO
       : rti_entity_ (0)
         , dp_ (::DDS::DomainParticipant::_duplicate (dp))
         , sub_ (::DDS::Subscriber::_duplicate (sub))
-        , lst_mask_ (0)
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::DataReader_T");
       if (dr)
@@ -731,9 +730,17 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::set_qos");
 
-      ::DDS_DataReaderQos ddsqos;
-      ddsqos <<= qos;
-      return this->rti_entity ()->set_qos (ddsqos);
+      ::DDS_DataReaderQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DataReader_T<TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_qos - "
+                        "Error: Unable to retrieve qos\n"));
+          return retcode;
+        }
+      ccm_dds_qos <<= qos;
+      return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -743,9 +750,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_qos");
 
-      ::DDS_DataReaderQos ddsqos;
-      ::DDS_ReturnCode_t const retval = this->rti_entity ()->get_qos (ddsqos);
-      qos <<= ddsqos;
+      ::DDS_DataReaderQos ccm_dds_qos;
+      ccm_dds_qos <<= qos;
+      ::DDS_ReturnCode_t const retval = this->rti_entity ()->get_qos (ccm_dds_qos);
+      qos <<= ccm_dds_qos;
       return retval;
     }
 
@@ -757,11 +765,10 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::set_listener");
 
-      // Delete the previously set listener
-      DDSDataReaderListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
-      listener = 0;
+      // Retrieve the previously set listener
+      DDSDataReaderListener *old_listener = this->rti_entity ()->get_listener ();
 
+      DDSDataReaderListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
           ACE_NEW_THROW_EX (listener,
@@ -770,8 +777,20 @@ namespace CIAO
                               this),
                             ::CORBA::NO_MEMORY ());
         }
-      this->lst_mask_ = mask;
-      return this->rti_entity ()->set_listener (listener, mask);
+
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          delete old_listener;
+        }
+
+      return retcode;
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
@@ -958,15 +977,6 @@ namespace CIAO
                                                   ccm_dds_pub_handle);
       publication_data <<= ccm_dds_pub_data;
       return retcode;
-    }
-
-    template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>
-    ::DDS::StatusMask
-    DataReader_T <TYPED_DDS_READER, TYPED_READER_TYPE, VALUE_TYPE, SEQ_TYPE, RTI_SEQ_TYPE>::get_mask (void)
-    {
-      DDS4CCM_TRACE ("CIAO::NDDS::DataReader_T::get_mask");
-
-      return this->lst_mask_;
     }
 
     template <typename TYPED_DDS_READER, typename TYPED_READER_TYPE, typename VALUE_TYPE, typename SEQ_TYPE, typename RTI_SEQ_TYPE>

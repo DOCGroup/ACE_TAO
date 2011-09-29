@@ -199,6 +199,48 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 }
 #endif /* !ACE_HAS_WINCE */
 
+#if defined (ACE_USES_ULONG_FOR_STAT_TIME)
+ACE_INLINE ACE_TCHAR *
+ACE_OS::ctime (const unsigned long *t)
+{
+  return ACE_OS::ctime (reinterpret_cast<const time_t *>(t));
+}
+
+ACE_INLINE ACE_TCHAR *
+ACE_OS::ctime_r (const unsigned long *clock, ACE_TCHAR *buf, int buflen)
+{
+  return ACE_OS::ctime_r (reinterpret_cast<const time_t *>(clock), buf, buflen);
+}
+
+ACE_INLINE struct tm *
+ACE_OS::gmtime (const unsigned long *clock)
+{
+  return ACE_OS::gmtime (reinterpret_cast<const time_t *>(clock));
+}
+
+ACE_INLINE struct tm *
+ACE_OS::gmtime_r (const unsigned long *clock,
+                  struct tm *res)
+{
+  return ACE_OS::gmtime_r (reinterpret_cast<const time_t *>(clock), res);
+}
+
+ACE_INLINE struct tm *
+ACE_OS::localtime (const unsigned long *clock)
+{
+  return ACE_OS::localtime (reinterpret_cast<const time_t *>(clock));
+}
+
+ACE_INLINE struct tm *
+ACE_OS::localtime_r (const unsigned long *clock,
+                     struct tm *res)
+{
+  return ACE_OS::localtime_r (reinterpret_cast<const time_t *>(clock), res);
+}
+
+
+#endif
+
 #if !defined (ACE_LACKS_DIFFTIME)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)

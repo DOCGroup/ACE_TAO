@@ -1,11 +1,11 @@
-../../ACE_wrappers/bin/generate_export_file.pl       usr/lib/ace/bin
-../../ACE_wrappers/bin/split-cpp.pl                  usr/lib/ace/bin
-../../ACE_wrappers/bin/g++dep                        usr/lib/ace/bin
-../../ACE_wrappers/bin/add_rel_link.sh               usr/lib/ace/bin
-../../ACE_wrappers/bin/depgen.pl                     usr/lib/ace/bin
-../../ACE_wrappers/bin/DependencyGenerator           usr/lib/ace/bin
-../../ACE_wrappers/include                           usr/lib/ace
-../../ACE_wrappers/include/makeinclude/platform_macros.GNU usr/lib/ace/include/makeinclude
+../../bin/generate_export_file.pl       usr/lib/ace/bin
+../../bin/split-cpp.pl                  usr/lib/ace/bin
+../../bin/g++dep                        usr/lib/ace/bin
+../../bin/add_rel_link.sh               usr/lib/ace/bin
+../../bin/depgen.pl                     usr/lib/ace/bin
+../../bin/DependencyGenerator           usr/lib/ace/bin
+../../include                           usr/lib/ace
+../../include/makeinclude/platform_macros.GNU usr/lib/ace/include/makeinclude
 usr/include/ace/*.{h,inl,cpp}
 usr/include/ace/os_include
 usr/lib/libACE.so

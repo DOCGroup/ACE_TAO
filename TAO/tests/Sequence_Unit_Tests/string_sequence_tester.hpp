@@ -62,7 +62,7 @@ struct string_sequence_test_helpers<char>
   }
 };
 
-#if defined(_GLIBCPP_VERSION) && !defined(_GLIBCPP_USE_WCHAR_T)
+#if defined(_GLIBCPP_VERSION) && !defined(_GLIBCPP_USE_WCHAR_T) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
 # define TAO_LACKS_WCHAR_CXX_STDLIB
 #endif
 
@@ -204,10 +204,11 @@ struct string_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    character_type const * lhs = 0;
+    character_type const * lhs;
     character_type const * rhs = 0;
     CHECK_THROW(lhs = y[32], std::range_error);
     CHECK_THROW(x[32] = rhs, std::range_error);
+    ACE_UNUSED_ARG (lhs);
     return 0;
   }
 

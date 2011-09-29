@@ -84,7 +84,9 @@ private:
 #  define ACE_ERRNO_TYPE ACE_CE_Errno
 #  define ACE_ERRNO_GET ACE_CE_Errno::instance ()->operator int()
 #else
-#  define ACE_ERRNO_TYPE int
+#  if !defined (ACE_ERRNO_TYPE)
+#   define ACE_ERRNO_TYPE int
+#  endif  /* !ACE_ERRNO_TYPE */
 #  define ACE_ERRNO_GET errno
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 

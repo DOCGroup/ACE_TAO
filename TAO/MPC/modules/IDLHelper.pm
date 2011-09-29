@@ -11,11 +11,19 @@ sub get_output {
   if ($flags =~ /-Gxhex/ && $flags =~ /-Wb,exec_export_include=(\S*)/) {
     push(@out, $1);
   }
-  if ($flags =~ /-Gxhst/ && $flags =~ /-Wb,stub_export_include=(\S*)/) {
-    push(@out, $1);
+  if ($flags =~ /-Gxhst/) {
+    if ($flags =~ /-Wb,stub_export_file=(\S*)/) {
+      push(@out, $1);
+    } elsif ($flags =~ /-Wb,stub_export_include=(\S*)/) {
+      push(@out, $1);
+    }
   }
-  if ($flags =~ /-Gxhsk/ && $flags =~ /-Wb,skel_export_include=(\S*)/) {
-    push(@out, $1);
+  if ($flags =~ /-Gxhsk/) {
+    if ($flags =~ /-Wb,skel_export_file=(\S*)/) {
+      push(@out, $1);
+    } elsif ($flags =~ /-Wb,skel_export_include=(\S*)/) {
+      push(@out, $1);
+    }
   }
   if ($flags =~ /-Gxhsv/ && $flags =~ /-Wb,svnt_export_include=(\S*)/) {
     push(@out, $1);

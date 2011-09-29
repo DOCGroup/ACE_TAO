@@ -10,6 +10,9 @@
 #include "dds4ccm/impl/TimeUtilities.h"
 
 #include "dds4ccm/impl/dds4ccm_conf.h"
+#if (CIAO_DDS4CCM_NDDS==1)
+# include "dds4ccm/impl/ndds/convertors/InstanceHandle_t.h"
+#endif
 
 namespace CIAO_AmiDds_Receiver_Impl
 {
@@ -52,7 +55,7 @@ namespace CIAO_AmiDds_Receiver_Impl
                           "key <%C> - iteration <%d>\n",
                           an_instance.key.in (),
                           an_instance.x));
-    if (!info.instance_handle.isValid)
+    if (info.instance_handle == ::DDS::HANDLE_NIL)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOneByOneTest_Listener_exec_i::on_one_data: "
                             "instance handle seems to be invalid "

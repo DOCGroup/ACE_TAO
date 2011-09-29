@@ -15,6 +15,8 @@ namespace CIAO_CFTLS_Test_Sender_Impl
   StartHandler::StartHandler(Sender_exec_i &callback)
     : callback_ (callback)
   {
+    this->reference_counting_policy ().value
+      (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
 
   int
@@ -119,7 +121,10 @@ namespace CIAO_CFTLS_Test_Sender_Impl
   void
   Sender_exec_i::start (void)
   {
-    StartHandler *rh = new StartHandler (*this);
+    StartHandler* rh = 0;
+    ACE_NEW (rh,
+             StartHandler (*this));
+    ACE_Event_Handler_var safe_handler (rh);
     this->reactor ()->notify (rh);
   }
 

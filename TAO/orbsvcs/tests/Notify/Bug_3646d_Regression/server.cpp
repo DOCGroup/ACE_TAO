@@ -38,17 +38,16 @@ ACE_TCHAR const * const scpc_unloadNameService = ACE_REMOVE_SERVICE_DIRECTIVE("t
 
 void loadunloadcycle()
 {
-  int result = 0;
-
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")
   ));
 
-  result = ACE_Service_Config::process_directive(scpc_loadOrb);
+  int result = ACE_Service_Config::process_directive(scpc_loadOrb);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
+    result
   ));
 
   DllORB * p_orb =
@@ -77,13 +76,15 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_loadNameService);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NamingService done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NamingService done. Result: <%d>\n"),
+    result
   ));
 
   result = ACE_Service_Config::process_directive(scpc_loadNotifyService);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done. Result: <%d>\n"),
+    result
   ));
 
   ACE_DEBUG((
@@ -98,7 +99,8 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadNotifyService);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService done. Result: <%d>\n"),
+    result
   ));
 
   ACE_DEBUG((
@@ -108,7 +110,8 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadNameService);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NameService done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NameService done. Result: <%d>\n"),
+    result
   ));
 
   ACE_DEBUG((
@@ -118,9 +121,11 @@ void loadunloadcycle()
   result = ACE_Service_Config::process_directive(scpc_unloadOrb);
   ACE_DEBUG((
     LM_DEBUG,
-    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done\n")
+    ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),
+    result
   ));
 }
+
 int ACE_TMAIN (int , ACE_TCHAR **)
 {
   ACE_DEBUG((

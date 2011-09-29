@@ -361,6 +361,8 @@ namespace
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  int err = 0;
+
   try
     {
       // Contact the orb
@@ -722,10 +724,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception in nslist");
-      orb->destroy ();
-      return -1;
+      ++err;
     }
 
-  orb->destroy ();
-  return 0;
+  try
+    {
+      orb->destroy ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
+      ex._tao_print_exception ("Exception in while shutting down");
+      ++err;
+    }
+
+  return err;
 }

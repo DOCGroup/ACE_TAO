@@ -54,7 +54,8 @@ public:
     DDS_NONE,
     NDDS,
     OPENSPLICE,
-    OPENDDS
+    OPENDDS,
+    COREDX
   };
 
   BE_GlobalData (void);
@@ -254,6 +255,14 @@ public:
   //// export macro definition.
   void skel_export_include (const char* s);
 
+  //// Returns the name of the include file that will be generated for the
+  //// server side export macro definition.
+  const char* skel_export_file (void) const;
+
+  //// Set the name of the include file that the will be generated for server
+  //// side export macro definition.
+  void skel_export_file (const char* s);
+
   //// Returns the macro name for exporting client side classes in Win32
   //// DLL.
   const char* stub_export_macro (void) const;
@@ -268,6 +277,14 @@ public:
   //// Set the name of the include file that contains the client side
   //// export macro definition.
   void stub_export_include (const char* s);
+
+  //// Returns the name of the include file will be generated for the client
+  //// side export macro definition.
+  const char* stub_export_file (void) const;
+
+  //// Set the name of the include file that will be generated for the client
+  //// side export macro definition.
+  void stub_export_file (const char* s);
 
   //// Returns the macro name for exporting *A.h file classes in Win32
   //// DLL.
@@ -592,6 +609,12 @@ public:
   /// Check Any support.
   bool any_support (void) const;
 
+  /// Set cdr support.
+  void cdr_support (bool);
+
+  /// Check cdr support.
+  bool cdr_support (void) const;
+
   /// Set TypeCode support.
   void tc_support (bool);
 
@@ -849,6 +872,12 @@ public:
   bool in_facet_servant (void) const;
   void in_facet_servant (bool val);
 
+  bool gen_arg_traits (void) const;
+  void gen_arg_traits (bool val);
+
+  bool gen_anytypecode_adapter (void) const;
+  void gen_anytypecode_adapter (bool val);
+
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
 
@@ -870,8 +899,10 @@ private:
   // Macros and includes used to export classes from generated code.
   char* skel_export_macro_;
   char* skel_export_include_;
+  char* skel_export_file_;
   char* stub_export_macro_;
   char* stub_export_include_;
+  char* stub_export_file_;
 
   // Macro and include used on ORB .pidl files generating to the
   // AnyTypeCode library.
@@ -1020,6 +1051,9 @@ private:
 
   /// do we support Any operators?
   bool any_support_;
+
+  /// do we support cdr?
+  bool cdr_support_;
 
   /// do we support typecodes?
   bool tc_support_;
@@ -1204,8 +1238,15 @@ private:
   /// Are we generating STL types?
   bool alt_mapping_;
 
-  /// Are we generating a facet servant?
+  /// Are we in the act of generating a facet servant?
   bool in_facet_servant_;
+
+  /// Are we generating arg traits template instantiations?
+  bool gen_arg_traits_;
+
+  /// Generating arg traits in the ORB for the basic type
+  /// sequences requires the AnyTypeCode_Adapter class.
+  bool gen_anytypecode_adapter_;
 };
 
 #endif /* _BE_GLOBAL_H */

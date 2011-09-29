@@ -25,7 +25,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  CORBA::ULong endpoint_count;
 #if defined (ACE_HAS_IPV6)
   int def_type = AF_UNSPEC;
 #endif /* ACE_HAS_IPV6 */
@@ -136,21 +135,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // in a localhost environment.
   if (!ipv4_only && !ipv6_non_ll)
     lo_cnt = ipv4_lo_cnt;
-
-  if (!ignore_lo)
-    endpoint_count = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll);
-  else
-    endpoint_count = static_cast<CORBA::ULong> (if_ok_cnt - ipv6_ll - lo_cnt);
 #else /* ACE_HAS_IPV6 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
   bool ignore_lo;
   ignore_lo = if_cnt != lo_cnt;
-  if (!ignore_lo)
-    endpoint_count = static_cast<CORBA::ULong> (if_cnt);
-  else
-    endpoint_count = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 #endif /* !ACE_HAS_IPV6 */
 
   // The number of hosts/interfaces we want to cache may not be the

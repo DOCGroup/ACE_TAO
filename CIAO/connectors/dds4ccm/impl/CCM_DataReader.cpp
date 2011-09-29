@@ -169,7 +169,7 @@ CIAO::DDS4CCM::CCM_DataReader::get_matched_publications (
 ::DDS::ReturnCode_t
 CIAO::DDS4CCM::CCM_DataReader::get_matched_publication_data (
   ::DDS::PublicationBuiltinTopicData & publication_data,
-  const ::DDS::InstanceHandle_t & publication_handle)
+  DDS_INSTANCE_HANDLE_T_IN publication_handle)
 {
   return this->dds_entity ()->get_matched_publication_data (publication_data, publication_handle);
 }

@@ -126,8 +126,7 @@ Quoter_i::get_quote (char const *)
 
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
-                const CosLifeCycle::Criteria &/*the_criteria*/
-                )
+                const CosLifeCycle::Criteria &/*the_criteria*/)
 {
   const char *exception_message = "Null message";
   CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
@@ -239,8 +238,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
 void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
-                const CosLifeCycle::Criteria & /* the_criteria */
-                )
+                const CosLifeCycle::Criteria & /* the_criteria */)
 {
   ACE_ERROR ((LM_ERROR,
               "Quoter_i::move: The Quoter object is not movable!"));

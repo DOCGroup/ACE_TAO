@@ -31,8 +31,8 @@ public:
 
   ~Name_Binding ()
   {
-    delete this->name_;
-    delete this->value_;
+    delete[] this->name_;
+    delete[] this->value_;
     ACE_OS::free (const_cast<char*> (this->type_));
     this->type_ = 0;
   }

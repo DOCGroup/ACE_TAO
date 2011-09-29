@@ -136,8 +136,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // Now generate the private data members of the union.
   *os << "private:" << be_idt_nl;
-  *os << bt->nested_type_name (node) << " disc_;" << be_nl;
-  *os << bt->nested_type_name (node) << " holder_;" << be_nl_2;
+  *os << bt->nested_type_name (node) << " disc_;" << be_nl_2;
 
   // The members are inside of a union.
   *os << "union" << be_nl;

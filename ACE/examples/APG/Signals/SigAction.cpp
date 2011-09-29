@@ -11,7 +11,7 @@ static void register_actions ();
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_TRACE (ACE_TEXT ("::main"));
+  ACE_TRACE ("::main");
 
   ::register_actions ();    // Register actions to happen.
 
@@ -39,7 +39,7 @@ extern "C" {
 // Listing 3 code/ch11
 static void my_sighandler (int signo)
 {
-  ACE_TRACE (ACE_TEXT ("::my_sighandler"));
+  ACE_TRACE ("::my_sighandler");
 
   ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
 
@@ -57,7 +57,7 @@ static void my_sighandler (int signo)
 // Listing 2 code/ch11
 static void register_actions ()
 {
-  ACE_TRACE (ACE_TEXT ("::register_actions"));
+  ACE_TRACE ("::register_actions");
 
   ACE_Sig_Action sa (reinterpret_cast <ACE_SignalHandler> (my_sighandler));
 

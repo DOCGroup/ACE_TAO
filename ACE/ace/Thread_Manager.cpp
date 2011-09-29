@@ -525,10 +525,11 @@ ace_thread_manager_adapter (void *args)
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
   // Invoke the user-supplied function with the args.
-  void *status = thread_args->invoke ();
+  ACE_THR_FUNC_RETURN status = thread_args->invoke ();
 
   delete static_cast<ACE_Base_Thread_Adapter *> (thread_args);
-  return status;
+
+  return reinterpret_cast<void *> (status);
 }
 #endif
 

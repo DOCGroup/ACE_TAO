@@ -51,50 +51,32 @@ public:
   ~TAO_DynAny_i (void);
 
   /// Initialize using just a TypeCode
-  void init (CORBA::TypeCode_ptr tc
-            );
+  void init (CORBA::TypeCode_ptr tc);
 
   /// Initialize using an Any.
-  void init (const CORBA::Any& any
-            );
+  void init (const CORBA::Any& any);
 
   // = LocalObject methods.
-  static TAO_DynAny_i *_narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_DynAny_i *_narrow (CORBA::Object_ptr obj);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
-  virtual void from_any (
-      const CORBA::Any & value
-      )
-;
+  virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (
-      void)
-;
+  virtual CORBA::Any * to_any (void);
 
-  virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any
-      )
-;
+  virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (
-      void)
-;
+  virtual void destroy (void);
 
-  virtual DynamicAny::DynAny_ptr current_component (
-      void)
-;
+  virtual DynamicAny::DynAny_ptr current_component (void);
 
 private:
   /// Check if the typecode is acceptable.
-  void check_typecode (CORBA::TypeCode_ptr tc
-                      );
+  void check_typecode (CORBA::TypeCode_ptr tc);
 
   /// Used when we are created from a typecode.
-  void set_to_default_value (CORBA::TypeCode_ptr tc
-                            );
+  void set_to_default_value (CORBA::TypeCode_ptr tc);
 
   /// Called by both versions of init().
   void init_common (void);

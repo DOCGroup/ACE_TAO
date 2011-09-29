@@ -1007,7 +1007,10 @@ ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     return result;
 
   if (this->deactivated_)
-    return -1;
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
 
   // Update the countdown to reflect time waiting for the mutex.
   ACE_MT (countdown.update ());

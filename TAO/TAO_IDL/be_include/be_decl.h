@@ -164,10 +164,6 @@ public:
 
   DEF_NARROW_FROM_DECL (be_decl);
 
-protected:
-  // Called by be_operation (for the return type) and be_argument.
-  void set_arg_seen_bit (be_type *);
-
 private:
   // Variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.

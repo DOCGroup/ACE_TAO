@@ -4,6 +4,10 @@
 #define LARGE_COMMON_IDL
 
 #pragma ndds typesupport "Common/CommonSupport.h"
+#pragma opendds typesupport "Common/CommonTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "LargeType"
+#pragma DCPS_DATA_KEY "LargeType value"
 
 struct LargeType {
   string value; //@key

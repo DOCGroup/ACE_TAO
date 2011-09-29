@@ -19,9 +19,15 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Typed_SV_Message_Queue<Message_Data> msgque (key_t (SRV_KEY));
 
+#if !defined(ACE_LACKS_CUSERID)
   Message_Data msg_data (pid,
                          ACE_OS::cuserid (static_cast<char *> (0)),
                          "did you get this?");
+#else
+  Message_Data msg_data (pid,
+                         "",
+                         "did you get this?");
+#endif
 
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data,
                                                SRV_ID,

@@ -112,9 +112,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Registration with cache is successful, #REFCOUNT# is two at this
   // point.
-
-  TAO_Server_Strategy_Factory *f =
-    this->orb_core_->server_factory ();
+  TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
 
   int result = 0;
 

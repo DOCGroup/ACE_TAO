@@ -43,6 +43,14 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_qos");
       ::DDS_DataWriterQos ccm_dds_qos;
+      DDS_ReturnCode_t const retcode = this->rti_entity ()->get_qos (ccm_dds_qos);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                        "DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_qos - "
+                        "Error: Unable to retrieve qos\n"));
+          return retcode;
+        }
       ccm_dds_qos <<= qos;
       return this->rti_entity ()->set_qos (ccm_dds_qos);
     }
@@ -67,18 +75,32 @@ namespace CIAO
     {
       DDS4CCM_TRACE ("DataWriter_T<TYPED_DDS_WRITER, TYPED_WRITER_TYPE, VALUE_TYPE>::set_listener");
 
-      // Delete the previously set listener
-      DDSDataWriterListener *listener = this->rti_entity ()->get_listener ();
-      delete listener;
+      // Retrieve the previously set listener
+      DDSDataWriterListener *old_listener = this->rti_entity ()->get_listener ();
 
-      DDS_DataWriterListener_i * ccm_dds_impl_list = 0;
+      DDSDataWriterListener *listener = 0;
       if (! ::CORBA::is_nil (a_listener))
         {
-          ACE_NEW_THROW_EX (ccm_dds_impl_list,
-                            DDS_DataWriterListener_i (a_listener, this),
+          ACE_NEW_THROW_EX (listener,
+                            DDS_DataWriterListener_i (
+                              a_listener,
+                              this),
                             ::CORBA::NO_MEMORY ());
         }
-      return this->rti_entity ()->set_listener (ccm_dds_impl_list, mask);
+
+      ::DDS::ReturnCode_t const retcode =
+        this->rti_entity ()->set_listener (listener, mask);
+
+      if (retcode != ::DDS::RETCODE_OK)
+        {
+          delete listener;
+        }
+      else
+        {
+          delete old_listener;
+        }
+
+      return retcode;
     }
 
     template <typename TYPED_DDS_WRITER, typename TYPED_WRITER_TYPE, typename VALUE_TYPE>

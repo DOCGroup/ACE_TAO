@@ -28,8 +28,11 @@ sub create_target
     my $target = undef;
     my $envname = "DOC_TEST_\U$component";
     if (!exists $ENV{$envname}) {
-        $target = new PerlACE::TestTarget("default");
-        return $target;
+        $envname = "DOC_TEST_DEFAULT";
+        if (!exists $ENV{$envname}) {
+          $target = new PerlACE::TestTarget("default");
+          return $target;
+        }
     }
     my $config_name = $ENV{$envname};
     # There's a configuration name; use it to look up the platform.
@@ -58,6 +61,11 @@ sub create_target
       if ($config_os =~ /WinCE/i) {
         require PerlACE::TestTarget_WinCE;
         $target = new PerlACE::TestTarget_WinCE ($config_name);
+        last SWITCH;
+      }
+      if ($config_os =~ /ANDROID/i) {
+        require PerlACE::TestTarget_Android;
+        $target = new PerlACE::TestTarget_Android ($config_name, $component);
         last SWITCH;
       }
       print STDERR "$config_os is an unknown OS type!\n";
@@ -148,6 +156,12 @@ sub GetConfigSettings ($)
     } else {
         $self->{PROCESS_STOP_WAIT_INTERVAL} = 10;
     }
+    $env_name = $env_prefix.'ADB_WAIT_FOR_DEVICE_TIMEOUT';
+    if (exists $ENV{$env_name}) {
+        $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT} = $ENV{$env_name};
+    } else {
+        $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT} = 120;
+    }
     $env_name = $env_prefix.'HOSTNAME';
     if (exists $ENV{$env_name}) {
         $self->{HOSTNAME} = $ENV{$env_name};
@@ -231,9 +245,9 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         my @x_env = split (' ', $ENV{$env_name});
         foreach my $x_env_s (@x_env) {
-          if ($x_env_s =~ /(\w+)=(.*)/) {
-            $self->{EXTRA_ENV}->{$1} = $2;
-          }
+            if ($x_env_s =~ /(\w+)=(.*)/) {
+                $self->{EXTRA_ENV}->{$1} = $2;
+            }
         }
     }
 }
@@ -309,6 +323,13 @@ sub ProcessStopWaitInterval ($)
     return $self->{PROCESS_STOP_WAIT_INTERVAL};
 }
 
+sub AdbWaitForDeviceTimeout ($)
+{
+    my $self = shift;
+    return $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT};
+}
+
+
 sub LocalFile ($)
 {
     my $self = shift;
@@ -341,7 +362,7 @@ sub AddLibPath ($)
         $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
     } else {
         # add rebased path
-        $dir = PerlACE::rebase_path ($dir, $ENV{"ACE_ROOT"}, $self->ACE_ROOT ());
+        $dir = PerlACE::rebase_path ($dir, $ENV{'ACE_ROOT'}, $self->ACE_ROOT ());
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Adding libpath $dir\n";
         }
@@ -400,31 +421,31 @@ sub WaitForFileTimed ($)
     my $timeout = shift;
     my $newfile = $self->LocalFile($file);
     if (defined $self->{REMOTE_SHELL} && defined $self->{REMOTE_FILETEST}) {
-      # If the target's config has a different ACE_ROOT, rebase the file
-      # from $ACE_ROOT to the target's root.
-      if ($self->ACE_ROOT () ne $ENV{'ACE_ROOT'}) {
-        $file = File::Spec->rel2abs($file);
-        $file = File::Spec->abs2rel($file, $ENV{"ACE_ROOT"});
-        $file = $self->{TARGET}->ACE_ROOT() . "/$file";
-      }
-      $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
-      my $cmd = $self->{REMOTE_SHELL};
-      if ($self->{REMOTE_FILETEST} =~ /^\d*$/) {
-        $cmd .= " 'test -e $newfile && test -s $newfile ; echo \$?'";
-      } else {
-        $cmd .= $self->{REMOTE_FILETEST} . ' ' . $file;
-      }
-      my $rc = 1;
-      while ($timeout-- != 0) {
-        $rc = int(`$cmd`);
-        if ($rc == 0) {
-          return 0;
+        # If the target's config has a different ACE_ROOT, rebase the file
+        # from $ACE_ROOT to the target's root.
+        if ($self->ACE_ROOT () ne $ENV{'ACE_ROOT'}) {
+            $file = File::Spec->rel2abs($file);
+            $file = File::Spec->abs2rel($file, $ENV{'ACE_ROOT'});
+            $file = $self->{TARGET}->ACE_ROOT() . "/$file";
         }
-        sleep 1;
-      }
-      return -1;
+        $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+        my $cmd = $self->{REMOTE_SHELL};
+        if ($self->{REMOTE_FILETEST} =~ /^\d*$/) {
+            $cmd .= " 'test -e $newfile && test -s $newfile ; echo \$?'";
+        } else {
+            $cmd .= $self->{REMOTE_FILETEST} . ' ' . $file;
+        }
+        my $rc = 1;
+        while ($timeout-- != 0) {
+            $rc = int(`$cmd`);
+            if ($rc == 0) {
+                return 0;
+            }
+            sleep 1;
+        }
+        return -1;
     } else {
-      return PerlACE::waitforfile_timed ($newfile, $timeout);
+        return PerlACE::waitforfile_timed ($newfile, $timeout);
     }
 }
 

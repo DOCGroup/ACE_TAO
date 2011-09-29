@@ -9,6 +9,7 @@
 #define WU_LATEBINDING_BASE_IDL
 
 #pragma ndds typesupport "Base/WU_LateBinding_BaseSupport.h"
+#pragma opendds typesupport "Base/WU_LateBinding_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "WU_LateBindingTest"
 #pragma DCPS_DATA_KEY "WU_LateBindingTest key"

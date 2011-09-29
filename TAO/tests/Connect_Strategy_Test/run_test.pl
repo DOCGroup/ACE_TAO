@@ -21,14 +21,24 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "server.ior";
-my $reactor_conf = "reactor$PerlACE::svcconf_ext";
-my $blocked_conf = "blocked$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
-my $client_reactor_conf = $client->LocalFile ($reactor_conf);
-my $client_blocked_conf = $client->LocalFile ($blocked_conf);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
+
+my $reactor_conf = "reactor$PerlACE::svcconf_ext";
+my $client_reactor_conf = $client->LocalFile ($reactor_conf);
+if ($client->PutFile ($reactor_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_reactor_conf>\n";
+    exit 1;
+}
+
+my $blocked_conf = "blocked$PerlACE::svcconf_ext";
+my $client_blocked_conf = $client->LocalFile ($blocked_conf);
+if ($client->PutFile ($blocked_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_blocked_conf>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile");

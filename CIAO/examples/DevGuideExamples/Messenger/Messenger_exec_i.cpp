@@ -122,25 +122,13 @@ namespace CIAO_Messenger_Impl
   ::CCM_Publication_ptr
   Messenger_exec_i::get_content ()
   {
-    // Your code here.
-
-    // MY CODE
-
-    // bump up ref count because we give up ownership when we return this
-    this->content_->_add_ref();
-    return this->content_;
+    return ::CCM_Publication::_duplicate (this->content_);
   }
 
   ::CCM_History_ptr
   Messenger_exec_i::get_message_history ()
   {
-    // Your code here.
-
-    // MY CODE
-
-    // bump up ref count because we give up ownership when we return this
-    this->history_->_add_ref();
-    return this->history_;
+    return ::CCM_History::_duplicate (this->history_);
   }
 
   // Operations from Components::SessionComponent

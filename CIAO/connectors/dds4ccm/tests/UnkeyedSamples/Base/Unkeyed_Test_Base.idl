@@ -9,6 +9,7 @@
 #define UNKEYED_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Unkeyed_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Unkeyed_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "UnkeyedTest"
 #pragma DCPS_DATA_KEY "UnkeyedTest key"

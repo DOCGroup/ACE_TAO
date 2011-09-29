@@ -34,7 +34,7 @@ project(Launch_Failure_lem_stub) : ccm_svnt {
   libs  +=  Launch_Failure_stub
 
   libout = ../lib
-  libpaths += ../lib
+  libpaths += ../lib ../lib_stub
 
   sharedname = Launch_Failure_lem_stub
   dynamicflags += LAUNCH_FAILURE_LEM_STUB_BUILD_DLL
@@ -61,7 +61,7 @@ project(Launch_Failure_stub) : ccm_stub {
   libs  +=
 
   libout = ../lib_stub
-  libpaths += ../lib
+  libpaths += ../lib ../lib_stub
 
   sharedname = Launch_Failure_stub
   dynamicflags += LAUNCH_FAILURE_STUB_BUILD_DLL

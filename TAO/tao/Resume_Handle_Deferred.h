@@ -36,40 +36,26 @@ class TAO_ORB_Core;
  *  however, the resumption is performed at the expiration of a timer,
  *  previously registered with the reactor. TAO_Resume_Handle_Deferred
  *  will also notify the reactor (reactor->notify())
- *
- * Please read the documentation in the bugzilla #575 in the bugzilla
- * database what we mean by handler resumption.
  */
 class TAO_Export TAO_Resume_Handle_Deferred : public ACE_Event_Handler
 {
-  public:
-    /// Ctor
-    TAO_Resume_Handle_Deferred (TAO_ORB_Core* orbc, ACE_HANDLE h);
+public:
+  /// Ctor
+  TAO_Resume_Handle_Deferred (TAO_ORB_Core* orbc, ACE_Event_Handler* h);
 
-    /// Destructor
-    ~TAO_Resume_Handle_Deferred (void);
+  /// Destructor
+  ~TAO_Resume_Handle_Deferred (void);
 
-    /// Handles the timeout event by resuming the handle and
-    /// calling the reactor->notify()
-    virtual int handle_timeout (const ACE_Time_Value &, const void * = 0);
+  /// Handles the timeout event by resuming the handle and
+  /// calling the reactor->notify()
+  virtual int handle_timeout (const ACE_Time_Value &, const void * = 0);
 
-    /// Disposes off this instance
-    virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-
-  private:
-    /// Implements the timeout handling
-    int handle_timeout_eh ();
-
-  private:
-    ACE_HANDLE h_;
-    TAO_ORB_Core * orbc_;
+private:
+  ACE_Event_Handler_var h_;
+  TAO_ORB_Core * orbc_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-# include "Resume_Handle_Deferred.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_RESUME_HANDLE_DEFERRED_H*/

@@ -9,6 +9,7 @@
 #define CFT_EXCEPTION_TEST_BASE_IDL
 
 #pragma ndds typesupport "Base/Exception_Test_BaseSupport.h"
+#pragma opendds typesupport "Base/Exception_Test_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "CFTExceptionTest"
 #pragma DCPS_DATA_KEY "CFTExceptionTest symbol"

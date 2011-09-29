@@ -41,7 +41,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
                             "key <%C> - x <%d>\n",
                             an_instance.keyOne.in (),
                             an_instance.x));
-    if (!info.instance_handle.isValid)
+    if (DDS_INSTANCE_HANDLE_INVALID (info.instance_handle))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: ListenOne_Listener_exec_i::on_one_data: "
                             "instance handle seems to be invalid "
@@ -90,7 +90,7 @@ namespace CIAO_MultipleTemp_Receiver_Impl
                               "key <%C> - y <%d>\n",
                               an_instance.keyTwo.in (),
                               an_instance.y));
-      if (!info.instance_handle.isValid)
+      if (DDS_INSTANCE_HANDLE_INVALID (info.instance_handle))
         {
           ACE_ERROR ((LM_ERROR, "ERROR: ListenTwo_Listener_exec_i::on_one_data: "
                               "instance handle seems to be invalid "

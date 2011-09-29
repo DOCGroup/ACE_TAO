@@ -39,8 +39,8 @@ public:
   /**
    * T type connector
    **/
-   // DDS_Listen operations
-   virtual
+  // DDS_Listen operations
+  virtual
   CCM_DDS::CCM_ContentFilterSetting*
   get_push_consumer_t_filter_config(void);
 
@@ -67,11 +67,11 @@ public:
   // DDS_Update operations
   virtual
   typename CCM_TYPE::observable_t_traits::data_type::_ptr_type
-    get_observable_t_data (void);
+  get_observable_t_data (void);
 
   virtual
   typename CCM_TYPE::observable_t_traits::dds_entity_type::_ptr_type
-   get_observable_t_dds_entity (void);
+  get_observable_t_dds_entity (void);
 
 
 
@@ -80,37 +80,37 @@ public:
    **/
   // DDS_Listen operations
   virtual
-   CCM_DDS::CCM_ContentFilterSetting*
-   get_push_consumer_y_filter_config(void);
+  CCM_DDS::CCM_ContentFilterSetting*
+  get_push_consumer_y_filter_config(void);
 
-   virtual
-   CCM_DDS::QueryFilter *
-   push_consumer_y_filter (void);
+  virtual
+  CCM_DDS::QueryFilter *
+  push_consumer_y_filter (void);
 
-   virtual
-   void
-   push_consumer_y_filter (const ::CCM_DDS::QueryFilter &);
+  virtual
+  void
+  push_consumer_y_filter (const ::CCM_DDS::QueryFilter &);
 
-   virtual
-   typename CCM_TYPE::push_consumer_y_traits::data_type::_ptr_type
-   get_push_consumer_y_data (void);
+  virtual
+  typename CCM_TYPE::push_consumer_y_traits::data_type::_ptr_type
+  get_push_consumer_y_data (void);
 
-   virtual
-   typename CCM_TYPE::push_consumer_y_traits::data_control_type::_ptr_type
-   get_push_consumer_y_data_control (void);
+  virtual
+  typename CCM_TYPE::push_consumer_y_traits::data_control_type::_ptr_type
+  get_push_consumer_y_data_control (void);
 
-   virtual
-   typename CCM_TYPE::push_consumer_y_traits::dds_entity_type::_ptr_type
-   get_push_consumer_y_dds_entity (void);
+  virtual
+  typename CCM_TYPE::push_consumer_y_traits::dds_entity_type::_ptr_type
+  get_push_consumer_y_dds_entity (void);
 
-   // DDS_Update operations
-    virtual
-   typename CCM_TYPE::observable_y_traits::data_type::_ptr_type
-   get_observable_y_data (void);
+  // DDS_Update operations
+  virtual
+  typename CCM_TYPE::observable_y_traits::data_type::_ptr_type
+  get_observable_y_data (void);
 
-   virtual
-   typename CCM_TYPE::observable_y_traits::dds_entity_type::_ptr_type
-    get_observable_y_dds_entity (void);
+  virtual
+  typename CCM_TYPE::observable_y_traits::dds_entity_type::_ptr_type
+  get_observable_y_dds_entity (void);
 
 
 

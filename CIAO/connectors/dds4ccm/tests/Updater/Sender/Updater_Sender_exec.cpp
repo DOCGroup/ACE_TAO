@@ -28,6 +28,7 @@
 #include "Updater_Sender_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "dds4ccm/impl/dds4ccm_conf.h"
 
 namespace CIAO_Updater_Sender_Impl
 {
@@ -140,7 +141,7 @@ namespace CIAO_Updater_Sender_Impl
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Expected : Exception AlreadyCreated test updater create_one.\n")));
         return true;
       }
-    catch (const CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while create_one for <%C>.\n"),
                         i.key.in ()));
@@ -166,7 +167,7 @@ namespace CIAO_Updater_Sender_Impl
                        i.key.in ()));
         return false;
       }
-    catch (const CCM_DDS::InternalError& )
+    catch (const CCM_DDS::InternalError &)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Internal Error while update_one for <%C>.\n"),
                         i.key.in ()));
@@ -179,7 +180,7 @@ namespace CIAO_Updater_Sender_Impl
   Sender_exec_i::update_one_not_registered (
     ::Updater::UpdaterConnector::Updater_ptr updater)
   {
-    //update a not yet registered instance,expext a NonExistent exception
+    //update a not yet registered instance, expect a NonExistent exception
      //use second instance of table
     TestTopic i = this->topic_seq_one_[1];
     try
@@ -260,12 +261,12 @@ namespace CIAO_Updater_Sender_Impl
     //update an instance after registering first, using a handle
     TestTopic i = this->topic_seq_one_[2];
     //take third instance of table
-    DDS::InstanceHandle_t hnd = updater->register_instance(i);
+    DDS::InstanceHandle_t const hnd = updater->register_instance(i);
     try
       {
-        if (hnd.isValid)
+        if (DDS_INSTANCE_HANDLE_VALID(hnd))
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registrating instance, key <%C>\n"),
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Updater: update a new  instance after registering instance, key <%C>\n"),
                         i.key.in ()));
             updater->update_one(i, hnd);
           }

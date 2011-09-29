@@ -42,7 +42,6 @@ private:
   /// Encapsulating various bits of code generation peculiar
   /// to the client source file, done either before or after
   /// he main scope traversal.
-  int gen_arg_traits (be_root *node);
   int gen_obv_defns (be_root *node);
   int gen_any_ops (be_root *node);
   int gen_cdr_ops (be_root *node);

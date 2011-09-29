@@ -15,11 +15,8 @@
  */
 //=============================================================================
 
-
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"
-
-
 
 #include "test_config.h"
 #include "ace/ACE.h"
@@ -51,6 +48,11 @@ run_main (int, ACE_TCHAR *[])
   // ACE_Time_Value (2.5).  Some compilers, such as g++ 2.7.2.3,
   // actually warn about it without the case.
   ACE_Time_Value tv8 (static_cast <long> (2.5));
+
+  ACE_Time_Value first;
+  ACE_Time_Value last(ACE_Time_Value::max_time);
+  first = last;
+  ACE_TEST_ASSERT (first == last);
 
   // Test assignment operator, tv9 and tv6 must be the same after this
   ACE_Time_Value tv9;
@@ -93,32 +95,6 @@ run_main (int, ACE_TCHAR *[])
   tv1.set (1, 999999);
   tv2.set (static_cast<time_t> (-19), -999990);
   tv1 *= -10.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-
-  const time_t max_time_t = ACE_Numeric_Limits<time_t>::max ();
-  const time_t min_time_t = ACE_Numeric_Limits<time_t>::min ();
-
-  // test protection against overflows
-  // ACE_TEST_ASSERT( ACE_Time_Value(max_time_t,ACE_ONE_SECOND_IN_USECS) != ACE_Time_Value(ACE_Numeric_Limits<time_t>::min()) );
-
-  // test saturated result
-  tv1.set (max_time_t - 1, 499999);
-  tv2.set (max_time_t, 999999);  // ACE_Time_Value::max_time
-  tv1 *= 10.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t - 1, 499999);
-  tv2.set (min_time_t, -999999);
-  tv1 *= -10.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-
-  // test results near limits
-  tv1.set ((max_time_t >> 1), 499999);
-  tv2.set ((-(max_time_t >> 1) << 1), -999998);
-  tv1 *= -2.0;
-  ACE_TEST_ASSERT (tv1 == tv2);
-  tv1.set (max_time_t >> 1, 499999);
-  tv2.set (((max_time_t >> 1) << 1), 999998);
-  tv1 *= 2.0;
   ACE_TEST_ASSERT (tv1 == tv2);
 
   // Test correct msec() convert; also checks for compile error reported in

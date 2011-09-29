@@ -9,6 +9,9 @@
 #define FIXED_SIZE_STRUCT_EVENT_BASE_IDL
 
 #pragma ndds typesupport "Base/FSS_Event_BaseSupport.h"
+#pragma opendds typesupport "Base/FSS_Event_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "FixedStructSizeTest"
 
 struct FixedStructSizeTest {
   long one;

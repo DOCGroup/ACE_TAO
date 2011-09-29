@@ -1,4 +1,4 @@
-// $Id$
+# $Id$
 
 ssl=0
 
@@ -16,6 +16,14 @@ ifeq ($(buildbits),universal)
   FLAGS_C_CC += -arch i386 -arch x86_64
   LDFLAGS    += -arch i386 -arch x86_64
 endif
+
+ifneq (,$(buildbits))
+  FLAGS_C_CC += -m64
+  LDFLAGS    += -m64
+endif
+
+CC:=clang
+CXX:=clang++
 
 PLATFORM_NDDS_FLAGS=-ppPath cpp-4.2 -I.
 

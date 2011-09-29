@@ -35,7 +35,6 @@
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
 #include "tao/AnyTypeCode_Adapter.h"
 #include "ace/Dynamic_Service.h"
@@ -66,30 +65,6 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS */
 
 }
-
-// Arg traits specializations.
-namespace TAO
-{
-
-#if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
-#define _CORBA_POLICY__ARG_TRAITS_CS_
-
-  template<>
-  class  Arg_Traits<CORBA::Policy>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::Policy_ptr,
-            CORBA::Policy_var,
-            CORBA::Policy_out,
-            TAO::Objref_Traits<CORBA::Policy>,
-            TAO::Any_Insert_Policy_AnyTypeCode_Adapter
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-}
-
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63

@@ -3,6 +3,6 @@
 
 project : acelib, ace_qt4 {
   requires += ace_qt4reactor
-  after    += ACE_QtReactor
+  after    += ACE_Qt4Reactor
   libs     += ACE_QtReactor
 }

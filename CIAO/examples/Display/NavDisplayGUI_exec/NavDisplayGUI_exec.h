@@ -17,6 +17,7 @@
 #include "ace/Synch.h"
 #include "tao/LocalObject.h"
 #include "NavUnit.h"
+#include <vector>
 
 class Worker;
 
@@ -27,6 +28,7 @@ namespace MyImpl
    *
    * RateGen executor implementation class.
    */
+
   class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl
     : public virtual ::CIAO_HUDisplay_NavDisplay_Impl::NavDisplay_Exec,
       public virtual ::CORBA::LocalObject
@@ -59,13 +61,19 @@ namespace MyImpl
 
     virtual void
     ccm_remove (void);
+
+    //attribute operations
+    virtual CORBA::Long number_of_GPS ();
+    virtual void number_of_GPS (CORBA::Long number_of_GPS);
+
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
     Worker *worker_;
-    NavUnit unit_;
+    CORBA::Long number_of_GPS_;
     UnitLocation loc_;
-    TAO_SYNCH_MUTEX mutex_;
+    std::vector<NavUnit*> navunitarr;
+    TAO_SYNCH_RECURSIVE_MUTEX mutex_;
   };
 
   /**

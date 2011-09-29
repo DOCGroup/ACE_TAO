@@ -174,7 +174,6 @@ Test_DynAny::run_test (void)
         ftc1->destroy ();
       }
 
-
       ACE_DEBUG ((LM_DEBUG,
                  "\t*=*=*=*= %C =*=*=*=*\n",
                  data.labels[12]));

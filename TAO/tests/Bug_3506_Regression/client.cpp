@@ -119,12 +119,20 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int retval = 0;
-  m_ORB_p = CORBA::ORB_init (argc, argv);
-  IF_Test_client testclient;
-
-  for (int i = 0; i < 10; i++)
+  try
     {
-      retval += testclient.foo (argc, argv, i == 9);
+      m_ORB_p = CORBA::ORB_init (argc, argv);
+      IF_Test_client testclient;
+
+      for (int i = 0; i < 10; i++)
+        {
+          retval += testclient.foo (argc, argv, i == 9);
+        }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++retval;
     }
   return retval;
 }

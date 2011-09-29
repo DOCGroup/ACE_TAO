@@ -599,7 +599,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // To explicitly disable QUEUE_ORDER_POLICY support uncomment the following
 // #define TAO_HAS_QUEUE_ORDER_POLICY 0
 
-// Default QUEUE_ORDER_POLICY settings
+/// Default QUEUE_ORDER_POLICY settings
 #if !defined (TAO_HAS_QUEUE_ORDER_POLICY)
 #  if (TAO_HAS_CORBA_MESSAGING == 1) && \
       (TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0)
@@ -647,25 +647,8 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
             TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI */
 
-// We dont have AMI_POLLER support in TAO. Just prevent anyone from
-// using it.
-
-/***********************************************************/
-// All these are for future use. Commenting it..
-
-// #if !defined (TAO_HAS_AMI_POLLER)
-// #  if (TAO_HAS_AMI == 1)
-// #    define TAO_HAS_AMI_POLLER 1
-// #  else
-// #    define TAO_HAS_AMI_POLLER 0
-// #  endif  /* TAO_HAS_AMI == 1 */
-// #else
-// #  if (TAO_HAS_AMI_POLLER == 1) && (TAO_HAS_CORBA_MESSAGING == 0)
-// #  error "tao/orbconf.h: You need CORBA_MESSAGING for AMI support"
-// #  endif /* TAO_HAS_AMI_POLLER == 1 &&
-//             TAO_HAS_CORBA_MESSAGING == 0 */
-// #endif  /* !TAO_HAS_AMI_POLLER */
-/***********************************************************/
+/// We dont have AMI_POLLER support in TAO. Just prevent anyone from
+/// using it.
 
 // AMI_CALLBACK support is disabled by default if TAO is not
 // configured for AMI.  If TAO is configured for AMI, then
@@ -676,7 +659,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // To explicitly disable AMI_CALLBACK support uncomment the following
 // #define TAO_HAS_AMI_CALLBACK 0
 
-// Default AMI_CALLBACK settings
+/// Default AMI_CALLBACK settings
 #if !defined (TAO_HAS_AMI_CALLBACK)
 #  if (TAO_HAS_AMI == 1)
 #    define TAO_HAS_AMI_CALLBACK 1
@@ -691,8 +674,8 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
             TAO_HAS_CORBA_MESSAGING == 0 */
 #endif  /* !TAO_HAS_AMI_CALLBACK */
 
-// Interceptors is supported by default if we are not building for
-// MinimumCORBA.
+/// Interceptors is supported by default if we are not building for
+/// MinimumCORBA.
 #if !defined (TAO_HAS_INTERCEPTORS)
 # if (TAO_HAS_MINIMUM_CORBA == 1) || defined (CORBA_E_COMPACT) || defined (CORBA_E_MICRO)
 #   define TAO_HAS_INTERCEPTORS 0
@@ -701,9 +684,9 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # endif /* TAO_HAS_MINIMUM_CORBA */
 #endif
 
-// At the moment we have sendfile support in ACE we enabled this also by
-// default for TAO, but we can suppress it also explicitly by set
-// TAO_HAS_SENDFILE to 0.
+/// At the moment we have sendfile support in ACE we enabled this also by
+/// default for TAO, but we can suppress it also explicitly by set
+/// TAO_HAS_SENDFILE to 0.
 #if !defined (TAO_HAS_SENDFILE)
 # if defined ACE_HAS_SENDFILE && ACE_HAS_SENDFILE == 1
 #  define TAO_HAS_SENDFILE 1
@@ -712,14 +695,14 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # endif /* ACE_HAS_SENDFILE */
 #endif /* !TAO_HAS_SENDFILE */
 
-// Proprietary FT interception-point support is disabled by default.
+/// Proprietary FT interception-point support is disabled by default.
 #ifndef TAO_HAS_EXTENDED_FT_INTERCEPTORS
 # define TAO_HAS_EXTENDED_FT_INTERCEPTORS 0
 #endif  /* !TAO_HAS_EXTENEDED_FT_INTERCEPTORS */
 
-// This is needed for a check in the Policy Set; Should really not be
-// here though; We should find a different way to handle the check in
-// the Policy Set.
+/// This is needed for a check in the Policy Set; Should really not be
+/// here though; We should find a different way to handle the check in
+/// the Policy Set.
 #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 42
 
 /// Policies that are accessed on the critical path and need to be
@@ -786,8 +769,8 @@ enum TAO_Cached_Policy_Type
   TAO_CACHED_POLICY_MAX_CACHED
 };
 
-// This enum provides a mask that represent the scope at which a given
-// policy can be applied
+/// This enum provides a mask that represent the scope at which a given
+/// policy can be applied
 enum TAO_Policy_Scope
 {
   TAO_POLICY_OBJECT_SCOPE   = 0x01,
@@ -804,12 +787,12 @@ enum TAO_Policy_Scope
                    TAO_POLICY_ORB_SCOPE | \
                    TAO_POLICY_POA_SCOPE))
 
-// Control the default version of GIOP used by TAO.
-// The ORB is always able to communicate with 1.0, 1.1 and 1.2
-// servers, and it creates 1.2 endpoints (and profiles).  If you need
-// to talk to old clients that only understand 1.0 or 1.1 (and do not
-// attempt to use 1.0 or 1.1 with 1.2 servers), then change the values
-// below.
+/// Control the default version of GIOP used by TAO.
+/// The ORB is always able to communicate with 1.0, 1.1 and 1.2
+/// servers, and it creates 1.2 endpoints (and profiles).  If you need
+/// to talk to old clients that only understand 1.0 or 1.1 (and do not
+/// attempt to use 1.0 or 1.1 with 1.2 servers), then change the values
+/// below.
 #if !defined (TAO_DEF_GIOP_MAJOR)
 #define TAO_DEF_GIOP_MAJOR 1
 #endif /* TAO_DEF_GIOP_MAJOR */
@@ -817,7 +800,7 @@ enum TAO_Policy_Scope
 #define TAO_DEF_GIOP_MINOR 2
 #endif /* TAO_DEF_GIOP_MINOR */
 
-// Control the minimum required IIOP version for IPv6 support
+/// Control the minimum required IIOP version for IPv6 support
 #if defined (ACE_HAS_IPV6)
 # if !defined (TAO_MIN_IPV6_IIOP_MAJOR)
 #   define TAO_MIN_IPV6_IIOP_MAJOR 1
@@ -827,12 +810,12 @@ enum TAO_Policy_Scope
 # endif /* TAO_MIN_IPV6_IIOP_MINOR */
 #endif /* ACE_HAS_IPV6 */
 
-// By default TAO generate the OMG standard profile components
-// (ORB_TYPE and CODE_SETS)
+/// By default TAO generate the OMG standard profile components
+/// (ORB_TYPE and CODE_SETS)
 #define TAO_STD_PROFILE_COMPONENTS
 
 #if !defined (TAO_DEFAULT_IOR_SIZE)
-// This is the default size of the buffer used for processing IORs.
+/// This is the default size of the buffer used for processing IORs.
 #define TAO_DEFAULT_IOR_SIZE 1024
 #endif /* TAO_DEFAULT_IOR_SIZE */
 
@@ -865,7 +848,7 @@ enum TAO_Policy_Scope
 #  define TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL 0
 #endif /* TAO_USE_LOCAL_MEMORY_POOL */
 
-// Enable TransportCurrent by default
+/// Enable TransportCurrent by default
 #if !defined (TAO_HAS_TRANSPORT_CURRENT)
 #    define TAO_HAS_TRANSPORT_CURRENT 1
 #endif  /* ! TAO_HAS_TRANSPORT_CURRENT */

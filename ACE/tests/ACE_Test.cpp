@@ -19,8 +19,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdlib.h"
 
-
-
 int
 log2_test (void)
 {

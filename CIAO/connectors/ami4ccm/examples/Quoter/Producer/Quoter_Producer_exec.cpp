@@ -84,6 +84,7 @@ namespace CIAO_Quoter_Producer_Impl
   ::CORBA::Boolean
   my_quoter_exec_i::find_closest_symbol (char *& symbol)
   {
+    CORBA::string_free (symbol);
     symbol = CORBA::string_dup ("Windoze");
     return true;
   }

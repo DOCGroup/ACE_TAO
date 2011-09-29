@@ -11,22 +11,27 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
 
-$debug_level = '0';
+$server_debug_level = '0';
+$client_debug_level = '0';
 $iterations = '1';
+
+$conf_file = "muxed$PerlACE::svcconf_ext";
 
 foreach $i (@ARGV) {
     if ($i eq '-mux') {
-        $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
+        $conf_file = "muxed$PerlACE::svcconf_ext";
     }
     elsif ($i eq '-debug') {
-        $debug_level = '1';
+        $server_debug_level = '1';
+        $client_debug_level = '1';
     }
     elsif ($i eq '-exclusive') {
-        $client_conf = $client->LocalFile ("exclusive$PerlACE::svcconf_ext");
+        $conf_file = "exclusive$PerlACE::svcconf_ext";
     }
 }
+
+$client_conf = $client->LocalFile ($conf_file);
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
@@ -34,7 +39,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
+$SV = $server->CreateProcess ("server", "-ORBdebuglevel $server_debug_level -o $server_iorfile");
 
 $server_status = $SV->Spawn ();
 
@@ -59,10 +64,16 @@ if ($client->PutFile ($iorbase) == -1) {
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }
+# copy the configruation file.
+if ($client->PutFile ($conf_file) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
 $CL = $client->CreateProcess ("simple_client",
                               "-ORBsvcconf $client_conf "
-                              . "-ORBdebuglevel $debug_level"
+                              . "-ORBdebuglevel $client_debug_level"
                               . " -k file://$client_iorfile "
                               . " -i $iterations -d");
 
@@ -77,7 +88,7 @@ if ($client_status != 0) {
 $CL2 = $client->CreateProcess ("simple_client",
                                "-ORBsvcconf $client_conf"
                                . " -ORBCollocation no"
-                               . " -ORBdebuglevel $debug_level"
+                               . " -ORBdebuglevel $client_debug_level"
                                . " -k file://$client_iorfile "
                                . " -i $iterations -x -d");
 

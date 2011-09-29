@@ -71,7 +71,7 @@ namespace TAO
     /**
      * Create or return current reactor instance.
      * Please note that this call is NOT synchronized. Left to the
-     * get_reactor to synchronize access.
+     * get_reactor() to synchronize access.
      */
     virtual ACE_Reactor_Impl *reactor_impl (void) = 0;
 

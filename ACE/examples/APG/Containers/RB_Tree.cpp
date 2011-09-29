@@ -35,7 +35,7 @@ private:
 // Listing 1 code/ch05
 int Tree_Example::run (void)
 {
-  ACE_TRACE (ACE_TEXT ("Tree_Example::run"));
+  ACE_TRACE ("Tree_Example::run");
 
   DataElement *d  = 0;
   for (int i = 0; i < 100; i++)
@@ -75,7 +75,7 @@ int Tree_Example::run (void)
 
 void Tree_Example::iterate_forward (void)
 {
-  ACE_TRACE (ACE_TEXT ("Tree_Example::iterate_forward"));
+  ACE_TRACE ("Tree_Example::iterate_forward");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration:\n")));
   for (Tree<int, DataElement*>::iterator iter = tree_.begin ();
@@ -89,7 +89,7 @@ void Tree_Example::iterate_forward (void)
 
 void Tree_Example::iterate_reverse (void)
 {
-  ACE_TRACE (ACE_TEXT ("Tree_Example::iterate_reverse"));
+  ACE_TRACE ("Tree_Example::iterate_reverse");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration:\n")));
   for (Tree<int, DataElement*>::reverse_iterator iter
@@ -104,7 +104,7 @@ void Tree_Example::iterate_reverse (void)
 
 int Tree_Example::remove_all (void)
 {
-  ACE_TRACE (ACE_TEXT ("Tree_Example::remove_all"));
+  ACE_TRACE ("Tree_Example::remove_all");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing elements\n")));
 
   // Note that we can't use the iterators here as they are

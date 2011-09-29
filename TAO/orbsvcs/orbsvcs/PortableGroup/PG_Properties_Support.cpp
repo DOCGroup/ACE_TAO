@@ -58,7 +58,7 @@ TAO::PG_Properties_Support::set_type_properties (
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  TAO::PG_Property_Set * typeid_properties;
+  TAO::PG_Property_Set * typeid_properties = 0;
   if ( 0 != this->properties_map_.find (type_id, typeid_properties))
   {
     ACE_NEW_THROW_EX (

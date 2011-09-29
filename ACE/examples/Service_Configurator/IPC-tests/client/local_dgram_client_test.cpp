@@ -92,8 +92,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
 
   char name[ACE_MAX_USERID];
+#if !defined (ACE_LACKS_CUSERID)
   ACE_OS::cuserid (name);
-
+#else
+  name[0] = '.';
+  name[1] = '\0';
+#endif
   if (sd.send (name,
                ACE_OS::strlen (name) + 1,
                ACE_UNIX_Addr (rendezvous_dgram)) == -1)

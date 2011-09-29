@@ -121,11 +121,14 @@ namespace CIAO_Getter_Test_Sender_Impl
       , ccm_activated_ (false)
       , last_iter_ (1)
   {
-    this->ticker_ = new pulse_Generator (*this);
+    ACE_NEW_THROW_EX (this->ticker_,
+                      pulse_Generator (*this),
+                      ::CORBA::NO_MEMORY ());
   }
 
   Sender_exec_i::~Sender_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
@@ -356,7 +359,6 @@ namespace CIAO_Getter_Test_Sender_Impl
   {
     this->reactor ()->cancel_timer (this->ticker_);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sender_exec_i::stop : Timer canceled.\n")));
-    delete this->ticker_;
   }
 
   extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -9,6 +9,7 @@
 #define AMIDDS_DDS_IDL
 
 #pragma ndds typesupport "Base/AmiDds_DDSSupport.h"
+#pragma opendds typesupport "Base/AmiDds_DDSTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TestTopic"
 #pragma DCPS_DATA_KEY "TestTopic key"

@@ -15,6 +15,10 @@
 # include "dds4ccm/impl/ndds/DomainParticipant.h"
 #endif
 
+#if (CIAO_DDS4CCM_OPENDDS==1)
+#include "dds/DCPS/Marked_Default_Qos.h"
+#endif
+
 template <typename CCM_TYPE>
 DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
   : domain_id_ (0)
@@ -30,6 +34,12 @@ DDS_Base_Connector_T<CCM_TYPE>::DDS_Base_Connector_T (void)
     {
       this->dlf_->init ();
     }
+#if (CIAO_DDS4CCM_OPENDDS==1)
+  int argc = 0 ;
+  ACE_TCHAR** argv = 0;
+  this->participant_factory_ = TheParticipantFactoryWithArgs (argc, argv);
+//  OpenDDS::DCPS::set_DCPS_debug_level  (10);
+#endif
 }
 
 template <typename CCM_TYPE>
@@ -40,6 +50,12 @@ DDS_Base_Connector_T<CCM_TYPE>::~DDS_Base_Connector_T (void)
   DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_TRACE, DDS4CCM_INFO
                 "DDS_Base_Connector_T::~DDS_Base_Connector_T - "
                 "Connector has been destructed\n"));
+#if (CIAO_DDS4CCM_OPENDDS==1)
+//  this->domain_participant_->delete_contained_entities();
+//  this->participant_factory_->delete_participant(this->domain_participant_.in());
+//  TheTransportFactory->release();
+//  TheServiceParticipant->shutdown ();
+#endif
 }
 
 template <typename CCM_TYPE>
@@ -106,6 +122,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                 "Start configuring default domain <%d>\n",
                 this->domain_id_));
 
+#if (CIAO_DDS4CCM_NDDS==1)
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
       this->participant_factory_.set_default_participant_qos_with_profile (
@@ -118,9 +135,30 @@ DDS_Base_Connector_T<CCM_TYPE>::init_domain (
                                       0);
     }
   else
+#endif
     {
       ::DDS::DomainParticipantQos qos;
+      DDS::ReturnCode_t const retcode =
+#if (CIAO_DDS4CCM_NDDS==1)
+        this->participant_factory_.get_default_participant_qos (qos);
+#else
+        this->participant_factory_->get_default_participant_qos (qos);
+#endif
+
+      if (retcode != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              "DDS_Base_Connector_T::init_domain - "
+              "Error: Unable to retrieve default_participant_qos: <%C>\n",
+              ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CCM_DDS::InternalError (retcode, 0);
+        }
+
+#if (CIAO_DDS4CCM_NDDS==1)
       participant = this->participant_factory_.create_participant (
+#else
+      participant = this->participant_factory_->create_participant (
+#endif
                                       this->domain_id_,
                                       qos,
                                       ::DDS::DomainParticipantListener::_nil (),
@@ -234,6 +272,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
   DDS4CCM_TRACE ("DDS_Base_Connector_T::init_topic");
 
   ::DDS::Topic_var tp;
+#if (CIAO_DDS4CCM_NDDS==1)
   if (!::CORBA::is_nil (this->qos_profile_.in ()))
     {
       tp = participant->create_topic_with_profile (topic_name,
@@ -243,21 +282,35 @@ DDS_Base_Connector_T<CCM_TYPE>::init_topic (
                                           0);
     }
   else
+#endif
     {
       ::DDS::TopicQos tqos;
+      DDS::ReturnCode_t const retcode =
+        participant->get_default_topic_qos (tqos);
+
+      if (retcode != DDS::RETCODE_OK)
+        {
+          DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+              "DDS_Base_Connector_T::init_topic - "
+              "Error: Unable to retrieve default_topic_qos: <%C>\n",
+              ::CIAO::DDS4CCM::translate_retcode (retcode)));
+          throw ::CCM_DDS::InternalError (retcode, 0);
+        }
+
       tp = participant->create_topic (topic_name,
                              typesupport_name,
                              tqos,
                              ::DDS::TopicListener::_nil (),
                              0);
     }
-  if (::CORBA::is_nil (tp))
+  if (::CORBA::is_nil (tp.in ()))
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                     "DDS_Base_Connector_T::init_topic - "
                     "Error: Proxy returned a nil topic\n"));
       throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
     }
+
   topic = tp._retn ();
 }
 
@@ -271,6 +324,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
 
   if (::CORBA::is_nil (publisher))
     {
+#if (CIAO_DDS4CCM_NDDS==1)
       if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
           publisher = participant->create_publisher_with_profile (
@@ -279,8 +333,20 @@ DDS_Base_Connector_T<CCM_TYPE>::init_publisher (
                                               0);
         }
       else
+#endif
         {
           ::DDS::PublisherQos pqos;
+          DDS::ReturnCode_t const retcode =
+            participant->get_default_publisher_qos (pqos);
+
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_publisher - "
+                  "Error: Unable to retrieve get_default_publisher_qos: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CCM_DDS::InternalError (retcode, 0);
+            }
           publisher = participant->create_publisher (pqos,
                                             ::DDS::PublisherListener::_nil (),
                                             0);
@@ -305,6 +371,7 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
 
   if (::CORBA::is_nil (subscriber))
     {
+#if (CIAO_DDS4CCM_NDDS==1)
       if (!::CORBA::is_nil (this->qos_profile_.in ()))
         {
           subscriber = participant->create_subscriber_with_profile (
@@ -313,8 +380,20 @@ DDS_Base_Connector_T<CCM_TYPE>::init_subscriber (
                                               0);
         }
       else
+#endif
         {
           ::DDS::SubscriberQos sqos;
+          DDS::ReturnCode_t const retcode =
+            participant->get_default_subscriber_qos (sqos);
+
+          if (retcode != DDS::RETCODE_OK)
+            {
+              DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
+                  "DDS_Base_Connector_T::init_publisher - "
+                  "Error: Unable to retrieve get_default_subscriber_qos: <%C>\n",
+                  ::CIAO::DDS4CCM::translate_retcode (retcode)));
+              throw ::CCM_DDS::InternalError (retcode, 0);
+            }
           subscriber = participant->create_subscriber (sqos,
                                               ::DDS::SubscriberListener::_nil (),
                                               0);
@@ -572,7 +651,12 @@ DDS_Base_Connector_T<CCM_TYPE>::remove_domain (
 {
   DDS4CCM_TRACE ("DDS_Base_Connector_T::remove_domain");
 
-  ::DDS::ReturnCode_t const retcode = this->participant_factory_.delete_participant (participant);
+  ::DDS::ReturnCode_t retcode = ::DDS::RETCODE_OK;
+#if (CIAO_DDS4CCM_NDDS==1)
+  retcode = this->participant_factory_.delete_participant (participant);
+#else
+  retcode = this->participant_factory_->delete_participant (participant);
+#endif
   if (retcode != ::DDS::RETCODE_OK)
     {
       throw ::CCM_DDS::InternalError (retcode, 0);

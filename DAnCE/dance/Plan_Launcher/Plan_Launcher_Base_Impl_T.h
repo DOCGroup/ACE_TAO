@@ -25,6 +25,7 @@ namespace DAnCE
   class Plan_Launcher_Base_Impl : public virtual Plan_Launcher_Base
   {
   protected:
+    typedef Plan_Launcher_Base_Impl< Manager, AppManager, Application > __Type;
 
     typedef typename Manager::_ptr_type Manager_ptr;
     typedef typename Manager::_var_type Manager_var;

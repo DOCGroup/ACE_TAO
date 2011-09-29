@@ -45,22 +45,18 @@ public:
   virtual bool write_locate_request_header (
       CORBA::ULong request_id,
       TAO_Target_Specification &spec,
-      TAO_OutputCDR &msg
-    );
+      TAO_OutputCDR &msg);
 
   /// Write the reply header in to @a output
   virtual bool write_reply_header (
       TAO_OutputCDR &output,
-      TAO_Pluggable_Reply_Params_Base &reply
-
-    );
+      TAO_Pluggable_Reply_Params_Base &reply);
 
   /// Writes the locate _reply message in to the @a output
   virtual bool write_locate_reply_mesg (
       TAO_OutputCDR &output,
       CORBA::ULong request_id,
-      TAO_GIOP_Locate_Status_Msg &status
-    );
+      TAO_GIOP_Locate_Status_Msg &status);
 
   virtual bool write_fragment_header (TAO_OutputCDR & cdr,
                                       CORBA::ULong request_id);
@@ -72,8 +68,7 @@ public:
   /// Parse the LocateRequest Header from the incoming stream. This will do a
   /// version specific parsing of the incoming Request header
   virtual int parse_locate_header (
-      TAO_GIOP_Locate_Request_Header &
-    );
+      TAO_GIOP_Locate_Request_Header &);
 
   /// Parse the reply message from the server
   virtual int parse_reply (TAO_InputCDR &input,

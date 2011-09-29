@@ -347,8 +347,7 @@ ACE_Process_Manager::handle_signal (int,
 #if defined (ACE_WIN32)
   ACE_HANDLE proc = si->si_handle_;
   ACE_exitcode status = 0;
-  BOOL result = ::GetExitCodeProcess (proc,
-                                      &status);
+  BOOL result = ::GetExitCodeProcess (proc, &status);
   if (result)
     {
       if (status != STILL_ACTIVE)

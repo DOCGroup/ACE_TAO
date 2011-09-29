@@ -39,7 +39,7 @@ private:
 // Listing 2 code/ch05
 Hash_Map_Example::Hash_Map_Example()
 {
-  ACE_TRACE (ACE_TEXT ("Hash_Map_Example::Hash_Map_Example"));
+  ACE_TRACE ("Hash_Map_Example::Hash_Map_Example");
 
   map_.open (100);
 }
@@ -47,7 +47,7 @@ Hash_Map_Example::Hash_Map_Example()
 
 int Hash_Map_Example::run (void)
 {
-  ACE_TRACE (ACE_TEXT ("Hash_Map_Example::run"));
+  ACE_TRACE ("Hash_Map_Example::run");
 
   for (int i = 0; i < 100; i++)
     {
@@ -80,7 +80,7 @@ int Hash_Map_Example::run (void)
 
 void Hash_Map_Example::iterate_forward (void)
 {
-  ACE_TRACE (ACE_TEXT ("Hash_Map_Example::iterate_forward"));
+  ACE_TRACE ("Hash_Map_Example::iterate_forward");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Forward Iteration\n")));
   for (Hash_Map<int, DataElement>::iterator iter = map_.begin ();
@@ -93,7 +93,7 @@ void Hash_Map_Example::iterate_forward (void)
 
 void Hash_Map_Example::iterate_reverse (void)
 {
-  ACE_TRACE (ACE_TEXT ("Hash_Map_Example::iterate_reverse"));
+  ACE_TRACE ("Hash_Map_Example::iterate_reverse");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Reverse Iteration\n")));
   for (Hash_Map<int, DataElement>::reverse_iterator iter = map_.rbegin ();
@@ -106,7 +106,7 @@ void Hash_Map_Example::iterate_reverse (void)
 
 void Hash_Map_Example::remove_all (void)
 {
-  ACE_TRACE (ACE_TEXT ("Hash_Map_Example::remove_all"));
+  ACE_TRACE ("Hash_Map_Example::remove_all");
   map_.unbind_all ();
 }
 

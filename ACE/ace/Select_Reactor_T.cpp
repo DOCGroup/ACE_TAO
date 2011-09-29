@@ -495,6 +495,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
       // determine the size at run-time by checking the process file
       // descriptor limit on platforms that support this feature.
 
+      // reset the errno so that subsequent checks are valid
+      errno = 0;
+
       // There is no need to deallocate resources from previous open()
       // call since the open() method deallocates any resources prior
       // to exiting if an error was encountered.
@@ -1402,15 +1405,25 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 
   ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
 
-  if (ACE_OS::thr_equal (ACE_Thread::self (),
-                         this->owner_) == 0 || this->deactivated_)
-    return -1;
+  if (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_) == 0)
+    {
+      errno = EACCES;
+      return -1;
+    }
+  if (this->deactivated_)
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
 
   // Update the countdown to reflect time waiting for the mutex.
   countdown.update ();
 #else
   if (this->deactivated_)
-    return -1;
+    {
+      errno = ESHUTDOWN;
+      return -1;
+    }
 #endif /* ACE_MT_SAFE */
 
   return this->handle_events_i (max_wait_time);
