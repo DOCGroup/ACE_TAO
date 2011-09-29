@@ -1,3 +1,9 @@
+Thu Sep 29 01:58:23 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_lion.GNU:
+
+          LLVM is the default compiler on Lion for now on. 
+
 Fri Sep 23 12:45:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/PerlACE/TestTarget.pm:

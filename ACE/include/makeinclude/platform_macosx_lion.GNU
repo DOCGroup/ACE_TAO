@@ -17,6 +17,14 @@ ifeq ($(buildbits),universal)
   LDFLAGS    += -arch i386 -arch x86_64
 endif
 
+ifneq (,$(buildbits))
+  FLAGS_C_CC += -m64
+  LDFLAGS    += -m64
+endif
+
+CC:=clang
+CXX:=clang++
+
 PLATFORM_NDDS_FLAGS=-ppPath cpp-4.2 -I.
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_common.GNU
