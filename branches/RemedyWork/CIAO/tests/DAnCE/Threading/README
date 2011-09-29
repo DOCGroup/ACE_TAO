@@ -1,0 +1,11 @@
+// $Id$
+
+This test is there to experiment with the TAO/CORBA settings.
+
+There are two components, Component1 and Component2.
+Component1 invokes a method (invoke_interface_2) on Component2. In that method,
+Component2 invokes a method (invoke_interface_1) on Component1. By default this
+doesn't deadlock the application since TAO's default wait strategy prefends this.
+
+The wait strategy can be changed in the deployment plan (descriptors/Plan.cdp).
+A deadlock occurs when 'rw' is used as strategy.

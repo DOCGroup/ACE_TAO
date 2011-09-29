@@ -1,0 +1,134 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Quoter_Base Quoter_Producer"
+
+project(AMI_Quoter_Producer_idl_gen) : componentidldefaults {
+  custom_only = 1
+  after += AMI_Quoter_idl_gen
+  idlflags += -Wb,stub_export_macro=QUOTER_PRODUCER_STUB_Export \
+              -Wb,stub_export_include=Quoter_Producer_stub_export.h \
+              -Wb,skel_export_macro=QUOTER_PRODUCER_SVNT_Export \
+              -Wb,skel_export_include=Quoter_Producer_svnt_export.h \
+              -Wb,exec_export_macro=QUOTER_PRODUCER_EXEC_Export \
+              -Wb,exec_export_include=Quoter_Producer_exec_export.h \
+              -Glem -I..
+
+  IDL_Files {
+    Quoter_Producer.idl
+  }
+}
+
+project(AMI_Quoter_Producer_lem_gen) : ciaoidldefaults {
+  after += AMI_Quoter_Producer_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=QUOTER_PRODUCER_LEM_STUB_Export \
+              -Wb,stub_export_include=Quoter_Producer_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    Quoter_ProducerE.idl
+  }
+}
+
+project(AMI_Quoter_Producer_lem_stub) : ccm_svnt, messaging {
+  after += AMI_Quoter_Producer_lem_gen AMI_Quoter_Producer_stub AMI_Quoter_stub
+  libs  += Quoter_stub Quoter_Producer_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Quoter_Producer_lem_stub
+  dynamicflags += QUOTER_PRODUCER_LEM_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    Quoter_ProducerEC.cpp
+  }
+
+  Header_Files {
+    Quoter_ProducerEC.h
+    Quoter_Producer_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Quoter_ProducerEC.inl
+  }
+}
+
+project(AMI_Quoter_Producer_stub) : ccm_stub, messaging {
+  after += AMI_Quoter_Producer_idl_gen AMI_Quoter_stub
+  libs  += Quoter_stub
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Quoter_Producer_stub
+  dynamicflags += QUOTER_PRODUCER_STUB_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    Quoter_ProducerC.cpp
+  }
+
+  Header_Files {
+    Quoter_ProducerC.h
+    Quoter_Producer_stub_export.h
+  }
+
+  Inline_Files {
+    Quoter_ProducerC.inl
+  }
+}
+
+project(AMI_Quoter_Producer_exec) : ciao_executor, messaging {
+  after   += AMI_Quoter_Producer_lem_stub AMI_Quoter_Producer_stub AMI_Quoter_stub AMI_Quoter_lem_stub
+  sharedname = Quoter_Producer_exec
+  libs += Quoter_Producer_stub Quoter_Producer_lem_stub Quoter_stub Quoter_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += QUOTER_PRODUCER_EXEC_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    Quoter_Producer_exec.cpp
+  }
+
+  Header_Files {
+    Quoter_Producer_exec.h
+    Quoter_Producer_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(AMI_Quoter_Producer_svnt) : ciao_servant, messaging {
+  after      += AMI_Quoter_Base_skel AMI_Quoter_Producer_lem_stub AMI_Quoter_stub AMI_Quoter_skel AMI_Quoter_lem_stub
+  sharedname  = Quoter_Producer_svnt
+  libs       += Quoter_Producer_stub Quoter_Producer_lem_stub  \
+                Quoter_skel \
+                Quoter_stub Quoter_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += QUOTER_PRODUCER_SVNT_BUILD_DLL
+  includes += ..
+  IDL_Files {
+  }
+
+  Source_Files {
+    Quoter_ProducerS.cpp
+    Quoter_Producer_svnt.cpp
+  }
+
+  Header_Files {
+    Quoter_ProducerS.h
+    Quoter_Producer_svnt.h
+    Quoter_Producer_svnt_export.h
+  }
+
+  Inline_Files {
+    Quoter_ProducerS.inl
+  }
+}
+

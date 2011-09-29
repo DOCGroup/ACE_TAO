@@ -1,0 +1,33 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Idl) : taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Client) : orbsvcsexe, portableserver {
+  after   += *Idl
+  exename  = client
+  source_files {
+    testC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Server) : orbsvcsexe, portableserver {
+  after   += *Idl
+  exename  = server
+  source_files {
+    testC.cpp
+    testS.cpp
+    server.cpp
+    test_i.cpp
+  }
+  IDL_Files {
+  }
+}
