@@ -1,3 +1,73 @@
+Fri Sep 30 08:08:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+        * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+          Layout changes
+
+        * connectors/dds4ccm/impl/CCM_DataReader.cpp:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Get_T.h:
+        * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+        * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Update_T.h:
+        * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+        * connectors/dds4ccm/impl/DDS_Write_T.h:
+        * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+        * connectors/dds4ccm/impl/Reader_T.cpp:
+          Ability to change the topic name. When a topic name changes,
+          DDS will be restarted. After restart, the connector manages the
+          new topic.
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+          Improved logging
+
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+          Removed test for NonChangeable exception. 
+
+
+        * connectors/dds4ccm/tests/ResetTopic:
+        * connectors/dds4ccm/tests/ResetTopic/README:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_impl.h:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_impl.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/run_test.pl:
+          Added test which test the reset DDS within the connector. See readme for more information.
+
 
 Local Variables:
 mode: change-log

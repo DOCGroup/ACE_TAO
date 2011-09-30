@@ -296,7 +296,36 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name");
 
-  if (this->late_binded (topic_name))
+  if (this->stop_dds (topic_name))
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_State_Connector_T::topic_name - "
+                    "Stopping DDS=>switching to new topic <%C>.\n",
+                    topic_name));
+      this->ccm_passivate ();
+      this->do_ccm_remove (false);
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_State_Connector_T::topic_name - "
+                    "DDS is down. Setting new to <%C>.\n",
+                    topic_name));
+
+      TopicBaseConnector::topic_name (topic_name);
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_State_Connector_T::topic_name - "
+                    "Initialize DDS again for topic <%C>.\n",
+                    topic_name));
+
+      this->do_configuration_complete ();
+      this->do_ccm_activate ();
+
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_State_Connector_T::topic_name - "
+                    "DDS up and running for topic <%C>.\n",
+                    topic_name));
+    }
+  else if (this->late_binded (topic_name))
     {
       this->do_configuration_complete ();
       this->do_ccm_activate ();
@@ -587,37 +616,37 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_passivate (void)
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
+DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
+  const bool set_component)
 {
-  DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
-
+  DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove");
   try
     {
       if (ACE_OS::strlen (this->topic_name_) != 0)
         {
           if (this->observable_obtained_)
             {
-              this->observable_.remove (this->publisher_.in ());
+              this->observable_.remove (this->publisher_.in (), set_component);
             }
 
           if (this->push_observer_obtained_)
             {
-              this->push_observer_.remove (this->subscriber_.in ());
+              this->push_observer_.remove (this->subscriber_.in (), set_component);
             }
 
           if (this->push_state_observer_obtained_)
             {
-              this->push_state_observer_.remove (this->subscriber_.in ());
+              this->push_state_observer_.remove (this->subscriber_.in (), set_component);
             }
 
           if (this->pull_observer_obtained_)
             {
-              this->pull_observer_.remove (this->subscriber_.in ());
+              this->pull_observer_.remove (this->subscriber_.in (), set_component);
             }
 
           if (this->passive_observer_obtained_)
             {
-              this->passive_observer_.remove (this->subscriber_.in ());
+              this->passive_observer_.remove (this->subscriber_.in (), set_component);
             }
           TopicBaseConnector::ccm_remove ();
         }
@@ -627,7 +656,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
                               DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                              "DDS_State_Connector_T::ccm_remove");
+                              "DDS_State_Connector_T::do_ccm_remove");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
@@ -635,15 +664,24 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
       DDS4CCM_PRINT_CORBA_EXCEPTION (
                               DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
-                              "DDS_State_Connector_T::ccm_remove");
+                              "DDS_State_Connector_T::do_ccm_remove");
       throw;
     }
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_State_Connector_T::ccm_remove - "
+                    "DDS_State_Connector_T::do_ccm_remove - "
                     "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
+void
+DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
+
+  this->do_ccm_remove (true);
 }
 

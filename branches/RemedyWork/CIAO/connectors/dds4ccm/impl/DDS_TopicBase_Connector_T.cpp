@@ -32,6 +32,27 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binding (bool late
   this->late_binding_ |= late_binding;
 }
 
+
+template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
+bool
+DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds (
+  const char * topic_name)
+{
+  DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds");
+
+  if (!::CORBA::is_nil (this->topic_name_.in ()))
+    { //topic name already set
+      // do not stop DDS when topic names are equal
+      if (ACE_OS::strlen (this->topic_name_.in ()) == 0)
+        return false;
+      return ACE_OS::strcmp (this->topic_name_.in (), topic_name) != 0;
+    }
+  else
+    { //topic is not set
+      return false;
+    }
+}
+
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 bool
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
@@ -51,11 +72,7 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
       DDS_TopicBase_Connector_T::topic_name (topic_name);
       return true;
     }
-  else if (this->configuration_complete_)
-    {
-      throw ::CCM_DDS::NonChangeable ();
-    }
-  else
+  else if (!this->configuration_complete_)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
@@ -84,11 +101,13 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
     {
       this->register_type (this->domain_participant_.in (),
                            typesupport_name);
+
       this->init_topic (this->domain_participant_.in (),
                         this->topic_.inout () ,
                         this->topic_name_.in (),
                         typesupport_name.in ());
     }
+
   this->init_subscriber (this->domain_participant_.in (),
                          this->subscriber_.inout ());
   this->init_publisher (this->domain_participant_.in (),

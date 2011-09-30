@@ -43,7 +43,9 @@ CIAO::DDS4CCM::CCM_DataReader::create_readcondition (
   ::DDS::ViewStateMask view_states,
   ::DDS::InstanceStateMask instance_states)
 {
-  return this->dds_entity ()->create_readcondition (sample_states, view_states, instance_states);
+  return this->dds_entity ()->create_readcondition (sample_states,
+                                                    view_states,
+                                                    instance_states);
 }
 
 ::DDS::QueryCondition_ptr
@@ -54,7 +56,11 @@ CIAO::DDS4CCM::CCM_DataReader::create_querycondition (
   const char * query_expression,
   const ::DDS::StringSeq & query_parameters)
 {
-  return this->dds_entity ()->create_querycondition (sample_states, view_states, instance_states, query_expression, query_parameters);
+  return this->dds_entity ()->create_querycondition (sample_states,
+                                                     view_states,
+                                                     instance_states,
+                                                     query_expression,
+                                                     query_parameters);
 }
 
 ::DDS::ReturnCode_t
@@ -171,7 +177,8 @@ CIAO::DDS4CCM::CCM_DataReader::get_matched_publication_data (
   ::DDS::PublicationBuiltinTopicData & publication_data,
   DDS_INSTANCE_HANDLE_T_IN publication_handle)
 {
-  return this->dds_entity ()->get_matched_publication_data (publication_data, publication_handle);
+  return this->dds_entity ()->get_matched_publication_data (publication_data,
+                                                            publication_handle);
 }
 
 

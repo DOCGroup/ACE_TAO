@@ -41,11 +41,13 @@ DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::config
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, bool FIXED>
 void
 DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::remove (
-  ::DDS::Subscriber_ptr subscriber)
+  ::DDS::Subscriber_ptr subscriber,
+  const bool reset_component)
 {
   DDS4CCM_TRACE ("DDS_Get_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE, FIXED>::remove");
-  SubscriberBase_type::remove (subscriber);
-  this->dds_get_->_set_component (::CORBA::Object::_nil ());
+  SubscriberBase_type::remove (subscriber, reset_component);
+  if (reset_component)
+    this->dds_get_->_set_component (::CORBA::Object::_nil ());
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, bool FIXED>

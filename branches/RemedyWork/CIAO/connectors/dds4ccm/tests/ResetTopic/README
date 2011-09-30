@@ -1,0 +1,21 @@
+// $Id$
+
+In the early days of the DDS4CCM specification a topic name was not changable.
+When it was set (doesn't matter if it was a late binded topic), the user was not
+allowed to change it, otherwise a NonChangeable exception was thrown.
+
+The requirement from the field dictates that a topic name should be changeable.
+When the topic name will be set a second time, the connector should shut down
+DDS and start it again, using the new topic name. The connector does not tear
+down the proxies. This means that the connector doesn't change on the outside.
+
+The ReadGet test has the following sequence:
+1. Sender writes samples for topic 1 (iteration 1 -10)
+2. Sender informs the receiver that samples for topic 1 were written to DDS
+3. Receiver sets the topic name (late binding), and starts to read.
+4. Sender writes samples for topic 2 (iteration 11 - 20)
+5. Sender informs the receiver that samples for topic 2 were written to DDS
+6. Receiver sets the topic name to topic 2. At this moment, the connector will
+   restart DDS.
+7. Receiver reads the samples from DDS.
+

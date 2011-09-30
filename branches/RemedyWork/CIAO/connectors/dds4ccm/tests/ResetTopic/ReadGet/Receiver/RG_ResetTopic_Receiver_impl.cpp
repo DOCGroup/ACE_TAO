@@ -1,18 +1,18 @@
 // $Id$
-#include "RG_LateBinding_Receiver_impl.h"
+#include "RG_ResetTopic_Receiver_impl.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-namespace CIAO_RG_LateBinding_Receiver_Impl
+namespace CIAO_RG_ResetTopic_Receiver_Impl
 {
 
   /**
    * Check last
    */
-  LastSampleChecker::LastSampleChecker (RG_LateBinding_Receiver_impl &callback,
+  LastSampleChecker::LastSampleChecker (RG_ResetTopic_Receiver_impl &callback,
                                         const ::CORBA::UShort &iterations)
     : callback_ (callback)
-      , iterations_ (iterations)
+    , iterations_ (iterations)
   {
   }
 
@@ -26,33 +26,34 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     ACE_DEBUG ((LM_DEBUG, "Checking if last sample "
                           "is available in DDS...\n"));
     if (this->callback_.check_last ())
-      {
-        this->callback_.start_read ();
-      }
+      this->callback_.start_read ();
     return 0;
   }
 
   /**
-   * RG_LateBinding_Receiver_impl
+   * RG_ResetTopic_Receiver_impl
    */
-  RG_LateBinding_Receiver_impl::RG_LateBinding_Receiver_impl (
-      ::RG_LateBinding::CCM_Receiver_Context_ptr ctx,
+  RG_ResetTopic_Receiver_impl::RG_ResetTopic_Receiver_impl (
+      ::RG_ResetTopic::CCM_Receiver_Context_ptr ctx,
       const ::CORBA::UShort & iterations,
       const ::CORBA::UShort & keys)
     : ciao_context_ (
-        ::RG_LateBinding::CCM_Receiver_Context::_duplicate (ctx))
+        ::RG_ResetTopic::CCM_Receiver_Context::_duplicate (ctx))
     , iterations_ (iterations)
     , keys_ (keys)
+    , expected_per_run_ (keys * iterations)
+    , checker_ (0)
+    , topic_name_("")
   {
   }
 
-  RG_LateBinding_Receiver_impl::~RG_LateBinding_Receiver_impl ()
+  RG_ResetTopic_Receiver_impl::~RG_ResetTopic_Receiver_impl ()
   {
     delete this->checker_;
   }
 
   ACE_Reactor*
-  RG_LateBinding_Receiver_impl::reactor (void)
+  RG_ResetTopic_Receiver_impl::reactor (void)
   {
     ACE_Reactor* reactor = 0;
     ::CORBA::Object_var ccm_object =
@@ -72,14 +73,29 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     return reactor;
   }
 
-  bool
-  RG_LateBinding_Receiver_impl::check_last (void)
+  void
+  RG_ResetTopic_Receiver_impl::iterations (::CORBA::UShort iterations)
   {
-    ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+    this->iterations_ = iterations;
+  }
+
+  void
+  RG_ResetTopic_Receiver_impl::keys (::CORBA::UShort keys)
+  {
+    this->keys_= keys;
+  }
+
+  bool
+  RG_ResetTopic_Receiver_impl::check_last (void)
+  {
+    ::RG_ResetTopic::RG_ResetTopicSampleConnector::Reader_var reader =
       this->ciao_context_->get_connection_info_read_data ();
     try
       {
-        RG_LateBindingTest datum;
+        ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::check_last - "
+                              "last iteration should be <%02d>\n",
+                              this->iterations_));
+        RG_ResetTopicSample datum;
         ::CCM_DDS::ReadInfo readinfo;
         char key[10];
         ACE_OS::sprintf (key, "KEY_%d", this->keys_);
@@ -96,9 +112,11 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
       }
     catch (const ::CCM_DDS::InternalError &)
       {
+        ACE_DEBUG ((LM_DEBUG, "INTERNAL ERROR\n"));
       }
     catch (const ::CCM_DDS::NonExistent &)
       {
+        ACE_DEBUG ((LM_DEBUG, "NONEXISTENT\n"));
       }
     catch (...)
       {
@@ -109,15 +127,17 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   void
-  RG_LateBinding_Receiver_impl::start (void)
+  RG_ResetTopic_Receiver_impl::start (const char * topic_name)
   {
-    this->test_exception ();
-    this->set_topic_name_reader ();
+    this->topic_name_ = topic_name;
+//     this->test_exception ();
+    this->set_topic_name_reader (topic_name);
 
-    ACE_NEW_THROW_EX (this->checker_,
-                      LastSampleChecker (*this,
-                                         this->iterations_),
-                      ::CORBA::NO_MEMORY ());
+    if (!this->checker_)
+      ACE_NEW_THROW_EX (this->checker_,
+                        LastSampleChecker (*this,
+                                          this->iterations_),
+                        ::CORBA::NO_MEMORY ());
     if (this->reactor ()->schedule_timer (this->checker_,
                                           0,
                                           ACE_Time_Value (1, 0),
@@ -129,23 +149,21 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   void
-  RG_LateBinding_Receiver_impl::start_read ()
+  RG_ResetTopic_Receiver_impl::start_read (void)
   {
     if (this->checker_)
       {
         this->reactor ()->cancel_timer (this->checker_);
       }
     this->start_reading ();
-    this->set_topic_name_getter ();
+    this->set_topic_name_getter (this->topic_name_.c_str());
     this->start_getting ();
-    this->set_topic_name_reader ();
-    this->set_topic_name_getter ();
   }
 
   void
-  RG_LateBinding_Receiver_impl::check_samples (
+  RG_ResetTopic_Receiver_impl::check_samples (
     const char * test,
-    const RG_LateBindingTestSeq& samples,
+    const RG_ResetTopicSampleSeq& samples,
     const ::CORBA::UShort& expected)
   {
     bool error = samples.length () != expected;
@@ -155,7 +173,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
       }
     if (error)
       {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::check_samples - "
+        ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::check_samples - "
                     "ERROR: Unexpected number of %C samples received: "
                     "expected <%d> - received <%u>\n",
                     test,
@@ -164,7 +182,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
       }
     else
       {
-        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::check_samples - "
+        ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::check_samples - "
                     "%C Samples found: <%u>\n",
                     test,
                     samples.length ()));
@@ -173,7 +191,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
          i < samples.length ();
          ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::check_samples - "
+        ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::check_samples - "
                     "Sample %C: sample <%d> - key <%C> - iteration <%d>\n",
                     test,
                     i,
@@ -183,90 +201,90 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   void
-  RG_LateBinding_Receiver_impl::test_exception (void)
+  RG_ResetTopic_Receiver_impl::test_exception (void)
   {
     try
       {
         if (! ::CORBA::is_nil (this->ciao_context_.in ()))
           {
-            ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+            ::RG_ResetTopic::RG_ResetTopicSampleConnector::Reader_var reader =
               this->ciao_context_->get_connection_info_read_data ();
             if (::CORBA::is_nil (reader.in ()))
               {
-                ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
+                ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::test_exception - "
                             "ERROR: Unable to get writer interface from the "
                             "CIAO context\n"));
                 return;
               }
 
-            RG_LateBindingTest sample;
+            RG_ResetTopicSample sample;
             ::CCM_DDS::ReadInfo readinfo;
             sample.key = CORBA::string_dup ("KEY_1");
             reader->read_one_last (sample,
                                    readinfo,
                                    ::DDS::HANDLE_NIL);
-            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
+            ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::test_exception - "
                         "ERROR: No exception caught before topic name has been set\n"));
           }
         else
           {
-            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
+            ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::test_exception - "
                         "ERROR: CIAO context seems to be NIL\n"));
           }
       }
     catch (const ::CORBA::BAD_INV_ORDER &)
       {
-        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::test_exception - "
+        ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::test_exception - "
                     "Expected BAD_INV_ORDER thrown.\n"));
       }
     catch (const CORBA::Exception &e)
       {
-        e._tao_print_exception("RG_LateBinding_Receiver_impl::test_exception - "
+        e._tao_print_exception("RG_ResetTopic_Receiver_impl::test_exception - "
                                "ERROR: Unexpected exception");
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::test_exception - "
+        ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::test_exception - "
                     "ERROR: expected and unknown exception caught\n"));
       }
   }
 
   void
-  RG_LateBinding_Receiver_impl::start_reading (void)
+  RG_ResetTopic_Receiver_impl::start_reading (void)
   {
-    ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::start_reading - "
+    ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::start_reading - "
                 "Start reading\n"));
-    ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+    ::RG_ResetTopic::RG_ResetTopicSampleConnector::Reader_var reader =
       this->ciao_context_->get_connection_info_read_data ();
     try
       {
-        RG_LateBindingTestSeq samples;
+        RG_ResetTopicSampleSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
         reader->read_all (samples, readinfo_seq);
-        this->check_samples ("read", samples, this->iterations_ * this->keys_);
+        this->check_samples ("read", samples, this->expected_per_run_);
       }
     catch (const CORBA::Exception &e)
       {
-        e._tao_print_exception("RG_LateBinding_Receiver_impl::start_reading - "
+        e._tao_print_exception("RG_ResetTopic_Receiver_impl::start_reading - "
                                "ERROR: Unexpected exception");
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::start_reading - "
+        ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::start_reading - "
                     "ERROR: Caught unknow exception\n"));
       }
   }
 
   void
-  RG_LateBinding_Receiver_impl::start_getting (void)
+  RG_ResetTopic_Receiver_impl::start_getting (void)
   {
     try
       {
-        ::RG_LateBinding::RG_LateBindingTestConnector::Getter_var getter =
+        ::RG_ResetTopic::RG_ResetTopicSampleConnector::Getter_var getter =
           this->ciao_context_->get_connection_info_get_fresh_data ();
         if (::CORBA::is_nil (getter.in ()))
           {
-            ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::start_getting - "
+            ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::start_getting - "
                         "ERROR: Unable to get writer interface from the "
                         "CIAO context\n"));
             return;
@@ -276,97 +294,98 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
         to.nanosec = 0;
         getter->time_out (to);
 
-        RG_LateBindingTestSeq samples;
+        RG_ResetTopicSampleSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfos;
         getter->get_many (samples, readinfos);
         this->check_samples ("get", samples);
       }
     catch (const CORBA::Exception &e)
       {
-        e._tao_print_exception("RG_LateBinding_Receiver_impl::start_getting - "
+        e._tao_print_exception("RG_ResetTopic_Receiver_impl::start_getting - "
                                "ERROR: Unexpected exception");
       }
     catch (...)
       {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::start_getting - "
+        ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::start_getting - "
                     "ERROR: expected and unknown exception caught\n"));
       }
   }
 
   void
-  RG_LateBinding_Receiver_impl::set_topic_name_reader (void)
+  RG_ResetTopic_Receiver_impl::set_topic_name_reader (const char * topic_name)
   {
     try
       {
-        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_reader - "
-                    "Setting topic name\n"));
-        ::RG_LateBinding::RG_LateBindingTestConnector::Reader_var reader =
+        ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::set_topic_name_reader - "
+                    "Setting topic name to <%C>\n", topic_name));
+        ::RG_ResetTopic::RG_ResetTopicSampleConnector::Reader_var reader =
           this->ciao_context_->get_connection_info_read_data ();
         if (::CORBA::is_nil (reader.in ()))
             {
-              ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+              ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_reader - "
                                     "Unable to get reader interface\n"));
               throw ::CORBA::INTERNAL ();
             }
         ::CORBA::Object_var cmp = reader->_get_component ();
         if (::CORBA::is_nil (cmp.in ()))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_reader - "
                                   "Unable to get component interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_State_var conn =
-          ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+        ::RG_ResetTopic::RG_ResetTopicSampleConnector::CCM_DDS_State_var conn =
+          ::RG_ResetTopic::RG_ResetTopicSampleConnector::CCM_DDS_State::_narrow (cmp.in ());
         if (::CORBA::is_nil (conn.in ()))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_reader - "
                                   "Unable to narrow connector interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        conn->topic_name ("LateBindingTopic");
+
+        conn->topic_name (topic_name);
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+        ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_reader - "
                     "Caught NonChangeable exception.\n"));
       }
   }
 
   void
-  RG_LateBinding_Receiver_impl::set_topic_name_getter (void)
+  RG_ResetTopic_Receiver_impl::set_topic_name_getter (const char * topic_name)
   {
     try
       {
-        ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
-                    "Setting topic name\n"));
-        ::RG_LateBinding::RG_LateBindingTestConnector::Getter_var getter =
+        ACE_DEBUG ((LM_DEBUG, "RG_ResetTopic_Receiver_impl::set_topic_name_getter - "
+                    "Setting topic name to <%C>\n", topic_name));
+        ::RG_ResetTopic::RG_ResetTopicSampleConnector::Getter_var getter =
           this->ciao_context_->get_connection_info_get_fresh_data ();
         if (::CORBA::is_nil (getter.in ()))
             {
-              ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+              ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_getter - "
                                     "Unable to get getter interface\n"));
               throw ::CORBA::INTERNAL ();
             }
           ::CORBA::Object_var cmp = getter->_get_component ();
           if (::CORBA::is_nil (cmp.in ()))
             {
-              ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+              ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_getter - "
                                     "Unable to get component interface\n"));
               throw ::CORBA::INTERNAL ();
             }
-        ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_Event_var conn =
-          ::RG_LateBinding::RG_LateBindingTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+        ::RG_ResetTopic::RG_ResetTopicSampleConnector::CCM_DDS_Event_var conn =
+          ::RG_ResetTopic::RG_ResetTopicSampleConnector::CCM_DDS_Event::_narrow (cmp.in ());
         if (::CORBA::is_nil (conn.in ()))
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+            ACE_ERROR ((LM_ERROR, "ERROR: RG_ResetTopic_Receiver_impl::set_topic_name_getter - "
                                   "Unable to narrow connector interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        conn->topic_name ("LateBindingTopic");
+        conn->topic_name (topic_name);
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+        ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::set_topic_name_getter - "
                     "ERROR: Caught NonChangeable exception.\n"));
       }
   }

@@ -38,7 +38,8 @@ public:
     ::CCM_DDS::PortStatusListener_ptr status,
     ACE_Reactor* reactor);
 
-  void remove (::DDS::Subscriber_ptr subscriber);
+  void remove (::DDS::Subscriber_ptr subscriber,
+              const bool reset_component);
 
 private:
   typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_VALUE_TYPE>
