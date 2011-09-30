@@ -78,12 +78,14 @@ DDS_StateListen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::activ
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
 DDS_StateListen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
-  ::DDS::Subscriber_ptr subscriber)
+  ::DDS::Subscriber_ptr subscriber,
+  const bool reset_component)
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
-  this->data_control_->_set_component (::CORBA::Object::_nil ());
-  SubscriberBase_type::remove (subscriber);
+  if (reset_component)
+    this->data_control_->_set_component (::CORBA::Object::_nil ());
+  SubscriberBase_type::remove (subscriber, reset_component);
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>

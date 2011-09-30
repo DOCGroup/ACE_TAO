@@ -241,6 +241,9 @@ namespace CIAO
         {
           if (iter->second->_ref_count () == 1)
             {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
+                            "DomainParticipantManager::remove_participant - "
+                            "Delete participant since ref_count is one. \n"));
               delete iter->second;
 
               // Save to remove from list

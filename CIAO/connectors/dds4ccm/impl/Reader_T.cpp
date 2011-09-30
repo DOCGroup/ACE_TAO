@@ -28,6 +28,8 @@ namespace CIAO
       const VALUE_TYPE& an_instance,
       DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
+      DDS4CCM_TRACE ("Reader_T::check_handle");
+
       ::DDS::InstanceHandle_t const lookup_hnd =
           this->dds_reader ()->lookup_instance (an_instance);
 
@@ -41,6 +43,8 @@ namespace CIAO
       const ::DDS::SampleInfoSeq& sample_infos,
       const bool determine_last)
     {
+      DDS4CCM_TRACE ("Reader_T::get_nr_valid_samples");
+
       CORBA::ULong nr_of_samples = 0;
       if (determine_last)
         {
@@ -74,6 +78,8 @@ namespace CIAO
       ::CCM_DDS::ReadInfoSeq& infos,
       const ::DDS::SampleInfoSeq & sample_info)
     {
+      DDS4CCM_TRACE ("Reader_T::convert_data");
+
       CORBA::ULong samples_to_return = this->get_nr_valid_samples (sample_info,
                                                                     false);
       infos.length (samples_to_return);
@@ -133,6 +139,7 @@ namespace CIAO
       ::DDS::QueryCondition_ptr qc)
     {
       DDS4CCM_TRACE ("Reader_T::read_wo_instance");
+
       ::DDS::ReturnCode_t retval = ::DDS::RETCODE_ERROR;
 
       if (! ::CORBA::is_nil (qc))
@@ -174,6 +181,8 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info,
       bool throw_exception)
     {
+      DDS4CCM_TRACE ("Reader_T::return_loan");
+
       // Return the loan
       ::DDS::ReturnCode_t const retval =
         this->dds_reader ()->return_loan (data, sample_info);
@@ -196,6 +205,8 @@ namespace CIAO
       SEQ_VALUE_TYPE& instances,
       ::CCM_DDS::ReadInfoSeq& infos)
     {
+      DDS4CCM_TRACE ("Reader_T::read_last");
+
       // This function has to return the last sample of all instances
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
@@ -229,6 +240,8 @@ namespace CIAO
               SEQ_VALUE_TYPE& instances,
               ::CCM_DDS::ReadInfoSeq& infos)
     {
+      DDS4CCM_TRACE ("Reader_T::read_all");
+
       // This function has to return all samples of all instances
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
@@ -249,6 +262,8 @@ namespace CIAO
       ::CCM_DDS::ReadInfo_out info,
       DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
+      DDS4CCM_TRACE ("Reader_T::read_one_last");
+
       ::DDS::InstanceHandle_t const lookup_hnd =
         this->check_handle (an_instance, instance_handle);
 
@@ -287,6 +302,8 @@ namespace CIAO
       ::CCM_DDS::ReadInfoSeq& infos,
       DDS_INSTANCE_HANDLE_T_IN instance_handle)
     {
+      DDS4CCM_TRACE ("Reader_T::read_one_all");
+
       ::DDS::InstanceHandle_t const lookup_hnd =
         this->check_handle (an_instance, instance_handle);
 
@@ -305,6 +322,7 @@ namespace CIAO
     Reader_T<READER_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::query (void)
     {
       DDS4CCM_TRACE ("Reader_T::query");
+
       return this->condition_manager_->query ();
     }
 
@@ -325,6 +343,7 @@ namespace CIAO
       ConditionManager * condition_manager)
     {
       DDS4CCM_TRACE ("Reader_T::set_dds_reader");
+
       this->dds_reader_ = TYPED_DDS_READER::_narrow (dr);
       if (!::CORBA::is_nil (dr) && ::CORBA::is_nil (this->dds_reader_.in ()))
         {

@@ -89,6 +89,7 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::configuration_c
       this->ccm_data_writer_->set_dds_entity (dwv_tmp.in ());
     }
 }
+
 template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
 DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::activate ()
@@ -106,7 +107,8 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::passivate ()
 template <typename CCM_TYPE, typename TYPED_WRITER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
 DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
-  ::DDS::Publisher_ptr publisher)
+  ::DDS::Publisher_ptr publisher,
+  const bool reset_component)
 {
   DDS4CCM_TRACE ("DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
@@ -118,7 +120,8 @@ DDS_Write_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
 
       if (retcode == ::DDS::RETCODE_OK)
         {
-          this->dds_write_->_set_component (::CORBA::Object::_nil ());
+          if (reset_component)
+            this->dds_write_->_set_component (::CORBA::Object::_nil ());
           this->dds_write_->set_dds_writer (::DDS::DataWriter::_nil ());
           this->ccm_data_writer_->set_dds_entity (::DDS::DataWriter::_nil ());
         }
