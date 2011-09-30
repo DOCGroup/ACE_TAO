@@ -31,9 +31,9 @@ project (RG_ResetTopicReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
 
 project (RG_ResetTopicReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
   after +=  RG_ResetTopicReceiver_lem_gen RG_ResetTopicReceiver_stub  RG_ResetTopicConnector_stub \
-            RG_ResetTopicBase_stub Reader_Starter_stub
+            RG_ResetTopicBase_stub reader_starter_rt_stub
   libs  +=  Receiver_stub RG_ResetTopicConnector_stub RG_ResetTopicBase_stub \
-            Reader_Starter_stub
+            reader_starter_rt_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -60,9 +60,9 @@ project (RG_ResetTopicReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
 project (RG_ResetTopicReceiver_stub) : ccm_stub, dds4ccm_base {
   after +=  RG_ResetTopicReceiver_idl_gen  RG_ResetTopicConnector_stub \
             RG_ResetTopicBase_stub RG_ResetTopicConnector_lem_gen \
-            Reader_Starter_stub Reader_Starter_lem_stub
+            reader_starter_rt_stub reader_starter_rt_lem_stub
   libs  +=  RG_ResetTopicConnector_stub RG_ResetTopicBase_stub \
-            Reader_Starter_stub
+            reader_starter_rt_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -90,11 +90,11 @@ project (RG_ResetTopicReceiver_exec) : ciao_executor, dds4ccm_lem_stub {
   after   += RG_ResetTopicReceiver_lem_stub RG_ResetTopicReceiver_stub \
              RG_ResetTopicBase_stub RG_ResetTopicConnector_stub \
              RG_ResetTopicConnector_lem_stub \
-             Reader_Starter_lem_stub Reader_Starter_stub
+             reader_starter_rt_lem_stub reader_starter_rt_stub
   sharedname = Receiver_exec
   libs += Receiver_stub Receiver_lem_stub RG_ResetTopicBase_stub \
           RG_ResetTopicConnector_stub RG_ResetTopicConnector_lem_stub \
-          Reader_Starter_lem_stub Reader_Starter_stub
+          reader_starter_rt_lem_stub reader_starter_rt_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -123,14 +123,14 @@ project (RG_ResetTopicReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   after      +=   RG_ResetTopicReceiver_lem_stub RG_ResetTopicBase_stub \
                   RG_ResetTopicConnector_stub RG_ResetTopicConnector_svnt \
                   RG_ResetTopicReceiver_exec RG_ResetTopicConnector_lem_stub \
-                  Reader_Starter_stub \
-                  Reader_Starter_svnt Reader_Starter_lem_stub
+                  reader_starter_rt_stub \
+                  reader_starter_rt_svnt reader_starter_rt_lem_stub
   sharedname  = Receiver_svnt
   libs       += Receiver_stub Receiver_lem_stub RG_ResetTopicBase_stub \
                 RG_ResetTopicConnector_stub RG_ResetTopicConnector_svnt \
                 Receiver_exec RG_ResetTopicConnector_lem_stub \
-                Reader_Starter_stub Reader_Starter_svnt \
-                Reader_Starter_lem_stub
+                reader_starter_rt_stub reader_starter_rt_svnt \
+                reader_starter_rt_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
