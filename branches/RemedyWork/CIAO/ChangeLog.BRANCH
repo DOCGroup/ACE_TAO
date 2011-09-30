@@ -1,3 +1,10 @@
+Fri Sep 30 16:27:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.mpc:
+          Fixed duplicate project names.
+
 Fri Sep 30 08:28:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
