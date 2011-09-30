@@ -1,8 +1,16 @@
+Fri Sep 30 14:03:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Check more filetypes for id tag
+
+        * docs/bczar/bczar.html:
+          Added some more packages
+
 Thu Sep 29 01:58:23 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_lion.GNU:
 
-          LLVM is the default compiler on Lion for now on. 
+          LLVM is the default compiler on Lion for now on.
 
 Fri Sep 23 12:45:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
