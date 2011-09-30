@@ -1,3 +1,8 @@
+Fri Sep 30 08:28:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added new test to the test framework
+
 Fri Sep 30 08:08:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
@@ -36,7 +41,7 @@ Fri Sep 30 08:08:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
         * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
         * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
-          Removed test for NonChangeable exception. 
+          Removed test for NonChangeable exception.
 
 
         * connectors/dds4ccm/tests/ResetTopic:
