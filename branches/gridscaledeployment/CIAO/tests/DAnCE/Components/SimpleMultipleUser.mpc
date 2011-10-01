@@ -1,0 +1,110 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleMultipleUser"
+
+project(SimpleCom_SimpleMulUser_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SIMPLEMULTIPLEUSER_STUB_Export \
+              -Wb,stub_export_include=SimpleMultipleUser_stub_export.h \
+              -Wb,skel_export_macro=SIMPLEMULTIPLEUSER_SVNT_Export \
+              -Wb,skel_export_include=SimpleMultipleUser_svnt_export.h \
+              -Wb,exec_export_macro=SIMPLEMULTIPLEUSER_EXEC_Export \
+              -Wb,exec_export_include=SimpleMultipleUser_exec_export.h \
+
+  IDL_Files {
+    SimpleMultipleUser.idl
+  }
+}
+
+project(SimpleCom_SimpleMulUser_lem_gen) : ciaoidldefaults {
+  after += SimpleCom_SimpleMulUser_idl_gen SimpleCommon_idl_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=SIMPLEMULTIPLEUSER_EXEC_Export \
+              -Wb,export_include=SimpleMultipleUser_exec_export.h \
+              -SS
+
+  IDL_Files {
+    SimpleMultipleUserE.idl
+  }
+}
+
+project(SimpleCommon_SimpleMultipleUser_stub) : ccm_stub {
+  after += SimpleCommon_stub SimpleCom_SimpleMulUser_idl_gen
+  libs  += SimpleCommon_stub
+
+  sharedname = SimpleMultipleUser_stub
+  dynamicflags += SIMPLEMULTIPLEUSER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleMultipleUserC.cpp
+  }
+
+  Header_Files {
+    SimpleMultipleUserC.h
+    SimpleMultipleUser_stub_export.h
+  }
+
+  Inline_Files {
+    SimpleMultipleUserC.inl
+  }
+}
+
+project(SimpleCommon_SimpleMultipleUser_exec) : ciao_executor {
+  after   += SimpleCom_SimpleMulUser_lem_gen SimpleCommon_SimpleMultipleUser_stub
+  sharedname = SimpleMultipleUser_exec
+  libs += SimpleMultipleUser_stub SimpleCommon_stub
+
+  dynamicflags += SIMPLEMULTIPLEUSER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleMultipleUserEC.cpp
+    SimpleMultipleUser_exec.cpp
+  }
+
+  Header_Files {
+    SimpleMultipleUserEC.h
+    SimpleMultipleUser_exec.h
+    SimpleMultipleUser_exec_export.h
+  }
+
+  Inline_Files {
+    SimpleMultipleUserEC.inl
+  }
+}
+
+
+project(SimpleCommon_SimpleMultipleUser_svnt) : ciao_servant {
+  after      += SimpleCommon_skel SimpleCommon_SimpleMultipleUser_exec
+  sharedname  = SimpleMultipleUser_svnt
+  libs       += SimpleMultipleUser_exec \
+                SimpleMultipleUser_stub \
+                SimpleCommon_skel \
+                SimpleCommon_stub
+
+  dynamicflags += SIMPLEMULTIPLEUSER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleMultipleUserS.cpp
+    SimpleMultipleUser_svnt.cpp
+  }
+
+  Header_Files {
+    SimpleMultipleUserS.h
+    SimpleMultipleUser_svnt.h
+    SimpleMultipleUser_svnt_export.h
+  }
+
+  Inline_Files {
+    SimpleMultipleUserS.inl
+  }
+}
+
+

@@ -1,0 +1,20 @@
+// $Id$
+
+#ifndef FILE_2_
+#define FILE_2_
+
+#include <File1.idl>
+
+module File2 {
+
+    interface Test {
+
+        void op1(in File1::Seq1 s1);
+
+        void op2(in File1::Seq2 s2);
+
+    };
+
+};
+
+#endif // FILE_2_

@@ -1,0 +1,42 @@
+= Compiling ACE+TAO Debian packages =
+
+ * ACE+TAO-src-<version>.tar.bz2 is retrieved from:
+     http://download.dre.vanderbilt.edu/previous_versions/
+   The -src version does not contain pre-generated Makefiles. They are
+   regenerated in the buid process.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>, Sun, 24 Jul 2011 18:47:59 +0200
+
+= New releases =
+
+When preparing a new release, there are several things to remember:
+
+ - Update patch 34-bts386713 (change soversions)
+
+ - Regenerate the list of include files for libace-inet-dev and
+   libace-inet-ssl-dev:
+
+   From debian/tmp:
+
+   $ find . -type f | grep -vi https | grep -vi ssl  --> These go to libace-inet-dev
+
+   The ones matching HTTPS or SSL go in libace-inet-ssl-dev.install:
+   
+   usr/include/ace/INet/*SSL*
+   usr/include/ace/INet/*HTTPS*
+
+   But that might need updating if ACE_INet_SSL starts supporting FTPS or others
+
+   libace-inet-ssl-dev requires libace-inet-dev
+ 
+   Also, make sure none of the files in libace-inet-dev include anything from
+   libace-inet-ssl-dev. Test with:
+
+   From debian/tmp/usr/include/ace/INet:
+
+   $ find . -type f | grep -vi https | grep -vi ssl | xargs -I {} grep -Hi "include.*ssl"
+
+   $ find . -type f | grep -vi https | grep -vi ssl | xargs -I {} grep -Hi "include.*https"
+
+   (both should return nothing)
+
