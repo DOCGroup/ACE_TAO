@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+
+project(Collocated_Best_ThruP): taoserver {
+  exename = Collocated_Best_ThruP
+}

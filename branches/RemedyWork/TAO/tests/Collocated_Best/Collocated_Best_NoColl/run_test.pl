@@ -16,8 +16,10 @@ $server->DeleteFile($iorbase);
 
 $status = 0;
 
-print STDERR "======== Running with -ORBCollocation global -ORBCollocationStrategy direct \n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation global -ORBCollocationStrategy direct");
+$SV = $server->CreateProcess ("Collocated_Best_NoColl");
+
+print STDERR "======== Running with -ORBCollocation global -ORBCollocationStrategy best \n";
+$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation global -ORBCollocationStrategy best");
 $sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {

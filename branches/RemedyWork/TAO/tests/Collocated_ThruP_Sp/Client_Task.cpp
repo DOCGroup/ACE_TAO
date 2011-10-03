@@ -23,6 +23,7 @@ Client_Task::svc (void)
     {
       CORBA::Object_var tmp =
         this->corb_->string_to_object (input_);
+
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in ());
 
@@ -35,12 +36,13 @@ Client_Task::svc (void)
         }
       try
         {
-          CORBA::String_var the_string = hello->get_string ();
+          CORBA::String_var the_string =
+            hello->get_string ();
 
-           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                         the_string.in ()));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
+                      the_string.in ()));
 
-           hello->shutdown ();
+          hello->shutdown ();
         }
       catch (CORBA::INTERNAL)
         {
@@ -60,5 +62,4 @@ Client_Task::svc (void)
       ACE_ERROR ((LM_ERROR, "(ERROR: Client_Task::svc Expected exception not received\n"));
     }
   return 0;
-
 }

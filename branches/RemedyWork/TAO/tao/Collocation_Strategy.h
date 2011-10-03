@@ -34,6 +34,10 @@ namespace TAO
       /// servant.
       TAO_CS_DIRECT_STRATEGY,
 
+      /// Calls to the collocated object are made directly to its
+      /// servant if possible, else forwarded by the POA.
+      TAO_CS_BEST_STRATEGY,
+
       /// This value should always be the last value in the enumeration.
       /// It provides the count for the number of collocation
       /// strategies.

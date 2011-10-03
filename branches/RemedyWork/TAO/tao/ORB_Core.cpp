@@ -613,9 +613,13 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // Specify which collocation policy we want to use.
           const ACE_TCHAR *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("thru_poa")) == 0)
-            this->collocation_strategy_ = THRU_POA;
+            {
+              this->collocation_strategy_ = THRU_POA;
+            }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("direct")) == 0)
             this->collocation_strategy_ = DIRECT;
+          else if (ACE_OS::strcasecmp (opt, ACE_TEXT("best")) == 0)
+            this->collocation_strategy_ = BEST;
 
           arg_shifter.consume_arg ();
         }
@@ -3615,6 +3619,8 @@ TAO_ORB_Core_instance (void)
 TAO::Collocation_Strategy
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
+  ACE_DEBUG((LM_DEBUG,
+              ACE_TEXT("TAO_ORB_Core::collocation_strategy\n")));
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0)
@@ -3626,7 +3632,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
           switch (orb_core->get_collocation_strategy ())
             {
             case THRU_POA:
-              return TAO::TAO_CS_THRU_POA_STRATEGY;
+               return TAO::TAO_CS_THRU_POA_STRATEGY;
 
             case DIRECT:
               {
@@ -3638,7 +3644,38 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
                 ACE_ASSERT (object->_servant () != 0);
                 return TAO::TAO_CS_DIRECT_STRATEGY;
               }
+            case BEST:
+              return TAO::TAO_CS_BEST_STRATEGY;
             }
+        }
+      // no collocation object, check wrong use of ORBCollocationStrategy
+      else
+        {
+          switch (orb_core->get_collocation_strategy ())
+             {
+             case THRU_POA:
+               throw ::CORBA::INTERNAL (
+                  CORBA::SystemException::_tao_minor_code (
+                    TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                    errno),
+                   CORBA::COMPLETED_NO);
+               break;
+             case DIRECT:
+               {
+                 throw ::CORBA::INTERNAL (
+                     CORBA::SystemException::_tao_minor_code (
+                       TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                       errno),
+                     CORBA::COMPLETED_NO);
+                 break;
+
+               }
+             case BEST:
+                ACE_DEBUG((LM_DEBUG,
+                           ACE_TEXT("CollocationStrategy BEST, becomes TAO_CS_REMOTE_STRATEGY\n")));
+
+
+             }
         }
     }
 

@@ -1058,8 +1058,10 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
             // @todo Change the way TAO's ORB_Core detects collocation,
             //       or at least augment it so that we don't have to
             //       resort this hack.
-            *os << " reinterpret_cast<TAO::Collocation_Proxy_Broker *> (0xdead);"
-                << " // Dummy";
+      //      *os << " reinterpret_cast<TAO::Collocation_Proxy_Broker *> (0xdead);"
+      //          << " // Dummy";
+            *os << " 0;";
+            //<<  be_uidt;
           }
 
         *os << be_uidt_nl

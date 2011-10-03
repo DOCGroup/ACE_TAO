@@ -80,12 +80,31 @@ namespace TAO
         // the object reference also refers to a collocated object.
         if (cpb_ != 0 || effective_target->_servant () != 0)
           {
+            // get the ORBStrategy
             strat = TAO_ORB_Core::collocation_strategy (effective_target.in ());
+            if (strat == TAO_CS_BEST_STRATEGY)
+              {
+                // check if TAO_CS_DIRECT_STRATEGY is possible
+                if (cpb_ != 0)
+                  strat = TAO_CS_DIRECT_STRATEGY;
+                else if (effective_target->_servant () != 0)
+                  strat = TAO_CS_THRU_POA_STRATEGY;
+                else
+                  {
+                    // you should never have come here
+                  throw ::CORBA::INTERNAL (
+                    CORBA::SystemException::_tao_minor_code (
+                      TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                      errno),
+                    CORBA::COMPLETED_NO);
+                  }
+              }
+
           }
 
-        if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
+         if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
-            status =
+             status =
               this->invoke_remote_i (stub,
                                      details,
                                      effective_target,
@@ -152,9 +171,26 @@ namespace TAO
   {
     // To make a collocated call we must have a collocated proxy broker, the
     // invoke_i() will make sure that we only come here when we have one
-    ACE_ASSERT (cpb_ != 0
-                || (strat == TAO_CS_THRU_POA_STRATEGY
-                    && effective_target->_servant () != 0));
+//    ACE_ASSERT (cpb_ != 0
+//                || (strat == TAO_CS_THRU_POA_STRATEGY
+//                    && effective_target->_servant () != 0));
+
+
+    // to do : which exception to throw?
+    if ((strat == TAO_CS_DIRECT_STRATEGY) && (cpb_ == 0))
+      throw ::CORBA::INTERNAL (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO);
+
+    if ((strat == TAO_CS_THRU_POA_STRATEGY) &&
+        (effective_target->_servant () == 0))
+       throw ::CORBA::INTERNAL (
+         CORBA::SystemException::_tao_minor_code (
+           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+           errno),
+         CORBA::COMPLETED_NO);
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
