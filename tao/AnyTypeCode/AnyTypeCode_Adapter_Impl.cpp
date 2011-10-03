@@ -98,6 +98,14 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const std::stri
   (*any) <<= value.c_str ();
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const std::wstring & value)
+{
+  (*any) <<= value.c_str ();
+}
+#endif /* ACE_LACKS_STD_WSTRING */
+
 void
 TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Long value)
 {

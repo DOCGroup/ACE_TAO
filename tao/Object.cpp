@@ -128,8 +128,7 @@ CORBA::Object::marshal (TAO_OutputCDR &cdr)
 }
 
 /*static*/ CORBA::Boolean
-CORBA::Object::marshal (const CORBA::Object_ptr x,
-                        TAO_OutputCDR &cdr)
+CORBA::Object::marshal (const CORBA::Object_ptr x, TAO_OutputCDR &cdr)
 {
   if (x == 0)
     {

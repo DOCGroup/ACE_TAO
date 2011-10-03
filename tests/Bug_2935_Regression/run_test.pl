@@ -49,8 +49,19 @@ $middle->DeleteFile ($middlelogfilebase);
 
 $source->DeleteFile ($sourcelogfilebase);
 
+my $middleconffilebase = "middle.conf";
+my $middleconffile = $middle->LocalFile ($middleconffilebase);
+
+# copy the configuation file
+if ($middle->PutFile ($middleconffilebase) == -1) {
+    print STDERR "ERROR: cannot set file <$middleconffile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    return 1;
+}
+
+
 $SV = $sink->CreateProcess ("sink", "-o $sinkiorfile -orblogfile $sinklogfile -orbdebuglevel 9");
-$MD = $middle->CreateProcess ("middle", "-o $middleiorfile -f $sinkiorfile -ORBSvcConf middle.conf -orblogfile $middlelogfile  -orbdebuglevel 9");
+$MD = $middle->CreateProcess ("middle", "-o $middleiorfile -f $sinkiorfile -ORBSvcConf $middleconffile -orblogfile $middlelogfile  -orbdebuglevel 9");
 $CL = $source->CreateProcess ("source", "-f $middleiorfile -orblogfile $sourcelogfile  -orbdebuglevel 9");
 
 $SV->Spawn ();

@@ -21,13 +21,24 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "server.ior";
-my $svcconf = "svc$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
-my $server_svcfile = $server->LocalFile ($svcconf);
 my $client_iorfile = $client->LocalFile ($iorbase);
-my $client_svcfile = $client->LocalFile ($svcconf);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
+
+my $svcconf = "svc$PerlACE::svcconf_ext";
+my $server_svcfile = $server->LocalFile ($svcconf);
+my $client_svcfile = $client->LocalFile ($svcconf);
+
+if ($client->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_svcfile>\n";
+    exit 1;
+}
+if ($server->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcfile>\n";
+    exit 1;
+}
+
 
 print STDERR "==== Server upcall waits for operations on other threads\n";
 

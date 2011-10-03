@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    nsadd.cpp
@@ -13,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -27,6 +25,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
   const ACE_TCHAR *ior = 0;
+
+  int err = 0;
 
   try
     {
@@ -366,7 +366,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 root_nc->bind (the_name, obj.in ());
             }
         }
-      orb->destroy ();
     }
   catch (const CosNaming::NamingContext::NotFound& nf)
     {
@@ -406,18 +405,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
              ACE_DEBUG ((LM_DEBUG, "ID: %C\n",
                nf.rest_of_name[index].id.in()));
         }
-      orb->destroy ();
-      return 1;
+      ++err;
     }
   catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
       ex._tao_print_exception ("Exception in nsadd");
       orb->destroy ();
-      return 1;
+      ++err;
     }
 
-  return 0;
+  try
+    {
+      orb->destroy ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nError:\n"));
+      ex._tao_print_exception ("Exception in while shutting down");
+      ++err;
+    }
+  return err;
 }
 
 

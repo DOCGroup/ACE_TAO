@@ -33,6 +33,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       sysex._tao_print_exception ("System Exception in main");
       return -1;
     }
+  catch (const ::CORBA::Exception &e)
+    {
+      e._tao_print_exception ("CORBA exception in main");
+      return 1;
+    }
 
   return 0;
 }

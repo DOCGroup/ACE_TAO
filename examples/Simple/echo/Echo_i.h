@@ -24,7 +24,7 @@
  *
  * @brief Echo Object Implementation
  *
- * The object implementation  performs teh following functions:
+ * The object implementation  performs the following functions:
  * -- To return the string which needs to be displayed
  * from the server.
  * -- shuts down the server
@@ -55,8 +55,7 @@ private:
   /// ORB pointer.
   CORBA::ORB_var orb_;
 
-  /// Keeping g++ 2.7.2 happy..
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Echo_i&))
+  void operator= (const Echo_i&);
 };
 
 #endif /* ECHO_I_H */

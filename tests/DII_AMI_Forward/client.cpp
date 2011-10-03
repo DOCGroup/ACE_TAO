@@ -102,37 +102,46 @@ int do_shutdown_test (CORBA::Object_var &server)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-  if (parse_args (argc, argv) != 0)
-    return 1;
   int result = 0;
 
-
-  ACE_DEBUG ((LM_DEBUG,"Client using ior source %s\n", ior));
-  CORBA::Object_var server = orb->string_to_object (ior);
-
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-  PortableServer::POA_var root =
-    PortableServer::POA::_narrow (obj.in());
-
-  PortableServer::POAManager_var pm = root->the_POAManager();
-  pm->activate();
-  bool got_reply = false;
-  Messaging::ReplyHandler_var callback = new DII_ReplyHandler(got_reply);
-
-  do_primary_test (server,callback);
-
-  for (int i = 0; i < 100 && !got_reply; i++)
+  try
     {
-      ACE_Time_Value t(0,10000);
-      orb->perform_work(t);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
+      ACE_DEBUG ((LM_DEBUG,"Client using ior source %s\n", ior));
+      CORBA::Object_var server = orb->string_to_object (ior);
+
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var root =
+        PortableServer::POA::_narrow (obj.in());
+
+      PortableServer::POAManager_var pm = root->the_POAManager();
+      pm->activate();
+      bool got_reply = false;
+      Messaging::ReplyHandler_var callback = new DII_ReplyHandler(got_reply);
+
+      do_primary_test (server,callback);
+
+      for (int i = 0; i < 100 && !got_reply; i++)
+        {
+          ACE_Time_Value t(0,10000);
+          orb->perform_work(t);
+        }
+
+      if (do_shutdown)
+        result = do_shutdown_test (server);
+
+      ACE_DEBUG ((LM_DEBUG,"Shutting down and destrying ORB.\n"));
+      orb->destroy();
+      ACE_DEBUG ((LM_DEBUG,"ORB destroyed\n"));
     }
-
-  if (do_shutdown)
-    result = do_shutdown_test (server);
-
-  ACE_DEBUG ((LM_DEBUG,"Shutting down and destrying ORB.\n"));
-  orb->destroy();
-  ACE_DEBUG ((LM_DEBUG,"ORB destroyed\n"));
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++result;
+    }
   return result;
 }

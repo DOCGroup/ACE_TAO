@@ -3,7 +3,10 @@
 #ifndef TAO_BD_STRING_SARGUMENT_T_CPP
 #define TAO_BD_STRING_SARGUMENT_T_CPP
 
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #include "tao/PortableServer/BD_String_SArgument_T.h"
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)

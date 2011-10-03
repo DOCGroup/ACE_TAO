@@ -24,8 +24,7 @@ class MY_Stub_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamo
 
   Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy);
 
-  virtual char * shape ()
-;
+  virtual char * shape ();
   // Smartify the method call!
 
   // Dont need to add any extra functionality into shutdown()

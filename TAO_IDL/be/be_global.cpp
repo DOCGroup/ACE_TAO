@@ -39,8 +39,10 @@ BE_GlobalData::BE_GlobalData (void)
   : changing_standard_include_files_ (1),
     skel_export_macro_ (0),
     skel_export_include_ (0),
+    skel_export_file_ (0),
     stub_export_macro_ (0),
     stub_export_include_ (0),
+    stub_export_file_ (0),
     anyop_export_macro_ (0),
     anyop_export_include_ (0),
     exec_export_macro_ (0),
@@ -787,6 +789,19 @@ BE_GlobalData::skel_export_include (const char *s)
 }
 
 const char*
+BE_GlobalData::skel_export_file (void) const
+{
+  return this->skel_export_file_;
+}
+
+void
+BE_GlobalData::skel_export_file (const char *s)
+{
+  ACE::strdelete (this->skel_export_file_);
+  this->skel_export_file_ = ACE::strnew (s);
+}
+
+const char*
 BE_GlobalData::stub_export_macro (void) const
 {
   if (this->stub_export_macro_ == 0)
@@ -815,6 +830,19 @@ BE_GlobalData::stub_export_include (const char *s)
 {
   ACE::strdelete (this->stub_export_include_);
   this->stub_export_include_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::stub_export_file (void) const
+{
+  return this->stub_export_file_;
+}
+
+void
+BE_GlobalData::stub_export_file (const char *s)
+{
+  ACE::strdelete (this->stub_export_file_);
+  this->stub_export_file_ = ACE::strnew (s);
 }
 
 const char*
@@ -1857,11 +1885,17 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->skel_export_include_);
   this->skel_export_include_ = 0;
 
+  ACE::strdelete (this->skel_export_file_);
+  this->skel_export_file_ = 0;
+
   ACE::strdelete (this->stub_export_macro_);
   this->stub_export_macro_ = 0;
 
   ACE::strdelete (this->stub_export_include_);
   this->stub_export_include_ = 0;
+
+  ACE::strdelete (this->stub_export_file_);
+  this->stub_export_file_ = 0;
 
   ACE::strdelete (this->anyop_export_macro_);
   this->anyop_export_macro_ = 0;
