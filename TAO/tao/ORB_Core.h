@@ -237,7 +237,12 @@ public:
     THRU_POA,
 
     /// Collocated calls invoke operation on Servant directly.
-    DIRECT
+    DIRECT,
+
+    /// Collocated calls invoke operation on Servant directly if possible,
+    /// else Collocated calls will go thru POA if possible, else
+    /// use REMOTE_STRATEGY
+    BEST
   };
 
   /**

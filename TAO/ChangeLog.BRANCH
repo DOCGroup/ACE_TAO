@@ -1,3 +1,73 @@
+Mon Oct  3 15:33:35 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+         Change dead to 0 for Collocation_Proxy_Broker
+         
+        * tao/Collocation_Strategy.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        Add exceptions for situations if not used -Gp or used -Sp idl flags and
+        ORBCollocationStrategies Direct and Thru_Poa. Add strategie BEST.
+        To do: add prefix COLLOCATION_.
+
+        * tests/Bug_2241_Regression/Client_Task.cpp:
+        * tests/Bug_2241_Regression/Hello.cpp:
+        * tests/Bug_2241_Regression/run_test.pl:
+        Catch expected exceptions.
+
+        * tests/Collocated_Best:
+        * tests/Collocated_Best/Collocated_Best_Direct:
+        * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.h:
+        * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Best_Direct.mpc:
+        * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Test.cpp:
+        * tests/Collocated_Best/Collocated_Best_Direct/Hello.h:
+        * tests/Collocated_Best/Collocated_Best_Direct/Hello.cpp:
+        * tests/Collocated_Best/Collocated_Best_Direct/Server_Task.h:
+        * tests/Collocated_Best/Collocated_Best_Direct/Server_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_Direct/Test.idl:
+        * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
+
+        * tests/Collocated_Best/Collocated_Best_NoColl:
+
+        * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.h:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Collocated_Best_NoColl.mpc:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Collocated_Test.cpp:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Hello.h:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Server_Task.h:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Server_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Test.idl:
+        * tests/Collocated_Best/Collocated_Best_NoColl/run_test.pl:
+
+        * tests/Collocated_Best/Collocated_Best_ThuP:
+
+        * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.h:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Best_ThruP.mpc:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Test.cpp:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Hello.h:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Hello.cpp:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Server_Task.h:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Server_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Test.idl:
+        * tests/Collocated_Best/Collocated_Best_ThuP/run_test.pl:
+
+        * tests/Collocated_ThruP_Sp:
+
+        * tests/Collocated_ThruP_Sp/Client_Task.h:
+        * tests/Collocated_ThruP_Sp/Client_Task.cpp:
+        * tests/Collocated_ThruP_Sp/Collocated_Test.cpp:
+        * tests/Collocated_ThruP_Sp/Collocated_ThruP_Sp.mpc:
+        * tests/Collocated_ThruP_Sp/Hello.h:
+        * tests/Collocated_ThruP_Sp/Hello.cpp:
+        * tests/Collocated_ThruP_Sp/Server_Task.h:
+        * tests/Collocated_ThruP_Sp/Server_Task.cpp:
+        * tests/Collocated_ThruP_Sp/Test.idl:
+        * tests/Collocated_ThruP_Sp/run_test.pl:
+        tests for COLLOCATION_DIRECT. To do: add readme
 
 Local Variables:
 mode: change-log

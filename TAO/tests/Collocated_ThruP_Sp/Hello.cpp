@@ -16,9 +16,8 @@
 char *
 Hello::get_string (void)
 {
-  ACE_ERROR ((LM_ERROR,
-              "(%P|%t) ERROR: Unexpected Upcall in process ..\n"));
-
+  ACE_ERROR ((LM_DEBUG,
+              "(%P|%t) ERROR: Upcall in process ..\n"));
   return CORBA::string_dup ("Hello there!");
 }
 

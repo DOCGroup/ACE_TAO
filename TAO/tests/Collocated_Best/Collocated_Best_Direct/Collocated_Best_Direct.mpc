@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+// Enable DIRECT Collocation
+
+project(Collocated_Best_Direct): taoserver {
+  exename = Collocated_Best_Direct
+  idlflags += -Gd
+}
