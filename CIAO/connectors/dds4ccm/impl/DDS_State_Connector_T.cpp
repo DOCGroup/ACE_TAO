@@ -626,27 +626,37 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
         {
           if (this->observable_obtained_)
             {
-              this->observable_.remove (this->publisher_.in (), set_component);
+              this->observable_.remove (this->publisher_.in ());
+              if (set_component)
+                this->observable_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->push_observer_obtained_)
             {
-              this->push_observer_.remove (this->subscriber_.in (), set_component);
+              this->push_observer_.remove (this->subscriber_.in ());
+              if (set_component)
+                this->push_observer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->push_state_observer_obtained_)
             {
-              this->push_state_observer_.remove (this->subscriber_.in (), set_component);
+              this->push_state_observer_.remove (this->subscriber_.in ());
+              if (set_component)
+                this->push_state_observer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->pull_observer_obtained_)
             {
-              this->pull_observer_.remove (this->subscriber_.in (), set_component);
+              this->pull_observer_.remove (this->subscriber_.in ());
+              if (set_component)
+                this->pull_observer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->passive_observer_obtained_)
             {
-              this->passive_observer_.remove (this->subscriber_.in (), set_component);
+              this->passive_observer_.remove (this->subscriber_.in ());
+              if (set_component)
+                this->passive_observer_.set_component (::CORBA::Object::_nil ());
             }
           TopicBaseConnector::ccm_remove ();
         }

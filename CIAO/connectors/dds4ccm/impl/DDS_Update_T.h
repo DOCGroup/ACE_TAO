@@ -33,8 +33,7 @@ public:
 
   void passivate (void);
 
-  void remove (::DDS::Publisher_ptr publisher,
-              const bool reset_component);
+  void remove (::DDS::Publisher_ptr publisher);
 
 private:
   typedef ::CIAO::DDS4CCM::Updater_T<

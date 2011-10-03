@@ -53,8 +53,7 @@ public:
 
   void passivate (void);
 
-  void remove (::DDS::Subscriber_ptr subscriber,
-              const bool set_component);
+  void remove (::DDS::Subscriber_ptr subscriber);
 
 protected:
   typedef ::CIAO::DDS4CCM::Reader_T<

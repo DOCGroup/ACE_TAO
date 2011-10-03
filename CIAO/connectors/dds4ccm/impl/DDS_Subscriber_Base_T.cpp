@@ -189,8 +189,7 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::p
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
 DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
-  ::DDS::Subscriber_ptr subscriber,
-  const bool reset_component)
+  ::DDS::Subscriber_ptr subscriber)
 {
   DDS4CCM_TRACE ("DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
@@ -209,8 +208,6 @@ DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::r
         }
     }
   this->cft_setting_->delete_contentfilteredtopic (subscriber);
-  if (reset_component)
-    this->dds_read_->_set_component (::CORBA::Object::_nil ());
   this->dds_read_->set_dds_reader (::DDS::DataReader::_nil (),
                                    0);
   this->condition_manager_.set_dds_entity (::DDS::DataReader::_nil ());
