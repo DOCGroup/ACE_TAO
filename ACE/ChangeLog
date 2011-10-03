@@ -1,3 +1,8 @@
+Mon Oct  3 06:30:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.h:
+          Doxygen improvements
+
 Fri Sep 30 14:03:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
