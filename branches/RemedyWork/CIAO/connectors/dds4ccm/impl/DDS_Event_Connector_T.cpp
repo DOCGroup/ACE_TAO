@@ -485,20 +485,23 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
         {
           if (this->push_consumer_obtained_)
             {
-              this->push_consumer_.remove (this->subscriber_.in (),
-                                           set_component);
+              this->push_consumer_.remove (this->subscriber_.in ());
+              if (set_component)
+                this->push_consumer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->supplier_obtained_)
             {
-              this->supplier_.remove (this->publisher_.in (),
-                                      set_component);
+              this->supplier_.remove (this->publisher_.in ());
+              if (set_component)
+                this->supplier_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->pull_consumer_obtained_)
             {
-              this->pull_consumer_.remove (this->subscriber_.in (),
-                                          set_component);
+              this->pull_consumer_.remove (this->subscriber_.in ());
+              if (set_component)
+                this->pull_consumer_.set_component (::CORBA::Object::_nil ());
             }
           TopicBaseConnector::ccm_remove ();
         }

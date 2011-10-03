@@ -77,15 +77,11 @@ DDS_Listen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::activate (
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
 void
 DDS_Listen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
-  ::DDS::Subscriber_ptr subscriber,
-  const bool reset_component)
+  ::DDS::Subscriber_ptr subscriber)
 {
   DDS4CCM_TRACE ("DDS_Listen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
-  if (reset_component)
-    this->data_control_->_set_component (::CORBA::Object::_nil ());
-
-  SubscriberBase_type::remove (subscriber, reset_component);
+  SubscriberBase_type::remove (subscriber);
 }
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
