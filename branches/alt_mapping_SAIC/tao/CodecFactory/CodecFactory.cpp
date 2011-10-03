@@ -38,7 +38,7 @@ ACE_STATIC_SVC_DEFINE (TAO_CodecFactory_Loader,
                        &ACE_SVC_NAME (TAO_CodecFactory_Loader),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_CodecFactory, TAO_CodecFactory_Loader)
+ACE_FACTORY_DEFINE (TAO_CODECFACTORY, TAO_CodecFactory_Loader)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

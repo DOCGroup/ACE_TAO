@@ -10,6 +10,8 @@
 #include "testing_allocation_traits.hpp"
 #include "test_macros.h"
 
+#include "tao/SystemException.h"
+
 #define CHECK_NO_THROW(statement) \
 try { statement; } catch(...) { \
   return 1; }
@@ -152,20 +154,29 @@ struct Foo { int y; };
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   int status = 0;
-  {
-    Tester<int>  tester;
-    status += tester.test_all ();
-  }
 
-  {
-    Tester<Foo> tester;
-    status += tester.test_all ();
-  }
+  try
+    {
+      {
+        Tester<int>  tester;
+        status += tester.test_all ();
+      }
 
-  {
-    Tester<char*>  tester;
-    status += tester.test_all ();
-  }
+      {
+        Tester<Foo> tester;
+        status += tester.test_all ();
+      }
+
+      {
+        Tester<char*>  tester;
+        status += tester.test_all ();
+      }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ++status;
+    }
 
   return status;
 }

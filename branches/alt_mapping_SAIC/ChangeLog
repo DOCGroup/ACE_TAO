@@ -1,3 +1,319 @@
+Mon Oct  3 18:23:31 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * Merged main trunk into the alt_mapping_SAIC branch again.
+
+          Wed Sep 28 12:46:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+                  * tao/CodecFactory/CodecFactory.mpc:
+                    Added the generated export files so that they get installed
+
+          Wed Sep 28 12:42:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/Generic_Sequence_T.h:
+                  * tao/Valuetype/AbstractBase.h:
+                  * tao/Valuetype/Valuetype_Adapter_Impl.h:
+                    Doxygen changes
+
+                  * tao/Object.cpp:
+                  * tao/PortableServer/Basic_SArgument_T.h:
+                  * tao/DynamicAny/DynAny_i.h:
+                    Layout changes
+
+          Wed Sep 28 12:39:12 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+                  * orbsvcs/tests/Notify/lib/Peer_T.cpp:
+                    Layout changes and cleanup
+
+          Wed Sep 28 12:37:05 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * examples/Persistent_Grid/Grid_i.h:
+                  * examples/Simple/bank/AccountManager_i.h:
+                  * examples/Simple/echo/Echo_i.h:
+                  * examples/Simple/grid/Grid_i.h:
+                  * examples/Simple/time/Time_i.h:
+                    Layout changes, remove workarounds
+
+          Wed Sep 28 12:35:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+                  * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                    Layout changes to the generated code
+
+          Wed Sep 28 12:34:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tests/Bug_3683_Regression/Echo_i.h:
+                    Remove workaround
+
+                  * tests/IDL_Test/typedef.idl:
+                  * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+                    Layout changes
+
+          Wed Sep 28 12:31:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tests/HandleExhaustion/run_test.pl:
+                    Added missing GetFile
+
+          Wed Sep 28 11:39:31 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                  * tests/Bug_2241_Regression:
+                  * tests/Bug_2241_Regression/Bug_2241_Regression.mpc:
+                  * tests/Bug_2241_Regression/Client_Task.h:
+                  * tests/Bug_2241_Regression/Client_Task.cpp:
+                  * tests/Bug_2241_Regression/Collocated_Test.cpp:
+                  * tests/Bug_2241_Regression/Hello.h:
+                  * tests/Bug_2241_Regression/Hello.cpp:
+                  * tests/Bug_2241_Regression/Server_Task.h:
+                  * tests/Bug_2241_Regression/Server_Task.cpp:
+                  * tests/Bug_2241_Regression/Test.idl:
+                  * tests/Bug_2241_Regression/run_test.pl:
+                  * bin/tao_orb_tests.lst:
+                  New test for '-ORBCollocationStrategy direct'
+
+          Sun Sep 25 17:02:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/Parallel_Connect_Strategy/run_test.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+          Wed Sep 21 13:40:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tests/MT_Client/run_test.pl:
+                    Removed conf files that are not in the repo at all
+
+          Tue Sep 20 06:43:33 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/AMI/run_mt_noupcall.pl:
+                  * tests/MT_Client/run_test.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+          Tue Sep 20 06:27:42 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/Oneway_Send_Timeouts/run_test.pl:
+                    Fixed runtime issues
+
+          Fri Sep 16 12:01:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * DevGuideExamples/Multithreading/ThreadPerConnection/run_test.pl:
+                  * tests/CSD_Collocation/run_test.pl:
+                  * tests/Connection_Purging/run_test.pl:
+                  * tests/Hang_Shutdown/run_test.pl:
+                  * tests/LongUpcalls/run_test.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+          Fri Sep 16 07:55:50 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/Faults/run_test.pl:
+                  * tests/Faults/run_test_pp.pl:
+                  * tests/MT_NoUpcall_Client_Leader/run_test.pl:
+                  * tests/POA/EndpointPolicy/run_test_dh.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+          Fri Sep 16 07:37:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/Connect_Strategy_Test/run_test.pl:
+                  * tests/MT_BiDir/run_test.pl:
+                  * tests/MT_Server/run_test.pl:
+                  * tests/No_Server_MT_Connect_Test/run_test.pl:
+                  * tests/RTCORBA/Server_Protocol/run_test.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+          Fri Sep 16 07:02:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/Bug_3163_Regression/run_test.pl:
+                  * tests/Bug_3630_Regression/run_test.pl:
+                  * tests/Bug_3683_Regression/run_test.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+                  * tests/Bug_3630_Regression/server.cpp:
+                    Added \n
+
+          Thu Sep 15 07:42:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * tests/AMI/run_test.pl:
+                  * tests/Bug_2183_Regression/run_test.pl:
+                  * tests/Bug_2186_Regression/run_test.pl:
+                  * tests/Bug_2935_Regression/run_test.pl:
+                  * tests/Bug_3068_Regression/run_test.pl:
+                  * tests/Leader_Followers/run_test.pl:
+                  * tests/Oneway_Send_Timeouts/run_test.pl:
+                    Copy only those configuration files that are needed by the targets.
+                    We don't want to solve this in the test framework; the script knows
+                    which configuration files should be copied.
+
+          Wed Sep 14 07:34:56 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/TAO_Internal.cpp:
+                    When we can't find the service config file output a message that
+                    has error in it, so that the scoreboard parser also detects those
+                    errors
+
+          Wed Sep  7 18:07:24 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/CodecFactory/CodecFactory.h:
+                  * tao/CodecFactory/CodecFactory.cpp:
+                  * tao/CodecFactory/CodecFactory.mpc:
+                    export file is now generated by tao_idl
+
+                  * tao/CodecFactory/codecfactory_export.h:
+                    Removed this file.
+
+          Wed Sep  7 17:31:31 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/BiDir_GIOP/BiDirGIOP.h:
+                  * tao/BiDir_GIOP/BiDirGIOP.cpp:
+                  * tao/BiDir_GIOP/BiDirPolicy_Validator.h:
+                  * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+                    export file is now generated by tao_idl
+
+                  * tao/BiDir_GIOP/bidirgiop_export.h:
+                    Removed this file.
+
+          Wed Sep  7 17:27:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * MPC/modules/IDLHelper.pm:
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be/be_global.cpp:
+                  * TAO_IDL/be/be_util.cpp:
+                  * TAO_IDL/be_include/be_global.h:
+                    Added skel_export_file and stub_export_file to define an explicit
+                    filename for these export files that are different than the stub/skel
+                    export_include which could be a full path. This fixes bugzilla 3980
+
+          Tue Sep  6 11:45:16 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/PortableServer/Servant_Base.h:
+                    Fixed problem with versioned namespace support
+
+          Tue Sep  6 08:14:42 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/AnyTypeCode/Any.h:
+                  * tao/AnyTypeCode/Any.cpp:
+                    Added support for std::wstring
+
+          Tue Sep  6 08:06:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/PortableServer/Basic_SArguments.h:
+                    Added support for std::wstring
+
+          Thu Sep  1 09:59:22 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h:
+                  * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+                  * tao/AnyTypeCode_Adapter.h:
+                  * tao/Basic_Arguments.h:
+                    Added support for std::wstring
+
+          Thu Sep  1 06:31:53 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * tao/PortableServer/BD_String_SArgument_T.cpp:
+                  * tao/PortableServer/Basic_SArgument_T.cpp:
+                  * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+                  * tao/PortableServer/Fixed_Size_SArgument_T.cpp:
+                  * tao/PortableServer/Object_SArgument_T.cpp:
+                  * tao/PortableServer/Special_Basic_SArgument_T.cpp:
+                  * tao/PortableServer/UB_String_SArgument_T.cpp:
+                  * tao/PortableServer/Var_Array_SArgument_T.cpp:
+                  * tao/PortableServer/Var_Size_SArgument_T.cpp:
+                  * tao/PortableServer/Vector_SArgument_T.cpp:
+                    Fixed coverity issues
+
+          Mon Aug 29 07:20:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+                    Fixed runtime issues in orbsvcs.
+
+                  * tests/OBV/ValueBox/client.cpp:
+                    Fixed runtime issues.
+
+          Fri Aug 26 11:09:12 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                  * DevGuideExamples/ValueTypes/Bank/client.cpp:
+                  * examples/AMH/Sink_Server/client.cpp:
+                  * examples/Event_Comm/supplier.cpp:
+                  * examples/Simple/bank/server.cpp:
+                  * examples/Simple/echo/server.cpp:
+                  * examples/Simple/grid/server.cpp:
+                  * examples/Simple/time/server.cpp:
+                  * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp:
+                  * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+                  * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+                  * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
+                  * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/test_idl.cpp:
+                  * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/client.cpp:
+                  * performance-tests/Sequence_Latency/Sequence_Operations_Time/test.cpp:
+                  * tests/Bug_1383_Regression/SimpleClient.cpp:
+                  * tests/Bug_3506_Regression/client.cpp:
+                  * tests/Bug_3548_Regression/client.cpp:
+                  * tests/CDR/allocator.cpp:
+                  * tests/Connection_Failure/client.cpp:
+                  * tests/DII_AMI_Forward/client.cpp:
+                  * tests/DynAny_Test/driver.cpp:
+                  * tests/OBV/ValueBox/client.cpp:
+                  * tests/POA/EndpointPolicy/server.cpp:
+                  * tests/POA/Loader/server.cpp:
+                  * tests/Param_Test/driver.cpp:
+                  * tests/Portable_Interceptors/AdvSlot/client.cpp:
+                  * tests/Portable_Interceptors/AdvSlot/server.cpp:
+                  * tests/Portable_Interceptors/AdvSlotDblCpy/client.cpp:
+                  * tests/Portable_Interceptors/AdvSlotExt/client.cpp:
+                  * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+                  * tests/RTScheduling/VoidData/test_client.cpp:
+                  * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+                  * tests/Sequence_Unit_Tests/bounded_sequence_cdr_ut.cpp:
+                  * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+                  * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+                  * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp:
+                  * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+                  * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+                  * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+                  * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+                  * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+                  * tests/Sequence_Unit_Tests/unbounded_sequence_cdr_ut.cpp:
+                  * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+                  * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+                  * utils/nslist/nsadd.cpp:
+                  * utils/nslist/nsdel.cpp:
+                  * utils/nslist/nslist.cpp:
+                    Fixed issues regarding exceptions which are not caught.
+
+          Tue Aug 23 18:19:01 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * NEWS:
+                    Prepared for next release
+
+          Tue Aug 23 19:01:44 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                  * TAO version 2.0.4 released.
+
+          Mon Aug 22 15:39:52 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+                  * orbsvcs/tests/Security/BiDirectional/ssl/ca.pem:
+                  * orbsvcs/tests/Security/BiDirectional/ssl/client-cert.pem:
+                  * orbsvcs/tests/Security/BiDirectional/ssl/client-key.pem:
+                  * orbsvcs/tests/Security/BiDirectional/ssl/server-cert.pem:
+                  * orbsvcs/tests/Security/BiDirectional/ssl/server-key.pem:
+
+                    Regenerated these certs so the test works.
+
+          Thu Aug 11 18:55:10 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * NEWS:
+
+                    Edited existing entry about generation of argument traits.
+
 Thu Aug 11 18:40:36 UTC 2011  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Merged main trunk into the alt_mapping_SAIC branch again.

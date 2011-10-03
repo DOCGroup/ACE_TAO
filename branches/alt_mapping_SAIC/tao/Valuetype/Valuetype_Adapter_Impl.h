@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Class that adapts various functions involving the Valuetype,
  * ValueFactory and AbstractInterface classes. This is a concrete class
- * implementating the pure virtual methods of TAO_Valuetype_Adapter
+ * implementing the pure virtual methods of TAO_Valuetype_Adapter
  */
 class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter

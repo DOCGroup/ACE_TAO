@@ -38,14 +38,26 @@ my $corbaloc = "corbaloc:".
 my $valid_ep = "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$port";
 
 my $iorbase = "server.ior";
-my $reactive_conf = "reactive$PerlACE::svcconf_ext";
-my $blocked_conf = "blocked$PerlACE::svcconf_ext";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
-my $client_reactive_conf = $client->LocalFile ($reactive_conf);
-my $client_blocked_conf = $client->LocalFile ($blocked_conf);
+
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
+
+my $reactive_conf = "reactive$PerlACE::svcconf_ext";
+my $blocked_conf = "blocked$PerlACE::svcconf_ext";
+my $client_reactive_conf = $client->LocalFile ($reactive_conf);
+my $client_blocked_conf = $client->LocalFile ($blocked_conf);
+
+if ($client->PutFile ($reactive_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_reactive_conf>\n";
+    exit 1;
+}
+
+if ($client->PutFile ($blocked_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_blocked_conf>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server",
                               "-ORBdebuglevel $debug_level ".

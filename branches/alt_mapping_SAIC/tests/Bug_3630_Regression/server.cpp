@@ -94,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (result == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Test passed!")));
+                ACE_TEXT ("Test passed!\n")));
   else
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Test failed. Result: %d\n"),

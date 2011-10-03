@@ -834,7 +834,7 @@ namespace
                 errno = EINVAL;
 
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) - Unable to open file <%s>")
+                                   ACE_TEXT ("TAO (%P|%t) - Error, unable to open file <%s>")
                                    ACE_TEXT (", referenced by -ORBSvcConf option\n"),
                                    current_arg),
                                   -1);

@@ -39,6 +39,12 @@ $client4->DeleteFile($iorbase);
 
 my $hostname = $server->HostName ();
 
+# Copy configuration file first
+if ($server->PutFile ($svcbase) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcfile>\n";
+    exit 1;
+}
+
 $SV = $server->CreateProcess ("MessengerServer",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBSvcConf $server_svcfile " .

@@ -131,14 +131,14 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     {
       *os << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl;
+          << "_Factory_function_pointer";
     }
   else
     {
-      *os << "0" << be_uidt_nl;
+      *os << "0";
     }
 
-  *os << ");" << be_uidt_nl << be_uidt_nl;
+  *os << ");" << be_uidt << be_uidt_nl << be_uidt_nl;
 
   *os << "return true;" << be_uidt_nl
       << "}" << be_nl;

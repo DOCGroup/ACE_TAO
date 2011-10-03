@@ -44,7 +44,7 @@ typedef TAO_V5 TAO_Z5[5];
 // typedef has a unique #ifndef guard.
 module TestModule
 {
-   typedef string<32> typedef_1;
+  typedef string<32> typedef_1;
   typedef string<32> typedef_2;
 
   interface TestInterface
@@ -117,6 +117,8 @@ module CommaList
 {
   typedef sequence<double> Dubble, Dubbel, Toil, Trouble;
 };
+
+
 
 
 

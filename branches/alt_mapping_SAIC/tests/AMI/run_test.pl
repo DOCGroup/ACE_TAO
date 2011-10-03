@@ -11,24 +11,27 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-$client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
 
 $server_debug_level = '0';
 $client_debug_level = '0';
 $iterations = '1';
 
+$conf_file = "muxed$PerlACE::svcconf_ext";
+
 foreach $i (@ARGV) {
     if ($i eq '-mux') {
-        $client_conf = $client->LocalFile ("muxed$PerlACE::svcconf_ext");
+        $conf_file = "muxed$PerlACE::svcconf_ext";
     }
     elsif ($i eq '-debug') {
         $server_debug_level = '1';
         $client_debug_level = '1';
     }
     elsif ($i eq '-exclusive') {
-        $client_conf = $client->LocalFile ("exclusive$PerlACE::svcconf_ext");
+        $conf_file = "exclusive$PerlACE::svcconf_ext";
     }
 }
+
+$client_conf = $client->LocalFile ($conf_file);
 
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
@@ -58,6 +61,12 @@ if ($server->GetFile ($iorbase) == -1) {
 }
 if ($client->PutFile ($iorbase) == -1) {
     print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+# copy the configruation file.
+if ($client->PutFile ($conf_file) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }

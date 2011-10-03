@@ -155,8 +155,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (void)
                   "Peer %s is_equivanent other exception.",
                   this->name_.c_str ()));
     }
-#else
-;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 

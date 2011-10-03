@@ -70,7 +70,12 @@ for($i = 0; $i < $server_count; $i++) {
         $servers_endpoint[$i] = "-ORBEndpoint uiop://$servers_socket[$i]";
     }
     elsif ($use_shmiop) {
-        $server_shmiop_conf = $servers[$i]->LocalFile ("server_shmiop$PerlACE::svcconf_ext");
+        $server_conf_base = "server_shmiop$PerlACE::svcconf_ext";
+        $server_shmiop_conf = $servers[$i]->LocalFile ($server_shmiop_conf);
+        if ($servers[$i]->PutFile ($server_conf_base) == -1) {
+            print STDERR "ERROR: cannot set file <$server_shmiop_conf>\n";
+            exit 1;
+        }
         $servers_endpoint[$i] = "-ORBEndpoint shmiop:// -ORBSvcConf $server_shmiop_conf";
     }
     else {
@@ -114,9 +119,13 @@ for($i = 0; $i < $clients_count; $i++) {
     if ($debug_level < 1) {
         $debug_level = 1; #min value for debug level is one
     }
+    $client_conf_file = $clients[$i]->LocalFile ($clients_conf[$i]);
+    if ($clients[$i]->PutFile ($clients_conf[$i]) == -1) {
+        print STDERR "ERROR: cannot set file <$client_conf_file>\n";
+    }
     $CLS[$i] = $clients[$i]->CreateProcess ("client", "-ORBDebugLevel $debug_level ".
                                                       "-k $clients_iorfile[$i] ".
-                                                      "-ORBSvcConf $clients_conf[$i]");
+                                                      "-ORBSvcConf $client_conf_file");
 
     my $client_status = $CLS[$i]->SpawnWaitKill ($clients[$i]->ProcessStartWaitInterval() + 75);
 

@@ -140,6 +140,17 @@ namespace TAO
           Any_Insert_Policy_AnyTypeCode_Adapter>
   {
   };
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  template<>
+  class TAO_Export Arg_Traits<std::wstring>
+    : public
+        Basic_Arg_Traits_T <
+          std::wstring,
+          Any_Insert_Policy_AnyTypeCode_Adapter>
+  {
+  };
+#endif /* ACE_LACKS_STD_WSTRING */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

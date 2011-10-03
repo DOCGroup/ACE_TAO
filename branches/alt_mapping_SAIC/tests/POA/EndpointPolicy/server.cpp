@@ -347,9 +347,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ex._tao_print_exception ("cannot run server");
     }
-  root_poa->destroy (1, 1);
+  try
+    {
+      root_poa->destroy (1, 1);
 
-  orb->destroy ();
-
+      orb->destroy ();
+    }
+  catch (CORBA::Exception &ex)
+    {
+      ex._tao_print_exception ("CORBA exception during shutdown");
+    }
   return 0;
 }
