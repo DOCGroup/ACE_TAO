@@ -12,6 +12,7 @@
 #include "ace/String_Base.h"
 #include "ace/Task.h"
 #include "tao/ORB.h"
+#include "dance/Deployment/Deployment_BaseC.h"
 
 #include <list>
 #include <string>
@@ -39,6 +40,7 @@ namespace DAnCE
     void usage (void);
 
     CORBA::ORB_var orb_;
+    ::Deployment::Properties_var config_;
 
     ACE_TString uuid_;
     ACE_TString callback_ior_str_;

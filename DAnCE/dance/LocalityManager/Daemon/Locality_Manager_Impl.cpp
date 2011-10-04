@@ -45,22 +45,18 @@ namespace DAnCE
   }
 
   void
-  LocalityManager_i::init (Deployment::Properties *props)
+  LocalityManager_i::init (const Deployment::Properties &props)
   {
     DANCE_TRACE ("LocalityManager_i::init");
 
-    if (props)
-      {
-        DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
-                     (LM_DEBUG, DLINFO
-                      ACE_TEXT ("LocalityManager_i::init - ")
-                      ACE_TEXT ("Received %u properties from init\n"),
-                      props->length ()));
-        this->props_ = props;
-
-        PLUGIN_MANAGER::instance ()->set_configuration (this->props_.in ());
-      }
-
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+		 (LM_DEBUG, DLINFO
+		  ACE_TEXT ("LocalityManager_i::init - ")
+		  ACE_TEXT ("Received %u properties from init\n"),
+		  props.length ()));
+	
+    PLUGIN_MANAGER::instance ()->set_configuration (props);
+    
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
 
     Plugin_Configurator config;
@@ -83,10 +79,10 @@ namespace DAnCE
         config.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (i->c_str ()));
       }
 
-    if (CORBA::is_nil (this->props_))
+    if (props.length () != 0)
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
-                                                *this->props_,
+                                                props,
                                                 this->spawn_delay_))
           {
             DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
@@ -95,17 +91,23 @@ namespace DAnCE
                           ACE_TEXT ("Using provided spawn delay %u\n"),
                           this->spawn_delay_));
           }
-
-        for (CORBA::ULong i = 0; i < this->props_->length (); ++i)
+	
+	DANCE_DEBUG (DANCE_LOG_TRACE,
+		     (LM_DEBUG, DLINFO
+		      ACE_TEXT ("LocalityManager_i::init - ")
+		      ACE_TEXT ("Number of LM configuration properties: %u\n"),
+		      props.length ()));
+	
+        for (CORBA::ULong i = 0; i < props.length (); ++i)
           {
             DANCE_DEBUG (DANCE_LOG_TRACE,
                          (LM_DEBUG, DLINFO
                           ACE_TEXT ("LocalityManager_i::init - ")
                           ACE_TEXT ("Looking up configuration handler for <%C>\n"),
-                          this->props_[i].name.in ()));
+                          props[i].name.in ()));
 
             ::DAnCE::LocalityConfiguration_var config =
-              PLUGIN_MANAGER::instance ()->get_configuration_handler (this->props_[i].name.in ());
+              PLUGIN_MANAGER::instance ()->get_configuration_handler (props[i].name.in ());
 
             if (config.in ())
               {
@@ -113,10 +115,16 @@ namespace DAnCE
                              (LM_DEBUG, DLINFO
                               ACE_TEXT ("LocalityManager_i::init - ")
                               ACE_TEXT ("Invoking configuration handler for <%C>\n"),
-                              this->props_[i].name.in ()));
-                config->configure (this->props_[i]);
+                              props[i].name.in ()));
+                config->configure (props[i]);
               }
           }
+      }
+    else
+      {
+	DANCE_ERROR (DANCE_LOG_MAJOR_DEBUG_INFO,
+		     (LM_WARNING, DLINFO
+		      ACE_TEXT ("Warning: No configuration properties\n")));
       }
   }
 
@@ -1115,7 +1123,6 @@ namespace DAnCE
     // Explicitly close the plugin manager to release memory.
     PLUGIN_MANAGER::close ();
 
-    this->props_ = 0;
     this->poa_ = PortableServer::POA::_nil ();
     this->orb_ = CORBA::ORB::_nil ();
   }
