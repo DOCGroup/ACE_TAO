@@ -69,8 +69,8 @@ namespace DAnCE
           }
         catch (CORBA::UserException &ex)
           {
-            DANCE_ERROR (DANCE_LOG_ERROR,
-                         (LM_ERROR, DLINFO
+            DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
+                         (LM_INFO, DLINFO
                           ACE_TEXT ("Action_Base::call - ")
                           ACE_TEXT ("Caught CORBA UserException while processing instance ")
                           ACE_TEXT ("<%C>\n"),
@@ -79,8 +79,8 @@ namespace DAnCE
           }
         catch (CORBA::SystemException &ex)
           {
-            DANCE_ERROR (DANCE_LOG_ERROR,
-                         (LM_ERROR, DLINFO
+            DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
+                         (LM_INFO, DLINFO
                           ACE_TEXT ("Action_Base::call - ")
                           ACE_TEXT ("Caught CORBA SystemException while processing instance ")
                           ACE_TEXT ("<%C>\n"),
@@ -89,8 +89,8 @@ namespace DAnCE
           }
         catch (...)
           {
-            DANCE_ERROR (DANCE_LOG_ERROR,
-                         (LM_ERROR, DLINFO
+            DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
+                         (LM_INFO, DLINFO
                           ACE_TEXT ("Action_Base::call - ")
                           ACE_TEXT ("Caught C++ exception while processing instance ")
                           ACE_TEXT ("<%C>\n"),
@@ -137,8 +137,8 @@ namespace DAnCE
       }
     catch (CORBA::UserException &ex)
       {
-        DANCE_ERROR (DANCE_LOG_ERROR,
-                     (LM_ERROR, DLINFO
+        DANCE_ERROR (DANCE_LOG_MAJOR_EVENT,
+                     (LM_INFO, DLINFO
                       ACE_TEXT ("Action_Base::call - ")
                       ACE_TEXT ("CORBA UserException propagated from interceptors for instance ")
                       ACE_TEXT ("<%C>\n"),
@@ -157,8 +157,8 @@ namespace DAnCE
       }
     catch (CORBA::SystemException &ex)
       {
-        DANCE_ERROR (DANCE_LOG_ERROR,
-                     (LM_ERROR, DLINFO
+        DANCE_ERROR (DANCE_LOG_MAJOR_EVENT,
+                     (LM_INFO, DLINFO
                       ACE_TEXT ("Action_Base::call - ")
                       ACE_TEXT ("CORBA SystemException propagated from interceptors for instance ")
                       ACE_TEXT ("<%C>\n"),
