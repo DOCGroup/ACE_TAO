@@ -234,15 +234,15 @@ public:
     ORB_CONTROL,
 
     /// Collocated calls will go thru POA.
-    THRU_POA,
+    TAO_COLLOCATION_THRU_POA,
 
     /// Collocated calls invoke operation on Servant directly.
-    DIRECT,
+    TAO_COLLOCATION_DIRECT,
 
     /// Collocated calls invoke operation on Servant directly if possible,
     /// else Collocated calls will go thru POA if possible, else
     /// use REMOTE_STRATEGY
-    BEST
+    TAO_COLLOCATION_BEST
   };
 
   /**

@@ -217,7 +217,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     ft_send_extended_sc_ (false),
     opt_for_collocation_ (true),
     use_global_collocation_ (true),
-    collocation_strategy_ (THRU_POA),
+    collocation_strategy_ (TAO_DEFAULT_COLLOCATION_STRATEGY),
+//    collocation_strategy_ (TAO_COLLOCATION_THRU_POA),
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -439,7 +440,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       this->use_implrepo_ = ACE_OS::atoi  (use_IMR_env_var_value) ;
     }
 
-
   while (arg_shifter.is_anything_left ())
     {
       const ACE_TCHAR *current_arg = 0;
@@ -614,12 +614,16 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           const ACE_TCHAR *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("thru_poa")) == 0)
             {
-              this->collocation_strategy_ = THRU_POA;
+              this->collocation_strategy_ = TAO_COLLOCATION_THRU_POA;
             }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("direct")) == 0)
-            this->collocation_strategy_ = DIRECT;
+            {
+              this->collocation_strategy_ = TAO_COLLOCATION_DIRECT;
+            }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("best")) == 0)
-            this->collocation_strategy_ = BEST;
+            {
+              this->collocation_strategy_ = TAO_COLLOCATION_BEST;
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -3619,22 +3623,21 @@ TAO_ORB_Core_instance (void)
 TAO::Collocation_Strategy
 TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
-  ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT("TAO_ORB_Core::collocation_strategy\n")));
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0)
     {
       TAO_ORB_Core *orb_core = stub->servant_orb_var ()->orb_core ();
 
+
       if (orb_core->collocation_resolver ().is_collocated (object))
         {
           switch (orb_core->get_collocation_strategy ())
             {
-            case THRU_POA:
+            case TAO_COLLOCATION_THRU_POA:
                return TAO::TAO_CS_THRU_POA_STRATEGY;
 
-            case DIRECT:
+            case TAO_COLLOCATION_DIRECT:
               {
                 /////////////////////////////////////////////////////////////
                 // If the servant is null and you are collocated this means
@@ -3644,7 +3647,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
                 ACE_ASSERT (object->_servant () != 0);
                 return TAO::TAO_CS_DIRECT_STRATEGY;
               }
-            case BEST:
+            case TAO_COLLOCATION_BEST:
               return TAO::TAO_CS_BEST_STRATEGY;
             }
         }
@@ -3653,28 +3656,26 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
         {
           switch (orb_core->get_collocation_strategy ())
              {
-             case THRU_POA:
+             case TAO_COLLOCATION_THRU_POA:
                throw ::CORBA::INTERNAL (
-                  CORBA::SystemException::_tao_minor_code (
-                    TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-                    errno),
-                   CORBA::COMPLETED_NO);
+                 CORBA::SystemException::_tao_minor_code (
+                   TAO::VMCID,
+                   EINVAL),
+                 CORBA::COMPLETED_NO);
                break;
-             case DIRECT:
+             case TAO_COLLOCATION_DIRECT:
                {
                  throw ::CORBA::INTERNAL (
-                     CORBA::SystemException::_tao_minor_code (
-                       TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-                       errno),
-                     CORBA::COMPLETED_NO);
+                   CORBA::SystemException::_tao_minor_code (
+                     TAO::VMCID,
+                     EINVAL),
+                   CORBA::COMPLETED_NO);
                  break;
 
                }
-             case BEST:
+             case TAO_COLLOCATION_BEST:
                 ACE_DEBUG((LM_DEBUG,
                            ACE_TEXT("CollocationStrategy BEST, becomes TAO_CS_REMOTE_STRATEGY\n")));
-
-
              }
         }
     }
