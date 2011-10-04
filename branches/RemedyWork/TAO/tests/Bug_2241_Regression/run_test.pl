@@ -16,6 +16,8 @@ $server->DeleteFile($iorbase);
 
 $status = 0;
 
+$SV = $server->CreateProcess ("Bug_2241_Regression");
+
 print STDERR "======== Running with -ORBCollocation global -ORBCollocationStrategy direct \n";
 $SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation global -ORBCollocationStrategy direct");
 $sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());

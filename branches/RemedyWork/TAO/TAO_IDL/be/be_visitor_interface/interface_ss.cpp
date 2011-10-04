@@ -1049,20 +1049,11 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           }
         else
           {
-            // @@ HACK!
-
             // Dummy function pointer for the thru-POA case.  It isn't
             // used to call a function but it is used to determine if
             // collocation is available.
-
-            // @todo Change the way TAO's ORB_Core detects collocation,
-            //       or at least augment it so that we don't have to
-            //       resort this hack.
-      //      *os << " reinterpret_cast<TAO::Collocation_Proxy_Broker *> (0xdead);"
-      //          << " // Dummy";
-            *os << " 0;";
-            //<<  be_uidt;
-          }
+           *os << " 0;";
+           }
 
         *os << be_uidt_nl
             << "}" << be_nl_2;

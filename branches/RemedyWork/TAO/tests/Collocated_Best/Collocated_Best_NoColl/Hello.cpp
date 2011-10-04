@@ -57,15 +57,11 @@ Hello::get_string (void)
     {
       if (this->orb_->orb_core ()->optimize_collocation_objects () &&
             this->orb_->orb_core ()->use_global_collocation ())
-          {
-
-      printf("self_Id != this_id, not same thread   \nn");
-      ACE_ERROR ((LM_ERROR,
+        {
+          ACE_ERROR ((LM_ERROR,
                "(%P|%t) ERROR: An unexpected collocated call has been made \n"));
-          }
-
+        }
     }
-
   return CORBA::string_dup ("Hello there!");
 }
 
