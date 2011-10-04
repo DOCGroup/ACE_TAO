@@ -44,7 +44,7 @@ namespace DAnCE
                        CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr poa);
 
-    void init (Deployment::Properties *prop);
+    void init (const Deployment::Properties &prop);
     // Destructor
     virtual ~LocalityManager_i (void);
 
@@ -104,9 +104,7 @@ namespace DAnCE
     REFERENCE_MAP instance_references_;
 
     ::Deployment::DeploymentPlan plan_;
-
-    ::Deployment::Properties_var props_;
-
+    
     DAnCE::Deployment_Scheduler scheduler_;
 
     CORBA::ULong spawn_delay_;

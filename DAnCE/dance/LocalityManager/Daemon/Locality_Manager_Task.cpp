@@ -62,11 +62,11 @@ namespace DAnCE
 
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (object.in ());
-
-    {
+    
+      {
         PortableServer::POAManager_var poa_manager =
           root_poa->the_POAManager ();
-
+	
         poa_manager->activate ();
 
         DANCE_DEBUG (DANCE_LOG_TRACE,
@@ -123,7 +123,6 @@ namespace DAnCE
                 throw Error ("Failed to narrow callback IOR");
               }
 
-            Deployment::Properties_var config;
             {
               Deployment::Properties *cf = 0;
               ACE_NEW_NORETURN (cf, Deployment::Properties (0));
@@ -137,7 +136,7 @@ namespace DAnCE
                 }
               else
                 {
-                  config = cf;
+                  this->config_ = cf;
                 }
             }
 
@@ -151,16 +150,16 @@ namespace DAnCE
               {
                 // Callback to NodeApplication to get configuration
                 sa->locality_manager_callback (lm.in (),
-                                              ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
-                                              config.out ());
-
+					       ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
+					       this->config_.out ());
+		
                 DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                              (LM_TRACE, DLINFO
                               ACE_TEXT ("LocalityManager_Task::svc - ")
                               ACE_TEXT ("Configuration received, got %u values\n"),
-                              config->length ()));
+                              this->config_->length ()));
 
-                lm_srv->init (config._retn ());
+                lm_srv->init (this->config_.in ());
 
                 DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
                              (LM_NOTICE, DLINFO
@@ -179,6 +178,15 @@ namespace DAnCE
                               ACE_TEXT ("wrong Activator\n")));
                 throw Error ("Bad callback IOR");
               }
+	    catch (const CORBA::Exception &ex)
+	      {
+		DANCE_ERROR (DANCE_LOG_ERROR,
+                             (LM_ERROR, DLINFO
+                              ACE_TEXT ("LocalityManager_Task::svc - ")
+			      ACE_TEXT ("Caught CORBA Exception while calling back: %C\n"),
+			      ex._info ().c_str ()));
+		throw Error (ex._info ().c_str ());
+	      }
             catch (...)
               {
                 DANCE_ERROR (DANCE_LOG_ERROR,
@@ -205,7 +213,7 @@ namespace DAnCE
                      (LM_TRACE, DLINFO
                       ACE_TEXT ("LocalityManager_Task::svc - ")
                       ACE_TEXT ("ORB Event loop completed.\n")));
-    }
+      }
 
     root_poa->destroy (1, 1);
     root_poa = ::PortableServer::POA::_nil ();

@@ -151,7 +151,7 @@ namespace DAnCE
   void
   Plugin_Manager::set_configuration (const Deployment::Properties &config)
   {
-    this->config_ = config;
+    this->config_ = &config;
   }
 
   char *
@@ -165,7 +165,7 @@ namespace DAnCE
 
     try
       {
-        plugin->configure (this->config_);
+        plugin->configure (*this->config_);
 
         CORBA::String_var instance_type = plugin->instance_type ();
 
@@ -233,7 +233,7 @@ namespace DAnCE
                                                      entrypoint);
     try
       {
-        plugin->configure (this->config_);
+        plugin->configure (*this->config_);
 
         DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
                      (LM_INFO, DLINFO
