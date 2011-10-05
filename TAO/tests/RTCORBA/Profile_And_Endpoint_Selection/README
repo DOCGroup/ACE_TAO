@@ -8,28 +8,28 @@ below.
 
 Client: The client does the following:
 
-- vanilla invocations 
+- vanilla invocations
 - sets private connection
-- vanilla invocations 
+- vanilla invocations
 - reset
 
 - sets client protocols
-- vanilla invocations 
+- vanilla invocations
 - sets private connection
-- vanilla invocations 
+- vanilla invocations
 - reset
 
 - set bands
 - priority invocations
 - sets private connection
-- priority invocations 
+- priority invocations
 - reset
 
 - set bands
 - sets client protocols
-- priority invocations 
+- priority invocations
 - sets private connection
-- priority invocations 
+- priority invocations
 - reset
 
 This test can be configured in several ways (72 to be precise) as
