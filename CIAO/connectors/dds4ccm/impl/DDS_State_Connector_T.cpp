@@ -305,25 +305,33 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
       this->ccm_passivate ();
       this->do_ccm_remove ();
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_State_Connector_T::topic_name - "
-                    "DDS is down. Setting new to <%C>.\n",
-                    topic_name));
+      if (ACE_OS::strlen (topic_name) > 0)
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_State_Connector_T::topic_name - "
+                        "DDS is down. Setting new to <%C>.\n",
+                        topic_name));
 
-      TopicBaseConnector::topic_name (topic_name);
+          TopicBaseConnector::topic_name (topic_name);
 
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_State_Connector_T::topic_name - "
-                    "Initialize DDS again for topic <%C>.\n",
-                    topic_name));
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_State_Connector_T::topic_name - "
+                        "Initialize DDS again for topic <%C>.\n",
+                        topic_name));
 
-      this->do_configuration_complete ();
-      this->do_ccm_activate ();
-
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    "DDS_State_Connector_T::topic_name - "
-                    "DDS up and running for topic <%C>.\n",
-                    topic_name));
+          this->do_configuration_complete ();
+          this->do_ccm_activate ();
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_State_Connector_T::topic_name - "
+                        "DDS up and running for topic <%C>.\n",
+                        topic_name));
+        }
+      else
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_Event_Connector_T::topic_name - "
+                        "DDS is down.\n"));
+        }
     }
   else if (this->late_binded (topic_name))
     {
