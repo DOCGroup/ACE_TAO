@@ -1,12 +1,12 @@
-# $Id$
+$Id$
 
 Description:
-This test is used to test the bug fix on collocated dii oneway request 
-invocation via send_oneway() crash on get_in_arg() when the request has multiple 
+This test is used to test the bug fix on collocated dii oneway request
+invocation via send_oneway() crash on get_in_arg() when the request has multiple
 "IN" parameters.
 
 The test.idl defines oneway operations with all sorts SArgument to test the
-conversion of the DII parameters in NVList to the list of arguments. 
+conversion of the DII parameters in NVList to the list of arguments.
 It also defines the operations with multiple "IN" arguments to test the
 bug fix.
 
@@ -20,7 +20,7 @@ Usage:
 =====
 
 The run_test.pl runs several test cases listed below. The test result will be printed
-after the test completes. To debug the test failure, the operation "-d" can be passed 
+after the test completes. To debug the test failure, the operation "-d" can be passed
 to have verbose log.
 
 
@@ -41,7 +41,7 @@ Collocated_Test -o test.ior -k file://test.ior -ORBCollocation no
 
 ======== Running in default mode and two ORBS
 
-Collocated_Test -o test.ior -k file://test.ior -n 
+Collocated_Test -o test.ior -k file://test.ior -n
 
 
 ======== Running in per-orb mode and two ORBS
