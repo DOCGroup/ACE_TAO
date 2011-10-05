@@ -11,7 +11,7 @@ Just for reference, a correct execution of the tests is included below:
 
 Enjoy!
 
-> export_test 
+> export_test
 
 *** Bootstrap to the Lookup interface.
 *** Narrowing the lookup interface.
@@ -34,120 +34,120 @@ type name: PostScript_Printer
 *** TAO_Service_Type_Exporter::describing all types in the Repository.
 Type Name: Remote_IO
 Interface Name: IDL:TAO_Trader_Test/Remote_Output:1.0
-Property: Miscellaneous         Mode: Normal                  
-Property: Trader_Name           Mode: Normal                  
-Property: Host_Name             Mode: Mandatory               
-Property: Description           Mode: Normal                  
-Property: Location              Mode: Mandatory               
-Property: Name                  Mode: Mandatory and Readonly  
+Property: Miscellaneous         Mode: Normal
+Property: Trader_Name           Mode: Normal
+Property: Host_Name             Mode: Mandatory
+Property: Description           Mode: Normal
+Property: Location              Mode: Mandatory
+Property: Name                  Mode: Mandatory and Readonly
 ------------------------------
 Type Name: Plotter
 Interface Name: IDL:TAO_Trader_Test/Plotter:1.0
 Super Type: Remote_IO
-Property: File_Sizes_Pending    Mode: Normal                  
-Property: User_Queue            Mode: Normal                  
-Property: Model_Number          Mode: Read only               
-Property: Cost_Per_Page         Mode: Normal                  
-Property: Auto_Loading          Mode: Read only               
-Property: Num_Colors            Mode: Normal                  
+Property: File_Sizes_Pending    Mode: Normal
+Property: User_Queue            Mode: Normal
+Property: Model_Number          Mode: Read only
+Property: Cost_Per_Page         Mode: Normal
+Property: Auto_Loading          Mode: Read only
+Property: Num_Colors            Mode: Normal
 ------------------------------
 Type Name: Printer
 Interface Name: IDL:TAO_Trader_Test/Printer:1.0
 Super Type: Remote_IO
-Property: File_Sizes_Pending    Mode: Normal                  
-Property: User_Queue            Mode: Normal                  
-Property: Pages_Per_Sec         Mode: Read only               
-Property: Model_Number          Mode: Read only               
-Property: Cost_Per_Page         Mode: Normal                  
-Property: Double_Sided          Mode: Read only               
-Property: Color                 Mode: Mandatory and Readonly  
+Property: File_Sizes_Pending    Mode: Normal
+Property: User_Queue            Mode: Normal
+Property: Pages_Per_Sec         Mode: Read only
+Property: Model_Number          Mode: Read only
+Property: Cost_Per_Page         Mode: Normal
+Property: Double_Sided          Mode: Read only
+Property: Color                 Mode: Mandatory and Readonly
 ------------------------------
 Type Name: File_System
 Interface Name: IDL:TAO_Trader_Test/File_System:1.0
 Super Type: Remote_IO
-Property: Permission_Level      Mode: Normal                  
-Property: Space_Remaining       Mode: Normal                  
-Property: Disk_Space            Mode: Mandatory and Readonly  
+Property: Permission_Level      Mode: Normal
+Property: Space_Remaining       Mode: Normal
+Property: Disk_Space            Mode: Mandatory and Readonly
 ------------------------------
 Type Name: PostScript_Printer
 Interface Name: IDL:TAO_Trader_Test/PostScript_Printer:1.0
 Super Type: Printer
-Property: Version               Mode: Mandatory and Readonly  
+Property: Version               Mode: Mandatory and Readonly
 ------------------------------
 *** TAO_Service_Type_Exporter::fully describing all types in the Repository.
 Type Name: Remote_IO
 Interface Name: IDL:TAO_Trader_Test/Remote_Output:1.0
-Property: Name                  Mode: Mandatory and Readonly  
-Property: Location              Mode: Mandatory               
-Property: Description           Mode: Normal                  
-Property: Host_Name             Mode: Mandatory               
-Property: Trader_Name           Mode: Normal                  
-Property: Miscellaneous         Mode: Normal                  
+Property: Name                  Mode: Mandatory and Readonly
+Property: Location              Mode: Mandatory
+Property: Description           Mode: Normal
+Property: Host_Name             Mode: Mandatory
+Property: Trader_Name           Mode: Normal
+Property: Miscellaneous         Mode: Normal
 ------------------------------
 Type Name: Plotter
 Interface Name: IDL:TAO_Trader_Test/Plotter:1.0
 Super Type: Remote_IO
-Property: Name                  Mode: Mandatory and Readonly  
-Property: Location              Mode: Mandatory               
-Property: Description           Mode: Normal                  
-Property: Host_Name             Mode: Mandatory               
-Property: Trader_Name           Mode: Normal                  
-Property: Miscellaneous         Mode: Normal                  
-Property: Num_Colors            Mode: Normal                  
-Property: Auto_Loading          Mode: Read only               
-Property: Cost_Per_Page         Mode: Normal                  
-Property: Model_Number          Mode: Read only               
-Property: User_Queue            Mode: Normal                  
-Property: File_Sizes_Pending    Mode: Normal                  
+Property: Name                  Mode: Mandatory and Readonly
+Property: Location              Mode: Mandatory
+Property: Description           Mode: Normal
+Property: Host_Name             Mode: Mandatory
+Property: Trader_Name           Mode: Normal
+Property: Miscellaneous         Mode: Normal
+Property: Num_Colors            Mode: Normal
+Property: Auto_Loading          Mode: Read only
+Property: Cost_Per_Page         Mode: Normal
+Property: Model_Number          Mode: Read only
+Property: User_Queue            Mode: Normal
+Property: File_Sizes_Pending    Mode: Normal
 ------------------------------
 Type Name: Printer
 Interface Name: IDL:TAO_Trader_Test/Printer:1.0
 Super Type: Remote_IO
-Property: Name                  Mode: Mandatory and Readonly  
-Property: Location              Mode: Mandatory               
-Property: Description           Mode: Normal                  
-Property: Host_Name             Mode: Mandatory               
-Property: Trader_Name           Mode: Normal                  
-Property: Miscellaneous         Mode: Normal                  
-Property: Color                 Mode: Mandatory and Readonly  
-Property: Double_Sided          Mode: Read only               
-Property: Cost_Per_Page         Mode: Normal                  
-Property: Model_Number          Mode: Read only               
-Property: Pages_Per_Sec         Mode: Read only               
-Property: User_Queue            Mode: Normal                  
-Property: File_Sizes_Pending    Mode: Normal                  
+Property: Name                  Mode: Mandatory and Readonly
+Property: Location              Mode: Mandatory
+Property: Description           Mode: Normal
+Property: Host_Name             Mode: Mandatory
+Property: Trader_Name           Mode: Normal
+Property: Miscellaneous         Mode: Normal
+Property: Color                 Mode: Mandatory and Readonly
+Property: Double_Sided          Mode: Read only
+Property: Cost_Per_Page         Mode: Normal
+Property: Model_Number          Mode: Read only
+Property: Pages_Per_Sec         Mode: Read only
+Property: User_Queue            Mode: Normal
+Property: File_Sizes_Pending    Mode: Normal
 ------------------------------
 Type Name: File_System
 Interface Name: IDL:TAO_Trader_Test/File_System:1.0
 Super Type: Remote_IO
-Property: Name                  Mode: Mandatory and Readonly  
-Property: Location              Mode: Mandatory               
-Property: Description           Mode: Normal                  
-Property: Host_Name             Mode: Mandatory               
-Property: Trader_Name           Mode: Normal                  
-Property: Miscellaneous         Mode: Normal                  
-Property: Disk_Space            Mode: Mandatory and Readonly  
-Property: Space_Remaining       Mode: Normal                  
-Property: Permission_Level      Mode: Normal                  
+Property: Name                  Mode: Mandatory and Readonly
+Property: Location              Mode: Mandatory
+Property: Description           Mode: Normal
+Property: Host_Name             Mode: Mandatory
+Property: Trader_Name           Mode: Normal
+Property: Miscellaneous         Mode: Normal
+Property: Disk_Space            Mode: Mandatory and Readonly
+Property: Space_Remaining       Mode: Normal
+Property: Permission_Level      Mode: Normal
 ------------------------------
 Type Name: PostScript_Printer
 Interface Name: IDL:TAO_Trader_Test/PostScript_Printer:1.0
 Super Type: Remote_IO
 Super Type: Printer
-Property: Name                  Mode: Mandatory and Readonly  
-Property: Location              Mode: Mandatory               
-Property: Description           Mode: Normal                  
-Property: Host_Name             Mode: Mandatory               
-Property: Trader_Name           Mode: Normal                  
-Property: Miscellaneous         Mode: Normal                  
-Property: Color                 Mode: Mandatory and Readonly  
-Property: Double_Sided          Mode: Read only               
-Property: Cost_Per_Page         Mode: Normal                  
-Property: Model_Number          Mode: Read only               
-Property: Pages_Per_Sec         Mode: Read only               
-Property: User_Queue            Mode: Normal                  
-Property: File_Sizes_Pending    Mode: Normal                  
-Property: Version               Mode: Mandatory and Readonly  
+Property: Name                  Mode: Mandatory and Readonly
+Property: Location              Mode: Mandatory
+Property: Description           Mode: Normal
+Property: Host_Name             Mode: Mandatory
+Property: Trader_Name           Mode: Normal
+Property: Miscellaneous         Mode: Normal
+Property: Color                 Mode: Mandatory and Readonly
+Property: Double_Sided          Mode: Read only
+Property: Cost_Per_Page         Mode: Normal
+Property: Model_Number          Mode: Read only
+Property: Pages_Per_Sec         Mode: Read only
+Property: User_Queue            Mode: Normal
+Property: File_Sizes_Pending    Mode: Normal
+Property: Version               Mode: Mandatory and Readonly
 ------------------------------
 *** Service Type Exporter tests complete.
 *** Running the Offer Exporter tests.
@@ -2261,8 +2261,8 @@ Running the Offer Importer tests.
 *** TAO_Offer_Importer::Federated Query.
 
 *** Performing query for Remote_IO.
-*** Query: 
-*** Preferences: 
+*** Query:
+*** Preferences:
 *** Results:
 
 ------------------------------
@@ -2415,8 +2415,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 0.000000
 Model_Number   : String HP238293892bn2398
 Pages_Per_Sec  : UShort 0
-User_Queue     : sbw1 schmidt naga alex 
-File_Sizes_Pending: 0 10000 20000 30000 
+User_Queue     : sbw1 schmidt naga alex
+File_Sizes_Pending: 0 10000 20000 30000
 ------------------------------
 Name           : String Printer #1
 Location       : String Bryan 503
@@ -2428,8 +2428,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 1.000000
 Model_Number   : String PK92839nkse092309
 Pages_Per_Sec  : UShort 1
-User_Queue     : mk1 marina sumedh sergio 
-File_Sizes_Pending: 40000 50000 60000 70000 
+User_Queue     : mk1 marina sumedh sergio
+File_Sizes_Pending: 40000 50000 60000 70000
 ------------------------------
 Name           : String Printer #2
 Location       : String Dunker 102
@@ -2441,8 +2441,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 2.000000
 Model_Number   : String 8328323n293kljs98
 Pages_Per_Sec  : UShort 2
-User_Queue     : coryan cdgill levine jxh 
-File_Sizes_Pending: 80000 90000 100000 110000 
+User_Queue     : coryan cdgill levine jxh
+File_Sizes_Pending: 80000 90000 100000 110000
 ------------------------------
 Name           : String Printer #3
 Location       : String Jolley 408
@@ -2454,8 +2454,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 3.000000
 Model_Number   : String 29309sjdkq34jksd2
 Pages_Per_Sec  : UShort 3
-User_Queue     : irfan nanbor eea1 sbw1 
-File_Sizes_Pending: 120000 130000 140000 0 
+User_Queue     : irfan nanbor eea1 sbw1
+File_Sizes_Pending: 120000 130000 140000 0
 ------------------------------
 Name           : String Printer #4
 Location       : String Lopata 401
@@ -2467,8 +2467,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 4.000000
 Model_Number   : String 09q834efjhqw834q3
 Pages_Per_Sec  : UShort 4
-User_Queue     : schmidt naga alex mk1 
-File_Sizes_Pending: 10000 20000 30000 40000 
+User_Queue     : schmidt naga alex mk1
+File_Sizes_Pending: 10000 20000 30000 40000
 ------------------------------
 Name           : String Printer #5
 Location       : String January 110
@@ -2480,8 +2480,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 5.000000
 Model_Number   : String q9834fdkjwq0934kf
 Pages_Per_Sec  : UShort 5
-User_Queue     : marina sumedh sergio coryan 
-File_Sizes_Pending: 50000 60000 70000 80000 
+User_Queue     : marina sumedh sergio coryan
+File_Sizes_Pending: 50000 60000 70000 80000
 ------------------------------
 Name           : String Printer #6
 Location       : String Cupples I 30
@@ -2493,8 +2493,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 6.000000
 Model_Number   : String q834jfda09q834djk
 Pages_Per_Sec  : UShort 6
-User_Queue     : cdgill levine jxh irfan 
-File_Sizes_Pending: 90000 100000 110000 120000 
+User_Queue     : cdgill levine jxh irfan
+File_Sizes_Pending: 90000 100000 110000 120000
 ------------------------------
 Name           : String Printer #7
 Location       : String Cupples II 201
@@ -2506,8 +2506,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
 Pages_Per_Sec  : UShort 7
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
 Name           : String Printer #8
 Location       : String Urbauer 321
@@ -2519,8 +2519,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 8.000000
 Model_Number   : String 9p83q4jklsdj098q3
 Pages_Per_Sec  : UShort 8
-User_Queue     : naga alex mk1 marina 
-File_Sizes_Pending: 20000 30000 40000 50000 
+User_Queue     : naga alex mk1 marina
+File_Sizes_Pending: 20000 30000 40000 50000
 ------------------------------
 Name           : String Printer #9
 Location       : String Umrath 302
@@ -2532,8 +2532,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 9.000000
 Model_Number   : String 09a834ojfda09wu3r
 Pages_Per_Sec  : UShort 9
-User_Queue     : sumedh sergio coryan cdgill 
-File_Sizes_Pending: 60000 70000 80000 90000 
+User_Queue     : sumedh sergio coryan cdgill
+File_Sizes_Pending: 60000 70000 80000 90000
 ------------------------------
 Name           : String Printer #10
 Location       : String Wilson 110
@@ -2545,8 +2545,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 10.000000
 Model_Number   : String 09234kejdfq934jed
 Pages_Per_Sec  : UShort 10
-User_Queue     : levine jxh irfan nanbor 
-File_Sizes_Pending: 100000 110000 120000 130000 
+User_Queue     : levine jxh irfan nanbor
+File_Sizes_Pending: 100000 110000 120000 130000
 ------------------------------
 Name           : String Printer #11
 Location       : String Olin 239
@@ -2558,8 +2558,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 11.000000
 Model_Number   : String 0q83kjefd09384jda
 Pages_Per_Sec  : UShort 11
-User_Queue     : eea1 sbw1 schmidt naga 
-File_Sizes_Pending: 140000 0 10000 20000 
+User_Queue     : eea1 sbw1 schmidt naga
+File_Sizes_Pending: 140000 0 10000 20000
 ------------------------------
 Name           : String Printer #12
 Location       : String Simon 238
@@ -2571,8 +2571,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 12.000000
 Model_Number   : String asdfj0283jkdf0923
 Pages_Per_Sec  : UShort 12
-User_Queue     : alex mk1 marina sumedh 
-File_Sizes_Pending: 30000 40000 50000 60000 
+User_Queue     : alex mk1 marina sumedh
+File_Sizes_Pending: 30000 40000 50000 60000
 ------------------------------
 Name           : String Printer #13
 Location       : String Rebstock 232
@@ -2584,8 +2584,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 13.000000
 Model_Number   : String kladfp72wu34j230f
 Pages_Per_Sec  : UShort 13
-User_Queue     : sergio coryan cdgill levine 
-File_Sizes_Pending: 70000 80000 90000 100000 
+User_Queue     : sergio coryan cdgill levine
+File_Sizes_Pending: 70000 80000 90000 100000
 ------------------------------
 Name           : String Printer #14
 Location       : String McMillan 123
@@ -2597,8 +2597,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 14.000000
 Model_Number   : String 9q834jidlj234ujof
 Pages_Per_Sec  : UShort 14
-User_Queue     : jxh irfan nanbor eea1 
-File_Sizes_Pending: 110000 120000 130000 140000 
+User_Queue     : jxh irfan nanbor eea1
+File_Sizes_Pending: 110000 120000 130000 140000
 ------------------------------
 Name           : String Plotter #0
 Location       : String Bryan 509
@@ -2609,8 +2609,8 @@ Num_Colors     : Long 0
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 0.000000
 Model_Number   : String HP238293892bn2398
-User_Queue     : sbw1 schmidt naga alex 
-File_Sizes_Pending: 0 10000 20000 30000 
+User_Queue     : sbw1 schmidt naga alex
+File_Sizes_Pending: 0 10000 20000 30000
 ------------------------------
 Name           : String Plotter #1
 Location       : String Bryan 503
@@ -2621,8 +2621,8 @@ Num_Colors     : Long 2
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 1.000000
 Model_Number   : String PK92839nkse092309
-User_Queue     : mk1 marina sumedh sergio 
-File_Sizes_Pending: 40000 50000 60000 70000 
+User_Queue     : mk1 marina sumedh sergio
+File_Sizes_Pending: 40000 50000 60000 70000
 ------------------------------
 Name           : String Plotter #2
 Location       : String Dunker 102
@@ -2633,8 +2633,8 @@ Num_Colors     : Long 4
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 2.000000
 Model_Number   : String 8328323n293kljs98
-User_Queue     : coryan cdgill levine jxh 
-File_Sizes_Pending: 80000 90000 100000 110000 
+User_Queue     : coryan cdgill levine jxh
+File_Sizes_Pending: 80000 90000 100000 110000
 ------------------------------
 Name           : String Plotter #3
 Location       : String Jolley 408
@@ -2645,8 +2645,8 @@ Num_Colors     : Long 6
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 3.000000
 Model_Number   : String 29309sjdkq34jksd2
-User_Queue     : irfan nanbor eea1 sbw1 
-File_Sizes_Pending: 120000 130000 140000 0 
+User_Queue     : irfan nanbor eea1 sbw1
+File_Sizes_Pending: 120000 130000 140000 0
 ------------------------------
 Name           : String Plotter #4
 Location       : String Lopata 401
@@ -2657,8 +2657,8 @@ Num_Colors     : Long 8
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 4.000000
 Model_Number   : String 09q834efjhqw834q3
-User_Queue     : schmidt naga alex mk1 
-File_Sizes_Pending: 10000 20000 30000 40000 
+User_Queue     : schmidt naga alex mk1
+File_Sizes_Pending: 10000 20000 30000 40000
 ------------------------------
 Name           : String Plotter #5
 Location       : String January 110
@@ -2669,8 +2669,8 @@ Num_Colors     : Long 10
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 5.000000
 Model_Number   : String q9834fdkjwq0934kf
-User_Queue     : marina sumedh sergio coryan 
-File_Sizes_Pending: 50000 60000 70000 80000 
+User_Queue     : marina sumedh sergio coryan
+File_Sizes_Pending: 50000 60000 70000 80000
 ------------------------------
 Name           : String Plotter #6
 Location       : String Cupples I 30
@@ -2681,8 +2681,8 @@ Num_Colors     : Long 12
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 6.000000
 Model_Number   : String q834jfda09q834djk
-User_Queue     : cdgill levine jxh irfan 
-File_Sizes_Pending: 90000 100000 110000 120000 
+User_Queue     : cdgill levine jxh irfan
+File_Sizes_Pending: 90000 100000 110000 120000
 ------------------------------
 Name           : String Plotter #7
 Location       : String Cupples II 201
@@ -2693,8 +2693,8 @@ Num_Colors     : Long 14
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
 Name           : String Plotter #8
 Location       : String Urbauer 321
@@ -2705,8 +2705,8 @@ Num_Colors     : Long 16
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 8.000000
 Model_Number   : String 9p83q4jklsdj098q3
-User_Queue     : naga alex mk1 marina 
-File_Sizes_Pending: 20000 30000 40000 50000 
+User_Queue     : naga alex mk1 marina
+File_Sizes_Pending: 20000 30000 40000 50000
 ------------------------------
 Name           : String Plotter #9
 Location       : String Umrath 302
@@ -2717,8 +2717,8 @@ Num_Colors     : Long 18
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 9.000000
 Model_Number   : String 09a834ojfda09wu3r
-User_Queue     : sumedh sergio coryan cdgill 
-File_Sizes_Pending: 60000 70000 80000 90000 
+User_Queue     : sumedh sergio coryan cdgill
+File_Sizes_Pending: 60000 70000 80000 90000
 ------------------------------
 Name           : String Plotter #10
 Location       : String Wilson 110
@@ -2729,8 +2729,8 @@ Num_Colors     : Long 20
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 10.000000
 Model_Number   : String 09234kejdfq934jed
-User_Queue     : levine jxh irfan nanbor 
-File_Sizes_Pending: 100000 110000 120000 130000 
+User_Queue     : levine jxh irfan nanbor
+File_Sizes_Pending: 100000 110000 120000 130000
 ------------------------------
 Name           : String Plotter #11
 Location       : String Olin 239
@@ -2741,8 +2741,8 @@ Num_Colors     : Long 22
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 11.000000
 Model_Number   : String 0q83kjefd09384jda
-User_Queue     : eea1 sbw1 schmidt naga 
-File_Sizes_Pending: 140000 0 10000 20000 
+User_Queue     : eea1 sbw1 schmidt naga
+File_Sizes_Pending: 140000 0 10000 20000
 ------------------------------
 Name           : String Plotter #12
 Location       : String Simon 238
@@ -2753,8 +2753,8 @@ Num_Colors     : Long 24
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 12.000000
 Model_Number   : String asdfj0283jkdf0923
-User_Queue     : alex mk1 marina sumedh 
-File_Sizes_Pending: 30000 40000 50000 60000 
+User_Queue     : alex mk1 marina sumedh
+File_Sizes_Pending: 30000 40000 50000 60000
 ------------------------------
 Name           : String Plotter #13
 Location       : String Rebstock 232
@@ -2765,8 +2765,8 @@ Num_Colors     : Long 26
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 13.000000
 Model_Number   : String kladfp72wu34j230f
-User_Queue     : sergio coryan cdgill levine 
-File_Sizes_Pending: 70000 80000 90000 100000 
+User_Queue     : sergio coryan cdgill levine
+File_Sizes_Pending: 70000 80000 90000 100000
 ------------------------------
 Name           : String Plotter #14
 Location       : String McMillan 123
@@ -2777,13 +2777,13 @@ Num_Colors     : Long 28
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 14.000000
 Model_Number   : String 9q834jidlj234ujof
-User_Queue     : jxh irfan nanbor eea1 
-File_Sizes_Pending: 110000 120000 130000 140000 
+User_Queue     : jxh irfan nanbor eea1
+File_Sizes_Pending: 110000 120000 130000 140000
 ------------------------------
 
 *** Performing query for Remote_IO.
 *** Query: Location ~ 'Cupples'
-*** Preferences: 
+*** Preferences:
 *** Results:
 
 ------------------------------
@@ -2817,8 +2817,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 6.000000
 Model_Number   : String q834jfda09q834djk
 Pages_Per_Sec  : UShort 6
-User_Queue     : cdgill levine jxh irfan 
-File_Sizes_Pending: 90000 100000 110000 120000 
+User_Queue     : cdgill levine jxh irfan
+File_Sizes_Pending: 90000 100000 110000 120000
 ------------------------------
 Name           : String Printer #7
 Location       : String Cupples II 201
@@ -2830,8 +2830,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
 Pages_Per_Sec  : UShort 7
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
 Name           : String Plotter #6
 Location       : String Cupples I 30
@@ -2842,8 +2842,8 @@ Num_Colors     : Long 12
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 6.000000
 Model_Number   : String q834jfda09q834djk
-User_Queue     : cdgill levine jxh irfan 
-File_Sizes_Pending: 90000 100000 110000 120000 
+User_Queue     : cdgill levine jxh irfan
+File_Sizes_Pending: 90000 100000 110000 120000
 ------------------------------
 Name           : String Plotter #7
 Location       : String Cupples II 201
@@ -2854,8 +2854,8 @@ Num_Colors     : Long 14
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
   Offers in the iterator:
 ------------------------------
@@ -2877,8 +2877,8 @@ Num_Colors     : Long 0
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 0.000000
 Model_Number   : String HP238293892bn2398
-User_Queue     : sbw1 schmidt naga alex 
-File_Sizes_Pending: 0 10000 20000 30000 
+User_Queue     : sbw1 schmidt naga alex
+File_Sizes_Pending: 0 10000 20000 30000
 ------------------------------
 Name           : String Plotter #3
 Location       : String Jolley 408
@@ -2889,8 +2889,8 @@ Num_Colors     : Long 6
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 3.000000
 Model_Number   : String 29309sjdkq34jksd2
-User_Queue     : irfan nanbor eea1 sbw1 
-File_Sizes_Pending: 120000 130000 140000 0 
+User_Queue     : irfan nanbor eea1 sbw1
+File_Sizes_Pending: 120000 130000 140000 0
 ------------------------------
 Name           : String Plotter #7
 Location       : String Cupples II 201
@@ -2901,8 +2901,8 @@ Num_Colors     : Long 14
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
 Name           : String Plotter #11
 Location       : String Olin 239
@@ -2913,8 +2913,8 @@ Num_Colors     : Long 22
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 11.000000
 Model_Number   : String 0q83kjefd09384jda
-User_Queue     : eea1 sbw1 schmidt naga 
-File_Sizes_Pending: 140000 0 10000 20000 
+User_Queue     : eea1 sbw1 schmidt naga
+File_Sizes_Pending: 140000 0 10000 20000
 ------------------------------
   Offers in the iterator:
 ------------------------------
@@ -2936,8 +2936,8 @@ Num_Colors     : Long 12
 Auto_Loading   : Boolean FALSE
 Cost_Per_Page  : Float 6.000000
 Model_Number   : String q834jfda09q834djk
-User_Queue     : cdgill levine jxh irfan 
-File_Sizes_Pending: 90000 100000 110000 120000 
+User_Queue     : cdgill levine jxh irfan
+File_Sizes_Pending: 90000 100000 110000 120000
 ------------------------------
 Name           : String Plotter #7
 Location       : String Cupples II 201
@@ -2948,8 +2948,8 @@ Num_Colors     : Long 14
 Auto_Loading   : Boolean TRUE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
   Offers in the iterator:
 ------------------------------
@@ -2972,8 +2972,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 11.000000
 Model_Number   : String 0q83kjefd09384jda
 Pages_Per_Sec  : UShort 11
-User_Queue     : eea1 sbw1 schmidt naga 
-File_Sizes_Pending: 140000 0 10000 20000 
+User_Queue     : eea1 sbw1 schmidt naga
+File_Sizes_Pending: 140000 0 10000 20000
 ------------------------------
 Name           : String Printer #7
 Location       : String Cupples II 201
@@ -2985,8 +2985,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
 Pages_Per_Sec  : UShort 7
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
 Name           : String Printer #5
 Location       : String January 110
@@ -2998,8 +2998,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 5.000000
 Model_Number   : String q9834fdkjwq0934kf
 Pages_Per_Sec  : UShort 5
-User_Queue     : marina sumedh sergio coryan 
-File_Sizes_Pending: 50000 60000 70000 80000 
+User_Queue     : marina sumedh sergio coryan
+File_Sizes_Pending: 50000 60000 70000 80000
 ------------------------------
 Name           : String Printer #9
 Location       : String Umrath 302
@@ -3011,8 +3011,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 9.000000
 Model_Number   : String 09a834ojfda09wu3r
 Pages_Per_Sec  : UShort 9
-User_Queue     : sumedh sergio coryan cdgill 
-File_Sizes_Pending: 60000 70000 80000 90000 
+User_Queue     : sumedh sergio coryan cdgill
+File_Sizes_Pending: 60000 70000 80000 90000
 ------------------------------
 Name           : String Printer #13
 Location       : String Rebstock 232
@@ -3024,8 +3024,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 13.000000
 Model_Number   : String kladfp72wu34j230f
 Pages_Per_Sec  : UShort 13
-User_Queue     : sergio coryan cdgill levine 
-File_Sizes_Pending: 70000 80000 90000 100000 
+User_Queue     : sergio coryan cdgill levine
+File_Sizes_Pending: 70000 80000 90000 100000
 ------------------------------
   Offers in the iterator:
 ------------------------------
@@ -3048,8 +3048,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 14.000000
 Model_Number   : String 9q834jidlj234ujof
 Pages_Per_Sec  : UShort 14
-User_Queue     : jxh irfan nanbor eea1 
-File_Sizes_Pending: 110000 120000 130000 140000 
+User_Queue     : jxh irfan nanbor eea1
+File_Sizes_Pending: 110000 120000 130000 140000
 ------------------------------
 Name           : String Printer #13
 Location       : String Rebstock 232
@@ -3061,8 +3061,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 13.000000
 Model_Number   : String kladfp72wu34j230f
 Pages_Per_Sec  : UShort 13
-User_Queue     : sergio coryan cdgill levine 
-File_Sizes_Pending: 70000 80000 90000 100000 
+User_Queue     : sergio coryan cdgill levine
+File_Sizes_Pending: 70000 80000 90000 100000
 ------------------------------
 Name           : String Printer #12
 Location       : String Simon 238
@@ -3074,8 +3074,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 12.000000
 Model_Number   : String asdfj0283jkdf0923
 Pages_Per_Sec  : UShort 12
-User_Queue     : alex mk1 marina sumedh 
-File_Sizes_Pending: 30000 40000 50000 60000 
+User_Queue     : alex mk1 marina sumedh
+File_Sizes_Pending: 30000 40000 50000 60000
 ------------------------------
 Name           : String Printer #11
 Location       : String Olin 239
@@ -3087,8 +3087,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 11.000000
 Model_Number   : String 0q83kjefd09384jda
 Pages_Per_Sec  : UShort 11
-User_Queue     : eea1 sbw1 schmidt naga 
-File_Sizes_Pending: 140000 0 10000 20000 
+User_Queue     : eea1 sbw1 schmidt naga
+File_Sizes_Pending: 140000 0 10000 20000
 ------------------------------
 Name           : String Printer #10
 Location       : String Wilson 110
@@ -3100,8 +3100,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 10.000000
 Model_Number   : String 09234kejdfq934jed
 Pages_Per_Sec  : UShort 10
-User_Queue     : levine jxh irfan nanbor 
-File_Sizes_Pending: 100000 110000 120000 130000 
+User_Queue     : levine jxh irfan nanbor
+File_Sizes_Pending: 100000 110000 120000 130000
 ------------------------------
 Name           : String Printer #9
 Location       : String Umrath 302
@@ -3113,8 +3113,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 9.000000
 Model_Number   : String 09a834ojfda09wu3r
 Pages_Per_Sec  : UShort 9
-User_Queue     : sumedh sergio coryan cdgill 
-File_Sizes_Pending: 60000 70000 80000 90000 
+User_Queue     : sumedh sergio coryan cdgill
+File_Sizes_Pending: 60000 70000 80000 90000
 ------------------------------
 Name           : String Printer #8
 Location       : String Urbauer 321
@@ -3126,8 +3126,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 8.000000
 Model_Number   : String 9p83q4jklsdj098q3
 Pages_Per_Sec  : UShort 8
-User_Queue     : naga alex mk1 marina 
-File_Sizes_Pending: 20000 30000 40000 50000 
+User_Queue     : naga alex mk1 marina
+File_Sizes_Pending: 20000 30000 40000 50000
 ------------------------------
 Name           : String Printer #7
 Location       : String Cupples II 201
@@ -3139,8 +3139,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
 Pages_Per_Sec  : UShort 7
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
   Offers in the iterator:
 ------------------------------
@@ -3154,8 +3154,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 6.000000
 Model_Number   : String q834jfda09q834djk
 Pages_Per_Sec  : UShort 6
-User_Queue     : cdgill levine jxh irfan 
-File_Sizes_Pending: 90000 100000 110000 120000 
+User_Queue     : cdgill levine jxh irfan
+File_Sizes_Pending: 90000 100000 110000 120000
 ------------------------------
 Name           : String Printer #5
 Location       : String January 110
@@ -3167,8 +3167,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 5.000000
 Model_Number   : String q9834fdkjwq0934kf
 Pages_Per_Sec  : UShort 5
-User_Queue     : marina sumedh sergio coryan 
-File_Sizes_Pending: 50000 60000 70000 80000 
+User_Queue     : marina sumedh sergio coryan
+File_Sizes_Pending: 50000 60000 70000 80000
 ------------------------------
 Name           : String Printer #4
 Location       : String Lopata 401
@@ -3180,8 +3180,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 4.000000
 Model_Number   : String 09q834efjhqw834q3
 Pages_Per_Sec  : UShort 4
-User_Queue     : schmidt naga alex mk1 
-File_Sizes_Pending: 10000 20000 30000 40000 
+User_Queue     : schmidt naga alex mk1
+File_Sizes_Pending: 10000 20000 30000 40000
 ------------------------------
 Name           : String Printer #3
 Location       : String Jolley 408
@@ -3193,8 +3193,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 3.000000
 Model_Number   : String 29309sjdkq34jksd2
 Pages_Per_Sec  : UShort 3
-User_Queue     : irfan nanbor eea1 sbw1 
-File_Sizes_Pending: 120000 130000 140000 0 
+User_Queue     : irfan nanbor eea1 sbw1
+File_Sizes_Pending: 120000 130000 140000 0
 ------------------------------
 Name           : String Printer #2
 Location       : String Dunker 102
@@ -3206,8 +3206,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 2.000000
 Model_Number   : String 8328323n293kljs98
 Pages_Per_Sec  : UShort 2
-User_Queue     : coryan cdgill levine jxh 
-File_Sizes_Pending: 80000 90000 100000 110000 
+User_Queue     : coryan cdgill levine jxh
+File_Sizes_Pending: 80000 90000 100000 110000
 ------------------------------
 Name           : String Printer #1
 Location       : String Bryan 503
@@ -3219,8 +3219,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 1.000000
 Model_Number   : String PK92839nkse092309
 Pages_Per_Sec  : UShort 1
-User_Queue     : mk1 marina sumedh sergio 
-File_Sizes_Pending: 40000 50000 60000 70000 
+User_Queue     : mk1 marina sumedh sergio
+File_Sizes_Pending: 40000 50000 60000 70000
 ------------------------------
 Name           : String Printer #0
 Location       : String Bryan 509
@@ -3232,8 +3232,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 0.000000
 Model_Number   : String HP238293892bn2398
 Pages_Per_Sec  : UShort 0
-User_Queue     : sbw1 schmidt naga alex 
-File_Sizes_Pending: 0 10000 20000 30000 
+User_Queue     : sbw1 schmidt naga alex
+File_Sizes_Pending: 0 10000 20000 30000
 ------------------------------
 
 *** Performing query for Printer.
@@ -3254,8 +3254,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 7.000000
 Model_Number   : String kajsd09q384kjda90
 Pages_Per_Sec  : UShort 7
-User_Queue     : nanbor eea1 sbw1 schmidt 
-File_Sizes_Pending: 130000 140000 0 10000 
+User_Queue     : nanbor eea1 sbw1 schmidt
+File_Sizes_Pending: 130000 140000 0 10000
 ------------------------------
 Name           : String Printer #0
 Location       : String Bryan 509
@@ -3267,8 +3267,8 @@ Double_Sided   : Boolean TRUE
 Cost_Per_Page  : Float 0.000000
 Model_Number   : String HP238293892bn2398
 Pages_Per_Sec  : UShort 0
-User_Queue     : sbw1 schmidt naga alex 
-File_Sizes_Pending: 0 10000 20000 30000 
+User_Queue     : sbw1 schmidt naga alex
+File_Sizes_Pending: 0 10000 20000 30000
 ------------------------------
 Name           : String Printer #3
 Location       : String Jolley 408
@@ -3280,8 +3280,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 3.000000
 Model_Number   : String 29309sjdkq34jksd2
 Pages_Per_Sec  : UShort 3
-User_Queue     : irfan nanbor eea1 sbw1 
-File_Sizes_Pending: 120000 130000 140000 0 
+User_Queue     : irfan nanbor eea1 sbw1
+File_Sizes_Pending: 120000 130000 140000 0
 ------------------------------
 Name           : String Printer #11
 Location       : String Olin 239
@@ -3293,8 +3293,8 @@ Double_Sided   : Boolean FALSE
 Cost_Per_Page  : Float 11.000000
 Model_Number   : String 0q83kjefd09384jda
 Pages_Per_Sec  : UShort 11
-User_Queue     : eea1 sbw1 schmidt naga 
-File_Sizes_Pending: 140000 0 10000 20000 
+User_Queue     : eea1 sbw1 schmidt naga
+File_Sizes_Pending: 140000 0 10000 20000
 ------------------------------
   Offers in the iterator:
 ------------------------------
