@@ -1,11 +1,12 @@
 # -*- text -*-
 # Hey, Emacs!  This is a TEXT file.
+# $Id$
 
 --------------------------
 README for the JAWS server
 --------------------------
 
-This is the README file for the JAWS server. 
+This is the README file for the JAWS server.
 
 CONTENTS
 
@@ -168,7 +169,7 @@ status|task
       |
       | (c) JAWS will support a general protocol content filtering
       |     mechanism which will be used to replace the existing CGI
-      |     support implementation. 
+      |     support implementation.
       |
 
 Questions, comments, corrections, suggestions are welcome.  Please
@@ -211,17 +212,17 @@ functionality and provided a new cmd line option -c with params NO_CACHE/CACHE.
 
 This capability is to be used with the RepositoryManager in CIAO.
 
-In its current design the RepositoryManager (RM) need a collocated HTTP server. 
+In its current design the RepositoryManager (RM) need a collocated HTTP server.
 When RM istalls packages, it unpacks them so that the separate files are accessible to
 ZIP unaware entities like JAWS. JAWS is used to serve the libraries in the package to the
 various deamons that might be interested in them, e.g. the NodeApplicationManager.
 
-The problem with using file caching reveals itself during the deletePackage operation of 
-the RM. When the RM attempts to delete a file which was previously accessed via JAWS a 
-is currently in the file cache the call fails and the file remains on the filesystem 
+The problem with using file caching reveals itself during the deletePackage operation of
+the RM. When the RM attempts to delete a file which was previously accessed via JAWS a
+is currently in the file cache the call fails and the file remains on the filesystem
 indefinitely. If the file is cached with a ACE_NOMAP option is is not stored in a file
 map and it is deleted upon server termination. The OS handles that. Althoguh this might
-or might not be OK (depending on how it scales) there is an additional problem because 
+or might not be OK (depending on how it scales) there is an additional problem because
 JAWS and the ACE_Filecache_Handle class used do not provide enough functionality to deal
 with the ACE_NOMAP case. I believe that ACE_NOMAP option was probably never used.
 
