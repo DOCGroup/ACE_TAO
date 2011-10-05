@@ -1,10 +1,12 @@
+$Id$
+
 This test evalutes ORB fault tolerance support, based on one of the
 problems that was reported by the DOORS team at Lucent. The test is
 aimed at testing the following scenario.
 
 1. We will have three copies of the same server running. Let me call
    them as ref1, ref2 & ref3.
-     
+
 2. We will have a manager application which does the following. Hosts
    a POA with the policies set for a Servant_Locator.  Then it creates
    the reference on that and does the following
@@ -17,7 +19,7 @@ aimed at testing the following scenario.
 
 3. The client starts by reading  the IOR written to a file by the
    Manager,  that was created by 2a.  The client basically makes a remote
-   call and a shutdown call on the remote objects in a loop ie. multiple times. 
+   call and a shutdown call on the remote objects in a loop ie. multiple times.
 
    a. When the first call is made, the call is responded by the server who published
       ref1. He is then shutdown.
@@ -25,9 +27,9 @@ aimed at testing the following scenario.
       is also shutdown next.
    c. On the third call, the call first comes to the preinvoke () method in the
       Locator class who throws the ForwardRequest exception with the IOR created in
-      2b.  
+      2b.
    d. After the exception is thrown the calls get resolved on the server
-     who published ref3. He is also shutdown next. 
+     who published ref3. He is also shutdown next.
 
 The above sequence SHOULD be seen to consider the test as being
 succesfull.
@@ -37,20 +39,20 @@ To run the test
 
 * Start three copies of the server like this
 
-  $ ./server -o file1.ior 
-  $ ./server -o file2.ior 
-  $ ./server -o file3.ior 
+  $ ./server -o file1.ior
+  $ ./server -o file2.ior
+  $ ./server -o file3.ior
 
 * Then start the Manager like this
 
   $ ./Manager -a file://file1.ior -b file://file2.ior -c \
-    file://file3.ior -d file4.ior 
+    file://file3.ior -d file4.ior
 
    (The above should be on the same line in the command prompt. The
    file4.ior is for publishing the first merged IOR (refer step 2.a).
 
 * The start the client like this
-  
+
   $ ./client -o file://file4.ior
 
 

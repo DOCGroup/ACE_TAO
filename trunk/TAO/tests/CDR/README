@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This directory contains the following tests for the CDR stream class;
 
@@ -6,15 +6,15 @@ This directory contains the following tests for the CDR stream class;
 
           Simply encodes a lot of CORBA::Octets, CORBA::Short and
           CORBA::Long into a CDR stream and then decodes them;
-          verifying that the same results are obtained. 
+          verifying that the same results are obtained.
 
         . growth
-        
+
           Helps measure how the growth strategy affects the
           performance of CDR streams.
 
         . tc
-        
+
           TAO implements TypeCodes using a CDR buffer (this was
           inherited from the Sun IIOP engine), this test verifies that
           some of the basic TypeCodes actually are able to interpret
