@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains two sample logging applications that implement
 and test the ACE distributed logging service.
 
@@ -7,12 +9,12 @@ and test the ACE distributed logging service.
 		the localhost, which forwards the messages to Server
 		Logging Daemon.  The Client Logging Daemon and Server
 		Logging Daemon both must be started before you can run
-		this test. 
+		this test.
 
 	. direct_logging.cpp
 
 		This program talks directly to the Server Logging
 		Daemon.  The Server Logging Daemon must be started
-		before you can run this test. 
+		before you can run this test.
 
 To start these daemons, please check out the ../../servers/ directory.
