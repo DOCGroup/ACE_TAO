@@ -1,3 +1,4 @@
+$Id$
 
 test_rw_locks shows how to use ACE_Local_RLock, ACE_Local_WLock,
 ACE_Remote_RLock, and ACE_Remote_WLock.
@@ -20,7 +21,7 @@ for <iterations>
       acquire read lock
     for <reads>
       release read lock
-  
+
     acquire write lock
     if (sleep during writes)
       sleep for 1 second
@@ -36,5 +37,5 @@ that no thread holds a reader lock.
 To run a test, simply type:
 % ./test_rw_lock
 
-This should show output as described above.  
+This should show output as described above.
 
