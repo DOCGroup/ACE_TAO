@@ -4,34 +4,34 @@
 
 $Id$
 
-	This is test for feature of request forwarding ONCE when client 
+	This is test for feature of request forwarding ONCE when client
 	receives OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT or INV_OBJREF
-	exceptions from server. The forward once feature defaults to be off. 
+	exceptions from server. The forward once feature defaults to be off.
 	They can be enabled and disabled by -ORBForwardOnceOnObjectNotExist
 	-ORBForwardOnceOnCommFailure, -ORBForwardOnceOnTransient and
 	-ORBForwardOnceOnInvObjref options with value 0(disable) and 1(enable).
-	
-	The servant implementation is made to raise the exceptions. 
-	This is	to simulate the server exception reply regardless the actual 
-	meaning of the exceptions. The test also takes advantage of the 
+
+	The servant implementation is made to raise the exceptions.
+	This is	to simulate the server exception reply regardless the actual
+	meaning of the exceptions. The test also takes advantage of the
 	IORTable facilities in TAO to create a simple corbaloc IOR, TAO
-	always responds with a LOCATION_FORWARD message when a request is 
+	always responds with a LOCATION_FORWARD message when a request is
 	made for an object in the IORTable. This would make the stub have the
-	forward address upon receiving the exceptions so it can perform the 
-	forwarding. 
-	
+	forward address upon receiving the exceptions so it can perform the
+	forwarding.
+
 	TAO defaults to forwarding request upon COMM_FAILURE and TRANSIENT
-	exceptions. With forwarding once feature enabled, the client will 
-	catch the exceptions and servant should be called twice for each 
-	request, otherwise, the request will be looping between server and 
-	client. 
-	
-	TAO defaults to not forwarding request upon OBJECT_NOT_EXIST and 
+	exceptions. With forwarding once feature enabled, the client will
+	catch the exceptions and servant should be called twice for each
+	request, otherwise, the request will be looping between server and
+	client.
+
+	TAO defaults to not forwarding request upon OBJECT_NOT_EXIST and
 	INV_OBJREF exceptions from server so the client should catch the exception
 	and servant should be called once for each request. If the forwarding
-	once feature is on, the client should catch the exception and servant 
+	once feature is on, the client should catch the exception and servant
 	should be called twice.
-	
+
 	To execute the test simply run:
 
 $ ./run_test.pl
