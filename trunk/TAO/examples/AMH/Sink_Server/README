@@ -1,3 +1,5 @@
+$Id$
+
 Files:
 ------
 AMH_Servant.h/cpp     : AMH Servant that implements the Test interface
@@ -21,7 +23,7 @@ Multi  Threaded Server: make mt_server
 Running the servers:
 --------------------
 Single threaded AMH Sink Server:
-st_server -ORBsvcconf st_server.conf -o <ior_output_file> -s <sleep_time (in microseconds)> 
+st_server -ORBsvcconf st_server.conf -o <ior_output_file> -s <sleep_time (in microseconds)>
 
 e.g.: st_server -o test.ior -s 20000
 to delay a reply to the client by 20 milliseconds.
@@ -40,7 +42,7 @@ necessary and there are no defaults
 How the server works:
 ---------------------
 - Each client request is 'timed' (with the sleep_time) and registered
-in the ORB's reactor.  
+in the ORB's reactor.
 
 - Upon expiration of the timer, the reactor fires the timer_handler
 and the AMH RH servant method is called to send the reply to the

@@ -1,3 +1,5 @@
+$Id$
+
 This program illustrates how to implement a simple client and server
 using CORBA, IIOP, and asynchronous method invocations (AMI).  Client
 applications can use this service to download and display files from a
@@ -15,9 +17,9 @@ is as follows:
 
         * The CORBA Naming Service is used to bind and resolve object
           references, rather than using a file.
-    
+
 The client program performs the following activities:
-          
+
         1. From the command-line, it reads the name of the pathname
            you want to download.  It then initializes the client-side
            ORB and uses resolve_initial_references() to obtain a
@@ -29,7 +31,7 @@ The client program performs the following activities:
            interface, the get_iterator() operation is called via the
            object reference to obtain the Chunk_Iterator, which is
            used to download the file.
-          
+
         2. The client invokes the sendc_next_chunk() method on the
            iterator, passing in the offset and the object reference to
            the client's reply handler.  Only one pending call at a
@@ -37,14 +39,14 @@ The client program performs the following activities:
            some type of offset parameter to the next_chunk() callback
            to perform reassembly if chunks for the same file arrived
            out of order.
-          
+
         3. When next_chunk() returns a chunk of the file, the contents
            are written into a temporary file created in your a cache
            (e.g., /tmp/yourloginname) on the local host.  Then, an
            external viewer is spawned to display the file.  The type
            of viewer to spawn is determined by examining the the
            content_type_ metadata returned by the server.
-       
+
 The example can be run as follows:
 
 	1. Start the Name Service:
