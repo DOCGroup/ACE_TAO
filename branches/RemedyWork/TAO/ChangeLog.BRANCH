@@ -1,8 +1,46 @@
+Wed Oct  5 07:15:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+          Add prefix TAO_COLLOCATION_ to Collocated strategy Thru_POA
+
+Tue Oct  4 16:36:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        Clean up debug text
+
+        * tao/Invocation_Adapter.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        Change Exception for collocated errors.
+        Add prefix TAO_COLLOCATION_ to Collocated strategies DIrect, Best and Thru_POA
+        Add TAO_DEFAULT_COLLOCATION_STRATEGY
+        
+        * tao/orbconf.h:
+        Add TAO_DEFAULT_COLLOCATION_STRATEGY
+
+        * tests/Bug_2241_Regression/run_test.pl:
+        * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Best_Direct.mpc:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Best_ThruP.mpc:
+
+        * tests/Collocated_ThruP_Sp_Gd:
+        * tests/Collocated_ThruP_Sp_Gd/Client_Task.h:
+        * tests/Collocated_ThruP_Sp_Gd/Client_Task.cpp:
+        * tests/Collocated_ThruP_Sp_Gd/Collocated_Test.cpp:
+        * tests/Collocated_ThruP_Sp_Gd/Collocated_ThruP_Sp_Gd.mpc:
+        * tests/Collocated_ThruP_Sp_Gd/Hello.h:
+        * tests/Collocated_ThruP_Sp_Gd/Hello.cpp:
+        * tests/Collocated_ThruP_Sp_Gd/Server_Task.h:
+        * tests/Collocated_ThruP_Sp_Gd/Server_Task.cpp:
+        * tests/Collocated_ThruP_Sp_Gd/Test.idl:
+        * tests/Collocated_ThruP_Sp_Gd/run_test.pl:
+        New test for combination Sp and Gd
+
 Mon Oct  3 15:33:35 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
          Change dead to 0 for Collocation_Proxy_Broker
-         
+
         * tao/Collocation_Strategy.h:
         * tao/Invocation_Adapter.cpp:
         * tao/ORB_Core.h:
