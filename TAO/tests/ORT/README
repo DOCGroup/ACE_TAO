@@ -1,8 +1,8 @@
-# $Id$
+$Id$
 
 This is to test the functionality of the Object Reference Template and
 the various other conditions that have to be met according to the ORT
-spec. 
+spec.
 
 The various conditions that are tested here are
 
@@ -12,7 +12,7 @@ The various conditions that are tested here are
 	For this, I just create some POAs and keep a count on how
 many times the establish components is called.
 
-2. An ORT is initialized every time a new POA is created. 
+2. An ORT is initialized every time a new POA is created.
 
 3. Check the identity of the ORT using the adapter_name() and such other
    methods in the Object Reference Template abstract valuetype.
@@ -24,16 +24,16 @@ methods should be invoked when a POA is created.
 4. The other thing to test is that when ever the state of the POA
 manager changes, the adapter_manager_state_changed() method is
 invoked.  I am not going to do anything about it .. may be just have a
-debug statement. 
+debug statement.
 
 5. And, of course that the application's implementation of the
-make_object() is invoked. I wont do anything in it .. just call 
-create_reference_with_id() again .. may be. 
+make_object() is invoked. I wont do anything in it .. just call
+create_reference_with_id() again .. may be.
 
 6. Simple checks are for checking if -ORBId and -ORBServerId are
 working. But, this can be checked by passing command line parameters
 and invoking the corresponding functions to check if they are working
-perfectly. 
+perfectly.
 
 How to run:
 ===========

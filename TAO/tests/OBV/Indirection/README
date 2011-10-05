@@ -1,12 +1,12 @@
-// $Id$
+$Id$
 
 This directory contains a CORBA example illustrating a simple client and
 a server. The idl is similar to jacorb demo/value test. The test is used to
 test indirection support in TAO and also can be used as interoperability
-test between TAO and JacORB. 
+test between TAO and JacORB.
 
 
-How to Run 
+How to Run
 ----------
 
 Start the server :
@@ -31,10 +31,10 @@ above.  This script can be run via the following command:
 
 NOTE:
 
-   If you run on Windows platform, go to Debug or Release directory to run the 
-   script via following command:  
-   
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
    perl ../run_test.pl
-    
+
 
 

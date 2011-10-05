@@ -1,7 +1,9 @@
+$Id$
+
 Codeset translation test.
 
 First build the IBM1047 - ISO8859 translator library. Then build and run the
-"simple" test. 
+"simple" test.
 
 The translator library may also serve as a reference for building other custom
 translators.
