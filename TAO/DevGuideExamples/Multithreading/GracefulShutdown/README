@@ -8,7 +8,7 @@ Getting Started example to show various techniques for gracefully
 shutting down a TAO server.
 
 
-How to Run 
+How to Run
 ----------
 
 To start the server :
@@ -20,10 +20,10 @@ where [options] can be one of the following:
   -x     - (default) shutdown the ORB when the client invokes the
            Messenger::shutdown() operation
 
-  -p <n> - use non-blocking ORB operations in a polling loop to shutdown 
+  -p <n> - use non-blocking ORB operations in a polling loop to shutdown
            after <n> iterations
 
-  -t <n> - schedule a timer with the ORB's reactor to shutdown in 
+  -t <n> - schedule a timer with the ORB's reactor to shutdown in
            <n> seconds
 
   -r <n> - use the overloaded version of CORBA::ORB::run() that takes
@@ -31,7 +31,7 @@ where [options] can be one of the following:
            should process events before returning, where <n> is the
            number of seconds the ORB will run.
 
-  -c     - spawn a separate thread to shutdown the ORB on any 
+  -c     - spawn a separate thread to shutdown the ORB on any
            input from the console (terminal)
 
 
@@ -56,10 +56,10 @@ above.  This script can be run via the following command:
 
 NOTE:
 
-   If you run on Windows platform, go to Debug or Release directory to run the 
-   script via following command:  
-   
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
    perl ../run_test.pl
-    
+
 
 

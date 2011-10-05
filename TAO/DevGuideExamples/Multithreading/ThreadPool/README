@@ -10,7 +10,7 @@ capabilities to the server using the thread pool concurrency model.
 The server creates 4 threads for the thread pool.
 
 
-How to Run 
+How to Run
 ----------
 
 To start the server :
@@ -67,10 +67,10 @@ NOTE:
 
 NOTE:
 
-   If you run on Windows platform, go to Debug or Release directory to run the 
-   script via following command:  
-   
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
    perl ../run_test.pl
-    
+
 
 

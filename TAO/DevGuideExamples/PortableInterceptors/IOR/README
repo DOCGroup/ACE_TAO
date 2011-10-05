@@ -6,11 +6,11 @@ Portable Interceptors
 File: DevGuideExamples/PortableInterceptor/IOR/README
 
 
-This directory contains an example of using portable interceptors to add 
+This directory contains an example of using portable interceptors to add
 tagged information to an IOR.
 
-This example is based on the Messenger example in GettingStarted 
-directory.  A message is send by MessengerClient and displayed by 
+This example is based on the Messenger example in GettingStarted
+directory.  A message is send by MessengerClient and displayed by
 MessengerServer.  On IOR creation, the server has added a special
 tag "ServerRequiresAuth". The client is able to extract this tag.
 
@@ -20,12 +20,12 @@ How to Run
 
 To start the server:
 ------------------
-./MessengerServer 
+./MessengerServer
 
 
 To start the client:
 ------------------
-./MessengerClient 
+./MessengerClient
 
 
 Execution via Perl Script

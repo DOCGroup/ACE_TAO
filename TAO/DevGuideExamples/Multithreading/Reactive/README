@@ -6,7 +6,7 @@ File: DevGuideExamples/Multithreading/Reactive/README
 This directory contains a CORBA example illustrating a simple client and
 a server with an interface Messenger. The Messenger interface has
 an operation for sending a message (send_message).  The MessengerClient
-will send a message which is displayed by the MessengerServer when 
+will send a message which is displayed by the MessengerServer when
 received.  The MessengerClient will then confirm that the message has
 been sent successfully.
 
@@ -16,7 +16,7 @@ Multithreading with TAO chapter.  The svc.conf file shows run time
 configuration options for optimizing single-threaded TAO applications.
 
 
-How to Run 
+How to Run
 ----------
 
 To start the server :
@@ -41,10 +41,10 @@ above.  This script can be run via the following command:
 
 NOTE:
 
-   If you run on Windows platform, go to Debug or Release directory to run the 
-   script via following command:  
-   
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
    perl ../run_test.pl
-    
+
 
 
