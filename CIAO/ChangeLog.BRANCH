@@ -1,3 +1,10 @@
+Wed Oct  5 15:12:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/Plan.cdp:
+          Enabled test for state connector.
+
 Wed Oct  5 14:16:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
@@ -25,9 +32,9 @@ Wed Oct  5 14:16:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/SenderDriver.cpp:
         * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/ReceiverDriver.cpp:
         * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/SenderDriver.cpp:
-          Clearing topic name on a running DDS connector. After clearing, start writing. 
+          Clearing topic name on a running DDS connector. After clearing, start writing.
           The connector should throw a bad_inv_order exception. Setting the topic name again.
-          The sender should be able to write again. Need to expanded with an updater 
+          The sender should be able to write again. Need to expanded with an updater
           (state connector).
 
 Wed Oct  5 12:39:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>

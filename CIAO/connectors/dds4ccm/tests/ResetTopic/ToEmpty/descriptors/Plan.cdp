@@ -92,7 +92,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>WU_ResetTopic_Connector_svnt</string>
+          <string>TE_ResetTopic_Connector_svnt</string>
         </value>
       </value>
     </execParameter>
@@ -103,7 +103,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>WU_ResetTopic_Connector_exec</string>
+          <string>TE_ResetTopic_Connector_exec</string>
         </value>
       </value>
     </execParameter>
@@ -178,7 +178,7 @@
     </configProperty>
   </instance>
 
-  <!--instance xmi:id="ResetTopic_SenderStateConnectorInstance">
+  <instance xmi:id="ResetTopic_SenderStateConnectorInstance">
     <name>ResetTopic_SenderStateConnectorInstance</name>
     <node>SenderNode</node>
     <source/>
@@ -194,7 +194,7 @@
         </value>
       </value>
     </configProperty>
-  </instance-->
+  </instance>
 
   <instance xmi:id="SenderComponentInstance">
     <name>SenderComponent</name>
@@ -267,7 +267,7 @@
     </internalEndpoint>
   </connection>
 
-  <!--connection>
+  <connection>
     <name>updater_connection</name>
     <deployRequirement>
       <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
@@ -285,7 +285,7 @@
       <kind>Facet</kind>
       <instance xmi:idref="ResetTopic_SenderStateConnectorInstance" />
     </internalEndpoint>
-  </connection-->
+  </connection>
 
   <artifact xmi:id="Sender_ExecArtifact">
     <name>Sender_exec</name>

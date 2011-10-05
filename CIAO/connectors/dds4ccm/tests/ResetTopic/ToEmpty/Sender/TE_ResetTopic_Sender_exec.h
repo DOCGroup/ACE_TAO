@@ -38,6 +38,8 @@
 #include /**/ "Sender_exec_export.h"
 #include "tao/LocalObject.h"
 
+#include <map>
+
 namespace CIAO_TE_ResetTopic_Sender_Impl
 {
   class Sender_exec_i;
@@ -98,7 +100,9 @@ namespace CIAO_TE_ResetTopic_Sender_Impl
 
     //@{
     /** User defined public operations. */
+    void set_topic_name (const char * topic_name);
     void set_topic_name_writer (const char * topic_name);
+    void set_topic_name_updater (const char * topic_name);
     void start_event_test (void);
     //@}
 
@@ -119,11 +123,15 @@ namespace CIAO_TE_ResetTopic_Sender_Impl
     ACE_CString topic_name_, old_topic_name_;
 
     TAO_SYNCH_RECURSIVE_MUTEX topic_name_lock_;
+
+    typedef std::map<ACE_CString, TE_ResetTopicTest_var> Sample_Table;
+
+    Sample_Table tests_;
     //@}
 
     //@{
     /** User defined private operations. */
-
+    void create_samples (void);
     //@}
 
     /// Get the ACE_Reactor
