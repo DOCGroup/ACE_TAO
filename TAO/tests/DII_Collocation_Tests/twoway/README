@@ -1,23 +1,23 @@
-# $Id$
+$Id$
 
-NOTE: This test has not completed yet !!!. This test currently just tested with "IN" 
-arguments. The OUT, INOUT and RETURN arguments test cases need be added. 
+NOTE: This test has not completed yet !!!. This test currently just tested with "IN"
+arguments. The OUT, INOUT and RETURN arguments test cases need be added.
 
 
 Description:
-This test is used to test the bug fix on collocated dii twoway request 
-invocation via invoke() crash on get_in_arg() when the request has multiple 
+This test is used to test the bug fix on collocated dii twoway request
+invocation via invoke() crash on get_in_arg() when the request has multiple
 "IN" parameters.
 
 The test.idl defines twoway operations with all sorts "IN" SArgument to test the
-conversion of the DII parameters in NVList to the list of arguments. 
+conversion of the DII parameters in NVList to the list of arguments.
 It also defines the operations with multiple "IN" arguments to test the
 bug fix.
 
 
-This test is a modification of the DII_Collocation_Tests/oneway test. The 
+This test is a modification of the DII_Collocation_Tests/oneway test. The
 idl interfaces define twoway method instead of oneway and the client invokes
-the twoway operations via invoke() instead of oneway operations via 
+the twoway operations via invoke() instead of oneway operations via
 send_oneway().
 
 

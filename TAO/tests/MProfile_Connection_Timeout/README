@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page MProfile_Connection_Tiemout Test README File
 
 	The simplest possible test for connection timeouts across
@@ -9,11 +11,11 @@ timeout policy is set. If connection_timeout policy is set and if the
 client is not anle to establish connection using one of the profiles,
 the client should fail over to the next profile seamlessly. The test
 has been constructed to check for this feature.
-         
-        Please refrain from "improving", extending or expanding this
-test. 
 
-@todo: We need to write a MT test for this feature. 
+        Please refrain from "improving", extending or expanding this
+test.
+
+@todo: We need to write a MT test for this feature.
 
 	To run the test use the run_test.pl script:
 
