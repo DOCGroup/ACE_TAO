@@ -1,3 +1,30 @@
+Wed Oct  5 07:58:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.idl:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/ReceiverDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/SenderDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/run_test.pl:
+          Reset of topic name during write and listen operations. 
+
 Mon Oct  3 14:18:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
