@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains a simple client/server implementation of the
 distributed logging server described in several papers in the C++
 Report (which can be obtained via the following WWW URLs:
@@ -9,7 +11,7 @@ The example consists of the following directories:
 
 		This program talks directly to the server logging
 		daemon.  The server daemon must be started before you
-		can run this test. 
+		can run this test.
 
 	. simple-server
 
@@ -26,7 +28,7 @@ The example consists of the following directories:
 To see a more complex solution that implements the design described in
 the C++ Report articles, please see the:
 
-$ACE_ROOT/netsvcs/{clients,lib,servers} 
+$ACE_ROOT/netsvcs/{clients,lib,servers}
 
 directories.
 
