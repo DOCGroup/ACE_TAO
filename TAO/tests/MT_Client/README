@@ -1,10 +1,9 @@
-
-# $Id$
+$Id$
 
 Description:
 
 	This is a simple test for multi-threaded clients; it just
-creates a simple server process and runs a client with multiple thread 
+creates a simple server process and runs a client with multiple thread
 sharing the same object reference.
 
 Expected output:

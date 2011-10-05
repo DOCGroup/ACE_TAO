@@ -1,3 +1,5 @@
+$Id$
+
 CORBA InterOperable Naming Service :
 -------------------------------------
 
@@ -13,12 +15,12 @@ $(TAO_ROOT)/docs/Options.html
 The InterOp_test :
 
 The test server adds the argument specified with the -i option and the
-IOR of the INS_i servant to the IOR table. The test client calls 
+IOR of the INS_i servant to the IOR table. The test client calls
 resolve_initial_references on argv[1].
 
 TEST 1: Single Profile corbalocs using -ORBInitRef
 
-InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL  
+InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL
 					// -i Adds the ins:IOR mapping to
 					// the ORB table.
 					// -n Use the Naming Service.
@@ -29,7 +31,7 @@ InterOp-Naming> INS_test_client arbit_service \
 
 TEST 2: Multiple Profile corbalocs using -ORBInitRef
 
-InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 
 					// -i Adds the ins:IOR mapping to
 					// the ORB table.
@@ -43,7 +45,7 @@ InterOp-Naming> INS_test_client arbit_service \
 
 TEST 3: Single Profile corbaloc using -ORBDefautlInitRef
 
-InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL  
+InterOp-Naming> INS_test_server -i ins -nd -ORBObjRefStyle URL
 
 					// -i Adds the ins:IOR mapping to
 					// the ORB table.
@@ -54,7 +56,7 @@ InterOp-Naming> INS_test_client ins \
 
 TEST 4: Multiple Profile corbaloc using -ORBDefaultInitRef
 
-InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url  
+InterOp-Naming> INS_test_server -i ins -nd -ORBobjrefstyle url
 
 					// -i Adds the ins:IOR mapping to
 					// the ORB table.

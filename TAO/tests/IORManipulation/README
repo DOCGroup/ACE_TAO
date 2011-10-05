@@ -1,3 +1,5 @@
+$Id$
+
 This program test the basic operation of TAO's IORManipulation
 interface.
 
@@ -10,4 +12,4 @@ Comments:
 
 - The various stages of the test are printed out.  Each
   generated IOR and all error conditions.  Currently
-  the NotFound exception is tested for. 
+  the NotFound exception is tested for.
