@@ -104,48 +104,121 @@ namespace CIAO_TE_ResetTopic_Sender_Impl
   }
 
   void
+  Sender_exec_i::create_samples (void)
+  {
+    for (CORBA::UShort i = 1; i < this->keys_ + 1; ++i)
+      {
+        char key[7];
+        TE_ResetTopicTest *new_key = new TE_ResetTopicTest;
+        ACE_OS::sprintf (key, "KEY_%d", i);
+        new_key->key = CORBA::string_dup(key);
+        new_key->iteration = 0;
+        this->tests_[key] = new_key;
+
+        ::TE_ResetTopic::TE_ResetTopicTestConnector::Updater_var updater =
+          this->ciao_context_->get_connection_info_update_data();
+
+        updater->create_one (*new_key);
+        ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::create_samples - "
+                  "Sample <%C> created\n",
+                  key));
+      }
+  }
+
+  void
+  Sender_exec_i::set_topic_name (const char * topic_name)
+  {
+    if (ACE_OS::strcmp (topic_name, this->old_topic_name_.c_str()) != 0)
+      {
+        this->old_topic_name_ = topic_name;
+        this->set_topic_name_writer (topic_name);
+        this->set_topic_name_updater (topic_name);
+      }
+  }
+
+  void
   Sender_exec_i::set_topic_name_writer (const char * topic_name)
   {
     try
       {
-        if (ACE_OS::strcmp (topic_name, this->old_topic_name_.c_str()) != 0)
+        ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_writer - "
+                  "Setting topic to <%C>\n",
+                  topic_name));
+        ::TE_ResetTopic::TE_ResetTopicTestConnector:: Writer_var writer =
+          this->ciao_context_->get_connection_info_write_data ();
+        if (::CORBA::is_nil (writer.in ()))
           {
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_writer - "
-                      "Setting topic to <%C>\n",
-                      topic_name));
-            this->old_topic_name_ = topic_name;
-            ::TE_ResetTopic::TE_ResetTopicTestConnector:: Writer_var writer =
-              this->ciao_context_->get_connection_info_write_data ();
-            if (::CORBA::is_nil (writer.in ()))
-              {
-                ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
-                                      "Unable to get writer interface\n"));
-                throw ::CORBA::INTERNAL ();
-              }
-            ::CORBA::Object_var cmp = writer->_get_component ();
-            if (::CORBA::is_nil (cmp.in ()))
-              {
-                ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
-                                      "Unable to get component interface\n"));
-                throw ::CORBA::INTERNAL ();
-              }
-            ::TE_ResetTopic::TE_ResetTopicTestConnector::CCM_DDS_Event_var conn =
-              ::TE_ResetTopic::TE_ResetTopicTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
-            if (::CORBA::is_nil (conn.in ()))
-              {
-                ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
-                                      "Unable to narrow connector interface\n"));
-                throw ::CORBA::INTERNAL ();
-              }
-            {
-              ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, guard, this->topic_name_lock_);
-              conn->topic_name (topic_name);
-            }
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                                  "Unable to get writer interface\n"));
+            throw ::CORBA::INTERNAL ();
           }
+        ::CORBA::Object_var cmp = writer->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                                  "Unable to get component interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::TE_ResetTopic::TE_ResetTopicTestConnector::CCM_DDS_Event_var conn =
+          ::TE_ResetTopic::TE_ResetTopicTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        {
+          ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, guard, this->topic_name_lock_);
+          conn->topic_name (topic_name);
+        }
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                    "Caught NonChangeable exception.\n"));
+      }
+  }
+
+  void
+  Sender_exec_i::set_topic_name_updater (const char * topic_name)
+  {
+    try
+      {
+        ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_updater - "
+                  "Setting topic to <%C>\n",
+                  topic_name));
+        ::TE_ResetTopic::TE_ResetTopicTestConnector:: Updater_var updater =
+          this->ciao_context_->get_connection_info_update_data ();
+        if (::CORBA::is_nil (updater.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                                  "Unable to get updater interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::CORBA::Object_var cmp = updater->_get_component ();
+        if (::CORBA::is_nil (cmp.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                                  "Unable to get component interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        ::TE_ResetTopic::TE_ResetTopicTestConnector::CCM_DDS_State_var conn =
+          ::TE_ResetTopic::TE_ResetTopicTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+        if (::CORBA::is_nil (conn.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                                  "Unable to narrow connector interface\n"));
+            throw ::CORBA::INTERNAL ();
+          }
+        {
+          ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, guard, this->topic_name_lock_);
+          conn->topic_name (topic_name);
+        }
+        this->create_samples ();
+      }
+    catch (const ::CCM_DDS::NonChangeable &)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
                     "Caught NonChangeable exception.\n"));
       }
   }
@@ -168,7 +241,7 @@ namespace CIAO_TE_ResetTopic_Sender_Impl
 
             for (::CORBA::UShort iter = 1; iter < this->iterations_ + 1; ++iter)
               {
-                this->set_topic_name_writer (this->topic_name_.c_str ());
+                this->set_topic_name (this->topic_name_.c_str ());
                 ::TE_ResetTopic::TE_ResetTopicTestConnector:: Writer_var writer =
                   this->ciao_context_->get_connection_info_write_data ();
                 sample.iteration = iter;
@@ -178,7 +251,29 @@ namespace CIAO_TE_ResetTopic_Sender_Impl
                             "Sample for topic <%C> written : key <%C> - iteration <%d>\n",
                             this->topic_name_.c_str (), tmp, iter));
 
-                ACE_Time_Value tv (0, 50000);
+                ACE_Time_Value tv (0, 5000);
+                ACE_OS::sleep (tv);
+              }
+          }
+        for (Sample_Table::iterator iter = this->tests_.begin ();
+            iter != this->tests_.end ();
+            ++iter)
+          {
+            for (::CORBA::UShort i = 1; i < this->iterations_ + 1; ++i)
+              {
+                this->set_topic_name (this->topic_name_.c_str ());
+                ::TE_ResetTopic::TE_ResetTopicTestConnector:: Updater_var updater =
+                  this->ciao_context_->get_connection_info_update_data ();
+                iter->second->iteration = i;
+                updater->update_one (iter->second, ::DDS::HANDLE_NIL);
+
+                ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::start_event_test - "
+                            "Sample for topic <%C> updated : key <%C> - iteration <%d>\n",
+                            this->topic_name_.c_str (),
+                            iter->second->key.in (),
+                            i));
+
+                ACE_Time_Value tv (0, 5000);
                 ACE_OS::sleep (tv);
               }
           }
@@ -253,6 +348,7 @@ namespace CIAO_TE_ResetTopic_Sender_Impl
   void
   Sender_exec_i::ccm_activate (void)
   {
+    this->create_samples ();
     if (this->reactor ()->schedule_timer (
                 this->to_handler_,
                 0,
