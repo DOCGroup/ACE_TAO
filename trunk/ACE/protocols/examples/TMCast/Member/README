@@ -1,8 +1,10 @@
-Member example shows how you can build a simple multicast group 
-using transactional multicast (TMCast). Each member can be either 
+$Id$
+
+Member example shows how you can build a simple multicast group
+using transactional multicast (TMCast). Each member can be either
 a sender or a receiver.
 
-The sender sends small messages to the multicast group with a random 
+The sender sends small messages to the multicast group with a random
 wait period in [0, 1] second range. The receiver is simply receiving
 those messages and prints them out.
 
@@ -12,8 +14,8 @@ $ ./member s sender-1 239.255.0.1:10000
 
 Here the first argument ('s') indicates that new member will be
 a sender. The second argument ('sender-1') is an id of the new
-member (each member of the group should have a unique id). And 
-the third argument ('239.255.0.1:10000') specifies IPv4 multicast 
+member (each member of the group should have a unique id). And
+the third argument ('239.255.0.1:10000') specifies IPv4 multicast
 address and port (you can choose you own).
 
 To start the receiver you can execute similar command:
@@ -23,7 +25,7 @@ $ ./member r receiver-1 239.255.0.1:10000
 After you have started both the receiver and the sender you
 should see a sequence of messages printed by the receiver.
 
-Note, since the group can exist with only one member for a 
+Note, since the group can exist with only one member for a
 very short period of time you should start first two members
 virtually at the same time. See TMCast documentation for more
 information about why it behaves this way.
@@ -32,5 +34,5 @@ You may want to add more than one sender to the group if you
 want to see how TMCast operates in a totally-ordered mode.
 
 
--- 
+--
 Boris Kolpackov <boris@dre.vanderbilt.edu>
