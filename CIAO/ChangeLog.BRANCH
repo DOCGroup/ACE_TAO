@@ -1,3 +1,45 @@
+Wed Oct  5 12:29:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+          Reset the components in the ccm_remove method itself since this is
+          the only place where these components need to be reset.
+
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+          Applied coding conventions.
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.idl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/ReceiverDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver.idl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/SenderDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/run_test.pl:
+          A new test which tests the reset of topic names in the state connector.
+
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+          Removed unnecessary logging
+
 Wed Oct  5 07:58:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
@@ -23,7 +65,7 @@ Wed Oct  5 07:58:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors:
         * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/Plan.cdp:
         * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/run_test.pl:
-          Reset of topic name during write and listen operations. 
+          Reset of topic name during write and listen operations.
 
 Mon Oct  3 14:18:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
