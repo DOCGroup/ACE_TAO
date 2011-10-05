@@ -133,14 +133,8 @@ be_home::destroy (void)
   delete [] this->relative_skel_name_;
   this->relative_skel_name_ = 0;
 
-  delete [] this->remote_proxy_impl_name_;
-  this->remote_proxy_impl_name_ = 0;
-
   delete [] this->direct_proxy_impl_name_;
   this->direct_proxy_impl_name_ = 0;
-
-  delete [] this->full_remote_proxy_impl_name_;
-  this->full_remote_proxy_impl_name_ = 0;
 
   delete [] this->full_direct_proxy_impl_name_;
   this->full_direct_proxy_impl_name_ = 0;

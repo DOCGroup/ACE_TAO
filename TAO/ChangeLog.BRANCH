@@ -1,3 +1,17 @@
+Wed Oct  5 18:42:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be/be_visitor_operation/base_proxy_impl_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+          More cleanup
+
+        * TAO_IDL/be_include/be_visitor_operation/base_proxy_impl_ch.h:
+        * TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+          Removed these files.
+
 Wed Oct  5 18:34:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_home.cpp:
