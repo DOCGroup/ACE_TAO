@@ -1,33 +1,35 @@
 /**
 
+$Id$
+
 @page IDL Inherited Operation Test README File
 
   This test checks that an IDL compiler bug, fixed by
-  
+
   Fri Mar 20 16:04:58 UTC 2009  Jeff Parsons <j.parsons@vanderbilt.edu>
 
   never gets re-introduced. The IDL declarations that caused the
   original bug are:
-  
+
   - A base interface, with an operation, is declared inside 2
-    nested modules.   
+    nested modules.
   - The nested modules are closed.
   - The nested modules are reopened, and forward declaration of
-    the base interface appears inside.  
+    the base interface appears inside.
   -  The nested modules are closed.
   - The outer module is reopened, and a derived interface
     declaration appears inside, using the partially scoped
     name of the base interface.
-    
+
   This type of IDL caused the base interface operation to be missing
   from the operation table in generated code for the derived
   interface. Client calls to this operation on a derived object
   would result in a BAD_OPERATION exception.
-  
+
   The test is here instead of in the IDL_Test directory because
   the bug can be detected only at runtime, by a remote call.
   IDL_Test is designed to catch only:
-  
+
   - Error messages incorrectly caused by legal IDL
   - Errors from incompilable generated code
   - Incorrect repository IDs, fetched by a local stub call

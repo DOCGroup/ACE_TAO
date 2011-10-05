@@ -1,9 +1,11 @@
 /**
 
+$Id$
+
 @page OBV/Forward Test README File
 
-        This is a very simple test to show and verify 
-        forward declaration of valuetypes. 
+        This is a very simple test to show and verify
+        forward declaration of valuetypes.
 
         To run the test either use the run_test.pl script:
 

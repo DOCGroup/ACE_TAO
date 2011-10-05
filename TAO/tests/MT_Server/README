@@ -1,9 +1,9 @@
-# $Id$
+$Id$
 
 Description:
 
 	This is a simple test for a thread-pool server.  It creates a
-server process with a variable number of threads, multiple clients can 
+server process with a variable number of threads, multiple clients can
 send requests to it, the requests are handled in different threads.
 
 Expected output:
