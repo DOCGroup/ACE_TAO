@@ -50,15 +50,11 @@
 const char *be_interface::suffix_table_[] =
 {
   "_Proxy_Impl",
-  "_Proxy_Broker"
 };
 
 const char *be_interface::tag_table_[] =
 {
-  "_ThruPOA",
   "_Direct",
-  "_Remote",
-  "_Strategized",
   "_TAO_"
 };
 
