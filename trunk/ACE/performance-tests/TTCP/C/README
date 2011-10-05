@@ -1,3 +1,4 @@
+$Id$
 
 		TTCP for c_version and ACE-wrappers
 		----------------------------------------------------
@@ -8,10 +9,10 @@ code, you have to do the following:
 
 1. You should have ACE installed in your system and configured
    correctly. (see the reference manual for installation and
-   configuration procedure) 
+   configuration procedure)
 
 2. Copy this directory (ttcp) in the same directory structure to your
-   disk space. 
+   disk space.
 
 3. setup the following environment parameters (before compilation stage):
    ACE_ROOT, LD_LIBRARY_PATH.

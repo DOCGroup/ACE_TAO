@@ -1,3 +1,5 @@
+$Id$
+
 This directory provides programs that measure the round trip latency
 of synchronous octet messaging using ACE wrapper-facades for the SCTP
 protocol. Currently these programs provide the only example code on
@@ -7,7 +9,7 @@ directory.
 
 SOCK_STREAM_clt and SOCK_STREAM_srv use the SOCK_STREAM service
 provided by SCTP via ACE's SOCK_Connector, SOCK_Stream,
-SOCK_Association wrapper-facade classes. 
+SOCK_Association wrapper-facade classes.
 
 SOCK_SEQPACK_clt and SOCK_SEQPACK_srv use the SOCK_SEQPACKET service
 provided by SCTP via ACE's SOCK_SEQPACK_Connector,
@@ -26,25 +28,25 @@ LKSCTP implementations. Please read additional README* files listed below.
     Impl.       Type           Characteristics          Facades
  ------------------------------------------------------------------------------
  OpenSS7     SOCK_SEQPACKET    {Connected,      ACE_SOCK_SEQPACKET_Acceptor
-                                Reliable,       ACE_SOCK_SEQPACKET_Connector 
+                                Reliable,       ACE_SOCK_SEQPACKET_Connector
                                 Messages}       ACE_SOCK_SEQPACKET_Association
- 
+
  OpenSS7      SOCK_STREAM      {Connected,      ACE_SOCK_Acceptor(IPPROTO_SCTP)
                                 Reliable,       ACE_SOCK_Connector(IPPROTO_SCTP)
                                 Byte Stream}    ACE_SOCK_Stream(IPPROTO_SCTP)
- 
+
  OpenSS7       SOCK_RDM        {Connectionless,      NOT IMPLEMENTED IN ACE
-                                Reliable,     
-                                Messages}     
- 
- 
- LKSCTP      SOCK_SEQPACKET    {Connectionless,         NOT USED IN ACE  
-                                UNRELIABLE,        
-                                Messages}        
- 
+                                Reliable,
+                                Messages}
+
+
+ LKSCTP      SOCK_SEQPACKET    {Connectionless,         NOT USED IN ACE
+                                UNRELIABLE,
+                                Messages}
+
  LKSCTP      SOCK_STREAM      {Connected,       ACE_SOCK_SEQPACKET_Acceptor
-                                Reliable,       ACE_SOCK_SEQPACKET_Connector 
-                                Messages}       ACE_SOCK_SEQPACKET_Association 
+                                Reliable,       ACE_SOCK_SEQPACKET_Connector
+                                Messages}       ACE_SOCK_SEQPACKET_Association
                                                 ACE_SOCK_Acceptor(IPPROTO_SCTP)
                                                 ACE_SOCK_Connector(IPPROTO_SCTP)
                                                 ACE_SOCK_Stream(IPPROTO_SCTP)
@@ -63,9 +65,9 @@ located in this directory.
 
  README.SCTP_PERF_TEST - Detailed description on how to use the
                          performance tests and the run_spectrum.pl
-                         script contained in this directory. 
+                         script contained in this directory.
                          Discussion of the baseline performance
-                         results obtained by LM ATL. 
+                         results obtained by LM ATL.
 
  THANKS - Documents all the people who contributed to the development
           of the ACE wrapper-facades for SCTP and the SCIOP (SCTP
