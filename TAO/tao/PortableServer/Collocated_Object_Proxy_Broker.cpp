@@ -21,7 +21,7 @@ namespace TAO
     // Which collocation strategy should we use?
     if (stub != 0 &&
         stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
-          == TAO_ORB_Core::THRU_POA)
+          == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
       {
         TAO::Portable_Server::Servant_Upcall servant_upcall (
           stub->servant_orb_var ()->orb_core ());
@@ -59,7 +59,7 @@ namespace TAO
         // Which collocation strategy should we use?
         if (stub != 0 &&
             stub->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+              ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
                 stub->servant_orb_var ()->orb_core ());
@@ -97,7 +97,7 @@ namespace TAO
     // Which collocation strategy should we use?
     if (stub != 0 &&
         stub->servant_orb_var ()->orb_core ()
-        ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
       {
         TAO::Portable_Server::Servant_Upcall servant_upcall (
           target->_stubobj ()->servant_orb_var ()->orb_core ());
@@ -135,7 +135,7 @@ namespace TAO
         // Which collocation strategy should we use?
         if (stub != 0 &&
             stub->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+              ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
                 stub->servant_orb_var ()->orb_core ());
@@ -174,7 +174,7 @@ namespace TAO
         // Which collocation strategy should we use?
         if (stub != 0 &&
             stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
-              == TAO_ORB_Core::THRU_POA)
+              == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
                 target->_stubobj ()->servant_orb_var ()->orb_core ());
