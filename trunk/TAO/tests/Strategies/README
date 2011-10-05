@@ -1,11 +1,11 @@
-// $Id$
+$Id$
 
 	This test helps show the various ways in which the default and
-advanced TAO Strategies can be dynamically loaded. 
+advanced TAO Strategies can be dynamically loaded.
 
 The default TAO strategies are defined in tao/default_resource.cpp and
 the advanced TAO strategies are defined in
-tao/Strategies/advanced_resource.cpp. 
+tao/Strategies/advanced_resource.cpp.
 
 	The advanced TAO strategies can be loaded dynamically or
 statically linked. To load these strategies dynamically, we need to
@@ -14,7 +14,7 @@ statically, we need to link the library and include the header file.
 
 	This test shows a simple case where in only the default
 strategies are used. It also shows the advanced case where in the
-advanced strategies are used. 
+advanced strategies are used.
 
 	The test can be run using the perl script available or
 manually.

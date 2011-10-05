@@ -1,12 +1,14 @@
 /**
 
+$Id$
+
 @page Connection_Timeout Test README File
 
 	The simplest possible test for the proprietary
 Connection_Timeouts. This test sets the connection timeouts through a
 policy. The client tries to connect to an non-existent server. The
 timeout for the connection is controlled by the value supplied by that
-policy. 
+policy.
 
 $ ./run_test.pl
 

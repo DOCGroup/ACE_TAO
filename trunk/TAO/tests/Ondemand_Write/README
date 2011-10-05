@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Hello Test README File
 
 	The simplest possible test for TAO.  This is a very simple
@@ -26,7 +28,7 @@ anything useful, i.e. chances are that this test will always pass.
   type codes or Anys.
 
 	Please refrain from "improving", extending or expanding this
-test, if you need to change 
+test, if you need to change
 
 	To run the test use the run_test.pl script:
 

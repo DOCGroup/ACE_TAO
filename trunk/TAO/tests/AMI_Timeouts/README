@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Description:
 This is a simple test for AMI callback model in combination with
@@ -9,7 +9,7 @@ Use TAO_HAS_CORBA_MESSAGING
 and TAO_HAS_AMI_CALLBACK
 to compile TAO. This enables the AMI code in it.
 
-Use -GC on the TAO IDL compiler to generate code for AMI callbacks. 
+Use -GC on the TAO IDL compiler to generate code for AMI callbacks.
 
 Usage:
 =====
