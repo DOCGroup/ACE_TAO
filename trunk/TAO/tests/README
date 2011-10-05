@@ -9,12 +9,12 @@ how to run the following tests:
           This is a simple test for AMI callback model.
 
         . AMI_Buffering
-        
+
           Test the buffering constraint policy when applied to AMI
 	  requests.
 
         . AMI_Timeouts
-        
+
           This is a simple test for AMI callback model in combination with
           timeouts (relative roundtrip timeout policy).
 
@@ -59,7 +59,7 @@ how to run the following tests:
 
 	  TAO-1.1.12 leaked handles, this test tries to verify that
 	  the problem does not happen any longer by connecting a
-	  client to 1000 servers. 
+	  client to 1000 servers.
 
         . Codec
 
@@ -74,7 +74,7 @@ how to run the following tests:
         . Collocation_Opportunities
 
           A test for making sure the ORB avails all collocation
-          opportunities it is presented with.                   
+          opportunities it is presented with.
 
         . Connection_Purging
 
@@ -82,7 +82,7 @@ how to run the following tests:
           and checks whether cached handlers are purged effectively
           when the process runs out of descriptors.
 
-        . Connection_Failure 
+        . Connection_Failure
 
           A simple test for connection failures. The client tries to
           connect to an non-existent server.
@@ -110,7 +110,7 @@ how to run the following tests:
 	  unloading (i.e. finalization).
 
         . DSI_Gateway
-                    
+
           A simple test for the DSI/DII gateway support. TAO can
           optimize some demarshaling/marshaling and data copying in
           the implementation of DSI/DII based gateways.
@@ -132,12 +132,12 @@ how to run the following tests:
           This tests the methods work_pending() and perform_work()
           methods of the orb.
 
-        . Exposed_Policies          
-          
+        . Exposed_Policies
+
           This directory contains a test case used to verify that the
           client exposed policies get embedded correctly in the IOR
           and exposed to the client in the object reference.
-          
+
         . FL_Cube
 
           Test the integration of the FL toolkit and TAO.
@@ -166,7 +166,7 @@ how to run the following tests:
           main.cpp.
 
         . ior_corbaloc
-        
+
           This is test to exercise the corbaname: style URL.
 
         . IORManipulation
@@ -187,8 +187,8 @@ how to run the following tests:
           threads (threads making remote calls) starting before event
           loop threads (threads running the event loop).
 
-        . LongUpcalls          
-          
+        . LongUpcalls
+
 	  Regression test for bugs #175 and #575
 
         . MProfile
@@ -218,10 +218,10 @@ how to run the following tests:
           Test the ORB timeouts in multithreaded configurations.
 
         . Multiple
-                    
+
           This test make sure that the collocation scheme works fine
           in case of diamond shaped multiple inheritance.
-          
+
         . Multiple_Inheritance
 
           This test exercises IDL interfaces that inherit from
@@ -256,16 +256,16 @@ how to run the following tests:
 	  sizes and timeouts work correctly.
 
         . ORB_destroy
-        
+
           A simple ORB destruction test.
-                    
+
         . ORB_init
 
           The ORB_init test simply verifies that the CORBA::ORB_init()
           call behaves as defined in the OMG CORBA specification.
 
-        . Object_Loader          
-          
+        . Object_Loader
+
 	  Regression test for the DLL-style IORs.
 
         . OctetSeq
@@ -284,13 +284,13 @@ how to run the following tests:
           Tests all the features of TAO's protocol engine.
 
         . Policies
-        
-          This is a stress test for the ORB's Policy interfaces.  
-                  
+
+          This is a stress test for the ORB's Policy interfaces.
+
         . Portable_Interceptors
-        
+
           A series of tests for the Portable Interceptors feature.
-          
+
         . QtTests
 
           This example illustrates the usage of the QtReactor from TAO.
@@ -308,11 +308,11 @@ how to run the following tests:
           can be found in $TAO_ROOT/performance-tests/RTCorba.
 
         . Single_Read
-        
+
           This is a stress test for TAO's "single read" feature.
 
         . Server_Leaks
-        
+
           Try to make the server-side leak resources by connecting and
 	  disconnecting multiple clients.
 
@@ -322,7 +322,7 @@ how to run the following tests:
           specify a proxy in plaec of the default proxy (stub).
 
         . Strategies
-          
+
           This test helps show the various ways in which the default
           and advanced TAO strategies can be dynamically loaded.
 
