@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 On_Demand_Activation Tests:
 ==========================
@@ -64,7 +64,7 @@ Servant Activator:
 
 2. Get the IOR for "first test"  from the server output .
 
-3. Run client -k IOR	
+3. Run client -k IOR
 
 4. You should get an output
 
