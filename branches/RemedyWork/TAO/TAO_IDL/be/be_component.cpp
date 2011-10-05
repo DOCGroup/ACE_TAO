@@ -369,19 +369,6 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
 }
 
 void
-be_component::gen_parent_collocation (TAO_OutStream *os)
-{
-  AST_Component *base = this->base_component ();
-
-  if (base != 0)
-    {
-      *os << be_nl
-          << "this->" << base->flat_name ()
-          << "_setup_collocation" << " ();";
-    }
-}
-
-void
 be_component::mirror_scan (AST_PortType *pt)
 {
   AST_Uses *u = 0;

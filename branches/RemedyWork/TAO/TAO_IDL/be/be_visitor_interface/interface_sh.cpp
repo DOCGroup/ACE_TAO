@@ -90,8 +90,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     {
       *os << be_nl_2
           << "class " << node->direct_proxy_impl_name ()
-          << ";" << be_nl
-          << "class " << node->strategized_proxy_broker_name ()
           << ";";
     }
 
@@ -224,25 +222,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   be_visitor_context ctx (*this->ctx_);
 
-  if (be_global->gen_direct_collocation ())
-    {
-      ctx = *this->ctx_;
-      // Generate strategized proxy broker.
-      be_visitor_interface_strategized_proxy_broker_sh ispb_visitor (&ctx);
-
-      if (node->accept (&ispb_visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_interface_sh::")
-                             ACE_TEXT ("visit_interface - ")
-                             ACE_TEXT ("codegen for strategized ")
-                             ACE_TEXT ("proxy broker class failed\n")),
-                            -1);
-        }
-    }
-
   // Generate the collocated class.
-
   ctx = *this->ctx_;
 
   if (be_global->gen_direct_collocation ())

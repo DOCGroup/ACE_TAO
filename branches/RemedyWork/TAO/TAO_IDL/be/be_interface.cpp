@@ -669,6 +669,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
   // Generate the constructor from stub and servant.
   if (!this->is_local ())
     {
+      bool const abstract = this->is_abstract ();
       *os << be_nl_2
           << "ACE_INLINE" << be_nl;
       *os << this->name () << "::"
@@ -677,7 +678,8 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *oc)" << be_uidt_nl
+          << "TAO_ORB_Core *" << (abstract ? "" : "oc") << ")"
+          << be_uidt_nl
           << ": ";
 
       bool the_check =
@@ -740,29 +742,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           *os << "::CORBA::Object (objref, _tao_collocated, servant, oc)";
         }
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-        {
-          *os << "," << be_nl
-              << "the" << this->base_proxy_broker_name () << "_ (0)"
-              << be_uidt << be_uidt;
-        }
-
-      *os << be_nl << "{" << be_idt_nl;
-
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-        {
-          *os << "this->" << this->flat_name ()
-              << "_setup_collocation ();";
-        }
-
-      if (this->is_abstract ())
-        {
-          *os << be_nl
-              << "ACE_UNUSED_ARG (oc);";
-        }
-
-      *os << be_uidt_nl
-          << "}";
+      *os << be_uidt << be_uidt_nl << "{" << be_nl << "}";
     }
 }
 
@@ -3041,34 +3021,6 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
     }
 
   return 0;
-}
-
-void
-be_interface::gen_parent_collocation (TAO_OutStream *os)
-{
-  long n_parents = this->n_inherits ();
-  bool has_parent = false;
-  AST_Type **parents = this->inherits ();
-
-  if (n_parents > 0)
-    {
-      for (long i = 0; i < n_parents; ++i)
-        {
-          be_interface *inherited =
-            be_interface::narrow_from_decl (parents[i]);
-
-          if (!has_parent)
-            {
-              *os << be_nl;
-            }
-
-          has_parent = true;
-
-          *os << be_nl
-              << "this->" << inherited->flat_name ()
-              << "_setup_collocation" << " ();";
-        }
-    }
 }
 
 // =================================================================

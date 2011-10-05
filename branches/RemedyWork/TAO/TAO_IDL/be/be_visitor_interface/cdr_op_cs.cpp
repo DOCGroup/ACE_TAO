@@ -127,15 +127,14 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   *os << be_idt << be_idt_nl
       << "obj.in ()," << be_nl;
 
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+  *os << "TAO::TAO_CO_NONE";
+  if (be_global->gen_direct_collocation())
     {
-      *os << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer";
+      *os << " | TAO::TAO_CO_DIRECT_POA_STRATEGY";
     }
-  else
+  if (be_global->gen_thru_poa_collocation())
     {
-      *os << "0";
+      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
     }
 
   *os << ");" << be_uidt << be_uidt_nl << be_uidt_nl;

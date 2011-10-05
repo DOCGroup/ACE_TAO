@@ -125,6 +125,15 @@ public:
                      TAO::Collocation_Strategy s,
                      const size_t length = 0) = 0;
 
+  virtual void _collocated_dispatch (::CORBA::Object_ptr obj,
+                                     ::CORBA::Object_out forward_obj,
+                                     bool &is_forwarded,
+                                     TAO::Argument ** args,
+                                     int num_args,
+                                     const char * op,
+                                     size_t op_len,
+                                     TAO::Collocation_Strategy strategy) = 0;
+
 protected:
 
   /// Default constructor, only derived classes can be created.

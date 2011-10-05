@@ -131,17 +131,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
-
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
-        {
-          *os << "if (this->the_TAO_" << parent->local_name ()
-              << "_Proxy_Broker_ == 0)" << be_idt_nl
-              << "{" << be_idt_nl
-              << parent->flat_name () << "_setup_collocation ("
-              << ");" << be_uidt_nl
-              << "}" << be_uidt;
-        }
     }
 
   // Includes the reply handler, but we have to add 1 for the retval anyway.

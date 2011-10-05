@@ -236,13 +236,6 @@ CORBA::Object::_is_collocated (void) const
   return false;
 }
 
-void
-CORBA::Object::set_collocated_servant (TAO_Abstract_ServantBase *b)
-{
-  this->protocol_proxy_->collocated_servant (b);
-  this->protocol_proxy_->is_collocated (true);
-}
-
 CORBA::Boolean
 CORBA::Object::_is_local (void) const
 {

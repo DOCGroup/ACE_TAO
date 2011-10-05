@@ -11,7 +11,6 @@
 #include "tao/Collocated_Invocation.h"
 #include "tao/Transport.h"
 #include "tao/Transport_Mux_Strategy.h"
-#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/TAOC.h"
 #include "tao/SystemException.h"
@@ -74,20 +73,24 @@ namespace TAO
         // Default we go to remote
         Collocation_Strategy strat = TAO_CS_REMOTE_STRATEGY;
 
-        // If we have a collocated proxy broker we look if we maybe
+        // If we have the opportunity for collocation we maybe
         // can use a collocated invocation.  Similarly, if the
         // target object reference contains a pointer to a servant,
         // the object reference also refers to a collocated object.
-        if (cpb_ != 0 || effective_target->_servant () != 0)
+        if (this->collocation_opportunity_ != TAO::TAO_CO_NONE &&
+            effective_target->_servant () != 0)
           {
             // get the ORBStrategy
-            strat = TAO_ORB_Core::collocation_strategy (effective_target.in ());
-            if (strat == TAO_CS_BEST_STRATEGY)
+            // pass the collocation opportunity here to orb core
+            strat = TAO_ORB_Core::collocation_strategy (
+                      this->collocation_opportunity_,
+                      effective_target.in ());
+//            if (strat == TAO_CS_BEST_STRATEGY)
               {
                 // check if TAO_CS_DIRECT_STRATEGY is possible
-                if (cpb_ != 0)
+                if (this->collocation_opportunity_ & TAO::TAO_CO_DIRECT_POA_STRATEGY)
                   strat = TAO_CS_DIRECT_STRATEGY;
-                else if (effective_target->_servant () != 0)
+                else if (this->collocation_opportunity_ & TAO::TAO_CO_THRU_POA_STRATEGY)
                   strat = TAO_CS_THRU_POA_STRATEGY;
                 else
                   {
@@ -169,22 +172,17 @@ namespace TAO
                                            Collocation_Strategy strat)
   {
     // if (effective_target->_servant () == 0) exception in all cases
+
     // To make a collocated call we must have a collocated proxy broker, the
     // invoke_i() will make sure that we only come here when we have one
-    if ((strat == TAO_CS_DIRECT_STRATEGY) && (cpb_ == 0))
+    if ((effective_target->_servant () == 0))
+//        ((this->collocation_opportunity_ & TAO::TAO_CO_DIRECT_POA_STRATEGY) ==0) ||
+  //      ((this->collocation_opportunity_ & TAO::TAO_CO_THRU_POA_STRATEGY)))
       throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO::VMCID,
           EINVAL),
         CORBA::COMPLETED_NO);
-
-    if ((strat == TAO_CS_THRU_POA_STRATEGY) &&
-        (effective_target->_servant () == 0))
-       throw ::CORBA::INTERNAL (
-         CORBA::SystemException::_tao_minor_code (
-           TAO::VMCID,
-           EINVAL),
-         CORBA::COMPLETED_NO);
 
     // if cpb than call check_strategy method to determine whether the generated code works
     // Initial state
@@ -196,7 +194,7 @@ namespace TAO
                                     details,
                                     this->type_ == TAO_TWOWAY_INVOCATION);
 
-    status = coll_inv.invoke (this->cpb_, strat);
+    status = coll_inv.invoke (strat);
 
     if (status == TAO_INVOKE_RESTART &&
         (coll_inv.reply_status () == GIOP::LOCATION_FORWARD ||
