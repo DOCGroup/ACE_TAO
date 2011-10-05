@@ -9,10 +9,10 @@ File: DevGuideExamples/PortableInterceptor/Auth/README
 This directory contains an example illustrating client and server
 Request Interceptors.
 
-This is a simple insecure authentication example that is based on 
-the Messenger example in GettingStarted directory.  A message is 
-sent by MessengerClient and displayed by MessengerServer.  A client-side 
-portable interceptor adds a username to each request sent to the server. 
+This is a simple insecure authentication example that is based on
+the Messenger example in GettingStarted directory.  A message is
+sent by MessengerClient and displayed by MessengerServer.  A client-side
+portable interceptor adds a username to each request sent to the server.
 A server-side interceptor verifies that the supplied username is valid.
 
 How to Run
@@ -20,12 +20,12 @@ How to Run
 
 To start the server:
 ------------------
-./MessengerServer 
+./MessengerServer
 
 
 To start the client:
 ------------------
-./MessengerClient 
+./MessengerClient
 
 
 
