@@ -1,4 +1,4 @@
-$Id $
+$Id$
 
 ============================ TAO Time Service==============================
 
@@ -8,7 +8,7 @@ client. The Time Service interface has been implemented as two servants:
 the clerk and the server. Clients who wish to use the service talk to
 clerks and the clerks in turn keep their time synchronized
 globally. The clerks do this by talking to the servers running on
-different machines. 
+different machines.
 
 There needs to be at least one time server running in the network. The Clerks
 update their time periodically from the servers. The servers and clerks
@@ -73,12 +73,12 @@ more elaborate distributed time synchronization algorithm.
 Version Updates : (10th March, 1999)
 -----------------
 
-The TAO Time Service has been updated to include the timezone information 
-in the Universal Time Object. This object now also has an inaccuracy estimate 
-in it. The inaccuracy is a measure of the skew in the synchronization of 
+The TAO Time Service has been updated to include the timezone information
+in the Universal Time Object. This object now also has an inaccuracy estimate
+in it. The inaccuracy is a measure of the skew in the synchronization of
 the clerks time. It is the difference between the highest and the lowest times
-from the servers that the clerk synchronizes its time with. The high-inaccuracy 
-and the low-inaccuracy fields are also being calculated from the inaccuracy as 
+from the servers that the clerk synchronizes its time with. The high-inaccuracy
+and the low-inaccuracy fields are also being calculated from the inaccuracy as
 follows :
 
 		Inaccuracy 64-bits

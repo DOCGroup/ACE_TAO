@@ -1,9 +1,9 @@
 $Id$
 
-This client and server in this test both load the UIPMC protocol plug in 
+This client and server in this test both load the UIPMC protocol plug in
 (see svc.conf).
 
-The client creates a MIOP object ref and tests that it can be marshalled 
+The client creates a MIOP object ref and tests that it can be marshalled
 and demarshalled without problems by passing it over the wire to the server.
 
 _Expected successful result_:

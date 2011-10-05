@@ -25,8 +25,8 @@ problem and providing non-automated test code.
 
 To build this test, the TAO library, the TypeCodeFactory
 library, the Interface Repository (the last two found in
-TAO/orbsvcs/IFR_Service), and these test files must all be built. 
-In addition, the Interface Repository requires the TAO_Svc_Utils 
+TAO/orbsvcs/IFR_Service), and these test files must all be built.
+In addition, the Interface Repository requires the TAO_Svc_Utils
 library in TAO/orbsvcs/orbsvcs.
 
 To run this test, either use the Perl script run_test.pl, or
@@ -34,7 +34,7 @@ To run this test, either use the Perl script run_test.pl, or
 
 
 (Windows)
-start the Interface Repository by typing 
+start the Interface Repository by typing
 
  ..\..\..\IFR_Service\IFR_Service
 
@@ -50,7 +50,7 @@ and then
  IFR_Inheritance_Test -ORBInitRef InterfaceRepository=file://if_repo.ior
 
 (Unix)
-in this directory, type 
+in this directory, type
 
  ../../../IFR_Service/IFR_Service &
 
@@ -68,8 +68,8 @@ and use the default multicast address for the InterfaceRepository.
 
  ../../../IFR_Service/IFR_Service -m 1
 
-and 
+and
 
- ./IFR_Inheritance_Test  
+ ./IFR_Inheritance_Test
 
 - Scott Harris <harris_s@ociweb.com>

@@ -22,8 +22,8 @@ struct_test(), union_test() and exception_test().
 
 To build this test, the TAO library, the TypeCodeFactory
 library, the Interface Repository (the last two found in
-TAO/orbsvcs/IFR_Service), and these test files must all be built. 
-In addition, the Interface Repository requires the TAO_Svc_Utils 
+TAO/orbsvcs/IFR_Service), and these test files must all be built.
+In addition, the Interface Repository requires the TAO_Svc_Utils
 library in TAO/orbsvcs/orbsvcs.
 
 To run this test, either use the Perl script run_test.pl, or
@@ -31,7 +31,7 @@ To run this test, either use the Perl script run_test.pl, or
 
 
 (Windows)
-start the Interface Repository by typing 
+start the Interface Repository by typing
 
  ..\..\..\IFR_Service\IFR_Service
 
@@ -40,7 +40,7 @@ in one window, then (in another window)
  IFR_Test -ORBInitRef InterfaceRepository=file://if_repo.ior
 
 (Unix)
-in this directory, type 
+in this directory, type
 
  ../../../IFR_Service/IFR_Service &
 
@@ -55,12 +55,12 @@ and use the default multicast address for the InterfaceRepository.
 
  ../../../IFR_Service/IFR_Service -m 1
 
-and 
+and
 
  ./IFR_Test
 
 You may add any of the options below to the IFR_Test command line. Both the
-Perl script and the test executable have the same command line options. 
+Perl script and the test executable have the same command line options.
 They are:
 
 	-d	Outputs the results of queries along with a string
@@ -107,7 +107,7 @@ The IFR server is started in this test with locking enabled. Even
 though the test itself is single-threaded, using this option will
 ensure that future modifications to IFR code don't cause deadlocks.
 
-More information about the Interface Repository can be found in 
+More information about the Interface Repository can be found in
 TAO/docs/releasenotes.index.html.
 
 -Jeff Parsons <parsons@cs.wustl.edu>
