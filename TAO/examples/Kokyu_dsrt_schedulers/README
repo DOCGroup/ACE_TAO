@@ -1,32 +1,34 @@
+$Id$
+
 Design approaches for the Kokyu based DSRT scheduler/dispatcher
 --------------------------------------------------------
 
 The DSRT schedulers in this directory use the Kokyu DSRT
 dispatching classes present in $ACE_ROOT/Kokyu. These
-act as wrappers/adapters around the Kokyu DSRT dispatcher. 
+act as wrappers/adapters around the Kokyu DSRT dispatcher.
 The Kokyu DSRT dispatcher is responsible for scheduling
 threads which ask the dispatcher to schedule themselves.
 Currently there are two implementations for the Kokyu
 DSRT dispatcher. One uses a condition-variable based
 approach for scheduling threads and the other manipulates
 priorities of threads and relies on the OS scheduler for
-dispatching the threads appropriately. 
+dispatching the threads appropriately.
 
 CV-based approach
 -----------------
 In this approach, it is assumed that the threads "yield"
-on a regular basis to the scheduler by calling 
+on a regular basis to the scheduler by calling
 update_scheduling_segment. Only one thread is running at
-any point in time. All the other threads are blocked 
+any point in time. All the other threads are blocked
 on a condition variable. When the currently running
-thread yields, it will cause the condition variable 
+thread yields, it will cause the condition variable
 to be signalled. All the eligible threads are stored
-in a scheduler queue (rbtree), the most eligible thread 
+in a scheduler queue (rbtree), the most eligible thread
 determined by the scheduling discipline. This approach
-has the drawback that it requires a cooperative 
-threading model, where threads yield voluntarily 
-on a regular basis. The application threads are 
-responsible for doing this voluntary yielding. 
+has the drawback that it requires a cooperative
+threading model, where threads yield voluntarily
+on a regular basis. The application threads are
+responsible for doing this voluntary yielding.
 
 OS-based approach
 -----------------
@@ -43,29 +45,29 @@ while bumping down the priority of the currently running
 thread, if it is not the most eligible. There are four
 priority levels required for this mechanism to work,
 listed in descending order of priorities. For example,
-a thread running at Active priority will preempt a 
-thread running at Inactive priority level. 
+a thread running at Active priority will preempt a
+thread running at Inactive priority level.
 
-1. Executive priority - priority at which the scheduler 
+1. Executive priority - priority at which the scheduler
    executive thread runs.
-2. Blocked priority - this is the priority to which 
+2. Blocked priority - this is the priority to which
    threads about to block on remote calls will be bumped
    up to.
-3. Active priority - this is the priority to which 
+3. Active priority - this is the priority to which
    the most eligible thread is set to.
 4. Inactive priority - this is the priority to which
    all threads except the most eligible thread is set
    to.
 
-As soon as a thread asks to be scheduled, a 
+As soon as a thread asks to be scheduled, a
 wrapper object is created and inserted into the queue.
 This object carries the qos (sched params) associated
 with that thread. A condition variable is signalled
-to inform the executive thread that the queue is 
-"dirty". The scheduler thread picks up the most 
+to inform the executive thread that the queue is
+"dirty". The scheduler thread picks up the most
 eligble one and sets its priority to "active" and
-sets the currently running thread priority to 
-"inactive". 
+sets the currently running thread priority to
+"inactive".
 
 The drawback to this approach is that it relies on
 the OS scheduler to dispatch the threads. Also,
@@ -79,10 +81,10 @@ threads and this could cause priority inversions.
 How to write a new DSRT scheduler using Kokyu
 ---------------------------------------------
 One can use one of the schedulers as a starting
-point. The variation points are 
+point. The variation points are
 
 1. The scheduler parameters that need to be propagated
-   along with the service context. 
+   along with the service context.
 2. The QoS comparison function, that determines which
    thread is more eligible.
 
@@ -90,13 +92,13 @@ To aid (1), we have created a Svc_Ctxt_DSRT_QoS idl
 interface (see ./Kokyu_qos.pidl). This interface
 currently has the necessary things to be propagated
 for FP, MIF and MUF schedulers. This can be altered
-if necessary to accomodate new sched params. The 
+if necessary to accomodate new sched params. The
 idea here is to let the IDL compiler generate the
 marshalling code (including Any operators) so that
-these parameters can be shipped across in the 
-service context in an encapsulated CDR. 
+these parameters can be shipped across in the
+service context in an encapsulated CDR.
 
-To create customized QoS comparator functions, we 
+To create customized QoS comparator functions, we
 used the idea of C++ traits to let the user define
 customized comparator functions. For example, the
 MIF scheduler uses the following traits class.
@@ -130,12 +132,12 @@ MIF scheduler uses the following traits class.
 
 The idea of traits makes the Kokyu dispatcher more flexible
 in terms of creating new schedulers. For example, the
-Kokyu classes do not care about what concrete type 
+Kokyu classes do not care about what concrete type
 Guid is. It could be an OctetSequence for some applications,
 whereas it could be an int for some others. The exact type
 is defined by the application (in this case, the MIF scheduler)
 using the traits class. In the above traits class the
-Guid's type is defined to be an octet sequence (indirectly). 
+Guid's type is defined to be an octet sequence (indirectly).
 The Kokyu dispatcher expects the following typedef's to
 be present in the traits class:
 

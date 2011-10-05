@@ -1,3 +1,5 @@
+$Id$
+
 ******************************************************************************
 CALLBACK QUOTER TEST EXAMPLE                           -- Kirthika Parameswaran
                                                           <kirthika@cs.wustl.edu>
@@ -5,7 +7,7 @@ CALLBACK QUOTER TEST EXAMPLE                           -- Kirthika Parameswaran
 
 This is an distributed application which highlights the importance
 of the callback feature in helping meet the demands of various clients
-without them having to poll continously for input from the server.
+without them having to poll continuously for input from the server.
 
 There are three parts to the Callback Quoter Example.
 
@@ -13,10 +15,10 @@ There are three parts to the Callback Quoter Example.
 2) Notifier
 3) Consumer
 
-  
+
 In detail:
 _________
-      
+
 1) Supplier
 --is the market feed daemon who keeps feeding the current stock
 information to the Notifier periodically.
@@ -26,9 +28,9 @@ the Notifier.
 
 2) Notifier
 -- On getting information form the supplier, it checks whether there are
-any consumers ineterested in the information and accordingly sends it to
+any consumers interested in the information and accordingly sends it to
 them. The consumer object is registered with the notifier and the data
-is pushed to the consumer usoing this refernce.
+is pushed to the consumer using this reference.
 
 3) Consumer
 -- He is the stock broker interested in the stock values in the market.
@@ -76,7 +78,7 @@ You can  unregister by typing 'u' and quit by typing 'q'.
 ./supplier -ifilename
 
 The -i option simply tells the daemon where to pick information from.
-TIP:: the contents of the input file per line should be: stockname and its price. 
+TIP:: the contents of the input file per line should be: stockname and its price.
       Sample: ./example.stocks
 
 The other option includes setting the period for the stock feed.
@@ -111,7 +113,7 @@ You can  unregister by typing 'u' and quit by typing 'q'.
 ./supplier -ifilename -fior_file -s
 
 The -i option simply tells the daemon where to pick information from.
-TIP:: the contents of the input file per line should be: stockname and its price. 
+TIP:: the contents of the input file per line should be: stockname and its price.
       Sample: ./example.stocks
 
 The other option includes setting the period for the stock feed.
