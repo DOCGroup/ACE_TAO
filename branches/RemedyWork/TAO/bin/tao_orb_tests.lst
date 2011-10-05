@@ -38,6 +38,7 @@ TAO/tests/Collocated_Best/Collocated_Best_Direct/run_test.pl: !ST
 TAO/tests/Collocated_Best/Collocated_Best_NoColl/run_test.pl: !ST
 TAO/tests/Collocated_Best/Collocated_Best_ThuP/run_test.pl: !ST
 TAO/tests/Collocated_ThruP_Sp/run_test.pl: !ST
+TAO/tests/Collocated_ThruP_Sp_Gd/run_test.pl: !ST
 TAO/tests/Collocation_Tests/run_test.pl: !ST
 TAO/tests/Collocation_Opportunities/run_test.pl: !ST !CORBA_E_MICRO
 TAO/tests/Collocation_Oneway_Tests/run_test.pl: !ST !NO_MESSAGING !CORBA_E_MICRO
