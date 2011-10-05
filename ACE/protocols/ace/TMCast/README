@@ -1,4 +1,4 @@
-
+$Id$
 
 Introduction
 ------------
@@ -17,7 +17,7 @@ transition [Tn] should satisfy one of the following equations:
 Mo(Tn-1) = Ma(T) U Mf(T)
 Mo(Tn-1) = Mc(T) U Mf(T)
 
-Or, in other words, after transaction T has been committed (aborted), 
+Or, in other words, after transaction T has been committed (aborted),
 all operational (before transaction T) members are either in the
 committed (aborted) or failed state.
 
@@ -41,7 +41,7 @@ is one, one is nothing.
 State of Implementation
 -----------------------
 
-The current implementation is in a prototypical stage. The following 
+The current implementation is in a prototypical stage. The following
 parts are not implemented or still under development:
 
 * Handling of network partitioning (TODO)
@@ -54,7 +54,7 @@ parts are not implemented or still under development:
 Examples
 --------
 
-There is a simple example available in examples/TMCast/Member with 
+There is a simple example available in examples/TMCast/Member with
 the corresponding README.
 
 
@@ -62,7 +62,7 @@ Architecture
 ------------
 
 Primary goals of the protocol are to (1) mask transient failures of the
-underlying multicast protocol (or, more precisely, allow to recover 
+underlying multicast protocol (or, more precisely, allow to recover
 from transient failures) and (2) exhibit failfast behavior in cases of
 permanent failures.
 
@@ -82,13 +82,13 @@ struct MemberId
   char id[MEMBER_ID_LENGTH];
 };
 
-Each payload delivery is part of a transaction. Each transaction is 
+Each payload delivery is part of a transaction. Each transaction is
 identified by TransactionId:
 
 typedef unsigned short TransactionId;
 
 
-Each transaction has a status code which identifies its state, as viewed by 
+Each transaction has a status code which identifies its state, as viewed by
 a group member:
 
 
@@ -108,7 +108,7 @@ struct Transaction
   TransactionStatus status;
 };
 
-The outcome of some predefined number of recent transactions is stored 
+The outcome of some predefined number of recent transactions is stored
 in TransactionList:
 
 typedef Transaction TransactionList[TL_LENGTH];
@@ -127,7 +127,7 @@ struct MessageHeader
 
 [Maybe describe each field here.]
 
-A new member joins the group with transaction id 0 and status 
+A new member joins the group with transaction id 0 and status
 TS_COMMITTED.
 
 Each member sends a periodic 'pulse' messages with some predefined interval
@@ -135,10 +135,10 @@ advertising its current view of the group. This includes the state of the
 current transaction and the history of the recent transactions.
 
 
-If a member of the group needs a payload delivery it starts a new 
+If a member of the group needs a payload delivery it starts a new
 transaction by sending a message with current transaction set to
 
-{++current_id, TS_BEGIN} 
+{++current_id, TS_BEGIN}
 
 and payload appended after the header.
 
@@ -147,22 +147,22 @@ Each member joins a transaction in one of the following ways:
 
 * A member that began the transaction joins it 'to commit' (TS_COMMIT)
 
-* A member that received TS_BEGIN joins current transaction 'to commit' 
+* A member that received TS_BEGIN joins current transaction 'to commit'
   (TS_COMMIT).
 
 * A member that received TS_COMMIT or TS_ABORT but did not receive TS_BEGIN
   joins current transaction 'to abort' (TS_ABORT).
 
 
-After a member has joined the transaction it starts participating in the 
-transaction's voting phase. On this phase members of the group decide the 
-fate of the transaction. Each member sends a predefined number of messages 
+After a member has joined the transaction it starts participating in the
+transaction's voting phase. On this phase members of the group decide the
+fate of the transaction. Each member sends a predefined number of messages
 where it announces its vote. In between those messages the member is receiving
 and processing votes from other members and can be influenced by their
-'opinion'. 
+'opinion'.
 
-In their decision-making members follow the principle of the majority. As 
-the voting progresses (and comes close to an end) members become more and 
+In their decision-making members follow the principle of the majority. As
+the voting progresses (and comes close to an end) members become more and
 more reluctant to deviate from the decision of the majority.
 
 [Maybe add an equation that measures member's willingness to change
@@ -176,8 +176,8 @@ In addition, each member builds a 'majority view' of the transaction history
 (based on transaction_list). If it deviates from the member's own history the
 member declares itself failed.
 
-Here are some example scenarios of how the protocol behaves in different 
-situations. Let's say we have three members of the group S, R1, R2. S 
+Here are some example scenarios of how the protocol behaves in different
+situations. Let's say we have three members of the group S, R1, R2. S
 initiates a transaction. R1 and R2 join it.
 
 Scenario 1. (two-step voting)
@@ -200,7 +200,7 @@ Scenario 2. (two-step voting)
 
 1.  S  initiates a transaction (TS_BEGIN)
 2a. R1 receives TS_BEGIN, joins for commit
-2b. R2 didn't receive TS_BEGIN 
+2b. R2 didn't receive TS_BEGIN
 3a. S  announces TS_COMMIT (first vote)
 3b. R1 announces TS_COMMIT (first vote)
 3c. R2 received R1's TS_COMMIT announces TS_ABORT (first vote)
@@ -216,7 +216,7 @@ Scenario 3. (three-step voting)
 
 1.  S  initiates a transaction (TS_BEGIN)
 2a. R1 receives TS_BEGIN, joins for commit
-2b. R2 didn't receive TS_BEGIN 
+2b. R2 didn't receive TS_BEGIN
 3a. S  announces TS_COMMIT (first vote)
 3b. R1 announces TS_COMMIT (first vote)
 3c. R2 still didn't receive anything
@@ -232,9 +232,9 @@ Scenario 3. (three-step voting)
 
 6a. S  announces TS_COMMITTED (end of vote)
 6b. R1 announces TS_COMMITTED (end of vote)
-6c. R2 discovers that the the majority has declared current transaction 
+6c. R2 discovers that the the majority has declared current transaction
        committed and thus declares itself failed.
 
 
--- 
+--
 Boris Kolpackov <boris@dre.vanderbilt.edu>
