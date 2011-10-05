@@ -1,12 +1,12 @@
-// $Id$
+$Id$
 
 
 Default_Servants
 ================
-	
+
 	By using the USE_DEFAULT_SERVANT policy, the developer can create
 	a POA that will use a single servant to implement all of its objects.
-	This approach is useful when there is very little data associated 
+	This approach is useful when there is very little data associated
 	with each object, so little that the data can be encoded in the
 	Object Id.
 
@@ -23,12 +23,12 @@ SERVER:
 ======
 
 	1. To run the server, type
-	
+
 	   % server [-ORBobjrefstyle URL]
-			
+
 CLIENT:
 ======
-	The client tries to create a file "test" and writes a message to 
+	The client tries to create a file "test" and writes a message to
 	the file and reads it back and prints it.
 
 	1. To run the client, type
@@ -37,9 +37,9 @@ CLIENT:
 
 	where the IOR is got from the server output.
 
-	
-	
-	
 
 
-		
+
+
+
+
