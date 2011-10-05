@@ -1,3 +1,13 @@
+Wed Oct  5 13:01:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+        * tests/Collocated_Best/README
+        * tests/Collocated_ThruP_Sp/README
+        * tests/Collocated_ThruP_Sp_Gd/README
+        * tests/Bug_2241_Regression/README
+        Add README's
+        
+        * bin/tao_orb_tests.lst
+        Added Collocated_ThruP_Sp_Gd test. 
+        
 Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
         * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
