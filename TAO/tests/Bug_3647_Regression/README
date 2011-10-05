@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Bug_3647_Regression Test README File
 
 This test demonstrates the problem described in bugzilla entry #3647.
@@ -7,7 +9,7 @@ This test demonstrates the problem described in bugzilla entry #3647.
 In this test we have three participants:
 
 A) A back-end server that will inconveniently block in the middle of
-   its work 
+   its work
 B) A middle-tier server that is trying to communicate with the back
    end server using SYNC_WITH_TRANSPORT oneway calls, with timeouts.
 C) A client application that is sending twoway calls to the
@@ -22,7 +24,7 @@ incoming requests from the client application.
 What we observe is that the middle-tier application blocks, but not in
 the event loop as it should, but while checking if the socket is ready
 for output.
-  
+
 To run the test use the run_test.pl script:
 
 $ ./run_test.pl
