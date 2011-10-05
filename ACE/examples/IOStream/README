@@ -1,3 +1,5 @@
+$Id$
+
 This example illustrates the use of the ACE_IOStream and
 ACE_Streambuf_T templates to create an object based on ACE_*_Stream
 classes.  These classes provide C++ iostream functionality across a
@@ -7,7 +9,7 @@ To run the tests simply build the executables in the client and server
 directories and then do the following in separate windows:
 
 # Window 1
-% server/iostream_server 
+% server/iostream_server
 (10049) starting up daemon
 
 # Window 2
