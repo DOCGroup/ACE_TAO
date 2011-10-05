@@ -88,18 +88,10 @@ be_interface::be_interface (UTL_ScopedName *n,
              n),
     be_type (AST_Decl::NT_interface,
              n),
-    base_proxy_impl_name_ (0),
     remote_proxy_impl_name_ (0),
     direct_proxy_impl_name_ (0),
-    full_base_proxy_impl_name_ (0),
     full_remote_proxy_impl_name_ (0),
     full_direct_proxy_impl_name_ (0),
-    base_proxy_broker_ (0),
-    remote_proxy_broker_ (0),
-    strategized_proxy_broker_ (0),
-    full_base_proxy_broker_name_ (0),
-    full_remote_proxy_broker_name_ (0),
-    full_strategized_proxy_broker_name_ (0),
     client_scope_ (0),
     flat_client_scope_ (0),
     server_scope_ (0),
@@ -2717,32 +2709,11 @@ be_interface::destroy (void)
   delete [] this->direct_proxy_impl_name_;
   this->direct_proxy_impl_name_ = 0;
 
-  delete [] this->full_base_proxy_impl_name_;
-  this->full_base_proxy_impl_name_ = 0;
-
   delete [] this->full_remote_proxy_impl_name_;
   this->full_remote_proxy_impl_name_ = 0;
 
   delete [] this->full_direct_proxy_impl_name_;
   this->full_direct_proxy_impl_name_ = 0;
-
-  delete [] this->base_proxy_broker_;
-  this->base_proxy_broker_ = 0;
-
-  delete [] this->remote_proxy_broker_;
-  this->remote_proxy_broker_ = 0;
-
-  delete [] this->strategized_proxy_broker_;
-  this->strategized_proxy_broker_ = 0;
-
-  delete [] this->full_base_proxy_broker_name_;
-  this->full_base_proxy_broker_name_ = 0;
-
-  delete [] this->full_remote_proxy_broker_name_;
-  this->full_remote_proxy_broker_name_ = 0;
-
-  delete [] this->full_strategized_proxy_broker_name_;
-  this->full_strategized_proxy_broker_name_ = 0;
 
   delete [] this->client_scope_;
   this->client_scope_ = 0;
@@ -3331,45 +3302,6 @@ be_interface::is_ami4ccm_rh (bool val)
 }
 
 const char *
-be_interface::base_proxy_impl_name (void)
-{
-  if (this->base_proxy_impl_name_ == 0)
-    {
-      this->base_proxy_impl_name_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_IMPL]);
-    }
-
-  return this->base_proxy_impl_name_;
-}
-
-const char *
-be_interface::full_base_proxy_impl_name (void)
-{
-  if (this->full_base_proxy_impl_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name =
-        this->base_proxy_impl_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_base_proxy_impl_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_base_proxy_impl_name_,
-                      scope);
-      ACE_OS::strcat (this->full_base_proxy_impl_name_,
-                      base_name);
-    }
-
-  return this->full_base_proxy_impl_name_;
-}
-
-const char *
 be_interface::remote_proxy_impl_name (void)
 {
   if (this->remote_proxy_impl_name_ == 0)
@@ -3448,125 +3380,6 @@ be_interface::full_direct_proxy_impl_name (void)
   return this->full_direct_proxy_impl_name_;
 }
 
-
-const char *
-be_interface::base_proxy_broker_name (void)
-{
-  if (this->base_proxy_broker_ == 0)
-    {
-      this->base_proxy_broker_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_BROKER]);
-    }
-
-  return this->base_proxy_broker_;
-}
-
-const char *
-be_interface::full_base_proxy_broker_name (void)
-{
-  if (this->full_base_proxy_broker_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name = this->base_proxy_broker_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_base_proxy_broker_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_base_proxy_broker_name_,
-                      scope);
-      ACE_OS::strcat (this->full_base_proxy_broker_name_,
-                      base_name);
-    }
-
-  return this->full_base_proxy_broker_name_;
-}
-
-
-const char *
-be_interface::remote_proxy_broker_name (void)
-{
-  if (this->remote_proxy_broker_ == 0)
-    {
-      this->remote_proxy_broker_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_BROKER],
-          this->tag_table_[REMOTE]);
-    }
-
-  return this->remote_proxy_broker_;
-}
-
-const char *
-be_interface::full_remote_proxy_broker_name (void)
-{
-  if (this->full_remote_proxy_broker_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name = this->remote_proxy_broker_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_remote_proxy_broker_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_remote_proxy_broker_name_,
-                      scope);
-      ACE_OS::strcat (this->full_remote_proxy_broker_name_,
-                      base_name);
-    }
-
-  return this->full_remote_proxy_broker_name_;
-}
-
-
-const char *
-be_interface::strategized_proxy_broker_name (void)
-{
-  if (this->strategized_proxy_broker_ == 0)
-    {
-      this->strategized_proxy_broker_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_BROKER],
-          this->tag_table_[STRATEGIZED]);
-    }
-
-  return this->strategized_proxy_broker_;
-}
-
-const char *
-be_interface::full_strategized_proxy_broker_name (void)
-{
-  if (this->full_strategized_proxy_broker_name_ == 0)
-    {
-      const char *scope = this->server_enclosing_scope ();
-      const char *base_name =
-        this->strategized_proxy_broker_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_strategized_proxy_broker_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_strategized_proxy_broker_name_,
-                      scope);
-      ACE_OS::strcat (this->full_strategized_proxy_broker_name_,
-                      base_name);
-    }
-
-  return this->full_strategized_proxy_broker_name_;
-}
 
 const char *
 be_interface::client_enclosing_scope (void)

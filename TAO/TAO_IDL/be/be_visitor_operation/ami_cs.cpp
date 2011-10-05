@@ -181,8 +181,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "};" << be_uidt;
     }
 
-  be_interface *intf = be_interface::narrow_from_decl (parent);
-
   ACE_CString base (node->local_name ()->get_string ());
 
   /// The sendc_* operation makes the invocation with the
@@ -205,13 +203,14 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << "\"" << op_name << "\"," << be_nl
       << len << "," << be_nl;
 
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+  *os << "TAO::TAO_CO_NONE";
+  if (be_global->gen_direct_collocation())
     {
-      *os << "this->the" << intf->base_proxy_broker_name () << "_";
+      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
     }
-  else
+  if (be_global->gen_thru_poa_collocation())
     {
-      *os << "0";
+      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
     }
 
   *os << be_uidt_nl

@@ -69,13 +69,6 @@ public:
   /// Retrieve the fully qualified collocated class name.
   const char *local_coll_name (int);
 
-  /// retrieve the name of the base proxy implementation.
-  virtual const char *base_proxy_impl_name (void);
-
-  /// retrieve the fully qualified name of the base proxy
-  /// implementation.
-  virtual const char *full_base_proxy_impl_name (void);
-
   /// retrieve the name of the remote  proxy implementation.
   virtual const char *remote_proxy_impl_name (void);
 
@@ -89,26 +82,6 @@ public:
   /// retrieve the fully qualified name of the direct proxy
   /// implementation.
   virtual const char *full_direct_proxy_impl_name (void);
-
-  /// retrieve the name of the base proxy broker.
-  virtual const char *base_proxy_broker_name (void);
-
-  /// retrieve the fully qualified name of the base proxy broker.
-  virtual const char *full_base_proxy_broker_name (void);
-
-  /// retrieve the name of the remote  proxy broker implementation.
-  virtual const char *remote_proxy_broker_name (void);
-
-  /// retrieve the fully qualified name of the remote  proxy broker
-  /// implementation.
-  virtual const char *full_remote_proxy_broker_name (void);
-
-  /// retrieve the name of the strategized proxy broker implementation.
-  virtual const char *strategized_proxy_broker_name (void);
-
-  /// retrieve the fully qualified name of the strategized proxy broker
-  /// implementation.
-  virtual const char *full_strategized_proxy_broker_name (void);
 
   /// Return the client scope that encloses the interface.
   virtual const char *client_enclosing_scope (void);
@@ -381,18 +354,8 @@ protected:
   char *remote_proxy_impl_name_;
   char *direct_proxy_impl_name_;
 
-  char *full_base_proxy_impl_name_;
   char *full_remote_proxy_impl_name_;
   char *full_direct_proxy_impl_name_;
-
-  // Proxy Broker Names.
-  char *base_proxy_broker_;
-  char *remote_proxy_broker_;
-  char *strategized_proxy_broker_;
-
-  char *full_base_proxy_broker_name_;
-  char *full_remote_proxy_broker_name_;
-  char *full_strategized_proxy_broker_name_;
 
   char *client_scope_;
   char *flat_client_scope_;
