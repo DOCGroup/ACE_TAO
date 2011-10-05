@@ -1,3 +1,69 @@
+Wed Oct  5 08:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be_include/be_component.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * tao/Abstract_Servant_Base.h:
+        * tao/Collocated_Invocation.h:
+        * tao/Collocated_Invocation.cpp:
+        * tao/Collocation_Strategy.h:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        * tao/Invocation_Adapter.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/Object.h:
+        * tao/Object.cpp:
+        * tao/Object_T.h:
+        * tao/Object_T.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.inl:
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/tao.mpc:
+          Rough reimplementatin of handling of collocated call. A pre condition
+          for using collocation is having a servant pointer. The core of TAO
+          also couldn't detect whether through poa collocation is requested
+          without having -Gp being enabled. The collocated proxy broker (cpb)
+          was only used for direct collocation, but didn't contain any interface
+          specific code. TAO_IDL now generated a collocation opportunity to
+          indicate which support it did generate, when the core than has
+          a servant pointer it can determine which opportunities it has an
+          what is requested.
+
+          As side effect we get smaller generated code, less complexity, and
+          better performance
+
+          This has to be finished but committing it right now.
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_sh.h:
+        * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+        * tao/Collocation_Proxy_Broker.h:
+        * tao/Collocation_Proxy_Broker.cpp:
+          Removed these files.
+
 Wed Oct  5 07:15:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
         * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
@@ -14,7 +80,7 @@ Tue Oct  4 16:36:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         Change Exception for collocated errors.
         Add prefix TAO_COLLOCATION_ to Collocated strategies DIrect, Best and Thru_POA
         Add TAO_DEFAULT_COLLOCATION_STRATEGY
-        
+
         * tao/orbconf.h:
         Add TAO_DEFAULT_COLLOCATION_STRATEGY
 

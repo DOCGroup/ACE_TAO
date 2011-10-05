@@ -3621,7 +3621,8 @@ TAO_ORB_Core_instance (void)
 
 
 TAO::Collocation_Strategy
-TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
+TAO_ORB_Core::collocation_strategy (
+  int collocation_opportunity, CORBA::Object_ptr object)
 {
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
@@ -3648,7 +3649,8 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
                 return TAO::TAO_CS_DIRECT_STRATEGY;
               }
             case TAO_COLLOCATION_BEST:
-              return TAO::TAO_CS_BEST_STRATEGY;
+              //return TAO::TAO_CS_BEST_STRATEGY;
+              return TAO::TAO_CS_DIRECT_STRATEGY; // todo
             }
         }
       // no collocation object, check wrong use of ORBCollocationStrategy

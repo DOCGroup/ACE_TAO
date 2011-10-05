@@ -204,99 +204,6 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 }
 
 static TAO_CORBA_Policy_Perfect_Hash_OpTable tao_CORBA_Policy_optable;
-///////////////////////////////////////////////////////////////////////
-//            Strategized Proxy Broker Implementation
-//
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/strategized_proxy_broker_ss.cpp:40
-
-// Factory function Implementation.
-POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker *
-POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::the_TAO_Policy_Strategized_Proxy_Broker (void)
-{
-  static POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker
-  strategized_proxy_broker;
-
-  return &strategized_proxy_broker;
-}
-
-POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::_TAO_Policy_Strategized_Proxy_Broker (void)
-{
-}
-
-POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::~_TAO_Policy_Strategized_Proxy_Broker (void)
-{
-}
-
-TAO::Collocation_Strategy
-POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::get_strategy (
-    CORBA::Object_ptr obj
-
-  )
-{
-  TAO::Collocation_Strategy strategy =
-    TAO_ORB_Core::collocation_strategy (obj);
-
-  return strategy;
-}
-
-void
-POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::dispatch (
-    CORBA::Object_ptr obj,
-    CORBA::Object_out forward_obj,
-    bool & is_forwarded,
-    TAO::Argument ** args,
-    int num_args,
-    const char * op,
-    size_t op_len,
-    TAO::Collocation_Strategy strategy
-
-  )
-{
-  TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
-  collocation_upcall_wrapper.upcall (
-    obj,
-    forward_obj,
-    is_forwarded,
-    args,
-    num_args,
-    op,
-    op_len,
-    strategy
-   );
-}
-
-//
-//        End Strategized Proxy Broker Implementation
-///////////////////////////////////////////////////////////////////////
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:999
-
-TAO::Collocation_Proxy_Broker *
-CORBA__TAO_Policy_Proxy_Broker_Factory_function (CORBA::Object_ptr)
-{
-  return
-    ::POA_CORBA::_TAO_Policy_Strategized_Proxy_Broker::the_TAO_Policy_Strategized_Proxy_Broker ();
-}
-
-int
-CORBA__TAO_Policy_Proxy_Broker_Factory_Initializer (size_t)
-{
-  CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer =
-    CORBA__TAO_Policy_Proxy_Broker_Factory_function;
-
-  return 0;
-}
-
-static int
-CORBA__TAO_Policy_Proxy_Broker_Stub_Factory_Initializer_Scarecrow =
-  CORBA__TAO_Policy_Proxy_Broker_Factory_Initializer (
-      reinterpret_cast<size_t> (CORBA__TAO_Policy_Proxy_Broker_Factory_Initializer)
-    );
-
-
 
 ///////////////////////////////////////////////////////////////////////
 //                 Direct Proxy  Implementation
@@ -1027,7 +934,7 @@ POA_CORBA::Policy::_this (void)
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
-        CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
+        TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_POA_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
       );
 }
 

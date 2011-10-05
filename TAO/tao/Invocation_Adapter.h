@@ -46,7 +46,6 @@ namespace TAO
 {
   class Argument;
   struct Exception_Data;
-  class Collocation_Proxy_Broker;
   class Profile_Transport_Resolver;
 
   /**
@@ -94,9 +93,8 @@ namespace TAO
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
-     * @param cpb The collocation proxy broker for the target if one
-     * exists. This is useful especially to route the call to the
-     * collocated target.
+     * @param collocation_opportunity Indicate which collocation optimizations
+     * should be possible
      *
      * @param type The operation type which could be a oneway or two
      * way operation. This information is available in the IDL file.
@@ -109,7 +107,7 @@ namespace TAO
                         int arg_number,
                         const char *operation,
                         size_t op_len,
-                        Collocation_Proxy_Broker *cpb,
+                        int collocation_opportunity,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
                         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
@@ -255,8 +253,8 @@ namespace TAO
     /// String length of the operation name.
     size_t const op_len_;
 
-    /// Collocation proxy broker for this operation.
-    Collocation_Proxy_Broker * const cpb_;
+    /// Collocation opportunity for this operation.
+    int const collocation_opportunity_;
 
     /// The invocation type
     Invocation_Type const type_;

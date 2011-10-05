@@ -933,19 +933,17 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << be_idt << be_idt_nl
       << "obj.in ()," << be_nl;
 
-  if (be_global->gen_direct_collocation()
-      || be_global->gen_thru_poa_collocation ())
+  *os << "TAO::TAO_CO_NONE";
+  if (be_global->gen_direct_collocation())
     {
-      *os << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl;
+      *os << " | TAO::TAO_CO_DIRECT_POA_STRATEGY";
     }
-  else
+  if (be_global->gen_thru_poa_collocation())
     {
-      *os << "0" << be_uidt_nl;
+      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
     }
 
-  *os << ");" << be_uidt << be_uidt << be_uidt_nl
+  *os << be_uidt_nl << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 }
 
@@ -994,102 +992,7 @@ be_visitor_interface_ss::generate_amh_classes (be_interface *node)
 int
 be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
   be_visitor_context ctx = *this->ctx_;
-
-  // Strategized Proxy Broker Implementation.
-  if (be_global->gen_thru_poa_collocation ()
-      || be_global->gen_direct_collocation ())
-    {
-
-      // Do not generate strategized proxy broker for thru-POA case.
-      // It isn't necessary.
-      if (be_global->gen_direct_collocation ())
-        {
-          ctx = *this->ctx_;
-          be_visitor_interface_strategized_proxy_broker_ss ispb_visitor (&ctx);
-
-          if (node->accept (&ispb_visitor) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("be_visitor_interface_ss::")
-                                 ACE_TEXT ("generate_proxy_classes - ")
-                                 ACE_TEXT ("codegen for Base Proxy Broker ")
-                                 ACE_TEXT ("class failed\n")),
-                                -1);
-            }
-        }
-
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
-      {
-        *os << be_nl_2;
-
-        *os << "// TAO_IDL - Generated from" << be_nl
-            << "// " << __FILE__ << ":" << __LINE__;
-
-        // Proxy Broker Factory Function.
-        *os << be_nl_2
-            << "TAO::Collocation_Proxy_Broker *" << be_nl
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Factory_function ( ::CORBA::Object_ptr)"
-            << be_nl
-            << "{" << be_idt_nl
-            << "return";
-
-        if (be_global->gen_direct_collocation ())
-          {
-            *os << be_idt_nl
-                << "::"
-                << node->full_strategized_proxy_broker_name ()
-                << "::" <<"the"
-                << node->strategized_proxy_broker_name ()
-                << " ();" << be_uidt;
-          }
-        else
-          {
-            // Dummy function pointer for the thru-POA case.  It isn't
-            // used to call a function but it is used to determine if
-            // collocation is available.
-           *os << " 0;";
-           }
-
-        *os << be_uidt_nl
-            << "}" << be_nl_2;
-
-        // Proxy Broker Function Pointer Initializer.
-        *os << "int" << be_nl
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Factory_Initializer (size_t)" << be_nl
-            << "{" << be_idt_nl
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Factory_function_pointer = "
-            << be_idt_nl
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Factory_function;"
-            << be_uidt_nl
-            << be_nl
-            << "return 0;" << be_uidt_nl
-            << "}" << be_nl_2;
-
-        *os << "static int" << be_nl
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Stub_Factory_Initializer_Scarecrow ="
-            << be_idt_nl
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Factory_Initializer (" << be_idt << be_idt_nl
-            << "reinterpret_cast<size_t> ("
-            << node->flat_client_enclosing_scope ()
-            << node->base_proxy_broker_name ()
-            << "_Factory_Initializer));" << be_uidt << be_uidt << be_uidt_nl;
-      }
-    }
 
   if (be_global->gen_direct_collocation ())
     {

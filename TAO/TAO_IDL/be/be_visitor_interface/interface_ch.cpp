@@ -183,18 +183,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";
     }
 
-  if (! node->is_local () &&
-        (be_global->gen_direct_collocation()
-         || be_global->gen_thru_poa_collocation ()))
-    {
-      // Add the Proxy Broker member variable.
-      *os << be_uidt_nl << be_nl
-          << "private:" << be_idt_nl
-          << "TAO::Collocation_Proxy_Broker *"
-          << "the" << node->base_proxy_broker_name ()
-          << "_;";
-    }
-
   *os << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl;
 
@@ -208,18 +196,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           *os << "// Concrete interface only." << be_nl
               << node->local_name () << " (void);"
               << be_nl_2;
-        }
-
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
-        {
-          *os << "// These methods traverse the "
-              << "inheritance tree and set the"
-              << be_nl
-              << "// parents piece of the given class in the right mode."
-              << be_nl
-              << "virtual void " << node->flat_name ()
-              << "_setup_collocation (void);" << be_nl_2;
         }
     }
 

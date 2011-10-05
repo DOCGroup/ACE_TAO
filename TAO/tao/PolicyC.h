@@ -67,7 +67,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  class Collocation_Proxy_Broker;
   template<typename T> class Narrow_Utils;
 }
 
@@ -314,16 +313,9 @@ namespace CORBA
     virtual TAO_Policy_Scope _tao_scope (void) const;
     // ****************************************************************
 
-  private:
-    TAO::Collocation_Proxy_Broker *the_TAO_Policy_Proxy_Broker_;
-
   protected:
     // Concrete interface only.
     Policy (void);
-
-    // These methods travese the inheritance tree and set the
-    // parents piece of the given class in the right mode.
-    virtual void CORBA_Policy_setup_collocation (void);
 
     // Concrete non-local interface only.
     Policy (
@@ -354,17 +346,6 @@ namespace CORBA
 // be\be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
-
-// Proxy Broker Factory function pointer declarations.
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:139
-
-extern TAO_Export
-TAO::Collocation_Proxy_Broker *
-(*CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  );
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61

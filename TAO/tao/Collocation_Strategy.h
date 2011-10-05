@@ -19,7 +19,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Define symbolic names for the ORB collocation strategies.
+/// Define symbolic names for the ORB collocation strategies as used at runtime.
 namespace TAO
 {
   enum Collocation_Strategy
@@ -34,15 +34,20 @@ namespace TAO
       /// servant.
       TAO_CS_DIRECT_STRATEGY,
 
-      /// Calls to the collocated object are made directly to its
-      /// servant if possible, else forwarded by the POA.
-      TAO_CS_BEST_STRATEGY,
-
       /// This value should always be the last value in the enumeration.
       /// It provides the count for the number of collocation
       /// strategies.
       TAO_CS_LAST
     };
+
+  /// No collocation possible
+  int const TAO_CO_NONE = 0x00;
+
+  /// Through POA collocation is possible
+  int const TAO_CO_THRU_POA_STRATEGY = 0x01;
+
+  /// Direct collocation is possible
+  int const TAO_CO_DIRECT_POA_STRATEGY = 0x02;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

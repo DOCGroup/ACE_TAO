@@ -167,11 +167,6 @@ be_visitor_root_ch::gen_fwd_decls (void)
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl;
 
-     if (be_global->gen_direct_collocation () || be_global->gen_thru_poa_collocation ())
-       {
-         *o_ << "class Collocation_Proxy_Broker;" << be_nl;
-       }
-
       if (idl_global->abstract_iface_seen_)
         {
           *o_ << "template<typename T> class AbstractBase_Narrow_Utils;" << be_nl;
@@ -187,38 +182,6 @@ be_visitor_root_ch::gen_fwd_decls (void)
 void
 be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
 {
-  size_t size = be_global->non_local_interfaces.size ();
-
-  if (size == 0)
-    {
-      return;
-    }
-
-  size_t index = 0;
-  be_interface *i = 0;
-
-  *o_ << be_nl_2
-      << "// Proxy Broker Factory function pointer declarations."
-      << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  for (index = 0; index < size; ++index)
-    {
-      be_global->non_local_interfaces.dequeue_head (i);
-
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-        {
-          *o_ << be_nl_2
-              << "extern " << be_global->stub_export_macro () << be_nl
-              << "TAO::Collocation_Proxy_Broker *" << be_nl
-              << "(*" << i->flat_client_enclosing_scope ()
-              << i->base_proxy_broker_name ()
-              << "_Factory_function_pointer) ("
-              << be_idt << be_idt_nl
-              << "::CORBA::Object_ptr obj);" << be_uidt << be_uidt;
-        }
-    }
 }
 
 void

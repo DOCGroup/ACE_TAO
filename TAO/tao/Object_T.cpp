@@ -17,7 +17,7 @@ namespace TAO
   T *
   Narrow_Utils<T>::narrow (CORBA::Object_ptr obj,
                            const char *repo_id,
-                           Proxy_Broker_Factory pbf)
+                           int collocation_opportunity)
   {
     if (CORBA::is_nil (obj))
       {
@@ -29,17 +29,17 @@ namespace TAO
         return T::_nil ();
       }
 
-    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id, pbf);
+    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id, collocation_opportunity);
   }
 
   template<typename T> T *
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     Proxy_Broker_Factory pbf)
+                                     int collocation_opportunity)
   {
     T *proxy = 0;
     try
       {
-        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0, pbf);
+        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0, collocation_opportunity);
       }
     catch (const ::CORBA::Exception&)
       {
@@ -53,7 +53,7 @@ namespace TAO
   template<typename T> T *
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
                                      const char *,
-                                     Proxy_Broker_Factory pbf)
+                                     int collocation_opportunity)
   {
     if (CORBA::is_nil (obj))
       {
@@ -86,7 +86,7 @@ namespace TAO
       !CORBA::is_nil (stub->servant_orb_var ().in ())
       && stub->optimize_collocation_objects ()
       && obj->_is_collocated ()
-      && pbf != 0;
+      && collocation_opportunity != TAO::TAO_CO_NONE;
 
     ACE_NEW_THROW_EX (proxy,
                       T (stub,

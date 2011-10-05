@@ -77,9 +77,6 @@ public:
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
 
-  /// Generate setup_collocation() for base component, if any.
-  virtual void gen_parent_collocation (TAO_OutStream *os);
-
   // Narrowing.
 
   DEF_NARROW_FROM_DECL (be_component);

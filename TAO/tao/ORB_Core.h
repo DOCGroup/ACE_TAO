@@ -225,7 +225,7 @@ public:
   /// Get the adapter registry
   TAO_Adapter_Registry &adapter_registry (void);
 
-  /// @name Collocation Strategies
+  /// @name Collocation Strategies as configured by the user
   //@{
   enum
   {
@@ -253,7 +253,8 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
+  TAO::Collocation_Strategy collocation_strategy (
+    int collocation_opportunity, CORBA::Object_ptr object);
   //@}
 
   /// Set/get the collocation flags
