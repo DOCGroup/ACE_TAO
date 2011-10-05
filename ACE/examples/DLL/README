@@ -15,7 +15,7 @@ objects like Newsweek and Today deriving form it. The libraries are
 dynamically linked on demand.  Thus, they can be changed on the fly
 and accessed with its new changes.
 
-The ACE_DLL class used in this example is an helper class for 
+The ACE_DLL class used in this example is an helper class for
 performing various operations on the library object.
 
 Compilation and Execution:
@@ -39,7 +39,7 @@ Compilation and Execution:
    Load DLL.sln which contains DLL_Main.vcproj, DLL_Today.vcproj and DLL_Newsweek.vcproj.
 
    Build each vcproj such that you build DLL_Main.vcproj last.
-   This is because the test_dll.exe will be using Today.dll and Newsweek.dll. 
+   This is because the test_dll.exe will be using Today.dll and Newsweek.dll.
 
    Execute test_dll
 

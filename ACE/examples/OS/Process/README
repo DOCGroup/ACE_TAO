@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains two examples: <imore> and <process>.  They
 show how you can play with various features of ACE_Process to create
 new processes.
@@ -19,7 +21,7 @@ portably specify path, command-line arguments, environment variable
 values.  It also allows applications to set the new process' standard
 handles (stdin, stdout, and stderr).  ACE_Process is created with the
 ACE_Process_Options and can be used to perform operations on the
-running process.  
+running process.
 
 Notice that this example uses NT version's UNIX utilities like
 "DATE.EXE," and "ls.exe."  You can find where to get them from
