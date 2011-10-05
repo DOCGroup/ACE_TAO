@@ -130,7 +130,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   *os << "TAO::TAO_CO_NONE";
   if (be_global->gen_direct_collocation())
     {
-      *os << " | TAO::TAO_CO_DIRECT_POA_STRATEGY";
+      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
     }
   if (be_global->gen_thru_poa_collocation())
     {

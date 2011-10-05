@@ -934,7 +934,7 @@ POA_CORBA::Policy::_this (void)
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
-        TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_POA_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
+        TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
       );
 }
 

@@ -51,7 +51,7 @@ namespace TAO
         int arg_number,
         const char *operation,
         size_t op_len,
-        Collocation_Proxy_Broker *cpb,
+        int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
