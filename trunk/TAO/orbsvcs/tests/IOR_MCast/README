@@ -1,9 +1,9 @@
-// $Id$
+$Id$
 
 This is a simple test for testing the multicast ior parser with format
 mcast://multicast_address:port:nicaddress:ttl
 
-The Client requests for the IOR of a service that is multicasted. 
+The Client requests for the IOR of a service that is multicasted.
 The Server helps get this ior with the use of the TAO_IOR_Multicast
 class in the libTAO_Svc_Utils library.
 

@@ -1,3 +1,5 @@
+$Id$
+
 This directory runs the IFR compiler on the various IDL compiler
 stress tests found in $TAO_ROOT/tests/IDL_Test.  It will automatically
 pick up new IDL files as they are added.
@@ -30,7 +32,7 @@ The testing goes in three phases:
      skip the IDL file if the IDL file is known to fail in #1
      tao_ifr on the IDL file
    }
-   
+
    For each IDL file {
      skip the IDL file if the IDL file is known to fail in #1
      tao_ifr on the IDL file to remove from the IFR

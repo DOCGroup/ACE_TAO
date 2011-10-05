@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 TAO Audio/Video Streaming service
 ---------------------------------
@@ -11,7 +11,7 @@ interfaces for controlling multimedia streams.
 This directory contains the following files
 
 AVStreams_i.{h,cpp}:       Implementation of the A/V handshake specification, as well
-                           as base classes for the various interfaces defined in the spec. 
+                           as base classes for the various interfaces defined in the spec.
 
 Endpoint_Strategy.{h,cpp}: Implementation of various multimedia endpoint activation strategies.
 

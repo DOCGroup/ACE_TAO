@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page McastHello Test README File
 
 This test verifies basic functionality of the MIOP support in TAO.
@@ -20,7 +22,7 @@ users. Firstly, server.cpp includes MIOP.h, which has some magic for
 loading MIOP protocol in static builds. Secondly, the svc.conf has
 a directive for loading the right protocol factory. Both of them are
 required for static builds in addition to linking with the
-TAO_PortableGroup library. 
+TAO_PortableGroup library.
 
 However for dynamic builds things are different
 

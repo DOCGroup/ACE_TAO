@@ -1,5 +1,7 @@
+$Id$
+
 The service is registered with the naming service with the name
-"NotifyLogFactory" .  
+"NotifyLogFactory" .
 
 To run the Notify Logging Service:
 ------------------------

@@ -1,5 +1,7 @@
+$Id$
+
 The service is registered with the naming service with the name
-"BasicLogFactory" .  
+"BasicLogFactory" .
 
 To run the Basic Logging Service:
 ------------------------
