@@ -3,7 +3,7 @@
 A simple example using valuetypes.
 
 
-How to Run 
+How to Run
 ----------
 
 Start the server :
@@ -28,10 +28,10 @@ above.  This script can be run via the following command:
 
 NOTE:
 
-   If you run on Windows platform, go to Debug or Release directory to run the 
-   script via following command:  
-   
+   If you run on Windows platform, go to Debug or Release directory to run the
+   script via following command:
+
    perl ../run_test.pl
-    
+
 
 

@@ -7,13 +7,13 @@ File: DevGuideExamples/PortableInterceptor/PICurrent_NameService/README
 
 
 This directory contains an example that shows how the PICurrent can
-be used to stop client-side interceptor recursions. 
+be used to stop client-side interceptor recursions.
 
-This example is based on the Messenger example in GettingStarted 
-directory.  A message is send by MessengerClient and displayed by 
+This example is based on the Messenger example in GettingStarted
+directory.  A message is send by MessengerClient and displayed by
 MessengerServer.  When the client receives a reply, it asks the server
 for the current time. This causes a recursive call at the receive_reply()
-interception point. A flag is passed in the PICurrent to let the client 
+interception point. A flag is passed in the PICurrent to let the client
 know the call is recursive.
 
 How to Run
@@ -21,7 +21,7 @@ How to Run
 
 To start the server:
 ------------------
-./MessengerServer 
+./MessengerServer
 
 To start the client:
 ------------------
