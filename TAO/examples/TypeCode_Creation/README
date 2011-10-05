@@ -1,20 +1,20 @@
 $Id$
 
-Normally, a typecode is created at compile time by the 
-IDL compiler for each declaration in an IDL file, or at 
-runtime by the  Interface Repository. However, in some 
-situations, such as a bridge between ORBs, a typecode may 
+Normally, a typecode is created at compile time by the
+IDL compiler for each declaration in an IDL file, or at
+runtime by the  Interface Repository. However, in some
+situations, such as a bridge between ORBs, a typecode may
 have to be  created without any knowledge of the IDL and outside
 any Interface Repository. In such cases, the typecode
 creation methods of the pseudo-object CORBA::ORB are used.
 
-This program is a simple example of the use of the 
+This program is a simple example of the use of the
 CORBA::ORB::create_*_tc methods. It does not require any
 queries to the Interface Repository (although for a more
 elaborate example, this may be necessary). It does, however,
 use IFR data types, so the program must be linked to the
 IFR_Client library. For examples of queries on the Interface
-Repository, see the tests in 
+Repository, see the tests in
 ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo/IFR_Test and
 ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo/Application_Test.
 
@@ -22,7 +22,7 @@ These typecode creation methods make use of the functions
 of the same name in TypeCodeFactory (proposed, but not yet
 officially part of the CORBA spec). The TAO_TypeCodeFactory
 library is found in ACE_ROOT/TAO/tao/TypeCodeFactory, and
-is used by the Interface Repository as well as by 
+is used by the Interface Repository as well as by
 CORBA::ORB::create_*_tc to create typecodes. This library
 may be compiled, but, to keep dependencies and footprint
 to a minimum, it is not linked and loaded automatically.

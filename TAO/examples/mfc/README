@@ -1,3 +1,5 @@
+$Id$
+
 This is an short example to show how to integrate TAO and MFC base GUI
 applications.  The server is an MFC-based GUI application, which
 spawns an additional thread to invoke the ORBs event queue.  The
@@ -9,13 +11,13 @@ and TAO by adding an additional thread for the ORB:
 Step 1: Creating a MFC-Application wizard-based project
 
 Step 2: Set the following project settings
-	
+
 	- C++ Settings / Preprocessor
-	
+
 		ACE_HAS_DLL=1, ACE_HAS_MFC=1
-	
+
 	- Use the MFC-based librarys of ACE & TAO
-	
+
 		e.g. link acemfcd.lib TAOmfcd.lib for the Debug-version!
 
 Step 3: Add a threadfunction for the ORB
@@ -26,15 +28,15 @@ Step 3: Add a threadfunction for the ORB
 	the necessary stuff to start an ORB!
 
 Step 4: Add the thread invocation in the Application
-	
+
 	- Initialize ACE
-	
+
 	- Spawn the thread for the ORB
-	
+
 	At first you have to initialize ACE by calling
-	
+
 		ACE::init()
-	
+
 	as soon as possible in your application. Good places are in
 	the constructor or in the InitInstance() memberfunction of the
 	application-calls.  In addition you have to spawn the thread
@@ -42,15 +44,15 @@ Step 4: Add the thread invocation in the Application
 	(spawn_my_orb_thread);
 
 Step 5: Overwrite the default destructor of the Application-Class
-	
+
 	- Get a reference to the ORB use in the thread
-	
+
 	- Shut down the ORB
-	
+
 	- Wait for the shutdown of the ORB-thread
-	
+
 	- Call ACE::fini() to close the ACE::init()-call
-	
+
 	To shut down the ORB in it's separate thread you need to call
 	the ORB::shutdown() method of the ORB references in the
 	thread. To get an reference to this special ORB create an
