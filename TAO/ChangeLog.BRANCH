@@ -1,3 +1,31 @@
+Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Collocation_Strategy.h:
+        * tao/PortableServer/PolicyS.cpp:
+         Change define TAO_CO_DIRECT_POA,remove POA 
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+         Change proxybroker for collocation opertunities
+
+        * tao/ORB_Core.cpp:
+        * tao/Invocation_Adapter.cpp:
+         Extended collocation_strategy with opertunities
+         Handling of BEST strategy and checking other strategies.
+ 
+        * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
+
+      
+
 Wed Oct  5 08:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

@@ -77,32 +77,11 @@ namespace TAO
         // can use a collocated invocation.  Similarly, if the
         // target object reference contains a pointer to a servant,
         // the object reference also refers to a collocated object.
-        if (this->collocation_opportunity_ != TAO::TAO_CO_NONE &&
-            effective_target->_servant () != 0)
-          {
-            // get the ORBStrategy
-            // pass the collocation opportunity here to orb core
-            strat = TAO_ORB_Core::collocation_strategy (
+        // get the ORBStrategy
+        // pass the collocation opportunity here to orb core
+        strat = TAO_ORB_Core::collocation_strategy (
                       this->collocation_opportunity_,
                       effective_target.in ());
-//            if (strat == TAO_CS_BEST_STRATEGY)
-              {
-                // check if TAO_CS_DIRECT_STRATEGY is possible
-                if (this->collocation_opportunity_ & TAO::TAO_CO_DIRECT_POA_STRATEGY)
-                  strat = TAO_CS_DIRECT_STRATEGY;
-                else if (this->collocation_opportunity_ & TAO::TAO_CO_THRU_POA_STRATEGY)
-                  strat = TAO_CS_THRU_POA_STRATEGY;
-                else
-                  {
-                    // you should never have come here
-                    throw ::CORBA::INTERNAL (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO::VMCID,
-                        EINVAL),
-                      CORBA::COMPLETED_NO);
-                  }
-              }
-          }
 
         if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
@@ -125,7 +104,6 @@ namespace TAO
                                          effective_target,
                                          strat);
           }
-
         if (status == TAO_INVOKE_RESTART)
           {
             details.reset_request_service_info ();
@@ -172,12 +150,7 @@ namespace TAO
                                            Collocation_Strategy strat)
   {
     // if (effective_target->_servant () == 0) exception in all cases
-
-    // To make a collocated call we must have a collocated proxy broker, the
-    // invoke_i() will make sure that we only come here when we have one
     if ((effective_target->_servant () == 0))
-//        ((this->collocation_opportunity_ & TAO::TAO_CO_DIRECT_POA_STRATEGY) ==0) ||
-  //      ((this->collocation_opportunity_ & TAO::TAO_CO_THRU_POA_STRATEGY)))
       throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO::VMCID,
@@ -257,14 +230,12 @@ namespace TAO
     bool const block_connect =
       rflags != static_cast<CORBA::Octet> (Messaging::SYNC_NONE)
       && rflags != static_cast<CORBA::Octet> (TAO::SYNC_DELAYED_BUFFERING);
-
     // Create the resolver which will pick (or create) for us a
     // transport and a profile from the effective_target.
     Profile_Transport_Resolver resolver (
       effective_target.in (),
       stub,
       block_connect);
-
     resolver.resolve (max_wait_time);
 
     if (TAO_debug_level)
@@ -274,13 +245,11 @@ namespace TAO
                       ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote_i, ")
                       ACE_TEXT ("max wait time consumed during transport resolution\n")));
       }
-
     // Update the request id now that we have a transport
     if (resolver.transport ())
       {
         details.request_id (resolver.transport ()->tms ()->request_id ());
       }
-
     switch (this->type_)
       {
         case TAO_ONEWAY_INVOCATION:

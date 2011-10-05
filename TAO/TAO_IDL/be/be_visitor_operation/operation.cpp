@@ -284,7 +284,7 @@ be_visitor_operation::gen_stub_operation_body (
   *os << "TAO::TAO_CO_NONE";
   if (be_global->gen_direct_collocation())
     {
-      *os << " | TAO::TAO_CO_DIRECT_POA_STRATEGY";
+      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
     }
   if (be_global->gen_thru_poa_collocation())
     {

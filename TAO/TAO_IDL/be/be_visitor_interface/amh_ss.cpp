@@ -103,7 +103,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
   *os << "TAO::TAO_CO_NONE";
   if (be_global->gen_direct_collocation())
     {
-      *os << " | TAO::TAO_CO_DIRECT_POA_STRATEGY";
+      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
     }
   if (be_global->gen_thru_poa_collocation())
     {

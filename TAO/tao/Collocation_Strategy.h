@@ -47,7 +47,7 @@ namespace TAO
   int const TAO_CO_THRU_POA_STRATEGY = 0x01;
 
   /// Direct collocation is possible
-  int const TAO_CO_DIRECT_POA_STRATEGY = 0x02;
+  int const TAO_CO_DIRECT_STRATEGY = 0x02;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
