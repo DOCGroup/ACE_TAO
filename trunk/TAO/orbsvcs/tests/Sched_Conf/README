@@ -1,34 +1,36 @@
+$Id$
+
 Overview:
 
  The scheduling service can run in one of two different modes of
  operation, an off-line configuration mode, and a run-time execution mode.
- The application uses the Scheduler_Factory to specify in which mode 
+ The application uses the Scheduler_Factory to specify in which mode
  it would like to use the scheduling service.
- 
+
  In the configuration mode, the application registers RT_Infos containing
  operation characteristics with the off-line scheduler, and also specifies
  operation dependencies. The Event Channel also registers RT_Infos for its
  own operations, and specifies any additional dependencies introduced by
- subscription or event correllation. 
- 
+ subscription or event correllation.
+
  Once all operations are registered, the  application invokes the
  scheduler's compute_scheduling method.  The scheduler generates a
  "schedule" consisting of operation priorities and sub-priorities, and
- determines whether or not the schedule is feasible.  The scheduler also 
+ determines whether or not the schedule is feasible.  The scheduler also
  produces queue specification information that can be used to configure
  the dispatching module's number and kinds of queues (this
  automatic dispatching module configuration will appear in a TAO release
  *very* soon). The application then may ask the config scheduler to dump
  it's schedule to a header file.
- 
+
  The Sched_Conf.cpp file in this directory is an example of how this is done.
  Building and running the Sched_Conf executable will produce a header file
  called Sched_Conf_Runtime.h, which is included by Sched_Conf_Runtime.cpp.
- 
- The dumped header file contains tables with the static scheduling and 
- configuration information. The Sched_Conf_Runtime application passes this 
- information to the run-time scheduler at start-up.  The application may also 
- re-register its operations to verify the correct operations were loaded. The 
+
+ The dumped header file contains tables with the static scheduling and
+ configuration information. The Sched_Conf_Runtime application passes this
+ information to the run-time scheduler at start-up.  The application may also
+ re-register its operations to verify the correct operations were loaded. The
  Sched_Conf_Runtime does this, and in fact exercises a number of methods
  of the run-time scheduler to ensure it gives correct responses for the
  table of operations with which it was instantiated.

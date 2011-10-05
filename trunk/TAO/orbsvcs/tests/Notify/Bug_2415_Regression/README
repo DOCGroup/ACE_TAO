@@ -1,12 +1,13 @@
+$Id$
+
 Sequence Event ETCL Filter Test
 ===============================
-
 
 Description
 -----------
 
 This test checks push supplier and push consumer ETCL event filter mechanisms.
-The supplier sends a number of events specified by the consumer. The consumer 
+The supplier sends a number of events specified by the consumer. The consumer
 can filter or not filter the events and can use multiple consumers.
 The consumer may specify 'and' and/or 'or' relations on the filterable data
 contained within an event.
@@ -18,19 +19,19 @@ Usage
 The test consists of a Supplier and Consumer. The usage for each as is
 follows:
 
-$ ./Sequence_Supplier 
+$ ./Sequence_Supplier
 usage:  ./Sequence_Supplier -o <iorfile> -e <# of events>
 
 $ ./Sequence_Consumer -\?
 usage:  ./Sequence_Consumer -k <ior> -l <low expected events>
                             -h <high expected events>
 
-To run this test, run the run_test.pl perl script. 
+To run this test, run the run_test.pl perl script.
 This script is designed to test various aspects of the filtering
 mechanism.
 
 
 Expected Results
 ----------------
-The test script will display an error if for any test that fails. 
+The test script will display an error if for any test that fails.
 Otherwise, the test passed.
