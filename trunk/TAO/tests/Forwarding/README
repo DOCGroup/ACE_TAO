@@ -25,6 +25,6 @@ $ ./run_test.pl
 @todo The test is not nearly a complete test for location forwarding,
       for example, it does not test deeeply nested location forwards
       or the interactions between location forwarding and multiple
-      profiles. 
+      profiles.
 
 */

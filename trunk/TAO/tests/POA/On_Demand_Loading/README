@@ -53,5 +53,5 @@ interfaces.
 
 NOTE: If directly running run_test.pl srcipt then by default the example
 uses Generic_Servant as the servant. Hence its necessary to build
-$TAO_ROOT/examples/POA/Generic_Servant before you build and run this 
+$TAO_ROOT/examples/POA/Generic_Servant before you build and run this
 example.
