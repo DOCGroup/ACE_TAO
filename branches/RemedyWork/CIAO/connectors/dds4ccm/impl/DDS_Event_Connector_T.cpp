@@ -529,22 +529,19 @@ void
 DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
-  if (ACE_OS::strlen (this->topic_name_) != 0)
+  if (this->push_consumer_obtained_)
     {
-      if (this->push_consumer_obtained_)
-        {
-          this->push_consumer_.set_component (::CORBA::Object::_nil ());
-        }
+      this->push_consumer_.set_component (::CORBA::Object::_nil ());
+    }
 
-      if (this->supplier_obtained_)
-        {
-          this->supplier_.set_component (::CORBA::Object::_nil ());
-        }
+  if (this->supplier_obtained_)
+    {
+      this->supplier_.set_component (::CORBA::Object::_nil ());
+    }
 
-      if (this->pull_consumer_obtained_)
-        {
-          this->pull_consumer_.set_component (::CORBA::Object::_nil ());
-        }
+  if (this->pull_consumer_obtained_)
+    {
+      this->pull_consumer_.set_component (::CORBA::Object::_nil ());
     }
 
   this->do_ccm_remove ();
