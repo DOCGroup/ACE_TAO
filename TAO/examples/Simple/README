@@ -7,22 +7,22 @@ features.  The individual directories contain READMEs on how to run
 the following tests:
 
         . bank
-        
+
           This directory implements the canonical VisiBroker
           test.
 
         . chat
-        
+
           This directory implements an ORBacus test.
 
         . echo
-        
+
           This directory implements the canonical omniORB test.
 
         . grid
-        
+
           This directory implements the canonical Orbix test.
 
         . time
-          
+
           This directory implements a simple time/date test.

@@ -1,8 +1,9 @@
+$Id$
 
 Performance tests for the performance of the DIOP
-implementation using oneways. 
+implementation using oneways.
 
-1000 oneway requests containing a sequence of 256 chars are 
+1000 oneway requests containing a sequence of 256 chars are
 performed and the average time per call is measured.
 
 To execute the test either
