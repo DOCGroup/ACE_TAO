@@ -89,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             Param_Test_var param_test =
               TAO::Narrow_Utils<Param_Test>::unchecked_narrow (
                   obj.in (),
-                  _TAO_Param_Test_Proxy_Broker_Factory_function_pointer
+                  TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
                 );
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
