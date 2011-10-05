@@ -62,11 +62,11 @@ namespace DAnCE
 
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (object.in ());
-    
+
       {
         PortableServer::POAManager_var poa_manager =
           root_poa->the_POAManager ();
-	
+
         poa_manager->activate ();
 
         DANCE_DEBUG (DANCE_LOG_TRACE,
@@ -152,7 +152,7 @@ namespace DAnCE
                 sa->locality_manager_callback (lm.in (),
 					       ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
 					       this->config_.out ());
-		
+
                 DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                              (LM_TRACE, DLINFO
                               ACE_TEXT ("LocalityManager_Task::svc - ")

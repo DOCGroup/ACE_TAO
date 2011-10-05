@@ -50,13 +50,13 @@ namespace DAnCE
     DANCE_TRACE ("LocalityManager_i::init");
 
     DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
-		 (LM_DEBUG, DLINFO
-		  ACE_TEXT ("LocalityManager_i::init - ")
-		  ACE_TEXT ("Received %u properties from init\n"),
-		  props.length ()));
-	
+                 (LM_DEBUG, DLINFO
+                  ACE_TEXT ("LocalityManager_i::init - ")
+                  ACE_TEXT ("Received %u properties from init\n"),
+                  props.length ()));
+
     PLUGIN_MANAGER::instance ()->set_configuration (props);
-    
+
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
 
     Plugin_Configurator config;
@@ -91,13 +91,13 @@ namespace DAnCE
                           ACE_TEXT ("Using provided spawn delay %u\n"),
                           this->spawn_delay_));
           }
-	
-	DANCE_DEBUG (DANCE_LOG_TRACE,
-		     (LM_DEBUG, DLINFO
-		      ACE_TEXT ("LocalityManager_i::init - ")
-		      ACE_TEXT ("Number of LM configuration properties: %u\n"),
-		      props.length ()));
-	
+
+        DANCE_DEBUG (DANCE_LOG_TRACE,
+                     (LM_DEBUG, DLINFO
+                      ACE_TEXT ("LocalityManager_i::init - ")
+                      ACE_TEXT ("Number of LM configuration properties: %u\n"),
+                      props.length ()));
+
         for (CORBA::ULong i = 0; i < props.length (); ++i)
           {
             DANCE_DEBUG (DANCE_LOG_TRACE,
@@ -122,9 +122,9 @@ namespace DAnCE
       }
     else
       {
-	DANCE_ERROR (DANCE_LOG_MAJOR_DEBUG_INFO,
-		     (LM_WARNING, DLINFO
-		      ACE_TEXT ("Warning: No configuration properties\n")));
+        DANCE_ERROR (DANCE_LOG_MAJOR_DEBUG_INFO,
+                     (LM_WARNING, DLINFO
+                      ACE_TEXT ("Warning: No configuration properties\n")));
       }
   }
 
