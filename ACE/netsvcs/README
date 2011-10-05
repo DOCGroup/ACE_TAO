@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains the ACE network service implementations and
 sample driver programs for dynamically configuring them into client
 and server processes.  The subdirectories include the following:
@@ -8,9 +10,9 @@ and server processes.  The subdirectories include the following:
 	  These can be built as shared libraries (i.e., DLLs), which
 	  are then linked into applications either statically or
 	  dynamically.
-	
+
 	. servers -- contains the driver program that links the various
-	  services together, either statically or dynamically, to 
+	  services together, either statically or dynamically, to
 	  form complete server programs.
 
 	. clients -- contains a number of test programs that illustrate
