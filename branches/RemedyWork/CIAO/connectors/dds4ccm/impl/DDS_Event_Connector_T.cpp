@@ -189,7 +189,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
                     "Stopping DDS=>switching to new topic <%C>.\n",
                     topic_name));
       this->ccm_passivate ();
-      this->do_ccm_remove (false);
+      this->do_ccm_remove ();
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DDS_Event_Connector_T::topic_name - "
@@ -475,8 +475,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_passivate (void)
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
-    const bool set_component)
+DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove");
   try
@@ -486,22 +485,16 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
           if (this->push_consumer_obtained_)
             {
               this->push_consumer_.remove (this->subscriber_.in ());
-              if (set_component)
-                this->push_consumer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->supplier_obtained_)
             {
               this->supplier_.remove (this->publisher_.in ());
-              if (set_component)
-                this->supplier_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->pull_consumer_obtained_)
             {
               this->pull_consumer_.remove (this->subscriber_.in ());
-              if (set_component)
-                this->pull_consumer_.set_component (::CORBA::Object::_nil ());
             }
           TopicBaseConnector::ccm_remove ();
         }
@@ -536,6 +529,23 @@ void
 DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
+  if (ACE_OS::strlen (this->topic_name_) != 0)
+    {
+      if (this->push_consumer_obtained_)
+        {
+          this->push_consumer_.set_component (::CORBA::Object::_nil ());
+        }
 
-  this->do_ccm_remove (true);
+      if (this->supplier_obtained_)
+        {
+          this->supplier_.set_component (::CORBA::Object::_nil ());
+        }
+
+      if (this->pull_consumer_obtained_)
+        {
+          this->pull_consumer_.set_component (::CORBA::Object::_nil ());
+        }
+    }
+
+  this->do_ccm_remove ();
 }

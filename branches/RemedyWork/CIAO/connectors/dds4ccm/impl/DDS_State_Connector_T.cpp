@@ -303,7 +303,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
                     "Stopping DDS=>switching to new topic <%C>.\n",
                     topic_name));
       this->ccm_passivate ();
-      this->do_ccm_remove (false);
+      this->do_ccm_remove ();
 
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     "DDS_State_Connector_T::topic_name - "
@@ -616,8 +616,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_passivate (void)
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
-  const bool set_component)
+DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove");
   try
@@ -627,36 +626,26 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (
           if (this->observable_obtained_)
             {
               this->observable_.remove (this->publisher_.in ());
-              if (set_component)
-                this->observable_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->push_observer_obtained_)
             {
               this->push_observer_.remove (this->subscriber_.in ());
-              if (set_component)
-                this->push_observer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->push_state_observer_obtained_)
             {
               this->push_state_observer_.remove (this->subscriber_.in ());
-              if (set_component)
-                this->push_state_observer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->pull_observer_obtained_)
             {
               this->pull_observer_.remove (this->subscriber_.in ());
-              if (set_component)
-                this->pull_observer_.set_component (::CORBA::Object::_nil ());
             }
 
           if (this->passive_observer_obtained_)
             {
               this->passive_observer_.remove (this->subscriber_.in ());
-              if (set_component)
-                this->passive_observer_.set_component (::CORBA::Object::_nil ());
             }
           TopicBaseConnector::ccm_remove ();
         }
@@ -692,6 +681,34 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
 
-  this->do_ccm_remove (true);
+  if (ACE_OS::strlen (this->topic_name_) != 0)
+    {
+      if (this->observable_obtained_)
+        {
+          this->observable_.set_component (::CORBA::Object::_nil ());
+        }
+
+      if (this->push_observer_obtained_)
+        {
+          this->push_observer_.set_component (::CORBA::Object::_nil ());
+        }
+
+      if (this->push_state_observer_obtained_)
+        {
+          this->push_state_observer_.set_component (::CORBA::Object::_nil ());
+        }
+
+      if (this->pull_observer_obtained_)
+        {
+          this->pull_observer_.set_component (::CORBA::Object::_nil ());
+        }
+
+      if (this->passive_observer_obtained_)
+        {
+          this->passive_observer_.set_component (::CORBA::Object::_nil ());
+        }
+    }
+
+  this->do_ccm_remove ();
 }
 
