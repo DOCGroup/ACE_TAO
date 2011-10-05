@@ -59,8 +59,6 @@ be_visitor_root_ch::visit_root (be_root *node)
         }
     }
 
-  this->gen_proxy_broker_factory_pointers ();
-
   this->gen_ref_counting_overrides ();
 
   this->gen_static_corba_overrides ();
@@ -153,8 +151,6 @@ be_visitor_root_ch::gen_arg_traits (be_root *node)
 void
 be_visitor_root_ch::gen_fwd_decls (void)
 {
-  // If this IDL file contains an non local interface declaration, generate a
-  // forward declaration of the proxy broker for a possible collocated call.
   if (idl_global->non_local_iface_seen_)
     {
       *o_ << be_nl_2
@@ -177,11 +173,6 @@ be_visitor_root_ch::gen_fwd_decls (void)
 
       *o_ << be_global->core_versioning_end () << be_nl;
     }
-}
-
-void
-be_visitor_root_ch::gen_proxy_broker_factory_pointers (void)
-{
 }
 
 void

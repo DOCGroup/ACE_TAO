@@ -256,9 +256,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Don't support smart proxies for local interfaces.
   if (! node->is_local ())
     {
-      // List that generates proxy broker factory function pointer.
-      be_global->non_local_interfaces.enqueue_tail (node);
-
       if (be_global->gen_smart_proxies ())
         {
           *os << be_nl_2;

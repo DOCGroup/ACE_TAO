@@ -766,10 +766,6 @@ public:
   /// Cleanup function.
   void destroy (void);
 
-  /// Used in the generation of declarations for
-  /// xxx_Proxy_Broker_Factory_function_pointer.
-  ACE_Unbounded_Queue<be_interface *> non_local_interfaces;
-
   /// Used in the generation of extern function declarations so we
   /// can use non-defined interfaces as members and parameters.
   ACE_Unbounded_Queue<be_interface_fwd *> non_defined_interfaces;

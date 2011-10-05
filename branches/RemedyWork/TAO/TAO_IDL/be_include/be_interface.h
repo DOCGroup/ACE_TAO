@@ -325,16 +325,12 @@ protected:
   enum Suffix_Code
   {
     PROXY_IMPL = 0,
-    PROXY_BROKER = 1
   };
 
   enum Tag_Code
   {
-    THRU_POA = 0,
-    DIRECT = 1,
-    REMOTE = 2,
-    STRATEGIZED = 3,
-    GC_PREFIX = 4 // Prefix used for the generated class
+    DIRECT = 0,
+    GC_PREFIX = 1 // Prefix used for the generated class
                   // This prefix is used to avoid name conflicts
                   // with the user classes.
   };
