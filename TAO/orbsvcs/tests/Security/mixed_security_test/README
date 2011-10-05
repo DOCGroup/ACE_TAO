@@ -1,6 +1,4 @@
-#
-# $Id$
-#
+$Id$
 
 -----------------------------
 cases:
@@ -13,13 +11,13 @@ cases:
 
 This test verifies that the ORB's secure invocation mechanism is
 functioning properly.  It expands on what the Secure_Invocation does
-by activating an object with two separate ORBs and POAs. One of the POAs 
+by activating an object with two separate ORBs and POAs. One of the POAs
 has a SecQoPNoProtection policy assigned and thus should permit also
 invocations over non-secure transport.
 
 The test verifies that a secure client can make invocations, using both
-the "secure" and the "non-secure" IOR from the server. Note that for 
-the server to support the non-secure invocations it must have -SSLNoProtection 
+the "secure" and the "non-secure" IOR from the server. Note that for
+the server to support the non-secure invocations it must have -SSLNoProtection
 in its sevice configuration file.
 
 The test verifies that a non-secure client can only make invocations through

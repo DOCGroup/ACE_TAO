@@ -1,16 +1,16 @@
-// $Id$
+$Id$
 
 Goals:
 ------
 This is the most basic test for federating Event Channels via
 multicast or udp.  Two Event Channels participate: one sends out its events
 via multicast (or udp), while the second one listens for events on
-multicast (or udp).  
+multicast (or udp).
 
-This test can be run with two different configurations: multicast is used 
+This test can be run with two different configurations: multicast is used
 for federating event channels in one and udp is used in another.  The
 test uses ECG_Mcast_Gateway configured with Simple Address Server and
-Simple Mcast Handler or UDP Handler components.  
+Simple Mcast Handler or UDP Handler components.
 
 Description:
 ------------
@@ -28,9 +28,9 @@ Consumer: $consumer -ORBInitRef Event_Service=<ior>
 Supplier: $supplier -ORBInitRef Event_Service=<ior>
 
 Mcast-equipped EC: $gateway_ec -ORBsvcconf <conf_file> -i <ior_file>
-where 
+where
 <ior_file> is the name of the file to which the ior of the Event
-           Channel will be printed 
+           Channel will be printed
 <conf_file> is a service conf file used to configure the Event Channel
             and the multicast components.  See consumer-ec.conf or
             supplier-ec.conf for examples, or
@@ -39,24 +39,24 @@ where
 
 To run:
 -------
-Automagically (runs all executables, processes output): 
+Automagically (runs all executables, processes output):
 $ run_test.pl
 
 Manually:
-  
+
  Multicast Federation test
 
 $gateway-ec -ORBsvcconf consumer-ec.conf -i consumer-ec.ior
-$consumer -ORBInitRef Event_Service=file://consumer-ec.ior 
+$consumer -ORBInitRef Event_Service=file://consumer-ec.ior
 $gateway-ec -ORBsvcconf supplier-ec.conf -i supplier-ec.ior
-$supplier -ORBInitRef Event_Service=file://supplier-ec.ior 
+$supplier -ORBInitRef Event_Service=file://supplier-ec.ior
 
  UDP Federation test
 
 $gateway-ec -ORBsvcconf udp-consumer-ec.conf -i consumer-ec.ior
-$consumer -ORBInitRef Event_Service=file://consumer-ec.ior 
+$consumer -ORBInitRef Event_Service=file://consumer-ec.ior
 $gateway-ec -ORBsvcconf udp-supplier-ec.conf -i supplier-ec.ior
-$supplier -ORBInitRef Event_Service=file://supplier-ec.ior 
+$supplier -ORBInitRef Event_Service=file://supplier-ec.ior
 
 
 

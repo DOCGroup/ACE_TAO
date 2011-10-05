@@ -1,10 +1,10 @@
-// $Id$
+$Id$
 
 Goals:
 ------
 This is a step up from the Simple mcast test.  There are still two
 Event Channels participating: one sends out its events via multicast,
-while the second one listens for events on multicast. 
+while the second one listens for events on multicast.
 
 But this test uses ECG_Mcast_Gateway configured with Complex
 Address Server and Complex Mcast Handler components.  In other words,
@@ -21,7 +21,7 @@ configured to use a different mcast group for each  event type.
 Supplier pushes 100 events of each of the three event types to its
 Event Channel while the consumer waits for events from its EC.  Once
 the consumer receives 100 events of each of the three types it
-expects, it destroys its EC and exits. 
+expects, it destroys its EC and exits.
 
 Command-line Options:
 ---------------------
@@ -30,9 +30,9 @@ Consumer: $consumer -ORBInitRef Event_Service=<ior>
 Supplier: $supplier -ORBInitRef Event_Service=<ior>
 
 Mcast-equipped EC: $gateway_ec -ORBsvcconf <conf_file> -i <ior_file>
-where 
+where
 <ior_file> is the name of the file to which the ior of the Event
-           Channel will be printed 
+           Channel will be printed
 <conf_file> is a service conf file used to configure the Event Channel
             and the multicast components.  See consumer-ec.conf or
             supplier-ec.conf for examples, or
@@ -41,14 +41,14 @@ where
 
 To run:
 -------
-Automagically (runs all executables, processes output): 
+Automagically (runs all executables, processes output):
 $ run_test.pl
 
 Manually:
 $gateway-ec -ORBsvcconf consumer-ec.conf -i consumer-ec.ior
-$consumer -ORBInitRef Event_Service=file://consumer-ec.ior 
+$consumer -ORBInitRef Event_Service=file://consumer-ec.ior
 $gateway-ec -ORBsvcconf supplier-ec.conf -i supplier-ec.ior
-$supplier -ORBInitRef Event_Service=file://supplier-ec.ior 
+$supplier -ORBInitRef Event_Service=file://supplier-ec.ior
 
 
 

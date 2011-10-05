@@ -1,4 +1,4 @@
-// README v 1.3 dhanvey <d.hanvey@qub.ac.uk> 14:43 30/05/02
+$Id$
 
                         Telecom Log Service
                         -------------------
@@ -20,7 +20,7 @@ The Logging Service is comprised of 3 separate services ...
 
 There is also a RTEvent Logging Service available ...
 
-4. The RTEvent Logging Service 
+4. The RTEvent Logging Service
    $TAO_ROOT/orbsvcs/orbsvcs/Logging_Service/RTEvent_Logging_Service
 
 Please see the README documents in each of the above folders for
