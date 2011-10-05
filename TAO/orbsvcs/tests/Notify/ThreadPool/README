@@ -1,3 +1,5 @@
+$Id$
+
 ThreadPool test
 ===============
 
@@ -19,7 +21,7 @@ supplier.conf:
 
 This creates the following -
 - An EventChannel with a threadpool.
-- A SupplierAdmin (SA1)with a threadpool.  
+- A SupplierAdmin (SA1)with a threadpool.
 - Another SupplierAdmin (SA2) with no threadpool.
 
 - A ProxyConsumer(1) is connected to SA1 with a threadpool.
@@ -33,11 +35,11 @@ consumer.conf:
 -------------
 
 This creates:
-- A ConsumerAdmin (CA1)with a threadpool.  
+- A ConsumerAdmin (CA1)with a threadpool.
 - Another ConsumerAdmin (CA2) with no threadpool.
 
 An RT POA is created in which the ProxySuppliers are activated.
- 
+
 - A ProxySupplier(1) is connected to CA1 with a threadpool.
 - A ProxySupplier(2) is connected to CA1 with no threadpool.
 - A ProxySupplier(3) is connected to CA2 with no threadpool.
@@ -49,4 +51,4 @@ Expected Result:
 ==============
 if a request reaches a threadpool that it was not supposed to, an
 error message is printed. otherwise some housekeeping messages are
-generated when the test runs.  
+generated when the test runs.

@@ -31,10 +31,10 @@ This directory contains:
                        but not event persistence.
    ns_st_both.conf  -- configures the Notification Service for single
                        thread operation with support for both topological,
-                       and event persistence. 
+                       and event persistence.
    ns_mt_both.conf  -- configures the Notification Service for multi-
                        threaded operation with support for both topological,
-                       and event persistence. 
+                       and event persistence.
    event.conf       -- configures the Notification Service for event
                        persistence without topology persistence.  This is
                        an invalid configuration and should cause the
@@ -67,9 +67,9 @@ the Supplier.
 
   -nonamesvc            Don't use the Naming Service to find
                         EventChannelFactory
-  -channel filename     Where to store a channel number so the Supplier can 
+  -channel filename     Where to store a channel number so the Supplier can
                         find it
-  -any or -str or -seq  What type of event supplier will send (pick one, 
+  -any or -str or -seq  What type of event supplier will send (pick one,
                         default: -any)
   -expect n             How many events are expected.
   -fail n               Simulate a recoverable failure every n events.
@@ -77,7 +77,7 @@ the Supplier.
                         used, then serial number checking is disabled.
                         This allows testing the consumer with multiple
                         Suppliers.
-  -disconnect           Disconnect from notfication service cleanly 
+  -disconnect           Disconnect from notfication service cleanly
                         (no reconnect will be possible)
   -v                    Verbose output.
 
@@ -122,7 +122,7 @@ Service).  Structured events and Sequence events are events supported only
 by the Notification Service.  See the TAO Developer's Guide or the CORBA
 specification for more details.
 
-Only one of these three options should be specified.  If none of these 
+Only one of these three options should be specified.  If none of these
 is specified, the default is "-any".
 
 Command line option: -send n
@@ -137,17 +137,17 @@ After it has received that many events, the Consumer will shut down.
 
 Command line option: -fail n
 ------------------------------
-This Consumer-only option tells the Consumer to throw an exception 
+This Consumer-only option tells the Consumer to throw an exception
 (CORBA::UNKNOWN) every n events.  This simulates a recoverable error in
 the consumer.  After throwing the exception, the consumer continues
 to listen for incoming events. It expects the event it was processing
 to be retransmitted.
 
 Because of the retransmission, the use of the -fail option may be
-counterintuitive.  If the consumer options are "-expect 10 -fail 4" then 
-it will receive events 0, 1, 2, and fail on event 3.  It will then 
-receive 3, 4, 5, and fail on event 6.  Then it will receive 6, 7, 8, 
-and fail on event 9.  Finally it will receive the retransmission of event 
+counterintuitive.  If the consumer options are "-expect 10 -fail 4" then
+it will receive events 0, 1, 2, and fail on event 3.  It will then
+receive 3, 4, 5, and fail on event 6.  Then it will receive 6, 7, 8,
+and fail on event 9.  Finally it will receive the retransmission of event
 9 and exit.
 
 Command line option: -pause n
@@ -234,7 +234,7 @@ during the test.  The default if none of these options is present is "-any".
 run_test.pl: command line option -v
 --------------------------------------------
 This option controls the verbosity of the test script and the Supplier and
-Consumer applications.  When it is present, a detailed step-by-step 
+Consumer applications.  When it is present, a detailed step-by-step
 report is produced by the test.
 
 run_test.pl: Test #1: Supplier reconnection.
@@ -246,8 +246,8 @@ The Consumer is configured to receive 20 events.  The Supplier is configured
 to send ten events.
 
 After sending ten events, the Supplier exits -- simulating a Supplier failure.
-The test script starts a new copy of the Supplier.  The new Supplier is 
-configured to send ten events starting with event number 10.  
+The test script starts a new copy of the Supplier.  The new Supplier is
+configured to send ten events starting with event number 10.
 It uses information saved by the previous supplier to reconnect to the same
 channel, admin, and proxy in the Notification Services.
 The Suppler sends the remaining ten events then exists.  The Consumer having
@@ -262,9 +262,9 @@ The Notification Service from the previous test is still running and the
 saved reconnection information for both the Supplier and Consumer is still
 available.
 
-The test script starts a Consumer configured to receive 20 events and a 
+The test script starts a Consumer configured to receive 20 events and a
 Supplier configured to send twenty events.  Both clients use the reconnection
-information from the previous test to reconnect to the Notification Service.  
+information from the previous test to reconnect to the Notification Service.
 
 Twenty events are sent successfully, then both clients exit and the test
 is complete.
@@ -292,13 +292,13 @@ run_test.pl: Test #4: The Reconnection Registry
 -----------------------------------------------
 This test starts with the Notification Service from the previous test.
 
-The script starts a new Consumer that expects to receive 20 events. The 
+The script starts a new Consumer that expects to receive 20 events. The
 Consumer reconnects to the Notification Server.
-The script starts a Supplier.  It is configured to send 10 events then 
-pause waiting for a Notification Service initiated reconnection before 
+The script starts a Supplier.  It is configured to send 10 events then
+pause waiting for a Notification Service initiated reconnection before
 sending the remaining 10 events.
 
-Both clients register with the Reconnection Registry to receive reconnection 
+Both clients register with the Reconnection Registry to receive reconnection
 callbacks.
 
 The test script waits for the Supplier to pause.  It then kills the
@@ -335,7 +335,7 @@ communication or Consumer failures.
 
 Known Problems as of Feb 2004.
 ------------------------------
-Sequence events are not working.  It is unclear whether this is a problem in 
+Sequence events are not working.  It is unclear whether this is a problem in
 the test or in the Notification Service itself.
 
 Known Problems as of Mar 2004.

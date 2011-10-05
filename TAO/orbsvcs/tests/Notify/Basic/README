@@ -1,6 +1,7 @@
+$Id$
 
-                                                        Basic Tests
-                                                        ===========
+Basic Tests
+===========
 
 Updates:
 -------
@@ -16,7 +17,7 @@ Connects/Disconnects consumers and suppliers in a loop to test connect
 and disconnect to admin objects.
 
 Command line parameters:
-                     
+
 "-count <testcount>",
 "-consumers <number_of_consumers>",
 "-suppliers <number_of_suppliers>",
@@ -28,18 +29,18 @@ Creates and destroys EC and Admin objects.
 Command line parameters:
 "-count testcount"
 
-where <testcount> is how many times we want to create/destroy.  
+where <testcount> is how many times we want to create/destroy.
 
 IdAssignment:
 ------------
 This test exercies Id generation by creating ec and admin objects and
 using the assigned ids to lookup these objects and destroy them.
 
-Command line parameters:                     
-"-iter <count>", count is how many times to repeat this test.                    
-"-ec_count <count>", count is number of ec objects to create 
-"-ca_count <count>", count is number of consumer admin (ca) objects to create 
-"-sa_count <count>\n", count is number of supplier admin (sa) objects to create 
+Command line parameters:
+"-iter <count>", count is how many times to repeat this test.
+"-ec_count <count>", count is number of ec objects to create
+"-ca_count <count>", count is number of consumer admin (ca) objects to create
+"-sa_count <count>\n", count is number of supplier admin (sa) objects to create
 
 
 AdminProperties
@@ -55,17 +56,17 @@ command line parameters:
 -consumers [consumers]
 -suppliers [suppliers]
 -event_count [event_count]
--ConsumerDelay [delay in secs] 
+-ConsumerDelay [delay in secs]
 // sleep period per push for the consumer created to test MaxQueueLength
 -InitialDelay [delay in secs]
 
 Events:
 ----------
-This test creates 1 structured supplier and 2 structured consumers. 
+This test creates 1 structured supplier and 2 structured consumers.
 Each consumer should receive all the events send by the supplier.
 The uses the default ConsumerAdmin and default Supplier Admin if the
 -use_default_admin option is specified.
- 
+
 command line options:
 -use_default_admin
 -events [number of events to send]
@@ -73,9 +74,9 @@ command line options:
 MultiTypes:
 -----------
 Creates a Supplier and Consumer each for the 3 Client types that send
-and receive Any, Structured and Sequence event types. 
+and receive Any, Structured and Sequence event types.
 Each type of the supplier then sends an event each to the Notification
-channel. All 3 types of consumers should receive 3 events each. 
+channel. All 3 types of consumers should receive 3 events each.
 
 command line options:
 none.
@@ -86,7 +87,7 @@ Creates 1 Any Supplier and 1 Any Consumer. Events received by the
 supplier must be equal to the count send.
 
 command line options:
--events [number of events to send] 
+-events [number of events to send]
 
 Filter:
 ------
