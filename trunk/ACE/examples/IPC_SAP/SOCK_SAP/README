@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains groups of client and server test programs that
 exercise the various C++ wrappers for sockets.  In general, the test
 programs do more or less the same thing -- the client establishes a
@@ -12,7 +14,7 @@ describes each set of tests in more detail:
 	. C-{inclient,inserver}.cpp -- This is basically a C code
 	  implementation that opens a connection to the server and
 	  sends all the data from the stdin using Internet domain
-	  sockets (i.e., TCP).  
+	  sockets (i.e., TCP).
 
 	. CPP-{inclient,inserver}.cpp -- This test is
           a more sophisticated C++ wrapper version of the preceeding
