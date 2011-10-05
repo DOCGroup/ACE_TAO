@@ -1,8 +1,8 @@
 This directory contains subdirectories that test the ACE Reactor and Proactor
 
 	. Dgram
-		Tests the CODgram and Dgram classes with the Reactor.	
-	
+		Tests the CODgram and Dgram classes with the Reactor.
+
 	. Misc
 		Various miscellaneous tests of Reactor functionality
 		(e.g., signals, timers, notification, etc.).
