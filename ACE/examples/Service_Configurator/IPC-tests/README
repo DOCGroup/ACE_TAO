@@ -1,3 +1,5 @@
+$Id$
+
 This file describes how to invoke the tests in the
 $ACE_ROOT/examples/Service_Configurator/IPC-test/{client,server}
 directories.  These tests exercise all of the ACE IPC SAP
@@ -38,7 +40,7 @@ Svc_Manager object to be initialized with an "argv" argument of "-d -p
 connection requests from clients.  To see how this works do the
 following:
 
-1. Comment out all the other lines except 
+1. Comment out all the other lines except
 
    static Svc_Manager "-d -p 3911"
 
@@ -49,7 +51,7 @@ following:
    % ./server_test -d
 
 3. Make another window on the *same* host and cd to the ./client/
-   directory 
+   directory
 
 4. Run the ./remote_service_directory_test program as follows:
 
@@ -66,7 +68,7 @@ and activate another service dynamically, perform the following steps:
 
 1. *Without* shutting down the ./server_test program, edit the svc.conf
    file.  Comment out the Svc_Manager line by adding a '#' at the
-   front, i.e.: 
+   front, i.e.:
 
    # static Svc_Manager "-d -p 3911"
 
@@ -83,9 +85,9 @@ and activate another service dynamically, perform the following steps:
    parameters as follows:
 
    % ./remote_service_directory_test -p 3911 -h localhost -r
-   
+
    The '-r' flag instructs the server to reconfigure itself.
-   
+
    After reconfiguration, you'll now have a second active service in
    the address space of the ./server_test daemon.  To see this, rerun
    the remote_service_directory_test command, e.g.:
@@ -93,10 +95,10 @@ and activate another service dynamically, perform the following steps:
    % ./remote_service_directory_test -p 3911 -h localhost
 
    You should now see the following output:
-   
+
    Svc_Manager 3911/tcp # lists all services in the daemon
    Remote_Brdcast 10001/udp # tests broadcasting
-   
+
    which indicates that the remote broadcast service is now active.
 
 3. To test the remote broadcast service, run the following program
@@ -104,7 +106,7 @@ and activate another service dynamically, perform the following steps:
 
    % ./broadcast_client_test -p 10001
 
-   This should cause the window running the ./server_test to 
+   This should cause the window running the ./server_test to
    display the following output:
 
    received broadcast datagram from host spare.ics.uci.edu
