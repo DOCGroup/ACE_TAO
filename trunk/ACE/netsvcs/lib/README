@@ -1,3 +1,5 @@
+$Id$
+
 This directory provides a number of network services that utilize the
 ACE wrapper features.
 
@@ -16,8 +18,8 @@ ACE wrapper features.
 	  allows applications to bind, find, and unbind names in
 	  a distributed system.
 
-	. Token_Handler.* -- Implements a distributed token 
-	  service that allows applications to acquire and release 
+	. Token_Handler.* -- Implements a distributed token
+	  service that allows applications to acquire and release
 	  locks in a distributed system.
 
 	. Time_Handler.* -- Implements a distributed time service that
@@ -48,7 +50,7 @@ line arguments that can be given to the Logging_Strategy Service:
     LOGGER      -- Write messages to the local client logger deamon.
     OSTREAM     -- Write messages to the ostream that gets created by
 		   specifying a filename (see below)
-    VERBOSE	-- Display messages in a verbose manner 
+    VERBOSE	-- Display messages in a verbose manner
     SILENT      -- Do not print messages at all
 
 Note: If more than one flag is specified, the flags need to be 'OR'ed
@@ -68,7 +70,7 @@ To direct output only to STDERR, specify command line arguments as:
 	"-f STDERR"
 
 To direct output to both STDERR and a file called "mylog", specify
-command line arguments as: 
+command line arguments as:
 	"-f STDERR|OSTREAM -s mylog"
 
 ==================== Name Service ====================
@@ -88,7 +90,7 @@ consists of :
  - nameserver_host : hostname where the server process resides
  - namespace_dir   : directory that holds the NameBinding databases
  - process_name    : name of the client process (argv[0]), NameBindings of
-		     a ProcessLocal namespace are stored in file 
+		     a ProcessLocal namespace are stored in file
 		     "namespace_dir/process_name". NameBindings of NodeGlobal
 		     namespace are stored in "namespace_dir/localnames".
 		     NameBindings of Net_Local namespace are stored in file
@@ -135,7 +137,7 @@ The strategy for all public methods of Naming_Context is common :
 1. Transform the format of the arguments to ACE_SString (which is
    internally used) if necessary.
 
-2. check if work can be done locally : -> call the appropriate local_* method 
+2. check if work can be done locally : -> call the appropriate local_* method
    otherwise call the appropriate global_* method.
 
 Removing Name_Bindings from the database (either with unbind or
@@ -202,7 +204,7 @@ Note that multiple servers can be specified in this manner for the
 clerk to connect to when it starts up. The server name and the port
 number need to be concatenated and separated by a ":". In addition,
 the timeout value can also be specified as a command line argument as
-follows: 
+follows:
 
 	-t timeout
 
