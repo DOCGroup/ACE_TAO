@@ -50,14 +50,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Forward class declarations for components.
       *os << be_nl_2
-          << "class " << node->base_proxy_impl_name ()
-          << ";" << be_nl
           << "class " << node->remote_proxy_impl_name ()
-          << ";" << be_nl
-          << "class " << node->base_proxy_broker_name ()
-          << ";" << be_nl
-          << "class " << node->remote_proxy_broker_name ()
-          << ";";
+          << ";" << be_nl;
     }
 
   // Now generate the class definition.

@@ -1,14 +1,34 @@
+Wed Oct  5 18:34:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+          Cleanup of very old stuff
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+          Fixed cpb
+
+        * tao/Valuetype/AbstractBase_T.h:
+        * tao/Valuetype/AbstractBase_T.cpp:
+          Updated for changes below
+
+        * tests/CSD_Collocation/svc.conf.csd:
+          Removed deprecated arguments
+
 Wed Oct  5 13:01:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
         * tests/Collocated_Best/README
         * tests/Collocated_ThruP_Sp/README
         * tests/Collocated_ThruP_Sp_Gd/README
         * tests/Bug_2241_Regression/README
         Add README's
-        
+
         * bin/tao_orb_tests.lst
-        Added Collocated_ThruP_Sp_Gd test. 
-        
+        Added Collocated_ThruP_Sp_Gd test.
+
 Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
         * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
@@ -17,7 +37,7 @@ Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * tao/PolicyC.cpp:
         * tao/Collocation_Strategy.h:
         * tao/PortableServer/PolicyS.cpp:
-         Change define TAO_CO_DIRECT_POA,remove POA 
+         Change define TAO_CO_DIRECT_POA,remove POA
 
         * tao/DynamicInterface/DII_Invocation_Adapter.h:
         * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
@@ -31,10 +51,10 @@ Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * tao/Invocation_Adapter.cpp:
          Extended collocation_strategy with opertunities
          Handling of BEST strategy and checking other strategies.
- 
+
         * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
 
-      
+
 
 Wed Oct  5 08:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
