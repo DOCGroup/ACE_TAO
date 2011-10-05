@@ -1,3 +1,35 @@
+Wed Oct  5 14:16:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+          Start DDS when the topic name is not empty.
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/SenderDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/run_test.pl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/ReceiverDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/SenderDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/ReceiverDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/SenderDriver.cpp:
+          Clearing topic name on a running DDS connector. After clearing, start writing. 
+          The connector should throw a bad_inv_order exception. Setting the topic name again.
+          The sender should be able to write again. Need to expanded with an updater 
+          (state connector).
+
 Wed Oct  5 12:39:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:

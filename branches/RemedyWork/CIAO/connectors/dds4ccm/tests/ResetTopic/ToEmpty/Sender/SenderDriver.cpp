@@ -6,7 +6,7 @@
  */
 
 
-#include "UL_ResetTopic_SenderC.h"
+#include "TE_ResetTopic_SenderC.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 
@@ -16,7 +16,7 @@ const ACE_TCHAR *topic_name = ACE_TEXT ("");
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ek:n:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -31,12 +31,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
             topic_name = get_opts.opt_arg ();
             break;
 
+          case 'e':
+            topic_name = "";
+            break;
+
           case '?':
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
                               "usage:  %s\n"
                               "-k <Sender IOR> (default is file://Sender.ior)\n"
                               "-n <new topic>\n"
+                              "-e <clearing topic name>\n"
                               "\n",
                               argv [0]),
                               -1);
@@ -64,8 +69,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         orb->string_to_object (sender_ior);
 
       // downcast the object reference to the appropriate type
-      ::UL_ResetTopic::Sender_var sender =
-        ::UL_ResetTopic::Sender::_narrow (sender_obj.in ());
+      ::TE_ResetTopic::Sender_var sender =
+        ::TE_ResetTopic::Sender::_narrow (sender_obj.in ());
 
       if (CORBA::is_nil (sender.in ()))
         {

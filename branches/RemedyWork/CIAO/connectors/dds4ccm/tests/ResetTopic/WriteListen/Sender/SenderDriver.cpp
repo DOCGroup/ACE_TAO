@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           default:
             ACE_ERROR_RETURN ((LM_ERROR,
                               "usage:  %s\n"
-                              "-k <Distributor IOR> (default is file://Sender.ior)\n"
+                              "-k <Sender IOR> (default is file://Sender.ior)\n"
                               "-n <new topic>\n"
                               "\n",
                               argv [0]),
