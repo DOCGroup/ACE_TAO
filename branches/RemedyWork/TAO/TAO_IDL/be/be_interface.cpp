@@ -88,9 +88,7 @@ be_interface::be_interface (UTL_ScopedName *n,
              n),
     be_type (AST_Decl::NT_interface,
              n),
-    remote_proxy_impl_name_ (0),
     direct_proxy_impl_name_ (0),
-    full_remote_proxy_impl_name_ (0),
     full_direct_proxy_impl_name_ (0),
     client_scope_ (0),
     flat_client_scope_ (0),
@@ -2700,17 +2698,8 @@ be_interface::destroy (void)
   delete [] this->relative_skel_name_;
   this->relative_skel_name_ = 0;
 
-  delete [] this->base_proxy_impl_name_;
-  this->base_proxy_impl_name_ = 0;
-
-  delete [] this->remote_proxy_impl_name_;
-  this->remote_proxy_impl_name_ = 0;
-
   delete [] this->direct_proxy_impl_name_;
   this->direct_proxy_impl_name_ = 0;
-
-  delete [] this->full_remote_proxy_impl_name_;
-  this->full_remote_proxy_impl_name_ = 0;
 
   delete [] this->full_direct_proxy_impl_name_;
   this->full_direct_proxy_impl_name_ = 0;
@@ -3299,45 +3288,6 @@ void
 be_interface::is_ami4ccm_rh (bool val)
 {
   this->is_ami4ccm_rh_ = val;
-}
-
-const char *
-be_interface::remote_proxy_impl_name (void)
-{
-  if (this->remote_proxy_impl_name_ == 0)
-    {
-      this->remote_proxy_impl_name_ =
-        this->create_with_prefix_suffix (
-          this->tag_table_[GC_PREFIX],
-          this->local_name (),
-          this->suffix_table_[PROXY_IMPL],
-          this->tag_table_[REMOTE]);
-    }
-
-  return this->remote_proxy_impl_name_;
-}
-
-const char *
-be_interface::full_remote_proxy_impl_name (void)
-{
-  if (this->full_remote_proxy_impl_name_ == 0)
-    {
-      const char *scope = this->client_enclosing_scope ();
-      const char *base_name = this->remote_proxy_impl_name ();
-      size_t length =
-        ACE_OS::strlen (scope) + ACE_OS::strlen (base_name);
-
-      ACE_NEW_RETURN (this->full_remote_proxy_impl_name_,
-                      char[length + 1],
-                      0);
-
-      ACE_OS::strcpy (this->full_remote_proxy_impl_name_,
-                      scope);
-      ACE_OS::strcat (this->full_remote_proxy_impl_name_,
-                      base_name);
-    }
-
-  return this->full_remote_proxy_impl_name_;
 }
 
 const char *

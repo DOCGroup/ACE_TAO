@@ -69,13 +69,6 @@ public:
   /// Retrieve the fully qualified collocated class name.
   const char *local_coll_name (int);
 
-  /// retrieve the name of the remote  proxy implementation.
-  virtual const char *remote_proxy_impl_name (void);
-
-  /// retrieve the fully qualified name of the remote
-  /// proxy implementation.
-  virtual const char *full_remote_proxy_impl_name (void);
-
   /// retrieve the name of the direct proxy implementation.
   virtual const char *direct_proxy_impl_name (void);
 
@@ -350,11 +343,8 @@ protected:
   static const char *tag_table_[];
 
   // Proxy Implementation names.
-  char *base_proxy_impl_name_;
-  char *remote_proxy_impl_name_;
   char *direct_proxy_impl_name_;
 
-  char *full_remote_proxy_impl_name_;
   char *full_direct_proxy_impl_name_;
 
   char *client_scope_;

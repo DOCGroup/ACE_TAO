@@ -46,14 +46,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   AST_Component *c = AST_Component::narrow_from_decl (node);
 
-  if (c != 0)
-    {
-      // Forward class declarations for components.
-      *os << be_nl_2
-          << "class " << node->remote_proxy_impl_name ()
-          << ";" << be_nl;
-    }
-
   // Now generate the class definition.
   *os << be_nl_2
       << "class " << be_global->stub_export_macro ()
@@ -233,8 +225,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Friends declarations, component only.
       *os << be_nl_2
-          << "friend class " << node->remote_proxy_impl_name ()
-          << ";" << be_nl
           << "friend class " << node->direct_proxy_impl_name ()
           << ";";
     }
