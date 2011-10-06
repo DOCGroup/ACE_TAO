@@ -1,14 +1,16 @@
 /**
 
+$Id$
+
 @page GroupRef_Manipulation Test README File
 
       This is a simple test which tests the following
 
 - If a client receives a location forwarding with a new IOGR  version,
   the next request from the client should have the new version in the
-  FT_GROUP_VERSION context of the GIOP header 
+  FT_GROUP_VERSION context of the GIOP header
 
-- that location forwarding to a FTORB actually works. 
+- that location forwarding to a FTORB actually works.
 
 The test creates two IOR's and sets both of them as primaries. The
 first IOR is passed to the client for making invocations. After a
@@ -16,6 +18,6 @@ certain number of invocations from the client, the server request
 interceptor throw ForwardRequest exception with a reference to the
 second IOR which also has new IOGR revision information. The
 server side interceptor checks whether the subsequent calls have the
-new version information. 
+new version information.
 
 */
