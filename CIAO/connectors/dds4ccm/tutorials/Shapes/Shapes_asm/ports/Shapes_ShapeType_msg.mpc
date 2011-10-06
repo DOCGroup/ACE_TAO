@@ -1,30 +1,26 @@
 // $Id$
+// This file is generated with "generate_component_mpc.pl -d -o../lib Shapes_ShapeType_msg
 
-project (Shapes_ShapeType_msg_stub) : taoidldefaults, dds4ccm_ts_default, Shapes {
-  idlflags += -SS -Sci \
-              -Wb,stub_export_macro=SHAPES_MSG_STUB_Export \
-              -Wb,stub_export_include=Shapes_ShapeType_msg_stub_export.h \
-              -o GeneratedCode
-
+project(Shapes_ShapeType_msg_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = Shapes_ShapeType_msg_stub
+  dynamicflags += SHAPES_SHAPETYPE_MSG_STUB_BUILD_DLL
   libout = ../lib
 
-  sharedname = Shapes_ShapeType_msg_stub
-  dynamicflags += SHAPES_MSG_STUB_BUILD_DLL
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=SHAPES_SHAPETYPE_MSG_STUB_Export \
+              -Wb,stub_export_include=Shapes_ShapeType_msg_stub_export.h
 
   IDL_Files {
     idlflags += -Gxhst
-    gendir = GeneratedCode
     Shapes_ShapeType_msg.idl
   }
 
-  opendds_ts_flags += --export=SHAPES_MSG_STUB_Export
+  opendds_ts_flags += --export=SHAPES_SHAPETYPE_MSG_STUB_Export
 
   DDSGenerator_Files {
     Shapes_ShapeType_msg.idl
-    gendir = GeneratedCode
   }
 
   Source_Files {
   }
 }
-

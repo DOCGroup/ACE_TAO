@@ -466,237 +466,245 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   DummyPublisherListener * pub_listener = 0;
   ::DDS::Publisher * pub = 0;
 
-  ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id_);
-  domain_id_ = id;
-
-  if (parse_args (argc, argv) != 0)
+  try
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error arguments.\n")));
-      return 1;
-    }
+      ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id_);
+      domain_id_ = id;
 
-  (void) ACE_High_Res_Timer::global_scale_factor ();
-  ACE_Reactor::instance ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
-
-  /* Create the domain participant */
-  DDSDomainParticipant * participant =
-                          DDSDomainParticipantFactory::get_instance()->
-                          create_participant_with_profile(
-                              domain_id_,
-                              lib_name_,
-                              prof_name_,
-                              0,
-                              DDS_STATUS_MASK_NONE);
-  if (!participant)
-    {
-      ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Sender : Unable to create domain participant.\n")));
-      goto clean_exit;
-    }
-
-  /* Register type before creating topic */
-  type_name = LatencyTestTypeSupport::get_type_name();
-  retcode = LatencyTestTypeSupport::register_type (participant,
-                                                   type_name);
-  if (retcode != DDS_RETCODE_OK)
-    {
-      goto clean_exit;
-    }
-
-  send_topic = participant->create_topic_with_profile (
-                                                        "send",
-                                                        type_name,
-                                                        lib_name_,
-                                                        prof_name_,
-                                                        0,
-                                                        DDS_STATUS_MASK_NONE);
-  if (!send_topic)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
-      goto clean_exit;
-    }
-
-  receive_topic = participant->create_topic_with_profile (
-                                                        "receive",
-                                                        type_name,
-                                                        lib_name_,
-                                                        prof_name_,
-                                                        0,
-                                                        DDS_STATUS_MASK_NONE);
-    if (!receive_topic)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
-        goto clean_exit;
-      }
-
-    pub_listener = new DummyPublisherListener ();
-    pub = participant->create_publisher_with_profile (
-                                            lib_name_,
-                                            prof_name_,
-                                            0,
-                                            DDS_STATUS_MASK_NONE);
-
-    if (!pub) {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create publisher.\n")));
-        goto clean_exit;
-    }
-
-    /* Create the data writer using the publisher */
-    data_writer = pub->create_datawriter_with_profile(
-                                            send_topic,
-                                            lib_name_,
-                                            prof_name_,
-                                            pub_listener,
-                                            DDS_OFFERED_DEADLINE_MISSED_STATUS |
-                                            DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
-                                            DDS_RELIABLE_WRITER_CACHE_CHANGED_STATUS |
-                                            DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
-                                            DDS_LIVELINESS_LOST_STATUS |
-                                            DDS_PUBLICATION_MATCHED_STATUS);
-
-    if (!data_writer)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
-        goto clean_exit;
-      }
-
-    /* Create a data reader, which will not be used, but is there for
-     *  compatibility with DDS4CCM latency test, where there is always a
-     *  reader and a writer per connector.
-    */
-    if (both_read_write_)
-      {
-        dum_data_reader = participant->create_datareader_with_profile(
-                                                send_topic,
-                                                lib_name_,
-                                                prof_name_,
-                                                &dum_listener,
-                                                DDS_DATA_AVAILABLE_STATUS);
-
-      if (!dum_data_reader )
+      if (parse_args (argc, argv) != 0)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create dummy data reader.\n")));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error arguments.\n")));
+          return 1;
+        }
+
+      (void) ACE_High_Res_Timer::global_scale_factor ();
+      ACE_Reactor::instance ()->timer_queue()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
+
+      /* Create the domain participant */
+      DDSDomainParticipant * participant =
+                              DDSDomainParticipantFactory::get_instance()->
+                              create_participant_with_profile(
+                                  domain_id_,
+                                  lib_name_,
+                                  prof_name_,
+                                  0,
+                                  DDS_STATUS_MASK_NONE);
+      if (!participant)
+        {
+          ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Sender : Unable to create domain participant.\n")));
           goto clean_exit;
         }
+
+      /* Register type before creating topic */
+      type_name = LatencyTestTypeSupport::get_type_name();
+      retcode = LatencyTestTypeSupport::register_type (participant,
+                                                      type_name);
+      if (retcode != DDS_RETCODE_OK)
+        {
+          goto clean_exit;
+        }
+
+      send_topic = participant->create_topic_with_profile (
+                                                            "send",
+                                                            type_name,
+                                                            lib_name_,
+                                                            prof_name_,
+                                                            0,
+                                                            DDS_STATUS_MASK_NONE);
+      if (!send_topic)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
+          goto clean_exit;
+        }
+
+      receive_topic = participant->create_topic_with_profile (
+                                                            "receive",
+                                                            type_name,
+                                                            lib_name_,
+                                                            prof_name_,
+                                                            0,
+                                                            DDS_STATUS_MASK_NONE);
+      if (!receive_topic)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
+          goto clean_exit;
+        }
+
+      pub_listener = new DummyPublisherListener ();
+      pub = participant->create_publisher_with_profile (
+                                              lib_name_,
+                                              prof_name_,
+                                              0,
+                                              DDS_STATUS_MASK_NONE);
+
+      if (!pub) {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create publisher.\n")));
+          goto clean_exit;
       }
 
-    data_reader = participant->create_datareader_with_profile(
-                                                receive_topic,
-                                                lib_name_,
-                                                prof_name_,
-                                                &listener,
-                                                DDS_DATA_AVAILABLE_STATUS);
-    if (!data_reader)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
-        goto clean_exit;
-      }
+      /* Create the data writer using the publisher */
+      data_writer = pub->create_datawriter_with_profile(
+                                              send_topic,
+                                              lib_name_,
+                                              prof_name_,
+                                              pub_listener,
+                                              DDS_OFFERED_DEADLINE_MISSED_STATUS |
+                                              DDS_OFFERED_INCOMPATIBLE_QOS_STATUS |
+                                              DDS_RELIABLE_WRITER_CACHE_CHANGED_STATUS |
+                                              DDS_RELIABLE_READER_ACTIVITY_CHANGED_STATUS |
+                                              DDS_LIVELINESS_LOST_STATUS |
+                                              DDS_PUBLICATION_MATCHED_STATUS);
 
-    /* Create a data writer, which will not be used, but is there for
-     *   compatibility with DDS4CCM latency test, where there is always a
-     *  reader and a writer per connector
-    */
-    if (both_read_write_)
-      {
-        dum_data_writer = participant->create_datawriter_with_profile(
-                                   receive_topic,
-                                    lib_name_,
-                                    prof_name_,
-                                    0,
-                                    DDS_STATUS_MASK_NONE);
-        if (!dum_data_writer)
+      if (!data_writer)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
+          goto clean_exit;
+        }
+
+      /* Create a data reader, which will not be used, but is there for
+      *  compatibility with DDS4CCM latency test, where there is always a
+      *  reader and a writer per connector.
+      */
+      if (both_read_write_)
+        {
+          dum_data_reader = participant->create_datareader_with_profile(
+                                                  send_topic,
+                                                  lib_name_,
+                                                  prof_name_,
+                                                  &dum_listener,
+                                                  DDS_DATA_AVAILABLE_STATUS);
+
+        if (!dum_data_reader )
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create dummy data writer.\n")));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create dummy data reader.\n")));
             goto clean_exit;
           }
-      }
+        }
 
-    /* Create data sample for writing */
-    instance_ = LatencyTestTypeSupport::create_data ();
-    if (instance_ == 0)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
-        goto clean_exit;
-      }
+      data_reader = participant->create_datareader_with_profile(
+                                                  receive_topic,
+                                                  lib_name_,
+                                                  prof_name_,
+                                                  &listener,
+                                                  DDS_DATA_AVAILABLE_STATUS);
+      if (!data_reader)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data reader.\n")));
+          goto clean_exit;
+        }
 
-    init_values();
+      /* Create a data writer, which will not be used, but is there for
+      *   compatibility with DDS4CCM latency test, where there is always a
+      *  reader and a writer per connector
+      */
+      if (both_read_write_)
+        {
+          dum_data_writer = participant->create_datawriter_with_profile(
+                                    receive_topic,
+                                      lib_name_,
+                                      prof_name_,
+                                      0,
+                                      DDS_STATUS_MASK_NONE);
+          if (!dum_data_writer)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create dummy data writer.\n")));
+              goto clean_exit;
+            }
+        }
 
-    test_data_writer_ = LatencyTestDataWriter::narrow (data_writer);
-    if (!test_data_writer_)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("LatencyTestDataWriter_narrow failed.\n")));
-        goto clean_exit;
-      }
+      /* Create data sample for writing */
+      instance_ = LatencyTestTypeSupport::create_data ();
+      if (instance_ == 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
+          goto clean_exit;
+        }
 
-    // Sleep a couple seconds to allow discovery to happen
-    ACE_OS::sleep (5);
+      init_values();
 
-    // handle writing of messages
-    start();
+      test_data_writer_ = LatencyTestDataWriter::narrow (data_writer);
+      if (!test_data_writer_)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("LatencyTestDataWriter_narrow failed.\n")));
+          goto clean_exit;
+        }
 
-    /* --- Clean Up --- */
-    ACE_OS::sleep (5);
-    main_result = 0;
+      // Sleep a couple seconds to allow discovery to happen
+      ACE_OS::sleep (5);
 
-clean_exit:
-    const char * read_write_str;
-    if (both_read_write_)
-      {
-        read_write_str = "Used a extra dummy reader and writer per topic.";
-      }
-    else
-      {
-        read_write_str = "Used a reader for one topic and a writer for other topic.";
-      }
+      // handle writing of messages
+      start();
 
-    if((nr_of_runs_ -1) != datalen_idx_)
-      {
-        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
-                            " Number of messages sent of last run (%u): %u\n"
-                            "%C\n\n",
-                            datalen_idx_,
-                            nr_of_runs_,
-                            datalen_idx_ + 1,
-                            number_of_msg_,
-                            read_write_str));
-      }
-    else
-      {
-        ACE_UINT64 test_time_usec = end_time_test_ - start_time_test_;
+      /* --- Clean Up --- */
+      ACE_OS::sleep (5);
+      main_result = 0;
 
-        double sec = (double)test_time_usec / (1000 * 1000);
-        ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of "
-                              "%u messages in %3.3f seconds.\n"
-                               "%C\n\n",
+  clean_exit:
+      const char * read_write_str;
+      if (both_read_write_)
+        {
+          read_write_str = "Used a extra dummy reader and writer per topic.";
+        }
+      else
+        {
+          read_write_str = "Used a reader for one topic and a writer for other topic.";
+        }
+
+      if((nr_of_runs_ -1) != datalen_idx_)
+        {
+          ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER : %u of %u runs completed.\n"
+                              " Number of messages sent of last run (%u): %u\n"
+                              "%C\n\n",
+                              datalen_idx_,
                               nr_of_runs_,
+                              datalen_idx_ + 1,
                               number_of_msg_,
-                              sec,
                               read_write_str));
-      }
-    ACE_DEBUG ((LM_DEBUG, "\tNumber of unexpected events : %u\n",
-                  unexpected_count_));
-    if (participant)
-      {
-        retcode = participant->delete_contained_entities ();
-        if (retcode != DDS_RETCODE_OK)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
-            main_result = 1;
-          }
-        retcode = DDSDomainParticipantFactory::get_instance()->
-                        delete_participant (participant);
-        if (retcode != DDS_RETCODE_OK)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
-            main_result = 1;
-          }
-      }
-    delete [] datalen_range_;
-    delete [] duration_times_;
-    delete pub_listener;
-    return main_result;
+        }
+      else
+        {
+          ACE_UINT64 test_time_usec = end_time_test_ - start_time_test_;
+
+          double sec = (double)test_time_usec / (1000 * 1000);
+          ACE_DEBUG ((LM_DEBUG, "TEST successful, number of runs (%u) of "
+                                "%u messages in %3.3f seconds.\n"
+                                "%C\n\n",
+                                nr_of_runs_,
+                                number_of_msg_,
+                                sec,
+                                read_write_str));
+        }
+      ACE_DEBUG ((LM_DEBUG, "\tNumber of unexpected events : %u\n",
+                    unexpected_count_));
+      if (participant)
+        {
+          retcode = participant->delete_contained_entities ();
+          if (retcode != DDS_RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
+              main_result = 1;
+            }
+          retcode = DDSDomainParticipantFactory::get_instance()->
+                          delete_participant (participant);
+          if (retcode != DDS_RETCODE_OK)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
+              main_result = 1;
+            }
+        }
+    }
+  catch (const ::CORBA::Exception &ex)
+    {
+      ex._tao_print_exception("ERROR : Unexpected CORBA exception caught :");
+      main_result = 1;
+    }
+  delete [] datalen_range_;
+  delete [] duration_times_;
+  delete pub_listener;
+  return main_result;
 }
 
 void HelloListener::on_data_available(DDSDataReader *reader)
