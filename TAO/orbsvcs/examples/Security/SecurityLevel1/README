@@ -11,11 +11,11 @@ methods, it has to be authenticated first(I am not sure, as of now,
 the way for authenticating or the fact if this is really needed
 .. well for starters, I will leave authentication). Then based on the
 principals privilege attributes, the invocation will be
-successful or denied. 
+successful or denied.
 
 This test makes use of the Current::get_attributes to get the
 attributes of the prinicipal which are used to provide or deny
-access. 
+access.
 
 We will check the values for all the possible attribute types that a
 server could check in the remote case. And, as in the example, run
@@ -26,7 +26,7 @@ returning the correct credentials and not garbling or giving some
 random values.
 
 This will prove that
- 
+
 1. Authorization is working.
 2. All the attribute types which are supposed to work are working
    properly.
@@ -37,7 +37,7 @@ This will prove that
 
 	Since, the only thing that the SecurityLevel1 does is to get the
 credentials of the initiating principal, to test the implementation,
-in my view, 
+in my view,
 
 1. We need to see if the method is returning the correct credentials.
 2. If all the attribute types are working... ie.. show what are the

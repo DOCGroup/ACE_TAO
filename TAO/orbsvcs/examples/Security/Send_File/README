@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Description:
 
@@ -58,7 +58,7 @@ $ client -k file://test.ior < certificate.pem
 
 ======= Testing failed authentications:
 
-	To test failed server authentications we simply run the client 
+	To test failed server authentications we simply run the client
 and server as indicated below, but we enter invalid pass phrases in
 the client and/or server.
 
