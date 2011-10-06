@@ -1,7 +1,9 @@
+$Id$
+
 This tests TAO's CosPropertyService implementation.
 
 Please report bugs/comments to <alex@cs.wustl.edu> and
-                               <ace-users@cs.wustl.edu>        
+                               <ace-users@cs.wustl.edu>
 
 To compile:
 ==========
@@ -33,10 +35,10 @@ Server:
 Client:
 ------
 % client        [-ORBnameserviceport <portnum>]
-        
+
 <portnum> is same everywhere.
 
 
 Expected Result:
 ----------------
-If everything goes well, client prints "Test Succeeded". 
+If everything goes well, client prints "Test Succeeded".

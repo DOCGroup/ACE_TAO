@@ -1,5 +1,7 @@
+$Id$
+
 This directory contains a simple file transfer test program for the
-Full Profile  in the TAO's Audio/Video Streaming Service. 
+Full Profile  in the TAO's Audio/Video Streaming Service.
 
 This example follows the sequence of steps for using the Full Profile
 as outlined in the following section of the Audio/Video Streams
@@ -11,9 +13,9 @@ This is from Section 2.3.8, The FlowConnection:
 
 ===================================================================================
 - User A adds some flowendpoints to an instance of a full profile implementation of
-  StreamEndPoint_A (myA) by calling myA->add_fep(aFEP); 
-- User B adds some FEPs to an instance of a full profile implementation of 
-  StreamEndPoint_B (theirB). 
+  StreamEndPoint_A (myA) by calling myA->add_fep(aFEP);
+- User B adds some FEPs to an instance of a full profile implementation of
+  StreamEndPoint_B (theirB).
 User C creates a StreamCtrl and calls aSC->bind(myA,theirB,someQoS,nilflowSpec)
 
 The bind() algorithm will find which pairs of FlowEndPoints are compatible
@@ -49,6 +51,6 @@ In that order:
 
 Run the Naming Service
 
-server -f <filename>     
+server -f <filename>
 
-ftp -f <filename> -p <TCP/UDP>        
+ftp -f <filename> -p <TCP/UDP>

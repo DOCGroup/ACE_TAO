@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -9,9 +9,9 @@ receiver.  The test has the following features:
 1. It tests the AVStreams Pluggable Protocol Framework
 2. Shows a mechanism to pace data.
 
-A new flow protocol called Time Stamp Flow Protocol is plugged into the AV Streams Framework 
-using the Pluggable Protocol Framework and the ACE Service Configurator. This new protocol 
-is compiled into a library and loaded when the AVStreams framework is initialized. When a 
+A new flow protocol called Time Stamp Flow Protocol is plugged into the AV Streams Framework
+using the Pluggable Protocol Framework and the ACE Service Configurator. This new protocol
+is compiled into a library and loaded when the AVStreams framework is initialized. When a
 frame is sent this protocol appends a timestamp to the data being sent.
 
 Running the test
@@ -28,11 +28,11 @@ receiver -f <output_filename>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d] 
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d]
 
 
 -f filename --> The file to be streamed to the receiver (defaults to
-                "input"). 
+                "input").
 
 -p protocol --> The protocol string could be UDP or TCP (defaults to
                 UDP). But with the multicast address it should be UDP.
