@@ -1,3 +1,8 @@
+Thu Oct  6 09:34:57 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+       * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+       Set collocation_opportunity to TAO_CO_THRU_POA_STRATEGY instead of 0.
+
 Thu Oct  6 08:56:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:

@@ -36,7 +36,7 @@ namespace TAO
                           arg_number,
                           operation,
                           op_len,
-                          0, // Collocation Proxy broker pointer
+                          TAO_CO_THRU_POA_STRATEGY, // default through POA collocation is possible
                           TAO_TWOWAY_INVOCATION,
                           mode)
       , exception_list_ (excp)
@@ -305,7 +305,7 @@ namespace TAO
                           arg_count,
                           operation,
                           op_len,
-                          0,
+                          TAO_CO_THRU_POA_STRATEGY,
                           TAO_ONEWAY_INVOCATION,
                           mode)
   {
