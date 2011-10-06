@@ -7,7 +7,7 @@ File: DevGuideExamples/NotifyService/QoSProperties/README
 
 
 This example extends the NotifyService/Messenger example by
-demonstrating how QoS features can be incorporated into the utilization 
+demonstrating how QoS features can be incorporated into the utilization
 of the Notification channel.
 
 The Client code is stored in:

@@ -6,8 +6,8 @@ File: DevGuideExamples/NamingService/Naming_Client/README
 
 
 The example in this directory is a modification of the code given
-in the NamingService/Messenger example.  It illustrates how to use the 
-TAO_Naming_Client class for accessing the Naming Service.  This class 
+in the NamingService/Messenger example.  It illustrates how to use the
+TAO_Naming_Client class for accessing the Naming Service.  This class
 simplifies the interface for accessing and using the Naming Service.
 The TAO_Naming_Client class is used by both the Client and
 Server to access the Naming Service.
