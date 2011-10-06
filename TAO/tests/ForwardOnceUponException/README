@@ -1,8 +1,8 @@
 /**
 
-@page ForwardOnceOnException Test README File
-
 $Id$
+
+@page ForwardOnceOnException Test README File
 
 	This is test for feature of request forwarding ONCE when client
 	receives OBJECT_NOT_EXIST, COMM_FAILURE, TRANSIENT or INV_OBJREF
