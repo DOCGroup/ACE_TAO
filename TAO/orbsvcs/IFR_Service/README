@@ -1,14 +1,13 @@
 $Id$
 
-
 Interface Repository -------
 
 Required libraries (in addition to ACE and TAO):
-        ACE_ROOT/TAO/tao/IFR_CLient/TAO_IFR_CLient.(lib-ext)     
-        ACE_ROOT/TAO/tao/TypeCodeFactory/TAO_TypeCodeFactory.(lib-ext)       
-        ACE_ROOT/TAO/tao/PortableServer/TAO_PortableServer.(lib-ext)    
-        ACE_ROOT/TAO/tao/IORTable/TAO_IORTable.(lib-ext)    
-        ACE_ROOT/TAO/orbsvcs/orbsvcs/TAO_Svc_Utils.(lib-ext)    
+        ACE_ROOT/TAO/tao/IFR_CLient/TAO_IFR_CLient.(lib-ext)
+        ACE_ROOT/TAO/tao/TypeCodeFactory/TAO_TypeCodeFactory.(lib-ext)
+        ACE_ROOT/TAO/tao/PortableServer/TAO_PortableServer.(lib-ext)
+        ACE_ROOT/TAO/tao/IORTable/TAO_IORTable.(lib-ext)
+        ACE_ROOT/TAO/orbsvcs/orbsvcs/TAO_Svc_Utils.(lib-ext)
 
 Executable name is IFR_Service.
 
@@ -16,7 +15,7 @@ Command line options are:
 
  -p		Makes the Interface Repository persistent.
 
- -b <filename>	Overrides the default filename used for 
+ -b <filename>	Overrides the default filename used for
 		persistent storage. The default filename
 		is "ifr_default_backing_store".
 
@@ -34,8 +33,8 @@ Command line options are:
 		If the platform is not win32, an error
 		message is output.
 
- -o <filename>	Overrides the default filename used for 
-		outputting the Interface Repository IOR. 
+ -o <filename>	Overrides the default filename used for
+		outputting the Interface Repository IOR.
 		The default filename is "if_repo.ior".
 
 Test code for the Interface Repository can be found in
@@ -54,12 +53,12 @@ the IFR service, plus the IFR_Service executable itself.
 Test code for tao_ifr can be found in
 ACE_ROOT/TAO/orbsvcs/tests/InterfaceRepo/Application_Test.
 
-tao_ifr can also handle the -ORBxxx parameters. The one most 
-frequently used would probably be 
+tao_ifr can also handle the -ORBxxx parameters. The one most
+frequently used would probably be
 
 '-ORBInitRef InterfaceRepository=file://<filename>'
 
-which will enable the IFR service to be resolved by getting 
+which will enable the IFR service to be resolved by getting
 its IOR from <filename>. By default, the IFR service stores
 its IOR in the file 'if_repo.ior', but that can be modified
 by starting the IFR service using the -o option (see above).
@@ -70,10 +69,10 @@ tao_ifr can process multiple IDL files in one execution. As
 long as the filenames come after any -ORB options that may
 be present, they may come mixed in any order with the other
 command line options. The tao_ifr command line parser will
-treat any option (or option pair) that doesn't begin with 
+treat any option (or option pair) that doesn't begin with
 '-' as a filename.
 
-More information about the Interface Repository and tao_ifr can 
+More information about the Interface Repository and tao_ifr can
 be found in ACE_ROOT/TAO/docs/releasenotes/index.html.
 
 
