@@ -11,7 +11,7 @@ Unless noted differently, the server is implemented as an "iterative
 server," i.e., it only deals with one client at a time.  The following
 describes each set of tests in more detail:
 
-	. SSL-{client,server}.cpp -- This test allows you to test
+  . SSL-{client,server}.cpp -- This test allows you to test
           oneway and twoway socket communication latency and
           throughput over SSL between two processes on the same
           machine or on different machines.

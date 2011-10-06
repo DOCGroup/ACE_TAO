@@ -7,23 +7,23 @@ http://www.cs.wustl.edu/~schmidt/{Reactor1-93.ps.gz,Reactor2-93.ps.gz}).
 
 The example consists of the following directories:
 
-	. client
+  . client
 
-		This program talks directly to the server logging
-		daemon.  The server daemon must be started before you
-		can run this test.
+    This program talks directly to the server logging
+    daemon.  The server daemon must be started before you
+    can run this test.
 
-	. simple-server
+  . simple-server
 
-		This program runs a simple, non-templated,
-		single-threaded Reactive implementation of the
-		distributed logging server daemon.
+    This program runs a simple, non-templated,
+    single-threaded Reactive implementation of the
+    distributed logging server daemon.
 
-	. Acceptor-server
+  . Acceptor-server
 
-		This program runs templated, Acceptor-based
-		single-threaded Reactive implementation of the
-		distributed logging server daemon.
+    This program runs templated, Acceptor-based
+    single-threaded Reactive implementation of the
+    distributed logging server daemon.
 
 To see a more complex solution that implements the design described in
 the C++ Report articles, please see the:
