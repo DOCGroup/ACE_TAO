@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Deferred Synchronous Latency Test README File
 
 	This test tries to estimate the minimum latency for a deferred
