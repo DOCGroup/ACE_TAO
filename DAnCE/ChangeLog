@@ -1,3 +1,9 @@
+Thu Oct  6 12:37:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.h:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+          Fuzz.
+
 Wed Oct  5 14:32:32 UTC 2011  William R. Otte  <wotte@dre.vanderbit.edu>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:

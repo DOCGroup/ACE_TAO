@@ -83,6 +83,9 @@ namespace DAnCE
 
     void disconnect_connections (void);
 
+    const char * determine_instance_type (const ::Deployment::PlanConnectionDescription &conn,
+                                  const ::Deployment::Connection & providedReference);
+
     ACE_TString uuid_;
 
     std::list< std::string > plugin_config_files_;

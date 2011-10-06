@@ -150,8 +150,8 @@ namespace DAnCE
               {
                 // Callback to NodeApplication to get configuration
                 sa->locality_manager_callback (lm.in (),
-					       ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
-					       this->config_.out ());
+                  ACE_TEXT_ALWAYS_CHAR (this->uuid_.c_str ()),
+                  this->config_.out ());
 
                 DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                              (LM_TRACE, DLINFO
@@ -178,24 +178,24 @@ namespace DAnCE
                               ACE_TEXT ("wrong Activator\n")));
                 throw Error ("Bad callback IOR");
               }
-	    catch (const CORBA::Exception &ex)
-	      {
-		DANCE_ERROR (DANCE_LOG_ERROR,
-                             (LM_ERROR, DLINFO
-                              ACE_TEXT ("LocalityManager_Task::svc - ")
-			      ACE_TEXT ("Caught CORBA Exception while calling back: %C\n"),
-			      ex._info ().c_str ()));
-		throw Error (ex._info ().c_str ());
-	      }
+            catch (const CORBA::Exception &ex)
+              {
+                DANCE_ERROR (DANCE_LOG_ERROR,
+                                  (LM_ERROR, DLINFO
+                                    ACE_TEXT ("LocalityManager_Task::svc - ")
+                                    ACE_TEXT ("Caught CORBA Exception while ")
+                                    ACE_TEXT ("calling back: %C\n"),
+                                    ex._info ().c_str ()));
+                throw Error (ex._info ().c_str ());
+              }
             catch (...)
               {
                 DANCE_ERROR (DANCE_LOG_ERROR,
-                             (LM_ERROR, DLINFO
+                              (LM_ERROR, DLINFO
                               ACE_TEXT ("LocalityManager_Task::svc - ")
                               ACE_TEXT ("Caught exception while calling back\n")));
                 throw Error ("Caught exception while calling back");
               }
-
           }
         else
           {
