@@ -11,7 +11,7 @@ How to Run
 
 Start the Implementation Repository (ImplRepo) server:
 ------------------------------------------------------
-$TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service -o implrepo.ior 
+$TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service -o implrepo.ior
 
 Register the server's POA name and start-up command with the ImplRepo:
 ----------------------------------------------------------------------
@@ -26,4 +26,4 @@ $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr -ORBInitRef \
 
 Run the client (ImplRepo should automatically start the server):
 ----------------------------------------------------------------
-./MessengerClient 
+./MessengerClient

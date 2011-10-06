@@ -7,12 +7,12 @@ File: examples/NotifyService/EventSequence/README
 
 This directory contains an example which transmits an EventBatch using the Notification Service.
 
-This example extends the Messenger example in GettingStarted directory 
-to illustrate how the Notification channel can be used to push event batches 
+This example extends the Messenger example in GettingStarted directory
+to illustrate how the Notification channel can be used to push event batches
 from the supplier to the consumer. The example uses the push/push model.
 
 The MessengerServer in this example plays the role of a server for
-the MessengerClient and the role of a supplier for the MessengerConsumer. 
+the MessengerClient and the role of a supplier for the MessengerConsumer.
 The flow of messages is shown below:
 
 MessengerClient->MessengerSupplier->NotificationChannel->MessengerConsumer.

@@ -1,13 +1,12 @@
 // $Id$
 
 DevGuideExamples/NamingService/corbaloc_Messenger/README
-// $Id$
 
-The example in this directory extends the example in GettingStartedUNIX 
-(or GettingStartedVC) to use the Naming_Service 
-and calling string_to_object instead of calling resolve_initial_references 
+The example in this directory extends the example in GettingStartedUNIX
+(or GettingStartedVC) to use the Naming_Service
+and calling string_to_object instead of calling resolve_initial_references
 to get the NameService object reference.
- 
+
 This example only differs from the NamingService/Messenger example by a few lines
 in the MessengerClient.cpp.  (All other source files should be the same.)
 
@@ -17,18 +16,18 @@ To start the Naming_Service:
 ----------------------------
 $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1 &
 
-Note: Must start the Naming_Service using multicast (-m 1) 
+Note: Must start the Naming_Service using multicast (-m 1)
       for the default initial reference for NameService to work.
 
 To start the server:
 ------------------
-./MessengerServer 
+./MessengerServer
 To start the client:
 ------------------
 ./MessengerClient
 
 
-This MessengerClient will optionally take parameter that is a URL (corbaloc:) 
+This MessengerClient will optionally take parameter that is a URL (corbaloc:)
 that addresses the Naming_Service.
 
 The MessengerServer and MessengerClient may also take an -ORBInitRef option
