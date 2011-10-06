@@ -1,5 +1,5 @@
 #!/bin/sh
-#
+# $Id$
 
 # get configuration
 [ -n "$WEBSTONEROOT" ] || WEBSTONEROOT=`pwd`/..
