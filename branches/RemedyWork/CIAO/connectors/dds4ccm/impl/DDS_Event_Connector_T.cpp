@@ -218,6 +218,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_Event_Connector_T::topic_name - "
                         "DDS is down.\n"));
+          TopicBaseConnector::topic_name (topic_name);
         }
     }
   else if (this->late_binded (topic_name))

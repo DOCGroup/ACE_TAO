@@ -238,7 +238,6 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    ACE_DEBUG ((LM_DEBUG, "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\n"));
     this->ciao_context_ =
       ::RG_LateBinding::CCM_Receiver_Context::_narrow (ctx);
 

@@ -171,7 +171,6 @@ namespace CIAO_RG_LateBinding_Sender_Impl
   Sender_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
-    ACE_DEBUG ((LM_DEBUG, "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\n"));
     this->ciao_context_ =
       ::RG_LateBinding::CCM_Sender_Context::_narrow (ctx);
 
