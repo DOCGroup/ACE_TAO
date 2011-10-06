@@ -1,5 +1,5 @@
 /**
-// Id:$
+$Id$
 
 This test checks that you can pass a nil object as part of a sequence. It's
 a very minor mod of hello world.
