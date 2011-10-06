@@ -1,9 +1,9 @@
-# $Id$
+$Id$
 
 This is a test for the StateListener when the StateListenerControl is in the MANY_BY_MANY mode.
 
 The test uses the Updater to sent samples.
-With a create_one ( 1 sample) and create_many (3 samples) of the Updater, 
+With a create_one ( 1 sample) and create_many (3 samples) of the Updater,
 the on_creation must be triggered ( 4 times 1 sample).
 
 With a delete_one ( 1 sample) and a delete_many (3 samples) of the Updater,
@@ -20,7 +20,7 @@ In on_deletion, the returning dataum.key is tested . The key shouldn't be empty,
 because of the  <serialize_key_with_dispose> and <propagate_dispose_of_unregistered_instances> settings in the QoS .
 
 
-Beccause the StateListener performs a get, a read_all of a Reader shouldn't receive any samples 
-after the Statelistener has received his triggers. 
- 
+Beccause the StateListener performs a get, a read_all of a Reader shouldn't receive any samples
+after the Statelistener has received his triggers.
+
 

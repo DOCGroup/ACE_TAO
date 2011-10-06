@@ -1,11 +1,11 @@
-# $Id$
+$Id$
 
-KeyedWriter tests the DDS_Writer. It tests write_one 
+KeyedWriter tests the DDS_Writer. It tests write_one
 and write_many, in combination with register_instance.
 
 In descriptors/USER_QOS_PROFILE.xml, max_instances is
 set to one. An exception should be thrown when the second
-instance is registered. Every subsequent write of 
+instance is registered. Every subsequent write of
 unregistered keys, should result in an error.
 
 When invoking write_many, writing the first sample should succeed.
