@@ -1,6 +1,6 @@
-// $Id$
+$Id$
 
-The following applications are used to measure performance of TAO's POA. 
+The following applications are used to measure performance of TAO's POA.
 
         . Object_Creation_And_Registration
 

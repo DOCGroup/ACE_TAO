@@ -1,18 +1,4 @@
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/performance-tests/Demux
-//
-// = FILENAME
-//    README
-//
-// = AUTHOR
-//
-//    Aniruddha Gokhale
-//
-// ============================================================================
-
+$Id$
 
 This test directory tests various demultiplexing strategies used in
 TAO for POA, object, and operation name lookups
@@ -29,7 +15,7 @@ demux_test_client.{h, cpp}: Client-side implementation details
 demux_test_macros.h: Some constants used by both the client and the server
 
 
-Generated Files: 
+Generated Files:
 ----------------
 
 Must run ./CodeGen/demux tool to generate the following files. See
@@ -63,7 +49,7 @@ client -d  (for debugging)
 
 
 ------
-*NOTE* 
+*NOTE*
 ------
 The num_POAs, num_objs, and num_ops must match on the client
 and server side.
@@ -84,13 +70,13 @@ Make the following changes in Object_Adapter.cpp :
 
 #define ACE_ENABLE_TIMEPROBES
 
-Comment out all ACE_FUNCTION_TIMEPROBE calls except the one 
+Comment out all ACE_FUNCTION_TIMEPROBE calls except the one
 in  locate_poa  ACE_FUNCTION_TIMEPROBE
 (TAO_OBJECT_ADAPTER_FIND_POA_START);
 
 
 In the demux_test_client : The object loop increments by one.
-In gen_names.cpp : 
+In gen_names.cpp :
 > Codegen/demux -p 25
 > make
 > ./server -p 25
