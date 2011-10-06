@@ -1,7 +1,7 @@
 // $Id$
 
-This directory has a generic server which opens and reads the svc.conf file in 
-the directory and dynamically loads and unloads the various ORB services as per 
+This directory has a generic server which opens and reads the svc.conf file in
+the directory and dynamically loads and unloads the various ORB services as per
 the entries made in the svc.conf file.
 
 To Load a Service Dynamically:
@@ -9,12 +9,12 @@ To Load a Service Dynamically:
 
 1. Add an entry to the svc.conf which specifies the service name that you wish to
    load dynamically.
-	
+
 	The syntax for loading a service dynamically is:
 
 	dynamic < Service name i.e. name that you want the Service Repository to
                   use to identify the dynamically linked Service_Object
-                  so that you can look it up later via, 
+                  so that you can look it up later via,
 	          e.g., ACE_Dynamic_Service::instance () > \
                 < The type of the service > \
                 < The shared DLL that has the function
@@ -25,7 +25,7 @@ To Load a Service Dynamically:
 
 To load Naming Service dynamically :
 ----------------------------------
-	
+
   dynamic TAO_Naming_Loader Service_Object * \
           TAO_CosNaming_Serv:_make_TAO_Naming_Loader () "dummy -o ns.ior"
 
@@ -36,7 +36,7 @@ To load Naming Service dynamically :
 
 To load Event Service dynamically:
 ---------------------------------
-	
+
 	In the case of Event Service, we also want to load the default
 Event Service Factory in addition to the Event Service. So, we need to
 add these two entries when we want to load the event service.
@@ -59,7 +59,7 @@ dynamic TAO_Trading_Loader Service_Object * \
 To Remove a Service
 *******************
 
-	The directive for removing a service is <remove>. Removing a 
+	The directive for removing a service is <remove>. Removing a
 service is simpler. Add the following entry to the same svc.conf file
 after commenting the entry for loading the same service, so that
 the service is not loaded again.
@@ -92,9 +92,9 @@ To Run TAO_Service :
 
 1. Start with a empty svc.conf file. Run the TAO_Service. Make sure
 that you start with an empty svc.conf file because the ORB_init () and
-the service configurator get pretty confused. 
+the service configurator get pretty confused.
 
-In detail, the svc.conf file is read and services loaded when 
+In detail, the svc.conf file is read and services loaded when
 ORB_init () is called in the main (). But, to load any service, we
 need to initialize the ORB. Here, it gets confused. To avoid this,
 run the TAO_Service with no entries in the svc.conf file.
@@ -109,7 +109,7 @@ entry, send a SIGHUP signal:
 svc.conf file again and reconfigures the services.
 
 3. If you want to test if the service is loaded successfully, run the
-generic client program < tests_svc_loader.cpp > located in 
+generic client program < tests_svc_loader.cpp > located in
 orbsvcs/tests/tests_svc_loader. For more details about the
 tests_svc_loader.cpp, read the README in the same directory.
 
