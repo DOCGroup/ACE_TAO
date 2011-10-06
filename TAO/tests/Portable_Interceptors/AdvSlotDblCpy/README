@@ -1,3 +1,5 @@
+$Id$
+
 The test should complete without exceptions or asserts.
 
 This test checks that simply calling GetSlot works at every

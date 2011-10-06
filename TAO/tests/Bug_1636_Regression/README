@@ -1,3 +1,5 @@
+$Id$
+
 An Any is populated with a union whose member is not empty.
 Call dynAny->from_any (Any);
 to put the Any'd union into a DynAny object.
