@@ -1,3 +1,5 @@
+$Id$
+
 This program performs a series of sanity check on the collocation
 support in TAO.  It also serves as an example of how to separate stub
 and skeleton + implementation from the main program.
