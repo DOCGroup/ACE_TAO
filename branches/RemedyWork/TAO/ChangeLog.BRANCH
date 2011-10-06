@@ -1,3 +1,12 @@
+Thu Oct  6 08:56:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Policies/Policies.mpc:
+          requires for corba_messaging is already pulled in through the
+          base projects
+
 Wed Oct  5 18:49:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

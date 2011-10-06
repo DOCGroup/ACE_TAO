@@ -24,7 +24,6 @@ project(*Server): messaging, taoserver {
 
 project(*Client): messaging, taoclient {
   exename = client
-  requires += corba_messaging
   after += *idl
 
   Source_Files {
