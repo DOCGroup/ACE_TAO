@@ -3,28 +3,28 @@ $Id$
 This directory provides a number of network services that utilize the
 ACE wrapper features.
 
-	. Logging_Strategy -- Controls the output of all services that are
-	  invoked along with the Logging_Strategy service. Please see below for
-	  details on how to control the output.
+  . Logging_Strategy -- Controls the output of all services that are
+    invoked along with the Logging_Strategy service. Please see below for
+    details on how to control the output.
 
-	. [Thr_]Server_Logging_Handler.* -- Implements server portion
-	  of the ACE distributed logging service.  Both multi-threaded
-	  and single-threaded implementations are provided.
+  . [Thr_]Server_Logging_Handler.* -- Implements server portion
+    of the ACE distributed logging service.  Both multi-threaded
+    and single-threaded implementations are provided.
 
-	. Client_Logging_Handler.* -- Implements the client portion
-	  of the ACE distributed logging service.
+  . Client_Logging_Handler.* -- Implements the client portion
+    of the ACE distributed logging service.
 
-	. Name_Handler.* -- Implements a distributed name service that
-	  allows applications to bind, find, and unbind names in
-	  a distributed system.
+  . Name_Handler.* -- Implements a distributed name service that
+    allows applications to bind, find, and unbind names in
+    a distributed system.
 
-	. Token_Handler.* -- Implements a distributed token
-	  service that allows applications to acquire and release
-	  locks in a distributed system.
+  . Token_Handler.* -- Implements a distributed token
+    service that allows applications to acquire and release
+    locks in a distributed system.
 
-	. Time_Handler.* -- Implements a distributed time service that
-	  allows distributed applications to synchronize their
-	  time.
+  . Time_Handler.* -- Implements a distributed time service that
+    allows distributed applications to synchronize their
+    time.
 
 The remainder of this README file explains how these services work.
 
