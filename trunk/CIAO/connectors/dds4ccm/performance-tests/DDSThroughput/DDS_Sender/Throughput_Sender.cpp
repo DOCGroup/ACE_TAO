@@ -158,162 +158,170 @@ CORBA::UShort domain_id = 0;
 
     int  main_result = 1; /* error by default */
 
-    ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id);
-    domain_id = id;
-
-    if (parse_args (argc, argv) != 0)
-      return 1;
-
-     /* Create the domain participant */
-    ::DDS::DomainParticipant *participant =
-                             ::DDS::DomainParticipantFactory::get_instance()->
-                             create_participant_with_profile(
-                                domain_id,                   /* Domain ID */
-                                lib_name,
-                                part_name,                   /* QoS */
-                                0,                           /* Listener */
-                                DDS_STATUS_MASK_NONE);
-    if (!participant) {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Unable to create domain participant.\n")));
-        goto clean_exit;
-    }
-
-    /* Register type before creating topic */
-    type_name = ThroughputTestTypeSupport::get_type_name();
-    retcode = ThroughputTestTypeSupport::register_type(
-                                                participant, type_name);
-    if (retcode != DDS_RETCODE_OK)
+    try
       {
-        goto clean_exit;
-      }
-    topic = participant->create_topic(
-                                      "Test data",    /* Topic name*/
-                                      type_name,      /* Type name */
-                                      DDS_TOPIC_QOS_DEFAULT, /* Topic QoS */
-                                      0,                     /* Listener  */
-                                      DDS_STATUS_MASK_NONE);
+        ACE_Env_Value<int> id (ACE_TEXT("DDS4CCM_DEFAULT_DOMAIN_ID"), domain_id);
+        domain_id = id;
 
+        if (parse_args (argc, argv) != 0)
+          return 1;
 
-    if (!topic) {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
-        goto clean_exit;
-    }
+        /* Create the domain participant */
+        ::DDS::DomainParticipant *participant =
+                                ::DDS::DomainParticipantFactory::get_instance()->
+                                create_participant_with_profile(
+                                    domain_id,                   /* Domain ID */
+                                    lib_name,
+                                    part_name,                   /* QoS */
+                                    0,                           /* Listener */
+                                    DDS_STATUS_MASK_NONE);
+        if (!participant) {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Unable to create domain participant.\n")));
+            goto clean_exit;
+        }
 
-    /* Register type before creating topic */
-    type_name_cmd = ThroughputCommandTypeSupport::get_type_name();
-    retcode = ThroughputCommandTypeSupport::register_type(
-        participant, type_name_cmd);
-    if (retcode != DDS_RETCODE_OK)
-      {
-        goto clean_exit;
-      }
-    /* Create the topic "Command World" for the String type */
-    cmd_topic = participant->create_topic("Command data",       /* Topic name*/
-                                          type_name_cmd ,       /* Type name */
-                                          DDS_TOPIC_QOS_DEFAULT,/* Topic QoS */
-                                          0,                    /* Listener  */
+        /* Register type before creating topic */
+        type_name = ThroughputTestTypeSupport::get_type_name();
+        retcode = ThroughputTestTypeSupport::register_type(
+                                                    participant, type_name);
+        if (retcode != DDS_RETCODE_OK)
+          {
+            goto clean_exit;
+          }
+        topic = participant->create_topic(
+                                          "Test data",    /* Topic name*/
+                                          type_name,      /* Type name */
+                                          DDS_TOPIC_QOS_DEFAULT, /* Topic QoS */
+                                          0,                     /* Listener  */
                                           DDS_STATUS_MASK_NONE);
-    if (!topic)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
-        goto clean_exit;
-      }
 
-    /* Create the command writer using the default publisher */
-    cmd_writer = participant->create_datawriter_with_profile(
-                                cmd_topic,
-                                lib_name,
-                                cmd_prof_name,      /* QoS */
-                                0,                  /* Listener */
-                                DDS_STATUS_MASK_NONE);
-    if (!cmd_writer)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Unable to create cmd data writer.\n")));
-        goto clean_exit;
-      }
 
-    /* Create the data writer using the default publisher */
-    data_writer = participant->create_datawriter_with_profile(
-                                topic,
-                                lib_name,
-                                prof_name,             /* QoS */
-                                0,                     /* Listener */
-                                DDS_STATUS_MASK_NONE);
-    if (!data_writer)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
-        goto clean_exit;
-      }
+        if (!topic) {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
+            goto clean_exit;
+        }
 
-    /* Create data sample for writing */
-    instance = ThroughputTestTypeSupport::create_data();
-    if (instance == 0)
-      {
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
-        goto clean_exit;
-      }
-    overhead_size = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
-    instance->key = 1;
-    instance->seq_num = 0;
-    //instance->data.maximum (MAX_DATA_SEQUENCE_LENGTH);
-    instance->data.length(datalen - overhead_size);
+        /* Register type before creating topic */
+        type_name_cmd = ThroughputCommandTypeSupport::get_type_name();
+        retcode = ThroughputCommandTypeSupport::register_type(
+            participant, type_name_cmd);
+        if (retcode != DDS_RETCODE_OK)
+          {
+            goto clean_exit;
+          }
+        /* Create the topic "Command World" for the String type */
+        cmd_topic = participant->create_topic("Command data",       /* Topic name*/
+                                              type_name_cmd ,       /* Type name */
+                                              DDS_TOPIC_QOS_DEFAULT,/* Topic QoS */
+                                              0,                    /* Listener  */
+                                              DDS_STATUS_MASK_NONE);
+        if (!topic)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create topic.\n")));
+            goto clean_exit;
+          }
 
-    /* Create data sample for writing */
-    instance_cmd = ThroughputCommandTypeSupport::create_data();
-    if (instance_cmd == 0)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create command sample.\n")));
-      goto clean_exit;
-    }
+        /* Create the command writer using the default publisher */
+        cmd_writer = participant->create_datawriter_with_profile(
+                                    cmd_topic,
+                                    lib_name,
+                                    cmd_prof_name,      /* QoS */
+                                    0,                  /* Listener */
+                                    DDS_STATUS_MASK_NONE);
+        if (!cmd_writer)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Unable to create cmd data writer.\n")));
+            goto clean_exit;
+          }
 
-    /* Perform a safe type-cast from a generic data writer into a
-     * specific data writer for the types "ThroughputTestDataWriter"
-     * and "ThroughputCommandDataWriter"
-    */
-    test_data_writer = ThroughputTestDataWriter::narrow(data_writer);
-    cmd_data_writer =  ThroughputCommandDataWriter::narrow(cmd_writer);
-    if (!test_data_writer || !cmd_data_writer)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("DDS_StringDataWriter_narrow failed.\n")));
-        goto clean_exit;
-     }
+        /* Create the data writer using the default publisher */
+        data_writer = participant->create_datawriter_with_profile(
+                                    topic,
+                                    lib_name,
+                                    prof_name,             /* QoS */
+                                    0,                     /* Listener */
+                                    DDS_STATUS_MASK_NONE);
+        if (!data_writer)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data writer.\n")));
+            goto clean_exit;
+          }
 
-    // Sleep a couple seconds to allow discovery to happen
-    ACE_OS::sleep (1);
+        /* Create data sample for writing */
+        instance = ThroughputTestTypeSupport::create_data();
+        if (instance == 0)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create data sample.\n")));
+            goto clean_exit;
+          }
+        overhead_size = sizeof(CORBA::ULong) + sizeof(CORBA::ULongLong);
+        instance->key = 1;
+        instance->seq_num = 0;
+        //instance->data.maximum (MAX_DATA_SEQUENCE_LENGTH);
+        instance->data.length(datalen - overhead_size);
 
-    /* --- Write Data ----------------------------------------------------- */
-    for(CORBA::ULong i = start_load; i < (max_load + incr_load); i+= incr_load)
-    {
-      write();
-      ACE_OS::sleep (5);
-    }
+        /* Create data sample for writing */
+        instance_cmd = ThroughputCommandTypeSupport::create_data();
+        if (instance_cmd == 0)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create command sample.\n")));
+          goto clean_exit;
+        }
 
-    /* --- Clean Up ------------------------------------------------------- */
-    ACE_OS::sleep (5);
+        /* Perform a safe type-cast from a generic data writer into a
+        * specific data writer for the types "ThroughputTestDataWriter"
+        * and "ThroughputCommandDataWriter"
+        */
+        test_data_writer = ThroughputTestDataWriter::narrow(data_writer);
+        cmd_data_writer =  ThroughputCommandDataWriter::narrow(cmd_writer);
+        if (!test_data_writer || !cmd_data_writer)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("DDS_StringDataWriter_narrow failed.\n")));
+            goto clean_exit;
+        }
 
-    main_result = 0;
+        // Sleep a couple seconds to allow discovery to happen
+        ACE_OS::sleep (1);
+
+        /* --- Write Data ----------------------------------------------------- */
+        for(CORBA::ULong i = start_load; i < (max_load + incr_load); i+= incr_load)
+        {
+          write();
+          ACE_OS::sleep (5);
+        }
+
+        /* --- Clean Up ------------------------------------------------------- */
+        ACE_OS::sleep (5);
+
+        main_result = 0;
 clean_exit:
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
-    ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %Q\n",
-                          (number_of_msg)));
-    if (participant)
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Exiting.")));
+        ACE_DEBUG ((LM_DEBUG, "SUMMARY SENDER number of messages sent: %Q\n",
+                              (number_of_msg)));
+        if (participant)
+          {
+            retcode = participant->delete_contained_entities();
+            if (retcode != DDS_RETCODE_OK)
+              {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
+                main_result = 1;
+              }
+            retcode = ::DDS::DomainParticipantFactory::get_instance()->
+                            delete_participant(participant);
+            if (retcode != DDS_RETCODE_OK)
+              {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
+                main_result = 1;
+              }
+        }
+      }
+    catch (const ::CORBA::Exception &ex)
       {
-        retcode = participant->delete_contained_entities();
-        if (retcode != DDS_RETCODE_OK)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
-            main_result = 1;
-          }
-        retcode = ::DDS::DomainParticipantFactory::get_instance()->
-                        delete_participant(participant);
-        if (retcode != DDS_RETCODE_OK)
-          {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("Deletion failed.\n")));
-            main_result = 1;
-          }
-    }
+        ex._tao_print_exception("ERROR : Unexpected CORBA exception caught :");
+        main_result = 1;
+      }
     return main_result;
 }
