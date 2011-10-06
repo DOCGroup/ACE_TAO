@@ -1,7 +1,6 @@
+$Id$
+
 Event Notification Service
-
-
-File: Bug_3387_Regression test
 
 This directory contains a test for this bug.
 
@@ -13,7 +12,7 @@ EndPoint, this can occur on embedded system or with ORBEndPoint, and
 after connecting, disconnectes then, after rebooting or re-running,
 comes back and tries to reconnect.  With the bug, the new consumer
 receives no events.  After fixing the bug the consumer will again
-receive events.  
+receive events.
 
 All of the special edge conditions are duplicated in the test.
 
