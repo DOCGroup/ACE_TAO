@@ -1,3 +1,5 @@
+$Id$
+
 wxNamingViewer - a wxWindows implementation of NamingViewer
 Author: Charlie Frasch <cfrasch@atdesk.com>
 
@@ -7,8 +9,8 @@ Based on NamingViewer by Chris Hafey (chris@stentorsoft.com)
 1. This is an (almost) exact port of NamingViewer to wxWindows. There are some
 differences and a few minor improvements. The port was done with
 ACE 5.1.4/TAO 1.1.4 and wxWindows 2.1.5 on Borland C++ Builder 4. Chris Hafey
-contributed changes for MSVC. It has recently (11/11/03) been updated for 
-ACE 5.3.1/TAO 1.3.1, wxWindows2.4.2 and linux. 
+contributed changes for MSVC. It has recently (11/11/03) been updated for
+ACE 5.3.1/TAO 1.3.1, wxWindows2.4.2 and linux.
 
 *) put <null> as the "root" of the naming context if a naming service cannot be
 found
@@ -53,11 +55,11 @@ For linux/gcc:
 
 *) Build the the dynamically linked release version of ACE and TAO.
 
-*) optionally use MPC to generate the makefile 
+*) optionally use MPC to generate the makefile
 
   -) enable the wxwindows feature
      vi $ACE_ROOT/bin/MakeProjectCreator/config/default.features
-     and add/change 
+     and add/change
       wxWindows     = 1
 
   -) build the Makefile
@@ -65,7 +67,7 @@ For linux/gcc:
      mwc.pl -type gnuace -recurse
 
 *) Make the wxNamingViewer
-   must have wxWindows=1 on make line or in 
+   must have wxWindows=1 on make line or in
    $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 For others: (TBD)
