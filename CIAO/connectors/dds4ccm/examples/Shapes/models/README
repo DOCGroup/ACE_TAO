@@ -1,4 +1,4 @@
-README
+$Id$
 
 The follow steps is how you import IDL input PICML for the Shapes
 example so that the IDL generator works properly.
@@ -8,12 +8,12 @@ example so that the IDL generator works properly.
 Please notice the -l command-line option, which is something new
 to idl_to_picml. If you type --help, the -l option will be listed.
 
-What this will do is not only import the IDL in the Shapes directory, 
-but also attach the dds4ccm.xme file as a GME library to the Shapes 
-example. Furthermore, it will search the attached library to resolve 
-any references that it cannot find based on parsing IDL files located 
+What this will do is not only import the IDL in the Shapes directory,
+but also attach the dds4ccm.xme file as a GME library to the Shapes
+example. Furthermore, it will search the attached library to resolve
+any references that it cannot find based on parsing IDL files located
 in the Shapes subdirectories (or the one specified at the command-line).
 
-After doing this, you should be able to import the Shapes example 
+After doing this, you should be able to import the Shapes example
 and generate the IDL files, which there original location retained,
-which is also something new to idl_to_picml and the IDL generator. ;-) 
+which is also something new to idl_to_picml and the IDL generator. ;-)
