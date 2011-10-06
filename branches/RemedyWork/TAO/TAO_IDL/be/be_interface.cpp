@@ -351,13 +351,13 @@ be_interface::compute_coll_names (int type,
       // in the loop.
       j.next ();
 
-      // We add the POA_ preffix only if the first component is not
+      // We add the POA_ prefix only if the first component is not
       // the global scope...
       if (ACE_OS::strcmp (item, "") != 0)
         {
           if (!j.is_done ())
             {
-              // We only add the POA_ preffix if there are more than
+              // We only add the POA_ prefix if there are more than
               // two components in the name, in other words, if the
               // class is inside some scope.
               if (!poa_added)
