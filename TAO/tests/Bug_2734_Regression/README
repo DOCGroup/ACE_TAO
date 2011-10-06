@@ -1,3 +1,5 @@
+$Id$
+
 This test demonstrates Bug 2734 by running the Timeout test with different
 options.  If a name is given to the client's ORB, the test will stop working
 if Bug 2734 is reintroduced.
