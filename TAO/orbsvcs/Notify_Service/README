@@ -70,7 +70,7 @@ Command line arguments:
                   Notify_Service, which is on by default.
 
 "-LoggingInterval seconds" : Sets up a logging interval timer for the ORB's
-                             reactor.  This is required to use the ACE 
+                             reactor.  This is required to use the ACE
                              Logging Service features such as file sizing
                              and rotation.  See the example below.
 
