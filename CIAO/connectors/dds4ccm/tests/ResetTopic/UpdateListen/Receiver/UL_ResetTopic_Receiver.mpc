@@ -140,8 +140,8 @@ project (UL_ResetTopicReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
 
 project (UL_ResetTopicReceiver_Driver) : ccm_stub, valuetype, dds4ccm_lem_stub {
   exename = ReceiverDriver
-  after += UL_ResetTopicReceiver_stub
-  libs  += Receiver_stub UL_ResetTopicBase_stub
+  after += UL_ResetTopicReceiver_stub UL_ResetTopicConnector_stub
+  libs  += Receiver_stub UL_ResetTopicBase_stub UL_ResetTopicConnector_stub
 
   includes += ..
   libpaths += ../lib

@@ -143,8 +143,8 @@ project (WL_ResetTopicSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_ske
 
 project (WL_ResetTopicSender_Driver) : ccm_stub, valuetype, dds4ccm_lem_stub {
   exename = SenderDriver
-  after += WL_ResetTopicSender_stub
-  libs  += Sender_stub WL_ResetTopicBase_stub
+  after += WL_ResetTopicSender_stub WL_ResetTopicConnector_stub
+  libs  += Sender_stub WL_ResetTopicBase_stub WL_ResetTopicConnector_stub
 
   includes += ..
   libpaths += ../lib

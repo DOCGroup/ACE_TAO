@@ -62,23 +62,24 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
 
   this->late_binding (ACE_OS::strlen (topic_name) == 0);
 
-  if (this->late_binding () &&
-      ACE_OS::strlen (topic_name) > 0 &&
+//   if (this->late_binding () &&
+  if (ACE_OS::strlen (topic_name) > 0 &&
+      !CORBA::is_nil (this->topic_name_) &&
       ACE_OS::strlen (this->topic_name_.in ()) == 0)
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
-                    ACE_TEXT ("Topic %C is late binded.\n"), topic_name));
+                    ACE_TEXT ("Topic <%C> is late binded.\n"), topic_name));
       DDS_TopicBase_Connector_T::topic_name (topic_name);
       return true;
     }
   else if (!this->configuration_complete_)
     {
-      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
-                    ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
-                    ACE_TEXT ("Topic %C is not late binded.\n"), topic_name));
       DDS_TopicBase_Connector_T::topic_name (topic_name);
     }
+  DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
+                ACE_TEXT ("Topic <%C> is not late binded.\n"), topic_name));
   return false;
 }
 
