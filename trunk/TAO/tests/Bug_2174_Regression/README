@@ -1,3 +1,5 @@
+$Id$
+
 This test contains regression tests for fixes to bug #2174
 "Object::_non_existent never returns true, but raises OBJECT_NOT_EXIST"
 See the bugzilla record for details.
