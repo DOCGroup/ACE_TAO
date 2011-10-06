@@ -1,4 +1,4 @@
-
+$Id$
 
 Server:
 
@@ -41,8 +41,8 @@ test type is anything else, the -m argument is not used. To get
 reasonable results with buffered oneway requests, it's a good idea
 to make the number of iterations -i a multiple of the queue size -m.
 This will insure that there are no requests left in the queue to be
-sent when the tests are done with their timings. For buffered 
-oneways, control is returned to the application as soon as the 
+sent when the tests are done with their timings. For buffered
+oneways, control is returned to the application as soon as the
 request is placed on the queue, or, if the queue is being flushed,
 as soon as all the requests are sent.
 
@@ -52,7 +52,7 @@ returned to the application when the request is handed off to the
 transport (usually TCP) layer.
 
 If the test type is 'server', control is returned to the application
-after any servant locator is called, but before the servant 
+after any servant locator is called, but before the servant
 executes the request. This will enable any location forwarding
 information to be returned to the client.
 
@@ -70,13 +70,13 @@ The -w option sets the number of empty loops of 1000 performed by
 the servant. To test the advantage of SYNC_WITH_SERVER over
 SYNC_WITH_TARGET and twoway requests, the servant must perform
 some 'significant' work that a oneway request with a SyncScope
-policy value of SYNC_WITH_SERVER does not wait on, while the 
+policy value of SYNC_WITH_SERVER does not wait on, while the
 other two types of requests mentioned above do.
 
 
-All the above command line options except -k, -s, -p and -x may be 
-used with the perl script run_test.pl. If no test type is specified, 
-the script will run each test type in turn before the server is shut 
+All the above command line options except -k, -s, -p and -x may be
+used with the perl script run_test.pl. If no test type is specified,
+the script will run each test type in turn before the server is shut
 down.
 
 There is also a perl script called client_test.pl, which facilitates
@@ -85,7 +85,7 @@ this script, first run the server manually, then run client_test.pl.
 With this script, the server will not shut down automatically.
 
 There is code in the test to set the priorities of the client and
-server threads to values consistent with a real time priority 
+server threads to values consistent with a real time priority
 class on Solaris and other Unix systems. If the user is not logged
 in as a superuser, a message will be output that the threads are
-running in a timesharing priority class.	
+running in a timesharing priority class.
