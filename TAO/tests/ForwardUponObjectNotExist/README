@@ -7,15 +7,15 @@ $Id$
 	This is test for feature of request forwarding when client receives
 	OBJECT_NOT_EXIST exception. The feature is enabled and disabled by
 	-ORBForwardInvocationOnObjectNotExist [0|1] option.
-	
-	The servant implementation is made to raise OBJECT_NOT_EXIST exception. 
-	This is	to simulate the server exception reply regardless the actual 
-	meaning of the OBJECT_NOT_EXIST exception. The test also takes advantage 
+
+	The servant implementation is made to raise OBJECT_NOT_EXIST exception.
+	This is	to simulate the server exception reply regardless the actual
+	meaning of the OBJECT_NOT_EXIST exception. The test also takes advantage
 	of the IORTable facilities in TAO to create a simple corbaloc IOR, TAO
-	always responds with a LOCATION_FORWARD message when a request is 
+	always responds with a LOCATION_FORWARD message when a request is
 	made for an object in the IORTable. This would make the stub have the
 	forward address upon receiving OBJECT_NOT_EXIST exception so it can
-	perform the forwarding. If client runs with the feature disabled 
+	perform the forwarding. If client runs with the feature disabled
 	(-ORBForwardInvocationOnObjectNotExist 0) then the client should catch
 	the OBJECT_NOT_EXIST exception, otherwise, the request will be looping
 	between server and client and the invocation never ends. The invocation

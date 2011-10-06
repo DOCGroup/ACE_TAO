@@ -8,7 +8,7 @@ Scenario:
 The server creates a POA with RTCORBA::SERVER_DECLARED priority model
 policy.  Two objects are created using this POA, one inherits the POA
 priority and the second one overrides POA priority with its own.
-Server threadpool resources are configured appropriately.  
+Server threadpool resources are configured appropriately.
 
 The client obtains two object references and invokes a method on each
 several times.  On each invocation, the client passes object's server
