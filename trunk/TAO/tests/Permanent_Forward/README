@@ -1,3 +1,5 @@
+$Id$
+
 This program tests the various forward and forward-permanent
 combinations possible in applications.  The tests operates directly on
 Objects and TAO_Stub interfaces.

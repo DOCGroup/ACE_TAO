@@ -1,3 +1,5 @@
+$Id$
+
 Please note, to actually test Bug 2677, ACE and TAO must be built with the
 following in your config.h:
 
