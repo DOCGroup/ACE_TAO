@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Connection Purging
 ------------------
@@ -12,7 +12,7 @@ Usage: run_test.pl [-u | -s]
 
 There are four configurator files, one for each strategy.  Each configurator
 file sets the -ORBConnectionCacheMax to 10 and the
--ORBConnectionCachePurgePercentage to 30 (excluding client.null.conf). 
+-ORBConnectionCachePurgePercentage to 30 (excluding client.null.conf).
 After 10 separate connections are made, 30% of the transport cache is
 purged in a way that corresponds to the chosen purging strategy.
 

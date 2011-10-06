@@ -10,11 +10,9 @@ conversion of the DII parameters in NVList to the list of arguments.
 It also defines the operations with multiple "IN" arguments to test the
 bug fix.
 
-
 This test is a modification of the Collocation_Tests. The big difference is
 this test invokes the oneway operations using DII while the Collocation_Tests
 invoke a simple twoway operations.
-
 
 Usage:
 =====

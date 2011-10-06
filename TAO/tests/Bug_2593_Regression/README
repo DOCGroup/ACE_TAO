@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Bug 2593 Regression Test README File
 
 This test is used to demonstrate that TAO can successfully connect
@@ -7,7 +9,7 @@ with a server even if the server's IOR contains profiles the client
 doesn't know about.
 
 When TAO 1.5.2 was released it was discovered that TAO could no longer
-tolerate unknown profiles. This test is designed to ensure that 
+tolerate unknown profiles. This test is designed to ensure that
 problem is caught before another release is cut.
 
 

@@ -9,7 +9,7 @@ There are multiple servants in this test:
   thread pool.
 
 - One servant is in a POA with the CLIENT_PROPAGATED policy and is
-  serviced by a thread pool without lanes.  
+  serviced by a thread pool without lanes.
 
 - Two servants are in a POA with the SERVER_DECLARED policy and is
   serviced by a thread pool without lanes.  One of the servant is at

@@ -1,8 +1,8 @@
 $Id$
 
-This test is to test if the destruction process 
-and the _non_existent() function in the smart proxy 
-is working properly. 
+This test is to test if the destruction process
+and the _non_existent() function in the smart proxy
+is working properly.
 
 For execution of the test:
 

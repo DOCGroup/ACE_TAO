@@ -1,22 +1,24 @@
 /**
 
+$Id$
+
 @page Large Object Reference Sequence Test README File
       This test is for testing large Sequences of Object
       references. The test was donated by Petr Tuma
       <petr.tuma@mff.cuni.cz> with the necessary TAO'ification by Bala.
       This test failed in TAO 1.2 and 1.2.1.
-      
+
       Run the test as follows
 
 $ ./server -o file.ior
 $ ./client -k file://file.ior
 
       The test takes a long time to complete. Please do not include it
-      in the daily builds. 
+      in the daily builds.
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful. 
+	the script returns 0 if the test was successful.
 
 
 */

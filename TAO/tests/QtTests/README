@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Introduction:
 
@@ -8,7 +8,7 @@ creates a dialog with a quit button & a slider. On dragging the slider
 the display on the server dialog box will change. On pressing the Quit
 button the ORB would be shutdown and the movement of the slider will
 NOT be communicated to the server. The user can kill the windows to
-exit. 
+exit.
 
 To run the server and the client simply do the following:
 

@@ -24,7 +24,7 @@ policy. This ensures that all replies sent from the POA have the dscp
 set. It registers a servant with this POA. Client obtains the object
 reference. Client then performs several invocations on the object.
 
-To run (on Unix): 
+To run (on Unix):
 -----------------
 
 $ ./server -ORBdebuglevel 1 -p 20000

@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 	A simple test for the DSI/DII gateway support. TAO can
 optimize some demarshaling/marshaling and data copying in the
@@ -7,7 +7,7 @@ also pass requests and replies that are not in native (the
 gateway's) byte order. NOTE - For this last feature to work, you
 must compile ACE with ACE_ENABLE_SWAP_ON_WRITE defined.
 
-	This is a smoke test and simple example for those 
+	This is a smoke test and simple example for those
 features. Use
 
         $ server -o server.ior
@@ -25,11 +25,11 @@ then calling a method that raises a CORBA system exception.
         To run these tests by hand, start the server and gateway
 as shown above, then use
 
-        $ client -k file://gw.ior -u 
+        $ client -k file://gw.ior -u
 
 for the user exception test and
 
-        $ client -k file://gw.ior -s 
+        $ client -k file://gw.ior -s
 
 for the system exception test. For these tests, the -x
 option (server shutdown) and -i option (# of calls)
