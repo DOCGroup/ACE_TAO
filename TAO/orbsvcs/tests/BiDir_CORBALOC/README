@@ -1,14 +1,15 @@
 /**
 
+$Id$
+
 @page BiDir_CORBALOC README File
-      
+
       This is a simple test to use BiDirGIOP to work with any corbaloc
 URL's, such as the naming service. The test is ultra simple trying to
 set BiDir policies and exporting a reference to an object to the name
 service. The fun part is trying to contact the name service using
-corbaloc URL's. 
+corbaloc URL's.
 
        The test is in the orbsvcs directory because the test uses the
-NameService. 
+NameService.
 */
-        
