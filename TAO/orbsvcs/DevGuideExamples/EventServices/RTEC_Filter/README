@@ -26,7 +26,7 @@ EchoEventSupplerMain.cpp
   Main program for a PushSupplier.
 
     EchoEventSupplier -ORBInitRef NameService=file://ns.ior
-  
+
   It will publish an event to the event channel every 1 second.
   Use Control-C to kill the process.
 
