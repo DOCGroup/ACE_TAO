@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.0.4 and ACE-6.0.5
 ====================================================
 
+. Improved support for Android and added the ability to run all ACE/TAO tests
+  automatically using the Android emulator
+
 USER VISIBLE CHANGES BETWEEN ACE-6.0.3 and ACE-6.0.4
 ====================================================
 
