@@ -1,4 +1,5 @@
 #/bin/sh
+# $Id$
 
 for i in $TYPES; do
   echo $i ;
