@@ -1,11 +1,13 @@
 /**
 
+$Id$
+
 @page CSD_Strategy TestInf README File
 
-  This is the test infrastructure library. It contains the common shared 
-code such as test exception idl files, the helper functions that wrap multiple 
+  This is the test infrastructure library. It contains the common shared
+code such as test exception idl files, the helper functions that wrap multiple
 TAO operations and the classes provide the basic test functionalities. Adding
-this library is to simplify the development of the new tests. 
+this library is to simplify the development of the new tests.
 
 */
 

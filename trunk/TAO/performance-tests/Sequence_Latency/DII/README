@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page DII Latency Test README File
 
 	This test tries to estimate the minimum latency for a DII twoway
