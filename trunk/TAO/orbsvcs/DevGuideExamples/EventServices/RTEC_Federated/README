@@ -44,7 +44,7 @@ EchoEventSupplerMain.cpp
   it locates the remote event channel, initialize the gateway,
   and then publish an event to the local event channel every 10
   milliseconds.  This event will contain the string <name> in the
-  any_value field. When the gateway is initialized, you'll see a 
+  any_value field. When the gateway is initialized, you'll see a
   message stating "Gateway initialized".  If you pass the -iorfile
   parameter, this server also writes the EC's IOR to <file> when
   the gateway is initialized.

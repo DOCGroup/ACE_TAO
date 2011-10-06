@@ -7,13 +7,13 @@ File: examples/NotifyService/Messenger/README
 
 This directory contains a simple example of using the Notification Service.
 
-This example extends the Messenger example in GettingStarted directory 
+This example extends the Messenger example in GettingStarted directory
 to illustrate how the Notification channel can be used to push messages
 from the supplier to the consumer.  Structured events are used to demonstrate
 the operation of the channel.  The example uses the push/push model.
 
 The MessengerServer in this example plays the role of a server for
-the MessengerClient and the role of a supplier for the MessengerConsumer. 
+the MessengerClient and the role of a supplier for the MessengerConsumer.
 The flow of messages is shown below:
 
 MessengerClient->MessengerSupplier->NotificationChannel->MessengerConsumer.
