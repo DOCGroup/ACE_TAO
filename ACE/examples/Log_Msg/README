@@ -20,7 +20,7 @@ Log_Msg class to record various information.
     parameters.  When invoked with any parameters like,
 
     ./Log_Msg foobar
-  
+
     the log messages are direct to stdout (or, ostream in C++.)
     In this case, the program simulates an error EWOULDBLOCK and
     write an error log to stdout as,
