@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Bug_1476_Test Test README File
 
 	This test is built on the Hello test. The client pings
