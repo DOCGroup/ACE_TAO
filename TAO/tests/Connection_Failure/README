@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Connection_Failure Test README File
 
 A simple test for connection failures. The client tries to connect to

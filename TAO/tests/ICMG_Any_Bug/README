@@ -1,10 +1,14 @@
 /**
 
+$Id$
+
+
+
 @page ICMG_Any Test README File
 
 	The goals of writing this test are:
 
-	1. To test TAO's implementaion of Any_to_object ().
+	1. To test TAO's implementation of Any_to_object ().
 
 	To run the test use the run_test.pl script:
 
