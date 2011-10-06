@@ -1,9 +1,11 @@
+$Id$
+
 This is the README file for the Repository Manager (RM).
 
 Building RM:
 In order to be able to compile the RM you need to have ZLIB lib because the RM
-uses it to read the contents of CCM packages. In order to compile the RM 
-successfully you will need to do the following: 
+uses it to read the contents of CCM packages. In order to compile the RM
+successfully you will need to do the following:
 1.Download the binary version of ZLIB or build it yourself
 3.Create an "include" and a "lib" subdirectory. Then copy the libraries files into
   the "lib" subdirectory and copy zlib.h into the "include" subdirectory.
@@ -17,7 +19,7 @@ If you want to get the component package through http server:
 2.Start JAWS: $ACE_ROOT/apps/JAWS/server/main
 
 Start RM:
-1.Using ior file: 
+1.Using ior file:
   RepositoryManagerDaemon -o
 2.Using Naming Service:
   RepositoryManagerDaemon -v [NameofRM]
@@ -28,7 +30,7 @@ Using RMadmin:
   > RMadmin -o -n BasicSP -i -l packages/BasicSP.cpk
   or
   > RMadmin -o -n BasicSP -i -l http://127.0.0.1:5432/packages/BasicSP.cpk (If the JAWS is started)
-  This will create the BasicSP directory, BasicSP.cpk file and BasicSP.epc file in the 
+  This will create the BasicSP directory, BasicSP.cpk file and BasicSP.epc file in the
   $CIAO_ROOT/DAnCE/RepositoryManager/RepositoryManager/
 2.Delete component package: (use BasicSP for example)
   > RMadmin -o -n BasicSP -d
@@ -36,7 +38,7 @@ Using RMadmin:
   > RMadmin -o -n BasicSP -f
 4.Stop RM:
   > RMadmin -o -s
-  This will create the RM_record file in the $CIAO_ROOT/DAnCE/RepositoryManager/RepositoryManager/ which record the 
+  This will create the RM_record file in the $CIAO_ROOT/DAnCE/RepositoryManager/RepositoryManager/ which record the
   names and UUIDs of the installed component packages.
 
 
