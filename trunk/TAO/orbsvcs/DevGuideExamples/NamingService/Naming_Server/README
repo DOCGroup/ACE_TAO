@@ -4,11 +4,11 @@ OMG Naming Service
 
 File: DevGuideExamples/NamingService/Naming_Server/README
 
-The example in NamingService/Naming_Client is modified to utilize 
-the TAO_Naming_Server class.  This class enables the Naming Service 
-to easily be collocated within an application.  In this example, 
-the Naming Service is collocated with a server that supports the 
-Messenger Interface described in GettingStartedUNIX (or GettingStartedVC). 
+The example in NamingService/Naming_Client is modified to utilize
+the TAO_Naming_Server class.  This class enables the Naming Service
+to easily be collocated within an application.  In this example,
+the Naming Service is collocated with a server that supports the
+Messenger Interface described in GettingStartedUNIX (or GettingStartedVC).
 
 The Server code is stored in:
 

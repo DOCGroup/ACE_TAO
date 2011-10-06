@@ -8,7 +8,7 @@ File: examples/NotifyService/RTNotify/README
 This directory contains a simple example of using the Notification Service
 with Real-Time CORBA.
 
-This example extends the basic Messenger notify service example to illustrate 
+This example extends the basic Messenger notify service example to illustrate
 how the Notification channel can be used with RT CORBA features.  The supplier
 and consumer both set up their proxies to use a thread pool with lanes and
 the Notify_Service executable is configured to load the RT_Notification library
@@ -16,7 +16,7 @@ and associated features.  A priority is set in the supplier and propagetd throug
 the channel into the consumer.
 
 The MessengerServer in this example plays the role of a server for
-the MessengerClient and the role of a supplier for the MessengerConsumer. 
+the MessengerClient and the role of a supplier for the MessengerConsumer.
 The flow of messages is shown below:
 
 MessengerClient->MessengerSupplier->NotificationChannel->MessengerConsumer.
