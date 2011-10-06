@@ -1,3 +1,23 @@
+Thu Oct  6 11:56:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * README:
+        * examples/Connection/non_blocking/README:
+        * examples/IPC_SAP/DEV_SAP/README:
+        * examples/IPC_SAP/SOCK_SAP/README:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/Log_Msg/Log_Msg_MFC/README:
+        * examples/Log_Msg/README:
+        * examples/Logger/README:
+        * examples/README:
+        * examples/Reactor/Ntalker/README:
+        * examples/Reactor/README:
+        * examples/Reactor/TP_Reactor/README:
+        * examples/Service_Configurator/Misc/README:
+        * examples/Synch/README:
+        * examples/System_V_IPC/README:
+        * examples/Timer_Queue/README:
+          Fuzz: trailing whitespaces, tab characters and ID strings
+
 Mon Oct  3 06:30:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.h:
