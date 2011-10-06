@@ -1,3 +1,18 @@
+Thu Oct  6 12:01:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * netsvcs/README:
+        * netsvcs/clients/Logger/README:
+        * netsvcs/clients/README:
+        * netsvcs/clients/Tokens/README:
+        * netsvcs/clients/Tokens/collection/README:
+        * netsvcs/clients/Tokens/deadlock/README:
+        * netsvcs/clients/Tokens/invariant/README:
+        * netsvcs/clients/Tokens/manual/README:
+        * netsvcs/clients/Tokens/mutex/README:
+        * netsvcs/lib/README:
+        * netsvcs/servers/README:
+          Fuzz: trailing whitespaces, tab characters and ID strings
+
 Thu Oct  6 11:56:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * README:
