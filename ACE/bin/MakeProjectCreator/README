@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains ACE- and TAO-specific extensions of MPC.  All
 the base projects in the config directory are ACE- and TAO-specific,
 along with the perl modules for the gnuace and vxtest types and the

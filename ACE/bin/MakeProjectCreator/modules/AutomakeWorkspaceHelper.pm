@@ -4,6 +4,7 @@ package AutomakeWorkspaceHelper;
 # Description   : An Automake Workspace Helper
 # Author        : Chad Elliott
 # Create Date   : 9/01/2004
+# $Id$
 # ************************************************************
 
 # ************************************************************
