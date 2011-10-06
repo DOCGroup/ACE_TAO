@@ -2,14 +2,14 @@
 
 DevGuideExamples/NamingService/Naming_Context_Ext/README
 
-The example in this directory illustratues how to convert between CosNames, 
-Stringified Names, and URLs. 
+The example in this directory illustratues how to convert between CosNames,
+Stringified Names, and URLs.
 
-A Name can be converted to a stringified Name by to_string operation. A stringified 
-Name can be converted to a Name by to_name operation. The resolve_str operation 
-resolves an object by passing a strigified Name. 
+A Name can be converted to a stringified Name by to_string operation. A stringified
+Name can be converted to a Name by to_name operation. The resolve_str operation
+resolves an object by passing a strigified Name.
 
-The MessengerServer writes its corbaname URL to a file by calling to_url and 
+The MessengerServer writes its corbaname URL to a file by calling to_url and
 the MessengerClient reads the URL file to get the MessengerServer object reference.
 
 

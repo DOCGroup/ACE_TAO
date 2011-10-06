@@ -5,9 +5,9 @@ OMG Naming Service
 File: DevGuideExamples/NamingService/Messenger/README
 
 
-The Original Messenger example, introduced in Chapters 4 and 5 
-(GettingStartedUNIX and GettingStartedVC), is modified to utilize the 
-Naming Service.  The client now uses the Naming Service rather than 
+The Original Messenger example, introduced in Chapters 4 and 5
+(GettingStartedUNIX and GettingStartedVC), is modified to utilize the
+Naming Service.  The client now uses the Naming Service rather than
 reading the server object's IOR as a string from a file.
 
 The Client code is stored in:

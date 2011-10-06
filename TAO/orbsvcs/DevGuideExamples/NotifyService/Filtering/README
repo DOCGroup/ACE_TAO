@@ -2,18 +2,16 @@
 
 Event Notification Service
 
-
 File: DevGuideExamples/NotifyService/Filtering/README
 
-
 This example extends the NotifyService/Messenger example by
-demonstrating how filtering can be incorporated into the utilization 
+demonstrating how filtering can be incorporated into the utilization
 of the Notification channel.  Supplier-side, and consumer-side
-filtering can be implemented, but only consumer_side filtering is 
+filtering can be implemented, but only consumer_side filtering is
 demonstrated in this example.
 
-Filters are configured to guarantee that only certain events are 
-passed to the consumer. The criteria is specified by imposing constraints 
+Filters are configured to guarantee that only certain events are
+passed to the consumer. The criteria is specified by imposing constraints
 on the appropriate fields of a structured event.
 
 

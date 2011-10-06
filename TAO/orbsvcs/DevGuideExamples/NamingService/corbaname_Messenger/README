@@ -2,14 +2,14 @@
 
 DevGuideExamples/NamingService/corbaname_Messenger/README
 
-The example in this directory extends the example in GettingStartedUNIX 
+The example in this directory extends the example in GettingStartedUNIX
 (or GettingStartedVC) to use the Naming_Service
-and calling string_to_object instead of calling resolve_initial_references 
+and calling string_to_object instead of calling resolve_initial_references
 to get the NameService object reference and look up the service in the Naming_Service.
 
 This example only differs from the NamingService/Messenger example by a few lines
 in the MessengerClient.cpp.  (All other source files should be the same.)
- 
+
 How to Run:
 -----------
 To start the Naming_Service:
@@ -25,7 +25,7 @@ To start the client:
 ./MessengerClient
 
 
-This MessengerClient will optionally take parameter that is a URL (corbaname:) 
+This MessengerClient will optionally take parameter that is a URL (corbaname:)
 that addresses the Naming_Service and the MessengerServer within it.
 
 The MessengerServer and MessengerClient may also take an -ORBInitRef option
@@ -50,7 +50,7 @@ REM start the client
 cd/d %EXAMPLES%\NamingService\corbaname_Messenger\Debug
 title client
 
-REM use a corbaname that does not require -ORBDefaultInitRef 
+REM use a corbaname that does not require -ORBDefaultInitRef
 MessengerClient corbaname:iiop:localhost:2809#example/Messenger
 
 REM defaults to iiop protocol
@@ -61,5 +61,5 @@ MessengerClient corbaname::localhost#example/Messenger
 
 
 
-REM use RIR 
+REM use RIR
 MessengerClient -ORBInitRef NameService=iiop://localhost:2809/NameService corbaname:rir:#example/Messenger
