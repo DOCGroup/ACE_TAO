@@ -94,7 +94,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test_var test =
         TAO::Narrow_Utils<Test>::unchecked_narrow (
           object.in (),
-          _TAO_Test_Proxy_Broker_Factory_function_pointer);
+          TAO::TAO_CO_NONE);
 
       if (CORBA::is_nil (test.in ()))
         {
