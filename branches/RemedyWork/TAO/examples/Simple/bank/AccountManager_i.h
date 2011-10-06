@@ -96,7 +96,7 @@ private:
    */
   MAP_MANAGER_TYPE hash_map_;
 
-  void operator= (const AccountManager_i &)
+  void operator= (const AccountManager_i &);
 };
 
 #endif /* ACCOUNTMANAGER_I_H */
