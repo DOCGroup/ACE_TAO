@@ -1,12 +1,14 @@
-This test is to verify the Notification Service client connection
-validation feature.  
+$Id$
 
-The test synthesizes a persistency file that points to a dummy 
-service. The Notify service is then run so that it uses the 
+This test is to verify the Notification Service client connection
+validation feature.
+
+The test synthesizes a persistency file that points to a dummy
+service. The Notify service is then run so that it uses the
 persistency file to restore a topology and eventually reap the
 proxies because the "ping" yields an OBJECT_NOT_EXIST exception.
 
-The result should be that after a few seconds, a new persistence 
+The result should be that after a few seconds, a new persistence
 file is created that contains no proxy references.
 
 Run ./run_test.pl and it should output "test passed".

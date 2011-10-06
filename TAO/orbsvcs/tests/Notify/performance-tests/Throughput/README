@@ -1,10 +1,11 @@
+$Id$
 
         Notify Throughput
 
 Test to measure Notify's throughput
 
 Command line options:
--------------------- 
+--------------------
 -collocated_ec,
 -consumers [count],
 -suppliers [count],
@@ -15,6 +16,6 @@ Command line options:
 -EC [Channel Name],
 -ExpectedCount [count]
 
-e.g. 
+e.g.
 ./Throughput -ORBInitRef NameService=file:///naming.ior -consumers 1 -suppliers 1 -burst_size 1000 -burst_count 1 -payload 16384
 
