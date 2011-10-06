@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -33,7 +33,7 @@ sender [-f <filename>] [-r <data_rate>] [-s <sender device name>] [-a <address_f
 
 -s sender device name --> This is the name of the sender as it will be
                           registered with the naming service and which
-                          receivers connect to.  
+                          receivers connect to.
 
 -a address_file -->	  This file contains the sender and receiver
 			  endpoint addressses to be used to set up a

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -31,10 +31,10 @@ receiver -f <output_filename> -s <stats_file>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-s <# of frames sent>] [-b <frame size>] [-d] 
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-s <# of frames sent>] [-b <frame size>] [-d]
 
 -f filename --> The file to be streamed to the receiver (defaults to
-                "input"). 
+                "input").
 
 -p protocol --> The protocol string could be UDP, TCP, RTP/UDP or SCTP_SEQ (defaults to
                 UDP). But with the multicast address it should be UDP.
@@ -42,10 +42,10 @@ sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-
 -r framerate--> The rate at which tha data frames need to be sent
                 (defaults to 30 frames per second).
 
--l address  --> Local address in the format host:port. If protocol is SCTP_SEQ then specify "," 
+-l address  --> Local address in the format host:port. If protocol is SCTP_SEQ then specify ","
 		separated secondary addresses.eg. primary_addr:port,sec_addr1,sec_addr2
 
--a address  --> Destination address in the format host:port. If protocol is SCTP_SEQ then specify "," 
+-a address  --> Destination address in the format host:port. If protocol is SCTP_SEQ then specify ","
 		separated secondary addresses.eg. primary_addr:port,sec_addr1,sec_addr2
 
 -s frames   --> The number of frames to be sent from the sender to the receiver. The
