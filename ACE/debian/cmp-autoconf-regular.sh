@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id$
 
 usage() {
 	cat >&2 << EOF
