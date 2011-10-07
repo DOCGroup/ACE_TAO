@@ -4,11 +4,11 @@ $Id$
 
 @page Hello Test README File
 
-	The simplest possible test for TAO.  This is a very simple
+The simplest possible test for TAO.  This is a very simple
 test for TAO, it can be argued that it is in fact too simple to do
 anything useful, i.e. chances are that this test will always pass.
 
-	The goals of writing this test are:
+  The goals of writing this test are:
 
 - Provide a very simple, very fast 'smoke test' for ORB developers.
   If Hello does not pass then something is extremely broken and you
@@ -27,13 +27,13 @@ anything useful, i.e. chances are that this test will always pass.
   there is no dependency on it if the client and server do not use
   type codes or Anys.
 
-	Please refrain from "improving", extending or expanding this
+Please refrain from "improving", extending or expanding this
 test, if you need to change
 
-	To run the test use the run_test.pl script:
+  To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+  the script returns 0 if the test was successful.
 
 */

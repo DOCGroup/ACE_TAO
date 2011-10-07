@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This is a compile only test. If it compiles, it's passed. It checks that you can have an include for PortableServer.pidl, and other 'unsafe' files, in a user file if it is guarded or ifdef'd out.
 

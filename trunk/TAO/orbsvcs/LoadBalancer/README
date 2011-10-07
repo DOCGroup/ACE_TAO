@@ -1,11 +1,9 @@
-#
-# $Id$
-#
+$Id$
 
 This directory contains the sources for two binaries:
 
-	1) LoadManager
-	2) LoadMonitor
+  1) LoadManager
+  2) LoadMonitor
 
 Descriptions of each follow.
 

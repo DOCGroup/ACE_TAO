@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This example is a copy of the $TAO_ROOT/test/BiDirerectional test
 but it does not use ACE_TRY/ENVIRONMENT macros.

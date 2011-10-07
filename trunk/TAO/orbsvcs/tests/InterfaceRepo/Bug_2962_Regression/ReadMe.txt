@@ -1,3 +1,5 @@
+$Id$
+
 tao#532 - Bugzilla Bug 2962
 
 The original problem is that asking the IFR for the length of an array doesn't

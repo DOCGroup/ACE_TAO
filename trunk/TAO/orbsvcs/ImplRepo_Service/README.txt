@@ -1,5 +1,7 @@
 /** -*- HTML-Helper -*- $Id$
 
+$Id$
+
 @mainpage Implementation Repository
 
 @section intro Introduction

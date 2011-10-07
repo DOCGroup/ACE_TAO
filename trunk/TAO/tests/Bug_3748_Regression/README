@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test registers orb initializer which in turn registers Test_Protocol_Hooks.
 This is necessary for emulation of failure in TAO_IIOP_Connection_Handler::open()

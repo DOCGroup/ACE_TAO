@@ -7,11 +7,11 @@ $Id$
 parsers between threads processing different GIOP versions.
 
 
-	To run the test use the run_test.pl script:
+To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+the script returns 0 if the test was successful.
 
 */
 

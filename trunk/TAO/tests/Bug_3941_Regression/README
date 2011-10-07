@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 The problem is described in the corresponding issue. In short tao_idl
 incorrectly generated _tao_unmarshal() function for valuetypes so that

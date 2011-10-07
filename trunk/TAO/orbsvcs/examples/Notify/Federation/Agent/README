@@ -1,3 +1,5 @@
+$Id$
+
 Agent is a simple application which sends and receives discovery messages
 via multicast-based federation of Notification Service. To run the example
 you don't need to start Notification Service; each agent process will create

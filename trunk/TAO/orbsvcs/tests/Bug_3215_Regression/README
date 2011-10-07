@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 N.B. This test is a rip off of the bug #2287 regression test. The only significant change is that after throwing an
 initial location forward perm back to the client, redirecting it to the same server, the server then starts throwing transients up to (or indeed past) the expiration time. At this poin the client ORB should cease retrying and report the transient to the application.

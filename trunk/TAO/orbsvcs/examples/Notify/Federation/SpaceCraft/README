@@ -1,3 +1,5 @@
+$Id$
+
 This example simulates spacecraft constellation. Each spacecraft
 connects to a constellation-wide multicast group to which it
 forwards pre-filtered messages on behalf of its agents. To run

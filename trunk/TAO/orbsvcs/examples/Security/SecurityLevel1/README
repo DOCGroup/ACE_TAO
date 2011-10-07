@@ -3,7 +3,7 @@ $Id$
 * README *
 
 
-	In this example, the server will have some (or may be just
+In this example, the server will have some (or may be just
 one, if that will serve the purpose .. anyways since these will be
 just simple dummy methods, it shouldnt matter) methods with different
 levels of authorization. When a client wants to invoke any of these

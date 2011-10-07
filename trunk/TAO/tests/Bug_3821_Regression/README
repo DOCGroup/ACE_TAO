@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Even if union uses enumeration as discriminant and all possible case
 are specified in IDL there are still possible a lot of other values because

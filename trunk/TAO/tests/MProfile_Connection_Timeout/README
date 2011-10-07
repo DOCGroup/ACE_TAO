@@ -4,7 +4,7 @@ $Id$
 
 @page MProfile_Connection_Tiemout Test README File
 
-	The simplest possible test for connection timeouts across
+The simplest possible test for connection timeouts across
 multiple profiles aka BUGID 1284. The aim of this test is to
 see whether TAO client fails over to the next profile if a connection
 timeout policy is set. If connection_timeout policy is set and if the
@@ -12,15 +12,15 @@ client is not anle to establish connection using one of the profiles,
 the client should fail over to the next profile seamlessly. The test
 has been constructed to check for this feature.
 
-        Please refrain from "improving", extending or expanding this
+Please refrain from "improving", extending or expanding this
 test.
 
 @todo: We need to write a MT test for this feature.
 
-	To run the test use the run_test.pl script:
+To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+the script returns 0 if the test was successful.
 
 */

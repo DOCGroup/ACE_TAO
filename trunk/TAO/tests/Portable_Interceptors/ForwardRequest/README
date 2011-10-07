@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test verifies that the PortableInterceptor::ForwardRequest
 exception support is working properly.  There are four cases that it

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test checks that a shmiop corbaloc reference can be parsed correctly and connected correctly. It uses the NameService and nslist because they are compatible already built pairing of client and server. Their use is not relevent otherwise. This would work just as well with hello world. This is actually a test for TAO/tao/Strategies *not* TAO/orbsvcs but as it uses the NS it's here rather than in TAO/tests.
 

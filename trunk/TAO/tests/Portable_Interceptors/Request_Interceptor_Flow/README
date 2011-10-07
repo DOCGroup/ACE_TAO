@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 NOTE: The code in this test is highly specialized and very brittle.
       Do not use it as a model for "real world" interceptor code.
