@@ -1,8 +1,10 @@
 /**
 
+$Id$
+
 @page NodeManager README File
 
-      CIAO's NodeManager implementation. NodeManager is the bootstraping
+CIAO's NodeManager implementation. NodeManager is the bootstraping
 mechanism to create new NodeApplication on the localhost.  We
 currently depend on starting the NodeApplicationManager process on
 some port of all the hosts that have NodeApplication install to
