@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/TAO_Service/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  Dynamically configure the naming service into the application process. -->
  <!-- dynamic TAO_Naming_Loader Service_Object * TAO_CosNaming:_make_TAO_Naming_Loader () "dummy -o ns.ior" -->
  <!--  Dynamically configure the default Event Service Factory -->

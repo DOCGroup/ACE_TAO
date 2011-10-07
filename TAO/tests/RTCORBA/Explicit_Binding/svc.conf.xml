@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  Options for SHMIOP protocol -->
  <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop"/>
 </ACE_Svc_Conf>
