@@ -1,4 +1,6 @@
+$Id$
 /**
+
 @page msvc Miscellaneous Notes for ACE/TAO and Microsoft Visual C++
 
 Here are just some random information about ACE/TAO with Microsoft Visual
