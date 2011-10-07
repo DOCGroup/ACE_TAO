@@ -534,9 +534,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
         << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
         << be_idt << be_idt_nl
-        << "TAO_ORB_Core::ifr_client_adapter_name ()"
-        << be_uidt_nl
-        << ");" << be_uidt_nl << be_uidt_nl;
+        << "TAO_ORB_Core::ifr_client_adapter_name ());"
+        << be_uidt
+        << be_uidt_nl << be_uidt_nl;
     *os << "if (!_tao_adapter)" << be_idt_nl
         << "{" << be_idt_nl
         << "throw ::CORBA::INTF_REPOS (::CORBA::OMGVMCID | 1, ::CORBA::COMPLETED_NO);"

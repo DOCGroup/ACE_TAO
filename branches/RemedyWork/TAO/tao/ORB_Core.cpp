@@ -3638,49 +3638,73 @@ TAO_ORB_Core::collocation_strategy (
               {
                 // check opportunity
                 // if collocation_opportunity == TAO_CO_THRU_POA_STRATEGY
-                if (ACE_BIT_ENABLED (collocation_opportunity, TAO::TAO_CO_THRU_POA_STRATEGY)
-                    && (object->_servant () != 0))
-                   return TAO::TAO_CS_THRU_POA_STRATEGY;
+                if (ACE_BIT_ENABLED (collocation_opportunity, TAO::TAO_CO_THRU_POA_STRATEGY))
+                  {
+                    return TAO::TAO_CS_THRU_POA_STRATEGY;
+                  }
                 else
-                  // collocation object, but no collocation_opportunity for Thru_poa
-                  throw ::CORBA::INTERNAL (
-                    CORBA::SystemException::_tao_minor_code (
-                      TAO::VMCID,
-                      EINVAL),
-                    CORBA::COMPLETED_NO);
-
+                  {
+                    if (TAO_debug_level > 0)
+                      {
+                        ACE_ERROR ((LM_ERROR,
+                                    ACE_TEXT ("TAO_ORB_Core::collocation_strategy, ")
+                                    ACE_TEXT ("request for through poa collocation ")
+                                    ACE_TEXT ("without needed collocation opportunity.\n")));
+                      }
+                    // collocation object, but no collocation_opportunity for Thru_poa
+                    throw ::CORBA::INTERNAL (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO::VMCID,
+                        EINVAL),
+                      CORBA::COMPLETED_NO);
+                  }
+                break;
               }
             case TAO_COLLOCATION_DIRECT:
               {
                 if (ACE_BIT_ENABLED (collocation_opportunity,
                                      TAO::TAO_CO_DIRECT_STRATEGY)
                                      && (object->_servant () != 0))
-                  return TAO::TAO_CS_DIRECT_STRATEGY;
+                  {
+                    return TAO::TAO_CS_DIRECT_STRATEGY;
+                  }
                 else
-                  // collocation object, but no collocation_opportunity for Direct
-                  // or servant() == 0
-                  throw ::CORBA::INTERNAL (
-                  CORBA::SystemException::_tao_minor_code (
-                    TAO::VMCID,
-                    EINVAL),
-                  CORBA::COMPLETED_NO);
+                  {
+                    if (TAO_debug_level > 0)
+                      {
+                        ACE_ERROR ((LM_ERROR,
+                                    ACE_TEXT ("TAO_ORB_Core::collocation_strategy, ")
+                                    ACE_TEXT ("request for direct collocation ")
+                                    ACE_TEXT ("without needed collocation opportunity.\n")));
+                      }
+                    // collocation object, but no collocation_opportunity for Direct
+                    // or servant() == 0
+                    throw ::CORBA::INTERNAL (
+                    CORBA::SystemException::_tao_minor_code (
+                      TAO::VMCID,
+                      EINVAL),
+                    CORBA::COMPLETED_NO);
+                  }
+                break;
               }
             case TAO_COLLOCATION_BEST:
               {
                 if (ACE_BIT_ENABLED (collocation_opportunity,
                                      TAO::TAO_CO_DIRECT_STRATEGY))
-                  return TAO::TAO_CS_DIRECT_STRATEGY;
+                  {
+                    return TAO::TAO_CS_DIRECT_STRATEGY;
+                  }
                 else if (ACE_BIT_ENABLED (collocation_opportunity,
-                                          TAO::TAO_CO_THRU_POA_STRATEGY))
-                  return TAO::TAO_CS_THRU_POA_STRATEGY;
-                 else
-              // collocation object, but no collocation_opportunity for
-              //     Direct or Thru_poa, isn't possible
-                throw ::CORBA::INTERNAL (
-                CORBA::SystemException::_tao_minor_code (
-                  TAO::VMCID,
-                  EINVAL),
-                CORBA::COMPLETED_NO);
+                                          TAO::TAO_CO_THRU_POA_STRATEGY)
+                        && (object->_servant () != 0))
+                  {
+                    return TAO::TAO_CS_THRU_POA_STRATEGY;
+                  }
+                else
+                  {
+                    return TAO::TAO_CS_REMOTE_STRATEGY;
+                  }
+                break;
               }
             }
         }
@@ -3688,28 +3712,28 @@ TAO_ORB_Core::collocation_strategy (
       else
         {
           switch (orb_core->get_collocation_strategy ())
-             {
-             case TAO_COLLOCATION_THRU_POA:
-               throw ::CORBA::INTERNAL (
-                 CORBA::SystemException::_tao_minor_code (
-                   TAO::VMCID,
-                   EINVAL),
-                 CORBA::COMPLETED_NO);
-               break;
-             case TAO_COLLOCATION_DIRECT:
+            {
+            case TAO_COLLOCATION_THRU_POA:
+              {
+                throw ::CORBA::INTERNAL (
+                  CORBA::SystemException::_tao_minor_code (
+                    TAO::VMCID,
+                    EINVAL),
+                  CORBA::COMPLETED_NO);
+              }
+              break;
+            case TAO_COLLOCATION_DIRECT:
                {
                  throw ::CORBA::INTERNAL (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      EINVAL),
                    CORBA::COMPLETED_NO);
-                 break;
-
                }
-             case TAO_COLLOCATION_BEST:
-                ACE_DEBUG((LM_DEBUG,
-                           ACE_TEXT("CollocationStrategy BEST, becomes TAO_CS_REMOTE_STRATEGY\n")));
-             }
+               break;
+            case TAO_COLLOCATION_BEST:
+               break;
+            }
         }
     }
 
