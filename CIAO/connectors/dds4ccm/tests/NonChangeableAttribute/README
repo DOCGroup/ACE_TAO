@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test tests whether the connection attributes
 can be set once the configuration is complete.

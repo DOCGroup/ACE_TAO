@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 UnkeyedSamples consists of a Sender and a Receiver.
 The Sender writes samples unkeyed; the Receiver should

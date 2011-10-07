@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test tests all possible connections between
 a Sender and a DDS State connector and a Receiver and a
