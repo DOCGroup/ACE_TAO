@@ -107,7 +107,7 @@ namespace DAnCE
     REFERENCE_MAP instance_references_;
 
     ::Deployment::DeploymentPlan plan_;
-    
+
     DAnCE::Deployment_Scheduler scheduler_;
 
     CORBA::ULong spawn_delay_;

@@ -1,3 +1,11 @@
+Fri Oct  7 08:02:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.h:
+          Fuzz: Trailing whitespace
+
+        * docs/sources/Error_Documentation.oo3/contents.xml:
+          Fuzz: No id-tag
+
 Thu Oct  6 12:37:04 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * dance/LocalityManager/Daemon/Locality_Manager_Impl.h:
