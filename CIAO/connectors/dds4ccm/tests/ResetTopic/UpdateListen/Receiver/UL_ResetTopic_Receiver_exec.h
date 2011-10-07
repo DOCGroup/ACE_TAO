@@ -53,7 +53,7 @@ namespace CIAO_UL_ResetTopic_Receiver_Impl
   public:
     info_out_state_data_listener_exec_i (
       ::UL_ResetTopic::CCM_Receiver_Context_ptr ctx,
-      Atomic_Boolean &sample_received_);
+      Atomic_Boolean &samples_received);
     virtual ~info_out_state_data_listener_exec_i (void);
 
     /** @name Operations and attributes from UL_ResetTopic::UL_ResetTopicTestConnector::StateListener */

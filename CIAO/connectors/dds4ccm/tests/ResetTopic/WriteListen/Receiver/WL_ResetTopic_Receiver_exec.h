@@ -40,6 +40,7 @@
 
 namespace CIAO_WL_ResetTopic_Receiver_Impl
 {
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
 
   /**
    * Provider Executor Implementation Class: info_out_event_data_listener_exec_i
@@ -51,7 +52,8 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
   {
   public:
     info_out_event_data_listener_exec_i (
-      ::WL_ResetTopic::CCM_Receiver_Context_ptr ctx);
+      ::WL_ResetTopic::CCM_Receiver_Context_ptr ctx,
+      Atomic_Boolean &samples_received);
     virtual ~info_out_event_data_listener_exec_i (void);
 
     //@{
@@ -68,6 +70,7 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
 
   private:
     ::WL_ResetTopic::CCM_Receiver_Context_var ciao_context_;
+    Atomic_Boolean &samples_received_;
   };
 
   /**
@@ -157,6 +160,7 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
 
     //@{
     /** User defined members. */
+    Atomic_Boolean samples_received_;
 
     //@}
 

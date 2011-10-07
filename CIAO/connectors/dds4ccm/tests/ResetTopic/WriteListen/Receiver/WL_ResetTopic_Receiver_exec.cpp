@@ -36,9 +36,11 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
    */
 
   info_out_event_data_listener_exec_i::info_out_event_data_listener_exec_i (
-        ::WL_ResetTopic::CCM_Receiver_Context_ptr ctx)
+        ::WL_ResetTopic::CCM_Receiver_Context_ptr ctx,
+        Atomic_Boolean &samples_received)
     : ciao_context_ (
         ::WL_ResetTopic::CCM_Receiver_Context::_duplicate (ctx))
+    , samples_received_(samples_received)
   {
   }
 
@@ -52,6 +54,7 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
   info_out_event_data_listener_exec_i::on_one_data (const ::WL_ResetTopicTest & datum,
   const ::CCM_DDS::ReadInfo & /* info */)
   {
+    this->samples_received_ = true;
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("info_out_event_data_listener_exec_i::on_one_data - ")
             ACE_TEXT ("received data for <%C> at %u\n"),
             datum.key.in (),
@@ -105,6 +108,7 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
 
   Receiver_exec_i::Receiver_exec_i (void)
     : iterations_ (0)
+    , samples_received_(0)
   {
   }
 
@@ -141,6 +145,16 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
   void
   Receiver_exec_i::set_new_topic (const char * topic_name)
   {
+
+    if (this->samples_received_.value())
+      ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::set_new_topic - "
+                  "OK, samples received during last run\n"));
+    else
+      ACE_ERROR ((LM_ERROR, "Receiver_exec_i::set_new_topic - "
+                  "ERROR: No samples received during last run\n"));
+
+    this->samples_received_ = false;
+
     ::CORBA::Object_var cmp;
     try
       {
@@ -190,7 +204,8 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
         ACE_NEW_RETURN (
           tmp,
           info_out_event_data_listener_exec_i (
-            this->ciao_context_.in ()),
+            this->ciao_context_.in (),
+            this->samples_received_),
             ::WL_ResetTopic::WL_ResetTopicTestConnector::CCM_Listener::_nil ());
 
           this->ciao_info_out_event_data_listener_ = tmp;
@@ -271,6 +286,12 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
   void
   Receiver_exec_i::ccm_remove (void)
   {
+    if (this->samples_received_.value())
+      ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_remove - "
+                  "OK, samples received during last run\n"));
+    else
+      ACE_ERROR ((LM_ERROR, "Receiver_exec_i::ccm_remove - "
+                  "ERROR: No samples received during last run\n"));
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
