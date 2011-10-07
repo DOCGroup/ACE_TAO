@@ -2,8 +2,7 @@ $Id$
 
 File: DevGuideExamples/Multithreading/README
 
-
-This directory contains subdirectories containing CORBA examples 
+This directory contains subdirectories containing CORBA examples
 illustrating TAO's various concurrency models:
 
 Reactive
