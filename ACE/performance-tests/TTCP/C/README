@@ -1,7 +1,7 @@
 $Id$
 
-		TTCP for c_version and ACE-wrappers
-		----------------------------------------------------
+    TTCP for c_version and ACE-wrappers
+    ----------------------------------------------------
 
 This is the super-readme file for the "ttcp" code. This directory
 contains the C and ACE-wrappers versions of ttcp code. To compile the

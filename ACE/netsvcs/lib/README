@@ -1,6 +1,8 @@
 $Id$
 
 This directory provides a number of network services that utilize the
+$Id$
+
 ACE wrapper features.
 
   . Logging_Strategy -- Controls the output of all services that are

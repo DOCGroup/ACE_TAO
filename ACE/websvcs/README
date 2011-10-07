@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This directory contains utility classes to build web clients
 and servers.  At this point we have only implemented simple classes to
