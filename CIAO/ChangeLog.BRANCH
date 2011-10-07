@@ -1,3 +1,9 @@
+Fri Oct  7 15:30:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+          Some extra check on whether samples were received during each run.
+
 Thu Oct  6 11:34:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
