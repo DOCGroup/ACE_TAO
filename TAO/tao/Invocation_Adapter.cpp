@@ -78,7 +78,6 @@ namespace TAO
         // target object reference contains a pointer to a servant,
         // the object reference also refers to a collocated object.
         // get the ORBStrategy
-        // pass the collocation opportunity here to orb core
         strat = TAO_ORB_Core::collocation_strategy (
                       this->collocation_opportunity_,
                       effective_target.in ());
