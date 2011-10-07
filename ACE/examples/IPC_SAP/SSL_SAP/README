@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This directory contains groups of client and server test programs that
 exercise the various C++ wrappers for SSL sockets.  In general, the
