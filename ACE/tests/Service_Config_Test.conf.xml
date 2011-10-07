@@ -1,7 +1,9 @@
-<!-- $Id$ -->
 <?xml version='1.0'?>
 <!-- Converted from Service_Config_Test.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  Dynamically loading each of the Service Objects below causes a -->
  <!--  number of threads to be spawned, each one invoking the Service -->
  <!--  Configurator (e.g. ACE_Service_Config::process_directive().  If the -->

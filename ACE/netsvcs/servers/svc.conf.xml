@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  These are the services that can be linked into ACE. -->
  <!--  Note that you can append the "netsvcs" with -->
  <!--  a relative path if you idn't set your LD search path correctly -- -->

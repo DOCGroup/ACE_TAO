@@ -1,3 +1,16 @@
+Fri Oct  7 07:48:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/broken.xml:
+        * ACEXML/examples/SAXPrint/namespaces.xml:
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+        * Kokyu/tests/DSRT_MIF/svc.conf.xml:
+        * examples/ASX/CCM_App/svc.conf.xml:
+        * netsvcs/servers/svc.conf.xml:
+        * tests/Service_Config_Test.conf.xml:
+          Fuzz: No Id-tags.
+
 Thu Oct  6 12:01:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * netsvcs/README:
