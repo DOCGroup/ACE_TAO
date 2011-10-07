@@ -176,6 +176,6 @@ The LoadManager object's IOR must be made available to the
 "LoadMonitor" binary.  This can be done using the standard
 Interoperable Naming Service "-ORBInitRef" option.  For example, the
 following will work if LoadManager IOR is available in the file
-`lm.ior' 
+`lm.ior'
 
 	LoadMonitor -ORBInitRef LoadManager=file://lm.ior
