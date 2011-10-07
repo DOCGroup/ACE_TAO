@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This is a plain DDS test, which test the use of 2 different query conditions, followed through a
 readcondition.

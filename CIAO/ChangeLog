@@ -1,3 +1,44 @@
+Fri Oct  7 09:20:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/ami4ccm/tests/ThreeComp/README.txt:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/README:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/README:
+        * connectors/dds4ccm/tests/DDSEntity/README:
+        * connectors/dds4ccm/tests/Event_Connection_Test/README:
+        * connectors/dds4ccm/tests/Getter/README:
+        * connectors/dds4ccm/tests/InstanceHandle/README:
+        * connectors/dds4ccm/tests/KeyedSamples/README:
+        * connectors/dds4ccm/tests/LateBinding/README:
+        * connectors/dds4ccm/tests/ListenManyByMany/README:
+        * connectors/dds4ccm/tests/ListenNotEnabled/README:
+        * connectors/dds4ccm/tests/ListenOneByOne/README:
+        * connectors/dds4ccm/tests/NonChangeableAttribute/README:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/README:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/README:
+        * connectors/dds4ccm/tests/QueryCondition/Different/README:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/README:
+        * connectors/dds4ccm/tests/Reader/README:
+        * connectors/dds4ccm/tests/SetConnectorAttributes/README:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/README:
+        * connectors/dds4ccm/tests/State_Connection_Test/README:
+        * connectors/dds4ccm/tests/UnkeyedSamples/README:
+        * connectors/tests/AMIDDS/README.txt:
+        * examples/BasicSP/EC/README:
+        * examples/DevGuideExamples/readme.txt:
+        * tests/CIDL/CodeGen/README:
+        * tests/DAnCE/EM-Launch-Failures/README.txt:
+        * tests/DAnCE/EM-Redeployment/README.txt:
+        * tests/DAnCE/EM-Shutdown-Failures/README.txt:
+        * tests/DAnCE/Threading/README:
+        * tests/IDL3/Connectors/README.txt:
+        * tests/IDL3/Events/Any/README:
+        * tests/IDL3/Lookup/README:
+        * tests/IDL3_to_XMI/Forward_Declared/README:
+        * tests/IDL_Test/IDL3_Plus/README:
+        * tests/IDL_Test/Reused_Facet_Interface/README:
+        * tests/Thread/README.txt:
+          Fuzz: Id-tags.
+
 Fri Oct  7 07:59:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
