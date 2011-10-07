@@ -1,6 +1,6 @@
 $Id$
 
-	This directory contains a very simple example of a
+  This directory contains a very simple example of a
 multicast-based federation of event services.
 
 	The example is a single process that contains:

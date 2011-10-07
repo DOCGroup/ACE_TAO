@@ -1,3 +1,4 @@
+$Id$
 
 Run FT_ReplicationManager as follows:
 
@@ -8,5 +9,3 @@ Run FT_ReplicationManager as follows:
     FT_ReplicationManager
         Starts the replication manager and registers it
         with the naming service.
-
-s

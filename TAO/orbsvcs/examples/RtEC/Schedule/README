@@ -1,10 +1,10 @@
-# $Id$
+$Id$
 
-	Shows how to use the scheduling service in conjunction with
+  Shows how to use the scheduling service in conjunction with
 the real-time event channel.  The test has a single consumer that
 subscribes for two event types, using different RT_Infos for each. A
 supplier pushes those events also using different RT_Infos.
-	The event-channel cooperates with the scheduling service to
+  The event-channel cooperates with the scheduling service to
 compute a schedule and assign priorities to each event. The event
 channel will use different queues for those events, each queue
 serviced by threads at different priorities.

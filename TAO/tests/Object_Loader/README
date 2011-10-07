@@ -4,13 +4,13 @@
 
 $Id$
 
-	Test the DLL-style IORs. For more details on the DLL-style
-IORs please read the documentation in $TAO_ROOT/tao/DLL_Parser.h.
+  Test the DLL-style IORs. For more details on the DLL-style
+  IORs please read the documentation in $TAO_ROOT/tao/DLL_Parser.h.
 
-	To execute the test simply run
+  To execute the test simply run
 
 $ ./driver
 
-	or run the run_test.pl script.  The test returns 0 on success.
+  or run the run_test.pl script.  The test returns 0 on success.
 
 */

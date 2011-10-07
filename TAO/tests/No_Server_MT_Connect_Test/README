@@ -4,7 +4,7 @@ $Id$
 
 @page No_Server_MT_Connect_Test  README File
 
-      The objective of the test is to track the behavior of the
+The objective of the test is to track the behavior of the
 multi-threaded client when no server is present to connect. The client
 uses all the connect strategies provided by the ORB. All the client
 threads should exit gracefully.
@@ -13,13 +13,13 @@ This test is to make sure (hopefully) the refcount mechanism on the
 handler used that safeguards handlers getting deleted when the
 connection establishment fails.
 
-	Please refrain from "improving", extending or expanding this
+Please refrain from "improving", extending or expanding this
 test, if you need to change
 
-	To run the test use the run_test.pl script:
+To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+the script returns 0 if the test was successful.
 
 */

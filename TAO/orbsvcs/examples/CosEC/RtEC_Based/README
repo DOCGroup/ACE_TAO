@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 	This directory contains a partial implementation of the COS
 Event Service, using TAO's RT Event Service as the backend.  It is

@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test verifies that the ServerRequestInterceptor::destroy() method
 is not called prematurely, e.g. during ORB::shutdown() and before

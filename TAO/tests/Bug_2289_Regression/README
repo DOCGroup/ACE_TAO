@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test checks that collocation optimisation takes effect after a location forward is received to an in process servant.
 

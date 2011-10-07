@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test creates 2 ORBs. The first ORB uses global gestalt and the second
 one uses -ORBGestalt LOCAL. Both of the ORBs try to load the same service

@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 	This test can be used to measure the performance of TAO's
 Real-time Event Service.  The test can be configured to change:

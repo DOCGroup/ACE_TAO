@@ -1,3 +1,5 @@
+$Id$
+
 This test checks that the code generated from IDL defining a valuetype with a private anonymous sequence type field can be compiled.
 
 See the ticket for details. If it builds it's worked.

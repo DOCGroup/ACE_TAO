@@ -1,6 +1,4 @@
-#
-# $Id$
-#
+$Id$
 
 This test verifies that the ORB's secure invocation mechanism is
 functioning properly.  It does so by the doing the following:

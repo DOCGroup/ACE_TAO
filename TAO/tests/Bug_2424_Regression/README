@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This is a compile only test to check that the IDL compiler can deal with IDL containing unfeasibly long lines. If it builds - it's passed.
 

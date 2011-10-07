@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
         A simple test for timeouts.  The client sets each one of the
 policy overrides (object, thread and ORB) and issues requests using

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test is a tweaked version of Hello test. It checks whether
 ACE_Logging_Strategy and -ORBHandleLoggingStrategyEvents provide log

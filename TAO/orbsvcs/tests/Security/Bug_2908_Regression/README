@@ -1,6 +1,4 @@
-#
-#$Id$
-#
+$Id$
 
 This is a regression test to demonstrate a problem in collocated invocation with SSLIOP in a separate thread.
 

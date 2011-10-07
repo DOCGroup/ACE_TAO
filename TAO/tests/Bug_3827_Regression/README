@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Valuetype factory related operations from different threads
 after orb was just shutdown could result in SIGSEGV.

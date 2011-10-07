@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This directory has a generic server which opens and reads the svc.conf file in
 the directory and dynamically loads and unloads the various ORB services as per

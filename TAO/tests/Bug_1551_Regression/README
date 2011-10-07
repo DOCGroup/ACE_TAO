@@ -1,3 +1,5 @@
+$Id$
+
 A regression test for [BUGID:1551].
 
 The ORB might deadlock if one tries send messages while handling

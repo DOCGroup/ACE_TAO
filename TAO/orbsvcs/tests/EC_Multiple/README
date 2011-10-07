@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
         This test ilustrates how to connect multiple ECs; it has many
 options and can be configured to run a single EC, two ECs connected

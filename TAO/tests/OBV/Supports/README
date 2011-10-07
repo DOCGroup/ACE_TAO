@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 The Supports_Test example tests the ability of valuetypes to support concrete
 interfaces. Valuetypes are manipulated both as normal valuetypes and as object

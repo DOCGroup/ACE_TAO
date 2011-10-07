@@ -2,16 +2,16 @@ $Id$
 
 Description:
 
-	This is a simple test for multi-threaded clients; it just
+This is a simple test for multi-threaded clients; it just
 creates a simple server process and runs a client with multiple thread
 sharing the same object reference.
 
 Expected output:
-	The server prints out the IOR of the object it serves. The
+The server prints out the IOR of the object it serves. The
 client shouldn't print out anything, it returns 0 on success.
 
 How to run:
-	You can use the run_test.pl script to run it or:
+You can use the run_test.pl script to run it or:
 
 $ server -o test.ior
 $ client -k file://test.ior -n 4 -i 1000
