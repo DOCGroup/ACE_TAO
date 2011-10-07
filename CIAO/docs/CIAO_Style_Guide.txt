@@ -1,3 +1,5 @@
+$Id$
+
 Error/Debug messages
 ========================
 ciao_debug_level () and associated environment are no longer used.

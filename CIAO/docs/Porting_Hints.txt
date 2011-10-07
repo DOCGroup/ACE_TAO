@@ -1,3 +1,5 @@
+$Id$
+
 Porting applications to the refactored DAnCE:
 
 1)  ciao_client_dnc base projects should be changed to ccm_stub
