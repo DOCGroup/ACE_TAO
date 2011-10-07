@@ -1,22 +1,24 @@
+$Id$
+
 The files in this directory support controlled benchmarking of the ACE
 synchronization mechanisms.
 
   These mechanisms include:
 
-	. Mutexes
-	. Reader/writer locks
-	. Condition variables
-	. Semaphores
+  . Mutexes
+  . Reader/writer locks
+  . Condition variables
+  . Semaphores
         . Tokens
         . Adaptive lockings
 
 There are additional tests that measure the memory bandwidth under the
 following conditions:
 
-	. User memory-to-memory copying of data within a single thread
- 	. User memory-to-kernel-to-user memory copying via pipes
-	  between separate processes, as well as between separate
-	  threads in the same process
+  . User memory-to-memory copying of data within a single thread
+  . User memory-to-kernel-to-user memory copying via pipes
+    between separate processes, as well as between separate
+    threads in the same process
 
 There are many options available for this module that can be put into
 svc.conf files.  See the Performance_Test_Options.[Chi] file for more

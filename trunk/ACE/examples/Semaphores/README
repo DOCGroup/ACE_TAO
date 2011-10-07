@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This is a small example how to use process semaphores. We use it to
 synchronize between multiple processes and it was used to analyze

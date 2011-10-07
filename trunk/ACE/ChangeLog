@@ -1,3 +1,29 @@
+Fri Oct  7 09:10:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/docs/readme.txt:
+        * ASNMP/README:
+        * Kokyu/README:
+        * bin/LabVIEW_RT/README:
+        * bin/PerlACE/README:
+        * contrib/FaCE/README:
+        * examples/C++NPv1/README:
+        * examples/C++NPv2/README:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/Semaphores/README:
+        * html/README:
+        * netsvcs/lib/README:
+        * performance-tests/README:
+        * performance-tests/RPC/README:
+        * performance-tests/Synch-Benchmarks/Perf_Test/README:
+        * performance-tests/Synch-Benchmarks/README:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/README:
+        * performance-tests/TCP/README:
+        * performance-tests/TTCP/C/README:
+        * performance-tests/UDP/README:
+        * protocols/ace/HTBP/README:
+        * websvcs/README:
+          Fuzz: No id-tags. Also uniform way of declaring the Id-tags
+
 Fri Oct  7 07:48:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ACEXML/examples/SAXPrint/broken.xml:

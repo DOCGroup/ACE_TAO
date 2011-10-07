@@ -1,4 +1,4 @@
-# $Id:
+$Id$
 
 Kokyu is a portable middleware scheduling framework designed to
 provide flexible scheduling and dispatching services within the
