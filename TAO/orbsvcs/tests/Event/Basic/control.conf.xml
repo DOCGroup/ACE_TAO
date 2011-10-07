@@ -1,6 +1,8 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/Event/Basic/control.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
  <!--  $Id$ -->
+ <!--  -->
  <static id="EC_Factory" params="-ECConsumerControl reactive -ECSupplierControl reactive -ECConsumerControlPeriod 50000 -ECSupplierControlPeriod 50000"/>
 </ACE_Svc_Conf>

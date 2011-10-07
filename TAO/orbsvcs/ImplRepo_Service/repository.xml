@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <ImplementationRepository>
-	<Servers name="test" activator="MYHOST" command_line="mysrv" working_dir="mydir" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">
-	</Servers>
-	<Servers name="test2" activator="MYHOST" command_line="" working_dir="" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">
-	</Servers>
-	<Activators name="MYHOST" token="1610927480" ior="IOR:010000002b00000049444c3a496d706c656d656e746174696f6e5265706f7369746f72792f416374697661746f723a312e300000010000000000000090000000010102cd150000004a555354414c49454e2e6f63697765622e636f6d00cd1f083900000014010f004e555000000017000000000100000000496d525f416374697661746f7200000000000100000054414f496d52416374697661746f7200000002000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000"/>
+  <!--  -->
+  <!--  $Id$ -->
+  <!--  -->
+  <Servers name="test" activator="MYHOST" command_line="mysrv" working_dir="mydir" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">
+  </Servers>
+  <Servers name="test2" activator="MYHOST" command_line="" working_dir="" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">
+  </Servers>
+  <Activators name="MYHOST" token="1610927480" ior="IOR:010000002b00000049444c3a496d706c656d656e746174696f6e5265706f7369746f72792f416374697661746f723a312e300000010000000000000090000000010102cd150000004a555354414c49454e2e6f63697765622e636f6d00cd1f083900000014010f004e555000000017000000000100000000496d525f416374697661746f7200000000000100000054414f496d52416374697661746f7200000002000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000"/>
 </ImplementationRepository>

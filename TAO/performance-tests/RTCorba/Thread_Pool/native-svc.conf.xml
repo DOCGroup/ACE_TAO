@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from native-svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  For testing of RT threads (with native priority) -->
  <static id="RT_ORB_Loader" params="-ORBSchedPolicy SCHED_FIFO -ORBScopePolicy SYSTEM"/>
  <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy EXCLUSIVE"/>

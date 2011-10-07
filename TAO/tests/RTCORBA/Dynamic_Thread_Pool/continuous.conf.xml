@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from continuous.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  Option for platforms where direct mapping doesn't work -->
  <static id="RT_ORB_Loader" params="-ORBPriorityMapping continuous -RTORBDynamicThreadIdleTimeout 1000000"/>
 </ACE_Svc_Conf>

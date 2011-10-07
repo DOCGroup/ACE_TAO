@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from ./examples/Simple/time-date/client.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  $Id$ -->
  <!--  Empty configuration file, the default configuration works just fine -->
  <!--  for the client, but the svc.conf file (or -ORBSkipServiceConfigOpen) -->
