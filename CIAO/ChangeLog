@@ -1,3 +1,8 @@
+Fri Oct  7 07:08:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.mpc:
+          Changed Id tag so that it's recognized by svn.
+
 Fri Oct  7 07:07:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.mpc:
