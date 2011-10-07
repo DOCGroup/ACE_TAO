@@ -1,3 +1,5 @@
+$Id$
+
 The LocalityManager is a deployment entity that can be easily extended
 through the use of user-provided functionality plug-ins.  These
 plug-ins fall into three categories:
