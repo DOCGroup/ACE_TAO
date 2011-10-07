@@ -1,3 +1,10 @@
+Fri Oct  7 09:45:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/docs/TODO.txt:
+        * ACEXML/docs/bugs.txt:
+        * ASNMP/tests/run_tests.sh:
+          Fuzz
+
 Fri Oct  7 09:10:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ACEXML/docs/readme.txt:
