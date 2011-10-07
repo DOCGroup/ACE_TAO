@@ -1,3 +1,4 @@
+$Id$
 
  This script tests redeployment of plans after initial launch failures.
  Each test uses 2 descriptors; the first with a configured launch failure

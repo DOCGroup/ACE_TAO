@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Tests whether the connector attribute are
 properly set by the D&C framework.

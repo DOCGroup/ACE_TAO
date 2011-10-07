@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test creates instances in DDS by using the
 updater port. After that, every instance is updated.

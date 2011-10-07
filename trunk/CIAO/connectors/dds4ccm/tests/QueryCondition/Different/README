@@ -1,3 +1,5 @@
+$Id$
+
 Test whether Querycondition are NOT shared between two extended ports.
 
 The receiver uses two extend ports of the DDS4CCM State connector:
