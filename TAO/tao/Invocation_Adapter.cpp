@@ -149,15 +149,6 @@ namespace TAO
                                            CORBA::Object_var &effective_target,
                                            Collocation_Strategy strat)
   {
-    // if (effective_target->_servant () == 0) exception in all cases
-    if ((effective_target->_servant () == 0))
-      throw ::CORBA::INTERNAL (
-        CORBA::SystemException::_tao_minor_code (
-          TAO::VMCID,
-          EINVAL),
-        CORBA::COMPLETED_NO);
-
-    // if cpb than call check_strategy method to determine whether the generated code works
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
 

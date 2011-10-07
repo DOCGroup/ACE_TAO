@@ -1,3 +1,19 @@
+Fri Oct  7 09:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+          Layout change to generated code
+
+        * tao/Invocation_Adapter.cpp:
+          Removed the check that servant != 0 before being able to invoke
+          collocated, collocation opportunities test shows a case where this
+          happens
+
+        * tao/ORB_Core.cpp:
+          Added logging before we throw an exception related to collocation
+          mis configuration. If we are collocated with best opportunity without
+          any opportunity we default to remote instead of having an exception.
+          Through poa seems possible without a servant pointer
+
 Thu Oct  6 09:34:57 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
