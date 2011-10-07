@@ -1,3 +1,10 @@
+Fri Oct  7 10:54:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Tweaked collocation strategy a little bit more, for direct we need
+          a servant, not for poa. If we are not collocated, we just go remote and
+          not give an exception
+
 Fri Oct  7 09:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:

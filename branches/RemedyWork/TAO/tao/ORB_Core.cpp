@@ -3624,6 +3624,7 @@ TAO::Collocation_Strategy
 TAO_ORB_Core::collocation_strategy (
   int collocation_opportunity, CORBA::Object_ptr object)
 {
+  TAO::Collocation_Strategy strategy = TAO::TAO_CS_REMOTE_STRATEGY;
   TAO_Stub *stub = object->_stubobj ();
   if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0)
@@ -3637,10 +3638,10 @@ TAO_ORB_Core::collocation_strategy (
             case TAO_COLLOCATION_THRU_POA:
               {
                 // check opportunity
-                // if collocation_opportunity == TAO_CO_THRU_POA_STRATEGY
-                if (ACE_BIT_ENABLED (collocation_opportunity, TAO::TAO_CO_THRU_POA_STRATEGY))
+                if (ACE_BIT_ENABLED (collocation_opportunity,
+                                     TAO::TAO_CO_THRU_POA_STRATEGY))
                   {
-                    return TAO::TAO_CS_THRU_POA_STRATEGY;
+                    strategy = TAO::TAO_CS_THRU_POA_STRATEGY;
                   }
                 else
                   {
@@ -3666,7 +3667,7 @@ TAO_ORB_Core::collocation_strategy (
                                      TAO::TAO_CO_DIRECT_STRATEGY)
                                      && (object->_servant () != 0))
                   {
-                    return TAO::TAO_CS_DIRECT_STRATEGY;
+                    strategy = TAO::TAO_CS_DIRECT_STRATEGY;
                   }
                 else
                   {
@@ -3690,55 +3691,27 @@ TAO_ORB_Core::collocation_strategy (
             case TAO_COLLOCATION_BEST:
               {
                 if (ACE_BIT_ENABLED (collocation_opportunity,
-                                     TAO::TAO_CO_DIRECT_STRATEGY))
+                                     TAO::TAO_CO_DIRECT_STRATEGY)
+                    && (object->_servant () != 0))
                   {
-                    return TAO::TAO_CS_DIRECT_STRATEGY;
+                    strategy = TAO::TAO_CS_DIRECT_STRATEGY;
                   }
                 else if (ACE_BIT_ENABLED (collocation_opportunity,
-                                          TAO::TAO_CO_THRU_POA_STRATEGY)
-                        && (object->_servant () != 0))
+                                          TAO::TAO_CO_THRU_POA_STRATEGY))
                   {
-                    return TAO::TAO_CS_THRU_POA_STRATEGY;
+                    strategy = TAO::TAO_CS_THRU_POA_STRATEGY;
                   }
                 else
                   {
-                    return TAO::TAO_CS_REMOTE_STRATEGY;
+                    strategy = TAO::TAO_CS_REMOTE_STRATEGY;
                   }
                 break;
               }
             }
         }
-      // no collocation object, check wrong use of ORBCollocationStrategy
-      else
-        {
-          switch (orb_core->get_collocation_strategy ())
-            {
-            case TAO_COLLOCATION_THRU_POA:
-              {
-                throw ::CORBA::INTERNAL (
-                  CORBA::SystemException::_tao_minor_code (
-                    TAO::VMCID,
-                    EINVAL),
-                  CORBA::COMPLETED_NO);
-              }
-              break;
-            case TAO_COLLOCATION_DIRECT:
-               {
-                 throw ::CORBA::INTERNAL (
-                   CORBA::SystemException::_tao_minor_code (
-                     TAO::VMCID,
-                     EINVAL),
-                   CORBA::COMPLETED_NO);
-               }
-               break;
-            case TAO_COLLOCATION_BEST:
-               break;
-            }
-        }
     }
 
-  // In this case the Object is a client.
-  return TAO::TAO_CS_REMOTE_STRATEGY;
+  return strategy;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
