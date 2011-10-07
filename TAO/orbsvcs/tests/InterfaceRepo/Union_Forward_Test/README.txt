@@ -1,4 +1,4 @@
-$Id $
+$Id$
 
 This test illustrates a problem with the IFR service in that it cannot
 properly handle forward declared unions.

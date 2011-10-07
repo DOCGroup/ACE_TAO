@@ -1,3 +1,12 @@
+Fri Oct  7 09:45:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/PP_Memory_Management.txt:
+        * orbsvcs/tests/FT_App/replica.cmd:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/README.txt:
+        * orbsvcs/tests/Log/README:
+        * orbsvcs/tests/Time/README:
+          Fuzz.
+
 Fri Oct  7 09:12:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * DevGuideExamples/AMH/README:
