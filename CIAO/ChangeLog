@@ -1,3 +1,8 @@
+Fri Oct  7 07:59:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Fuzz: Trailing whitespace
+
 Fri Oct  7 07:08:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.mpc:
