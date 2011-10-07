@@ -4,7 +4,7 @@ Run FT_ReplicationManager as follows:
 
     FT_ReplicationManager -o <file1.ior>
         Starts the replication manager and writes in ior
-        to the specified file.  
+        to the specified file.
 
     FT_ReplicationManager
         Starts the replication manager and registers it
