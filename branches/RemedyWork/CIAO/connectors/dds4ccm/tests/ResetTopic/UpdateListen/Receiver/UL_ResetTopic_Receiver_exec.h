@@ -40,6 +40,7 @@
 
 namespace CIAO_UL_ResetTopic_Receiver_Impl
 {
+  typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Boolean> Atomic_Boolean;
 
   /**
    * Provider Executor Implementation Class: info_out_state_data_listener_exec_i
@@ -51,7 +52,8 @@ namespace CIAO_UL_ResetTopic_Receiver_Impl
   {
   public:
     info_out_state_data_listener_exec_i (
-      ::UL_ResetTopic::CCM_Receiver_Context_ptr ctx);
+      ::UL_ResetTopic::CCM_Receiver_Context_ptr ctx,
+      Atomic_Boolean &sample_received_);
     virtual ~info_out_state_data_listener_exec_i (void);
 
     /** @name Operations and attributes from UL_ResetTopic::UL_ResetTopicTestConnector::StateListener */
@@ -80,6 +82,7 @@ namespace CIAO_UL_ResetTopic_Receiver_Impl
 
   private:
     ::UL_ResetTopic::CCM_Receiver_Context_var ciao_context_;
+    Atomic_Boolean &samples_received_;
   };
 
   /**
@@ -176,13 +179,13 @@ namespace CIAO_UL_ResetTopic_Receiver_Impl
 
     /** @name User defined members. */
     //@{
-    void set_new_topic (::CORBA::Object_var cmp,
-                        const char * topic_name);
-
+    Atomic_Boolean samples_received_;
     //@}
 
     /** @name User defined private operations. */
     //@{
+    void set_new_topic (::CORBA::Object_var cmp,
+                        const char * topic_name);
 
     //@}
   };
