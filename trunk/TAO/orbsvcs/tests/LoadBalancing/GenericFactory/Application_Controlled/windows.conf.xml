@@ -1,7 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from windows.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  $Id $ -->
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <dynamic id="Advanced_Resource_Factory" type="Service_Object">
    <initializer path="TAO_Strategies" init="_make_TAO_Advanced_Resource_Factory" params="-ORBReactorType select_mt"/>
  </dynamic>

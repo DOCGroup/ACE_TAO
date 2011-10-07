@@ -1,3 +1,74 @@
+Fri Oct  7 07:55:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/svc.conf.xml:
+        * examples/PluggableUDP/tests/SimplePerformance/svc.conf.xml:
+        * examples/Simple/time-date/client.conf.xml:
+        * examples/Simple/time-date/svc.conf.xml:
+        * interop-tests/wchar/build.xml:
+        * orbsvcs/Concurrency_Service/svc.conf.xml:
+        * orbsvcs/ImplRepo_Service/repository.xml:
+        * orbsvcs/Notify_Service/svc.conf.xml:
+        * orbsvcs/TAO_Service/svc.conf.xml:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/svc.conf.xml:
+        * orbsvcs/tests/CosEvent/Basic/svc.pull.conf.xml:
+        * orbsvcs/tests/Event/Basic/control.conf.xml:
+        * orbsvcs/tests/Event/UDP/svc.conf.xml:
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/windows.conf.xml:
+        * orbsvcs/tests/Miop/McastHello/client.conf.xml:
+        * orbsvcs/tests/Miop/McastHello/server.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf.xml:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/client.conf.xml:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.conf.xml:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.conf.xml:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.conf.xml:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.conf.xml:
+        * orbsvcs/tests/Security/ssliop_corbaloc/server.conf.xml:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf.xml:
+        * performance-tests/RTCorba/Thread_Pool/native-svc.conf.xml:
+        * performance-tests/RTCorba/Thread_Pool/svc.conf.xml:
+        * performance-tests/Throughput/svc.conf.xml:
+        * tests/AMI/exclusive.conf.xml:
+        * tests/AMI/muxed.conf.xml:
+        * tests/AMI/server.conf.xml:
+        * tests/AMI_Timeouts/svc.conf.xml:
+        * tests/Bug_3251_Regression/Bug_3251.conf.xml:
+        * tests/Bug_3801_Regression/exclusive.conf.xml:
+        * tests/Bug_3801_Regression/muxed.conf.xml:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.conf.xml:
+        * tests/POA/Explicit_Activation/alternate.conf.xml:
+        * tests/RTCORBA/Banded_Connections/svc.conf.xml:
+        * tests/RTCORBA/Client_Propagated/svc.conf.xml:
+        * tests/RTCORBA/Client_Protocol/svc.conf.xml:
+        * tests/RTCORBA/Collocation/continuous.conf.xml:
+        * tests/RTCORBA/Collocation/svc.conf.xml:
+        * tests/RTCORBA/Destroy_Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Dynamic_Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Dynamic_Thread_Pool/svc.conf.xml:
+        * tests/RTCORBA/Explicit_Binding/svc.conf.xml:
+        * tests/RTCORBA/Linear_Priority/svc.conf.xml:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf.xml:
+        * tests/RTCORBA/Persistent_IOR/continuous.conf.xml:
+        * tests/RTCORBA/Policy_Combinations/svc.conf.xml:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/continuous.conf.xml:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/svc.conf.xml:
+        * tests/RTCORBA/Server_Declared/continuous.conf.xml:
+        * tests/RTCORBA/Server_Declared/svc.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf.xml:
+        * tests/RTCORBA/Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Thread_Pool/svc.conf.xml:
+          Fuzz: No Id-tags.
+
 Wed Sep 28 12:46:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDir_GIOP.mpc:

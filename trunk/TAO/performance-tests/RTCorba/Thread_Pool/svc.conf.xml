@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  Options for exclusive transport strategy -->
  <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy EXCLUSIVE"/>
  <!--  Options required for regular testing -->
