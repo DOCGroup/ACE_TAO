@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id$
 
 max_len=24
 pushd /proc/sys/net/sctp &> /dev/null
