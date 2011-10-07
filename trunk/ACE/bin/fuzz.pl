@@ -165,6 +165,12 @@ sub store_file ($)
         }
         push @files_conf, ($name);
     }
+    elsif ($name =~ /\.(conf.xml)$/i) {
+        if ($name =~ /\.(WCHAR_T.conf.xml|UTF-16.conf.xml)$/i) {
+            return;
+        }
+        push @files_conf, ($name);
+    }
     elsif ($name =~ /\.(pm|cmd|java|sh|txt|xml)$/i) {
         push @files_generic, ($name);
     }
