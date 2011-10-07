@@ -1,3 +1,20 @@
+Fri Oct  7 10:45:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Event_Service/stock_list.txt:
+        * docs/tutorials/Quoter/Event_Service/stock_list1.txt:
+        * docs/tutorials/Quoter/Event_Service/stock_list2.txt:
+
+        * docs/tutorials/Quoter/Simple/ImprovedServer/stock_list.txt:
+
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/GeometryStore.pm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/MonitorControl.pm:
+
+        * performance-tests/Protocols/set_lksctp_params.sh:
+        * performance-tests/Protocols/set_sctp_params.sh:
+        * performance-tests/Protocols/show_lksctp_params.sh:
+        * performance-tests/Protocols/show_sctp_params.sh:
+          Fuzz
+
 Fri Oct  7 09:45:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * docs/PP_Memory_Management.txt:
