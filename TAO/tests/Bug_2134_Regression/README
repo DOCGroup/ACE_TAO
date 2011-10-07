@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test checks that a collocated object ref bound into the local IOR table can be used.
 

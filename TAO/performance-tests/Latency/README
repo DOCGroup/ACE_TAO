@@ -1,6 +1,4 @@
-#
-# $Id$
-#
+$Id$
 
 This directory contains a number of tests that illustrate the
 performance of TAO and other ORBs.  The individual directories contain

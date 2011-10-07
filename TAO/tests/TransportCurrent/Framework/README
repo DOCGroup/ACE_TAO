@@ -1,3 +1,4 @@
+$Id$
 This test intents to show the usage and the expected behavior of the
 Transport Current framework. The topology is the same as in the basic
 Hello test: a client invokes a method on the server and then shuts it

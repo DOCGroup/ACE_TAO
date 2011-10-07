@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 	A simple latency test for the AVStreams pluggable protocol
 framework. Run as follows:

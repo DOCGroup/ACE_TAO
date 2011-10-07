@@ -1,13 +1,13 @@
 $Id$
 
-	A simple test for the DSI/DII gateway support. TAO can
+A simple test for the DSI/DII gateway support. TAO can
 optimize some demarshaling/marshaling and data copying in the
 implementation of DSI/DII based gateways. The DSI/DII gateway can
 also pass requests and replies that are not in native (the
 gateway's) byte order. NOTE - For this last feature to work, you
 must compile ACE with ACE_ENABLE_SWAP_ON_WRITE defined.
 
-	This is a smoke test and simple example for those
+This is a smoke test and simple example for those
 features. Use
 
         $ server -o server.ior
@@ -16,13 +16,13 @@ features. Use
 
 or run the run_test.pl script.
 
-        A second perl script, run_exception_test.pl,
+A second perl script, run_exception_test.pl,
 tests the exception handling of the gateway. The script
 runs the client twice, first calling a method that raises
 a user exception (containing several fields of information),
 then calling a method that raises a CORBA system exception.
 
-        To run these tests by hand, start the server and gateway
+To run these tests by hand, start the server and gateway
 as shown above, then use
 
         $ client -k file://gw.ior -u

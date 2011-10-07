@@ -4,35 +4,35 @@ $Id$
 
 @page Long Upcalls Test README File
 
-	Verify that the ORB does not dead-lock, even in the presence
+Verify that the ORB does not dead-lock, even in the presence
 of very long or unbounded upcalls.  This is a regression test for:
 
 http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=175
 
-	In the old days the leader thread would not allow any
+In the old days the leader thread would not allow any
 followers to take over while a long upcall or reply handler
 was running.  This could produce deadlocks as in some cases the upcall
 may want for follower threads before returning.
 
-	To execute the test simply run
+To execute the test simply run
 
 $ ./run_test.pl
 
-	The test returns 0 on success.
+The test returns 0 on success.
 
 @section Known problems
 
-	This test can also be used to verify that bug
+This test can also be used to verify that bug
 
 http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=575
 
-	is still unresolved, all you need to do is run the following
+is still unresolved, all you need to do is run the following
 programs:
 
 $ ./ami_server -ORBSvcConf svc.conf -o test.ior
 
 $ ./ami_client -ORBSvcConf svc.conf -k file://test.ior
 
-	the client will deadlock.
+the client will deadlock.
 
 */

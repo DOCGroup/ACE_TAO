@@ -1,12 +1,12 @@
-# $Id$
+$Id$
 
-	Simple test to show (and verify) that TAO can generate code
+Simple test to show (and verify) that TAO can generate code
 for platforms with native exception support, including passing the
 exception around.
 
-	To run just do:
+To run just do:
 
 $ server -o test.ior
 $ client -k file://test.ior
 
-	or use the run_test.pl script
+or use the run_test.pl script

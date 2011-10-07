@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test is similar to the $TAO_ROOT/tests/BiDirectional test. The
 only difference being that the server after it has received the upcall

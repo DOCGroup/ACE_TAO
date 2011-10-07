@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This example is very similar to the Explicit_Activation example except
 that the POAs are deleted once the object references have been

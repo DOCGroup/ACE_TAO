@@ -7,10 +7,10 @@ $Id$
   This test is designed to test a list of IPV6 specific
   connection conditions.
 
-	To run the test use the run_test.pl script:
+To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+the script returns 0 if the test was successful.
 
 */

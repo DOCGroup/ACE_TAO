@@ -1,6 +1,4 @@
-#
-# $Id$
-#
+$Id$
 
 This test is designed to excercise the connection cache related code
 in a complex pluggable protocol such as SSLIOP.

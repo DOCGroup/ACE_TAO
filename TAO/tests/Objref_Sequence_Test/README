@@ -18,7 +18,7 @@ $ ./client -k file://file.ior
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+  the script returns 0 if the test was successful.
 
 
 */

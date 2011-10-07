@@ -2,16 +2,16 @@ $Id$
 
 Description:
 
-	This is a simple test for a thread-pool server.  It creates a
+This is a simple test for a thread-pool server.  It creates a
 server process with a variable number of threads, multiple clients can
 send requests to it, the requests are handled in different threads.
 
 Expected output:
-	The server prints out the IOR of the object it serves and the
+The server prints out the IOR of the object it serves and the
 thread that handles each request.
 
 How to run:
-	You can use the run_test.pl script to run it or:
+You can use the run_test.pl script to run it or:
 
 $ server -o test.ior -n 4 -ORBSvcConf server.conf
 $ client -k file://test.ior -i 1000

@@ -1,6 +1,6 @@
 $Id$
 
-		HTTP Tunneling Inter-ORB Protocol
+      HTTP Tunneling Inter-ORB Protocol
 
 Introduction
 Components
