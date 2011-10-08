@@ -1,3 +1,41 @@
+Sat Oct  8 08:45:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/DDSLatency/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Throughput/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLQoS/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CSLUnexpStat/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CoherentUpdater/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/CoherentWriter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Getter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/KeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/ListenManyByMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/PSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/PSLSampleLost/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QosProfile/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/Different/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/Reader/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SLManyByMany/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SLOneByOne/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+          Fixed runtime issue. XML doesn't allow comments before the <xml ... > tag.
+
 Fri Oct  7 09:46:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * docs/CIAO_Style_Guide.txt:
