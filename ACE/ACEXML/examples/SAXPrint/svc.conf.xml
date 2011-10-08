@@ -1,7 +1,9 @@
+<?xml version="1.0"?>
+
 <!--  -->
 <!--  $Id$ -->
 <!--  -->
-<?xml version="1.0"?>
+
 <!-- This is a test XML file.  Most of the stuff here don't make any sense at all -->
 <!DOCTYPE ACE_Svc_Conf PUBLIC 'GOODSAM' '../../apps/svcconf/svcconf.dtd'
   [

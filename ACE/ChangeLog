@@ -1,3 +1,11 @@
+Sat Oct  8 09:00:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/namespaces.xml:
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+          XML does not allow anything before the xml-tag.
+
 Fri Oct  7 09:45:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ACEXML/docs/TODO.txt:
