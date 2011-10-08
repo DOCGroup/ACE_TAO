@@ -4,5 +4,7 @@
 
 interface Test
 {
-   void test_method();
+  void test_method();
+
+  oneway void shutdown ();
 };
