@@ -35,10 +35,10 @@ $SV = $server->CreateProcess ("server",
                               "-o $server_iorfile");
 
 $CL1 = $client->CreateProcess ("client",
-                              "-k \"corbaloc:iiop:$TARGETHOSTNAME:$port/Name\\2dwith\\2dhyphens\"");
+                              "-ORBdebuglevel $debug_level -k \"corbaloc:iiop:$TARGETHOSTNAME:$port/Name\\2dwith\\2dhyphens\"");
 
 $CL2 = $client->CreateProcess ("client",
-                              "-s -k corbaloc:iiop:$TARGETHOSTNAME:$port/Name%2dwith%2dhyphens");
+                              "-ORBdebuglevel $debug_level -s -k corbaloc:iiop:$TARGETHOSTNAME:$port/Name%2dwith%2dhyphens");
 
 
 $server_status = $SV->Spawn ();
