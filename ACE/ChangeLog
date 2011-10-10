@@ -1,5 +1,10 @@
 Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * docs/Download.html:
+          Make x.0.5 public
+
+Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * bin/diff-builds-and-group-fixed-tests-only.sh:
           Updated for next release
 
