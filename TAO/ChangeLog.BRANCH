@@ -1,3 +1,20 @@
+Mon Oct 10 17:43:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          Moved collocation_strategy from the orb core to the invocation adapter
+
+        * tests/Collocated_ThruP_Sp/Collocated_Test.cpp:
+        * tests/Collocated_ThruP_Sp/README:
+        * tests/Collocated_ThruP_Sp/Server_Task.cpp:
+        * tests/Collocated_ThruP_Sp/run_test.pl:
+        * tests/Collocated_ThruP_Sp_Gd/README:
+        * tests/Collocated_ThruP_Sp_Gd/run_test.pl:
+          Add -debug to the script, layout changes, missing Id
+
 Fri Oct  7 10:54:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:

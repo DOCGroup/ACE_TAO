@@ -245,18 +245,6 @@ public:
     TAO_COLLOCATION_BEST
   };
 
-  /**
-   * This method returns the right collocation strategy, if any,
-   * to be used to perform a method invocation on the given object.
-   *
-   * @note
-   * No-Collocation is a special case of collocation.
-   */
-  static
-  TAO::Collocation_Strategy collocation_strategy (
-    int collocation_opportunity, CORBA::Object_ptr object);
-  //@}
-
   /// Set/get the collocation flags
   //@{
   void optimize_collocation_objects (CORBA::Boolean opt);

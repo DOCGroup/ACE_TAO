@@ -43,8 +43,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  if (parse_args (argc, argv) == -1)
     return -1;
 
   try
