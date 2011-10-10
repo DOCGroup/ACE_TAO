@@ -74,11 +74,7 @@ namespace ACE
               * @brief
               *
               */
-#if (defined(_MSC_VER) || defined(__MINGW32__))
               class ACE_INET_Export INetConnectionKey
-#else
-              class INetConnectionKey
-#endif
                 : public ConnectionKey
                 {
                   public:

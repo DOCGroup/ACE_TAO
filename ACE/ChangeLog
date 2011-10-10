@@ -1,3 +1,10 @@
+Mon Oct 10 12:13:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Always export, should solve SLE9 issues
+
 Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
