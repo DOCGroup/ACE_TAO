@@ -436,6 +436,10 @@ namespace CIAO
 
     ::Components::Cookie_var cookie = provided->connect (conn.externalReference[0].portName.in (),
                                                          facet.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(facet.in ());
+#endif
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_facet - "
                     "Connection <%C> successfully established.\n",
@@ -509,6 +513,10 @@ namespace CIAO
 
     ::Components::Cookie_var cookie = receptacle->connect (endpoint.portName.in (),
                                                            provided.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(provided.in ());
+#endif
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_receptacle - "
                     "Connection <%C> successfully established.\n",
@@ -597,6 +605,9 @@ namespace CIAO
       }
     Components::Cookie_var cookie = publisher->subscribe (endpoint.portName.in (),
                                                           event.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(publisher.in());
+#endif
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_publisher - "
@@ -704,6 +715,10 @@ namespace CIAO
                         conn.externalReference[0].portName.in ()));
       }
 
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(event.in());
+#endif
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_consumer - "
                     "Connection <%C> successfully established.\n",
@@ -775,6 +790,9 @@ namespace CIAO
 
     emitter->connect_consumer (endpoint.portName.in (),
                                event.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(emitter.in());
+#endif
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_emitter - "
@@ -972,6 +990,9 @@ namespace CIAO
                                                                  facet_endpoint.portName.in (),
                                                                  receptacle,
                                                                  receptacle_endpoint.portName.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(facet);
+#endif
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_local_port - "
                     "Connected local port <%C>:<%C> to <%C>:<%C>\n",
@@ -1060,6 +1081,33 @@ namespace CIAO
                     facet_endpoint.portName.in (),
                     plan.instance[receptacle_endpoint.instanceRef].name.in (),
                     receptacle_endpoint.portName.in ()));
+  }
+
+  void
+  Connection_Handler::validate_connection (::CORBA::Object_ptr obj)
+  {
+    CIAO_TRACE ("Connection_Handler::validate_connection");
+    try
+      {
+        if (!::CORBA::is_nil (obj))
+          {
+            ::CORBA::PolicyList_var pl;
+            if (obj->_validate_connection (pl.out ()))
+              {
+                CIAO_DEBUG (6, (LM_DEBUG, CLINFO "Connection_Handler::validate_connection - "
+                            "Succesfully validated connection. Connection has been established.\n"));
+              }
+            else
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO "Connection_Handler::validate_connection - "
+                            "Failed to establish a connection."));
+              }
+          }
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        ex._tao_print_exception("Connection_Handler::validate_connection");
+      }
   }
 
   bool

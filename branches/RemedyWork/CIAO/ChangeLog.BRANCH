@@ -1,3 +1,11 @@
+Mon Oct 10 14:11:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Added validate_connection when a user want's the connections to
+          be connected during deployment (instead of on first usage). This can
+          be switched on by setting the CIAO_PRE_ESTABLISH_CONNECTIONS define
+
 Mon Oct 10 08:03:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
