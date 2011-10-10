@@ -1,3 +1,8 @@
+Mon Oct 10 08:03:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+          No need to check of the NonChangeable exception, since the topic name can be reset.
+
 Mon Oct 10 07:55:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.h:
