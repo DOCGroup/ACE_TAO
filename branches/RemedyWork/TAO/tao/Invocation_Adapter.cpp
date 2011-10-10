@@ -14,6 +14,7 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/TAOC.h"
 #include "tao/SystemException.h"
+#include "tao/Collocation_Resolver.h"
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
@@ -78,9 +79,7 @@ namespace TAO
         // target object reference contains a pointer to a servant,
         // the object reference also refers to a collocated object.
         // get the ORBStrategy
-        strat = TAO_ORB_Core::collocation_strategy (
-                      this->collocation_opportunity_,
-                      effective_target.in ());
+        strat = this->collocation_strategy (effective_target.in ());
 
         if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
@@ -370,6 +369,100 @@ namespace TAO
           errno),
         CORBA::COMPLETED_NO);
   }
+
+  TAO::Collocation_Strategy
+  Invocation_Adapter::collocation_strategy (CORBA::Object_ptr object)
+  {
+    TAO::Collocation_Strategy strategy = TAO::TAO_CS_REMOTE_STRATEGY;
+    TAO_Stub *stub = object->_stubobj ();
+    if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
+        stub->servant_orb_var ()->orb_core () != 0)
+      {
+        TAO_ORB_Core *orb_core = stub->servant_orb_var ()->orb_core ();
+
+        if (orb_core->collocation_resolver ().is_collocated (object))
+          {
+            switch (orb_core->get_collocation_strategy ())
+              {
+              case TAO_ORB_Core::TAO_COLLOCATION_THRU_POA:
+                {
+                  // check opportunity
+                  if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                      TAO::TAO_CO_THRU_POA_STRATEGY))
+                    {
+                      strategy = TAO::TAO_CS_THRU_POA_STRATEGY;
+                    }
+                  else
+                    {
+                      if (TAO_debug_level > 0)
+                        {
+                          ACE_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("Invocation_Adapter::collocation_strategy, ")
+                                      ACE_TEXT ("request for through poa collocation ")
+                                      ACE_TEXT ("without needed collocation opportunity.\n")));
+                        }
+                      // collocation object, but no collocation_opportunity for Thru_poa
+                      throw ::CORBA::INTERNAL (
+                        CORBA::SystemException::_tao_minor_code (
+                          TAO::VMCID,
+                          EINVAL),
+                        CORBA::COMPLETED_NO);
+                    }
+                  break;
+                }
+              case TAO_ORB_Core::TAO_COLLOCATION_DIRECT:
+                {
+                  if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                      TAO::TAO_CO_DIRECT_STRATEGY)
+                                      && (object->_servant () != 0))
+                    {
+                      strategy = TAO::TAO_CS_DIRECT_STRATEGY;
+                    }
+                  else
+                    {
+                      if (TAO_debug_level > 0)
+                        {
+                          ACE_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("Invocation_Adapter::collocation_strategy, ")
+                                      ACE_TEXT ("request for direct collocation ")
+                                      ACE_TEXT ("without needed collocation opportunity.\n")));
+                        }
+                      // collocation object, but no collocation_opportunity for Direct
+                      // or servant() == 0
+                      throw ::CORBA::INTERNAL (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO::VMCID,
+                        EINVAL),
+                      CORBA::COMPLETED_NO);
+                    }
+                  break;
+                }
+              case TAO_ORB_Core::TAO_COLLOCATION_BEST:
+                {
+                  if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                      TAO::TAO_CO_DIRECT_STRATEGY)
+                      && (object->_servant () != 0))
+                    {
+                      strategy = TAO::TAO_CS_DIRECT_STRATEGY;
+                    }
+                  else if (ACE_BIT_ENABLED (this->collocation_opportunity_,
+                                            TAO::TAO_CO_THRU_POA_STRATEGY))
+                    {
+                      strategy = TAO::TAO_CS_THRU_POA_STRATEGY;
+                    }
+                  else
+                    {
+                      strategy = TAO::TAO_CS_REMOTE_STRATEGY;
+                    }
+                  break;
+                }
+              }
+          }
+      }
+
+    return strategy;
+  }
+
 } // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

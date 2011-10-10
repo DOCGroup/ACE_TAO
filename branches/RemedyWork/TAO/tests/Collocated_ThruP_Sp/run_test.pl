@@ -15,11 +15,18 @@ my $server_iorfile = $server->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 
 $status = 0;
+$debug_level = '0';
+
+foreach $i (@ARGV) {
+    if ($i eq '-debug') {
+        $debug_level = '10';
+    }
+}
 
 $SV = $server->CreateProcess ("Collocated_ThruP_Sp");
 
 print STDERR "======== Running in Default Mode \n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile");
+$SV->Arguments ("-ORBdebuglevel $debug_level -o $server_iorfile -k file://$server_iorfile");
 $sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
@@ -29,7 +36,7 @@ if ($sv != 0) {
 $server->DeleteFile($iorbase);
 
 print STDERR "======== Running with global ORBCollocationStrategy\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation global");
+$SV->Arguments ("-ORBdebuglevel $debug_level -o $server_iorfile -k file://$server_iorfile -ORBCollocation global");
 $sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
@@ -39,7 +46,7 @@ if ($sv != 0) {
 $server->DeleteFile($iorbase);
 
 print STDERR "======== Running with global ORBCollocationStrategy thru_poa\n";
-$SV->Arguments ("-o $server_iorfile -k file://$server_iorfile -ORBCollocation global -ORBCollocationStrategy thru_poa");
+$SV->Arguments ("-ORBdebuglevel $debug_level -o $server_iorfile -k file://$server_iorfile -ORBCollocation global -ORBCollocationStrategy thru_poa");
 $sv = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
 if ($sv != 0) {
