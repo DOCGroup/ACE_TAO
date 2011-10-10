@@ -1,3 +1,9 @@
+Mon Oct 10 07:55:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.h:
+        * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.cpp:
+          No need to check of the NonChangeable exception. Since the topic name can be reset.
+
 Mon Oct 10 07:46:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
