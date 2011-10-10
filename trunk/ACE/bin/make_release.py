@@ -914,7 +914,6 @@ def generate_workspaces (stage_dir):
 
     vc10_option = ' -name_modifier *_vc10 '
     vc9_option = ' -name_modifier *_vc9 '
-    vc8_option = ' -name_modifier *_vc8 '
 
     redirect_option = str ()
     if not opts.verbose:
@@ -932,9 +931,6 @@ def generate_workspaces (stage_dir):
 
     print "\tGenerating VC9 solutions..."
     ex (mpc_command + " -type vc9 " + mpc_option + vc9_option + redirect_option)
-
-    print "\tGenerating VC8 solutions..."
-    ex (mpc_command + " -type vc8 " + mpc_option + vc8_option + redirect_option)
 
     print "\tCorrecting permissions for all generated files..."
     ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name '*.vcxproj' -or -name '*.filters' -or -name 'GNUmake*' | xargs chmod 0644")

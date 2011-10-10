@@ -1,3 +1,17 @@
+Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for next release
+
+        * bin/make_release.py:
+          Next time we don't ship vc8 anymore
+
+        * docs/bczar/bczar.html:
+          Make x.0.5 public
+
+        * etc/index.html:
+          Make x.0.5 public
+
 Mon Oct 10 08:48:51 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.0.5 released.
