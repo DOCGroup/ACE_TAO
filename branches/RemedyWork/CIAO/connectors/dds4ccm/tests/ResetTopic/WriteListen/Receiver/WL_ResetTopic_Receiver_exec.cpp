@@ -118,17 +118,17 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
 
   // Supported operations and attributes.
   void
-  Receiver_exec_i::set_new_topic (::CORBA::Object_var cmp,
+  Receiver_exec_i::set_new_topic (::CORBA::Object_ptr cmp,
                                   const char * topic_name)
   {
-    if (::CORBA::is_nil (cmp.in ()))
+    if (::CORBA::is_nil (cmp))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::set_topic_name_writer - "
                               "Unable to get component interface\n"));
         throw ::CORBA::INTERNAL ();
       }
     ::WL_ResetTopic::WL_ResetTopicTestConnector::CCM_DDS_Event_var conn =
-      ::WL_ResetTopic::WL_ResetTopicTestConnector::CCM_DDS_Event::_narrow (cmp.in ());
+      ::WL_ResetTopic::WL_ResetTopicTestConnector::CCM_DDS_Event::_narrow (cmp);
     if (::CORBA::is_nil (conn.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::set_topic_name_writer - "

@@ -166,7 +166,7 @@ namespace CIAO_WL_ResetTopic_Receiver_Impl
 
     //@{
     /** User defined private operations. */
-    void set_new_topic (::CORBA::Object_var cmp,
+    void set_new_topic (::CORBA::Object_ptr cmp,
       const char * topic_name);
 
     //@}
