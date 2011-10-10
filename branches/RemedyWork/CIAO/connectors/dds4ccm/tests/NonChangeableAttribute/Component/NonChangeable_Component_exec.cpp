@@ -31,21 +31,19 @@ namespace CIAO_NonChangeable_NonChangeableComponent_Impl
     try
       {
         conn->topic_name ("nonchangeable_test");
-        ACE_ERROR ((LM_ERROR, "NonChangeable_Connector_exec_impl_i::test_topic_name - "
-                              "ERROR: Able to set topic name without "
-                              "an exception.\n"));
+        ACE_DEBUG ((LM_DEBUG, "NonChangeable_Connector_exec_impl_i::test_topic_name - "
+                              "Able to reset topic name without an exception.\n"));
+        return true;
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        ACE_DEBUG ((LM_DEBUG, "NonChangeable_Connector_exec_impl_i::test_topic_name - "
-                              "Caught expected exception.\n"));
-        return true;
+        ACE_ERROR ((LM_ERROR, "NonChangeable_Connector_exec_impl_i::test_topic_name - "
+                              "ERROR: Unable to reset topic name.\n"));
       }
     catch (...)
       {
         ACE_ERROR ((LM_ERROR, "NonChangeable_Connector_exec_impl_i::test_topic_name - "
                               "ERROR: Caught unexpected exception.\n"));
-        return false;
       }
     return false;
   }
