@@ -1,3 +1,11 @@
+Mon Oct 10 07:46:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+          Fixed ref count issue. Because of this, the core crashed on exit.
+
 Fri Oct  7 15:41:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:

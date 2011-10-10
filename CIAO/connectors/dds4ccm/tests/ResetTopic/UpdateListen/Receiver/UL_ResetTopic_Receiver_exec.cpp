@@ -136,17 +136,17 @@ namespace CIAO_UL_ResetTopic_Receiver_Impl
 
   // Supported operations and attributes.
   void
-  Receiver_exec_i::set_new_topic (::CORBA::Object_var cmp,
+  Receiver_exec_i::set_new_topic (::CORBA::Object_ptr cmp,
                                   const char * topic_name)
   {
-    if (::CORBA::is_nil (cmp.in ()))
+    if (::CORBA::is_nil (cmp))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::set_topic_name_writer - "
                               "Unable to get component interface\n"));
         throw ::CORBA::INTERNAL ();
       }
     ::UL_ResetTopic::UL_ResetTopicTestConnector::CCM_DDS_State_var conn =
-      ::UL_ResetTopic::UL_ResetTopicTestConnector::CCM_DDS_State::_narrow (cmp.in ());
+      ::UL_ResetTopic::UL_ResetTopicTestConnector::CCM_DDS_State::_narrow (cmp);
     if (::CORBA::is_nil (conn.in ()))
       {
         ACE_ERROR ((LM_ERROR, "ERROR: Receiver_exec_i::set_topic_name_writer - "
