@@ -10,12 +10,23 @@ DDS and start it again, using the new topic name. The connector does not tear
 down the proxies. This means that the connector doesn't change on the outside.
 
 The ReadGet test has the following sequence:
-1. Sender writes samples for topic 1 (iteration 1 -10)
-2. Sender informs the receiver that samples for topic 1 were written to DDS
-3. Receiver sets the topic name (late binding), and starts to read.
-4. Sender writes samples for topic 2 (iteration 11 - 20)
-5. Sender informs the receiver that samples for topic 2 were written to DDS
-6. Receiver sets the topic name to topic 2. At this moment, the connector will
-   restart DDS.
-7. Receiver reads the samples from DDS.
+1. Sender starts writing samples for TopicI
+2. Sender informs the Receiver that samples has been written for TopicI
+3. Receiver sets this topic name on his connector (late binding), and starts to
+   collect the samples.
+4. Sender resets the topic name to TopicII and informs the receiver about this.
+5. Receiver resets the topic name on his connector and starts collecting the
+   samples belonging to TopicII.
 
+Both listeners tests (UpdateListen and WriteListen) have about the same sequence:
+1. Sender and Receiver start, writing and listening to the same topic.
+2. After 10 second, the perl script starts two small executables; one to inform
+   the receiver to switch to topic II and one to inform the sender to switch to
+   topic II. The executables are spawned in this order.
+3. Step one is repeated.
+4. Step two will be repeated.
+
+The ToEmpty test will initially start writing samples for TopicI. After a while,
+the topic name will be cleared. This means that the connector internally stops DDS.
+After another while, the sender will start writing samples again,
+but now for TopicII. This sequence repeats.

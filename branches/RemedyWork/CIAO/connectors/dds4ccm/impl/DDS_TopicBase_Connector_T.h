@@ -56,6 +56,9 @@ protected:
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
 
+  bool init_subscriber_;
+  bool init_publisher_;
+
   typedef DDS_Base_Connector_T<CCM_TYPE> BaseConnector;
 
 #if (CIAO_DDS4CCM_NDDS==1)

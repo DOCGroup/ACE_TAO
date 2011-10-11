@@ -1,3 +1,23 @@
+Tue Oct 11 09:34:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Updated.
+
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Improved logging: mentioning the connection which has
+          been pre-established.
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Prevent the creation of a subscriber or publisher when
+          they are not needed.
+
+        * connectors/dds4ccm/tests/ResetTopic/README:
+          Updated.
+
 Mon Oct 10 14:11:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.h:

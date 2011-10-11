@@ -96,7 +96,8 @@ namespace CIAO
 
     bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 
-    void validate_connection (::CORBA::Object_ptr obj);
+    void validate_connection (const char * conn,
+                              ::CORBA::Object_ptr obj);
 
     ::CORBA::ULong retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn);
 
