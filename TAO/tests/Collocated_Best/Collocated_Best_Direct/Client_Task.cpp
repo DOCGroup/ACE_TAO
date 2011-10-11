@@ -18,6 +18,7 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 int
 Client_Task::svc (void)
 {
+  int status = 0;
   try
     {
       CORBA::Object_var tmp =
@@ -37,17 +38,26 @@ Client_Task::svc (void)
       CORBA::String_var the_string =
         hello->get_string ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                  the_string.in ()));
+      if (ACE_OS::strcmp (the_string.in (), "Hello there!") != 0)
+        {
+          ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
+                      the_string.in ()));
+          status = 1;
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
+                      the_string.in ()));
+        }
 
       hello->shutdown ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      return 1;
+      status = 1;
     }
 
-  return 0;
+  return status;
 
 }
