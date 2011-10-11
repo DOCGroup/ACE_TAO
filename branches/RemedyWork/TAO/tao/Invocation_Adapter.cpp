@@ -132,11 +132,20 @@ namespace TAO
     TAO_Stub * const stub = this->target_->_stubobj ();
 
     if (stub == 0)
-      throw ::CORBA::INTERNAL (
-        CORBA::SystemException::_tao_minor_code (
-          TAO::VMCID,
-          EINVAL),
-        CORBA::COMPLETED_NO);
+      {
+        if (TAO_debug_level > 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("Invocation_Adapter::get_stub, ")
+                        ACE_TEXT ("raising CORBA::INTERNAL because of nil ")
+                        ACE_TEXT ("stub.\n")));
+          }
+        throw ::CORBA::INTERNAL (
+          CORBA::SystemException::_tao_minor_code (
+            TAO::VMCID,
+            EINVAL),
+          CORBA::COMPLETED_NO);
+      }
 
     return stub;
   }
