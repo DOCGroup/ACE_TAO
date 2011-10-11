@@ -899,30 +899,19 @@ be_visitor_interface_ss::this_method (be_interface *node)
   *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
       << be_nl_2;
 
-   if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-     {
-       *os << "::CORBA::Boolean const _tao_opt_colloc ="
-           << be_idt_nl
-           << "stub->servant_orb_var ()->orb_core ()->"
-           << "optimize_collocation_objects ();" << be_uidt_nl << be_nl;
-     }
+  *os << "::CORBA::Boolean const _tao_opt_colloc ="
+      << be_idt_nl
+      << "stub->servant_orb_var ()->orb_core ()->"
+      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl;
+
   *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
       << "::CORBA::Object (stub, ";
 
-  if (be_global->gen_direct_collocation()
-      || be_global->gen_thru_poa_collocation ())
-    {
-      *os << "_tao_opt_colloc";
-    }
-  else
-    {
-      *os << "false";
-    }
+  *os << "_tao_opt_colloc";
 
   *os << ", this)," << be_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "0);" << be_uidt << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl_2
@@ -943,7 +932,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
       *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
     }
 
-  *os << be_uidt_nl << ");" << be_uidt << be_uidt << be_uidt_nl
+  *os << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 }
 
