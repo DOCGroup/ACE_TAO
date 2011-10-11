@@ -1,3 +1,8 @@
+Tue Oct 11 07:17:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+          Layout changes and just always generate the orb optimize flags
+
 Mon Oct 10 17:43:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:
