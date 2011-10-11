@@ -7,9 +7,9 @@
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::DDS_TopicBase_Connector_T (void) :
     BaseConnector ()
-  , late_binding_ (false)
   , init_subscriber_ (false)
   , init_publisher_(false)
+  , late_binding_ (false)
 {
 }
 
@@ -64,7 +64,6 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
 
   this->late_binding (ACE_OS::strlen (topic_name) == 0);
 
-//   if (this->late_binding () &&
   if (ACE_OS::strlen (topic_name) > 0 &&
       !CORBA::is_nil (this->topic_name_) &&
       ACE_OS::strlen (this->topic_name_.in ()) == 0)

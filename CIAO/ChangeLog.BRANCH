@@ -1,3 +1,11 @@
+Tue Oct 11 14:27:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+          Layout changes.
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Fixed warnings.
+
 Tue Oct 11 09:34:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
