@@ -35,6 +35,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_data (v
 
   this->supplier_obtained_ = true;
   this->supplier_.set_component (this);
+  this->init_publisher_ |= this->supplier_obtained_;
   return this->supplier_.get_data ();
 }
 
@@ -46,6 +47,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_dds_ent
 
   this->supplier_obtained_ = true;
   this->supplier_.set_component (this);
+  this->init_publisher_ |= this->supplier_obtained_;
   return this->supplier_.get_dds_entity ();
 }
 
@@ -57,6 +59,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_fr
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_fresh_data ();
 }
 
@@ -68,6 +71,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_da
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_data ();
 }
 
@@ -79,6 +83,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_da
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_data ();
 }
 
@@ -90,6 +95,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_fi
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_filter_config ();
 }
 
@@ -101,6 +107,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_da
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_data_control ();
 }
 
@@ -112,6 +119,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_dd
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_dds_entity ();
 }
 
@@ -142,6 +150,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_dd
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_dds_entity ();
 }
 
@@ -153,6 +162,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_fi
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_filter_config ();
 }
 

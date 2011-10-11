@@ -8,6 +8,8 @@ template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
 DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::DDS_TopicBase_Connector_T (void) :
     BaseConnector ()
   , late_binding_ (false)
+  , init_subscriber_ (false)
+  , init_publisher_(false)
 {
 }
 
@@ -109,10 +111,29 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
                         typesupport_name.in ());
     }
 
-  this->init_subscriber (this->domain_participant_.in (),
-                         this->subscriber_.inout ());
-  this->init_publisher (this->domain_participant_.in (),
-                        this->publisher_.inout ());
+  if (this->init_subscriber_)
+    {
+      this->init_subscriber (this->domain_participant_.in (),
+                            this->subscriber_.inout ());
+    }
+  else
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_TopicBase_Connector_T::configuration_complete - "
+                    "No need to create a subscriber.\n"));
+    }
+
+  if (this->init_publisher_)
+    {
+      this->init_publisher (this->domain_participant_.in (),
+                            this->publisher_.inout ());
+    }
+  else
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_TopicBase_Connector_T::configuration_complete - "
+                    "No need to create a publisher.\n"));
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>
@@ -126,12 +147,18 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::ccm_activate (void)
   this->activate_topic (reactor,
                         this->topic_.in (),
                         this->topiclistener_.inout ());
-  this->activate_subscriber (reactor,
-                             this->subscriber_.in (),
-                             this->subscriber_listener_.inout ());
-  this->activate_publisher (reactor,
-                            this->publisher_.in (),
-                            this->publisher_listener_.inout ());
+  if (this->init_subscriber_)
+    {
+      this->activate_subscriber (reactor,
+                                this->subscriber_.in (),
+                                this->subscriber_listener_.inout ());
+    }
+  if (this->init_publisher_)
+    {
+      this->activate_publisher (reactor,
+                                this->publisher_.in (),
+                                this->publisher_listener_.inout ());
+    }
 }
 
 template <typename CCM_TYPE, typename DDS_TYPE, typename SEQ_TYPE>

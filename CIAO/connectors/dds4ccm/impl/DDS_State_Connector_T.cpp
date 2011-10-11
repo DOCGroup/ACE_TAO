@@ -34,6 +34,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_observable_data 
 
   this->observable_obtained_ = true;
   this->observable_.set_component (this);
+  this->init_publisher_ |= this->observable_obtained_;
   return this->observable_.get_data ();
 }
 
@@ -45,6 +46,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_observable_dds_e
 
   this->observable_obtained_ = true;
   this->observable_.set_component (this);
+  this->init_publisher_ |= this->observable_obtained_;
   return this->observable_.get_dds_entity ();
 }
 
@@ -56,6 +58,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_passive_observer
 
   this->passive_observer_obtained_ = true;
   this->passive_observer_.set_component (this);
+  this->init_subscriber_ |= this->passive_observer_obtained_;
   return this->passive_observer_.get_data ();
 }
 
@@ -67,6 +70,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_passive_observer
 
   this->passive_observer_obtained_ = true;
   this->passive_observer_.set_component (this);
+  this->init_subscriber_ |= this->passive_observer_obtained_;
   return this->passive_observer_.get_dds_entity ();
 }
 
@@ -78,6 +82,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_passive_observer
 
   this->passive_observer_obtained_ = true;
   this->passive_observer_.set_component (this);
+  this->init_subscriber_ |= this->passive_observer_obtained_;
   return this->passive_observer_.get_filter_config ();
 }
 
@@ -108,6 +113,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_da
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_data ();
 }
 
@@ -119,6 +125,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_fr
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_fresh_data ();
 }
 
@@ -130,6 +137,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_dd
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_dds_entity ();
 }
 
@@ -141,6 +149,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_fi
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_filter_config ();
 }
 
@@ -171,6 +180,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_da
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_data ();
 }
 
@@ -182,6 +192,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_da
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_data_control ();
 }
 
@@ -193,6 +204,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_dd
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_dds_entity ();
 }
 
@@ -204,6 +216,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_fi
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_filter_config ();
 }
 
@@ -234,6 +247,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_data ();
 }
 
@@ -245,6 +259,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_data_control ();
 }
 
@@ -256,6 +271,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_dds_entity ();
 }
 
@@ -267,6 +283,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_filter_config ();
 }
 
