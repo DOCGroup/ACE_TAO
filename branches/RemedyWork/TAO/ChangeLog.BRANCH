@@ -1,3 +1,10 @@
+Tue Oct 11 17:38:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.cpp:
+        * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.cpp:
+          Also check the string that returned
+
 Tue Oct 11 10:53:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object_T.cpp:
