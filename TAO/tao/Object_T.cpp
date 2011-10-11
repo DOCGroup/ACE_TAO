@@ -55,6 +55,7 @@ namespace TAO
                                      const char *,
                                      int collocation_opportunity)
   {
+    ACE_UNUSED_ARG(collocation_opportunity); //@todo
     if (CORBA::is_nil (obj))
       {
         return T::_nil ();
@@ -85,8 +86,7 @@ namespace TAO
     bool const collocated =
       !CORBA::is_nil (stub->servant_orb_var ().in ())
       && stub->optimize_collocation_objects ()
-      && obj->_is_collocated ()
-      && collocation_opportunity != TAO::TAO_CO_NONE;
+      && obj->_is_collocated ();
 
     ACE_NEW_THROW_EX (proxy,
                       T (stub,
