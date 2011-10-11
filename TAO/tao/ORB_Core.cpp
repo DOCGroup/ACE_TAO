@@ -218,7 +218,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     opt_for_collocation_ (true),
     use_global_collocation_ (true),
     collocation_strategy_ (TAO_DEFAULT_COLLOCATION_STRATEGY),
-//    collocation_strategy_ (TAO_COLLOCATION_THRU_POA),
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
