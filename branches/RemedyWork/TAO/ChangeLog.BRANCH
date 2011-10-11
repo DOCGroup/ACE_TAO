@@ -1,3 +1,10 @@
+Tue Oct 11 10:53:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object_T.cpp:
+          Don't use collocation opportunity, just determine whether the
+          object is collocated or not. If this doesn't break any tests, we
+          need to do some more cleanup here
+
 Tue Oct 11 10:41:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBANAME_Parser.cpp:
