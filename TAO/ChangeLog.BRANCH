@@ -1,3 +1,9 @@
+Tue Oct 11 10:41:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBANAME_Parser.cpp:
+        * tao/Remote_Object_Proxy_Broker.cpp:
+          Enable through poa collocation by default
+
 Tue Oct 11 07:17:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
