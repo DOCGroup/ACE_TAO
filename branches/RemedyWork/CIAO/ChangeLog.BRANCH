@@ -1,3 +1,25 @@
+Wed Oct 12 12:25:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/Collocation:
+        * tests/Collocation/Sender:
+        * tests/Collocation/Sender/Sender.idl:
+        * tests/Collocation/Sender/Sender_exec.cpp:
+        * tests/Collocation/Sender/Sender.mpc:
+        * tests/Collocation/Sender/Sender_exec.h:
+        * tests/Collocation/.project:
+        * tests/Collocation/Coll_Base:
+        * tests/Collocation/Coll_Base/Base.mpc:
+        * tests/Collocation/Coll_Base/Base.idl:
+        * tests/Collocation/descriptors:
+        * tests/Collocation/descriptors/run_test.pl:
+        * tests/Collocation/descriptors/PlanAllOnOne.cdp:
+        * tests/Collocation/Receiver:
+        * tests/Collocation/Receiver/Receiver.mpc:
+        * tests/Collocation/Receiver/Receiver_exec.h:
+        * tests/Collocation/Receiver/Receiver_exec.cpp:
+        * tests/Collocation/Receiver/Receiver.idl:
+        Test for collocation, for playing with results change OrbStrategy in cdp plan
+
 Wed Oct 12 09:07:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
