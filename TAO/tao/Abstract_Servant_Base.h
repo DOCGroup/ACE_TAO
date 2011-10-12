@@ -61,9 +61,7 @@ typedef void (*TAO_Skeleton)(
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
-    TAO::Argument **,
-    int
-  );
+    TAO::Argument **);
 
 class TAO_Export TAO_Abstract_ServantBase
 {

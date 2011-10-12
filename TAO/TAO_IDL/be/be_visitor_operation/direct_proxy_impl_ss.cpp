@@ -83,8 +83,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << " args";
     }
 
-  *os << "," << be_nl
-      << "int)" << be_uidt;
+  *os << ")" << be_uidt_nl;
 
   *os << be_uidt_nl
       << "{" << be_idt_nl;

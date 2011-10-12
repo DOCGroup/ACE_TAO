@@ -1,3 +1,13 @@
+Wed Oct 12 10:09:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * tao/Abstract_Servant_Base.h:
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+        * tao/PortableServer/Operation_Table.h:
+          Removed the num_args argument for the direct collocation skeleton
+          functions because it was not used at all
+
 Wed Oct 12 09:55:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
