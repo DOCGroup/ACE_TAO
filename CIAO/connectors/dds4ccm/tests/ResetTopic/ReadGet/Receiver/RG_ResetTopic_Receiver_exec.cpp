@@ -107,7 +107,7 @@ namespace CIAO_RG_ResetTopic_Receiver_Impl
    */
 
   Receiver_exec_i::Receiver_exec_i (void)
-    : iterations_ (0)
+    : iterations_ (10)
     , keys_ (5)
     , impl_(0)
   {

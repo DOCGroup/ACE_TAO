@@ -1,3 +1,9 @@
+Wed Oct 12 08:58:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_impl.cpp:
+          Extended this test a bit more.
+
 Tue Oct 11 14:27:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:

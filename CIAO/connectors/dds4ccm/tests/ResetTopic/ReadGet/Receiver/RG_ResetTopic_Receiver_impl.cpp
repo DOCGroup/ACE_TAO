@@ -130,7 +130,9 @@ namespace CIAO_RG_ResetTopic_Receiver_Impl
   RG_ResetTopic_Receiver_impl::start (const char * topic_name)
   {
     this->topic_name_ = topic_name;
-//     this->test_exception ();
+    //only the first time...
+    if (!this->checker_)
+      this->test_exception ();
     this->set_topic_name_reader (topic_name);
 
     if (!this->checker_)
@@ -212,7 +214,7 @@ namespace CIAO_RG_ResetTopic_Receiver_Impl
             if (::CORBA::is_nil (reader.in ()))
               {
                 ACE_ERROR ((LM_ERROR, "RG_ResetTopic_Receiver_impl::test_exception - "
-                            "ERROR: Unable to get writer interface from the "
+                            "ERROR: Unable to get reader interface from the "
                             "CIAO context\n"));
                 return;
               }
@@ -261,6 +263,7 @@ namespace CIAO_RG_ResetTopic_Receiver_Impl
         RG_ResetTopicSampleSeq samples;
         ::CCM_DDS::ReadInfoSeq readinfo_seq;
         reader->read_all (samples, readinfo_seq);
+
         this->check_samples ("read", samples, this->expected_per_run_);
       }
     catch (const CORBA::Exception &e)
