@@ -81,6 +81,14 @@ namespace TAO
         // get the ORBStrategy
         strat = this->collocation_strategy (effective_target.in ());
 
+        if (TAO_debug_level > 2)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - Invocation_Adapter::invoke_i, ")
+              ACE_TEXT("making a %C invocation\n"),
+              TAO::translate_collocation_strategy(strat)));
+          }
+
         if (strat == TAO_CS_REMOTE_STRATEGY || strat == TAO_CS_LAST)
           {
             status =

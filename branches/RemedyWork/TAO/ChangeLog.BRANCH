@@ -1,3 +1,12 @@
+Wed Oct 12 12:02:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocation_Strategy.h:
+        * tao/Invocation_Adapter.cpp:
+          Print the collocation strategy that we have determined
+
+        * tests/Hello/run_test.pl:
+          Added -cdebug that enables ORBDebugLevel 10 for the client
+
 Wed Oct 12 10:09:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:

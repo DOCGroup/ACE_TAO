@@ -40,6 +40,20 @@ namespace TAO
       TAO_CS_LAST
     };
 
+  inline const char * translate_collocation_strategy (Collocation_Strategy cs)
+    {
+#define TAO_CS(X) case X: return #X
+      switch (cs)
+        {
+          TAO_CS (TAO_CS_REMOTE_STRATEGY);
+          TAO_CS (TAO_CS_THRU_POA_STRATEGY);
+          TAO_CS (TAO_CS_DIRECT_STRATEGY);
+          TAO_CS (TAO_CS_LAST);
+        }
+      return "***Unknown enum value, update TAO::translate_collocation_strategy()";
+#undef TAO_CS
+    }
+
   /// No collocation possible
   int const TAO_CO_NONE = 0x00;
 
