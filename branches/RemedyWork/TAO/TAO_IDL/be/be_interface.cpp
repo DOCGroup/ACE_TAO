@@ -1481,18 +1481,17 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "ACE_INLINE void" << be_nl
       << derived->full_direct_proxy_impl_name ()
       << "::" << prefix << d->local_name () << " ("
-      << be_idt << be_idt_nl
+      << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
       << "TAO::Argument ** args)" << be_uidt_nl;
 
-  *os << be_uidt_nl
-      << "{" << be_idt_nl
+  *os << "{" << be_idt_nl
       << ancestor->full_direct_proxy_impl_name ()
       << "::" << prefix << d->local_name () << " ("
-      << be_idt << be_idt_nl
+      << be_idt_nl
       << "servant," << be_nl
       << "args);" << be_uidt
-      << be_uidt << be_uidt_nl
+      << be_uidt_nl
       << "}"<< be_nl;
 }
 
@@ -2205,26 +2204,20 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void" << be_nl
                       << derived->full_skel_name () << "::"
                       << d->local_name ()
-                      << "_skel (" << be_idt << be_idt_nl
+                      << "_skel (" << be_idt_nl
                       << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
-                      << "void * servant)" << be_uidt
+                      << "void * servant)"
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
-                      << " * const impl =" << be_idt_nl
-                      << "static_cast<"
-                      << derived->full_skel_name ()
-                      << " *> (servant);" << be_uidt_nl;
-
-                  *os << ancestor->full_skel_name ()
                       << "::" << d->local_name ()
-                      << "_skel (" << be_idt << be_idt_nl
+                      << "_skel (" << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl);" << be_uidt
-                      << be_uidt << be_uidt_nl
+                      << "servant);" << be_uidt
+                      << be_uidt_nl
                       << "}";
                 }
             }

@@ -1,3 +1,10 @@
+Wed Oct 12 14:14:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+          Changed indentation and removed not needed static cast in the
+          generated code
+
 Wed Oct 12 12:06:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * tests/Collocated_NoColl:
         * tests/Collocated_NoColl/Client_Task.h:
