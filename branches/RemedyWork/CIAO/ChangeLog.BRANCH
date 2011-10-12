@@ -1,3 +1,10 @@
+Wed Oct 12 09:07:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          We also need to create a subscriber and publisher when the user
+          is using a ConnectorStatusListener; the Subscriber Listener and
+          Publisher Listener are involved in the ConnectorStatusListener.
+
 Wed Oct 12 08:58:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.cpp:
