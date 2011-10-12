@@ -221,17 +221,12 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::~_TAO_Policy_Direct_Proxy_Impl (void)
 void
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
     TAO_Abstract_ServantBase  *servant,
-    TAO::Argument ** args,
-    int
-
-  )
+    TAO::Argument ** args)
 {
   ((TAO::Arg_Traits< ::CORBA::PolicyType>::ret_val *) args[0])->arg () =
     dynamic_cast<POA_CORBA::Policy_ptr>
       (servant)
-    ->policy_type (
-
-        );
+    ->policy_type ();
 }
 // TAO_IDL - Generated from
 // be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
@@ -239,17 +234,12 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
 void
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
     TAO_Abstract_ServantBase  *servant,
-    TAO::Argument ** args,
-    int
-
-  )
+    TAO::Argument ** args)
 {
   ((TAO::Arg_Traits< CORBA::Policy>::ret_val *) args[0])->arg () =
     dynamic_cast<POA_CORBA::Policy_ptr>
       (servant)
-    ->copy (
-
-        );
+    ->copy ();
 }
 // TAO_IDL - Generated from
 // be\be_visitor_operation/direct_proxy_impl_ss.cpp:42
@@ -257,15 +247,11 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
 void
 POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
     TAO_Abstract_ServantBase  *servant,
-    TAO::Argument **,
-    int
-  )
+    TAO::Argument **)
 {
   dynamic_cast<POA_CORBA::Policy_ptr>
     (servant)
-  ->destroy (
-
-      );
+  ->destroy ();
 }
 
 
