@@ -1483,8 +1483,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "::" << prefix << d->local_name () << " ("
       << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase *servant," << be_nl
-      << "TAO::Argument ** args," << be_nl
-      << "int num_args)" << be_uidt_nl;
+      << "TAO::Argument ** args)" << be_uidt_nl;
 
   *os << be_uidt_nl
       << "{" << be_idt_nl
@@ -1492,8 +1491,7 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "::" << prefix << d->local_name () << " ("
       << be_idt << be_idt_nl
       << "servant," << be_nl
-      << "args," << be_nl
-      << "num_args);" << be_uidt
+      << "args);" << be_uidt
       << be_uidt << be_uidt_nl
       << "}"<< be_nl;
 }
@@ -2372,8 +2370,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
           *os << "static void" << be_nl
               << d->local_name () << " (" << be_idt_nl
               << "TAO_Abstract_ServantBase *servant, "
-              << "TAO::Argument **args, "
-              << "int num_args);" << be_uidt_nl;
+              << "TAO::Argument **args);" << be_uidt_nl;
         }
       else if (d->node_type () == AST_Decl::NT_attr)
         {
