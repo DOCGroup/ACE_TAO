@@ -1,3 +1,18 @@
+Wed Oct 12 12:06:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+        * tests/Collocated_NoColl:
+        * tests/Collocated_NoColl/Client_Task.h:
+        * tests/Collocated_NoColl/Client_Task.cpp:
+        * tests/Collocated_NoColl/Collocated_NoColl.mpc:
+        * tests/Collocated_NoColl/Collocated_Test.cpp:
+        * tests/Collocated_NoColl/Hello.h:
+        * tests/Collocated_NoColl/Hello.cpp:
+        * tests/Collocated_NoColl/Server_Task.h:
+        * tests/Collocated_NoColl/Server_Task.cpp:
+        * tests/Collocated_NoColl/Test.idl:
+        * tests/Collocated_NoColl/run_test.pl:
+        Test for -ORBCollocation NO
+
+
 Wed Oct 12 12:02:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Collocation_Strategy.h:
