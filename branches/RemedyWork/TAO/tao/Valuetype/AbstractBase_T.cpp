@@ -14,8 +14,7 @@ namespace TAO
   template<typename T> T *
   AbstractBase_Narrow_Utils<T>::narrow (
       CORBA::AbstractBase_ptr obj,
-      const char *repo_id,
-      int collocation_opportunity)
+      const char *repo_id)
   {
     if (CORBA::is_nil (obj))
       {
@@ -27,21 +26,17 @@ namespace TAO
         return T::_nil ();
       }
 
-    return
-      AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, repo_id, collocation_opportunity);
+    return AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, repo_id);
   }
 
   template<typename T>  T *
-  AbstractBase_Narrow_Utils<T>::unchecked_narrow (
-      CORBA::AbstractBase_ptr obj,
-      int collocation_opportunity)
+  AbstractBase_Narrow_Utils<T>::unchecked_narrow (CORBA::AbstractBase_ptr obj)
   {
     T *proxy = 0;
 
     try
       {
-        proxy =
-          AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, 0, collocation_opportunity);
+        proxy = AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, 0);
       }
     catch (const ::CORBA::Exception&)
       {
@@ -53,8 +48,7 @@ namespace TAO
   template<typename T>  T *
   AbstractBase_Narrow_Utils<T>::unchecked_narrow (
       CORBA::AbstractBase_ptr obj,
-      const char *,
-      int collocation_opportunity)
+      const char *)
   {
     if (CORBA::is_nil (obj))
       {
@@ -70,8 +64,7 @@ namespace TAO
         bool const collocated =
           !CORBA::is_nil (stub->servant_orb_var ().in ())
           && stub->optimize_collocation_objects ()
-          && obj->_is_collocated ()
-          && collocation_opportunity != TAO::TAO_CO_NONE;
+          && obj->_is_collocated ();
 
         ACE_NEW_THROW_EX (proxy,
                           T (obj->_stubobj (),

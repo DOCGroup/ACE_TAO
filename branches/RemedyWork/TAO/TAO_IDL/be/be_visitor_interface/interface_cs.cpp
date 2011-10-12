@@ -409,18 +409,9 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
       *os << be_idt << be_idt_nl
           << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl;
+          << "\"" << node->repoID () << "\");";
 
-      *os << "TAO::TAO_CO_NONE";
-      if (be_global->gen_direct_collocation())
-        {
-          *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
-        }
-      if (be_global->gen_thru_poa_collocation())
-        {
-          *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
-        }
-      *os << be_uidt_nl << ");" << be_uidt << be_nl
+      *os << be_uidt << be_uidt << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
@@ -443,18 +434,9 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
       *os << be_idt << be_idt_nl
           << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl;
+          << "\"" << node->repoID () << "\");";
 
-      *os << "TAO::TAO_CO_NONE";
-      if (be_global->gen_direct_collocation())
-        {
-          *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
-        }
-      if (be_global->gen_thru_poa_collocation())
-        {
-          *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
-        }
-      *os << be_uidt_nl << ");" << be_uidt << be_uidt << be_uidt_nl
+      *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "}" << be_nl_2;
     }
 

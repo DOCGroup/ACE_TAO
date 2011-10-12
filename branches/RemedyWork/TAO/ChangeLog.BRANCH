@@ -1,3 +1,20 @@
+Wed Oct 12 09:01:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * tao/Object_T.h:
+        * tao/Object_T.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/Valuetype/AbstractBase_T.h:
+        * tao/Valuetype/AbstractBase_T.cpp:
+          Removed the collocation opportunity from the narrow calls, the
+          boolean collocated only means whether the servant is collocated or
+          not and shouldn't include the fact whether we have a collocation
+          opportunity or not
+
 Tue Oct 11 17:38:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:

@@ -920,19 +920,9 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "return" << be_idt_nl
       << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
       << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl;
+      << "obj.in ());";
 
-  *os << "TAO::TAO_CO_NONE";
-  if (be_global->gen_direct_collocation())
-    {
-      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
-    }
-  if (be_global->gen_thru_poa_collocation())
-    {
-      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
-    }
-
-  *os << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+  *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 }
 

@@ -98,19 +98,9 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
     }
   *os << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl;
+      << "obj.in ());" << be_nl;
 
-  *os << "TAO::TAO_CO_NONE";
-  if (be_global->gen_direct_collocation())
-    {
-      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
-    }
-  if (be_global->gen_thru_poa_collocation())
-    {
-      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
-    }
-
-  *os << be_uidt_nl << ");" << be_uidt << be_uidt << be_uidt_nl
+  *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
 }
