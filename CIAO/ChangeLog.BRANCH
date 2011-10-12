@@ -1,3 +1,30 @@
+Wed Oct 12 12:37:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/CollocatedPubSub:
+        * connectors/dds4ccm/tests/CollocatedPubSub/Base:
+        * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.idl:
+        * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.mpc:
+        * connectors/dds4ccm/tests/CollocatedPubSub/Connector:
+        * connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.idl:
+        * connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.mpc:
+        * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent:
+        * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component.idl:
+        * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component.mpc:
+        * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component_exec.h:
+        * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component_exec.cpp:
+        * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent:
+        * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component.idl:
+        * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component.mpc:
+        * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component_exec.h:
+        * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component_exec.cpp:
+        * connectors/dds4ccm/tests/CollocatedPubSub/descriptors:
+        * connectors/dds4ccm/tests/CollocatedPubSub/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/CollocatedPubSub/descriptors/run_test.pl:
+          New test. Three components running on the same node. One writes the samples
+          to DDS and collects these sample at the same time. The other two components just
+          listen. All listeners have a QueryFilter applied.
+
 Wed Oct 12 12:25:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/Collocation:
