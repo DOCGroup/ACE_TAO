@@ -407,9 +407,16 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
 
-      *os << be_idt << be_idt_nl
-          << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\");";
+      *os << be_idt << be_idt_nl;
+
+      *os << "_tao_objref";
+      if (ACE_OS::strcmp (pre, "narrow") == 0)
+        {
+          *os << "," << be_nl
+              << "\"" << node->repoID () << "\"";
+        }
+
+      *os << ");";
 
       *os << be_uidt << be_uidt << be_nl
           << "return TAO_" << node->flat_name ()
@@ -433,8 +440,15 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
         }
 
       *os << be_idt << be_idt_nl
-          << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\");";
+          << "_tao_objref";
+
+      if (ACE_OS::strcmp (pre, "narrow") == 0)
+        {
+          *os << "," << be_nl
+              << "\"" << node->repoID () << "\"";
+        }
+
+      *os << ");";
 
       *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "}" << be_nl_2;
