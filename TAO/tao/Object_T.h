@@ -43,16 +43,13 @@ namespace TAO
     typedef T *T_ptr;
 
     static T_ptr narrow (CORBA::Object_ptr,
-                         const char *repo_id,
-                         int collocation_opportunity);
+                         const char *repo_id);
 
     /// Version used the operators.
-    static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   int collocation_opportunity);
+    static T_ptr unchecked_narrow (CORBA::Object_ptr);
 
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   const char *repo_id,
-                                   int collocation_opportunity);
+                                   const char *repo_id);
 
   private:
     // Code for lazily evaluated IORs.

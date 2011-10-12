@@ -16,8 +16,7 @@ namespace TAO
   template<typename T>
   T *
   Narrow_Utils<T>::narrow (CORBA::Object_ptr obj,
-                           const char *repo_id,
-                           int collocation_opportunity)
+                           const char *repo_id)
   {
     if (CORBA::is_nil (obj))
       {
@@ -29,17 +28,16 @@ namespace TAO
         return T::_nil ();
       }
 
-    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id, collocation_opportunity);
+    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id);
   }
 
   template<typename T> T *
-  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     int collocation_opportunity)
+  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj)
   {
     T *proxy = 0;
     try
       {
-        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0, collocation_opportunity);
+        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0);
       }
     catch (const ::CORBA::Exception&)
       {
@@ -52,10 +50,8 @@ namespace TAO
 
   template<typename T> T *
   Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     const char *,
-                                     int collocation_opportunity)
+                                     const char *)
   {
-    ACE_UNUSED_ARG(collocation_opportunity); //@todo
     if (CORBA::is_nil (obj))
       {
         return T::_nil ();

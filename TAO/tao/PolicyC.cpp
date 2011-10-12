@@ -489,9 +489,7 @@ CORBA::Policy::_narrow (
   return
     TAO::Narrow_Utils<Policy>::narrow (
         _tao_objref,
-        "IDL:omg.org/CORBA/Policy:1.0",
-        TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      );
+        "IDL:omg.org/CORBA/Policy:1.0");
 }
 
 CORBA::Policy_ptr
@@ -503,9 +501,7 @@ CORBA::Policy::_unchecked_narrow (
   return
     TAO::Narrow_Utils<Policy>::unchecked_narrow (
         _tao_objref,
-        "IDL:omg.org/CORBA/Policy:1.0",
-        TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      );
+        "IDL:omg.org/CORBA/Policy:1.0");
 }
 
 CORBA::Policy_ptr
@@ -687,9 +683,7 @@ CORBA::Boolean operator>> (
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
-        obj.in (),
-        TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      );
+        obj.in ());
 
   return 1;
 }

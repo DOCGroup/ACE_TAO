@@ -37,15 +37,12 @@ namespace TAO
     typedef T *T_ptr;
 
     static T_ptr narrow (CORBA::AbstractBase_ptr,
-                         const char *repo_id,
-                         int collocation_opportunity);
+                         const char *repo_id);
+
+    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr);
 
     static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-                                   int collocation_opportunity);
-
-    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-                                   const char *repo_id,
-                                   int collocation_opportunity);
+                                   const char *repo_id);
   };
 }
 
