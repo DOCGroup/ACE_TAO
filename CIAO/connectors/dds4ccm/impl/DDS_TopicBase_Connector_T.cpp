@@ -99,6 +99,11 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::configuration_complete 
   typesupport_name = type.get_type_name ();
 #endif
 
+  ::CCM_DDS::ConnectorStatusListener_var error_listener =
+    this->context_->get_connection_error_listener ();
+  this->init_subscriber_ |= ! ::CORBA::is_nil (error_listener.in ());
+  this->init_publisher_  |= ! ::CORBA::is_nil (error_listener.in ());
+
   if (::CORBA::is_nil (this->topic_.in ()))
     {
       this->register_type (this->domain_participant_.in (),
