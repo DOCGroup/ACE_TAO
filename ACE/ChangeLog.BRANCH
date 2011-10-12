@@ -1,3 +1,11 @@
+Wed Oct 12 13:08:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/MakeProjectCreator/config/crosscompile.mpb:
+          Fixed install issues.
+
+        * bin/mwc.pl:
+          Removed unnecessary STDERR.
+
 
 Local Variables:
 mode: change-log
