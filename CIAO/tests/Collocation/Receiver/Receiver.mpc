@@ -1,0 +1,139 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p Base -c IDL2Client -e -I .. -l ../lib -o ../lib Receiver"
+
+project(CollBase_Receiver_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+  custom_only = 1
+
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
+              -Wb,stub_export_include=Receiver_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -Gxhex -Gxhsk -Gxhst -I ..
+
+  IDL_Files {
+    Receiver.idl
+  }
+}
+
+project(CollBase_Receiver_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
+  after += CollBase_Receiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=Receiver_lem_stub_export.h \
+              -SS -Gxhst -I ..
+
+  IDL_Files {
+    ReceiverE.idl
+  }
+}
+
+project(CollBase_Receiver_lem_stub) : ccm_svnt, avoids_ccm_noevent {
+  after += CollBase_Receiver_lem_gen CollBase_Receiver_stub CollBase_stub CollBase_lem_stub
+  libs  += CollBase_stub CollBase_lem_stub Receiver_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Receiver_lem_stub
+  dynamicflags += RECEIVER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverEC.cpp
+  }
+
+  Header_Files {
+    ReceiverEC.h
+    Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    ReceiverEC.inl
+  }
+}
+
+project(CollBase_Receiver_stub) : ccm_stub, avoids_ccm_noevent {
+  after += CollBase_Receiver_idl_gen CollBase_stub CollBase_lem_stub
+  libs  += CollBase_stub CollBase_lem_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Receiver_stub
+  dynamicflags += RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverC.cpp
+  }
+
+  Header_Files {
+    ReceiverC.h
+    Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    ReceiverC.inl
+  }
+}
+
+project(CollBase_Receiver_exec) : ciao_executor, avoids_ccm_noevent {
+  after   += CollBase_lem_stub CollBase_Receiver_lem_stub CollBase_Receiver_stub
+  sharedname = Receiver_exec
+  libs += CollBase_lem_stub Receiver_stub Receiver_lem_stub CollBase_stub CollBase_lem_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += RECEIVER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Receiver_exec.cpp
+  }
+
+  Header_Files {
+    Receiver_exec.h
+    Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(CollBase_Receiver_svnt) : ciao_servant, avoids_ccm_noevent  {
+  after      += CollBase_skel CollBase_lem_stub  CollBase_Receiver_lem_stub
+  sharedname  = Receiver_svnt
+  libs       += Receiver_stub Receiver_lem_stub  \
+                CollBase_skel \
+                CollBase_stub \
+                CollBase_lem_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  dynamicflags += RECEIVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverS.cpp
+    Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    ReceiverS.h
+    Receiver_svnt.h
+    Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    ReceiverS.inl
+  }
+}
