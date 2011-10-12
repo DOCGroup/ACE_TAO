@@ -21,34 +21,16 @@ namespace TAO
         return T::_nil ();
       }
 
-    if (obj->_is_a (repo_id) == false)
+    if (!obj->_is_a (repo_id))
       {
         return T::_nil ();
       }
 
-    return AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, repo_id);
+    return AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj);
   }
 
   template<typename T>  T *
   AbstractBase_Narrow_Utils<T>::unchecked_narrow (CORBA::AbstractBase_ptr obj)
-  {
-    T *proxy = 0;
-
-    try
-      {
-        proxy = AbstractBase_Narrow_Utils<T>::unchecked_narrow (obj, 0);
-      }
-    catch (const ::CORBA::Exception&)
-      {
-      }
-
-    return proxy;
-  }
-
-  template<typename T>  T *
-  AbstractBase_Narrow_Utils<T>::unchecked_narrow (
-      CORBA::AbstractBase_ptr obj,
-      const char *)
   {
     if (CORBA::is_nil (obj))
       {
@@ -57,26 +39,32 @@ namespace TAO
 
     T_ptr proxy = T::_nil ();
 
-    if (obj->_is_objref ())
+    try
       {
-        TAO_Stub* stub = obj->_stubobj ();
+        if (obj->_is_objref ())
+          {
+            TAO_Stub* stub = obj->_stubobj ();
 
-        bool const collocated =
-          !CORBA::is_nil (stub->servant_orb_var ().in ())
-          && stub->optimize_collocation_objects ()
-          && obj->_is_collocated ();
+            bool const collocated =
+              !CORBA::is_nil (stub->servant_orb_var ().in ())
+              && stub->optimize_collocation_objects ()
+              && obj->_is_collocated ();
 
-        ACE_NEW_THROW_EX (proxy,
-                          T (obj->_stubobj (),
-                             collocated,
-                             obj->_servant ()),
-                          CORBA::NO_MEMORY ());
+            ACE_NEW_RETURN (proxy,
+                            T (obj->_stubobj (),
+                               collocated,
+                               obj->_servant ()),
+                            T::_nil ());
+          }
+        else
+          {
+            proxy = dynamic_cast<T *> (obj);
+            if (proxy)
+              proxy->_add_ref ();
+          }
       }
-    else
+    catch (const ::CORBA::Exception&)
       {
-        proxy = dynamic_cast<T *> (obj);
-        if (proxy)
-          proxy->_add_ref ();
       }
 
     return proxy;

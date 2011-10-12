@@ -40,9 +40,6 @@ namespace TAO
                          const char *repo_id);
 
     static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr);
-
-    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-                                   const char *repo_id);
   };
 }
 

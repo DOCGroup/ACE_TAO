@@ -481,10 +481,7 @@ CORBA::Policy::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 CORBA::Policy_ptr
-CORBA::Policy::_narrow (
-    CORBA::Object_ptr _tao_objref
-
-  )
+CORBA::Policy::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return
     TAO::Narrow_Utils<Policy>::narrow (
@@ -493,15 +490,10 @@ CORBA::Policy::_narrow (
 }
 
 CORBA::Policy_ptr
-CORBA::Policy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-
-  )
+CORBA::Policy::_unchecked_narrow (CORBA::Object_ptr _tao_objref)
 {
   return
-    TAO::Narrow_Utils<Policy>::unchecked_narrow (
-        _tao_objref,
-        "IDL:omg.org/CORBA/Policy:1.0");
+    TAO::Narrow_Utils<Policy>::unchecked_narrow (_tao_objref);
 }
 
 CORBA::Policy_ptr

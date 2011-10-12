@@ -1,3 +1,17 @@
+Wed Oct 12 09:55:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * tao/Object_T.h:
+        * tao/Object_T.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Valuetype/AbstractBase_T.h:
+        * tao/Valuetype/AbstractBase_T.cpp:
+          unchecked_narrow method was available with and without repository_id
+          argument but that wasn't used at all. merged both methods into one
+          and updated tao_idl code generation to not generate the repository_id
+          anymore
+
 Wed Oct 12 09:01:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:

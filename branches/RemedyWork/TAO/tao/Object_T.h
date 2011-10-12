@@ -48,9 +48,6 @@ namespace TAO
     /// Version used the operators.
     static T_ptr unchecked_narrow (CORBA::Object_ptr);
 
-    static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   const char *repo_id);
-
   private:
     // Code for lazily evaluated IORs.
     static T_ptr lazy_evaluation (CORBA::Object_ptr);

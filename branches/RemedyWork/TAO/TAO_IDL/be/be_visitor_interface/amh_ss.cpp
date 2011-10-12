@@ -97,10 +97,9 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     {
       *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
     }
-  *os << be_idt << be_idt_nl
-      << "obj.in ());" << be_nl;
+  *os << "obj.in ());" << be_nl;
 
-  *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
+  *os << be_uidt << be_uidt_nl
       << "}";
 
 }
