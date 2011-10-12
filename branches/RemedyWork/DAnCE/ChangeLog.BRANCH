@@ -1,3 +1,16 @@
+Wed Oct 12 13:09:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/DAnCE_Core.mpc:
+        * dance/LocalityManager/Configuration/Configuration.mpc:
+        * dance/LocalityManager/Interceptors/Error_Interceptors.mpc:
+        * dance/Plan_Launcher/Daemon/PL_Daemon.mpc:
+        * tools/Artifact_Installation/Artifact_Installation.mpc:
+        * tools/Convert_Plan/Convert_Plan.mpc:
+        * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+        * tools/System_Health/Interceptors/SHS_Interceptor.mpc:
+        * tools/System_Health/System_Health.mpc:
+          Fixed several install issues.
+
 
 Local Variables:
 mode: change-log
