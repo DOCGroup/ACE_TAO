@@ -1,5 +1,5 @@
 // $Id$
-project (CIAO_Deployment_Interceptors) : ciao_base, ciao_lib, ciao_output, \
+project (CIAO_Deployment_Interceptors) : install, ciao_base, ciao_lib, ciao_output, \
         naming, ciao_logger, dance_stub, dance_deployment_scheduler {
   dynamicflags += CIAO_DEPLOYMENT_INTERCEPTORS_BUILD_DLL
 
@@ -11,5 +11,9 @@ project (CIAO_Deployment_Interceptors) : ciao_base, ciao_lib, ciao_output, \
   Header_Files {
     Deployment_Interceptors.h
     Name_Utilities.h
+  }
+
+  specific {
+    install_dir = ciao/Deployment/Interceptors
   }
 }
