@@ -1,15 +1,19 @@
 // -*- MPC -*-
 // $Id$
 
-project (DAnCE_Artifact_Installation_IDL) : danceidldefaults {
+project (DAnCE_Artifact_Installation_IDL) : install, danceidldefaults {
   custom_only = 1
   IDL_Files {
     idlflags += -SS -Sci
     DAnCE_Artifact_Installation_Handler.idl
   }
+
+  specific {
+    install_dir = tools/Artifact_Installation
+  }
 }
 
-project (DAnCE_Artifact_Installation) : dance_lib, dynamicinterface, \
+project (DAnCE_Artifact_Installation) : install, dance_lib, dynamicinterface, \
             dance_deployment_stub, dance_logger, dance_skel, utils {
   dynamicflags += DANCE_ARTIFACT_INSTALLATION_BUILD_DLL
   sharedname = DAnCE_Artifact_Installation
@@ -26,9 +30,13 @@ project (DAnCE_Artifact_Installation) : dance_lib, dynamicinterface, \
   }
   IDL_Files {
   }
+
+  specific {
+    install_dir = tools/Artifact_Installation
+  }
 }
 
-project (DAnCE_Installation_Repository_Manager) : dance_lib, dynamicinterface, dance_artifact_installation, \
+project (DAnCE_Installation_Repository_Manager) : install, dance_lib, dynamicinterface, dance_artifact_installation, \
             dance_logger, utils {
   dynamicflags += INSTALLATION_REPOSITORY_MANAGER_BUILD_DLL
   sharedname = DAnCE_Installation_Repository_Manager
@@ -40,9 +48,13 @@ project (DAnCE_Installation_Repository_Manager) : dance_lib, dynamicinterface, d
   }
   IDL_Files {
   }
+
+  specific {
+    install_dir = tools/Artifact_Installation
+  }
 }
 
-project (DAnCE_File_Installation) : dance_lib, dynamicinterface, dance_artifact_installation, \
+project (DAnCE_File_Installation) : install, dance_lib, dynamicinterface, dance_artifact_installation, \
             dance_logger, utils {
   dynamicflags += ARTIFACT_INSTALLATION_HANDLER_BUILD_DLL
   sharedname = DAnCE_File_Installation
@@ -54,9 +66,13 @@ project (DAnCE_File_Installation) : dance_lib, dynamicinterface, dance_artifact_
   }
   IDL_Files {
   }
+
+  specific {
+    install_dir = tools/Artifact_Installation
+  }
 }
 
-project (DAnCE_Http_Installation) : dance_lib, dynamicinterface, dance_artifact_installation, \
+project (DAnCE_Http_Installation) : install, dance_lib, dynamicinterface, dance_artifact_installation, \
             dance_logger, utils, inet {
   dynamicflags += ARTIFACT_INSTALLATION_HANDLER_BUILD_DLL
   sharedname = DAnCE_Http_Installation
@@ -68,9 +84,13 @@ project (DAnCE_Http_Installation) : dance_lib, dynamicinterface, dance_artifact_
   }
   IDL_Files {
   }
+
+  specific {
+    install_dir = tools/Artifact_Installation
+  }
 }
 
-project (DAnCE_Artifact_Installation_Exec) : dance_exe, dance_output, dance_artifact_installation, \
+project (DAnCE_Artifact_Installation_Exec) : install, dance_exe, dance_output, dance_artifact_installation, \
         dance_installation_handlers, dance_installation_repository_manager, \
         avoids_ace_for_tao, dance_convert_plan, dance_logger {
   exename = dance_artifact_installation
@@ -81,5 +101,9 @@ project (DAnCE_Artifact_Installation_Exec) : dance_exe, dance_output, dance_arti
   Template_Files {
   }
   IDL_Files {
+  }
+
+  specific {
+    install_dir = tools/Artifact_Installation
   }
 }

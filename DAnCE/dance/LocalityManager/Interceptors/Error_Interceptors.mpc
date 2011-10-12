@@ -1,6 +1,6 @@
 // $Id$
 
-project (DAnCE_Error_Interceptors) : dance_skel, dance_lib, dance_output, dance_logger {
+project (DAnCE_Error_Interceptors) : install, dance_skel, dance_lib, dance_output, dance_logger {
    dynamicflags += DANCE_ERROR_INTERCEPTORS_BUILD_DLL
 
    Source_Files {
@@ -12,4 +12,8 @@ project (DAnCE_Error_Interceptors) : dance_skel, dance_lib, dance_output, dance_
      Standard_Error.h  
      Best_Effort.h  
    }
+
+  specific {
+     install_dir = dance/LocalityManager/Interceptors
+  }
 }

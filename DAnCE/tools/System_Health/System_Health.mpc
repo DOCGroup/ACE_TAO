@@ -28,6 +28,7 @@ project (DAnCE_System_Health_stub) : install, dance_lib, dance_output, gen_ostre
 
   Header_Files {
     SHS_DataModelC.h
+    SystemHealth_stub_export.h
   }
 
   specific {
