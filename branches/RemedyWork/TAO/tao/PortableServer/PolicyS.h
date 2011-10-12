@@ -200,10 +200,7 @@ namespace POA_CORBA
     static void
     _get_policy_type (
         TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-
-      );
+        TAO::Argument ** args);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
@@ -211,10 +208,7 @@ namespace POA_CORBA
     static void
     copy (
         TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-
-      );
+        TAO::Argument ** args);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
@@ -222,10 +216,7 @@ namespace POA_CORBA
     static void
     destroy (
         TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-
-      );
+        TAO::Argument ** args);
   };
 
   //
