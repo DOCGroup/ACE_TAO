@@ -1,3 +1,10 @@
+Thu Oct 13 07:15:34 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+          Further reduction of code being generated in case of interface
+          inheritance
+
 Thu Oct 13 06:46:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

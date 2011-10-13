@@ -2161,7 +2161,6 @@ be_interface::gen_skel_helper (be_interface *derived,
       // attributes defined by "ancestor", become methods on the derived
       // class which call the corresponding method of the base class by
       // doing the proper casting.
-
       for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
            !si.is_done ();
            si.next ())
@@ -2258,16 +2257,11 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "{" << be_idt_nl;
 
                   *os << ancestor->full_skel_name ()
-                      << " * const impl = static_cast<"
-                      << derived->full_skel_name ()
-                      << " *> (servant);" << be_nl;
-
-                  *os << ancestor->full_skel_name ()
                       << "::_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
                       << "server_request," << be_nl
                       << "servant_upcall," << be_nl
-                      << "impl);" << be_uidt
+                      << "servant);" << be_uidt
                       << be_uidt << be_uidt_nl
                       << "}";
                 }
@@ -2304,16 +2298,11 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "{" << be_idt_nl;
 
                       *os << ancestor->full_skel_name ()
-                          << " * const impl = static_cast<"
-                          << derived->full_skel_name ()
-                          << " *> (servant);" << be_nl;
-
-                      *os << ancestor->full_skel_name ()
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "server_request," << be_nl
                           << "servant_upcall," << be_nl
-                          << "impl);" << be_uidt
+                          << "servant);" << be_uidt
                           << be_uidt << be_uidt_nl
                           << "}";
                     }
