@@ -77,7 +77,7 @@ public:
 
   ::CORBA::ORB_var orb_;
 
-  ::Deployment::Domain_var domain_;
+  const ::Deployment::Domain *domain_;
 
   // Maps node names to strings
   typedef std::map < std::string, std::string > NODE_MAP;

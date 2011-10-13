@@ -27,20 +27,22 @@ DAnCE_Domain_Validator_i::load_domain_from_file (const char * filename)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
-                    ACE_TEXT("Node_Locator::process_cdd - ")
+                    ACE_TEXT("DAnCE_Domain_Validator_i::load_domain_from_file - ")
                     ACE_TEXT("Error: Provided with nil filename\n")));
       return false;
     }
 
   ::DAnCE::Config_Handlers::XML_File_Intf file (filename);
+
   file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
+
   ::Deployment::Domain *plan = file.release_domain ();
 
   if (!plan)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
-                    ACE_TEXT("Node_Locator::process_cdd - ")
+                    ACE_TEXT("DAnCE_Domain_Validator_i::load_domain_from_file - ")
                     ACE_TEXT("Error: Processing file <%C>\n"), filename));
       return false;
     }
@@ -52,9 +54,8 @@ DAnCE_Domain_Validator_i::load_domain_from_file (const char * filename)
 void
 DAnCE_Domain_Validator_i::load_domain (const ::Deployment::Domain & domain)
 {
-  throw CORBA::NO_IMPLEMENT ();
-  //  this->domain_ = domain;
-  //  return this->create_node_table ();
+  this->domain_ = &domain;
+  this->create_node_table ();
 }
 
 bool
@@ -135,7 +136,7 @@ DAnCE_Domain_Validator_i::validate_node (const char * node_name)
         {
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                        (LM_DEBUG, DLINFO
-                        ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node")
+                        ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node - ")
                         ACE_TEXT ("Nil object refernece from string_to_object for node %C\n"),
                         node_name));
           return false;
@@ -147,7 +148,7 @@ DAnCE_Domain_Validator_i::validate_node (const char * node_name)
         {
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                        (LM_DEBUG, DLINFO
-                        ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node")
+                        ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node - ")
                         ACE_TEXT ("Resolved object reference not valid for node %C\n"),
                         node_name));
           return false;
@@ -157,7 +158,7 @@ DAnCE_Domain_Validator_i::validate_node (const char * node_name)
     {
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
-                    ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node")
+                    ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node - ")
                     ACE_TEXT ("Caught CORBA Exception whilst resolving node %C: %C\n"),
                     node_name,
                     ex._info ().c_str ()));
@@ -167,7 +168,7 @@ DAnCE_Domain_Validator_i::validate_node (const char * node_name)
     {
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
-                    ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node")
+                    ACE_TEXT ("DAnCE_Domain_Validator_i::validate_node - ")
                     ACE_TEXT ("Caught C++ exception whilst resolving node %C\n"),
                     node_name));
       return false;
@@ -330,6 +331,11 @@ DAnCE_Domain_Validator_i::block_for_domain (const ::DAnCE::Time_Value & max_bloc
   NODE_LIST untried_list;
   NODE_LIST retry_list;
 
+  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+               (LM_DEBUG, DLINFO
+                ACE_TEXT ("DAnCE_Domain_Validator_i::block_for_domain - ")
+                ACE_TEXT ("Starting domain check\n")));
+
   for (CORBA::ULong i = 0; i < this->domain_->node.length (); ++i)
     {
       untried_list.push_back (this->domain_->node[i].name.in ());
@@ -339,7 +345,7 @@ DAnCE_Domain_Validator_i::block_for_domain (const ::DAnCE::Time_Value & max_bloc
        i != untried_list.end ();
        ++i)
     {
-      if (ACE_OS::gettimeofday () < timeout)
+      if (ACE_OS::gettimeofday () > timeout)
         {
           DANCE_ERROR (DANCE_LOG_ERROR,
                        (LM_ERROR, DLINFO
@@ -372,33 +378,46 @@ DAnCE_Domain_Validator_i::block_for_domain (const ::DAnCE::Time_Value & max_bloc
         }
     }
 
-  for (NODE_LIST::iterator i = retry_list.begin ();
-       i != retry_list.end ();
-       ++i)
+  bool first = true;
+  // @@ TODO: We'll probably want a more intelligent quantum.
+  ACE_Time_Value retry (0, 1000000 / 4);
+
+  while ((ACE_OS::gettimeofday () < timeout) && retry_list.size ())
     {
-      if (ACE_OS::gettimeofday () < timeout)
+      if (!first)
         {
-          DANCE_ERROR (DANCE_LOG_ERROR,
-                       (LM_ERROR, DLINFO
-                        ACE_TEXT ("DAnCE_Domain_Validator_i::block_for_domain - ")
-                        ACE_TEXT ("Timeout occurred while performing follow up validation\n")));
-
-          this->build_late_list (retry_list, late_nodes);
-
-          return false;
+          ACE_OS::sleep (retry);
         }
+      else first = false;
 
-      bool result = this->validate_node (i->c_str ());
-
-      if (result)
+      for (NODE_LIST::iterator i = retry_list.begin ();
+           i != retry_list.end ();
+           ++i)
         {
-          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
-                       (LM_DEBUG, DLINFO
-                        ACE_TEXT ("DAnCE_Domain_Validator_i::block_for_domain - ")
-                        ACE_TEXT ("Node %C is alive\n"),
-                        i->c_str ()));
-          retry_list.erase (i);
-          --i; // need to reposition the iterator so the next ++ will put it in the correct place
+          if (ACE_OS::gettimeofday () > timeout)
+            {
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("DAnCE_Domain_Validator_i::block_for_domain - ")
+                            ACE_TEXT ("Timeout occurred while performing follow up validation\n")));
+
+              this->build_late_list (retry_list, late_nodes);
+
+              return false;
+            }
+
+          bool result = this->validate_node (i->c_str ());
+
+          if (result)
+            {
+              DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("DAnCE_Domain_Validator_i::block_for_domain - ")
+                            ACE_TEXT ("Node %C is alive\n"),
+                            i->c_str ()));
+              retry_list.erase (i);
+              --i; // need to reposition the iterator so the next ++ will put it in the correct place
+            }
         }
     }
 
