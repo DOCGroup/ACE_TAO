@@ -1,3 +1,18 @@
+Thu Oct 13 19:10:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DAnCE_Utility.h:
+        * dance/DAnCE_Utility.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * dance/Plan_Launcher/Plan_Launcher.mpc:
+        * tools/Domain_Validator:
+        * tools/Domain_Validator/CORBA:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+        * tools/Domain_Validator/Domain_Validator.idl:
+        * tools/Domain_Validator/Domain_Validator.mpc:
+
+          Initial domain validator implementation.
+
 Thu Oct 13 19:05:45 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/DAnCE_Properties.idl:

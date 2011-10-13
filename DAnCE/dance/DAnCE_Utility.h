@@ -20,6 +20,7 @@
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "dance/Deployment/Deployment_DeploymentPlanC.h"
+#include "dance/Deployment/Deployment_TargetDataC.h"
 #include "dance/Logger/Log_Macros.h"
 
 namespace DAnCE
@@ -58,6 +59,10 @@ namespace DAnCE
     get_satisfierproperty_value (const char *name,
                          const ::Deployment::SatisfierProperties &properties,
                          T &val);
+
+    bool get_resource_value (const char *type,
+                             const ::Deployment::Resources &resources,
+                             ::Deployment::Resource  &val);
 
     template<class T>
     void
