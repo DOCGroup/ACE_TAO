@@ -328,6 +328,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return client.check_results ();
+  int status = 0;
+
+  try
+    {
+      status = client.check_results ();
+    }
+  catch (const CORBA::Exception& se)
+    {
+      se._tao_print_exception ("Error: ");
+      status = 1;
+    }
+
+  return status;
 }
 
