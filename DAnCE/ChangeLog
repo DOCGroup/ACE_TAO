@@ -1,3 +1,12 @@
+Thu Oct 13 22:19:49 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/XMLSchema/id_map.hpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+
+          1) the XML_Helper is no longer terminated in the File_Intf destructor,
+          this caused problems when several files were parsed in a single process.
+          2) We now reset the ID_Map before each parsing event.
+
 Thu Oct 13 19:10:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/DAnCE_Utility.h:
