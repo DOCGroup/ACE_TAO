@@ -1,3 +1,11 @@
+Thu Oct 13 22:24:56 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+
+          Bugfixes.
+
 Thu Oct 13 22:19:49 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/XMLSchema/id_map.hpp:
