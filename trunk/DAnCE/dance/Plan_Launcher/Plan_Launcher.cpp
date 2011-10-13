@@ -11,6 +11,7 @@
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Logger/Logger_Service.h"
 #include "tools/Convert_Plan/Convert_Plan_Impl.h"
+#include "tools/Config_Handlers/XML_File_Intf.h"
 #include "tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h"
 
 #include "EM_Launcher.h"
@@ -80,9 +81,12 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("NodeManager IOR for NM based deployment.\n")
               ACE_TEXT ("\t--lm-ior <LocalityManager IOR>\t")
               ACE_TEXT ("LocalityManager IOR for LM based deployment.\n")
-              ACE_TEXT ("\t--manager-timeout <seconds>\t")
+              ACE_TEXT ("\t--manager-timeout <seconds>\t\n")
+              ACE_TEXT ("Number of seconds to wait for a valid Execution Manager reference.\n")
               ACE_TEXT ("\t--domain-timeout <seconds>\t")
-              ACE_TEXT ("Number of seconds to wait for a valid domain validation.\n")
+              ACE_TEXT ("Number of seconds to wait for a domain validation.\n")
+              ACE_TEXT ("\t--domain-file <cdd>\t")
+              ACE_TEXT ("The domain file that the plan launcher should use for domain validation\n")
               /*
               ACE_TEXT ("\nName Service Options\n")
               ACE_TEXT ("\t--domain-nc [NC]\t\t)
@@ -157,6 +161,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("manager-timeout"), ACE_Get_Opt::ARG_REQUIRED);
   get_opt.long_option(ACE_TEXT("domain-timeout"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("domain-file"), ACE_Get_Opt::ARG_REQUIRED);
 
   int c;
   ACE_CString s;
@@ -297,6 +302,17 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               options.lm_ior_ = get_opt.opt_arg ();
               break;
             }
+          if (ACE_OS::strcmp (get_opt.long_option (),
+                              ACE_TEXT ("domain-file")) == 0)
+            {
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::parse_args - ")
+                            ACE_TEXT ("Got domain file: %C\n"),
+                            get_opt.opt_arg ()));
+              options.domain_file_ = get_opt.opt_arg ();
+              break;
+            }
           if ((ACE_OS::strcmp (get_opt.long_option (),
                                ACE_TEXT ("manager-timeout")) == 0) ||
               (ACE_OS::strcmp (get_opt.long_option (),
@@ -305,7 +321,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                            (LM_DEBUG, DLINFO
                             ACE_TEXT ("Plan_Launcher::parse_args - ")
-                            ACE_TEXT ("Got Manager Timeout value: %C"),
+                            ACE_TEXT ("Got Manager Timeout value: %C\n"),
                             get_opt.opt_arg ()));
               options.em_timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
               break;
@@ -872,6 +888,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           pl_base.reset (lm_pl);
         }
 
+
       Deployment::DeploymentPlan_var dp;
 
       DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
@@ -910,20 +927,41 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (options.domain_file_)
         {
+          ::DAnCE::Config_Handlers::XML_File_Intf file (options.domain_file_);
+          file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
+          ::Deployment::Domain *plan = file.release_domain ();
+
+          if (!plan)
+            {
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT("PlanLauncher - Error - ")
+                            ACE_TEXT("Error: Processing file <%C>\n"), options.domain_file_));
+              return false;
+            }
+
           DAnCE_Domain_Validator_i validator (orb);
-          validator.load_domain_from_file (options.domain_file_);
+          validator.load_domain (*plan);
 
           ACE_Time_Value remaining_time (timeout - ACE_OS::gettimeofday ());
           ACE_UINT64 usec;
-          remaining_time.to_usec (usec);
+          timeout.to_usec (usec);
 
           ::DAnCE::Time_Value tv;
-          tv.useconds (usec);
+          tv.seconds (options.em_timeout_);
           CORBA::StringSeq_var late_nodes;
 
-          validator.block_for_domain (tv, late_nodes.out ());
-
+          if (!validator.block_for_domain (tv, late_nodes.out ()))
+            {
+              DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("PlanLauncher - Error: ")
+                            ACE_TEXT ("Not all nodes in domain ready\n")));
+              return 1;
+            }
         }
+
+
       switch (options.mode_)
         {
         case Options::LAUNCH:
