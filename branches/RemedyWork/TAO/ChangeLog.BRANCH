@@ -1,3 +1,12 @@
+Thu Oct 13 11:15:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_Impl.cpp:
+          Layout changes
+
+        * tao/LocalObject.cpp:
+        * tao/Object.cpp:
+          Log an error before throwing a NO_IMPLEMENT system exception
+
 Thu Oct 13 07:15:34 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
