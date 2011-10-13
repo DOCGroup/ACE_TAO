@@ -168,8 +168,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (node->has_native ()) // native exists => no stub
     {
-      if (this->gen_raise_exception ("::CORBA::MARSHAL",
-                                     "") == -1)
+      if (this->gen_raise_exception ("::CORBA::MARSHAL", "") == -1)
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,

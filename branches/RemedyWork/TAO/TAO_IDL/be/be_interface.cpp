@@ -833,8 +833,7 @@ private:
 };
 
 TAO_IDL_Gen_OpTable_Worker::TAO_IDL_Gen_OpTable_Worker (
-    const char *skeleton_name
-  )
+    const char *skeleton_name)
   : skeleton_name_ (skeleton_name)
 {
 }
@@ -1252,7 +1251,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                                    const char *full_skeleton_name,
                                    TAO_OutStream *os)
 {
-  int lookup_strategy =
+  int const lookup_strategy =
     be_global->lookup_strategy ();
 
   if (lookup_strategy == BE_GlobalData::TAO_DYNAMIC_HASH)
@@ -1292,7 +1291,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               *os << "}," << be_nl;
 
-              derived_interface->skel_count_++;
+              ++derived_interface->skel_count_;
             }
           else if (d->node_type () == AST_Decl::NT_attr)
             {
@@ -1321,7 +1320,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               *os << "}," << be_nl;
 
-              derived_interface->skel_count_++;
+              ++derived_interface->skel_count_;
 
               if (!attr->readonly ())
                 {
@@ -1343,7 +1342,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
                   *os << "}," << be_nl;
 
-                  derived_interface->skel_count_++;
+                  ++derived_interface->skel_count_;
                 }
             }
         }
@@ -1554,7 +1553,6 @@ be_interface::traverse_inheritance_graph (
   // Make sure the queues are empty.
   this->insert_queue.reset ();
   this->del_queue.reset ();
-
 
   // Insert ourselves in the queue.
   if (insert_queue.enqueue_tail (this) == -1)
