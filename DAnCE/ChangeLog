@@ -1,3 +1,12 @@
+Thu Oct 13 22:25:39 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tests/Plan_Launcher/NM-Delay:
+        * tests/Plan_Launcher/NM-Delay/Deployment.cdp:
+        * tests/Plan_Launcher/NM-Delay/NodeMap.cdd:
+        * tests/Plan_Launcher/NM-Delay/run_test.pl:
+
+          Test for the domain validator.
+
 Thu Oct 13 22:24:56 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Plan_Launcher/Plan_Launcher.cpp:
