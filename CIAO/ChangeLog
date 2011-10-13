@@ -1,3 +1,9 @@
+Thu Oct 13 19:09:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+
+          File missing from previous commit.
+
 Thu Oct 13 19:04:17 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Base/CIAO_Properties.idl:
