@@ -71,11 +71,11 @@ module DAnCE
   /// Property describing the implementation type of a monolithic implementation
   const string IMPL_TYPE = "edu.vanderbilt.dre.DAnCE.ImplementationType";
 
-  const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
-  const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
-  const string CCM_COMPONENT = "edu.dre.vanderbilt.dre.CCM.Component";
-  const string CCM_HOMEDCOMPONENT = "edu.dre.vanderbilt.dre.CCM.HomedComponent";
-  const string CCM_CONNECTOR = "edu.dre.vanderbilt.dre.CCM.Connector";
+  const string CCM_CONTAINER = "edu.vanderbilt.dre.CCM.Container";
+  const string CCM_HOME = "edu.vanderbilt.dre.CCM.Home";
+  const string CCM_COMPONENT = "edu.vanderbilt.dre.CCM.Component";
+  const string CCM_HOMEDCOMPONENT = "edu.vanderbilt.dre.CCM.HomedComponent";
+  const string CCM_CONNECTOR = "edu.vanderbilt.dre.CCM.Connector";
 
   const string DANCE_LOCALITYMANAGER = "edu.vanderbilt.dre.DAnCE.LocalityManager";
   const string DANCE_INSTALLATIONHANDLER = "edu.vanderbilt.dre.DAnCE.InstanceHandler";
