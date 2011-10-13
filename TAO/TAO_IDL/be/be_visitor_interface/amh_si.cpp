@@ -39,9 +39,7 @@ be_visitor_amh_interface_si::visit_interface (be_interface *node)
 
   int status =
     node->traverse_inheritance_graph (
-              be_visitor_amh_interface_si::gen_skel_helper,
-              os
-            );
+              be_visitor_amh_interface_si::gen_skel_helper, os);
 
   if (status == -1)
     {
