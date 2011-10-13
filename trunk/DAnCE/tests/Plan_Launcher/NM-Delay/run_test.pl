@@ -168,7 +168,7 @@ print "Invoking executor - launch the application -\n";
 
 print "Start dance_plan_launcher.exe with -x $cdp_file -k file://$ior_emfile\n";
 $E = $tg_executor->CreateProcess ("$DANCE_ROOT/bin/dance_plan_launcher",
-                        "-x $cdp_file --em-ior file://$ior_emfile --manager-timeout 20 --domain-file NodeMap.cdd");
+                        "-x $cdp_file --em-ior file://$ior_emfile --domain-timeout 20 --domain-file NodeMap.cdd");
 
 $pl_status = $E->Spawn ();
 
@@ -185,7 +185,7 @@ sleep 3;
 # Invoke execution manager.
 print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
+                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService -ORBEndpoint iiop://localhost:60006");
 $em_status = $EM->Spawn ();
 
 print "Sleeping 3 seconds to ensure that PL properly waits on NM reference.\n";

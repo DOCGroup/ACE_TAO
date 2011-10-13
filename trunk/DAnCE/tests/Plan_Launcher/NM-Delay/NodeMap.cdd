@@ -6,6 +6,28 @@
   <label/>
 
   <node>
+    <name>ExecutionManager</name>
+    <label/>
+    <resource>
+      <name>Node Address</name>
+      <resourceType>edu.vanderbilt.dre.DAnCE.NodeAddress</resourceType>
+      <property>
+        <name>edu.vanderbilt.dre.DAnCE.StringIOR</name>
+        <kind>Attribute</kind>
+        <dynamic>false</dynamic>
+        <value>
+          <type>
+            <kind>tk_string</kind>
+          </type>
+          <value>
+            <string>corbaloc:iiop:localhost:60006</string>
+          </value>
+        </value>
+      </property>
+    </resource>
+  </node>
+
+  <node>
     <name>LocalityOne</name>
     <label/>
     <resource>

@@ -1,3 +1,13 @@
+Thu Oct 13 22:38:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.cpp:
+        * tests/Plan_Launcher/NM-Delay/NodeMap.cdd:
+        * tests/Plan_Launcher/NM-Delay/run_test.pl:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+
+          Added capability for the domain validator to check the liveness of the
+          ExecutionManager.
+
 Thu Oct 13 22:25:39 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tests/Plan_Launcher/NM-Delay:
