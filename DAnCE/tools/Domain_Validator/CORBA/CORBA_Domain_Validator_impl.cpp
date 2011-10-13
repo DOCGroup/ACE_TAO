@@ -100,6 +100,11 @@ DAnCE_Domain_Validator_i::create_node_table (void)
           ior += domain_->node[i].name;
           ior += ".NodeManager";
         }
+      else
+        {
+          ior += "/";
+          ior += "ExecutionManager";
+        }
 
       DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                    (LM_INFO, DLINFO ACE_TEXT("Node_Locator::process_cdd - ")
