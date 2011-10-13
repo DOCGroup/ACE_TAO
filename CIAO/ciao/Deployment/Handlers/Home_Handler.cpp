@@ -43,7 +43,7 @@ namespace CIAO
   Home_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Home_Handler_i::instance_type");
-    return CORBA::string_dup ("edu.dre.vanderbilt.dre.CCM.Home");
+    return CORBA::string_dup (CIAO::Deployment::CCM_HOME);
   }
 
   void

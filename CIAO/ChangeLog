@@ -1,3 +1,13 @@
+Thu Oct 13 19:04:17 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Base/CIAO_Properties.idl:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+
+          Changed to use constants in the CIAO_Properties file to identify
+          implementation type.
+
 Mon Oct 10 08:48:51 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.0.5 released.
