@@ -1,3 +1,8 @@
+Thu Oct 13 06:46:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Fixed problem with num_args that still was generated for arguments
+
 Wed Oct 12 14:14:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
