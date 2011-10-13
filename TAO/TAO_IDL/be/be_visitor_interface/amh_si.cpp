@@ -141,20 +141,16 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "TAO_ServerRequest & req," << be_nl
                   << "void * context," << be_nl
-                  << "void * obj" << be_uidt_nl
-                  << ")" << be_uidt_nl
+                  << "void * obj)" << be_uidt
+                  << be_uidt_nl
                   << "{" << be_idt_nl;
               *os << ancestor_amh_name
-                  << "* const impl = static_cast<"
-                  << derived_amh_name
-                  << " *> (obj);" << be_nl;
-              *os << ancestor_amh_name
                   << "::" << d->local_name ()
-                  << "_skel (" << be_idt << be_idt_nl
+                  << "_skel (" << be_idt_nl
                   << "req," << be_nl
                   << "context," << be_nl
-                  << "impl" << be_uidt_nl
-                  << ");" << be_uidt << be_uidt_nl
+                  << "obj);" << be_uidt
+                  << be_uidt_nl
                   << "}";
             }
           else if (nt == AST_Decl::NT_attr)
@@ -177,22 +173,17 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "TAO_ServerRequest & req," << be_nl
                   << "void * context," << be_nl
-                  << "void * obj" << be_uidt_nl
-                  << ")" << be_uidt_nl
+                  << "void * obj)" << be_uidt
+                  << be_uidt_nl
                   << "{" << be_idt_nl;
-
-              *os << ancestor_amh_name
-                  << "* const impl = static_cast<"
-                  << derived_amh_name
-                  << " *> (obj);" << be_nl;
 
               *os << ancestor_amh_name
                   << "::_get_" << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
                   << "req," << be_nl
                   << "context," << be_nl
-                  << "impl" << be_uidt_nl
-                  << ");" << be_uidt << be_uidt_nl
+                  << "obj);" << be_uidt
+                  << be_uidt << be_uidt_nl
                   << "}";
 
               if (!attr->readonly ())
@@ -209,22 +200,17 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & req," << be_nl
                       << "void * context," << be_nl
-                      << "void * obj" << be_uidt_nl
-                      << ")" << be_uidt_nl
+                      << "void * obj)" << be_uidt
+                      << be_uidt_nl
                       << "{" << be_idt_nl;
-
-                  *os << ancestor_amh_name
-                      << "* const impl = static_cast<"
-                      << derived_amh_name
-                      << " *> (obj);" << be_nl;
 
                   *os << ancestor_amh_name
                       << "::_set_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
                       << "req," << be_nl
                       << "context," << be_nl
-                      << "impl" << be_uidt_nl
-                      << ");" << be_uidt << be_uidt_nl
+                      << "obj);" << be_uidt
+                      << be_uidt << be_uidt_nl
                       << "}";
                 }
             }
