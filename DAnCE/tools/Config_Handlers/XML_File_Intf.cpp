@@ -6,6 +6,7 @@
 #include "DP_Handler.h"
 #include "DD_Handler.h"
 #include "Common.h"
+#include "XMLSchema/id_map.hpp"
 
 #include "dance/Deployment/Deployment_DataC.h"
 #include "dance/Deployment/Deployment_TargetDataC.h"
@@ -26,7 +27,7 @@ namespace DAnCE
     {
       DANCE_TRACE("XML_File_Intf::destructor");
 
-      XML_Helper::XML_HELPER.terminate_parser ();
+      //      XML_Helper::XML_HELPER.terminate_parser ();
     }
 
     bool
@@ -57,6 +58,9 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
             (LM_TRACE, DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
                        ACE_TEXT ("DOMElement pointer: %u\n"), foo));
+
+          ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+          (*TSS_ID_Map)->reset ();
 
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_plan - ")
@@ -131,6 +135,10 @@ namespace DAnCE
           DANCE_DEBUG (DANCE_LOG_EVENT_TRACE, (LM_TRACE,
             DLINFO ACE_TEXT ("XML_File_Intf::read_process_domain - ")
                        ACE_TEXT ("Parsing XML file with XSC\n")));
+
+          ID_Map::TSS_ID_Map* TSS_ID_Map (ACE_Singleton<ID_Map::TSS_ID_Map, ACE_Null_Mutex>::instance());
+          (*TSS_ID_Map)->reset ();
+
           Domain dp =
             DAnCE::Config_Handlers::reader::domain (dom);
 
@@ -216,7 +224,6 @@ namespace DAnCE
                                     const ACE_TCHAR *relpath)
     {
       DANCE_TRACE("XML_File_Intf::add_search_path");
-
       XML_Helper::XML_HELPER.get_resolver ().get_resolver ().add_path (environment, relpath);
     }
 
