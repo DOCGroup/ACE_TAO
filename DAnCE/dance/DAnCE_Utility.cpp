@@ -285,6 +285,46 @@ namespace DAnCE
       return false;
     }
 
+  bool
+  get_resource_value (const char *type,
+                      const ::Deployment::Resources &resources,
+                      ::Deployment::Resource  &val)
+  {
+    DANCE_TRACE ("DAnCE::Utility::get_resource_value<const char *>");
+
+    DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                 (LM_TRACE, DLINFO
+                  ACE_TEXT("DAnCE::Utility::get_resource_value - ")
+                  ACE_TEXT("Finding resource for type '%C'\n"),
+                  type));
+
+    for (CORBA::ULong i = 0; i < resources.length (); ++i)
+      {
+        // search for the resource with resourceType
+        for (CORBA::ULong k = 0;k < resources[i].resourceType.length ();k++)
+          {
+            if (ACE_OS::strcmp (type,
+                                 resources[i].resourceType[k]) == 0)
+              {
+                DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
+                             (LM_TRACE, DLINFO
+                              ACE_TEXT("DAnCE::Utility::get_resource_value - ")
+                              ACE_TEXT("Found resource for type '%C'\n"),
+                              type));
+
+                val = resources[i];
+                return true;
+              }
+          }
+        }
+      DANCE_ERROR (DANCE_LOG_ERROR,
+                   (LM_WARNING, DLINFO
+                    ACE_TEXT("DAnCE::Utility::get_resource_value - ")
+                    ACE_TEXT("Failed to extract resource for %C\n"),
+                    type));
+      return false;
+    }
+
     template<>
     bool get_property_value (const char *name,
                              const ::Deployment::Properties &properties,

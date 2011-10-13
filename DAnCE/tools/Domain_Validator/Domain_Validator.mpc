@@ -1,0 +1,24 @@
+project(DAnCE_Domain_Validator_Base) : dance_deployment_stub, dance_lib, dance_output, install, \
+                                                      taolib_with_idl {
+
+  idlflags += \
+              -Wb,stub_export_macro=DAnCE_Domain_Validator_Stub_Export \
+              -Wb,stub_export_include=DAnCE_Domain_Validator_stub_export.h \
+              -Wb,skel_export_macro=DAnCE_Domain_Validator_Stub_Export \
+              -Wb,skel_export_include=DAnCE_Domain_Validator_stub_export.h \
+              -Gxhst -Gxhsk
+
+  IDL_Files {
+   Domain_Validator.idl
+  }
+
+  Source_Files {
+   Domain_ValidatorC.cpp
+   Domain_ValidatorS.cpp
+  }
+
+  Header_Files {
+   Domain_ValidatorC.h
+   Domain_ValidatorS.h
+  }
+}
