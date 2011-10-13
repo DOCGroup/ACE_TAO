@@ -1,3 +1,8 @@
+Thu Oct 13 07:17:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * dance/Logger/Log_Macros.h:
+          Fix complile errors when all logging is disabled.
+
 Wed Oct 12 13:09:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * dance/DAnCE_Core.mpc:
