@@ -1,3 +1,12 @@
+Thu Oct 13 12:57:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be/be_valuetype.cpp:
+          Removed gen_skel_helper from here, not used at all
+
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+          Fixed compile error with gcc 4.6
+
 Thu Oct 13 12:14:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
