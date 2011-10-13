@@ -87,10 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
             Param_Test_var param_test =
-              TAO::Narrow_Utils<Param_Test>::unchecked_narrow (
-                  obj.in (),
-                  TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-                );
+              TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in ());
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
