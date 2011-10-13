@@ -20,11 +20,11 @@ module CIAO
     const string COMPONENT_HOME = "edu.vanderbilt.dre.CIAO.ComponentHomeId";
     const string CONTAINER_ID = "edu.vanderbilt.dre.CIAO.ContainerId";
 
-    const string CCM_CONTAINER = "edu.dre.vanderbilt.dre.CCM.Container";
-    const string CCM_HOME = "edu.dre.vanderbilt.dre.CCM.Home";
-    const string CCM_COMPONENT = "edu.dre.vanderbilt.dre.CCM.Component";
-    const string CCM_HOMEDCOMPONENT = "edu.dre.vanderbilt.dre.CCM.HomedComponent";
-    const string CCM_CONNECTOR = "edu.dre.vanderbilt.dre.CCM.Connector";
+    const string CCM_CONTAINER = "edu.vanderbilt.dre.CCM.Container";
+    const string CCM_HOME = "edu.vanderbilt.dre.CCM.Home";
+    const string CCM_COMPONENT = "edu.vanderbilt.dre.CCM.Component";
+    const string CCM_HOMEDCOMPONENT = "edu.vanderbilt.dre.CCM.HomedComponent";
+    const string CCM_CONNECTOR = "edu.vanderbilt.dre.CCM.Connector";
   };
 };
 #endif /* CIAO_PROPERTIES_IDL */

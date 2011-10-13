@@ -45,7 +45,7 @@ namespace CIAO
   Homed_Component_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Homed_Component_Handler_i::instance_type");
-    return CORBA::string_dup ("edu.vanderbilt.dre.CCM.HomedComponent");
+    return CORBA::string_dup (CIAO::Deployment::CCM_HOMEDCOMPONENT);
   }
 
   void
