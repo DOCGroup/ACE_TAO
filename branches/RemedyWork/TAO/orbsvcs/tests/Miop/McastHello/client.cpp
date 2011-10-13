@@ -56,9 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        */
       Test::McastHello_var hello =
         TAO::Narrow_Utils<Test::McastHello>::unchecked_narrow (
-            tmp.in (),
-            TAO::TAO_CO_NONE
-          );
+            tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
