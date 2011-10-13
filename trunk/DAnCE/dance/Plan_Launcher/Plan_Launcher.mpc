@@ -22,7 +22,8 @@ project(DAnCE_Plan_Launcher_Impl) : install_lib, dance_lib, dance_logger, dance_
   }
 }
 
-project(Plan_Launcher_Exec) : install, dance_exe, dance_plan_launcher {
+project(Plan_Launcher_Exec) : install, dance_exe, dance_plan_launcher, \
+                            dance_domain_validator {
   exename = dance_plan_launcher
   Source_Files {
     Plan_Launcher.cpp

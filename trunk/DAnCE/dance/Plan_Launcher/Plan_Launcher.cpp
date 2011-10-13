@@ -11,6 +11,7 @@
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Logger/Logger_Service.h"
 #include "tools/Convert_Plan/Convert_Plan_Impl.h"
+#include "tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h"
 
 #include "EM_Launcher.h"
 #include "NM_Launcher.h"
@@ -38,6 +39,7 @@ namespace
         lm_ior_ (0),
         xml_plan_ (0),
         cdr_plan_ (0),
+        domain_file_ (0),
         uuid_ (0),
         am_ior_ (0),
         app_ior_ (0),
@@ -54,6 +56,7 @@ namespace
     const ACE_TCHAR *lm_ior_;
     const ACE_TCHAR *xml_plan_;
     const ACE_TCHAR *cdr_plan_;
+    const ACE_TCHAR *domain_file_;
     const ACE_TCHAR *uuid_;
     const ACE_TCHAR *am_ior_;
     const ACE_TCHAR *app_ior_;
@@ -78,7 +81,8 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("\t--lm-ior <LocalityManager IOR>\t")
               ACE_TEXT ("LocalityManager IOR for LM based deployment.\n")
               ACE_TEXT ("\t--manager-timeout <seconds>\t")
-              ACE_TEXT ("Number of seconds to wait for a valid manager reference.\n")
+              ACE_TEXT ("\t--domain-timeout <seconds>\t")
+              ACE_TEXT ("Number of seconds to wait for a valid domain validation.\n")
               /*
               ACE_TEXT ("\nName Service Options\n")
               ACE_TEXT ("\t--domain-nc [NC]\t\t)
@@ -152,6 +156,7 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("output"), 'o', ACE_Get_Opt::ARG_OPTIONAL);
   get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("manager-timeout"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("domain-timeout"), ACE_Get_Opt::ARG_REQUIRED);
 
   int c;
   ACE_CString s;
@@ -292,8 +297,10 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               options.lm_ior_ = get_opt.opt_arg ();
               break;
             }
-          if (ACE_OS::strcmp (get_opt.long_option (),
-                              ACE_TEXT ("manager-timeout")) == 0)
+          if ((ACE_OS::strcmp (get_opt.long_option (),
+                               ACE_TEXT ("manager-timeout")) == 0) ||
+              (ACE_OS::strcmp (get_opt.long_option (),
+                               ACE_TEXT ("domain-timeout")) == 0))
             {
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                            (LM_DEBUG, DLINFO
@@ -658,9 +665,8 @@ teardown_plan (const Options &opts,
 
 template <typename Manager>
 typename Manager::_ptr_type
-resolve_manager (int delay, const ACE_TCHAR * ior, CORBA::ORB_ptr orb)
+resolve_manager (ACE_Time_Value timeout, const ACE_TCHAR * ior, CORBA::ORB_ptr orb)
 {
-  ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (delay));
   ACE_Time_Value retry (0, 1000000 / 4);
 
   CORBA::Object_var obj;
@@ -780,13 +786,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       auto_ptr<DAnCE::Plan_Launcher_Base> pl_base (0);
 
+      ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (options.em_timeout_));
+
       if (options.em_ior_)
         {
           // Resolve ExecutionManager IOR for EM base deployment.
           DAnCE::EM_Launcher *em_pl (0);
 
+
           Deployment::ExecutionManager_var tmp_em =
-            resolve_manager<Deployment::ExecutionManager> (options.em_timeout_,
+            resolve_manager<Deployment::ExecutionManager> (timeout,
                                                            options.em_ior_,
                                                            orb);
 
@@ -899,6 +908,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
+      if (options.domain_file_)
+        {
+          DAnCE_Domain_Validator_i validator (orb);
+          validator.load_domain_from_file (options.domain_file_);
+
+          ACE_Time_Value remaining_time (timeout - ACE_OS::gettimeofday ());
+          ACE_UINT64 usec;
+          remaining_time.to_usec (usec);
+
+          ::DAnCE::Time_Value tv;
+          tv.useconds (usec);
+          CORBA::StringSeq_var late_nodes;
+
+          validator.block_for_domain (tv, late_nodes.out ());
+
+        }
       switch (options.mode_)
         {
         case Options::LAUNCH:
