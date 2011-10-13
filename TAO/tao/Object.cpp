@@ -209,7 +209,14 @@ CORBA::Object::_is_a (const char *type_id)
   // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
 
   if (this->protocol_proxy_ == 0)
-    throw ::CORBA::NO_IMPLEMENT ();
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                    type_id));
+
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (type_id,
@@ -367,6 +374,11 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   // object references.
   if (ctx != 0 || this->protocol_proxy_ == 0)
     {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                    operation));
+
       throw ::CORBA::NO_IMPLEMENT ();
     }
 
@@ -407,6 +419,11 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
   // object references.
   if (ctx != 0 || this->protocol_proxy_ == 0)
     {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                    operation));
+
       throw ::CORBA::NO_IMPLEMENT ();
     }
 
@@ -445,6 +462,11 @@ CORBA::Object::_request (const char *operation)
     }
   else
     {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy for %C\n"),
+                    operation));
+
       throw ::CORBA::NO_IMPLEMENT ();
     }
 }
@@ -515,7 +537,13 @@ CORBA::Object::_get_policy (CORBA::PolicyType type)
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy (type);
   else
-    throw ::CORBA::NO_IMPLEMENT ();
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
 }
 
 CORBA::Policy_ptr
@@ -526,7 +554,13 @@ CORBA::Object::_get_cached_policy (TAO_Cached_Policy_Type type)
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_cached_policy (type);
   else
-    throw ::CORBA::NO_IMPLEMENT ();
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
 }
 
 CORBA::Object_ptr
@@ -537,7 +571,13 @@ CORBA::Object::_set_policy_overrides (
   TAO_OBJECT_IOR_EVALUATE_RETURN;
 
   if (!this->protocol_proxy_)
-    throw ::CORBA::NO_IMPLEMENT ();
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
 
   TAO_Stub* stub =
     this->protocol_proxy_->set_policy_overrides (policies, set_add);
@@ -574,7 +614,13 @@ CORBA::Object::_get_policy_overrides (const CORBA::PolicyTypeSeq & types)
   if (this->protocol_proxy_)
     return this->protocol_proxy_->get_policy_overrides (types);
   else
-    throw ::CORBA::NO_IMPLEMENT ();
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+
+      throw ::CORBA::NO_IMPLEMENT ();
+    }
 }
 
 CORBA::Boolean
@@ -627,7 +673,13 @@ CORBA::Object::_get_orb (void)
       if (this->protocol_proxy_)
         return CORBA::ORB::_duplicate (this->protocol_proxy_->orb_core ()->orb ());
       else
-        throw ::CORBA::INTERNAL ();
+        {
+          if (TAO_debug_level > 0)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - No protocol proxy in _get_policy\n")));
+
+          throw ::CORBA::NO_IMPLEMENT ();
+        }
     }
 }
 
