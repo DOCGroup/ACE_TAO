@@ -92,9 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->string_to_object ("corbaloc:iiop:localhost:12345/FakeIOR");
 
       Test_var test =
-        TAO::Narrow_Utils<Test>::unchecked_narrow (
-          object.in (),
-          TAO::TAO_CO_NONE);
+        TAO::Narrow_Utils<Test>::unchecked_narrow (object.in ());
 
       if (CORBA::is_nil (test.in ()))
         {
