@@ -1,9 +1,0 @@
-// $Id$
-
-project {
-  after += CodeGenerationKit
-  libs  += CodeGenerationKits
-
-  includes += $(CCF_ROOT)
-  libpaths += $(CCF_ROOT)/CCF
-}

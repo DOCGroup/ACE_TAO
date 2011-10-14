@@ -1,3 +1,9 @@
+Fri Oct 14 19:34:17 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * MPC/config/codegenerationkit.mpb:
+
+          Removed this file.
+
 Fri Oct 14 18:25:38 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * MPC/config/ccf_common.mpb:
