@@ -1,3 +1,9 @@
+Fri Oct 14 14:47:22 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_domain_validator.mpb:
+
+          fuzz.
+
 Fri Oct 14 14:01:41 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * MPC/config/dance_domain_validator.mpb:
