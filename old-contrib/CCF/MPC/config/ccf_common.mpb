@@ -1,8 +1,8 @@
 // $Id$
 
 project : boost_filesystem, boost_regex, crosscompile {
-  includes += $(CCF_ROOT) $(CCF_ROOT)/CCF $(ACE_ROOT)/contrib/utility
-  libpaths += $(CCF_ROOT)/CCF $(ACE_ROOT)/lib
+  includes += $(CCF_ROOT) $(CCF_ROOT)/CCF
+  libpaths += $(CCF_ROOT)/CCF
 
   specific(prop:microsoft) {
     compile_flags += /wd4290 /wd4800 /wd4250 /wd4355 /wd4996
