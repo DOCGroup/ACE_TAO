@@ -1,3 +1,9 @@
+Fri Oct 14 14:01:41 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_domain_validator.mpb:
+
+          Missing from a previous commit.
+
 Fri Oct 14 02:31:06 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Domain_Validator/Domain_Validator.idl:
