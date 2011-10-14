@@ -1,3 +1,25 @@
+Fri Oct 14 12:18:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Base:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.idl:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/SenderDriver.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender.idl:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender.mpc:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.h:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/run_test.pl:
+          Added a test which test whether the correct exception is thrown when a topic cannot
+          be created by DDS.
+
 Thu Oct 13 06:30:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/logger/Log_Macros.h:
