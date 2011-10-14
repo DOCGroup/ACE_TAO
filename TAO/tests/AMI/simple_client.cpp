@@ -263,10 +263,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "Issuing a synchronous method to collect the AMI replies\n"));
         }
 
-      //while (orb->work_pending())
-      //  orb->perform_work ();
-
-
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
                                               "Let's talk SMI.");
