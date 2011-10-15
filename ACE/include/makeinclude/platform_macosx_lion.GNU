@@ -17,7 +17,7 @@ ifeq ($(buildbits),universal)
   LDFLAGS    += -arch i386 -arch x86_64
 endif
 
-ifneq (,$(buildbits))
+ifeq (,$(buildbits))
   FLAGS_C_CC += -m64
   LDFLAGS    += -m64
 endif
