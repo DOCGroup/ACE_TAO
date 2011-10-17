@@ -387,8 +387,9 @@ treated as collocated. </td>
       <tr>
         <td><code>-ORBCollocationStrategy</code> <em>thru_poa/direct/best</em>
         </td>
-        <td>Specifies what type of collocated object to use. If the <code>thru_poa</code>
-(default) strategy is used, TAO uses the collocation object
+        <td>Specifies what type of collocated object to use. If not specified
+the TAO_DEFAULT_COLLOCATION_STRATEGY default (default on  thru_poa) is used.
+If the <code>thru_poa</code> strategy is used, TAO uses the collocation object
 implementation that respects POA's current state and policies. When
 using the <code>direct</code> strategy, method invocations on
 collocated objects become direct calls to servant without checking
