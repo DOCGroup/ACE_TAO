@@ -1,3 +1,17 @@
+Mon Oct 17 14:01:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/CIAO_State.h:
+        * ciao/Deployment/Handlers/CIAO_State.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.h:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Using mutexes to be threadsafe.
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Using this for class variable.
+
+        * ciao/Servants/Extension/Servant_Impl_T.cpp:
+          Renamed some variables.
+
 Mon Oct 17 08:31:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:

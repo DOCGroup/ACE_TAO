@@ -20,6 +20,11 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::add_container");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->container_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     if (CIAO_debug_level && // Let's only perform this lookup if we have logging enabled.
         this->containers_.find (id) != this->containers_.end ())
       {
@@ -35,6 +40,12 @@ namespace CIAO
   Deployment_State::remove_container (const char *id)
   {
     CIAO_TRACE ("Deployment_State::remove_container");
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->container_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     CONTAINERS::iterator pos = this->containers_.find (id);
 
     if (pos != this->containers_.end ())
@@ -46,12 +57,15 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::fetch_container");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->container_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     CONTAINERS::iterator pos = this->containers_.find (id);
 
     if (pos == this->containers_.end ())
-      {
-        return CIAO::Container::_nil ();
-      }
+      return CIAO::Container::_nil ();
 
     return CIAO::Container::_duplicate (pos->second.in ());
   }
@@ -63,33 +77,58 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::add_home");
 
-    if (CIAO_debug_level && // Let's only perform this lookup if we have logging enabled.
-        this->homes_.find (id) != this->homes_.end ())
-      {
-        CIAO_ERROR (1, (LM_WARNING, CLINFO
-                        "Deployment_State::add_home - "
-                        "Warning:  Attempting to add duplicate home reference\n"));
-      }
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->home_mutex_,
+                          CORBA::NO_RESOURCES ());
 
-    this->instance_container_[id] = cont_id;
-    this->homes_[id] = Components::CCMHome::_duplicate (home);
+      if (CIAO_debug_level && // Let's only perform this lookup if we have logging enabled.
+          this->homes_.find (id) != this->homes_.end ())
+        {
+          CIAO_ERROR (1, (LM_WARNING, CLINFO
+                          "Deployment_State::add_home - "
+                          "Warning:  Attempting to add duplicate home reference\n"));
+        }
+      this->homes_[id] = Components::CCMHome::_duplicate (home);
+    }
+
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instance_container_mutex_,
+                          CORBA::NO_RESOURCES ());
+      this->instance_container_[id] = cont_id;
+    }
   }
 
   void
   Deployment_State::remove_home (const char *id)
   {
     CIAO_TRACE ("Deployment_State::remove_home");
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->home_mutex_,
+                          CORBA::NO_RESOURCES ());
 
-    HOMES::iterator pos = this->homes_.find (id);
+      HOMES::iterator pos = this->homes_.find (id);
 
-    if (pos != this->homes_.end ())
-      this->homes_.erase (pos);
+      if (pos != this->homes_.end ())
+        this->homes_.erase (pos);
+    }
 
-    INSTANCE_CONTAINER::iterator cont =
-      this->instance_container_.find (id);
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instance_container_mutex_,
+                          CORBA::NO_RESOURCES ());
+      INSTANCE_CONTAINER::iterator cont =
+        this->instance_container_.find (id);
 
-    if (cont != this->instance_container_.end ())
-      this->instance_container_.erase (cont);
+      if (cont != this->instance_container_.end ())
+        this->instance_container_.erase (cont);
+    }
   }
 
   Components::CCMHome_ptr
@@ -97,9 +136,16 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::fetch_home");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->home_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     HOMES::iterator pos = this->homes_.find (id);
 
-    if (pos == this->homes_.end ()) return Components::CCMHome::_nil ();
+    if (pos == this->homes_.end ())
+      return Components::CCMHome::_nil ();
+
     return Components::CCMHome::_duplicate (pos->second.in ());
   }
 
@@ -110,16 +156,28 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::add_component");
 
-    if (CIAO_debug_level && // Let's only perform this lookup if we have logging enabled.
-        this->components_.find (id) != this->components_.end ())
-      {
-        CIAO_ERROR (1, (LM_WARNING, CLINFO
-                        "Deployment_State::add_component - "
-                        "Warning:  Attempting to add duplicate component reference\n"));
-      }
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->component_mutex_,
+                          CORBA::NO_RESOURCES ());
 
-    this->instance_container_[id] = cont_id;
-    this->components_[id] = Components::CCMObject::_duplicate (component);
+      if (CIAO_debug_level && // Let's only perform this lookup if we have logging enabled.
+          this->components_.find (id) != this->components_.end ())
+        {
+          CIAO_ERROR (1, (LM_WARNING, CLINFO
+                          "Deployment_State::add_component - "
+                          "Warning:  Attempting to add duplicate component reference\n"));
+        }
+      this->components_[id] = Components::CCMObject::_duplicate (component);
+    }
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instance_container_mutex_,
+                          CORBA::NO_RESOURCES ());
+      this->instance_container_[id] = cont_id;
+    }
   }
 
   void
@@ -127,16 +185,28 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::remove_component");
 
-    COMPONENTS::iterator pos = this->components_.find (id);
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->component_mutex_,
+                          CORBA::NO_RESOURCES ());
+      COMPONENTS::iterator pos = this->components_.find (id);
 
-    if (pos != this->components_.end ())
-      this->components_.erase (pos);
+      if (pos != this->components_.end ())
+        this->components_.erase (pos);
+    }
 
-    INSTANCE_CONTAINER::iterator cont =
-      this->instance_container_.find (id);
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instance_container_mutex_,
+                          CORBA::NO_RESOURCES ());
+      INSTANCE_CONTAINER::iterator cont =
+        this->instance_container_.find (id);
 
-    if (cont != this->instance_container_.end ())
-      this->instance_container_.erase (cont);
+      if (cont != this->instance_container_.end ())
+        this->instance_container_.erase (cont);
+    }
   }
 
   Components::CCMObject_ptr
@@ -144,12 +214,15 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::fetch_component");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->component_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     COMPONENTS::iterator pos = this->components_.find (id);
 
     if (pos == this->components_.end ())
-      {
-        return Components::CCMObject::_nil ();
-      }
+      return Components::CCMObject::_nil ();
 
     return Components::CCMObject::_duplicate (pos->second.in ());
   }
@@ -159,6 +232,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Deployment_State::instance_to_container");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->instance_container_mutex_,
+                        CORBA::NO_RESOURCES ());
     INSTANCE_CONTAINER::const_iterator cont =
       this->instance_container_.find (id);
 

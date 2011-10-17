@@ -116,7 +116,7 @@ namespace CIAO
             CORBA::Object_var obj;
             props[i].value >>= CORBA::Any::to_object (obj);
 
-            ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
+            this->ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
           }
       }
   }
