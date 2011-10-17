@@ -1,3 +1,12 @@
+Mon Oct 17 17:27:17 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/Plan_Launcher/Plan_Launcher.mpc:
+          stab at a static linking problem.
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+
+          warnings.
+
 Mon Oct 17 06:15:45 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
