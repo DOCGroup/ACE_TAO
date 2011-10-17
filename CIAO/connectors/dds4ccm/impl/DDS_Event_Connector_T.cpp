@@ -253,21 +253,24 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_complete");
 
-  TopicBaseConnector::configuration_complete ();
+  typename CCM_TYPE::push_consumer_traits::data_listener_type::_var_type
+    push_consumer_data_listener =
+      this->context_->get_connection_push_consumer_data_listener ();
 
-  typename CCM_TYPE::push_consumer_traits::data_listener_type::_var_type push_consumer_data_listener =
-    this->context_->get_connection_push_consumer_data_listener ();
   this->push_consumer_obtained_ |=
     ! ::CORBA::is_nil (push_consumer_data_listener.in ());
-
   ::CCM_DDS::PortStatusListener_var push_consumer_psl =
     this->context_->get_connection_push_consumer_status ();
   this->push_consumer_obtained_ |= ! ::CORBA::is_nil (push_consumer_psl.in ());
+  this->init_subscriber_ |= this->push_consumer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var pull_consumer_psl =
     this->context_->get_connection_pull_consumer_status ();
   this->pull_consumer_obtained_ |=
     ! ::CORBA::is_nil (pull_consumer_psl.in ());
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
+
+  TopicBaseConnector::configuration_complete ();
 
   if (this->push_consumer_obtained_)
     {

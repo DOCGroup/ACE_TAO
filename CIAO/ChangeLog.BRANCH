@@ -1,3 +1,9 @@
+Mon Oct 17 08:31:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+          A subscriber must be created when just listeners are created.
+
 Fri Oct 14 12:18:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/ciao_tests.lst:
