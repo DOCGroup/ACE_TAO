@@ -1,3 +1,21 @@
+Mon Oct 17 13:08:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+        * tests/Collocated_DerivedIF:
+        * tests/Collocated_DerivedIF/Client_Task.h:
+        * tests/Collocated_DerivedIF/Client_Task.cpp:
+        * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
+        * tests/Collocated_DerivedIF/Collocated_Test.cpp:
+        * tests/Collocated_DerivedIF/Hello.h:
+        * tests/Collocated_DerivedIF/Hello.cpp:
+        * tests/Collocated_DerivedIF/Server_Task.h:
+        * tests/Collocated_DerivedIF/Server_Task.cpp:
+        * tests/Collocated_DerivedIF/Test.idl:
+        * tests/Collocated_DerivedIFl/run_test.pl:
+        * tests/Collocated_DerivedIFl/README:
+        Test for -ORBCollocationStrategy direct and interface inheritance
+       
+        * tests/Collocated_Best/README:
+       Add ID
+
 Mon Oct 17 12:33:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * docs/Options.html
         Added new define TAO_DEFAULT_COLLOCATION_STRATEGY .
