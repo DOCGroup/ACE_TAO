@@ -1,3 +1,6 @@
+ . Added new define TAO_DEFAULT_COLLOCATION_STRATEGY (default = thru_poa) which is used as
+   -ORBCollocationStrategy isn't specified.
+
  . Added new -ORBCollocationStrategy best. TAO tries to perform the best possible
    collocation, first direct if possible, then through_poa if possible else no collocation.
 
