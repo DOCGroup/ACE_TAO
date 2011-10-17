@@ -113,6 +113,8 @@ DAnCE_Domain_Validator_i::create_node_table (void)
 
       this->node_map_ [destination] = ior;
     }
+
+  return true;
 }
 
 ::CORBA::Boolean
@@ -296,9 +298,9 @@ DAnCE_Domain_Validator_i::block_for_node (const char * node_name,
                    (LM_EMERGENCY, DLINFO, ACE_TEXT ("Plan_Launcher - ")
                     ACE_TEXT ("Unable to validate connection to Manager: %C\n"),
                     last_error.c_str ()));
-      return 0;
+      return false;
     }
-
+  return true;
 }
 
 ::CORBA::Boolean
@@ -330,7 +332,6 @@ DAnCE_Domain_Validator_i::block_for_domain (const ::DAnCE::Time_Value & max_bloc
   ACE_Time_Value tv = this->convert_time_value (max_block_time);
   ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (tv));
 
-  bool retval = false;
   late_nodes = new ::CORBA::StringSeq (0);
 
   NODE_LIST untried_list;
@@ -480,11 +481,12 @@ DAnCE_Domain_Validator_i::validate_plan (const ::Deployment::DeploymentPlan & pl
 }
 
 ::CORBA::Boolean
-DAnCE_Domain_Validator_i::block_for_plan (const ::Deployment::DeploymentPlan & plan,
-                                          const ::DAnCE::Time_Value & max_block_time,
-                                          ::CORBA::StringSeq_out late_nodes)
+DAnCE_Domain_Validator_i::block_for_plan (const ::Deployment::DeploymentPlan & ,
+                                          const ::DAnCE::Time_Value & ,
+                                          ::CORBA::StringSeq_out )
 {
   // Add your implementation here
-  ACE_Time_Value tv = this->convert_time_value (max_block_time);
+  //  ACE_Time_Value tv = this->convert_time_value (max_block_time);
+  throw CORBA::NO_IMPLEMENT ();
 }
 
