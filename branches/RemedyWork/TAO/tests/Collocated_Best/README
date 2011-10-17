@@ -1,3 +1,4 @@
+// $Id$
 CollocationStrategy TAO_COLLOCATION_BEST:
 
 This tests  performs a series of checks on CollocationStrategy 'best'  (TAO_COLLOCATION_BEST) support in TAO.
