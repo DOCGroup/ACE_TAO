@@ -373,14 +373,13 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_complete");
 
-  TopicBaseConnector::configuration_complete ();
-
   ::CCM_DDS::PortStatusListener_var push_observer_psl =
     this->context_->get_connection_push_observer_status ();
   typename CCM_TYPE::push_observer_traits::data_listener_type::_var_type push_observer_dl =
     this->context_->get_connection_push_observer_data_listener ();
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
+  this->init_subscriber_ |= this->push_observer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
     this->context_->get_connection_push_state_observer_status ();
@@ -388,14 +387,19 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
     this->context_->get_connection_push_state_observer_data_listener ();
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var pull_observer_psl =
     this->context_->get_connection_pull_observer_status ();
   this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
+  this->init_subscriber_ |= this->pull_observer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var passive_observer_psl =
     this->context_->get_connection_passive_observer_status ();
   this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
+  this->init_subscriber_ |= this->passive_observer_obtained_;
+
+  TopicBaseConnector::configuration_complete ();
 
   if (this->observable_obtained_)
     {
