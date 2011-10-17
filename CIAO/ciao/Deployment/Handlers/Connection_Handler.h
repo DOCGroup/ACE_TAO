@@ -116,6 +116,8 @@ namespace CIAO
     ::Components::CCMObject_ptr get_ccm_object (const char * connection_name);
 
     COOKIES cookies_;
+
+    TAO_SYNCH_MUTEX  cookies_mutex_;
   };
 }
 #endif

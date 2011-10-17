@@ -1136,6 +1136,11 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::insert_cookie");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->cookies_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
                                                               conn_info);
     std::pair<COOKIES::iterator, bool> ret = this->cookies_.insert (value_to_insert);
@@ -1163,6 +1168,11 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::remove_cookie");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->cookies_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
       {
@@ -1184,6 +1194,11 @@ namespace CIAO
   Connection_Handler::get_cookie (const char * connection_name)
   {
     CIAO_TRACE ("Connection_Handler::get_cookie");
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->cookies_mutex_,
+                        CORBA::NO_RESOURCES ());
 
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
