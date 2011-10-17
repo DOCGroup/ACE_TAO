@@ -1,3 +1,9 @@
+Mon Oct 17 20:40:35 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Minor enhancements to this file to make ACE/TAO compile again.
+
 Sat Oct 15 00:57:11 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-lion.h:
