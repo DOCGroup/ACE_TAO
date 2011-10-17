@@ -1,3 +1,7 @@
+Mon Oct 17 11:41:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+        * docs/Options.html
+        Add new ORBCollocationStrategy best .
+
 Thu Oct 13 12:57:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_valuetype.h:
