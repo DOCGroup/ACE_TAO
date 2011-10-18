@@ -1,3 +1,7 @@
+Tue Oct 18 07:01:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+        * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
+        Changes for duplicate project names.
+
 Mon Oct 17 13:08:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * tests/Collocated_DerivedIF:
         * tests/Collocated_DerivedIF/Client_Task.h:
