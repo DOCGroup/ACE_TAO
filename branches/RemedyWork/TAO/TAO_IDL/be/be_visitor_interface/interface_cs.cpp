@@ -173,15 +173,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "::" << node->local_name ()
           << " (void)" << be_nl;
 
-      *os << "{" << be_idt_nl;
+      *os << "{" << be_nl;
 
-      *os << be_uidt << "}";
+      *os << "}";
     }
 
   *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
-  *os << "{}" << be_nl_2;
+  *os << "{" << be_nl << "}" << be_nl_2;
 
   bool gen_any_destructor =
     be_global->any_support ()
