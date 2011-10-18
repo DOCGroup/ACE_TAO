@@ -1,3 +1,8 @@
+Tue Oct 18 10:03:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+          Using the container_ variable in a thread safe way.
+
 Tue Oct 18 07:01:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
         Changes for duplicate project names.
@@ -16,7 +21,7 @@ Mon Oct 17 13:08:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * tests/Collocated_DerivedIFl/run_test.pl:
         * tests/Collocated_DerivedIFl/README:
         Test for -ORBCollocationStrategy direct and interface inheritance
-       
+
         * tests/Collocated_Best/README:
        Add ID
 
