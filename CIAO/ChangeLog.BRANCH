@@ -1,3 +1,19 @@
+Tue Oct 18 08:57:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * MPC/ccm_direct_collocation.mpb:
+        * MPC/avoids_ccm_direct_collocation.mpb:
+        * MPC/ciaoidldefaults.mpb:
+        * MPC/ccm_svnt.mpb:
+        * MPC/ccm.mpb:
+        * MPC/ciao_base.mpb:
+        * MPC/ciao.mpb:
+        * MPC/ciao_servant.mpb:
+        * MPC/ciao_servant_activator_stub.mpb:
+        Add direct_collocation to projects
+        
+        
+        
+
 Tue Oct 18 08:31:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
