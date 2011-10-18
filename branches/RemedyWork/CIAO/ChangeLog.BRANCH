@@ -1,3 +1,8 @@
+Tue Oct 18 08:31:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Using temporary _var variables in order to be thread safe.
+
 Mon Oct 17 14:01:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/CIAO_State.h:
