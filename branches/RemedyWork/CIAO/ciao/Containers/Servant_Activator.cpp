@@ -84,7 +84,7 @@ namespace CIAO
         throw CORBA::OBJECT_NOT_EXIST ();
       }
 
-    if (CORBA::is_nil (pa_iter->second))
+    if (CORBA::is_nil (pa_iter->second.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO "Servant_Activator_i::incarnate - "
                      "Port Activator for ObjectId %C was nil!\n",
@@ -133,7 +133,7 @@ namespace CIAO
         throw CORBA::OBJECT_NOT_EXIST ();
       }
 
-    if (CORBA::is_nil (pa_iter->second))
+    if (CORBA::is_nil (pa_iter->second.in ()))
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO "Servant_Activator_i::etherealize - "
                      "Port Activator for ObjectId %C was nil!\n",
@@ -151,7 +151,7 @@ namespace CIAO
                       guard,
                       this->mutex_,
                       false);
-        CORBA::String_var safe_oid (pa->oid ());
+    ::CORBA::String_var safe_oid (pa->oid ());
     ::CORBA::String_var safe_name (pa->name ());
     CIAO_DEBUG (6, (LM_INFO, CLINFO "Servant_Activator_i::register_port_activator - "
                  "Registering a port activator for port [%C] with ObjectID [%C]\n",
