@@ -1,3 +1,8 @@
+Tue Oct 18 09:23:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+        Add ccm_direct_collocation
+ 
 Wed Oct 12 13:08:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * bin/MakeProjectCreator/config/crosscompile.mpb:
