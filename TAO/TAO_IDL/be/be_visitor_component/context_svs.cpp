@@ -369,7 +369,7 @@ be_visitor_context_svs::gen_uses_multiplex (
       << port_name << " (void)" << be_nl
       << "{" << be_idt_nl;
 
-  os_ << "ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX," << be_nl
+  os_ << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
       << "                  this->" << port_name
       << "_lock_," << be_nl
@@ -421,7 +421,7 @@ be_visitor_context_svs::gen_uses_multiplex (
 
   os_ << be_nl_2
       << "{" << be_idt_nl
-      << "ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX," << be_nl
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
       << "                  this->" << port_name
       << "_lock_," << be_nl
@@ -470,7 +470,7 @@ be_visitor_context_svs::gen_uses_multiplex (
 
   os_ << be_nl_2
       << "{" << be_idt_nl
-      << "ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX," << be_nl
+      << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
       << "                  mon," << be_nl
       << "                  this->" << port_name
       << "_lock_," << be_nl
