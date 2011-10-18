@@ -1,3 +1,9 @@
+Tue Oct 18 10:51:21 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Using recursive mutexes instead of normal mutexes.
+
 Tue Oct 18 10:39:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svs.cpp:

@@ -192,7 +192,7 @@ be_visitor_context_svh::visit_uses (be_uses *node)
           << "_TABLE;" << be_uidt_nl
           << tao_cg->upcase (port_name) << "_TABLE "
           << "ciao_uses_" << port_name << "_;" << be_nl
-          << "TAO_SYNCH_MUTEX " << port_name << "_lock_;";
+          << "TAO_SYNCH_RECURSIVE_MUTEX " << port_name << "_lock_;";
     }
   else
     {
