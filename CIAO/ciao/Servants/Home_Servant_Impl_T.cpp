@@ -69,15 +69,17 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::remove_component");
 
-    PortableServer::POA_var poa =
-      this->container_->the_POA ();
-    PortableServer::ObjectId_var oid =
-      poa->reference_to_id (comp);
+    typename CONTAINER::_var_type cnt_safe =
+      CONTAINER::_duplicate (this->container_.in());
+    PortableServer::POA_var poa = cnt_safe->the_POA ();
+    PortableServer::ObjectId_var oid = poa->reference_to_id (comp);
 
-    Components::CCMObject_var ccm_obj_var = Components::CCMObject::_nil ();
+    Components::CCMObject_var ccm_obj_var;
     if (objref_map_.find (oid.in (), ccm_obj_var) != 0)
       {
-        CIAO_ERROR (1, (LM_WARNING, CLINFO "Home_Servant_Impl<>::remove_component - Invalid component object reference\n"));
+        CIAO_ERROR (1, (LM_WARNING, CLINFO
+                    "Home_Servant_Impl<>::remove_component - "
+                    "Invalid component object reference\n"));
         throw Components::RemoveFailure ();
       }
 
@@ -94,7 +96,9 @@ namespace CIAO
         _ciao_comp->remove ();
       }
 
-    CIAO_DEBUG (6, (LM_INFO, CLINFO "Home_Servant_Impl<>::remove_component - Removed the component\n"));
+    CIAO_DEBUG (6, (LM_INFO, CLINFO
+                "Home_Servant_Impl<>::remove_component - "
+                "Removed the component\n"));
   }
 
   template <typename BASE_SKEL,
@@ -113,8 +117,9 @@ namespace CIAO
     Components::CCMObject_var ccm_obj_ptr;
     if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO "Home_Servant_Impl<>::update_component_map - "
-                     "Invalid component object reference\n"));
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                    "Home_Servant_Impl<>::update_component_map - "
+                    "Invalid component object reference\n"));
       }
   }
 
@@ -148,12 +153,16 @@ namespace CIAO
 
     if (::CORBA::is_nil (this->executor_.in ()))
       {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO "Home_Servant_Impl<>:create - nil executor reference\n"));
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                    "Home_Servant_Impl<>:create - "
+                    "nil executor reference\n"));
         throw CORBA::INTERNAL ();
       }
 
-    ::Components::EnterpriseComponent_var _ciao_ec =
-      this->executor_->create ();
+    typename EXEC::_var_type exec_safe =
+      EXEC::_duplicate (this->executor_.in());
+
+    ::Components::EnterpriseComponent_var _ciao_ec = exec_safe->create ();
 
     typedef typename COMP_SVNT::_exec_type exec_type;
     typename COMP_SVNT::_exec_type::_var_type _ciao_comp =
@@ -175,7 +184,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_activate_component");
 
-    CORBA::Object_var hobj = this->container_->get_objref (this);
+    typename CONTAINER::_var_type cnt_safe =
+      CONTAINER::_duplicate (this->container_.in());
+
+    CORBA::Object_var hobj = cnt_safe->get_objref (this);
 
     Components::CCMHome_var home =
       Components::CCMHome::_narrow (hobj.in ());
@@ -194,16 +206,16 @@ namespace CIAO
                                  home.in (),
                                  (this->ins_name_ + buffer).c_str (),
                                  this,
-                                 this->container_),
+                                 cnt_safe),
                       CORBA::NO_MEMORY ());
 
     PortableServer::ServantBase_var safe (svt);
     PortableServer::ObjectId_var oid;
 
     CORBA::Object_var objref =
-      this->container_->install_servant (svt,
-                                         Container_Types::COMPONENT_t,
-                                         oid.out ());
+      cnt_safe->install_servant (svt,
+                                Container_Types::COMPONENT_t,
+                                oid.out ());
     typedef typename COMP_SVNT::_stub_type stub_type;
     typename COMP_SVNT::_stub_var_type ho = stub_type::_narrow (objref.in ());
 
@@ -229,7 +241,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Home_Servant_Impl<>::_ciao_passivate_component");
 
-    this->container_->uninstall_component (comp);
+    typename CONTAINER::_var_type cnt_safe =
+      CONTAINER::_duplicate (this->container_.in());
+
+    cnt_safe->uninstall_component (comp);
   }
 }
 

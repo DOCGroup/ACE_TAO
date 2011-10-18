@@ -46,6 +46,7 @@ namespace CIAO
             typename CONTEXT>
   Session_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::~Session_Servant_Impl (void)
   {
+    //TODO: thread safe? How?
     if (this->executor_->_refcount_value () > 1)
       {
         CIAO_ERROR (1,

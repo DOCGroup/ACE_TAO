@@ -1,3 +1,12 @@
+Tue Oct 18 14:06:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Home_Servant_Impl_T.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Session/Servant_Impl_T.cpp:
+          Using class variables in a thread safe way.
+          Code alignment.
+
 Tue Oct 18 10:02:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * NEWS:
