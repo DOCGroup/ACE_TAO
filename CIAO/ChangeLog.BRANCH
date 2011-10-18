@@ -1,3 +1,15 @@
+Tue Oct 18 10:02:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * NEWS:
+          Info about thread safety.
+
+        * ciao/Containers/Servant_Activator.cpp:
+          Minor code updates.
+
+        * ciao/Contexts/Context_Impl_Base_T.cpp:
+        * ciao/Contexts/Session/Session_Context_T.cpp:
+          Made the container_ variable thread safe.
+
 Tue Oct 18 08:57:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * MPC/ccm_direct_collocation.mpb:
@@ -10,9 +22,9 @@ Tue Oct 18 08:57:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * MPC/ciao_servant.mpb:
         * MPC/ciao_servant_activator_stub.mpb:
         Add direct_collocation to projects
-        
-        
-        
+
+
+
 
 Tue Oct 18 08:31:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 

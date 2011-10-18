@@ -25,6 +25,8 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.0.6
   Since this is not spec-compliant behavior, an issue has been be
   raised on the DDS4CCM specification.
 
+. Improved thread safety in the CIAO core.
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================
 
