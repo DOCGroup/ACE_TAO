@@ -1,3 +1,8 @@
+Tue Oct 18 10:39:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+          Fixed a minor indentation issue.
+
 Tue Oct 18 10:03:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
