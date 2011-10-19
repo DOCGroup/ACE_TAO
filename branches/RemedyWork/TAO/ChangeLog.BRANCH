@@ -1,3 +1,15 @@
+Wed Oct 19 14:15:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+        * docs/tutorials/Quoter/RTCORBA/docs/distributor.html:
+          Fixed typos.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+          Fixed typo.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+          ++x instead of x++;
+
 Tue Oct 18 13:47:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svh.cpp:
