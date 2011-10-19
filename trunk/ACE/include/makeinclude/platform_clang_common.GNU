@@ -3,6 +3,11 @@
 #
 # Common file help turn on/off explicit template instantiation
 
+ifeq ($(openmp),1)
+FLAGS_C_CC += -fopenmp
+LDFLAGS += -fopenmp
+endif
+
 ifeq ($(CXX),insure)
   # insure does not pass through the -dumpversion option.
   CXX_FOR_VERSION_TEST ?= g++
