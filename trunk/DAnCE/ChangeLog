@@ -1,3 +1,9 @@
+Wed Oct 19 05:03:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Domain_Validator/Domain_Validator.mpc:
+
+          Attempt at windows compile/linking issue.
+
 Mon Oct 17 17:27:17 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/Plan_Launcher/Plan_Launcher.mpc:
