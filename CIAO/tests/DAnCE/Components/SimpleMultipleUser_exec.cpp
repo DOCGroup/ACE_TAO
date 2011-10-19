@@ -98,7 +98,20 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   SimpleMultipleUser_exec_i::ccm_remove ()
   {
     ACE_TRACE ("SimpleMultipleUser_exec_i::ccm_remove ()");
-    // Your code here.
+
+    ::Simple::SimpleMultipleUser::trig_uses_mConnections_var conns =
+      this->context_->get_connections_trig_uses_m ();
+    if (conns->length() != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "SimpleMultipleUser_exec_i::ccm_remove - "
+                  "ERROR: Connections still exists on exit - <%u>\n",
+                  conns->length()));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, "SimpleMultipleUser_exec_i::ccm_remove - "
+                  "OK: Connections do not exist on exit\n"));
+      }
   }
 
   //==================================================================

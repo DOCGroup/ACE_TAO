@@ -1,3 +1,11 @@
+Wed Oct 19 14:19:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Fixed some typos in comments.
+
+        * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+          Added extra tests on exit.
+
 Tue Oct 18 14:06:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
