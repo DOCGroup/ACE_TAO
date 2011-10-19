@@ -60,10 +60,10 @@ namespace DAnCE
                          const ::Deployment::SatisfierProperties &properties,
                          T &val);
 
-    bool get_resource_value (const char *type,
-                             const ::Deployment::Resources &resources,
-                             ::Deployment::Resource  &val);
-
+    DANCE_STUB_Export bool get_resource_value (const char *type,
+                                               const ::Deployment::Resources &resources,
+                                               ::Deployment::Resource  &val);
+    
     template<class T>
     void
     update_property_value (const char *name,
