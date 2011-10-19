@@ -276,7 +276,7 @@ namespace CIAO
               }
             else
               {
-                //only because of the receptacle is an external endpoint
+                //only because the receptacle is an external endpoint
                 this->disconnect_non_local (conn, conn.externalReference[0].portName.in ());
               }
             break;
@@ -320,7 +320,7 @@ namespace CIAO
         // pass through
         throw;
       }
-    // Since DANCE shutdown the Locality managers simultaniously,
+    // Since DANCE shuts down the Locality managers simultaniously,
     // it could be that one locality manager is shutdown while the
     // other wants to disconnect from this locality manager. Therefor
     // we catch an OBJECT_NOT_EXIST, TRANSIENT and a COMM_FAILURE at this point
@@ -817,6 +817,7 @@ namespace CIAO
     ::CORBA::Object_var safe_tmp =
       obj->disconnect (port_name,
                       this->get_cookie (conn.name.in ()));
+
     this->remove_cookie (conn.name.in ());
   }
 
