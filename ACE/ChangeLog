@@ -1,3 +1,8 @@
+Wed Oct 19 09:56:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed not needed setting of inline
+
 Mon Oct 17 20:40:35 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_iOS.GNU:

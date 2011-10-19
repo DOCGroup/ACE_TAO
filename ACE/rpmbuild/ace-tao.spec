@@ -855,7 +855,6 @@ cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 inline = 1
 EOF
 %else
-%define inline
 %define inline -D__ACE_NO_INLINE__ -U__ACE_INLINE__
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 inline = 0
