@@ -1,3 +1,9 @@
+Wed Oct 19 16:30:35 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/DAnCE_Utility.h:
+
+          Add missing export macro.
+
 Wed Oct 19 05:03:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Domain_Validator/Domain_Validator.mpc:
