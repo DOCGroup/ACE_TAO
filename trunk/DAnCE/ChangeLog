@@ -1,3 +1,12 @@
+Wed Oct 19 19:14:34 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * MPC/config/dance_split_plan.mpb:
+        * tools/Split_Plan/Split_Plan.h:
+        * tools/Split_Plan/Split_Plan.cpp:
+        * tools/Split_Plan/Split_Plan.mpc:
+
+          Added capability to multithread the split plan process with openmp.
+
 Wed Oct 19 16:30:35 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * dance/DAnCE_Utility.h:
