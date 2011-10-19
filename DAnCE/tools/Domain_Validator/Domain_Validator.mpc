@@ -9,6 +9,8 @@ project(DAnCE_Domain_Validator_Base) : dance_deployment_stub, dance_lib, dance_o
               -Wb,skel_export_include=DAnCE_Domain_Validator_stub_export.h \
               -Gxhst -Gxhsk
 
+  dynamicflags += DAnCE_Domain_Validator_Stub_BUILD_DLL
+
   IDL_Files {
    Domain_Validator.idl
   }
