@@ -10,6 +10,10 @@
 #include "Split_Plan.h"
 #include "dance/Logger/Log_Macros.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 namespace DAnCE
 {
   template <class SPLITTER, class UUIDGEN>
@@ -111,7 +115,6 @@ namespace DAnCE
               }
 
             sub_plan.localityConstraint = default_loc;
-
           }
         else
           {
@@ -142,213 +145,241 @@ namespace DAnCE
                   ACE_TEXT("proceeding to copying phase\n"),
                   this->sub_plans_.current_size ()));
 
+    // build instance lists
+    TSubPlanList sub_plan_list;
+    for (TSubPlanIterator iter_plans = this->sub_plans_.begin ();
+         iter_plans != this->sub_plans_.end ();
+         ++iter_plans)
+      {
+        // get the sub plan and key for current instance
+        TSubPlanKey& sub_plan_key = (*iter_plans).ext_id_;
+        SubPlanList list_item;
+        list_item.first = sub_plan_key;
+
+        sub_plan_list.push_back (list_item);
+      }
+
+#pragma omp parallel for
+    for (int i = 0; i < sub_plan_list.size (); ++i)
+      {
+        // get the sub plan and key for current instance
+        TSubPlanKey& sub_plan_key = sub_plan_list[i].first;
+        std::list < CORBA::ULong > &instances = sub_plan_list[i].second;
+
+        for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
+          {
+            if (plan_splitter.match_sub_plan (i, sub_plan_key))
+              instances.push_back (i);
+          }
+      }
+
     /*
      *  Copying phase
      */
 
-    // (1) Iterate over the <instance> field of the global DeploymentPlan
-    //     structure.
-    // (2) Retrieve the necessary information to contruct the sub plans
-    //     one by one.
-    for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
-      {
-        DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
-                                       ACE_TEXT("Split_Plan::split_plan - ")
-                                       ACE_TEXT("Processing instance: %C\n"),
-                                       plan.instance[i].name.in()));
+      // (1) Iterate over the <instance> field of the global DeploymentPlan
+      //     structure.
+      // (2) Retrieve the necessary information to contruct the sub plans
+      //     one by one.
+#pragma omp parallel for
+    for (int i = 0; i < sub_plan_list.size (); ++i)
+        {
+          // get the sub plan and key for current instance
+          TSubPlanKey& sub_plan_key = sub_plan_list[i].first;
 
-        // TODO
+          ::Deployment::DeploymentPlan sub_plan;
 
-        // Get the sub plan.
-        TSubPlanKey sub_plan_key;
-        Deployment::DeploymentPlan sub_plan;
+          this->sub_plans_.find (sub_plan_key, sub_plan);
 
-        // find sub plan for instance (if any)
-        if (!this->find_sub_plan (plan_splitter, i, sub_plan_key, sub_plan))
-          {
-            DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
-                                                    ACE_TEXT("Split_Plan::split_plan - ")
-                                                    ACE_TEXT("Instance %C excluded from selected subplans\n"),
-                                                    plan.instance[i].name.in ()));
-            continue;
-          }
+          // Get instance list
+          std::list <CORBA::ULong> &instances = sub_plan_list[i].second;
 
-        // Get the instance deployment description
-        const Deployment::InstanceDeploymentDescription & my_instance =
-          plan.instance[i];
+          for (InstanceList::const_iterator i = instances.begin ();
+               i != instances.end ();
+               ++i)
+            {
+              CORBA::ULong pos = *i;
 
-        // Fill in the contents of the sub plan entry.
+              DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
+                                             ACE_TEXT("Split_Plan::split_plan - ")
+                                             ACE_TEXT("Processing instance: %C\n"),
+                                             plan.instance[pos].name.in()));
 
-        // Append the "MonolithicDeploymentDescriptions implementation"
-        // field with a new "implementation", which is specified by the
-        // <implementationRef> field of <my_instance> entry.
-        Deployment::MonolithicDeploymentDescription const & my_implementation
-          = plan.implementation[my_instance.implementationRef];
+              // Get the instance deployment description
+              const Deployment::InstanceDeploymentDescription & my_instance =
+                plan.instance[pos];
 
-        CORBA::ULong index_imp = sub_plan.implementation.length ();
-        sub_plan.implementation.length (index_imp + 1);
-        sub_plan.implementation[index_imp] = my_implementation;
+              // Fill in the contents of the sub plan entry.
 
-        // update the "ArtifactDeploymentDescriptions" <artifact> field
-        // of the sub plan with the artifacts referenced by the <artifactRef>
-        // sequence of the added implementation
+              // Append the "MonolithicDeploymentDescriptions implementation"
+              // field with a new "implementation", which is specified by the
+              // <implementationRef> field of <my_instance> entry.
+              Deployment::MonolithicDeploymentDescription const & my_implementation
+                = plan.implementation[my_instance.implementationRef];
 
-        // Initialize with the correct sequence length.
-        CORBA::ULongSeq ulong_seq;
-        ulong_seq.length (my_implementation.artifactRef.length ());
+              CORBA::ULong index_imp = sub_plan.implementation.length ();
+              sub_plan.implementation.length (index_imp + 1);
+              sub_plan.implementation[index_imp] = my_implementation;
 
-        // append the "ArtifactDeploymentDescriptions"
-        CORBA::ULong const impl_length =
-          my_implementation.artifactRef.length ();
-        CORBA::ULong const artifact_offset = sub_plan.artifact.length ();
+              // update the "ArtifactDeploymentDescriptions" <artifact> field
+              // of the sub plan with the artifacts referenced by the <artifactRef>
+              // sequence of the added implementation
 
-        // extend <artifact> sequence to required size
-        sub_plan.artifact.length (artifact_offset + impl_length);
+              // Initialize with the correct sequence length.
+              CORBA::ULongSeq ulong_seq;
+              ulong_seq.length (my_implementation.artifactRef.length ());
 
-        for (CORBA::ULong iter = 0;
-             iter < impl_length;
-             iter ++)
-          {
-            CORBA::ULong artifact_ref = my_implementation.artifactRef[iter];
+              // append the "ArtifactDeploymentDescriptions"
+              CORBA::ULong const impl_length =
+                my_implementation.artifactRef.length ();
+              CORBA::ULong const artifact_offset = sub_plan.artifact.length ();
 
-            // Fill in the <artifact> field of the sub plan
-            sub_plan.artifact[artifact_offset + iter] =
-              plan.artifact[artifact_ref];
+              // extend <artifact> sequence to required size
+              sub_plan.artifact.length (artifact_offset + impl_length);
 
-            // Fill in the artifactRef field of the
-            // MonolithicDeploymentDescription
-            ulong_seq[iter] = artifact_offset + iter;
-          }
+              for (CORBA::ULong iter = 0;
+                   iter < impl_length;
+                   iter ++)
+                {
+                  CORBA::ULong artifact_ref = my_implementation.artifactRef[iter];
 
-        // Change the <artifactRef> field of the added "implementation" to
-        // reference the artifact field of the sub plan
-        sub_plan.implementation[index_imp].artifactRef = ulong_seq;
+                  // Fill in the <artifact> field of the sub plan
+                  sub_plan.artifact[artifact_offset + iter] =
+                    plan.artifact[artifact_ref];
 
-        // Append the "InstanceDeploymentDescription instance" field with
-        // a new "instance", which is almost the same as the "instance" in
-        // the global plan except the <implementationRef> field.
-        CORBA::ULong index_ins = sub_plan.instance.length ();
-        sub_plan.instance.length (index_ins + 1);
-        sub_plan.instance[index_ins] = my_instance;
+                  // Fill in the artifactRef field of the
+                  // MonolithicDeploymentDescription
+                  ulong_seq[iter] = artifact_offset + iter;
+                }
 
-        // Update the <implementationRef> field of the "instance".
-        sub_plan.instance[index_ins].implementationRef = index_imp;
+              // Change the <artifactRef> field of the added "implementation" to
+              // reference the artifact field of the sub plan
+              sub_plan.implementation[index_imp].artifactRef = ulong_seq;
 
-        DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
-                                       ACE_TEXT("Split_Plan::split_plan - ")
-                                       ACE_TEXT("Processing connections.\n")));
-        // Copy connections
-        for (CORBA::ULong j = 0; j < plan.connection.length (); ++j)
-          {
-            DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
-                                                    ACE_TEXT("Split_Plan::split_plan - ")
-                                                    ACE_TEXT("Connection: %C\n"),
-                                                    plan.connection[j].name.in ()));
-            for (CORBA::ULong k = 0;
-                 k < plan.connection[j].internalEndpoint.length (); ++k)
-              {
-                DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
-                                                        ACE_TEXT("Split_Plan::split_plan - ")
-                                                        ACE_TEXT("Endpoint: %C(%C)\n"),
-                                                        plan.connection[j].internalEndpoint[k].portName.in (),
-                                                        plan.connection[j].internalEndpoint[k].provider ?
-                                                        "provider" : "client"));
+              // Append the "InstanceDeploymentDescription instance" field with
+              // a new "instance", which is almost the same as the "instance" in
+              // the global plan except the <implementationRef> field.
+              CORBA::ULong index_ins = sub_plan.instance.length ();
+              sub_plan.instance.length (index_ins + 1);
+              sub_plan.instance[index_ins] = my_instance;
 
-                // check if connection endpoint references the instance (i)
-                // we're adding to the sub plan
-                if (i == plan.connection[j].internalEndpoint[k].instanceRef)
-                  {
-                    Deployment::PlanConnectionDescription *
-                      connection_copied = 0;
+              // Update the <implementationRef> field of the "instance".
+              sub_plan.instance[index_ins].implementationRef = index_imp;
 
-                    // check if we already copied this connection
-                    // (for an earlier endpoint match)
-                    for (CORBA::ULong m = 0;
-                         m < sub_plan.connection.length (); ++m)
-                      {
-                        if (ACE_OS::strcmp (plan.connection[j].name.in (),
-                                            sub_plan.connection[m].name.in ()) == 0)
-                          {
-                            connection_copied = &sub_plan.connection[m];
-                            break;
-                          }
-                      }
+              DANCE_DEBUG (DANCE_LOG_TRACE, (LM_TRACE, DLINFO
+                                             ACE_TEXT("Split_Plan::split_plan - ")
+                                             ACE_TEXT("Processing connections.\n")));
+              // Copy connections
+              for (CORBA::ULong j = 0; j < plan.connection.length (); ++j)
+                {
+                  DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
+                                                          ACE_TEXT("Split_Plan::split_plan - ")
+                                                          ACE_TEXT("Connection: %C\n"),
+                                                          plan.connection[j].name.in ()));
+                  for (CORBA::ULong k = 0;
+                       k < plan.connection[j].internalEndpoint.length (); ++k)
+                    {
+                      DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
+                                                              ACE_TEXT("Split_Plan::split_plan - ")
+                                                              ACE_TEXT("Endpoint: %C(%C)\n"),
+                                                              plan.connection[j].internalEndpoint[k].portName.in (),
+                                                              plan.connection[j].internalEndpoint[k].provider ?
+                                                              "provider" : "client"));
 
-                    if (!connection_copied)
-                      {
-                        // Copy the connection
-                        CORBA::ULong const index_con =
-                          sub_plan.connection.length();
-                        sub_plan.connection.length (index_con + 1);
-                        sub_plan.connection[index_con] = plan.connection[j];
-                        connection_copied = &sub_plan.connection[index_con];
-                        connection_copied->internalEndpoint.length (0);
-                      }
+                      // check if connection endpoint references the instance (i)
+                      // we're adding to the sub plan
+                      if (pos == plan.connection[j].internalEndpoint[k].instanceRef)
+                        {
+                          Deployment::PlanConnectionDescription *
+                            connection_copied = 0;
 
-                    // Copy the endpoint
-                    CORBA::ULong const index_ep =
-                      connection_copied->internalEndpoint.length();
+                          // check if we already copied this connection
+                          // (for an earlier endpoint match)
+                          for (CORBA::ULong m = 0;
+                               m < sub_plan.connection.length (); ++m)
+                            {
+                              if (ACE_OS::strcmp (plan.connection[j].name.in (),
+                                                  sub_plan.connection[m].name.in ()) == 0)
+                                {
+                                  connection_copied = &sub_plan.connection[m];
+                                  break;
+                                }
+                            }
 
-                    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
-                                                            ACE_TEXT("Split_Plan::split_plan - ")
-                                                            ACE_TEXT ("Copying endpoint %u into endpoint %u\n"),
-                                                            k, index_ep));
+                          if (!connection_copied)
+                            {
+                              // Copy the connection
+                              CORBA::ULong const index_con =
+                                sub_plan.connection.length();
+                              sub_plan.connection.length (index_con + 1);
+                              sub_plan.connection[index_con] = plan.connection[j];
+                              connection_copied = &sub_plan.connection[index_con];
+                              connection_copied->internalEndpoint.length (0);
+                            }
 
-                    connection_copied->internalEndpoint.length (
-                                                                index_ep + 1);
-                    connection_copied->internalEndpoint[index_ep] =
-                      plan.connection[j].internalEndpoint[k];
-                    connection_copied->internalEndpoint[index_ep].instanceRef
-                      = index_ins;
-                  }
-              }
-          }
+                          // Copy the endpoint
+                          CORBA::ULong const index_ep =
+                            connection_copied->internalEndpoint.length();
 
-        // copy any locality constraints matching the instance we're
-        // adding to the sub plan
-        for (CORBA::ULong j = 0;
-             j < plan.localityConstraint.length (); ++j)
-          {
-            const Deployment::PlanLocality &loc =
-              plan.localityConstraint[j];
-            for (CORBA::ULong k = 0;
-                 k < loc.constrainedInstanceRef.length (); ++k)
-              {
-                // we are the same instance...
-                if (loc.constrainedInstanceRef[k] == i)
-                  {
-                    // add our new instance ref to the sub plan's
-                    // corresponding contraint.
-                    CORBA::ULong sub_loc_len =
-                      sub_plan.localityConstraint[j].constrainedInstanceRef.length ();
+                          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE, (LM_TRACE, DLINFO
+                                                                  ACE_TEXT("Split_Plan::split_plan - ")
+                                                                  ACE_TEXT ("Copying endpoint %u into endpoint %u\n"),
+                                                                  k, index_ep));
 
-                    DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
-                                 (LM_TRACE,
-                                  DLINFO ACE_TEXT ("Split_Plan::split_plan - ")
-                                  ACE_TEXT ("Found matching locality constraint ")
-                                  ACE_TEXT ("%u:%u,")
-                                  ACE_TEXT (" adding to %u:%u as %u\n"),
-                                  j, k, j, sub_loc_len, index_ins));
+                          connection_copied->internalEndpoint.length (
+                                                                      index_ep + 1);
+                          connection_copied->internalEndpoint[index_ep] =
+                            plan.connection[j].internalEndpoint[k];
+                          connection_copied->internalEndpoint[index_ep].instanceRef
+                            = index_ins;
+                        }
+                    }
+                }
 
-                    // set the correct constraint type
-                    sub_plan.localityConstraint[j].constraint =
-                      loc.constraint;
+              // copy any locality constraints matching the instance we're
+              // adding to the sub plan
+              for (CORBA::ULong j = 0;
+                   j < plan.localityConstraint.length (); ++j)
+                {
+                  const Deployment::PlanLocality &loc =
+                    plan.localityConstraint[j];
+                  for (CORBA::ULong k = 0;
+                       k < loc.constrainedInstanceRef.length (); ++k)
+                    {
+                      // we are the same instance...
+                      if (loc.constrainedInstanceRef[k] == pos)
+                        {
+                          // add our new instance ref to the sub plan's
+                          // corresponding contraint.
+                          CORBA::ULong sub_loc_len =
+                            sub_plan.localityConstraint[j].constrainedInstanceRef.length ();
 
-                    // add instance reference to matched contraint
-                    // thank god someone made an 18 and 20+ char
-                    // member variable...
-                    sub_plan.localityConstraint[j].constrainedInstanceRef.length (
-                                                                                  sub_loc_len + 1);
-                    sub_plan.localityConstraint[j].constrainedInstanceRef[
-                                                                          sub_loc_len] = index_ins;
-                  }
-              }
-          }
+                          DANCE_DEBUG (DANCE_LOG_DETAILED_TRACE,
+                                       (LM_TRACE,
+                                        DLINFO ACE_TEXT ("Split_Plan::split_plan - ")
+                                        ACE_TEXT ("Found matching locality constraint ")
+                                        ACE_TEXT ("%u:%u,")
+                                        ACE_TEXT (" adding to %u:%u as %u\n"),
+                                        j, k, j, sub_loc_len, index_ins));
 
-        // rebing updated sub plan
-        this->sub_plans_.rebind (sub_plan_key, sub_plan);
-      }
+                          // set the correct constraint type
+                          sub_plan.localityConstraint[j].constraint =
+                            loc.constraint;
 
+                          // add instance reference to matched contraint
+                          // thank god someone made an 18 and 20+ char
+                          // member variable...
+                          sub_plan.localityConstraint[j].constrainedInstanceRef.length (
+                                                                                        sub_loc_len + 1);
+                          sub_plan.localityConstraint[j].constrainedInstanceRef[
+                                                                                sub_loc_len] = index_ins;
+                        }
+                    }
+                }
+            }
+          // rebing updated sub plan
+          this->sub_plans_.rebind (sub_plan_key, sub_plan);
+        }
     /*
      *  Finalization
      */

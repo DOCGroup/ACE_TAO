@@ -23,6 +23,9 @@
 #include "Split_Plan/DAnCE_Split_Plan_export.h"
 #include "Sub_UUID_Generator.h"
 
+#include <list>
+#include <vector>
+
 namespace DAnCE
 {
   template <class SPLITTER, class UUIDGEN = Unique_Sub_UUID_Generator>
@@ -37,6 +40,12 @@ namespace DAnCE
     typedef ACE_Map_Manager<TSubPlanKey,
                             Deployment::DeploymentPlan,
                             ACE_Null_Mutex> TSubPlans;
+
+    typedef std::list <CORBA::ULong > InstanceList;
+    typedef std::pair < TSubPlanKey, InstanceList > SubPlanList;
+
+    typedef std::vector < SubPlanList > TSubPlanList;
+
     typedef typename TSubPlans::iterator TSubPlanIterator;
     typedef typename TSubPlans::const_iterator TSubPlanConstIterator;
 

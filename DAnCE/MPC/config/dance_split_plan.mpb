@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : dance, dance_stub, dance_deployment_stub, dance_tools {
+project : dance, dance_stub, dance_deployment_stub, dance_tools, openmp {
    after += DAnCE_Split_Plan_Impl
    libs += DAnCE_Split_Plan_Impl
 }
