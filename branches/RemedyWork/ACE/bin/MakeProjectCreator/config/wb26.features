@@ -1,0 +1,4 @@
+// $Id$
+
+// We're always cross-compiling with wb26
+cross_compile = 1

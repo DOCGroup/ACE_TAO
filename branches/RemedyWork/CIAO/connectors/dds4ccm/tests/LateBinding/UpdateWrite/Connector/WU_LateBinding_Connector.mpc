@@ -1,0 +1,148 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p WU_LateBindingBase -l .. -o ../lib -u DDS WU_LateBinding_Connector"
+
+project (WU_LateBindingConnector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=WU_LATEBINDING_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=LateBinding_Connector_stub_export.h \
+              -Wb,skel_export_macro=WU_LATEBINDING_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=LateBinding_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=WU_LATEBINDING_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=LateBinding_Connector_svnt_export.h \
+              -Wb,conn_export_macro=WU_LATEBINDING_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=LateBinding_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    WU_LateBinding_Connector.idl
+  }
+}
+
+project (WU_LateBindingConnector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += WU_LateBindingConnector_idl_gen
+  idlflags += -Wb,stub_export_macro=WU_LATEBINDING_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=WU_LateBinding_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    WU_LateBinding_ConnectorE.idl
+  }
+}
+
+project (WU_LateBindingConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += WU_LateBindingConnector_lem_gen WU_LateBindingConnector_stub \
+           WU_LateBindingBase_stub
+  libs  += WU_LateBindingBase_stub WU_LateBindingConnector_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = WU_LateBindingConnector_lem_stub
+  dynamicflags += WU_LATEBINDING_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WU_LateBinding_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    WU_LateBinding_ConnectorEC.h
+    WU_LateBinding_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    WU_LateBinding_ConnectorEC.inl
+  }
+}
+
+project (WU_LateBindingConnector_stub) : ccm_stub, dds4ccm_base {
+  after += WU_LateBindingConnector_idl_gen WU_LateBindingBase_stub
+  libs  += WU_LateBindingBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = WU_LateBindingConnector_stub
+  dynamicflags += WU_LATEBINDING_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WU_LateBinding_ConnectorC.cpp
+  }
+
+  Header_Files {
+    WU_LateBinding_ConnectorC.h
+    WU_LateBinding_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    WU_LateBinding_ConnectorC.inl
+  }
+}
+
+project (WU_LateBindingConnector_exec) : ciao_executor, dds4ccm_impl {
+  after   += WU_LateBindingConnector_lem_stub WU_LateBindingConnector_stub \
+             WU_LateBindingBase_stub
+  sharedname = WU_LateBindingConnector_exec
+  libs += WU_LateBindingConnector_stub WU_LateBindingConnector_lem_stub \
+          WU_LateBindingBase_stub WU_LateBindingBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += WU_LATEBINDING_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WU_LateBinding_Connector_conn.cpp
+  }
+
+  Header_Files {
+    WU_LateBinding_Connector_conn.h
+    WU_LateBinding_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project (WU_LateBindingConnector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += WU_LateBindingConnector_lem_stub WU_LateBindingConnector_exec \
+                WU_LateBindingConnector_stub
+  sharedname  = WU_LateBindingConnector_svnt
+  libs       += WU_LateBindingConnector_stub \
+                WU_LateBindingConnector_lem_stub  \
+                WU_LateBindingBase_stub \
+                WU_LateBindingConnector_exec
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += WU_LATEBINDING_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WU_LateBinding_ConnectorS.cpp
+    WU_LateBinding_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    WU_LateBinding_ConnectorS.h
+    WU_LateBinding_Connector_svnt.h
+    WU_LateBinding_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    WU_LateBinding_ConnectorS.inl
+  }
+}
+
+

@@ -1,0 +1,2 @@
+# $Id$
+import generator
