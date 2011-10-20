@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(negotiate_codesets) {
-  after  += TAO
-  libs   += TAO_Codeset
-  macros += TAO_NEGOTIATE_CODESET
-}

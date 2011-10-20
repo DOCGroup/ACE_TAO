@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: acedefaults {
-  after    += ACE
-  libs     += ACE
-}

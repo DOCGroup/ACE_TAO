@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(Collocation Opportunities): taoserver, pi_server {
-  exename = Collocation_Opportunities
-}
