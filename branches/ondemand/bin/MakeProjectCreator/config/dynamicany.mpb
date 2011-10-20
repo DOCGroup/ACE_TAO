@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taolib, anytypecode {
-  after   += DynamicAny
-  libs    += TAO_DynamicAny
-}
