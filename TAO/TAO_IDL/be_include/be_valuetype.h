@@ -126,12 +126,6 @@ public:
                                        be_interface *base,
                                        TAO_OutStream *os);
 
-  /// Helper method to generate *_skel operations for the concrete
-  /// interface that we support (if any) and those of its base classes.
-  static int gen_skel_helper (be_interface *node,
-                              be_interface *base,
-                              TAO_OutStream *os);
-
   /// Accessor to the member.
   const char *fwd_helper_name (void) const;
 

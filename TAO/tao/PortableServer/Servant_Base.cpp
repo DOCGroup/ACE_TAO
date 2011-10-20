@@ -5,6 +5,7 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
@@ -326,6 +327,28 @@ CORBA::ULong
 TAO_ServantBase::_refcount_value (void) const
 {
   return this->ref_count_.value ();
+}
+
+void
+TAO_ServantBase::_collocated_dispatch (::CORBA::Object_ptr obj,
+                                       ::CORBA::Object_out forward_obj,
+                                       bool &is_forwarded,
+                                       TAO::Argument ** args,
+                                       int num_args,
+                                       const char * op,
+                                       size_t op_len,
+                                       TAO::Collocation_Strategy strategy)
+{
+  TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
+  collocation_upcall_wrapper.upcall (
+    obj,
+    forward_obj,
+    is_forwarded,
+    args,
+    num_args,
+    op,
+    op_len,
+    strategy);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -3,18 +3,22 @@
 //
 #include "Test_i.h"
 
-Test_i::Test_i()
+Test_i::Test_i(CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
-   // Noop
 }
 
 Test_i::~Test_i()
 {
-   // Noop
 }
 
 void
 Test_i::test_method (void)
 {
-   // Noop
+}
+
+void
+Test_i::shutdown (void)
+{
+  this->orb_->shutdown (0);
 }

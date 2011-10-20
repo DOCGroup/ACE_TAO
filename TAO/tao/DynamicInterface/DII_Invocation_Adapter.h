@@ -141,7 +141,7 @@ namespace TAO
         int arg_number,
         const char *operation,
         size_t op_len,
-        Collocation_Proxy_Broker *b,
+        int collocation_opportunity,
         TAO_ORB_Core *oc,
         CORBA::Request *req,
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);

@@ -21,9 +21,15 @@ project (DDS4CCM_lem_gen) : install, dds4ccm, ciaoidldefaults {
      dds4ccm_StateListenerControlE.idl
      dds4ccm_ConnectorE.idl
   }
+
+  specific {
+     install_dir = connectors/dds4ccm/idl
+  }
 }
 
-project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ccm_session_stub, ciaolib_with_idl, ciao_output, taolib, valuetype, ifr_client {
+project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ccm_session_stub, \
+                            ciaolib_with_idl, ciao_output, taolib, valuetype, \
+                            ifr_client {
   after += DDS4CCM_stub DDS4CCM_lem_gen CIAO_NDDS_lem_stub
   libs  += DDS4CCM_stub
   includes += $(CIAO_ROOT)/connectors
@@ -50,7 +56,22 @@ project (DDS4CCM_lem_stub) : install, dds4ccm, ccm_lem_stub, ccm_session_stub, c
    dds4ccm_DataListenerControlEC.h
    dds4ccm_ConnectorStatusListenerEC.h
    dds4ccm_StateListenerControlEC.h
+   dds4ccm_ConnectorEC.h
    dds4ccm_lem_stub_export.h
+  }
+
+  Inline_Files {
+   dds4ccm_BaseEC.inl
+   dds_rtf2_dcpsEC.inl
+   dds4ccm_PortStatusListenerEC.inl
+   dds4ccm_DataListenerControlEC.inl
+   dds4ccm_ConnectorStatusListenerEC.inl
+   dds4ccm_StateListenerControlEC.inl
+   dds4ccm_ConnectorEC.inl
+  }
+
+  specific {
+   install_dir = connectors/dds4ccm/idl
   }
 }
 

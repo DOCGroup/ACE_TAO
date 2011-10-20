@@ -1,3 +1,501 @@
+Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Oct 20 08:56:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Optimized logging
+
+                * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+                  Reverted extra test. More investigation needed.
+
+        Wed Oct 19 14:19:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Fixed some typos in comments.
+
+                * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+                  Added extra tests on exit.
+
+        Tue Oct 18 14:06:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+                * ciao/Servants/Home_Servant_Impl_T.cpp:
+                * ciao/Servants/Servant_Impl_Base.cpp:
+                * ciao/Servants/Session/Servant_Impl_T.cpp:
+                  Using class variables in a thread safe way.
+                  Code alignment.
+
+        Tue Oct 18 10:02:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * NEWS:
+                  Info about thread safety.
+
+                * ciao/Containers/Servant_Activator.cpp:
+                  Minor code updates.
+
+                * ciao/Contexts/Context_Impl_Base_T.cpp:
+                * ciao/Contexts/Session/Session_Context_T.cpp:
+                  Made the container_ variable thread safe.
+
+        Tue Oct 18 08:57:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * MPC/ccm_direct_collocation.mpb:
+                * MPC/avoids_ccm_direct_collocation.mpb:
+                * MPC/ciaoidldefaults.mpb:
+                * MPC/ccm_svnt.mpb:
+                * MPC/ccm.mpb:
+                * MPC/ciao_base.mpb:
+                * MPC/ciao.mpb:
+                * MPC/ciao_servant.mpb:
+                * MPC/ciao_servant_activator_stub.mpb:
+                Add direct_collocation to projects
+
+
+
+
+        Tue Oct 18 08:31:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Container_Base_T.cpp:
+                  Using temporary _var variables in order to be thread safe.
+
+        Mon Oct 17 14:01:44 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/CIAO_State.h:
+                * ciao/Deployment/Handlers/CIAO_State.cpp:
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Using mutexes to be threadsafe.
+
+                * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+                  Using this for class variable.
+
+                * ciao/Servants/Extension/Servant_Impl_T.cpp:
+                  Renamed some variables.
+
+        Mon Oct 17 08:31:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                  A subscriber must be created when just listeners are created.
+
+        Fri Oct 14 12:18:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Base:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.idl:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.idl:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Connector/TL_ResetTopic_Connector.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/SenderDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender.idl:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/ResetTopic/TooLong/descriptors/run_test.pl:
+                  Added a test which test whether the correct exception is thrown when a topic cannot
+                  be created by DDS.
+
+        Thu Oct 13 06:30:15 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/logger/Log_Macros.h:
+                  Fixed compile errors when all logging is disabled. Seems that no space
+                  is allowed between the declaration and the first bracket ( "XXX (Y)" should
+                  be "XXX(Y)" ).
+
+        Wed Oct 12 13:10:27 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Base/CIAO_Base.mpc:
+                * ciao/Deployment/Interceptors/CIAO_Deployment_Interceptors.mpc:
+                * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+                * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+                * connectors/dds4ccm/idl/dds4ccm_stub.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_idltocpp_lem_stub.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_idltocpp_skel.mpc:
+                * connectors/dds4ccm/idl/ndds/ndds_idltocpp_stub.mpc:
+                * connectors/dds4ccm/impl/dds4ccm_impl.mpc:
+                * connectors/dds4ccm/impl/logger/dds4ccm_logger.mpc:
+                * connectors/dds4ccm/impl/ndds/ndds_idltocpp.mpc:
+                  Fixed several install issues.
+
+        Wed Oct 12 12:37:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * connectors/dds4ccm/tests/CollocatedPubSub:
+                * connectors/dds4ccm/tests/CollocatedPubSub/Base:
+                * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.idl:
+                * connectors/dds4ccm/tests/CollocatedPubSub/Base/Collocated_Base.mpc:
+                * connectors/dds4ccm/tests/CollocatedPubSub/Connector:
+                * connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.idl:
+                * connectors/dds4ccm/tests/CollocatedPubSub/Connector/Collocated_Connector.mpc:
+                * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent:
+                * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component.idl:
+                * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component.mpc:
+                * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component_exec.h:
+                * connectors/dds4ccm/tests/CollocatedPubSub/PubSubComponent/PubSub_Component_exec.cpp:
+                * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent:
+                * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component.idl:
+                * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component.mpc:
+                * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component_exec.h:
+                * connectors/dds4ccm/tests/CollocatedPubSub/SubComponent/Sub_Component_exec.cpp:
+                * connectors/dds4ccm/tests/CollocatedPubSub/descriptors:
+                * connectors/dds4ccm/tests/CollocatedPubSub/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/CollocatedPubSub/descriptors/run_test.pl:
+                  New test. Three components running on the same node. One writes the samples
+                  to DDS and collects these sample at the same time. The other two components just
+                  listen. All listeners have a QueryFilter applied.
+
+        Wed Oct 12 12:25:34 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * tests/Collocation:
+                * tests/Collocation/Sender:
+                * tests/Collocation/Sender/Sender.idl:
+                * tests/Collocation/Sender/Sender_exec.cpp:
+                * tests/Collocation/Sender/Sender.mpc:
+                * tests/Collocation/Sender/Sender_exec.h:
+                * tests/Collocation/.project:
+                * tests/Collocation/Coll_Base:
+                * tests/Collocation/Coll_Base/Base.mpc:
+                * tests/Collocation/Coll_Base/Base.idl:
+                * tests/Collocation/descriptors:
+                * tests/Collocation/descriptors/run_test.pl:
+                * tests/Collocation/descriptors/PlanAllOnOne.cdp:
+                * tests/Collocation/Receiver:
+                * tests/Collocation/Receiver/Receiver.mpc:
+                * tests/Collocation/Receiver/Receiver_exec.h:
+                * tests/Collocation/Receiver/Receiver_exec.cpp:
+                * tests/Collocation/Receiver/Receiver.idl:
+                Test for collocation, for playing with results change OrbStrategy in cdp plan
+
+        Wed Oct 12 09:07:34 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+                  We also need to create a subscriber and publisher when the user
+                  is using a ConnectorStatusListener; the Subscriber Listener and
+                  Publisher Listener are involved in the ConnectorStatusListener.
+
+        Wed Oct 12 08:58:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_impl.cpp:
+                  Extended this test a bit more.
+
+        Tue Oct 11 14:27:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+                  Layout changes.
+
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+                  Fixed warnings.
+
+        Tue Oct 11 09:34:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * NEWS:
+                  Updated.
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Improved logging: mentioning the connection which has
+                  been pre-established.
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+                  Prevent the creation of a subscriber or publisher when
+                  they are not needed.
+
+                * connectors/dds4ccm/tests/ResetTopic/README:
+                  Updated.
+
+        Mon Oct 10 14:11:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Deployment/Handlers/Connection_Handler.h:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                  Added validate_connection when a user want's the connections to
+                  be connected during deployment (instead of on first usage). This can
+                  be switched on by setting the CIAO_PRE_ESTABLISH_CONNECTIONS define
+
+        Mon Oct 10 08:03:56 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/NonChangeableAttribute/Component/NonChangeable_Component_exec.cpp:
+                  No need to check of the NonChangeable exception, since the topic name can be reset.
+
+        Mon Oct 10 07:55:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.h:
+                * connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.cpp:
+                  No need to check of the NonChangeable exception. Since the topic name can be reset.
+
+        Mon Oct 10 07:46:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+                  Fixed ref count issue. Because of this, the core crashed on exit.
+
+        Fri Oct  7 15:41:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+                  Minor change of names.
+
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+                  Some extra check on whether samples were received during each run.
+
+        Fri Oct  7 15:30:37 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+                  Some extra check on whether samples were received during each run.
+
+        Thu Oct  6 11:34:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+
+                * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+                  Optimized logging.
+
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+                  Removed unnecessary logging.
+
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.mpc:
+                  Fixed warnings on FC15.
+
+        Wed Oct  5 15:12:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/Plan.cdp:
+                  Enabled test for state connector.
+
+        Wed Oct  5 14:16:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                  Start DDS when the topic name is not empty.
+
+                * bin/ciao_tests.lst:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Connector/TE_ResetTopic_Connector.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/SenderDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/ResetTopic/ToEmpty/descriptors/run_test.pl:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/ReceiverDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/SenderDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/ReceiverDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/SenderDriver.cpp:
+                  Clearing topic name on a running DDS connector. After clearing, start writing.
+                  The connector should throw a bad_inv_order exception. Setting the topic name again.
+                  The sender should be able to write again. Need to expanded with an updater
+                  (state connector).
+
+        Wed Oct  5 12:39:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                  Components are always set when a port is obtained. This does not
+                  depend on whether the topic name has been set.
+
+        Wed Oct  5 12:29:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                  Reset the components in the ccm_remove method itself since this is
+                  the only place where these components need to be reset.
+
+                * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+                * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+                  Applied coding conventions.
+
+                * bin/ciao_tests.lst:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.idl:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.idl:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Connector/UL_ResetTopic_Connector.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/ReceiverDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver.idl:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/SenderDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.idl:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/ResetTopic/UpdateListen/descriptors/run_test.pl:
+                  A new test which tests the reset of topic names in the state connector.
+
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+                  Removed unnecessary logging
+
+        Wed Oct  5 07:58:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.idl:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.idl:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Connector/WL_ResetTopic_Connector.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/ReceiverDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver.idl:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/SenderDriver.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.idl:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/ResetTopic/WriteListen/descriptors/run_test.pl:
+                  Reset of topic name during write and listen operations.
+
+        Mon Oct  3 14:18:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Get_T.h:
+                * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Listen_T.h:
+                * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+                * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+                * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Update_T.h:
+                * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Write_T.h:
+                * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                  Setting the component to nil in the State connector and Event connector,
+                  instead of setting it in the extended ports.
+
+        Fri Sep 30 16:27:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.mpc:
+                  Fixed duplicate project names.
+
+        Fri Sep 30 08:28:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/ciao_tests.lst:
+                  Added new test to the test framework
+
+        Fri Sep 30 08:08:14 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/idl/dds4ccm_lem_stub.mpc:
+                * connectors/dds4ccm/idl/dds4ccm_skel.mpc:
+                  Layout changes
+
+                * connectors/dds4ccm/impl/CCM_DataReader.cpp:
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_Event_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Get_T.h:
+                * connectors/dds4ccm/impl/DDS_Get_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Listen_T.h:
+                * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+                * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+                * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_State_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.h:
+                * connectors/dds4ccm/impl/DDS_Subscriber_Base_T.cpp:
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+                * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Update_T.h:
+                * connectors/dds4ccm/impl/DDS_Update_T.cpp:
+                * connectors/dds4ccm/impl/DDS_Write_T.h:
+                * connectors/dds4ccm/impl/DDS_Write_T.cpp:
+                * connectors/dds4ccm/impl/Getter_T.cpp:
+                * connectors/dds4ccm/impl/Reader_T.cpp:
+                  Ability to change the topic name. When a topic name changes,
+                  DDS will be restarted. After restart, the connector manages the
+                  new topic.
+
+                * connectors/dds4ccm/impl/ndds/DomainParticipantManager.cpp:
+                  Improved logging
+
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.h:
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_impl.cpp:
+                * connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+                  Removed test for NonChangeable exception.
+
+
+                * connectors/dds4ccm/tests/ResetTopic:
+                * connectors/dds4ccm/tests/ResetTopic/README:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/Reader_Starter.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Connector/RG_ResetTopic_Connector.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_impl.h:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Receiver/RG_ResetTopic_Receiver_impl.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.idl:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender.mpc:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.h:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.cpp:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/Plan.cdp:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+                * connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/run_test.pl:
+                  Added test which test the reset DDS within the connector. See readme for more information.
+
+        === end changelog ===
+
 Thu Oct 13 19:09:42 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Deployment/Handlers/Container_Handler.cpp:

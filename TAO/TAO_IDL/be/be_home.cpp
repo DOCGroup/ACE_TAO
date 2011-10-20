@@ -133,41 +133,11 @@ be_home::destroy (void)
   delete [] this->relative_skel_name_;
   this->relative_skel_name_ = 0;
 
-  delete [] this->base_proxy_impl_name_;
-  this->base_proxy_impl_name_ = 0;
-
-  delete [] this->remote_proxy_impl_name_;
-  this->remote_proxy_impl_name_ = 0;
-
   delete [] this->direct_proxy_impl_name_;
   this->direct_proxy_impl_name_ = 0;
 
-  delete [] this->full_base_proxy_impl_name_;
-  this->full_base_proxy_impl_name_ = 0;
-
-  delete [] this->full_remote_proxy_impl_name_;
-  this->full_remote_proxy_impl_name_ = 0;
-
   delete [] this->full_direct_proxy_impl_name_;
   this->full_direct_proxy_impl_name_ = 0;
-
-  delete [] this->base_proxy_broker_;
-  this->base_proxy_broker_ = 0;
-
-  delete [] this->remote_proxy_broker_;
-  this->remote_proxy_broker_ = 0;
-
-  delete [] this->strategized_proxy_broker_;
-  this->strategized_proxy_broker_ = 0;
-
-  delete [] this->full_base_proxy_broker_name_;
-  this->full_base_proxy_broker_name_ = 0;
-
-  delete [] this->full_remote_proxy_broker_name_;
-  this->full_remote_proxy_broker_name_ = 0;
-
-  delete [] this->full_strategized_proxy_broker_name_;
-  this->full_strategized_proxy_broker_name_ = 0;
 
   delete [] this->client_scope_;
   this->client_scope_ = 0;

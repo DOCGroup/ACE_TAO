@@ -1,5 +1,5 @@
 // $Id$
-project (DAnCE_PL_Daemon_idl) : dancelib_with_idl, dance_output, gen_ostream, \
+project (DAnCE_PL_Daemon_idl) : install, dancelib_with_idl, dance_output, gen_ostream, \
         valuetype, dance_deployment_stub {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DANCE_PL_STUB_Export \
@@ -9,9 +9,13 @@ project (DAnCE_PL_Daemon_idl) : dancelib_with_idl, dance_output, gen_ostream, \
   IDL_Files {
    PL_Daemon.idl
   }
+
+  specific {
+   install_dir = dance/Plan_Launcher/Daemon
+  }
 }
 
-project (DAnCE_PL_Daemon_stub) : dance_deployment_stub, dance_output, dance_lib {
+project (DAnCE_PL_Daemon_stub) : install, dance_deployment_stub, dance_output, dance_lib {
 
   after += DAnCE_PL_Daemon_idl
   dynamicflags += DANCE_PL_STUB_BUILD_DLL
@@ -25,6 +29,10 @@ project (DAnCE_PL_Daemon_stub) : dance_deployment_stub, dance_output, dance_lib 
 
   Header_Files {
     PL_DaemonC.h
+  }
+
+  specific {
+    install_dir = dance/Plan_Launcher/Daemon
   }
 }
 
@@ -45,5 +53,9 @@ project (DAnCE_PL_Daemon) : dance_exe, install, dance_plan_launcher, utils, danc
   
    Header_Files {
      PL_Daemon_Impl.h
+   }
+
+   specific {
+     install_dir = dance/Plan_Launcher/Daemon
    }
 }

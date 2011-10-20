@@ -3,6 +3,8 @@
 #ifndef CIAO_CONTEXT_IMPL_BASE_T_C
 #define CIAO_CONTEXT_IMPL_BASE_T_C
 
+#include "ciao/Logger/Log_Macros.h"
+
 namespace CIAO
 {
   template <typename CONTAINER_TYPE>
@@ -78,7 +80,18 @@ namespace CIAO
   CORBA::Object_ptr
   Context_Impl_Base_T<CONTAINER_TYPE>::resolve_service_reference(const char *service_id)
   {
-    return this->container_->resolve_service_reference (service_id);
+    typename CONTAINER_TYPE::_var_type cnt_safe =
+      CONTAINER_TYPE::_duplicate (this->container_.in ());
+    if (::CORBA::is_nil (cnt_safe.in ()))
+      {
+        CIAO_ERROR (1,
+                    (LM_ERROR,
+                     CLINFO
+                     "Extension_Context_Impl::get_client_interceptor_registration - "
+                     "Error: Container is nil\n"));
+        throw ::CORBA::INV_OBJREF ();
+      }
+    return cnt_safe->resolve_service_reference (service_id);
   }
 
   template <typename CONTAINER_TYPE>

@@ -21,21 +21,21 @@ namespace TAO
     // Which collocation strategy should we use?
     if (stub != 0 &&
         stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
-          == TAO_ORB_Core::THRU_POA)
+          == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
       {
         TAO::Portable_Server::Servant_Upcall servant_upcall (
           stub->servant_orb_var ()->orb_core ());
 
-      CORBA::Object_var forward_to;
-      servant_upcall.prepare_for_upcall (
-          stub->profile_in_use ()->object_key (),
-          "_is_a",
-          forward_to.out ());
+        CORBA::Object_var forward_to;
+        servant_upcall.prepare_for_upcall (
+            stub->profile_in_use ()->object_key (),
+            "_is_a",
+            forward_to.out ());
 
-      servant_upcall.pre_invoke_collocated_request ();
+        servant_upcall.pre_invoke_collocated_request ();
 
-      return servant_upcall.servant ()->_is_a (type_id);
-    }
+        return servant_upcall.servant ()->_is_a (type_id);
+      }
 
     // Direct collocation strategy is used.
     if (target->_servant () != 0)
@@ -43,7 +43,7 @@ namespace TAO
         return target->_servant ()->_is_a (type_id);
       }
 
-    return 0;
+    return false;
   }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -59,7 +59,7 @@ namespace TAO
         // Which collocation strategy should we use?
         if (stub != 0 &&
             stub->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+              ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
                 stub->servant_orb_var ()->orb_core ());
@@ -97,7 +97,7 @@ namespace TAO
     // Which collocation strategy should we use?
     if (stub != 0 &&
         stub->servant_orb_var ()->orb_core ()
-        ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
       {
         TAO::Portable_Server::Servant_Upcall servant_upcall (
           target->_stubobj ()->servant_orb_var ()->orb_core ());
@@ -135,7 +135,7 @@ namespace TAO
         // Which collocation strategy should we use?
         if (stub != 0 &&
             stub->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+              ->get_collocation_strategy () == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
                 stub->servant_orb_var ()->orb_core ());
@@ -174,7 +174,7 @@ namespace TAO
         // Which collocation strategy should we use?
         if (stub != 0 &&
             stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
-              == TAO_ORB_Core::THRU_POA)
+              == TAO_ORB_Core::TAO_COLLOCATION_THRU_POA)
           {
             TAO::Portable_Server::Servant_Upcall servant_upcall (
                 target->_stubobj ()->servant_orb_var ()->orb_core ());

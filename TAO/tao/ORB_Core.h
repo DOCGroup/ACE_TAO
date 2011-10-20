@@ -225,7 +225,7 @@ public:
   /// Get the adapter registry
   TAO_Adapter_Registry &adapter_registry (void);
 
-  /// @name Collocation Strategies
+  /// @name Collocation Strategies as configured by the user
   //@{
   enum
   {
@@ -234,22 +234,16 @@ public:
     ORB_CONTROL,
 
     /// Collocated calls will go thru POA.
-    THRU_POA,
+    TAO_COLLOCATION_THRU_POA,
 
     /// Collocated calls invoke operation on Servant directly.
-    DIRECT
-  };
+    TAO_COLLOCATION_DIRECT,
 
-  /**
-   * This method returns the right collocation strategy, if any,
-   * to be used to perform a method invocation on the given object.
-   *
-   * @note
-   * No-Collocation is a special case of collocation.
-   */
-  static
-  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
-  //@}
+    /// Collocated calls invoke operation on Servant directly if possible,
+    /// else Collocated calls will go thru POA if possible, else
+    /// use REMOTE_STRATEGY
+    TAO_COLLOCATION_BEST
+  };
 
   /// Set/get the collocation flags
   //@{

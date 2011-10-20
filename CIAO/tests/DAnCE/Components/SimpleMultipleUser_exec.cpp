@@ -2,6 +2,7 @@
 
 #include "SimpleMultipleUser_exec.h"
 #include "ace/Log_Msg.h"
+#include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO_Simple_SimpleMultipleUser_Impl
 {
@@ -98,7 +99,22 @@ namespace CIAO_Simple_SimpleMultipleUser_Impl
   SimpleMultipleUser_exec_i::ccm_remove ()
   {
     ACE_TRACE ("SimpleMultipleUser_exec_i::ccm_remove ()");
-    // Your code here.
+    //TODO: Enable this check again and resolve underlying issues.
+/*
+    ::Simple::SimpleMultipleUser::trig_uses_mConnections_var conns =
+      this->context_->get_connections_trig_uses_m ();
+    if (conns->length() != 0)
+      {
+        ACE_ERROR ((LM_ERROR, CLINFO "SimpleMultipleUser_exec_i::ccm_remove - "
+                  "ERROR: Connections still exists on exit - <%u> %@\n",
+                  conns->length(), this));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG, CLINFO "SimpleMultipleUser_exec_i::ccm_remove - "
+                  "OK: Connections do not exist on exit %@\n", this));
+      }
+*/
   }
 
   //==================================================================

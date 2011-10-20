@@ -1,3 +1,550 @@
+Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Oct 20 08:42:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * On_Demand_Act_Direct_Coll:
+                * On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
+                * On_Demand_Act_Direct_Coll/Servant_Activator.cpp:
+                * On_Demand_Act_Direct_Coll/test_i.cpp:
+                * On_Demand_Act_Direct_Coll/Server_Task.h:
+                * On_Demand_Act_Direct_Coll/run_test.pl:
+                * On_Demand_Act_Direct_Coll/test_i.h:
+                * On_Demand_Act_Direct_Coll/Client_Task.cpp:
+                * On_Demand_Act_Direct_Coll/Server_Task.cpp:
+                * On_Demand_Act_Direct_Coll/Servant_Activator.h:
+                * On_Demand_Act_Direct_Coll/Client_Task.h:
+                * On_Demand_Act_Direct_Coll/On_Demand_Act_D_Coll.mpc:
+                * On_Demand_Act_Direct_Coll/test.idl:
+                Test with Servant Activator and thru_poa- and direct collocation.
+
+                * bin/tao_orb_tests.lst
+                Added On_Demand_Act_Direct_Coll test.
+
+
+        Wed Oct 19 14:15:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+                * docs/tutorials/Quoter/RTCORBA/docs/distributor.html:
+                  Fixed typos.
+
+                * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+                  Fixed typo.
+
+                * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+                  ++x instead of x++;
+
+        Tue Oct 18 13:47:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Reverted last changes. Need a more robust implementation to
+                  fix re-entrancy
+
+        Tue Oct 18 11:35:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+                  Layout changes to the generated code
+
+        Tue Oct 18 10:51:21 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Using recursive mutexes instead of normal mutexes.
+
+        Tue Oct 18 10:39:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Fixed a minor indentation issue.
+
+        Tue Oct 18 10:03:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Using the container_ variable in a thread safe way.
+
+        Tue Oct 18 07:01:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
+                Changes for duplicate project names.
+
+        Mon Oct 17 13:08:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * tests/Collocated_DerivedIF:
+                * tests/Collocated_DerivedIF/Client_Task.h:
+                * tests/Collocated_DerivedIF/Client_Task.cpp:
+                * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
+                * tests/Collocated_DerivedIF/Collocated_Test.cpp:
+                * tests/Collocated_DerivedIF/Hello.h:
+                * tests/Collocated_DerivedIF/Hello.cpp:
+                * tests/Collocated_DerivedIF/Server_Task.h:
+                * tests/Collocated_DerivedIF/Server_Task.cpp:
+                * tests/Collocated_DerivedIF/Test.idl:
+                * tests/Collocated_DerivedIFl/run_test.pl:
+                * tests/Collocated_DerivedIFl/README:
+                Test for -ORBCollocationStrategy direct and interface inheritance
+
+                * tests/Collocated_Best/README:
+              Add ID
+
+        Mon Oct 17 12:33:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * docs/Options.html
+                Added new define TAO_DEFAULT_COLLOCATION_STRATEGY .
+
+        Mon Oct 17 11:41:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * docs/Options.html
+                Add new ORBCollocationStrategy best .
+
+        Thu Oct 13 12:57:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be_include/be_valuetype.h:
+                * TAO_IDL/be/be_valuetype.cpp:
+                  Removed gen_skel_helper from here, not used at all
+
+                * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+                  Fixed compile error with gcc 4.6
+
+        Thu Oct 13 12:14:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+                  static_cast seems to be required, not sure why, reverting this part
+                  to get our branch build green again
+
+        Thu Oct 13 11:15:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/AnyTypeCode/Any_Impl.cpp:
+                  Layout changes
+
+                * tao/LocalObject.cpp:
+                * tao/Object.cpp:
+                  Log an error before throwing a NO_IMPLEMENT system exception
+
+        Thu Oct 13 07:15:34 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+                  Further reduction of code being generated in case of interface
+                  inheritance
+
+        Thu Oct 13 06:46:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                  Fixed problem with num_args that still was generated for arguments
+
+        Wed Oct 12 14:14:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+                  Changed indentation and removed not needed static cast in the
+                  generated code
+
+        Wed Oct 12 12:06:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * tests/Collocated_NoColl:
+                * tests/Collocated_NoColl/Client_Task.h:
+                * tests/Collocated_NoColl/Client_Task.cpp:
+                * tests/Collocated_NoColl/Collocated_NoColl.mpc:
+                * tests/Collocated_NoColl/Collocated_Test.cpp:
+                * tests/Collocated_NoColl/Hello.h:
+                * tests/Collocated_NoColl/Hello.cpp:
+                * tests/Collocated_NoColl/Server_Task.h:
+                * tests/Collocated_NoColl/Server_Task.cpp:
+                * tests/Collocated_NoColl/Test.idl:
+                * tests/Collocated_NoColl/run_test.pl:
+                Test for -ORBCollocation NO
+
+
+        Wed Oct 12 12:02:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Collocation_Strategy.h:
+                * tao/Invocation_Adapter.cpp:
+                  Print the collocation strategy that we have determined
+
+                * tests/Hello/run_test.pl:
+                  Added -cdebug that enables ORBDebugLevel 10 for the client
+
+        Wed Oct 12 10:09:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+                * tao/Abstract_Servant_Base.h:
+                * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+                * tao/PortableServer/Operation_Table.h:
+                  Removed the num_args argument for the direct collocation skeleton
+                  functions because it was not used at all
+
+        Wed Oct 12 09:55:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * tao/Object_T.h:
+                * tao/Object_T.cpp:
+                * tao/PolicyC.cpp:
+                * tao/Valuetype/AbstractBase_T.h:
+                * tao/Valuetype/AbstractBase_T.cpp:
+                  unchecked_narrow method was available with and without repository_id
+                  argument but that wasn't used at all. merged both methods into one
+                  and updated tao_idl code generation to not generate the repository_id
+                  anymore
+
+        Wed Oct 12 09:01:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * tao/Object_T.h:
+                * tao/Object_T.cpp:
+                * tao/PolicyC.cpp:
+                * tao/PortableServer/PolicyS.cpp:
+                * tao/Valuetype/AbstractBase_T.h:
+                * tao/Valuetype/AbstractBase_T.cpp:
+                  Removed the collocation opportunity from the narrow calls, the
+                  boolean collocated only means whether the servant is collocated or
+                  not and shouldn't include the fact whether we have a collocation
+                  opportunity or not
+
+        Tue Oct 11 17:38:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.cpp:
+                  Also check the string that returned
+
+        Tue Oct 11 10:53:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Object_T.cpp:
+                  Don't use collocation opportunity, just determine whether the
+                  object is collocated or not. If this doesn't break any tests, we
+                  need to do some more cleanup here
+
+        Tue Oct 11 10:41:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/CORBANAME_Parser.cpp:
+                * tao/Remote_Object_Proxy_Broker.cpp:
+                  Enable through poa collocation by default
+
+        Tue Oct 11 07:17:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                  Layout changes and just always generate the orb optimize flags
+
+        Mon Oct 10 17:43:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/IIOP_Connector.cpp:
+                * tao/Invocation_Adapter.h:
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                  Moved collocation_strategy from the orb core to the invocation adapter
+
+                * tests/Collocated_ThruP_Sp/Collocated_Test.cpp:
+                * tests/Collocated_ThruP_Sp/README:
+                * tests/Collocated_ThruP_Sp/Server_Task.cpp:
+                * tests/Collocated_ThruP_Sp/run_test.pl:
+                * tests/Collocated_ThruP_Sp_Gd/README:
+                * tests/Collocated_ThruP_Sp_Gd/run_test.pl:
+                  Add -debug to the script, layout changes, missing Id
+
+        Fri Oct  7 10:54:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/ORB_Core.cpp:
+                  Tweaked collocation strategy a little bit more, for direct we need
+                  a servant, not for poa. If we are not collocated, we just go remote and
+                  not give an exception
+
+        Fri Oct  7 09:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                  Layout change to generated code
+
+                * tao/Invocation_Adapter.cpp:
+                  Removed the check that servant != 0 before being able to invoke
+                  collocated, collocation opportunities test shows a case where this
+                  happens
+
+                * tao/ORB_Core.cpp:
+                  Added logging before we throw an exception related to collocation
+                  mis configuration. If we are collocated with best opportunity without
+                  any opportunity we default to remote instead of having an exception.
+                  Through poa seems possible without a servant pointer
+
+        Thu Oct  6 09:34:57 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+              * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+              Set collocation_opportunity to TAO_CO_THRU_POA_STRATEGY instead of 0.
+
+        Thu Oct  6 08:56:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+                * orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc:
+                * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+                * tests/Policies/Policies.mpc:
+                  requires for corba_messaging is already pulled in through the
+                  base projects
+
+        Wed Oct  5 18:49:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+                * TAO_IDL/be_include/be_global.h:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+                  Even more cleanup of old stuff
+
+        Wed Oct  5 18:42:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_home.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be/be_visitor_operation/base_proxy_impl_ch.cpp:
+                * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+                  More cleanup
+
+                * TAO_IDL/be_include/be_visitor_operation/base_proxy_impl_ch.h:
+                * TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+                  Removed these files.
+
+        Wed Oct  5 18:34:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_home.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                  Cleanup of very old stuff
+
+                * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+                  Fixed cpb
+
+                * tao/Valuetype/AbstractBase_T.h:
+                * tao/Valuetype/AbstractBase_T.cpp:
+                  Updated for changes below
+
+                * tests/CSD_Collocation/svc.conf.csd:
+                  Removed deprecated arguments
+
+        Wed Oct  5 13:01:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * tests/Collocated_Best/README
+                * tests/Collocated_ThruP_Sp/README
+                * tests/Collocated_ThruP_Sp_Gd/README
+                * tests/Bug_2241_Regression/README
+                Add README's
+
+                * bin/tao_orb_tests.lst
+                Added Collocated_ThruP_Sp_Gd test.
+
+        Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                * tao/PolicyC.cpp:
+                * tao/Collocation_Strategy.h:
+                * tao/PortableServer/PolicyS.cpp:
+                Change define TAO_CO_DIRECT_POA,remove POA
+
+                * tao/DynamicInterface/DII_Invocation_Adapter.h:
+                * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+                * tao/Messaging/Asynch_Invocation_Adapter.h:
+                * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+                * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+                * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+                Change proxybroker for collocation opertunities
+
+                * tao/ORB_Core.cpp:
+                * tao/Invocation_Adapter.cpp:
+                Extended collocation_strategy with opertunities
+                Handling of BEST strategy and checking other strategies.
+
+                * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
+
+
+
+        Wed Oct  5 08:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_component.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+                * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+                * TAO_IDL/be_include/be_component.h:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be_include/be_visitor_interface.h:
+                * tao/Abstract_Servant_Base.h:
+                * tao/Collocated_Invocation.h:
+                * tao/Collocated_Invocation.cpp:
+                * tao/Collocation_Strategy.h:
+                * tao/Invocation_Adapter.h:
+                * tao/Invocation_Adapter.inl:
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                * tao/Object.h:
+                * tao/Object.cpp:
+                * tao/Object_T.h:
+                * tao/Object_T.cpp:
+                * tao/PolicyC.h:
+                * tao/PolicyC.inl:
+                * tao/PolicyC.cpp:
+                * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+                * tao/PortableServer/PolicyS.h:
+                * tao/PortableServer/PolicyS.cpp:
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                * tao/tao.mpc:
+                  Rough reimplementatin of handling of collocated call. A pre condition
+                  for using collocation is having a servant pointer. The core of TAO
+                  also couldn't detect whether through poa collocation is requested
+                  without having -Gp being enabled. The collocated proxy broker (cpb)
+                  was only used for direct collocation, but didn't contain any interface
+                  specific code. TAO_IDL now generated a collocation opportunity to
+                  indicate which support it did generate, when the core than has
+                  a servant pointer it can determine which opportunities it has an
+                  what is requested.
+
+                  As side effect we get smaller generated code, less complexity, and
+                  better performance
+
+                  This has to be finished but committing it right now.
+
+                * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+                * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_sh.h:
+                * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+                * tao/Collocation_Proxy_Broker.h:
+                * tao/Collocation_Proxy_Broker.cpp:
+                  Removed these files.
+
+        Wed Oct  5 07:15:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+                  Add prefix TAO_COLLOCATION_ to Collocated strategy Thru_POA
+
+        Tue Oct  4 16:36:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                Clean up debug text
+
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                Change Exception for collocated errors.
+                Add prefix TAO_COLLOCATION_ to Collocated strategies DIrect, Best and Thru_POA
+                Add TAO_DEFAULT_COLLOCATION_STRATEGY
+
+                * tao/orbconf.h:
+                Add TAO_DEFAULT_COLLOCATION_STRATEGY
+
+                * tests/Bug_2241_Regression/run_test.pl:
+                * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Best_Direct.mpc:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Best_ThruP.mpc:
+
+                * tests/Collocated_ThruP_Sp_Gd:
+                * tests/Collocated_ThruP_Sp_Gd/Client_Task.h:
+                * tests/Collocated_ThruP_Sp_Gd/Client_Task.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Collocated_Test.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Collocated_ThruP_Sp_Gd.mpc:
+                * tests/Collocated_ThruP_Sp_Gd/Hello.h:
+                * tests/Collocated_ThruP_Sp_Gd/Hello.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Server_Task.h:
+                * tests/Collocated_ThruP_Sp_Gd/Server_Task.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Test.idl:
+                * tests/Collocated_ThruP_Sp_Gd/run_test.pl:
+                New test for combination Sp and Gd
+
+        Mon Oct  3 15:33:35 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                Change dead to 0 for Collocation_Proxy_Broker
+
+                * tao/Collocation_Strategy.h:
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                Add exceptions for situations if not used -Gp or used -Sp idl flags and
+                ORBCollocationStrategies Direct and Thru_Poa. Add strategie BEST.
+                To do: add prefix COLLOCATION_.
+
+                * tests/Bug_2241_Regression/Client_Task.cpp:
+                * tests/Bug_2241_Regression/Hello.cpp:
+                * tests/Bug_2241_Regression/run_test.pl:
+                Catch expected exceptions.
+
+                * tests/Collocated_Best:
+                * tests/Collocated_Best/Collocated_Best_Direct:
+                * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Best_Direct.mpc:
+                * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Test.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Server_Task.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Server_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Test.idl:
+                * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
+
+                * tests/Collocated_Best/Collocated_Best_NoColl:
+
+                * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Collocated_Best_NoColl.mpc:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Collocated_Test.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Server_Task.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Server_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Test.idl:
+                * tests/Collocated_Best/Collocated_Best_NoColl/run_test.pl:
+
+                * tests/Collocated_Best/Collocated_Best_ThuP:
+
+                * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Best_ThruP.mpc:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Test.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Server_Task.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Server_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Test.idl:
+                * tests/Collocated_Best/Collocated_Best_ThuP/run_test.pl:
+
+                * tests/Collocated_ThruP_Sp:
+
+                * tests/Collocated_ThruP_Sp/Client_Task.h:
+                * tests/Collocated_ThruP_Sp/Client_Task.cpp:
+                * tests/Collocated_ThruP_Sp/Collocated_Test.cpp:
+                * tests/Collocated_ThruP_Sp/Collocated_ThruP_Sp.mpc:
+                * tests/Collocated_ThruP_Sp/Hello.h:
+                * tests/Collocated_ThruP_Sp/Hello.cpp:
+                * tests/Collocated_ThruP_Sp/Server_Task.h:
+                * tests/Collocated_ThruP_Sp/Server_Task.cpp:
+                * tests/Collocated_ThruP_Sp/Test.idl:
+                * tests/Collocated_ThruP_Sp/run_test.pl:
+                tests for COLLOCATION_DIRECT. To do: add readme
+
+        === end changelog ===
+
 Mon Oct 10 08:48:51 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.0.5 released.

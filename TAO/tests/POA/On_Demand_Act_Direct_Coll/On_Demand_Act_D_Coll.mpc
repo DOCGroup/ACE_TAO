@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project(On_Demand_Act_D_Coll): taoserver, portableserver {
+   exename  = On_Demand_Act_D_Coll
+   idlflags += -Gd
+
+   Source_Files {
+    Collocated_Test.cpp
+    Server_Task.cpp
+    Client_Task.cpp
+    Servant_Activator.cpp
+    test_i.cpp
+   }
+}

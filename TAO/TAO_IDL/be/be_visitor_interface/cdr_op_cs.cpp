@@ -117,28 +117,16 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   if (!node->is_abstract ())
     {
-      *os << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (";
+      *os << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
+          << "obj.in ());";
     }
   else
     {
-      *os << "TAO::AbstractBase_Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (";
+      *os << "TAO::AbstractBase_Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
+          << "obj.in ());";
     }
 
-  *os << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl;
-
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-    {
-      *os << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer";
-    }
-  else
-    {
-      *os << "0";
-    }
-
-  *os << ");" << be_uidt << be_uidt_nl << be_uidt_nl;
+  *os << be_nl << be_uidt_nl;
 
   *os << "return true;" << be_uidt_nl
       << "}" << be_nl;

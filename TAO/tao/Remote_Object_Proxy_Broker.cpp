@@ -34,7 +34,7 @@ namespace TAO
                                       2,
                                       "_is_a",
                                       5,
-                                      0);
+                                      TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
     tao_call.invoke (0, 0);
 
@@ -58,7 +58,7 @@ namespace TAO
                                        1,
                                        "_non_existent",
                                        13,
-                                       0);
+                                       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
     _tao_call.invoke (0, 0);
 
@@ -80,7 +80,7 @@ namespace TAO
                                        1,
                                        "_component",
                                        10,
-                                       0);
+                                       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
     _tao_call.invoke (0, 0);
 
@@ -118,7 +118,7 @@ namespace TAO
                                        1,
                                        "_repository_id",
                                        14,
-                                       0);
+                                       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
     _tao_call.invoke (0, 0);
 

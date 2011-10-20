@@ -36,7 +36,7 @@ namespace TAO
                           arg_number,
                           operation,
                           op_len,
-                          0, // Collocation Proxy broker pointer
+                          TAO_CO_THRU_POA_STRATEGY, // default through POA collocation is possible
                           TAO_TWOWAY_INVOCATION,
                           mode)
       , exception_list_ (excp)
@@ -158,7 +158,7 @@ namespace TAO
       int arg_number,
       const char *operation,
       size_t op_len,
-      Collocation_Proxy_Broker *b,
+      int collocation_opportunity,
       TAO_ORB_Core *oc,
       CORBA::Request *req,
       Invocation_Mode mode)
@@ -167,7 +167,7 @@ namespace TAO
                           arg_number,
                           operation,
                           op_len,
-                          b,
+                          collocation_opportunity,
                           TAO_TWOWAY_INVOCATION,
                           mode)
       , request_ (req)
@@ -305,7 +305,7 @@ namespace TAO
                           arg_count,
                           operation,
                           op_len,
-                          0,
+                          TAO_CO_THRU_POA_STRATEGY,
                           TAO_ONEWAY_INVOCATION,
                           mode)
   {

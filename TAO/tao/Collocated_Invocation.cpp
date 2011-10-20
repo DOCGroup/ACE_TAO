@@ -1,7 +1,6 @@
 // $Id$
 
 #include "tao/Collocated_Invocation.h"
-#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/ORB_Core.h"
 #include "tao/Request_Dispatcher.h"
 #include "tao/TAO_Server_Request.h"
@@ -9,6 +8,7 @@
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
 #include "tao/SystemException.h"
+#include "tao/Abstract_Servant_Base.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
@@ -33,8 +33,7 @@ namespace TAO
   }
 
   Invocation_Status
-  Collocated_Invocation::invoke (Collocation_Proxy_Broker *cpb,
-                                 Collocation_Strategy strat)
+  Collocated_Invocation::invoke (Collocation_Strategy strat)
   {
     Invocation_Status s = TAO_INVOKE_FAILURE;
 
@@ -82,7 +81,8 @@ namespace TAO
           {
             bool is_forwarded = false;
 
-            cpb->dispatch (this->effective_target (),
+            this->effective_target ()->_servant()->_collocated_dispatch (
+                           this->effective_target (),
                            this->forwarded_to_.out (),
                            is_forwarded,
                            this->details_.args (),

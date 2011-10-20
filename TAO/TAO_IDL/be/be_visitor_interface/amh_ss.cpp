@@ -97,21 +97,9 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     {
       *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
     }
-  *os << be_idt << be_idt_nl
-      << "obj.in ()," << be_nl;
+  *os << "obj.in ());" << be_nl;
 
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-    {
-      *os << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_uidt_nl;
-    }
-  else
-    {
-      *os << "0" << be_uidt_nl;
-    }
-
-  *os << ");" << be_uidt << be_uidt << be_uidt_nl
+  *os << be_uidt << be_uidt_nl
       << "}";
 
 }
@@ -221,14 +209,12 @@ public:
                     be_interface *derived);
 };
 
-TAO_IDL_Copy_Ctor_Worker::
-TAO_IDL_Copy_Ctor_Worker (void)
+TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker (void)
 {
 }
 
 int
-TAO_IDL_Copy_Ctor_Worker::
-emit (be_interface *derived,
+TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
       TAO_OutStream *os,
       be_interface *base)
 {
@@ -278,12 +264,11 @@ be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
   node->get_insert_queue ().reset ();
   node->get_del_queue ().reset ();
 
-
   // Insert ourselves in the queue.
   if (node->get_insert_queue ().enqueue_tail (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "(%N:%l) be_interface::generate_copy_ctor - "
                          "error generating entries\n"),
                         -1);
     }

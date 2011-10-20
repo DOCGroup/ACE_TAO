@@ -229,8 +229,8 @@ module DDS {
     local interface Listener {};
 
     local interface TopicListener : Listener {
-    void on_inconsistent_topic(in Topic the_topic,
-        in InconsistentTopicStatus status);
+        void on_inconsistent_topic(in Topic the_topic,
+            in InconsistentTopicStatus status);
     };
 
     local interface DataWriterListener : Listener {

@@ -149,22 +149,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  if (!node->is_local () &&
-      (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ()))
-    {
-      // Generate the proxy broker factory function pointer definition.
-      *os << be_nl_2
-          << "// Function pointer for collocation factory initialization."
-          << be_nl
-          << "TAO::Collocation_Proxy_Broker * " << be_nl
-          << "(*" << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer) ("
-          << be_idt << be_idt_nl
-          << "::CORBA::Object_ptr obj) = 0;" << be_uidt
-          << be_uidt;
-    }
-
   // Generate code for the elements of the interface.
   if (this->visit_scope (node) == -1)
     {
@@ -189,80 +173,15 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "::" << node->local_name ()
           << " (void)" << be_nl;
 
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-        {
-          *os << " : the" << node->base_proxy_broker_name () << "_ (0)" << be_nl;
-        }
+      *os << "{" << be_nl;
 
-      *os << "{" << be_idt_nl;
-
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-        {
-          *os << "this->" << node->flat_name ()
-              << "_setup_collocation ();" << be_uidt_nl;
-        }
-      *os << be_uidt << "}";
-    }
-
-  if (! node->is_local () &&
-     (be_global->gen_direct_collocation()
-      || be_global->gen_thru_poa_collocation ()))
-    {
-      *os << be_nl_2
-          << "void" << be_nl
-          << node->name () << "::" << node->flat_name ()
-          << "_setup_collocation ()" << be_nl
-          << "{" << be_idt_nl
-          << "if (" << "::"
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer";
-
-       // Right now (29-01-04) we don't support collocation for
-       // abstract interfaces, and the 'collocated' arg will always
-       // be 0. However, just to be safe, we add a
-       // check for non-zero collocation factory function pointer
-       // (which at present is also 0 for abstract interfaces),
-       // in case the logic is changed in the future.
-       if (node->is_abstract ())
-        {
-          *os << " && " << node->flat_client_enclosing_scope ()
-              << node->base_proxy_broker_name ()
-              << "_Factory_function_pointer";
-        }
-
-      *os << ")" << be_idt_nl
-          << "{" << be_idt_nl
-          << "this->the" << node->base_proxy_broker_name ()
-          << "_ =" << be_idt_nl
-          << "::" << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer (";
-
-       if (node->is_abstract ())
-          {
-            *os << be_idt << be_idt_nl
-                << "this->equivalent_objref ()" << be_uidt_nl
-                << ");" << be_uidt;
-          }
-        else
-          {
-            *os << "this);";
-          }
-
-      *os << be_uidt << be_uidt_nl
-          << "}" << be_uidt;
-
-      // Now we setup the immediate parents.
-      node->gen_parent_collocation (os);
-
-      *os << be_uidt_nl << "}";
+      *os << "}";
     }
 
   *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
       << " (void)" << be_nl;
-  *os << "{}" << be_nl_2;
+  *os << "{" << be_nl << "}" << be_nl_2;
 
   bool gen_any_destructor =
     be_global->any_support ()
@@ -488,22 +407,18 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << "proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
 
-      *os << be_idt << be_idt_nl
-          << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl;
+      *os << be_idt << be_idt_nl;
 
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
+      *os << "_tao_objref";
+      if (ACE_OS::strcmp (pre, "narrow") == 0)
         {
-          *os << node->flat_client_enclosing_scope ()
-              << node->base_proxy_broker_name ()
-              << "_Factory_function_pointer" << be_uidt_nl;
+          *os << "," << be_nl
+              << "\"" << node->repoID () << "\"";
         }
-      else
-        {
-          *os << "0" << be_uidt_nl;
-        }
-      *os << ");" << be_uidt << be_nl
+
+      *os << ");";
+
+      *os << be_uidt << be_uidt << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
@@ -525,21 +440,17 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
         }
 
       *os << be_idt << be_idt_nl
-          << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl;
+          << "_tao_objref";
 
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
+      if (ACE_OS::strcmp (pre, "narrow") == 0)
         {
-          *os << node->flat_client_enclosing_scope ()
-              << node->base_proxy_broker_name ()
-              << "_Factory_function_pointer" << be_uidt_nl;
+          *os << "," << be_nl
+              << "\"" << node->repoID () << "\"";
         }
-      else
-        {
-          *os << "0" << be_uidt_nl;
-        }
-      *os << ");" << be_uidt << be_uidt << be_uidt_nl
+
+      *os << ");";
+
+      *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "}" << be_nl_2;
     }
 

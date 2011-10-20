@@ -32,7 +32,7 @@ which is a subclass of POA_Stock::StockQuoter class. <P>
 
 <hr><h3>Implementation of StockDistributorHome interface</h3>
 
-This interface is used to register the necessary factories and mappings with the specified orb and 
+This interface is used to register the necessary factories and mappings with the specified orb and
 create StockDistributor objects. <P>
 
 The Stock_StockDistributorHome_i class is generated automatically by the IDL compiler (using the -GI flag),
@@ -48,7 +48,7 @@ The main steps of this function are described as follows: <P>
 
 <PRE>
     if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
-      ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n", 
+      ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
                   "register_handler\n"));
 </PRE>
 
@@ -76,7 +76,7 @@ The main steps of this function are described as follows: <P>
 
 <li>Create a CORBA::PolicyList for the child POA.</li>
 
-This step include several sub-stpes:
+This step include several sub-steps:
 <OL>
 <li>    Get a reference to the RTORB.</li>
 <li>    Initialize a CORBA::PolicyList object.</li>
@@ -90,38 +90,38 @@ create a lane for each priority.</li>
 <PRE>
     CORBA::Object_var obj = orb_->resolve_initial_references ("RTORB");
     RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
-  
+
     TAO::Utils::PolicyList_Destroyer policies (2);
     policies.length (2);
-  
+
     policies[0] =
       rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                             Stock::Priority_Mapping::VERY_LOW);
-  
+
     RTCORBA::ThreadpoolLanes lanes (5); lanes.length (5);
-  
-    for (CORBA::ULong i = 0; i < lanes.length (); ++i) 
+
+    for (CORBA::ULong i = 0; i < lanes.length (); ++i)
       {
         lanes[i].lane_priority = static_cast<RTCORBA::Priority> (i);
         lanes[i].static_threads = 5;
         lanes[i].dynamic_threads = 0;
       }
-  
-    RTCORBA::ThreadpoolId threadpool_id = 
+
+    RTCORBA::ThreadpoolId threadpool_id =
       rt_orb->create_threadpool_with_lanes (1024*1024,
                                             lanes,
                                             false, false, 0, 0);
-  
+
     policies[1] = rt_orb->create_threadpool_policy (threadpool_id);
 
     PortableServer::POA_var poa = this->_default_POA ();
     PortableServer::POAManager_var poa_mgr = poa->the_POAManager ();
-  
+
     PortableServer::POA_var child_poa =
-      poa->create_POA ("StockDistributor_POA", 
+      poa->create_POA ("StockDistributor_POA",
                        poa_mgr.in (),
                        policies);
-  
+
     this->rt_poa_ = RTPortableServer::POA::_narrow (child_poa.in ());
 </PRE>
 
@@ -133,7 +133,7 @@ create a lane for each priority.</li>
 
 <h4>Implementing the create_distributor () member function</h4>
 
-<li>Create a new instance of the StockDistributor_i. Then activate it under the located POA. 
+<li>Create a new instance of the StockDistributor_i. Then activate it under the located POA.
 This will cause the object to have the CLIENT_PROPAGATED policies. </li>
 
 <PRE>
@@ -179,7 +179,7 @@ which is a subclass of POA_Stock::StockDistributor class. <P>
         orb_ (CORBA::ORB::_duplicate (poa->_get_orb ()))
 </PRE>
 
-The "rate_" and "active_" are two private members of the Stock_StockDistributor_i class. They stand 
+The "rate_" and "active_" are two private members of the Stock_StockDistributor_i class. They stand
 for the notification rate and the active state of the StockDistributor object. <P>
 
 <h4>Implementing the subscribe_notifier () member function</h4>
@@ -190,7 +190,7 @@ The main steps of this function are described as follows: <P>
 
 <li>Generate an unique id for the cookie and use it to create a new Cookie object.</li> <P>
 
-<li>Insert the StockNameConsumer object and its priority into the StockDistributor object's subscriber map, 
+<li>Insert the StockNameConsumer object and its priority into the StockDistributor object's subscriber map,
 using the cookie id as the key.</li> <P>
 
 <li>Return the Cookie object.</li> <P>
@@ -202,7 +202,7 @@ The main steps of this function are described as follows: <P>
 <li>Check the value of the Cookie object.</li> <P>
 
 <li>Get the write thread mutex of the subscriber map.</li> <P>
-  
+
 <li>Search for the Cookie object in the argument in the StockDistributor object's subscriber map.</li> <P>
 
 <li>Erase the Cookie object from the StockDistributor object's subscribers' map.</li> <P>
@@ -212,7 +212,7 @@ The main steps of this function are described as follows: <P>
 <h4>Implementing the provide_quoter_info () member function</h4>
 
 <li>Get the read thread mutex of the subscriber map.</li> <P>
-  
+
 <li>Search for the Cookie object in the argument in the StockDistributor object's subscriber map.</li> <P>
 
 <PRE>
@@ -224,11 +224,11 @@ The main steps of this function are described as follows: <P>
 <PRE>
     Stock_StockQuoter_i *quoter = new Stock_StockQuoter_i;
     PortableServer::ServantBase_var owner_transfer (quoter);
-  
-    PortableServer::ObjectId *oid = 
+
+    PortableServer::ObjectId *oid =
       this->rt_poa_->activate_object_with_priority (quoter,
                                                     iter->second.second);
-  
+
     CORBA::Object_var obj = rt_poa_->id_to_reference (*oid);
     Stock::StockQuoter_var quoter_var = ::Stock::StockQuoter::_narrow (obj.in ());
 </PRE>
@@ -257,12 +257,12 @@ While the state of the StockDistributor object is active, continue the following
             CORBA::Object_var obj = orb_->resolve_initial_references ("RTCurrent");
             RTCORBA::Current_var rt_current =
               RTCORBA::Current::_narrow (obj);
-              
+
             rt_current->the_priority (iter->second.second);
 
             // Tell the database to push its information to the
             // <consumer>, which passes along the CORBA priority
-            // in the service_context list of the GIOP message. 
+            // in the service_context list of the GIOP message.
             STOCK_DATABASE->publish_stock_info (iter->second.first);
           }
         catch (CORBA::Exception &ex)
@@ -288,10 +288,10 @@ While the state of the StockDistributor object is active, continue the following
 
 <li>Deactivate the StockDistributor object.</li>
 
-<PRE>  
+<PRE>
     ::Stock::StockDistributor_var dist = this->_this ();
     PortableServer::ObjectId_var oid = this->rt_poa_->reference_to_id (dist.in ());
-  
+
     this->rt_poa_->deactivate_object (oid.in ());
 </PRE>
 
