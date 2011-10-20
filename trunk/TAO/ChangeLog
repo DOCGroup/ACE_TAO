@@ -1,3 +1,8 @@
+Thu Oct 20 17:34:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/On_Demand_Act_Direct_Coll/On_Demand_Act_D_Coll.mpc:
+          Don't build this test with minimum corba and CORBA/e
+
 Thu Oct 20 12:50:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_interface.h:
