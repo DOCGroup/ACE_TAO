@@ -1,3 +1,5 @@
+// $Id$
+
 This test is build without  idlflag -Gd,  so Direct collocation isn't enabled.
 Running this test with -ORBCollocationStrategy 'direct' should result in an Exception.
 
