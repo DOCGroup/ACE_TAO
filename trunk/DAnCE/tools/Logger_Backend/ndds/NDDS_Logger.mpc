@@ -20,6 +20,10 @@ project(DAnCE_NDDS_Logger) : ndds_cck_ts_defaults, nddslib, taolib_with_idl, dan
   Source_Files {
    Log_Backend.cpp
   }
+
+  specific {
+   install_dir = tools/Logger_Backend/ndds
+  }
 }
 
 project(DAnCE_NDDS_Log_Server) : ndds_cck_ts_defaults, nddsexe, taoidldefaults, taoclient, dance_output, install {
@@ -32,5 +36,9 @@ project(DAnCE_NDDS_Log_Server) : ndds_cck_ts_defaults, nddsexe, taoidldefaults, 
     Log_RecordPlugin.cxx
     Log_RecordSupport.cxx
     Log_Server.cpp
+  }
+
+  specific {
+    install_dir = tools/Logger_Backend/ndds
   }
 }

@@ -1,5 +1,31 @@
-USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.0.6
+USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
 =======================================================
+
+. It is now possible to connect connections in a deployment plan
+  at deployment time instead of connecting them on first use.
+  This can be established by setting the CIAO_PRE_ESTABLISH_CONNECTIONS
+  define in your config.h.
+
+. The DDS4CCM connector now only creates a subscriber or
+  publisher when they are needed. Previously, the DDS4CCM
+  always created a publisher and subscriber, regardless
+  of need.
+
+. Besides late binding, it is now possible to reset the topic
+  name in the DDS4CCM connector. This means that the DDS4CCM
+  connector is able to switch between topics of the same data
+  type at runtime. Resetting a topic name means that DDS will
+  be closed down and started again, using the new topic name.
+  On the outside, all connections to and from the connector
+  stay intact; therefor the user doesn't need to re-establish
+  the connections again. Please see
+  $CIAO_ROOT/connectors/dds4ccm/tests/ResetTopic/README for
+  more info. This directory also contains some examples on how
+  to reset a topic name.
+  Since this is not spec-compliant behavior, an issue has been be
+  raised on the DDS4CCM specification.
+
+. Improved thread safety in the CIAO core.
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================

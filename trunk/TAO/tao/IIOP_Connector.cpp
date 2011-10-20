@@ -151,31 +151,31 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   if (iiop_endpoint == 0)
     return -1;
 
-   const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
-   // Verify that the remote ACE_INET_Addr was initialized properly.
-   // Failure can occur if hostname lookup failed when initializing the
-   // remote ACE_INET_Addr.
+  // Verify that the remote ACE_INET_Addr was initialized properly.
+  // Failure can occur if hostname lookup failed when initializing the
+  // remote ACE_INET_Addr.
 #if defined (ACE_HAS_IPV6)
-   if (remote_address.get_type () != AF_INET &&
-       remote_address.get_type () != AF_INET6)
+  if (remote_address.get_type () != AF_INET &&
+      remote_address.get_type () != AF_INET6)
 #else /* ACE_HAS_IPV6 */
-   if (remote_address.get_type () != AF_INET)
+  if (remote_address.get_type () != AF_INET)
 #endif /* !ACE_HAS_IPV6 */
-     {
-       if (TAO_debug_level > 0)
-         {
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO (%P|%t) - IIOP connection failed.\n")
-                       ACE_TEXT ("     This is most likely ")
-                       ACE_TEXT ("due to a hostname lookup ")
-                       ACE_TEXT ("failure.\n")));
-         }
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - IIOP connection failed.\n")
+                      ACE_TEXT ("     This is most likely ")
+                      ACE_TEXT ("due to a hostname lookup ")
+                      ACE_TEXT ("failure.\n")));
+        }
 
-       return -1;
-     }
+      return -1;
+    }
 
-   return 0;
+  return 0;
 }
 
 TAO_Transport *

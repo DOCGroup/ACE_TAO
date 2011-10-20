@@ -91,34 +91,34 @@ namespace CIAO_Keyed_Test_Sender_Impl
   void
   Sender_exec_i::tick (void)
   {
-    if (this->last_key != this->ktests_.end ())
+    if (this->last_key_ != this->ktests_.end ())
       {
         try
           {
             KeyedTestConnector::Writer_var writer =
               this->ciao_context_->get_connection_info_write_data ();
-            ++this->last_key->second->iteration;
-            writer->write_one (this->last_key->second, ::DDS::HANDLE_NIL);
+            ++this->last_key_->second->iteration;
+            writer->write_one (this->last_key_->second, ::DDS::HANDLE_NIL);
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Written key <%C> with <%d>\n"),
-                    this->last_key->first.c_str (),
-                    this->last_key->second->iteration));
+                    this->last_key_->first.c_str (),
+                    this->last_key_->second->iteration));
           }
         catch (const CCM_DDS::InternalError& )
           {
             ACE_ERROR ((LM_ERROR, "ERROR: Internal Error while writing KeyedTest info for <%C>.\n",
-                        this->last_key->first.c_str ()));
+                        this->last_key_->first.c_str ()));
           }
-        ++this->last_key;
+        ++this->last_key_;
       }
     else
       {
         // Onto the next iteration
-        this->last_key = this->ktests_.begin ();
-        while (this->last_key != this->ktests_.end ())
+        this->last_key_ = this->ktests_.begin ();
+        while (this->last_key_ != this->ktests_.end ())
           {
-            if (this->last_key->second->iteration == this->iterations_)
+            if (this->last_key_->second->iteration == this->iterations_)
               {
-                ++this->last_key;
+                ++this->last_key_;
               }
             else
               {
@@ -229,7 +229,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
 
         this->ktests_[key] = new_key;
       }
-     this->last_key = this->ktests_.begin ();
+     this->last_key_ = this->ktests_.begin ();
   }
 
   void

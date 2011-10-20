@@ -3,7 +3,7 @@
 
 project : ciao_logger, ciao_port_activator_stub, ciao_servant_activator_stub, \
         ccm_svnt, taoidldefaults, portableserver, ccm_cookie, ccm_session_stub, \
-        ciao_session_container_stub {
+        ciao_session_container_stub, ccm_direct_collocation {
    after += CIAO_Servant_Impl
    libs += CIAO_Servant_Impl
 }

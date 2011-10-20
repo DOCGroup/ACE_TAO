@@ -56,25 +56,36 @@ namespace CIAO
     Connection_Handler connection_handler;
 
   private:
+    /// Container administration
     typedef std::map < std::string,
                        CIAO::Container_var > CONTAINERS;
 
     CONTAINERS containers_;
+
+    TAO_SYNCH_MUTEX  container_mutex_;
 
     typedef std::map < std::string, std::string > INSTANCE_CONTAINER;
 
     /// maps instance ids to containers.
     INSTANCE_CONTAINER instance_container_;
 
+    TAO_SYNCH_MUTEX  instance_container_mutex_;
+
+    /// Homes administration
     typedef std::map < std::string,
       Components::CCMHome_var > HOMES;
 
     HOMES homes_;
 
+    TAO_SYNCH_MUTEX  home_mutex_;
+
+    /// Components administration
     typedef std::map < std::string,
       Components::CCMObject_var > COMPONENTS;
 
     COMPONENTS components_;
+
+    TAO_SYNCH_MUTEX  component_mutex_;
   };
 
   typedef ACE_Singleton <Deployment_State,

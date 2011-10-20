@@ -43,6 +43,7 @@ protected:
   bool late_binding (void);
   void late_binding (bool late_binding);
   bool late_binded (const char * topic_name);
+  bool stop_dds (const char * topic_name);
 
   CORBA::String_var topic_name_;
   DDS::StringSeq key_fields_;
@@ -54,6 +55,9 @@ protected:
   ::DDS::PublisherListener_var publisher_listener_;
   ::DDS::Subscriber_var subscriber_;
   ::DDS::SubscriberListener_var subscriber_listener_;
+
+  bool init_subscriber_;
+  bool init_publisher_;
 
   typedef DDS_Base_Connector_T<CCM_TYPE> BaseConnector;
 

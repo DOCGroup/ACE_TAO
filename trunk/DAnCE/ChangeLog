@@ -1,3 +1,29 @@
+Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Oct 13 07:17:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * dance/Logger/Log_Macros.h:
+                  Fix complile errors when all logging is disabled.
+
+        Wed Oct 12 13:09:40 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * dance/DAnCE_Core.mpc:
+                * dance/LocalityManager/Configuration/Configuration.mpc:
+                * dance/LocalityManager/Interceptors/Error_Interceptors.mpc:
+                * dance/Plan_Launcher/Daemon/PL_Daemon.mpc:
+                * tools/Artifact_Installation/Artifact_Installation.mpc:
+                * tools/Convert_Plan/Convert_Plan.mpc:
+                * tools/Logger_Backend/ndds/NDDS_Logger.mpc:
+                * tools/System_Health/Interceptors/SHS_Interceptor.mpc:
+                * tools/System_Health/System_Health.mpc:
+                  Fixed several install issues.
+
+        === end changelog ===
+
 Thu Oct 20 02:37:36 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Split_Plan/Split_Plan.cpp:

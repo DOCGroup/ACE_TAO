@@ -16,44 +16,23 @@ namespace TAO
   template<typename T>
   T *
   Narrow_Utils<T>::narrow (CORBA::Object_ptr obj,
-                           const char *repo_id,
-                           Proxy_Broker_Factory pbf)
+                           const char *repo_id)
   {
     if (CORBA::is_nil (obj))
       {
         return T::_nil ();
       }
 
-    if (obj->_is_a (repo_id) == false)
+    if (!obj->_is_a (repo_id))
       {
         return T::_nil ();
       }
 
-    return TAO::Narrow_Utils<T>::unchecked_narrow (obj, repo_id, pbf);
+    return TAO::Narrow_Utils<T>::unchecked_narrow (obj);
   }
 
   template<typename T> T *
-  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     Proxy_Broker_Factory pbf)
-  {
-    T *proxy = 0;
-    try
-      {
-        proxy = TAO::Narrow_Utils<T>::unchecked_narrow (obj, 0, pbf);
-      }
-    catch (const ::CORBA::Exception&)
-      {
-        // Swallow the exception
-        return T::_nil ();
-      }
-
-    return proxy;
-  }
-
-  template<typename T> T *
-  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj,
-                                     const char *,
-                                     Proxy_Broker_Factory pbf)
+  Narrow_Utils<T>::unchecked_narrow (CORBA::Object_ptr obj)
   {
     if (CORBA::is_nil (obj))
       {
@@ -65,34 +44,38 @@ namespace TAO
         return T::_duplicate (dynamic_cast<T *> (obj));
       }
 
-    T_ptr proxy = Narrow_Utils<T>::lazy_evaluation (obj);
-
-    if (!CORBA::is_nil (proxy))
+    T_ptr proxy = T::_nil ();
+    try
       {
-        return proxy;
+        proxy = Narrow_Utils<T>::lazy_evaluation (obj);
+
+        if (CORBA::is_nil (proxy))
+          {
+            TAO_Stub* stub = obj->_stubobj ();
+
+            if (stub != 0)
+              {
+                stub->_incr_refcnt ();
+
+                bool const collocated =
+                  !CORBA::is_nil (stub->servant_orb_var ().in ())
+                  && stub->optimize_collocation_objects ()
+                  && obj->_is_collocated ();
+
+                ACE_NEW_RETURN (proxy,
+                                T (stub,
+                                   collocated,
+                                   obj->_servant ()),
+                                T::_nil ());
+              }
+          }
+      }
+    catch (const ::CORBA::Exception&)
+      {
+        // Swallow the exception
+        return T::_nil ();
       }
 
-    TAO_Stub* stub = obj->_stubobj ();
-
-    if (stub == 0)
-      {
-        // If we're here, we have been passed a bogus objref.
-        throw ::CORBA::BAD_PARAM ();
-      }
-
-    stub->_incr_refcnt ();
-
-    bool const collocated =
-      !CORBA::is_nil (stub->servant_orb_var ().in ())
-      && stub->optimize_collocation_objects ()
-      && obj->_is_collocated ()
-      && pbf != 0;
-
-    ACE_NEW_THROW_EX (proxy,
-                      T (stub,
-                         collocated,
-                         obj->_servant ()),
-                      CORBA::NO_MEMORY ());
     return proxy;
   }
 

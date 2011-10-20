@@ -2,7 +2,7 @@
 // $Id$
 
 project : ccm_session_stub, portableserver, avoids_minimum_corba, \
-        avoids_corba_e_compact, avoids_corba_e_micro {
+        avoids_corba_e_compact, avoids_corba_e_micro, ccm_direct_collocation {
   after += CCM_svnt
   libs += CCM_svnt
 }

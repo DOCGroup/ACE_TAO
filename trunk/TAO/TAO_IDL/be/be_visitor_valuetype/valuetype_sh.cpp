@@ -78,12 +78,6 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
       *os << "class " << node->direct_proxy_impl_name () << ";" << be_nl;
     }
 
-  if (be_global->gen_direct_collocation ())
-    {
-      *os << "class " << node->strategized_proxy_broker_name ()
-          << ";" << be_nl;
-    }
-
   *os << be_nl;
 
   // Now generate the class definition.

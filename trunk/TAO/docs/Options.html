@@ -385,17 +385,20 @@ treated as collocated. When <em>no</em> is specified, no objects are
 treated as collocated. </td>
       </tr>
       <tr>
-        <td><code>-ORBCollocationStrategy</code> <em>thru_poa/direct</em>
+        <td><code>-ORBCollocationStrategy</code> <em>thru_poa/direct/best</em>
         </td>
-        <td>Specifies what type of collocated object to use. If the <code>thru_poa</code>
-(default) strategy is used, TAO uses the collocation object
+        <td>Specifies what type of collocated object to use. If not specified
+the TAO_DEFAULT_COLLOCATION_STRATEGY default (default on  thru_poa) is used.
+If the <code>thru_poa</code> strategy is used, TAO uses the collocation object
 implementation that respects POA's current state and policies. When
 using the <code>direct</code> strategy, method invocations on
 collocated objects become direct calls to servant without checking
 POA's status, which can increase performance. If you use the <code>direct</code>
 strategy, your interfaces must be compiled with the <code><a
  href="compiler.html#collocation-stubs">-Gd</a></code> IDL <a
- href="compiler.html">compiler option</a>. </td>
+ href="compiler.html">compiler option</a>. If you choose for the <code>best</code> strategy,
+ TAO tries to perform the best possible collocation, first <code>direct</code> collocation if possible,
+else <code>thru_poa</code> collocation if possible and otherwise no collocation. </td>
       </tr>
       <tr>
         <td><code>-ORBAMICollocation</code> <em>1|0</em>

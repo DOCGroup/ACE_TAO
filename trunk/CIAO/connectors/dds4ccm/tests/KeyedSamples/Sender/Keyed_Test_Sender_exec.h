@@ -132,7 +132,7 @@ namespace CIAO_Keyed_Test_Sender_Impl
     typedef std::map<ACE_CString, KeyedTest_var> Keyed_Test_Table;
 
     Keyed_Test_Table ktests_;
-    Keyed_Test_Table::iterator last_key;
+    Keyed_Test_Table::iterator last_key_;
 
     //@}
 

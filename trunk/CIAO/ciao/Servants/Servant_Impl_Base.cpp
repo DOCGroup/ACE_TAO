@@ -25,6 +25,8 @@ namespace CIAO
 
     try
     {
+      Container_var cnt_safe =
+        Container::_duplicate(this->container_.in ());
       PortableServer::POA_var port_poa =
         this->container_->the_port_POA ();
 
@@ -39,7 +41,7 @@ namespace CIAO
           port_poa->deactivate_object (cons_id);
 
           CIAO::Servant_Activator_var sa =
-            this->container_->ports_servant_activator ();
+            cnt_safe->ports_servant_activator ();
 
           if (!CORBA::is_nil (sa.in ()))
             {
@@ -275,7 +277,9 @@ namespace CIAO
       }
 
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          mon,
+                          this->lock_,
                           CORBA::NO_RESOURCES ());
 
       this->consumer_table_[port_name] = ::Components::EventConsumerBase::_duplicate (port_ref);

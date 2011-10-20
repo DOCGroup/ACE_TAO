@@ -1,0 +1,19 @@
+// $Id$
+
+#ifndef RECEIVER_IDL_
+#define RECEIVER_IDL_
+
+#include <Components.idl>
+
+#include "Coll_Base/Base.idl"
+
+component Receiver {
+  // Which interfaces the Receiver provides.
+  //provides Bye bye_from_rec;
+
+  // Which interfaces Receiver uses.
+   uses Hello hello_to_rec;
+ 
+};
+
+#endif /* RECEIVER_IDL_ */

@@ -35,6 +35,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_data (v
 
   this->supplier_obtained_ = true;
   this->supplier_.set_component (this);
+  this->init_publisher_ |= this->supplier_obtained_;
   return this->supplier_.get_data ();
 }
 
@@ -46,6 +47,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_supplier_dds_ent
 
   this->supplier_obtained_ = true;
   this->supplier_.set_component (this);
+  this->init_publisher_ |= this->supplier_obtained_;
   return this->supplier_.get_dds_entity ();
 }
 
@@ -57,6 +59,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_fr
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_fresh_data ();
 }
 
@@ -68,6 +71,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_da
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_data ();
 }
 
@@ -79,6 +83,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_da
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_data ();
 }
 
@@ -90,6 +95,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_fi
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_filter_config ();
 }
 
@@ -101,6 +107,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_da
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_data_control ();
 }
 
@@ -112,6 +119,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_consumer_dd
 
   this->pull_consumer_obtained_ = true;
   this->pull_consumer_.set_component (this);
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
   return this->pull_consumer_.get_dds_entity ();
 }
 
@@ -142,6 +150,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_dd
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_dds_entity ();
 }
 
@@ -153,6 +162,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_consumer_fi
 
   this->push_consumer_obtained_ = true;
   this->push_consumer_.set_component (this);
+  this->init_subscriber_ |= this->push_consumer_obtained_;
   return this->push_consumer_.get_filter_config ();
 }
 
@@ -182,7 +192,46 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name");
 
-  if (this->late_binded (topic_name))
+  if (this->stop_dds (topic_name))
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_Event_Connector_T::topic_name - "
+                    "Stopping DDS=>switching to new topic <%C>.\n",
+                    topic_name));
+      this->ccm_passivate ();
+      this->do_ccm_remove ();
+
+      if (ACE_OS::strlen (topic_name) > 0)
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_Event_Connector_T::topic_name - "
+                        "DDS is down. Setting new to <%C>.\n",
+                        topic_name));
+
+          TopicBaseConnector::topic_name (topic_name);
+
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_Event_Connector_T::topic_name - "
+                        "Initialize DDS again for topic <%C>.\n",
+                        topic_name));
+
+          this->do_configuration_complete ();
+          this->do_ccm_activate ();
+
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_Event_Connector_T::topic_name - "
+                        "DDS up and running for topic <%C>.\n",
+                        topic_name));
+        }
+      else
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_Event_Connector_T::topic_name - "
+                        "DDS is down.\n"));
+          TopicBaseConnector::topic_name (topic_name);
+        }
+    }
+  else if (this->late_binded (topic_name))
     {
       this->do_configuration_complete ();
       this->do_ccm_activate ();
@@ -204,21 +253,24 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
 {
   DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_complete");
 
-  TopicBaseConnector::configuration_complete ();
+  typename CCM_TYPE::push_consumer_traits::data_listener_type::_var_type
+    push_consumer_data_listener =
+      this->context_->get_connection_push_consumer_data_listener ();
 
-  typename CCM_TYPE::push_consumer_traits::data_listener_type::_var_type push_consumer_data_listener =
-    this->context_->get_connection_push_consumer_data_listener ();
   this->push_consumer_obtained_ |=
     ! ::CORBA::is_nil (push_consumer_data_listener.in ());
-
   ::CCM_DDS::PortStatusListener_var push_consumer_psl =
     this->context_->get_connection_push_consumer_status ();
   this->push_consumer_obtained_ |= ! ::CORBA::is_nil (push_consumer_psl.in ());
+  this->init_subscriber_ |= this->push_consumer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var pull_consumer_psl =
     this->context_->get_connection_pull_consumer_status ();
   this->pull_consumer_obtained_ |=
     ! ::CORBA::is_nil (pull_consumer_psl.in ());
+  this->init_subscriber_ |= this->pull_consumer_obtained_;
+
+  TopicBaseConnector::configuration_complete ();
 
   if (this->push_consumer_obtained_)
     {
@@ -443,12 +495,12 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_passivate (void)
     }
 }
 
+
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
+DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (void)
 {
-  DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
-
+  DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove");
   try
     {
       if (ACE_OS::strlen (this->topic_name_) != 0)
@@ -475,7 +527,7 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
                               DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                              "DDS_Event_Connector_T::ccm_remove");
+                              "DDS_Event_Connector_T::do_ccm_remove");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
@@ -483,14 +535,37 @@ DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
       DDS4CCM_PRINT_CORBA_EXCEPTION (
                               DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
-                              "DDS_Event_Connector_T::ccm_remove");
+                              "DDS_Event_Connector_T::do_ccm_remove");
       throw;
     }
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_Event_Connector_T::ccm_remove - "
+                    "DDS_Event_Connector_T::do_ccm_remove - "
                     "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
+void
+DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
+{
+  DDS4CCM_TRACE ("DDS_Event_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
+  if (this->push_consumer_obtained_)
+    {
+      this->push_consumer_.set_component (::CORBA::Object::_nil ());
+    }
+
+  if (this->supplier_obtained_)
+    {
+      this->supplier_.set_component (::CORBA::Object::_nil ());
+    }
+
+  if (this->pull_consumer_obtained_)
+    {
+      this->pull_consumer_.set_component (::CORBA::Object::_nil ());
+    }
+
+  this->do_ccm_remove ();
 }

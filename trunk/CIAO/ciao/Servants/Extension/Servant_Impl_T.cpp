@@ -24,12 +24,12 @@ namespace CIAO
     ACE_NEW (this->context_,
              CONTEXT (home, c, this, ins_name));
 
-    ::Components::ExtensionComponent_var scom =
+    ::Components::ExtensionComponent_var ecom =
       ::Components::ExtensionComponent::_narrow (exe);
 
-    if (! ::CORBA::is_nil (scom.in ()))
+    if (! ::CORBA::is_nil (ecom.in ()))
       {
-        scom->set_extension_context (this->context_);
+        ecom->set_extension_context (this->context_);
       }
     else
       {
@@ -108,10 +108,10 @@ namespace CIAO
   CORBA::Object_ptr
   Extension_Servant_Impl<BASE_SKEL, EXEC, CONTEXT>::_get_component (void)
   {
-    ::Components::ExtensionContext_var sc =
+    ::Components::ExtensionContext_var ec =
       ::Components::ExtensionContext::_narrow (this->context_);
 
-    if (! ::CORBA::is_nil (sc.in ()))
+    if (! ::CORBA::is_nil (ec.in ()))
       {
 // @todo        return sc->get_CCM_object ();
       }

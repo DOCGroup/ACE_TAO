@@ -126,7 +126,6 @@ DDS_Update_T<CCM_TYPE, TYPED_WRITER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove (
               ::CIAO::DDS4CCM::translate_retcode (retval)));
           throw ::CORBA::INTERNAL ();
         }
-      this->dds_update_->_set_component (::CORBA::Object::_nil ());
       this->dds_update_->set_dds_writer (::DDS::DataWriter::_nil ());
       this->ccm_data_writer_->set_dds_entity (::DDS::DataWriter::_nil ());
     }

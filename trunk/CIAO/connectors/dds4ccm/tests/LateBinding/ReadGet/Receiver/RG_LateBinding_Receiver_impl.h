@@ -52,8 +52,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
 
     LastSampleChecker * checker_;
 
-    void set_topic_name_reader (bool test_non_changeable=false);
-    void set_topic_name_getter (bool test_non_changeable=false);
+    void set_topic_name_reader ();
+    void set_topic_name_getter ();
 
     void start_reading (void);
     void start_getting (void);

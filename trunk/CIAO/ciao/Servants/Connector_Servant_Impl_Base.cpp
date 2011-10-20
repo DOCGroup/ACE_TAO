@@ -33,28 +33,34 @@ namespace CIAO
 
     try
     {
-      PortableServer::POA_var port_poa =
-        this->container_->the_port_POA ();
+      Container_var cnt_safe = Container::_duplicate(this->container_.in ());
+      PortableServer::POA_var port_poa = cnt_safe->the_port_POA ();
 
-      // Removing Facets
-      for (FacetTable::const_iterator iter =
-             this->facet_table_.begin ();
-           iter != this->facet_table_.end ();
-           ++iter)
-        {
-          PortableServer::ObjectId_var facet_id =
-            port_poa->reference_to_id (iter->second);
+      {
+        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                            mon,
+                            this->lock_,
+                            CORBA::NO_RESOURCES ());
+        // Removing Facets
+        for (FacetTable::const_iterator iter =
+              this->facet_table_.begin ();
+            iter != this->facet_table_.end ();
+            ++iter)
+          {
+            PortableServer::ObjectId_var facet_id =
+              port_poa->reference_to_id (iter->second);
 
-          port_poa->deactivate_object (facet_id);
+            port_poa->deactivate_object (facet_id);
 
-          CIAO::Servant_Activator_var sa =
-            this->container_->ports_servant_activator ();
+            CIAO::Servant_Activator_var sa =
+              cnt_safe->ports_servant_activator ();
 
-          if (!CORBA::is_nil (sa.in ()))
-            {
-              sa->update_port_activator (facet_id.in ());
-            }
-        }
+            if (!CORBA::is_nil (sa.in ()))
+              {
+                sa->update_port_activator (facet_id.in ());
+              }
+          }
+      }
 
       this->ccm_remove ();
 
@@ -189,19 +195,25 @@ namespace CIAO
     retval->length (this->facet_table_.size ());
     CORBA::ULong i = 0UL;
 
-    for (FacetTable::const_iterator iter =
-           this->facet_table_.begin ();
-         iter != this->facet_table_.end ();
-         ++iter, ++i)
-      {
-        ::Components::FacetDescription *fd = 0;
-        ACE_NEW_THROW_EX (fd,
-                          ::OBV_Components::FacetDescription (iter->first.c_str (),
-                                                              iter->second->_interface_repository_id (),
-                                                              iter->second),
-                          CORBA::NO_MEMORY ());
-        retval[i] = fd;
-      }
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          mon,
+                          this->lock_,
+                          CORBA::NO_RESOURCES ());
+      for (FacetTable::const_iterator iter =
+            this->facet_table_.begin ();
+          iter != this->facet_table_.end ();
+          ++iter, ++i)
+        {
+          ::Components::FacetDescription *fd = 0;
+          ACE_NEW_THROW_EX (fd,
+                            ::OBV_Components::FacetDescription (iter->first.c_str (),
+                                                                iter->second->_interface_repository_id (),
+                                                                iter->second),
+                            CORBA::NO_MEMORY ());
+          retval[i] = fd;
+        }
+    }
 
     return retval._retn ();
   }
@@ -502,7 +514,9 @@ namespace CIAO
       }
 
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, mon, this->lock_,
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          mon,
+                          this->lock_,
                           CORBA::NO_RESOURCES ());
 
       this->facet_table_[port_name] = ::CORBA::Object::_duplicate (port_ref);

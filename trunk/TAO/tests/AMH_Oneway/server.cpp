@@ -81,7 +81,7 @@ public:
   ST_AMH_Server (int *argc, ACE_TCHAR **argv);
   virtual ~ST_AMH_Server ();
 
-  /// ORB inititalisation stuff
+  /// ORB initialization stuff
   int start_orb_and_poa (void);
 
   /// register the servant with the poa
@@ -91,7 +91,7 @@ public:
   virtual void run_event_loop ();
 
   /// do post-run cleanup. This is necessary here because the servant
-  /// supplied to regiser_servant happens to be allocated on the
+  /// supplied to register_servant happens to be allocated on the
   /// stack, and done after the instance of ST_AMH_Server is
   /// created. This leads to the servant being destroyed before this
   /// class's destructor. And alternative solution would be allocate
@@ -100,7 +100,7 @@ public:
   virtual void cleanup ();
 
 public:
-  /// Accesor method (for servants) to the initialised ORB
+  /// Accesor method (for servants) to the initialized ORB
   CORBA::ORB_ptr orb () { return this->orb_.in (); }
 
 protected:

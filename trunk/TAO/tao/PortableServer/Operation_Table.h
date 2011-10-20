@@ -32,14 +32,11 @@ class TAO_Abstract_ServantBase;
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
     void *,
-    void *
-  );
+    void *);
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
-    TAO::Argument **,
-    int
-  );
+    TAO::Argument **);
 
 /**
  * @struct TAO_operation_db_entry
