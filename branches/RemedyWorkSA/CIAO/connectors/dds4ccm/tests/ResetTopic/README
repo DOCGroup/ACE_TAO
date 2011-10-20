@@ -1,0 +1,32 @@
+// $Id$
+
+In the early days of the DDS4CCM specification a topic name was not changable.
+When it was set (doesn't matter if it was a late binded topic), the user was not
+allowed to change it, otherwise a NonChangeable exception was thrown.
+
+The requirement from the field dictates that a topic name should be changeable.
+When the topic name will be set a second time, the connector should shut down
+DDS and start it again, using the new topic name. The connector does not tear
+down the proxies. This means that the connector doesn't change on the outside.
+
+The ReadGet test has the following sequence:
+1. Sender starts writing samples for TopicI
+2. Sender informs the Receiver that samples has been written for TopicI
+3. Receiver sets this topic name on his connector (late binding), and starts to
+   collect the samples.
+4. Sender resets the topic name to TopicII and informs the receiver about this.
+5. Receiver resets the topic name on his connector and starts collecting the
+   samples belonging to TopicII.
+
+Both listeners tests (UpdateListen and WriteListen) have about the same sequence:
+1. Sender and Receiver start, writing and listening to the same topic.
+2. After 10 second, the perl script starts two small executables; one to inform
+   the receiver to switch to topic II and one to inform the sender to switch to
+   topic II. The executables are spawned in this order.
+3. Step one is repeated.
+4. Step two will be repeated.
+
+The ToEmpty test will initially start writing samples for TopicI. After a while,
+the topic name will be cleared. This means that the connector internally stops DDS.
+After another while, the sender will start writing samples again,
+but now for TopicII. This sequence repeats.

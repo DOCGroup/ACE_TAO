@@ -1,0 +1,148 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p RG_ResetTopicBase -l .. -o ../lib -u DDS RG_ResetTopic_Connector"
+
+project (RG_ResetTopicConnector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RG_RESETTOPIC_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=LateBinding_Connector_stub_export.h \
+              -Wb,skel_export_macro=RG_RESETTOPIC_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=LateBinding_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=RG_RESETTOPIC_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=LateBinding_Connector_svnt_export.h \
+              -Wb,conn_export_macro=RG_RESETTOPIC_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=LateBinding_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    RG_ResetTopic_Connector.idl
+  }
+}
+
+project (RG_ResetTopicConnector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += RG_ResetTopicConnector_idl_gen
+  idlflags += -Wb,stub_export_macro=RG_RESETTOPIC_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=RG_ResetTopic_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    RG_ResetTopic_ConnectorE.idl
+  }
+}
+
+project (RG_ResetTopicConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += RG_ResetTopicConnector_lem_gen RG_ResetTopicConnector_stub \
+           RG_ResetTopicBase_stub
+  libs  += RG_ResetTopicBase_stub RG_ResetTopicConnector_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = RG_ResetTopicConnector_lem_stub
+  dynamicflags += RG_RESETTOPIC_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_ConnectorEC.h
+    RG_ResetTopic_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_ConnectorEC.inl
+  }
+}
+
+project (RG_ResetTopicConnector_stub) : ccm_stub, dds4ccm_base {
+  after += RG_ResetTopicConnector_idl_gen RG_ResetTopicBase_stub
+  libs  += RG_ResetTopicBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = RG_ResetTopicConnector_stub
+  dynamicflags += RG_RESETTOPIC_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_ConnectorC.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_ConnectorC.h
+    RG_ResetTopic_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_ConnectorC.inl
+  }
+}
+
+project (RG_ResetTopicConnector_exec) : ciao_executor, dds4ccm_impl {
+  after   += RG_ResetTopicConnector_lem_stub RG_ResetTopicConnector_stub \
+             RG_ResetTopicBase_stub
+  sharedname = RG_ResetTopicConnector_exec
+  libs += RG_ResetTopicConnector_stub RG_ResetTopicConnector_lem_stub \
+          RG_ResetTopicBase_stub RG_ResetTopicBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RG_RESETTOPIC_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_Connector_conn.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_Connector_conn.h
+    RG_ResetTopic_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project (RG_ResetTopicConnector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += RG_ResetTopicConnector_lem_stub RG_ResetTopicConnector_exec \
+                RG_ResetTopicConnector_stub
+  sharedname  = RG_ResetTopicConnector_svnt
+  libs       += RG_ResetTopicConnector_stub \
+                RG_ResetTopicConnector_lem_stub  \
+                RG_ResetTopicBase_stub \
+                RG_ResetTopicConnector_exec
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RG_RESETTOPIC_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_ConnectorS.cpp
+    RG_ResetTopic_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_ConnectorS.h
+    RG_ResetTopic_Connector_svnt.h
+    RG_ResetTopic_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_ConnectorS.inl
+  }
+}
+
+

@@ -1,0 +1,27 @@
+
+//=============================================================================
+/**
+ *  @file    ami_test.idl
+ *
+ *  $Id$
+ *
+ *  IDL description of the AMI Test interface
+ *
+ *
+ *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
+ */
+//=============================================================================
+
+
+
+module A
+  {
+    interface AMI_Test
+      {
+        long foo (out long out_l);
+
+        oneway void shutdown ();
+      };
+
+  };
