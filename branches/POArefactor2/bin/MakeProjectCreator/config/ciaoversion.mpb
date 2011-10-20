@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  version = 0.4.2
-}

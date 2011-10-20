@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, core, naming, trading_serv, utils {
-  exename  = Trading_Service
-}
-

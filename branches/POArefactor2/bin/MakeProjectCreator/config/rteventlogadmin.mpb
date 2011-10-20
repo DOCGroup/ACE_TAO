@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dslogadmin_serv, rtoldevent {
-  after      += RTEventLogAdmin
-  libs       += TAO_RTEventLogAdmin
-}
