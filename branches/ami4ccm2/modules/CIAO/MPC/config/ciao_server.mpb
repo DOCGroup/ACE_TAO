@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_client, naming, ccm_cookie, ccm_configvalue, \
-    avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
-  after += CIAO_Server
-  libs  += CIAO_Server
-}

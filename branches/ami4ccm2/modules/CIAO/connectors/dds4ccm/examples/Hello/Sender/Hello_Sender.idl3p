@@ -1,9 +1,0 @@
-#include "Hello_Base.idl3p"
-
-module Hello_DDS
-{
-  component Sender
-  {
-    port DDS_Write<string> push_message;
-  };
-};
