@@ -1,7 +1,0 @@
-        * ace/README
-        * ace/config-win32-msvc6.h:
-        * ace/Global_Macros.h:
-          Deprecated ACE_HAS_BROKEN_NAMESPACES, we drop msvc6 and I am
-          removing the workarounds for this compiler one by one as part of the
-          new sequence implementation. Because we deprecate this also
-          ACE_NESTED_CLASS is deprecated
