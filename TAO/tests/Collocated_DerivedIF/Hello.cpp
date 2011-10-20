@@ -1,11 +1,9 @@
-//
 // $Id$
-//
+
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
-
 
 HelloAgain::HelloAgain (CORBA::ORB_ptr orb,
              ACE_thread_t thrid)
