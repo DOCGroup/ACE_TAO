@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver, ciao_port_activator_stub, ciao_servant_activator_stub, avoids_minimum_corba, ciao_logger {
-   libs += CIAO_Servant_Activator_impl
-   after += CIAO_Servant_Activator_impl
-}
