@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver {
-  after     += Security
-  libs      += TAO_Security
-  tagchecks += Security
-}
