@@ -1,6 +1,0 @@
-// $Id$
-
-project : dance_plan_launcher_base, dance_logger {
-  after += Plan_Launcher
-  libs += DAnCE_Plan_Launcher
-}

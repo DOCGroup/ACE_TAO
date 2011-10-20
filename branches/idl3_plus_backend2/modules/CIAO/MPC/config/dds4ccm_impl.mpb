@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : nddslib, dds4ccm_skel, ciao_logger {
-  after += CIAO_DDS4CCM_NDDS_Impl
-  libs += CIAO_DDS4CCM_NDDS_Impl
-}

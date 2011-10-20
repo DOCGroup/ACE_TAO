@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_componentserver_stub, ccm_componentserver_svnt, ciao_session_container, ciao_cs_client {
-     after += CIAO_ComponentServer_svnt
-     libs += CIAO_ComponentServer_svnt
-}

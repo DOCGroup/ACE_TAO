@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ccm_stub, ciao_componentserver_stub, ccm_componentserver_svnt, portableserver, threads, avoids_ace_for_tao, ciao_logger {
-  after += CIAO_CS_Client_svnt
-  libs += CIAO_CS_Client_svnt
-}
