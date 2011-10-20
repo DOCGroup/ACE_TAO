@@ -1,3 +1,24 @@
+Thu Oct 20 08:42:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * On_Demand_Act_Direct_Coll:
+        * On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
+        * On_Demand_Act_Direct_Coll/Servant_Activator.cpp:
+        * On_Demand_Act_Direct_Coll/test_i.cpp:
+        * On_Demand_Act_Direct_Coll/Server_Task.h:
+        * On_Demand_Act_Direct_Coll/run_test.pl:
+        * On_Demand_Act_Direct_Coll/test_i.h:
+        * On_Demand_Act_Direct_Coll/Client_Task.cpp:
+        * On_Demand_Act_Direct_Coll/Server_Task.cpp:
+        * On_Demand_Act_Direct_Coll/Servant_Activator.h:
+        * On_Demand_Act_Direct_Coll/Client_Task.h:
+        * On_Demand_Act_Direct_Coll/On_Demand_Act_D_Coll.mpc:
+        * On_Demand_Act_Direct_Coll/test.idl:
+        Test with Servant Activator and thru_poa- and direct collocation.
+        
+        * bin/tao_orb_tests.lst
+        Added On_Demand_Act_Direct_Coll test.
+        
+
 Wed Oct 19 14:15:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
