@@ -44,31 +44,31 @@ HelloAgain::get_string_again (void)
 char *
 HelloAgain::get_string (void)
 {
-	 ACE_DEBUG ((LM_DEBUG,
-	              "(%P|%t) HelloAgain::get_string Upcall get_string in process ..\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "(%P|%t) HelloAgain::get_string Upcall get_string in process ..\n"));
 
-	  // Use portable thread IDs
-	  ACE_Thread_ID self_ID;
-	  // Thread ID from Server
-	  ACE_Thread_ID this_ID;
-	  this_ID.id(this->thr_id_);
+    // Use portable thread IDs
+    ACE_Thread_ID self_ID;
+    // Thread ID from Server
+    ACE_Thread_ID this_ID;
+    this_ID.id(this->thr_id_);
 
-	  // Servant Thread ID same as Thread ID server, so a remote call,
-	  // in case of a collocation the servant runs in calling thread (Client)
-	  if (self_ID == this_ID)
-	    {
-	      ACE_ERROR ((LM_ERROR,"(%P|%t) ERROR: A remote call has been made \n"));
-	    }
-	  else
-	    {
-	      if (this->orb_->orb_core ()->optimize_collocation_objects () &&
-	            this->orb_->orb_core ()->use_global_collocation ())
-	        {
-	          ACE_DEBUG ((LM_DEBUG,
-	               "(%P|%t) OK: An expected collocated call has been made \n"));
-	        }
-	    }
-	  return CORBA::string_dup ("Hello there!");
+    // Servant Thread ID same as Thread ID server, so a remote call,
+    // in case of a collocation the servant runs in calling thread (Client)
+    if (self_ID == this_ID)
+      {
+        ACE_ERROR ((LM_ERROR,"(%P|%t) ERROR: A remote call has been made \n"));
+      }
+    else
+      {
+        if (this->orb_->orb_core ()->optimize_collocation_objects () &&
+              this->orb_->orb_core ()->use_global_collocation ())
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                 "(%P|%t) OK: An expected collocated call has been made \n"));
+          }
+      }
+    return CORBA::string_dup ("Hello there!");
 }
 void
 HelloAgain::shutdown (void)
