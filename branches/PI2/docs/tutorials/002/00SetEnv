@@ -1,2 +1,0 @@
-export ACE_ROOT=/local/src/ACE/ACE_wrappers
-export LD_LIBRARY_PATH=$ACE_ROOT/ace:$LD_LIBRARY_PATH 
