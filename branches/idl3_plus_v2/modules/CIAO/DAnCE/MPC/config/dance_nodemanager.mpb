@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-// @todo, use nodeapplicationmanager_stb
-project : dance, dance_nodeapplicationmanager, dance_nodemanager_skel, naming_serv {
-  after += Node_Manager_Module
-  libs  += DAnCE_NodeManager
-}

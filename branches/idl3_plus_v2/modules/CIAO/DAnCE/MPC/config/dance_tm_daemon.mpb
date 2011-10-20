@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_deployment_svnt {
-   after += DAnCE_TargetManagerDaemon_svnt DAnCE_TargetManagerDaemon_stub
-   libs += DAnCE_TargetManagerDaemon_svnt DAnCE_TargetManagerDaemon_stub
-}
