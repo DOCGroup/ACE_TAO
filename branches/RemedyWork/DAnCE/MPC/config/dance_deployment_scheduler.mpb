@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance_skel, dance_logger, dance_completion_counter {
-   after += DAnCE_Deployment_Scheduler
-   libs += DAnCE_Deployment_Scheduler
-}
