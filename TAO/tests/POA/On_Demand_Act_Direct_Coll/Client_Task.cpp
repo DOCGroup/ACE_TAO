@@ -21,7 +21,7 @@ Client_Task::svc (void)
   try
     {
       // Get an object reference from the argument string.
-	    CORBA::Object_var tmp =
+      CORBA::Object_var tmp =
         this->corb_->string_to_object (input_);
 
       // Try to narrow the object reference to a test reference.
@@ -42,17 +42,17 @@ Client_Task::svc (void)
                    ior.in ()));
       try
         {
- 		      CORBA::String_var the_string = test->get_string ();
-  		    if (ACE_OS::strcmp (the_string.in (), "Hello there!") != 0)
- 			      {
- 			        ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
- 						  the_string.in ()));
- 			      }
- 		      else
- 			      {
- 			        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - OK , correct string returned <%C>\n",
- 						    the_string.in ()));
- 		 	       }
+           CORBA::String_var the_string = test->get_string ();
+          if (ACE_OS::strcmp (the_string.in (), "Hello there!") != 0)
+             {
+               ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
+               the_string.in ()));
+             }
+           else
+             {
+               ACE_DEBUG ((LM_DEBUG, "(%P|%t) - OK , correct string returned <%C>\n",
+                 the_string.in ()));
+               }
           test->shutdown ();
         }
       catch (CORBA::INTERNAL)
