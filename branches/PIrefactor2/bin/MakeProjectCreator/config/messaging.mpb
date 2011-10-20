@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : valuetype, portableserver, corba_messaging {
-  after    += Messaging
-  libs     += TAO_Messaging
-}
