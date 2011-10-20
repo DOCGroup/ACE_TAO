@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : messaging, ec_use_typed_events, naming, minimum_corba {
-  after     += CosEvent
-  libs      += TAO_CosEvent
-  tagchecks += CosEvent
-}

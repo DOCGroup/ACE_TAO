@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcslib, ifr_client, valuetype, security, taoidldefaults {
-  after    += CIAO_DnC_Client
-  includes   += $(CIAO_ROOT)/DAnCE $(CIAO_ROOT)/DAnCE/ciao
-  idlflags += -I$(CIAO_ROOT)/DAnCE -I$(CIAO_ROOT)/DAnCE/ciao -Sc
-  libs     += CIAO_DnC_Client
-}

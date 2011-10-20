@@ -1,4 +1,0 @@
-// $Id$
-project: namingexe, dslogadmin {
-  includes += $(TAO_ROOT)/orbsvcs
-}

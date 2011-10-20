@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : taolib_with_idl {
-  after += Deployment_stub
-  libs  += CIAO_Deployment_stub
-  includes += $(CIAO_ROOT)/DAnCE
-  idlflags += -I$(CIAO_ROOT)/DAnCE -Sc
-}

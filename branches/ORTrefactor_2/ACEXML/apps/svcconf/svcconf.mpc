@@ -1,6 +1,0 @@
-//  -*- MPC -*-
-// $Id$
-
-project(ACEXML_XML_Svc_Conf_Parser): acelib, acexml {
-  sharedname = ACEXML_XML_Svc_Conf_Parser
-}
