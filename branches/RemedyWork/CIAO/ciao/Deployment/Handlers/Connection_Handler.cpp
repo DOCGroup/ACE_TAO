@@ -814,6 +814,10 @@ namespace CIAO
     CIAO_TRACE ("Connection_Handler::disconnect_non_local");
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::disconnect_non_local - "
+                    "About to disconnect <%C>\n",
+                    conn.name.in()));
     ::CORBA::Object_var safe_tmp =
       obj->disconnect (port_name,
                       this->get_cookie (conn.name.in ()));
@@ -1224,6 +1228,8 @@ namespace CIAO
   ::Components::CCMObject_ptr
   Connection_Handler::get_ccm_object (const char * connection_name)
   {
+    CIAO_TRACE ("Connection_Handler::get_ccm_object");
+
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
       {
@@ -1234,6 +1240,7 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (connection_name,
                                                "Unable to find correct cookie");
       }
+
     ::Components::CCMObject_var ret = it->second.second;
     if (::CORBA::is_nil (ret.in ()))
       {
@@ -1250,6 +1257,7 @@ namespace CIAO
   ::CORBA::ULong
   Connection_Handler::retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn)
   {
+    CIAO_TRACE ("Connection_Handler::retrieve_endpoint");
     if (conn.internalEndpoint.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO

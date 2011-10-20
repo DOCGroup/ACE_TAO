@@ -1,3 +1,11 @@
+Thu Oct 20 08:56:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+          Optimized logging
+
+        * tests/DAnCE/Components/SimpleMultipleUser_exec.cpp:
+          Reverted extra test. More investigation needed.
+
 Wed Oct 19 14:19:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Deployment/Handlers/Connection_Handler.cpp:
