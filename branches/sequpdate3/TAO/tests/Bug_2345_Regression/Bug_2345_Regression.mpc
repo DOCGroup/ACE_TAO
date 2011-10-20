@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Server) : taoserver, imr_client, exceptions {
-  Source_Files {
-    server.cpp
-  }
-}
