@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Client) : orbsvcsexe, event, event_skel, rtevent_serv, rtsched {
-  after += CosEC_RtEC_Based_lib
-  includes += ../../lib
-  libs += CosEC_RtEC_Based
-  libpaths += ../../lib
-}

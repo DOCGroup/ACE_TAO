@@ -1,5 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(RTCORBA Policies Server): rt_server, minimum_corba {
-}
