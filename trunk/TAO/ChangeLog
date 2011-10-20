@@ -1,3 +1,8 @@
+Thu Oct 20 12:50:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_interface.h:
+          Fixed gcc warning
+
 Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
