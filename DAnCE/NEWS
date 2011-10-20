@@ -29,7 +29,7 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
 
 . A new logging macro, DANCE_LOG_TRACE has been added to the most
   fine-grained tracing messages.  This can be disabled to improve
-  performance and footprint seperate from more useful logging messages.
+  performance and footprint separate from more useful logging messages.
 
 . Added capability to plugin custom log backends into the DAnCE
   logging service.  These backends must be loaded via a svc.conf file
