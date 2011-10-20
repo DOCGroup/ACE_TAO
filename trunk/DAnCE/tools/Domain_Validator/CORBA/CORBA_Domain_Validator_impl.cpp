@@ -4,6 +4,7 @@
 #include "CORBA_Domain_Validator_impl.h"
 
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_sys_time.h"
 #include "dance/DAnCE_Utility.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/DAnCE_PropertiesC.h"
