@@ -1,0 +1,16 @@
+// $Id$
+project(DAnCE_CORBA_Domain_Validator) : dance_config_handlers, dance_deployment_stub, \
+                                      dance_stub, dance_lib, dance_output, install, \
+                                                                 taolib {
+
+  after += DAnCE_Domain_Validator_Base
+  libs += DAnCE_Domain_Validator_Base
+
+  Header_Files {
+   CORBA_Domain_Validator_impl.h
+  }
+
+  Source_Files {
+   CORBA_Domain_Validator_impl.cpp
+  }
+}

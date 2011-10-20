@@ -1,0 +1,1211 @@
+--- pkg-ace.orig/TAO/etc/tao.doxygen
++++ pkg-ace/TAO/etc/tao.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_anytypecode.doxygen
++++ pkg-ace/TAO/etc/tao_anytypecode.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -148,11 +148,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_av.doxygen
++++ pkg-ace/TAO/etc/tao_av.doxygen
+@@ -80,7 +80,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -152,11 +152,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -166,5 +168,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_compression.doxygen
++++ pkg-ace/TAO/etc/tao_compression.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -148,11 +148,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_cosevent.doxygen
++++ pkg-ace/TAO/etc/tao_cosevent.doxygen
+@@ -80,7 +80,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -153,11 +153,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -167,5 +169,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_cosnaming.doxygen
++++ pkg-ace/TAO/etc/tao_cosnaming.doxygen
+@@ -78,7 +78,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_cosnotification.doxygen
++++ pkg-ace/TAO/etc/tao_cosnotification.doxygen
+@@ -85,7 +85,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -159,11 +159,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -173,5 +175,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_costime.doxygen
++++ pkg-ace/TAO/etc/tao_costime.doxygen
+@@ -78,7 +78,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -150,11 +150,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -164,5 +166,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_costrader.doxygen
++++ pkg-ace/TAO/etc/tao_costrader.doxygen
+@@ -80,7 +80,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -152,11 +152,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -166,5 +168,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_dynamicany.doxygen
++++ pkg-ace/TAO/etc/tao_dynamicany.doxygen
+@@ -78,7 +78,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -148,11 +148,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_dynamicinterface.doxygen
++++ pkg-ace/TAO/etc/tao_dynamicinterface.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -161,5 +163,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_esf.doxygen
++++ pkg-ace/TAO/etc/tao_esf.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_ifr.doxygen
++++ pkg-ace/TAO/etc/tao_ifr.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -151,11 +151,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -165,5 +167,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_implrepo.doxygen
++++ pkg-ace/TAO/etc/tao_implrepo.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -150,11 +150,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -164,5 +166,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_iormanip.doxygen
++++ pkg-ace/TAO/etc/tao_iormanip.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -148,11 +148,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_iortable.doxygen
++++ pkg-ace/TAO/etc/tao_iortable.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -148,11 +148,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_pi.doxygen
++++ pkg-ace/TAO/etc/tao_pi.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_pi_server.doxygen
++++ pkg-ace/TAO/etc/tao_pi_server.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_portablegroup.doxygen
++++ pkg-ace/TAO/etc/tao_portablegroup.doxygen
+@@ -80,7 +80,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -152,11 +152,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -166,5 +168,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_portableserver.doxygen
++++ pkg-ace/TAO/etc/tao_portableserver.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_rtcorba.doxygen
++++ pkg-ace/TAO/etc/tao_rtcorba.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_rtevent.doxygen
++++ pkg-ace/TAO/etc/tao_rtevent.doxygen
+@@ -86,7 +86,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -159,11 +159,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -173,5 +175,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_rtportableserver.doxygen
++++ pkg-ace/TAO/etc/tao_rtportableserver.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -149,11 +149,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -163,5 +165,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_security.doxygen
++++ pkg-ace/TAO/etc/tao_security.doxygen
+@@ -82,7 +82,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -154,11 +154,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -168,5 +170,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_smartproxies.doxygen
++++ pkg-ace/TAO/etc/tao_smartproxies.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -161,5 +163,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_ssliop.doxygen
++++ pkg-ace/TAO/etc/tao_ssliop.doxygen
+@@ -82,7 +82,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -155,11 +155,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -169,5 +171,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_strategies.doxygen
++++ pkg-ace/TAO/etc/tao_strategies.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -152,11 +152,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -166,5 +168,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_transportcurrent.doxygen
++++ pkg-ace/TAO/etc/tao_transportcurrent.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -150,11 +150,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -164,5 +166,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/TAO/etc/tao_ziop.doxygen
++++ pkg-ace/TAO/etc/tao_ziop.doxygen
+@@ -77,7 +77,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -150,11 +150,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+ # found. If left blank, it is assumed the dot tool can be found on the path.
+@@ -164,5 +166,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/etc/ace.doxygen
++++ pkg-ace/etc/ace.doxygen
+@@ -89,7 +89,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -174,11 +174,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+@@ -189,4 +191,4 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+--- pkg-ace.orig/etc/ace_inet.doxygen
++++ pkg-ace/etc/ace_inet.doxygen
+@@ -79,7 +79,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/etc/ace_man.doxygen
++++ pkg-ace/etc/ace_man.doxygen
+@@ -79,7 +79,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -151,7 +151,9 @@
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = NO
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+--- pkg-ace.orig/etc/ace_qos.doxygen
++++ pkg-ace/etc/ace_qos.doxygen
+@@ -79,7 +79,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/etc/ace_rmcast.doxygen
++++ pkg-ace/etc/ace_rmcast.doxygen
+@@ -79,7 +79,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/etc/ace_ssl.doxygen
++++ pkg-ace/etc/ace_ssl.doxygen
+@@ -79,7 +79,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 
+--- pkg-ace.orig/etc/acexml.doxygen
++++ pkg-ace/etc/acexml.doxygen
+@@ -79,7 +79,7 @@
+ HTML_FOOTER           =
+ HTML_STYLESHEET       =
+ HTML_ALIGN_MEMBERS    = YES
+-GENERATE_HTMLHELP     = YES
++GENERATE_HTMLHELP     = NO
+ 
+ #---------------------------------------------------------------------------
+ # configuration options related to the LaTeX output
+@@ -147,11 +147,13 @@
+ 
+ HAVE_DOT              = YES
+ CLASS_GRAPH           = YES
+-COLLABORATION_GRAPH   = YES
++COLLABORATION_GRAPH   = NO
+ INCLUDE_GRAPH         = NO
+ INCLUDED_BY_GRAPH     = NO
+ GRAPHICAL_HIERARCHY   = YES
+-DOT_MULTI_TARGETS     = YES
++DOT_MULTI_TARGETS     = YES 
++DOT_GRAPH_MAX_NODES   = 15 
++DOT_IMAGE_FORMAT      = png
+ MAX_DOT_GRAPH_DEPTH   = 3
+ 
+ # The tag DOT_PATH can be used to specify the path where the dot tool can be
+@@ -162,5 +164,5 @@
+ # Configuration::additions related to the search engine
+ #---------------------------------------------------------------------------
+ 
+-SEARCHENGINE          = YES
++SEARCHENGINE          = NO
+ 

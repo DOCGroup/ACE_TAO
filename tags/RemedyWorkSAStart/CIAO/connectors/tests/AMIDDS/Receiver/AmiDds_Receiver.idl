@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marijke Hengstmengel <mhengstmengel@remedy.nl>
+ */
+
+#ifndef AMIDDS_RECEIVER_IDL
+#define AMIDDS_RECEIVER_IDL
+
+#include <Components.idl>
+#include "Connector/AmiDds_Connector.idl"
+#include "Base/AmiDds_Base.idl"
+
+module AmiDds
+{
+  component Receiver
+  {
+    port AmiDdsConnector::DDS_Listen info_out;
+    provides MyFoo do_my_foo;
+  };
+};
+#endif

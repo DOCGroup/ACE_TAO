@@ -1,0 +1,79 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl SimpleCommon"
+
+project(SimpleCommon_idl_gen) : ciaoidldefaults, anytypecode {
+  custom_only = 1
+  idlflags += -Gxhst -Gxhsk \
+              -Wb,stub_export_macro=SIMPLECOMMON_STUB_Export \
+              -Wb,stub_export_include=SimpleCommon_stub_export.h \
+              -Wb,skel_export_macro=SIMPLECOMMON_SKEL_Export \
+              -Wb,skel_export_include=SimpleCommon_skel_export.h -Glem
+
+  IDL_Files {
+    SimpleCommon.idl
+  }
+}
+
+project(SimpleCommon_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  idlflags += -Gxhst \
+              -Wb,export_macro=SIMPLECOMMON_STUB_Export \
+              -Wb,export_include=SimpleCommon_stub_export.h \
+              -SS
+  after += SimpleCommon_idl_gen
+
+  IDL_Files {
+    SimpleCommonE.idl
+  }
+}
+
+project(SimpleCommon_stub) : ccm_stub {
+  after += SimpleCommon_lem_gen
+  libs  +=
+
+  sharedname = SimpleCommon_stub
+  dynamicflags += SIMPLECOMMON_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleCommonC.cpp
+    SimpleCommonEC.cpp
+  }
+
+  Header_Files {
+    SimpleCommonC.h
+    SimpleCommon_stub_export.h
+  }
+
+  Inline_Files {
+    SimpleCommonC.inl
+  }
+}
+
+project(SimpleCommon_skel) : ccm_svnt {
+  after      += SimpleCommon_stub
+  sharedname  = SimpleCommon_skel
+  libs       += SimpleCommon_stub
+
+  dynamicflags += SIMPLECOMMON_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    SimpleCommonS.cpp
+  }
+
+  Header_Files {
+    SimpleCommonS.h
+    SimpleCommon_skel_export.h
+  }
+
+  Inline_Files {
+    SimpleCommonS.inl
+  }
+}
+
+
