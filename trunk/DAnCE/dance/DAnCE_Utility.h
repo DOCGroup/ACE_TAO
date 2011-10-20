@@ -4,7 +4,7 @@
  * @file DAnCE_Utility.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * Utility methods used throughought DAnCE.
+ * Utility methods used throughout DAnCE.
 
  */
 
@@ -63,7 +63,7 @@ namespace DAnCE
     DANCE_STUB_Export bool get_resource_value (const char *type,
                                                const ::Deployment::Resources &resources,
                                                ::Deployment::Resource  &val);
-    
+
     template<class T>
     void
     update_property_value (const char *name,
