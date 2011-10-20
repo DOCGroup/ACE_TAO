@@ -1,9 +1,0 @@
-// $Id$
-
-project (*) : ciao_client, rtcorba {
-  after += DiffServ_Sender_stub DiffServ_Receiver_stub
-  requires += exceptions
-  includes += ../Sender
-  includes += ../Receiver
-  libs += DiffServ_Sender_stub DiffServ_Receiver_stub DiffServ_stub
-}

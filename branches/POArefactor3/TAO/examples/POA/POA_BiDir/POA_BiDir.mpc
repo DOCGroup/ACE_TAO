@@ -1,5 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: taoserver, bidir_giop, minimum_corba {
-}

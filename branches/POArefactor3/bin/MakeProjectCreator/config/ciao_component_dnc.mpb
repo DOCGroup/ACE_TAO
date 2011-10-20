@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_client_dnc, portableserver, ciao_deployment_stub {
-  after    += CIAO_DnC_Container
-  libs     += CIAO_DnC_Container
-}

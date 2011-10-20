@@ -1,7 +1,0 @@
-//  -*- MPC -*-
-// $Id$
-
-project : acelib, core, exceptions, threads {
-  sharedname    = ACE_TMCast
-  dynamicflags += TMCAST_BUILD_DLL
-}

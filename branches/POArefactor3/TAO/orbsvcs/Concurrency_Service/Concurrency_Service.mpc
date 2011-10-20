@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, core, concurrency, naming_serv, utils {
-  exename  = Concurrency_Service
-}
