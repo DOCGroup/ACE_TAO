@@ -125,7 +125,7 @@
       </value>
     </execParameter>
   </implementation>
-  
+ 
  <instance xmi:id="CompSvr1Inst">
     <name>ComponentServer1Instance</name>
     <node>One</node>
@@ -146,7 +146,7 @@
       </value>
     </configProperty>
   </instance>
-  
+
   <instance xmi:id="SenderInstance">
     <name>Sender</name>
     <node>One</node>
@@ -225,7 +225,7 @@
     <node />
     <location>dance_locality_manager</location>
   </artifact>
-  
+
  <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvr1Inst" />
