@@ -1,9 +1,0 @@
-// $Id$
-project : dance, taolib, xerces, ciao_config_handlers, dance_logger {
-  exename   = DeploymentTest1
-
-  Source_Files {
-    test.cpp
-  }
-}
-

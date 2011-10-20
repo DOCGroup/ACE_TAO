@@ -1,9 +1,0 @@
-#include "Hello_Base.idl3p"
-
-module Hello_DDS
-{
-  component Receiver
-  {
-    port DDS_Listen<string> read_message;
-  };
-};

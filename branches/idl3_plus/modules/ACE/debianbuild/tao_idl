@@ -1,6 +1,0 @@
-#!/bin/sh
-
-ACE_ROOT=/usr/share/ace; export ACE_ROOT;
-TAO_ROOT=$ACE_ROOT/TAO; export TAO_ROOT;
-
-exec tao_idl.real "$@"

@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dance, dance_deployment_svnt, dance_redirection_service, dance_logger, \
-  ciao_client, ciao_cs_client, ciao_componentserver_stub, dynamicinterface, iortable, naming {
-  after += NodeApplication
-  libs  += DAnCE_NodeApplication CIAO_Client
-}

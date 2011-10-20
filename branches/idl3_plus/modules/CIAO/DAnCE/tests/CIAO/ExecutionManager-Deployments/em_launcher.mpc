@@ -1,6 +1,0 @@
-// $Id$
-project(simple_em_launcher) : ciao_config_handlers, dance_nodemanager_stub, ciao_logger {
-  Source_Files {
-    simple_em_launcher.cpp
-  }
-}
