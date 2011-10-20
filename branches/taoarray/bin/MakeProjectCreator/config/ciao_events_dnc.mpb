@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : security, ifr_client, valuetype, pi, codecfactory, ciao_container_dnc, ciao_client_dnc, ciao_rtevent_dnc {
-  includes   += $(CIAO_ROOT)/ciaosvcs/Events
-  idlflags += -I$(CIAO_ROOT)/ciaosvcs/Events -Sc
-  libs     += CIAO_DnC_Events
-  after    += CIAO_DnC_Events
-}
