@@ -34,6 +34,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_observable_data 
 
   this->observable_obtained_ = true;
   this->observable_.set_component (this);
+  this->init_publisher_ |= this->observable_obtained_;
   return this->observable_.get_data ();
 }
 
@@ -45,6 +46,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_observable_dds_e
 
   this->observable_obtained_ = true;
   this->observable_.set_component (this);
+  this->init_publisher_ |= this->observable_obtained_;
   return this->observable_.get_dds_entity ();
 }
 
@@ -56,6 +58,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_passive_observer
 
   this->passive_observer_obtained_ = true;
   this->passive_observer_.set_component (this);
+  this->init_subscriber_ |= this->passive_observer_obtained_;
   return this->passive_observer_.get_data ();
 }
 
@@ -67,6 +70,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_passive_observer
 
   this->passive_observer_obtained_ = true;
   this->passive_observer_.set_component (this);
+  this->init_subscriber_ |= this->passive_observer_obtained_;
   return this->passive_observer_.get_dds_entity ();
 }
 
@@ -78,6 +82,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_passive_observer
 
   this->passive_observer_obtained_ = true;
   this->passive_observer_.set_component (this);
+  this->init_subscriber_ |= this->passive_observer_obtained_;
   return this->passive_observer_.get_filter_config ();
 }
 
@@ -108,6 +113,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_da
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_data ();
 }
 
@@ -119,6 +125,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_fr
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_fresh_data ();
 }
 
@@ -130,6 +137,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_dd
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_dds_entity ();
 }
 
@@ -141,6 +149,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_pull_observer_fi
 
   this->pull_observer_obtained_ = true;
   this->pull_observer_.set_component (this);
+  this->init_subscriber_ |= this->pull_observer_obtained_;
   return this->pull_observer_.get_filter_config ();
 }
 
@@ -171,6 +180,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_da
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_data ();
 }
 
@@ -182,6 +192,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_da
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_data_control ();
 }
 
@@ -193,6 +204,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_dd
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_dds_entity ();
 }
 
@@ -204,6 +216,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_observer_fi
 
   this->push_observer_obtained_ = true;
   this->push_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_observer_obtained_;
   return this->push_observer_.get_filter_config ();
 }
 
@@ -234,6 +247,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_data ();
 }
 
@@ -245,6 +259,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_data_control ();
 }
 
@@ -256,6 +271,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_dds_entity ();
 }
 
@@ -267,6 +283,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::get_push_state_obser
 
   this->push_state_observer_obtained_ = true;
   this->push_state_observer_.set_component (this);
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
   return this->push_state_observer_.get_filter_config ();
 }
 
@@ -296,7 +313,45 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name (
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::topic_name");
 
-  if (this->late_binded (topic_name))
+  if (this->stop_dds (topic_name))
+    {
+      DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                    "DDS_State_Connector_T::topic_name - "
+                    "Stopping DDS=>switching to new topic <%C>.\n",
+                    topic_name));
+      this->ccm_passivate ();
+      this->do_ccm_remove ();
+
+      if (ACE_OS::strlen (topic_name) > 0)
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_State_Connector_T::topic_name - "
+                        "DDS is down. Setting new to <%C>.\n",
+                        topic_name));
+
+          TopicBaseConnector::topic_name (topic_name);
+
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_State_Connector_T::topic_name - "
+                        "Initialize DDS again for topic <%C>.\n",
+                        topic_name));
+
+          this->do_configuration_complete ();
+          this->do_ccm_activate ();
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_State_Connector_T::topic_name - "
+                        "DDS up and running for topic <%C>.\n",
+                        topic_name));
+        }
+      else
+        {
+          DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
+                        "DDS_Event_Connector_T::topic_name - "
+                        "DDS is down.\n"));
+          TopicBaseConnector::topic_name (topic_name);
+        }
+    }
+  else if (this->late_binded (topic_name))
     {
       this->do_configuration_complete ();
       this->do_ccm_activate ();
@@ -318,14 +373,13 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
 {
   DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_complete");
 
-  TopicBaseConnector::configuration_complete ();
-
   ::CCM_DDS::PortStatusListener_var push_observer_psl =
     this->context_->get_connection_push_observer_status ();
   typename CCM_TYPE::push_observer_traits::data_listener_type::_var_type push_observer_dl =
     this->context_->get_connection_push_observer_data_listener ();
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_psl.in ());
   this->push_observer_obtained_ |= ! ::CORBA::is_nil (push_observer_dl.in ());
+  this->init_subscriber_ |= this->push_observer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var push_state_observer_psl =
     this->context_->get_connection_push_state_observer_status ();
@@ -333,14 +387,19 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_configuration_com
     this->context_->get_connection_push_state_observer_data_listener ();
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_psl.in ());
   this->push_state_observer_obtained_ |= ! ::CORBA::is_nil (push_state_observer_dl.in ());
+  this->init_subscriber_ |= this->push_state_observer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var pull_observer_psl =
     this->context_->get_connection_pull_observer_status ();
   this->pull_observer_obtained_ |= ! ::CORBA::is_nil (pull_observer_psl.in ());
+  this->init_subscriber_ |= this->pull_observer_obtained_;
 
   ::CCM_DDS::PortStatusListener_var passive_observer_psl =
     this->context_->get_connection_passive_observer_status ();
   this->passive_observer_obtained_ |= ! ::CORBA::is_nil (passive_observer_psl.in ());
+  this->init_subscriber_ |= this->passive_observer_obtained_;
+
+  TopicBaseConnector::configuration_complete ();
 
   if (this->observable_obtained_)
     {
@@ -587,10 +646,9 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_passivate (void)
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
 void
-DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
+DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove (void)
 {
-  DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
-
+  DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::do_ccm_remove");
   try
     {
       if (ACE_OS::strlen (this->topic_name_) != 0)
@@ -627,7 +685,7 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
       DDS4CCM_PRINT_INTERNAL_EXCEPTION (
                               DDS4CCM_LOG_LEVEL_ERROR,
                               ::CIAO::DDS4CCM::translate_retcode (ex.error_code),
-                              "DDS_State_Connector_T::ccm_remove");
+                              "DDS_State_Connector_T::do_ccm_remove");
       throw ::CORBA::INTERNAL ();
     }
   catch (const ::CORBA::Exception& ex)
@@ -635,15 +693,49 @@ DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
       DDS4CCM_PRINT_CORBA_EXCEPTION (
                               DDS4CCM_LOG_LEVEL_ERROR,
                               ex,
-                              "DDS_State_Connector_T::ccm_remove");
+                              "DDS_State_Connector_T::do_ccm_remove");
       throw;
     }
   catch (...)
     {
       DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                    "DDS_State_Connector_T::ccm_remove - "
+                    "DDS_State_Connector_T::do_ccm_remove - "
                     "Caught unexpected exception.\n"));
       throw ::CORBA::INTERNAL ();
     }
+}
+
+template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>
+void
+DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove (void)
+{
+  DDS4CCM_TRACE ("DDS_State_Connector_T<CCM_TYPE, DDS_TYPE, FIXED, SEQ_TYPE>::ccm_remove");
+
+  if (this->observable_obtained_)
+    {
+      this->observable_.set_component (::CORBA::Object::_nil ());
+    }
+
+  if (this->push_observer_obtained_)
+    {
+      this->push_observer_.set_component (::CORBA::Object::_nil ());
+    }
+
+  if (this->push_state_observer_obtained_)
+    {
+      this->push_state_observer_.set_component (::CORBA::Object::_nil ());
+    }
+
+  if (this->pull_observer_obtained_)
+    {
+      this->pull_observer_.set_component (::CORBA::Object::_nil ());
+    }
+
+  if (this->passive_observer_obtained_)
+    {
+      this->passive_observer_.set_component (::CORBA::Object::_nil ());
+    }
+
+  this->do_ccm_remove ();
 }
 

@@ -78,8 +78,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
       status =
         node->traverse_inheritance_graph (
             be_interface::gen_colloc_op_defn_helper,
-            os
-          );
+            os);
 
       if (status == -1)
         {

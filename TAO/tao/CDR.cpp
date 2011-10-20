@@ -219,8 +219,7 @@ TAO_OutputCDR::throw_skel_exception (int error_num )
       ACE_NOTREACHED (break);
 
     case EACCES : // wchar but no codeset
-      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 23,
-                                   CORBA::COMPLETED_YES);
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 23, CORBA::COMPLETED_YES);
       ACE_NOTREACHED (break);
 
 #if (ERANGE != EINVAL)

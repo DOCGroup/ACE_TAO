@@ -1,6 +1,7 @@
 // $Id$
 
-project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, ciao_output, taolib, portableserver, ciao_servant {
+project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, \
+                        ciao_output, taolib, portableserver, ciao_servant {
   includes += $(CIAO_ROOT)/connectors
 
   dynamicflags += DDS4CCM_SKEL_BUILD_DLL
@@ -8,12 +9,16 @@ project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, ciao_outpu
   }
 
   Header_Files {
+    dds4ccm_skel_export.h
+    dds4ccm_EntityS.h
+    ccm_ddsS.h
     dds4ccm_BaseS.h
     dds4ccm_QueryFilterS.h
     dds4ccm_PortStatusListenerS.h
     dds4ccm_DataListenerControlS.h
     dds4ccm_StateListenerControlS.h
     dds4ccm_ConnectorStatusListenerS.h
+    dds4ccm_ConnectorS.h
     dds_rtf2_dcpsS.h
   }
 
@@ -24,5 +29,18 @@ project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, ciao_outpu
     dds4ccm_ConnectorStatusListenerS.cpp
     dds4ccm_ConnectorS.cpp
     dds4ccm_StateListenerControlS.cpp
+  }
+
+  Inline_Files {
+    dds_rtf2_dcpsS.inl
+    dds4ccm_PortStatusListenerS.inl
+    dds4ccm_DataListenerControlS.inl
+    dds4ccm_ConnectorStatusListenerS.inl
+    dds4ccm_ConnectorS.inl
+    dds4ccm_StateListenerControlS.inl
+  }
+
+  specific {
+    install_dir = connectors/dds4ccm/idl
   }
 }

@@ -54,7 +54,7 @@ namespace TAO
         {
           bool wait_occurred_restart_call = false;
 
-          int result =
+          int const result =
             this->prepare_for_upcall_i (key,
                                         operation,
                                         forward_to,

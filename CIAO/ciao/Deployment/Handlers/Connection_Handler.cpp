@@ -276,7 +276,7 @@ namespace CIAO
               }
             else
               {
-                //only because of the receptacle is an external endpoint
+                //only because the receptacle is an external endpoint
                 this->disconnect_non_local (conn, conn.externalReference[0].portName.in ());
               }
             break;
@@ -320,7 +320,7 @@ namespace CIAO
         // pass through
         throw;
       }
-    // Since DANCE shutdown the Locality managers simultaniously,
+    // Since DANCE shuts down the Locality managers simultaniously,
     // it could be that one locality manager is shutdown while the
     // other wants to disconnect from this locality manager. Therefor
     // we catch an OBJECT_NOT_EXIST, TRANSIENT and a COMM_FAILURE at this point
@@ -436,6 +436,10 @@ namespace CIAO
 
     ::Components::Cookie_var cookie = provided->connect (conn.externalReference[0].portName.in (),
                                                          facet.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(conn.name.in (), facet.in ());
+#endif
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_facet - "
                     "Connection <%C> successfully established.\n",
@@ -509,6 +513,10 @@ namespace CIAO
 
     ::Components::Cookie_var cookie = receptacle->connect (endpoint.portName.in (),
                                                            provided.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(conn.name.in (), provided.in ());
+#endif
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_non_local_receptacle - "
                     "Connection <%C> successfully established.\n",
@@ -597,6 +605,9 @@ namespace CIAO
       }
     Components::Cookie_var cookie = publisher->subscribe (endpoint.portName.in (),
                                                           event.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(conn.name.in (), publisher.in());
+#endif
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_publisher - "
@@ -704,6 +715,10 @@ namespace CIAO
                         conn.externalReference[0].portName.in ()));
       }
 
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(conn.name.in (), event.in());
+#endif
+
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_consumer - "
                     "Connection <%C> successfully established.\n",
@@ -775,6 +790,9 @@ namespace CIAO
 
     emitter->connect_consumer (endpoint.portName.in (),
                                event.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(conn.name.in (), emitter.in());
+#endif
 
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_emitter - "
@@ -796,9 +814,14 @@ namespace CIAO
     CIAO_TRACE ("Connection_Handler::disconnect_non_local");
 
     ::Components::CCMObject_var obj = this->get_ccm_object (conn.name.in ());
+    CIAO_DEBUG (6, (LM_DEBUG, CLINFO
+                    "Connection_Handler::disconnect_non_local - "
+                    "About to disconnect <%C>\n",
+                    conn.name.in()));
     ::CORBA::Object_var safe_tmp =
       obj->disconnect (port_name,
                       this->get_cookie (conn.name.in ()));
+
     this->remove_cookie (conn.name.in ());
   }
 
@@ -972,6 +995,9 @@ namespace CIAO
                                                                  facet_endpoint.portName.in (),
                                                                  receptacle,
                                                                  receptacle_endpoint.portName.in ());
+#if defined (CIAO_PRE_ESTABLISH_CONNECTIONS)
+    this->validate_connection(conn.name.in (), facet);
+#endif
     CIAO_DEBUG (5, (LM_INFO, CLINFO
                     "Connection_Handler::connect_local_port - "
                     "Connected local port <%C>:<%C> to <%C>:<%C>\n",
@@ -1062,6 +1088,36 @@ namespace CIAO
                     receptacle_endpoint.portName.in ()));
   }
 
+  void
+  Connection_Handler::validate_connection (const char * conn,
+                                           ::CORBA::Object_ptr obj)
+  {
+    CIAO_TRACE ("Connection_Handler::validate_connection");
+    try
+      {
+        if (!::CORBA::is_nil (obj))
+          {
+            ::CORBA::PolicyList_var pl;
+            if (obj->_validate_connection (pl.out ()))
+              {
+                CIAO_DEBUG (6, (LM_DEBUG, CLINFO "Connection_Handler::validate_connection - "
+                            "Succesfully validated connection <%C>. Connection has been pre-established.\n",
+                            conn));
+              }
+            else
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO "Connection_Handler::validate_connection - "
+                            "Failed to pre-establish a connection <%C>.\n",
+                            conn));
+              }
+          }
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        ex._tao_print_exception("Connection_Handler::validate_connection");
+      }
+  }
+
   bool
   Connection_Handler::is_local_connection (const ::Deployment::PlanConnectionDescription &conn)
   {
@@ -1084,6 +1140,11 @@ namespace CIAO
                                      const CONNECTION_INFO conn_info)
   {
     CIAO_TRACE ("Connection_Handler::insert_cookie");
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->cookies_mutex_,
+                        CORBA::NO_RESOURCES ());
 
     std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
                                                               conn_info);
@@ -1112,6 +1173,11 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::remove_cookie");
 
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->cookies_mutex_,
+                        CORBA::NO_RESOURCES ());
+
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
       {
@@ -1133,6 +1199,11 @@ namespace CIAO
   Connection_Handler::get_cookie (const char * connection_name)
   {
     CIAO_TRACE ("Connection_Handler::get_cookie");
+
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->cookies_mutex_,
+                        CORBA::NO_RESOURCES ());
 
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
@@ -1157,6 +1228,8 @@ namespace CIAO
   ::Components::CCMObject_ptr
   Connection_Handler::get_ccm_object (const char * connection_name)
   {
+    CIAO_TRACE ("Connection_Handler::get_ccm_object");
+
     COOKIES::iterator it = this->cookies_.find (connection_name);
     if (it == this->cookies_.end ())
       {
@@ -1167,6 +1240,7 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (connection_name,
                                                "Unable to find correct cookie");
       }
+
     ::Components::CCMObject_var ret = it->second.second;
     if (::CORBA::is_nil (ret.in ()))
       {
@@ -1183,6 +1257,7 @@ namespace CIAO
   ::CORBA::ULong
   Connection_Handler::retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn)
   {
+    CIAO_TRACE ("Connection_Handler::retrieve_endpoint");
     if (conn.internalEndpoint.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO

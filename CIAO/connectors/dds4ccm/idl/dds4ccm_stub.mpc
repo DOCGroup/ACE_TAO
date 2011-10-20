@@ -9,19 +9,20 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
               -I$(CIAO_ROOT)/connectors -Glem
 
   IDL_Files {
+    idlflags -= -Gsv
     idlflags += -Gxhst -Gxhsk -SS
     dds4ccm_Base.idl
   }
 
   IDL_Files {
-    idlflags -= -Gxhst -Gxhsk
+    idlflags -= -Gxhst -Gxhsk -Gsv -Glem
     idlflags -= -St -Sa
     idlflags += -SS
     dds4ccm_QueryFilter.idl
   }
 
   IDL_Files {
-    idlflags -= -Gxhst -Gxhsk
+    idlflags -= -Gxhst -Gxhsk -Gsv
     idlflags += -Sci -SS -Scc
     dds4ccm_Entity.idl
     ccm_dds.idl
@@ -36,6 +37,10 @@ project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
     dds4ccm_StateListenerControl.idl
     dds4ccm_Connector.idl
   }
+
+  specific {
+    install_dir = connectors/dds4ccm/idl
+  }
 }
 
 project (DDS4CCM_stub) : install, dds4ccm, ccm_stub, ciaolib_with_idl, ciao_output, taolib {
@@ -47,12 +52,16 @@ project (DDS4CCM_stub) : install, dds4ccm, ccm_stub, ciaolib_with_idl, ciao_outp
   }
 
   Header_Files {
+    dds4ccm_stub_export.h
+    dds4ccm_EntityC.h
+    ccm_ddsC.h
     dds4ccm_BaseC.h
     dds4ccm_QueryFilterC.h
     dds4ccm_PortStatusListenerC.h
     dds4ccm_DataListenerControlC.h
     dds4ccm_ConnectorStatusListenerC.h
     dds4ccm_StateListenerControlC.h
+    dds4ccm_ConnectorC.h
     dds_rtf2_dcpsC.h
   }
 
@@ -65,6 +74,20 @@ project (DDS4CCM_stub) : install, dds4ccm, ccm_stub, ciaolib_with_idl, ciao_outp
     dds4ccm_StateListenerControlC.cpp
     dds4ccm_ConnectorC.cpp
     dds_rtf2_dcpsC.cpp
+  }
+
+  Inline_Files {
+    dds4ccm_BaseC.inl
+    dds4ccm_PortStatusListenerC.inl
+    dds4ccm_DataListenerControlC.inl
+    dds4ccm_ConnectorStatusListenerC.inl
+    dds4ccm_StateListenerControlC.inl
+    dds4ccm_ConnectorC.inl
+    dds_rtf2_dcpsC.inl
+  }
+
+  specific {
+    install_dir = connectors/dds4ccm/idl
   }
 }
 

@@ -98,8 +98,8 @@ namespace CIAO_WU_LateBinding_Sender_Impl
 
     //@{
     /** User defined public operations. */
-    void set_topic_name_writer (bool test_non_changeable=false);
-    void set_topic_name_updater (bool test_non_changeable=false);
+    void set_topic_name_writer (void);
+    void set_topic_name_updater (void);
     void start_event_test (void);
     void start_state_test (void);
     //@}

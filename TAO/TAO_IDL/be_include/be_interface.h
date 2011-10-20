@@ -69,46 +69,12 @@ public:
   /// Retrieve the fully qualified collocated class name.
   const char *local_coll_name (int);
 
-  /// retrieve the name of the base proxy implementation.
-  virtual const char *base_proxy_impl_name (void);
-
-  /// retrieve the fully qualified name of the base proxy
-  /// implementation.
-  virtual const char *full_base_proxy_impl_name (void);
-
-  /// retrieve the name of the remote  proxy implementation.
-  virtual const char *remote_proxy_impl_name (void);
-
-  /// retrieve the fully qualified name of the remote
-  /// proxy implementation.
-  virtual const char *full_remote_proxy_impl_name (void);
-
   /// retrieve the name of the direct proxy implementation.
   virtual const char *direct_proxy_impl_name (void);
 
   /// retrieve the fully qualified name of the direct proxy
   /// implementation.
   virtual const char *full_direct_proxy_impl_name (void);
-
-  /// retrieve the name of the base proxy broker.
-  virtual const char *base_proxy_broker_name (void);
-
-  /// retrieve the fully qualified name of the base proxy broker.
-  virtual const char *full_base_proxy_broker_name (void);
-
-  /// retrieve the name of the remote  proxy broker implementation.
-  virtual const char *remote_proxy_broker_name (void);
-
-  /// retrieve the fully qualified name of the remote  proxy broker
-  /// implementation.
-  virtual const char *full_remote_proxy_broker_name (void);
-
-  /// retrieve the name of the strategized proxy broker implementation.
-  virtual const char *strategized_proxy_broker_name (void);
-
-  /// retrieve the fully qualified name of the strategized proxy broker
-  /// implementation.
-  virtual const char *full_strategized_proxy_broker_name (void);
 
   /// Return the client scope that encloses the interface.
   virtual const char *client_enclosing_scope (void);
@@ -344,9 +310,6 @@ public:
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
 
-  /// Generate setup_collocation() for base component, if any.
-  virtual void gen_parent_collocation (TAO_OutStream *os);
-
 protected:
   /**
    * CDreate a new string made by the concatenation
@@ -362,16 +325,12 @@ protected:
   enum Suffix_Code
   {
     PROXY_IMPL = 0,
-    PROXY_BROKER = 1
   };
 
   enum Tag_Code
   {
-    THRU_POA = 0,
-    DIRECT = 1,
-    REMOTE = 2,
-    STRATEGIZED = 3,
-    GC_PREFIX = 4 // Prefix used for the generated class
+    DIRECT = 0,
+    GC_PREFIX = 1 // Prefix used for the generated class
                   // This prefix is used to avoid name conflicts
                   // with the user classes.
   };
@@ -380,22 +339,9 @@ protected:
   static const char *tag_table_[];
 
   // Proxy Implementation names.
-  char *base_proxy_impl_name_;
-  char *remote_proxy_impl_name_;
   char *direct_proxy_impl_name_;
 
-  char *full_base_proxy_impl_name_;
-  char *full_remote_proxy_impl_name_;
   char *full_direct_proxy_impl_name_;
-
-  // Proxy Broker Names.
-  char *base_proxy_broker_;
-  char *remote_proxy_broker_;
-  char *strategized_proxy_broker_;
-
-  char *full_base_proxy_broker_name_;
-  char *full_remote_proxy_broker_name_;
-  char *full_strategized_proxy_broker_name_;
 
   char *client_scope_;
   char *flat_client_scope_;

@@ -36,4 +36,8 @@ project(CIAO_DDS4CCM_DDS_NDDS) : install, ndds_idltocpp_stub, taolib, \
     WaitSet.cpp
     Utils.cpp
   }
+
+  specific {
+    install_dir = connectors/dds4ccm/impl/ndds
+  }
 }

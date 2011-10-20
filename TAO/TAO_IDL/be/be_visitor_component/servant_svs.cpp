@@ -320,14 +320,20 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       << "this)," << be_uidt_nl
       << "::CORBA::NO_MEMORY ());" << be_uidt_nl << be_nl
       << "::CIAO::Port_Activator_var pa = tmp;" << be_nl_2
+      << "::CIAO::Container_var cnt_safe =" << be_idt_nl
+      << "::CIAO::Container::_duplicate ("
+      << "this->container_.in ());" << be_uidt_nl << be_nl
+      << "if (::CORBA::is_nil (cnt_safe.in ()))" << be_idt_nl
+      << "{" << be_idt_nl << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
-      << "this->container_->ports_servant_activator ();"
+      << "cnt_safe->ports_servant_activator ();"
       << be_uidt_nl << be_nl
       << "if (sa->register_port_activator (pa.in ()))"
       << be_idt_nl
       << "{" << be_idt_nl
       << "::CORBA::Object_var obj =" << be_idt_nl
-      << "this->container_->generate_reference (" << be_idt_nl
+      << "cnt_safe->generate_reference (" << be_idt_nl
       << "obj_id.c_str ()," << be_nl
       << "\"" << obj->repoID () << "\"," << be_nl
       << "::CIAO::Container_Types::FACET_CONSUMER_t);"

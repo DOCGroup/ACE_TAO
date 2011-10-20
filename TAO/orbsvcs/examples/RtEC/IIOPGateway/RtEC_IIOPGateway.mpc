@@ -2,44 +2,28 @@
 // $Id$
 
 project(*Consumer): messaging, rteventexe, naming {
-
   exename = Consumer
-
-  requires  += corba_messaging
-
   Source_Files {
     Consumer.cpp
   }
 }
 
 project(*Supplier): messaging, rteventexe, naming {
-
   exename = Supplier
-
-  requires  += corba_messaging
-
   Source_Files {
     Supplier.cpp
   }
 }
 
 project(*): messaging, rteventexe, rtevent_serv, naming {
-
   exename = Gateway
-
-  requires  += corba_messaging
-
   Source_Files {
     Gateway.cpp
   }
 }
 
 project(*EC): messaging, rteventexe, rtevent_serv, naming {
-
   exename = EC
-
-  requires  += corba_messaging
-
   Source_Files {
     EC.cpp
   }

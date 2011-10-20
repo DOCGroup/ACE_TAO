@@ -10,10 +10,13 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
-
+$cdebug_level = '0';
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    }
+    if ($i eq '-cdebug') {
+      $cdebug_level = '10';
     }
 }
 
@@ -27,7 +30,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-k file://$client_iorfile");
+$CL = $client->CreateProcess ("client", "-ORBdebuglevel $cdebug_level -k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {

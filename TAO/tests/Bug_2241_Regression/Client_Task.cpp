@@ -18,11 +18,11 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 int
 Client_Task::svc (void)
 {
+  CORBA::Boolean exception = false;
   try
     {
       CORBA::Object_var tmp =
         this->corb_->string_to_object (input_);
-
       Test::Hello_var hello =
         Test::Hello::_narrow(tmp.in ());
 
@@ -33,21 +33,32 @@ Client_Task::svc (void)
                              input_),
                              1);
         }
+      try
+        {
+          CORBA::String_var the_string = hello->get_string ();
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
+                         the_string.in ()));
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                  the_string.in ()));
-
-      hello->shutdown ();
+           hello->shutdown ();
+        }
+      catch (CORBA::INTERNAL)
+        {
+          exception = true;
+          ACE_DEBUG ((LM_DEBUG, "OK: Client_Task Expected exception received\n"));
+          corb_->destroy ();
+          return 0;
+        }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-
+  if (!exception)
+    {
+      ACE_ERROR ((LM_ERROR, "(ERROR: Client_Task::svc Expected exception not received\n"));
+    }
   return 0;
 
 }

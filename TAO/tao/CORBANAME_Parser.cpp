@@ -51,7 +51,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                     2,
                                     "resolve_str",
                                     11,
-                                    0);
+                                    TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
   tao_call.invoke (0, 0);
 

@@ -1,0 +1,20 @@
+// $Id$
+#ifndef BASE_IDL_
+#define BASE_IDL_
+
+#pragma ciao lem "Coll_Base/BaseE.idl"
+
+struct pointer_id
+  {
+    long point;
+    string txt;
+  };
+
+// Interfaces for communication between Sender and Receiver
+interface Hello {
+  //string say_hello ();
+  void set_point(in pointer_id p);
+ };
+
+
+#endif /* BASE_IDL_ */

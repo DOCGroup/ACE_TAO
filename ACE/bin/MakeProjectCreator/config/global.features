@@ -153,5 +153,7 @@ link_codecfactory = 0
 ccm_lw = 1
 // Feature for CCM for disabling events.
 ccm_noevent = 0
+// Feature for direct collocation
+ccm_direct_collocation = 0
 
 valuetype_out_indirection=1

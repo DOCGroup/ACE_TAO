@@ -35,8 +35,7 @@ public:
     ::DDS::Subscriber_ptr subscriber,
     const char * qos_profile);
 
-  void remove (
-    ::DDS::Subscriber_ptr subscriber);
+  void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
   typedef DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>

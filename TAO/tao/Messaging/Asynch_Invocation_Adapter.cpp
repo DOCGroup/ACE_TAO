@@ -27,14 +27,14 @@ namespace TAO
     int arg_number,
     const char *operation,
     size_t op_len,
-    Collocation_Proxy_Broker *p,
+    int collocation_opportunity,
     Invocation_Mode m)
     : Invocation_Adapter (target,
                           args,
                           arg_number,
                           operation,
                           op_len,
-                          p,
+                          collocation_opportunity,
                           TAO_TWOWAY_INVOCATION,
                           m)
     , safe_rd_ ()

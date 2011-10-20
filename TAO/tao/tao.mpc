@@ -105,7 +105,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Codeset_Manager_Factory_Base.cpp
     Codeset_Translator_Base.cpp
     Collocated_Invocation.cpp
-    Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
     Connect_Strategy.cpp
     Connection_Handler.cpp
@@ -361,7 +360,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Codeset_Manager_Factory_Base.h
     Codeset_Translator_Base.h
     Collocated_Invocation.h
-    Collocation_Proxy_Broker.h
     Collocation_Resolver.h
     Collocation_Strategy.h
     Condition.h

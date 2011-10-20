@@ -196,7 +196,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Run the event loop.
       ACE_DEBUG ((LM_DEBUG,
                   "running the event loop:\n"
-                  "*** message: ready to receieve stock information...\n\n"));
+                  "*** message: ready to receive stock information...\n\n"));
       orb->run ();
 
       // Cleanup the POA and ORB.

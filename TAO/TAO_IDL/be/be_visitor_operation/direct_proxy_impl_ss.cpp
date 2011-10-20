@@ -54,7 +54,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     }
 
   *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
   *os << "void" << be_nl
       << intf->full_direct_proxy_impl_name () << "::";
@@ -83,20 +83,10 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << " args";
     }
 
-  *os << "," << be_nl
-      << "int)" << be_uidt_nl;
+  *os << ")" << be_uidt_nl;
 
   *os << be_uidt_nl
       << "{" << be_idt_nl;
-
-#if 0
-      << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
-      << be_idt << be_idt_nl
-      << "obj->_stubobj ()"
-      << "->servant_orb_var ()->orb_core ()"
-      << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
-#endif /*if 0*/
 
   if (!node->void_return_type ())
     {
@@ -125,10 +115,9 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       *os << be_uidt;
     }
 
-  *os << be_uidt << be_uidt_nl;
+  *os << be_uidt << be_uidt << be_uidt_nl;
 
-  *os << be_uidt_nl
-      << "}" << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   return 0;
 }

@@ -65,10 +65,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Test_i server_impl;
+      Test_i *server_impl = 0;
+      ACE_NEW_RETURN (server_impl,
+                      Test_i (orb.in ()),
+                      1);
+      PortableServer::ServantBase_var owner_transfer(server_impl);
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl);
+        root_poa->activate_object (server_impl);
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
@@ -85,26 +89,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       adapter->bind("Name-with-hyphens", ior.in());
 
-
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
       if (output_file == 0)
          ACE_ERROR_RETURN ((LM_ERROR,
                                "SERVER (%P): Cannot open output file "
-                               "for writing IOR: %C",
-                               "server.ior"),
+                               "for writing IOR: %s",
+                               ior_file),
                               1);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
       ACE_DEBUG ((LM_DEBUG,
-                      "SERVER (%P): Activated as file://%C\n",
-                      "server.ior"));
+                      "SERVER (%P): Activated as file://%s\n",
+                      ior_file));
 
       poa_manager->activate();
 
       orb->run ();
 
       root_poa->destroy (1, 1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

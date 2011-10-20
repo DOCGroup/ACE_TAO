@@ -2669,8 +2669,6 @@ TAO_CodeGen::gen_skel_hdr_includes (void)
         }
 
       this->gen_standard_include (this->server_header_,
-                                  "tao/Collocation_Proxy_Broker.h");
-      this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/PortableServer.h");
       this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/Servant_Base.h");

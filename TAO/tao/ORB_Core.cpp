@@ -217,7 +217,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     ft_send_extended_sc_ (false),
     opt_for_collocation_ (true),
     use_global_collocation_ (true),
-    collocation_strategy_ (THRU_POA),
+    collocation_strategy_ (TAO_DEFAULT_COLLOCATION_STRATEGY),
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -439,7 +439,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       this->use_implrepo_ = ACE_OS::atoi  (use_IMR_env_var_value) ;
     }
 
-
   while (arg_shifter.is_anything_left ())
     {
       const ACE_TCHAR *current_arg = 0;
@@ -613,9 +612,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // Specify which collocation policy we want to use.
           const ACE_TCHAR *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("thru_poa")) == 0)
-            this->collocation_strategy_ = THRU_POA;
+            {
+              this->collocation_strategy_ = TAO_COLLOCATION_THRU_POA;
+            }
           else if (ACE_OS::strcasecmp (opt, ACE_TEXT("direct")) == 0)
-            this->collocation_strategy_ = DIRECT;
+            {
+              this->collocation_strategy_ = TAO_COLLOCATION_DIRECT;
+            }
+          else if (ACE_OS::strcasecmp (opt, ACE_TEXT("best")) == 0)
+            {
+              this->collocation_strategy_ = TAO_COLLOCATION_BEST;
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -3609,41 +3616,6 @@ TAO_ORB_Core_instance (void)
     }
 
   return orb_table->first_orb ();
-}
-
-
-TAO::Collocation_Strategy
-TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
-{
-  TAO_Stub *stub = object->_stubobj ();
-  if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
-      stub->servant_orb_var ()->orb_core () != 0)
-    {
-      TAO_ORB_Core *orb_core = stub->servant_orb_var ()->orb_core ();
-
-      if (orb_core->collocation_resolver ().is_collocated (object))
-        {
-          switch (orb_core->get_collocation_strategy ())
-            {
-            case THRU_POA:
-              return TAO::TAO_CS_THRU_POA_STRATEGY;
-
-            case DIRECT:
-              {
-                /////////////////////////////////////////////////////////////
-                // If the servant is null and you are collocated this means
-                // that the POA policy NON-RETAIN is set, and with that policy
-                // using the DIRECT collocation strategy is just insane.
-                /////////////////////////////////////////////////////////////
-                ACE_ASSERT (object->_servant () != 0);
-                return TAO::TAO_CS_DIRECT_STRATEGY;
-              }
-            }
-        }
-    }
-
-  // In this case the Object is a client.
-  return TAO::TAO_CS_REMOTE_STRATEGY;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

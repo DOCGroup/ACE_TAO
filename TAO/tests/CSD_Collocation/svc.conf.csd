@@ -8,9 +8,9 @@ static Advanced_Resource_Factory "-ORBReactorType select_st -ORBInputCDRAllocato
 
 # Make sure we use RW client handler so if something goes wrong, the program will bloc,
 # i.e., won't work.
-static Client_Strategy_Factory "-ORBProfileLock null -ORBClientConnectionHandler RW"
+static Client_Strategy_Factory "-ORBClientConnectionHandler RW"
 
 # Not absolutely necessary for this test, but we add it for fun.
-static Server_Strategy_Factory "-ORBConcurrency reactive -ORBPOALock null"
+static Server_Strategy_Factory "-ORBConcurrency reactive"
 
 static TAO_CSD_TP_Strategy_Factory "-CSDtp child:2:OFF"

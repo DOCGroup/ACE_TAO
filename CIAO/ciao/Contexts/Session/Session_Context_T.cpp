@@ -32,7 +32,18 @@ namespace CIAO
 
     try
       {
-        obj = this->container_->get_objref (this->servant_);
+        ::CIAO::Session_Container_var cnt_safe =
+          ::CIAO::Session_Container::_duplicate (this->container_.in ());
+        if (::CORBA::is_nil (cnt_safe.in ()))
+          {
+            CIAO_ERROR (1,
+                        (LM_ERROR,
+                        CLINFO
+                        "Session_Context_Impl::get_CCM_object - "
+                        "Error: Container is nil\n"));
+            throw ::CORBA::INV_OBJREF ();
+          }
+        obj = cnt_safe->get_objref (this->servant_);
       }
     catch (const CORBA::Exception& ex)
       {

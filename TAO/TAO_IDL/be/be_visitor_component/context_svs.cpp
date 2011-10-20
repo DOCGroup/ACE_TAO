@@ -488,8 +488,8 @@ be_visitor_context_svs::gen_uses_multiplex (
       << "retv = iter->second;" << be_nl
       << "n = this->ciao_uses_" << port_name
       << "_.erase (key);" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "}" << be_uidt;
+      << "}" << be_uidt << be_uidt_nl
+      << "}";
 
   os_ << be_nl_2
       << "if (n != 1UL)" << be_idt_nl
