@@ -1,3 +1,10 @@
+Thu Oct 20 06:57:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+	* *.*:
+          Removed autoconf support due to lack of resources/funding to 
+          get autoconf really working. It now only causes confusions and
+          not working configurations for users.
+
 Wed Oct 19 19:13:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/global.features:
