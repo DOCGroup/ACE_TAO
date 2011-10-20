@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver, ciao_deployment_stub, ciao_client_dnc {
-  after += Deployment_svnt
-  libs  += CIAO_Deployment_svnt 
-  includes += $(CIAO_ROOT)/DAnCE/ciao 
-  idlflags += -I$(CIAO_ROOT)/DAnCE -Sc
-}

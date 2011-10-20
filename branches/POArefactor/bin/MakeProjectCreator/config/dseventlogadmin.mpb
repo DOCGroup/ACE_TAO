@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dslogadmin, event_serv {
-  after      += DsEventLogAdmin
-  libs       += TAO_DsEventLogAdmin
-}

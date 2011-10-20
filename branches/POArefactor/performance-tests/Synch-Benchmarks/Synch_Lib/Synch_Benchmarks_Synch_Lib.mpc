@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(Synch_Lib) : aceexe {
-  sharedname = Synch_Lib
-  dynamicflags += SYNCHLIB_BUILD_DLL
-}

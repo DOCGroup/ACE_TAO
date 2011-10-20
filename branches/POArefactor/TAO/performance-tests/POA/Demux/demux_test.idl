@@ -1,8 +1,0 @@
-// $Id$
-// Interface for TAO's Demux_Test
-
-interface Demux_Test
-{
-   void M302 ();
-   oneway void shutdown ();
-};

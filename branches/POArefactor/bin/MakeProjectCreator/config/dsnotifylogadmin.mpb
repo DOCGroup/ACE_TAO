@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : dseventlogadmin, notification, notification_skel {
-  after      += DsNotifyLogAdmin
-  libs       += TAO_DsNotifyLogAdmin
-}
