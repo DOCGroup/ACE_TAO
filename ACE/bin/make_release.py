@@ -919,10 +919,6 @@ def generate_workspaces (stage_dir):
     if not opts.verbose:
         redirect_option = " >> ../mpc.log 2>&1"
 
-    # Generate GNUmakefiles
-    print "\tBootstrapping autotools support"
-    ex ("bin/bootstrap " + redirect_option)
-
     print "\tGenerating GNUmakefiles...."
     ex (mpc_command + " -type gnuace " + exclude_option + mpc_option + redirect_option)
 
