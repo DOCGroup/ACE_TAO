@@ -1,11 +1,12 @@
 // $Id$
+
 CollocationStrategy TAO_COLLOCATION_BEST:
 
 This tests  performs a series of checks on CollocationStrategy 'best'  (TAO_COLLOCATION_BEST) support in TAO.
 
 With CollocationStrategy 'best'  the best possible collocation strategy is tried to perform.
  If TAO_COLLOCATION_DIRECT is possible, this has to be used, else if TAO_COLLOCATION_THRU_POA
- is possible this has to be used, else use remote stub. 
+ is possible this has to be used, else use remote stub.
 
 The test Collocated_Best_Direct uses IDLflags -Sp, to disable Thru_poa collocation
   and -Gd, to enable Direct collocation.

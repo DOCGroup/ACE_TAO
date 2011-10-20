@@ -1,3 +1,5 @@
+$Id$
+
 This test simulates the sending of a GIOP CloseConnection message.
 Since TAO does not send this GIOP message, a perl script
 (fakeserver2.pl) is used to simulate a CORBA server.  Since it isn't

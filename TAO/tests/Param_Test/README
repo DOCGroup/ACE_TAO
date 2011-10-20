@@ -1,17 +1,4 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/Param_Test
-//
-// = FILENAME
-//    README
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+$Id$
 
 This directory contains an application that tests all the parameter
 passing conventions in CORBA for a number of OMG IDL data types.
@@ -35,7 +22,7 @@ To run the server, type
           arguments to ORB_init start with the letters -ORB. Please
           see TAO documentattion on all the supported arguments
 
-          -d for debugging. 
+          -d for debugging.
 	  -o <ior_output_file> for outputting the servant IOR to a file.
 
 To run the client, type
@@ -47,7 +34,7 @@ To run the client, type
    [-d]                                 debugging
    [-n loopcount]                       number of times to run the test
    [-f servant-IOR-file]		reads the servant-IOR from the
-                                        specified file. 
+                                        specified file.
    [-k Param_Test-obj-ref-key]          object key of Param_Test object
    [-i invocation (sii/dii)]            default is static invocation
                                         interface. To use DII, type
@@ -91,7 +78,7 @@ the client:
 
 	1. Using the -f option to read the IOR from a file.
 
-	2. Using the -k option to read the IOR from the 	
+	2. Using the -k option to read the IOR from the
 	   command line.
 
 run_test.pl:
@@ -99,8 +86,8 @@ run_test.pl:
 	There is a perl script in this directory named run_test.pl to
         test all the types. It starts the server first and then runs
         the client with the different data type parameters. The
-        arguments it takes are: 
-	
+        arguments it takes are:
+
 	-n num              -- runs the client num times (default is 5)
         -d                  -- runs each in debug mode
         -onewin             -- keeps all tests in one window on NT

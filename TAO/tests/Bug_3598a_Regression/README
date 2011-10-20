@@ -2,7 +2,7 @@ $Id$
 
 This test attempts to contact a server IOR with no connectable profile in it (on account of how there is no server running).
 
-The method invocation should fail but the installed client request interceptor should have its send_request and receive_exception methods invoked regardless. 
+The method invocation should fail but the installed client request interceptor should have its send_request and receive_exception methods invoked regardless.
 
 The expected result looks like:
 

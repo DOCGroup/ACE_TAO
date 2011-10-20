@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test proves that TAOs Fault Tolerant object group equivalence comparison is according to the spec. Any error (assuming the Fault Tolerance orbsvcs library, and all its prerequisites, is available on the test platform) will indicate a regression or some sort of IOR demarshalling problem.
 

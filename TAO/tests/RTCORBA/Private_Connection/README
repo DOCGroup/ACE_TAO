@@ -2,8 +2,8 @@ $Id$
 
 This is a unit test for RTCORBA::PrivateConnectionPolicy.
 
-Description.  
--------- 
+Description.
+--------
 The server creates two servants, registers them with the Root POA,
 prints out their IORs and waits for the requests from the client.  The
 client obtains the IORs, makes several invocations on the objects,

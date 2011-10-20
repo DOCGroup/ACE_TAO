@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Here is a Stock Quoter example that features the use of the TAO IDL
 compiler, the different types of configuration settings (global vs
@@ -20,25 +20,25 @@ Note: Moving the Quoter object is no longer available!
 	  to use a servant locator on the POA managing the Quoter object.
 
 Context: The Quoter example serves several tests, the first is the test
-         of several multithreading policies and the second is showing the 
-         use of the Life Cycle Service as it is defined in the 
+         of several multithreading policies and the second is showing the
+         use of the Life Cycle Service as it is defined in the
          CORBA Common Object Services specification.
 
 Life Cycle Service use-case:
 
-several processes exist: server, 
-                         Factory_Finder, 
+several processes exist: server,
+                         Factory_Finder,
                          Generic_Factory,
                          Life_Cycle_Service
                          client
 
-several object exist: Quoter, 
-                      Quoter_Factory,  
-                      Quoter_Factory_Finder, 
+several object exist: Quoter,
+                      Quoter_Factory,
+                      Quoter_Factory_Finder,
                       Quoter_Generic_Factory,
                       Quoter_Life_Cycle_Service
 
-server: The server process contains two kind of objects: Quoter and 
+server: The server process contains two kind of objects: Quoter and
         Quoter_Factory's. A Quoter is a very simple Object supporting
         only one method. The focus is not on a sophisticated object
         but on showing how policies work.
@@ -46,26 +46,26 @@ server: The server process contains two kind of objects: Quoter and
 
 Factory_Finder: The COS spec. introduces the concept of a Factory Finder
                 which is capable to find proper factories. The Naming
-                Service is used as lookup-mechanism. A reference to 
+                Service is used as lookup-mechanism. A reference to
                 the Factory_Finder is passed as parameter of any copy
-                or move request. 
+                or move request.
 
-Generic_Factory: This process supports the object Quoter_Generic_Factory (QGF). 
+Generic_Factory: This process supports the object Quoter_Generic_Factory (QGF).
                  The QGF supports the GenericFactory interface introduced by
-                 the COS specification. It forwards create_object requests to 
-                 more concrete factories, e.g. the Quoter_Factory. The 
+                 the COS specification. It forwards create_object requests to
+                 more concrete factories, e.g. the Quoter_Factory. The
                  concrete factories are found via the Naming Service.
 
-Life_Cycle_Service: This process is very similar to the Generic_Factory 
+Life_Cycle_Service: This process is very similar to the Generic_Factory
                     proocess. It also supports an Object, which conforms to
                     the GenericFactory interface. The Quoter_Life_Cycle_Service
-                    conforms to the idea of a life cycle service as it is 
+                    conforms to the idea of a life cycle service as it is
                     introduced by the COS specification. The Quoter_Life_Cycle_Service
                     is neutral against the Quoter example. It is not dependent
                     on it. Only interfaces defined by the CosLifeCycle.idl file
-                    are used. The implemenation uses the COS Trading Service 
-                    manage registered Generic Factories, as the Quoter_Generic_Factory 
-                    for example. A lookup on the Trading Service is performed 
+                    are used. The implemenation uses the COS Trading Service
+                    manage registered Generic Factories, as the Quoter_Generic_Factory
+                    for example. A lookup on the Trading Service is performed
                     when a create_object request is invoked on it.
 
 client: Creates one Quoter through using the Quoter_Factory_Finder. After that

@@ -126,6 +126,12 @@
       }
     }
 
+    void reset (void)
+    {
+      id_map_.clear ();
+      idref_map_.clear ();
+    }
+
     private:
     //id_map_: maps the ID string to the element with the
     //         ID attribute

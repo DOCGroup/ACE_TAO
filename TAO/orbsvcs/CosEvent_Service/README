@@ -1,3 +1,5 @@
+$Id$
+
                         CORBA COS Event Service
                         -----------------------
 
@@ -82,10 +84,10 @@ $TAO_ROOT/docs/cec_options.html
 
    Note:
    ====
-   By default, the Naming Service disables multicast discovery. 
+   By default, the Naming Service disables multicast discovery.
    The "-m 1" option enables the Naming Service to be resolved via
-   multicast. 
-   
+   multicast.
+
    If you do not wish to do this, then use the
    -ORBInitRef option in which case the Naming Service should be started
    as:

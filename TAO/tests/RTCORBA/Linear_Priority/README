@@ -31,6 +31,6 @@ ORBScopePolicy options in svc.conf file.
       NO          YES         YES          NO
       NO          NO          NO           YES
       YES         NO          NO           YES
-      YES         YES         NO           YES      
+      YES         YES         NO           YES
       NO          NO          YES          YES
       NO          YES         YES          YES

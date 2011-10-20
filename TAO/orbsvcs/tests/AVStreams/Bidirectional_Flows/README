@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -23,11 +23,11 @@ receiver -f <input_filename>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d] 
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d]
 
 
 -f filename --> The file to be streamed to the receiver (defaults to
-                "input"). 
+                "input").
 
 -p protocol --> The protocol string could be UDP or TCP (defaults to
                 UDP). But with the multicast address it should be UDP.

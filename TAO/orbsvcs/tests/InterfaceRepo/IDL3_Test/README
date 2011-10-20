@@ -1,7 +1,7 @@
 $Id$
 
 This test specializes in the Interface Repository support of
-valuetypes and the IDL extensions that were added to 
+valuetypes and the IDL extensions that were added to
 support the CORBA Component Model (CCM). Testing of most of
 the other IDL types can be found in the nearby IFR_Test
 directory.
@@ -25,7 +25,7 @@ and sequence lengths found in test.idl, appear at the top of
 idl3_client.cpp. This allows the test to be easily extended
 to cover more complicated use cases.
 
-More information about the Interface Repository can be found in 
+More information about the Interface Repository can be found in
 TAO/docs/releasenotes/index.html.
 
 

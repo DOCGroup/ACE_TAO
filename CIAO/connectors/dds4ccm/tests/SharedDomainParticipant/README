@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 To save resources, every subsequent connector with the same
 library name and profile name, should get the same domain-

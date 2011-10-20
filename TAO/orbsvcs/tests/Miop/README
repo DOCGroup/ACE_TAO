@@ -1,7 +1,7 @@
 $Id$
 
 This directory houses a collection of tests that exercise TAO support
-for features defined in the MIOP specification. 
+for features defined in the MIOP specification.
 
 Each individual subdirectory contains a README file with more
 information on the corresponding test.  The list of tests so far

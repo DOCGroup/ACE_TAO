@@ -1,4 +1,3 @@
-
 $Id$
 
 Description:
@@ -35,7 +34,7 @@ different connections.
 (c) shows priority inversion as low priority requests get processed
 before high priority requests.  This is because only one connection is
 used for both low and high priority requests.  Therefore, the high
-priority requests are queued behind the low priority requests. 
+priority requests are queued behind the low priority requests.
 
 (d) shows improvement on (c) since using bands allows the high
 priority requests to go on a different connection than the low

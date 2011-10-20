@@ -7,7 +7,7 @@ _Expected successful result_:
 
 $>run_test.pl
 Starting IIOP test
-  server -o /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior  
+  server -o /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior
   client -k file:///home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/server.ior   -ORBIPHopLimit 1 -ORBDebugLevel 1 -ORBLogFile /home/vzykov/devel/PrismTech/zbuild/tao161_XXXTAO_gcc423_ipv6-x86_64/tao161/prism/tests/tao690_regression/test.log
 Client's log:
 TAO (22932|140355161454320) Default_Resource_Factory - codeset manager=0x61b7e0

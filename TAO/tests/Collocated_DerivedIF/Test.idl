@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
@@ -18,6 +16,6 @@ module Test
   // A derived interface
   interface HelloAgain : Hello
   {
-    string get_string_again (); 
+    string get_string_again ();
   };
 };

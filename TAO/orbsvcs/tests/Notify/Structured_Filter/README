@@ -1,12 +1,13 @@
+$Id$
+
 Structured Event Filter Test
 ============================
-
 
 Description
 -----------
 
 This test checks push supplier and push consumer event filter mechanisms.
-The supplier sends a number of events specified by the consumer. The consumer 
+The supplier sends a number of events specified by the consumer. The consumer
 can filter or not filter the events and can use multiple consumers.
 If filtered, the consumer will receive 1/3 of the total events.
 
@@ -17,20 +18,20 @@ Usage
 The test consists of a Supplier and Consumer. The usage for each as is
 follows:
 
-$ Structured_Supplier 
-usage:  ./Structured_Supplier -ORBInitRef <Naming Service Location> 
+$ Structured_Supplier
+usage:  ./Structured_Supplier -ORBInitRef <Naming Service Location>
 
 $ Structured_Consumer -\?
 usage:  ./Structured_Consumer [-f] -n <num events> -c <num consumers> \
                 -ORBInitRef <Naming Service Location>
 
-The -f option applies an event filter to the consumer. The -c option lets 
+The -f option applies an event filter to the consumer. The -c option lets
 the user specify the number of consumers to use.
 
-To run this test, run the run_test.pl perl script. 
+To run this test, run the run_test.pl perl script.
 
 
 Expected Results
 ----------------
-The test script will display an error if for any test that fails. 
+The test script will display an error if for any test that fails.
 Otherwise, the test passed.

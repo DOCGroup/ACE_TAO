@@ -6,6 +6,7 @@ package GNUAutobuildWorkspaceCreator;
 #                 before outputting to stdout.
 # Author        : Chad Elliott, minor modifications by Will Otte
 # Create Date   : 3/22/07
+# $Id$
 # ************************************************************
 
 # ************************************************************

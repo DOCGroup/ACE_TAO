@@ -1,7 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from ./examples/Simple/time-date/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
  <!--  $Id$ -->
+ <!--  -->
  <!--  Define a special Reactor for single-threaded configurations.  Refer -->
  <!--  to README for details.   -->
  <dynamic id="Resource_Factory" type="Service_Object">

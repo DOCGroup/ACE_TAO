@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains a test for the ACE_Name_Server library.  This
 test program also illustrates how to use the ACE Service_Config
 mechanism, which enables the client code to be dynamically linked into
@@ -9,11 +11,11 @@ test parameters through the following menu driven interface:
          Name Service Main Menu
          ----------------------
   *** Using Process Local Database ***
- 
+
 <P> Use Process Local Database
 <N> Use Node Local Database
 <H> Set Remote Name server <host> and <port>
- 
+
 <B> Bind <key> <value> [<type>]
 <U> Unbind <key>
 <R> Rebind <key> <value> [<type>]
@@ -25,7 +27,7 @@ test parameters through the following menu driven interface:
 <D> Complete lookup values matching <pattern>
 <E> Complete lookup types matching <pattern>
 
-<Q> or ^C (exit) 
+<Q> or ^C (exit)
 
 Initially, the user can select the type of database -- process local,
 node local, or net local -- from the menu.
@@ -34,7 +36,7 @@ node local, or net local -- from the menu.
     same name as the process and stored in /tmp).
 <N> uses the node local database (which defaults to /tmp/localnames).
 <H> uses the net local database by specifying host and port number (by
-    default this is stored in a file called /tmp/globalnames on the server). 
+    default this is stored in a file called /tmp/globalnames on the server).
 
 The user can then create new bindings, delete existing bindings, or
 rebind bindings:
@@ -87,7 +89,7 @@ user wants to use the net local database, the hostname and the port
 number of the server containing the net local database can be given at
 "command line" in the svc.conf file, e.g.:
 
-dynamic ACE_Naming_Context Service_Object * libACE.so:_make_ACE_Naming_Context () 
+dynamic ACE_Naming_Context Service_Object * libACE.so:_make_ACE_Naming_Context ()
 						"main -h tango.cs -p 7891"
 dynamic Name_Server_test Service_Object * .shobj/Client_Test.so:_make_Client_Test () ""
 
@@ -100,7 +102,7 @@ been dynamically linked.
 Note that you can also use environment variables in the "command
 line", as follows:
 
-dynamic ACE_Naming_Context Service_Object * libACE.so:_make_ACE_Naming_Context () 
+dynamic ACE_Naming_Context Service_Object * libACE.so:_make_ACE_Naming_Context ()
 						"main -s $DB -p $PORT -h tango"
 dynamic Name_Server_test Service_Object * .shobj/Client_Test.so:_make_Client_Test () ""
 

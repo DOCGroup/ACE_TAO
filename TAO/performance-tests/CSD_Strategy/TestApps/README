@@ -1,13 +1,15 @@
 /**
 
+$Id$
+
 @page CSD_Strategy TestApp README File
 
-    This directory contains the test applications. This test tries to 
+    This directory contains the test applications. This test tries to
 estimate how fast the CSD strategy can handle requests.
 
-    To run the test use the run_test.pl script as below. The number 
-parameter is the trail id for the server used to identify the test 
-results when running same test multiple times using single script. 
+    To run the test use the run_test.pl script as below. The number
+parameter is the trail id for the server used to identify the test
+results when running same test multiple times using single script.
 The id should be positive integer.
 
 
@@ -15,10 +17,10 @@ $ ./run_test.pl 1
 
    1 remote client, 1 servant, 1 orb thread (main thread), 1 csd strategy thread
 
-$ ./run_test.pl remote 1 
+$ ./run_test.pl remote 1
 
    40 remote clients, 1 servant, 1 orb thread (main thread), 1 csd strategy thread
-  
+
 $ ./run_test.pl collocated 1
 
    10 collocated clients, 1 servant, 1 orb thread (main thread), 1 csd strategy thread
@@ -27,7 +29,7 @@ $ ./run_test.pl remote_orbthreads 1
 
    40 remote clients, 1 servant, 5 orb threads, 1 csd strategy thread
 
-$ ./run_test.pl remote_servants 1 
+$ ./run_test.pl remote_servants 1
 
    40 remote clients, 5 servants, 5 orb threads, 1 csd strategy thread
 
@@ -35,15 +37,15 @@ $ ./run_test.pl remote_csdthreads 1
 
    40 remote clients, 5 servants, 1 orb thread (main thread), 5 csd strategy threads
 
-$ ./run_test.pl remote_big 1 
+$ ./run_test.pl remote_big 1
 
    40 remote clients, 10 servants, 4 orb threads, 5 csd strategy threads
 
-$ ./run_test.pl collocated_big 1 
+$ ./run_test.pl collocated_big 1
 
    40 collocated clients, 10 servants, 1 orb thread (main thread), 5 csd strategy threads
 
-$ ./run_test.pl big 1 
+$ ./run_test.pl big 1
 
    40 remote clients, 40 collocated clients, 10 servants, 4 orb threads, 5 csd strategy threads
 

@@ -1,9 +1,9 @@
-// $Id$
+$Id$
 
-These application tests address various features of TAO's 
-Naming Service. The functionality is the same as in the 
-Simple_Naming test, but the difference is that all the 
-communication is done over SSLIOP and clients are using 
+These application tests address various features of TAO's
+Naming Service. The functionality is the same as in the
+Simple_Naming test, but the difference is that all the
+communication is done over SSLIOP and clients are using
 INS-style corbaloc URLs.
 
 To run all tests automatically -
@@ -12,12 +12,12 @@ To run all tests automatically -
 To run tests manually -
 	start the Naming Service (see
 	TAO/orbsvcs/Naming_Service/README for valid options).
-        Make sure you use " -ORBSvcConf server.conf" and 
+        Make sure you use " -ORBSvcConf server.conf" and
         "-ORBEndpoint iiop://localhost:23456/ssl_port=12345"
-        
+
 	Then run ./client with one of the options below.
         Make sure you add " -ORBSvcConf client.conf" and
-        "-ORBInitRef NameService=corbaloc:ssliop:localhost:12345/NameService" 
+        "-ORBInitRef NameService=corbaloc:ssliop:localhost:12345/NameService"
 
 NOTE: if running tests manually, Naming Service has to be restarted
 before each test (this is due to some tests not 'cleaning up' bindings

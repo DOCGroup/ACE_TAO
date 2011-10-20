@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test checks that the repository ID is correct for generated AMI reply handler servant classes when different pragma prefixes are used.
 

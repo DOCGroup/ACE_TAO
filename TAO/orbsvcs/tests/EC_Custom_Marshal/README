@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 	This example shows how to do custom marshaling of IDL and
 non-IDL data structures in TAO, store the resulting CDR stream in an

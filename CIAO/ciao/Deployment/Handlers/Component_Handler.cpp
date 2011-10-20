@@ -45,7 +45,7 @@ namespace CIAO
   Component_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Component_Handler_i::instance_type");
-    return CORBA::string_dup ("edu.dre.vanderbilt.dre.CCM.Component");
+    return CORBA::string_dup (CIAO::Deployment::CCM_COMPONENT);
   }
 
   void

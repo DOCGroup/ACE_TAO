@@ -1,3 +1,5 @@
+$Id$
+
 Presently, this directory contains only one example application for
 SPIPEs.  The test source code is contained in SPIPE-acceptor.h and
 SPIPE-connector.h.
@@ -29,7 +31,7 @@ hello
 starting up daemon test_sock_connector
 Opening acepipe
 activating 5
- 
+
 please enter input..: hello
 
 There are a number of other options that you can provide.  Please see

@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test verifies that PolicyFactory support is working properly.
 Working PolicyFactory support requires the following on the server side:
@@ -22,5 +22,5 @@ Run the test as follows:
 Output should be very similar to the following:
 
 ==== Running PolicyFactory test
- 
+
 PolicyFactory test succeeded.

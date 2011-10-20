@@ -40,15 +40,15 @@ The order of events is as follows:
                 through the Naming Service, but here the
                 IOR is read from the file where it was
                 stored by the server.
-                
+
         (c)     The client then makes several calls to the
-                repository, first searching for an object 
+                repository, first searching for an object
                 with the name 'warehouse'. Once this is
                 found, the client checks to see if 'warehouse'
                 may contain other objects. If so, it gets a
                 list of all the objects 'contained' by
                 warehouse which are interfaces. Each inteface's
-                name is checked to find one called  'inventory'. 
+                name is checked to find one called  'inventory'.
                 Then the client gets a list of all inventory's
                 operations. Each of these is checked to find
                 one called 'getCDinfo'. The client then gets
@@ -60,7 +60,7 @@ The order of events is as follows:
                 sets its return type and adds parameters
                 according to the information extracted from
                 the operation repository object. Notice that
-                the client does not have the correct string for 
+                the client does not have the correct string for
                 the album title, but one that is commonly used
                 by people when referring to that album. The
                 server will try to be smart about this, and
@@ -84,7 +84,7 @@ object to get its InterfaceDef from the respository, and then
 query the IntefaceDef object to get information about its
 operations and their parameters. If the command line option -n
 is passed to the client (or to the Perl script), the client will
-resolve the repository by a call to 
+resolve the repository by a call to
 orb->resolve_initial_references ("InterfaceRepository") and use
 information it has (through some unspecified means) about the
 local name of the interface and of its containing module,
@@ -103,9 +103,9 @@ included in the application (in test_i.h) and TAO_IFR_Client added to
 the list of linked libraries. This will force the static Initializer
 function in the library to initialize all the IFR typecodes and to
 load the library. Applications that don't need to call _get_interface
-don't need to link this library and can thus keep the server-side 
+don't need to link this library and can thus keep the server-side
 footprint smaller.
 
-More information about the Interface Repository can be found in 
+More information about the Interface Repository can be found in
 TAO/docs/releasenotes/index.html.
 

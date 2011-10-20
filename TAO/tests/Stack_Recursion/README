@@ -2,6 +2,7 @@
 
 @page Stack_Recursion Test README File
 
+$Id$
 
 Begin Comment added August 14, 2007 <wilsond@ociweb.com>
 The original README starts below.
@@ -16,18 +17,18 @@ The client starts 8 tasks (aka threads.) Each task calls the ping method
 pings opens one or more connections to the server. The actual number of
 connections varies from test run to test run.
 
-After that the client calls the get_data method 1000 times.  Each call 
-returns a sequence of octets containing 1048576 bytes (1Mb).  The test 
-succeeds if these replys are received by the client in 960 seconds 
+After that the client calls the get_data method 1000 times.  Each call
+returns a sequence of octets containing 1048576 bytes (1Mb).  The test
+succeeds if these replys are received by the client in 960 seconds
 (16 minutes).
 
-A successful test executes 8800 CORBA calls in 16 minutes  (550 calls a 
-minute = 9+ calls/second) and returns 8000 megabytes (500 megabytes/minute 
+A successful test executes 8800 CORBA calls in 16 minutes  (550 calls a
+minute = 9+ calls/second) and returns 8000 megabytes (500 megabytes/minute
 = 8.3 megabytes/second) via a local host connection.
 
 A typical failure for this test is a client timeout at the end of 16 minutes.
 This can happen if the test system is too slow or heavily loaded to handle
-this much data (including the necessary mallocs & frees (16M per call), or 
+this much data (including the necessary mallocs & frees (16M per call), or
 if there is a significant bottleneck or hang in the ORB.  Because the test
 is sensitive to other loads on the test system, the results will be intermittent.
 
@@ -41,17 +42,17 @@ End Comment added August 14, 2007 <wilsond@ociweb.com>
 
 
       A stress test for the stack recursion outlined in the bugzilla
-under id 1125. Here is the link for the bug 
+under id 1125. Here is the link for the bug
 
 http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1125
 
 This test is designed to show the bug. The test has a server running 4
 threads and clients running 16 threads requesting around 30 MB of
-data. 
+data.
 
 @@NOTE: Once the bug is fixed we may have to change the timings in the
 test so that the test can run to completion.
-     
+
 	To run the test use the run_test.pl script:
 
 $ ./run_test.pl

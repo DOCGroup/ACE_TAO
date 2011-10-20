@@ -1,3 +1,5 @@
+$Id$
+
 http_tester
 -----------
 
@@ -46,7 +48,7 @@ The output file consists of the following space delimited fields:
 
 Experiment Id (string)
 Average throughput of connection (float)
-Average latency of connection (float) 
+Average latency of connection (float)
 Maximum number of active connections at any given time (int)
 
 

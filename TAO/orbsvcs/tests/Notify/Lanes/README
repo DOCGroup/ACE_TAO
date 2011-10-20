@@ -1,3 +1,5 @@
+$Id$
+
 RT Notification test to verify lane support
 ===========================================
 This test makes sure that events are send according to the lanes

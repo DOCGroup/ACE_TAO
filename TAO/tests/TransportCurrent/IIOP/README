@@ -1,6 +1,8 @@
+$Id$
+
 This test has two parts, which run automatically:
 
-Part 1: 
+Part 1:
 
 IIOP_Transport_Current test: Demonstrates how in the application the
 user can resolve the IIOP_Transport_Current and use it to obtain

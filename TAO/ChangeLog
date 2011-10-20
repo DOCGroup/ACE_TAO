@@ -1,3 +1,910 @@
+Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Oct 20 08:42:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * On_Demand_Act_Direct_Coll:
+                * On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
+                * On_Demand_Act_Direct_Coll/Servant_Activator.cpp:
+                * On_Demand_Act_Direct_Coll/test_i.cpp:
+                * On_Demand_Act_Direct_Coll/Server_Task.h:
+                * On_Demand_Act_Direct_Coll/run_test.pl:
+                * On_Demand_Act_Direct_Coll/test_i.h:
+                * On_Demand_Act_Direct_Coll/Client_Task.cpp:
+                * On_Demand_Act_Direct_Coll/Server_Task.cpp:
+                * On_Demand_Act_Direct_Coll/Servant_Activator.h:
+                * On_Demand_Act_Direct_Coll/Client_Task.h:
+                * On_Demand_Act_Direct_Coll/On_Demand_Act_D_Coll.mpc:
+                * On_Demand_Act_Direct_Coll/test.idl:
+                Test with Servant Activator and thru_poa- and direct collocation.
+
+                * bin/tao_orb_tests.lst
+                Added On_Demand_Act_Direct_Coll test.
+
+
+        Wed Oct 19 14:15:57 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+                * docs/tutorials/Quoter/RTCORBA/docs/distributor.html:
+                  Fixed typos.
+
+                * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+                  Fixed typo.
+
+                * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+                  ++x instead of x++;
+
+        Tue Oct 18 13:47:54 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Reverted last changes. Need a more robust implementation to
+                  fix re-entrancy
+
+        Tue Oct 18 11:35:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+                  Layout changes to the generated code
+
+        Tue Oct 18 10:51:21 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Using recursive mutexes instead of normal mutexes.
+
+        Tue Oct 18 10:39:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/context_svs.cpp:
+                  Fixed a minor indentation issue.
+
+        Tue Oct 18 10:03:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                  Using the container_ variable in a thread safe way.
+
+        Tue Oct 18 07:01:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
+                Changes for duplicate project names.
+
+        Mon Oct 17 13:08:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * tests/Collocated_DerivedIF:
+                * tests/Collocated_DerivedIF/Client_Task.h:
+                * tests/Collocated_DerivedIF/Client_Task.cpp:
+                * tests/Collocated_DerivedIF/Collocated_DerivedIF.mpc:
+                * tests/Collocated_DerivedIF/Collocated_Test.cpp:
+                * tests/Collocated_DerivedIF/Hello.h:
+                * tests/Collocated_DerivedIF/Hello.cpp:
+                * tests/Collocated_DerivedIF/Server_Task.h:
+                * tests/Collocated_DerivedIF/Server_Task.cpp:
+                * tests/Collocated_DerivedIF/Test.idl:
+                * tests/Collocated_DerivedIFl/run_test.pl:
+                * tests/Collocated_DerivedIFl/README:
+                Test for -ORBCollocationStrategy direct and interface inheritance
+
+                * tests/Collocated_Best/README:
+              Add ID
+
+        Mon Oct 17 12:33:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * docs/Options.html
+                Added new define TAO_DEFAULT_COLLOCATION_STRATEGY .
+
+        Mon Oct 17 11:41:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * docs/Options.html
+                Add new ORBCollocationStrategy best .
+
+        Thu Oct 13 12:57:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be_include/be_valuetype.h:
+                * TAO_IDL/be/be_valuetype.cpp:
+                  Removed gen_skel_helper from here, not used at all
+
+                * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+                  Fixed compile error with gcc 4.6
+
+        Thu Oct 13 12:14:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+                  static_cast seems to be required, not sure why, reverting this part
+                  to get our branch build green again
+
+        Thu Oct 13 11:15:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/AnyTypeCode/Any_Impl.cpp:
+                  Layout changes
+
+                * tao/LocalObject.cpp:
+                * tao/Object.cpp:
+                  Log an error before throwing a NO_IMPLEMENT system exception
+
+        Thu Oct 13 07:15:34 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+                  Further reduction of code being generated in case of interface
+                  inheritance
+
+        Thu Oct 13 06:46:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                  Fixed problem with num_args that still was generated for arguments
+
+        Wed Oct 12 14:14:32 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+                  Changed indentation and removed not needed static cast in the
+                  generated code
+
+        Wed Oct 12 12:06:33 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+                * tests/Collocated_NoColl:
+                * tests/Collocated_NoColl/Client_Task.h:
+                * tests/Collocated_NoColl/Client_Task.cpp:
+                * tests/Collocated_NoColl/Collocated_NoColl.mpc:
+                * tests/Collocated_NoColl/Collocated_Test.cpp:
+                * tests/Collocated_NoColl/Hello.h:
+                * tests/Collocated_NoColl/Hello.cpp:
+                * tests/Collocated_NoColl/Server_Task.h:
+                * tests/Collocated_NoColl/Server_Task.cpp:
+                * tests/Collocated_NoColl/Test.idl:
+                * tests/Collocated_NoColl/run_test.pl:
+                Test for -ORBCollocation NO
+
+
+        Wed Oct 12 12:02:04 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Collocation_Strategy.h:
+                * tao/Invocation_Adapter.cpp:
+                  Print the collocation strategy that we have determined
+
+                * tests/Hello/run_test.pl:
+                  Added -cdebug that enables ORBDebugLevel 10 for the client
+
+        Wed Oct 12 10:09:25 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+                * tao/Abstract_Servant_Base.h:
+                * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+                * tao/PortableServer/Operation_Table.h:
+                  Removed the num_args argument for the direct collocation skeleton
+                  functions because it was not used at all
+
+        Wed Oct 12 09:55:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * tao/Object_T.h:
+                * tao/Object_T.cpp:
+                * tao/PolicyC.cpp:
+                * tao/Valuetype/AbstractBase_T.h:
+                * tao/Valuetype/AbstractBase_T.cpp:
+                  unchecked_narrow method was available with and without repository_id
+                  argument but that wasn't used at all. merged both methods into one
+                  and updated tao_idl code generation to not generate the repository_id
+                  anymore
+
+        Wed Oct 12 09:01:19 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * tao/Object_T.h:
+                * tao/Object_T.cpp:
+                * tao/PolicyC.cpp:
+                * tao/PortableServer/PolicyS.cpp:
+                * tao/Valuetype/AbstractBase_T.h:
+                * tao/Valuetype/AbstractBase_T.cpp:
+                  Removed the collocation opportunity from the narrow calls, the
+                  boolean collocated only means whether the servant is collocated or
+                  not and shouldn't include the fact whether we have a collocation
+                  opportunity or not
+
+        Tue Oct 11 17:38:06 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.cpp:
+                  Also check the string that returned
+
+        Tue Oct 11 10:53:17 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/Object_T.cpp:
+                  Don't use collocation opportunity, just determine whether the
+                  object is collocated or not. If this doesn't break any tests, we
+                  need to do some more cleanup here
+
+        Tue Oct 11 10:41:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/CORBANAME_Parser.cpp:
+                * tao/Remote_Object_Proxy_Broker.cpp:
+                  Enable through poa collocation by default
+
+        Tue Oct 11 07:17:47 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                  Layout changes and just always generate the orb optimize flags
+
+        Mon Oct 10 17:43:50 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/IIOP_Connector.cpp:
+                * tao/Invocation_Adapter.h:
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                  Moved collocation_strategy from the orb core to the invocation adapter
+
+                * tests/Collocated_ThruP_Sp/Collocated_Test.cpp:
+                * tests/Collocated_ThruP_Sp/README:
+                * tests/Collocated_ThruP_Sp/Server_Task.cpp:
+                * tests/Collocated_ThruP_Sp/run_test.pl:
+                * tests/Collocated_ThruP_Sp_Gd/README:
+                * tests/Collocated_ThruP_Sp_Gd/run_test.pl:
+                  Add -debug to the script, layout changes, missing Id
+
+        Fri Oct  7 10:54:09 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * tao/ORB_Core.cpp:
+                  Tweaked collocation strategy a little bit more, for direct we need
+                  a servant, not for poa. If we are not collocated, we just go remote and
+                  not give an exception
+
+        Fri Oct  7 09:17:36 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                  Layout change to generated code
+
+                * tao/Invocation_Adapter.cpp:
+                  Removed the check that servant != 0 before being able to invoke
+                  collocated, collocation opportunities test shows a case where this
+                  happens
+
+                * tao/ORB_Core.cpp:
+                  Added logging before we throw an exception related to collocation
+                  mis configuration. If we are collocated with best opportunity without
+                  any opportunity we default to remote instead of having an exception.
+                  Through poa seems possible without a servant pointer
+
+        Thu Oct  6 09:34:57 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+              * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+              Set collocation_opportunity to TAO_CO_THRU_POA_STRATEGY instead of 0.
+
+        Thu Oct  6 08:56:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+                * orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc:
+                * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+                * tests/Policies/Policies.mpc:
+                  requires for corba_messaging is already pulled in through the
+                  base projects
+
+        Wed Oct  5 18:49:30 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+                * TAO_IDL/be_include/be_global.h:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be_include/be_visitor_root/root_ch.h:
+                  Even more cleanup of old stuff
+
+        Wed Oct  5 18:42:43 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_home.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be/be_visitor_operation/base_proxy_impl_ch.cpp:
+                * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+                  More cleanup
+
+                * TAO_IDL/be_include/be_visitor_operation/base_proxy_impl_ch.h:
+                * TAO_IDL/be_include/be_visitor_operation/remote_proxy_impl_cs.h:
+                  Removed these files.
+
+        Wed Oct  5 18:34:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_home.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be_include/be_interface.h:
+                  Cleanup of very old stuff
+
+                * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+                  Fixed cpb
+
+                * tao/Valuetype/AbstractBase_T.h:
+                * tao/Valuetype/AbstractBase_T.cpp:
+                  Updated for changes below
+
+                * tests/CSD_Collocation/svc.conf.csd:
+                  Removed deprecated arguments
+
+        Wed Oct  5 13:01:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * tests/Collocated_Best/README
+                * tests/Collocated_ThruP_Sp/README
+                * tests/Collocated_ThruP_Sp_Gd/README
+                * tests/Bug_2241_Regression/README
+                Add README's
+
+                * bin/tao_orb_tests.lst
+                Added Collocated_ThruP_Sp_Gd test.
+
+        Wed Oct  5 12:41:20 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                * tao/PolicyC.cpp:
+                * tao/Collocation_Strategy.h:
+                * tao/PortableServer/PolicyS.cpp:
+                Change define TAO_CO_DIRECT_POA,remove POA
+
+                * tao/DynamicInterface/DII_Invocation_Adapter.h:
+                * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+                * tao/Messaging/Asynch_Invocation_Adapter.h:
+                * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+                * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+                * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+                Change proxybroker for collocation opertunities
+
+                * tao/ORB_Core.cpp:
+                * tao/Invocation_Adapter.cpp:
+                Extended collocation_strategy with opertunities
+                Handling of BEST strategy and checking other strategies.
+
+                * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
+
+
+
+        Wed Oct  5 08:35:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_component.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+                * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+                * TAO_IDL/be_include/be_component.h:
+                * TAO_IDL/be_include/be_interface.h:
+                * TAO_IDL/be_include/be_visitor_interface.h:
+                * tao/Abstract_Servant_Base.h:
+                * tao/Collocated_Invocation.h:
+                * tao/Collocated_Invocation.cpp:
+                * tao/Collocation_Strategy.h:
+                * tao/Invocation_Adapter.h:
+                * tao/Invocation_Adapter.inl:
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                * tao/Object.h:
+                * tao/Object.cpp:
+                * tao/Object_T.h:
+                * tao/Object_T.cpp:
+                * tao/PolicyC.h:
+                * tao/PolicyC.inl:
+                * tao/PolicyC.cpp:
+                * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h:
+                * tao/PortableServer/PolicyS.h:
+                * tao/PortableServer/PolicyS.cpp:
+                * tao/PortableServer/Servant_Base.h:
+                * tao/PortableServer/Servant_Base.cpp:
+                * tao/tao.mpc:
+                  Rough reimplementatin of handling of collocated call. A pre condition
+                  for using collocation is having a servant pointer. The core of TAO
+                  also couldn't detect whether through poa collocation is requested
+                  without having -Gp being enabled. The collocated proxy broker (cpb)
+                  was only used for direct collocation, but didn't contain any interface
+                  specific code. TAO_IDL now generated a collocation opportunity to
+                  indicate which support it did generate, when the core than has
+                  a servant pointer it can determine which opportunities it has an
+                  what is requested.
+
+                  As side effect we get smaller generated code, less complexity, and
+                  better performance
+
+                  This has to be finished but committing it right now.
+
+                * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+                * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_sh.h:
+                * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_ss.h:
+                * tao/Collocation_Proxy_Broker.h:
+                * tao/Collocation_Proxy_Broker.cpp:
+                  Removed these files.
+
+        Wed Oct  5 07:15:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * tao/PortableServer/Collocated_Object_Proxy_Broker.cpp:
+                  Add prefix TAO_COLLOCATION_ to Collocated strategy Thru_POA
+
+        Tue Oct  4 16:36:46 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                Clean up debug text
+
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                Change Exception for collocated errors.
+                Add prefix TAO_COLLOCATION_ to Collocated strategies DIrect, Best and Thru_POA
+                Add TAO_DEFAULT_COLLOCATION_STRATEGY
+
+                * tao/orbconf.h:
+                Add TAO_DEFAULT_COLLOCATION_STRATEGY
+
+                * tests/Bug_2241_Regression/run_test.pl:
+                * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Best_Direct.mpc:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Best_ThruP.mpc:
+
+                * tests/Collocated_ThruP_Sp_Gd:
+                * tests/Collocated_ThruP_Sp_Gd/Client_Task.h:
+                * tests/Collocated_ThruP_Sp_Gd/Client_Task.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Collocated_Test.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Collocated_ThruP_Sp_Gd.mpc:
+                * tests/Collocated_ThruP_Sp_Gd/Hello.h:
+                * tests/Collocated_ThruP_Sp_Gd/Hello.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Server_Task.h:
+                * tests/Collocated_ThruP_Sp_Gd/Server_Task.cpp:
+                * tests/Collocated_ThruP_Sp_Gd/Test.idl:
+                * tests/Collocated_ThruP_Sp_Gd/run_test.pl:
+                New test for combination Sp and Gd
+
+        Mon Oct  3 15:33:35 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                Change dead to 0 for Collocation_Proxy_Broker
+
+                * tao/Collocation_Strategy.h:
+                * tao/Invocation_Adapter.cpp:
+                * tao/ORB_Core.h:
+                * tao/ORB_Core.cpp:
+                Add exceptions for situations if not used -Gp or used -Sp idl flags and
+                ORBCollocationStrategies Direct and Thru_Poa. Add strategie BEST.
+                To do: add prefix COLLOCATION_.
+
+                * tests/Bug_2241_Regression/Client_Task.cpp:
+                * tests/Bug_2241_Regression/Hello.cpp:
+                * tests/Bug_2241_Regression/run_test.pl:
+                Catch expected exceptions.
+
+                * tests/Collocated_Best:
+                * tests/Collocated_Best/Collocated_Best_Direct:
+                * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Best_Direct.mpc:
+                * tests/Collocated_Best/Collocated_Best_Direct/Collocated_Test.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Server_Task.h:
+                * tests/Collocated_Best/Collocated_Best_Direct/Server_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_Direct/Test.idl:
+                * tests/Collocated_Best/Collocated_Best_Direct/run_test.pl:
+
+                * tests/Collocated_Best/Collocated_Best_NoColl:
+
+                * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Collocated_Best_NoColl.mpc:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Collocated_Test.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Server_Task.h:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Server_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_NoColl/Test.idl:
+                * tests/Collocated_Best/Collocated_Best_NoColl/run_test.pl:
+
+                * tests/Collocated_Best/Collocated_Best_ThuP:
+
+                * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Client_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Best_ThruP.mpc:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Collocated_Test.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Hello.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Hello.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Server_Task.h:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Server_Task.cpp:
+                * tests/Collocated_Best/Collocated_Best_ThuP/Test.idl:
+                * tests/Collocated_Best/Collocated_Best_ThuP/run_test.pl:
+
+                * tests/Collocated_ThruP_Sp:
+
+                * tests/Collocated_ThruP_Sp/Client_Task.h:
+                * tests/Collocated_ThruP_Sp/Client_Task.cpp:
+                * tests/Collocated_ThruP_Sp/Collocated_Test.cpp:
+                * tests/Collocated_ThruP_Sp/Collocated_ThruP_Sp.mpc:
+                * tests/Collocated_ThruP_Sp/Hello.h:
+                * tests/Collocated_ThruP_Sp/Hello.cpp:
+                * tests/Collocated_ThruP_Sp/Server_Task.h:
+                * tests/Collocated_ThruP_Sp/Server_Task.cpp:
+                * tests/Collocated_ThruP_Sp/Test.idl:
+                * tests/Collocated_ThruP_Sp/run_test.pl:
+                tests for COLLOCATION_DIRECT. To do: add readme
+
+        === end changelog ===
+
+Mon Oct 10 08:48:51 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.0.5 released.
+
+Fri Oct  7 10:45:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/tutorials/Quoter/Event_Service/stock_list.txt:
+        * docs/tutorials/Quoter/Event_Service/stock_list1.txt:
+        * docs/tutorials/Quoter/Event_Service/stock_list2.txt:
+
+        * docs/tutorials/Quoter/Simple/ImprovedServer/stock_list.txt:
+
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/GeometryStore.pm:
+        * orbsvcs/examples/Notify/MC/TkMonitor/modules/MonitorControl.pm:
+
+        * performance-tests/Protocols/set_lksctp_params.sh:
+        * performance-tests/Protocols/set_sctp_params.sh:
+        * performance-tests/Protocols/show_lksctp_params.sh:
+        * performance-tests/Protocols/show_sctp_params.sh:
+          Fuzz
+
+Fri Oct  7 09:45:58 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * docs/PP_Memory_Management.txt:
+        * orbsvcs/tests/FT_App/replica.cmd:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/README.txt:
+        * orbsvcs/tests/Log/README:
+        * orbsvcs/tests/Time/README:
+          Fuzz.
+
+Fri Oct  7 09:12:23 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * DevGuideExamples/AMH/README:
+        * DevGuideExamples/AMH_AMI/README:
+        * DevGuideExamples/BiDirectionalGIOP/README:
+        * DevGuideExamples/GettingStarted/README:
+        * DevGuideExamples/Messaging/AMIcallback/README:
+        * DevGuideExamples/Messaging/RelativeRoundtripTimeout/README:
+        * DevGuideExamples/Multithreading/GracefulShutdown/README:
+        * DevGuideExamples/Multithreading/README:
+        * DevGuideExamples/Multithreading/Reactive/README:
+        * DevGuideExamples/Multithreading/ThreadPerConnection/README:
+        * DevGuideExamples/Multithreading/ThreadPool/README:
+        * DevGuideExamples/PortableInterceptors/Auth/README:
+        * DevGuideExamples/PortableInterceptors/IOR/README:
+        * DevGuideExamples/PortableInterceptors/PICurrent/README:
+        * DevGuideExamples/PortableInterceptors/SimpleCodec/README:
+        * DevGuideExamples/RTCORBA/README:
+        * DevGuideExamples/SmartProxies/README:
+        * DevGuideExamples/ValueTypes/Bank/README:
+        * DevGuideExamples/ValueTypes/Messenger/README:
+        * DevGuideExamples/readme.txt:
+        * README:
+        * examples/AMI/FL_Callback/README:
+        * examples/Buffered_AMI/README:
+        * examples/Buffered_Oneways/README:
+        * examples/CSD_Strategy/ThreadPool/README:
+        * examples/CSD_Strategy/ThreadPool2/README:
+        * examples/CSD_Strategy/ThreadPool3/README:
+        * examples/CSD_Strategy/ThreadPool4/README:
+        * examples/CSD_Strategy/ThreadPool6/README:
+        * examples/Load_Balancing/README:
+        * examples/OBV/Typed_Events/README:
+        * examples/RTCORBA/Activity/README:
+        * interop-tests/wchar/README:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_Basic/README:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_SupplierSideEC/README:
+        * orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/README:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Basic/README:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Federated/README:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_Filter/README:
+        * orbsvcs/DevGuideExamples/EventServices/RTEC_MCast_Federated/README:
+        * orbsvcs/DevGuideExamples/ImplRepo/README:
+        * orbsvcs/DevGuideExamples/NamingService/Messenger/README:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Client/README:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/README:
+        * orbsvcs/DevGuideExamples/NamingService/Naming_Server/README:
+        * orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/README:
+        * orbsvcs/DevGuideExamples/NotifyService/EventSequence/README:
+        * orbsvcs/DevGuideExamples/NotifyService/Filtering/README:
+        * orbsvcs/DevGuideExamples/NotifyService/Messenger/README:
+        * orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/README:
+        * orbsvcs/DevGuideExamples/NotifyService/QoSProperties/README:
+        * orbsvcs/DevGuideExamples/NotifyService/RTNotify/README:
+        * orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/README:
+        * orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/README:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/README:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/README:
+        * orbsvcs/DevGuideExamples/ValueTypes/Notify/readme.txt:
+        * orbsvcs/FT_ReplicationManager/README:
+        * orbsvcs/ImplRepo_Service/README.txt:
+        * orbsvcs/LoadBalancer/README:
+        * orbsvcs/TAO_Service/README:
+        * orbsvcs/examples/CosEC/Factory/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/README:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/README:
+        * orbsvcs/examples/CosEC/Simple/README:
+        * orbsvcs/examples/Log/Basic/README:
+        * orbsvcs/examples/Log/Event/README:
+        * orbsvcs/examples/Log/Notify/README:
+        * orbsvcs/examples/Log/README:
+        * orbsvcs/examples/Log/RTEvent/README:
+        * orbsvcs/examples/Notify/Federation/Agent/README:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/README:
+        * orbsvcs/examples/Notify/Filter/README:
+        * orbsvcs/examples/Notify/Lanes/README:
+        * orbsvcs/examples/Notify/MC/TkMonitor/README:
+        * orbsvcs/examples/Notify/README:
+        * orbsvcs/examples/Notify/Subscribe/README:
+        * orbsvcs/examples/Notify/ThreadPool/README:
+        * orbsvcs/examples/RtEC/IIOPGateway/README:
+        * orbsvcs/examples/RtEC/MCast/README:
+        * orbsvcs/examples/RtEC/Schedule/README:
+        * orbsvcs/examples/RtEC/Simple/README:
+        * orbsvcs/examples/Security/README:
+        * orbsvcs/examples/Security/SecurityLevel1/README:
+        * orbsvcs/orbsvcs/HTIOP/README.txt:
+        * orbsvcs/orbsvcs/Naming/README:
+        * orbsvcs/tests/AVStreams/Component_Switching/README:
+        * orbsvcs/tests/AVStreams/Latency/README:
+        * orbsvcs/tests/AVStreams/Multicast/README:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/README:
+        * orbsvcs/tests/AVStreams/README:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/README:
+        * orbsvcs/tests/AVStreams/mpeg/README.uav:
+        * orbsvcs/tests/Bug_1334_Regression/README:
+        * orbsvcs/tests/Bug_1393_Regression/README:
+        * orbsvcs/tests/Bug_1395_Regression/README:
+        * orbsvcs/tests/Bug_1436_Regression/README:
+        * orbsvcs/tests/Bug_1437_Regression/README:
+        * orbsvcs/tests/Bug_2137_Regression/README:
+        * orbsvcs/tests/Bug_2247_Regression/README:
+        * orbsvcs/tests/Bug_2248_Regression/README:
+        * orbsvcs/tests/Bug_2285_Regression/README:
+        * orbsvcs/tests/Bug_2287_Regression/README:
+        * orbsvcs/tests/Bug_2615_Regression/README:
+        * orbsvcs/tests/Bug_2709_Regression/README:
+        * orbsvcs/tests/Bug_2777_Regression/README:
+        * orbsvcs/tests/Bug_3215_Regression/README:
+        * orbsvcs/tests/Bug_3216_Regression/README:
+        * orbsvcs/tests/CosEvent/Timeout/README:
+        * orbsvcs/tests/EC_Custom_Marshal/README:
+        * orbsvcs/tests/EC_MT_Mcast/README:
+        * orbsvcs/tests/EC_Mcast/README:
+        * orbsvcs/tests/EC_Multiple/README:
+        * orbsvcs/tests/EC_Throughput/README:
+        * orbsvcs/tests/Event/Mcast/AddrServer/README:
+        * orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/README:
+        * orbsvcs/tests/Event/Mcast/Two_Way/README:
+        * orbsvcs/tests/Event/Performance/README:
+        * orbsvcs/tests/Event/lib/README:
+        * orbsvcs/tests/FaultTolerance/IOGR/README:
+        * orbsvcs/tests/ImplRepo/Bug_2604_Regression/README:
+        * orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/ReadMe.txt:
+        * orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/ReadMe.txt:
+        * orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/ReadMe.txt:
+        * orbsvcs/tests/InterfaceRepo/IFR_Self_Recursive_IDL_Test/README:
+        * orbsvcs/tests/InterfaceRepo/Union_Forward_Test/README.txt:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/README:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/README:
+        * orbsvcs/tests/Log/Basic_Log_Test/README:
+        * orbsvcs/tests/Notify/lib/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/1_Path_Period_0_Lanes/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/3_Path_Period_10ms_Lanes/README:
+        * orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/README:
+        * orbsvcs/tests/Redundant_Naming/README:
+        * orbsvcs/tests/Security/Big_Request/README:
+        * orbsvcs/tests/Security/Bug_1107_Regression/README:
+        * orbsvcs/tests/Security/Bug_2908_Regression/README:
+        * orbsvcs/tests/Security/Callback/README:
+        * orbsvcs/tests/Security/Secure_Invocation/README:
+        * orbsvcs/tests/Security/cert/README:
+        * orbsvcs/tests/Security/ssliop_CSD/README:
+        * orbsvcs/tests/Simple_Naming/README:
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/README:
+        * performance-tests/Cubit/README:
+        * performance-tests/Latency/README:
+        * performance-tests/README:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/README:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/README:
+        * performance-tests/Sequence_Latency/Sequence_Operations_Time/README.txt:
+        * tests/Any/Recursive/README:
+        * tests/BiDirectional_DelayedUpcall/README:
+        * tests/Big_AMI/README:
+        * tests/Bug_1330_Regression/README:
+        * tests/Bug_1551_Regression/README:
+        * tests/Bug_1627_Regression/README:
+        * tests/Bug_2119_Regression/README:
+        * tests/Bug_2122_Regression/README:
+        * tests/Bug_2124_Regression/README:
+        * tests/Bug_2126_Regression/README:
+        * tests/Bug_2134_Regression/README:
+        * tests/Bug_2183_Regression/README:
+        * tests/Bug_2186_Regression/README:
+        * tests/Bug_2289_Regression/README:
+        * tests/Bug_2375_Regression/README:
+        * tests/Bug_2399_Regression/README:
+        * tests/Bug_2419_Regression/README:
+        * tests/Bug_2424_Regression/README:
+        * tests/Bug_2429_Regression/README:
+        * tests/Bug_2549_Regression/README:
+        * tests/Bug_2669_Regression/README:
+        * tests/Bug_2791_Regression/README:
+        * tests/Bug_2805_Regression/README.txt:
+        * tests/Bug_2935_Regression/README.txt:
+        * tests/Bug_3068_Regression/README:
+        * tests/Bug_3276_Regression/README:
+        * tests/Bug_3299_Regression/README:
+        * tests/Bug_3311_Regression/README:
+        * tests/Bug_3513_Regression/README:
+        * tests/Bug_3524_Regression/README:
+        * tests/Bug_3574_Regression/README:
+        * tests/Bug_3575_Regression/README:
+        * tests/Bug_3632_Regression/README:
+        * tests/Bug_3676_Regression/README:
+        * tests/Bug_3743_Regression/README:
+        * tests/Bug_3748_Regression/README:
+        * tests/Bug_3755_Ext_Regression/README:
+        * tests/Bug_3790_Regression/README:
+        * tests/Bug_3821_Regression/README:
+        * tests/Bug_3827_Regression/README:
+        * tests/Bug_3837_Regression/README:
+        * tests/Bug_3926_Regression/README:
+        * tests/Bug_3941_Regression/README:
+        * tests/CSD_Strategy_Tests/TP_Test_4/README:
+        * tests/CodeSets/simple/README:
+        * tests/Collocation_Opportunities/README:
+        * tests/DIOP/README:
+        * tests/DSI_Gateway/README:
+        * tests/FL_Cube/README:
+        * tests/Faults/README:
+        * tests/HandleExhaustion/README:
+        * tests/Hello/README:
+        * tests/ICMG_Any_Bug/README:
+        * tests/IPV6/README:
+        * tests/Leader_Followers/README:
+        * tests/LongUpcalls/README:
+        * tests/MProfile/README:
+        * tests/MProfile_Connection_Timeout/README:
+        * tests/MT_BiDir/README:
+        * tests/MT_Client/README:
+        * tests/MT_Server/README:
+        * tests/MT_Timeout/README:
+        * tests/Multiple/README:
+        * tests/Multiple_Inheritance/README:
+        * tests/Muxed_GIOP_Versions/README:
+        * tests/Muxing/README:
+        * tests/Native_Exceptions/README:
+        * tests/Nested_Event_Loop/README:
+        * tests/No_Server_MT_Connect_Test/README:
+        * tests/OBV/Any/README:
+        * tests/OBV/Supports/README:
+        * tests/ORB_Local_Config/Bug_1459/README:
+        * tests/ORB_Local_Config/Bug_3049/README:
+        * tests/ORB_Local_Config/README:
+        * tests/ORB_Local_Config/Two_DLL_ORB/README:
+        * tests/ORB_destroy/README:
+        * tests/Object_Loader/README:
+        * tests/Objref_Sequence_Test/README:
+        * tests/OctetSeq/README:
+        * tests/POA/Adapter_Activator/README:
+        * tests/POA/Bug_1592_Regression/README:
+        * tests/POA/DSI/README:
+        * tests/POA/Explicit_Activation/Alt_Resources/README:
+        * tests/POA/Explicit_Activation/README:
+        * tests/POA/FindPOA/README:
+        * tests/POA/README:
+        * tests/POA/Reference_Counted_Servant/README:
+        * tests/POA/RootPOA/README:
+        * tests/Policies/README:
+        * tests/Portable_Interceptors/Benchmark/README:
+        * tests/Portable_Interceptors/Dynamic/README:
+        * tests/Portable_Interceptors/ForwardRequest/README:
+        * tests/Portable_Interceptors/IORInterceptor/README:
+        * tests/Portable_Interceptors/ORB_Shutdown/README:
+        * tests/Portable_Interceptors/PICurrent/README:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/README:
+        * tests/RTScheduling/Current/README:
+        * tests/RTScheduling/DT_Spawn/README:
+        * tests/RTScheduling/Thread_Cancel/README:
+        * tests/RTScheduling/VoidData/README:
+        * tests/Smart_Proxies/Collocation/README:
+        * tests/Timed_Buffered_Oneways/README:
+        * tests/Timeout/README:
+        * tests/TransportCurrent/Framework/README:
+        * tests/Xt_Stopwatch/README:
+          Fuzz: Missing Id-tags.
+
+Fri Oct  7 07:55:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/PluggableUDP/tests/Performance/svc.conf.xml:
+        * examples/PluggableUDP/tests/SimplePerformance/svc.conf.xml:
+        * examples/Simple/time-date/client.conf.xml:
+        * examples/Simple/time-date/svc.conf.xml:
+        * interop-tests/wchar/build.xml:
+        * orbsvcs/Concurrency_Service/svc.conf.xml:
+        * orbsvcs/ImplRepo_Service/repository.xml:
+        * orbsvcs/Notify_Service/svc.conf.xml:
+        * orbsvcs/TAO_Service/svc.conf.xml:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/svc.conf.xml:
+        * orbsvcs/tests/CosEvent/Basic/svc.pull.conf.xml:
+        * orbsvcs/tests/Event/Basic/control.conf.xml:
+        * orbsvcs/tests/Event/UDP/svc.conf.xml:
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/windows.conf.xml:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/windows.conf.xml:
+        * orbsvcs/tests/Miop/McastHello/client.conf.xml:
+        * orbsvcs/tests/Miop/McastHello/server.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/listener.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/lookup.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/reactive.conf.xml:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/svc.conf.xml:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/client.conf.xml:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/server.conf.xml:
+        * orbsvcs/tests/Security/MT_SSLIOP/client.conf.xml:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.conf.xml:
+        * orbsvcs/tests/Security/ssliop_corbaloc/client.conf.xml:
+        * orbsvcs/tests/Security/ssliop_corbaloc/server.conf.xml:
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/svc.conf.xml:
+        * performance-tests/RTCorba/Thread_Pool/native-svc.conf.xml:
+        * performance-tests/RTCorba/Thread_Pool/svc.conf.xml:
+        * performance-tests/Throughput/svc.conf.xml:
+        * tests/AMI/exclusive.conf.xml:
+        * tests/AMI/muxed.conf.xml:
+        * tests/AMI/server.conf.xml:
+        * tests/AMI_Timeouts/svc.conf.xml:
+        * tests/Bug_3251_Regression/Bug_3251.conf.xml:
+        * tests/Bug_3801_Regression/exclusive.conf.xml:
+        * tests/Bug_3801_Regression/muxed.conf.xml:
+        * tests/ORB_Local_Config/Service_Dependency/Service_Config_Test.conf.xml:
+        * tests/POA/Explicit_Activation/alternate.conf.xml:
+        * tests/RTCORBA/Banded_Connections/svc.conf.xml:
+        * tests/RTCORBA/Client_Propagated/svc.conf.xml:
+        * tests/RTCORBA/Client_Protocol/svc.conf.xml:
+        * tests/RTCORBA/Collocation/continuous.conf.xml:
+        * tests/RTCORBA/Collocation/svc.conf.xml:
+        * tests/RTCORBA/Destroy_Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Dynamic_Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Dynamic_Thread_Pool/svc.conf.xml:
+        * tests/RTCORBA/Explicit_Binding/svc.conf.xml:
+        * tests/RTCORBA/Linear_Priority/svc.conf.xml:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/svc.conf.xml:
+        * tests/RTCORBA/Persistent_IOR/continuous.conf.xml:
+        * tests/RTCORBA/Policy_Combinations/svc.conf.xml:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/continuous.conf.xml:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/svc.conf.xml:
+        * tests/RTCORBA/Server_Declared/continuous.conf.xml:
+        * tests/RTCORBA/Server_Declared/svc.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf.xml:
+        * tests/RTCORBA/Server_Protocol/server_uiop.conf.xml:
+        * tests/RTCORBA/Thread_Pool/continuous.conf.xml:
+        * tests/RTCORBA/Thread_Pool/svc.conf.xml:
+          Fuzz: No Id-tags.
+
 Wed Sep 28 12:46:14 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/BiDir_GIOP/BiDir_GIOP.mpc:

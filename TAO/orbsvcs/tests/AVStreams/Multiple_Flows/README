@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -14,13 +14,13 @@ The sender sets up two data streams:
 1. Data_Receiver_One and
 2. Data_Receiver_Two
 
-and sends the data from the input file on both these streams. 
+and sends the data from the input file on both these streams.
 
 The receiver creates two output files:
 1. Data_Receiver_One and
 2. Data_Receiver_Two
 
-corresponding to the two data streams. 
+corresponding to the two data streams.
 
 Running the test
 ----------------
@@ -35,11 +35,11 @@ receiver
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d] 
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-d]
 
 
 -f filename --> The file to be streamed to the receiver (defaults to
-                "input"). 
+                "input").
 
 -p protocol --> The protocol string could be UDP or TCP (defaults to
                 UDP). But with the multicast address it should be UDP.

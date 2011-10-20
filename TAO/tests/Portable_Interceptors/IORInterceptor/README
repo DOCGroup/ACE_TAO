@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test verifies that IOR interceptor support is working properly.
 It does so by adding a unique tagged component to the IOR.  If the

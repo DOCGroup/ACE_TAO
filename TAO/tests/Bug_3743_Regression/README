@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 -Se tao_idl option didn't work properly when idl file included
 orb.idl.

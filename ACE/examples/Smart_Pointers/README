@@ -8,7 +8,7 @@ available in ACE.
 
 There are two programs in this example. Each program implements a
 similar set of classes, but with a different style of using smart
-pointers. 
+pointers.
 
 The Widget example is written such that objects may only pass raw
 pointers between them, and use smart pointers to manage the object

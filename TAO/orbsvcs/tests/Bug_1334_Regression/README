@@ -1,3 +1,5 @@
+$Id$
+
 This test provides regression for Bug 1334.
 
 It tests that a service initial ref IOR can be specified as an environment property in the form <ServiceName>IOR (in this case it is the NameService) and that the value set has correct precedence vis a vis -ORBInitRef values.

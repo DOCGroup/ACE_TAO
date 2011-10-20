@@ -1,12 +1,14 @@
 /**
 
+$Id$
+
 @page Multi_Threaded README File
-      
-      This black box experiment measures "multi-threading" support present in CIAO. 
-In this test, a client component spawns four threads that concurrently invoke operations 
+
+      This black box experiment measures "multi-threading" support present in CIAO.
+In this test, a client component spawns four threads that concurrently invoke operations
 on the server. The latency, throughput and jitter for each thread is printed out. The
-motivation of this test is to observe scalability when a ComponentServer receives 
-multiple requests from parallel clients. A sister test, ../Multi_Process documents 
+motivation of this test is to observe scalability when a ComponentServer receives
+multiple requests from parallel clients. A sister test, ../Multi_Process documents
 behavior as parallel clients (separate processes) invoke requests on the server.
 
 */

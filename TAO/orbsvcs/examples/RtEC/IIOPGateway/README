@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
         This directory contains an example of the real-time event service
 and the IIOP Gateway. There are four executables, the consumer, supplier,

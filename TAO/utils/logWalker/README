@@ -5,7 +5,7 @@ files generated with -ORBDebuglevel 10. The utility summarizes thread,
 connection, and invocation details for a collection of related processes.
 
 This is a work in progress. It currently is limited to parsing logs of
-IIOP based apps only. 
+IIOP based apps only.
 
 The executable is installed as $ACE_ROOT/bin/tao_logWalker.
 
@@ -33,17 +33,17 @@ The command line options are:
   -a <name=value>	 allows for substitution of addresses. Some endpoints
      			 may be logged using a hostname, while other instances
 			 may appear as an IP address. This is a simple means
-			 of substituting one for the other to improve the 
-			 recognition of a peer process. 
+			 of substituting one for the other to improve the
+			 recognition of a peer process.
 
   -m <filename>		 read argument from the named manifest file. For
      			 repeated analysis of may perhaps distributed log files,
 			 use a manifest file to minimize keying in long command
 			 lines. Each line of the file contains one full argument.
 
-  [alias=]logfile        provide as many log files as needed. The optional 
+  [alias=]logfile        provide as many log files as needed. The optional
   			 alias gives a way to assign a useful name to the process
-			 that generated the log output in the file. If many 
+			 that generated the log output in the file. If many
 			 processes shared a logfile so that their output is
 			 comingled or consecutive, each process instance will be
 			 given an indexed alias such as alias_1, alias_2, etc.
@@ -62,7 +62,7 @@ Host process HelloClient pid(8448) from logfile helloClient.log
 
 
 
-Session detail threads report: 
+Session detail threads report:
 
 Host process HelloServer pid (8447)  thread details:
    Thread[1] tid = 2147483647	2 encounters
@@ -72,7 +72,7 @@ Host process HelloClient pid (8448)  thread details:
 
 
 
-Session detail peer process report: 
+Session detail peer process report:
 
 Host process HelloServer pid (8447)  peer processes:
 0 clients
@@ -86,25 +86,25 @@ Host process HelloClient pid (8448)  peer processes:
 
 
 
-Session detail object report: 
+Session detail object report:
 
-Host process HelloServer pid (8447)  peer objects: 
+Host process HelloServer pid (8447)  peer objects:
 1 Objects referenced in proc_0:
 0 has 2 invocations
-Total of  2 invocations 
+Total of  2 invocations
 
 
-Host process HelloClient pid (8448)  peer objects: 
+Host process HelloClient pid (8448)  peer objects:
 1 Objects referenced in proc_1:
 0 has 2 invocations
-Total of  2 invocations 
+Total of  2 invocations
 
 
 
 
-Session detail invocation report: 
+Session detail invocation report:
 
-Host process HelloServer pid (8447)  invocations: 
+Host process HelloServer pid (8447)  invocations:
 
  2 Invocations with proc_0:
  1 for obj_0 from HelloClient [get_string]	 Request, line 30 Thread[1] Reply, line 37 log offset = 7
@@ -112,7 +112,7 @@ Host process HelloServer pid (8447)  invocations:
 
 Host process HelloServer pid (8447)  end invocation report
 
-Host process HelloClient pid (8448)  invocations: 
+Host process HelloClient pid (8448)  invocations:
 
  2 Invocations with proc_1:
  1 to obj_0 in HelloServer [get_string]	 Request, line 27 Thread[1] Reply, line 49 log offset = 22

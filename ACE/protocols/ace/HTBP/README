@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This directory contains the HTTP Tunneling, Bidirectional, Protocol
 implementation. This is a new streaming abstraction layered over an

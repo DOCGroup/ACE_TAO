@@ -1,6 +1,6 @@
 $Id$
 
-A Regression test for ACE QoS features. 
+A Regression test for ACE QoS features.
 ---------------------------------------
 
 This test implements a simple Receiver-Sender program that ensures
@@ -8,7 +8,7 @@ Quality of Service (QoS) guarantees on the underlying network before
 transmitting data. The program tests the ACE QoS APIs/features. The
 test works for Winsock2 APIs on Win2K as well as RAPI on Solaris.
 
-In addition it dynamically changes the sender TSpec which in turn 
+In addition it dynamically changes the sender TSpec which in turn
 changes the PATH messages.
 
 ------------------------------------------------------------------------
@@ -18,11 +18,11 @@ Build Requirements :
 --------------------
 1. Two Win2K machines.
 2. June98 Platform SDK or later.
-3. Link with ws2_32.lib 
+3. Link with ws2_32.lib
 
 The test consists of a server (which is the receiver) and a client
- (which is the sender). 
- 
+ (which is the sender).
+
  The receiver is started first (though it is not mandatory) as :
 
  server -m merengue.cs.wustl.edu:9091
@@ -59,7 +59,7 @@ On Win2K the user must have administrative access to the machine to
 run this program.  It seems to be a pre-requisite to opening QoS
 sockets.
 
-The sender and receiver should be run on different Win2K machines. 
+The sender and receiver should be run on different Win2K machines.
 
 The test demonstrates how to GQOS enable an application using the ACE QoS APIs.
 It concentrates on the use of various ACE QoS APIs and their correctness.
@@ -78,8 +78,8 @@ PLATFORM_RAPI_LDFLAGS += -L/project/doc/vishal/rapi/rel4.2a4/rsvpd/
 
 assuming that RAPI library is installed in /project/doc/vishal/rapi/rel4.2a4/
 
-1. Compile ACE with 
-       
+1. Compile ACE with
+
    make rapi=1 static_libs_only=1
 
    Static library option is used because the RAPI library that we have
@@ -106,7 +106,7 @@ assuming that RAPI library is installed in /project/doc/vishal/rapi/rel4.2a4/
        sender beguine/6000 [ t 2000000 100000 2000000 512 1024 ]
 
    From Macarena:
-       wait until done with ACE 
+       wait until done with ACE
        dest udp macarena/5000          <session name>
        reserve wf [ cl 2000000 100000 2000000 512 1024 ]
 
@@ -117,7 +117,7 @@ assuming that RAPI library is installed in /project/doc/vishal/rapi/rel4.2a4/
    that rtap session is released on both machines.
 
 -------------------------------------------------------------------------------
-  
+
 If you run into any problems with this test please contact Vishal
 Kachroo <vishal@cs.wustl.edu>.
 

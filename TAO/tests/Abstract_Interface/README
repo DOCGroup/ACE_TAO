@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Description:
 
@@ -22,7 +22,7 @@ directly on the abstract interface by the client. Then the interface
 itself is extracted and cast to the derived type. Finally, both the
 base class and the derived class operations are called by the client.
 
-In the final test, an operation called on the abstract interface 
+In the final test, an operation called on the abstract interface
 is made to throw a user exception deliberately to test exception
 handling.
 
@@ -45,5 +45,5 @@ Other client command line options:
 -e Test exception handling only
 
 The last three options are  mutually exclusive and will override
-any previous test selection options. The default behavior is to run 
+any previous test selection options. The default behavior is to run
 all three tests.

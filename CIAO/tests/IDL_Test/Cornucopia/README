@@ -1,3 +1,4 @@
+$Id$
 
 Cornucopia Code Generation Test
 ===============================
@@ -11,7 +12,7 @@ constructs, and some features
 not yet present in other CIAO tests and examples:
 
             Non-template IDL3+
-            
+
 - porttype
 - port
 - mirrorport
@@ -23,17 +24,17 @@ not yet present in other CIAO tests and examples:
   - supported interfaces
   - homes
   - components (attributes only)
-  
+
 - inheritance of factory and finder operations
 
 - raises, getraises and setraises constructs
 
 - separate scoping for supported interfaces,
   port interfaces, derived components, and homes
-  
+
 - skeleton and servant generated files in separate
   builds/libraries
-  
-  
+
+
 Jeff Parsons
 December 17, 2009

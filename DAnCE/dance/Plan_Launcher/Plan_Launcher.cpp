@@ -11,6 +11,8 @@
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Logger/Logger_Service.h"
 #include "tools/Convert_Plan/Convert_Plan_Impl.h"
+#include "tools/Config_Handlers/XML_File_Intf.h"
+#include "tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h"
 
 #include "EM_Launcher.h"
 #include "NM_Launcher.h"
@@ -38,6 +40,7 @@ namespace
         lm_ior_ (0),
         xml_plan_ (0),
         cdr_plan_ (0),
+        domain_file_ (0),
         uuid_ (0),
         am_ior_ (0),
         app_ior_ (0),
@@ -46,7 +49,8 @@ namespace
         mode_ (LAUNCH),
         force_ (false),
         quiet_ (false),
-        em_timeout_ (1)
+        em_timeout_ (1),
+        domain_timeout_ (0)
     {}
 
     const ACE_TCHAR *em_ior_;
@@ -54,6 +58,7 @@ namespace
     const ACE_TCHAR *lm_ior_;
     const ACE_TCHAR *xml_plan_;
     const ACE_TCHAR *cdr_plan_;
+    const ACE_TCHAR *domain_file_;
     const ACE_TCHAR *uuid_;
     const ACE_TCHAR *am_ior_;
     const ACE_TCHAR *app_ior_;
@@ -63,6 +68,7 @@ namespace
     bool force_;
     bool quiet_;
     int em_timeout_;
+    int domain_timeout_;
   };
 }
 
@@ -77,8 +83,12 @@ usage(const ACE_TCHAR*)
               ACE_TEXT ("NodeManager IOR for NM based deployment.\n")
               ACE_TEXT ("\t--lm-ior <LocalityManager IOR>\t")
               ACE_TEXT ("LocalityManager IOR for LM based deployment.\n")
-              ACE_TEXT ("\t--manager-timeout <seconds>\t")
-              ACE_TEXT ("Number of seconds to wait for a valid manager reference.\n")
+              ACE_TEXT ("\t--manager-timeout <seconds>\t\n")
+              ACE_TEXT ("Number of seconds to wait for a valid Execution Manager reference.\n")
+              ACE_TEXT ("\t--domain-timeout <seconds>\t")
+              ACE_TEXT ("Number of seconds to wait for a domain validation.\n")
+              ACE_TEXT ("\t--domain-file <cdd>\t")
+              ACE_TEXT ("The domain file that the plan launcher should use for domain validation\n")
               /*
               ACE_TEXT ("\nName Service Options\n")
               ACE_TEXT ("\t--domain-nc [NC]\t\t)
@@ -152,6 +162,8 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
   get_opt.long_option(ACE_TEXT("output"), 'o', ACE_Get_Opt::ARG_OPTIONAL);
   get_opt.long_option(ACE_TEXT("help"), 'h', ACE_Get_Opt::NO_ARG);
   get_opt.long_option(ACE_TEXT("manager-timeout"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("domain-timeout"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opt.long_option(ACE_TEXT("domain-file"), ACE_Get_Opt::ARG_REQUIRED);
 
   int c;
   ACE_CString s;
@@ -293,14 +305,36 @@ parse_args(int argc, ACE_TCHAR *argv[], Options &options)
               break;
             }
           if (ACE_OS::strcmp (get_opt.long_option (),
-                              ACE_TEXT ("manager-timeout")) == 0)
+                              ACE_TEXT ("domain-file")) == 0)
             {
               DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
                            (LM_DEBUG, DLINFO
                             ACE_TEXT ("Plan_Launcher::parse_args - ")
-                            ACE_TEXT ("Got Manager Timeout value: %C"),
+                            ACE_TEXT ("Got domain file: %C\n"),
+                            get_opt.opt_arg ()));
+              options.domain_file_ = get_opt.opt_arg ();
+              break;
+            }
+          if ((ACE_OS::strcmp (get_opt.long_option (),
+                               ACE_TEXT ("manager-timeout")) == 0))
+            {
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::parse_args - ")
+                            ACE_TEXT ("Got Manager Timeout value: %C\n"),
                             get_opt.opt_arg ()));
               options.em_timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
+              break;
+            }
+          if ((ACE_OS::strcmp (get_opt.long_option (),
+                               ACE_TEXT ("domain-timeout")) == 0))
+            {
+              DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                           (LM_DEBUG, DLINFO
+                            ACE_TEXT ("Plan_Launcher::parse_args - ")
+                            ACE_TEXT ("Got Manager Timeout value: %C\n"),
+                            get_opt.opt_arg ()));
+              options.domain_timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             }
 
@@ -658,9 +692,8 @@ teardown_plan (const Options &opts,
 
 template <typename Manager>
 typename Manager::_ptr_type
-resolve_manager (int delay, const ACE_TCHAR * ior, CORBA::ORB_ptr orb)
+resolve_manager (ACE_Time_Value timeout, const ACE_TCHAR * ior, CORBA::ORB_ptr orb)
 {
-  ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (delay));
   ACE_Time_Value retry (0, 1000000 / 4);
 
   CORBA::Object_var obj;
@@ -780,13 +813,94 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       auto_ptr<DAnCE::Plan_Launcher_Base> pl_base (0);
 
+
+      Deployment::DeploymentPlan_var dp;
+
+      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
+                   (LM_DEBUG, DLINFO ACE_TEXT ("Plan_Launcher - ")
+                    ACE_TEXT ("Parsing deployment plan\n")));
+      if (options.cdr_plan_)
+        {
+          dp = DAnCE::Convert_Plan::read_cdr_plan (options.cdr_plan_);
+          if (!dp.ptr ())
+            {
+              if (!options.quiet_)
+                {
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
+                              ACE_TEXT ("PlanLauncher - ")
+                              ACE_TEXT ("Error: Unable to read ")
+                              ACE_TEXT ("in CDR plan\n")));
+                }
+              return 1;
+            }
+        }
+      else if (options.xml_plan_)
+        {
+          dp = DAnCE::Convert_Plan::read_xml_plan (options.xml_plan_);
+
+          if (!dp.ptr ())
+            {
+              if (!options.quiet_)
+                {
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
+                              ACE_TEXT ("PlanLauncher - Error: ")
+                              ACE_TEXT ("Unable to read in XML plan\n")));
+                }
+              return 1;
+            }
+        }
+
+      if (options.domain_file_)
+        {
+          ::DAnCE::Config_Handlers::XML_File_Intf file (options.domain_file_);
+          file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
+          ::Deployment::Domain *plan = file.release_domain ();
+
+          if (!plan)
+            {
+              DANCE_ERROR (DANCE_LOG_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT("PlanLauncher - Error - ")
+                            ACE_TEXT("Error: Processing file <%C>\n"), options.domain_file_));
+              return false;
+            }
+
+          DAnCE_Domain_Validator_i validator (orb);
+          validator.load_domain (*plan);
+
+          ::DAnCE::Time_Value tv;
+          tv.seconds (options.domain_timeout_);
+          CORBA::StringSeq_var late_nodes;
+
+          if (!validator.block_for_domain (tv, late_nodes.out ()))
+            {
+              DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT ("PlanLauncher - Error: ")
+                            ACE_TEXT ("Not all nodes in domain ready\n")));
+
+              for (CORBA::ULong i = 0; i < late_nodes->length (); ++i)
+                {
+                  DANCE_ERROR (DANCE_LOG_EMERGENCY,
+                               (LM_ERROR, DLINFO
+                                ACE_TEXT ("PlanLauncher - Error: ")
+                                ACE_TEXT ("Node <%C> is not started\n"),
+                                late_nodes[i].in ()));
+                }
+              return 1;
+            }
+        }
+
+      ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (options.em_timeout_));
+
       if (options.em_ior_)
         {
           // Resolve ExecutionManager IOR for EM base deployment.
           DAnCE::EM_Launcher *em_pl (0);
 
+
           Deployment::ExecutionManager_var tmp_em =
-            resolve_manager<Deployment::ExecutionManager> (options.em_timeout_,
+            resolve_manager<Deployment::ExecutionManager> (timeout,
                                                            options.em_ior_,
                                                            orb);
 
@@ -863,41 +977,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           pl_base.reset (lm_pl);
         }
 
-      Deployment::DeploymentPlan_var dp;
 
-      DANCE_DEBUG (DANCE_LOG_MAJOR_EVENT,
-                   (LM_DEBUG, DLINFO ACE_TEXT ("Plan_Launcher - ")
-                    ACE_TEXT ("Parsing deployment plan\n")));
-      if (options.cdr_plan_)
-        {
-          dp = DAnCE::Convert_Plan::read_cdr_plan (options.cdr_plan_);
-          if (!dp.ptr ())
-            {
-              if (!options.quiet_)
-                {
-                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
-                              ACE_TEXT ("PlanLauncher - ")
-                              ACE_TEXT ("Error: Unable to read ")
-                              ACE_TEXT ("in CDR plan\n")));
-                }
-              return 1;
-            }
-        }
-      else if (options.xml_plan_)
-        {
-          dp = DAnCE::Convert_Plan::read_xml_plan (options.xml_plan_);
-
-          if (!dp.ptr ())
-            {
-              if (!options.quiet_)
-                {
-                  DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR, DLINFO
-                              ACE_TEXT ("PlanLauncher - Error: ")
-                              ACE_TEXT ("Unable to read in XML plan\n")));
-                }
-              return 1;
-            }
-        }
 
       switch (options.mode_)
         {

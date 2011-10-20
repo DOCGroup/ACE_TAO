@@ -1,9 +1,9 @@
-# $Id$
+$Id$
 
 	Basic tests for the real-time event channel.
 
 This directory contains several tests to exercise the real-time event
-channel features, debug it and stress test it. The tests are as simple 
+channel features, debug it and stress test it. The tests are as simple
 as possible, but not simpler.
 
 	Here are some canonical test configurations:

@@ -11,9 +11,16 @@ CIF_Common::CIF_Common(void)
 
 CIF_Common::~CIF_Common(void)
 {
-  if (! ::CORBA::is_nil (this->orb_.in ()))
+  try
     {
-      this->orb_->destroy ();
+      if (! ::CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_->destroy ();
+        }
+    }
+  catch (const ::CORBA::Exception &e)
+    {
+      e._tao_print_exception ("~CIF_Common - ");
     }
 }
 

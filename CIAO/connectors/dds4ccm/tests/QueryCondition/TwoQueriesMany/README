@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 The TwoQueriesMany exists of 4 runs. During each run the Sender writes 20 samples to DDS.
 After that it informs the receiver that the samples were written. The receiver
@@ -25,7 +25,7 @@ The following runs are defined:
     that, the receiver reset the QueryFilter (by setting the expression to an
     empty string) and informs the Sender that a new run can be started.
 3.  Sender writes iterations 41-60 to DDS for the defined number of keys. After
-    that it informs the receiver which should receive with a get_many all samples 
+    that it informs the receiver which should receive with a get_many all samples
     with iterations 1-60 without the ones it read during run 1 and 2.
     The receiver then creates a new filter, using the same expression as used during
     runs 1 and 2 but with different parameters. Again the receiver informs the

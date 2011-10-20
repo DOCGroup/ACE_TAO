@@ -26,11 +26,11 @@ be provided by the user and must derive from the generated
 TAO_Default_Proxy_Factory class.
 
 This test particularly is used to test out the different policies for the
-smart proxy.  If the same smart proxy is needed for the interface the 
+smart proxy.  If the same smart proxy is needed for the interface the
 "one-shot" policy is to be used by which once a smart proxy factory is
 registered it is retained until the program terminates.  This is the default
 behavior.  But if a more flexible option is desired where the smart proxy
-can be different with every instance of the target object, then the 
+can be different with every instance of the target object, then the
 one-shot plolicy has to be disabled by passing a 0 at creation time.
 
 For execution of the test:
@@ -39,7 +39,7 @@ For execution of the test:
 
 2) ./server -o test2.ior
 
-2) ./client 
+2) ./client
 
 The -f0 option tries out the "per-object" policy and the -f1 (default)
 tries out the "one-shot" aka "per-interface" policy.

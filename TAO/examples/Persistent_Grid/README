@@ -21,7 +21,7 @@ Options:
 -o    Outputs the ior to the file
       The ior is the reference using which the client can interact with
       the target server object.
--m    Name of the memory pool. 
+-m    Name of the memory pool.
 
 
 When the server is started, you should see as the first line of output
@@ -50,7 +50,7 @@ Options:
 -w    Width of the grid
 -h    Height of the grid
 -v    Value that needs to be the starting point for storage. The value
-      that is stored will be this value + location id. 
+      that is stored will be this value + location id.
 
 persistent_client:
 -----------------

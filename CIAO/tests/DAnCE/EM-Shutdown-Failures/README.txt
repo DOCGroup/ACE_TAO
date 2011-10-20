@@ -1,3 +1,4 @@
+$Id$
 
  This script tests redeployment of plans after shutdown failures.
  Each test uses 2 descriptors; the first with a configured shutdown failure

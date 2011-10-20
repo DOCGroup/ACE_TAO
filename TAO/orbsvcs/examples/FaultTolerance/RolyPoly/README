@@ -1,14 +1,14 @@
-
+$Id$
 
 Overview
 
-RolyPoly is a simple example that shows how to increase application 
-reliability by using replication to tolerate faults. It allows you 
+RolyPoly is a simple example that shows how to increase application
+reliability by using replication to tolerate faults. It allows you
 to start two replicas of the same object which are logically seen as
 one object by a client. Furthermore, you can terminate one of the
 replicas without interrupting the service provided by the object.
 
-RolyPoly is using request/reply logging to suppress repeated 
+RolyPoly is using request/reply logging to suppress repeated
 requests (thus guaranteeing exactly-once semantic) and state
 synchronization (to ensure all replicas are in a consistent
 state). Since replicas are generally distributed across multiple
@@ -27,7 +27,7 @@ following crash point numbers are defined:
     returning reply to the client.
 
 Essential difference between crash point 1 and 2 is that in
-the second case there should be reply replay while in the 
+the second case there should be reply replay while in the
 first case request is simply re-executed (this can be observed
 in the trace messages of the replicas).
 
@@ -35,27 +35,27 @@ in the trace messages of the replicas).
 Execution Scenario
 
 In this example scenario we will start three replicas. For one
-of them (let us call it primary) we will specify a crash point 
-other than 0. Then we will start a client to execute requests 
-on the resulting object. After a few requests, primary will 
-fail and we will be able to observe transparent shifting of 
-client to the other replica. Also we will be able to make sure 
-that, after this shifting, object is still in expected state 
-(i.e. the sequence of returned numbers is not interrupted and 
+of them (let us call it primary) we will specify a crash point
+other than 0. Then we will start a client to execute requests
+on the resulting object. After a few requests, primary will
+fail and we will be able to observe transparent shifting of
+client to the other replica. Also we will be able to make sure
+that, after this shifting, object is still in expected state
+(i.e. the sequence of returned numbers is not interrupted and
 that, in case of the crash point 2, request is not re-executed).
 
 Note, due to the underlying group communication architecture,
 the group with only one member (replica in our case) can only
-exist for a very short period of time. This, in turn, means 
-that we need to start first two replicas virtually at the same 
-time. This is also a reason why we need three replicas instead 
-of two - if one replica is going to fail then the other one 
-won't live very long alone. For more information on the reasons 
-why it works this way please see documentation for TMCast 
+exist for a very short period of time. This, in turn, means
+that we need to start first two replicas virtually at the same
+time. This is also a reason why we need three replicas instead
+of two - if one replica is going to fail then the other one
+won't live very long alone. For more information on the reasons
+why it works this way please see documentation for TMCast
 available at $(ACE_ROOT)/ace/TMCast/README.
 
-Suppose we have node0, node1 and node2 on which we are going 
-to start our replicas (it could be the same node). Then, to 
+Suppose we have node0, node1 and node2 on which we are going
+to start our replicas (it could be the same node). Then, to
 start our replicas we can execute the following commands:
 
 node0$ ./server -o replica-0.ior -c 2
@@ -66,7 +66,7 @@ When all replicas are up we can start the client:
 
 $ ./client -k file://replica-0.ior -k file://replica-1.ior
 
-In this scenario, after executing a few requests, replica-0 
+In this scenario, after executing a few requests, replica-0
 will fail in crash point 2. After that, replica-1 will continue
 executing client requests. You can see what's going on with
 replicas by looking at various trace messages printed during
@@ -76,7 +76,7 @@ execution.
 Architecture
 
 The biggest part of the replication logic is carried out by
-the ReplicaController. In particular it performs the 
+the ReplicaController. In particular it performs the
 following tasks:
 
 * management of distributed request/reply log
@@ -97,9 +97,9 @@ ReplicaController:
   implemented by the servant.
 
 This two model can be used simultaneously. In RolyPoly interface
-implementation you can comment out corresponding piece of code to 
+implementation you can comment out corresponding piece of code to
 chose one of the strategies.
 
--- 
+--
 Boris Kolpackov <boris@dre.vanderbilt.edu>
 

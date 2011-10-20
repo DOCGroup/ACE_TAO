@@ -1,17 +1,18 @@
+$Id$
 
 Performance tests for the performance of the DIOP
 implementation using oneways in a roundtrip manor.
 This means that the client sends a request to the server,
-which in turn sends a request to the client. 
+which in turn sends a request to the client.
 
-1000 oneway requests containing a sequence of 256 chars are 
+1000 oneway requests containing a sequence of 256 chars are
 performed and the average time per call is measured.
 
 To execute the test either
 
 - use run_test.pl, or
 
-- start 
+- start
 
    server -o ior -ORBendpoint diop://:12345
 

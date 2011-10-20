@@ -44,7 +44,7 @@ namespace DAnCE
                        CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr poa);
 
-    void init (Deployment::Properties *prop);
+    void init (const Deployment::Properties &prop);
     // Destructor
     virtual ~LocalityManager_i (void);
 
@@ -83,6 +83,9 @@ namespace DAnCE
 
     void disconnect_connections (void);
 
+    const char * determine_instance_type (const ::Deployment::PlanConnectionDescription &conn,
+                                  const ::Deployment::Connection & providedReference);
+
     ACE_TString uuid_;
 
     std::list< std::string > plugin_config_files_;
@@ -104,8 +107,6 @@ namespace DAnCE
     REFERENCE_MAP instance_references_;
 
     ::Deployment::DeploymentPlan plan_;
-
-    ::Deployment::Properties_var props_;
 
     DAnCE::Deployment_Scheduler scheduler_;
 
