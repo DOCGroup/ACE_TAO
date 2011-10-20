@@ -1,6 +1,0 @@
-//$Id$
-project : taolib, core, messaging {
-  avoids += minimum_corba
-  sharedname   = TAO_DynamicInterface
-  dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL
-}
