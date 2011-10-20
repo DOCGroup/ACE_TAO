@@ -1,0 +1,23 @@
+// $Id$
+
+/**
+ * @file TE_ResetTopic_Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef TE_RESETTOPIC_BASE_IDL
+#define TE_RESETTOPIC_BASE_IDL
+
+#pragma ndds typesupport "Base/TE_ResetTopic_BaseSupport.h"
+
+#pragma DCPS_DATA_TYPE "TE_ResetTopicTest"
+#pragma DCPS_DATA_KEY "TE_ResetTopicTest key"
+
+struct TE_ResetTopicTest {
+  string key; //@key
+  long iteration;
+};
+
+typedef sequence<TE_ResetTopicTest> TE_ResetTopicTestSeq;
+
+#endif

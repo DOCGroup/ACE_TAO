@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/WU_LateBinding_Connector.idl"
+
+module WU_LateBinding
+{
+  component Receiver
+  {
+    port WU_LateBindingTestConnector::DDS_Listen info_out_event;
+    port WU_LateBindingTestConnector::DDS_StateListen info_out_state;
+
+    attribute unsigned short iterations;
+  };
+};
+
+#endif

@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef HELLO_T_SENDER_IDL
+#define HELLO_T_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/HelloT.idl"
+
+#pragma ciao ami4ccm receptacle "HelloT::Sender::run_my_foo"
+
+module HelloT
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

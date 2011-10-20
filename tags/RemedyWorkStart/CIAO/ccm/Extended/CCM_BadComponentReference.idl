@@ -1,0 +1,26 @@
+// $Id$
+/// Compliant with OMG 06-04-01 Section 9.4.2.1
+
+#if !defined (CCM_BADCOMPONENTREFERENCE_IDL)
+#define CCM_BADCOMPONENTREFERENCE_IDL
+
+#if !defined (CCM_LW)
+
+module Components
+{
+  typeprefix Components "omg.org";
+
+  enum BadComponentReferenceReason
+  {
+    NON_LOCAL_REFERENCE,
+    NON_COMPONENT_REFERENCE,
+    WRONG_CONTAINER
+  };
+  exception BadComponentReference
+  {
+    BadComponentReferenceReason reason;
+  };
+};
+#endif
+
+#endif /* CCM_BADCOMPONENTREFERENCE_IDL */

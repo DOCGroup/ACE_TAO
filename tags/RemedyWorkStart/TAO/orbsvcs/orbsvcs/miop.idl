@@ -1,0 +1,51 @@
+//=============================================================================
+/**
+ *  @file   miop.idl
+ *
+ *  $Id$
+ *
+ * This file contains MIOP packet and profile information from
+ * the MIOP specification.
+ */
+//=============================================================================
+
+
+#ifndef MIOP_IDL
+#define MIOP_IDL
+
+#include "tao/IOP.pidl"
+#include "tao/GIOP.pidl"
+
+#pragma prefix "omg.org"
+
+module MIOP
+{
+  typedef sequence <octet, 252> UniqueId;
+
+  typedef char char4[4];
+  struct PacketHeader_1_0
+  {
+    char4              magic;
+    octet             hdr_version;
+    octet             flags;
+    unsigned short    packet_length;
+    unsigned long     packet_number;
+    unsigned long     number_of_packets;
+    UniqueId          Id;
+  };
+
+  typedef GIOP::Version Version;
+
+  typedef string Address;
+
+  typedef sequence<IOP::TaggedComponent> Component_Seq;
+  struct UIPMC_ProfileBody
+  {
+    Version           miop_version;
+    Address           the_address;
+    short             the_port;
+    Component_Seq     components;
+  };
+};
+
+#endif
