@@ -1,5 +1,0 @@
-// $Id$
-project : taoexe, rtcorba, core {
-  install = $(ACE_ROOT)/bin
-  exename = catior
-}

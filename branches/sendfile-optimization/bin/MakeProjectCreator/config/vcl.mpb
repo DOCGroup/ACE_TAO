@@ -1,7 +1,0 @@
-project {
-  requires += vcl
-  macros   += ACE_HAS_VCL=1
-  specific(borland) {
-     lit_libs += rtl vcl
-  }
-}

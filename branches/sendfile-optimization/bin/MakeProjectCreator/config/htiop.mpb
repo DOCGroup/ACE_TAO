@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : htbp {
-  after  += HTIOP
-  libs   += TAO_HTIOP
-}
