@@ -159,8 +159,10 @@ namespace DAnCE
         sub_plan_list.push_back (list_item);
       }
 
+#ifdef _OPENMP
 #pragma omp parallel for
-    for (int i = 0; i < sub_plan_list.size (); ++i)
+#endif
+    for (int i = 0; i < static_cast<int> (sub_plan_list.size ()); ++i)
       {
         // get the sub plan and key for current instance
         TSubPlanKey& sub_plan_key = sub_plan_list[i].first;
@@ -181,8 +183,10 @@ namespace DAnCE
       //     structure.
       // (2) Retrieve the necessary information to contruct the sub plans
       //     one by one.
+#ifdef _OPENMP
 #pragma omp parallel for
-    for (int i = 0; i < sub_plan_list.size (); ++i)
+#endif
+    for (int i = 0; i < static_cast <int> (sub_plan_list.size ()); ++i)
         {
           // get the sub plan and key for current instance
           TSubPlanKey& sub_plan_key = sub_plan_list[i].first;
