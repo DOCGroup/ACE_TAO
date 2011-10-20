@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_nodemanager_stub {
-  includes += $(CIAO_ROOT)/DAnCE/TargetManager
-  libs     += CIAO_TargetManager_stub
-  after    += CIAO_TargetManager_stub
-}
