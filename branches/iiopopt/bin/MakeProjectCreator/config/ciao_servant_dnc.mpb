@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ciao_component_dnc, ciao_deployment_svnt, ciaocidldefaults, utils, naming {
-  after += CIAO_DnC_Server
-  libs  += CIAO_DnC_Server
-
-}
