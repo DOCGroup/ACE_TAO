@@ -1,6 +1,0 @@
-// $Id$
-project (Activator_CIAOComponentServer_Test) : ciao_componentserver_stub, ccm_configvalue, ciao_cs_client {
-   Source_Files {
-     client.cpp
-   }
-}

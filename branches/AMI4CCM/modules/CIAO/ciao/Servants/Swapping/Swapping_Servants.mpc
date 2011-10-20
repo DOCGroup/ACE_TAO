@@ -1,6 +1,0 @@
-// $Id$
-
-project(CIAO_Swapping_Servants) : ciao_lib, ciao_container_base, utils, \
-                                  ccm_componentserver_stub, ciao_servant_activator, ciao_session_container {
-  dynamicflags = CIAO_SWAPPING_SERVANT_BUILD_DLL
-}
