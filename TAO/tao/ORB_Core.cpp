@@ -782,7 +782,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBAMICollocation"))))
         {
-          int ami_collocation = ACE_OS::atoi (current_arg);
+          int const ami_collocation = ACE_OS::atoi (current_arg);
           if (ami_collocation)
             this->orb_params ()->ami_collication (true);
           else
