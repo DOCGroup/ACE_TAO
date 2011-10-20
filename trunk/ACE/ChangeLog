@@ -1,7 +1,7 @@
-Thu Oct 20 06:57:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+Thu Oct 20 06:57:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* *.*:
-          Removed autoconf support due to lack of resources/funding to 
+        * *.*:
+          Removed autoconf support due to lack of resources/funding to
           get autoconf really working. It now only causes confusions and
           not working configurations for users.
 
