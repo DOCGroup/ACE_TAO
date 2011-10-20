@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : ace_etcl_parser {
-  after += MonitorControl
-  libs += MonitorControl
-}
