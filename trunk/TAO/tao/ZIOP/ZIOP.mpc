@@ -6,9 +6,10 @@ project(*core_idl) : tao_versioning_idl_defaults, install {
     idlflags += -Gp -Gd -Sci -SS -Sorb \
                 -Wb,export_macro=TAO_ZIOP_Export \
                 -Wb,export_include=tao/ZIOP/ziop_export.h \
+                -Wb,stub_export_file=ziop_export.h \
                 -Wb,include_guard=TAO_ZIOP_SAFE_INCLUDE \
                 -Wb,safe_include=tao/ZIOP/ZIOP.h \
-                -iC tao/ZIOP
+                -iC tao/ZIOP -Gxhst
     ZIOP.pidl
   }
 
@@ -29,6 +30,7 @@ project(ZIOP) : tao_output, install, taolib, compression, pi, taoidldefaults {
 
   Header_Files {
     *.h
+    ziop_export.h
     ZIOPC.h
     ZIOPS.h
   }
