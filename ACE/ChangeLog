@@ -1,3 +1,13 @@
+Fri Oct 21 23:35:30 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/Time_Value.inl:
+
+          Changed the operator comparing __builtin_constant_p to be a
+          bitwise (&) instead oflogical and (&&) to address a warning from the
+          LLVM compiler.  In this case, the result of the two operators is
+          logically equivalent.  Thanks to Abdullah Sowayan <sowayan@gmail.com>
+          for reporting the issue.
+
 Fri Oct 21 11:26:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * examples/Misc/test_trace.cpp:
