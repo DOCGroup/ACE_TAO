@@ -9,7 +9,7 @@
 #define TE_RESETTOPIC_BASE_IDL
 
 #pragma ndds typesupport "Base/TE_ResetTopic_BaseSupport.h"
-#pragma opendds typesupport "Base/TE_ResetTopic_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/TE_ResetTopic_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TE_ResetTopicTest"
 #pragma DCPS_DATA_KEY "TE_ResetTopicTest key"
