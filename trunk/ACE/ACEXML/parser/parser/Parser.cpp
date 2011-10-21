@@ -1735,7 +1735,7 @@ ACEXML_Parser::parse_child (int skip_open_paren)
     }
 
   ACEXML_Char node_type = 0;
-  ACEXML_Char nextch;
+  ACEXML_Char nextch = 0;
 
   do {
     this->check_for_PE_reference ();
