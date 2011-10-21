@@ -22,9 +22,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/Locator.h"
+#include "ace/Copy_Disabled.h"
 
 /**
- * @class ACEXML_LocatorImpl LocatorImpl.h "ACEXML/common/LocatorImpl.h"
+ * @class ACEXML_LocatorImpl
  *
  * @brief ACEXML_LocatorImpl is an implementation of ACEXML_Locator.
  *
@@ -58,7 +59,9 @@
  *
  * @sa ACEXML_Locator
  */
-class ACEXML_Export ACEXML_LocatorImpl : public ACEXML_Locator
+class ACEXML_Export ACEXML_LocatorImpl :
+  public ACEXML_Locator,
+  private ACE_Copy_Disabled
 {
 public:
   /*

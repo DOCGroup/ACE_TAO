@@ -31,7 +31,7 @@
 class ACEXML_AttributesImpl;
 
 /**
- * @class ACEXML_Attribute AttributesImpl.h "ACEXML/common/AttributesImpl.h"
+ * @class ACEXML_Attribute
  *
  * @brief ACEXML_Attribute defines the data structure of an attribute
  *

@@ -26,7 +26,7 @@
 #include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Transcoder Transcode.h "ACEXML/common/Transcode.h"
+ * @class ACEXML_Transcoder
  *
  * @brief ACEXML_Transcoder
  *
