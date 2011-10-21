@@ -24,7 +24,7 @@
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
- * @class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"
+ * @class ACEXML_Element_Def_Builder
  *
  * @brief An abstract virtual class that defines the interface to define an
  * element definition.

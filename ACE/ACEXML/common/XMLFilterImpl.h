@@ -22,7 +22,7 @@
 #include "ACEXML/common/ErrorHandler.h"
 
 /**
- * @class ACEXML_XMLFilterImpl XMLFilterImpl.h "ACEXML/common/XMLFilterImpl.h"
+ * @class ACEXML_XMLFilterImpl
  *
  * @brief ACEXML_XMLFilterImpl
  *
