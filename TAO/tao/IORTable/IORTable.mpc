@@ -5,9 +5,10 @@ project(*core_idl) : tao_versioning_idl_defaults, install {
     idlflags += -Gp -Gd -Sci -SS -Sorb \
                 -Wb,export_macro=TAO_IORTable_Export \
                 -Wb,export_include=tao/IORTable/iortable_export.h \
+                -Wb,stub_export_file=iortable_export.h \
                 -Wb,include_guard=TAO_IORTABLE_SAFE_INCLUDE \
                 -Wb,safe_include=tao/IORTable/IORTable.h \
-                -iC tao/IORTable
+                -iC tao/IORTable -Gxhst
     IORTable.pidl
   }
 
@@ -28,6 +29,7 @@ project(IORTable) : taolib, tao_output, install, taoidldefaults {
 
   Header_Files {
     *.h
+    iortable_export.h
     IORTableC.h
     IORTableS.h
   }
