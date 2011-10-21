@@ -9,6 +9,7 @@
 #define RG_RESETTOPIC_BASE_IDL
 
 #pragma ndds typesupport "Base/RG_ResetTopic_BaseSupport.h"
+#pragma opendds typesupport "Base/RG_ResetTopic_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "RG_ResetTopicSample"
 #pragma DCPS_DATA_KEY "RG_ResetTopicSample key"
