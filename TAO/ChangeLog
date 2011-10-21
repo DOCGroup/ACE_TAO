@@ -1,3 +1,18 @@
+Fri Oct 21 14:44:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/ZIOP/ZIOP.mpc:
+          Generate export files as part of the build
+
+        * tao/IORManipulation/ior_manip_export.h:
+        * tao/IORTable/iortable_export.h:
+        * tao/ZIOP/ziop_export.h:
+          Removed these files.
+
+        * tao/ZIOP/ZIOP.h:
+          Doxygen fix
+
 Thu Oct 20 17:34:00 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/On_Demand_Act_Direct_Coll/On_Demand_Act_D_Coll.mpc:
