@@ -9,7 +9,7 @@
 #define WL_RESETTOPIC_BASE_IDL
 
 #pragma ndds typesupport "Base/WL_ResetTopic_BaseSupport.h"
-#pragma opendds typesupport "Base/WL_ResetTopic_BaseSupportImpl.h"
+#pragma opendds typesupport "Base/WL_ResetTopic_BaseTypeSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "WL_ResetTopicTest"
 #pragma DCPS_DATA_KEY "WL_ResetTopicTest key"
