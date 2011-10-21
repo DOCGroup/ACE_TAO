@@ -1,3 +1,34 @@
+Fri Oct 21 09:48:21 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * common/Attributes.h:
+        * common/AttributesImpl.h:
+        * common/Attributes_Def_Builder.h:
+        * common/CharStream.h:
+        * common/ContentHandler.h:
+        * common/DTDHandler.h:
+        * common/DTD_Manager.h:
+        * common/DefaultHandler.h:
+        * common/Element_Def_Builder.h:
+        * common/Encoding.h:
+        * common/EntityResolver.h:
+        * common/ErrorHandler.h:
+        * common/Exception.h:
+        * common/HttpCharStream.h:
+        * common/InputSource.h:
+        * common/Locator.h:
+        * common/LocatorImpl.h:
+        * common/Mem_Map_Stream.h:
+        * common/NamespaceSupport.h:
+        * common/SAXExceptions.h:
+        * common/StrCharStream.h:
+        * common/StreamFactory.h:
+        * common/Transcode.h:
+        * common/URL_Addr.h:
+        * common/Validator.h:
+        * common/XMLFilterImpl.h:
+        * common/XMLReader.h:
+          Doxygen changes, fix some Klocwork reports
+
 Tue Aug  3 16:50:57 UTC 2010  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * common/DTD_Manager.h:

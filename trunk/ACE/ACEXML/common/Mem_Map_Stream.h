@@ -30,7 +30,7 @@ typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;
 
 /**
- * @class ACEXML_Mem_Map_Stream Mem_Map_Stream.h "ACEXML/common/Mem_Map_Stream.h"
+ * @class ACEXML_Mem_Map_Stream
  *
  * @brief Provides a memory-mapped stream abstraction to simplify parsing
  * of tokens.

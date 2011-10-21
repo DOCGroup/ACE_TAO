@@ -26,7 +26,7 @@
 #include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Encoding Encoding.h "ACEXML/common/Encoding.h"
+ * @class ACEXML_Encoding Encoding.h
  *
  * @brief ACEXML_Encoding
  *
