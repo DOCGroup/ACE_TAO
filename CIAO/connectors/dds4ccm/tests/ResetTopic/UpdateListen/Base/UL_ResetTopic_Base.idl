@@ -9,6 +9,7 @@
 #define UL_RESETTOPIC_BASE_IDL
 
 #pragma ndds typesupport "Base/UL_ResetTopic_BaseSupport.h"
+#pragma opendds typesupport "Base/UL_ResetTopic_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "UL_ResetTopicTest"
 #pragma DCPS_DATA_KEY "UL_ResetTopicTest key"

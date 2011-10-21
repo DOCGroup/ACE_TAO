@@ -30,3 +30,5 @@ The ToEmpty test will initially start writing samples for TopicI. After a while,
 the topic name will be cleared. This means that the connector internally stops DDS.
 After another while, the sender will start writing samples again,
 but now for TopicII. This sequence repeats.
+
+TooLong will test whether an exception is thrown when an invalid topic name is applied.

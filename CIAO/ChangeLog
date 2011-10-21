@@ -1,3 +1,13 @@
+Fri Oct 21 07:06:59 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/ResetTopic/README:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Base/RG_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/ToEmpty/Base/TE_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/TooLong/Base/TL_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/UpdateListen/Base/UL_ResetTopic_Base.idl:
+        * connectors/dds4ccm/tests/ResetTopic/WriteListen/Base/WL_ResetTopic_Base.idl:
+          Fixed opendds compile errors.
+
 Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

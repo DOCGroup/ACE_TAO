@@ -9,6 +9,7 @@
 #define TL_RESETTOPIC_BASE_IDL
 
 #pragma ndds typesupport "Base/TL_ResetTopic_BaseSupport.h"
+#pragma opendds typesupport "Base/TL_ResetTopic_BaseSupportImpl.h"
 
 #pragma DCPS_DATA_TYPE "TL_ResetTopicTest"
 #pragma DCPS_DATA_KEY "TL_ResetTopicTest key"
