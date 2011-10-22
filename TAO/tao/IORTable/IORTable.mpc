@@ -20,7 +20,7 @@ project(*core_idl) : tao_versioning_idl_defaults, install {
 project(IORTable) : taolib, tao_output, install, taoidldefaults {
   after       += *core_idl
   sharedname   = TAO_IORTable
-  dynamicflags += TAO_IORTABLE_BUILD_DLL
+  dynamicflags += TAO_IORTable_BUILD_DLL
 
   Source_Files {
     *.cpp
