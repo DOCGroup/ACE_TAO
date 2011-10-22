@@ -1,3 +1,10 @@
+Sat Oct 22 22:01:01 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_export.h:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h:
+
+          Export macros.
+
 Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
