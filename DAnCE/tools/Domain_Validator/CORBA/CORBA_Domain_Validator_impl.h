@@ -12,6 +12,7 @@
 #define DOMAIN_VALIDATORI_TI3IMY_H_
 
 #include "tools/Domain_Validator/Domain_ValidatorS.h"
+#include "tools/Domain_Validator/CORBA/CORBA_Domain_Validator_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -22,7 +23,7 @@
 #include <map>
 #include <list>
 
-class DAnCE_Domain_Validator_Stub_Export DAnCE_Domain_Validator_i
+class CORBA_Domain_Validator_Export DAnCE_Domain_Validator_i
   : public virtual DAnCE::Domain_Validator,
     public virtual ::CORBA::LocalObject
 {
