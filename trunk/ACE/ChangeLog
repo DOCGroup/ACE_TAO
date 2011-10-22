@@ -1,3 +1,13 @@
+Sat Oct 22 02:06:37 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Added missing:
+          DCCFLAGS += -g
+
+          From the file. Thanks to William R. Otte  <wotte@dre.vanderbilt.edu>
+          for pointing this out.
+
 Fri Oct 21 23:35:30 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/Time_Value.inl:
