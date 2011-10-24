@@ -6,6 +6,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/debug.h"
+#include "tao/Leader_Follower.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -103,6 +104,19 @@ namespace TAO
 
     return true;
   }
+
+  int
+  Wait_On_LF_No_Upcall::defer_upcall (ACE_Event_Handler* eh)
+  {
+    if (TAO_debug_level > 6)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::defer_upcall, "
+                  "deferring upcall on transport "
+                  "because upcalls temporarily suspended on this thread\n",
+                  this->transport_->id()));
+    return this->transport_->orb_core ()->leader_follower ().defer_event (eh);
+  }
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
