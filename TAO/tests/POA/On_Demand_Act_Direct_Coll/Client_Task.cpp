@@ -6,11 +6,11 @@
 Client_Task::Client_Task (const ACE_TCHAR *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
-                          CORBA::Boolean exception)
+                          CORBA::Boolean except)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
-    , except_ (exception)
+    , except_ (except)
 {
 }
 
