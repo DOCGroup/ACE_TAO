@@ -55,12 +55,12 @@ Client_Task::svc (void)
                }
           test->shutdown ();
         }
-      catch (CORBA::INTERNAL)
+      catch (const CORBA::INTERNAL&)
          {
            if (this->except_)
              {
                ACE_DEBUG ((LM_DEBUG,
-                   "OK: Client_Task Expected exception with"
+                   "OK: Client_Task Expected excep with "
                    "direct collocation received\n"));
                   status = 0;
              }
