@@ -161,8 +161,10 @@ namespace DAnCE
 
 #ifdef _OPENMP
 #pragma omp parallel for
-#endif
     for (int i = 0; i < static_cast<int> (sub_plan_list.size ()); ++i)
+#else
+      for (CORBA::ULong i = 0; i < sub_plan_list.size (); ++i)
+#endif
       {
         // get the sub plan and key for current instance
         TSubPlanKey& sub_plan_key = sub_plan_list[i].first;
@@ -185,8 +187,10 @@ namespace DAnCE
       //     one by one.
 #ifdef _OPENMP
 #pragma omp parallel for
-#endif
     for (int i = 0; i < static_cast <int> (sub_plan_list.size ()); ++i)
+#else
+      for (CORBA::ULong i = 0; i < (sub_plan_list.size ()); ++i)
+#endif
         {
           // get the sub plan and key for current instance
           TSubPlanKey& sub_plan_key = sub_plan_list[i].first;
