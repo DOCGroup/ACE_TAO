@@ -1,3 +1,9 @@
+Tue Oct 25 17:29:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
+
+          Added missing dynamicflags directive.
+
 Sat Oct 22 22:01:01 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_export.h:
