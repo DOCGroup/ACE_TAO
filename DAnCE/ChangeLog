@@ -1,3 +1,10 @@
+Tue Oct 25 17:30:32 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Split_Plan/Split_Plan.cpp:
+
+          Moved openmp for loops inside __OPENMP ifdef, else we use
+          CORBA::ULong types for loop index.
+
 Tue Oct 25 17:29:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
