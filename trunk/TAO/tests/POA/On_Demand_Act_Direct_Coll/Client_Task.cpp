@@ -71,8 +71,8 @@ Client_Task::svc (void)
                     "thru_poa collocation received\n"));
                    status = 1;
              }
+           corb_->destroy ();
          }
-      corb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
