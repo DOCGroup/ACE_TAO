@@ -1,3 +1,8 @@
+Tue Oct 25 08:10:00 UTC 2011  Marijke Hengstmengel <mhengstmengel@remedy.nl>
+
+        * tests/POA/On_Demand_Act_Direct_Coll/Client_Task.cpp:
+        Solved error in destroying the orb.
+
 Fri Oct 21 14:44:28 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORManipulation/IORManipulation.mpc:
