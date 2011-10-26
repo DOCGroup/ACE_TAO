@@ -9,10 +9,10 @@ use lib "$ENV{'ACE_ROOT'}/bin";
 use PerlACE::TestTarget;
 
 #$ENV{'DANCE_LOG_LEVEL'}=9;
-$ENV{'CIAO_LOG_LEVEL'}=9;
-$ENV{'TAO_debug_level'}=5;
-$ENV{'DANCE_TRACE_ENABLE'}=1;
-$ENV{'CIAO_TRACE_ENABLE'}=1;
+#$ENV{'CIAO_LOG_LEVEL'}=9;
+#$ENV{'TAO_orbdebug'}=2;
+#$ENV{'DANCE_TRACE_ENABLE'}=1;
+#$ENV{'CIAO_TRACE_ENABLE'}=1;
 
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
 $TAO_ROOT = "$ENV{'TAO_ROOT'}";
@@ -120,7 +120,7 @@ sub run_node_daemons {
         $node_app = $tg_daemons[$i]->GetArchDir("$DANCE_ROOT/bin/") . "dance_locality_manager";
 
         $d_cmd = "$DANCE_ROOT/bin/dance_node_manager";
-        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService -ORBDebug";
+        $d_param = "-ORBEndpoint $iiop -s $node_app -n $nodename=$iorfile -t 30 --domain-nc corbaloc:rir:/NameService ";
         print "Run dance_node_manager with $d_param\n";
 
         $DEAMONS[$i] = $tg_daemons[$i]->CreateProcess ($d_cmd, $d_param);
@@ -182,7 +182,7 @@ $daemons_running = 1;
 # Invoke execution manager.
 print "Invoking execution manager (dance_execution_manager.exe) with -e$ior_emfile\n";
 $EM = $tg_exe_man->CreateProcess ("$DANCE_ROOT/bin/dance_execution_manager",
-                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService ");
+                                    "-e$ior_emfile --domain-nc corbaloc:rir:/NameService");
 $em_status = $EM->Spawn ();
 
 if ($em_status != 0) {

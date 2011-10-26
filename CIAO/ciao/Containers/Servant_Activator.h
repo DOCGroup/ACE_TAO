@@ -20,7 +20,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
+/*
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 #include "ciao/Containers/CIAO_Servant_ActivatorC.h"
@@ -44,7 +44,7 @@ namespace CIAO
    * list of port activators registered, uses the OID to pick the
    * right one (yes a linear algorithm is used), calls activate () on
    * it which returns the servant for *that* port.
-   */
+   *//*
   class CIAO_SERVANT_ACTIVATOR_Export Servant_Activator_i
     : public virtual ::CIAO::Servant_Activator,
       public virtual ::CORBA::LocalObject
@@ -66,7 +66,7 @@ namespace CIAO
      * methods, please PortableServer documentation. This is probably
      * not the place to document what these mean.
      */
-    virtual PortableServer::Servant incarnate (
+/*    virtual PortableServer::Servant incarnate (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa);
 
@@ -92,7 +92,7 @@ namespace CIAO
     TAO_SYNCH_MUTEX  mutex_;
   };
 }
-
-#include /**/ "ace/post.h"
+*/
+//#include /**/ "ace/post.h"
 
 #endif /*CIAO_SERVANT_ACTIVATOR_H*/
