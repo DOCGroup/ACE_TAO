@@ -1,3 +1,8 @@
+Wed Oct 26 09:44:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
+	  Merged Will's solution for compile issues on windows.
+
 
 Local Variables:
 mode: change-log
