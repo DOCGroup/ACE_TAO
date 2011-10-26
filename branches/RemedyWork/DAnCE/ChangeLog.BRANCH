@@ -1,7 +1,12 @@
+Wed Oct 26 10:13:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
+          Using the correct dynamic flag now.
+
 Wed Oct 26 09:44:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
-	  Merged Will's solution for compile issues on windows.
+          Merged Will's solution for compile issues on windows.
 
 
 Local Variables:
