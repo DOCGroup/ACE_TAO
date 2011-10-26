@@ -31,6 +31,10 @@ be_visitor_executor_exs::~be_visitor_executor_exs (void)
 int
 be_visitor_executor_exs::visit_operation (be_operation *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
@@ -49,6 +53,10 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 int
 be_visitor_executor_exs::visit_attribute (be_attribute *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
@@ -140,6 +148,10 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 int
 be_visitor_executor_exs::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   node_ = node;
   const char *lname = node->local_name ();
 
@@ -183,6 +195,10 @@ be_visitor_executor_exs::visit_component (be_component *node)
   if (ai_visitor.attr_generated ())
     {
       os_ << be_uidt << be_uidt_nl;
+    }
+  else
+    {
+      os_ << be_nl;
     }
 
   os_ << "{" << be_nl
@@ -319,6 +335,75 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
       << "}";
+  AST_Component *base = node->base_component ();
+  if (base != 0)
+    {
+      os_ << be_nl_2
+          << "// Operations from base classes."
+          << be_nl;
+
+      os_ << "::CORBA::Boolean" << be_nl
+          << lname << "_exec_i::_is_a (const char *value)" << be_nl;
+
+      os_ << "{" << be_idt_nl
+          << "::CORBA::Boolean ret = "
+          << lname << "_Exec::_is_a (value);"
+          << be_nl_2;
+
+      os_ << "if (" << be_idt << be_idt_nl;
+
+      status = node->gen_is_a_ancestors (&os_);
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("be_visitor_interface_cs::")
+                            ACE_TEXT ("visit_interface - ")
+                            ACE_TEXT ("gen_is_a_ancestors() failed\n")),
+                            -1);
+        }
+
+      os_ << ")" << be_nl
+          << "{" << be_idt_nl
+          << "ret |= true; // success using local knowledge" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl;
+
+      if (node->is_abstract () || node->is_local ())
+        {
+          os_ << "ret |= false;" << be_uidt_nl;
+        }
+      else
+        {
+          os_ << "ret = this->::CORBA::Object::_is_a (value);" << be_uidt_nl;
+        }
+
+      os_ << "}" << be_uidt_nl
+          << "return ret;" << be_uidt_nl
+          << "}" << be_nl_2;
+
+      os_ << "const char* " << lname
+          << "_exec_i::_interface_repository_id (void) const"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return \"" << node->repoID ()
+          << "\";" << be_uidt_nl
+          << "}";
+
+      bool is_loc = node->is_local ();
+
+      os_ << be_nl_2
+          << "::CORBA::Boolean" << be_nl
+          << lname << "_exec_i::marshal (TAO_OutputCDR &"
+          << (is_loc ? " /* " : "") << "cdr"
+          << (is_loc ? " */" : "") << ")" << be_nl
+          << "{" << be_idt_nl
+          << "return "
+          << (is_loc ? "false" : "(cdr << this)")
+          << ";" << be_uidt_nl
+          << "}";
+    }
 
   return 0;
 }
@@ -326,6 +411,10 @@ be_visitor_executor_exs::visit_component (be_component *node)
 int
 be_visitor_executor_exs::visit_provides (be_provides *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
@@ -374,6 +463,10 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
 int
 be_visitor_executor_exs::visit_consumes (be_consumes *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   be_eventtype *obj = node->consumes_type ();
   const char *port_name = node->local_name ()->get_string ();
 

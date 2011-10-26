@@ -30,7 +30,24 @@ be_visitor_component_exh::~be_visitor_component_exh (void)
 int
 be_visitor_component_exh::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   this->node_ = node;
+  AST_Component *base = node->base_component ();
+  if (base != 0)
+    {
+      ACE_CString tmp (base->file_name ());
+      ACE_String_Base_Const::size_type ext = tmp.find (".idl");
+      ACE_String_Base_Const::size_type first = tmp.find(ACE_DIRECTORY_SEPARATOR_STR_A) + 1;
+      tmp = tmp.substring(first, ext - first);
+      os_ << be_nl_2
+          << "#include \""
+          << tmp.c_str ()
+          << "_exec.h\"";
+    }
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.
   /// Now we use 'CIAO_' + component's flat name.

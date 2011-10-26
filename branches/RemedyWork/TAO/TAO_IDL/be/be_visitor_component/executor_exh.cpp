@@ -11,6 +11,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
@@ -32,6 +33,11 @@ be_visitor_executor_exh::~be_visitor_executor_exh (void)
 int
 be_visitor_executor_exh::visit_attribute (be_attribute *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
@@ -49,6 +55,10 @@ be_visitor_executor_exh::visit_attribute (be_attribute *node)
 int
 be_visitor_executor_exh::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   this->node_ = node;
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -57,6 +67,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
   // No _cxx_ prefix.
   const char *lname =
     node->original_local_name ()->get_string ();
+  AST_Component *base = node->base_component ();
 
   const char *global = (sname_str == "" ? "" : "::");
 
@@ -67,11 +78,36 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << comment_end_border_;
 
   os_ << be_nl_2
-      << "class " << lname
+      << "class ";
+
+  if (base == 0)
+    {
+      // since some other class might be derived from this one,
+      // we need to export it...
+      // TODO: determine whether we are base component of other
+      // components..... If so, we need to export our class,
+      // otherwise we don't
+      os_ << export_macro_.c_str () << " ";
+    }
+  os_ << lname
       << "_exec_i" << be_idt_nl
-      << ": public virtual " << lname << "_Exec," << be_idt_nl
-      << "public virtual ::CORBA::LocalObject"
-      << be_uidt << be_uidt_nl
+      << ": public virtual " << lname << "_Exec," << be_idt_nl;
+
+  if (base == 0)
+    {
+      // Derive in a standard way
+      os_ << "public virtual ::CORBA::LocalObject";
+    }
+  else
+    {
+      // Derive from the base implementation
+      os_ << "public virtual ::CIAO_"
+          << base->flat_name ()
+          << "_Impl::"
+          << base->original_local_name ()->get_string ()
+          << "_exec_i";
+    }
+  os_ << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
@@ -120,8 +156,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_
-      << "/** @name Operations from Components::" << be_global->ciao_container_type ()
+  os_ << "/** @name Operations from Components::" << be_global->ciao_container_type ()
       << "Component. */" << be_nl
       << "//@{";
 
@@ -148,6 +183,31 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   os_ << be_nl
       << "//@}";
+
+  if (base != 0)
+    {
+      // we need to satify the compilers by generating _is_a, marshal and .. methods
+      os_ << be_nl_2
+          << "/** @name Operations from base classes */" << be_nl
+          << "//@{" << be_nl;
+
+      // The _is_a method
+      os_ << "virtual ::CORBA::Boolean _is_a (const char *type_id);"
+          << be_nl;
+
+      // The _interface_repository_id method.
+      os_ << "virtual const char* _interface_repository_id "
+          << "(void) const;";
+
+      // The virtual marshal method, to prevent marshal of local iterfaces.
+      os_ << be_nl
+          << "virtual ::CORBA::Boolean marshal "
+          << "(TAO_OutputCDR &cdr);";
+
+      os_ << be_nl
+          << "//@}";
+
+    }
 
   os_ << be_nl_2
       << "/** @name User defined public operations. */" << be_nl
@@ -219,6 +279,10 @@ be_visitor_executor_exh::visit_component (be_component *node)
 int
 be_visitor_executor_exh::visit_provides (be_provides *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
@@ -246,6 +310,10 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 int
 be_visitor_executor_exh::visit_consumes (be_consumes *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   const char *obj_name =
     node->consumes_type ()->full_name ();
 

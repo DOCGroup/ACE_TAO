@@ -32,6 +32,11 @@ be_visitor_facet_exh::~be_visitor_facet_exh (void)
 int
 be_visitor_facet_exh::visit_provides (be_provides *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   be_type *impl = node->provides_type ();
   const char *iname =
     impl->original_local_name ()->get_string ();
