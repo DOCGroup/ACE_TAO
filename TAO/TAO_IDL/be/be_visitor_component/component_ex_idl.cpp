@@ -89,10 +89,24 @@ be_visitor_component_ex_idl::visit_component (
 
   os_ << "local interface " << lname << "_Exec" << be_idt_nl
       << ": " << global << sname << "::CCM_" << lname
-      << "," << be_idt_nl
-      << "::Components::" << be_global->ciao_container_type ()
-      << "Component" << be_uidt << be_uidt_nl
-      << "{" << be_nl
+      << "," << be_idt_nl;
+
+  AST_Component *base = node->base_component ();
+
+  if (base == 0)
+    {
+      os_ << "::Components::" << be_global->ciao_container_type ()
+          << "Component" << be_uidt << be_uidt_nl;
+    }
+  else
+    {
+      os_ << "::CIAO_" << base->flat_name ()
+          << "_Impl::"
+          << base->original_local_name ()->get_string ()
+          << "_Exec" << be_uidt << be_uidt_nl;
+    }
+
+  os_ << "{" << be_nl
       << "};";
 
   os_ << be_uidt_nl

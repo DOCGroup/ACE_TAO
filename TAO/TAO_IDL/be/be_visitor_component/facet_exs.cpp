@@ -75,6 +75,11 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
 int
 be_visitor_facet_exs::visit_provides (be_provides *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   be_type *impl = node->provides_type ();
 
   ACE_CString lname_str (this->ctx_->port_prefix ());
