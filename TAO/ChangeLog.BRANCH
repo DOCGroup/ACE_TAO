@@ -1,0 +1,13 @@
+Wed Oct 26 07:18:40 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        Remove include files for ciao servant- and port_activator.
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        Changes for removing activators in CIAO
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
