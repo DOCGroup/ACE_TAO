@@ -293,55 +293,41 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
     }
 
   os_ << be_nl_2
-      << "void" << be_nl
-      << node_->local_name () << "_Servant::setup_"
-      << port_name << "_i (void)" << be_nl
-      << "{" << be_idt_nl
-      << "typedef" << be_idt_nl
-      << "::CIAO::Port_Activator_T<" << be_idt_nl
-      << "::CIAO_FACET" << prefix_connector
-      << scope->flat_name () << "::" << lname
-      << "_Servant," << be_nl
-      << global << sname << "::CCM_" << lname << "," << be_nl
-      << "::Components::CCMContext," << be_nl
-      << node_->local_name () << "_Servant>" << be_uidt_nl
-      << "MACRO_MADNESS_TYPEDEF;" << be_uidt_nl << be_nl
-      << "MACRO_MADNESS_TYPEDEF * tmp = 0;" << be_nl
-      << "ACE_CString obj_id (this->ins_name_);" << be_nl
-      << "obj_id += \"_" << port_name << "\";" << be_nl_2
-      << "ACE_NEW_THROW_EX (" << be_idt_nl
-      << "tmp," << be_nl
-      << "MACRO_MADNESS_TYPEDEF (" << be_idt_nl
-      << "obj_id.c_str ()," << be_nl
-      << "\"" << port_name << "\"," << be_nl
-      << "::CIAO::Port_Activator_Types::FACET," << be_nl
-      << "0," << be_nl
-      << "this->context_," << be_nl
-      << "this)," << be_uidt_nl
-      << "::CORBA::NO_MEMORY ());" << be_uidt_nl << be_nl
-      << "::CIAO::Port_Activator_var pa = tmp;" << be_nl_2
-      << "::CIAO::Container_var cnt_safe =" << be_idt_nl
-      << "::CIAO::Container::_duplicate ("
-      << "this->container_.in ());" << be_uidt_nl << be_nl
-      << "if (::CORBA::is_nil (cnt_safe.in ()))" << be_idt_nl
-      << "{" << be_idt_nl << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::CIAO::Servant_Activator_var sa =" << be_idt_nl
-      << "cnt_safe->ports_servant_activator ();"
-      << be_uidt_nl << be_nl
-      << "if (sa->register_port_activator (pa.in ()))"
-      << be_idt_nl
-      << "{" << be_idt_nl
-      << "::CORBA::Object_var obj =" << be_idt_nl
-      << "cnt_safe->generate_reference (" << be_idt_nl
-      << "obj_id.c_str ()," << be_nl
-      << "\"" << obj->repoID () << "\"," << be_nl
-      << "::CIAO::Container_Types::FACET_CONSUMER_t);"
-      << be_uidt_nl << be_uidt_nl
-      << "this->add_facet (\"" << port_name << "\", obj.in ());"
-      << be_uidt_nl
-      << "}" << be_uidt << be_uidt_nl
-      << "}";
+        << "void" << be_nl
+        << node_->local_name () << "_Servant::setup_"
+        << port_name << "_i (void)" << be_nl
+        << "{" << be_idt_nl
+        << "ACE_CString obj_id (this->ins_name_);" << be_nl
+        << "obj_id += \"_" << port_name << "\";" << be_nl_2
+        << "::CIAO::Container_var cnt_safe =" << be_idt_nl
+        << "::CIAO::Container::_duplicate ("
+        << "this->container_.in ());" << be_uidt_nl << be_nl
+        << "if (::CORBA::is_nil (cnt_safe.in ()))" << be_idt_nl
+        << "{" << be_idt_nl << "throw ::CORBA::INV_OBJREF ();" << be_uidt_nl
+        << "}" << be_uidt_nl << be_nl
+        << "PortableServer::POA_var POA = cnt_safe->the_port_POA ();" << be_nl
+        << "::CORBA::Object_var tmp =" << be_idt_nl
+        << "this->get_facet_executor (\"" << port_name << "\");"<< be_uidt_nl << be_nl
+        << "::CIAO_FACET" << prefix_connector
+        << scope->flat_name () << "::" << lname
+        << "_Servant *" << port_name << "_servant_impl = " << be_idt_nl
+        << "new ::CIAO_FACET" << prefix_connector
+        << scope->flat_name () << "::" << lname
+        << "_Servant ("<< global << sname << "::CCM_" << lname << "::_narrow (tmp.in())," << be_nl
+        << "this->context_);" << be_uidt_nl << be_nl
+        << "PortableServer::ObjectId_var " << port_name << "_servant_oid =" << be_idt_nl
+        << "PortableServer::string_to_ObjectId (obj_id.c_str());" << be_uidt_nl << be_nl
+        << "POA->activate_object_with_id(" << port_name << "_servant_oid.in(),"
+        <<  port_name << "_servant_impl);" << be_nl
+        << "::CORBA::Object_var " << port_name << "_servant_impl_obj = " << be_idt_nl
+        << "cnt_safe->generate_reference ( " << be_idt_nl
+        << "obj_id.c_str ()," << be_nl
+        << "\"" << obj->repoID () << "\"," << be_nl
+        << "::CIAO::Container_Types::FACET_CONSUMER_t);"
+        << be_uidt_nl << be_uidt_nl
+        << "this->add_facet (\"" << port_name << "\", " << port_name << "_servant_impl_obj.in ());"
+        << be_uidt_nl
+        << "}";
 
   return 0;
 }
