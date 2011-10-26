@@ -42,11 +42,12 @@ namespace CIAO
 
           CIAO::Servant_Activator_var sa =
             cnt_safe->ports_servant_activator ();
-
+/*
           if (!CORBA::is_nil (sa.in ()))
             {
               sa->update_port_activator (cons_id.in ());
             }
+*/
         }
     }
     catch (const CORBA::Exception& ex)

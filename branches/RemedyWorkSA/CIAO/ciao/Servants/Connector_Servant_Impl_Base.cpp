@@ -3,7 +3,7 @@
 #include "Connector_Servant_Impl_Base.h"
 #include "StandardConfigurator_Impl.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ciao/Containers/CIAO_Servant_ActivatorC.h"
+//#include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
 namespace CIAO
 {
@@ -52,13 +52,14 @@ namespace CIAO
 
             port_poa->deactivate_object (facet_id);
 
-            CIAO::Servant_Activator_var sa =
+/*            CIAO::Servant_Activator_var sa =
               cnt_safe->ports_servant_activator ();
 
             if (!CORBA::is_nil (sa.in ()))
               {
                 sa->update_port_activator (facet_id.in ());
               }
+ */
           }
       }
 

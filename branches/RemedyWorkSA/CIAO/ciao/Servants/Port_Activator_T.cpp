@@ -2,7 +2,7 @@
 
 #ifndef CIAO_PORT_ACTIVATOR_T_CPP
 #define CIAO_PORT_ACTIVATOR_T_CPP
-
+/*
 #include "Port_Activator_T.h"
 #include "tao/CORBA_String.h"
 
@@ -78,5 +78,5 @@ namespace CIAO
     throw ::CORBA::OBJECT_NOT_EXIST ();
   }
 }
-
+*/
 #endif /*SERVANT_ACTIVATOR_T_CPP*/

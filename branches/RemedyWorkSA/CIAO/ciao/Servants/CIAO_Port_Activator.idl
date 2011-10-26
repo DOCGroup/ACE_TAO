@@ -4,7 +4,7 @@
  * $Id$
  * Local interface describing servant activators for component ports.
  */
-
+/*
 #ifndef CIAO_PORT_ACTIVATOR_IDL_
 #define CIAO_PORT_ACTIVATOR_IDL_
 
@@ -37,3 +37,4 @@ module CIAO
 };
 
 #endif
+*/

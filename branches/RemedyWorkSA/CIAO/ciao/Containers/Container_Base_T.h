@@ -113,7 +113,7 @@ namespace CIAO
 
     /// Return the servant activator factory that activates the
     /// servants for facets and consumers.
-    virtual ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
+//    virtual ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
 
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
 
@@ -149,7 +149,7 @@ namespace CIAO
 
     /// The servant activator factory used to activate facets and
     /// consumer servants.
-    Servant_Activator_var sa_;
+ //   Servant_Activator_var sa_;
 
     /// Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type t);

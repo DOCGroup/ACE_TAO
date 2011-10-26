@@ -1,5 +1,5 @@
 // $Id$
-
+/*
 #include "Servant_Activator.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/PortableServer/PortableServer_Functions.h"
@@ -172,3 +172,4 @@ namespace CIAO
     return true;
   }
 }
+*/
