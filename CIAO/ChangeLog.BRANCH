@@ -1,0 +1,47 @@
+
+Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * MPC/config/ciao_extension_container.mpb:
+        * MPC/config/ciao_extension_container_stub.mpb:
+        * MPC/config/ciao_servant.mpb:
+        * MPC/config/ciao_session_container.mpb:
+        * MPC/config/ciao_session_container_stub.mpb:
+        * ciao/Containers/Containers.mpc:
+        * ciao/Containers/Extension/Extension_Container.mpc:
+       * ciao/Containers/Session/Session_Container.mpc:
+        Remove ciao_port_activator_stub and cia_servant_activator_stub
+
+        * ciao/Containers/CIAO_Servant_Activator.idl:
+        * ciao/Containers/CIAO_Servant_Activator.mpc:
+        * ciao/Containers/Servant_Activator.h:
+        * ciao/Containers/Servant_Activator.cpp:
+        * ciao/Servants/Port_Activator_T.cpp:
+       * ciao/Servants/CIAO_Port_Activator.idl:
+        Deactivate content. Later on if build successfull delete files
+
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servants.mpc:
+        Disable Servant_Activator and Port_Activator functionality,
+        Later on if build successfull delete lines
+ 
+        * tests/Collocation/Coll_Base/Base.mpc:
+        * tests/Collocation/Receiver/Receiver.mpc:
+        * tests/Collocation/Sender/Sender.mpc:
+        Remove avoids_no_events and -GD (already global defined)
+
+        * tests/Collocation/descriptors/run_test.pl:
+        Disable debug logs
+
+        * bin/ciao_tests.lst:
+        Add CIAO/tests/Collocation  
+
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
