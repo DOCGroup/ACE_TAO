@@ -1,3 +1,8 @@
+Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
+
+        * ciao/Containers/Containers.mpc:
+       Remove ciao_port_activator_stub and cia_servant_activator_stub
+
 
 Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
 
@@ -8,7 +13,7 @@ Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * MPC/config/ciao_session_container_stub.mpb:
         * ciao/Containers/Containers.mpc:
         * ciao/Containers/Extension/Extension_Container.mpc:
-       * ciao/Containers/Session/Session_Container.mpc:
+        * ciao/Containers/Session/Session_Container.mpc:
         Remove ciao_port_activator_stub and cia_servant_activator_stub
 
         * ciao/Containers/CIAO_Servant_Activator.idl:
@@ -16,7 +21,7 @@ Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <hengstmengel_m@remedy.nl>
         * ciao/Containers/Servant_Activator.h:
         * ciao/Containers/Servant_Activator.cpp:
         * ciao/Servants/Port_Activator_T.cpp:
-       * ciao/Servants/CIAO_Port_Activator.idl:
+        * ciao/Servants/CIAO_Port_Activator.idl:
         Deactivate content. Later on if build successfull delete files
 
         * ciao/Containers/Container_Base.idl:
