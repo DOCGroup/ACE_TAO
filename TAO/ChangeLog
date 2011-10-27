@@ -1,3 +1,11 @@
+Thu Oct 27 16:16:09 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Log.cpp:
+
+          Clean up treatment of connection closure and reuse of handles.
+
 Thu Oct 27 12:13:40 UTC 2011  Simon Massey <sma at prismtech dot com>
 
         * tao/PI_Server/PI_Server_include.pidl:
