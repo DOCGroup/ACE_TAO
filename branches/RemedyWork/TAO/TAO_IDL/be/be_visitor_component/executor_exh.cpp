@@ -184,31 +184,6 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl
       << "//@}";
 
-  if (base != 0)
-    {
-      // we need to satify the compilers by generating _is_a, marshal and .. methods
-      os_ << be_nl_2
-          << "/** @name Operations from base classes */" << be_nl
-          << "//@{" << be_nl;
-
-      // The _is_a method
-      os_ << "virtual ::CORBA::Boolean _is_a (const char *type_id);"
-          << be_nl;
-
-      // The _interface_repository_id method.
-      os_ << "virtual const char* _interface_repository_id "
-          << "(void) const;";
-
-      // The virtual marshal method, to prevent marshal of local iterfaces.
-      os_ << be_nl
-          << "virtual ::CORBA::Boolean marshal "
-          << "(TAO_OutputCDR &cdr);";
-
-      os_ << be_nl
-          << "//@}";
-
-    }
-
   os_ << be_nl_2
       << "/** @name User defined public operations. */" << be_nl
       << "//@{";
