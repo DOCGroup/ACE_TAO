@@ -9,7 +9,8 @@
 
 PeerNode::PeerNode (long h, PeerProcess *p)
   :handle_ (h),
-   peer_ (p)
+   peer_ (p),
+   closed_ (false)
 {
 }
 
@@ -100,8 +101,8 @@ HostProcess::find_peer (const ACE_CString &addr)
   return pp;
 }
 
-PeerProcess *
-HostProcess::find_peer (long h)
+PeerNode *
+HostProcess::find_peer_i (long h)
 {
   if (this->by_handle_.size() == 0)
     return 0;
@@ -111,8 +112,19 @@ HostProcess::find_peer (long h)
     {
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
-        return node->peer_;
+        return node;
     }
+
+  return 0;
+}
+
+
+PeerProcess *
+HostProcess::find_peer (long h, bool ignore_closed)
+{
+  PeerNode *node = this->find_peer_i (h);
+  if (node != 0 && !(ignore_closed && node->closed_) )
+    return node->peer_;
   return 0;
 }
 
@@ -155,8 +167,8 @@ void
 HostProcess::add_peer(long handle, PeerProcess *peer)
 {
   peer->set_owner (this);
-  PeerProcess *existing = this->find_peer(handle);
-  if (existing != 0)
+  PeerNode *node = this->find_peer_i(handle);
+  if (node != 0 && !node->closed_ )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "add_peer, found existing for %d\n",
@@ -164,15 +176,29 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
     }
   const ACE_CString &addr = peer->is_server() ?
     peer->server_addr() : peer->last_client_addr();
+  errno = 0;
+
   int result = this->by_addr_.bind (addr,peer);
-  if (result != 0)
-    ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s %p\n", addr.c_str(), "by_addr_.bind"));
-  PeerNode *node = new PeerNode (handle,peer);
-  this->by_handle_.insert_tail(node);
+  if (result == -1)
+    {
+      ACE_ERROR ((LM_ERROR,"add_peer, cannot bind handle %d to addr %s %p\n",
+                  handle, addr.c_str(), "by_addr_.bind"));
+    }
+
+  if (node == 0)
+    {
+      node = new PeerNode (handle,peer);
+      this->by_handle_.insert_tail(node);
+    }
+  else
+    {
+      node->closed_ = false;
+      node->peer_ = peer;
+    }
 }
 
 void
-HostProcess::remove_peer(long h)
+HostProcess::close_peer(long h)
 {
   if (this->by_handle_.size() == 0)
     return;
@@ -183,7 +209,7 @@ HostProcess::remove_peer(long h)
       PeerNode *node = reinterpret_cast<PeerNode *>(i.next()->item_);
       if (node->handle_ == h)
         {
-          this->by_handle_.remove(i.next());
+          node->closed_ = true;
           return;
         }
     }
