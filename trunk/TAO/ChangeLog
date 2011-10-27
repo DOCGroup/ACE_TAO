@@ -1,3 +1,9 @@
+Thu Oct 27 12:13:40 UTC 2011  Simon Massey <sma at prismtech dot com>
+
+        * tao/PI_Server/PI_Server_include.pidl:
+        Was duplicating the tao/PortableServer/PortableServer_include.pidl
+        #define guard name.
+
 Tue Oct 25 08:10:00 UTC 2011  Marijke Hengstmengel <mhengstmengel@remedy.nl>
 
         * tests/POA/On_Demand_Act_Direct_Coll/Client_Task.cpp:

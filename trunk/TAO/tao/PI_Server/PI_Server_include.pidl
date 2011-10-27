@@ -6,8 +6,8 @@
  * @brief Include file for use in applications that need PI_Server.pidl.
  */
 
-#ifndef _PORTABLESERVER_INCLUDE_IDL_
-#define _PORTABLESERVER_INCLUDE_IDL_
+#ifndef _PI_SERVER_INCLUDE_IDL_
+#define _PI_SERVER_INCLUDE_IDL_
 
 // This pragma is here to make the Visual Age preprocessor generate #line
 // output for this file before the files it includes.
@@ -16,4 +16,4 @@
 ///FUZZ: disable check_for_include/
 #include "tao/PI_Server/ServerRequestInterceptor.pidl"
 
-#endif /* _PORTABLESERVER_INCLUDE_IDL_ */
+#endif /* _PI_SERVER_INCLUDE_IDL_ */
