@@ -1,3 +1,10 @@
+Thu Oct 27 08:05:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Removed the overrides of _is_a, marshal and _repository_id since
+          these methods are not needed anymore.
+
 Wed Oct 26 13:38:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
@@ -11,10 +18,10 @@ Wed Oct 26 13:38:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
           Fixed issues regarding derived components. Derived component
           were not derived from the base implementation. Instead of deriving
-          from the base implementation, a whole new base executor was 
+          from the base implementation, a whole new base executor was
           generated and still wasn't derived from this. Now there's
           one base implementation where the derived executor is derived from.
-          
+
         * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
           Fixed compile issues when a derived interface supports
           another interface.
