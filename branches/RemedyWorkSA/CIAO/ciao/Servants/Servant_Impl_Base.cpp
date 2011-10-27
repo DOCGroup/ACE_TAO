@@ -40,9 +40,9 @@ namespace CIAO
 
           port_poa->deactivate_object (cons_id);
 
-          CIAO::Servant_Activator_var sa =
+/*          CIAO::Servant_Activator_var sa =
             cnt_safe->ports_servant_activator ();
-/*
+
           if (!CORBA::is_nil (sa.in ()))
             {
               sa->update_port_activator (cons_id.in ());
