@@ -124,6 +124,7 @@ namespace CIAO
   /// Implementation skeleton constructor
   CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i (void)
   {
+    this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
   }
 
   /// Implementation skeleton destructor
@@ -132,10 +133,53 @@ namespace CIAO
   }
 
   void
-  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &,
-                                       ::CORBA::ULong,
-                                       ::CORBA::Any &)
+  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &plan,
+                                       ::CORBA::ULong connRef,
+                                       ::CORBA::Any &providedRef)
   {
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                    "CIAO_ReferenceLookup_i::pre_connect - "
+                    "Interceptor pre connect for connection %C\n",
+                     plan.connection[connRef].name.in ()));
+
+    // attempt to resolve CORBA IOR type external references
+    if (plan.connection[connRef].externalReference.length () > 0)
+      {
+        ::CORBA::Object_var obj;
+        providedRef >>= CORBA::Any::to_object (obj);
+        if (CORBA::is_nil (obj))
+          {
+            try
+              {
+                obj = this->orb_->string_to_object(plan.connection[connRef].externalReference[0].location.in());
+                providedRef <<= obj;
+              }
+            catch (const CORBA::INV_OBJREF&)
+              {
+                CIAO_ERROR (6, (LM_INFO, CLINFO
+                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                                ACE_TEXT("Unable to resolve external reference for connection %C\n"),
+                                plan.connection[connRef].name.in ()));
+              }
+            catch (CORBA::Exception &ex)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                                ACE_TEXT("Caught CORBA Exception while resolving external reference for connection %C: %C\n"),
+                                plan.connection[connRef].name.in (),
+                                ex._info ().c_str ()));
+                throw;
+              }
+            catch (...)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                                ACE_TEXT("Caught C++ Exception while resolving external reference for connection %C\n"),
+                                plan.connection[connRef].name.in ()));
+                throw;
+              }
+          }
+      }
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
@@ -156,5 +200,11 @@ extern "C"
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void)
   {
     return new CIAO::CIAO_StoreReferences_i ();
+  }
+
+  ::DAnCE::DeploymentInterceptor_ptr
+  CIAO_Deployment_Interceptors_Export create_CIAO_ReferenceLookup (void)
+  {
+    return new CIAO::CIAO_ReferenceLookup_i ();
   }
 }
