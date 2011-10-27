@@ -1,3 +1,15 @@
+Thu Oct 27 10:10:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        
+          Changed basic CIAO_ReferenceLookup_i to attempt handling resolving 
+          externalReference endpoints as CORBA IOR type references.
+          Added factory method for creating interceptor. 
+
+        * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
+        
+          Change to allow overruling CIAO_LOG_LEVEL from commandline.
 
 Local Variables:
 mode: change-log
