@@ -1,3 +1,8 @@
+Fri Oct 28 15:00:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+          Fixed link issue on windows.
+
 Fri Oct 28 14:55:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
