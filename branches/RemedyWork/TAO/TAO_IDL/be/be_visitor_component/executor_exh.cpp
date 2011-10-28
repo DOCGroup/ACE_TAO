@@ -254,10 +254,6 @@ be_visitor_executor_exh::visit_component (be_component *node)
 int
 be_visitor_executor_exh::visit_provides (be_provides *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
@@ -285,10 +281,6 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 int
 be_visitor_executor_exh::visit_consumes (be_consumes *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   const char *obj_name =
     node->consumes_type ()->full_name ();
 
