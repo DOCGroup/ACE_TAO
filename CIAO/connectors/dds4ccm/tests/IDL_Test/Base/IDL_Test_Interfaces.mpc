@@ -80,3 +80,28 @@ project(IDL_Test_Interfaces_stub) : ccm_stub   {
   }
 }
 
+project(IDL_Test_Interfaces_svnt) : ccm_svnt {
+  after += IDL_Test_Interfaces_idl_gen IDL_Test_Interfaces_stub
+  libs  += IDL_Test_Interfaces_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = IDL_Test_Interfaces_svnt
+  dynamicflags += IDL_TEST_INTERFACES_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    IDL_Test_InterfacesS.cpp
+  }
+
+  Header_Files {
+    IDL_Test_InterfacesS.h
+    IDL_Test_Interfaces_svnt_export.h
+  }
+
+  Inline_Files {
+    IDL_Test_InterfacesS.inl
+  }
+}

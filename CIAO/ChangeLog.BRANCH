@@ -1,3 +1,10 @@
+Fri Oct 28 15:55:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Interfaces.mpc:
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+          Fixed compile and link issues on windows
+
 Fri Oct 28 15:04:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:

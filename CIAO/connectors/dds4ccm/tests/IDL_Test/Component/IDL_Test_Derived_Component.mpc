@@ -36,11 +36,13 @@ project(DDS_IDL_Test_Derived_Component_lem_stub) : ccm_svnt, dds4ccm_base {
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Base_stub \
             IDL_Test_Interfaces_stub \
-            IDL_Test_Interfaces_lem_stub
+            IDL_Test_Interfaces_lem_stub \
+			DDS_IDL_Test_Base_Component_lem_stub
   libs  +=  Derived_Component_stub \
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Base_stub \
-            IDL_Test_Interfaces_stub
+            IDL_Test_Interfaces_stub \
+            Base_Component_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -104,14 +106,20 @@ project(DDS_IDL_Test_Derived_Component_exec) : ciao_executor, dds4ccm_lem_stub {
             DDS_IDL_Test_Base_stub \
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_lem_stub \
-            DDS_IDL_Test_Base_Component_exec
+            DDS_IDL_Test_Base_Component_exec \
+            DDS_IDL_Test_Base_Component_lem_stub \
+            IDL_Test_Interfaces_lem_stub \
+            IDL_Test_Interfaces_lem
   sharedname = Derived_Component_exec
   libs +=   Derived_Component_stub \
             Derived_Component_lem_stub \
             DDS_IDL_Test_Base_stub \
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_lem_stub \
-            Base_Component_exec
+            Base_Component_exec \
+            Base_Component_lem_stub \
+            IDL_Test_Interfaces_lem_stub \
+            IDL_Test_Interfaces_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -140,7 +148,13 @@ project(DDS_IDL_Test_Derived_Component_svnt) : ciao_servant, dds4ccm_lem_stub, d
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_svnt \
             DDS_IDL_Test_Derived_Component_exec \
-            DDS_IDL_Test_Connector_lem_stub
+            DDS_IDL_Test_Connector_lem_stub \
+            IDL_Test_Interfaces_stub \
+            IDL_Test_Interfaces_lem_stub \
+            IDL_Test_Interfaces_svnt \
+            DDS_IDL_Test_Base_Component_svnt \
+            DDS_IDL_Test_Base_Component_lem_stub \
+            DDS_IDL_Test_Base_Component_stub
   sharedname = Derived_Component_svnt
   libs  +=  Derived_Component_stub \
             Derived_Component_lem_stub \
@@ -148,7 +162,14 @@ project(DDS_IDL_Test_Derived_Component_svnt) : ciao_servant, dds4ccm_lem_stub, d
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_svnt \
             Derived_Component_exec \
-            DDS_IDL_Test_Connector_lem_stub
+            DDS_IDL_Test_Connector_lem_stub \
+            IDL_Test_Interfaces_stub \
+            IDL_Test_Interfaces_lem_stub \
+            IDL_Test_Interfaces_svnt \
+            Base_Component_svnt \
+            Base_Component_lem_stub \
+            Base_Component_stub
+            
   libpaths += ../lib
   libout = ../lib
   includes += ..

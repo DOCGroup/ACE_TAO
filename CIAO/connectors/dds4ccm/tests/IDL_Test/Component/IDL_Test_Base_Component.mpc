@@ -98,6 +98,7 @@ project(DDS_IDL_Test_Base_Component_exec) : ciao_executor, dds4ccm_lem_stub {
               DDS_IDL_Test_Base_stub \
               DDS_IDL_Test_Connector_stub \
               DDS_IDL_Test_Connector_lem_stub \
+              IDL_Test_Interfaces_stub \
               IDL_Test_Interfaces_lem_stub
   sharedname = Base_Component_exec
   libs +=   Base_Component_stub \
@@ -105,6 +106,7 @@ project(DDS_IDL_Test_Base_Component_exec) : ciao_executor, dds4ccm_lem_stub {
             DDS_IDL_Test_Base_stub \
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_lem_stub \
+            IDL_Test_Interfaces_stub \
             IDL_Test_Interfaces_lem_stub
   libpaths += ../lib
   libout = ../lib
@@ -134,7 +136,10 @@ project(DDS_IDL_Test_Base_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_svnt \
             DDS_IDL_Test_Base_Component_exec \
-            DDS_IDL_Test_Connector_lem_stub
+            DDS_IDL_Test_Connector_lem_stub \
+            IDL_Test_Interfaces_svnt \
+            IDL_Test_Interfaces_lem_stub \
+            IDL_Test_Interfaces_stub
   sharedname = Base_Component_svnt
   libs +=   Base_Component_stub \
             Base_Component_lem_stub \
@@ -142,7 +147,10 @@ project(DDS_IDL_Test_Base_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Connector_svnt \
             Base_Component_exec \
-            DDS_IDL_Test_Connector_lem_stub
+            DDS_IDL_Test_Connector_lem_stub \
+            IDL_Test_Interfaces_svnt \
+            IDL_Test_Interfaces_lem_stub \
+            IDL_Test_Interfaces_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
