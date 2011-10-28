@@ -1,3 +1,9 @@
+Fri Oct 28 10:35:06 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3531b_Regression/server.cpp:
+        
+          Fix for Windoze runtime problem with TSS.
+
 Fri Oct 28 10:22:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_array.cpp:
