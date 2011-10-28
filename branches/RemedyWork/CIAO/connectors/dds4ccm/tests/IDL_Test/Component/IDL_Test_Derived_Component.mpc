@@ -69,10 +69,12 @@ project(DDS_IDL_Test_Derived_Component_stub) : ccm_stub, dds4ccm_base {
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Base_stub \
             DDS_IDL_Test_Connector_lem_gen \
-            DDS_IDL_Test_Base_Component_stub
+            DDS_IDL_Test_Base_Component_stub \
+            DDS_IDL_Test_Base_Component_lem_stub
   libs  +=  DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Base_stub \
-            Base_Component_stub
+            Base_Component_stub \
+            Base_Component_lem_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
