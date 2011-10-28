@@ -254,7 +254,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
   // automatically converting back to xxx_slice *.
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
-      << "std::ostream &strm, " << be_nl
+      << "std::ostream &strm," << be_nl
       << "const " << arg_name.c_str () << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl

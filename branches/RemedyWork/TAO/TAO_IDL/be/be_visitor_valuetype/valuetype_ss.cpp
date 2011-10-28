@@ -58,7 +58,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
   ACE_CString flat_name_holder =
     this->generate_flat_name (node);
 
-  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Find if we are at the top scope or inside some module,

@@ -154,7 +154,7 @@ be_visitor_root_ch::gen_fwd_decls (void)
   if (idl_global->non_local_iface_seen_)
     {
       *o_ << be_nl_2
-          << "// TAO_IDL - Generated from " << be_nl
+          << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
       *o_ << be_global->core_versioning_begin () << be_nl;

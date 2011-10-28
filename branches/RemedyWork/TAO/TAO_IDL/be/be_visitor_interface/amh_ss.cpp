@@ -62,7 +62,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << non_amh_name.c_str () << "*" << be_nl
@@ -113,7 +113,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void" << be_nl

@@ -255,7 +255,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
       *os << "TAO::Objref_Traits< ::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
-          << this->post_ << ".in (), " << be_nl
+          << this->post_ << ".in ()," << be_nl
           << "strm" << be_uidt_nl
           << ")" << be_uidt;
       break;
@@ -305,7 +305,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
       *os << "TAO::Objref_Traits< ::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
-          << this->post_ << ".in (), " << be_nl
+          << this->post_ << ".in ()," << be_nl
           << "strm" << be_uidt_nl
           << ")" << be_uidt;
       break;
