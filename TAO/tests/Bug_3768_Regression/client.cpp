@@ -2,7 +2,6 @@
 
 #include "TestCallback.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS.h"
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 

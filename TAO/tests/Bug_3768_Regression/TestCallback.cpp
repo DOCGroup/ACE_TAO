@@ -2,7 +2,7 @@
 // $Id: TestCallback.cpp
 //
 #include "TestCallback.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_unistd.h"
 
 TestCallback::TestCallback (CORBA::ORB_ptr orb)
   : work_ (orb)
