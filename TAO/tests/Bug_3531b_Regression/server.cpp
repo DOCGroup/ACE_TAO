@@ -216,7 +216,10 @@ public:
 private:
 };
 
-ACE_FACTORY_DEFINE (TAO, Test_Resource_Factory)
+// force export flag otherwise Windoze will complain
+#define TAO_Test_Export ACE_Proper_Export_Flag
+
+ACE_FACTORY_DEFINE (TAO_Test, Test_Resource_Factory)
 ACE_STATIC_SVC_DEFINE (Test_Resource_Factory,
                        ACE_TEXT ("Resource_Factory"),
                        ACE_SVC_OBJ_T,
