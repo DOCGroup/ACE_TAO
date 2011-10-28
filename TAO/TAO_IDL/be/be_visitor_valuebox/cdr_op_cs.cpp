@@ -49,7 +49,7 @@ be_visitor_valuebox_cdr_op_cs::visit_valuebox (be_valuebox *node)
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &strm, " << be_nl
+      << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->full_name ()
       << " *_tao_valuebox" << be_uidt_nl
       << ")" << be_uidt_nl

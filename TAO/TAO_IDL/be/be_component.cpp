@@ -302,7 +302,7 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
 
       for (long i = 0; i < nsupports; ++i)
         {
-          *os << ", " << be_nl
+          *os << "," << be_nl
               << "public virtual ::"
               << supp_list[i]->name ();
         }

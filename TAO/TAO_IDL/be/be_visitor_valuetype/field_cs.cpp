@@ -307,7 +307,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
   *os << "}" << be_nl_2;
 
   *os << "/// Retrieve the member." << be_nl
-      << this->pre_op () << bt->name () << "_ptr " << be_nl;
+      << this->pre_op () << bt->name () << "_ptr" << be_nl;
 
       this->op_name (bu,
                      os);
@@ -375,7 +375,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
   *os << "}" << be_nl_2;
 
   *os << "/// Retrieve the member" << be_nl
-      << this->pre_op () << bt->name () << "_ptr " << be_nl;
+      << this->pre_op () << bt->name () << "_ptr" << be_nl;
 
   this->op_name (bu,
                  os);

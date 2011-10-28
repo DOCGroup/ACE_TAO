@@ -1,7 +1,67 @@
+Fri Oct 28 10:22:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_component.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/tie_ss.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_template_export.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+          Reduced whitespaces in generated code.
+
+        * TAO_IDL/be/be_visitor_interface/tie_ss.cpp:
+          Removed tabs from generated code.
+
+
 Fri Oct 28 09:23:52 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3531b_Regression/server.cpp:
-        
+
           Fix for Windoze compile problem.
 
 Fri Oct 28 07:36:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>

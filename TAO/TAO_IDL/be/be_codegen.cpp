@@ -647,7 +647,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  *this->server_skeletons_ << be_nl_2 << "// TAO_IDL - Generated from "
+  *this->server_skeletons_ << be_nl_2 << "// TAO_IDL - Generated from"
                            << be_nl << "// " << __FILE__ << ":" << __LINE__
                            << be_nl_2;
 
@@ -721,7 +721,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       return -1;
     }
 
-  *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from "
+  *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from"
                                     << be_nl << "// "
                                     << __FILE__ << ":" << __LINE__
                                     << be_nl_2;
@@ -1489,7 +1489,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       return -1;
     }
 
-  *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from "
+  *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from"
                                 << be_nl << "// "
                                 << __FILE__ << ":" << __LINE__
                                 << be_nl_2;
@@ -1546,7 +1546,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
       return -1;
     }
 
-  *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from "
+  *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from"
                                   << be_nl << "// "
                                   << __FILE__ << ":" << __LINE__
                                   << be_nl_2;
@@ -1743,7 +1743,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 int
 TAO_CodeGen::end_server_template_header (void)
 {
-  *this->server_template_header_ << be_nl_2 << "// TAO_IDL - Generated from "
+  *this->server_template_header_ << be_nl_2 << "// TAO_IDL - Generated from"
                                  << be_nl << "// "
                                  << __FILE__ << ":" << __LINE__ << "\n";
 

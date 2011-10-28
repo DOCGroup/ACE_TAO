@@ -46,7 +46,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
             << " " << node->local_name ()
             << " : public ::CORBA::UserException" << be_nl;
   *os << "{" << be_nl
-      << "public:" << be_idt_nl;
+      << "public:" << be_idt;
 
   // Generate code for field members.
   if (this->visit_scope (node) == -1)
@@ -58,10 +58,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
                         -1);
     }
 
-  *os << be_nl;
-
   // Constructors and destructor.
-  *os << node->local_name () << " (void);" << be_nl
+  *os << be_nl_2
+      << node->local_name () << " (void);" << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl
       << "~" << node->local_name () << " (void);\n" << be_nl;
@@ -86,7 +85,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       << "_tao_duplicate (void) const;\n" << be_nl
       << "virtual void _raise (void) const;\n" << be_nl
       << "virtual void _tao_encode (TAO_OutputCDR &cdr) const;" << be_nl
-      << "virtual void _tao_decode (TAO_InputCDR &cdr);" << be_nl;
+      << "virtual void _tao_decode (TAO_InputCDR &cdr);";
 
   // Generate constructor that takes each member as a parameter. We need a
   // new state. Such a constructor exists if we have members.
