@@ -86,7 +86,8 @@ private:
   bool shutdown_;
 };
 
-ACE_TSS<Worker> workers;
+ACE_TSS<Worker> *workers_p = 0;
+#define workers (*workers_p)
 
 int Worker::svc (void)
 {
@@ -1053,6 +1054,13 @@ void Test_10 (TAO_ORB_Core* orb_core )
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  // scope TSS holder within main scope
+  // so we're certain it gets destroyed before the
+  // ACE object manager
+  ACE_TSS<Worker> workers_;
+  // provide global access
+  workers_p = &workers_;
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
