@@ -1,3 +1,9 @@
+Fri Oct 28 14:49:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+          Fixed afters.
+
 Fri Oct 28 14:18:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/IDL_Test:

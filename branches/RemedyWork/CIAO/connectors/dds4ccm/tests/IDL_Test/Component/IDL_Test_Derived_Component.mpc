@@ -35,7 +35,8 @@ project(DDS_IDL_Test_Derived_Component_lem_stub) : ccm_svnt, dds4ccm_base {
             DDS_IDL_Test_Derived_Component_stub \
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Base_stub \
-            IDL_Test_Interfaces_stub
+            IDL_Test_Interfaces_stub \
+            IDL_Test_Interfaces_lem_stub
   libs  +=  Derived_Component_stub \
             DDS_IDL_Test_Connector_stub \
             DDS_IDL_Test_Base_stub \
