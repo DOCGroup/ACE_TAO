@@ -1,14 +1,25 @@
+Fri Oct 28 14:17:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Component/Extended:
+
+        * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+        * tests/IDL_Test/Inherited_Component/Extended/Base.mpc:
+        * tests/IDL_Test/Inherited_Component/Extended/Derived.idl:
+        * tests/IDL_Test/Inherited_Component/Extended/Derived.mpc:
+        * tests/IDL_Test/Inherited_Component/Extended/Tester.cpp:
+          Compilation test.
+
 Thu Oct 27 10:10:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
         * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
-        
-          Changed basic CIAO_ReferenceLookup_i to attempt handling resolving 
+
+          Changed basic CIAO_ReferenceLookup_i to attempt handling resolving
           externalReference endpoints as CORBA IOR type references.
-          Added factory method for creating interceptor. 
+          Added factory method for creating interceptor.
 
         * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
-        
+
           Change to allow overruling CIAO_LOG_LEVEL from commandline.
 
 Local Variables:
