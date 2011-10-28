@@ -342,10 +342,6 @@ be_visitor_executor_exs::visit_component (be_component *node)
 int
 be_visitor_executor_exs::visit_provides (be_provides *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   ACE_CString prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
@@ -394,10 +390,6 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
 int
 be_visitor_executor_exs::visit_consumes (be_consumes *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   be_eventtype *obj = node->consumes_type ();
   const char *port_name = node->local_name ()->get_string ();
 

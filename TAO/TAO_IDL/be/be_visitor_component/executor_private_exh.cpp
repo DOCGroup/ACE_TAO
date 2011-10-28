@@ -26,10 +26,6 @@ be_visitor_executor_private_exh::~be_visitor_executor_private_exh (void)
 int
 be_visitor_executor_private_exh::visit_provides (be_provides *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   be_type *impl = node->provides_type ();
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
   bool is_global = (i_scope->node_type () == AST_Decl::NT_root);
@@ -49,10 +45,6 @@ be_visitor_executor_private_exh::visit_provides (be_provides *node)
 int
 be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
