@@ -1,7 +1,7 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -p DDS_IDL_Test_Base -l .. -o ../lib -u DDS IDL_Test_Connector"
+// This file is generated with "generate_component_mpc.pl -p IDL_Test_Base -l .. -o ../lib -u DDS IDL_Test_Connector"
 
-project(DDS_IDL_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
+project(IDL_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=EVENT_MEMLEAKDETECTION_CONNECTOR_STUB_Export \
@@ -19,9 +19,9 @@ project(DDS_IDL_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   }
 }
 
-project(DDS_IDL_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
+project(IDL_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   custom_only = 1
-  after += DDS_IDL_Test_Connector_idl_gen
+  after += IDL_Test_Connector_idl_gen
   idlflags += -Wb,stub_export_macro=EVENT_MEMLEAKDETECTION_CONNECTOR_LEM_STUB_Export \
               -Wb,stub_export_include=IDL_Test_Connector_lem_stub_export.h \
               -SS -Gxhst \
@@ -32,13 +32,13 @@ project(DDS_IDL_Test_Connector_lem_gen) : ciaoidldefaults, dds4ccm {
   }
 }
 
-project(DDS_IDL_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
-  after += DDS_IDL_Test_Connector_lem_gen DDS_IDL_Test_Connector_stub DDS_IDL_Test_Base_stub 
-  libs  += DDS_IDL_Test_Base_stub DDS_IDL_Test_Connector_stub 
+project(IDL_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += IDL_Test_Connector_lem_gen IDL_Test_Connector_stub IDL_Test_Base_stub 
+  libs  += IDL_Test_Base_stub IDL_Test_Connector_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = DDS_IDL_Test_Connector_lem_stub
+  sharedname = IDL_Test_Connector_lem_stub
   dynamicflags += EVENT_MEMLEAKDETECTION_CONNECTOR_LEM_STUB_BUILD_DLL
 
   IDL_Files {
@@ -58,13 +58,13 @@ project(DDS_IDL_Test_Connector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
   }
 }
 
-project(DDS_IDL_Test_Connector_stub) : ccm_stub, dds4ccm_base {
-  after += DDS_IDL_Test_Connector_idl_gen DDS_IDL_Test_Base_stub
-  libs  += DDS_IDL_Test_Base_stub
+project(IDL_Test_Connector_stub) : ccm_stub, dds4ccm_base {
+  after += IDL_Test_Connector_idl_gen IDL_Test_Base_stub
+  libs  += IDL_Test_Base_stub
   libpaths += ../lib
   libout = ../lib
   includes += ..
-  sharedname = DDS_IDL_Test_Connector_stub
+  sharedname = IDL_Test_Connector_stub
   dynamicflags += EVENT_MEMLEAKDETECTION_CONNECTOR_STUB_BUILD_DLL
 
   IDL_Files {
@@ -84,10 +84,10 @@ project(DDS_IDL_Test_Connector_stub) : ccm_stub, dds4ccm_base {
   }
 }
 
-project(DDS_IDL_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
-  after   += DDS_IDL_Test_Connector_lem_stub DDS_IDL_Test_Connector_stub 
-  sharedname = DDS_IDL_Test_Connector_exec
-  libs += DDS_IDL_Test_Connector_stub DDS_IDL_Test_Connector_lem_stub DDS_IDL_Test_Base_stub 
+project(IDL_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
+  after   += IDL_Test_Connector_lem_stub IDL_Test_Connector_stub 
+  sharedname = IDL_Test_Connector_exec
+  libs += IDL_Test_Connector_stub IDL_Test_Connector_lem_stub IDL_Test_Base_stub 
   libpaths += ../lib
   libout = ../lib
   includes += ..
@@ -110,13 +110,13 @@ project(DDS_IDL_Test_Connector_exec) : ciao_executor, dds4ccm_impl {
 }
 
 
-project(DDS_IDL_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
-  after      += DDS_IDL_Test_Connector_lem_stub DDS_IDL_Test_Connector_exec DDS_IDL_Test_Connector_stub 
-  sharedname  = DDS_IDL_Test_Connector_svnt
-  libs       += DDS_IDL_Test_Connector_stub \
-                DDS_IDL_Test_Connector_lem_stub  \
-                DDS_IDL_Test_Base_stub \
-                DDS_IDL_Test_Connector_exec 
+project(IDL_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += IDL_Test_Connector_lem_stub IDL_Test_Connector_exec IDL_Test_Connector_stub 
+  sharedname  = IDL_Test_Connector_svnt
+  libs       += IDL_Test_Connector_stub \
+                IDL_Test_Connector_lem_stub  \
+                IDL_Test_Base_stub \
+                IDL_Test_Connector_exec 
   libpaths += ../lib
   libout = ../lib
   includes += ..

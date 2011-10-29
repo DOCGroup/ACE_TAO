@@ -1,3 +1,16 @@
+Sat Oct 29 14:25:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.mpc:
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+        * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+        * connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.mpc:
+          Fuzz.
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+          Fixed double project names.
+
 Fri Oct 28 15:55:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Interfaces.mpc:
