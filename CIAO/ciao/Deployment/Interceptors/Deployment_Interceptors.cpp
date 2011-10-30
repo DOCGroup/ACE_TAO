@@ -124,6 +124,16 @@ namespace CIAO
   /// Implementation skeleton constructor
   CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i (void)
   {
+    this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
+
+    if (CORBA::is_nil (this->orb_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Container_Handler_i::configure -"
+                        "Unable to locate ORB.\n"));
+        throw ::Deployment::StartError ("CIAO Container Handler",
+                                        "Unable to locate ORB");
+      }
   }
 
   /// Implementation skeleton destructor
@@ -132,10 +142,55 @@ namespace CIAO
   }
 
   void
-  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &,
-                                       ::CORBA::ULong,
-                                       ::CORBA::Any &)
+  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &plan,
+                                       ::CORBA::ULong connectionref,
+                                       ::CORBA::Any &ref)
   {
+    ::Deployment::PlanConnectionDescription &conn = plan.connection[connectionref];
+
+    if (conn.externalReference.length () >= 1)
+      {
+        try
+          {
+            CORBA::Object_ptr
+              obj = this->orb_->string_to_object(conn.externalReference[0].location.in());
+
+            if (!CORBA::is_nil (obj))
+              {
+                ref <<= obj;
+              }
+            else
+              {
+                DANCE_ERROR (DANCE_LOG_WARNING,
+                             (LM_DEBUG, DLINFO
+                              ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                              ACE_TEXT("can't create object for IOR %C\n"),
+                              conn.externalReference[0].location.in()));
+                throw Deployment::InvalidConnection (conn.name.in (),
+                                                     ACE_TEXT ("Invalid ExternalReference\n"));
+              }
+          }
+        catch (CORBA::Exception &ex)
+            {
+              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                           (LM_ERROR, DLINFO
+                            ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                            ACE_TEXT("Caught CORBA Exception while resolving endpoint for connection %C: %C\n"),
+                            conn.name.in (),
+                            ex._info ().c_str ()));
+              throw Deployment::InvalidConnection (conn.name.in (),
+                                                   ex._info ().c_str ());
+            }
+        catch (...)
+          {
+            DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
+                         (LM_ERROR, DLINFO
+                          ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                          ACE_TEXT("Caught C++ Exception while resolving endpoint for connection\n")));
+            throw Deployment::InvalidConnection (conn.name.in (),
+                                                 ACE_TEXT ("C++ Exception while resolving external reference"));
+          }
+      }
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
@@ -156,5 +211,11 @@ extern "C"
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void)
   {
     return new CIAO::CIAO_StoreReferences_i ();
+  }
+
+  ::DAnCE::DeploymentInterceptor_ptr
+  CIAO_Deployment_Interceptors_Export create_CIAO_ReferenceLookup (void)
+  {
+    return new CIAO::CIAO_ReferenceLookup_i ();
   }
 }
