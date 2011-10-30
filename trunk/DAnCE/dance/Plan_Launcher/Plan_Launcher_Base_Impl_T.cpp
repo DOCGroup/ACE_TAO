@@ -665,32 +665,16 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 
           try
             {
-              CORBA::Object_ptr
-                obj = this->orb_->string_to_object(plan.connection[i].externalReference[0].location.in());
+              CORBA::ULong indx = 0;
+              for (; indx < conn.length (); ++indx)
+                if (ACE_OS::strcmp (conn[indx].name.in (),
+                                    plan.connection[i].name.in ()) == 0)
+                  break;
 
-              if (!CORBA::is_nil (obj))
-                {
-                  CORBA::ULong indx = 0;
-                  for (; indx < conn.length (); ++indx)
-
-                    if (ACE_OS::strcmp (conn[indx].name.in (),
-                                        plan.connection[i].name.in ()) == 0)
-                      break;
-
-                  if (indx ==  conn.length())
-                    conn.length(indx + 1);
-                  conn[indx].name= CORBA::string_dup (plan.connection[i].name.in());
-                  conn[indx].endpoint.length(1L);
-                  conn[indx].endpoint[0] = obj;
-                }
-              else
-                {
-                  DANCE_ERROR (DANCE_LOG_WARNING,
-                               (LM_DEBUG, DLINFO
-                                ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
-                                ACE_TEXT("can't create object for IOR %C\n"),
-                                plan.connection[i].externalReference[0].location.in()));
-                }
+              if (indx ==  conn.length())
+                conn.length(indx + 1);
+              conn[indx].name= CORBA::string_dup (plan.connection[i].name.in());
+              conn[indx].endpoint.length (1);
             }
           catch (CORBA::Exception &ex)
             {
