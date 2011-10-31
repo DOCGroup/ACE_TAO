@@ -1,3 +1,26 @@
+Mon Oct 31 13:53:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ciao/Containers/Extension/Extension_Container.h:
+        * ciao/Containers/Session/Session_Container.h:
+        * ciao/Contexts/Extension/Extension_Context_T.cpp:
+        * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+        * ciao/Deployment/Handlers/CIAO_State.cpp:
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * ciao/Deployment/Handlers/Container_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+          Several improvements regarding thread safety. Also
+          some minor code layout changes.
+        
+        * ciao/Containers/Extension/README:
+        * ciao/Contexts/Extension/README:
+        * ciao/Servants/Extension/README:
+          Added: Extension containers are not ready to use, yet.
+
 Sat Oct 29 14:25:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.mpc:

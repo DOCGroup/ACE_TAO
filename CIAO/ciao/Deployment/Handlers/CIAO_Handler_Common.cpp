@@ -12,8 +12,10 @@ namespace CIAO
                                          const ::Deployment::DeploymentPlan &plan)
   {
     if (name == 0)
-      throw ::Deployment::PlanError (name,
-                                     "No such artifact");
+      {
+        throw ::Deployment::PlanError (name,
+                                      "No such artifact");
+      }
 
     for (CORBA::ULong i = 0;
          i < plan.artifact.length ();
@@ -24,7 +26,9 @@ namespace CIAO
           {
             if (plan.artifact[i].location.length () >= 1 &&
                 plan.artifact[i].location[0] != 0)
-              return plan.artifact[i].location[0].in ();
+              {
+                return plan.artifact[i].location[0].in ();
+              }
             else
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
