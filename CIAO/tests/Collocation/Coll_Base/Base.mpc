@@ -8,7 +8,7 @@ project(CollBase_idl_gen) : componentidldefaults {
               -Wb,stub_export_include=CollBase_stub_export.h \
               -Wb,skel_export_macro=BASE_SKEL_Export \
               -Wb,skel_export_include=CollBase_skel_export.h \
-              -Gxhex -Gxhsk -Gxhst -Gex -I ..
+              -Gxhex -Gxhsk -Gxhst -Gex -Sp -I ..
 
   IDL_Files {
     Base.idl

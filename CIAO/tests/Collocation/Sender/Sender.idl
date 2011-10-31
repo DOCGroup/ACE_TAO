@@ -8,9 +8,6 @@
 
 component Sender {
   provides Hello hello;
-
-  // Which interfaces the Sender uses.
-  //uses Bye bye;
 };
 
 #endif /* SENDER_IDL_ */

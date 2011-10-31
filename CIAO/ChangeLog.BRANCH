@@ -1,3 +1,17 @@
+Mon Oct 31 13:19:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/Coll_Base/Base.idl:
+        * tests/Collocation/Coll_Base/Base.mpc:
+        * tests/Collocation/Receiver/Receiver.idl:
+        * tests/Collocation/Receiver/Receiver_exec.h:
+        * tests/Collocation/Receiver/Receiver_exec.cpp:
+        * tests/Collocation/Sender/Sender.idl:
+        * tests/Collocation/Sender/Sender_exec.h:
+        * tests/Collocation/Sender/Sender_exec.cpp:
+        * tests/Collocation/descriptors/PlanAllOnOne.cdp:
+        * tests/Collocation/descriptors/run_test.pl:
+        Expanded test. Use different CollocationStrategies via  
+        attributes in deploymentplans.
+
 Tue Oct 27 07:16:24 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
        * ciao/Containers/Extension/Extension_Containers.mpc:
@@ -44,7 +58,7 @@ Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * ciao/Servants/Servants.mpc:
         Disable Servant_Activator and Port_Activator functionality,
         Later on if build successfull delete lines
- 
+
         * tests/Collocation/Coll_Base/Base.mpc:
         * tests/Collocation/Receiver/Receiver.mpc:
         * tests/Collocation/Sender/Sender.mpc:
@@ -54,7 +68,7 @@ Wed Oct 26 07:28:24 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         Disable debug logs
 
         * bin/ciao_tests.lst:
-        Add CIAO/tests/Collocation  
+        Add CIAO/tests/Collocation
 
 
 Local Variables:

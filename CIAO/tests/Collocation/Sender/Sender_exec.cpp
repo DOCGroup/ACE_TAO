@@ -18,33 +18,64 @@ namespace CIAO_Sender_Impl
   }
 
   // Operations from ::Hello
-/*  char *
-  hello_exec_i::say_hello (void)
-  {
-    ACE_DEBUG ((LM_DEBUG, "SENDER: hello_exec_i::say_hello .\n"));
-    return CORBA::string_dup ("Hello from sender.");
-  }
-*/
   void
-  hello_exec_i::set_point (const pointer_id &p)
+  hello_exec_i::set_point (const pointer_id &p, const char * strat)
    {
-      ACE_DEBUG ((LM_DEBUG, "SENDER: hello_exec_i::set_point pointer <%@>\n", (void *)&p));
-      CORBA::Long ptr_nmb = (long)&p;
-     if (ptr_nmb == p.point)
+     CORBA::Boolean coll = false;
+     if ((ACE_OS::strcmp("direct", strat) == 0) ||
+         (ACE_OS::strcmp("best", strat) == 0))
+       coll = true;
+     else if (ACE_OS::strcmp("no_collocation", strat) == 0)
+       coll = false;
+     else
+       ACE_ERROR ((LM_DEBUG, "Error: hello_exec_i::set_point - "
+                             "Unexpected strategy <%C> \n",
+                              strat));
+
+     ACE_DEBUG ((LM_DEBUG,
+                  "SENDER: hello_exec_i::set_point pointer <%@>\n",
+                  (void *)&p));
+
+     CORBA::Long ptr_nmb = (long)&p;
+     if (coll)
        {
-         ACE_DEBUG ((LM_DEBUG, "hello_exec_i::set_point - "
-                                "current pointer  <%u>  is same as starting pointer <%u>,"
-                                "direct or thru_poa collocation ! \n",
-                                ptr_nmb, p.point));
+         if (ptr_nmb == p.point)
+           {
+             ACE_DEBUG ((LM_DEBUG,
+                 "hello_exec_i::set_point - current pointer  <%u> "
+                 " is same as starting pointer <%u>,"
+                 "direct or thru_poa collocation ! \n",
+                  ptr_nmb, p.point));
+           }
+         else
+           {
+             ACE_ERROR ((LM_ERROR,
+                 "Error: hello_exec_i::set_point - current pointer  <%u> "
+                 " is not the same as starting pointer <%u>"
+                 ", No Collocation\n",
+                 ptr_nmb, p.point));
+           }
        }
      else
        {
-         ACE_ERROR ((LM_DEBUG, "Error: hello_exec_i::set_point - "
-                               "current pointer  <%u>  is not the same as starting pointer <%u>"
-                               ", No Collocation\n",
-                                ptr_nmb, p.point));
+         if (ptr_nmb == p.point)
+           {
+             ACE_ERROR ((
+                 LM_DEBUG,
+                 "Error: hello_exec_i::set_point - current pointer  <%u> "
+                 " is the same as starting pointer <%u>"
+                 ", Unexpected collocation\n",
+                 ptr_nmb, p.point));
+           }
+         else
+           {
+             ACE_DEBUG ((LM_DEBUG,
+                 "hello_exec_i::set_point - current pointer  <%u>"
+                 "  is not the same as starting pointer <%u>,"
+                 " No collocation, as expected ! \n",
+                 ptr_nmb, p.point));
+           }
        }
-     //return p._retn ();
    }
 
   /**
@@ -80,6 +111,7 @@ namespace CIAO_Sender_Impl
       ::CCM_Hello::_duplicate (
         this->ciao_hello_.in ());
   }
+
 
   // Operations from Components::SessionComponent.
   void
