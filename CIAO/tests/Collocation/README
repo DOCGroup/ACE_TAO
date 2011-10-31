@@ -1,0 +1,25 @@
+// $Id$
+
+This test is used to test collocation.
+
+CIAO has to be build with ccm_direct_collocation=1
+
+In order to make sure that indeed direct collocation is used, the test self
+is build with -Sp (see Base.mpc),so collocation thru_poa is disabled.
+
+The test runs with different CollocationStrategies, defined in the deploymentplans:
+- PlanAllOnOneNoTP ( Sender and Receiver same process) with  -ORBCollocationStrategy thru_poa:
+    because thru_poa is disabled, we expect an internal exception. 
+- PlanAllOnOne ( Sender and Receiver same process) with  -ORBCollocationStrategy direct:
+  we expect collocation and because thru_poa is disabled, this must be direct collocation.
+- PlanAllOnOneBest ( Sender and Receiver same process) with  -ORBCollocationStrategy best:
+  we expect collocation and because thru_poa is disabled, this must be direct collocation.
+- PlanAllOnOneNo ( Sender and Receiver same process) with  -ORBCollocation no:
+  we expect no collocation.
+
+- PlanAllOnOneMore ( Sender and Receiver different process)  with  -ORBCollocationStrategy direct:
+ we expect no collocation, but a remote strategy because the Sender and Receiver are not in the same process.
+
+
+
+
