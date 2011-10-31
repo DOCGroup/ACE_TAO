@@ -587,7 +587,6 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "{" << be_idt_nl
       << "ACE_CString obj_id (this->ins_name_);" << be_nl
       << "obj_id += \"_" << port_name << "\";" << be_nl_2
-
       << "::CIAO::Container_var cnt_safe =" << be_idt_nl
       << "::CIAO::Container::_duplicate ("
       << "this->container_.in ());" << be_uidt_nl << be_nl
@@ -601,14 +600,13 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << "new "   << node_->local_name () << "_Servant::" << lname
       << "Consumer_" << port_name << "_Servant (" << be_idt_nl
       << " this->executor_, this->context_);" << be_uidt_nl << be_uidt_nl << be_nl
-
+      << "PortableServer::ServantBase_var safe_base_servant ("
+      << port_name << "_servant_impl);" << be_nl
       << "PortableServer::ObjectId_var " << port_name << "_servant_oid =" << be_idt_nl
       << "PortableServer::string_to_ObjectId (obj_id.c_str());" << be_uidt_nl << be_nl
-
       << "POA->activate_object_with_id(" << be_idt_nl
       << port_name << "_servant_oid.in()," << be_nl
-      << "dynamic_cast<TAO_ServantBase *>("
-      <<  port_name << "_servant_impl));" << be_uidt_nl << be_nl
+      <<  port_name << "_servant_impl);" << be_uidt_nl << be_nl
 
       << "::CORBA::Object_var " << port_name << "_servant_impl_obj = " << be_idt_nl
       << "cnt_safe->generate_reference ( " << be_idt_nl
