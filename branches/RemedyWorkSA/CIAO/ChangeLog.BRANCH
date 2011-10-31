@@ -1,3 +1,7 @@
+Mon Oct 31 13:30:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/README:
+        Explanation of the test
+
 Mon Oct 31 13:19:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * tests/Collocation/Coll_Base/Base.idl:
         * tests/Collocation/Coll_Base/Base.mpc:
