@@ -1,3 +1,9 @@
+Mon Oct 31 13:14:04 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        Add safe_servant_base in CIAO consumers servant
+        
+
 Fri Oct 28 11:37:40 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
