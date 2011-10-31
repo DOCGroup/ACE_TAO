@@ -22,6 +22,10 @@ namespace CIAO
 
   void Home_Handler_i::close (void)
   {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->instances_mutex_,
+                        CORBA::NO_RESOURCES ());
     this->instances_.clear ();
   }
 
@@ -253,8 +257,13 @@ namespace CIAO
         throw ::Deployment::StartError (idd.name.in (),
                                         "Container provided nil object reference");
       }
-
-    this->instances_[idd.name.in ()] = info;
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instances_mutex_,
+                          CORBA::NO_RESOURCES ());
+      this->instances_[idd.name.in ()] = info;
+    }
 
     DEPLOYMENT_STATE::instance ()->add_home (idd.name.in (), cont_id, home_ref.in ());
 
@@ -289,23 +298,29 @@ namespace CIAO
     CIAO_TRACE ("Home_Handler_i::remove_instance");
 
     const char *name = plan.instance[instanceRef].name.in ();
-    Deployment_Common::INSTANCES::iterator instance
-      = this->instances_.find (name);
+    Deployment_Common::INSTANCES::iterator instance;
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instances_mutex_,
+                          CORBA::NO_RESOURCES ());
+      instance = this->instances_.find (name);
 
-    if (instance == this->instances_.end ())
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Home_Handler_i::remove_instance - "
-                        "Instructed to remove unknown home instance <%C>\n",
-                        name));
-        throw ::Deployment::StopError (name,
-                                       "Wrong instance handler for home instance\n");
-      }
+      if (instance == this->instances_.end ())
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
+                          "Home_Handler_i::remove_instance - "
+                          "Instructed to remove unknown home instance <%C>\n",
+                          name));
+          throw ::Deployment::StopError (name,
+                                        "Wrong instance handler for home instance\n");
+        }
 
-    CIAO_DEBUG (8, (LM_DEBUG, CLINFO
-                    "Home_Handler_i::remove_instance - "
-                    "Attempting removal of home instance <%C>\n",
-                    name));
+      CIAO_DEBUG (8, (LM_DEBUG, CLINFO
+                      "Home_Handler_i::remove_instance - "
+                      "Attempting removal of home instance <%C>\n",
+                      name));
+    }
 
     CORBA::Any val;
     const char *cont_id = 0;
@@ -364,7 +379,13 @@ namespace CIAO
                                        "Unknown C++ exception\n");
       }
 
-    this->instances_.erase (instance);
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instances_mutex_,
+                          CORBA::NO_RESOURCES ());
+      this->instances_.erase (instance);
+    }
 
     CIAO_DEBUG (4, (LM_INFO, CLINFO
                     "Home_Handler_i::remove_instance - "
