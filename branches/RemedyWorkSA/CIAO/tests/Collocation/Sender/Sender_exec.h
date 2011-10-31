@@ -62,11 +62,8 @@ namespace CIAO_Sender_Impl
 
     /** @name Operations and attributes from Hello */
     //@{
-
-//    virtual
- //   char * say_hello (void);
     virtual
-    void set_point (const pointer_id & );
+    void set_point (const pointer_id & , const char *);
 
       //@}
 
@@ -96,8 +93,7 @@ namespace CIAO_Sender_Impl
 
     virtual ::CCM_Hello_ptr
       get_hello (void);
-
-    //@}
+     //@}
 
     /** @name Operations from Components::SessionComponent. */
     //@{
@@ -123,7 +119,6 @@ namespace CIAO_Sender_Impl
 
     /** @name User defined members. */
     //@{
-
     //@}
   };
 
