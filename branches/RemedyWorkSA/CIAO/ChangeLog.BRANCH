@@ -1,3 +1,30 @@
+Mon Oct 31 13:55:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * ciao/Containers/Container_Base.idl:
+        * ciao/Containers/Container_Base_T.h:
+        * ciao/Containers/Container_Base_T.cpp:
+        * ciao/Servants/Extension/Extension_Container.h:
+        * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+        * ciao/Servants/Servant_Impl_Base.cpp:
+        * ciao/Servants/Servants.mpc:
+        Removed already disabled lines with servant- and portactivators 
+        
+        * ciao/Containers/CIAO_Servant_Activator.idl:
+        * ciao/Containers/CIAO_Servant_Activator.mpc:
+        * ciao/Containers/Servant_Activator.h:
+        * ciao/Containers/Servant_Activator.cpp:
+        * ciao/Servants/Port_Activator_T.cpp:
+        * ciao/Servants/Port_Activator_T.h:
+        * ciao/Servants/CIAO_Port_Activator.idl:
+        * ciao/Servants/Port_Activator.h:
+        * ciao/Servants/Port_Activator.cpp:
+        * MPC/config/ciao_port_activator_stub.mpb:
+        * MPC/config/ciao_servant_activator_stub.mpb:
+        * MPC/config/ciao_servant_activator.mpb:
+       
+        Deleted this files.
+   
+
+
 Mon Oct 31 13:30:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * tests/Collocation/README:
         Explanation of the test

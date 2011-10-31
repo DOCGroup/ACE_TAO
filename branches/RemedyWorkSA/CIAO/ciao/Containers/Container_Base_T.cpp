@@ -5,7 +5,6 @@
 
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-//#include "ciao/Containers/Servant_Activator.h"
 #include "ciao/Servants/Connector_Servant_Impl_Base.h"
 #include "ciao/Base/CIAO_ExceptionsC.h"
 
@@ -31,7 +30,6 @@ namespace CIAO
   void
   Container_i<BASE>::fini (void)
   {
-//    this->sa_ = ::CIAO::Servant_Activator::_nil ();
 
     ::PortableServer::POA_var comp_poa_safe = this->component_poa_._retn ();
 
@@ -763,11 +761,6 @@ namespace CIAO
 
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID);
-    /* old code
-    // Servant Manager Policy
-    // policies[1] =
-    //   root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
-    */
     // Servant Retention Policy
     policies[1] =
       root->create_servant_retention_policy (PortableServer::RETAIN);
@@ -776,14 +769,6 @@ namespace CIAO
       root->create_POA (name,
                         poa_manager.in (),
                         policies);
- /* old code
- //   Servant_Activator_i *sa = 0;
- //   ACE_NEW_THROW_EX (sa,
- //                     Servant_Activator_i (this->orb_.in ()),
- //                     CORBA::NO_MEMORY ());
- // this->sa_ = sa;
- //  this->facet_cons_poa_->set_servant_manager (this->sa_.in ());
- */
   }
 
   template <typename BASE>
@@ -1061,13 +1046,6 @@ namespace CIAO
     return poa_safe->servant_to_reference (p);
   }
 
- // template <typename BASE>
- // ::CIAO::Servant_Activator_ptr
- // Container_i<BASE>::ports_servant_activator (void)
- // {
- //   return Servant_Activator::_duplicate(this->sa_.in ());
- // }
-
   template <typename BASE>
   CORBA::Object_ptr
   Container_i<BASE>::generate_reference (const char *obj_id,
@@ -1081,15 +1059,11 @@ namespace CIAO
     if (t == Container_Types::COMPONENT_t
         || t == Container_Types::HOME_t)
       {
-        CIAO_TRACE ("Container_i::generate_reference component_poa_xxxxxxxxxxxxxxxxxxxx");
-
         poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in ());
       }
     else
       {
-        CIAO_TRACE ("Container_i::generate_reference facet_cons_poa xxxxxxxxxxxxx");
-
-        poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
+         poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
       }
 
     PortableServer::ObjectId_var oid =
