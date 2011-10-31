@@ -330,7 +330,8 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 
   if (!skip_varout)
     {
-      *os << "typedef " << this->local_name ()
+      *os << be_nl
+          << "typedef " << this->local_name ()
           << "_var _var_type;" << be_nl
           << "typedef " << this->local_name ()
           << "_out _out_type;";
