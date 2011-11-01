@@ -1,3 +1,10 @@
+Tue Nov  1 13:16:16 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
+
+          Integrated improvements from Martin Corino <mcorino@remedy.nl>.
+
 Thu Nov 01 10:54:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy SA work branch.
