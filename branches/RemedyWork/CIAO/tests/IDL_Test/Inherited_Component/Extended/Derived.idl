@@ -20,7 +20,7 @@ module Inherited
     long get_long_derived ();
   };
 
-  component Derived_comp : Inherited::Base_comp supports Tester
+  component Derived_comp : Inherited::Base_comp supports Inherited::Tester
   {
     provides Inherited::derived_interface prov_derived;
     uses     Inherited::derived_interface uses_derived;
