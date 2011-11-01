@@ -1,3 +1,8 @@
+Tue Nov  1 14:29:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Fixed link issues on windows.
+
 Tue Nov  1 12:52:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:

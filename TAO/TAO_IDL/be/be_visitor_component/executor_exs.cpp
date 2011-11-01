@@ -31,10 +31,6 @@ be_visitor_executor_exs::~be_visitor_executor_exs (void)
 int
 be_visitor_executor_exs::visit_operation (be_operation *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   AST_Decl::NodeType nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
