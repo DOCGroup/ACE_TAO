@@ -1,3 +1,11 @@
+Tue Nov  1 08:48:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Component/Extended/Derived.idl:
+          Used module name to identify the supported interface.
+
+        * tests/IDL_Test/Inherited_Component/Extended/Derived.mpc:
+          Fixed link issue on linux
+
 Mon Oct 31 13:53:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Containers/Extension/Extension_Container.h:
@@ -15,7 +23,7 @@ Mon Oct 31 13:53:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * ciao/Servants/Connector_Servant_Impl_Base.cpp:
           Several improvements regarding thread safety. Also
           some minor code layout changes.
-        
+
         * ciao/Containers/Extension/README:
         * ciao/Contexts/Extension/README:
         * ciao/Servants/Extension/README:
