@@ -22,6 +22,14 @@ namespace CIAO_Sender_Impl
   hello_exec_i::set_point (const pointer_id &p, const char * strat)
    {
      CORBA::Boolean coll = false;
+
+#if !defined (CCM_DIRECTCOLL)
+     ACE_DEBUG ((LM_DEBUG,
+                  "SENDER: hello_exec_i::set_point pointer"
+                  "No collocation because CIAO not build with  "
+                  "ccm_diect_collocation = 1.\n",
+                  (void *)&p));
+#else
      if ((ACE_OS::strcmp("direct", strat) == 0) ||
          (ACE_OS::strcmp("best", strat) == 0))
        coll = true;
@@ -31,7 +39,7 @@ namespace CIAO_Sender_Impl
        ACE_ERROR ((LM_DEBUG, "Error: hello_exec_i::set_point - "
                              "Unexpected strategy <%C> \n",
                               strat));
-
+#endif
      ACE_DEBUG ((LM_DEBUG,
                   "SENDER: hello_exec_i::set_point pointer <%@>\n",
                   (void *)&p));
@@ -39,12 +47,17 @@ namespace CIAO_Sender_Impl
      CORBA::Long ptr_nmb = (long)&p;
      if (coll)
        {
+
+         // In case of collocation pointer p is still the same pointer
+         // as at the point where poiner p was generated.
+         // Direct or thru_poa collocation, but thru_poa collocation is disabled,
+         // so remains direct .
          if (ptr_nmb == p.point)
            {
              ACE_DEBUG ((LM_DEBUG,
                  "hello_exec_i::set_point - current pointer  <%u> "
                  " is same as starting pointer <%u>,"
-                 "direct or thru_poa collocation ! \n",
+                 " direct collocation! \n",
                   ptr_nmb, p.point));
            }
          else
