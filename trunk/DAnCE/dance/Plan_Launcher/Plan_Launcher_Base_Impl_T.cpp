@@ -453,8 +453,6 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
 {
   DANCE_TRACE ("Plan_Launcher_Base_Impl::launch_plan");
 
-  //this->create_external_connections (plan, conns.inout());
-
   try
     {
       CORBA::Object_var app_mgr = this->prepare_plan (plan);
@@ -464,9 +462,6 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>
       CORBA::Object_var app = this->start_launch (app_mgr.in (),
                                                   0,
                                                   conns.out ());
-
-      this->create_external_connections (plan,
-                                         conns.inout ());
 
       this->finish_launch (app.in (),
                            conns,
@@ -640,60 +635,5 @@ Plan_Launcher_Base_Impl< Manager, AppManager, Application>::destroy_app_manager(
     }
 }
 
-
-template <typename Manager, typename AppManager, typename Application>
-void
-Plan_Launcher_Base_Impl< Manager, AppManager, Application>
-::create_external_connections(const ::Deployment::DeploymentPlan &plan,
-                              Deployment::Connections &conn)
-{
-  DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
-               (LM_DEBUG, DLINFO
-                ACE_TEXT("create_external_connections - start\n")));
-
-  for (CORBA::ULong i = 0; i < plan.connection.length(); i++)
-    {
-      if (plan.connection[i].externalReference.length() > 0)
-        //&& plan.connection[i].externalReference[0].provider)
-        {
-          DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
-                       (LM_DEBUG, DLINFO
-                        ACE_TEXT ("Plan_Launcher_i::create_external_connections - ")
-                        ACE_TEXT ("create connection %C from IOR %C\n"),
-                        plan.connection[i].name.in(),
-                        plan.connection[i].externalReference[0].location.in()));
-
-          try
-            {
-              CORBA::ULong indx = 0;
-              for (; indx < conn.length (); ++indx)
-                if (ACE_OS::strcmp (conn[indx].name.in (),
-                                    plan.connection[i].name.in ()) == 0)
-                  break;
-
-              if (indx ==  conn.length())
-                conn.length(indx + 1);
-              conn[indx].name= CORBA::string_dup (plan.connection[i].name.in());
-              conn[indx].endpoint.length (1);
-            }
-          catch (CORBA::Exception &ex)
-            {
-              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
-                           (LM_ERROR, DLINFO
-                            ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
-                            ACE_TEXT("Caught CORBA Exception while resolving endpoint for connection %C: %C\n"),
-                            plan.connection[i].name.in (),
-                            ex._info ().c_str ()));
-            }
-          catch (...)
-            {
-              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
-                           (LM_ERROR, DLINFO
-                            ACE_TEXT("Plan_Launcher_i::create_external_connections - ")
-                            ACE_TEXT("Caught C++ Exception while resolving endpoint for connection\n")));
-            }
-        }
-    }
-}
 }
 #endif
