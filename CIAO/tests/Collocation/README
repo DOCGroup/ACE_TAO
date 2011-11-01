@@ -9,7 +9,7 @@ is build with -Sp (see Base.mpc),so collocation thru_poa is disabled.
 
 The test runs with different CollocationStrategies, defined in the deploymentplans:
 - PlanAllOnOneNoTP ( Sender and Receiver same process) with  -ORBCollocationStrategy thru_poa:
-    because thru_poa is disabled, we expect an internal exception. 
+    because thru_poa is disabled, we expect an internal exception.
 - PlanAllOnOne ( Sender and Receiver same process) with  -ORBCollocationStrategy direct:
   we expect collocation and because thru_poa is disabled, this must be direct collocation.
 - PlanAllOnOneBest ( Sender and Receiver same process) with  -ORBCollocationStrategy best:
