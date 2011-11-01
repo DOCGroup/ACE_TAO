@@ -1,3 +1,5 @@
+// $Id$
+
 project(CIAO_Servant_Impl) : install, ciao_container_base_stub, ccm_svnt, ccm_session_stub, ciao_output, ciao_logger, ccm_direct_collocation {
    dynamicflags += CIAO_SERVANT_IMPL_BUILD_DLL
    IDL_Files {
