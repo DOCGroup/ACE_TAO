@@ -33,11 +33,6 @@ be_visitor_executor_exh::~be_visitor_executor_exh (void)
 int
 be_visitor_executor_exh::visit_attribute (be_attribute *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
@@ -67,7 +62,6 @@ be_visitor_executor_exh::visit_component (be_component *node)
   // No _cxx_ prefix.
   const char *lname =
     node->original_local_name ()->get_string ();
-  AST_Component *base = node->base_component ();
 
   const char *global = (sname_str == "" ? "" : "::");
 
@@ -80,33 +74,12 @@ be_visitor_executor_exh::visit_component (be_component *node)
   os_ << be_nl_2
       << "class ";
 
-  if (base == 0)
-    {
-      // since some other class might be derived from this one,
-      // we need to export it...
-      // TODO: determine whether we are base component of other
-      // components..... If so, we need to export our class,
-      // otherwise we don't
-      os_ << export_macro_.c_str () << " ";
-    }
   os_ << lname
       << "_exec_i" << be_idt_nl
       << ": public virtual " << lname << "_Exec," << be_idt_nl;
 
-  if (base == 0)
-    {
-      // Derive in a standard way
-      os_ << "public virtual ::CORBA::LocalObject";
-    }
-  else
-    {
-      // Derive from the base implementation
-      os_ << "public virtual ::CIAO_"
-          << base->flat_name ()
-          << "_Impl::"
-          << base->original_local_name ()->get_string ()
-          << "_exec_i";
-    }
+  os_ << "public virtual ::CORBA::LocalObject";
+
   os_ << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;

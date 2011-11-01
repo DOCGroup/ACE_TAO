@@ -1,3 +1,13 @@
+Tue Nov  1 12:52:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+        * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+          Reverted a few of my last changes. An derived executor
+          is not directly derived from its base anymore (on
+          executor IDL level as well as on implementation level).
+
 Mon Oct 31 15:14:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_type.cpp:
