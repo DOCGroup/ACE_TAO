@@ -53,7 +53,6 @@ Client_Task::svc (void)
                ACE_DEBUG ((LM_DEBUG, "(%P|%t) - OK , correct string returned <%C>\n",
                  the_string.in ()));
                }
-          test->shutdown ();
         }
       catch (const CORBA::INTERNAL&)
          {
@@ -72,6 +71,7 @@ Client_Task::svc (void)
                    status = 1;
              }
            corb_->destroy ();
+           return 1;
          }
     }
   catch (const CORBA::Exception& ex)
@@ -79,7 +79,7 @@ Client_Task::svc (void)
       ex._tao_print_exception ("Exception caught:");
       status = 1;
     }
-
+  corb_->destroy ();
   return status;
 
 }

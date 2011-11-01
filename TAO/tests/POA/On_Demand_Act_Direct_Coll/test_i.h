@@ -29,10 +29,6 @@ public:
   char *
   get_string (void);
 
-  /// Shutdown the ORB
-  void shutdown (void);
-
-
 protected:
   /// Our ORB.
   CORBA::ORB_var orb_;

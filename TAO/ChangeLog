@@ -1,4 +1,13 @@
-Thu Nov 01 10:54:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+Tue Nov 01 14:34:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
+        * On_Demand_Act_Direct_Coll/test_i.cpp:
+        * On_Demand_Act_Direct_Coll/test_i.h:
+        * On_Demand_Act_Direct_Coll/Client_Task.cpp:
+        * On_Demand_Act_Direct_Coll/test.idl:
+        Clean up test.
+   
+
+Tue Nov 01 10:54:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy SA work branch.
 
