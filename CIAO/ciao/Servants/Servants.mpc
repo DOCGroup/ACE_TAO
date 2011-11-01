@@ -1,36 +1,4 @@
-// $Id$
-project(CIAO_Port_Activator_stub_idl) : install, ciaoidldefaults {
-   custom_only = 1
-   idlflags  += -Wb,stub_export_include=CIAO_Port_Activator_export.h \
-                -Wb,stub_export_macro=CIAO_PORT_ACTIVATOR_Export \
-                -SS -Sci -Gxhst
-   IDL_Files {
-     CIAO_Port_Activator.idl
-   }
-
-  specific {
-    install_dir = ciao/Servants
-  }
-}
-
-project(CIAO_Port_Activator_stub) : install, portableserver, ciao_lib {
-   dynamicflags += CIAO_PORT_ACTIVATOR_BUILD_DLL
-   after += CIAO_Port_Activator_stub_idl
-   IDL_Files {
-   }
-   Source_Files {
-     CIAO_Port_ActivatorC.cpp
-   }
-   Header_Files {
-     CIAO_Port_ActivatorC.h
-     CIAO_Port_ActivatorS.h
-   }
-  specific {
-    install_dir = ciao/Servants
-  }
-}
-
-project(CIAO_Servant_Impl) : install, ciao_servant_activator_stub, ciao_port_activator_stub, ciao_container_base_stub, ccm_svnt, ccm_session_stub, ciao_output, ciao_logger {
+project(CIAO_Servant_Impl) : install, ciao_container_base_stub, ccm_svnt, ccm_session_stub, ciao_output, ciao_logger, ccm_direct_collocation {
    dynamicflags += CIAO_SERVANT_IMPL_BUILD_DLL
    IDL_Files {
    }
@@ -40,14 +8,12 @@ project(CIAO_Servant_Impl) : install, ciao_servant_activator_stub, ciao_port_act
      Home_Servant_Impl_Base.cpp
      Servant_Impl_Base.cpp
      StandardConfigurator_Impl.cpp
-     Port_Activator.cpp
    }
 
    Template_Files {
      Home_Servant_Impl_T.cpp
      Connector_Servant_Impl_Utils_T.cpp
      Servant_Impl_Utils_T.cpp
-     Port_Activator_T.cpp
    }
 
    Header_Files {
@@ -57,9 +23,6 @@ project(CIAO_Servant_Impl) : install, ciao_servant_activator_stub, ciao_port_act
      Home_Servant_Impl_T.h
      Servant_Impl_Base.h
      StandardConfigurator_Impl.h
-     Port_Activator.h
-     Port_Activator_T.h
-     CIAO_Port_Activator_export.h
    }
 
   specific {

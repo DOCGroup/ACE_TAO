@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_port_activator_stub, ciao_servant_activator_stub, ciao_container_base_stub {
+project : ciao_container_base_stub, ccm_direct_collocation {
   libs += CIAO_Session_Container_stub
   after += CIAO_Session_Container_stub
 }

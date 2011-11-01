@@ -138,9 +138,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBCollocation global -ORBCollocationStrategy direct</string>
-          <!--string>-ORBCollocation global -ORBCollocationStrategy best</string-->
-          <!--string>-ORBCollocation no</string-->
+          <string>-ORBCollocation global -ORBCollocationStrategy best</string>
          </value>
       </value>
     </configProperty>
@@ -158,14 +156,14 @@
     <node>One</node>
     <source/>
     <implementation xmi:idref="ReceiverImpl" />
-        <configProperty>
+    <configProperty>
       <name>strategy</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>direct</string>
+          <string>best</string>
         </value>
       </value>
     </configProperty>

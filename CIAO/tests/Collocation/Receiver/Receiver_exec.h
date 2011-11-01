@@ -70,6 +70,12 @@ namespace CIAO_Receiver_Impl
     /** @name User defined public operations. */
     //@{
     void tick (void);
+
+    char*
+      strategy (void);
+
+     void
+       strategy (const char* strategy);
     //@}
 
   private:
@@ -85,6 +91,7 @@ namespace CIAO_Receiver_Impl
     //@{
     HelloGenerator * hello_generator_;
     ACE_Time_Value interval_;
+    ::CORBA::String_var strategy_;
     ACE_Reactor* reactor (void);
     //@}
   };

@@ -38,8 +38,6 @@ namespace CIAO
   class ServerContainerInterceptorRegistration_Impl;
   class StubContainerInterceptorRegistration_Impl;
 
-  class Servant_Activator;
-
   typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
   typedef ::PortableServer::Servant (*HomeServantFactory) (::Components::HomeExecutorBase_ptr p,
                                                            ::CIAO::Extension_Container_ptr c,

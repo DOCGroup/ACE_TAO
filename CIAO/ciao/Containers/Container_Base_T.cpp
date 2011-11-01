@@ -5,7 +5,6 @@
 
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "ciao/Containers/Servant_Activator.h"
 #include "ciao/Servants/Connector_Servant_Impl_Base.h"
 #include "ciao/Base/CIAO_ExceptionsC.h"
 
@@ -17,8 +16,8 @@ namespace CIAO
   Container_i<BASE>::Container_i (CORBA::ORB_ptr o,
                                   PortableServer::POA_ptr root_poa)
     : orb_ (::CORBA::ORB::_duplicate (o)),
-      root_poa_ (::PortableServer::POA::_duplicate (root_poa)),
-      sa_ (0)
+      root_poa_ (::PortableServer::POA::_duplicate (root_poa))
+      //, sa_ (0)
   {
   }
 
@@ -31,7 +30,6 @@ namespace CIAO
   void
   Container_i<BASE>::fini (void)
   {
-    this->sa_ = ::CIAO::Servant_Activator::_nil ();
 
     ::PortableServer::POA_var comp_poa_safe = this->component_poa_._retn ();
 
@@ -758,32 +756,19 @@ namespace CIAO
 
     PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
-    TAO::Utils::PolicyList_Destroyer policies (3);
-    policies.length (3);
+    TAO::Utils::PolicyList_Destroyer policies (2);
+    policies.length (2);
 
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID);
-
-    // Servant Manager Policy
-    policies[1] =
-      root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
-
     // Servant Retention Policy
-    policies[2] =
+    policies[1] =
       root->create_servant_retention_policy (PortableServer::RETAIN);
 
     this->facet_cons_poa_ =
       root->create_POA (name,
                         poa_manager.in (),
                         policies);
-
-    Servant_Activator_i *sa = 0;
-    ACE_NEW_THROW_EX (sa,
-                      Servant_Activator_i (this->orb_.in ()),
-                      CORBA::NO_MEMORY ());
-    this->sa_ = sa;
-
-    this->facet_cons_poa_->set_servant_manager (this->sa_.in ());
   }
 
   template <typename BASE>
@@ -1062,13 +1047,6 @@ namespace CIAO
   }
 
   template <typename BASE>
-  ::CIAO::Servant_Activator_ptr
-  Container_i<BASE>::ports_servant_activator (void)
-  {
-    return Servant_Activator::_duplicate(this->sa_.in ());
-  }
-
-  template <typename BASE>
   CORBA::Object_ptr
   Container_i<BASE>::generate_reference (const char *obj_id,
                                          const char *repo_id,
@@ -1085,7 +1063,7 @@ namespace CIAO
       }
     else
       {
-        poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
+         poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
       }
 
     PortableServer::ObjectId_var oid =

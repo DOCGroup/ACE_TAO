@@ -138,9 +138,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBCollocation global -ORBCollocationStrategy direct</string>
-          <!--string>-ORBCollocation global -ORBCollocationStrategy best</string-->
-          <!--string>-ORBCollocation no</string-->
+          <string>-ORBCollocation global -ORBCollocationStrategy thru_poa</string>
          </value>
       </value>
     </configProperty>
@@ -165,7 +163,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>direct</string>
+          <string>no_thru_poa</string>
         </value>
       </value>
     </configProperty>
