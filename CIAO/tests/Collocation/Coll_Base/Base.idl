@@ -12,8 +12,7 @@ struct pointer_id
 
 // Interfaces for communication between Sender and Receiver
 interface Hello {
-  //string say_hello ();
-  void set_point(in pointer_id p);
+  void set_point(in pointer_id p, in string strategy);
  };
 
 

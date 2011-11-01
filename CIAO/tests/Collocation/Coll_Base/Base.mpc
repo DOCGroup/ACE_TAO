@@ -1,21 +1,21 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -n -e -I .. -l ../lib -o ../lib Base"
 
-project(CollBase_idl_gen) : componentidldefaults, avoids_ccm_noevent {
+project(CollBase_idl_gen) : componentidldefaults {
   custom_only = 1
 
   idlflags += -Wb,stub_export_macro=BASE_STUB_Export \
               -Wb,stub_export_include=CollBase_stub_export.h \
               -Wb,skel_export_macro=BASE_SKEL_Export \
               -Wb,skel_export_include=CollBase_skel_export.h \
-              -Gxhex -Gxhsk -Gxhst -Gex -Gd -I ..
+              -Gxhex -Gxhsk -Gxhst -Gex -Sp -I ..
 
   IDL_Files {
     Base.idl
   }
 }
 
-project(CollBase_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
+project(CollBase_lem_gen) : ciaoidldefaults {
   after += CollBase_idl_gen
   custom_only = 1
   idlflags += -Wb,stub_export_macro=BASE_LEM_STUB_Export \
@@ -27,7 +27,7 @@ project(CollBase_lem_gen) : ciaoidldefaults, avoids_ccm_noevent {
   }
 }
 
-project(CollBase_lem_stub) : ccm_svnt, avoids_ccm_noevent {
+project(CollBase_lem_stub) : ccm_svnt {
   after += CollBase_lem_gen CollBase_stub
   libs  +=  CollBase_stub
   includes += ..
@@ -53,7 +53,7 @@ project(CollBase_lem_stub) : ccm_svnt, avoids_ccm_noevent {
   }
 }
 
-project(CollBase_stub) : ccm_stub, avoids_ccm_noevent {
+project(CollBase_stub) : ccm_stub {
   after += CollBase_idl_gen
   libs  +=
   includes += ..
@@ -80,7 +80,7 @@ project(CollBase_stub) : ccm_stub, avoids_ccm_noevent {
 }
 
 
-project(CollBase_skel) : ciao_executor, avoids_ccm_noevent  {
+project(CollBase_skel) : ciao_executor {
   after      +=  CollBase_stub CollBase_lem_stub
   sharedname  = CollBase_skel
   libs       += CollBase_stub
