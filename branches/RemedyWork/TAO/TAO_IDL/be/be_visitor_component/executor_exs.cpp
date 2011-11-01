@@ -53,10 +53,6 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 int
 be_visitor_executor_exs::visit_attribute (be_attribute *node)
 {
-  if (node->imported ())
-    {
-      return 0;
-    }
   AST_Decl::NodeType nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
