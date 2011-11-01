@@ -63,7 +63,7 @@ project(Base_Derived_stub) : ccm_stub   {
   libs  += Base_stub
 
   sharedname = Derived_stub
-  dynamicflags += DERIVED_STUB_BUILD_DLL BASE_STUB_BUILD_DLL
+  dynamicflags += DERIVED_STUB_BUILD_DLL
 
   IDL_Files {
   }
@@ -145,7 +145,7 @@ project(Base_Derived_svnt) : ciao_servant   {
 project (Derived_Tester) : ccm_stub, valuetype {
   exename = Tester
   after += Base_Derived_stub
-  libs  += Derived_stub
+  libs  += Derived_stub Base_stub
 
   IDL_Files {
   }
@@ -160,7 +160,3 @@ project (Derived_Tester) : ccm_stub, valuetype {
   Inline_Files {
   }
 }
-
-
-
-

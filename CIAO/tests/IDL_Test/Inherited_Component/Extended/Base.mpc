@@ -32,7 +32,6 @@ project(Base_lem_stub) : ccm_svnt   {
   after += Base_lem_gen Base_stub
   libs  +=  Base_stub
 
-
   sharedname = Base_lem_stub
   dynamicflags += BASE_LEM_STUB_BUILD_DLL
 
@@ -56,7 +55,6 @@ project(Base_lem_stub) : ccm_svnt   {
 project(Base_stub) : ccm_stub   {
   after += Base_idl_gen
   libs  +=
-
 
   sharedname = Base_stub
   dynamicflags += BASE_STUB_BUILD_DLL
@@ -83,7 +81,6 @@ project(Base_exec) : ciao_executor   {
   sharedname = Base_exec
   libs += Base_stub Base_lem_stub
 
-
   dynamicflags += BASE_EXEC_BUILD_DLL
 
   IDL_Files {
@@ -108,7 +105,6 @@ project(Base_svnt) : ciao_servant   {
   sharedname  = Base_svnt
   libs       += Base_stub Base_lem_stub
 
-
   dynamicflags += BASE_SVNT_BUILD_DLL
 
   IDL_Files {
@@ -129,5 +125,3 @@ project(Base_svnt) : ciao_servant   {
     BaseS.inl
   }
 }
-
-
