@@ -54,7 +54,8 @@ namespace CIAO_Receiver_Impl
   */
 
   Receiver_exec_i::Receiver_exec_i (void)
-  : interval_ (2, 1)
+  : interval_ (2, 1),
+    strategy_("thru_poa")
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::Receiver_exec_i \n "));
     ACE_NEW_THROW_EX (this->hello_generator_,
@@ -91,8 +92,6 @@ namespace CIAO_Receiver_Impl
    void
    Receiver_exec_i::tick (void)
    {
-     ACE_DEBUG ((LM_DEBUG, "$$$$$$$$$$$$$$  Start interface method in Receiver_exec_i::tick - "
-                                     "set point  for  sender.\n"));
      try
        {
          /// Retrieve the connection to the sender.
@@ -100,13 +99,9 @@ namespace CIAO_Receiver_Impl
            this->ciao_context_->get_connection_hello_to_rec ();
          if (! ::CORBA::is_nil (hello_to_rec.in ()))
            {
- /*            CORBA::String_var message = hello_to_rec->say_hello ();
-             ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::tick - "
-                                           "got hello-message from sender  <%C>.\n",
-                                           message.in()));
-*/           pointer_id::_var_type p = new pointer_id;
+             pointer_id::_var_type p = new pointer_id;
              p->point = (long)p.ptr ();
-             hello_to_rec->set_point(p.in());
+             hello_to_rec->set_point(p.in(), this->strategy_.in());
 
               ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::tick - "
                                             "set_hello-point with pointer %@\n",
@@ -119,6 +114,18 @@ namespace CIAO_Receiver_Impl
                                             "no connection hello_to_rec with sender.\n"));
            }
         }
+     catch (const CORBA::INTERNAL& ex)
+       {
+         if (ACE_OS::strcmp ("no_thru_poa", this->strategy_.in())== 0)
+           {
+             ACE_DEBUG ((LM_DEBUG, "OK: Receiver received expected exception\n"));
+           }
+         else
+           {
+             ACE_ERROR ((LM_ERROR, "Receiver_exec_i::tick - "
+                             "Error: Unexpected exception caught\n"));
+           }
+       }
      catch (const CORBA::Exception &e)
        {
          /// Always catch CORBA exceptions. There might be somthing wrong with
@@ -132,11 +139,20 @@ namespace CIAO_Receiver_Impl
          ACE_ERROR ((LM_ERROR, "Receiver_exec_i::tick - "
                      "Error: Unexpected and unknown exception caught\n"));
        }
-     ACE_DEBUG ((LM_DEBUG, "$$$$$$$$$$$$$$  End interface method in Receiver_exec_i::tick - "
-                                      "set point  for  sender.\n"));
-
    }
   // Component attributes and port operations.
+
+   char*
+   Receiver_exec_i::strategy (void)
+    {
+      return ::CORBA::string_dup (this->strategy_);
+    }
+
+    void
+    Receiver_exec_i::strategy (const char* strategy)
+    {
+      this->strategy_ = ::CORBA::string_dup (strategy);
+    }
 
    // Operations from Components::SessionComponent.
 

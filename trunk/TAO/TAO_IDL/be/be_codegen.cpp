@@ -3254,18 +3254,6 @@ TAO_CodeGen::gen_svnt_src_includes (void)
 
   this->gen_standard_include (
     this->ciao_svnt_source_,
-    "ciao/Containers/CIAO_Servant_ActivatorC.h");
-
-  this->gen_standard_include (
-    this->ciao_svnt_source_,
-    "ciao/Servants/Port_Activator_T.h");
-
-  this->gen_standard_include (
-    this->ciao_svnt_source_,
-    "ciao/Servants/CIAO_Port_ActivatorC.h");
-
-  this->gen_standard_include (
-    this->ciao_svnt_source_,
     "tao/SystemException.h");
 
   this->gen_standard_include (

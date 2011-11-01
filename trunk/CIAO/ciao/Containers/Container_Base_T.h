@@ -111,10 +111,6 @@ namespace CIAO
                                     Container_Types::OA_Type type,
                                     PortableServer::ObjectId_out oid);
 
-    /// Return the servant activator factory that activates the
-    /// servants for facets and consumers.
-    virtual ::CIAO::Servant_Activator_ptr ports_servant_activator (void);
-
     virtual CORBA::Object_ptr get_objref (PortableServer::Servant p);
 
     /// Analog of the POA method that creates an object reference from
@@ -146,10 +142,6 @@ namespace CIAO
      * are distinct from the component.
      */
     PortableServer::POA_var facet_cons_poa_;
-
-    /// The servant activator factory used to activate facets and
-    /// consumer servants.
-    Servant_Activator_var sa_;
 
     /// Uninstall a servant for component or home.
     void uninstall (CORBA::Object_ptr objref, Container_Types::OA_Type t);

@@ -1,3 +1,30 @@
+Thu Nov 01 10:54:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy SA work branch.
+
+        === start changelog ===
+
+        Mon Oct 31 13:14:04 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                Add safe_servant_base in CIAO consumers servant
+
+
+        Fri Oct 28 11:37:40 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                Changes for removing activators for CIAO consumers
+
+        Wed Oct 26 07:18:40 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * TAO_IDL/be/be_codegen.cpp:
+                Remove include files for ciao servant- and port_activator.
+
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                Changes for removing activators in CIAO
+
+        === end changelog ===
+
 Thu Oct 27 16:16:09 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/HostProcess.h:

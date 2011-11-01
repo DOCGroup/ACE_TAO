@@ -138,8 +138,9 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>-ORBCollocation global -ORBCollocationStrategy direct</string>
-          <!--string>-ORBCollocation global -ORBCollocationStrategy best</string-->
+          <!--string>-ORBCollocation global -ORBCollocationStrategy thru_poa</string-->
+          <!--string>-ORBCollocation global -ORBCollocationStrategy direct</string-->
+          <string>-ORBCollocation global -ORBCollocationStrategy best</string>
           <!--string>-ORBCollocation no</string-->
          </value>
       </value>
@@ -158,14 +159,14 @@
     <node>One</node>
     <source/>
     <implementation xmi:idref="ReceiverImpl" />
-        <configProperty>
+    <configProperty>
       <name>strategy</name>
       <value>
         <type>
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>direct</string>
+          <string>no_collocation</string>
         </value>
       </value>
     </configProperty>
@@ -239,6 +240,11 @@
  <localityConstraint>
     <constraint>SameProcess</constraint>
     <constrainedInstance xmi:idref="CompSvr1Inst" />
+    <constrainedInstance xmi:idref="SenderInstance" />
+    <!--constrainedInstance xmi:idref="ReceiverInstance" /-->
+  </localityConstraint>
+ <localityConstraint>
+    <constraint>DifferentProcess</constraint>
     <constrainedInstance xmi:idref="SenderInstance" />
     <constrainedInstance xmi:idref="ReceiverInstance" />
   </localityConstraint>
