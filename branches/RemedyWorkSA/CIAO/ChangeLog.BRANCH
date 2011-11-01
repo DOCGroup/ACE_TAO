@@ -1,3 +1,8 @@
+Tue Nov 01 08:41:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/Sender/Sender_exec.cpp:
+        Add define in test in case of CIAO not build with 
+        ccm_direct_colloation. 
+
 Mon Oct 31 13:55:15 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * ciao/Containers/Container_Base.idl:
         * ciao/Containers/Container_Base_T.h:
