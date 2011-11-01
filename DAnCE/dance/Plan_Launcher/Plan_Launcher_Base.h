@@ -51,10 +51,6 @@ namespace DAnCE
 
     /// Instructs the Manager to destroy the ApplicationManager.
     virtual void destroy_app_manager (CORBA::Object_ptr app_mgr) = 0;
-
-    /// Helper method to resolve externalReference endpoints into valid object references.
-    virtual void create_external_connections(const ::Deployment::DeploymentPlan &plan,
-                                             Deployment::Connections  &conn) = 0;
   };
 }
 

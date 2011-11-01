@@ -1,3 +1,14 @@
+Tue Nov  1 13:18:21 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/Plan_Launcher/Plan_Launcher_Base.h:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Removed create_external_connections and moved functionality into the
+          LocalityManager.  Thanks to Martin Corino <mcorino@remedy.nl> for the
+          fixes.
+
 Sun Oct 30 22:42:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/ciao.localityconfig:
