@@ -32,7 +32,7 @@ namespace CIAO
   }
 
   void CIAO_StoreReferences_i::pre_install (::Deployment::DeploymentPlan &,
-                                                      ::CORBA::ULong)
+                                            ::CORBA::ULong)
   {
     // no-op
   }
@@ -48,7 +48,7 @@ namespace CIAO
     CIAO_DEBUG (9, (LM_TRACE, CLINFO
                     "CIAO_StoreReferences_i::post_install - "
                     "Interceptor post install for instance %C\n",
-                     plan.instance[index].name.in ()));
+                    plan.instance[index].name.in ()));
 
     if (reference.type() == ::CORBA::_tc_null)
       {
@@ -56,7 +56,7 @@ namespace CIAO
                         "CIAO_StoreReferences_i::post_install - "
                         "Got a nil reference, unable to store reference "
                         "for instance <%C>\n",
-                         inst.name.in ()));
+                        inst.name.in ()));
         return;
       }
 
@@ -82,8 +82,8 @@ namespace CIAO
             CIAO_DEBUG (9, (LM_TRACE, CLINFO
                             "CIAO_StoreReferences_i::post_install - "
                             "Registering name %C for instance %C\n",
-                             name,
-                             plan.instance[index].name.in ()));
+                            name,
+                            plan.instance[index].name.in ()));
 
             Name_Utilities::bind_object (name,
                                          obj.in (),
@@ -143,54 +143,56 @@ namespace CIAO
 
   void
   CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &plan,
-                                       ::CORBA::ULong connectionref,
-                                       ::CORBA::Any &ref)
+                                       ::CORBA::ULong connRef,
+                                       ::CORBA::Any &providedRef)
   {
-    ::Deployment::PlanConnectionDescription &conn = plan.connection[connectionref];
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                    "CIAO_ReferenceLookup_i::pre_connect - "
+                    "Interceptor pre connect for connection %C\n",
+                    plan.connection[connRef].name.in ()));
 
-    if (conn.externalReference.length () >= 1)
+    // attempt to resolve CORBA IOR type external references
+    if (plan.connection[connRef].externalReference.length () > 0)
       {
-        try
+        ::CORBA::Object_var obj;
+        providedRef >>= CORBA::Any::to_object (obj);
+        if (CORBA::is_nil (obj))
           {
-            CORBA::Object_ptr
-              obj = this->orb_->string_to_object(conn.externalReference[0].location.in());
-
-            if (!CORBA::is_nil (obj))
+            try
               {
-                ref <<= obj;
+                obj =
+                  this->orb_->string_to_object(plan.connection[connRef].externalReference[0].location.in());
+                providedRef <<= obj;
               }
-            else
+            catch (const CORBA::INV_OBJREF&)
               {
-                DANCE_ERROR (DANCE_LOG_WARNING,
-                             (LM_DEBUG, DLINFO
-                              ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                              ACE_TEXT("can't create object for IOR %C\n"),
-                              conn.externalReference[0].location.in()));
-                throw Deployment::InvalidConnection (conn.name.in (),
-                                                     ACE_TEXT ("Invalid ExternalReference\n"));
+                CIAO_ERROR (6, (LM_INFO, CLINFO
+                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                                ACE_TEXT("Unable to resolve external reference for connection %C\n"),
+                                plan.connection[connRef].name.in ()));
               }
-          }
-        catch (CORBA::Exception &ex)
-            {
-              DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
-                           (LM_ERROR, DLINFO
-                            ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                            ACE_TEXT("Caught CORBA Exception while resolving endpoint for connection %C: %C\n"),
-                            conn.name.in (),
-                            ex._info ().c_str ()));
-              throw Deployment::InvalidConnection (conn.name.in (),
-                                                   ex._info ().c_str ());
-            }
-        catch (...)
-          {
-            DANCE_ERROR (DANCE_LOG_NONFATAL_ERROR,
-                         (LM_ERROR, DLINFO
-                          ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                          ACE_TEXT("Caught C++ Exception while resolving endpoint for connection\n")));
-            throw Deployment::InvalidConnection (conn.name.in (),
-                                                 ACE_TEXT ("C++ Exception while resolving external reference"));
+            catch (CORBA::Exception &ex)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                                ACE_TEXT("Caught CORBA Exception while resolving external")
+                                ACE_TEXT ("reference for connection %C: %C\n"),
+                                plan.connection[connRef].name.in (),
+                                ex._info ().c_str ()));
+                throw;
+              }
+            catch (...)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
+                                ACE_TEXT("Caught C Exception while resolving external reference")
+                                ACE_TEXT("for connection %C\n"),
+                                plan.connection[connRef].name.in ()));
+                throw;
+              }
           }
       }
+
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
@@ -203,7 +205,7 @@ namespace CIAO
   CIAO_ReferenceLookup_i::configure (const ::Deployment::Properties & )
   {
   }
- }
+}
 
 extern "C"
 {
