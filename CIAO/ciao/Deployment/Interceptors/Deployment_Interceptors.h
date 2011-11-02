@@ -77,6 +77,9 @@ namespace CIAO
 extern "C"
 {
   ::DAnCE::DeploymentInterceptor_ptr
+  CIAO_Deployment_Interceptors_Export create_CIAO_ReferenceLookup (void);
+
+  ::DAnCE::DeploymentInterceptor_ptr
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void);
 
   ::DAnCE::DeploymentInterceptor_ptr

@@ -22,7 +22,7 @@
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
- * @class ACEXML_DTDHandler DTDHandler.h "ACEXML/common/DTDHandler.h"
+ * @class ACEXML_DTDHandler
  *
  * @brief ACEXML_DTDHandler
  *
@@ -58,8 +58,7 @@ public:
    */
   virtual void notationDecl (const ACEXML_Char *name,
                              const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId)
-        = 0;
+                             const ACEXML_Char *systemId) = 0;
 
   /**
    * Receive notification of an unparsed entity declaration event.

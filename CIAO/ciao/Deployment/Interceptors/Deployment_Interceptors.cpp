@@ -32,7 +32,7 @@ namespace CIAO
   }
 
   void CIAO_StoreReferences_i::pre_install (::Deployment::DeploymentPlan &,
-                                                      ::CORBA::ULong)
+                                            ::CORBA::ULong)
   {
     // no-op
   }
@@ -48,7 +48,7 @@ namespace CIAO
     CIAO_DEBUG (9, (LM_TRACE, CLINFO
                     "CIAO_StoreReferences_i::post_install - "
                     "Interceptor post install for instance %C\n",
-                     plan.instance[index].name.in ()));
+                    plan.instance[index].name.in ()));
 
     if (reference.type() == ::CORBA::_tc_null)
       {
@@ -56,7 +56,7 @@ namespace CIAO
                         "CIAO_StoreReferences_i::post_install - "
                         "Got a nil reference, unable to store reference "
                         "for instance <%C>\n",
-                         inst.name.in ()));
+                        inst.name.in ()));
         return;
       }
 
@@ -82,8 +82,8 @@ namespace CIAO
             CIAO_DEBUG (9, (LM_TRACE, CLINFO
                             "CIAO_StoreReferences_i::post_install - "
                             "Registering name %C for instance %C\n",
-                             name,
-                             plan.instance[index].name.in ()));
+                            name,
+                            plan.instance[index].name.in ()));
 
             ::CosNaming::NamingContext_var ctx_safe =
               ::CosNaming::NamingContext::_duplicate (this->ctx_.in ());
@@ -129,6 +129,15 @@ namespace CIAO
   CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i (void)
   {
     this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
+
+    if (CORBA::is_nil (this->orb_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Container_Handler_i::configure -"
+                        "Unable to locate ORB.\n"));
+        throw ::Deployment::StartError ("CIAO Container Handler",
+                                        "Unable to locate ORB");
+      }
   }
 
   /// Implementation skeleton destructor
@@ -144,7 +153,7 @@ namespace CIAO
     CIAO_DEBUG (9, (LM_TRACE, CLINFO
                     "CIAO_ReferenceLookup_i::pre_connect - "
                     "Interceptor pre connect for connection %C\n",
-                     plan.connection[connRef].name.in ()));
+                    plan.connection[connRef].name.in ()));
 
     // attempt to resolve CORBA IOR type external references
     if (plan.connection[connRef].externalReference.length () > 0)
@@ -155,7 +164,8 @@ namespace CIAO
           {
             try
               {
-                obj = this->orb_->string_to_object(plan.connection[connRef].externalReference[0].location.in());
+                obj =
+                  this->orb_->string_to_object(plan.connection[connRef].externalReference[0].location.in());
                 providedRef <<= obj;
               }
             catch (const CORBA::INV_OBJREF&)
@@ -169,7 +179,8 @@ namespace CIAO
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
                                 ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                                ACE_TEXT("Caught CORBA Exception while resolving external reference for connection %C: %C\n"),
+                                ACE_TEXT("Caught CORBA Exception while resolving external")
+                                ACE_TEXT ("reference for connection %C: %C\n"),
                                 plan.connection[connRef].name.in (),
                                 ex._info ().c_str ()));
                 throw;
@@ -178,12 +189,14 @@ namespace CIAO
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
                                 ACE_TEXT("CIAO_ReferenceLookup_i::pre_connect - ")
-                                ACE_TEXT("Caught C++ Exception while resolving external reference for connection %C\n"),
+                                ACE_TEXT("Caught C Exception while resolving external reference")
+                                ACE_TEXT("for connection %C\n"),
                                 plan.connection[connRef].name.in ()));
                 throw;
               }
           }
       }
+
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
@@ -196,7 +209,7 @@ namespace CIAO
   CIAO_ReferenceLookup_i::configure (const ::Deployment::Properties & )
   {
   }
- }
+}
 
 extern "C"
 {

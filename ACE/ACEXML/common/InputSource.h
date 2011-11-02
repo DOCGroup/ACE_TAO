@@ -21,9 +21,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/CharStream.h"
+#include "ace/Copy_Disabled.h"
 
 /**
- * @class ACEXML_InputSource InputSource.h "ACEXML/common/InputSource.h"
+ * @class ACEXML_InputSource
  *
  * @brief ACEXML_InputSource encapsulates the actual input stream with some
  * added information.
@@ -50,7 +51,7 @@
  *
  * @sa ACEXML_CharStream
  */
-class ACEXML_Export ACEXML_InputSource
+class ACEXML_Export ACEXML_InputSource : private ACE_Copy_Disabled
 {
 public:
   /**

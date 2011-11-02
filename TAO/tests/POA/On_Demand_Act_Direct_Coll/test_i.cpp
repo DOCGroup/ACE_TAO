@@ -47,12 +47,3 @@ test_i::get_string (void)
   return CORBA::string_dup ("Hello there!");
 }
 
-void
-test_i::shutdown (void)
-{
-  // Give the client thread time to return from the collocated
-  // call to this method before shutting down the ORB.  We sleep
-  // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
-  ACE_OS::sleep (1);
-  this->orb_->shutdown (0);
-}

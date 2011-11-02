@@ -1,3 +1,83 @@
+Wed Nov 02 08:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Thu Oct 27 10:10:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * bin/ciao.localityconfig:
+
+                  Added CIAO_ReferenceLookup interceptor.
+
+                * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+
+                  Added collection of connections with exernalReference endpoints
+                  to LocalityManager_i::collect_references (without resolving).
+                  Resolving the references is deferred to be handled in a
+                  deployment interceptor. This allows for more control in the
+                  exact setup of external references without the overhead of
+                  unnecessary/unwanted resolution attempts based on (incorrect)
+                  assumptions of the nature of the external references.
+
+                * dance/Plan_Launcher/Plan_Launcher_Base.h:
+                * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
+                * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+                  Removed create_external_connections() method.
+
+        Wed Oct 26 10:13:47 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
+                  Using the correct dynamic flag now.
+
+        Wed Oct 26 09:44:25 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
+                  Merged Will's solution for compile issues on windows.
+
+        === end changelog ===
+
+Tue Nov  1 13:18:21 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/Plan_Launcher/Plan_Launcher_Base.h:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.h:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Removed create_external_connections and moved functionality into the
+          LocalityManager.  Thanks to Martin Corino <mcorino@remedy.nl> for the
+          fixes.
+
+Sun Oct 30 22:42:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/ciao.localityconfig:
+        * dance/LocalityManager/Scheduler/Events/Connect.cpp:
+        * dance/Plan_Launcher/Plan_Launcher_Base_Impl_T.cpp:
+
+          Moved name service resolution of external reference endpoints into the
+          CIAO deployment interceptors.
+
+Tue Oct 25 17:30:32 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Split_Plan/Split_Plan.cpp:
+
+          Moved openmp for loops inside __OPENMP ifdef, else we use
+          CORBA::ULong types for loop index.
+
+Tue Oct 25 17:29:44 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator.mpc:
+
+          Added missing dynamicflags directive.
+
+Sat Oct 22 22:01:01 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_export.h:
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.h:
+
+          Export macros.
+
 Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.

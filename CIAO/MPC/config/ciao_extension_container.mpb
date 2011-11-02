@@ -2,8 +2,7 @@
 // $Id$
 
 project : utils, ciao_servant, \
-          ciao_port_activator_stub, ciao_servant_activator_stub, \
-          ciao_extension_container_stub {
+          ciao_extension_container_stub, ccm_direct_collocation {
   libs += CIAO_Extension_Container
   after += CIAO_Extension_Container
 }

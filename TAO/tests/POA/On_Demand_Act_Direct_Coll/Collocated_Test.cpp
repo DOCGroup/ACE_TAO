@@ -8,7 +8,9 @@
 
 const ACE_TCHAR *output = ACE_TEXT("test.ior");
 const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
-CORBA::Boolean exception = false;
+CORBA::Boolean exception_occured = false;
+ACE_CString server_orb;
+ACE_CString client_orb;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -27,11 +29,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 't':
         // no exception expected
-        exception = false;
+        exception_occured = false;
         break;
       case 'd':
         // exception expected
-        exception = true;
+        exception_occured = true;
         break;
       case '?':
       default:
@@ -55,7 +57,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv ());
+                         satc.get_TCHAR_argv (),
+                         server_orb.c_str());
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -75,12 +78,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Argv_Type_Converter catc (argc, argv);
       CORBA::ORB_var corb =
         CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv ());
+                         catc.get_TCHAR_argv (),
+                         client_orb.c_str());
 
       Client_Task client_task (input,
                                corb.in (),
                                ACE_Thread_Manager::instance (),
-                               exception);
+                               exception_occured);
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
                                 1,
@@ -94,6 +98,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Now that all threads have completed we can destroy the ORB
       sorb->destroy ();
+      if (server_orb != client_orb)
+        {
+          corb->destroy();
+        }
     }
   catch (const CORBA::Exception&)
     {

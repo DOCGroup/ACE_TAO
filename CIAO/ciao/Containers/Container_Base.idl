@@ -11,7 +11,6 @@
 #include "ccm/CCM_Base.idl"
 #include "ccm/CCM_StandardConfigurator.idl"
 #include "ccm/CCM_CCMException.idl"
-#include "ciao/Containers/CIAO_Servant_Activator.idl"
 #include "ciao/Base/CIAO_Exceptions.idl"
 #include "ccm/CCM_Exceptions.idl"
 #include "ccm/CCM_Navigation.idl"
@@ -121,8 +120,6 @@ module CIAO
     void uninstall_servant (in PortableServer::Servant compptr,
                             in Container_Types::OA_Type type,
                             out PortableServer::ObjectId oid);
-
-    Servant_Activator ports_servant_activator ();
 
     Object generate_reference (in string obj_id,
                                in string repo_id,
