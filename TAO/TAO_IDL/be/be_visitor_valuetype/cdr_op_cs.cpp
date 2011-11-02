@@ -68,7 +68,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &strm, " << be_nl
+      << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->full_name ()
       << " *_tao_valuetype" << be_uidt_nl
       << ")" << be_uidt_nl

@@ -5,7 +5,6 @@ project(DAnCE_CORBA_Domain_Validator) : dance_config_handlers, dance_deployment_
 
   after += DAnCE_Domain_Validator_Base
   libs += DAnCE_Domain_Validator_Base
-
   dynamicflags += CORBA_DOMAIN_VALIDATOR_BUILD_DLL
 
   Header_Files {

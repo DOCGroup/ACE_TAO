@@ -22,6 +22,12 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 {
 }
 
+int
+TAO_Wait_Strategy::defer_upcall (ACE_Event_Handler*)
+{
+  return -1;
+}
+
 /*
  * Hook to comment out this method in the lf wait strategy
  */

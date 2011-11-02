@@ -32,6 +32,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 class TAO_Transport;
 class TAO_Synch_Reply_Dispatcher;
+class ACE_Event_Handler;
 
 /**
  * @class TAO_Wait_Strategy
@@ -78,6 +79,14 @@ public:
    * requests while waiting for the reply.
    */
   virtual bool can_process_upcalls (void) const = 0;
+
+  /// Method to support deffering an upcall event till later in
+  /// cases where can_process_upcalls() returns false.
+  /// Some wait strategies like Wait_On_LF_No_Upcall allow an
+  /// event to be deferred at the Leader_Follower which resumes
+  /// the upcall at an opportune moment (when a new leader thread
+  /// is activated).
+  virtual int defer_upcall (ACE_Event_Handler*);
 
   /// Get method for the flag
   bool is_registered (void) const;

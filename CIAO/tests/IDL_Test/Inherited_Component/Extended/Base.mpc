@@ -1,0 +1,127 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl Base"
+
+project(Base_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=BASE_STUB_Export \
+              -Wb,stub_export_include=Base_stub_export.h \
+              -Wb,skel_export_macro=BASE_SVNT_Export \
+              -Wb,skel_export_include=Base_svnt_export.h \
+              -Wb,exec_export_macro=BASE_EXEC_Export \
+              -Wb,exec_export_include=Base_exec_export.h \
+              -Gex
+
+  IDL_Files {
+    Base.idl
+  }
+}
+
+project(Base_lem_gen) : ciaoidldefaults {
+  after += Base_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=BASE_LEM_STUB_Export \
+              -Wb,stub_export_include=Base_lem_stub_export.h \
+              -SS -Gxhst
+
+  IDL_Files {
+    BaseE.idl
+  }
+}
+
+project(Base_lem_stub) : ccm_svnt   {
+  after += Base_lem_gen Base_stub
+  libs  +=  Base_stub
+
+  sharedname = Base_lem_stub
+  dynamicflags += BASE_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseEC.cpp
+  }
+
+  Header_Files {
+    BaseEC.h
+    Base_lem_stub_export.h
+  }
+
+  Inline_Files {
+    BaseEC.inl
+  }
+}
+
+project(Base_stub) : ccm_stub   {
+  after += Base_idl_gen
+  libs  +=
+
+  sharedname = Base_stub
+  dynamicflags += BASE_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseC.cpp
+  }
+
+  Header_Files {
+    BaseC.h
+    Base_stub_export.h
+  }
+
+  Inline_Files {
+    BaseC.inl
+  }
+}
+
+project(Base_exec) : ciao_executor   {
+  after   += Base_lem_stub Base_stub
+  sharedname = Base_exec
+  libs += Base_stub Base_lem_stub
+
+  dynamicflags += BASE_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Base_exec.cpp
+  }
+
+  Header_Files {
+    Base_exec.h
+    Base_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(Base_svnt) : ciao_servant   {
+  after      +=   Base_lem_stub
+  sharedname  = Base_svnt
+  libs       += Base_stub Base_lem_stub
+
+  dynamicflags += BASE_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    BaseS.cpp
+    Base_svnt.cpp
+  }
+
+  Header_Files {
+    BaseS.h
+    Base_svnt.h
+    Base_svnt_export.h
+  }
+
+  Inline_Files {
+    BaseS.inl
+  }
+}

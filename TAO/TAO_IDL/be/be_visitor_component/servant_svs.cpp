@@ -1283,7 +1283,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   os_ << "\"" << port_name << "\"," << be_nl
       << "\"" << obj->repoID () << "\"," << be_nl;
 
-  os_  << "ciao_" << port_name << ".in (), " << be_nl;
+  os_  << "ciao_" << port_name << ".in ()," << be_nl;
 
   os_ << "safe_retval," << be_nl
       << slot_++ << "UL);" << be_uidt << be_uidt;

@@ -93,7 +93,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from " << be_nl
+  *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl_2;
@@ -166,7 +166,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from " << be_nl
+  *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl_2;
@@ -213,7 +213,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << be_nl_2
         << "void " << full_skel_name
         << "::_is_a_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
+        << "TAO_ServerRequest & server_request," << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant)" << be_uidt << be_uidt_nl
         << "{" << be_idt;
@@ -323,7 +323,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << be_nl_2
         << "void " << full_skel_name
         << "::_non_existent_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
+        << "TAO_ServerRequest & server_request," << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant)" << be_uidt << be_uidt_nl
         << "{" << be_idt;
@@ -437,7 +437,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << be_nl_2
         << "void " << full_skel_name
         << "::_repository_id_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
+        << "TAO_ServerRequest & server_request," << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant)" << be_uidt << be_uidt_nl
         << "{" << be_idt;
@@ -521,13 +521,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   {
     *os << be_nl_2;
 
-    *os << "// TAO_IDL - Generated from " << be_nl
+    *os << "// TAO_IDL - Generated from" << be_nl
         << "// " << __FILE__ << ":" << __LINE__;
 
     *os << be_nl_2
         << "void " << full_skel_name
         << "::_interface_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
+        << "TAO_ServerRequest & server_request," << be_nl
         << "void * /* servant_upcall */," << be_nl
         << "void * servant)" << be_uidt << be_uidt_nl;
     *os << "{" << be_idt_nl;
@@ -603,7 +603,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     *os << be_nl_2
         << "void " << full_skel_name
         << "::_component_skel (" << be_idt << be_idt_nl
-        << "TAO_ServerRequest & server_request, " << be_nl
+        << "TAO_ServerRequest & server_request," << be_nl
         << "void * TAO_INTERCEPTOR (servant_upcall)," << be_nl
         << "void * servant" << be_uidt_nl
         << ")" << be_uidt_nl

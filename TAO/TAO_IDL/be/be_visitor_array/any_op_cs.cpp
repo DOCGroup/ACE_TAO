@@ -41,7 +41,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl_2
-      << "// TAO_IDL - Generated from " << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;

@@ -47,35 +47,6 @@ namespace CIAO
                                                                 ::CIAO::Extension_Container_ptr,
                                                                 const char *);
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  HomeFactory,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex>
-    HOMECREATOR_FUNCPTR_MAP;
-
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  HomeServantFactory,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex>
-  HOMESERVANTCREATOR_FUNCPTR_MAP;
-
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  ComponentFactory,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex>
-    COMPONENTCREATOR_FUNCPTR_MAP;
-
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  ComponentServantFactory,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex>
-  COMPONENTSERVANTCREATOR_FUNCPTR_MAP;
-
-
   class EXTENSION_CONTAINER_Export Extension_Container_i :
     public Container_i < ::CIAO::Extension_Container>
   {

@@ -41,8 +41,6 @@ be_visitor_executor_ex_idl::visit_component (
   if (base == 0)
     {
       os_ << "::Components::EnterpriseComponent";
-
-      this->gen_supported ();
     }
   else
     {
@@ -56,6 +54,8 @@ be_visitor_executor_ex_idl::visit_component (
       os_ << global << sname << "::CCM_"
           << base->original_local_name ()->get_string ();
     }
+
+  this->gen_supported ();
 
   os_ << be_uidt_nl
       << "{" << be_idt;
