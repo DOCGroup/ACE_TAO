@@ -50,7 +50,7 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  *os << "ACE_INLINE const char* " << be_nl
+  *os << "ACE_INLINE const char*" << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
@@ -229,21 +229,21 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
   this->emit_boxed_access(node, "*");
 
   // Generate maximum() accessor
-  *os << "ACE_INLINE ::CORBA::ULong " << be_nl
+  *os << "ACE_INLINE ::CORBA::ULong" << be_nl
       << vb_node->name () << "::maximum (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->maximum ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Generate length() accessor
-  *os << "ACE_INLINE ::CORBA::ULong " << be_nl
+  *os << "ACE_INLINE ::CORBA::ULong" << be_nl
       << vb_node->name () << "::length (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->length ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Generate length() setter
-  *os << "ACE_INLINE void " << be_nl
+  *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::length ( ::CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value->length (length);" << be_uidt_nl
@@ -289,7 +289,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   this->emit_assignment (node, "");
 
   // Public constructor with one const argument of underlying type
-  *os << "ACE_INLINE " << be_nl
+  *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << node->full_name () << " val)" << be_nl
       << "{" << be_idt_nl
@@ -549,7 +549,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 
   // Generate modifier and accessor for discriminant
-  *os << "ACE_INLINE void " << be_nl
+  *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::_d (" << bt->nested_type_name (node) << " val)"
       << be_nl
       << "{" << be_idt_nl
@@ -662,7 +662,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
     be_type::narrow_from_decl (node)->size_type () == AST_Type::VARIABLE;
 
   // Public default constructor
-  *os << "ACE_INLINE " << be_nl
+  *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (void)"
       << be_nl << "{" << be_idt_nl
       << node->full_name () << "* p = 0;" << be_nl
@@ -684,7 +684,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg (be_decl *node,
   be_decl * vb_node = this->ctx_->node ();
 
   // Public constructor with one argument of underlying type
-  *os << "ACE_INLINE " << be_nl
+  *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
       << node->full_name () << type_suffix << " val)" << be_nl
       << "{" << be_idt_nl
@@ -701,7 +701,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
   be_decl * vb_node = this->ctx_->node ();
 
   // Public constructor with single argument of type const T&
-  *os << "ACE_INLINE " << be_nl
+  *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
@@ -722,7 +722,7 @@ be_visitor_valuebox_ci::emit_copy_constructor (void)
   be_decl * vb_node = this->ctx_->node ();
 
   // Public Copy constructor
-  *os << "ACE_INLINE " << be_nl
+  *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl
@@ -742,7 +742,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
   be_decl * vb_node = this->ctx_->node ();
 
   // Public copy constructor
-  *os << "ACE_INLINE " << be_nl
+  *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->full_name () << "& val)" << be_idt_nl
       << ": ::CORBA::ValueBase (val)," << be_nl

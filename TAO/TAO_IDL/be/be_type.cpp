@@ -28,6 +28,7 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 #include "nr_extern.h"
+#include <TAO_IDL/be_include/be_helper.h>
 
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
@@ -274,7 +275,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
       << be_idt << be_idt_nl
       << this->local_name () << be_uidt_nl
       << ">" << be_uidt_nl
-      << this->local_name () << "_var;" << be_uidt_nl << be_nl;
+      << this->local_name () << "_var;" << be_uidt << be_nl_2;
 
   if (st == AST_Type::FIXED)
     {
@@ -304,17 +305,14 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 
   *os << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  *os << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   AST_Interface *i = AST_Interface::narrow_from_decl (this);
   AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
 
   if (i != 0)
     {
-      *os << be_nl
-          << "typedef " << this->local_name ()
+      *os << "typedef " << this->local_name ()
           << (v == 0 ? "_ptr" : " *") << " _ptr_type;";
     }
 

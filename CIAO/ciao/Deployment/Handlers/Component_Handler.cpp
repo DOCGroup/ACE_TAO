@@ -24,6 +24,10 @@ namespace CIAO
   void
   Component_Handler_i::close (void)
   {
+    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->instances_mutex_,
+                        CORBA::NO_RESOURCES ());
     this->instances_.clear ();
   }
 
@@ -257,7 +261,13 @@ namespace CIAO
                                           "Container provided nil object reference");
         }
 
-      this->instances_[idd.name.in ()] = info;
+      {
+        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                            guard,
+                            this->instances_mutex_,
+                            CORBA::NO_RESOURCES ());
+        this->instances_[idd.name.in ()] = info;
+      }
 
       DEPLOYMENT_STATE::instance ()->add_component (idd.name.in (),
                                                     cont_id,
@@ -400,18 +410,24 @@ namespace CIAO
     CIAO_TRACE ("Component_Handler_i::remove_instance");
 
     const char *name = plan.instance[instanceRef].name.in ();
-    Deployment_Common::INSTANCES::iterator instance
-      = this->instances_.find (name);
+    Deployment_Common::INSTANCES::iterator instance;
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->instances_mutex_,
+                          CORBA::NO_RESOURCES ());
+      instance = this->instances_.find (name);
 
-    if (instance == this->instances_.end ())
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Component_Handler_i::remove_instance - "
-                        "Instructed to remove unknown component instance <%C>\n",
-                        name));
-        throw ::Deployment::StopError (name,
-                                       "Wrong instance handler for component instance\n");
-      }
+      if (instance == this->instances_.end ())
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
+                          "Component_Handler_i::remove_instance - "
+                          "Instructed to remove unknown component instance <%C>\n",
+                          name));
+          throw ::Deployment::StopError (name,
+                                        "Wrong instance handler for component instance\n");
+        }
+    }
 
     CIAO_DEBUG (8, (LM_DEBUG, CLINFO
                     "Component_Handler_i::remove_instance - "
@@ -477,7 +493,13 @@ namespace CIAO
                                           "Unknown C++ exception\n");
         }
 
-      this->instances_.erase (instance);
+      {
+        ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                            guard,
+                            this->instances_mutex_,
+                            CORBA::NO_RESOURCES ());
+        this->instances_.erase (instance);
+      }
       DEPLOYMENT_STATE::instance ()->remove_component (name);
 
       CIAO_DEBUG (4, (LM_INFO, CLINFO

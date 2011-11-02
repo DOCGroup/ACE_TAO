@@ -54,10 +54,10 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
       TAO_OutStream *os = this->ctx_->stream ();
 
       *os << be_nl_2;
-      *os << "// TAO_IDL - Generated from " << be_nl
+      *os << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-      *os << "void " << be_nl
+      *os << "void" << be_nl
           << node->name ()
           << "::_tao_any_destructor (" << be_idt << be_idt_nl
           << "void *_tao_void_pointer)" << be_uidt

@@ -190,7 +190,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (gen_any_destructor)
     {
-      *os << "void " << be_nl
+      *os << "void" << be_nl
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
@@ -249,7 +249,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "if (! ::CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
       << "obj->_add_ref ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
+      << "}" << be_uidt_nl
       << "return obj;" << be_uidt_nl
       << "}" << be_nl_2;
 

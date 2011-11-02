@@ -51,6 +51,7 @@ namespace DAnCE
 
     /// Instructs the Manager to destroy the ApplicationManager.
     virtual void destroy_app_manager (CORBA::Object_ptr app_mgr) = 0;
+
   };
 }
 

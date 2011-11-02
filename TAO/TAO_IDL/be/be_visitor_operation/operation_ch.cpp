@@ -97,7 +97,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
       && !node->has_native ())
     {
       *os << be_nl_2
-          << "static void " << be_nl
+          << "static void" << be_nl
           << node->local_name () << "_reply_stub (" << be_idt_nl
           << "TAO_InputCDR &_tao_reply_cdr," << be_nl
           << "::Messaging::ReplyHandler_ptr _tao_reply_handler,"

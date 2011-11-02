@@ -1,3 +1,221 @@
+Wed Nov 02 08:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Tue Nov  1 14:29:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+                  Fixed link issues on windows.
+
+        Tue Nov  1 12:52:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+                * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+                  Reverted a few of my last changes. An derived executor
+                  is not directly derived from its base anymore (on
+                  executor IDL level as well as on implementation level).
+
+        Mon Oct 31 15:14:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_type.cpp:
+                  Fixed new line.
+
+        Fri Oct 28 11:22:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/Bug_3768_Regression/TestCallback.cpp:
+                * tests/Bug_3768_Regression/TestServer.cpp:
+                * tests/Bug_3768_Regression/client.cpp:
+                * tests/Bug_3768_Regression/server.cpp:
+                  Fuzz.
+
+        Fri Oct 28 10:35:06 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tests/Bug_3531b_Regression/server.cpp:
+
+                  Fix for Windoze runtime problem with TSS.
+
+        Fri Oct 28 10:22:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_array.cpp:
+                * TAO_IDL/be/be_codegen.cpp:
+                * TAO_IDL/be/be_component.cpp:
+                * TAO_IDL/be/be_interface.cpp:
+                * TAO_IDL/be/be_type.cpp:
+                * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+                * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svh.cpp:
+                * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+                * TAO_IDL/be/be_visitor_connector/facet_ami_exs.cpp:
+                * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+                * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/direct_proxy_impl_sh.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+                * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+                * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+                * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+                * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
+                * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+                * TAO_IDL/be/be_visitor_operation/tie_ss.cpp:
+                * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+                * TAO_IDL/be/be_visitor_root/root_sth.cpp:
+                * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+                * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+                * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+                * TAO_IDL/be/be_visitor_template_export.cpp:
+                * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+                * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+                * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+                * TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
+                * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_ci.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+                * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+                  Reduced whitespaces in generated code.
+
+                * TAO_IDL/be/be_visitor_interface/tie_ss.cpp:
+                  Removed tabs from generated code.
+
+
+        Fri Oct 28 09:23:52 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tests/Bug_3531b_Regression/server.cpp:
+
+                  Fix for Windoze compile problem.
+
+        Fri Oct 28 07:36:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+                  Fixed compile issues.
+
+        Thu Oct 27 08:05:28 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+                  Removed the overrides of _is_a, marshal and _repository_id since
+                  these methods are not needed anymore.
+
+        Wed Oct 26 13:38:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * TAO_IDL/be/be_visitor_component/component_ex_idl.cpp:
+                * TAO_IDL/be/be_visitor_component/component_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/component_exs.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_exs_attr_init.cpp:
+                * TAO_IDL/be/be_visitor_component/executor_private_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+                * TAO_IDL/be/be_visitor_component/facet_exs.cpp:
+                  Fixed issues regarding derived components. Derived component
+                  were not derived from the base implementation. Instead of deriving
+                  from the base implementation, a whole new base executor was
+                  generated and still wasn't derived from this. Now there's
+                  one base implementation where the derived executor is derived from.
+
+                * TAO_IDL/be/be_visitor_component/executor_ex_idl.cpp:
+                  Fixed compile issues when a derived interface supports
+                  another interface.
+
+        Mon Oct 24 11:50:33 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/Connection_Handler.cpp:
+                * tao/Leader_Follower.h:
+                * tao/Leader_Follower.inl:
+                * tao/Leader_Follower.cpp:
+                * tao/Wait_On_LF_No_Upcall.h:
+                * tao/Wait_On_LF_No_Upcall.cpp:
+                * tao/Wait_On_Leader_Follower.h:
+                * tao/Wait_Strategy.h:
+                * tao/Wait_Strategy.cpp:
+
+                  Implemented a solution for two known problems:
+                  a) deadlocking possibility because of upcall handling
+                    in client leader threads without abdicating
+                    leadership
+                  b) inefficient handling of nested upcalls in
+                    client leader threads in case MT_NOUPCALL
+                    strategy
+                  This solution implements leadership abdication
+                  (as also proposed by Russell Mora in Bugzilla #3531
+                  and David Kinder in Bugzilla #3768) when a client
+                  leader thread receives an upcall (triggering a
+                  call to Leader_Follower::set_upcall_thread) so
+                  any waiting (regular) leader thread could now
+                  take over. Futhermore leader abdication for client
+                  leader threads is also implemented in case an event
+                  causes a client leader thread to wake up and it detects
+                  leader threads waiting which are capable to take over
+                  leadership.
+                  With this out of the way the solution for MT_NOUPCALL
+                  could now be optimized with a 'handle deferring'
+                  mechanism which allows a client leader thread to
+                  temporarily defer an upcall until the client leader
+                  thread has abdicated and leadership switches (which
+                  should happen almost immediately after the client
+                  leader thread deferred the upcall handle(r)).
+
+                * tao/Resume_Handle_Deferred.h:
+                * tao/Resume_Handle_Deferred.cpp:
+
+                  Removed these files. Part of previous, non-optimal,
+                  MT_NOUPCALL solution.
+
+                * tao/tao.mpc:
+
+                  Removed Resume_Handle_Deferred.{h,cpp}
+
+                * tests/Bug_3531b_Regression/Bug_3531b_Regression.mpc:
+                * tests/Bug_3531b_Regression/server.cpp:
+
+                  Fixed compile problems due to TAO version
+                  incompatibilities and removed dummy_label
+                  restriction.
+
+                * tests/Bug_3768_Regression:
+                * tests/Bug_3768_Regression/Bug_3768_Test.mpc:
+                * tests/Bug_3768_Regression/Test.idl:
+                * tests/Bug_3768_Regression/TestCallback.h:
+                * tests/Bug_3768_Regression/TestCallback.cpp:
+                * tests/Bug_3768_Regression/TestServer.h:
+                * tests/Bug_3768_Regression/TestServer.cpp:
+                * tests/Bug_3768_Regression/client.cpp:
+                * tests/Bug_3768_Regression/run_test.pl:
+                * tests/Bug_3768_Regression/server.cpp:
+
+                  Added new test for Bugzilla #3768.
+
+                * bin/tao_orb_tests.lst
+
+                  Added Bug_3531_Regression, Bug_3531b_Regression and
+                  Bug_3768_Regression to regular test runs.
+
+        === end changelog ===
+
 Tue Nov 01 14:34:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
         * On_Demand_Act_Direct_Coll/test_i.cpp:
@@ -5,7 +223,7 @@ Tue Nov 01 14:34:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * On_Demand_Act_Direct_Coll/Client_Task.cpp:
         * On_Demand_Act_Direct_Coll/test.idl:
         Clean up test.
-   
+
 
 Tue Nov 01 10:54:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 

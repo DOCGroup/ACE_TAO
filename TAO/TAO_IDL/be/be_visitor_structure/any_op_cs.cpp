@@ -41,7 +41,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl_2
-      << "// TAO_IDL - Generated from " << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Since we don't generate CDR stream operators for types that
