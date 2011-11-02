@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-feature(stl_mapping) : taoidldefaults {
-  requires += stl_mapping
-  idlflags += -Gstl
-}
