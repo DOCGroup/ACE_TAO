@@ -174,7 +174,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
       // The virtual _tao_marshal_v method.
-      *os << "::CORBA::Boolean " << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->name ()
           << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
           << "{" << be_idt_nl
@@ -200,7 +200,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << "}" << be_nl_2;
 
       // The virtual _tao_unmarshal_v method.
-      *os << "::CORBA::Boolean " << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->name ()
           << "::_tao_unmarshal_v (TAO_InputCDR & strm)"
           << be_nl
@@ -226,7 +226,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       *os << "}" << be_nl_2;
 
-      *os << "::CORBA::Boolean " << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->name ()
           << "::_tao_match_formal_type (ptrdiff_t formal_type_id) const"
           << be_nl
@@ -260,7 +260,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl_2;
 
       // The virtual _tao_match_formal_type method.
-      *os << "::CORBA::Boolean " << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->name ()
           << "::_tao_match_formal_type (ptrdiff_t ) const"
           << be_nl
@@ -306,7 +306,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // The static T::_tao_unmarshal method
 
-  *os << "::CORBA::Boolean " << be_nl << node->name()
+  *os << "::CORBA::Boolean" << be_nl << node->name()
       << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&new_object" << be_uidt_nl

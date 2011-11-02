@@ -52,7 +52,7 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
 typedef ACE_Unbounded_Queue<const ACEXML_Char *> ACEXML_STR_LIST;
 
 /**
- * @class ACEXML_Namespace_Context_Stack NamespaceSupport.h "ACEXML/common/NamespaceSupport.h"
+ * @class ACEXML_Namespace_Context_Stack
  *
  * @brief ACEXML_Namespace_Context_Stack implements a simple stack
  * that ACEXML_NamespaceSupport uses to keep track of namespace scopes.

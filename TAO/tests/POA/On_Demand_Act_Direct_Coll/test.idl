@@ -8,6 +8,4 @@ interface test
   void method ();
   // A twoway operation.
 
-  void shutdown ();
-  // Shutdown the server.
 };

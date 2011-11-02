@@ -23,7 +23,7 @@
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
- * @class ACEXML_Validator Validator.h "common/Validator.h"
+ * @class ACEXML_Validator
  *
  * @brief An abstract virtual class defining validator interface.
  *

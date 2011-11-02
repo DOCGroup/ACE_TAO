@@ -23,7 +23,7 @@
 class ACEXML_CharStream;
 
 /**
- *  @class ACEXML_StreamFactory StreamFactory.h "ACEXML/common/ACEXML_StreamFactory.h"
+ *  @class ACEXML_StreamFactory
  *
  *  @brief A generic factory used to create an appropriate @sa
  *  ACEXML_CharStream from a SYSTEM id. This class creates a @sa

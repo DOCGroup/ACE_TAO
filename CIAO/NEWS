@@ -6,9 +6,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
   This can be established by setting the CIAO_PRE_ESTABLISH_CONNECTIONS
   define in your config.h.
 
-. The DDS4CCM connector now only creates a subscriber or
-  publisher when they are needed. Previously, the DDS4CCM
-  always created a publisher and subscriber, regardless
+. The DDS4CCM connector now only creates a DDS subscriber or
+  DDS publisher when they are needed. Previously, the DDS4CCM
+  always created a DDS publisher and DDS subscriber, regardless
   of need.
 
 . Besides late binding, it is now possible to reset the topic
@@ -26,6 +26,12 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.0.5 and CIAO-1.1.0
   raised on the DDS4CCM specification.
 
 . Improved thread safety in the CIAO core.
+
+. Direct collocation between components is now supported. In order to enable
+  this add ccm_direct_collocation=1 to your default.features. We do recommend
+  to use the new -ORBCollocationStrategy best which does not require all
+  user components to be compiled with direct collocation enabled. Enabling
+  direct collocation does increase the size of the generated code
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.0.4 and CIAO-1.0.5
 =======================================================

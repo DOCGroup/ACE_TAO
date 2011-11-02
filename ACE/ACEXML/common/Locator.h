@@ -18,7 +18,7 @@
 #include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Locator Locator.h "ACEXML/common/Locator.h"
+ * @class ACEXML_Locator
  *
  * @brief ACEXML_Locator defines operations that an XML locator should support.
  *

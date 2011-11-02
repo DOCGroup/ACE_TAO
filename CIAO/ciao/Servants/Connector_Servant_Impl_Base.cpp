@@ -3,7 +3,6 @@
 #include "Connector_Servant_Impl_Base.h"
 #include "StandardConfigurator_Impl.h"
 #include "ciao/Logger/Log_Macros.h"
-#include "ciao/Containers/CIAO_Servant_ActivatorC.h"
 
 namespace CIAO
 {
@@ -51,24 +50,15 @@ namespace CIAO
               port_poa->reference_to_id (iter->second);
 
             port_poa->deactivate_object (facet_id);
-
-            CIAO::Servant_Activator_var sa =
-              cnt_safe->ports_servant_activator ();
-
-            if (!CORBA::is_nil (sa.in ()))
-              {
-                sa->update_port_activator (facet_id.in ());
-              }
           }
       }
 
       this->ccm_remove ();
 
       PortableServer::ObjectId_var oid;
-      this->container_->uninstall_servant (
-        this,
-        Container_Types::COMPONENT_t,
-        oid.out ());
+      cnt_safe->uninstall_servant (this,
+                                  Container_Types::COMPONENT_t,
+                                  oid.out ());
 
       if (this->home_servant_)
         {
@@ -490,7 +480,10 @@ namespace CIAO
   Connector_Servant_Impl_Base::_default_POA (void)
   {
     CIAO_TRACE("Connector_Servant_Impl_Base::_default_POA (void)");
-    return container_->the_POA ();
+
+    Container_var cnt_safe =
+      Container::_duplicate(this->container_.in ());
+    return cnt_safe->the_POA ();
   }
 
   ::CORBA::Object_ptr
@@ -553,6 +546,7 @@ namespace CIAO
     const char * receptacle_name)
   {
     CIAO_TRACE ("Connector_Servant_Impl_Base::lookup_receptacle_description");
+
     ::Components::ReceptacleDescriptions_var all_receptacles =
       this->get_all_receptacles ();
 

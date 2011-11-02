@@ -65,7 +65,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
   rh_skel_class_name += node->local_name ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << rh_skel_full_scope_name.c_str ()

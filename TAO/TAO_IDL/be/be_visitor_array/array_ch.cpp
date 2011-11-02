@@ -52,7 +52,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
                << "// " __FILE__ << ":" << __LINE__;
 
   // If we contain an anonymous sequence,

@@ -100,7 +100,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   *os << this->ctx_->port_prefix ().c_str ()
       << node->local_name () << "_reply_stub (" << be_idt_nl
-      << "TAO_InputCDR &_tao_in, " << be_nl
+      << "TAO_InputCDR &_tao_in," << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
       << "::CORBA::ULong reply_status"
       << ")" << be_uidt << be_uidt_nl
@@ -156,7 +156,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << be_nl << "static TAO::Exception_Data " << "exceptions_data [] = " << be_nl;
+      *os << be_nl << "static TAO::Exception_Data " << "exceptions_data [] =" << be_nl;
       *os << "{" << be_idt_nl;
 
       int excep_count = 0;

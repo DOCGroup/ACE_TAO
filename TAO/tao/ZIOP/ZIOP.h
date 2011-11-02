@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_ZIOP_Loader
  *
- * @brief Class that loads the BiDir library.
+ * @brief Class that loads the ZIOP library.
  */
 
 class TAO_ZIOP_Export TAO_ZIOP_Loader : public TAO_ZIOP_Adapter

@@ -25,7 +25,7 @@
 #include "ACEXML/common/ACEXML_Export.h"
 
 /**
- *  @class ACEXML_URL_Addr URL_Addr.h "ACEXML/common/URL_Addr.h"
+ *  @class ACEXML_URL_Addr
  *
  *  Defines a URL address family address format.
  */

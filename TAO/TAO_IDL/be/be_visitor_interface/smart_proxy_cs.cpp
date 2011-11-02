@@ -216,7 +216,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "ACE_MT (ACE_GUARD_RETURN ("
           << "TAO_SYNCH_RECURSIVE_MUTEX, ace_mon," << be_idt_nl
           << "this->lock_, 0));" << be_uidt_nl << be_nl
-          << "// To take care of those <unchecked_narrow> methods where we " << be_nl
+          << "// To take care of those <unchecked_narrow> methods where we" << be_nl
           << "// want to override the smart proxy factory if there exists one." << be_nl
           << "if (this->disable_factory_)" << be_idt_nl
           << "{" << be_idt_nl
@@ -229,7 +229,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "ACE_NEW_RETURN ("
           << "this->proxy_factory_," << be_idt << be_idt_nl
           << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory (0), " << be_nl
+          << "_Default_Proxy_Factory (0)," << be_nl
           << " 0);" << be_uidt_nl << be_uidt_nl << be_uidt_nl
           << "return "
           << "this->proxy_factory_->create_proxy (proxy);"

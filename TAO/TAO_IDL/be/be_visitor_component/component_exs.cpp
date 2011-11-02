@@ -30,6 +30,12 @@ be_visitor_component_exs::~be_visitor_component_exs (void)
 int
 be_visitor_component_exs::visit_component (be_component *node)
 {
+
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   node_ = node;
 
   /// CIDL-generated namespace used 'CIDL_' + composition name.

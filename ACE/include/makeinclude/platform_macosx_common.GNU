@@ -26,10 +26,10 @@ with_ld = macosx
 
 CC              ?= gcc
 CXX             ?= g++
-
+DCCFLAGS        += -g
 DCFLAGS         += -g
-DLD				= $(CXX)
-LD				= $(CXX)
+DLD		= $(CXX)
+LD		= $(CXX)
 #LIBS += -lstdc++.6 -lSystem -lSystemStubs
 
 OCFLAGS		   += -O2

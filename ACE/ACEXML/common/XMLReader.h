@@ -25,7 +25,7 @@
 #include "ACEXML/common/ErrorHandler.h"
 
 /**
- * @class ACEXML_XMLReader XMLReader.h "ACEXML/common/XMLReader.h"
+ * @class ACEXML_XMLReader
  *
  * @brief ACEXML_XMLReader
  *

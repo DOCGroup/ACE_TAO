@@ -28,7 +28,9 @@ namespace CIAO
   ::Components::ContainerPortableInterceptor::ClientContainerInterceptorRegistration_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::get_client_interceptor_registration (void)
   {
-    return this->container_->get_client_interceptor_registration ();
+    ::CIAO::Extension_Container_var cnt_safe =
+      ::CIAO::Extension_Container::_duplicate (this->container_.in ());
+    return cnt_safe->get_client_interceptor_registration ();
   }
 
   template <typename BASE_CTX,
@@ -36,7 +38,9 @@ namespace CIAO
   ::Components::ContainerPortableInterceptor::ServantContainerInterceptorRegistration_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::get_servant_interceptor_registration (void)
   {
-    return this->container_->get_servant_interceptor_registration ();
+    ::CIAO::Extension_Container_var cnt_safe =
+      ::CIAO::Extension_Container::_duplicate (this->container_.in ());
+    return cnt_safe->get_servant_interceptor_registration ();
   }
 
   template <typename BASE_CTX,
@@ -44,7 +48,9 @@ namespace CIAO
   ::Components::ContainerPortableInterceptor::ServerContainerInterceptorRegistration_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::get_server_interceptor_registration (void)
   {
-    return this->container_->get_server_interceptor_registration ();
+    ::CIAO::Extension_Container_var cnt_safe =
+      ::CIAO::Extension_Container::_duplicate (this->container_.in ());
+    return cnt_safe->get_server_interceptor_registration ();
   }
 
   template <typename BASE_CTX,
@@ -52,7 +58,9 @@ namespace CIAO
   ::Components::ContainerPortableInterceptor::StubContainerInterceptorRegistration_ptr
   Extension_Context_Impl<BASE_CTX, COMP>::get_stub_interceptor_registration (void)
   {
-    return this->container_->get_stub_interceptor_registration ();
+    ::CIAO::Extension_Container_var cnt_safe =
+      ::CIAO::Extension_Container::_duplicate (this->container_.in ());
+    return cnt_safe->get_stub_interceptor_registration ();
   }
 
   template <typename BASE_CTX,
@@ -62,8 +70,10 @@ namespace CIAO
         const char * service_id,
         ::CORBA::Object_ptr objref)
   {
-    return this->container_->install_service_reference (service_id,
-                                                        objref);
+    ::CIAO::Extension_Container_var cnt_safe =
+      ::CIAO::Extension_Container::_duplicate (this->container_.in ());
+    return cnt_safe->install_service_reference (service_id,
+                                                objref);
   }
 
   template <typename BASE_CTX,
@@ -72,7 +82,9 @@ namespace CIAO
   Extension_Context_Impl<BASE_CTX, COMP>::uninstall_service_reference (
     ::Components::Cookie * ck)
   {
-    return this->container_->uninstall_service_reference (ck);
+    ::CIAO::Extension_Container_var cnt_safe =
+      ::CIAO::Extension_Container::_duplicate (this->container_.in ());
+    return cnt_safe->uninstall_service_reference (ck);
   }
 }
 

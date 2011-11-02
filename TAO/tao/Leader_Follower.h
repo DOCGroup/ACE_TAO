@@ -27,6 +27,7 @@
 #include "ace/Intrusive_List.h"
 #include "ace/Intrusive_List_Node.h"
 #include "ace/OS_NS_Thread.h"
+#include "ace/Event_Handler.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -187,6 +188,11 @@ public:
   /// Set the new leader generator.
   void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
 
+  /// Method to support deffering an event till later (f.i. in
+  /// cases where transport()->wait_strategy()->can_process_upcalls()
+  /// returns false).
+  int defer_event (ACE_Event_Handler*);
+
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
@@ -215,6 +221,10 @@ private:
   int elect_new_leader_i (void);
 
   //@}
+
+  /// Method to allow the Leader_Follower to resume deferred events
+  /// when it is opportune to do so.
+  void resume_events ();
 
 private:
   /// The orb core
@@ -261,6 +271,22 @@ private:
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
   TAO_New_Leader_Generator *new_leader_generator_;
+
+  /// Class used to register deferred event handlers.
+  class Deferred_Event
+  : public ACE_Intrusive_List_Node<Deferred_Event>
+  {
+  public:
+    Deferred_Event (ACE_Event_Handler* h);
+
+    ACE_Event_Handler* handler () const;
+  private:
+    ACE_Event_Handler_var eh_;
+  };
+
+  /// The set of deferred event handlers.
+  typedef ACE_Intrusive_List<Deferred_Event> Deferred_Event_Set;
+  Deferred_Event_Set deferred_event_set_;
 };
 
 class TAO_Export TAO_LF_Client_Thread_Helper
