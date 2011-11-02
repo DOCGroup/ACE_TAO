@@ -1,0 +1,25 @@
+// -*- IDL -*-
+
+/**
+ * @file CodeSetContext.pidl
+ *
+ * $Id$
+ *
+ * This file is used to generate CodeSetContextC.*
+ */
+
+#ifndef TAO_CORBA_CODESETCONTEXT_PIDL
+#define TAO_CORBA_CODESETCONTEXT_PIDL
+
+#include "tao/CONV_FRAME.pidl"
+
+#pragma prefix "omg.org"
+
+module CONV_FRAME {
+  struct CodeSetContext {
+     CodeSetId char_data;
+     CodeSetId wchar_data;
+  };
+};
+
+#endif /* TAO_CORBA_CODESETCONTEXT_PIDL */

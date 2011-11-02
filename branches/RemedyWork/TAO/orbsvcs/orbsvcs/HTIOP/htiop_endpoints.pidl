@@ -1,0 +1,42 @@
+// -*- IDL -*-
+//
+// $Id$
+
+/*
+ * This file contains idl definition for data structures used to
+ * encapsulate data in TAO_TAG_ENDPOINTS tagged component.  This
+ * TAO-specific component is used for transmission of multiple
+ * endpoints per single profile.  Data structures defined here are
+ * used for transmission of htiop Endpoints.  See HTIOP_Profile.*
+ * for more details.
+ *
+ * This file was used to generate the code in
+ * htiop_endpoints.* The command used to generate code
+ * is:
+ *
+ *      tao_idl
+ *           -Gp -Gd -Sc -Sa -DCORBA3 -Sci \
+ *           -Wb,export_macro=HTIOP_Export \
+ *           -Wb,export_include="HTIOP_Export.h" \
+ *           -Wb,pre_include="ace/pre.h" \
+ *           -Wb,post_include="ace/post.h" \
+ *           htiop_endpoints.pidl
+ */
+
+#ifndef _HTIOP_ENDPOINTS_IDL_
+#define _HTIOP_ENDPOINTS_IDL_
+
+// Stores information for a single HTIOP endpoint.
+struct HTIOP_Endpoint_Info
+{
+  string host;
+  short _port;
+  string htid;
+};
+
+// Stores information for a collection of HTIOP endpoints.
+typedef sequence <HTIOP_Endpoint_Info> HTIOPEndpointSequence;
+
+#pragma prefix ""
+
+#endif /* _HTIOP_ENDPOINTS_IDL_ */

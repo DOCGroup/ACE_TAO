@@ -1,0 +1,41 @@
+// $Id$
+
+/**
+ * @file Base.idl
+ * @author Marcel Smit <msmit@remedy.nl>
+ */
+
+#ifndef BASE_IDL
+#define BASE_IDL
+
+#pragma ndds typesupport "Base/BaseSupport.h"
+#pragma opendds typesupport "Base/BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "SharedDPTest1"
+#pragma DCPS_DATA_KEY "SharedDPTest1 key1"
+
+#pragma DCPS_DATA_TYPE "SharedDPTest2"
+#pragma DCPS_DATA_KEY "SharedDPTest2 key2"
+
+#pragma DCPS_DATA_TYPE "SharedDPTest3"
+#pragma DCPS_DATA_KEY "SharedDPTest3 key3"
+
+struct SharedDPTest1 {
+  string key1;
+  long iteration1;
+};
+typedef sequence<SharedDPTest1> SharedDPTest1Seq;
+
+struct SharedDPTest2 {
+  string key2;
+  long iteration2;
+};
+typedef sequence<SharedDPTest2> SharedDPTest2Seq;
+
+struct SharedDPTest3 {
+  string key3;
+  long iteration3;
+};
+typedef sequence<SharedDPTest3> SharedDPTest3Seq;
+
+#endif
