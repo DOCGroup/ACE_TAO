@@ -280,7 +280,7 @@ namespace CIAO
                                         "Unable to locate POA");
       }
 
-    CIAO::Server_init (orb_);
+    CIAO::Server_init (this->orb_);
 
     // For the time being, we are going to go ahead and construct a container.
     ::Deployment::DeploymentPlan plan;

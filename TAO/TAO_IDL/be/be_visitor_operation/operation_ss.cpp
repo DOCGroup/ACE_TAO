@@ -169,7 +169,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                                 intf->full_skel_name (),
                                 upcall_command_name.c_str ());
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "void " << intf->full_skel_name () << "::";

@@ -23,7 +23,7 @@
 #include "ACEXML/common/CharStream.h"
 
 /**
- * @class ACEXML_StrCharStream StrCharStream.h "common/StrCharStream.h"
+ * @class ACEXML_StrCharStream
  *
  * An implementation of ACEXML_CharStream for reading
  * input from a null-terminated ACEXML_Char string.

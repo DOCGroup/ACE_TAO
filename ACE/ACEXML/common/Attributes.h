@@ -23,7 +23,7 @@
 #include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Attributes Attributes.h "ACEXML/common/Attributes.h"
+ * @class ACEXML_Attributes
  *
  * @brief ACEXML_Attributes defines a collection of attributes of an XML element.
  *

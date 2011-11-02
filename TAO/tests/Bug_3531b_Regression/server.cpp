@@ -11,6 +11,7 @@
 #include "tao/Transport.h"
 #include "ace/Task_T.h"
 #include "tao/TAO_Export.h"
+#include "ace/TP_Reactor.h"
 
 int nthreads = 4;
 bool debug = false;
@@ -85,7 +86,8 @@ private:
   bool shutdown_;
 };
 
-ACE_TSS<Worker> workers;
+ACE_TSS<Worker> *workers_p = 0;
+#define workers (*workers_p)
 
 int Worker::svc (void)
 {
@@ -143,12 +145,23 @@ bool Worker::shutdown (void)
   return shutdown_;
 }
 
-class Test_Reactor: public ACE_Reactor
+class Test_Reactor: public ACE_TP_Reactor
 {
 public:
+  Test_Reactor (size_t max_number_of_handles,
+                  bool restart = false,
+                  ACE_Sig_Handler *sh = 0,
+                  ACE_Timer_Queue *tq = 0,
+                  bool mask_signals = true,
+                  int s_queue = ACE_Select_Reactor_Token::FIFO)
+  : ACE_TP_Reactor(max_number_of_handles, restart, sh, tq, mask_signals, s_queue) {}
+
+
   // This is the method that the Leader_Follower object calls.
   virtual int handle_events (ACE_Time_Value * = 0)
   {
+    if (TAO_debug_level > 10)
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Executing Test_Reactor::handle_events\n"));
     // This is called by client leader threads.  Note, the loop here
     // glosses over the fact that the Leader_Follower code does not
     // work quite the way we want it to.  Namely, this logic:
@@ -180,19 +193,34 @@ class Test_Resource_Factory: public TAO_Default_Resource_Factory
 {
 public:
   Test_Resource_Factory ()
-    : test_reactor_ (new Test_Reactor)
   {}
 
-  virtual ACE_Reactor *get_reactor (void)
+  virtual ACE_Reactor_Impl* allocate_reactor_impl (void) const
   {
-    return test_reactor_;
+    ACE_Reactor_Impl *impl = 0;
+    /*
+     * Hook to specialize TAO's reactor implementation.
+     */
+  //@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
+    ACE_NEW_RETURN (impl,
+                    Test_Reactor (ACE::max_handles (),
+                                    1,
+                                    (ACE_Sig_Handler*)0,
+                                    (ACE_Timer_Queue*)0,
+                                    this->reactor_mask_signals_,
+                                    ACE_Select_Reactor_Token::LIFO),
+                    0);
+  //@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
+    return impl;
   }
+
 private:
-  // This is allocated in the constructor and deallocated by the ORB_Core.
-  Test_Reactor* test_reactor_;
 };
 
-ACE_FACTORY_DEFINE (TAO, Test_Resource_Factory)
+// force export flag otherwise Windoze will complain
+#define TAO_Test_Export ACE_Proper_Export_Flag
+
+ACE_FACTORY_DEFINE (TAO_Test, Test_Resource_Factory)
 ACE_STATIC_SVC_DEFINE (Test_Resource_Factory,
                        ACE_TEXT ("Resource_Factory"),
                        ACE_SVC_OBJ_T,
@@ -201,6 +229,9 @@ ACE_STATIC_SVC_DEFINE (Test_Resource_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_STATIC_SVC_REQUIRE (Test_Resource_Factory);
+
+int load_test_resources =
+ACE_Service_Config::process_directive (ace_svc_desc_Test_Resource_Factory);
 
 class Test_LF_Event: public TAO_LF_Event
 {
@@ -1023,18 +1054,18 @@ void Test_10 (TAO_ORB_Core* orb_core )
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  // scope TSS holder within main scope
+  // so we're certain it gets destroyed before the
+  // ACE object manager
+  ACE_TSS<Worker> workers_;
+  // provide global access
+  workers_p = &workers_;
+
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       if (parse_args (argc, argv) != 0)
         return 1;
-
-      // First we need to replace the resource factory in the ORB_Core
-      // to our test version, which will return our special test
-      // reactor to the Leader_Follower object.
-      ACE_STATIC_SVC_REGISTER (Test_Resource_Factory);
-
-      orb->orb_core ()->set_resource_factory ("Test_Resource_Factory");
 
       // Make sure the reactor is initialised in the leader_follower
       ACE_Reactor* reactor = orb->orb_core ()->leader_follower ().reactor ();

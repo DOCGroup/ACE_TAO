@@ -42,7 +42,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl_2
-      << "// TAO_IDL - Generated from " << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << be_global->core_versioning_begin () << be_nl;

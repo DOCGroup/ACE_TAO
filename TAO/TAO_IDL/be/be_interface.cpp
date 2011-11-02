@@ -2189,7 +2189,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request, " << be_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
                       << "void * servant_upcall," << be_nl
                       << "void * servant);" << be_uidt
                       << be_uidt;

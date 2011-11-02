@@ -208,7 +208,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                             -1);
         }
 
-      *os << "* buffer, " << be_nl
+      *os << "* buffer," << be_nl
           << "::CORBA::Boolean release = false);" << be_uidt;
   }
 

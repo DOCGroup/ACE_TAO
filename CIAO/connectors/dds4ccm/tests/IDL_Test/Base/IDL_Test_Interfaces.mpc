@@ -1,0 +1,107 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl IDL_Test_Interfaces"
+
+project(IDL_Test_Interfaces_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=IDL_TEST_INTERFACES_STUB_Export \
+              -Wb,stub_export_include=IDL_Test_Interfaces_stub_export.h \
+              -Wb,skel_export_macro=IDL_TEST_INTERFACES_SVNT_Export \
+              -Wb,skel_export_include=IDL_Test_Interfaces_svnt_export.h \
+              -Wb,exec_export_macro=IDL_TEST_INTERFACES_EXEC_Export \
+              -Wb,exec_export_include=IDL_Test_Interfaces_exec_export.h
+
+  IDL_Files {
+    IDL_Test_Interfaces.idl
+  }
+}
+
+project(IDL_Test_Interfaces_lem_gen) : ciaoidldefaults {
+  after += IDL_Test_Interfaces_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=IDL_TEST_INTERFACES_LEM_STUB_Export \
+              -Wb,stub_export_include=IDL_Test_Interfaces_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    IDL_Test_InterfacesE.idl
+  }
+}
+
+project(IDL_Test_Interfaces_lem_stub) : ccm_svnt   {
+  after +=  IDL_Test_Interfaces_lem_gen \
+            IDL_Test_Interfaces_stub
+  libs  +=  IDL_Test_Interfaces_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = IDL_Test_Interfaces_lem_stub
+  dynamicflags += IDL_TEST_INTERFACES_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    IDL_Test_InterfacesEC.cpp
+  }
+
+  Header_Files {
+    IDL_Test_InterfacesEC.h
+    IDL_Test_Interfaces_lem_stub_export.h
+  }
+
+  Inline_Files {
+    IDL_Test_InterfacesEC.inl
+  }
+}
+
+project(IDL_Test_Interfaces_stub) : ccm_stub   {
+  after += IDL_Test_Interfaces_idl_gen
+  libs  +=
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = IDL_Test_Interfaces_stub
+  dynamicflags += IDL_TEST_INTERFACES_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    IDL_Test_InterfacesC.cpp
+  }
+
+  Header_Files {
+    IDL_Test_InterfacesC.h
+    IDL_Test_Interfaces_stub_export.h
+  }
+
+  Inline_Files {
+    IDL_Test_InterfacesC.inl
+  }
+}
+
+project(IDL_Test_Interfaces_svnt) : ccm_svnt {
+  after += IDL_Test_Interfaces_idl_gen IDL_Test_Interfaces_stub
+  libs  += IDL_Test_Interfaces_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = IDL_Test_Interfaces_svnt
+  dynamicflags += IDL_TEST_INTERFACES_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    IDL_Test_InterfacesS.cpp
+  }
+
+  Header_Files {
+    IDL_Test_InterfacesS.h
+    IDL_Test_Interfaces_svnt_export.h
+  }
+
+  Inline_Files {
+    IDL_Test_InterfacesS.inl
+  }
+}

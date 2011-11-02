@@ -68,13 +68,22 @@ namespace CIAO
 
     virtual
       void configure(const Deployment::Properties&);
+
+  protected:
+    CORBA::ORB_var orb_;
   };
 }
 
 extern "C"
 {
   ::DAnCE::DeploymentInterceptor_ptr
+  CIAO_Deployment_Interceptors_Export create_CIAO_ReferenceLookup (void);
+
+  ::DAnCE::DeploymentInterceptor_ptr
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void);
+
+  ::DAnCE::DeploymentInterceptor_ptr
+  CIAO_Deployment_Interceptors_Export create_CIAO_ReferenceLookup (void);
 }
 
 #endif

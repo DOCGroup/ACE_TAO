@@ -6,11 +6,11 @@
 Client_Task::Client_Task (const ACE_TCHAR *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
-                          CORBA::Boolean exception)
+                          CORBA::Boolean except)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
-    , except_ (exception)
+    , except_ (except)
 {
 }
 
@@ -53,14 +53,13 @@ Client_Task::svc (void)
                ACE_DEBUG ((LM_DEBUG, "(%P|%t) - OK , correct string returned <%C>\n",
                  the_string.in ()));
                }
-          test->shutdown ();
         }
-      catch (CORBA::INTERNAL)
+      catch (const CORBA::INTERNAL&)
          {
            if (this->except_)
              {
                ACE_DEBUG ((LM_DEBUG,
-                   "OK: Client_Task Expected exception with"
+                   "OK: Client_Task Expected excep with "
                    "direct collocation received\n"));
                   status = 0;
              }
@@ -71,15 +70,16 @@ Client_Task::svc (void)
                     "thru_poa collocation received\n"));
                    status = 1;
              }
+           corb_->destroy ();
+           return 1;
          }
-      corb_->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       status = 1;
     }
-
+  corb_->destroy ();
   return status;
 
 }

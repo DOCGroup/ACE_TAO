@@ -324,7 +324,7 @@ protected:
 protected:
   enum Suffix_Code
   {
-    PROXY_IMPL = 0,
+    PROXY_IMPL = 0
   };
 
   enum Tag_Code

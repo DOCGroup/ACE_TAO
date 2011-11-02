@@ -69,9 +69,6 @@ namespace DAnCE
 
     virtual void destroy_app_manager (CORBA::Object_ptr);
 
-    virtual void create_external_connections(const ::Deployment::DeploymentPlan &plan,
-                                             Deployment::Connections &conn);
-
   protected:
     /// Cached ORB pointer
     CORBA::ORB_var orb_;
