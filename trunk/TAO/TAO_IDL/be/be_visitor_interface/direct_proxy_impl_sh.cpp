@@ -23,7 +23,7 @@ be_visitor_interface_direct_proxy_impl_sh::visit_interface (
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl_2
-      << "// TAO_IDL - Generated from " << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl_2

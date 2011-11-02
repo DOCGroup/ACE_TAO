@@ -85,9 +85,11 @@ namespace CIAO
                             name,
                             plan.instance[index].name.in ()));
 
+            ::CosNaming::NamingContext_var ctx_safe =
+              ::CosNaming::NamingContext::_duplicate (this->ctx_.in ());
             Name_Utilities::bind_object (name,
                                          obj.in (),
-                                         this->ctx_.in ());
+                                         ctx_safe.in ());
           }
         else if (ACE_OS::strcmp (inst.configProperty[i].name.in (),
                                  DAnCE::INSTANCE_IOR_FILE) == 0)
@@ -98,7 +100,9 @@ namespace CIAO
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
 
-            CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
+            ::CORBA::ORB_var orb_safe =
+              ::CORBA::ORB::_duplicate(this->orb_.in ());
+            CORBA::String_var ior = orb_safe->object_to_string (obj.in ());
 
             CIAO::Name_Utilities::write_ior (ACE_TEXT_CHAR_TO_TCHAR (name), ior.in ());
           }

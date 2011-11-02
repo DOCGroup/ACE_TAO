@@ -1,3 +1,141 @@
+Wed Nov 02 08:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Tue Nov  1 09:11:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/Inherited_Component/Extended/Base.mpc:
+                  Layout changes.
+
+                * tests/IDL_Test/Inherited_Component/Extended/Derived.mpc:
+                  Linux link error.
+
+        Tue Nov  1 08:48:41 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/Inherited_Component/Extended/Derived.idl:
+                  Used module name to identify the supported interface.
+
+                * tests/IDL_Test/Inherited_Component/Extended/Derived.mpc:
+                  Fixed link issue on linux
+
+        Mon Oct 31 13:53:36 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * ciao/Containers/Extension/Extension_Container.h:
+                * ciao/Containers/Session/Session_Container.h:
+                * ciao/Contexts/Extension/Extension_Context_T.cpp:
+                * ciao/Deployment/Handlers/CIAO_Handler_Common.cpp:
+                * ciao/Deployment/Handlers/CIAO_State.cpp:
+                * ciao/Deployment/Handlers/Component_Handler.h:
+                * ciao/Deployment/Handlers/Component_Handler.cpp:
+                * ciao/Deployment/Handlers/Connection_Handler.cpp:
+                * ciao/Deployment/Handlers/Container_Handler.cpp:
+                * ciao/Deployment/Handlers/Home_Handler.h:
+                * ciao/Deployment/Handlers/Home_Handler.cpp:
+                * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+                * ciao/Servants/Connector_Servant_Impl_Base.cpp:
+                  Several improvements regarding thread safety. Also
+                  some minor code layout changes.
+
+                * ciao/Containers/Extension/README:
+                * ciao/Contexts/Extension/README:
+                * ciao/Servants/Extension/README:
+                  Added: Extension containers are not ready to use, yet.
+
+        Sat Oct 29 14:25:16 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.mpc:
+                  Fuzz.
+
+                * connectors/dds4ccm/tests/QueryCondition/DDS/Base/Base.mpc:
+                * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/DDS_Receiver.mpc:
+                * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/DDS_Sender.mpc:
+                  Fixed double project names.
+
+        Fri Oct 28 15:55:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Interfaces.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+                  Fixed compile and link issues on windows
+
+        Fri Oct 28 15:04:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+                  Fixed another link issue.
+
+        Fri Oct 28 15:00:43 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+                  Fixed link issue on windows.
+
+        Fri Oct 28 14:55:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+                  Fixed compile issues on windows.
+
+        Fri Oct 28 14:52:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Interfaces.mpc:
+                  Added libpaths.
+
+        Fri Oct 28 14:49:01 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+                  Fixed afters.
+
+        Fri Oct 28 14:18:46 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * connectors/dds4ccm/tests/IDL_Test:
+                * connectors/dds4ccm/tests/IDL_Test/Base:
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.idl:
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Base.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Interfaces.idl:
+                * connectors/dds4ccm/tests/IDL_Test/Base/IDL_Test_Interfaces.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.idl:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Base_Component.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.idl:
+                * connectors/dds4ccm/tests/IDL_Test/Component/IDL_Test_Derived_Component.mpc:
+                * connectors/dds4ccm/tests/IDL_Test/Connector:
+                * connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.idl:
+                * connectors/dds4ccm/tests/IDL_Test/Connector/IDL_Test_Connector.mpc:
+                  Compilation test.
+
+                * tests/IDL_Test/Inherited_Component/IhC_Bar.mpc:
+                  Fixed link issue
+
+        Fri Oct 28 14:17:05 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * tests/IDL_Test/Inherited_Component/Extended:
+
+                * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+                * tests/IDL_Test/Inherited_Component/Extended/Base.mpc:
+                * tests/IDL_Test/Inherited_Component/Extended/Derived.idl:
+                * tests/IDL_Test/Inherited_Component/Extended/Derived.mpc:
+                * tests/IDL_Test/Inherited_Component/Extended/Tester.cpp:
+                  Compilation test.
+
+        Thu Oct 27 10:10:00 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+                * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+
+                  Changed basic CIAO_ReferenceLookup_i to attempt handling resolving
+                  externalReference endpoints as CORBA IOR type references.
+                  Added factory method for creating interceptor.
+
+                * tests/DAnCE/ExecutionManager-Deployments/run_test.pl:
+
+                  Change to allow overruling CIAO_LOG_LEVEL from commandline.
+
+        === end changelog ===
+
 Tue Nov  1 19:23:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * MPC/config/ccm_svnt.mpb:

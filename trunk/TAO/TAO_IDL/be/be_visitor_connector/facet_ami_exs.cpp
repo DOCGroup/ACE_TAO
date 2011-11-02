@@ -433,7 +433,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "::PortableServer::POA::_narrow (objvar.in ());" << be_uidt_nl
       << this->iface_->local_name () << "_reply_handler *handler = 0;"
       << be_nl
-      << "ACE_NEW (handler, " << be_nl
+      << "ACE_NEW (handler," << be_nl
       << "         " << this->iface_->local_name ()
       << "_reply_handler (ami_handler, poa));" << be_nl
       << "::PortableServer::ServantBase_var owner_transfer (handler);"

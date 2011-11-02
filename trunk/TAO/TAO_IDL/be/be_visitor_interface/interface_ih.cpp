@@ -77,7 +77,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   *os << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "// Constructor " << be_nl
+      << "// Constructor" << be_nl
       <<  be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);" << be_nl_2;
 
@@ -100,7 +100,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
     }
 
-  *os << "// Destructor " << be_nl
+  *os << "// Destructor" << be_nl
       << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " (void);";
 

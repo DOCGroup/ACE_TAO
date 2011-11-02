@@ -140,6 +140,10 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 int
 be_visitor_executor_exs::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   node_ = node;
   const char *lname = node->local_name ();
 
@@ -183,6 +187,10 @@ be_visitor_executor_exs::visit_component (be_component *node)
   if (ai_visitor.attr_generated ())
     {
       os_ << be_uidt << be_uidt_nl;
+    }
+  else
+    {
+      os_ << be_nl;
     }
 
   os_ << "{" << be_nl

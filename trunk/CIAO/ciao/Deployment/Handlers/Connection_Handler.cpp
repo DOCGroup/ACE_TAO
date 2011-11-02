@@ -1141,15 +1141,18 @@ namespace CIAO
   {
     CIAO_TRACE ("Connection_Handler::insert_cookie");
 
-    ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
-                        guard,
-                        this->cookies_mutex_,
-                        CORBA::NO_RESOURCES ());
+    std::pair<COOKIES::iterator, bool> result;
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->cookies_mutex_,
+                          CORBA::NO_RESOURCES ());
 
-    std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
-                                                              conn_info);
-    std::pair<COOKIES::iterator, bool> ret = this->cookies_.insert (value_to_insert);
-    if (!ret.second)
+      std::pair <std::string, CONNECTION_INFO> value_to_insert (connection_name,
+                                                                conn_info);
+      result = this->cookies_.insert (value_to_insert);
+    }
+    if (!result.second)
       {
         CIAO_ERROR (1, (LM_ERROR,  CLINFO
                         "Connection_Handler::insert_cookie - "
@@ -1229,18 +1232,23 @@ namespace CIAO
   Connection_Handler::get_ccm_object (const char * connection_name)
   {
     CIAO_TRACE ("Connection_Handler::get_ccm_object");
-
-    COOKIES::iterator it = this->cookies_.find (connection_name);
-    if (it == this->cookies_.end ())
-      {
-        CIAO_ERROR (1, (LM_ERROR, CLINFO
-                        "Connection_Handler::get_ccm_object - "
-                        "Cookie for <%C> not found\n",
-                        connection_name));
-        throw ::Deployment::InvalidConnection (connection_name,
-                                               "Unable to find correct cookie");
-      }
-
+    COOKIES::iterator it;
+    {
+      ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->cookies_mutex_,
+                          CORBA::NO_RESOURCES ());
+      it = this->cookies_.find (connection_name);
+      if (it == this->cookies_.end ())
+        {
+          CIAO_ERROR (1, (LM_ERROR, CLINFO
+                          "Connection_Handler::get_ccm_object - "
+                          "Cookie for <%C> not found\n",
+                          connection_name));
+          throw ::Deployment::InvalidConnection (connection_name,
+                                                "Unable to find correct cookie");
+        }
+    }
     ::Components::CCMObject_var ret = it->second.second;
     if (::CORBA::is_nil (ret.in ()))
       {
@@ -1258,6 +1266,7 @@ namespace CIAO
   Connection_Handler::retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn)
   {
     CIAO_TRACE ("Connection_Handler::retrieve_endpoint");
+
     if (conn.internalEndpoint.length () == 0)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO

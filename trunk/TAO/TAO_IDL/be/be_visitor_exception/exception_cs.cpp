@@ -97,7 +97,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_uidt_nl << "}" << be_nl_2;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // Default constructor.

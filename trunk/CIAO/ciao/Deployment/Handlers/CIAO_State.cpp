@@ -49,7 +49,9 @@ namespace CIAO
     CONTAINERS::iterator pos = this->containers_.find (id);
 
     if (pos != this->containers_.end ())
-      this->containers_.erase (pos);
+      {
+        this->containers_.erase (pos);
+      }
   }
 
   CIAO::Container_ptr
@@ -65,7 +67,9 @@ namespace CIAO
     CONTAINERS::iterator pos = this->containers_.find (id);
 
     if (pos == this->containers_.end ())
-      return CIAO::Container::_nil ();
+      {
+        return CIAO::Container::_nil ();
+      }
 
     return CIAO::Container::_duplicate (pos->second.in ());
   }
@@ -115,7 +119,9 @@ namespace CIAO
       HOMES::iterator pos = this->homes_.find (id);
 
       if (pos != this->homes_.end ())
-        this->homes_.erase (pos);
+        {
+          this->homes_.erase (pos);
+        }
     }
 
     {
@@ -127,7 +133,9 @@ namespace CIAO
         this->instance_container_.find (id);
 
       if (cont != this->instance_container_.end ())
-        this->instance_container_.erase (cont);
+        {
+          this->instance_container_.erase (cont);
+        }
     }
   }
 
@@ -144,7 +152,9 @@ namespace CIAO
     HOMES::iterator pos = this->homes_.find (id);
 
     if (pos == this->homes_.end ())
-      return Components::CCMHome::_nil ();
+      {
+        return Components::CCMHome::_nil ();
+      }
 
     return Components::CCMHome::_duplicate (pos->second.in ());
   }
@@ -193,7 +203,9 @@ namespace CIAO
       COMPONENTS::iterator pos = this->components_.find (id);
 
       if (pos != this->components_.end ())
-        this->components_.erase (pos);
+        {
+          this->components_.erase (pos);
+        }
     }
 
     {
@@ -205,7 +217,9 @@ namespace CIAO
         this->instance_container_.find (id);
 
       if (cont != this->instance_container_.end ())
-        this->instance_container_.erase (cont);
+        {
+          this->instance_container_.erase (cont);
+        }
     }
   }
 
@@ -222,7 +236,9 @@ namespace CIAO
     COMPONENTS::iterator pos = this->components_.find (id);
 
     if (pos == this->components_.end ())
-      return Components::CCMObject::_nil ();
+      {
+        return Components::CCMObject::_nil ();
+      }
 
     return Components::CCMObject::_duplicate (pos->second.in ());
   }
@@ -240,7 +256,9 @@ namespace CIAO
       this->instance_container_.find (id);
 
     if (cont != this->instance_container_.end ())
-      return cont->second.c_str ();
+      {
+        return cont->second.c_str ();
+      }
 
     CIAO_ERROR (1, (LM_ERROR, CLINFO
                     "Deployment_State::instance_to_container - "

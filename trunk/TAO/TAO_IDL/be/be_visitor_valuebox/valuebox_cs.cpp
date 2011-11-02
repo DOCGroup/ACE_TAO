@@ -125,7 +125,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   // _tao_match_formal_type method.  Generated because ValueBase interface
   // requires it. Since value boxes do not support inheritence, this can
   // simply return true.
-  *os << "::CORBA::Boolean " << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << node->name ()
       << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
       << "{" << be_idt_nl
@@ -227,7 +227,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
     }
 
   // The _tao_unmarshal method.
-  *os << "::CORBA::Boolean " << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << node->name () << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&vb_object" << be_uidt_nl
@@ -238,7 +238,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "TAO_InputCDR indrected_strm ((size_t) 0);" << be_nl
       << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
-      << "strm, indrected_strm, " << be_nl
+      << "strm, indrected_strm," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id (),"
       << be_nl
       << "is_null_object, is_indirected"
@@ -300,7 +300,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   // _tao_unmarshal_v method.  Generated because ValueBase interface
   // requires it.  But there is nothing for it to do in the valuebox
   // case.
-  *os << "::CORBA::Boolean " << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << node->name ()
       << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
       << "{" << be_idt_nl
@@ -337,7 +337,7 @@ be_visitor_valuebox_cs::visit_array (be_array * node)
   this->emit_destructor ();
 
   // _tao_marshal_v method
-  os << "::CORBA::Boolean " << be_nl
+  os << "::CORBA::Boolean" << be_nl
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
@@ -365,7 +365,7 @@ be_visitor_valuebox_cs::visit_enum (be_enum *)
   static char const marshal_arg[] = "this->_pd_value";
 
   // _tao_marshal_v method
-  os << "::CORBA::Boolean " << be_nl
+  os << "::CORBA::Boolean" << be_nl
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
@@ -490,7 +490,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
       *os << be_nl << "::CORBA::ULong max,";
     }
 
-  *os << be_nl << "::CORBA::ULong length, " << be_nl;
+  *os << be_nl << "::CORBA::ULong length," << be_nl;
 
 
   if (bt->accept (&bt_visitor) == -1)
@@ -533,7 +533,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  *os << " & " << be_nl
+  *os << " &" << be_nl
       << vb_node->name () << "::operator[] ( ::CORBA::ULong index)"
       << be_nl
       << "{" << be_idt_nl
@@ -572,13 +572,13 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     {
     case AST_Decl::NT_wstring:
       *os << "TAO_SeqElem_WString_Manager mgr = this->_pd_value->operator[] "
-             "(index); " << be_nl
+             "(index);" << be_nl
           << "return mgr._retn ();" << be_uidt_nl;
       break;
 
     case AST_Decl::NT_string:
       *os << "TAO_SeqElem_String_Manager mgr = this->_pd_value->operator[] "
-             "(index); " << be_nl
+             "(index);" << be_nl
           << "return mgr._retn ();" << be_uidt_nl;
       break;
 
@@ -600,7 +600,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   *os << "}" << be_nl_2;
 
   // _tao_marshal_v method
-  *os << "::CORBA::Boolean " << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl
@@ -624,7 +624,7 @@ be_visitor_valuebox_cs::visit_string (be_string *str)
   this->emit_destructor ();
 
   // _tao_marshal_v method
-  os << "::CORBA::Boolean " << be_nl
+  os << "::CORBA::Boolean" << be_nl
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
@@ -670,7 +670,7 @@ be_visitor_valuebox_cs::visit_structure (be_structure *)
   this->emit_destructor ();
 
   // _tao_marshal_v method
-  os << "::CORBA::Boolean " << be_nl
+  os << "::CORBA::Boolean" << be_nl
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
@@ -712,7 +712,7 @@ be_visitor_valuebox_cs::visit_union (be_union *)
   this->emit_destructor ();
 
   // _tao_marshal_v method
-  os << "::CORBA::Boolean " << be_nl
+  os << "::CORBA::Boolean" << be_nl
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
@@ -749,7 +749,7 @@ be_visitor_valuebox_cs::emit_for_predef_enum (char const * marshal_arg)
   this->emit_destructor ();
 
   // _tao_marshal_v method
-  os << "::CORBA::Boolean " << be_nl
+  os << "::CORBA::Boolean" << be_nl
      << vb_node->name ()
      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
      << "{" << be_idt_nl
