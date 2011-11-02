@@ -1,3 +1,9 @@
+Wed Nov 02 08:04:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/Receiver/Receiver_exec.cpp:
+        * tests/Collocation/Sender/Sender_exec.cpp:
+        Removed unreferenced local variables
+
+
 Wed Nov 02 08:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
