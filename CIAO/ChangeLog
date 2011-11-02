@@ -1,3 +1,7 @@
+Wed Nov 02 12:09:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/Receiver/Receiver_exec.cpp:
+        Cancel timer and delete generators
+
 Wed Nov 02 08:04:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * tests/Collocation/Receiver/Receiver_exec.cpp:
         * tests/Collocation/Sender/Sender_exec.cpp:
