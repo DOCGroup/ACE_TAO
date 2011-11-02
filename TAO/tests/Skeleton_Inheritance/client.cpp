@@ -66,9 +66,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   if_result_3.in ()));
 
       if (if_3->_is_a("no_name"))
-        ACE_DEBUG ((LM_DEBUG, "STRANGE\n"));
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: no_name is known.\n"));
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, "SEEMS OK\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK: no_name is unknown.\n"));
+        }
+      const char * name = "IDL:Skeleton_Inheritance/Interface_1:1.0";
+      if (if_3->_is_a(name))
+        {
+          ACE_DEBUG ((LM_DEBUG, "OK: <%C> is known.\n",
+                      name));
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: <%C> is unknown\n",
+                      name));
+        }
 
       if_3->shutdown ();
 
