@@ -1,0 +1,39 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Nested_Upcall_Idl): taoidldefaults {
+  IDL_Files {
+    MT_Client_Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Nested_Upcall_Server): taoserver, utils, avoids_corba_e_micro {
+  after += *Nested_Upcall_Idl
+  Source_Files {
+    MT_Object_i.cpp
+    server.cpp
+  }
+  Source_Files {
+    MT_Client_TestC.cpp
+    MT_Client_TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Nested_Upcall_Client): taoserver, utils, avoids_corba_e_micro {
+  exename = client
+  after += *Nested_Upcall_Idl
+  Source_Files {
+    MT_Object_i.cpp
+    local_server.cpp
+    client.cpp
+  }
+  Source_Files {
+    MT_Client_TestC.cpp
+    MT_Client_TestS.cpp
+  }
+  IDL_Files {
+  }
+}

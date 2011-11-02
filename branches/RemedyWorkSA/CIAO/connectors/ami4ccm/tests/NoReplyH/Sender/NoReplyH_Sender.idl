@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef NOREPLYH_SENDER_IDL
+#define NOREPLYH_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/NoReplyH.idl"
+
+#pragma ciao ami4ccm receptacle "NoReplyH::Sender::run_my_foo"
+
+module NoReplyH
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

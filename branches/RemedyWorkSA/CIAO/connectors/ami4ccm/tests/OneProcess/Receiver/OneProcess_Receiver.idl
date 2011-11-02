@@ -1,0 +1,18 @@
+// $Id$
+
+#ifndef ONEPROCESS_RECEIVER_IDL
+#define ONEPROCESS_RECEIVER_IDL
+
+#include <Components.idl>
+
+#include "Base/OneProcess.idl"
+
+module OneProcess
+{
+  component Receiver
+  {
+    /// Provides
+    provides MyFoo do_my_foo;
+  };
+};
+#endif
