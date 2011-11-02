@@ -58,9 +58,7 @@ namespace CIAO_Receiver_Impl
     strategy_("thru_poa")
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::Receiver_exec_i \n "));
-    ACE_NEW_THROW_EX (this->hello_generator_,
-                       HelloGenerator (*this),
-                       ::CORBA::NO_MEMORY ());
+    this->hello_generator_ = new HelloGenerator (*this);
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
