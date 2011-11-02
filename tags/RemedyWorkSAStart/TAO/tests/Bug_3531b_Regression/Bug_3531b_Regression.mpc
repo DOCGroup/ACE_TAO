@@ -1,0 +1,9 @@
+// $Id$
+
+project(*Server): taoserver {
+  after += *idl
+  Source_Files {
+    server.cpp
+  }
+}
+

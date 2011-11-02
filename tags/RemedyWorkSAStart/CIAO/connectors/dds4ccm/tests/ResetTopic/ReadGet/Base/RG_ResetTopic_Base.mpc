@@ -1,0 +1,26 @@
+// $Id$
+
+project (RG_ResetTopicBase_stub) : taoidldefaults, dds4ccm_ts_default {
+  sharedname = RG_ResetTopicBase_stub
+  dynamicflags += RG_RESETTOPIC_BASE_STUB_BUILD_DLL
+  libout = ../lib
+
+  idlflags += -SS -Sci \
+              -Wb,stub_export_macro=RG_RESETTOPIC_BASE_STUB_Export \
+              -Wb,stub_export_include=LateBinding_Base_stub_export.h
+
+  IDL_Files {
+    idlflags += -Gxhst
+    RG_ResetTopic_Base.idl
+  }
+
+  opendds_ts_flags += --export=RG_RESETTOPIC_BASE_STUB_Export
+
+  DDSGenerator_Files {
+    RG_ResetTopic_Base.idl
+  }
+
+  Source_Files {
+  }
+}
+
