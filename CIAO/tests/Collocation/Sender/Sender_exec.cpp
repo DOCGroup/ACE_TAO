@@ -26,9 +26,10 @@ namespace CIAO_Sender_Impl
 #if !defined (CCM_DIRECTCOLL)
      ACE_DEBUG ((LM_DEBUG,
                   "SENDER: hello_exec_i::set_point pointer"
-                  "No collocation because CIAO not build with  "
+                  "Strategy desired <%C>, but no collocation "
+                  "because CIAO not build with  "
                   "ccm_diect_collocation = 1.\n",
-                  (void *)&p));
+                  start, (void *)&p));
 #else
      if ((ACE_OS::strcmp("direct", strat) == 0) ||
          (ACE_OS::strcmp("best", strat) == 0))

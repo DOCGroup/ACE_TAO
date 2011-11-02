@@ -114,7 +114,7 @@ namespace CIAO_Receiver_Impl
                                             "no connection hello_to_rec with sender.\n"));
            }
         }
-     catch (const CORBA::INTERNAL& ex)
+     catch (const CORBA::INTERNAL& /*ex*/)
        {
          if (ACE_OS::strcmp ("no_thru_poa", this->strategy_.in())== 0)
            {
