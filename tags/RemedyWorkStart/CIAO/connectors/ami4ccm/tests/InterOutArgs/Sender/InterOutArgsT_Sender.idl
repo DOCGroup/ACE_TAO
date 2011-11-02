@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef INTEROUTARGS_T_SENDER_IDL
+#define INTEROUTARGS_T_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/InterOutArgsT.idl"
+
+#pragma ciao ami4ccm receptacle "InterOutArgsT::Sender::run_my_foo"
+
+module InterOutArgsT
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

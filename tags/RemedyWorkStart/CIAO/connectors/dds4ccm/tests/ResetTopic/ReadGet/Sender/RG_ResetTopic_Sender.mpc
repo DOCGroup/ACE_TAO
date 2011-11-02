@@ -1,0 +1,152 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p RG_ResetTopicBase -l ../lib -o ../lib -c controller -u DDS Sender"
+
+project (RG_ResetTopicSender_idl_gen) : componentidldefaults, dds4ccm {
+  after += RG_ResetTopicConnector_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SENDER_STUB_Export \
+              -Wb,stub_export_include=Sender_stub_export.h \
+              -Wb,skel_export_macro=SENDER_SVNT_Export \
+              -Wb,skel_export_include=Sender_svnt_export.h \
+              -Wb,svnt_export_macro=SENDER_SVNT_Export \
+              -Wb,svnt_export_include=Sender_svnt_export.h \
+              -Wb,exec_export_macro=SENDER_EXEC_Export \
+              -Wb,exec_export_include=Sender_exec_export.h \
+              -I ..
+
+  IDL_Files {
+    RG_ResetTopic_Sender.idl
+  }
+}
+
+project (RG_ResetTopicSender_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += RG_ResetTopicSender_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=SENDER_LEM_STUB_Export \
+              -Wb,stub_export_include=Sender_lem_stub_export.h \
+              -SS -Gxhst -I $CIAO_ROOT/connectors -I ..
+
+  IDL_Files {
+    RG_ResetTopic_SenderE.idl
+  }
+}
+
+project (RG_ResetTopicSender_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += RG_ResetTopicSender_lem_gen RG_ResetTopicSender_stub \
+           RG_ResetTopicBase_stub reader_starter_rt_stub
+  libs  += RG_ResetTopicBase_stub Sender_stub reader_starter_rt_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Sender_lem_stub
+  dynamicflags += SENDER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_SenderEC.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_SenderEC.h
+    Sender_lem_stub_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_SenderEC.inl
+  }
+}
+
+project (RG_ResetTopicSender_stub) : ccm_stub, dds4ccm_base {
+  after += RG_ResetTopicSender_idl_gen RG_ResetTopicBase_stub \
+           RG_ResetTopicConnector_stub reader_starter_rt_stub \
+           reader_starter_rt_lem_stub
+  libs  += RG_ResetTopicBase_stub RG_ResetTopicConnector_stub \
+           reader_starter_rt_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Sender_stub
+  dynamicflags += SENDER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_SenderC.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_SenderC.h
+    Sender_stub_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_SenderC.inl
+  }
+}
+
+project (RG_ResetTopicSender_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += RG_ResetTopicSender_lem_stub RG_ResetTopicSender_stub \
+             RG_ResetTopicConnector_lem_stub RG_ResetTopicConnector_stub \
+             reader_starter_rt_svnt reader_starter_rt_lem_stub
+  sharedname = Sender_exec
+  libs += Sender_stub Sender_lem_stub RG_ResetTopicBase_stub \
+          RG_ResetTopicConnector_lem_stub RG_ResetTopicConnector_stub \
+          reader_starter_rt_stub reader_starter_rt_svnt reader_starter_rt_lem_stub
+  libpaths += ../lib
+  includes += ..
+  libout = ../lib
+  dynamicflags += SENDER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_Sender_exec.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_Sender_exec.h
+    Sender_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project (RG_ResetTopicSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += RG_ResetTopicBase_stub  RG_ResetTopicSender_lem_stub RG_ResetTopicConnector_stub \
+                RG_ResetTopicConnector_svnt RG_ResetTopicConnector_lem_stub \
+                reader_starter_rt_stub reader_starter_rt_lem_stub reader_starter_rt_svnt
+  sharedname  = Sender_svnt
+  libs       += Sender_stub Sender_lem_stub  \
+                RG_ResetTopicBase_stub RG_ResetTopicConnector_stub RG_ResetTopicConnector_svnt \
+                RG_ResetTopicConnector_lem_stub reader_starter_rt_stub \
+                reader_starter_rt_lem_stub reader_starter_rt_svnt
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += SENDER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_SenderS.cpp
+    RG_ResetTopic_Sender_svnt.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_SenderS.h
+    RG_ResetTopic_Sender_svnt.h
+    Sender_svnt_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_SenderS.inl
+  }
+}
+

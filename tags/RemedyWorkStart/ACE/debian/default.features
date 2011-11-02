@@ -1,0 +1,35 @@
+// Misc
+acexml          = 1
+ace_svcconf     = 1
+ace_token       = 1
+ssl             = 1
+ipv6            = 1
+exceptions      = 1
+
+// GUI reactors
+xt              = 1
+ace_xtreactor   = 1
+tao_xtresource  = 1
+
+tk              = 1
+ace_tkreactor   = 1
+tao_tkresource  = 1
+
+fl              = 1
+ace_flreactor   = 1
+tao_flresource  = 1
+
+qt              = 1
+qt4             = 1
+ace_qtreactor   = 1
+tao_qtresource  = 1
+
+fox             = 1
+ace_foxreactor  = 1
+tao_foxresource = 1
+
+// ZIOP
+zlib          = 1
+zzip          = 1
+bzip2         = 1
+lzo1          = 1

@@ -1,0 +1,163 @@
+// $Id$
+
+project (WL_ResetTopicReceiver_idl_gen) : componentidldefaults, dds4ccm {
+  custom_only = 1
+  after += WL_ResetTopicConnector_idl_gen
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
+              -Wb,stub_export_include=Receiver_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
+              -Wb,svnt_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -I..
+  IDL_Files {
+    WL_ResetTopic_Receiver.idl
+  }
+}
+
+project (WL_ResetTopicReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += WL_ResetTopicReceiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    WL_ResetTopic_ReceiverE.idl
+  }
+}
+
+project (WL_ResetTopicReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += WL_ResetTopicReceiver_lem_gen WL_ResetTopicReceiver_stub  WL_ResetTopicConnector_stub WL_ResetTopicBase_stub
+  libs  +=  Receiver_stub WL_ResetTopicConnector_stub WL_ResetTopicBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Receiver_lem_stub
+  dynamicflags += RECEIVER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WL_ResetTopic_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    WL_ResetTopic_ReceiverEC.h
+    Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    WL_ResetTopic_ReceiverEC.inl
+  }
+}
+
+project (WL_ResetTopicReceiver_stub) : ccm_stub, dds4ccm_base {
+  after += WL_ResetTopicReceiver_idl_gen  WL_ResetTopicConnector_stub WL_ResetTopicBase_stub WL_ResetTopicConnector_lem_gen
+  libs  += WL_ResetTopicConnector_stub WL_ResetTopicBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Receiver_stub
+  dynamicflags += RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WL_ResetTopic_ReceiverC.cpp
+  }
+
+  Header_Files {
+    WL_ResetTopic_ReceiverC.h
+    Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    WL_ResetTopic_ReceiverC.inl
+  }
+}
+
+project (WL_ResetTopicReceiver_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += WL_ResetTopicReceiver_lem_stub WL_ResetTopicReceiver_stub \
+             WL_ResetTopicBase_stub WL_ResetTopicConnector_stub \
+             WL_ResetTopicConnector_lem_stub
+  sharedname = Receiver_exec
+  libs += Receiver_stub Receiver_lem_stub WL_ResetTopicBase_stub \
+          WL_ResetTopicConnector_stub WL_ResetTopicConnector_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RECEIVER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WL_ResetTopic_Receiver_exec.cpp
+  }
+
+  Header_Files {
+    WL_ResetTopic_Receiver_exec.h
+    Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project (WL_ResetTopicReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      +=   WL_ResetTopicReceiver_lem_stub WL_ResetTopicBase_stub WL_ResetTopicConnector_stub WL_ResetTopicConnector_svnt WL_ResetTopicReceiver_exec WL_ResetTopicConnector_lem_stub
+  sharedname  = Receiver_svnt
+  libs       += Receiver_stub Receiver_lem_stub WL_ResetTopicBase_stub WL_ResetTopicConnector_stub WL_ResetTopicConnector_svnt Receiver_exec WL_ResetTopicConnector_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RECEIVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    WL_ResetTopic_ReceiverS.cpp
+    WL_ResetTopic_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    WL_ResetTopic_ReceiverS.h
+    WL_ResetTopic_Receiver_svnt.h
+    Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    WL_ResetTopic_ReceiverS.inl
+  }
+}
+
+project (WL_ResetTopicReceiver_Driver) : ccm_stub, valuetype, dds4ccm_lem_stub {
+  exename = ReceiverDriver
+  after += WL_ResetTopicReceiver_stub WL_ResetTopicConnector_stub
+  libs  += Receiver_stub WL_ResetTopicBase_stub WL_ResetTopicConnector_stub
+
+  includes += ..
+  libpaths += ../lib
+
+  exeout = ../lib
+  IDL_Files {
+  }
+
+  Source_Files {
+    ReceiverDriver.cpp
+  }
+
+  Header_Files {
+  }
+
+  Inline_Files {
+  }
+}
+
