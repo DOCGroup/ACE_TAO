@@ -970,39 +970,38 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        *os << "{\"_is_a\", &" << skeleton_class_name
-            << "::_is_a_skel, 0}," << be_nl;
+        *os << "{\"_is_a\", &TAO_ServantBase::_is_a_skel, 0}," << be_nl;
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "{\"_non_existent\", &" << skeleton_class_name
-                << "::_non_existent_skel, 0}," << be_nl;
+            *os << "{\"_non_existent\", &TAO_ServantBase::_non_existent_skel, 0},"
+                << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_component\", &" << skeleton_class_name
-                << "::_component_skel, 0}," << be_nl;
+            *os << "{\"_component\", &TAO_ServantBase::_component_skel, 0},"
+                << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_interface\", &" << skeleton_class_name
-                << "::_interface_skel, 0}," << be_nl;
+            *os << "{\"_interface\", &TAO_ServantBase::_interface_skel, 0},"
+                << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "{\"_repository_id\", &" << skeleton_class_name
-                << "::_repository_id_skel, 0}" << be_uidt_nl;
+            *os << "{\"_repository_id\", &TAO_ServantBase::_repository_id_skel, 0}"
+                << be_uidt_nl;
 
             ++this->skel_count_;
           }
@@ -1137,43 +1136,37 @@ be_interface::gen_operation_table (const char *flat_name,
                               -1);
           }
 
-        *os << "_is_a,&"
-            << skeleton_class_name
-            << "::_is_a_skel, 0" << be_nl;
+        *os << "_is_a,&TAO_ServantBase::_is_a_skel, 0" << be_nl;
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "_non_existent,&"
-                << skeleton_class_name
-                << "::_non_existent_skel, 0" << be_nl;
+            *os << "_non_existent,&TAO_ServantBase::_non_existent_skel, 0"
+                << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_component,&"
-                << skeleton_class_name
-                << "::_component_skel, 0" << be_nl;
+            *os << "_component,&TAO_ServantBase::_component_skel, 0"
+                << be_nl;
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_interface,&"
-                << skeleton_class_name
-                << "::_interface_skel, 0" << be_nl;
+            *os << "_interface,&TAO_ServantBase::_interface_skel, 0"
+                << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "_repository_id,&"
-                << skeleton_class_name
-                << "::_repository_id_skel, 0" << be_nl;
+            *os << "_repository_id,&TAO_ServantBase::_repository_id_skel, 0"
+                << be_nl;
 
             ++this->skel_count_;
           }

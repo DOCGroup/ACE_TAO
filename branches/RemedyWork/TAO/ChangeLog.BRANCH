@@ -1,3 +1,19 @@
+Wed Nov  2 14:34:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+        * tao/PortableServer/SUpcall_commands.h:
+        * tao/PortableServer/SUpcall_commands.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Moved the static skeleton methods to Servant_Base. 
+          Changed the generated skeleton files accordingly. This means
+          that the skeleton files are much much smaller; this'll reduce
+          footprint and increases performance.
+
 
 Local Variables:
 mode: change-log
