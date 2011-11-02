@@ -70,6 +70,27 @@ public:
   /// Destructor.
   virtual ~TAO_ServantBase (void);
 
+
+  static void _is_a_skel (TAO_ServerRequest & req,
+                          void * servant_upcall,
+                          void * servant);
+
+  static void _non_existent_skel (TAO_ServerRequest & req,
+                                  void * servant_upcall,
+                                  void * servant);
+
+  static void _interface_skel (TAO_ServerRequest & req,
+                              void * servant_upcall,
+                              void * servant);
+
+  static void _component_skel (TAO_ServerRequest & req,
+                              void * servant_upcall,
+                              void * servant);
+
+  static void _repository_id_skel (TAO_ServerRequest & req,
+                                  void * servant_upcall,
+                                  void * servant);
+
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (void);
 
