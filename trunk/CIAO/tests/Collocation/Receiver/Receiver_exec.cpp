@@ -58,7 +58,10 @@ namespace CIAO_Receiver_Impl
     strategy_("thru_poa")
   {
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::Receiver_exec_i \n "));
-    this->hello_generator_ = new HelloGenerator (*this);
+    ACE_NEW_THROW_EX (this->hello_generator_,
+                      HelloGenerator (*this),
+                      ::CORBA::NO_MEMORY ());
+
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -114,7 +117,7 @@ namespace CIAO_Receiver_Impl
         }
      catch (const CORBA::INTERNAL& /*ex*/)
        {
-         if (ACE_OS::strcmp ("no_thru_poa", this->strategy_.in())== 0)
+         if (ACE_OS::strcmp ("no_thru_poa", this->strategy_)== 0)
            {
              ACE_DEBUG ((LM_DEBUG, "OK: Receiver received expected exception\n"));
            }
@@ -201,6 +204,7 @@ namespace CIAO_Receiver_Impl
   {
     /// No need to implement anything
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_passivate \n "));
+    this->reactor ()->cancel_timer (this->hello_generator_);
   }
 
   void
@@ -208,6 +212,7 @@ namespace CIAO_Receiver_Impl
   {
     /// No need to implement anything
     ACE_DEBUG ((LM_DEBUG, "Receiver_exec_i::ccm_remove \n "));
+    delete this->hello_generator_;
   }
 
   extern "C" RECEIVER_EXEC_Export ::Components::EnterpriseComponent_ptr
