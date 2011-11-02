@@ -1,0 +1,13 @@
+//
+// $Id$
+//
+
+#include "idl_1.idl"
+
+module Skeleton_Inheritance
+{
+  interface Interface_2 : Interface_1
+  {
+    string operation_2 ();
+  };
+};
