@@ -1,0 +1,11 @@
+//
+// $Id$
+//
+
+module Skeleton_Inheritance
+{
+  interface Interface_1
+  {
+    string operation_1 ();
+  };
+};

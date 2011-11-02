@@ -1,3 +1,22 @@
+Wed Nov  2 14:52:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tests/Skeleton_Inheritance:
+        * tests/Skeleton_Inheritance/client.cpp:
+        * tests/Skeleton_Inheritance/idl_1.idl:
+        * tests/Skeleton_Inheritance/idl_2.idl:
+        * tests/Skeleton_Inheritance/idl_3.idl:
+        * tests/Skeleton_Inheritance/interface_1_i.h:
+        * tests/Skeleton_Inheritance/interface_1_i.cpp:
+        * tests/Skeleton_Inheritance/interface_2_i.h:
+        * tests/Skeleton_Inheritance/interface_2_i.cpp:
+        * tests/Skeleton_Inheritance/interface_3_i.h:
+        * tests/Skeleton_Inheritance/interface_3_i.cpp:
+        * tests/Skeleton_Inheritance/run_test.pl:
+        * tests/Skeleton_Inheritance/server.cpp:
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+          Added a specific skeleton test to the test framework
+
 Wed Nov  2 14:34:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
@@ -9,7 +28,7 @@ Wed Nov  2 14:34:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * tao/PortableServer/SUpcall_commands.cpp:
         * tao/PortableServer/Servant_Base.h:
         * tao/PortableServer/Servant_Base.cpp:
-          Moved the static skeleton methods to Servant_Base. 
+          Moved the static skeleton methods to Servant_Base.
           Changed the generated skeleton files accordingly. This means
           that the skeleton files are much much smaller; this'll reduce
           footprint and increases performance.
