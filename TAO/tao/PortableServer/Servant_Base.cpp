@@ -8,7 +8,6 @@
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
 // MSM ADDED
-#include "tao/PortableServer/SUpcall_commands.h"
 #include "tao/PortableInterceptor.h"
 
 #include "tao/Timeprobe.h"

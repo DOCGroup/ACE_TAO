@@ -11,5 +11,7 @@ module Skeleton_Inheritance
     string operation_3 ();
 
     oneway void shutdown ();
+
+    attribute short attribute_3;
   };
 };

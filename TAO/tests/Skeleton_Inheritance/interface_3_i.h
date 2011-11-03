@@ -7,19 +7,27 @@
 #include /**/ "ace/pre.h"
 
 #include "idl_3S.h"
-#include "interface_2_i.h"
 
 class interface_3_i
-  : public virtual interface_2_i
-  , public virtual POA_Skeleton_Inheritance::Interface_3
+  : public virtual POA_Skeleton_Inheritance::Interface_3
 {
 public:
   /// Constructor
   interface_3_i (CORBA::ORB_ptr orb);
 
+  virtual char * operation_1 (void);
+  virtual char * operation_2 (void);
   virtual char * operation_3 (void);
 
   virtual void shutdown (void);
+
+  virtual ::CORBA::Long attribute_1 (void);
+  virtual void attribute_1 (::CORBA::Long attribute_1);
+
+  virtual char * attribute_2 (void);
+
+  virtual ::CORBA::Short attribute_3 (void);
+  virtual void attribute_3 (::CORBA::Short attribute_3);
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

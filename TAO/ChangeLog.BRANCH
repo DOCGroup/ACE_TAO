@@ -1,3 +1,39 @@
+Thu Nov  3 13:32:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+          Base operation skeleton methods and base skeleton 
+          attributes methods are not generated anymore in the
+          derived classes. This means that the inline files are
+          empty (most of the times). Also optimized the operation 
+          table to point to the right operation/attribute in the
+          base classes.
+
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Moved include file. The skeleton can now benefit
+          from these includes.
+
+        * tests/Skeleton_Inheritance/client.cpp:
+        * tests/Skeleton_Inheritance/idl_1.idl:
+        * tests/Skeleton_Inheritance/idl_2.idl:
+        * tests/Skeleton_Inheritance/idl_3.idl:
+        * tests/Skeleton_Inheritance/interface_3_i.h:
+        * tests/Skeleton_Inheritance/interface_3_i.cpp:
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+          Created proper export files for stubs and skeletons.
+          Fixed compile and runtime issues.
+
+        * tests/Skeleton_Inheritance/interface_1_i.h:
+        * tests/Skeleton_Inheritance/interface_1_i.cpp:
+        * tests/Skeleton_Inheritance/interface_2_i.h:
+        * tests/Skeleton_Inheritance/interface_2_i.cpp:
+          Removed these files.
+
 Thu Nov  3 08:41:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Skeleton_Inheritance/skel_inheritance.mpc:

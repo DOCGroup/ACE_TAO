@@ -26,6 +26,8 @@
 #include "tao/Abstract_Servant_Base.h"
 #include "ace/Atomic_Op.h"
 
+#include "tao/PortableServer/SUpcall_commands.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Table;

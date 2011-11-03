@@ -53,21 +53,6 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Generate skeletons for operations of our base classes. These skeletons
-  // just cast the pointer to the appropriate type before invoking the
-  // call. Hence we generate these in the inline file.
-  status = node->traverse_inheritance_graph (be_interface::gen_skel_helper,
-                                             os);
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_interface_si::")
-                         ACE_TEXT ("visit_interface - ")
-                         ACE_TEXT ("codegen for base ")
-                         ACE_TEXT ("class skeletons failed\n")),
-                        -1);
-    }
-
   if (this->generate_amh_classes (node) == -1)
     {
       return -1;

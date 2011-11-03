@@ -1371,9 +1371,8 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               // We are an operation node. We use the original
               // operation name, not the one with _cxx_ in it.
-              *os << d->original_local_name () << ",&"
-                  << full_skeleton_name << "::"
-                  << d->local_name () << "_skel,";
+              *os << d->original_local_name () << ",&POA_"
+                  << d->full_name () << "_skel,";
 
               if (be_global->gen_direct_collocation ())
                 {
@@ -1401,9 +1400,15 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 }
 
               // Generate only the "get" entry if we are readonly.
-              *os << "_get_" << d->original_local_name () << ",&"
-                  << full_skeleton_name << "::_get_"
-                  << d->local_name () << "_skel,";
+              // we need to split the full name in order to push _set_
+              // or _get_ in between the namespace and attribute name.
+              ACE_CString nspace (d->full_name ());
+              ACE_String_Base_Const::size_type pos = nspace.rfind(':');
+              nspace = nspace.substring(0, pos + 1);
+
+              *os << "_get_" << d->original_local_name () << ",&POA_"
+                  << nspace.c_str () << "_get_"
+                  << d->original_local_name () << "_skel,";
 
               if (be_global->gen_direct_collocation ())
                 {
@@ -1423,9 +1428,9 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (!attr->readonly ())
                 {
                   // The set method
-                  *os << "_set_" << d->original_local_name () << ",&"
-                      << full_skeleton_name << "::_set_"
-                      << d->local_name () << "_skel,";
+                  *os << "_set_" << d->original_local_name () << ",&POA_"
+                      << nspace.c_str () << "_set_"
+                      << d->original_local_name () << "_skel,";
 
                   if (be_global->gen_direct_collocation ())
                     {
@@ -2118,205 +2123,6 @@ be_interface::is_a_helper (be_interface * /*derived*/,
       << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
       << ") == 0 ||" << be_uidt_nl;
-
-  return 0;
-}
-
-int
-be_interface::gen_skel_helper (be_interface *derived,
-                               be_interface *ancestor,
-                               TAO_OutStream *os)
-{
-  // If derived and ancestor are same, skip it.
-  if (derived == ancestor)
-    {
-      return 0;
-    }
-
-  // If an operation or an attribute is abstract (declared in an
-  // abstract interface), we will either generate the full
-  // definition (if there are no concrete interfaces between the
-  // abstract ancestor and us) or, if there is a concrete ancestor
-  // in between, we will catch its definition elsewhere in this
-  // traversal.
-  if (ancestor->is_abstract ())
-    {
-      return 0;
-    }
-
-  // Else generate code that does the cast to the appropriate type.
-
-  if (ancestor->nmembers () > 0)
-    {
-      // If there are elements in ancestor scope i.e., any operations and
-      // attributes defined by "ancestor", become methods on the derived
-      // class which call the corresponding method of the base class by
-      // doing the proper casting.
-      for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
-           !si.is_done ();
-           si.next ())
-        {
-          // Get the next AST decl node
-          AST_Decl *d = si.item ();
-          AST_Decl::NodeType nt = d->node_type ();
-
-          if (nt == AST_Decl::NT_op)
-            {
-              be_operation *op =
-                be_operation::narrow_from_decl (d);
-
-              /// These are not generated on the server side.
-              if (op->is_sendc_ami ())
-                {
-                  continue;
-                }
-
-              *os << be_nl_2
-                  << "// TAO_IDL - Generated from" << be_nl
-                  << "// " << __FILE__ << ":" << __LINE__
-                  << be_nl_2;
-
-              if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
-                {
-                  // Generate the static method corresponding to this method.
-                  *os << "static void" << be_nl
-                      << d->local_name ()
-                      << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
-                      << be_uidt;
-                }
-              else
-                { // Generate code in the inline file.
-                  // Generate the static method corresponding to this method.
-                  *os << "ACE_INLINE" << be_nl
-                      << "void" << be_nl
-                      << derived->full_skel_name () << "::"
-                      << d->local_name ()
-                      << "_skel (" << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant)"
-                      << be_uidt_nl
-                      << "{" << be_idt_nl;
-
-                   *os << ancestor->full_skel_name ()
-                      << " * const impl =" << be_idt_nl
-                      << "static_cast<"
-                      << derived->full_skel_name ()
-                      << " *> (servant);" << be_uidt_nl;
-
-                  *os << ancestor->full_skel_name ()
-                      << "::" << d->local_name ()
-                      << "_skel (" << be_idt_nl
-                      << "server_request," << be_nl
-                      << "servant_upcall," << be_nl
-                      << "impl);" << be_uidt
-                      << be_uidt_nl
-                      << "}";
-                }
-            }
-          else if (nt == AST_Decl::NT_attr)
-            {
-              AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
-
-              if (attr == 0)
-                {
-                  return -1;
-                }
-
-              *os << be_nl_2;
-
-              if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
-                {
-                  // Generate the static method corresponding to this method.
-                  *os << "static void" << be_nl
-                      << "_get_" << d->local_name ()
-                      << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
-                      << be_uidt;
-                }
-              else
-                { // Generate code in the inline file.
-                  // Generate the static method corresponding to this method.
-                  *os << "ACE_INLINE" << be_nl
-                      << "void" << be_nl
-                      << derived->full_skel_name () << "::_get_"
-                      << d->local_name ()
-                      << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant)" << be_uidt
-                      << be_uidt_nl
-                      << "{" << be_idt_nl;
-
-                   *os << ancestor->full_skel_name ()
-                      << " * const impl = static_cast<"
-                      << derived->full_skel_name ()
-                      << " *> (servant);" << be_nl;
-
-                  *os << ancestor->full_skel_name ()
-                      << "::_get_" << d->local_name ()
-                      << "_skel (" << be_idt << be_idt_nl
-                      << "server_request," << be_nl
-                      << "servant_upcall," << be_nl
-                      << "impl);" << be_uidt
-                      << be_uidt << be_uidt_nl
-                      << "}";
-                }
-
-              if (!attr->readonly ())
-                {
-                  *os << be_nl_2;
-
-                  if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
-                    {
-                      // Generate the static method corresponding to
-                      // this method.
-                      *os << "static void" << be_nl
-                          << "_set_" << d->local_name ()
-                          << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest & server_request," << be_nl
-                          << "void * servant_upcall," << be_nl
-                          << "void * servant);" << be_uidt
-                          << be_uidt;
-                    }
-                  else
-                    { // Generate code in the inline file.
-                      // Generate the static method corresponding to
-                      // this method.
-                      *os << "ACE_INLINE" << be_nl
-                          << "void" << be_nl
-                          << derived->full_skel_name ()
-                          << "::_set_" << d->local_name ()
-                          << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest & server_request," << be_nl
-                          << "void * servant_upcall," << be_nl
-                          << "void * servant)" << be_uidt
-                          << be_uidt_nl
-                          << "{" << be_idt_nl;
-
-                      *os << ancestor->full_skel_name ()
-                          << " * const impl = static_cast<"
-                          << derived->full_skel_name ()
-                          << " *> (servant);" << be_nl;
-
-                      *os << ancestor->full_skel_name ()
-                          << "::_set_" << d->local_name ()
-                          << "_skel (" << be_idt << be_idt_nl
-                          << "server_request," << be_nl
-                          << "servant_upcall," << be_nl
-                          << "impl);" << be_uidt
-                          << be_uidt << be_uidt_nl
-                          << "}";
-                    }
-                }
-            }
-        } // End of FOR.
-    }
 
   return 0;
 }

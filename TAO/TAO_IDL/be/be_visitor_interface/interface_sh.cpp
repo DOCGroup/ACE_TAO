@@ -150,24 +150,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Generate skeletons for operations of our base classes. These
-  // skeletons just cast the pointer to the appropriate type
-  // before invoking the call.
-  int const status =
-    node->traverse_inheritance_graph (
-              be_interface::gen_skel_helper,
-              os);
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_interface_sh::")
-                         ACE_TEXT ("visit_interface - ")
-                         ACE_TEXT ("inheritance graph ")
-                         ACE_TEXT ("traversal failed\n")),
-                        -1);
-    }
-
   *os << be_uidt_nl << "};";
 
   be_visitor_context ctx (*this->ctx_);
