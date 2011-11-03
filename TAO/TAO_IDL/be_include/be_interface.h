@@ -185,6 +185,11 @@ public:
                                              be_interface *,
                                              TAO_OutStream *os);
 
+  /// skeletons in the AMH header and inline files.
+  static int gen_skel_helper (be_interface *,
+                              be_interface *,
+                              TAO_OutStream *);
+
   /// Helper method passed to the template method to generate code for the
   /// collocated functions in the header file.
   static int gen_colloc_op_decl_helper (be_interface *derived,
