@@ -1,3 +1,8 @@
+Thu Nov  3 08:41:29 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+          Every IDL file has its own project
+
 Thu Nov  3 08:21:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tao/PortableServer/SUpcall_commands.h:
