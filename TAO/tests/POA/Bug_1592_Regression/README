@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test verifies that server side interceptor flow is correct when a
 PortableServer::ServantLocator is in use.

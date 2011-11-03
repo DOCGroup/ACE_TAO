@@ -1,12 +1,12 @@
-// $Id$
+$Id$
 
 	This directory contains a generic client program. The program
 takes an object reference as a commandline parameter and checks if it
 refers to an existing object and a debug statement is printed out to
-reflect the same. 
+reflect the same.
 
 To Run tests_svc_loader
 =======================
 
 ./tests_svc_loader file://ns.ior
- 
+

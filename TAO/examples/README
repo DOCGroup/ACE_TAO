@@ -1,22 +1,24 @@
+$Id$
+
 This directory contains a number of example applications that
 illustrate how to program with standard CORBA using TAO.  The
 individual directories contain READMEs on how to run the following
 examples:
 
-        . Advanced 
+        . Advanced
 
-          Contains example code from "Advanced CORBA Programming with 
-          C++" by Michi Henning and Steve Vinoski with slight 
+          Contains example code from "Advanced CORBA Programming with
+          C++" by Michi Henning and Steve Vinoski with slight
           adaptations for TAO.
 
         . AMH
 
           Example code that illustrates working of a simple AMH 'Sink-Server'
           and a more sophisticated AMH 'Middle-Sever' that uses both
-          AMH and AMI. Sample 'one-button' perl scripts are provided that 
+          AMH and AMI. Sample 'one-button' perl scripts are provided that
           show how to run the servers.
 
-        . Borland 
+        . Borland
 
           This directory illustrates how to write a Borland C++
           Builder application using ACE+TAO.
@@ -41,7 +43,7 @@ examples:
           TAO.
 
         . Content_Server
-        
+
           Three examples that illustrate how to program client/server
           applications for downloading large file content via SMI,
           AMI, and the Iterator and Observer patterns.
@@ -58,11 +60,11 @@ examples:
           distributed load balancing.
 
         . Load_Balancing_persistent
-        
+
           A variant of the preceding example that keeps the state of
           the load balancer persistent.
 
-        . Logging 
+        . Logging
 
           This example implements a simple logging service using TAO.
 
@@ -82,7 +84,7 @@ examples:
           persistent memory.
 
         . PluggableUDP
-        
+
           This example tests the UDP Pluggable Protocol (DIOP) implementation by
           sending oneway requests to a server.
 
@@ -92,13 +94,13 @@ examples:
           the OMG POA specification.
 
         . Quoter
-        
+
           Illustrates how to use the Global POA options with multiple
           threads.  This example also shows how to use the Lifecycle
-          service. 
-                      
+          service.
+
         . Simple
-          
+
           Contains a number of simple CORBA examples, which also
           illustrate how to write canonical Orbix/VisiBroker/OmniORB
           examples in TAO using standard CORBA features rather than

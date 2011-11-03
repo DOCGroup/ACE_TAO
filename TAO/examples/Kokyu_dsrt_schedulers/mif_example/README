@@ -1,16 +1,18 @@
+$Id$
+
 This example illustrates the working of a Kokyu
 based DSRT scheduler. There are 2 threads waiting
 for requests on the server side. Two threads are
-started on the client side. The main thread as 
+started on the client side. The main thread as
 well as the worker threads are given the maximum
 priority so that their "release" happen immediately.
 Each of the worker threads make a remote two-way
-call to the server. The two requests are processed 
-in different threads on the server side. 
+call to the server. The two requests are processed
+in different threads on the server side.
 
-On the client side, the first thread is given lesser 
-importance than the second thread and the second thread 
-is started a little later than the first. It is 
+On the client side, the first thread is given lesser
+importance than the second thread and the second thread
+is started a little later than the first. It is
 expected that, on the server side, the first request
 is processed by one of the two threads. When the
 second request comes in, the other thread that processes
@@ -19,11 +21,11 @@ second request carries more importance than the first.
 A timeline is generated which shows the sequence of
 execution of the two different threads on the server.
 
-Make sure that you run in privileged mode. 
+Make sure that you run in privileged mode.
 
 To run the test using the CV-based approach (see ../README),
 
-./server -d 
+./server -d
 ./client -d -x
 
 To run the test using the OS-based approach (see ../README),

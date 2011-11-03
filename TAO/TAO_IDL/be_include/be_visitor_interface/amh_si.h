@@ -21,11 +21,11 @@ public:
 
   int visit_interface (be_interface *node);
 
+  // Helper method passed to the template method to generate code for the
+  // AMH skeletons in the inline files.
   static int gen_skel_helper (be_interface *,
                               be_interface *,
                               TAO_OutStream *);
-  // Helper method passed to the template method to generate code for the
-  // AMH skeletons in the inline files.
 };
 
 #endif /* AMH_SH_I_ */

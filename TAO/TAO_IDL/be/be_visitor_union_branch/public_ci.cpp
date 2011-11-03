@@ -347,7 +347,7 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
   // Get method.
   *os << "/// Retrieve the member." << be_nl
       << "ACE_INLINE" << be_nl
-      << bt->name () << "_ptr " << be_nl
+      << bt->name () << "_ptr" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
@@ -437,7 +437,7 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
   // Get method.
   *os << "/// Retrieve the member." << be_nl
       << "ACE_INLINE" << be_nl
-      << bt->name () << "_ptr " << be_nl
+      << bt->name () << "_ptr" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl
@@ -532,7 +532,7 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
   // Get method.
   *os << "/// Retrieve the member." << be_nl
       << "ACE_INLINE" << be_nl
-      << bt->name () << "* " << be_nl
+      << bt->name () << "*" << be_nl
       << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->u_." << ub->local_name () << "_->in ();" << be_uidt_nl

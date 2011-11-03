@@ -1,11 +1,13 @@
 /**
 
+$Id$
+
 @page Bug_1020_Basic_Regression Test README File
 
 	The simplest possible test BUG 1020 regression for TAO.  This
 is a very simple test for TAO.
 
-        
+
         The test does the following
 
 - A server waits for a request from the client
@@ -19,13 +21,13 @@ is a very simple test for TAO.
   reference it got from the client.
 
 - The client threads after processing a few invocation abort, there by
-  crashing the client. 
+  crashing the client.
 
 - The server should survive the crash
 
 - The test passes sequence<octet> between client and server in either
   direction with the purpose of ensuring that the tranport gets flow
-  controlled. 
+  controlled.
 
 To run the test
 

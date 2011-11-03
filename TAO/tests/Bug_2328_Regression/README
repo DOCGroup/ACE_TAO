@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Bug_2328_Regression README File
 
 This test sends 3 strings to the server. The server is using the codeset

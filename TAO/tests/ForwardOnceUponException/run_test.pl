@@ -93,7 +93,7 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 my $iorbase = "test.ior";
-my $host = $server->HostName(); #"localhost";
+my $host = $server->HostName();
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
 

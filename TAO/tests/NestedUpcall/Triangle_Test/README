@@ -1,23 +1,24 @@
 $Id$
+
 Documentation about the Triangle test
 
 Purpose:
 
 Is to show how nested upcalls are handled.
 
-Three objects exist: 
+Three objects exist:
 Object A, Object B and the Initiator
 
 The initiator calls a two-way call foo on object A,
 object A calls foo_object_B, a one-way call, on the initiator,
 this causes initiator to call foo on object B,
 this causes object B to (oneway) call finish on object A,
-this causes object A to return from its first two-way call 
+this causes object A to return from its first two-way call
 (before object B returns from its two-way call),
 after a second or so object B returns from its two-way call.
 
-The printed order should show, that the replies are 
-handled in the stack order, but not in the actual 
+The printed order should show, that the replies are
+handled in the stack order, but not in the actual
 arriving order.
 
 To start:

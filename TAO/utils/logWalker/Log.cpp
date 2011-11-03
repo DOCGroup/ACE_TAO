@@ -340,7 +340,7 @@ Log::parse_got_existing (Log *this_, char *line, size_t offset)
   char *hpos = ACE_OS::strchr(line,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
 
-  PeerProcess *pp = hp->find_peer(handle);
+  PeerProcess *pp = hp->find_peer(handle, true);
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -366,7 +366,7 @@ Log::parse_muxed_tms (Log *this_, char *line, size_t offset)
   long handle = ACE_OS::strtol(hpos+1,0,10);
   hpos = ACE_OS::strchr(hpos, '<');
   long req_id = ACE_OS::strtol(hpos+1,0,10);
-  PeerProcess *pp = hp->find_peer(handle);
+  PeerProcess *pp = hp->find_peer(handle, true);
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -395,7 +395,7 @@ Log::parse_exclusive_tms (Log *this_, char *line, size_t offset)
   Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
 
   long handle = thr->active_handle();
-  PeerProcess *pp = hp->find_peer(handle);
+  PeerProcess *pp = hp->find_peer(handle, true);
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -427,7 +427,7 @@ Log::parse_process_parsed_msgs (Log *this_, char *line, size_t offset)
   char *hpos = ACE_OS::strchr(line,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
 
-  PeerProcess *pp = hp->find_peer(handle);
+  PeerProcess *pp = hp->find_peer(handle, true);
   if (pp == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -454,13 +454,12 @@ Log::parse_wait_for_event (Log *this_, char *line, size_t offset)
 
   HostProcess *hp = this_->get_host(pid);
   Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
-//   char *pos = ACE_OS::strchr (line,'[');
-//   long rid = ACE_OS::strtol(pos+1, 0, 10);
+
   PeerProcess *pp = thr->incoming();
   if (pp == 0)
     {
       ACE_ERROR((LM_ERROR,
-                 "%d: wait_for_event, could not find pp for incoming, text = %s\n",
+                 "%d: wait_for_event, could not find peer process for incoming, text = %s\n",
                  offset, line));
       return;
     }
@@ -501,7 +500,14 @@ Log::parse_cleanup_queue (Log *this_, char *line, size_t offset)
 
   char *hpos = ACE_OS::strchr(line,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
-  PeerProcess *pp = hp->find_peer(handle);
+  PeerProcess *pp = hp->find_peer(handle, false);
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%d: cleanup queue, could not find peer for handle %d\n",
+                  offset, handle));
+      return;
+    }
 
   Thread *original_thr = thr;
   Invocation::GIOP_Buffer *target = original_thr->giop_target();
@@ -564,7 +570,7 @@ Log::parse_close_connection (Log *this_, char *line, size_t offset)
 
   char *hpos = ACE_OS::strchr(line,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
-  PeerProcess *pp = hp->find_peer(handle);
+  PeerProcess *pp = hp->find_peer(handle, false);
   if (pp != 0)
     {
       Transport *t = pp->find_transport (handle);
@@ -572,7 +578,7 @@ Log::parse_close_connection (Log *this_, char *line, size_t offset)
         t->close_offset_ = offset;
     }
 
-  hp->remove_peer(handle);
+  hp->close_peer(handle);
 }
 
 void

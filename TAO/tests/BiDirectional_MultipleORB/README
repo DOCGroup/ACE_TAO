@@ -1,16 +1,16 @@
-# $Id$
+$Id$
 
 This is a test that creates a birectional GIOP policy for a POA and then
 attempts to repeat this, after destructing and re-creating the ORB. This used to
-fail by breaking an assertion, because the second ORB was tryig to register a policy 
-validator object instance, which lingered since the time the first ORB was created. 
+fail by breaking an assertion, because the second ORB was tryig to register a policy
+validator object instance, which lingered since the time the first ORB was created.
 
 The validators are chained in a linked list, and any attempt to register a new one,
 which already points to another, is considered an error:
 
 ACE_ASSERT: (24189|4143901376) file Policy_Validator.cpp, line 28 assertion failed for 'validator->next_ == 0'.Aborting...
 
-In other instances it broke with SEGV, when trying to access an previously deleted 
+In other instances it broke with SEGV, when trying to access an previously deleted
 bi-dir policy validator.
 
 For additional detail reffer to RT4667 and RT4672.

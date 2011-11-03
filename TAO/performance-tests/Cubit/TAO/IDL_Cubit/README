@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This example uses the TAO IDL compiler to generate the SII stubs and
 skeletons.  You can either run the server in the background in the

@@ -3,8 +3,8 @@ $Id$
 This is a test for <Object::_validate_connection> method, i.e.,
 explicit binding functionality.
 
-Description.  
--------- 
+Description.
+--------
 The goal of this test is to check that <validate_connection>
 establishes connections appropriate for the effective policy
 overrides, and that it detects policy misconfigurations and reports

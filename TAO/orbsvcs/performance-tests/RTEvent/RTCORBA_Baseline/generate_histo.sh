@@ -1,4 +1,5 @@
 #/bin/sh
+# $Id$
 
 for i in *.txt; do
   b=`basename $i .txt`

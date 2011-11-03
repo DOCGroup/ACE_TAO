@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 THE MT_CUBIT EXAMPLE
 --------------------
@@ -115,10 +115,10 @@ by the client.
 
         Default Value: Disabled
 
-[-u <seconds>] runs the client/server utilization test for a number of <requests>.  
-        The output is the number of seconds for the test to make such number of requests.  
+[-u <seconds>] runs the client/server utilization test for a number of <requests>.
+        The output is the number of seconds for the test to make such number of requests.
         Now run the same test but with the -l option to make the same number of requests,
-        this time not using CORBA, instead directly making function calls.  The difference 
+        this time not using CORBA, instead directly making function calls.  The difference
         in time for each test to make the same number of requests is the utilization of
         the OS/ORB combined.
      (Note: This option overrides any specified "-t" option)
@@ -193,13 +193,13 @@ for ALL.
 server:
 ------
 $rsh host_name arun path_to_server -e iiop://DOTTED_DECIMAL_ADDRESS:0
- -f path_to_ior_file -ORBDottedDecimalAddresses 1 <server_options> 
+ -f path_to_ior_file -ORBDottedDecimalAddresses 1 <server_options>
 
 Since Chorus doesn't support DNS, you should pass
 dotted_decimal_address of the server machine to -e option.
 
 You DONT have to use -ORBDottedDecimalAddresses 1 if you have
-TAO_USE_DOTTED_DECIMAL_ADDRESSES defined in your config.h file. 
+TAO_USE_DOTTED_DECIMAL_ADDRESSES defined in your config.h file.
 
 e.g
 $rsh tambora1 arun /MT_Cubit/server -e iiop://128.252.165.82:0 -f /ior

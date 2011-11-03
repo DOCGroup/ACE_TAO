@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test checks that the IOGRs are works correctly if non-primary profile is process-local.
 

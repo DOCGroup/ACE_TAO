@@ -1,4 +1,4 @@
-//$Id$
+$Id$
 
 Case
 ----
@@ -52,7 +52,7 @@ Server_Interceptor::send_reply
 Server_Interceptor::receive_request_service_contexts
 Server_Interceptor::receive_request
 Request from Distributable Thread
-The Guid is 1 
+The Guid is 1
 Two-Way Message = file:///project/ace/yamuna/ior_file
 Server_Interceptor::send_reply
 Distributable Thread - 1 is cancelled
@@ -66,7 +66,7 @@ Client
 
 Making a one-way request
 Client_Interceptor::send_request
-The Guid is 2 
+The Guid is 2
 Client_Interceptor::receive_other
 Making a two-way request
 Client_Interceptor::send_request

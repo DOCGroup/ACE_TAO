@@ -1,3 +1,5 @@
+$Id$
+
 This program performs a series of sanity check on the collocation support in TAO.
 
 After building the example, you'll get:

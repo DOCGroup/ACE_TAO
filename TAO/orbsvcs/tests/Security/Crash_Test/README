@@ -1,9 +1,7 @@
-#
-# $Id$
-#
+$Id$
 
 This test verifies that the ORB's connection management mechanism is
-functioning properly while using SSLIOP as inter-orb protocol.  
+functioning properly while using SSLIOP as inter-orb protocol.
 It does so by doing the following:
 
 	- Starting server with persisten POA.

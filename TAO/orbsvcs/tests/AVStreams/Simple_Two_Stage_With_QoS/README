@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -8,7 +8,7 @@ receiver.  The test has the following features:
 
 1.It tests the AVStreams Integration with the AQoSA API when compiled
 and run with rapi=1. The test initiates an RSVP session between the
-sender and receiver.  
+sender and receiver.
 
 2.When rapi=0, that is, intserv is not used then it sets the diffserv
 codepoint to 0x3f.
@@ -36,11 +36,11 @@ receiver -f <output_filename>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-d]  
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-d]
 
 
 -f filename --> The file to be streamed to the receiver (defaults to
-                "input"). 
+                "input").
 
 -p protocol --> The protocol string sould be QoS_UDP if rapi=1 else it
                 should be UDP,RTP/UDP, SCTP_SEQ (defaults to UDP).

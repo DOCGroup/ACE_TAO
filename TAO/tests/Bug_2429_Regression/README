@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test makes a call via AMI and then waits to receive a call back. The server throws an exception so the client expects to receive that. The method called is a method inherited from a parent interface (parentMethod).
 

@@ -1,2 +1,4 @@
+$Id$
+
 This is a simple test of the DSI+AMH feature in TAO.
 To run it, just execute the script run_test.pl.

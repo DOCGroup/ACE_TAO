@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <dynamic id="AV_Default_Resource_Factory" type="Service_Object">
    <initializer path="TAO_AV" init="_make_TAO_AV_Default_Resource_Factory"/>
  </dynamic>

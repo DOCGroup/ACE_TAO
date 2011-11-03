@@ -7,19 +7,19 @@ Features
 --------
 
         . Displays the entries of a naming context graphically in a
-          tree control.  
+          tree control.
 
         . Supports configuration of different naming servers.
-          Configuration is stored in the registry.  
+          Configuration is stored in the registry.
 
-        . Double clicking on an object in the tree will open a dialog to 
+        . Double clicking on an object in the tree will open a dialog to
           examine the object reference.  This dialog will display the
           stringified object reference, repository ID and profile
-          information. 
+          information.
 
         . Supports binding, unbinding, context creation and context
           destroying.  User the right mouse button to pull up the
-          context menu. 
+          context menu.
 
         . Supports iterator returned from listing a context
 
@@ -53,7 +53,7 @@ TO-DO List
         . Add support for cutting/moving/copying objects in the tree?
 
         . Add ability to configure what is displayed for each entry in
-          a context. 
+          a context.
 
         . Right now its just the id and kind, but we could also add in
           the repository id and primary profile.
@@ -63,7 +63,7 @@ Issues/Bugs
 
         . Need to find a better way of displaying the kind attribute
           in a Name.  Right now we use "." which is ambiguous.
-          Perhaps a different color? 
+          Perhaps a different color?
 
         . Consider getting rid of the Select NS button and the name of
           the name service from the main window.  Put the name of the

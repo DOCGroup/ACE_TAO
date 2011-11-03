@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This test allows you to visually check the correct invocation of
 TAO's portable interceptors, especially the Dynamic interface.

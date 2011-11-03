@@ -59,8 +59,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "::CORBA::Boolean" << be_nl
           << "Any_Impl_T<" << node->name () << ">::to_object ("
           << be_idt <<  be_idt_nl
-          << "::CORBA::Object_ptr &_tao_elem" << be_uidt_nl
-          << ") const" << be_uidt_nl
+          << "::CORBA::Object_ptr &_tao_elem) const" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_elem = ::CORBA::Object::_duplicate (this->value_);" << be_nl
           << "return true;" << be_uidt_nl
@@ -78,8 +78,8 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
           << "Any_Impl_T<" << node->name ()
           << ">::to_abstract_base ("
           << be_idt <<  be_idt_nl
-          << "::CORBA::AbstractBase_ptr &_tao_elem" << be_uidt_nl
-          << ") const" << be_uidt_nl
+          << "::CORBA::AbstractBase_ptr &_tao_elem) const" << be_uidt
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_elem = ::CORBA::AbstractBase::_duplicate (this->value_);"
           << be_nl

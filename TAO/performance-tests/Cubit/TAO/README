@@ -1,3 +1,5 @@
+$Id$
+
 There are three versions of the Cubit example. Individual README files
 in the respective directories explain these versions in further
 detail.
@@ -7,12 +9,12 @@ detail.
                  Cubit example with tao_idl compiler generated stubs
                  and skeletons
 
-        . MT_Cubit 
+        . MT_Cubit
 
 		 Multithreaded real-time Cubit example.
 
         . DII_Cubit
-                
+
                  Cubit example with hand-generated stubs.  When
                  TAO supports the DII interface this will
                  illustrate how it works.

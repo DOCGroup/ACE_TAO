@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This is a build only test. A failure in the IDL compilation will probably indicate a regression.
 

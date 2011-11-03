@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 CORBA Messaging
 
@@ -23,12 +23,12 @@ How to Run
 
 To start the server:
 ------------------
-./MessengerServer 
+./MessengerServer
 
 
 To start the client:
 ------------------
-./MessengerClient 
+./MessengerClient
 
 
 

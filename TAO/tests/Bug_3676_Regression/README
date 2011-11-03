@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Codeset information is sent only in the first request in the service_context
 field of GIOP request message. However, CORBA::Object::_validate_connection()

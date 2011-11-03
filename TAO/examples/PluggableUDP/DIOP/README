@@ -1,3 +1,5 @@
+$Id$
+
 DIOP - UDP Based Pluggable Protocol
 ===================================
 
@@ -30,7 +32,7 @@ Notes on the DIOP implementation:
   TAO Connector.  It installs a connection handler on the first
   invocation on a remote CORBA object.
 
-DIOP Installation 
+DIOP Installation
 
 - The application using DIOP should have a svc.conf file with the
   following entry:

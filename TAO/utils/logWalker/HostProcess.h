@@ -29,6 +29,7 @@ struct PeerNode
   PeerNode (long h, PeerProcess *p);
   long handle_;
   PeerProcess *peer_;
+  bool closed_;
 };
 
 typedef ACE_DLList<Thread> ThreadList;
@@ -83,12 +84,9 @@ public:
 
   // locate a peer process by handle or address
   PeerProcess *find_peer (const ACE_CString& addr);
-  PeerProcess *find_peer (long handle);
+  PeerProcess *find_peer (long handle, bool ignore_closed);
 
-  void remove_peer (long handle);
-
-  // remove a peer by handle, noting the line.
-  void close_peer (long handle, size_t offset);
+  void close_peer (long handle);
 
   // various output methods
   void dump_ident (ostream &strm, const char *extra);
@@ -104,6 +102,8 @@ public:
   void reconcile_peers (Session *session);
 
 private:
+  PeerNode *find_peer_i (long handle);
+
   void iterate_peers (int group,
                       int operation,
                       ostream *strm = 0,

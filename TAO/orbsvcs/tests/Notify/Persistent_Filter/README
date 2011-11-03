@@ -1,3 +1,5 @@
+$Id$
+
 This test is based on the Filter example.
 It tests the persistent filter changes. The filter constraints
 are saved to persistent data instead of filter IOR.
@@ -5,6 +7,6 @@ are saved to persistent data instead of filter IOR.
 The run_test.pl starts NotificationService, consumer and supplier.
 After they complete, restart them again with using the persistent
 data. The restarted consumer and supplier will verify the filters
-and modify the constraints. The test finally should pass with no 
+and modify the constraints. The test finally should pass with no
 errors.
 

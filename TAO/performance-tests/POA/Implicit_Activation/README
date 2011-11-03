@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Activation Test README File
 
 	This test measures the time required to activate (via _this)

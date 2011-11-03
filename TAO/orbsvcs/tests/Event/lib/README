@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This directory contains a small framework to write tests for the
 real-time event service.  Check the Basic or Performance directories

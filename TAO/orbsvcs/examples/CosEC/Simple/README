@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 	This directory contains what possibly is the simplest example
 for a COS Event Service.  It contains three executables; a consumer,

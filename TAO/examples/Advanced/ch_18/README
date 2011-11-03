@@ -2,42 +2,42 @@ $Id$
 
 Chapter 18 example
 ______________________________________________________________________________
-This example been taken from the book "Advanced CORBA Programming with C++" 
-by Michi Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading, 
-MA.  To make the examples work with TAO, some minor modifications to the 
+This example been taken from the book "Advanced CORBA Programming with C++"
+by Michi Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
+MA.  To make the examples work with TAO, some minor modifications to the
 source code have been made, with permission, by Mike Moran <mm4@cs.wustl.edu>.
 All of these changes are documented in the file CHANGES, in this directory.
 ______________________________________________________________________________
 
 
 Summary:
-    This example adds the use of the Naming Service to the climate control 
+    This example adds the use of the Naming Service to the climate control
     system of chapter 12.
 
 Building:
-    This example must be built with native C++ exceptions, and with an ACE/TAO 
-    build with exceptions.  Make sure to use TAO_FLAG Ge=0 to ensure that the 
-    IDL generated code uses c++ exceptions rather than creating 
+    This example must be built with native C++ exceptions, and with an ACE/TAO
+    build with exceptions.  Make sure to use TAO_FLAG Ge=0 to ensure that the
+    IDL generated code uses c++ exceptions rather than creating
     CORBA_Environment variables.
 
-    With GNU make, simply type 
+    With GNU make, simply type
      % make exceptions=1
     to create the executable server and client.
 
-    Also, make sure that the Naming Service executable has been built at 
+    Also, make sure that the Naming Service executable has been built at
     $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service.
 
 server:
-    The server takes no parameters nor command line options and registers the 
-    controller object with the naming service.  The server then waits 
+    The server takes no parameters nor command line options and registers the
+    controller object with the naming service.  The server then waits
     infinitely for clients requests.
 
 client:
-    The client gets reference to the controller through the naming service, 
+    The client gets reference to the controller through the naming service,
     makes several remote calls on this controller, and terminates.
 
 run_test.pl:
-    The script starts up a new Naming Service, starts thc server and client, 
+    The script starts up a new Naming Service, starts thc server and client,
     and when the client has completed terminates the server and NamingService.
 
 Running:

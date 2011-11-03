@@ -1,7 +1,7 @@
 $Id$
 
 This test checks the combination of PERSISTENT & SYSTEM_ID POA
-policies. 
+policies.
 
 A servant is registered on the RootPOA. The client tells the server to
 create a POA with PERSISTENT & SYSTEM_ID policies.  The server does so

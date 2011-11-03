@@ -42,10 +42,6 @@
 #include "be_visitor_interface/smart_proxy_ch.h"
 #include "be_visitor_interface/smart_proxy_cs.h"
 
-// Proxy Brokers
-#include "be_visitor_interface/strategized_proxy_broker_sh.h"
-#include "be_visitor_interface/strategized_proxy_broker_ss.h"
-
 // Proxy Impls
 #include "be_visitor_interface/direct_proxy_impl_sh.h"
 #include "be_visitor_interface/direct_proxy_impl_ss.h"

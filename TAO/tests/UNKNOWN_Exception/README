@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Description:
 
@@ -13,7 +13,7 @@ the UNKNOWN exceptions.
 
 Expected output:
 
-A successful run is one without any asserts.  
+A successful run is one without any asserts.
 
 The server should say:
 

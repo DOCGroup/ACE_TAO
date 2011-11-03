@@ -67,7 +67,7 @@ namespace TAO
         int arg_number,
         const char *operation,
         size_t op_len,
-        Collocation_Proxy_Broker *b,
+        int collocation_opportunity,
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
 
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,

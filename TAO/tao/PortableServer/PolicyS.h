@@ -42,7 +42,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 
@@ -72,9 +71,6 @@ namespace POA_CORBA
 
   class Policy;
   typedef Policy *Policy_ptr;
-
-  class _TAO_Policy_Direct_Proxy_Impl;
-  class _TAO_Policy_Strategized_Proxy_Broker;
 
   class TAO_PortableServer_Export Policy
     : public virtual PortableServer::ServantBase
@@ -182,48 +178,6 @@ namespace POA_CORBA
       );
   };
 
-  ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration
-  //
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
-
-  class TAO_PortableServer_Export _TAO_Policy_Strategized_Proxy_Broker
-    : public virtual TAO::Collocation_Proxy_Broker
-  {
-  public:
-    _TAO_Policy_Strategized_Proxy_Broker (void);
-
-    virtual ~_TAO_Policy_Strategized_Proxy_Broker (void);
-
-    TAO::Collocation_Strategy
-    get_strategy (
-        CORBA::Object_ptr obj
-
-      );
-
-    void
-    dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
-        bool & is_forwarded,
-        TAO::Argument ** args,
-        int num_args,
-        const char * op,
-        size_t op_len,
-        TAO::Collocation_Strategy strategy
-
-      );
-
-    static _TAO_Policy_Strategized_Proxy_Broker *
-    the_TAO_Policy_Strategized_Proxy_Broker (void);
-  };
-
-  //
-  //            End Strategized Proxy Broker Declaration
-  ///////////////////////////////////////////////////////////////////////
-
 
 
   // TAO_IDL - Generated from
@@ -246,10 +200,7 @@ namespace POA_CORBA
     static void
     _get_policy_type (
         TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-
-      );
+        TAO::Argument ** args);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
@@ -257,10 +208,7 @@ namespace POA_CORBA
     static void
     copy (
         TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-
-      );
+        TAO::Argument ** args);
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/proxy_impl_xh.cpp:24
@@ -268,10 +216,7 @@ namespace POA_CORBA
     static void
     destroy (
         TAO_Abstract_ServantBase *servant,
-        TAO::Argument ** args,
-        int num_args
-
-      );
+        TAO::Argument ** args);
   };
 
   //

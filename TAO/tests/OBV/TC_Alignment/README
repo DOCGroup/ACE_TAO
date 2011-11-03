@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page OBV/TC_ALignment Test README File
 
 	This is a test of the traversal of the typecode tree for valuetypes.
@@ -11,7 +13,7 @@ an 8-byte boundary. This problem has been fixed - the test is to ensure that
 the problem does not recur as a result of future changes to the TAO TypeCode
 class.
 
-        Four valuetypes are declared in an IDL file, named in such a way 
+        Four valuetypes are declared in an IDL file, named in such a way
 that their repository IDs (including the terminal null byte) have lengths
 of 25, 27, 29, and 31. The test method is called 4 times. In each call,
 one of these valuetypes is inserted into an Any and returned to the client,

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test checks that if the first ORB is created with -ORBGestalt LOCAL
 then the settings from this ORB will not become default for the other ORBs
@@ -23,5 +23,5 @@ Testing with -ORBSvcConf
 Initialize ORB instances...
 After ORB_init...
 ERROR: '-ORBConnectionCacheMax' is applied globally while it's expected to apply to the first ORB only.
-ERROR: <server> failed: 
+ERROR: <server> failed:
 ERROR: server returned 255

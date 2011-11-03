@@ -11,6 +11,7 @@
  *  @author Jeff Parsons
  */
 //=============================================================================
+#include <TAO_IDL/be_include/be_helper.h>
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
@@ -49,6 +50,10 @@ be_visitor_executor_exh::visit_attribute (be_attribute *node)
 int
 be_visitor_executor_exh::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
   this->node_ = node;
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -67,11 +72,15 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << comment_end_border_;
 
   os_ << be_nl_2
-      << "class " << lname
+      << "class ";
+
+  os_ << lname
       << "_exec_i" << be_idt_nl
-      << ": public virtual " << lname << "_Exec," << be_idt_nl
-      << "public virtual ::CORBA::LocalObject"
-      << be_uidt << be_uidt_nl
+      << ": public virtual " << lname << "_Exec," << be_idt_nl;
+
+  os_ << "public virtual ::CORBA::LocalObject";
+
+  os_ << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
@@ -120,8 +129,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
                         -1);
     }
 
-  os_
-      << "/** @name Operations from Components::" << be_global->ciao_container_type ()
+  os_ << "/** @name Operations from Components::" << be_global->ciao_container_type ()
       << "Component. */" << be_nl
       << "//@{";
 

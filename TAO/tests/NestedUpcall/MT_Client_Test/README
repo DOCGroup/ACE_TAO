@@ -1,10 +1,11 @@
+$Id$
 
 Multiple Client and global resources test
 =========================================
 
 
 This test uses global resources, meaning one ORB and one Reactor.
-Several client threads are created, which call one of the two servers. 
+Several client threads are created, which call one of the two servers.
 This means, two server instances should be running. Also one
 server thread is running, doing nested upcalls to the same server.
 
@@ -12,7 +13,7 @@ The intention is to see if global resources with multiple threads work.
 
 The client understands the following switches:
 
--f file of the ior of the first server, used by approx. half of the 
+-f file of the ior of the first server, used by approx. half of the
    client threads and the local server thread.
 
 -g file of the ior of the second server

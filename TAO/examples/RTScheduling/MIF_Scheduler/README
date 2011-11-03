@@ -1,3 +1,5 @@
+$Id$
+
 Most Important First (MIF) Scheduler
 ====================================
 
@@ -16,7 +18,7 @@ any given time the scheduler dequeues the DT at the head of the queue,
 that corresponds to the most important thread, and signals the thread
 to activate it. The service context is used to send the importance and
 GUID of the DT across hosts it spans so the DT can be scheduled
-accordingly on the remote host. 
+accordingly on the remote host.
 
 In this experiment we show how dynamic scheduling is done using the
 Dynamic Scheduling framework with the MIF Scheduler as the pluggable

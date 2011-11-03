@@ -14,7 +14,7 @@ namespace TAO
       int arg_number,
       const char *operation,
       size_t op_len,
-      Collocation_Proxy_Broker *p,
+      int collocation_opportunity,
       Invocation_Type type,
       Invocation_Mode mode)
     : Invocation_Adapter (target->equivalent_objref (),
@@ -22,7 +22,7 @@ namespace TAO
                           arg_number,
                           operation,
                           op_len,
-                          p,
+                          collocation_opportunity,
                           type,
                           mode)
   {

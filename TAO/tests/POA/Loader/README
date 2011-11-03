@@ -28,7 +28,7 @@ Object-to-Servant association is added to the Active Object Map
 maintained by the POA.  This association becomes invalid when the POA
 is destroyed or/and the Object is deactivated.  In contrast, for the
 Servant_Locator example operation request from the client causes the
-servant to be linked, processed, destroyed, and unlinked.  
+servant to be linked, processed, destroyed, and unlinked.
 
 For all examples, the dynamic configuration granularity is at the POA
 level,i.e., a Servant Activator or Servant Locator is associated with
@@ -57,4 +57,4 @@ example:
 
 The output will demonstrate the different actions performed by the
 Servant_Manager via the Servant_Activator and the Servant_Locator
-interfaces. 
+interfaces.

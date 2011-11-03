@@ -1,13 +1,15 @@
 /**
 
+$Id$
+
 @page Two_Objects Test README File
 
-        This is used as an extended test for bug fix #575. 
+        This is used as an extended test for bug fix #575.
 There are two objects managed by the same POA. Before the
 bug fix, the calls to the objects on the same connection
-were serialized even when the first call was a one way call. 
+were serialized even when the first call was a one way call.
 The connection handle in the reactor was not 'resumed' until
-the upcall after was completed. The fix resumes the handle 
+the upcall after was completed. The fix resumes the handle
 before the upcall is made, so that another thread could listen
 for subsequent requests on the same connection handle.
 
@@ -22,10 +24,10 @@ a two way call to Servant 2. Servant 1 handles the oneway
 request and waits for a signal from Servant 2. Servant 2 gets
 the two way request, handles it and then wakes up Servant 1.
 We do an assertion that there is only one connection in the
-transport cache manager. If the bug fix was not working, 
-Servant 2 would have never received the request and Servant 1 
-will wait for ever.      
-      
+transport cache manager. If the bug fix was not working,
+Servant 2 would have never received the request and Servant 1
+will wait for ever.
+
 	To run the test use the run_test.pl script:
 
 $ ./run_test.pl

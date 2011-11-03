@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 C++ mapping says that "For bounded sequences, the maximum length is part of the
 type and cannot be set or modified..." and later "For a bounded sequence,

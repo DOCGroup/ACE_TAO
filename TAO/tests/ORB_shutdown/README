@@ -1,9 +1,11 @@
 /**
 
+$Id$
+
 @page ORB_shutdown Test README File
 
 	The simplest possible test for TAO's shutdown procedure. This
-test is basically a regression for BUG 1265. Please see BUG 1265 in 
+test is basically a regression for BUG 1265. Please see BUG 1265 in
 
     http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1265
 

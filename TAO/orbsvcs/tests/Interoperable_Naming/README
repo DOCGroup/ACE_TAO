@@ -1,12 +1,12 @@
-// $Id$
+$Id$
 
-This application tests the implementation of the CosNaming::NamingContextExt 
-interface. 
+This application tests the implementation of the CosNaming::NamingContextExt
+interface.
 
-To run the test automatically - 
+To run the test automatically -
 	execute Perl script run_test.pl
 
-To run tests manually - 
+To run tests manually -
 	start the Naming Service (see
 	TAO/orbsvcs/Naming_Service/README for valid options),
 	then run ./client with one of the options below.
@@ -25,13 +25,13 @@ If no option is specified, the test is run and no output is printed.
 DESCRIPTION AND EXPECTED OUTPUT
 ===============================
 
-Performs the to_string, to_name (), to_url () and resolve_str () methods on 
+Performs the to_string, to_name (), to_url () and resolve_str () methods on
 the given Name or stringified name.
 
 Expected Output:
 
-	If the -o option is specified, prints out the outputs of the 
-to_string (), to_name () and to_url () functions. If no option is specified, 
+	If the -o option is specified, prints out the outputs of the
+to_string (), to_name () and to_url () functions. If no option is specified,
 completes with no output.
 
 

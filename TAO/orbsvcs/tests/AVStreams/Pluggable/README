@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Description
 -----------
@@ -24,7 +24,7 @@ server -f <output_filename>
 ftp:
 ----
 
-ftp [-f <filename>] [-a <address>] [-p <protocol>] [-s] [-r <frame rate>] [-d] 
+ftp [-f <filename>] [-a <address>] [-p <protocol>] [-s] [-r <frame rate>] [-d]
 
 
 -f filename --> The file to be streamed to the server. It is currently
@@ -33,7 +33,7 @@ ftp [-f <filename>] [-a <address>] [-p <protocol>] [-s] [-r <frame rate>] [-d]
 -a address  --> Multicast address or the host on which the client is running
                 Default is multicast address
 
--p protocol --> The protocol string could be UDP or TCP. But with the 
+-p protocol --> The protocol string could be UDP or TCP. But with the
                 multicast address it should be UDP.
 
 -s          --> flag to use SFP. This option cannot be used with -p

@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Local/Remote Mismatch Test README File
 
 	This test does not use the C++ compiler or any binaries
@@ -8,14 +10,14 @@
 	successfully if it catches the expected error. If the
 	expected error is not returned by the IDL compiler,
 	the script itself returns an error.
-	
+
 	In each of the 4 IDL files:
-	
+
 	local_inarg.idl
 	local_inoutarg.idl
 	local_outarg.idl
 	local_rettype.idl
-	
+
 	there is an IDL error in which a local interface is used as
 	the indicated part of the signature of an operation on a
 	non-local interface. If the error were not caught in the

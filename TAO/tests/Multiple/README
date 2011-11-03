@@ -1,4 +1,4 @@
-<$Id$>
+$Id$
 
 This test make sure that the collocation scheme works fine in case
 of diamond shaped multiple inheritance.  The case taken into account

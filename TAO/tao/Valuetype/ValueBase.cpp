@@ -648,7 +648,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t)ValueBase::_tao_write_special_value found value %X - %X\n"),
+            ACE_TEXT ("(%P|%t)ValueBase::_tao_write_special_value, found value %X - %X\n"),
             value, pos));
         }
 
@@ -661,7 +661,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_write_special_value value, indirection %d\n"), offset));
+            ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_write_special_value, indirection %d\n"), offset));
         }
 
       return strm.write_long (offset);
@@ -680,7 +680,7 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
       else if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t)ValueBase::_tao_marshal bound value %X - %X \n"),
+            ACE_TEXT ("TAO (%P|%t) - ValueBase::_tao_marshal, bound value %X - %X \n"),
             value, strm.current()->wr_ptr()));
         }
 

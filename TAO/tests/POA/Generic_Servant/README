@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Generic Servant:
 ===============
@@ -17,6 +17,6 @@ Typing
 
 creates an executable client and server library.
 
-To run the client, type 
+To run the client, type
 
 % client -k file://ior

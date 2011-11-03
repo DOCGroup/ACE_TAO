@@ -1,2 +1,4 @@
+$Id$
+
 Simple ORB destruction test to make sure that it's possible to destroy
 the ORB correctly.

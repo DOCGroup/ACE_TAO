@@ -1,7 +1,7 @@
-# $Id$
+$Id$
 
-	This directory contains an example for a COS Event Service, 
-using a typed channel. 
+	This directory contains an example for a COS Event Service,
+using a typed channel.
 It contains two executables; a consumer and a supplier.
 
 	To test it use :
@@ -9,7 +9,7 @@ It contains two executables; a consumer and a supplier.
 # rm Country.ifr
 # IFR_Service -p -b Country.ifr -ORBEndPoint iiop://localhost:12345
 # tao_ifr -ORBInitRef InterfaceRepository=corbaloc:iiop:localhost:12345/InterfaceRepository -I$TAO_ROOT/orbsvcs Country.idl
-# Naming_Service -ORBEndPoint iiop://localhost:8000 
+# Naming_Service -ORBEndPoint iiop://localhost:8000
 # CosEvent_Service -n CountryEventChannel -r -t -d -ORBInitRef InterfaceRepository=corbaloc:iiop:localhost:12345/InterfaceRepository -ORBInitRef NameService=corbaloc:iiop:localhost:8000/NameService
 # consumer -ORBInitRef NameService=corbaloc:iiop:localhost:8000/NameService
 # supplier -ORBInitRef NameService=corbaloc:iiop:localhost:8000/NameService

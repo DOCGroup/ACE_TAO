@@ -10,7 +10,7 @@ We've also integrated the examples into the ACE+TAO Makefile scheme.
 Each directory contains a file CHANGES which describes all
 modifications, as well as a README file documenting its use.
 
-The original source distribution can be found at the Addison-Wesley 
+The original source distribution can be found at the Addison-Wesley
 homepage:
 
 http://cseng.aw.com/bookdetail.qry?ISBN=0-201-37927-9&ptype=0

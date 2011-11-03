@@ -1,15 +1,16 @@
+$Id$
+
 Structured Event InterFilterGroupOperator Test
 ==============================================
-
 
 Description
 -----------
 
-This test checks push supplier and push consumer event logical operators 
-between the Supplier/Consumer admins and their proxies. The supplier sends 
+This test checks push supplier and push consumer event logical operators
+between the Supplier/Consumer admins and their proxies. The supplier sends
 a number of events specified by the consumer. The supplier and consumer can
 filter or not filter the events, and can AND and OR the proxy and admin
-filters. 
+filters.
 
 
 Usage
@@ -18,22 +19,22 @@ Usage
 The test consists of a Supplier and Consumer. The usage for each as is
 follows:
 
-$ Structured_Supplier 
+$ Structured_Supplier
 usage:  ./Structured_Supplier [-f] -o <AND_OP | OR_OP> \
         -ORBInitRef <Naming Service Location>
 
 $ Structured_Consumer -\?
-usage:  ./Structured_Consumer [-f] [-s] -n <num events> -c <num consumers> \ 
+usage:  ./Structured_Consumer [-f] [-s] -n <num events> -c <num consumers> \
         -o <AND_OP | OR_OP> -ORBInitRef <Naming Service Location>
 
 The -f option applies an the event filter to the supplier or consumer.
 The -s option alerts the consumer to supplier filtering.
 The -c option lets the user specify the number of consumers to use.
 
-To run this test, run the run_test.pl perl script. 
+To run this test, run the run_test.pl perl script.
 
 
 Expected Results
 ----------------
-The test script will display an error if for any test that fails. 
+The test script will display an error if for any test that fails.
 Otherwise, the test passed.

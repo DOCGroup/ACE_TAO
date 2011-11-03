@@ -1,14 +1,14 @@
-// $Id$
+$Id$
 
-Here is a simple to test the corbaname: style URL. The simple way to 
-test is to run the run_test.pl. 
+Here is a simple to test the corbaname: style URL. The simple way to
+test is to run the run_test.pl.
 
 To test manually:
 
 1. Run the NamingService at a specified endpoint.
-   
+
 	$NamingService -ORBEndPoint iiop://doc.ece.uci.edu:12345 &
-	
+
 2. Run the server.
 
 	./server &
@@ -16,17 +16,17 @@ To test manually:
 3. Run the client as one of these.
 
  a)	./client corbaname:doc.ece.uci.edu:12345
-	
-	CORBANAME style URL is used and the protocol used to 
+
+	CORBANAME style URL is used and the protocol used to
 	contact the naming context is <iiop> implicitly.
-	
+
  b)	./client corbaname::iiop:doc.ece.uci.edu:12345
 
-	CORBANAME style URL is used and the protocol used to 
+	CORBANAME style URL is used and the protocol used to
 	contact the naming context is <iiop>.
-		          
+
 
  c)	./client corbaname:rir:
-	
-	CORBANAME style URL is used and the protocol used to 
+
+	CORBANAME style URL is used and the protocol used to
 	contact the naming context is <rir>.

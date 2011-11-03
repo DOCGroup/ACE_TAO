@@ -65,7 +65,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
       *os << "ACE_INLINE" << be_nl
-          << "void " << be_nl
+          << "void" << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
           << "this->_reset ();" << be_nl
@@ -156,7 +156,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       // default, we get the _default () method.
 
       *os << "ACE_INLINE" << be_nl
-          << "void " << be_nl
+          << "void" << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
           << "this->_reset ();" << be_nl

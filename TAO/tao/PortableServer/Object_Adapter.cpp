@@ -514,7 +514,7 @@ TAO_Object_Adapter::locate_servant_i (const TAO::ObjectKey &key)
   this->locate_poa (key, id, poa);
 
   PortableServer::Servant servant = 0;
-  TAO_SERVANT_LOCATION servant_location =
+  TAO_SERVANT_LOCATION const servant_location =
     poa->locate_servant_i (id, servant);
 
   switch (servant_location)

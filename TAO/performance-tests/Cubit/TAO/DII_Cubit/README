@@ -1,8 +1,8 @@
-// $Id$
+$Id$
 
-This is the cubit example that does everything using DII requests. 
+This is the cubit example that does everything using DII requests.
 It uses the server in IDL_Cubit. Getting a reference
-to the Cubit object, making the Cubit operation calls, 
+to the Cubit object, making the Cubit operation calls,
 and shutting down the server are all done with DII requests.
 
 NOTES: The IDL_Cubit server used to run a Naming Service so the client
@@ -15,8 +15,8 @@ To run the tests with one "button-push", execute the perl script run_test.pl
 in this directory. It will start up the server and client. The client will
 shut down the server when the tests are finished.
 
-If you want to run each executable separately and manually, run the 
-server first (in IDL_Cubit). Then run the client with zero or more of 
+If you want to run each executable separately and manually, run the
+server first (in IDL_Cubit). Then run the client with zero or more of
 the following args:
 
         [-d]                 Increments TAO_debug_level. It's additive, up
@@ -26,15 +26,15 @@ the following args:
 
         [-i <factory IOR>]   For passing the IOR by hand.
 
-        [-f <filename>]      If server is run with [-o <filename>] option, 
+        [-f <filename>]      If server is run with [-o <filename>] option,
                              it outputs its factory IOR to a file, which
                              the client can read with this option.
 
         [-x]                 Shuts down server when finished.
 
-If using the -i option, you might want to run the server with the option 
-[-ORBobjrefstyle url]. This will cause the server to display its IOR in a 
-more human-readable form. The server can be run in the same window in the 
+If using the -i option, you might want to run the server with the option
+[-ORBobjrefstyle url]. This will cause the server to display its IOR in a
+more human-readable form. The server can be run in the same window in the
 background, or in a different window.
 
 The command line options, default calls per loop, order and display

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This program tests the behavior of FT aware client when there
 is a fault in the server.

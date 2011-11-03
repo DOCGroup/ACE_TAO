@@ -879,7 +879,7 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
   *os << fname << "::~" << lname << " (void)" << be_nl
       << "{" << be_nl << "}\n\n";
 
-  *os << "const char* " << be_nl
+  *os << "const char*" << be_nl
       << fname << "::tao_repository_id (void)" << be_nl
       << "{" << be_idt_nl
       <<   "return " << node->local_name ()
