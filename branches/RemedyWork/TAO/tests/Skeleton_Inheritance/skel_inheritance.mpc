@@ -4,9 +4,11 @@
 project(idl_one_gen): taoidldefaults {
   custom_only = 1
 
-  idlflags += -Wb,export_macro=SKEL_INHERITANCE_Export \
-              -Wb,export_include=skel_inheritance_1_export.h \
-              -Gxhst
+  idlflags += -Wb,stub_export_macro=SKELETON_INHERITANCE_STUB_1_Export \
+              -Wb,stub_export_include=skeleton_inheritance_stub_1_export.h \
+              -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_1_Export \
+              -Wb,skel_export_include=skeleton_inheritance_skel_1_export.h \
+              -Gxhst -Gxhsk
 
   IDL_Files {
     idl_1.idl
@@ -16,9 +18,11 @@ project(idl_one_gen): taoidldefaults {
 project(idl_two_gen): taoidldefaults {
   custom_only = 1
 
-  idlflags += -Wb,export_macro=SKEL_INHERITANCE_Export \
-              -Wb,export_include=skel_inheritance_2_export.h \
-              -Gxhst
+  idlflags += -Wb,stub_export_macro=SKELETON_INHERITANCE_STUB_2_Export \
+              -Wb,stub_export_include=skeleton_inheritance_stub_2_export.h \
+              -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_2_Export \
+              -Wb,skel_export_include=skeleton_inheritance_skel_2_export.h \
+              -Gxhst -Gxhsk
 
   IDL_Files {
     idl_2.idl
@@ -28,9 +32,11 @@ project(idl_two_gen): taoidldefaults {
 project(idl_three_gen): taoidldefaults {
   custom_only = 1
 
-  idlflags += -Wb,export_macro=SKEL_INHERITANCE_Export \
-              -Wb,export_include=skel_inheritance_3_export.h \
-              -Gxhst
+  idlflags += -Wb,stub_export_macro=SKELETON_INHERITANCE_STUB_3_Export \
+              -Wb,stub_export_include=skeleton_inheritance_stub_3_export.h \
+              -Wb,skel_export_macro=SKELETON_INHERITANCE_SKEL_3_Export \
+              -Wb,skel_export_include=skeleton_inheritance_skel_3_export.h \
+              -Gxhst -Gxhsk
 
   IDL_Files {
     idl_3.idl
@@ -40,6 +46,8 @@ project(idl_three_gen): taoidldefaults {
 project(stub_one): taolib {
   sharedname = stub_one
   after += idl_one_gen
+
+  dynamicflags += SKELETON_INHERITANCE_STUB_1_BUILD_DLL
 
   Source_Files {
     idl_1C.cpp
@@ -55,6 +63,7 @@ project(skel_one): taolib {
   libs += stub_one
 
   sharedname = skel_one
+  dynamicflags += SKELETON_INHERITANCE_SKEL_1_BUILD_DLL
 
   Source_Files {
     idl_1S.cpp
@@ -71,6 +80,8 @@ project(stub_two): taolib {
   sharedname = stub_two
   after += idl_two_gen
 
+  dynamicflags += SKELETON_INHERITANCE_STUB_2_BUILD_DLL
+
   Source_Files {
     idl_2C.cpp
   }
@@ -85,6 +96,7 @@ project(skel_two): taolib {
   libs += stub_two
 
   sharedname = skel_two
+  dynamicflags += SKELETON_INHERITANCE_SKEL_2_BUILD_DLL
 
   Source_Files {
     idl_2S.cpp
@@ -100,6 +112,8 @@ project(stub_three): taolib {
   sharedname = stub_three
   after += idl_three_gen
 
+  dynamicflags += SKELETON_INHERITANCE_STUB_3_BUILD_DLL
+
   Source_Files {
     idl_3C.cpp
   }
@@ -114,6 +128,7 @@ project(skel_three): taolib {
   libs += stub_three
 
   sharedname = skel_three
+  dynamicflags += SKELETON_INHERITANCE_SKEL_3_BUILD_DLL
 
   Source_Files {
     idl_3S.cpp
@@ -134,15 +149,11 @@ project(*Server): taoserver {
             stub_three skel_three
 
   Source_Files {
-    interface_1_i.cpp
-    interface_2_i.cpp
     interface_3_i.cpp
     server.cpp
   }
 
   Header_Files {
-    interface_1_i.h
-    interface_2_i.h
     interface_3_i.h
   }
   IDL_Files {

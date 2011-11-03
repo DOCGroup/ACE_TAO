@@ -56,8 +56,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      ACE_DEBUG ((LM_DEBUG, "Invoking operation 3\n"));
       CORBA::String_var if_result_3 = if_3->operation_3 ();
+      ACE_DEBUG ((LM_DEBUG, "Invoking operation 2\n"));
       CORBA::String_var if_result_2 = if_3->operation_2 ();
+      ACE_DEBUG ((LM_DEBUG, "Invoking operation 1\n"));
       CORBA::String_var if_result_1 = if_3->operation_1 ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - strings returned:\n\t<%C>\n\t<%C>\n\t<%C>\n",
