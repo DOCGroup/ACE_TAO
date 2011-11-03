@@ -28,7 +28,7 @@ namespace CIAO_Sender_Impl
                   "SENDER: hello_exec_i::set_point pointer"
                   "Strategy desired <%C>, but no collocation "
                   "because CIAO not build with  "
-                  "ccm_diect_collocation = 1.\n",
+                  "ccm_direct_collocation = 1.\n",
                   strat));
 #else
      if ((ACE_OS::strcmp("direct", strat) == 0) ||
