@@ -1,3 +1,8 @@
+Thu Nov 03 09:51:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        Fixed error in previous commit
+
 Thu Nov 03 08:45:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3531b_Regression/server.cpp:
