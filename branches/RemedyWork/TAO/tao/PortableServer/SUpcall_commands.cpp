@@ -3,6 +3,7 @@
 
 #include "tao/PortableServer/SUpcall_commands.h"
 #include "tao/PortableServer/Servant_Base.h"
+#include "tao/Object.h"
 
 void
 _is_a_Upcall_Command::execute (void)
@@ -23,6 +24,7 @@ _is_a_Upcall_Command::execute (void)
       arg_1);
 }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 _non_existent_Upcall_Command::execute (void)
 {
@@ -34,6 +36,20 @@ _non_existent_Upcall_Command::execute (void)
   retval =
     this->servant_-> _non_existent ();
 }
+
+# if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+void
+_get_component_Upcall_Command::execute (void)
+{
+  TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
+      this->operation_details_,
+      this->args_);
+
+  retval =
+    this->servant_-> _get_component ();
+}
+# endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 
 void
@@ -47,16 +63,5 @@ _repository_id_Upcall_Command::execute (void)
   retval =
     this->servant_-> _repository_id ();
 }
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
-
-void
-_get_component_Upcall_Command::execute (void)
-{
-//   TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-//     TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
-//       this->operation_details_,
-//       this->args_);
-
-//   retval =
-//     this->servant_-> _get_component ();
-}
