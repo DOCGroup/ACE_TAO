@@ -26,22 +26,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Upcall_Wrapper.h"
-#include "tao/PortableServer/SArg_Traits_T.h"
-#include "tao/PortableServer/Basic_SArguments.h"
-#include "tao/PortableServer/Special_Basic_SArguments.h"
-#include "tao/PortableServer/Fixed_Size_SArgument_T.h"
-#include "tao/PortableServer/Var_Size_SArgument_T.h"
-#include "tao/PortableServer/Object_SArg_Traits.h"
-#include "tao/PortableServer/UB_String_SArguments.h"
-#include "tao/PortableServer/get_arg.h"
+#include "tao/operation_details.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
