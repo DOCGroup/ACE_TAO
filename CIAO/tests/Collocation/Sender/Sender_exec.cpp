@@ -29,7 +29,7 @@ namespace CIAO_Sender_Impl
                   "Strategy desired <%C>, but no collocation "
                   "because CIAO not build with  "
                   "ccm_diect_collocation = 1.\n",
-                  start, (void *)&p));
+                  strat));
 #else
      if ((ACE_OS::strcmp("direct", strat) == 0) ||
          (ACE_OS::strcmp("best", strat) == 0))
