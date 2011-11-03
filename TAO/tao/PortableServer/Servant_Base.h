@@ -75,10 +75,12 @@ public:
                           void * servant_upcall,
                           void * servant);
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   static void _non_existent_skel (TAO_ServerRequest & req,
                                   void * servant_upcall,
                                   void * servant);
 
+# if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   static void _interface_skel (TAO_ServerRequest & req,
                               void * servant_upcall,
                               void * servant);
@@ -86,10 +88,11 @@ public:
   static void _component_skel (TAO_ServerRequest & req,
                               void * servant_upcall,
                               void * servant);
-
+# endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
   static void _repository_id_skel (TAO_ServerRequest & req,
                                   void * servant_upcall,
                                   void * servant);
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
   /// Returns the default POA for this servant.
   virtual PortableServer::POA_ptr _default_POA (void);

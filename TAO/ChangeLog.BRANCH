@@ -1,3 +1,13 @@
+Thu Nov  3 08:21:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/PortableServer/SUpcall_commands.h:
+        * tao/PortableServer/SUpcall_commands.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Used defines to enable/disable the new created
+          skeleton methods. Fixed compile issues regarding
+          inline files.
+
 Wed Nov  2 15:09:48 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Skeleton_Inheritance/client.cpp:
