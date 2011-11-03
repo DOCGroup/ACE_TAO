@@ -1,10 +1,10 @@
-# $Id$
+$Id$
 
 This is a test that exercises the birectional GIOP connection
 implementation in TAO. Start the server like this
 
 $ server -o <file.ior> -i <no_iterations>
-$ client -k file://<file.ior> -x 
+$ client -k file://<file.ior> -x
 
 The server starts up writing the IOR to the file. The client then
 starts up, creates its own object and passes the reference to the
@@ -16,4 +16,4 @@ connection the server would crash itself.
 To test the fix for bug 3282, run run_test_bug3282.pl or use the commands
 
 $ server -ORBEndpoint iiop://localhost -o <file.ior> -i <no_iterations>
-$ client -k file://<file.ior> -x 
+$ client -k file://<file.ior> -x

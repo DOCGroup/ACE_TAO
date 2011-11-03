@@ -1,18 +1,19 @@
-// $Id$
+$Id$
+
 ===========================================================================
 Directory: $TAO_ROOT/tests/CSD_Strategy_Tests/TP_Test_Static
 
 ===========================================================================
 This test shows the ThreadPool strategy can automatically apply to the poa
-via service configuration file static directive. 
+via service configuration file static directive.
 
-This simple test is a copy of TP_Test_1. The difference is the test 
-application does not need to create the TP_Strategy object and apply to the 
+This simple test is a copy of TP_Test_1. The difference is the test
+application does not need to create the TP_Strategy object and apply to the
 poa. A new TP_Strategy object is created during the initialization of the
-TP_Strategy_Factory service object and it will be automatically applied to 
-a poa. 
+TP_Strategy_Factory service object and it will be automatically applied to
+a poa.
 
-The application needs to include the following two files to force the 
+The application needs to include the following two files to force the
 TAO_CSD_ORB_Loader and TAO_CSD_TP_Strategy_Factory service objects register
 with the service repository before initializing the services specified in
 .conf file.
@@ -22,8 +23,8 @@ with the service repository before initializing the services specified in
 
 
 The service configuration file specifies the number of threads that
-the ThreadPool strategy have and also specify which poa the strategy should 
-apply to. We can specify multiple ThreadPool strategies and the poas via -CSDtp 
+the ThreadPool strategy have and also specify which poa the strategy should
+apply to. We can specify multiple ThreadPool strategies and the poas via -CSDtp
 option.
 
 e.g

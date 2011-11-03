@@ -1,17 +1,4 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/IDL_Test
-//
-// = FILENAME
-//    README
-//
-// = AUTHOR
-//    Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ============================================================================
+$Id$
 
 This test is a collection of IDL files that once caused IDL compiler
 or C++ compiler errors, plus a dummy main.cpp for the build. There is
@@ -27,7 +14,7 @@ are uncovered and fixed, new examples will be added to the suite, to
 ensure that the bugs do not recur.
 
 The -GA option has been added to the IDL compiler command line. This
-option generates the implementations of type codes and Any 
+option generates the implementations of type codes and Any
 insertion/extraction operators in a separate file with the
 extension *A.cpp. These files have been added to the build, to make
 sure that the option functions correctly for all the IDL types
@@ -48,7 +35,7 @@ that will then be compiled by the C++ compiler on your platform.
 
 To run the test, type 'main' at the command line. The generation of
 correct IOR prefixes in pragma.idl is checked in the body of main().
-The rest of the .idl files need only to build cleanly. To test the 
-client/server functionality of the various IDL types and operations, 
+The rest of the .idl files need only to build cleanly. To test the
+client/server functionality of the various IDL types and operations,
 see the test suite in ACE_wrappers/TAO/tests/Param_Test.
 

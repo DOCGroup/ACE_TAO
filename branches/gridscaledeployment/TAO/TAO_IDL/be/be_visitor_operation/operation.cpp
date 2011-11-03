@@ -168,8 +168,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (node->has_native ()) // native exists => no stub
     {
-      if (this->gen_raise_exception ("::CORBA::MARSHAL",
-                                     "") == -1)
+      if (this->gen_raise_exception ("::CORBA::MARSHAL", "") == -1)
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
@@ -195,16 +194,6 @@ be_visitor_operation::gen_stub_operation_body (
           << "::CORBA::Object::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
-
-      if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
-        {
-            *os << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
-                << be_idt_nl
-                << "{" << be_idt_nl
-                << intf->flat_name () << "_setup_collocation ();"
-                << be_uidt_nl
-                << "}" << be_uidt_nl << be_nl;
-        }
     }
 
   // Declare return type helper class.
@@ -291,13 +280,14 @@ be_visitor_operation::gen_stub_operation_body (
   *os << lname << "\"," << be_nl
       << len << "," << be_nl;
 
-  if (be_global->gen_direct_collocation() || be_global->gen_thru_poa_collocation ())
+  *os << "TAO::TAO_CO_NONE";
+  if (be_global->gen_direct_collocation())
     {
-      *os << "this->the" << intf->base_proxy_broker_name () << "_";
+      *os << " | TAO::TAO_CO_DIRECT_STRATEGY";
     }
-  else
+  if (be_global->gen_thru_poa_collocation())
     {
-      *os << "0";
+      *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
     }
 
   if (node->flags () == AST_Operation::OP_oneway)

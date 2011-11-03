@@ -13,7 +13,7 @@ namespace TAO
       int arg_number,
       const char *operation,
       size_t op_len,
-      Collocation_Proxy_Broker *p,
+      int collocation_opportunity,
       Invocation_Type type,
       Invocation_Mode mode)
     : target_ (target)
@@ -21,7 +21,7 @@ namespace TAO
     , number_args_  (arg_number)
     , operation_ (operation)
     , op_len_ (op_len)
-    , cpb_ (p)
+    , collocation_opportunity_ (collocation_opportunity)
     , type_ (type)
     , mode_ (mode)
   {

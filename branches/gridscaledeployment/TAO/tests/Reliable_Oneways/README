@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Reliable_Oneways Test README File
 
 	A regression test for reliable oneways.  The test verifies

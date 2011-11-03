@@ -105,7 +105,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Codeset_Manager_Factory_Base.cpp
     Codeset_Translator_Base.cpp
     Collocated_Invocation.cpp
-    Collocation_Proxy_Broker.cpp
     Collocation_Resolver.cpp
     Connect_Strategy.cpp
     Connection_Handler.cpp
@@ -252,7 +251,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     RequestInterceptor_Adapter.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
-    Resume_Handle_Deferred.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
@@ -361,7 +359,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Codeset_Manager_Factory_Base.h
     Codeset_Translator_Base.h
     Collocated_Invocation.h
-    Collocation_Proxy_Broker.h
     Collocation_Resolver.h
     Collocation_Strategy.h
     Condition.h
@@ -555,7 +552,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     RequestInterceptor_Adapter.h
     Resource_Factory.h
     Resume_Handle.h
-    Resume_Handle_Deferred.h
     Seq_Out_T.h
     Seq_Var_T.h
     Sequence_T.h

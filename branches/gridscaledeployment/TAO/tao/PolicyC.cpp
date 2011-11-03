@@ -368,12 +368,6 @@ TAO::Objref_Traits<CORBA::Policy>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-
 // TAO_IDL - Generated from
 // be\be_visitor_operation/operation_cs.cpp:78
 
@@ -384,11 +378,6 @@ CORBA::PolicyType CORBA::Policy::policy_type (
   if (!this->is_evaluated ())
     {
       ::CORBA::Object::tao_object_initialize (this);
-    }
-
-  if (this->the_TAO_Policy_Proxy_Broker_ == 0)
-    {
-      CORBA_Policy_setup_collocation ();
     }
 
   TAO::Arg_Traits< ::CORBA::PolicyType>::ret_val _tao_retval;
@@ -404,7 +393,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       1,
       "_get_policy_type",
       16,
-      this->the_TAO_Policy_Proxy_Broker_
+      TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
     );
 
   _tao_call.invoke (0, 0);
@@ -424,11 +413,6 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       ::CORBA::Object::tao_object_initialize (this);
     }
 
-  if (this->the_TAO_Policy_Proxy_Broker_ == 0)
-    {
-      CORBA_Policy_setup_collocation ();
-    }
-
   TAO::Arg_Traits< ::CORBA::Policy>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -442,7 +426,7 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       1,
       "copy",
       4,
-      this->the_TAO_Policy_Proxy_Broker_
+      TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
     );
 
   _tao_call.invoke (0, 0);
@@ -462,11 +446,6 @@ void CORBA::Policy::destroy (
       ::CORBA::Object::tao_object_initialize (this);
     }
 
-  if (this->the_TAO_Policy_Proxy_Broker_ == 0)
-    {
-      CORBA_Policy_setup_collocation ();
-    }
-
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -480,26 +459,14 @@ void CORBA::Policy::destroy (
       1,
       "destroy",
       7,
-      this->the_TAO_Policy_Proxy_Broker_
+      TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
     );
 
   _tao_call.invoke (0, 0);
 }
 
 CORBA::Policy::Policy (void)
- : the_TAO_Policy_Proxy_Broker_ (0)
 {
-  this->CORBA_Policy_setup_collocation ();
-}
-
-void
-CORBA::Policy::CORBA_Policy_setup_collocation ()
-{
-  if (::CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer)
-    {
-      this->the_TAO_Policy_Proxy_Broker_ =
-        ::CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer (this);
-    }
 }
 
 CORBA::Policy::~Policy (void)
@@ -514,33 +481,19 @@ CORBA::Policy::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 CORBA::Policy_ptr
-CORBA::Policy::_narrow (
-    CORBA::Object_ptr _tao_objref
-
-  )
+CORBA::Policy::_narrow (CORBA::Object_ptr _tao_objref)
 {
   return
     TAO::Narrow_Utils<Policy>::narrow (
         _tao_objref,
-        "IDL:omg.org/CORBA/Policy:1.0",
-        CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
-
-      );
+        "IDL:omg.org/CORBA/Policy:1.0");
 }
 
 CORBA::Policy_ptr
-CORBA::Policy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
-
-  )
+CORBA::Policy::_unchecked_narrow (CORBA::Object_ptr _tao_objref)
 {
   return
-    TAO::Narrow_Utils<Policy>::unchecked_narrow (
-        _tao_objref,
-        "IDL:omg.org/CORBA/Policy:1.0",
-        CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
-
-      );
+    TAO::Narrow_Utils<Policy>::unchecked_narrow (_tao_objref);
 }
 
 CORBA::Policy_ptr
@@ -722,9 +675,7 @@ CORBA::Boolean operator>> (
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
-        obj.in (),
-        CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
-      );
+        obj.in ());
 
   return 1;
 }

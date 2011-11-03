@@ -178,7 +178,6 @@ Worker::run_test (void)
       return;
     }
 
-
   CORBA::Boolean r =
     server->test_is_a ("IDL:Foo:1.0");
 

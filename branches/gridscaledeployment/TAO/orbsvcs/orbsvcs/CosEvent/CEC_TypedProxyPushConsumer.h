@@ -146,7 +146,7 @@ private:
  * @brief A Guard for the TypedProxyPushConsumer reference count
  *
  * This is a helper class used in the implementation of
- * TypedProxyPushConumer.  It provides a Guard mechanism to increment
+ * TypedProxyPushConsumer.  It provides a Guard mechanism to increment
  * the reference count on the proxy, eliminating the need to hold
  * mutexes during long operations.
  */

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 The problem that we test here is if there is an attempt to forward from
 a collocated location to a remote one then object's stub becomes partially

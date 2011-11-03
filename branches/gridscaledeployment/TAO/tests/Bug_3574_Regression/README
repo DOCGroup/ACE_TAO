@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 Description:
 - sequence of 100 elements, means buffer allocation of 100 elements

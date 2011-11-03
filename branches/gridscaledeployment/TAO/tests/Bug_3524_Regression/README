@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 According to corba C++ mapping if bounds for IDL-bounded strings are violated
 then BAD_PARAM has to be thrown. Currently MARSHAL is thrown.

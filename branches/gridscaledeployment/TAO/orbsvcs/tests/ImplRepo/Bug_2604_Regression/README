@@ -1,3 +1,5 @@
+$Id$
+
 Purpose:
         This test demonstrates bug 2604 (see Bugzilla for details), which
         involves per_client activation failures with the ImR.

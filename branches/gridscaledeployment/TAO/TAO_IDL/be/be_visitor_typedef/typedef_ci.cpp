@@ -170,7 +170,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
 
       // alloc method
       *os << be_nl
-          << "ACE_INLINE " << be_nl
+          << "ACE_INLINE" << be_nl
           << tdef->name () << "_slice *" << be_nl;
       *os << tdef->name () << "_alloc (void)" << be_nl;
       *os << "{" << be_idt_nl;
@@ -178,7 +178,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << "}" << be_nl_2;
 
       // dup method
-      *os << "ACE_INLINE " << be_nl
+      *os << "ACE_INLINE" << be_nl
           << tdef->name () << "_slice *" << be_nl;
       *os << tdef->name () << "_dup (" << be_idt << be_idt_nl
           << "const " << tdef->name ()

@@ -2,9 +2,9 @@ $Id$
 
 Chapter 21 example.
 ______________________________________________________________________________
-This example been taken from the book "Advanced CORBA Programming with C++" 
-by Michi Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading, 
-MA.  To make the examples work with TAO, some minor modifications to the 
+This example been taken from the book "Advanced CORBA Programming with C++"
+by Michi Henning and Steve Vinoski. Copyright 1999. Addison-Wesley, Reading,
+MA.  To make the examples work with TAO, some minor modifications to the
 source code have been made, with permission, by Mike Moran <mm4@cs.wustl.edu>.
 All of these changes are documented in the file CHANGES, in this directory.
 ______________________________________________________________________________
@@ -12,26 +12,26 @@ ______________________________________________________________________________
 
 Summary:
     This is example modifies the climate control system of chapter 12 to have
-    a multithreaded server.  The client included here has been taken 
+    a multithreaded server.  The client included here has been taken
     from chapter 12.
 
 Building:
-    This example must be built with native C++ exceptions, and with an 
-    ACE/TAO build with exceptions.  Make sure to use TAO_FLAG Ge=0 to 
-    ensure that the IDL generated code uses c++ exceptions rather than 
+    This example must be built with native C++ exceptions, and with an
+    ACE/TAO build with exceptions.  Make sure to use TAO_FLAG Ge=0 to
+    ensure that the IDL generated code uses c++ exceptions rather than
     creating CORBA_Environment variables.
 
-    With GNU make, simply type 
+    With GNU make, simply type
      % make exceptions=1
     to create the executable server and client.
 
 server:
-    The server takes no parameters nor command line options and returns an 
+    The server takes no parameters nor command line options and returns an
     IOR to stdout.  The server then waits infinatly for clients requests.
 
 client:
-    The client takes an IOR from the command line, narrows this to a 
-    controller reference, makes several remote calls on this controller, and 
+    The client takes an IOR from the command line, narrows this to a
+    controller reference, makes several remote calls on this controller, and
     finally terminates.
 
 run_test.pl:

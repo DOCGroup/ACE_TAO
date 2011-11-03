@@ -3,7 +3,7 @@ $Id$
 TypeCodeFactory -------
 
 This library is used by the Interface Repository and
-by CORBA::ORB to create typecodes. To minimize 
+by CORBA::ORB to create typecodes. To minimize
 dependencies and footprint, this library need not be
 built or linked by an application. However, if an
 application needs to call CORBA::ORB::create_*_tc(),
@@ -16,11 +16,11 @@ the IFR will link the TypeCodeFactory library in its
 own build.
 
 Since the TypeCodeFactory must deal with Interface
-Repository data types, it depends on the 
+Repository data types, it depends on the
 TAO_IFR_Client library.
 
 Support has now been added for valuetypes, components,
-homes, eventtypes and recursive types. For an example 
+homes, eventtypes and recursive types. For an example
 of how to create a typecode for a recursive type, see
 the OMG CORBA specification section on typecode creation
 (in version 3.0, section 4.11.3).

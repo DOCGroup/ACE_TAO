@@ -1,7 +1,7 @@
-# $Id$
+$Id$
 
 This test verifies that CodecFactory and CDR encapsulation Codec
-support is working properly. 
+support is working properly.
 
 It does so by encoding a structure into an octet sequence, decoding
 into a new instance of the structure from the octet sequence, and then

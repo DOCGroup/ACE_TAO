@@ -389,7 +389,7 @@ be_visitor_servant_svh::gen_non_type_specific (void)
           << "connect (const char * name, ::CORBA::Object_ptr connection);";
 
       os_ << be_nl_2
-          << "virtual ::CORBA::Object_ptr " << be_nl
+          << "virtual ::CORBA::Object_ptr" << be_nl
           << "disconnect (const char * name, ::Components::Cookie * ck);";
     }
 

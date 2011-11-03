@@ -46,20 +46,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   AST_Component *c = AST_Component::narrow_from_decl (node);
 
-  if (c != 0)
-    {
-      // Forward class declarations for components.
-      *os << be_nl_2
-          << "class " << node->base_proxy_impl_name ()
-          << ";" << be_nl
-          << "class " << node->remote_proxy_impl_name ()
-          << ";" << be_nl
-          << "class " << node->base_proxy_broker_name ()
-          << ";" << be_nl
-          << "class " << node->remote_proxy_broker_name ()
-          << ";";
-    }
-
   // Now generate the class definition.
   *os << be_nl_2
       << "class " << be_global->stub_export_macro ()
@@ -183,18 +169,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";
     }
 
-  if (! node->is_local () &&
-        (be_global->gen_direct_collocation()
-         || be_global->gen_thru_poa_collocation ()))
-    {
-      // Add the Proxy Broker member variable.
-      *os << be_uidt_nl << be_nl
-          << "private:" << be_idt_nl
-          << "TAO::Collocation_Proxy_Broker *"
-          << "the" << node->base_proxy_broker_name ()
-          << "_;";
-    }
-
   *os << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl;
 
@@ -208,18 +182,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           *os << "// Concrete interface only." << be_nl
               << node->local_name () << " (void);"
               << be_nl_2;
-        }
-
-      if (be_global->gen_direct_collocation()
-          || be_global->gen_thru_poa_collocation ())
-        {
-          *os << "// These methods traverse the "
-              << "inheritance tree and set the"
-              << be_nl
-              << "// parents piece of the given class in the right mode."
-              << be_nl
-              << "virtual void " << node->flat_name ()
-              << "_setup_collocation (void);" << be_nl_2;
         }
     }
 
@@ -263,8 +225,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Friends declarations, component only.
       *os << be_nl_2
-          << "friend class " << node->remote_proxy_impl_name ()
-          << ";" << be_nl
           << "friend class " << node->direct_proxy_impl_name ()
           << ";";
     }
@@ -296,9 +256,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Don't support smart proxies for local interfaces.
   if (! node->is_local ())
     {
-      // List that generates proxy broker factory function pointer.
-      be_global->non_local_interfaces.enqueue_tail (node);
-
       if (be_global->gen_smart_proxies ())
         {
           *os << be_nl_2;

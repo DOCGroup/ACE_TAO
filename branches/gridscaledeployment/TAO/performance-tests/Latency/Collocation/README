@@ -1,10 +1,12 @@
 /**
 
+$Id$
+
 @page Collocation Performance Test README File
 
 	This test estimates the minimum latency for a twoway
-request when both client and server are collocated.  The test uses a single 
-threaded client and server, and configures the ORB to eliminate common sources 
+request when both client and server are collocated.  The test uses a single
+threaded client and server, and configures the ORB to eliminate common sources
 of overhead, such as locking. Further, this test uses the default collocation
 strategy in TAO, i.e. "thru_poa".
 
@@ -22,6 +24,6 @@ network.
 $ ./run_test.pl
 
 	the script returns 0 if the test was successful, and prints
-out the performance numbers. 
+out the performance numbers.
 
 */

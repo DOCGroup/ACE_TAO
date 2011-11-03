@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Connect_Strategy Test README File
 
 	The simplest possible test for connection strategies in TAO.
@@ -8,7 +10,7 @@ be argued that it is in fact too simple to make any conclusions based
 on the results from this test.
 
 	Please refrain from "improving", extending or expanding this
-test, if you need to change 
+test, if you need to change
 
 	To run the test use the run_test.pl script:
 

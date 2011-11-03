@@ -1,10 +1,10 @@
-// $Id$
+$Id$
 
 This example is a copy of the $TAO_ROOT/test/BiDirerectional test
 but it does not use ACE_TRY/ENVIRONMENT macros.
 
 This example exercises the birectional GIOP connection
-implementation in TAO. 
+implementation in TAO.
 
 Start like this:
 

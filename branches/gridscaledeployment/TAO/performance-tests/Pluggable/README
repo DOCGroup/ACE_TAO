@@ -5,8 +5,8 @@ various parts of the ORB, but mostly the emphasis is on the
 contribution due to the pluggable protocols code.  So far, the
 output is only to the screen, and is created using the ACE
 Timeprobe class. At various points in the ORB code and in this
-test code, an ACE Timeprobe is inserted. When this point is 
-passed in the execution, a timestamp is taken and added to a 
+test code, an ACE Timeprobe is inserted. When this point is
+passed in the execution, a timestamp is taken and added to a
 table. When the test finishes, the relative times are output,
 START being the first, or zero, entry, and the following
 values are the offset in microseconds. Each value has a label

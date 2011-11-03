@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page AMI Latency Test README File
 
 	This test tries to estimate the minimum latency for a AMI

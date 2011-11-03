@@ -31,7 +31,7 @@ services. To do this run:
 ImplRepo_Service -c install
 ImR_Activator -c install
 
-If you want to reinstall or change the installed settings then you 
+If you want to reinstall or change the installed settings then you
 must first use:
 
 ImplRepo_Service -c remove
@@ -53,11 +53,11 @@ copy %tao_root%\orbsvcs\ImplRepo_Service\*.exe .\
 ImR_Activator -c install -x activator.xml -t 60 -d 0 -orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService
 ImplRepo_Service -c install -d 0 -orbendpoint iiop://:8888
 
-* Start both services. 
+* Start both services.
 net start taoimrlocator
 net start taoimractivator
 
-* Register a server 
+* Register a server
 cd %tao_root%\orbsvcs\tests\ImplRepo
 %tao_root%\orbsvcs\ImplRepo_service\tao_imr add airplane_server -orbuseimr 1 -orbinitref ImplRepoService=corbaloc::localhost:8888/ImplRepoService
 
@@ -70,6 +70,6 @@ airplane_client -k file://airplane.ior
 airplane_client -k corbaloc::localhost:8888/airplane_server
 
 
-More information about the Implementation Repository can be found in 
+More information about the Implementation Repository can be found in
 TAO/docs.
 

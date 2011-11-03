@@ -1,5 +1,5 @@
-# $Id$
+$Id$
 
-	A little test to check the the ORB can handle server and
+A little test to check the the ORB can handle server and
 client crashes.  It is a bit tricky to run so better check the
 run_test.pl script for details.

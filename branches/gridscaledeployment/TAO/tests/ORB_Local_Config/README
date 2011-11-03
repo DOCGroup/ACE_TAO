@@ -1,4 +1,4 @@
-# $Id$
+$Id$
 
 This is a collection of tests for the refactoring of the Service Configurator.
 The following executables are self-sufficient test suites:

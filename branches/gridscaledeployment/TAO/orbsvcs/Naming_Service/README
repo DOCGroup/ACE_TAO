@@ -1,4 +1,4 @@
-// README,v 1.19 2001/02/02 20:21:38 schmidt Exp
+$Id$
 
 This directory contains files that implement a server for the TAO
 Naming Service.  In addition, it contains files that run the TAO
@@ -81,21 +81,21 @@ The following describes how to run the TAO Naming Service.
                 timing out and throwing a 'Cannot proceed' exception
                 to the client. If no value is set this will never occur.
 
-        -d 
+        -d
                Provides Naming Service specific debug information. By default
-               no diagnostics are given. 
+               no diagnostics are given.
 
         -u directory
                Use a flat-file persistence implementation that stores object
-               reference information in a file per context. Each context file 
+               reference information in a file per context. Each context file
                is placed in the directory specified.
-        
+
         -r directory
                Use redundant flat-file persistnece; same as the -u option,
                except more than one instance of the TAO Naming Service server
-               can run, each using the same set of disk files, to achieve a 
-               degree of fault tolerence (as long as directory is accessible 
-               to both servers). 
+               can run, each using the same set of disk files, to achieve a
+               degree of fault tolerence (as long as directory is accessible
+               to both servers).
 
 
 3. Environment Variables

@@ -1,28 +1,30 @@
+$Id$
+
 Test Description:
 
-The test consists of several processes and the usual run_test.pl script. 
+The test consists of several processes and the usual run_test.pl script.
 
-controller.exe -- This is a simple corba wrapper around the ServiceConfigurator 
-                  which takes -c <cmd> and -r options to run a command and 
-                  reload the conf file respectively. 
+controller.exe -- This is a simple corba wrapper around the ServiceConfigurator
+                  which takes -c <cmd> and -r options to run a command and
+                  reload the conf file respectively.
 
-combined_service.exe -- It combines the tao imr locator, activator, and a dynamic 
-                        server in a single process. You can use any service 
-                        configurator command line options, and it also writes 
-                        out a combined.ior file that can be use d with the controller above. 
+combined_service.exe -- It combines the tao imr locator, activator, and a dynamic
+                        server in a single process. You can use any service
+                        configurator command line options, and it also writes
+                        out a combined.ior file that can be use d with the controller above.
 
-test_server.exe -- This is a simple tao server that exposes two imr-ified objects 
-                   called TestObject1 and TestObject2. You must start it with 
-                   -orbuseimr 1 as usual. 
+test_server.exe -- This is a simple tao server that exposes two imr-ified objects
+                   called TestObject1 and TestObject2. You must start it with
+                   -orbuseimr 1 as usual.
 
-dynserver.dll -- This is the same server as above, except for use with the ServiceConfigurator. 
-                 It exposes DynObject1 and DynObject2. This program is not currently used as 
+dynserver.dll -- This is the same server as above, except for use with the ServiceConfigurator.
+                 It exposes DynObject1 and DynObject2. This program is not currently used as
                  part of the run_test.pl
 
-test.exe -- This is a simple client that invokes the test() operation on the Test object. 
-            Start it with -orbinitref Test=... It can be used against any of the 
-            four objects above. 
+test.exe -- This is a simple client that invokes the test() operation on the Test object.
+            Start it with -orbinitref Test=... It can be used against any of the
+            four objects above.
 
-There are also comments within the run_test.pl that describe the 
-test and expected results at various stages. 
+There are also comments within the run_test.pl that describe the
+test and expected results at various stages.
 

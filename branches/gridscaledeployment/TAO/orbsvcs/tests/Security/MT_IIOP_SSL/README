@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page MT_IIOP_SSL Test README File
 
 	This is a stress test for the IIOP_SSL features.  This test should
@@ -17,8 +19,8 @@ $ ./run_test.pl
 
 	the script returns 0 if the test was successful.
 
-@NOTE: 
-       
+@NOTE:
+
        This test links *and* loads the SSLIOP library. They are needed
 due to the way the test is setup.
 

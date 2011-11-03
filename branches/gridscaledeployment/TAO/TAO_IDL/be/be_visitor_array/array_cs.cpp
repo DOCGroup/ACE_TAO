@@ -154,7 +154,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "}" << be_nl_2;
 
   // copy method.
-  *os << "void " << be_nl;
+  *os << "void" << be_nl;
   *os << fname << "_copy (" << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
       << "const " << fname << "_slice *_tao_from)" << be_uidt

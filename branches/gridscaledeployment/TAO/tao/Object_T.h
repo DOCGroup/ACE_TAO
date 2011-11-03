@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/Versioned_Namespace.h"
+#include "tao/Collocation_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,11 +36,6 @@ namespace CORBA
 
 namespace TAO
 {
-  class Collocation_Proxy_Broker;
-
-  typedef
-    Collocation_Proxy_Broker * (* Proxy_Broker_Factory)(CORBA::Object_ptr);
-
   template<typename T>
   class Narrow_Utils
   {
@@ -47,15 +43,10 @@ namespace TAO
     typedef T *T_ptr;
 
     static T_ptr narrow (CORBA::Object_ptr,
-                         const char *repo_id,
-                         Proxy_Broker_Factory);
+                         const char *repo_id);
 
     /// Version used the operators.
-    static T_ptr unchecked_narrow (CORBA::Object_ptr, Proxy_Broker_Factory);
-
-    static T_ptr unchecked_narrow (CORBA::Object_ptr,
-                                   const char *repo_id,
-                                   Proxy_Broker_Factory);
+    static T_ptr unchecked_narrow (CORBA::Object_ptr);
 
   private:
     // Code for lazily evaluated IORs.

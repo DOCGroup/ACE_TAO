@@ -42,7 +42,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "ACE_INLINE" << be_nl;
@@ -65,7 +65,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
     }
 
 
-  *os << "ACE_INLINE const char* " << be_nl
+  *os << "ACE_INLINE const char*" << be_nl
       << node->name () << "::_tao_obv_static_repository_id ()" << be_nl
       <<  "{" << be_idt_nl
       <<     "return \"" << node->repoID () << "\";" << be_uidt_nl

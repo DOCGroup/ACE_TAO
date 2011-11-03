@@ -39,21 +39,16 @@ CORBA::Policy::Policy (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
-    TAO_ORB_Core *oc
-  )
-  : ::CORBA::Object (objref, _tao_collocated, servant, oc),
-    the_TAO_Policy_Proxy_Broker_ (0)
+    TAO_ORB_Core *oc)
+  : ::CORBA::Object (objref, _tao_collocated, servant, oc)
 {
-  this->CORBA_Policy_setup_collocation ();
 }
 
 ACE_INLINE
 CORBA::Policy::Policy (
     IOP::IOR *ior,
-    TAO_ORB_Core *oc
-  )
-  : ::CORBA::Object (ior, oc),
-    the_TAO_Policy_Proxy_Broker_ (0)
+    TAO_ORB_Core *oc)
+  : ::CORBA::Object (ior, oc)
 {
 }
 

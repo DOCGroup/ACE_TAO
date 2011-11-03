@@ -1,3 +1,5 @@
+$Id$
+
 This application explains the usage scenario, where new POAs will have
 to be created.
 
@@ -8,8 +10,8 @@ Run this example as follows.
 Comments :
 =========
 
- - Creates the POA hierarchy as given in the header of the NewPOA.cpp 
+ - Creates the POA hierarchy as given in the header of the NewPOA.cpp
    file.
-        
+
  - Prints out names of all the POAs.
 

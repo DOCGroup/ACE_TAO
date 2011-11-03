@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test is intended to demonstrate the ORB-specific configuration
 feature. It excesses two basic scenarios, in which a client and a

@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This is a regression test for TAO#3276.
 It tests whether nil forward requests are handled correctly.

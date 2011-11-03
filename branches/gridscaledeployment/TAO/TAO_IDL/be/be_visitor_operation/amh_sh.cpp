@@ -130,7 +130,7 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
     const char *skel_prefix
   )
 {
-  *os << be_nl_2 << "// TAO_IDL - Generated from " << be_nl
+  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "static void " << skel_prefix

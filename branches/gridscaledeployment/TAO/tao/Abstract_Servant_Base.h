@@ -61,9 +61,7 @@ typedef void (*TAO_Skeleton)(
 
 typedef void (*TAO_Collocated_Skeleton)(
     TAO_Abstract_ServantBase *,
-    TAO::Argument **,
-    int
-  );
+    TAO::Argument **);
 
 class TAO_Export TAO_Abstract_ServantBase
 {
@@ -124,6 +122,15 @@ public:
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy s,
                      const size_t length = 0) = 0;
+
+  virtual void _collocated_dispatch (::CORBA::Object_ptr obj,
+                                     ::CORBA::Object_out forward_obj,
+                                     bool &is_forwarded,
+                                     TAO::Argument ** args,
+                                     int num_args,
+                                     const char * op,
+                                     size_t op_len,
+                                     TAO::Collocation_Strategy strategy) = 0;
 
 protected:
 

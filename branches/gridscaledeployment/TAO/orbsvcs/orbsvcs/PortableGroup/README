@@ -12,7 +12,7 @@ For examples on how to use MIOP, see $TAO_ROOT/orbsvcs/tests/Miop.
 Compilation Note:
 
 The PortableGroup library requires the CosNaming library due to references
-to it in the IDL from the MIOP specification.  It is not really used in 
+to it in the IDL from the MIOP specification.  It is not really used in
 actual implementation.
 
 Implementation Notes:
@@ -26,14 +26,14 @@ to the final MIOP specification.  The following are current limitations:
 
   2.  Disassociating a group reference from a servant is not implemented.
       If interested in fixing this, be aware of the race conditions if a
-      servant disassociates during an upcall.  The TAO event services all 
+      servant disassociates during an upcall.  The TAO event services all
       have code to handle this issue.
 
   3.  Clients must call _unchecked_narrow to narrow any group references
       since a multicast group manager isn't supported yet (and UIPMC does
       not support twoway invocations)
 
-  4.  TAO does not have a multicast group manager, so groups must be 
+  4.  TAO does not have a multicast group manager, so groups must be
       assigned by creating a MIOP CORBALOC formatted reference.  See
       the tests or the MIOP specification for example group references.
 

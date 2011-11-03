@@ -51,7 +51,6 @@ namespace TAO
   class TAO_PortableServer_Export Direct_Collocation_Upcall_Wrapper
   {
   public:
-
     /// Perform the upcall
     void upcall (
       CORBA::Object_ptr obj,

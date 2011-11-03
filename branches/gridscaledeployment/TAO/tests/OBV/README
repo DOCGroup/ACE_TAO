@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 The following TAO applications test and illustate various Object
 By Value (OBV or valuetypes) functionality and their usage scenarios.
@@ -9,7 +9,7 @@ By Value (OBV or valuetypes) functionality and their usage scenarios.
 		of valuetypes inside CORBA Any type.
 
 	. Factory
-	
+
 	        The example tests OBV factory construct.
 
         . Forward

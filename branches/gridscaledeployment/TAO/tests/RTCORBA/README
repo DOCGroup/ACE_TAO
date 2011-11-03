@@ -5,7 +5,7 @@ for features defined in the RT-CORBA specification. Tests which exercise
 TAO-specific RT features can be found in $TAO_ROOT/performance-tests/RTCorba.
 OMG Real-time CORBA specification is available at:
 http://cgi.omg.org/cgi-bin/doc?ptc/99-05-03 (or check the OMG website
-for a more recent version).  
+for a more recent version).
 
 More information on TAO's implementation of RT-CORBA 1.0 specification
 is available at:
@@ -29,7 +29,7 @@ includes the following:
           Test for RTCORBA::ClientProtocol policy.
 
         . Collocation
-          
+
           Test for collocation when using thread pools and lanes.
 
         . Destroy_Thread_Pool
@@ -54,7 +54,7 @@ includes the following:
         . ORB_init
 
           Test for creation and destruction of multiple RT ORBs.
-          
+
         . Persistent_IOR
 
           Test for -ORBEndpoint option. Also makes sure that user
@@ -94,5 +94,5 @@ includes the following:
           Test for RTCORBA::ServerProtocol policy.
 
         . Thread_Pool
-        
+
           Tests the creation and use of thread pools.

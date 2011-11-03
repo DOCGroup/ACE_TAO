@@ -103,8 +103,7 @@ TAO::Any_Impl::_remove_ref (void)
 }
 
 void
-TAO::Any_Impl::_tao_decode (TAO_InputCDR &
-                            )
+TAO::Any_Impl::_tao_decode (TAO_InputCDR &)
 {
   throw ::CORBA::NO_IMPLEMENT ();
 }

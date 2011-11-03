@@ -1,14 +1,12 @@
-#
-# $Id$
-#
+$Id$
 
-This test verifies that a NULL cipher may be used. Sometime between 
+This test verifies that a NULL cipher may be used. Sometime between
 openssl release 0.9.7a and 0.9.8g, openssl changed the way it evaluated
 cipher strings so that "DEFAULT:eNULL" no longer allowed use of a NULL
 cipher. The correction is to have the SSLIOP Factory use "ALL:eNULL" as
 the cipher string when -SSLNoProtection is used on the server side.
 
-The test is a simple invocation, with qop and trust policies set to 
+The test is a simple invocation, with qop and trust policies set to
 force the use of a NULL cipher.
 
 A failure is indicated by the server reporting an ssl handshake error.

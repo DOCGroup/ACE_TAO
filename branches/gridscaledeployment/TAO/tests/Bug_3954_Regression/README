@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page Hello Test README File
 
 Test whether wait strategy mt_noupcall works with just basic hello server

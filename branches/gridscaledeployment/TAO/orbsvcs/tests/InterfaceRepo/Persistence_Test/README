@@ -8,8 +8,8 @@ two functions: populate() and query().
 
 To build this test, the TAO library, the TypeCodeFactory
 library, the Interface Repository (the last two found in
-TAO/orbsvcs/IFR_Service), must be previously built. In addition, 
-the Interface Repository requires the TAO_Svc_Utils library in 
+TAO/orbsvcs/IFR_Service), must be previously built. In addition,
+the Interface Repository requires the TAO_Svc_Utils library in
 TAO/orbsvcs/orbsvcs.
 
 It is far easier to run the test with the provided Perl script
@@ -20,7 +20,7 @@ run_test.pl, but to do it by hand, first start the IFR with
 
 Then execute the test code with
 
-Persistence_Test 
+Persistence_Test
 
 This will populate the IFR with a few IFR objects.
 After the test finishes, stop the IFR. Then start it again
@@ -43,7 +43,7 @@ The query run of the test code will also destroy all IFR objects that were
 created - the repository will be left empty except for the primitive kinds
 which are always there (and cannot be destroyed).
 
-If for some reason IP multicast is not available or enabled on your platform, 
+If for some reason IP multicast is not available or enabled on your platform,
 then add
 
  -ORBInitRef InterfaceRepository=file://if_repo.ior
@@ -63,7 +63,7 @@ destroy() call(s) at the end of the function were not exectuted.
 Before running the test again, the Interface Repository process
 should be stopped and restarted to avoid a BAD_PARAM exception.
 
-More information about the Interface Repository can be found in 
+More information about the Interface Repository can be found in
 TAO/docs/releasenotes.index.html.
 
 -Jeff Parsons <parsons@cs.wustl.edu>

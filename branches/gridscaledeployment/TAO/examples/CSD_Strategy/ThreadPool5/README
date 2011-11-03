@@ -1,8 +1,8 @@
-# $Id$
+$Id$
 
 Description:
 
-This test is a combination of other tests and has also added some 
+This test is a combination of other tests and has also added some
 other test cases such as cancel_servant. It uses the command
 line options for the number of orb threads, number of servants,
 collocated test options, etc.
@@ -18,15 +18,15 @@ $ ./run_test.pl
 
 $ ./run_test.pl collocated
 
-        This runs the collocated test. 
+        This runs the collocated test.
 
-        The server application creates one servant, runs one orb 
-        thread, runs two custom dispatching threads and one client 
+        The server application creates one servant, runs one orb
+        thread, runs two custom dispatching threads and one client
         thread to invoke the operations.
 
-        Running two custom dispatching threads instead of one is 
+        Running two custom dispatching threads instead of one is
         required to avoid deadlock.
-  
+
 $ ./run_test.pl multiple_servants
 
         This test is similar to the "ThreadPool2" test.
@@ -41,7 +41,7 @@ $ ./run_test.pl cancel_servant
         cancelled when a servant is deactivated.
 
         The client invokes multiple two-way operations and catches the
-        OBJECT_NOT_EXIST or NO_IMPLEMENTATION exception after the servant 
+        OBJECT_NOT_EXIST or NO_IMPLEMENTATION exception after the servant
         is deactivated - this is what it is supposed to do - the exceptions
         are expected.
 

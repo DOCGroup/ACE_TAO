@@ -1,4 +1,4 @@
-$ID$
+$Id$
 
 This example implements and tests runs a simple logging service using
 TAO.  You can either run the client and server as seperate processes
@@ -20,10 +20,10 @@ in the run_test.pl script.
 The client program will generate 4 logging messages which will be
 logged to the screen. The first message will be in the "verbose_lite"
 format. The rest will be fully verbose messages. Successful output is:
-LM_DEBUG@::log() test (1) 
-Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_EMERGENCY@::log() test (2) 
-Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_INFO@::logv() test (3) 
-Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_EMERGENCY@::log2() test (4) 
+LM_DEBUG@::log() test (1)
+Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_EMERGENCY@::log() test (2)
+Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_INFO@::logv() test (3)
+Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_EMERGENCY@::log2() test (4)
 
 server: ------
 

@@ -1,3 +1,5 @@
+$Id$
+
 This module is used as a test for IDL interfaces that inherit from
 multiple interfaces.  The "diamond of death" inheritance hierarchy is
 used in this example where there is a common base class (A), two

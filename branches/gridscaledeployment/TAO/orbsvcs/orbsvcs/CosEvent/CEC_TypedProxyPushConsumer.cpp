@@ -380,7 +380,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
     return;
 
   this->locked_ = 1;
-  this->refcount_++;
+  ++this->refcount_;
 }
 
 TAO_CEC_TypedProxyPushConsumer_Guard::

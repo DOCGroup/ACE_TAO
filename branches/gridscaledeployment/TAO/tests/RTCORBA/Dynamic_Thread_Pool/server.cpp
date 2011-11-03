@@ -219,7 +219,7 @@ Task::svc (void)
       poa_manager->activate ();
 
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
@@ -235,7 +235,7 @@ Task::svc (void)
       CORBA::Policy_var threadpool_policy_1 =
         rt_orb->create_threadpool_policy (threadpool_id_1);
 
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean allow_borrowing = false;
       RTCORBA::ThreadpoolLanes lanes (1);
       lanes.length (1);
 

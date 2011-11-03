@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from server_uiop.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <!--  Protocol options -->
  <static id="Advanced_Resource_Factory" params="-ORBProtocolFactory UIOP_Factory "/>
 </ACE_Svc_Conf>

@@ -1,11 +1,11 @@
-# $Id$
+$Id$
 
 This test verifies that Cygnus' CPU load monitor is working correctly.
 Run the test using the `run_test.pl' Perl script.  The expected test
 output is the following:
 
 ==== Running CPU Load Monitor test
- 
+
 Retrieving loads from LoadManager ...... DONE
 Retrieving loads directly from LoadMonitor ... DONE
 CPU Load Monitor test passed.

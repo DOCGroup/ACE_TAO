@@ -139,6 +139,17 @@ TAO_Leader_Follower::set_upcall_thread (void)
 
       this->elect_new_leader ();
     }
+  else if (tss->client_leader_thread_ == 1)
+    { // We are client leader thread going to handle upcall.
+      // When we're only leading one level (which should
+      // now always be the case since we implement leadership
+      // abdication here) we can now give up leadership to allow a
+      // waiting event thread to take over leaderpship
+      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock ());
+      this->reset_client_leader_thread ();
+
+      this->elect_new_leader ();
+    }
 }
 
 ACE_INLINE bool
@@ -160,9 +171,15 @@ ACE_INLINE void
 TAO_Leader_Follower::reset_client_leader_thread (void)
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
-  --tss->client_leader_thread_;
-  --this->leaders_;
-  --this->client_thread_is_leader_;
+  // We may be called twice when we gave up leadership from
+  // set_upcall_thread () if so tss->client_leader_thread_ may
+  // already have been decremented to 0
+  if (tss->client_leader_thread_ > 0)
+  {
+    --tss->client_leader_thread_;
+    --this->leaders_;
+    --this->client_thread_is_leader_;
+  }
 }
 
 ACE_INLINE bool

@@ -1,4 +1,4 @@
-README,v 1.5 2000/12/07 05:56:27 pradeep Exp
+$Id$
 
 README for the Notification Service
 -----------------------------------
@@ -31,7 +31,7 @@ another we can deploy dispatching threads using this option.
 -SourceThreads
 Deploys a thread pool after event receipt from the supplier.  All subsequent
 notification channel processing can happen on this thread and the original
-publishing push() can be ended.  Separates server side processing of the 
+publishing push() can be ended.  Separates server side processing of the
 event from the supplier's publication.
 
 

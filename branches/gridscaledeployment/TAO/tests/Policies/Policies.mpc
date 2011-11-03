@@ -3,5 +3,4 @@
 
 project(Policies Manipulation): taoserver, messaging {
   exename   = Manipulation
-  requires += corba_messaging
 }

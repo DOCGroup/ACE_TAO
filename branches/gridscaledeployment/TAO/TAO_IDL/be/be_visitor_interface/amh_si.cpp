@@ -12,8 +12,7 @@
 //=============================================================================
 
 be_visitor_amh_interface_si::be_visitor_amh_interface_si (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_interface_si (ctx)
 {
 }
@@ -40,9 +39,7 @@ be_visitor_amh_interface_si::visit_interface (be_interface *node)
 
   int status =
     node->traverse_inheritance_graph (
-              be_visitor_amh_interface_si::gen_skel_helper,
-              os
-            );
+              be_visitor_amh_interface_si::gen_skel_helper, os);
 
   if (status == -1)
     {
@@ -141,8 +138,8 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "TAO_ServerRequest & req," << be_nl
                   << "void * context," << be_nl
-                  << "void * obj" << be_uidt_nl
-                  << ")" << be_uidt_nl
+                  << "void * obj)" << be_uidt
+                  << be_uidt_nl
                   << "{" << be_idt_nl;
               *os << ancestor_amh_name
                   << "* const impl = static_cast<"
@@ -150,11 +147,11 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << " *> (obj);" << be_nl;
               *os << ancestor_amh_name
                   << "::" << d->local_name ()
-                  << "_skel (" << be_idt << be_idt_nl
+                  << "_skel (" << be_idt_nl
                   << "req," << be_nl
                   << "context," << be_nl
-                  << "impl" << be_uidt_nl
-                  << ");" << be_uidt << be_uidt_nl
+                  << "impl);" << be_uidt
+                  << be_uidt_nl
                   << "}";
             }
           else if (nt == AST_Decl::NT_attr)
@@ -177,11 +174,11 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "TAO_ServerRequest & req," << be_nl
                   << "void * context," << be_nl
-                  << "void * obj" << be_uidt_nl
-                  << ")" << be_uidt_nl
+                  << "void * obj)" << be_uidt
+                  << be_uidt_nl
                   << "{" << be_idt_nl;
 
-              *os << ancestor_amh_name
+               *os << ancestor_amh_name
                   << "* const impl = static_cast<"
                   << derived_amh_name
                   << " *> (obj);" << be_nl;
@@ -191,8 +188,8 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << "_skel (" << be_idt << be_idt_nl
                   << "req," << be_nl
                   << "context," << be_nl
-                  << "impl" << be_uidt_nl
-                  << ");" << be_uidt << be_uidt_nl
+                  << "impl);" << be_uidt
+                  << be_uidt << be_uidt_nl
                   << "}";
 
               if (!attr->readonly ())
@@ -209,11 +206,11 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "TAO_ServerRequest & req," << be_nl
                       << "void * context," << be_nl
-                      << "void * obj" << be_uidt_nl
-                      << ")" << be_uidt_nl
+                      << "void * obj)" << be_uidt
+                      << be_uidt_nl
                       << "{" << be_idt_nl;
 
-                  *os << ancestor_amh_name
+                   *os << ancestor_amh_name
                       << "* const impl = static_cast<"
                       << derived_amh_name
                       << " *> (obj);" << be_nl;
@@ -223,8 +220,8 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << "_skel (" << be_idt << be_idt_nl
                       << "req," << be_nl
                       << "context," << be_nl
-                      << "impl" << be_uidt_nl
-                      << ");" << be_uidt << be_uidt_nl
+                      << "impl);" << be_uidt
+                      << be_uidt << be_uidt_nl
                       << "}";
                 }
             }

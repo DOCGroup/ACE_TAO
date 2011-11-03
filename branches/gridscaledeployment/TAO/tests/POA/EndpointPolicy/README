@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page EndpointPolicy Test README File
 
   This test validates the TAO-specific Endpoint Policy. The Endpoint Policy
@@ -28,7 +30,7 @@ $ ./run_test.pl
 
   Beyond the basic test run using run_test.pl, there are two variants,
   a localhost based test and a "defaulted host" test. The localhost test
-  uses "localhost" as the hostname rather than allowing the server to 
+  uses "localhost" as the hostname rather than allowing the server to
   get the systems hostname. The Localhost test is not when autorunning
   on the vxworks platform.
 
@@ -36,7 +38,7 @@ $ ./run_test.pl
 
 $ ./run_test_lh.pl
 
-  In the defaulted host test, the hostname argument supplied to the 
+  In the defaulted host test, the hostname argument supplied to the
   endpoint policy is "". As discussed in Bug #3256, the behavior of
   using defaulted hosts is changed so that unless more than one
   protocol are involved, a defaulted hostname is not allowed in the

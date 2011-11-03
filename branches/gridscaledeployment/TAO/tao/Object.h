@@ -306,15 +306,6 @@ namespace CORBA
     /// Accessor to the flag..
     CORBA::Boolean is_evaluated (void) const;
 
-    /// Mutator for setting the servant in collocated cases.
-    /**
-     * This is used by the Object_Adapter to set the servant for
-     * collocated cases and only when the object is initialized. The
-     * object initialization takes place when IOR's are lazily
-     * evaluated.
-     */
-    void set_collocated_servant (TAO_Abstract_ServantBase *);
-
     /// Accessor for the ORB_Core..
     TAO_ORB_Core *orb_core (void) const;
 
@@ -339,8 +330,7 @@ namespace CORBA
     virtual char* convert_to_ior (bool use_omg_ior_format,
                                   const char* ior_prefix) const;
 
-    /// Wrapper for _remove_ref(), naming convention for
-    /// templatizing.
+    /// Wrapper for _remove_ref(), naming convention for templatizing.
     void _decr_refcount (void);
 
   protected:

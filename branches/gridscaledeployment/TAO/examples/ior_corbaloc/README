@@ -1,6 +1,6 @@
-// $Id$
+$Id$
 
-This is test to exercise the corbaloc: and corbaname: style URL.  
+This is test to exercise the corbaloc: and corbaname: style URL.
 The simple way to test is to run the run_test.pl.
 
 The corbaloc: and corbaname: URL syntax is documented in Chapter
@@ -23,12 +23,12 @@ To test manually:
 
 
 3. The client takes in a corbaloc style URL for the CORBA
-   Naming Service on the command-line.  The client will 
+   Naming Service on the command-line.  The client will
    first try to resolve the Naming Service using this corbaloc URL.
-   The client will then try to resolve a corbaloc::Status object 
+   The client will then try to resolve a corbaloc::Status object
    (see corbaloc.idl) named "STATUS".
    The client will then try to invoke the print_status() method
-   on this object.   
+   on this object.
 
    Run the client as one of these:
 
@@ -76,6 +76,6 @@ To test manually:
 
  c)    ./corbaname_client corbaname:rir:#STATUS
 
-       - Determine where the Naming Service is by using 
+       - Determine where the Naming Service is by using
          orb->resolve_initial_references("NameService")
        - Resolve an object reference of name "STATUS"

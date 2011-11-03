@@ -1,18 +1,18 @@
-# $Id$
+$Id$
 
 Description:
 
-	This is a simple test for a thread-pool server that can 
-service multithreaded clients with the same object reference. 
+	This is a simple test for a thread-pool server that can
+service multithreaded clients with the same object reference.
 It creates a server process with a variable number of threads,
-multiple (multithreaded) clients can send requests to it, the 
+multiple (multithreaded) clients can send requests to it, the
 requests are handled in different threads.
 
 Expected output:
 
 The server prints the thread that handles each request. The Client
 prints the Validation info as well as the  thread pid and iteration
-number. 
+number.
 
 How to run:
 Use the run_test.pl.
@@ -20,6 +20,6 @@ Use the run_test.pl.
 FOR SSL:-
    Pvt Key File ( RSA ) = pvtkey.pem
    Self Signed Certificate = selfsigncert.pem
-   
+
    ORB Svc Conf File for Server = server.conf
    ORB Svc Conf File for Client = client.conf
