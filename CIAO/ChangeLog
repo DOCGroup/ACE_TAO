@@ -1,3 +1,8 @@
+Thu Nov 03 08:52:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed WCHAR compile problem.
+
 Wed Nov 02 12:09:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * tests/Collocation/Receiver/Receiver_exec.cpp:
         Cancel timer and delete generators
