@@ -3,6 +3,9 @@
 
 #include "tao/PortableServer/SUpcall_commands.h"
 
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
+
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/PortableServer/Basic_SArguments.h"

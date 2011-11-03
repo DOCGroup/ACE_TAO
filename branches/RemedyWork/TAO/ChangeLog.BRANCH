@@ -1,3 +1,8 @@
+Thu Nov  3 14:40:18 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/PortableServer/SUpcall_commands.cpp:
+          Fixed another compile issue on windows.
+
 Thu Nov  3 14:28:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
