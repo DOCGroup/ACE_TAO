@@ -1,9 +1,14 @@
+Thu Nov 03 08:45:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3531b_Regression/server.cpp:
+          Fixed compile warning on Solaris10 build.
+
 Wed Nov 02 13:30:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
-        Put narrow in var, use ACE_NEW  with CIAO_FACET
+          Put narrow in var, use ACE_NEW  with CIAO_FACET
 
-        
+
 Wed Nov 02 08:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
