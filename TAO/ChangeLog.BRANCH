@@ -1,3 +1,12 @@
+Thu Nov  3 14:28:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * tao/PortableServer/SUpcall_commands.h:
+        * tao/PortableServer/SUpcall_commands.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Fixed compile issues on windows.
+
 Thu Nov  3 13:32:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -6,10 +15,10 @@ Thu Nov  3 13:32:45 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
         * TAO_IDL/be_include/be_interface.h:
-          Base operation skeleton methods and base skeleton 
+          Base operation skeleton methods and base skeleton
           attributes methods are not generated anymore in the
           derived classes. This means that the inline files are
-          empty (most of the times). Also optimized the operation 
+          empty (most of the times). Also optimized the operation
           table to point to the right operation/attribute in the
           base classes.
 
