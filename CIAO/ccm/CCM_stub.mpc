@@ -38,7 +38,6 @@ project(CCM_stub_idl) : install, ciaolib_with_idl, valuetype {
   }
 
   IDL_Files {
-    idlflags += -Ssi
     CCM_HomeFinder.idl
     CCM_Configurator.idl
     CCM_KeylessCCMHome.idl

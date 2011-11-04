@@ -1,3 +1,12 @@
+Fri Nov  4 09:53:06 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ccm/CCM_stub.mpc:
+        * ccm/Extension/CCM_extension.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+          Removed -Ssi/-si IDL flag since this obsolete.
+
 
 Local Variables:
 mode: change-log
