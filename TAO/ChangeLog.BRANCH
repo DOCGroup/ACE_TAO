@@ -1,3 +1,20 @@
+Fri Nov  4 12:46:02 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Operation now will invoke the thru_poa methods when
+          the generation of through poa option is on.
+
+
+        * TAO_IDL/be/be_util.cpp:
+        * docs/compiler.html:
+          Removed some comments regarding skeleton inline files.
+
+        * tao/PortableServer/SUpcall_commands.h:
+        * tao/PortableServer/SUpcall_commands.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Implemented the through POA methods.
+
 Fri Nov  4 09:54:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
@@ -20,7 +37,7 @@ Fri Nov  4 09:54:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * tao/Messaging/Messaging.mpc:
         * tao/Monitor/Monitor.mpc:
           Removed the generation of skeleton inline files completely.
-          Therefore the Ssi and si option are obsolete. 
+          Therefore the Ssi and si option are obsolete.
 
         * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
         * TAO_IDL/be/be_visitor_root/root_si.cpp:
