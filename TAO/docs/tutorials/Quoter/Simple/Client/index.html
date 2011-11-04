@@ -105,7 +105,7 @@ $ $ACE_ROOT/TAO/TAO_IDL/tao_idl Quoter.idl
       generated from <CODE>QuoterC.cpp</CODE>.
     </P>
     <P>
-      Similarly, <CODE>QuoterS.h</CODE>, <CODE>QuoterS.inl</CODE>
+      Similarly, <CODE>QuoterS.h</CODE>,
       and <CODE>QuoterS.cpp</CODE> contain the server-side
       <EM>skeletons</EM>. Servers must link the object files generated
       from <CODE>QuoterS.cpp</CODE> <STRONG>and</STRONG> <CODE>QuoterC.cpp</CODE>.
@@ -149,9 +149,9 @@ int main (int argc, char* argv[])
                        "" /* the ORB name, it can be anything! */);
 </PRE>
     <P>IDL supports variable-length types whose sizes are not known
-      at compile time, hence they must be dynamically allocated at run 
+      at compile time, hence they must be dynamically allocated at run
       time. <CODE>_var</CODE> types relieve us of the explicit memory
-      management of the variable-length types and thus hide the 
+      management of the variable-length types and thus hide the
       differences between fixed and variable-length structured types.
     </P>
     <P>Since the ORB initialization can fail, and in fact, any CORBA
@@ -225,9 +225,9 @@ int main (int argc, char* argv[])
     Quoter::Stock_Factory_var factory =
       Quoter::Stock_Factory::_narrow (factory_object.in ());
 </PRE>
-    <P>The <CODE>_narrow()</CODE> is used to test if a reference 
-      is of the specified type. If the reference is of the specified 
-      type, it returns a non-nil reference, else it returns a nil. 
+    <P>The <CODE>_narrow()</CODE> is used to test if a reference
+      is of the specified type. If the reference is of the specified
+      type, it returns a non-nil reference, else it returns a nil.
     </P>
     <P>There are a few interesting things about TAO:  First, it supports
       the <CODE>file:</CODE> scheme for object references, so the first
