@@ -27,6 +27,5 @@ project(RTSchedSynch): portableserver {
 
   Inline_Files {
     SynchC.inl
-    SynchS.inl
   }
 }

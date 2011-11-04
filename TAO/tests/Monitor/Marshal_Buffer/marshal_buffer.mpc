@@ -50,7 +50,6 @@ project(*server): taoserver {
 
   Inline_Files {
     testC.inl
-    testS.inl
   }
 }
 
