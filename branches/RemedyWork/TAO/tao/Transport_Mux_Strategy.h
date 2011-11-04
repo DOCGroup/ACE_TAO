@@ -58,7 +58,7 @@ public:
 
   /**
    * Unbind the dispatcher, the client is no longer waiting for the
-   * request, for example, because the request timedout.
+   * request, for example, because the request timed out.
    * The strategy can (must) cleanup any resources associated with the
    * request.
    * A later reply for that request should be ignored.

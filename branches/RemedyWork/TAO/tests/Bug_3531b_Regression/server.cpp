@@ -185,6 +185,11 @@ public:
       workers->process_cmd ();
     return 0;
   };
+
+  virtual int handle_events (ACE_Time_Value &)
+  {
+    return this->handle_events ();
+  }
 };
 
 // Our own Resource_Factory for testing purposes.  This just returns
