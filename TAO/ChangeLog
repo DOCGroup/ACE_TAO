@@ -1,3 +1,8 @@
+Fri Nov  4 07:28:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Extended documentation for ORBWaitStrategy mt_noupcall
+
 Thu Nov 03 09:51:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/servant_svs.cpp:
