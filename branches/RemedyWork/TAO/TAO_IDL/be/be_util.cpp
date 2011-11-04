@@ -842,7 +842,7 @@ be_util::usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -SS\t\t\tsuppress generating skeleton implementation")
-      ACE_TEXT (" and inline file (disabled by default)\n")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

@@ -36,6 +36,20 @@ _is_a_Upcall_Command::execute (void)
       arg_1);
 }
 
+void
+_is_a_thru_poa_Upcall_Command::execute (void)
+{
+  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
+
+  TAO::SArg_Traits< char *>::in_arg_type arg_1 =
+    static_cast<TAO::SArg_Traits< char *>::in_arg_val *> (this->args_[1])->arg ();
+
+  retval =
+    this->servant_-> _is_a (
+      arg_1);
+}
+
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 _non_existent_Upcall_Command::execute (void)
@@ -49,6 +63,17 @@ _non_existent_Upcall_Command::execute (void)
     this->servant_-> _non_existent ();
 }
 
+void
+_non_existent_thru_poa_Upcall_Command::execute (void)
+{
+  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
+
+  retval =
+    this->servant_-> _non_existent ();
+}
+
+
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 _get_component_Upcall_Command::execute (void)
@@ -61,6 +86,17 @@ _get_component_Upcall_Command::execute (void)
   retval =
     this->servant_-> _get_component ();
 }
+
+void
+_get_component_thru_poa_Upcall_Command::execute (void)
+{
+  TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits< ::CORBA::Object>::ret_val *> (this->args_[0])->arg ();
+
+  retval =
+    this->servant_-> _get_component ();
+}
+
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 
@@ -71,6 +107,16 @@ _repository_id_Upcall_Command::execute (void)
     TAO::Portable_Server::get_ret_arg< char *> (
       this->operation_details_,
       this->args_);
+
+  retval =
+    this->servant_-> _repository_id ();
+}
+
+void
+_repository_id_thru_poa_Upcall_Command::execute(void )
+{
+  TAO::SArg_Traits< char *>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits< char *>::ret_val *> (this->args_[0])->arg ();
 
   retval =
     this->servant_-> _repository_id ();

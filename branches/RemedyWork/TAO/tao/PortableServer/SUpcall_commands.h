@@ -64,6 +64,32 @@ private:
   TAO::Argument * const * const args_;
 };
 
+/**
+ * @class _is_a_thru_poa_Upcall_Command
+ *
+ * @brief Execution class for _is_a_skel when through POA option is used.
+ *
+ *
+ */
+class _is_a_thru_poa_Upcall_Command
+  : public TAO::Upcall_Command
+{
+public:
+  inline _is_a_thru_poa_Upcall_Command (
+    TAO_ServantBase * servant,
+    TAO::Argument * const args[])
+    : servant_ (servant)
+    , args_ (args)
+  {
+  }
+
+  virtual void execute (void);
+
+private:
+  TAO_ServantBase * const servant_;
+  TAO::Argument * const * const args_;
+};
+
 
 /**
  * @class _non_existent_Upcall_Command
@@ -91,6 +117,32 @@ public:
 private:
   TAO_ServantBase * const servant_;
   TAO_Operation_Details const * const operation_details_;
+  TAO::Argument * const * const args_;
+};
+
+/**
+ * @class _non_existent_thru_poa_Upcall_Command
+ *
+ * @brief Execution class for _non_existent_skel when through POA option is used.
+ *
+ *
+ */
+class _non_existent_thru_poa_Upcall_Command
+  : public TAO::Upcall_Command
+{
+public:
+  inline _non_existent_thru_poa_Upcall_Command (
+    TAO_ServantBase * servant,
+    TAO::Argument * const args[])
+    : servant_ (servant)
+    , args_ (args)
+  {
+  }
+
+  virtual void execute (void);
+
+private:
+  TAO_ServantBase * const servant_;
   TAO::Argument * const * const args_;
 };
 
@@ -124,6 +176,32 @@ private:
   TAO_Operation_Details const * const operation_details_;
   TAO::Argument * const * const args_;
 };
+
+/**
+ * @class _get_component_thru_poa_Upcall_Command
+ *
+ * @brief Execution class for _get_component when through POA option is used.
+ *
+ *
+ */
+class _get_component_thru_poa_Upcall_Command
+  : public TAO::Upcall_Command
+{
+public:
+  inline _get_component_thru_poa_Upcall_Command (
+    TAO_ServantBase * servant,
+    TAO::Argument * const args[])
+    : servant_ (servant)
+      , args_ (args)
+  {
+  }
+
+  virtual void execute (void);
+
+private:
+  TAO_ServantBase * const servant_;
+  TAO::Argument * const * const args_;
+};
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 /**
@@ -154,6 +232,33 @@ private:
   TAO_Operation_Details const * const operation_details_;
   TAO::Argument * const * const args_;
 };
+
+/**
+ * @class _repository_id_thru_poa_Upcall_Command
+ *
+ * @brief Execution class for _repository_id when through POA option is used.
+ *
+ *
+ */
+class _repository_id_thru_poa_Upcall_Command
+  : public TAO::Upcall_Command
+{
+public:
+  inline _repository_id_thru_poa_Upcall_Command (
+    TAO_ServantBase * servant,
+    TAO::Argument * const args[])
+    : servant_ (servant)
+    , args_ (args)
+  {
+  }
+
+  virtual void execute (void);
+
+private:
+  TAO_ServantBase * const servant_;
+  TAO::Argument * const * const args_;
+};
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

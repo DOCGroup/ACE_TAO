@@ -970,22 +970,47 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        *os << "{\"_is_a\", &TAO_ServantBase::_is_a_skel, 0}," << be_nl;
+        if (be_global->gen_thru_poa_collocation ())
+          {
+            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_thru_poa_skel, 0}," << be_nl;
+          }
+        else
+          {
+            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_skel, 0}," << be_nl;
+          }
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "{\"_non_existent\", &TAO_ServantBase::_non_existent_skel, 0},"
-                << be_nl;
+            if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "{\"_non_existent\", "
+                    << "&TAO_ServantBase::_non_existent_thru_poa_skel, 0},"
+                    << be_nl;
+              }
+            else
+              {
+                *os << "{\"_non_existent\", &TAO_ServantBase::_non_existent_skel, 0},"
+                    << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_component\", &TAO_ServantBase::_component_skel, 0},"
-                << be_nl;
+            if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "{\"_component\", "
+                    << "&TAO_ServantBase::_component_thru_poa_skel, 0},"
+                    << be_nl;
+              }
+            else
+              {
+                *os << "{\"_component\", &TAO_ServantBase::_component_skel, 0},"
+                    << be_nl;
+              }
 
             ++this->skel_count_;
           }
@@ -1000,8 +1025,18 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "{\"_repository_id\", &TAO_ServantBase::_repository_id_skel, 0}"
-                << be_uidt_nl;
+            if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "{\"_repository_id\", "
+                    << "&TAO_ServantBase::_repository_id_thru_poa_skel, 0}"
+                    << be_uidt_nl;
+              }
+            else
+              {
+                *os << "{\"_repository_id\", "
+                    << "&TAO_ServantBase::_repository_id_skel, 0}"
+                    << be_uidt_nl;
+              }
 
             ++this->skel_count_;
           }
@@ -1136,22 +1171,45 @@ be_interface::gen_operation_table (const char *flat_name,
                               -1);
           }
 
-        *os << "_is_a,&TAO_ServantBase::_is_a_skel, 0" << be_nl;
+        if (be_global->gen_thru_poa_collocation ())
+          {
+            *os << "_is_a,&TAO_ServantBase::_is_a_thru_poa_skel, 0" << be_nl;
+          }
+        else
+          {
+            *os << "_is_a,&TAO_ServantBase::_is_a_skel, 0" << be_nl;
+          }
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "_non_existent,&TAO_ServantBase::_non_existent_skel, 0"
-                << be_nl;
+            if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "_non_existent,&TAO_ServantBase::_non_existent_thru_poa_skel, 0"
+                    << be_nl;
+              }
+            else
+              {
+                *os << "_non_existent,&TAO_ServantBase::_non_existent_skel, 0"
+                    << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_component,&TAO_ServantBase::_component_skel, 0"
-                << be_nl;
+            if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "_component,&TAO_ServantBase::_component_thru_poa_skel, 0"
+                    << be_nl;
+              }
+            else
+              {
+                *os << "_component,&TAO_ServantBase::_component_skel, 0"
+                    << be_nl;
+              }
             ++this->skel_count_;
           }
 
@@ -1165,8 +1223,17 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            *os << "_repository_id,&TAO_ServantBase::_repository_id_skel, 0"
-                << be_nl;
+
+            if (be_global->gen_thru_poa_collocation ())
+              {
+                *os << "_repository_id,&TAO_ServantBase::_repository_id_thru_poa_skel, 0"
+                    << be_nl;
+              }
+            else
+              {
+                *os << "_repository_id,&TAO_ServantBase::_repository_id_skel, 0"
+                    << be_nl;
+              }
 
             ++this->skel_count_;
           }
