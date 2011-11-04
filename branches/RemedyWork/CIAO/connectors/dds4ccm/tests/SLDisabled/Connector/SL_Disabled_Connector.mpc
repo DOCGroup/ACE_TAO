@@ -137,7 +137,6 @@ project(DDS_SL_Disabled_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    SL_Disabled_ConnectorS.inl
   }
 }
 

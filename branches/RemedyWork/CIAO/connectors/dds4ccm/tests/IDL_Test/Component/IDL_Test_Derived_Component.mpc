@@ -190,7 +190,6 @@ project(IDL_Test_Derived_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4c
   }
 
   Inline_Files {
-    IDL_Test_Derived_ComponentS.inl
   }
 }
 

@@ -171,6 +171,5 @@ project(NT_Connector_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    NonTopic_ConnectorS.inl
   }
 }

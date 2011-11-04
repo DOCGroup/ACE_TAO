@@ -131,7 +131,6 @@ project(Single_Service_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    Single_ServiceS.inl
   }
 }
 

@@ -144,7 +144,6 @@ project(DDS_LatencyTT_Test_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   }
 
   Inline_Files {
-    LatencyTT_Test_ReceiverS.inl
   }
 }
 

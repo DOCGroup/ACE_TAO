@@ -109,7 +109,6 @@ project(Protocols_Receiver_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 
   Inline_Files {
-    ReceiverS.inl
   }
 }
 

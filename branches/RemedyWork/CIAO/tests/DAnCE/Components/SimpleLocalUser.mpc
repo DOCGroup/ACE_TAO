@@ -104,7 +104,6 @@ project(SimpleCommon_SimpleLocalUser_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleLocalUserS.inl
   }
 }
 

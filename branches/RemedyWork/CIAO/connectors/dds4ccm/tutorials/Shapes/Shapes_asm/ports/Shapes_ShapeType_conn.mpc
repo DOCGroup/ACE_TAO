@@ -148,7 +148,6 @@ project(Shapes_ShapeType_conn_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    GeneratedCode/Shapes_ShapeType_connS.inl
   }
 }
 

@@ -134,6 +134,5 @@ project(CollBase_Receiver_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    ReceiverS.inl
   }
 }

@@ -129,7 +129,6 @@ project(AMI_AmiDds_Base_AmiDds_Receiver_svnt) : ciao_servant, messaging, dds4ccm
   }
 
   Inline_Files {
-    AmiDds_ReceiverS.inl
   }
 }
 

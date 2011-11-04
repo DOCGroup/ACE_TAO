@@ -171,7 +171,6 @@ project(IDL_Test_Base_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_
   }
 
   Inline_Files {
-    IDL_Test_Base_ComponentS.inl
   }
 }
 

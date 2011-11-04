@@ -71,7 +71,6 @@ project(Protocols_skel) : ciao_executor {
   }
 
   Inline_Files {
-    ProtocolsS.inl
   }
 }
 

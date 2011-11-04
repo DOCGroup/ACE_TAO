@@ -141,7 +141,6 @@ project(CoherentUpdate_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    CoherentUpdate_Test_ConnectorS.inl
   }
 }
 

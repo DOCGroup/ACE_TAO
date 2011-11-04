@@ -140,7 +140,6 @@ project(DDS_LatencyTT_Test_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4cc
   }
 
   Inline_Files {
-    LatencyTT_Test_SenderS.inl
   }
 }
 

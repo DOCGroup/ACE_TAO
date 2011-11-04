@@ -141,7 +141,6 @@ project(NonChangeable_Component_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_
   }
 
   Inline_Files {
-    NonChangeable_ComponentS.inl
   }
 }
 

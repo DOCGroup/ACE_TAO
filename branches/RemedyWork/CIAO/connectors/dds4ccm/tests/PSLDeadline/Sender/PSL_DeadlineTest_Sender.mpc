@@ -134,7 +134,6 @@ project(DDS_PSL_DeadlineTest_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4
   }
 
   Inline_Files {
-    PSL_DeadlineTest_SenderS.inl
   }
 }
 
