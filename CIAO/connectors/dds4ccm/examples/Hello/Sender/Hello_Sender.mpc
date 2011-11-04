@@ -138,7 +138,6 @@ project(DDS_Hello_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
   }
 
   Inline_Files {
-    Hello_SenderS.inl
   }
 }
 

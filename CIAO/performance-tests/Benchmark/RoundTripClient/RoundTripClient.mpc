@@ -111,7 +111,6 @@ project(Benchmark_RoundTripClient_svnt) : ciao_servant, avoids_ace_for_tao {
   }
 
   Inline_Files {
-    RoundTripClientS.inl
   }
 }
 

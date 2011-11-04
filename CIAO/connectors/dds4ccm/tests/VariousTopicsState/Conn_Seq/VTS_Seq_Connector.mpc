@@ -137,7 +137,6 @@ project(DDS_VTS_Seq_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    VTS_Seq_ConnectorS.inl
   }
 }
 

@@ -134,7 +134,6 @@ project(DDS_KeyedWriterSender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_sk
   }
 
   Inline_Files {
-    Writer_SenderS.inl
   }
 }
 

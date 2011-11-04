@@ -134,7 +134,6 @@ project(DDS_SL_Disabled_Sender_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_s
   }
 
   Inline_Files {
-    SL_Disabled_SenderS.inl
   }
 }
 

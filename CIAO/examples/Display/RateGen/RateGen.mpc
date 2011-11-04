@@ -108,7 +108,6 @@ project(Display_RateGen_svnt) : ciao_servant, avoids_ccm_noevent {
   }
 
   Inline_Files {
-    RateGenS.inl
   }
 }
 

@@ -32,12 +32,6 @@ project (DDS4CCM_skel) : install, dds4ccm_lem_stub, ciaolib_with_idl, \
   }
 
   Inline_Files {
-    dds_rtf2_dcpsS.inl
-    dds4ccm_PortStatusListenerS.inl
-    dds4ccm_DataListenerControlS.inl
-    dds4ccm_ConnectorStatusListenerS.inl
-    dds4ccm_ConnectorS.inl
-    dds4ccm_StateListenerControlS.inl
   }
 
   specific {

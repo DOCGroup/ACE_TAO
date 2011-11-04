@@ -137,7 +137,6 @@ project(DDS_MultipleTemp_Receiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4cc
   }
 
   Inline_Files {
-    MultipleTemp_ReceiverS.inl
   }
 }
 

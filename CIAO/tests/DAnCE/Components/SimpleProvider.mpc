@@ -104,7 +104,6 @@ project(SimpleCommon_SimpleProvider_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleProviderS.inl
   }
 }
 

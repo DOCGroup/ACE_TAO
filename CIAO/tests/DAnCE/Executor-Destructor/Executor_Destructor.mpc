@@ -128,7 +128,6 @@ project(Executor_Destructor_svnt) : ciao_servant   {
   }
 
   Inline_Files {
-    Executor_DestructorS.inl
   }
 }
 

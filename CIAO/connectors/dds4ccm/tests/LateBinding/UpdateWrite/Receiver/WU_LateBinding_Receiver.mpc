@@ -136,7 +136,6 @@ project (WU_LateBindingReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_
   }
 
   Inline_Files {
-    WU_LateBinding_ReceiverS.inl
   }
 }
 

@@ -115,12 +115,6 @@ project(CCM_stub) : install, ciaolib_with_idl, ciao_output, valuetype, ifr_clien
     CCM_ReceptacleC.inl
     CCM_StandardConfiguratorC.inl
     CCM_CookieC.inl
-    CCM_HomeConfigurationS.inl
-    CCM_HomeS.inl
-    CCM_HomesS.inl
-    CCM_ObjectS.inl
-    CCM_PrimaryKeyBaseS.inl
-    CCM_StandardConfiguratorS.inl
   }
 
   Source_Files {

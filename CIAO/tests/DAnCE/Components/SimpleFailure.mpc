@@ -101,7 +101,6 @@ project(SimpleFailure_svnt) : ciao_servant {
   }
 
   Inline_Files {
-    SimpleFailureS.inl
   }
 }
 

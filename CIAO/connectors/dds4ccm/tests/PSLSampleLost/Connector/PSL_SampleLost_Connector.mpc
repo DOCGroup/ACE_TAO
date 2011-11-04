@@ -137,7 +137,6 @@ project(DDS_PSL_SampleLost_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    PSL_SampleLost_ConnectorS.inl
   }
 }
 

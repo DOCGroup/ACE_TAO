@@ -128,7 +128,6 @@ project(AMI_NoReplyH_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
-    NoReplyH_SenderS.inl
   }
 }
 

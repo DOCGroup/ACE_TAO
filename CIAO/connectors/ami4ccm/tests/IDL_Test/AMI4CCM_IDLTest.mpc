@@ -113,8 +113,6 @@ project(AMI4CCM_IDL_Test_skel) : ciao_executor, ami, ami4ccm_servant   {
   }
 
   Inline_Files {
-    HelloS.inl
-    HelloAS.inl
   }
 }
 

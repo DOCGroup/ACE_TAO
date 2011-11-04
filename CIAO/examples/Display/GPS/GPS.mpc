@@ -110,7 +110,6 @@ project(Display_GPS_svnt) : ciao_servant, avoids_ccm_noevent {
   }
 
   Inline_Files {
-    GPSS.inl
   }
 }
 

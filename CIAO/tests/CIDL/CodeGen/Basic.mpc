@@ -73,7 +73,6 @@ project(Basic_skel) : ciao_executor {
   }
 
   Inline_Files {
-    BasicS.inl
   }
 }
 

@@ -136,7 +136,6 @@ project(DDS_DNM_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    DNM_ConnectorS.inl
   }
 }
 

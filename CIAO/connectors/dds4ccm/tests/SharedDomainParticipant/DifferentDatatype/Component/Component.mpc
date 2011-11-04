@@ -149,7 +149,6 @@ project(DDS_SharedDP_DDComponent_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm
   }
 
   Inline_Files {
-    ComponentS.inl
   }
 }
 

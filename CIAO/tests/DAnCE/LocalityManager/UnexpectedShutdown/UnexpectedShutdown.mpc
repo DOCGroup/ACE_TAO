@@ -119,7 +119,6 @@ project(UnexpectedShutdown_svnt) : ciao_servant, dance_stub {
   }
 
   Inline_Files {
-    UnexpectedShutdownS.inl
   }
 }
 

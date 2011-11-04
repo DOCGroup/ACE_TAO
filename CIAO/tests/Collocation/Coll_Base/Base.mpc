@@ -103,7 +103,6 @@ project(CollBase_skel) : ciao_executor {
   }
 
   Inline_Files {
-    BaseS.inl
   }
 }
 

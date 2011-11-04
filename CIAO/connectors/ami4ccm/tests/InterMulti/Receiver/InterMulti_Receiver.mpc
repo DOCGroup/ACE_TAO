@@ -128,7 +128,6 @@ project(AMI_InterMulti_Base_Receiver_svnt) : ciao_servant, messaging {
   }
 
   Inline_Files {
-    InterMulti_ReceiverS.inl
   }
 }
 

@@ -136,7 +136,6 @@ project(DDS_SharedDP_Connector1_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
-    Connector1S.inl
   }
 }
 
