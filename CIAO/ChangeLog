@@ -1,3 +1,24 @@
+Thu Nov 03 13:25:13 UTC 2011   Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * tests/Collocation/Sender/Sender_exec.cpp:
+        * bin/ciao_tests.lst
+        Only if defined CCM_DIRECTCOLL run test. 
+
+Thu Nov 03 08:52:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed WCHAR compile problem.
+
+Wed Nov 02 12:09:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/Receiver/Receiver_exec.cpp:
+        Cancel timer and delete generators
+
+Wed Nov 02 08:04:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+        * tests/Collocation/Receiver/Receiver_exec.cpp:
+        * tests/Collocation/Sender/Sender_exec.cpp:
+        Removed unreferenced local variables
+
+
 Wed Nov 02 08:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         Merged changes from Remedy work branch.
