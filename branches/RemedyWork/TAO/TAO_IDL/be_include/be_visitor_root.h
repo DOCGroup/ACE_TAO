@@ -24,7 +24,6 @@
 #include "be_visitor_root/root_ci.h"
 #include "be_visitor_root/root_cs.h"
 #include "be_visitor_root/root_sh.h"
-#include "be_visitor_root/root_si.h"
 #include "be_visitor_root/root_ss.h"
 #include "be_visitor_root/root_sth.h"
 #include "be_visitor_root/root_is.h"

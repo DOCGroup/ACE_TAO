@@ -187,18 +187,6 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-  // Generate skeletons for operations of our base classes. These
-  // skeletons just cast the pointer to the appropriate type
-  // before invoking the call.
-  if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_amh_interface_sh::"
-                         "visit_interface - "
-                         "inheritance graph traversal failed\n"),
-                        -1);
-    }
-
   *os << be_uidt_nl
       << "};";
 

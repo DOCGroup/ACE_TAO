@@ -1,3 +1,34 @@
+Fri Nov  4 09:54:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/taobaseidldefaults.mpb:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_si.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
+        * tao/ImR_Client/ImR_Client.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/Monitor/Monitor.mpc:
+          Removed the generation of skeleton inline files completely.
+          Therefore the Ssi and si option are obsolete. 
+
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be/be_visitor_root/root_si.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/amh_si.h:
+        * TAO_IDL/be_include/be_visitor_root/root_si.h:
+          Removed the generation of skeleton inline files completely.
+          Removed these files.
+
 Thu Nov  3 18:01:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

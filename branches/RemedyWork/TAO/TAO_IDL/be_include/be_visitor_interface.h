@@ -54,7 +54,6 @@
 // AMH
 #include "be_visitor_interface/amh_ch.h"
 #include "be_visitor_interface/amh_sh.h"
-#include "be_visitor_interface/amh_si.h"
 #include "be_visitor_interface/amh_ss.h"
 #include "be_visitor_interface/amh_rh_sh.h"
 #include "be_visitor_interface/amh_rh_ss.h"

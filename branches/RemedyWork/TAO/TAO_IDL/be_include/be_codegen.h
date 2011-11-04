@@ -226,9 +226,6 @@ public:
   /// Set the server template header stream.
   int start_server_template_header (const char *fname);
 
-  /// Set the server inline stream.
-  int start_server_inline (const char *fname);
-
   /// Set the server skeletons stream.
   int start_server_skeletons (const char *fname);
 
@@ -262,9 +259,6 @@ public:
 
   /// Put a last #endif in the server header.
   int end_server_header (void);
-
-  /// Generate necessary code at end of server inline file.
-  void end_server_inline (void);
 
   /// Put a last #endif in the server header.
   int end_implementation_header (const char *fname);
@@ -322,9 +316,6 @@ public:
 
   /// Get the server template skeletons stream.
   TAO_OutStream *server_template_skeletons (void);
-
-  /// Get the server inline stream.
-  TAO_OutStream *server_inline (void);
 
   /// Get the server template inline stream.
   TAO_OutStream *server_template_inline (void);
@@ -462,9 +453,6 @@ private:
 
   /// Server skeleton template stream.
   TAO_OutStream *server_template_skeletons_;
-
-  /// Server side inline file.
-  TAO_OutStream *server_inline_;
 
   /// Anyop header file.
   TAO_OutStream *anyop_header_;
