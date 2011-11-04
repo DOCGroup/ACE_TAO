@@ -62,7 +62,6 @@ project(RTEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, rteventloga
   }
 
   Inline_Files {
-    RTEventLogAdminS.inl
   }
 
   Template_Files {

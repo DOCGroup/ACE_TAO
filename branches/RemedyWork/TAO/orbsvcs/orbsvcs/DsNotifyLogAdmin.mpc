@@ -64,7 +64,6 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dsnotifylo
   }
 
   Inline_Files {
-    DsNotifyLogAdminS.inl
   }
 
   Template_Files {

@@ -26,6 +26,5 @@ project(Job): portableserver {
 
   Inline_Files {
     JobC.inl
-    JobS.inl
   }
 }
