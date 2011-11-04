@@ -27,10 +27,10 @@ project: build_files {
 
     // Inline related options
     optional(inline_outputext) {
-      commandflags(!-SS && !-Ssi || !-Sci || -GT && !-SS && !-oS) += .inl, .i
+      commandflags(!-SS || !-Sci || -GT && !-SS && !-oS) += .inl, .i
     }
     optional(inline_pre_extension) {
-      commandflags(!-SS && !-Ssi && !-oS) += S
+      commandflags(!-SS && !-oS) += S
     }
     optional(inline_pre_extension) {
       commandflags(!-Sci) += C

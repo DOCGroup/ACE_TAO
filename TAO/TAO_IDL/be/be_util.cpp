@@ -789,11 +789,6 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -si\t\t\tServer's inline file name ending.")
-      ACE_TEXT (" Default is S.inl\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -ss\t\t\tServer's skeleton file name ending.")
       ACE_TEXT (" Default is S.cpp\n")
     ));
@@ -852,11 +847,6 @@ be_util::usage (void)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Sci\t\t\tsuppress generating client inline file")
-      ACE_TEXT (" (disabled by default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Ssi\t\t\tsuppress generating server inline file")
       ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((

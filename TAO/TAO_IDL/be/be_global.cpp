@@ -72,7 +72,6 @@ BE_GlobalData::BE_GlobalData (void)
     server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
     server_skeleton_ending_ (ACE::strnew ("S.cpp")),
     server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
-    server_inline_ending_ (ACE::strnew ("S.inl")),
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     ciao_svnt_hdr_ending_ (ACE::strnew ("_svnt.h")),
@@ -126,7 +125,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_client_inline_ (true),
-    gen_server_inline_ (true),
     gen_client_stub_ (true),
     gen_server_skeleton_ (true),
     gen_local_iface_anyops_ (true),
@@ -389,17 +387,6 @@ BE_GlobalData::be_get_server_template_skeleton (UTL_String *idl_file_name,
 }
 
 const char *
-BE_GlobalData::be_get_server_inline (UTL_String *idl_file_name,
-                                     bool base_name_only)
-{
-  return be_change_idl_file_extension (idl_file_name,
-                                       be_global->server_inline_ending (),
-                                       base_name_only,
-                                       false,
-                                       true);
-}
-
-const char *
 BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
                                     bool base_name_only)
 {
@@ -627,15 +614,6 @@ BE_GlobalData::be_get_server_template_skeleton_fname (
   return
     be_get_server_template_skeleton (idl_global->stripped_filename (),
                                      base_name_only);
-}
-
-const char *
-BE_GlobalData::be_get_server_inline_fname (
-  bool base_name_only)
-{
-  return
-    be_get_server_inline (idl_global->stripped_filename (),
-                          base_name_only);
 }
 
 const char *
@@ -1240,19 +1218,6 @@ const char*
 BE_GlobalData::server_template_skeleton_ending (void) const
 {
   return this->server_template_skeleton_ending_;
-}
-
-void
-BE_GlobalData::server_inline_ending (const char* s)
-{
-  ACE::strdelete (this->server_inline_ending_);
-  this->server_inline_ending_ = ACE::strnew (s);
-}
-
-const char*
-BE_GlobalData::server_inline_ending (void) const
-{
-  return this->server_inline_ending_;
 }
 
 void
@@ -1972,9 +1937,6 @@ BE_GlobalData::destroy (void)
   ACE::strdelete (this->server_template_skeleton_ending_);
   this->server_template_skeleton_ending_ = 0;
 
-  ACE::strdelete (this->server_inline_ending_);
-  this->server_inline_ending_ = 0;
-
   ACE::strdelete (this->anyop_hdr_ending_);
   this->anyop_hdr_ending_ = 0;
 
@@ -2301,18 +2263,6 @@ void
 BE_GlobalData::gen_client_inline (bool val)
 {
   this->gen_client_inline_ = val;
-}
-
-bool
-BE_GlobalData::gen_server_inline (void) const
-{
-  return this->gen_server_inline_;
-}
-
-void
-BE_GlobalData::gen_server_inline (bool val)
-{
-  this->gen_server_inline_ = val;
 }
 
 bool
@@ -2705,8 +2655,6 @@ BE_GlobalData::parse_args (long &i, char **av)
         //      Default is "S.cpp".
         // <-sT Server's template skeleton file name ending>
         //      Default is "S_T.cpp".
-        // <-si Server's inline file name ending>
-        //      Default is "S.inl".
         // <-sI Server's implementation skeleton file name ending>
         //      Default is "I.cpp".
 
@@ -2722,12 +2670,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             be_global->server_template_skeleton_ending (av[i + 1]);
             ++i;
           }
-        else if (av[i][2] == 'i')
-          {
-            idl_global->append_idl_flag (av[i + 1]);
-            be_global->server_inline_ending (av[i + 1]);
-            ++i;
-          }
         else if (av[i][2] == 'I')
           {
             idl_global->append_idl_flag (av[i + 1]);
@@ -2736,7 +2678,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else
           {
-            // I expect 's' or 'T' or 'i' or 't' after 's'.
+            // I expect 's' or 'T' or or 't' after 's'.
             ACE_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
@@ -3423,7 +3365,6 @@ BE_GlobalData::parse_args (long &i, char **av)
               {
                 // Disable skeleton file generation.
                 be_global->gen_skel_files (false);
-                be_global->gen_server_inline (false);
                 be_global->gen_server_skeleton (false);
               }
             else
@@ -3437,12 +3378,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 's')
           {
-            if (av[i][3] == 'i')
-              {
-                // No skeleton inline.
-                be_global->gen_server_inline (false);
-              }
-            else if (av[i][3] == 'c')
+            if (av[i][3] == 'c')
               {
                 // No skeleton inline.
                 be_global->gen_server_skeleton (false);
