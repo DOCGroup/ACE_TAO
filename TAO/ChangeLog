@@ -1,3 +1,8 @@
+Sat Nov 05 18:18:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3531b_Regression/server.cpp:
+          Fixed WChar build problems.
+
 Fri Nov  4 07:28:29 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:
