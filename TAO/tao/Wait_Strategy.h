@@ -25,6 +25,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
+class ACE_Event_Handler;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -32,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 class TAO_Transport;
 class TAO_Synch_Reply_Dispatcher;
-class ACE_Event_Handler;
 
 /**
  * @class TAO_Wait_Strategy
