@@ -22,7 +22,7 @@
 #include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_CharStream CharStream.h "ACEXML/common/CharStream.h"
+ * @class ACEXML_CharStream
  *
  * ACEXML_CharStream is an abstract class (interface) which defines the
  * basic opertions a parser could use to retrieve XML charater sequence.

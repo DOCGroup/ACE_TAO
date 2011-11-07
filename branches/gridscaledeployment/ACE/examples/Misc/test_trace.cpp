@@ -38,8 +38,7 @@
 #include "ace/OS_main.h"
 #include "ace/Signal.h"
 #include "ace/Task.h"
-
-
+#include "ace/Trace.h"
 
 class My_Task : public ACE_Task_Base
 {

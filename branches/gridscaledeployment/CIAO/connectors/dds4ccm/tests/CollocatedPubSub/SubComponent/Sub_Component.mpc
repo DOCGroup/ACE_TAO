@@ -1,0 +1,146 @@
+// $Id$
+
+project(SubComponent_idl_gen) : componentidldefaults, dds4ccm {
+  after += Collocated_Connector_idl_gen DDS_Starter_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PUBSUB_COMPONENT_STUB_Export \
+              -Wb,stub_export_include=Sub_Component_stub_export.h \
+              -Wb,skel_export_macro=PUBSUB_COMPONENT_SVNT_Export \
+              -Wb,skel_export_include=Sub_Component_svnt_export.h \
+              -Wb,svnt_export_macro=PUBSUB_COMPONENT_SVNT_Export \
+              -Wb,svnt_export_include=Sub_Component_svnt_export.h \
+              -Wb,exec_export_macro=PUBSUB_COMPONENT_EXEC_Export \
+              -Wb,exec_export_include=Sub_Component_exec_export.h \
+              -I ..
+
+  IDL_Files {
+    Sub_Component.idl
+  }
+}
+
+project(SubComponent_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += SubComponent_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PUBSUB_COMPONENT_LEM_STUB_Export \
+              -Wb,stub_export_include=SubComponent_lem_stub_export.h \
+              -SS -Gxhst -I $CIAO_ROOT/connectors -I ..
+
+  IDL_Files {
+    Sub_ComponentE.idl
+  }
+}
+
+project(SubComponent_lem_stub) : ccm_svnt, dds4ccm_base {
+  after += SubComponent_lem_gen SubComponent_stub \
+           Collocated_Base_stub
+  libs  += Collocated_Base_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Sub_Component_lem_stub
+  dynamicflags += PUBSUB_COMPONENT_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Sub_ComponentEC.cpp
+  }
+
+  Header_Files {
+    Sub_ComponentEC.h
+    Sub_Component_lem_stub_export.h
+  }
+
+  Inline_Files {
+    Sub_ComponentEC.inl
+  }
+}
+
+project(SubComponent_stub) : ccm_stub, dds4ccm_base {
+  after += SubComponent_idl_gen Collocated_Base_stub \
+           Collocated_Connector_stub
+  libs  += Collocated_Base_stub Collocated_Connector_stub
+  includes += ..
+  libpaths += ../lib
+  libout = ../lib
+  sharedname = Sub_Component_stub
+  dynamicflags += PUBSUB_COMPONENT_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Sub_ComponentC.cpp
+  }
+
+  Header_Files {
+    Sub_ComponentC.h
+    Sub_Component_stub_export.h
+  }
+
+  Inline_Files {
+    Sub_ComponentC.inl
+  }
+}
+
+project(SubComponent_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += SubComponent_lem_stub SubComponent_stub \
+             Collocated_Connector_lem_stub Collocated_Connector_stub
+  sharedname = Sub_Component_exec
+  libs    += Sub_Component_stub Sub_Component_lem_stub Collocated_Base_stub \
+             Collocated_Connector_lem_stub Collocated_Connector_stub
+  libpaths += ../lib
+  includes += ..
+  libout = ../lib
+  dynamicflags += PUBSUB_COMPONENT_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Sub_Component_exec.cpp
+  }
+
+  Header_Files {
+    Sub_Component_exec.h
+    Sub_Component_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(SubComponent_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      += Collocated_Base_stub  SubComponent_lem_stub \
+                Collocated_Connector_stub \
+                Collocated_Connector_svnt Collocated_Connector_lem_stub
+  sharedname  = Sub_Component_svnt
+  libs       += Sub_Component_stub Sub_Component_lem_stub Collocated_Base_stub \
+                Collocated_Connector_stub Collocated_Connector_svnt \
+                Collocated_Connector_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += PUBSUB_COMPONENT_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Sub_ComponentS.cpp
+    Sub_Component_svnt.cpp
+  }
+
+  Header_Files {
+    Sub_ComponentS.h
+    Sub_Component_svnt.h
+    Sub_Component_svnt_export.h
+  }
+
+  Inline_Files {
+    Sub_ComponentS.inl
+  }
+}
+

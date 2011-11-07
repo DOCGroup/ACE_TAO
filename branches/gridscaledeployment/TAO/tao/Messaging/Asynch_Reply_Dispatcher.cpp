@@ -67,7 +67,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     }
 
   // See whether we need to delete the data block by checking the
-  // flags. We cannot be happy that we initally allocated the
+  // flags. We cannot be happy that we initially allocated the
   // datablocks of the stack. If this method is called twice, as is in
   // some cases where the same invocation object is used to make two
   // invocations like forwarding, the release becomes essential.

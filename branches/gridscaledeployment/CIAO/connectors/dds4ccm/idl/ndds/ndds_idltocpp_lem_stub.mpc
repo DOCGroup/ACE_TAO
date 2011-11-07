@@ -15,6 +15,10 @@ project (CIAO_NDDS_lem_gen) : install, ndds_idltocpp, ciaoidldefaults {
   IDL_Files {
      ndds_dcps_i_handleE.idl
   }
+
+  specific {
+     install_dir = connectors/dds4ccm/idl/ndds
+  }
 }
 
 project (CIAO_NDDS_lem_stub) : install, ndds_idltocpp_stub, ccm_lem_stub, ccm_session_stub, ciaolib_with_idl, ciao_output, taolib, valuetype, ifr_client {
@@ -34,6 +38,15 @@ project (CIAO_NDDS_lem_stub) : install, ndds_idltocpp_stub, ccm_lem_stub, ccm_se
    ndds_dcpsEC.h
    ndds_lem_stub_export.h
    ndds_dcps_i_handleEC.h
+  }
+
+  Inline_Files {
+   ndds_dcpsEC.inl
+   ndds_dcps_i_handleEC.inl
+  }
+
+  specific {
+   install_dir = connectors/dds4ccm/idl/ndds
   }
 }
 

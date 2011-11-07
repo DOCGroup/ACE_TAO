@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains the "distributed rwho" (drwho) program.  Drwho
 alleviates certain rwho(1) limitations.  For instance it adds
 functionality that spans subnets.  In addition, drwho prints a much
@@ -16,7 +18,7 @@ commands:
 1. Print out the command-line options.
 
 % drwho-client -h
-usage: ./drwho-client 
+usage: ./drwho-client
 -?      prints a short usage message
 -A      append the following hostname to the list of predefined hostnames.
 -a      return information on *all* users remotely logged in (uses yp passwd).
@@ -37,7 +39,7 @@ usage: ./drwho-client
 -t      set the amount of time we wait for servers to timeout.
 -w      return information on just one user.
 
-----------------------------------------	 
+----------------------------------------
 
 2. Find out which friends are logged in (* means currently active)
 
@@ -120,7 +122,7 @@ or
 
 4. Find out everyone who is logged in everywhere!
 
-% drwho-client -A tango.cs.wustl.edu -r -a 
+% drwho-client -A tango.cs.wustl.edu -r -a
 remote users logged on
 ------------------------
  rlneblet                          [ascc]

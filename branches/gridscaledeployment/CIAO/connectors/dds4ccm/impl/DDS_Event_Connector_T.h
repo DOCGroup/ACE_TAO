@@ -123,6 +123,7 @@ private:
 
   void do_configuration_complete (void);
   void do_ccm_activate (void);
+  void do_ccm_remove (void);
 
   typedef DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE> TopicBaseConnector;
 };

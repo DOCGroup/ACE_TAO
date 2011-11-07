@@ -24,7 +24,7 @@
 #include "ace/Auto_Ptr.h"
 
 /**
- * @class ACEXML_Attribute_Def_Builder Attributes_Def_Builder.h "common/Attributes_Def_Builder.h"
+ * @class ACEXML_Attribute_Def_Builder
  *
  * @brief An abstract virtual class defining an interface for building an
  *        attribute definition from DTD.

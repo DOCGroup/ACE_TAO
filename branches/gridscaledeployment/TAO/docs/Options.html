@@ -1561,16 +1561,15 @@ is both a client and a server if the server side is handled by a
 separate thread and the client threads are "pure" clients. When this strategy
 is set to RW, then also the -ORBFlushingStrategy (which is part of the
 Resource_Factory) has to be set to <code>blocking</code>.</p> <p>
-        <CODE>MT_NOUPCALL</CODE> <b>(EXPERIMENTAL!)</b> means use a client connection handler that
+        <CODE>MT_NOUPCALL</CODE> means use a client connection handler that
         participates in the leader-follower model like MT, but, like
-        RW, does not allow handling of nested upcalls within the
-        waiting thread.  Note that with this strategy it is possible
+        RW, does not allow handling of nested CORBA upcalls within the
+        waiting thread. It does allow handling of other non CORBA (ACE reactor events)
+        like timers and ACE notification queue events. Note that with 
+        this strategy it is possible
         to "run out of threads" in a thread pool, and that TAO doesn't
         grow thread pools.  Unlike RW, this does not require  <a
         href="#ORBTransportMuxStrategy">-ORBTransportMuxStrategy&nbsp;<em>EXCLUSIVE</em></a>.
-<!--
-I'm not sure what the affect of AMI on this option is.
--->
 </p>
         <p>Default for this option is <em>MT</em>. </p>
         </td>

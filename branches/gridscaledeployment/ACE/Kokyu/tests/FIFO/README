@@ -1,3 +1,5 @@
+$Id$
+
 This example is a very simple example, showing how to use the Kokyu
 dispatcher to dispatch command objects in a FIFO manner. The test
 configures the Kokyu dispatcher with 3 FIFO lanes, each having a
@@ -6,9 +8,9 @@ which assigns priorities to tasks based on the rate of tasks. To
 ensure that the command objects enqueued in the dispatcher are
 dispatched in the correct order, we enqueue the command objects and
 *then* activate the dispatcher. Only when the dispatcher is activated,
-the thread watching each dispatch queue starts running. 
+the thread watching each dispatch queue starts running.
 
-To run this example, 
+To run this example,
 
 ./test -p<fifo|rr|other>
 

@@ -9,11 +9,17 @@ project (CIAO_NDDS_idl_gen) : install, ndds_idltocpp, componentidldefaults {
               -I$(CIAO_ROOT)/connectors -Glem
 
   IDL_Files {
+    idlflags -= -Gsv
     ndds_dcps.idl
   }
+
   IDL_Files {
-    idlflags -= -Gxhst -Gxhsk
+    idlflags -= -Gxhst -Gxhsk -Gsv
     ndds_dcps_i_handle.idl
+  }
+
+  specific {
+    install_dir = connectors/dds4ccm/idl/ndds
   }
 }
 
@@ -27,6 +33,7 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
   }
 
   Header_Files {
+    ndds_stub_export.h
     ndds_dcpsC.h
     ndds_dcps_i_handleC.h
     ndds_dcps_instance_handleC.h
@@ -37,6 +44,21 @@ project (CIAO_NDDS_stub) : install, ndds_idltocpp, ccm_stub, ciaolib_with_idl, c
     ndds_dcps_i_handleC.cpp
     ndds_dcps_instance_handleC.cpp
   }
+
+  Inline_Files {
+    ndds_dcpsC.inl
+    ndds_dcps_i_handleC.inl
+  }
+
+  specific {
+    install_dir = connectors/dds4ccm/idl/ndds
+  }
+
+  verbatim(gnuace, postinstall) {
+"	cp ndds_dcps_instance_handle.idl $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
+"	cp ndds_dcps_instance_handle*.h $(INSTALL_PREFIX)/include/connectors/dds4ccm/idl/ndds/"
+  }
+
 }
 
 project (CIAO_NDDS_idl_install_only) {

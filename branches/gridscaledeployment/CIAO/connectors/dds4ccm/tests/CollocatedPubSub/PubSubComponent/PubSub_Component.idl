@@ -1,0 +1,16 @@
+// $Id$
+
+#ifndef PUBSUB_COMPONENT_
+#define PUBSUB_COMPONENT_
+
+#include <Components.idl>
+#include "Connector/Collocated_Connector.idl"
+
+module CoPubSub {
+  component PubSub_comp {
+    port Test_conn::DDS_Write TestPub;
+    port Test_conn::DDS_Listen TestSub;
+  };
+};
+
+#endif // PUBSUB_COMPONENT_

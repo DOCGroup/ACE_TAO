@@ -1,7 +1,9 @@
+$Id$
+
                      MFC Logging Example documentation
                      =================================
                             by Craig Rodrigues <crodrigu@bbn.com>
-		               2002/08/02
+                    2002/08/02
 
 The example in this directory is a Microsoft Foundation Class (MFC)
 example which illustrates how to write an ACE_Log_Msg_Callback which

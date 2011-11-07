@@ -1,6 +1,8 @@
+$Id$
+
                             Converting IDL3 to IDL2
                             =======================
-                            
+
 Introduction
 ============
 
@@ -20,7 +22,7 @@ would have been generated in one step by a CCM-aware IDL compiler.
 The tao_idl3_to_idl2 executable itself is built in
 CIAO_ROOT/tools/IDL3_to_IDL2. It uses the TAO IDL compiler
 front end parsing engine and the TAO IDL compiler driver
-files, so it depends on ACE. The IDL generation is 
+files, so it depends on ACE. The IDL generation is
 accomplished by a custom backend library.
 
 Other Features Tested
@@ -73,7 +75,7 @@ order of execution.
 2.
 The -Sm option passed to the IDL compiler must be used when
 processing an IDL file resulting from the execution of
-tao_idl3_to_idl2. This option disables the action of the 
+tao_idl3_to_idl2. This option disables the action of the
 tao_idl backend 'preprocessor' (which is 'on' by default)
 that adds implied IDL nodes to the Abstract Syntax Tree
 for subsequent C++ code generation. In the case of an eventtype,

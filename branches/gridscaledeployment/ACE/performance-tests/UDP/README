@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 udp_test sends UDP packets and records round-trip latency.  The client
 records the latencies and provides nice summary statistics.  The server

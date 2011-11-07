@@ -1,6 +1,9 @@
 <?xml version='1.0'?>
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
  <static id="ACE_Service_Manager" params="-d -p 4911"/>
  <dynamic id="Test_Task" type="Service_Object">
    <initializer path="CCM_App" init="_make_Test_Task" params="-p 3000"/>

@@ -1,3 +1,5 @@
+$Id$
+
 This file describes the various enviornment variables and command line
 options used to configure the logging service in DAnCE.  In the case
 where both an enviornment variable and a command line option are

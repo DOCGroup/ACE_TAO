@@ -1,13 +1,10 @@
 #! /bin/sh
 
-#
-# NAME
 #	checkfilelist - try retrieving files from server
 #
-# SYNOPSIS
 #	checkfilelist servername portno filelist
 #
-#
+# $Id$
 
 if test "$#" -lt 3 ; then
    echo "usage: $0 servername portno filelist"

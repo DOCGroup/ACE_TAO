@@ -1,7 +1,7 @@
 // $Id$
 
-project(Base_stub) : ndds_ts_defaults, nddslib {
-  sharedname = Base_stub
+project(QC_Base_stub) : ndds_ts_defaults, nddslib {
+  sharedname = QC_Base_stub
   dynamicflags += NDDS_USER_DLL_EXPORT
   libout = ../descriptors
 

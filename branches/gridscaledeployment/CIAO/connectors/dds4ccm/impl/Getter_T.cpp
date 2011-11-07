@@ -295,7 +295,7 @@ namespace CIAO
         }
 
       // Check which conditions have triggered the wait method to 'wake up'.
-      for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
+      for (::CORBA::ULong i = 0; i < active_conditions.length(); ++i)
         {
           // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))
@@ -398,7 +398,7 @@ namespace CIAO
       ::DDS::SampleInfoSeq sample_info;
       SEQ_VALUE_TYPE data;
       // Check which conditions have triggered the wait method to 'wake up'.
-      for (::CORBA::ULong i = 0; i < active_conditions.length(); i++)
+      for (::CORBA::ULong i = 0; i < active_conditions.length(); ++i)
         {
           // Check whether this condition is the one we were waiting for.
           if (this->condition_manager_->check_condition (active_conditions[i].in ()))

@@ -1,9 +1,11 @@
+$Id$
+
 Shared Library Reduction Tool
 -----------------------------
 
 The motivation for this tool was the understanding that the ACE & TAO
 libraries were to be linked with the VxWorks kernel to allow multiple
-applications to be run simultaniously with a minimum of footprint
+applications to be run simultaneously with a minimum of footprint
 consumed. Ordinarily a choice is made between static linking
 applications, where each application gets only the object modules
 needed, and shared object linkage, where multiple applications share
@@ -30,7 +32,7 @@ the following steps to generate its results.
    important that target library directory has a current .shobj
    subdirectory.
 
-3. The list of undefined symbols is traversed. For each entry in the list, the 
+3. The list of undefined symbols is traversed. For each entry in the list, the
    modules loaded from step 2 are examined to look for a matching
    symbol. When one is found, the target symbol, and any others
    satisfied by the module are removed from the list, and any
@@ -44,7 +46,7 @@ the following steps to generate its results.
 
 Analysis Artifacts
 ------------------
-   
+
 Development of the shared library reduction tool also provided a
 secondary benefit. It is able to output usage metrics for the various
 modules, which may be useful for directing further hand-crafted
@@ -102,7 +104,7 @@ already fairly well factored so that the additional subsetting by
 soreduce is not effective. Also, due to the layout of the orbsvcs
 library source directory, the tool may not generate valid mpc files.
 
-bash$ $ACE_ROOT/apps/soreduce/soreduce Naming_Service/Naming_Service tests/Simple_Naming/client                    
+bash$ $ACE_ROOT/apps/soreduce/soreduce Naming_Service/Naming_Service tests/Simple_Naming/client
 discovering libraries
 loading object modules
 Libs subject to analysis:

@@ -138,8 +138,8 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
     this->start_reading ();
     this->set_topic_name_getter ();
     this->start_getting ();
-    this->set_topic_name_reader (true);
-    this->set_topic_name_getter (true);
+    this->set_topic_name_reader ();
+    this->set_topic_name_getter ();
   }
 
   void
@@ -294,7 +294,7 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
   }
 
   void
-  RG_LateBinding_Receiver_impl::set_topic_name_reader (bool test_non_changeable)
+  RG_LateBinding_Receiver_impl::set_topic_name_reader (void)
   {
     try
       {
@@ -323,34 +323,17 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
                                   "Unable to narrow connector interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        if (test_non_changeable)
-          {
-            conn->topic_name ("LateBindingTopicSecondTime");
-            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_reader - "
-                        "ERROR: No NonChangeable exception thrown.\n"));
-          }
-        else
-          {
-            conn->topic_name ("LateBindingTopic");
-          }
+        conn->topic_name ("LateBindingTopic");
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        if (test_non_changeable)
-          {
-            ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_reader - "
-                        "Expected NonChangeable caught.\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
-                        "Caught NonChangeable exception.\n"));
-          }
+        ACE_ERROR ((LM_ERROR, "ERROR: RG_LateBinding_Receiver_impl::set_topic_name_reader - "
+                    "Caught NonChangeable exception.\n"));
       }
   }
 
   void
-  RG_LateBinding_Receiver_impl::set_topic_name_getter (bool test_non_changeable)
+  RG_LateBinding_Receiver_impl::set_topic_name_getter (void)
   {
     try
       {
@@ -379,29 +362,12 @@ namespace CIAO_RG_LateBinding_Receiver_Impl
                                   "Unable to narrow connector interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        if (test_non_changeable)
-          {
-            conn->topic_name ("LateBindingTopicSecondTime");
-            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
-                        "ERROR: No NonChangeable exception thrown.\n"));
-          }
-        else
-          {
-            conn->topic_name ("LateBindingTopic");
-          }
+        conn->topic_name ("LateBindingTopic");
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        if (test_non_changeable)
-          {
-            ACE_DEBUG ((LM_DEBUG, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
-                        "Expected NonChangeable caught.\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
-                        "ERROR: Caught NonChangeable exception.\n"));
-          }
+        ACE_ERROR ((LM_ERROR, "RG_LateBinding_Receiver_impl::set_topic_name_getter - "
+                    "ERROR: Caught NonChangeable exception.\n"));
       }
   }
 }

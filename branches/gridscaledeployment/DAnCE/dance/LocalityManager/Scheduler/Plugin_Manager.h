@@ -75,7 +75,7 @@ namespace DAnCE
         get_configuration_handler (const char *id);
 
   private:
-    ::Deployment::Properties config_;
+    const ::Deployment::Properties *config_;
 
     typedef std::map < std::string,
                        ::DAnCE::InstanceDeploymentHandler_var > HANDLER_MAP;

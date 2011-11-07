@@ -1,5 +1,7 @@
 /**
 
+$Id$
+
 @page EC README File
 
       The EC component. This shouldnt be needed if we had a way to

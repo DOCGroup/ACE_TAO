@@ -23,7 +23,7 @@
 #include "ACEXML/common/SAXExceptions.h"
 
 /**
- * @class ACEXML_EntityResolver EntityResolver.h "ACEXML/common/EntityResolver.h"
+ * @class ACEXML_EntityResolver
  *
  * @brief ACEXML_EntityResolver
  *

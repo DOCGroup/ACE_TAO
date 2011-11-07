@@ -1,3 +1,5 @@
+$Id$
+
 README WebStone 2.0.1 bug fix release
 	Proxy server bug fixed (now correctly handles proxy server)
 	Error reading page_stats error fixed
@@ -42,7 +44,7 @@ lack of conformity in Webstone performance quotes.
 	be documented, as well as HTTPD server version and configuration
 	information such as logging, DNS lookups and number of threads.
 
-	
+
 README - WebStone 2.0beta6
 
 WARNING: Do not compare WebStone 2.0 results with WebStone 1.0 results.
@@ -63,7 +65,7 @@ This is the WebStone benchmark. Quick and dirty install:
 		  This may not be necessary, since IRIX binaries are included.
 		- edit conf/testbed to reflect your site
 		  See the doc/FAQ-webstone.html for details.
-	- ./webstone -genfiles will put the files in conf/fileset 
+	- ./webstone -genfiles will put the files in conf/fileset
 		onto your Web server.
 	- ./webstone
 	- to display a table of results: ./webstone -results
@@ -78,7 +80,7 @@ Files of interest:
 	README: This document.
 	README.FIRST: Quick and dirty directions.
 	README.DynamicWorkload: Information on the CGI and NSAPI workloads.
-	webstone: wrapper shell script for everything. 
+	webstone: wrapper shell script for everything.
 		Takes options:
 		-gui: start the GUI mode
 		-kill: kill stray WebStone processes
@@ -106,7 +108,7 @@ Files of interest (./bin):
 Files of interest (./conf):
 	filelist: default list of files on the Web server,
 		with workload description.
-	filelist.photo: Model of a popular Web site 
+	filelist.photo: Model of a popular Web site
 		containing photographic images.
 	filelist.ss: Model of SGI's Silicon Surf WWW site.
 	fileset: list of files for genfiles to create.
@@ -214,7 +216,7 @@ Release Notes (1.0 final):
 Release Notes (1.0b3):
 	* New Web browser GUI
 		NOTE: most Web browsers take up substantial CPU time.
-		If you run the GUI, we recommend that you make the controller 
+		If you run the GUI, we recommend that you make the controller
 		a separate machine, and don't run any WebStone clients on it.
 	* Minor bug fixes
 		Squashed some dubious error messages, fixed some client-
@@ -228,18 +230,18 @@ Release Notes (1.0b3):
 
 LEGAL STUFF:
 
-This file and all files contained in this directory are 
+This file and all files contained in this directory are
 copyright 1995, Silicon Graphics, Inc.
 
-This software is provided without support and without any obligation on the 
-part of Silicon Graphics, Inc. to assist in its use, correction, modification 
-or enhancement. There is no guarantee that this software will be included in 
+This software is provided without support and without any obligation on the
+part of Silicon Graphics, Inc. to assist in its use, correction, modification
+or enhancement. There is no guarantee that this software will be included in
 future software releases, and it probably will not be included.
 
-THIS SOFTWARE IS PROVIDED "AS IS" WITH NO WARRANTIES OF ANY KIND INCLUDING THE 
-WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE, 
-OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE. 
+THIS SOFTWARE IS PROVIDED "AS IS" WITH NO WARRANTIES OF ANY KIND INCLUDING THE
+WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE,
+OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
 
-In no event will Silicon Graphics, Inc. be liable for any lost revenue or 
-profits or other special, indirect and consequential damages, even if 
-Silicon Graphics, Inc. has been advised of the possibility of such damages. 
+In no event will Silicon Graphics, Inc. be liable for any lost revenue or
+profits or other special, indirect and consequential damages, even if
+Silicon Graphics, Inc. has been advised of the possibility of such damages.

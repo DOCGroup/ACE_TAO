@@ -24,7 +24,7 @@
 #include "ACEXML/common/Attributes.h"
 
 /**
- * @class ACEXML_ContentHandler ContentHandler.h "ACEXML/common/ContentHandler.h"
+ * @class ACEXML_ContentHandler
  *
  * @brief ACEXML_ContentHandler
  *

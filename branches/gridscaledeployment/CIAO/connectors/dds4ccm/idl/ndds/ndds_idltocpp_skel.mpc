@@ -9,6 +9,7 @@ project (CIAO_NDDS_skel) : install, ndds_idltocpp_stub, ciaolib_with_idl, ciao_o
   }
 
   Header_Files {
+    ndds_skel_export.h
     ndds_dcpsS.h
     ndds_dcps_i_handleS.h
   }
@@ -16,5 +17,14 @@ project (CIAO_NDDS_skel) : install, ndds_idltocpp_stub, ciaolib_with_idl, ciao_o
   Source_Files {
     ndds_dcpsS.cpp
     ndds_dcps_i_handleS.cpp
+  }
+
+  Inline_Files {
+    ndds_dcpsS.inl
+    ndds_dcps_i_handleS.inl
+  }
+
+  specific {
+    install_dir = connectors/dds4ccm/idl/ndds
   }
 }

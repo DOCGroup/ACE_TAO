@@ -4,6 +4,7 @@ package GNUObjectGenerator;
 # Description   : Generates object files for GNU Makefiles.
 # Author        : Chad Elliott
 # Create Date   : 5/23/2003
+# $Id$
 # ************************************************************
 
 # ************************************************************

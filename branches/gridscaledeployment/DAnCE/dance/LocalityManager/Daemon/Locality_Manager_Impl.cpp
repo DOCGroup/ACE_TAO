@@ -17,6 +17,7 @@
 #include "dance/LocalityManager/Scheduler/Events/Remove.h"
 #include "dance/LocalityManager/Scheduler/Events/Passivate.h"
 #include "dance/LocalityManager/Scheduler/Events/Disconnect.h"
+#include "ace/Auto_Ptr.h"
 
 namespace DAnCE
 {
@@ -45,21 +46,17 @@ namespace DAnCE
   }
 
   void
-  LocalityManager_i::init (Deployment::Properties *props)
+  LocalityManager_i::init (const Deployment::Properties &props)
   {
     DANCE_TRACE ("LocalityManager_i::init");
 
-    if (props)
-      {
-        DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
-                     (LM_DEBUG, DLINFO
-                      ACE_TEXT ("LocalityManager_i::init - ")
-                      ACE_TEXT ("Received %u properties from init\n"),
-                      props->length ()));
-        this->props_ = props;
+    DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
+                 (LM_DEBUG, DLINFO
+                  ACE_TEXT ("LocalityManager_i::init - ")
+                  ACE_TEXT ("Received %u properties from init\n"),
+                  props.length ()));
 
-        PLUGIN_MANAGER::instance ()->set_configuration (this->props_.in ());
-      }
+    PLUGIN_MANAGER::instance ()->set_configuration (props);
 
     PLUGIN_MANAGER::instance ()->set_orb (this->orb_.in ());
 
@@ -83,10 +80,10 @@ namespace DAnCE
         config.load_from_text_file (ACE_TEXT_CHAR_TO_TCHAR (i->c_str ()));
       }
 
-    if (CORBA::is_nil (this->props_))
+    if (props.length () != 0)
       {
         if (DAnCE::Utility::get_property_value (DAnCE::LOCALITY_TIMEOUT,
-                                                *this->props_,
+                                                props,
                                                 this->spawn_delay_))
           {
             DANCE_DEBUG (DANCE_LOG_MAJOR_DEBUG_INFO,
@@ -96,16 +93,22 @@ namespace DAnCE
                           this->spawn_delay_));
           }
 
-        for (CORBA::ULong i = 0; i < this->props_->length (); ++i)
+        DANCE_DEBUG (DANCE_LOG_TRACE,
+                     (LM_DEBUG, DLINFO
+                      ACE_TEXT ("LocalityManager_i::init - ")
+                      ACE_TEXT ("Number of LM configuration properties: %u\n"),
+                      props.length ()));
+
+        for (CORBA::ULong i = 0; i < props.length (); ++i)
           {
             DANCE_DEBUG (DANCE_LOG_TRACE,
                          (LM_DEBUG, DLINFO
                           ACE_TEXT ("LocalityManager_i::init - ")
                           ACE_TEXT ("Looking up configuration handler for <%C>\n"),
-                          this->props_[i].name.in ()));
+                          props[i].name.in ()));
 
             ::DAnCE::LocalityConfiguration_var config =
-              PLUGIN_MANAGER::instance ()->get_configuration_handler (this->props_[i].name.in ());
+              PLUGIN_MANAGER::instance ()->get_configuration_handler (props[i].name.in ());
 
             if (config.in ())
               {
@@ -113,10 +116,16 @@ namespace DAnCE
                              (LM_DEBUG, DLINFO
                               ACE_TEXT ("LocalityManager_i::init - ")
                               ACE_TEXT ("Invoking configuration handler for <%C>\n"),
-                              this->props_[i].name.in ()));
-                config->configure (this->props_[i]);
+                              props[i].name.in ()));
+                config->configure (props[i]);
               }
           }
+      }
+    else
+      {
+        DANCE_ERROR (DANCE_LOG_MAJOR_DEBUG_INFO,
+                     (LM_WARNING, DLINFO
+                      ACE_TEXT ("Warning: No configuration properties\n")));
       }
   }
 
@@ -302,41 +311,62 @@ namespace DAnCE
     CORBA::ULong dispatched (0);
     Deployment_Completion completion (this->scheduler_);
 
+    ::Deployment::Connections *conn_cmp = 0;
+    ACE_NEW_THROW_EX (conn_cmp,
+                      ::Deployment::Connections (this->plan_.connection.length ()),
+                      CORBA::NO_MEMORY ());
+    ACE_Auto_Ptr< ::Deployment::Connections > conn_safe (conn_cmp);
+    CORBA::ULong conn_pos (0);
+
     for (CORBA::ULong i = 0;
          i < this->plan_.connection.length ();
          ++i)
       {
         const ::Deployment::PlanConnectionDescription &conn =
           this->plan_.connection[i];
-        for (CORBA::ULong j = 0;
-             j != conn.internalEndpoint.length ();
-             ++j)
+
+        if (conn.externalReference.length () > 0)
           {
-            if (conn.internalEndpoint[j].provider)
-              {
-                CORBA::ULong instRef =
-                  conn.internalEndpoint[j].instanceRef;
-                CORBA::ULong implRef =
-                  this->plan_.instance[instRef].implementationRef;
-
-                const char  *inst_type =
-                  Utility::get_instance_type (this->plan_.implementation[implRef].execParameter);
-
-                Endpoint_Reference *event (0);
-                Event_Future result;
-                completion.accept (result);
-
-                ACE_NEW_THROW_EX (event,
-                                  Endpoint_Reference (this->plan_,
-                                                      i,
-                                                      inst_type,
-                                                      result),
-                                  CORBA::NO_MEMORY ());
-
-                this->scheduler_.schedule_event (event);
-                ++dispatched;
-              }
+            // connections with external reference endpoints
+            // we do not know how to resolve here; we just
+            // collect them and allow connect handlers/interceptors
+            // to handle them later
+            conn_cmp->length (conn_pos + 1);
+            (*conn_cmp)[conn_pos].name = conn.name.in ();
+            (*conn_cmp)[conn_pos].endpoint.length (1);
+            (*conn_cmp)[conn_pos].endpoint[0] = CORBA::Object::_nil ();
+            ++conn_pos;
           }
+        else
+          for (CORBA::ULong j = 0;
+               j != conn.internalEndpoint.length ();
+               ++j)
+            {
+              if (conn.internalEndpoint[j].provider)
+                {
+                  CORBA::ULong instRef =
+                    conn.internalEndpoint[j].instanceRef;
+                  CORBA::ULong implRef =
+                    this->plan_.instance[instRef].implementationRef;
+
+                  const char  *inst_type =
+                    Utility::get_instance_type (this->plan_.implementation[implRef].execParameter);
+
+                  Endpoint_Reference *event (0);
+                  Event_Future result;
+                  completion.accept (result);
+
+                  ACE_NEW_THROW_EX (event,
+                                    Endpoint_Reference (this->plan_,
+                                                        i,
+                                                        inst_type,
+                                                        result),
+                                    CORBA::NO_MEMORY ());
+
+                  this->scheduler_.schedule_event (event);
+                  ++dispatched;
+                }
+            }
       }
 
     ACE_Time_Value tv (ACE_OS::gettimeofday () + ACE_Time_Value (this->spawn_delay_));
@@ -364,12 +394,6 @@ namespace DAnCE
                       completed_events.size ()));
       }
 
-    ::Deployment::Connections *conn_cmp = 0;
-    ACE_NEW_THROW_EX (conn_cmp,
-                      ::Deployment::Connections (this->plan_.connection.length ()),
-                      CORBA::NO_MEMORY ());
-
-    CORBA::ULong pos (0);
     for (Event_List::iterator i = completed_events.begin ();
          i != completed_events.end ();
          ++i)
@@ -411,14 +435,14 @@ namespace DAnCE
                           event.id_.c_str ()));
           }
 
-        conn_cmp->length (pos + 1);
-        (*conn_cmp)[pos].name = event.id_.c_str ();
-        (*conn_cmp)[pos].endpoint.length (1);
-        (*conn_cmp)[pos].endpoint[0] = obj_ref;
-        ++pos;
+        conn_cmp->length (conn_pos + 1);
+        (*conn_cmp)[conn_pos].name = event.id_.c_str ();
+        (*conn_cmp)[conn_pos].endpoint.length (1);
+        (*conn_cmp)[conn_pos].endpoint[0] = obj_ref;
+        ++conn_pos;
       }
 
-    providedReference = conn_cmp;
+    providedReference = conn_safe.release ();
   }
 
   void
@@ -1115,7 +1139,6 @@ namespace DAnCE
     // Explicitly close the plugin manager to release memory.
     PLUGIN_MANAGER::close ();
 
-    this->props_ = 0;
     this->poa_ = PortableServer::POA::_nil ();
     this->orb_ = CORBA::ORB::_nil ();
   }

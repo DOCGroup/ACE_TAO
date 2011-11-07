@@ -2,12 +2,12 @@
 
 project(*qc_sender) : aceexe, nddslib, ndds_ts_defaults {
   exename = DDS_Sender
-  after += Base_stub
+  after += QC_Base_stub
 
   includes += ../Base
 
   exeout += ../descriptors
-  libs += Base_stub
+  libs += QC_Base_stub
   libpaths += ../descriptors
 
   Source_Files {

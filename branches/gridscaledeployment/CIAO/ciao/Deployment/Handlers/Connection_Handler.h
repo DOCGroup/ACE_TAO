@@ -96,6 +96,9 @@ namespace CIAO
 
     bool is_local_connection (const ::Deployment::PlanConnectionDescription &conn);
 
+    void validate_connection (const char * conn,
+                              ::CORBA::Object_ptr obj);
+
     ::CORBA::ULong retrieve_endpoint (const ::Deployment::PlanConnectionDescription &conn);
 
     typedef std::pair < ::Components::Cookie_var,
@@ -113,6 +116,8 @@ namespace CIAO
     ::Components::CCMObject_ptr get_ccm_object (const char * connection_name);
 
     COOKIES cookies_;
+
+    TAO_SYNCH_MUTEX  cookies_mutex_;
   };
 }
 #endif

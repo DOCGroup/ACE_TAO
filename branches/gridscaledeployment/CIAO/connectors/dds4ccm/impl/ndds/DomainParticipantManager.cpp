@@ -241,6 +241,9 @@ namespace CIAO
         {
           if (iter->second->_ref_count () == 1)
             {
+              DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
+                            "DomainParticipantManager::remove_participant - "
+                            "Delete participant since ref_count is one. \n"));
               delete iter->second;
 
               // Save to remove from list
@@ -248,12 +251,12 @@ namespace CIAO
             }
           else
             {
+              iter->second->_dec_ref ();
               DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_UNIMP_ACTION, (LM_TRACE, DDS4CCM_INFO
                             "DomainParticipantManager::remove_participant - "
                             "Don't delete participant since "
-                            "it's still used - ref_count <%d>\n",
+                            "it's still used - ref_count is still <%d>\n",
                             iter->second->_ref_count ()));
-              iter->second->_dec_ref ();
               return false;
             }
         }

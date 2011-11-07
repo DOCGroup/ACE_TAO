@@ -1,3 +1,5 @@
+# $Id$
+
 start
 description        	ISO 8859-1:1987; Latin Alphabet No. 1
 loc_name        NONE

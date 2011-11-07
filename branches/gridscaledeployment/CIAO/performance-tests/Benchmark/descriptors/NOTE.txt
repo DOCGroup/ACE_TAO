@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains various XML descriptors and configuration
 files required to run benchmarking experiments using CIAO in
 different ways.  Let's go over a few important files first:

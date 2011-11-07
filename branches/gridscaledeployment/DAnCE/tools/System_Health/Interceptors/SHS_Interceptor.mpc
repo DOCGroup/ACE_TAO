@@ -1,6 +1,6 @@
 // $Id$
 
-project (DAnCE_SHS_CORBA_Transport) : dance_lib, dance_output, dance_logger, \
+project (DAnCE_SHS_CORBA_Transport) : install, dance_lib, dance_output, dance_logger, \
         dance_shs_daemon, naming, dance_deployment_scheduler {
   
    dynamicflags += DANCE_SHS_CORBA_TRANSPORT_BUILD_DLL
@@ -13,9 +13,13 @@ project (DAnCE_SHS_CORBA_Transport) : dance_lib, dance_output, dance_logger, \
      SHS_Transport.h
      SHS_CORBA_Transport.h   
    }
+
+   specific {
+     install_dir = tools/System_Health/Interceptors
+   }
 }
 
-project (DAnCE_SHS_Interceptors) : dance_skel, dance_lib, dance_output, dance_logger, \
+project (DAnCE_SHS_Interceptors) : install, dance_skel, dance_lib, dance_output, dance_logger, \
         dance_shs_daemon, naming {
    dynamicflags += DANCE_SHS_INTERCEPTORS_BUILD_DLL
    after += DAnCE_SHS_CORBA_Transport
@@ -27,5 +31,9 @@ project (DAnCE_SHS_Interceptors) : dance_skel, dance_lib, dance_output, dance_lo
 
    Header_Files {
      SHS_Interceptor.h
+   }
+
+   specific {
+     install_dir = tools/System_Health/Interceptors
    }
 }

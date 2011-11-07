@@ -25,7 +25,7 @@
 #include "ACEXML/common/ErrorHandler.h"
 
 /**
- * @class ACEXML_DefaultHandler DefaultHandler.h "ACEXML/common/DefaultHandler.h"
+ * @class ACEXML_DefaultHandler
  *
  * @brief ACEXML_DefaultHandler
  *

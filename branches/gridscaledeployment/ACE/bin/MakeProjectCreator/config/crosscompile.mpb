@@ -13,7 +13,7 @@ project {
   }
   verbatim(gnuace, circuit) {
     ifneq ($(CROSS-COMPILE),)
-      all clean realclean idl_stubs depend lib_warning require_warning avoid_warning:
+      all clean realclean idl_stubs depend lib_warning require_warning avoid_warning install:
       "	@echo This project will not build on CROSS-COMPILE platforms."
     else
   }

@@ -88,6 +88,7 @@ namespace CIAO
 
   private:
     Deployment_Common::INSTANCES instances_;
+    TAO_SYNCH_MUTEX instances_mutex_;
   };
 }
 

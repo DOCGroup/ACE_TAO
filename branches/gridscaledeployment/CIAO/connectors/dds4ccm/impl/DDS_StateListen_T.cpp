@@ -82,7 +82,6 @@ DDS_StateListen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remov
 {
   DDS4CCM_TRACE ("DDS_StateListen_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>::remove");
 
-  this->data_control_->_set_component (::CORBA::Object::_nil ());
   SubscriberBase_type::remove (subscriber);
 }
 
