@@ -1,0 +1,25 @@
+= Misc =
+ * default tao_idl lookup path?
+ * current IDL should be in orvsvcs/orbsvcs
+ * see current bugs:
+   o package websvcs library?
+   o create man pages for ace/tao binaries
+ * rewrite the patch to load TAO libraries by SONAME and RFC it
+ * install .mpc files?
+ * What about REACTOR_NOTIFICATION_QUEUE?
+ * fltk and gl
+ * subj using PROBLEM-REPORT-FORM for reportbug?
+
+= CIAO =
+ * to restore?
+ * autoconf support is missing
+
+= autoconf =
+ * to restore?
+
+= Hurd =
+ * Test programs
+
+= Documentation =
+ * Build location leaks in generated documentation.
+ * ACEXML doc is not packaged.
