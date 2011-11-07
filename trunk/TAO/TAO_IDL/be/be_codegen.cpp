@@ -1183,8 +1183,8 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
                   -1);
 
   int status =
-    this->ciao_exec_header_->open (fname,
-                                   TAO_OutStream::CIAO_EXEC_HDR);
+   this->ciao_exec_header_->open (fname,
+                                  TAO_OutStream::CIAO_EXEC_HDR);
 
   if (status == -1)
     {
@@ -1240,7 +1240,6 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
   int status =
     this->ciao_exec_source_->open (fname,
                                    TAO_OutStream::CIAO_EXEC_IMPL);
-
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -2045,7 +2044,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
   ACE_CString file_str;
 
   const char *output_path =
-    be_util::get_output_path (false, for_skel);
+    be_util::get_output_path (false, for_skel, false);
 
   if (output_path != 0)
     {

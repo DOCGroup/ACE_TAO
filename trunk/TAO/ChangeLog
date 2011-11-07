@@ -1,3 +1,16 @@
+Mon Nov  07 10:10:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_util.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_util.h:
+        Add option -oE: Output directory for the generated CIAO executor files
+        and option -oN for not overwrite CIAO executor files.  
+         
+ 
+
 Sat Nov 05 18:18:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3531b_Regression/server.cpp:
