@@ -629,6 +629,60 @@ Log::parse_handler_open (Log *this_, char *line, size_t offset)
 }
 
 void
+Log::parse_SSLIOP_from_client (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+
+  char *addr = ACE_OS::strchr(line,'<') +1;
+  char *c = ACE_OS::strchr(addr,'>');
+  *c = '\0';
+  c = ACE_OS::strstr(c+1,"on [");
+  long handle = ACE_OS::strtol(c + 4,0,10);
+  PeerProcess *pp = thr->pending_peer();
+  if (pp == 0)
+    {
+      pp = new PeerProcess (offset, false);
+      thr->pending_peer (pp);
+    }
+
+  pp->set_server_addr(addr);
+}
+void
+Log::parse_SSLIOP_from_server (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+
+  char *addr = ACE_OS::strchr(line,'<') +1;
+  char *c = ACE_OS::strchr(addr,'>');
+  *c = '\0';
+  c = ACE_OS::strstr(c+1,"on [");
+  long handle = ACE_OS::strtol(c + 4,0,10);
+  PeerProcess *pp = thr->pending_peer();
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR,"%d: no pending peer for file %s\n",
+                  offset, this_->origin_.c_str()));
+     return;
+    }
+
+  Transport *trans = new Transport (addr,false,offset);
+  pp->add_transport(trans);
+  trans->handle_ = handle;
+  thr->pending_peer(0);
+  hp->add_peer(handle,pp);
+}
+
+void
 Log::parse_begin_connection (Log *this_, char *line, size_t offset)
 {
   long pid = 0;
@@ -647,6 +701,20 @@ Log::parse_begin_connection (Log *this_, char *line, size_t offset)
       pp = new PeerProcess(offset,true);
       pp->set_server_addr (addr);
     }
+  thr->pending_peer (pp);
+}
+
+void
+Log::parse_SSLIOP_begin_connection (Log *this_, char *line, size_t offset)
+{
+  long pid = 0;
+  long tid = 0;
+  this_->get_pid_tid(pid,tid,line);
+
+  HostProcess *hp = this_->get_host(pid);
+  Thread *thr = hp == 0 ? 0 : hp->find_thread (tid);
+
+  PeerProcess *pp = new PeerProcess(offset,true);
   thr->pending_peer (pp);
 }
 
@@ -711,6 +779,7 @@ Log::parse_line (char *line, size_t offset)
       { "GIOP_Message_Base::dump_msg,", parse_dump_msg },
       { "GIOP message - HEXDUMP", parse_HEXDUMP },
       { "open_i, listening on:", parse_open_listener },
+      { "open_i - listening on:", parse_open_listener },
       { "Muxed_TMS[", parse_muxed_tms },
       { "Exclusive_TMS::request_id", parse_exclusive_tms },
       { "process_parsed_messages", parse_process_parsed_msgs },
@@ -718,6 +787,9 @@ Log::parse_line (char *line, size_t offset)
       { "Wait_On_Read", parse_wait_on_read },
       { "::cleanup_queue, byte_count", parse_cleanup_queue },
       { "close_connection_eh", parse_close_connection },
+      { "ssliop_connect, making a new ", parse_SSLIOP_begin_connection },
+      { "SSLIOP connection from client", parse_SSLIOP_from_client },
+      { "SSLIOP connection accepted from server", parse_SSLIOP_from_server },
       { "IIOP_Connector::begin_connection, to ", parse_begin_connection },
       { "IIOP_Connection_Handler::open, The local addr is", parse_local_addr },
       { "opened as TAO_SERVER_ROLE", parse_open_as_server },

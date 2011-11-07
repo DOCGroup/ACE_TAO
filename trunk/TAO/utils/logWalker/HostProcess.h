@@ -27,6 +27,7 @@ class Thread;
 struct PeerNode
 {
   PeerNode (long h, PeerProcess *p);
+  ~PeerNode (void);
   long handle_;
   PeerProcess *peer_;
   bool closed_;
