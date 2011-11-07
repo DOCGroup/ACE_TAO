@@ -1,3 +1,8 @@
+Mon Nov  07 10:31:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * docs/compilet.html:
+        Add option -oE and -oN .
+
 Mon Nov  07 10:10:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
