@@ -9,6 +9,8 @@
 
 long
 Session::tao_version_ = 200;
+int
+Session::date_format_ = 1;
 
 Session::Session (void)
 {
@@ -49,6 +51,24 @@ long
 Session::tao_version (void)
 {
   return tao_version_;
+}
+
+bool
+Session::set_date_format (ACE_TCHAR *str)
+{
+  if (ACE_OS::strncmp(str, ACE_TEXT("1"), 1)== 0)
+    date_format_ = 1;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("2"), 1) == 0)
+    date_format_ = 2;
+   else
+    return false;
+  return true;
+}
+
+int
+Session::date_format (void)
+{
+  return date_format_;
 }
 
 void

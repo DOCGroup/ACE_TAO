@@ -54,6 +54,14 @@ PeerProcess::~PeerProcess (void)
         break;
       delete entry->item();
     }
+  for (TransportList::ITERATOR i(this->transports_); !i.done(); i++)
+    {
+      ACE_DLList_Node *entry;
+      if (i.next(entry) == 0)
+        break;
+      //i.remove ();
+      delete reinterpret_cast<Transport*>(entry->item_);
+    }
 }
 
 void

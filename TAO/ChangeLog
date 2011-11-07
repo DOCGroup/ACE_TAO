@@ -1,3 +1,20 @@
+Mon Nov  7 22:07:18 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/logWalker/HostProcess.h:
+        * utils/logWalker/HostProcess.cpp:
+        * utils/logWalker/Invocation.cpp:
+        * utils/logWalker/Log.h:
+        * utils/logWalker/Log.cpp:
+        * utils/logWalker/PeerProcess.cpp:
+        * utils/logWalker/Session.h:
+        * utils/logWalker/Session.cpp:
+        * utils/logWalker/logWalker.cpp:
+
+          Added basic support for tracking SSLIOP connections. Fixed some
+          memory leak issues reported by valgrind. Added a new date format
+          selector to accommodate two different time/date formats used by
+          -ORBVerboseLogging 1.
+
 Mon Nov  07 10:31:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * docs/compilet.html:
@@ -12,9 +29,9 @@ Mon Nov  07 10:10:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * TAO_IDL/be_include/be_global.h:
         * TAO_IDL/be_include/be_util.h:
         Add option -oE: Output directory for the generated CIAO executor files
-        and option -oN for not overwrite CIAO executor files.  
-         
- 
+        and option -oN for not overwrite CIAO executor files.
+
+
 
 Sat Nov 05 18:18:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
