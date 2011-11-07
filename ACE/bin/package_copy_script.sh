@@ -1,4 +1,5 @@
 #!/bin/sh
+# $Id$
 
 for i in *.gz *.bz2 *.zip; do
   d=`echo $i | sed 's/\.[tz][ai][rp]/-5.5.10&/'`

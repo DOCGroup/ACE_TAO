@@ -1,10 +1,12 @@
 /**
 
+$Id$
+
 @page BasicSP README File
 
       The most basic of the Boeing scenarios that form part of the
 OEP. This is done to illustrate how the OEP can be implemented using
-CIAO. 
+CIAO.
 
         Compilation of the CIDL compiler source code requires the
 Boost library, which is not included in this distribution of

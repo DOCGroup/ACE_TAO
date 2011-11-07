@@ -1,33 +1,33 @@
 $Id$
 
-This README file lists all the example applications for the Proactor framework. 
+This README file lists all the example applications for the Proactor framework.
 
 Test/Example Applications for Proactor:
 =========================================
 
 The following tests are available.
-        
-o $ACE_ROOT/tests/Aio_Platform_Test.cpp : Tests basic limits
-        pertaining to the  POSIX features 
 
-o $ACE_ROOT/examples/Reactor/Proactor/test_aiocb.cpp    : 
+o $ACE_ROOT/tests/Aio_Platform_Test.cpp : Tests basic limits
+        pertaining to the  POSIX features
+
+o $ACE_ROOT/examples/Reactor/Proactor/test_aiocb.cpp    :
         This is a C++ program for testing the AIOCB (AIO Control
         Blocks) based completion approach which uses <aio_suspend> for
-        completion querying. 
+        completion querying.
 
 o $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp   : This is a
         C++ program for testing the Signal based completion approach
-        that uses <sigtimedwait> for completion querying. 
+        that uses <sigtimedwait> for completion querying.
 
 o $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp: Portable
         version of test_aiocb.cpp. (Same as test_aiocb.cpp, but uses
         ACE_DEBUGs instead of printf's and ACE_Message_Blocks instead
-        of char*'s. 
+        of char*'s.
 
 o $ACE_ROOT/examples/Reactor/Proactor/test_aiosig_ace.cpp: Portable
         version of test_aiosig.cpp. (Same as test_aiosig.cpp, but uses
         ACE_DEBUGs instead of printf's and ACE_Message_Blocks instead
-        of char*'s. 
+        of char*'s.
 
 o test_proactor.cpp (with ACE_POSIX_AIOCB_Proactor)     : Test for
         ACE_Proactor which uses AIOCB (AIO Control Blocks) based
@@ -43,26 +43,26 @@ o test_proactor.cpp (with ACE_POSIX_SIG_Proactor)     : Test for
 o test_multiple_loops.cpp       : This example application shows how
         to write programs that combine the Proactor and Reactor event
         loops. This is possible only on WIN32 platform.
-       
+
 o test_timeout.cpp      : Multithreaded application testing the Timers
         mechanism of the Proactor.
 
 o test_timeout_st.cpp   : Single-threaded version of test_timeout.cpp.
 
 o post_completions.cpp  : Tests the completion posting mechanism of
-        the Proactor.  
+        the Proactor.
 
 o test_end_event_loop.cpp : Tests the event loop mechanism of the
-        Proactor. 
-        
+        Proactor.
+
 o test_cancel.cpp         : Tests <cancel> interface of the
         Asynch_Operation class.
-        
+
 Behavior of POSIX AIO of various platforms:
 ==========================================
 
 Sun 5.6 :       POSIX4 Real-Time signals implementation is broken in
-                this platform. 
+                this platform.
                 Only POSIX AIOCB Proactor works in this platform.
                 Therefore, it is not possible to use multiple threads
                 with in the framework.
@@ -70,6 +70,6 @@ Sun 5.6 :       POSIX4 Real-Time signals implementation is broken in
 Sun 5.7 :       AIOCB and SIG Proactors work fine.
 
 LynxOS 3.0.0 :  <pthread_sigmask> is not available in this
-                platform. So, only AIOCB Proactor works here. 
+                platform. So, only AIOCB Proactor works here.
 
 

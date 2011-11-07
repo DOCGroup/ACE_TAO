@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 The TwoQueries exists of 4 runs. During each run the Sender writes 20 samples to DDS.
 After that it informs the receiver that the samples were written. The receiver

@@ -1,3 +1,4 @@
+$Id$
 
 These tests test the performance with different options.
 
@@ -18,7 +19,7 @@ These tests test the performance with different options.
 To test changes in the next attributes, changes this values in the publisher cdp-files:
 latency_count : indicates the number of messages minus 1 between two latency messages
 iterations : the number of messages from one instance to send. 0 = INFINITY .
-datalen: the datalen of a message (minimal 32). 
-sleep:  time in ms to sleep before writing the next message 
-spin: number of times to do a code loop before writing the next message, sleep has to be 0 . 
-keys: number of instances. (default 1) MORE THEN 1 NOT IMPLEMENTED YET.  
+datalen: the datalen of a message (minimal 32).
+sleep:  time in ms to sleep before writing the next message
+spin: number of times to do a code loop before writing the next message, sleep has to be 0 .
+keys: number of instances. (default 1) MORE THEN 1 NOT IMPLEMENTED YET.

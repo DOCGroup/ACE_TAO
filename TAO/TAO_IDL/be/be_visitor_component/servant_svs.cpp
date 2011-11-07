@@ -308,7 +308,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << "PortableServer::POA_var POA = cnt_safe->the_port_POA ();" << be_nl
         << "::CORBA::Object_var tmp =" << be_idt_nl
         << "this->get_facet_executor (\"" << port_name << "\");"<< be_uidt_nl << be_nl
-        << "::CCM_" << lname << "_var tmp_var = "<< global << sname <<"::CCM_" << lname
+        << global << sname << "::CCM_" << lname << "_var tmp_var = "<< global << sname <<"::CCM_" << lname
         << "::_narrow (tmp.in());" << be_nl
         << "::CIAO_FACET" << prefix_connector
         << scope->flat_name () << "::" << lname

@@ -32,7 +32,7 @@ namespace CIAO
   }
 
   void CIAO_StoreReferences_i::pre_install (::Deployment::DeploymentPlan &,
-                                                      ::CORBA::ULong)
+                                            ::CORBA::ULong)
   {
     // no-op
   }
@@ -48,7 +48,7 @@ namespace CIAO
     CIAO_DEBUG (9, (LM_TRACE, CLINFO
                     "CIAO_StoreReferences_i::post_install - "
                     "Interceptor post install for instance %C\n",
-                     plan.instance[index].name.in ()));
+                    plan.instance[index].name.in ()));
 
     if (reference.type() == ::CORBA::_tc_null)
       {
@@ -56,7 +56,7 @@ namespace CIAO
                         "CIAO_StoreReferences_i::post_install - "
                         "Got a nil reference, unable to store reference "
                         "for instance <%C>\n",
-                         inst.name.in ()));
+                        inst.name.in ()));
         return;
       }
 
@@ -82,12 +82,14 @@ namespace CIAO
             CIAO_DEBUG (9, (LM_TRACE, CLINFO
                             "CIAO_StoreReferences_i::post_install - "
                             "Registering name %C for instance %C\n",
-                             name,
-                             plan.instance[index].name.in ()));
+                            name,
+                            plan.instance[index].name.in ()));
 
+            ::CosNaming::NamingContext_var ctx_safe =
+              ::CosNaming::NamingContext::_duplicate (this->ctx_.in ());
             Name_Utilities::bind_object (name,
                                          obj.in (),
-                                         this->ctx_.in ());
+                                         ctx_safe.in ());
           }
         else if (ACE_OS::strcmp (inst.configProperty[i].name.in (),
                                  DAnCE::INSTANCE_IOR_FILE) == 0)
@@ -98,7 +100,9 @@ namespace CIAO
             const char * name = 0;
             inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
 
-            CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
+            ::CORBA::ORB_var orb_safe =
+              ::CORBA::ORB::_duplicate(this->orb_.in ());
+            CORBA::String_var ior = orb_safe->object_to_string (obj.in ());
 
             CIAO::Name_Utilities::write_ior (ACE_TEXT_CHAR_TO_TCHAR (name), ior.in ());
           }
@@ -116,7 +120,7 @@ namespace CIAO
             CORBA::Object_var obj;
             props[i].value >>= CORBA::Any::to_object (obj);
 
-            ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
+            this->ctx_ = CosNaming::NamingContext::_narrow (obj.in ());
           }
       }
   }
@@ -124,6 +128,16 @@ namespace CIAO
   /// Implementation skeleton constructor
   CIAO_ReferenceLookup_i::CIAO_ReferenceLookup_i (void)
   {
+    this->orb_ = DAnCE::PLUGIN_MANAGER::instance ()->get_orb ();
+
+    if (CORBA::is_nil (this->orb_))
+      {
+        CIAO_ERROR (1, (LM_ERROR, CLINFO
+                        "Container_Handler_i::configure -"
+                        "Unable to locate ORB.\n"));
+        throw ::Deployment::StartError ("CIAO Container Handler",
+                                        "Unable to locate ORB");
+      }
   }
 
   /// Implementation skeleton destructor
@@ -132,10 +146,57 @@ namespace CIAO
   }
 
   void
-  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &,
-                                       ::CORBA::ULong,
-                                       ::CORBA::Any &)
+  CIAO_ReferenceLookup_i::pre_connect (::Deployment::DeploymentPlan &plan,
+                                       ::CORBA::ULong connRef,
+                                       ::CORBA::Any &providedRef)
   {
+    CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                    "CIAO_ReferenceLookup_i::pre_connect - "
+                    "Interceptor pre connect for connection %C\n",
+                    plan.connection[connRef].name.in ()));
+
+    // attempt to resolve CORBA IOR type external references
+    if (plan.connection[connRef].externalReference.length () > 0)
+      {
+        ::CORBA::Object_var obj;
+        providedRef >>= CORBA::Any::to_object (obj);
+        if (CORBA::is_nil (obj))
+          {
+            try
+              {
+                obj =
+                  this->orb_->string_to_object(plan.connection[connRef].externalReference[0].location.in());
+                providedRef <<= obj;
+              }
+            catch (const CORBA::INV_OBJREF&)
+              {
+                CIAO_ERROR (6, (LM_INFO, CLINFO
+                                "CIAO_ReferenceLookup_i::pre_connect - "
+                                "Unable to resolve external reference for connection %C\n",
+                                plan.connection[connRef].name.in ()));
+              }
+            catch (CORBA::Exception &ex)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                "CIAO_ReferenceLookup_i::pre_connect - "
+                                "Caught CORBA Exception while resolving external"
+                                "reference for connection %C: %C\n",
+                                plan.connection[connRef].name.in (),
+                                ex._info ().c_str ()));
+                throw;
+              }
+            catch (...)
+              {
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
+                                "CIAO_ReferenceLookup_i::pre_connect - "
+                                "Caught C Exception while resolving external reference"
+                                "for connection %C\n",
+                                plan.connection[connRef].name.in ()));
+                throw;
+              }
+          }
+      }
+
   }
 
   void CIAO_ReferenceLookup_i::post_connect (const ::Deployment::DeploymentPlan &,
@@ -148,7 +209,7 @@ namespace CIAO
   CIAO_ReferenceLookup_i::configure (const ::Deployment::Properties & )
   {
   }
- }
+}
 
 extern "C"
 {
@@ -156,5 +217,11 @@ extern "C"
   CIAO_Deployment_Interceptors_Export create_CIAO_StoreReferences (void)
   {
     return new CIAO::CIAO_StoreReferences_i ();
+  }
+
+  ::DAnCE::DeploymentInterceptor_ptr
+  CIAO_Deployment_Interceptors_Export create_CIAO_ReferenceLookup (void)
+  {
+    return new CIAO::CIAO_ReferenceLookup_i ();
   }
 }

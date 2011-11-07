@@ -1,11 +1,13 @@
+$Id$
+
 Web Crawler                                     Kirthika Parameswaran
 -----------
 
 The Web Crawler follows the  HTTP_1.1 protocol.
- 
+
 This Crawler crawls in  either FIFO or LIFO order over the URLs
-now stored in a ACE_Unbounded_Queue. The Command Processor pattern is 
-used in this example. 
+now stored in a ACE_Unbounded_Queue. The Command Processor pattern is
+used in this example.
 
 Also the auto-purging feature where connections are removed from the cache
 when the process runs out of file descriptors, is added to this example.
@@ -16,7 +18,7 @@ Run:
 ---
 
 
-> make 
+> make
 
 > main -r -u www.cs.wustl.edu/~kirthika/test.html -o LIFO
 

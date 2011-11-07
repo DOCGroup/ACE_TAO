@@ -5,7 +5,6 @@
 
 #include "ciao/Logger/Log_Macros.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "ciao/Containers/Servant_Activator.h"
 #include "ciao/Servants/Connector_Servant_Impl_Base.h"
 #include "ciao/Base/CIAO_ExceptionsC.h"
 
@@ -17,8 +16,8 @@ namespace CIAO
   Container_i<BASE>::Container_i (CORBA::ORB_ptr o,
                                   PortableServer::POA_ptr root_poa)
     : orb_ (::CORBA::ORB::_duplicate (o)),
-      root_poa_ (::PortableServer::POA::_duplicate (root_poa)),
-      sa_ (0)
+      root_poa_ (::PortableServer::POA::_duplicate (root_poa))
+      //, sa_ (0)
   {
   }
 
@@ -31,18 +30,20 @@ namespace CIAO
   void
   Container_i<BASE>::fini (void)
   {
-    this->sa_ = ::CIAO::Servant_Activator::_nil ();
 
-    if (! CORBA::is_nil (this->component_poa_.in ()))
+    ::PortableServer::POA_var comp_poa_safe = this->component_poa_._retn ();
+
+    if (! CORBA::is_nil (comp_poa_safe.in ()))
       {
-        this->component_poa_->destroy (1, 1);
-        this->component_poa_ = ::PortableServer::POA::_nil ();
+        comp_poa_safe->destroy (1, 1);
       }
 
-    if (! CORBA::is_nil (this->facet_cons_poa_.in ()))
+    ::PortableServer::POA_var facet_cons_poa_safe =
+      this->facet_cons_poa_._retn ();
+
+    if (! CORBA::is_nil (facet_cons_poa_safe.in ()))
       {
-        this->facet_cons_poa_->destroy (1, 1);
-        this->facet_cons_poa_ = ::PortableServer::POA::_nil ();
+        facet_cons_poa_safe->destroy (1, 1);
       }
 
     this->root_poa_ = ::PortableServer::POA::_nil ();
@@ -92,20 +93,20 @@ namespace CIAO
   {
     CIAO_TRACE ("Container_i::install_servant");
 
-    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
+    PortableServer::POA_var poa_safe;
 
     if (t == Container_Types::COMPONENT_t ||
         t == Container_Types::HOME_t)
       {
-        tmp = this->component_poa_.in ();
+        poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in ());
       }
     else
       {
-        tmp = this->facet_cons_poa_.in ();
+        poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
       }
 
-    PortableServer::ObjectId_var tmp_id = tmp->activate_object (p);
-    CORBA::Object_var objref = tmp->id_to_reference (tmp_id.in ());
+    PortableServer::ObjectId_var tmp_id = poa_safe->activate_object (p);
+    CORBA::Object_var objref = poa_safe->id_to_reference (tmp_id.in ());
     oid = tmp_id._retn ();
 
     return objref._retn ();
@@ -118,18 +119,21 @@ namespace CIAO
   {
     CIAO_TRACE ("Container_i::uninstall");
 
-    PortableServer::ServantBase_var svnt;
+    PortableServer::POA_var poa_safe;
 
     switch (y)
       {
         case Container_Types::COMPONENT_t:
         case Container_Types::HOME_t:
-          svnt = this->component_poa_->reference_to_servant (objref);
+          poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in());
           break;
         default:
-          svnt = this->facet_cons_poa_->reference_to_servant (objref);
+          poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in());
           break;
       }
+
+    PortableServer::ServantBase_var svnt =
+      poa_safe->reference_to_servant (objref);
 
     PortableServer::ObjectId_var oid;
     this->uninstall_servant (svnt.in (), y, oid.out ());
@@ -317,8 +321,10 @@ namespace CIAO
   {
     CIAO_TRACE ("Container_i::uninstall_component");
 
+    PortableServer::POA_var poa_safe =
+      PortableServer::POA::_duplicate(this->component_poa_.in ());
     PortableServer::ServantBase_var srv_tmp =
-      this->component_poa_->reference_to_servant (homeref);
+      poa_safe->reference_to_servant (homeref);
     CIAO::Connector_Servant_Impl_Base * svnt =
       dynamic_cast <CIAO::Connector_Servant_Impl_Base *> (
         srv_tmp.in ());
@@ -348,7 +354,7 @@ namespace CIAO
   {
     CIAO_TRACE ("Container_i::uninstall_servant");
 
-    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
+    PortableServer::POA_var poa_safe;
 
     if ((t == Container_Types::COMPONENT_t) ||
         (t == Container_Types::HOME_t))
@@ -359,7 +365,7 @@ namespace CIAO
                      "Container_i::uninstall_servant - "
                      "Removing component or home servant\n"));
 
-        tmp = this->component_poa_.in ();
+        poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in ());
       }
     else
       {
@@ -369,13 +375,13 @@ namespace CIAO
                     "Container_i::uninstall_servant - "
                     "Removing facet or consumer servant\n"));
 
-        tmp = this->facet_cons_poa_.in ();
+        poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
       }
 
     try
       {
-        PortableServer::ObjectId_var tmp_id = tmp->servant_to_id (svnt);
-        tmp->deactivate_object (tmp_id);
+        PortableServer::ObjectId_var tmp_id = poa_safe->servant_to_id (svnt);
+        poa_safe->deactivate_object (tmp_id);
 
         CIAO_DEBUG (9,
                     (LM_TRACE,
@@ -410,14 +416,15 @@ namespace CIAO
 
     try
       {
-
+        PortableServer::POA_var poa_safe =
+          PortableServer::POA::_duplicate(this->component_poa_.in ());
         CIAO::Connector_Servant_Impl_Base * svt = 0;
         PortableServer::ServantBase_var servant_from_reference;
 
         try
           {
             servant_from_reference =
-              this->component_poa_->reference_to_servant (compref);
+              poa_safe->reference_to_servant (compref);
             svt =
               dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
                 servant_from_reference.in ());
@@ -488,13 +495,15 @@ namespace CIAO
 
     try
       {
+        PortableServer::POA_var poa_safe =
+          PortableServer::POA::_duplicate(this->component_poa_.in ());
         CIAO::Connector_Servant_Impl_Base * svt = 0;
         PortableServer::ServantBase_var servant_from_reference;
 
         try
           {
             servant_from_reference =
-              this->component_poa_->reference_to_servant (compref);
+              poa_safe->reference_to_servant (compref);
             svt =
               dynamic_cast<CIAO::Connector_Servant_Impl_Base *> (
                 servant_from_reference.in ());
@@ -561,7 +570,9 @@ namespace CIAO
 
         try
           {
-            svt = this->component_poa_->reference_to_servant (compref);
+            PortableServer::POA_var poa_safe =
+              PortableServer::POA::_duplicate(this->component_poa_.in ());
+            svt = poa_safe->reference_to_servant (compref);
           }
         catch (CORBA::Exception &ex)
           {
@@ -587,7 +598,7 @@ namespace CIAO
                                           "exception while retrieving servant.");
           }
 
-        if (!svt)
+        if (CORBA::is_nil (svt.in ()))
           {
             CIAO_ERROR (1, (LM_EMERGENCY,  CLINFO
                             "Container_i::set_attributes - %C\n"
@@ -745,32 +756,19 @@ namespace CIAO
 
     PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
-    TAO::Utils::PolicyList_Destroyer policies (3);
-    policies.length (3);
+    TAO::Utils::PolicyList_Destroyer policies (2);
+    policies.length (2);
 
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID);
-
-    // Servant Manager Policy
-    policies[1] =
-      root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
-
     // Servant Retention Policy
-    policies[2] =
+    policies[1] =
       root->create_servant_retention_policy (PortableServer::RETAIN);
 
     this->facet_cons_poa_ =
       root->create_POA (name,
                         poa_manager.in (),
                         policies);
-
-    Servant_Activator_i *sa = 0;
-    ACE_NEW_THROW_EX (sa,
-                      Servant_Activator_i (this->orb_.in ()),
-                      CORBA::NO_MEMORY ());
-    this->sa_ = sa;
-
-    this->facet_cons_poa_->set_servant_manager (this->sa_.in ());
   }
 
   template <typename BASE>
@@ -794,10 +792,12 @@ namespace CIAO
         throw ::Components::InvalidConnection ();
       }
 
+    PortableServer::POA_var poa_safe =
+      PortableServer::POA::_duplicate(this->component_poa_.in ());
     try
       {
         PortableServer::ServantBase_var provider_tmp =
-          this->component_poa_->reference_to_servant (provider);
+          poa_safe->reference_to_servant (provider);
 
         CIAO_DEBUG (9,
                     (LM_TRACE,
@@ -822,7 +822,7 @@ namespace CIAO
           }
 
         PortableServer::ServantBase_var user_tmp =
-          this->component_poa_->reference_to_servant (user);
+          poa_safe->reference_to_servant (user);
 
         CIAO_DEBUG (9, (LM_TRACE, CLINFO "Container_i::connect_local_facet - "
                      "Successfully fetched user servant [%C] from POA\n", user_port));
@@ -933,8 +933,10 @@ namespace CIAO
 
     try
       {
+        PortableServer::POA_var poa_safe =
+          PortableServer::POA::_duplicate(this->component_poa_.in ());
         PortableServer::ServantBase_var srv_tmp =
-          this->component_poa_->reference_to_servant (provider);
+          poa_safe->reference_to_servant (provider);
 
         CIAO_DEBUG (9,
                     (LM_TRACE,
@@ -957,7 +959,7 @@ namespace CIAO
             throw ::Components::InvalidConnection ();
           }
 
-        srv_tmp = this->component_poa_->reference_to_servant (user);
+        srv_tmp = poa_safe->reference_to_servant (user);
 
         CIAO_DEBUG (9,
                     (LM_TRACE,
@@ -1039,14 +1041,9 @@ namespace CIAO
   ::CORBA::Object_ptr
   Container_i<BASE>::get_objref (PortableServer::Servant p)
   {
-    return this->component_poa_->servant_to_reference (p);
-  }
-
-  template <typename BASE>
-  ::CIAO::Servant_Activator_ptr
-  Container_i<BASE>::ports_servant_activator (void)
-  {
-    return Servant_Activator::_duplicate(this->sa_.in ());
+    PortableServer::POA_var poa_safe =
+      PortableServer::POA::_duplicate(this->component_poa_.in ());
+    return poa_safe->servant_to_reference (p);
   }
 
   template <typename BASE>
@@ -1057,16 +1054,16 @@ namespace CIAO
   {
     CIAO_TRACE ("Container_i::generate_reference");
 
-    PortableServer::POA_ptr tmp = PortableServer::POA::_nil();
+    PortableServer::POA_var poa_safe;
 
     if (t == Container_Types::COMPONENT_t
         || t == Container_Types::HOME_t)
       {
-        tmp = this->component_poa_.in ();
+        poa_safe = PortableServer::POA::_duplicate(this->component_poa_.in ());
       }
     else
       {
-        tmp = this->facet_cons_poa_.in ();
+         poa_safe = PortableServer::POA::_duplicate(this->facet_cons_poa_.in ());
       }
 
     PortableServer::ObjectId_var oid =
@@ -1076,7 +1073,7 @@ namespace CIAO
       PortableServer::ObjectId_to_string (oid.in ());
 
     CORBA::Object_var objref =
-      tmp->create_reference_with_id (oid.in (), repo_id);
+      poa_safe->create_reference_with_id (oid.in (), repo_id);
 
     return objref._retn ();
   }

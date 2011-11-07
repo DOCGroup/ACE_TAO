@@ -15,5 +15,9 @@ project(DDS4CCM_Logger): install, ciao_lib, taolib, acelib {
     Logger_Service.h
     Log_Macros.h
   }
+
+  specific {
+    install_dir = connectors/dds4ccm/impl/logger
+  }
 }
 

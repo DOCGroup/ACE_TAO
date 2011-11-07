@@ -1,5 +1,6 @@
 ==
 == Copyright and Licensing Information
+== $Id$
 ==
 
 ACE(tm) and TAO(tm) are copyrighted by Dr. Douglas C. Schmidt and the Center for Distributed

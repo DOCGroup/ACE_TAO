@@ -23,7 +23,7 @@
 #include "ACEXML/common/Exception.h"
 
 /**
- * @class ACEXML_SAXException SAXExceptions.h "ACEXML/common/SAXExceptions.h"
+ * @class ACEXML_SAXException
  *
  * @brief ACEXML_SAXException
  *

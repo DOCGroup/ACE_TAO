@@ -23,7 +23,7 @@
 #include "ACEXML/common/XML_Types.h"
 
 /**
- * @class ACEXML_Exception Exception.h "ACEXML/common/Exception.h"
+ * @class ACEXML_Exception
  *
  * @brief ACEXML_Exception
  *
@@ -59,7 +59,7 @@ public:
   virtual void print (void) const = 0;
 
 protected:
-  /// Default contructor.
+  /// Default constructor.
   ACEXML_Exception (void);
 
   /// All exceptions have names.  This name is used to identify the

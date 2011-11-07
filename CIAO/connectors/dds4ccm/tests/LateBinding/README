@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 Normally when a DDS4CCM connector starts, it prepares DDS by creating
 several DDS entities, like a domain participant and topic.

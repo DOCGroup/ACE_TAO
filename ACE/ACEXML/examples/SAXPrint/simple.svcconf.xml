@@ -1,4 +1,9 @@
 <ACE_Svc_Conf>
+
+<!--  -->
+<!--  $Id$ -->
+<!--  -->
+
 <static id="ACE_Service_Manager" params="-d -p 4911"/>
 
 <dynamic id="Test_Task" type="service_object"> &#65; &amp;

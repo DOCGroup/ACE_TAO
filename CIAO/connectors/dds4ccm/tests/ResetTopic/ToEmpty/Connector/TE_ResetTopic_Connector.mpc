@@ -1,0 +1,148 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl -p TE_ResetTopicBase -l .. -o ../lib -u DDS TE_ResetTopic_Connector"
+
+project (TE_ResetTopicConnector_idl_gen) : connectoridldefaults, dds4ccm {
+  after += DDS4CCM_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=TE_RESETTOPIC_CONNECTOR_STUB_Export \
+              -Wb,stub_export_include=ResetTopic_Connector_stub_export.h \
+              -Wb,skel_export_macro=TE_RESETTOPIC_CONNECTOR_SVNT_Export \
+              -Wb,skel_export_include=ResetTopic_Connector_svnt_export.h \
+              -Wb,svnt_export_macro=TE_RESETTOPIC_CONNECTOR_SVNT_Export \
+              -Wb,svnt_export_include=ResetTopic_Connector_svnt_export.h \
+              -Wb,conn_export_macro=TE_RESETTOPIC_CONNECTOR_CONN_Export \
+              -Wb,conn_export_include=ResetTopic_Connector_conn_export.h \
+              -I ..
+
+  IDL_Files {
+    TE_ResetTopic_Connector.idl
+  }
+}
+
+project (TE_ResetTopicConnector_lem_gen) : ciaoidldefaults, dds4ccm {
+  custom_only = 1
+  after += TE_ResetTopicConnector_idl_gen
+  idlflags += -Wb,stub_export_macro=TE_RESETTOPIC_CONNECTOR_LEM_STUB_Export \
+              -Wb,stub_export_include=TE_ResetTopic_Connector_lem_stub_export.h \
+              -SS -Gxhst \
+              -I ..
+
+  IDL_Files {
+    TE_ResetTopic_ConnectorE.idl
+  }
+}
+
+project (TE_ResetTopicConnector_lem_stub) : ccm_svnt, dds4ccm_lem_stub {
+  after += TE_ResetTopicConnector_lem_gen TE_ResetTopicConnector_stub \
+           TE_ResetTopicBase_stub
+  libs  += TE_ResetTopicBase_stub TE_ResetTopicConnector_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = TE_ResetTopicConnector_lem_stub
+  dynamicflags += TE_RESETTOPIC_CONNECTOR_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TE_ResetTopic_ConnectorEC.cpp
+  }
+
+  Header_Files {
+    TE_ResetTopic_ConnectorEC.h
+    TE_ResetTopic_Connector_lem_stub_export.h
+  }
+
+  Inline_Files {
+    TE_ResetTopic_ConnectorEC.inl
+  }
+}
+
+project (TE_ResetTopicConnector_stub) : ccm_stub, dds4ccm_base {
+  after += TE_ResetTopicConnector_idl_gen TE_ResetTopicBase_stub
+  libs  += TE_ResetTopicBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = TE_ResetTopicConnector_stub
+  dynamicflags += TE_RESETTOPIC_CONNECTOR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TE_ResetTopic_ConnectorC.cpp
+  }
+
+  Header_Files {
+    TE_ResetTopic_ConnectorC.h
+    TE_ResetTopic_Connector_stub_export.h
+  }
+
+  Inline_Files {
+    TE_ResetTopic_ConnectorC.inl
+  }
+}
+
+project (TE_ResetTopicConnector_exec) : ciao_executor, dds4ccm_impl {
+  after   += TE_ResetTopicConnector_lem_stub TE_ResetTopicConnector_stub \
+             TE_ResetTopicBase_stub
+  sharedname = TE_ResetTopicConnector_exec
+  libs += TE_ResetTopicConnector_stub TE_ResetTopicConnector_lem_stub \
+          TE_ResetTopicBase_stub TE_ResetTopicBase_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += TE_RESETTOPIC_CONNECTOR_CONN_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TE_ResetTopic_Connector_conn.cpp
+  }
+
+  Header_Files {
+    TE_ResetTopic_Connector_conn.h
+    TE_ResetTopic_Connector_conn_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project (TE_ResetTopicConnector_svnt) : ciao_servant, dds4ccm_impl {
+  after      += TE_ResetTopicConnector_lem_stub TE_ResetTopicConnector_exec \
+                TE_ResetTopicConnector_stub
+  sharedname  = TE_ResetTopicConnector_svnt
+  libs       += TE_ResetTopicConnector_stub \
+                TE_ResetTopicConnector_lem_stub  \
+                TE_ResetTopicBase_stub \
+                TE_ResetTopicConnector_exec
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += TE_RESETTOPIC_CONNECTOR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    TE_ResetTopic_ConnectorS.cpp
+    TE_ResetTopic_Connector_svnt.cpp
+  }
+
+  Header_Files {
+    TE_ResetTopic_ConnectorS.h
+    TE_ResetTopic_Connector_svnt.h
+    TE_ResetTopic_Connector_svnt_export.h
+  }
+
+  Inline_Files {
+    TE_ResetTopic_ConnectorS.inl
+  }
+}
+
+

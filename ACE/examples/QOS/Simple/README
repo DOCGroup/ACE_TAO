@@ -1,6 +1,6 @@
-//$Id$
+$Id$
 
-A Regression test for ACE QoS features. 
+A Regression test for ACE QoS features.
 ---------------------------------------
 
 This test implements a simple Receiver-Sender program that ensures
@@ -16,10 +16,10 @@ Build Requirements :
 --------------------
 1. Two Win2K machines.
 2. June98 Platform SDK or later.
-3. Link with ws2_32.lib 
+3. Link with ws2_32.lib
 
-The test consists of a receiver and a sender. 
- 
+The test consists of a receiver and a sender.
+
  The sender is started first (though it is not mandatory) as :
 
  sender -m merengue.cs.wustl.edu:9091 -P 10004
@@ -36,7 +36,7 @@ The test consists of a receiver and a sender.
 
 The sample Sender is started next as :
 
-  receiver -m merengue.cs.wustl.edu:9091 
+  receiver -m merengue.cs.wustl.edu:9091
 
  -m: specifies the multicast session address that both client and
      server subscribe to for QoS events.
@@ -56,7 +56,7 @@ On Win2K the user must have administrative access to the machine to
 run this program.  It seems to be a pre-requisite to opening QoS
 sockets.
 
-The sender and receiver should be run on different Win2K machines. 
+The sender and receiver should be run on different Win2K machines.
 
 The test demonstrates how to GQOS enable an application using the ACE QoS APIs.
 It concentrates on the use of various ACE QoS APIs and their correctness.
@@ -75,9 +75,9 @@ PLATFORM_RAPI_LDFLAGS += -L/project/doc/vishal/rapi/rel4.2a4/rsvpd/
 
 assuming that RAPI library is installed in /project/doc/vishal/rapi/rel4.2a4/
 
-1. Compile ACE with 
-       
-   make rapi=1 
+1. Compile ACE with
+
+   make rapi=1
 
 2. Run the RSVP Daemon on two machines: (merengue.cs and macarena.cs)
 
@@ -98,8 +98,8 @@ assuming that RAPI library is installed in /project/doc/vishal/rapi/rel4.2a4/
    RESV, PATH and other RSVP messages, run the QoS example, making sure
    that rtap session is released on both machines.
 
-The test consists of a receiver and a sender. 
- 
+The test consists of a receiver and a sender.
+
  The sender is started first (though it is not mandatory) as :
 
  sender -m macarena.cs.wustl.edu:9091 -P 10004
@@ -116,7 +116,7 @@ The test consists of a receiver and a sender.
 
 The sample Sender is started next as :
 
-  receiver -m macarena.cs.wustl.edu:9091 
+  receiver -m macarena.cs.wustl.edu:9091
 
  -m: specifies the multicast session address that both client and
      server subscribe to for QoS events.
@@ -133,7 +133,7 @@ The sample Sender is started next as :
  -h: Displays the help on various options.
 
 -------------------------------------------------------------------------------
-  
+
 If you run into any problems with this test please contact Vishal
 Kachroo <vishal@cs.wustl.edu>.
 

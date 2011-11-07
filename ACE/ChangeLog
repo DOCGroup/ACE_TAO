@@ -1,3 +1,213 @@
+Sat Oct 22 02:06:37 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_common.GNU:
+
+          Added missing:
+          DCCFLAGS += -g
+
+          From the file. Thanks to William R. Otte  <wotte@dre.vanderbilt.edu>
+          for pointing this out.
+
+Fri Oct 21 23:35:30 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/Time_Value.inl:
+
+          Changed the operator comparing __builtin_constant_p to be a
+          bitwise (&) instead oflogical and (&&) to address a warning from the
+          LLVM compiler.  In this case, the result of the two operators is
+          logically equivalent.  Thanks to Abdullah Sowayan <sowayan@gmail.com>
+          for reporting the issue.
+
+Fri Oct 21 11:26:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * examples/Misc/test_trace.cpp:
+          Fixed compile issue in case all logging is turned off.
+
+Thu Oct 20 10:41:44 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Added links to the OBS projects, thanks to John Fletcher for providing
+          this update
+
+Tue Oct 20 09:30:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        Merged changes from Remedy work branch.
+
+        === start changelog ===
+
+        Tue Oct 18 09:23:13 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+                * bin/MakeProjectCreator/config/global.features:
+                Add ccm_direct_collocation
+
+        Wed Oct 12 13:08:13 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+                * bin/MakeProjectCreator/config/crosscompile.mpb:
+                  Fixed install issues.
+
+                * bin/mwc.pl:
+                  Removed unnecessary STDERR.
+
+        === end changelog ===
+
+Thu Oct 20 06:57:38 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * *.*:
+          Removed autoconf support due to lack of resources/funding to
+          get autoconf really working. It now only causes confusions and
+          not working configurations for users.
+
+Wed Oct 19 19:13:38 UTC 2011  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/config/global.features:
+          disable openmp by default.
+
+        * include/makeinclude/platform_clang_common.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
+          add flags for openmp.
+
+Wed Oct 19 09:56:20 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          Removed not needed setting of inline
+
+Mon Oct 17 20:40:35 UTC 2011  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_iOS.GNU:
+
+          Minor enhancements to this file to make ACE/TAO compile again.
+
+Sat Oct 15 00:57:11 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-lion.h:
+        * include/makeinclude/platform_macosx_lion.GNU:
+
+          Minor enhancements to the files above.
+
+Mon Oct 10 12:13:52 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/ClientRequestHandler.h:
+        * protocols/ace/INet/HTTP_ClientRequestHandler.h:
+        * protocols/ace/INet/URLBase.h:
+          Always export, should solve SLE9 issues
+
+Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+          Make x.0.5 public
+
+Mon Oct 10 11:16:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+          Updated for next release
+
+        * bin/make_release.py:
+          Next time we don't ship vc8 anymore
+
+        * docs/bczar/bczar.html:
+          Make x.0.5 public
+
+        * etc/index.html:
+          Make x.0.5 public
+
+Mon Oct 10 08:48:51 CEST 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.0.5 released.
+
+Sat Oct  8 09:00:00 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/namespaces.xml:
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+          XML does not allow anything before the xml-tag.
+
+Fri Oct  7 09:45:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/docs/TODO.txt:
+        * ACEXML/docs/bugs.txt:
+        * ASNMP/tests/run_tests.sh:
+          Fuzz
+
+Fri Oct  7 09:10:55 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/docs/readme.txt:
+        * ASNMP/README:
+        * Kokyu/README:
+        * bin/LabVIEW_RT/README:
+        * bin/PerlACE/README:
+        * contrib/FaCE/README:
+        * examples/C++NPv1/README:
+        * examples/C++NPv2/README:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/Semaphores/README:
+        * html/README:
+        * netsvcs/lib/README:
+        * performance-tests/README:
+        * performance-tests/RPC/README:
+        * performance-tests/Synch-Benchmarks/Perf_Test/README:
+        * performance-tests/Synch-Benchmarks/README:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/README:
+        * performance-tests/TCP/README:
+        * performance-tests/TTCP/C/README:
+        * performance-tests/UDP/README:
+        * protocols/ace/HTBP/README:
+        * websvcs/README:
+          Fuzz: No id-tags. Also uniform way of declaring the Id-tags
+
+Fri Oct  7 07:48:32 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * ACEXML/examples/SAXPrint/broken.xml:
+        * ACEXML/examples/SAXPrint/namespaces.xml:
+        * ACEXML/examples/SAXPrint/ns.svc.conf.xml:
+        * ACEXML/examples/SAXPrint/simple.svcconf.xml:
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+        * Kokyu/tests/DSRT_MIF/svc.conf.xml:
+        * examples/ASX/CCM_App/svc.conf.xml:
+        * netsvcs/servers/svc.conf.xml:
+        * tests/Service_Config_Test.conf.xml:
+          Fuzz: No Id-tags.
+
+Thu Oct  6 12:01:30 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * netsvcs/README:
+        * netsvcs/clients/Logger/README:
+        * netsvcs/clients/README:
+        * netsvcs/clients/Tokens/README:
+        * netsvcs/clients/Tokens/collection/README:
+        * netsvcs/clients/Tokens/deadlock/README:
+        * netsvcs/clients/Tokens/invariant/README:
+        * netsvcs/clients/Tokens/manual/README:
+        * netsvcs/clients/Tokens/mutex/README:
+        * netsvcs/lib/README:
+        * netsvcs/servers/README:
+          Fuzz: trailing whitespaces, tab characters and ID strings
+
+Thu Oct  6 11:56:19 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * README:
+        * examples/Connection/non_blocking/README:
+        * examples/IPC_SAP/DEV_SAP/README:
+        * examples/IPC_SAP/SOCK_SAP/README:
+        * examples/IPC_SAP/SSL_SAP/README:
+        * examples/Log_Msg/Log_Msg_MFC/README:
+        * examples/Log_Msg/README:
+        * examples/Logger/README:
+        * examples/README:
+        * examples/Reactor/Ntalker/README:
+        * examples/Reactor/README:
+        * examples/Reactor/TP_Reactor/README:
+        * examples/Service_Configurator/Misc/README:
+        * examples/Synch/README:
+        * examples/System_V_IPC/README:
+        * examples/Timer_Queue/README:
+          Fuzz: trailing whitespaces, tab characters and ID strings
+
+Mon Oct  3 06:30:57 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.h:
+          Doxygen improvements
+
 Fri Sep 30 14:03:58 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:

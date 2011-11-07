@@ -1,4 +1,4 @@
-// $Id$
+$Id$
 
 This test exists of 3 components.
 -Master component  which sends asynchronous and synchronous calls to a Sender.

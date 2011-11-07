@@ -92,6 +92,7 @@ extern DAnCE_Logger_Export unsigned int DAnCE_debug_level;
 #if defined (DANCE_NLOGGING)
 # define DANCE_ERROR(L, X) do {} while (0)
 # define DANCE_DEBUG(L, X) do {} while (0)
+# define DANCE_TRACE_LOG(L, X) do {} while (0)
 #define DANCE_ERROR_RETURN(L, X, Y) return (Y)
 #define DANCE_ERROR_BREAK(L, X) { break; }
 #else

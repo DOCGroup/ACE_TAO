@@ -143,7 +143,7 @@ namespace TAO
         countdown.update ();
 
         // For some strategies one may want to release the transport
-        // back to  cache. If the idling is successful let the
+        // back to cache. If the idling is successful let the
         // resolver about that.
         if (transport->idle_after_send ())
           this->resolver_.transport_released ();
@@ -152,7 +152,7 @@ namespace TAO
         // here; need to investigate.  Client threads would frequently be
         // canceled sometime during recv_request ... the correct action to
         // take on being canceled is to issue a CancelRequest message to the
-        // server and then imediately let other client-side cancellation
+        // server and then immediately let other client-side cancellation
         // handlers do their jobs.
         //
         // In C++, that basically means to unwind the stack using almost

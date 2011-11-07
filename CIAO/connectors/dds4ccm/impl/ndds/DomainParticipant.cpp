@@ -484,7 +484,9 @@ namespace CIAO
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_DDS_NIL_RETURN, (LM_ERROR, DDS4CCM_INFO
                             "DDS_DomainParticipant_i::create_topic - "
-                            "Error: RTI DDS returned a nil topic\n"));
+                            "Error: RTI DDS returned a nil topic "
+                            "with name <%C> and type <%C>\n",
+                            impl_name, type_name));
               delete ccm_dds_tl;
               return ::DDS::Topic::_nil ();
             }
@@ -496,7 +498,7 @@ namespace CIAO
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_INFO, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_topic - "
-                        "Successfully created topic with name %C and type %C\n",
+                        "Successfully created topic with name <%C> and type <%C>\n",
                         impl_name, type_name));
 
           DPMANAGER->add_topic (this->rti_entity (), dds_tp);
@@ -512,7 +514,7 @@ namespace CIAO
         {
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                         "DDS_DomainParticipant_i::create_topic - "
-                        "Re-using topic with name %C and type %C.\n",
+                        "Re-using topic with name <%C> and type <%C>.\n",
                         impl_name, type_name));
 
           DPMANAGER->_inc_ref (this->rti_entity (), dds_tp);

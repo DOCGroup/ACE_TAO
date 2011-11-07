@@ -1,3 +1,5 @@
+$Id$
+
 README for blobby, the example application for JAWS
 ---------------------------------------------------
 
@@ -29,5 +31,5 @@ It accepts the following command line arguments:
         -l length       The number of bytes to read/write from the server
         -o offset       The offset into the file to be read/written
 
-        -d              Puts blobby into debug mode, where it echoes 
+        -d              Puts blobby into debug mode, where it echoes
                         its command line arguments

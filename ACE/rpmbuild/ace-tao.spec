@@ -1,7 +1,7 @@
 # Set the version number here.
-%define ACEVER  6.0.4
-%define TAOVER  2.0.4
-%define CIAOVER 1.0.4
+%define ACEVER  6.0.5
+%define TAOVER  2.0.5
+%define CIAOVER 1.0.5
 
 # Conditional build
 # Default values are
@@ -855,7 +855,6 @@ cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 inline = 1
 EOF
 %else
-%define inline
 %define inline -D__ACE_NO_INLINE__ -U__ACE_INLINE__
 cat >> $ACE_ROOT/include/makeinclude/platform_macros.GNU <<EOF
 inline = 0

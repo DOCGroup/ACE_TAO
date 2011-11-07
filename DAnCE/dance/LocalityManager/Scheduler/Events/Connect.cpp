@@ -40,8 +40,8 @@ namespace DAnCE
     DANCE_TRACE ("Connect_Instance::invoke_pre_interceptor");
 
     (*i)->pre_connect (this->plan_,
-                                this->connectionRef_,
-                                this->provided_ref_);
+                       this->connectionRef_,
+                       this->provided_ref_);
   }
 
 

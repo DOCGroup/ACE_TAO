@@ -1,3 +1,5 @@
+$Id$
+
 This directory contains an example which
 tests the setting of the Diffserv Codepoint (DSCP)
 values in the
@@ -6,7 +8,7 @@ IP TOS field of a stream of UDP packets.
 Running the example
 ===================
 
-(1)  On one host, run: 
+(1)  On one host, run:
         server [UDP port number]
 
      If port number is omitted, a default port number of 20002
@@ -29,7 +31,7 @@ Running the example
 
 Introduction
 ============
-In RFC 2474, the Type of Service (TOS) field in 
+In RFC 2474, the Type of Service (TOS) field in
 the IP header was renamed the Diffserv (DS) field.
 The DS field is one octet (8 bits).
 
@@ -98,7 +100,7 @@ RFC 2597, "Assured Forwarding PHB Group", http://www.ietf.org/rfc/rfc2597.txt
 
 RFC 3246, "An Expedited Forwarding PHB", http://www.ietf.org/rfc/rfc3246.txt
 
-RFC 3247, "Supplemental Information for the New Definition of the EF PHB", 
+RFC 3247, "Supplemental Information for the New Definition of the EF PHB",
           http://www.ietf.org/rfc/rfc3247.txt
 
 RFC 3168, "The Addition of Explicit Congestion Notification (ECN)

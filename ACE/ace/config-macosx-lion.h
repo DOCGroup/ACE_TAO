@@ -1,6 +1,6 @@
 // $Id$
-#ifndef ACE_CONFIG_MACOSX_SNOWLEOPARD_H
-#define ACE_CONFIG_MACOSX_SNOWLEOPARD_H
+#ifndef ACE_CONFIG_MACOSX_LION_H
+#define ACE_CONFIG_MACOSX_LION_H
 
 
 #include "ace/config-macosx-leopard.h"
@@ -16,4 +16,4 @@
 
 #define ACE_LACKS_UCONTEXT_H
 
-#endif // ACE_CONFIG_MACOSX_SNOWLEOPARD_H
+#endif // ACE_CONFIG_MACOSX_LION_H

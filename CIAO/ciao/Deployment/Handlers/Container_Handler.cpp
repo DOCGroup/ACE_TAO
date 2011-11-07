@@ -3,6 +3,7 @@
 #include "Container_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Logger/Logger_Service.h"
+#include "ciao/Base/CIAO_PropertiesC.h"
 #ifdef DANCE_DEPLOYS_EXTENSION_CONTAINER
   #include "ciao/Containers/Extension/Extension_Container.h"
 #else
@@ -79,7 +80,7 @@ namespace CIAO
   Container_Handler_i::instance_type (void)
   {
     CIAO_TRACE ("Container_Handler_i::instance_type");
-    return CORBA::string_dup ("edu.dre.vanderbilt.dre.DAnCE.CCM.Container");
+    return CORBA::string_dup (CIAO::Deployment::CCM_CONTAINER);
   }
 
   void
@@ -279,7 +280,7 @@ namespace CIAO
                                         "Unable to locate POA");
       }
 
-    CIAO::Server_init (orb_);
+    CIAO::Server_init (this->orb_);
 
     // For the time being, we are going to go ahead and construct a container.
     ::Deployment::DeploymentPlan plan;

@@ -1,3 +1,4 @@
+$Id$
 
                   IDL3 To IDL2 Converter
 
@@ -39,7 +40,7 @@ option takes effect only if foo.idl contains no 'IDL3' declarations,
 otherwise it's a no-op.
 
 Note that the original -x <filename> option (which manually excludes
-an included IDL file from being transformed to an include of the 
+an included IDL file from being transformed to an include of the
 '_IDL2' decorated corresponding file) has been eliminated. This
 option was intended for included IDL files that contained no IDL3
 constructs, and therefore didn't need processing by this tool.
@@ -106,20 +107,20 @@ interface Bar : Components::CCMObject
     Foo objref;
     Components::Cookie ck;
   };
-  
+
   typedef sequence<needs_fooConnection> needs_fooConnections;
-  
+
   Components::Cookie connect_needs_foo (in Foo connection)
     raises (Components::ExceededConnectionLimit, Components::InvalidConnection);
-  
+
   Foo disconnect_needs_foo (in Components::Cookie ck)
     raises (Components::InvalidConnection);
-  
+
   needs_fooConnections get_connections_needs_foo ();
-  
+
   Components::Cookie subscribe_ev_pub (in EvConsumer consumer)
     raises (Components::ExceededConnectionLimit);
-  
+
   EvConsumer unsubscribe_ev_pub (in Components::Cookie ck)
     raises (Components::InvalidConnection);
 };
@@ -134,7 +135,7 @@ interface BarHomeImplicit : Components::KeylessCCMHome
     raises (Components::CreateFailure);
 };
 
-interface BarHome : BarHomeExplicit, BarHomeImplicit 
+interface BarHome : BarHomeExplicit, BarHomeImplicit
 {
 };
 

@@ -34,7 +34,7 @@ my($mpcpath) = (defined $mpcroot ? $mpcroot :
 unshift(@INC, $mpcpath . '/modules');
 
 if (defined $mpcroot) {
-  print STDERR "MPC_ROOT was set to $mpcroot.\n";
+  print "MPC_ROOT was set to $mpcroot.\n";
 }
 
 if (! -d "$mpcpath/modules") {

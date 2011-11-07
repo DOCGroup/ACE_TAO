@@ -1,3 +1,5 @@
+$Id$
+
 This subdirectory illustrates a number of the ACE ASX framework
 features using an ACE_Stream application called the Event Server.  For
 more information on the design and use of the ACE ASX framework please
@@ -22,7 +24,7 @@ The Event Server example works as follows:
    # Consumer
    % transceiver -p 10002 -h hostname -C
 
-   or 
+   or
 
    # Supplier
    % transceiver -p 10003 -h hostname -S
@@ -35,13 +37,13 @@ The Event Server example works as follows:
    Consumer(s) and Supplier(s) in different windows to make it easier
    to understand the output.
 
-3. Once the Consumer(s) and Supplier(s) are connected, you can 
+3. Once the Consumer(s) and Supplier(s) are connected, you can
    type data from any Supplier window.  This data will be routed
    through the Modules/Tasks in the event_server's Stream and be
    forwarded to the Consumer(s).
 
    Since the transceivers are full-duplex you can also send messages
-   from the Consumer(s) to Supplier(s).  However, the Event Server will 
+   from the Consumer(s) to Supplier(s).  However, the Event Server will
    warn you about this since it's not really kosher to have Consumers
    sending to Suppliers...
 
@@ -65,15 +67,15 @@ Some of the more interesting things to add would be:
    of the Event_Server based on messages it got from Suppliers
    (or Consumers).
 
-3. Support for "pull" operations, as well as "push" operations. 
+3. Support for "pull" operations, as well as "push" operations.
    This would basically involve adding a "MIB Module" to get/set
    the "values" associated with "names" passed in by Peers.  This
    could probably replace the Event_Analysis Module.
 
 4. Filtering and correlation (this should probably be done
-   via a separate Module that handles filtering and correlation). 
+   via a separate Module that handles filtering and correlation).
 
-5. More flexible concurrency model(s), e.g., "Active Object per-Consumer".  
+5. More flexible concurrency model(s), e.g., "Active Object per-Consumer".
    This would enable the Event Server process to handle flow control
    more gracefully than it does not (it currently "hangs," which isn't
    desirable).

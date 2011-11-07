@@ -53,8 +53,8 @@ namespace CIAO_WU_LateBinding_Sender_Impl
     else if (assingment == 1)
       {
         this->callback_.start_state_test ();
-        this->callback_.set_topic_name_writer (true);
-        this->callback_.set_topic_name_updater (true);
+        this->callback_.set_topic_name_writer ();
+        this->callback_.set_topic_name_updater ();
       }
     return 0;
   }
@@ -139,7 +139,7 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   }
 
   void
-  Sender_exec_i::set_topic_name_writer (bool test_non_changeable)
+  Sender_exec_i::set_topic_name_writer (void)
   {
     try
       {
@@ -166,29 +166,16 @@ namespace CIAO_WU_LateBinding_Sender_Impl
                                   "Unable to narrow connector interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        if (test_non_changeable)
-          {
-            conn->topic_name ("LateBindingTopicSecondTime");
-            ACE_ERROR ((LM_ERROR, "Sender_exec_i::set_topic_name_writer - "
-                        "ERROR: No NonChangeable exception thrown.\n"));
-          }
-        else
-          {
-            conn->topic_name ("LateBindingTopic");
-          }
+        conn->topic_name ("LateBindingTopic");
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        if (test_non_changeable)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_writer - "
-                        "Expected NonChangeable caught.\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
-                        "Caught NonChangeable exception.\n"));
-          }
+        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_writer - "
+                    "Caught NonChangeable exception.\n"));
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        ex._tao_print_exception("ERROR: Sender_exec_i::set_topic_name_writer - ");
       }
   }
 
@@ -234,7 +221,7 @@ namespace CIAO_WU_LateBinding_Sender_Impl
   }
 
   void
-  Sender_exec_i::set_topic_name_updater(bool test_non_changeable)
+  Sender_exec_i::set_topic_name_updater(void)
   {
     try
       {
@@ -261,29 +248,16 @@ namespace CIAO_WU_LateBinding_Sender_Impl
                                   "Unable to narrow connector interface\n"));
             throw ::CORBA::INTERNAL ();
           }
-        if (test_non_changeable)
-          {
-            conn->topic_name ("LateBindingTopicSecondTime");
-            ACE_ERROR ((LM_ERROR, "Sender_exec_i::set_topic_name_updater - "
-                        "ERROR: No NonChangeable exception thrown.\n"));
-          }
-        else
-          {
-            conn->topic_name ("LateBindingTopic");
-          }
+        conn->topic_name ("LateBindingTopic");
       }
     catch (const ::CCM_DDS::NonChangeable &)
       {
-        if (test_non_changeable)
-          {
-            ACE_DEBUG ((LM_DEBUG, "Sender_exec_i::set_topic_name_updater - "
-                        "Expected NonChangeable caught.\n"));
-          }
-        else
-          {
-            ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
-                        "Caught NonChangeable exception.\n"));
-          }
+        ACE_ERROR ((LM_ERROR, "ERROR: Sender_exec_i::set_topic_name_updater - "
+                    "Caught NonChangeable exception.\n"));
+      }
+    catch (const ::CORBA::Exception &ex)
+      {
+        ex._tao_print_exception("ERROR: Sender_exec_i::set_topic_name_writer - ");
       }
   }
 

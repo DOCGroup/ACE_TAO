@@ -25,7 +25,7 @@
 #include "ACEXML/common/Mem_Map_Stream.h"
 
 /**
- * @class ACEXML_HttpCharStream HttpCharStream.h "ACEXML/common/HttpCharStream.h"
+ * @class ACEXML_HttpCharStream
  *
  * An implementation of ACEXML_CharStream for reading input from a URL.
  */

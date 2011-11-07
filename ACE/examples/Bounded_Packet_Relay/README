@@ -1,3 +1,5 @@
+$Id$
+
 1. INTRODUCTION
 
 This directory contains an example that illustrates how to use both
@@ -5,9 +7,9 @@ threaded and reactive concurrency mechanisms in ACE.  The example
 application schedules and processes heterogenerous user input and
 timer-based events in the context of a bounded packet relay mechanism.
 
-In this example, a transmission begins, packets arrive from an input device 
+In this example, a transmission begins, packets arrive from an input device
 object, and are transferred to an output device object by a relay object at
-a specified pace.  The transfer continues until all packets have been 
+a specified pace.  The transfer continues until all packets have been
 relayed, a duration limit expires, or the transmission is cancelled.
 
 User input is handled concurrently with a running transmission.  You
@@ -15,12 +17,12 @@ can run a transmission, cancel a transmission, change transmission
 parameters, view statistics from the most recent transmission, or exit
 the program, using selections from an interactive text-based menu.
 In addition, the example program can be run in batch mode, with the
-appropriate commands piped to the program's standard input stream.  
+appropriate commands piped to the program's standard input stream.
 
-Transmission parameters are intialized to default values.  Transmission 
-parameter values persist until/unless they are subsequently modified by an 
+Transmission parameters are intialized to default values.  Transmission
+parameter values persist until/unless they are subsequently modified by an
 appropriate command.  If an invalid value for a command is given, or a run
-or report command is issued while a transmission is in progress, the 
+or report command is issued while a transmission is in progress, the
 offending command has no effect, and an error message is generated.
 
 2. USER INTERFACE
@@ -33,7 +35,7 @@ Settings commands:
 
      Minimum value is 1 packet, defaults to 1000 packets.
 
-  2 <input packet arrival period (in usec)>  
+  2 <input packet arrival period (in usec)>
 
      Minimum value is 1 usec, defaults to 10000 usec (10 msec).
 
@@ -50,7 +52,7 @@ Settings commands:
      to the output device).
 
   5 <logging level>
-     
+
      0 - does no logging
      1 - logs packets created by the input device
      2 - logs packets consumed by the output device
@@ -91,7 +93,7 @@ The relay object is passive, managing a message queue and necessary
 locks to allow safe access from multiple threads.  It provides methods
 to receive and enqueue a mesage from the input device, dequeue a
 message and send it to the output device, and to start or end a
-transmission.  It uses ACE_Message_Queue (which contains ACE_Message_Block 
+transmission.  It uses ACE_Message_Queue (which contains ACE_Message_Block
 objects) and ACE_Thread_Mutex objects to implement this functionality.
 
 The input object is active, managing timeouts and input events in its
@@ -119,7 +121,7 @@ object tries to start a new transmission.  If another transmission is in
 progress, the method returns an error.  Otherwise, the relay object's start
 transmission method initializes itself and the input and output device
 objects, activates the input device object, and stores the handle for
-the new input device thread. 
+the new input device thread.
 
 The driver then constructs a timeout handler with a count of the
 number of messages to relay and a send timeout value, and pushes a
@@ -168,7 +170,7 @@ maintains a count of the number of messages it has sent.  Once the
 input device has sent all its messages, it marks itself inactive, and
 its thread simply exits.
 
-4. ACCESSING THE SOURCE CODE 
+4. ACCESSING THE SOURCE CODE
 
 The files for this example are located in
 $ACE_ROOT/examples/Bounded_Packet_Relay in the latest release of ACE,

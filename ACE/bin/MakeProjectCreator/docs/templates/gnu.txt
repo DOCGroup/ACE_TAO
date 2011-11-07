@@ -1,3 +1,4 @@
+// $Id$
 // Current as of 2/27/2007
 // This defines the role of all the template variables specific to the
 // 'gnuace' project type.
