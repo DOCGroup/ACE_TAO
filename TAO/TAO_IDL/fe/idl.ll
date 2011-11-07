@@ -846,7 +846,8 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0)
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0) ||
+           (ACE_OS::strncmp (buf + 8, "ami4ccm interface", 17) == 0))
     {
       if (idl_global->in_main_file ())
         {
@@ -857,7 +858,8 @@ idl_store_pragma (char *buf)
           delete [] tmp;
         }
     }
-  else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)||
+           (ACE_OS::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
     {
       char *tmp = idl_get_pragma_string (buf);
 
@@ -876,7 +878,8 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0)
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0) ||
+           (ACE_OS::strncmp (buf + 8, "ami4ccm idl", 11) == 0))
     {
       char *tmp = idl_get_pragma_string (buf);
 
