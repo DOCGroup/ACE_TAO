@@ -1,0 +1,28 @@
+Mon Nov  7 13:29:04 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/ami4ccm/tests/PragmaT:
+        * connectors/ami4ccm/tests/PragmaT/Base:
+        * connectors/ami4ccm/tests/PragmaT/Base/PragmaT.idl:
+        * connectors/ami4ccm/tests/PragmaT/Base/PragmaT.mpc:
+        * connectors/ami4ccm/tests/PragmaT/README:
+        * connectors/ami4ccm/tests/PragmaT/Receiver:
+        * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver.idl:
+        * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver_exec.h:
+        * connectors/ami4ccm/tests/PragmaT/Receiver/PragmaT_Receiver_exec.cpp:
+        * connectors/ami4ccm/tests/PragmaT/Sender:
+        * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender.idl:
+        * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender.mpc:
+        * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.h:
+        * connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.cpp:
+        * connectors/ami4ccm/tests/PragmaT/descriptors:
+        * connectors/ami4ccm/tests/PragmaT/descriptors/Plan.cdp:
+        * connectors/ami4ccm/tests/PragmaT/descriptors/run_test.pl:
+        Test use of new pragma's 'ami4ccm interface', 'ami4ccm receptacle' and 'ami4ccm idl'.
+        New pragma's work besides old ones 'ciao ami4ccm ...' .
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:
