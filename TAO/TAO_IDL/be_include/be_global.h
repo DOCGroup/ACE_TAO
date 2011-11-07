@@ -603,6 +603,20 @@ public:
   /// to be kept. Default is output_dir_.
   const char* anyop_output_dir (void) const;
 
+  /// Set the directory where all the *exec.* files are
+  /// to be kept. Default is output_dir_.
+  void exec_output_dir (const char* s);
+
+  /// Get the directory where all the *exec.* files are
+  /// to be kept. Default is output_dir_.
+  const char* exec_output_dir (void) const;
+
+  ///Get the flag for not overwriting already existing exec files.
+  bool overwrite_not_exec (void) const;
+
+  ///Set the flag for not overwriting already existing exec files.
+  void overwrite_not_exec (bool val);
+
   /// Set any support.
   void any_support (bool);
 
@@ -1045,6 +1059,14 @@ private:
    */
   char* anyop_output_dir_;
 
+  /**
+    * Directory where all the *exec.* files are to be
+    * kept. Default value is 0 for this string which means the
+    * value for output_dir_ is used.
+    */
+  char* exec_output_dir_;
+
+
   /// do we support Any operators?
   bool any_support_;
 
@@ -1205,6 +1227,10 @@ private:
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
   bool gen_ciao_exec_reactor_impl_;
+
+  ///Flag to indicate whether generated exec files should
+   ///overwritten already existing exe files
+   bool overwrite_not_exec_;
 
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.

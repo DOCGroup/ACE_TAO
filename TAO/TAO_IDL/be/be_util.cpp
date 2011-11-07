@@ -789,6 +789,17 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -oE <output_dir>\tOutput directory for the generated ")
+      ACE_TEXT ("executor files, only when -Gex option is used.")
+      ACE_TEXT (" Default is current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -oN\tWhen -Gex option is used, executor files shouldn't be overwritten ")
+      ACE_TEXT ("if they are already in the output directory.\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -si\t\t\tServer's inline file name ending.")
       ACE_TEXT (" Default is S.inl\n")
     ));
@@ -905,7 +916,8 @@ be_util::generator_init (void)
 
 const char *
 be_util::get_output_path (bool for_anyop,
-                          bool for_skel)
+                          bool for_skel,
+                          bool for_exec)
 {
   if (for_anyop && 0 != be_global->anyop_output_dir ())
     {
@@ -915,10 +927,44 @@ be_util::get_output_path (bool for_anyop,
     {
       return be_global->skel_output_dir ();
     }
+  else if (for_exec && 0 != be_global->exec_output_dir ())
+    {
+      return be_global->exec_output_dir ();
+    }
   else
     {
       return be_global->output_dir ();
     }
+}
+
+bool
+be_util::overwrite_ciao_exec_files ()
+{
+  bool overwrite = true;
+  if (be_global->overwrite_not_exec())
+    {
+      bool src_exist = false;
+      bool hdr_exist = false;
+      const char *fname_hdr = be_global->be_get_ciao_exec_hdr_fname (false);
+      FILE* fp_hdr = ACE_OS::fopen(fname_hdr, "r");
+      if (fp_hdr)
+        {
+          // file exists, don't generate new exec files.
+          ACE_OS::fclose(fp_hdr);
+          hdr_exist = true;
+        }
+      const char *fname_src = be_global->be_get_ciao_exec_src_fname (false);
+      FILE* fp_src = ACE_OS::fopen(fname_src, "r");
+      if (fp_src)
+        {
+          // file exists, don't generate new exec files.
+          ACE_OS::fclose(fp_src);
+          src_exist = true;
+        }
+      if (hdr_exist && src_exist)
+          overwrite = false;
+    }
+  return overwrite;
 }
 
 void
