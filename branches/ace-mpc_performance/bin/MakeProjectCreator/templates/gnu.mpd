@@ -68,6 +68,10 @@ FILES = \
 <%endfor%>
 
 <%endif%>
+IDL_DEPS = \
+<%foreach(idl_files)%>
+  <%idl_file%><%fornotlast(" \\")%>
+<%endfor%>
 <%vpath%>
 #----------------------------------------------------------------------------
 #       Include macros and targets

@@ -447,7 +447,7 @@ ifeq ($(lacks_touch),1)
 else
 	touch $(DEPENDENCY_FILE)
 endif
-depend.local: $(DEPENDENCY_FILE)
+depend_idl.local depend.local: $(DEPENDENCY_FILE)
 -include $(DEPENDENCY_FILE)
 endif
 
@@ -467,12 +467,23 @@ ifeq ($(findstring depgen.pl, $(notdir $(DEPGEN))), depgen.pl)
   endif
 endif
 
+depend_idl.local: $(MAKEFILE) idl_stubs.local
+	@$(RM) $(DEPENDENCY_FILE)_idl.old
+	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old
+	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
+	$(TAO_IDLFLAGS) -a -t gnuidl -DMAKEDEPEND $(IDL_DEPS)
+	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE)_idl.old ;\
+	then echo "GNUmakefile idl dependencies unchanged." ;\
+	else \
+		echo "GNUmakefile idl dependencies updated." ;\
+	fi ;\
+	$(RM) $(DEPENDENCY_FILE)_idl.old ;
 
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old
 	$(DEPGEN_ENV) $(DEPGEN) -A $(DEPEND_CMD_ARGS) -f $(DEPENDENCY_FILE) \
-	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC)
+	$(CPPFLAGS) -t gnu -DMAKEDEPEND $(CCFLAGS) $(LSRC) $(SRC) $(PSRC) 
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
 	then echo "GNUmakefile dependencies unchanged." ;\
 	else \
