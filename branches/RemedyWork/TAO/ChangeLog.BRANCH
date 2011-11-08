@@ -1,3 +1,11 @@
+Tue Nov  8 15:08:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tao/PortableServer/SUpcall_commands.cpp:
+          Removed unnecessary logging.
+
+        * tao/PortableServer/Servant_Base.cpp:
+          No need to invoke tao_send_reply in case _component_skel.
+
 Tue Nov  8 14:15:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
@@ -10,9 +18,9 @@ Tue Nov  8 14:15:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
         * tao/PortableServer/SUpcall_commands.cpp:
         * tao/PortableServer/Servant_Base.h:
         * tao/PortableServer/Servant_Base.cpp:
-          In case AMH, the _*_skel methods should invoke 
+          In case AMH, the _*_skel methods should invoke
           tao_send_reply. To accomplish this, there's a _is_amh method
-          in servant_base, returning false, and which is overridden in 
+          in servant_base, returning false, and which is overridden in
           the amh classes, returning true.
 
 Tue Nov  8 08:18:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
