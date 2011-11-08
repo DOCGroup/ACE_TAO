@@ -54,7 +54,6 @@ _is_a_Upcall_Command::execute (void)
 void
 _non_existent_thru_poa_Upcall_Command::execute (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "XXXXXXXXXXXXXXXXXXXXXXXXX 2a\n"));
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
       this->operation_details_,
@@ -62,7 +61,6 @@ _non_existent_thru_poa_Upcall_Command::execute (void)
 
   retval =
     this->servant_-> _non_existent ();
-  ACE_DEBUG ((LM_DEBUG, "XXXXXXXXXXXXXXXXXXXXXXXXX 2b\n"));
 }
 
 void

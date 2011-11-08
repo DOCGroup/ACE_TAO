@@ -385,10 +385,6 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
