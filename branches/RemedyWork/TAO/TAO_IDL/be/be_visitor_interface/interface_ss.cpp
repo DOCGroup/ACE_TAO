@@ -421,12 +421,6 @@ be_visitor_interface_ss::this_method (be_interface *node)
 }
 
 void
-be_visitor_interface_ss::generate_send_reply (TAO_OutStream *)
-{
-  // no-op for regular interfaces
-}
-
-void
 be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

@@ -46,13 +46,6 @@ protected:
   virtual void this_method (be_interface *node);
   virtual void dispatch_method (be_interface *node);
 
-  // Some AMH skeletons must explicitly send the reply, for regular
-  // classes the following function is empty, for AMH code it
-  // generates the explicit call.
-  virtual void generate_send_reply (TAO_OutStream * os);
-
-///   virtual int generate_downcast_implementation (be_interface *node,
-///                                                 TAO_OutStream *os);
   virtual int generate_amh_classes (be_interface *node);
   virtual int generate_proxy_classes (be_interface *node);
   virtual int generate_copy_ctor (be_interface *node,

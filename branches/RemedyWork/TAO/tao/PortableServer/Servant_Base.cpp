@@ -7,7 +7,6 @@
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
-// MSM ADDED
 #include "tao/PortableInterceptor.h"
 #include "tao/PortableServer/SUpcall_commands.h"
 
@@ -30,6 +29,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
+#include "../Basic_Types.h"
 
 //@@ TAO_SERVANT_BASE_INCLUDE_ADD_HOOK
 
@@ -119,7 +119,6 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
 
   _is_a_Upcall_Command command (
     impl,
-    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -133,6 +132,10 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 void
@@ -161,6 +164,7 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
 
   _is_a_thru_poa_Upcall_Command command (
     impl,
+    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -174,6 +178,10 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 
@@ -201,7 +209,6 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
 
   _non_existent_Upcall_Command command (
     impl,
-    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -215,6 +222,10 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_request,
@@ -234,12 +245,12 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
     };
 
   static size_t const nargs = 1;
-
   TAO_ServantBase * const impl =
     static_cast<TAO_ServantBase *> (servant);
 
   _non_existent_thru_poa_Upcall_Command command (
     impl,
+    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -253,6 +264,10 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 
@@ -286,6 +301,10 @@ TAO_ServantBase::_interface_skel (TAO_ServerRequest & server_request,
     {
       throw ::CORBA::MARSHAL ();
     }
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 void
@@ -312,7 +331,6 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
 
   _get_component_Upcall_Command command (
     impl,
-    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -326,6 +344,7 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+//   impl->send_reply (server_request);
 }
 
 void
@@ -352,6 +371,7 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 
   _get_component_thru_poa_Upcall_Command command (
     impl,
+    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -365,6 +385,10 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
@@ -395,7 +419,6 @@ TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
 
   _repository_id_Upcall_Command command (
     impl,
-    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -409,6 +432,10 @@ TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 
 void
@@ -435,6 +462,7 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
 
   _repository_id_thru_poa_Upcall_Command command (
     impl,
+    server_request.operation_details (),
     args);
 
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -448,6 +476,10 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
+  if (impl->_is_amh ())
+    {
+      server_request.tao_send_reply ();
+    }
 }
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -460,6 +492,12 @@ TAO_ServantBase::_is_a (const char *logical_type_id)
 
 CORBA::Boolean
 TAO_ServantBase::_non_existent (void)
+{
+  return false;
+}
+
+::CORBA::Boolean
+TAO_ServantBase::_is_amh (void)
 {
   return false;
 }

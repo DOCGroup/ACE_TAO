@@ -124,6 +124,12 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "void *_servant_upcall" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
+  // Add the _is_amh method.
+  *os << "inline virtual ::CORBA::Boolean" << be_nl
+      << "_is_amh (void)" << be_nl
+      << "{" << be_idt_nl << "return true;"
+      << be_uidt_nl << "}" << be_nl_2;
+
   this->this_method (node);
 
   // The _interface_repository_id method.
