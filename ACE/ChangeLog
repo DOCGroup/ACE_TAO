@@ -1,3 +1,22 @@
+Tue Nov  8 18:58:36 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/ChangeLogEditor/FileLocatorFactory.pm:
+
+          Implemented a utility function that searches the parent
+          directory for the specified directory. This is necessary
+          because the SVN 1.7.x client does not store .svn directories
+          in the child directory anymore. Instead, the root directory
+          of the checkout contains the .svn directory. Now, the SVN
+          locator will search all parent directories to determine if
+          it the SCM is a SVN sandbox.
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Updated the Executable() subroutine such that if the full
+          or relative path of the executable is not specified, then
+          it will try to resolve the location of the executable using
+          the PATH.
+
 Sat Oct 22 02:06:37 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
 
         * include/makeinclude/platform_macosx_common.GNU:
