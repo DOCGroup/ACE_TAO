@@ -1,3 +1,8 @@
+Tue Nov  8 08:18:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+          No need to generate the _*_skel methods.
+
 Fri Nov  4 16:24:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * MPC/config/taobaseidldefaults.mpb:
