@@ -211,9 +211,9 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     "  Activator: %s\n"
     "  Command Line: %s\n"
     "  Working Directory: %s\n"
-    "  Activation Mode: %s\n"
+    "  Activation Mode: %C\n"
     "  Number of retries: %d\n"
-    "%s",
+    "%C",
     info.startup.activator.in (),
     info.startup.command_line.in (),
     info.startup.working_directory.in (),
