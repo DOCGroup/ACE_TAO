@@ -153,6 +153,9 @@ protected:
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall) = 0;
 
+
+  virtual ::CORBA::Boolean _is_amh (void) = 0;
+
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
                                             void *derived_this) = 0;
