@@ -211,7 +211,7 @@ static void saveAsXML (const ACE_CString& fname, Locator_Repository& repo)
   FILE* fp = ACE_OS::fopen (fname.c_str (), "w");
   if (fp == 0)
     {
-      ACE_ERROR ((LM_ERROR, "Couldn't write to file %s\n", fname.c_str()));
+      ACE_ERROR ((LM_ERROR, "Couldn't write to file %C\n", fname.c_str()));
       return;
     }
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
@@ -362,7 +362,7 @@ Locator_Repository::unregister_if_address_reused (
   if (this->debug_ > 0)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
-      ACE_TEXT ("for server \"%s %s\" ior \"%s\"\n"),
+      ACE_TEXT ("for server \"%C %C\" ior \"%C\"\n"),
       server_id.c_str(), name.c_str (), partial_ior));
   }
 
@@ -377,7 +377,7 @@ Locator_Repository::unregister_if_address_reused (
     if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
-        ACE_TEXT ("\"%s %s\" ior \"%s\"\n"), info->server_id.c_str(),
+        ACE_TEXT ("\"%C %C\" ior \"%C\"\n"), info->server_id.c_str(),
         info->name.c_str (), info->partial_ior.c_str ()));
     }
 
@@ -387,8 +387,8 @@ Locator_Repository::unregister_if_address_reused (
     {
       if (this->debug_)
       {
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: reuse address %s so remove")
-          ACE_TEXT ("server %s \n"), info->partial_ior.c_str (), info->name.c_str ()));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove")
+          ACE_TEXT ("server %C \n"), info->partial_ior.c_str (), info->name.c_str ()));
       }
       if (! info->name.empty ())
       {
