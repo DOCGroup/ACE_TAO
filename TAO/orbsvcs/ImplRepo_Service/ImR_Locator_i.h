@@ -29,10 +29,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 class INS_Locator;
 
-// Gets a request from a client and depending on the POA name,
-// requests an activator to take care of activating the
-// corresponding server and raises a forward exception to the
-// client pointing to the correct server.
+/// Gets a request from a client and depending on the POA name,
+/// requests an activator to take care of activating the
+/// corresponding server and raises a forward exception to the
+/// client pointing to the correct server.
 class Locator_Export ImR_Locator_i
   : public virtual POA_ImplementationRepository::Locator
 {

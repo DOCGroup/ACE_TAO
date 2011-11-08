@@ -103,15 +103,15 @@ public:
   const char* repo_mode();
 
 private:
-  // Type mechanism to use for persistence.
+  /// Type mechanism to use for persistence.
   Options::RepoMode rmode_;
-  // The in-memory list of the server information.
+  /// The in-memory list of the server information.
   SIMap server_infos_;
-  // The in-memory list of the activator information.
+  /// The in-memory list of the activator information.
   AIMap activator_infos_;
-  // Several rmode_ values require this.
+  /// Several rmode_ values require this.
   ACE_Auto_Ptr<ACE_Configuration> config_;
-  // XML requires the file name
+  /// XML requires the file name
   ACE_CString fname_;
 
   unsigned int debug_;
