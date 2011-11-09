@@ -1,18 +1,24 @@
+Wed Nov  9 03:34:28 UTC 2011  Chip Jones  <jonesc@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added blank line between IDL_DEPS and VPATH  
+
 Mon Nov  7 16:41:08 UTC 2011  Chip Jones  <jonesc@ociweb.com>
 
         * bin/DependencyGenerator/GNUIDLDependencyWriter.pm:
         * bin/DependencyGenerator/GNUIDLObjectGenerator.pm:
 
           Added these files to support writing IDL dependencies.
-        
+
         * bin/MakeProjectCreator/templates/gnu.mpd:
-        
+
           Modifications to support IDL dependency generation.
 
         * include/makeinclude/rules.common.GNU:
         * include/makeinclude/rules.local.GNU:
         * include/makeinclude/wrapper_macros.GNU:
-        
+
           Modifications to support IDL dependency generation.
 
 Sat Oct 22 02:06:37 UTC 2011  Abdullah Sowayan  <sowayan@gmail.com>
