@@ -642,7 +642,7 @@ Log::parse_SSLIOP_from_client (Log *this_, char *line, size_t offset)
   char *c = ACE_OS::strchr(addr,'>');
   *c = '\0';
   c = ACE_OS::strstr(c+1,"on [");
-  long handle = ACE_OS::strtol(c + 4,0,10);
+
   PeerProcess *pp = thr->pending_peer();
   if (pp == 0)
     {
