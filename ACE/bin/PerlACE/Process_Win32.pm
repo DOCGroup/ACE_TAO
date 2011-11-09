@@ -139,12 +139,12 @@ sub Executable
         }
 
         $executable =~ s/\//\\/g; # / <- # color coding issue in devenv
-        
+
         # If there is no directory in the executable name, then we are going
         # to search the PATH for the executable.
         if ($executable !~ m/\//) {
             my $which = File::Which::which ($executable);
-            
+
             if ($which ne "") {
                 $executable = $which;
             }
