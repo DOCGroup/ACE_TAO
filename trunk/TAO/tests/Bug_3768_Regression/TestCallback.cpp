@@ -13,8 +13,8 @@ void
 TestCallback::start_threads_and_block (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - start_threads_and_block\n"));
-  work_.activate(0,10);
-  ACE_OS::sleep(-1);
+  work_.activate(THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,10);
+  work_.wait (); // blocks forever as the worker threads never end
 }
 
 void
@@ -26,6 +26,6 @@ TestCallback::test_call (void)
 void
 TestCallback::shutdown (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test completed\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test completed\n"));
   exit (0);
 }
