@@ -39,7 +39,7 @@ sub searchParentDirectory {
   my($hidden)  = shift;
   my($path)    = cwd();
   my($index)   = -1;
-  
+
   # Search all parent directories for the specified hidden
   # directory. We stop when we either found the hidden directory
   # of there are no more parent directories let to search.
@@ -47,14 +47,14 @@ sub searchParentDirectory {
     if (-d $path . '/' . $hidden) {
       return 1;
     }
-    
+
     $index = rindex($path, '/');
-    
+
     if ($index != -1) {
       $path = substr ($path, 0, $index);
     }
   } while ($index != -1);
-  
+
   return 0;
 }
 
