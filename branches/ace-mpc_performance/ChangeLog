@@ -1,8 +1,15 @@
+Wed Nov  9 12:49:11 UTC 2011  Chip Jones  <jonesc@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Added conditional so that IDL_DEPS does not print
+          when empty.
+
 Wed Nov  9 03:34:28 UTC 2011  Chip Jones  <jonesc@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
 
-          Added blank line between IDL_DEPS and VPATH  
+          Added blank line between IDL_DEPS and VPATH
 
 Mon Nov  7 16:41:08 UTC 2011  Chip Jones  <jonesc@ociweb.com>
 
