@@ -1438,9 +1438,29 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               // We are an operation node. We use the original
               // operation name, not the one with _cxx_ in it.
-              *os << d->original_local_name () << ",&POA_"
-                  << d->full_name () << "_skel,";
-
+              // We need to the name of the base class!! But since
+              // we don't know whether this is an AMH class, we
+              // need to check this, using the full_skeleton_name
+              ACE_CString tmp (full_skeleton_name);
+              if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
+                {
+                  ACE_CString name (d->full_name ());
+                  ACE_String_Base_Const::size_type const last = name.rfind(':') - 1;
+                  name = name.substring (0, last);
+                  ACE_String_Base_Const::size_type const pre_last = name.rfind(':') - 1;
+                  ACE_CString nspace = name.substring (0, name.rfind (':') - 1);
+                  name = name.substring (name.rfind (':') + 1);
+                  *os << d->original_local_name () << ",&POA_"
+                      << nspace.c_str () << "::AMH_"
+                      << name.c_str () << "::"
+                      << d->original_local_name ()
+                      << "_skel,";
+                }
+              else
+                {
+                  *os << d->original_local_name () << ",&POA_"
+                      << d->full_name () << "_skel,";
+                }
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
@@ -1472,7 +1492,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               //determine the correct namespace
               ACE_CString nspace (d->full_name ());
-              ACE_String_Base_Const::size_type pos = nspace.rfind(':');
+              ACE_String_Base_Const::size_type const pos = nspace.rfind(':');
               nspace = nspace.substring(0, pos + 1);
 
               *os << "_get_" << d->original_local_name () << ",&POA_"

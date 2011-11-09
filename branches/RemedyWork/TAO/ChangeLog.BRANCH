@@ -1,3 +1,8 @@
+Wed Nov  9 12:10:39 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Fixed runtime issues regarding AMH
+
 Wed Nov  9 08:44:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
