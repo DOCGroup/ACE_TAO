@@ -1,3 +1,8 @@
+Wed Nov  9 14:44:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Fixed link issues in case direct collocation
+
 Wed Nov  9 14:24:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
