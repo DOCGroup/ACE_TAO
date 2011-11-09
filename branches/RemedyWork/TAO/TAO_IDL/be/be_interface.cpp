@@ -1444,7 +1444,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << derived_interface->full_direct_proxy_impl_name ();
+                      << this->full_direct_proxy_impl_name ();
                   *os << "::" << d->local_name ();
                 }
               else
@@ -1469,6 +1469,8 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               // Generate only the "get" entry if we are readonly.
               // we need to split the full name in order to push _set_
               // or _get_ in between the namespace and attribute name.
+
+              //determine the correct namespace
               ACE_CString nspace (d->full_name ());
               ACE_String_Base_Const::size_type pos = nspace.rfind(':');
               nspace = nspace.substring(0, pos + 1);

@@ -1,3 +1,8 @@
+Wed Nov  9 08:44:09 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Fixed link issues in case direct collocation
+
 Tue Nov  8 15:08:03 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tao/PortableServer/SUpcall_commands.cpp:
