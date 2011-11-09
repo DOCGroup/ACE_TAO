@@ -1,3 +1,11 @@
+Wed Nov  9 10:25:09 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3768_Regression/TestCallback.cpp:
+        * tests/Bug_3768_Regression/server.cpp:
+        
+          Cleaned up test to behave more properly to fix segfaults
+          and other failures.
+
 Tue Nov  8 19:11:46 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
