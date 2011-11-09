@@ -1441,25 +1441,45 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               // We need to the name of the base class!! But since
               // we don't know whether this is an AMH class, we
               // need to check this, using the full_skeleton_name
+              // TODO: find a more elegant solution for this
               ACE_CString tmp (full_skeleton_name);
               if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
                 {
                   ACE_CString name (d->full_name ());
                   ACE_String_Base_Const::size_type const last = name.rfind(':') - 1;
                   name = name.substring (0, last);
-                  ACE_String_Base_Const::size_type const pre_last = name.rfind(':') - 1;
-                  ACE_CString nspace = name.substring (0, name.rfind (':') - 1);
-                  name = name.substring (name.rfind (':') + 1);
-                  *os << d->original_local_name () << ",&POA_"
-                      << nspace.c_str () << "::AMH_"
-                      << name.c_str () << "::"
-                      << d->original_local_name ()
-                      << "_skel,";
+                  if (name.rfind (':') != ACE_String_Base_Const::npos)
+                    {
+                      ACE_CString nspace = name.substring (0, name.rfind (':') - 1);
+                      name = name.substring (name.rfind (':') + 1);
+                      *os << d->original_local_name () << ",&POA_"
+                          << nspace.c_str () << "::AMH_"
+                          << name.c_str () << "::"
+                          << d->original_local_name ()
+                          << "_skel,";
+                    }
+                  else
+                    {
+                      *os << d->original_local_name () << ",&POA_AMH_"
+                          << name.c_str () << "::"
+                          << d->original_local_name ()
+                          << "_skel,";
+                    }
                 }
               else
                 {
-                  *os << d->original_local_name () << ",&POA_"
-                      << d->full_name () << "_skel,";
+                  if (!d->is_abstract ())
+                    {
+                      *os << d->original_local_name () << ",&POA_"
+                          << d->full_name () << "_skel,";
+                    }
+                  else
+                    {
+                      *os << d->original_local_name () << ",&"
+                          << full_skeleton_name << "::"
+                          << d->original_local_name ()
+                          << "_skel,";
+                    }
                 }
               if (be_global->gen_direct_collocation ())
                 {

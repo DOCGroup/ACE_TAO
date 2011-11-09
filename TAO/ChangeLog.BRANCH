@@ -1,3 +1,8 @@
+Wed Nov  9 14:24:49 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+          Optimized AMH stuff in the operation table.
+
 Wed Nov  9 12:10:39 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
