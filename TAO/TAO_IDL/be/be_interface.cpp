@@ -1370,7 +1370,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << derived_interface->full_direct_proxy_impl_name ()
+                      << this->full_direct_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
               else
@@ -1392,7 +1392,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   if (be_global->gen_direct_collocation ())
                     {
                       *os << " &"
-                          << derived_interface->full_direct_proxy_impl_name ()
+                          << this->full_direct_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
                   else
@@ -1484,8 +1484,8 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << this->full_direct_proxy_impl_name ();
-                  *os << "::" << d->local_name ();
+                      << this->full_direct_proxy_impl_name ()
+                      << "::" << d->local_name ();
                 }
               else
                 {
@@ -1522,7 +1522,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << derived_interface->full_direct_proxy_impl_name ()
+                      << this->full_direct_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
               else
@@ -1544,7 +1544,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   if (be_global->gen_direct_collocation ())
                     {
                       *os << " &"
-                          << derived_interface->full_direct_proxy_impl_name ()
+                          << this->full_direct_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
                   else
