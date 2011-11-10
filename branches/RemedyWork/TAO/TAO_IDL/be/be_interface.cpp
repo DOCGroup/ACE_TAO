@@ -1341,7 +1341,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << derived_interface->full_direct_proxy_impl_name ()
+                      << this->full_direct_proxy_impl_name ()
                       << "::" << d->local_name ();
                 }
               else
@@ -1483,9 +1483,19 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 }
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &"
-                      << this->full_direct_proxy_impl_name ()
-                      << "::" << d->local_name ();
+                  if (!d->is_abstract ())
+                    {
+                      *os << " &"
+                          << this->full_direct_proxy_impl_name ()
+                          << "::" << d->local_name ();
+                    }
+                  else
+                    {
+                      *os << " &"
+                          << derived_interface->full_direct_proxy_impl_name ()
+                          << "::" << d->local_name ();
+                    }
+
                 }
               else
                 {
@@ -1515,19 +1525,39 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               ACE_String_Base_Const::size_type const pos = nspace.rfind(':');
               nspace = nspace.substring(0, pos + 1);
 
-              *os << "_get_" << d->original_local_name () << ",&POA_"
-                  << nspace.c_str () << "_get_"
-                  << d->original_local_name () << "_skel,";
-
-              if (be_global->gen_direct_collocation ())
+              if (!d->is_abstract ())
                 {
-                  *os << " &"
-                      << this->full_direct_proxy_impl_name ()
-                      << "::_get_" << d->local_name ();
+                  *os << "_get_" << d->original_local_name () << ",&POA_"
+                      << nspace.c_str () << "_get_"
+                      << d->original_local_name () << "_skel,";
+
+                  if (be_global->gen_direct_collocation ())
+                    {
+                      *os << " &"
+                          << this->full_direct_proxy_impl_name ()
+                          << "::_get_" << d->local_name ();
+                    }
+                  else
+                    {
+                      *os << " 0";
+                    }
                 }
               else
                 {
-                  *os << " 0";
+                  *os << "_get_" << d->original_local_name () << ",&"
+                      << full_skeleton_name << "::_get_"
+                      << d->original_local_name () << "_skel,";
+
+                  if (be_global->gen_direct_collocation ())
+                    {
+                      *os << " &"
+                          << derived_interface->full_direct_proxy_impl_name ()
+                          << "::_get_" << d->local_name ();
+                    }
+                  else
+                    {
+                      *os << " 0";
+                    }
                 }
 
               *os << "\n";
@@ -1536,20 +1566,41 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (!attr->readonly ())
                 {
-                  // The set method
-                  *os << "_set_" << d->original_local_name () << ",&POA_"
-                      << nspace.c_str () << "_set_"
-                      << d->original_local_name () << "_skel,";
-
-                  if (be_global->gen_direct_collocation ())
+                  if (!d->is_abstract ())
                     {
-                      *os << " &"
-                          << this->full_direct_proxy_impl_name ()
-                          << "::_set_" << d->local_name ();
+                      // The set method
+                      *os << "_set_" << d->original_local_name () << ",&POA_"
+                          << nspace.c_str () << "_set_"
+                          << d->original_local_name () << "_skel,";
+
+                      if (be_global->gen_direct_collocation ())
+                        {
+                          *os << " &"
+                              << this->full_direct_proxy_impl_name ()
+                              << "::_set_" << d->local_name ();
+                        }
+                      else
+                        {
+                          *os << " 0";
+                        }
                     }
                   else
                     {
-                      *os << " 0";
+                      // The set method in case abstract
+                      *os << "_set_" << d->original_local_name () << ",&"
+                          << full_skeleton_name << "::_set_"
+                          << d->original_local_name () << "_skel,";
+
+                      if (be_global->gen_direct_collocation ())
+                        {
+                          *os << " &"
+                              << derived_interface->full_direct_proxy_impl_name ()
+                              << "::_set_" << d->local_name ();
+                        }
+                      else
+                        {
+                          *os << " 0";
+                        }
                     }
 
                   *os << "\n";
