@@ -1,3 +1,8 @@
+Thu Nov 10 07:28:38 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Skeleton_Inheritance/skel_inheritance.mpc:
+          Fixed afters
+
 Wed Nov  9 14:44:24 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
