@@ -78,7 +78,7 @@ project(skel_one): taolib {
 
 project(stub_two): taolib {
   sharedname = stub_two
-  after += idl_two_gen
+  after += idl_two_gen idl_one_gen
 
   dynamicflags += SKELETON_INHERITANCE_STUB_2_BUILD_DLL
 
@@ -110,7 +110,7 @@ project(skel_two): taolib {
 
 project(stub_three): taolib {
   sharedname = stub_three
-  after += idl_three_gen
+  after += idl_three_gen idl_two_gen idl_one_gen
 
   dynamicflags += SKELETON_INHERITANCE_STUB_3_BUILD_DLL
 
