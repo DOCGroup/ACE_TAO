@@ -132,10 +132,6 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 
 void
@@ -178,10 +174,6 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 
 
@@ -222,10 +214,6 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 
 void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_request,
@@ -264,10 +252,6 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 
 
@@ -300,10 +284,6 @@ TAO_ServantBase::_interface_skel (TAO_ServerRequest & server_request,
   if (!_tao_result)
     {
       throw ::CORBA::MARSHAL ();
-    }
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
     }
 }
 
@@ -427,10 +407,6 @@ TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 
 void
@@ -471,10 +447,6 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
-  if (impl->_is_amh ())
-    {
-      server_request.tao_send_reply ();
-    }
 }
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -487,12 +459,6 @@ TAO_ServantBase::_is_a (const char *logical_type_id)
 
 CORBA::Boolean
 TAO_ServantBase::_non_existent (void)
-{
-  return false;
-}
-
-::CORBA::Boolean
-TAO_ServantBase::_is_amh (void)
 {
   return false;
 }

@@ -94,6 +94,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     skel_count_ (0),
     in_mult_inheritance_ (-1),
     original_interface_ (0),
+    is_amh_rh_ (false),
     is_ami_rh_ (false),
     is_ami4ccm_rh_ (false),
     full_skel_name_ (0),
@@ -929,6 +930,12 @@ int
 be_interface::gen_operation_table (const char *flat_name,
                                    const char *skeleton_class_name)
 {
+  // TODO: find another way to determine whether this is an AMH class
+  ACE_CString tmp (skeleton_class_name);
+  if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
+    {
+      this->is_amh_rh_ = true;
+    }
   // Check out the op_lookup_strategy.
   switch (be_global->lookup_strategy ())
   {
@@ -970,7 +977,11 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        if (be_global->gen_thru_poa_collocation ())
+        if (this->is_amh_rh())
+          {
+            *os << "{\"_is_a\", &TAO_AMH_Skeletons::_is_a_amh_skel, 0}," << be_nl;
+          }
+        else if (be_global->gen_thru_poa_collocation ())
           {
             *os << "{\"_is_a\", &TAO_ServantBase::_is_a_thru_poa_skel, 0}," << be_nl;
           }
@@ -983,7 +994,12 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
+            if (this->is_amh_rh())
+              {
+                *os << "{\"_non_existent\", &TAO_AMH_Skeletons"
+                    << "::_non_existent_amh_skel, 0}," << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "{\"_non_existent\", &TAO_ServantBase"
                     << "::_non_existent_thru_poa_skel, 0}," << be_nl;
@@ -999,7 +1015,12 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
+            if (this->is_amh_rh())
+              {
+                *os << "{\"_component\", &TAO_AMH_Skeletons"
+                    << "::_component_amh_skel, 0}," << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "{\"_component\", &TAO_ServantBase"
                     << "::_component_thru_poa_skel, 0}," << be_nl;
@@ -1015,14 +1036,27 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_interface\", &TAO_ServantBase"
-                << "::_interface_skel, 0}," << be_nl;
+            if (this->is_amh_rh())
+              {
+                *os << "{\"_interface\", &TAO_AMH_Skeletons"
+                    << "::_interface_amh_skel, 0}," << be_nl;
+              }
+            else
+              {
+                *os << "{\"_interface\", &TAO_ServantBase"
+                    << "::_interface_skel, 0}," << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
+            if (this->is_amh_rh())
+              {
+                *os << "{\"_repository_id\", &TAO_AMH_Skeletons"
+                    << "::_repository_id_amh_skel, 0}" << be_uidt_nl;
+              }
             if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "{\"_repository_id\", &TAO_ServantBase"
@@ -1167,7 +1201,12 @@ be_interface::gen_operation_table (const char *flat_name,
                               -1);
           }
 
-        if (be_global->gen_thru_poa_collocation ())
+        if (this->is_amh_rh())
+          {
+            *os << "_is_a,&TAO_AMH_Skeletons"
+                << "::_is_a_amh_skel, 0" << be_nl;
+          }
+        else if (be_global->gen_thru_poa_collocation ())
           {
             *os << "_is_a,&TAO_ServantBase"
                 << "::_is_a_thru_poa_skel, 0" << be_nl;
@@ -1182,7 +1221,12 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
+            if (this->is_amh_rh())
+              {
+                *os << "_non_existent,&TAO_AMH_Skeletons"
+                    << "::_non_existent_amh_skel, 0" << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "_non_existent,&TAO_ServantBase"
                     << "::_non_existent_thru_poa_skel, 0" << be_nl;
@@ -1198,7 +1242,12 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
+            if (this->is_amh_rh())
+              {
+                *os << "_component,&TAO_AMH_Skeletons"
+                    << "::_component_amh_skel, 0" << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "_component,&TAO_ServantBase"
                     << "::_component_thru_poa_skel, 0" << be_nl;
@@ -1213,15 +1262,28 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_interface,&TAO_ServantBase"
-                << "::_interface_skel, 0" << be_nl;
+            if (this->is_amh_rh())
+              {
+                *os << "_interface,&TAO_AMH_Skeletons"
+                    << "::_interface_amh_skel, 0" << be_nl;
+              }
+            else
+              {
+                *os << "_interface,&TAO_ServantBase"
+                    << "::_interface_skel, 0" << be_nl;
+              }
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
+            if (this->is_amh_rh())
+              {
+                *os << "_repository_id,&TAO_AMH_Skeletons"
+                    << "::_repository_id_amh_skel, 0" << be_nl;
+              }
+            else if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "_repository_id,&TAO_ServantBase"
                     << "::_repository_id_thru_poa_skel, 0" << be_nl;
@@ -3308,6 +3370,18 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
   this->ami4ccm_ex_idl_gen (true);
 
   return 0;
+}
+
+bool
+be_interface::is_amh_rh (void) const
+{
+  return this->is_amh_rh_;
+}
+
+void
+be_interface::is_amh_rh (bool val)
+{
+  this->is_amh_rh_ = val;
 }
 
 bool

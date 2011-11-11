@@ -2774,6 +2774,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
       this->gen_standard_include (this->server_skeletons_,
                                   "tao/Buffer_Allocator_T.h");
       this->gen_standard_include (this->server_skeletons_,
+                                  "tao/Messaging/AMH_Skeletons.h");
+      this->gen_standard_include (this->server_skeletons_,
                                   "ace/Auto_Functor.h");
     }
 
