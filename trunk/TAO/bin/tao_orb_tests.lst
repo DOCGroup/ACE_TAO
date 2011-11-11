@@ -29,6 +29,7 @@ TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !
 TAO/tests/AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/AMI/run_test.pl -exclusive: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/AMI/run_mt_noupcall.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/AMI/run_exclusive_rw.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
 TAO/tests/AMH_Oneway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
@@ -275,6 +276,8 @@ TAO/tests/CallbackTest/run_test_mixed_ip.pl: IPV6 !MINIMUM !CORBA_E_COMPACT !COR
 TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash
 # Disabled Crash On Write on Win32, see bugzilla 959 why !LabVIEW_RT !WinCE
 TAO/tests/Crash_On_Write/run_test.pl: !ST !Win32
+TAO/tests/Mixed_Sync_ASync_Events/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/Mixed_Sync_ASync_Events/run_exclusive_rw.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/MT_NoUpcall_Client_Leader/run_test.pl: !ST !CORBA_E_MICRO !NO_MESSAGING
 TAO/tests/Nested_Upcall_Crash/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash !QUICK
 TAO/tests/Nested_Upcall_Crash/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash QUICK
