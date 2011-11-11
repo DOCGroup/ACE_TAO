@@ -138,10 +138,12 @@ namespace TAO
         if (s != TAO_INVOKE_SUCCESS)
           return s;
 
-        // NOTE: Not sure how things are handles with exclusive muxed
-        // strategy.
-        if (transport->idle_after_send ())
-          (void) this->resolver_.transport_released ();
+        // transport strategy takes care of idling transport or not
+        transport->idle_after_send ();
+        // release transport from resolver in any case since we don't
+        // want the resolver to make the transport idle if the strategy
+        // told it not to
+        this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1
       }
