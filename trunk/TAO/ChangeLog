@@ -1,3 +1,13 @@
+Tue Nov  8 11:50:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * client.cpp:
+        * exclusive_rw.conf:
+        * exclusive_rw.conf.xml:
+        * run_exclusive_rw.pl:
+
+          Adedd test variant for full blocking configuration
+          (RW + EXCLUSIVE TMS + blocking connect and flushing)
+
 Sun Nov  6 18:08:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tao/CDR.cpp:
