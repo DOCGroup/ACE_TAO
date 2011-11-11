@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<!-- Converted from ./tests/Smart_Proxies/On_Demand/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!-- $Id$ -->
+ <!--  Dynamically configure the smart proxy -->
+ <dynamic id="Smart_Test_Factory" type="Service_Object">
+   <initializer path="./Smart_Test_Factory" init="_make_Smart_Test_Factory" params="dummy"/>
+ </dynamic>
+</ACE_Svc_Conf>

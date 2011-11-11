@@ -1,0 +1,14 @@
+// $Id$
+#ifndef NODEAPPLICATIONMANAGER_IDL
+#define NODEAPPLICATIONMANAGER_IDL
+
+#include "dance/Deployment/Deployment_ApplicationManager.idl"
+
+module Deployment {
+  interface NodeApplicationManager :
+    ApplicationManager
+  {
+  };
+};
+
+#endif /* NODEAPPLICATIONMANAGER_IDL */
