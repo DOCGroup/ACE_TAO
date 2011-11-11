@@ -1,8 +1,18 @@
+Thu Nov 10 14:15:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/ami4ccm/examples/Hello/descriptors/PlanFullBlock.cdp:
+        * connectors/ami4ccm/examples/Hello/descriptors/run_fullblock_test.pl:
+
+          Added variant of test using full blocking container servers 
+          (LocalityManager).          
+
 Thu Nov 03 13:25:13 UTC 2011   Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * tests/Collocation/Sender/Sender_exec.cpp:
         * bin/ciao_tests.lst
-        Only if defined CCM_DIRECTCOLL run test. 
+        
+          Only if defined CCM_DIRECTCOLL run test. 
 
 Thu Nov 03 08:52:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
