@@ -55,7 +55,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       return -1;
     }
-
   ACE_CString full_skel_name_holder =
     this->generate_full_skel_name (node);
 

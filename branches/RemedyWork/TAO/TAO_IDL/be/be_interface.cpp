@@ -931,10 +931,11 @@ be_interface::gen_operation_table (const char *flat_name,
                                    const char *skeleton_class_name)
 {
   // TODO: find another way to determine whether this is an AMH class
+  bool amh = false;
   ACE_CString tmp (skeleton_class_name);
   if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
     {
-      this->is_amh_rh_ = true;
+      amh = true;
     }
   // Check out the op_lookup_strategy.
   switch (be_global->lookup_strategy ())
@@ -977,7 +978,7 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        if (this->is_amh_rh())
+        if (amh)
           {
             *os << "{\"_is_a\", &TAO_AMH_Skeletons::_is_a_amh_skel, 0}," << be_nl;
           }
@@ -994,7 +995,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "{\"_non_existent\", &TAO_AMH_Skeletons"
                     << "::_non_existent_amh_skel, 0}," << be_nl;
@@ -1015,7 +1016,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "{\"_component\", &TAO_AMH_Skeletons"
                     << "::_component_amh_skel, 0}," << be_nl;
@@ -1036,7 +1037,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "{\"_interface\", &TAO_AMH_Skeletons"
                     << "::_interface_amh_skel, 0}," << be_nl;
@@ -1052,7 +1053,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "{\"_repository_id\", &TAO_AMH_Skeletons"
                     << "::_repository_id_amh_skel, 0}" << be_uidt_nl;
@@ -1201,7 +1202,7 @@ be_interface::gen_operation_table (const char *flat_name,
                               -1);
           }
 
-        if (this->is_amh_rh())
+        if (amh)
           {
             *os << "_is_a,&TAO_AMH_Skeletons"
                 << "::_is_a_amh_skel, 0" << be_nl;
@@ -1221,7 +1222,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "_non_existent,&TAO_AMH_Skeletons"
                     << "::_non_existent_amh_skel, 0" << be_nl;
@@ -1242,7 +1243,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "_component,&TAO_AMH_Skeletons"
                     << "::_component_amh_skel, 0" << be_nl;
@@ -1262,7 +1263,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "_interface,&TAO_AMH_Skeletons"
                     << "::_interface_amh_skel, 0" << be_nl;
@@ -1278,7 +1279,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (this->is_amh_rh())
+            if (amh)
               {
                 *os << "_repository_id,&TAO_AMH_Skeletons"
                     << "::_repository_id_amh_skel, 0" << be_nl;
@@ -3370,18 +3371,6 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
   this->ami4ccm_ex_idl_gen (true);
 
   return 0;
-}
-
-bool
-be_interface::is_amh_rh (void) const
-{
-  return this->is_amh_rh_;
-}
-
-void
-be_interface::is_amh_rh (bool val)
-{
-  this->is_amh_rh_ = val;
 }
 
 bool
