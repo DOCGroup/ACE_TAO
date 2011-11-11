@@ -126,6 +126,7 @@ project(Glfa_B_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    BS.inl
   }
 }
 

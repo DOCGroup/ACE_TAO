@@ -26,6 +26,7 @@ project(*Server): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compa
   }
 
   Inline_Files {
+    param_testS.inl
     param_testC.inl
   }
 

@@ -16,7 +16,7 @@ is a program that is used to compile
 .I IDL
 source code.  The IDL compiler generates 9 files from each .idl file,
 the file names are obtained by taking the IDL basename and appending
-C.h, C.inl, C.cpp, S.h, S.cpp, S_T.h, S_T.inl, and S_T.cpp; the
+C.h, C.inl, C.cpp, S.h, S.inl, S.cpp, S_T.h, S_T.inl, and S_T.cpp; the
 client stubs are declared in the C.h file, the skeletons in the S.h
 file. Please see the Options list on how to get different suffixes for
 these files.
@@ -164,6 +164,9 @@ Server skeleton file name ending. Default is "S.cpp".
 .TP
 .B \-sT
 Server template skeleton file name ending. Default is "S_T.cpp".
+.TP
+.B \-si
+Server inline skeleton file name ending. Default is "S.inl".
 .TP
 .B \-st
 Server's template inline file name ending. Default is "S_T.inl".

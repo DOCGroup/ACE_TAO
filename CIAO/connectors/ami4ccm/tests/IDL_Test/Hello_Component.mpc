@@ -132,6 +132,7 @@ project(AMI4CCM_ITB_Hello_Comp_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
+    Hello_ComponentS.inl
   }
 }
 

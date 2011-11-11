@@ -970,73 +970,39 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        if (be_global->gen_thru_poa_collocation ())
-          {
-            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_thru_poa_skel, 0}," << be_nl;
-          }
-        else
-          {
-            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_skel, 0}," << be_nl;
-          }
+        *os << "{\"_is_a\", &" << skeleton_class_name
+            << "::_is_a_skel, 0}," << be_nl;
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
-              {
-                *os << "{\"_non_existent\", "
-                    << "&TAO_ServantBase::_non_existent_thru_poa_skel, 0},"
-                    << be_nl;
-              }
-            else
-              {
-                *os << "{\"_non_existent\", &TAO_ServantBase::_non_existent_skel, 0},"
-                    << be_nl;
-              }
+            *os << "{\"_non_existent\", &" << skeleton_class_name
+                << "::_non_existent_skel, 0}," << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
-              {
-                *os << "{\"_component\", "
-                    << "&TAO_ServantBase::_component_thru_poa_skel, 0},"
-                    << be_nl;
-              }
-            else
-              {
-                *os << "{\"_component\", &TAO_ServantBase::_component_skel, 0},"
-                    << be_nl;
-              }
+            *os << "{\"_component\", &" << skeleton_class_name
+                << "::_component_skel, 0}," << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "{\"_interface\", &TAO_ServantBase::_interface_skel, 0},"
-                << be_nl;
+            *os << "{\"_interface\", &" << skeleton_class_name
+                << "::_interface_skel, 0}," << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
-              {
-                *os << "{\"_repository_id\", "
-                    << "&TAO_ServantBase::_repository_id_thru_poa_skel, 0}"
-                    << be_uidt_nl;
-              }
-            else
-              {
-                *os << "{\"_repository_id\", "
-                    << "&TAO_ServantBase::_repository_id_skel, 0}"
-                    << be_uidt_nl;
-              }
+            *os << "{\"_repository_id\", &" << skeleton_class_name
+                << "::_repository_id_skel, 0}" << be_uidt_nl;
 
             ++this->skel_count_;
           }
@@ -1171,69 +1137,43 @@ be_interface::gen_operation_table (const char *flat_name,
                               -1);
           }
 
-        if (be_global->gen_thru_poa_collocation ())
-          {
-            *os << "_is_a,&TAO_ServantBase::_is_a_thru_poa_skel, 0" << be_nl;
-          }
-        else
-          {
-            *os << "_is_a,&TAO_ServantBase::_is_a_skel, 0" << be_nl;
-          }
+        *os << "_is_a,&"
+            << skeleton_class_name
+            << "::_is_a_skel, 0" << be_nl;
 
         ++this->skel_count_;
 
         if (!be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
-              {
-                *os << "_non_existent,&TAO_ServantBase::_non_existent_thru_poa_skel, 0"
-                    << be_nl;
-              }
-            else
-              {
-                *os << "_non_existent,&TAO_ServantBase::_non_existent_skel, 0"
-                    << be_nl;
-              }
+            *os << "_non_existent,&"
+                << skeleton_class_name
+                << "::_non_existent_skel, 0" << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            if (be_global->gen_thru_poa_collocation ())
-              {
-                *os << "_component,&TAO_ServantBase::_component_thru_poa_skel, 0"
-                    << be_nl;
-              }
-            else
-              {
-                *os << "_component,&TAO_ServantBase::_component_skel, 0"
-                    << be_nl;
-              }
+            *os << "_component,&"
+                << skeleton_class_name
+                << "::_component_skel, 0" << be_nl;
             ++this->skel_count_;
           }
 
         if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
           {
-            *os << "_interface,&TAO_ServantBase::_interface_skel, 0"
-                << be_nl;
+            *os << "_interface,&"
+                << skeleton_class_name
+                << "::_interface_skel, 0" << be_nl;
 
             ++this->skel_count_;
           }
 
         if (!be_global->gen_minimum_corba ())
           {
-
-            if (be_global->gen_thru_poa_collocation ())
-              {
-                *os << "_repository_id,&TAO_ServantBase::_repository_id_thru_poa_skel, 0"
-                    << be_nl;
-              }
-            else
-              {
-                *os << "_repository_id,&TAO_ServantBase::_repository_id_skel, 0"
-                    << be_nl;
-              }
+            *os << "_repository_id,&"
+                << skeleton_class_name
+                << "::_repository_id_skel, 0" << be_nl;
 
             ++this->skel_count_;
           }
@@ -1341,7 +1281,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << this->full_direct_proxy_impl_name ()
+                      << derived_interface->full_direct_proxy_impl_name ()
                       << "::" << d->local_name ();
                 }
               else
@@ -1370,7 +1310,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               if (be_global->gen_direct_collocation ())
                 {
                   *os << " &"
-                      << this->full_direct_proxy_impl_name ()
+                      << derived_interface->full_direct_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
               else
@@ -1392,7 +1332,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   if (be_global->gen_direct_collocation ())
                     {
                       *os << " &"
-                          << this->full_direct_proxy_impl_name ()
+                          << derived_interface->full_direct_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
                   else
@@ -1438,64 +1378,15 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               // We are an operation node. We use the original
               // operation name, not the one with _cxx_ in it.
-              // We need to the name of the base class!! But since
-              // we don't know whether this is an AMH class, we
-              // need to check this, using the full_skeleton_name
-              // TODO: find a more elegant solution for this
-              ACE_CString tmp (full_skeleton_name);
-              if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
-                {
-                  ACE_CString name (d->full_name ());
-                  ACE_String_Base_Const::size_type const last = name.rfind(':') - 1;
-                  name = name.substring (0, last);
-                  if (name.rfind (':') != ACE_String_Base_Const::npos)
-                    {
-                      ACE_CString nspace = name.substring (0, name.rfind (':') - 1);
-                      name = name.substring (name.rfind (':') + 1);
-                      *os << d->original_local_name () << ",&POA_"
-                          << nspace.c_str () << "::AMH_"
-                          << name.c_str () << "::"
-                          << d->original_local_name ()
-                          << "_skel,";
-                    }
-                  else
-                    {
-                      *os << d->original_local_name () << ",&POA_AMH_"
-                          << name.c_str () << "::"
-                          << d->original_local_name ()
-                          << "_skel,";
-                    }
-                }
-              else
-                {
-                  if (!d->is_abstract ())
-                    {
-                      *os << d->original_local_name () << ",&POA_"
-                          << d->full_name () << "_skel,";
-                    }
-                  else
-                    {
-                      *os << d->original_local_name () << ",&"
-                          << full_skeleton_name << "::"
-                          << d->original_local_name ()
-                          << "_skel,";
-                    }
-                }
+              *os << d->original_local_name () << ",&"
+                  << full_skeleton_name << "::"
+                  << d->local_name () << "_skel,";
+
               if (be_global->gen_direct_collocation ())
                 {
-                  if (!d->is_abstract ())
-                    {
-                      *os << " &"
-                          << this->full_direct_proxy_impl_name ()
-                          << "::" << d->local_name ();
-                    }
-                  else
-                    {
-                      *os << " &"
-                          << derived_interface->full_direct_proxy_impl_name ()
-                          << "::" << d->local_name ();
-                    }
-
+                  *os << " &"
+                      << derived_interface->full_direct_proxy_impl_name ();
+                  *os << "::" << d->local_name ();
                 }
               else
                 {
@@ -1517,47 +1408,19 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 }
 
               // Generate only the "get" entry if we are readonly.
-              // we need to split the full name in order to push _set_
-              // or _get_ in between the namespace and attribute name.
+              *os << "_get_" << d->original_local_name () << ",&"
+                  << full_skeleton_name << "::_get_"
+                  << d->local_name () << "_skel,";
 
-              //determine the correct namespace
-              ACE_CString nspace (d->full_name ());
-              ACE_String_Base_Const::size_type const pos = nspace.rfind(':');
-              nspace = nspace.substring(0, pos + 1);
-
-              if (!d->is_abstract ())
+              if (be_global->gen_direct_collocation ())
                 {
-                  *os << "_get_" << d->original_local_name () << ",&POA_"
-                      << nspace.c_str () << "_get_"
-                      << d->original_local_name () << "_skel,";
-
-                  if (be_global->gen_direct_collocation ())
-                    {
-                      *os << " &"
-                          << this->full_direct_proxy_impl_name ()
-                          << "::_get_" << d->local_name ();
-                    }
-                  else
-                    {
-                      *os << " 0";
-                    }
+                  *os << " &"
+                      << derived_interface->full_direct_proxy_impl_name ()
+                      << "::_get_" << d->local_name ();
                 }
               else
                 {
-                  *os << "_get_" << d->original_local_name () << ",&"
-                      << full_skeleton_name << "::_get_"
-                      << d->original_local_name () << "_skel,";
-
-                  if (be_global->gen_direct_collocation ())
-                    {
-                      *os << " &"
-                          << derived_interface->full_direct_proxy_impl_name ()
-                          << "::_get_" << d->local_name ();
-                    }
-                  else
-                    {
-                      *os << " 0";
-                    }
+                  *os << " 0";
                 }
 
               *os << "\n";
@@ -1566,41 +1429,20 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (!attr->readonly ())
                 {
-                  if (!d->is_abstract ())
-                    {
-                      // The set method
-                      *os << "_set_" << d->original_local_name () << ",&POA_"
-                          << nspace.c_str () << "_set_"
-                          << d->original_local_name () << "_skel,";
+                  // The set method
+                  *os << "_set_" << d->original_local_name () << ",&"
+                      << full_skeleton_name << "::_set_"
+                      << d->local_name () << "_skel,";
 
-                      if (be_global->gen_direct_collocation ())
-                        {
-                          *os << " &"
-                              << this->full_direct_proxy_impl_name ()
-                              << "::_set_" << d->local_name ();
-                        }
-                      else
-                        {
-                          *os << " 0";
-                        }
+                  if (be_global->gen_direct_collocation ())
+                    {
+                      *os << " &"
+                          << derived_interface->full_direct_proxy_impl_name ()
+                          << "::_set_" << d->local_name ();
                     }
                   else
                     {
-                      // The set method in case abstract
-                      *os << "_set_" << d->original_local_name () << ",&"
-                          << full_skeleton_name << "::_set_"
-                          << d->original_local_name () << "_skel,";
-
-                      if (be_global->gen_direct_collocation ())
-                        {
-                          *os << " &"
-                              << derived_interface->full_direct_proxy_impl_name ()
-                              << "::_set_" << d->local_name ();
-                        }
-                      else
-                        {
-                          *os << " 0";
-                        }
+                      *os << " 0";
                     }
 
                   *os << "\n";
@@ -2283,6 +2125,205 @@ be_interface::is_a_helper (be_interface * /*derived*/,
       << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
       << ") == 0 ||" << be_uidt_nl;
+
+  return 0;
+}
+
+int
+be_interface::gen_skel_helper (be_interface *derived,
+                               be_interface *ancestor,
+                               TAO_OutStream *os)
+{
+  // If derived and ancestor are same, skip it.
+  if (derived == ancestor)
+    {
+      return 0;
+    }
+
+  // If an operation or an attribute is abstract (declared in an
+  // abstract interface), we will either generate the full
+  // definition (if there are no concrete interfaces between the
+  // abstract ancestor and us) or, if there is a concrete ancestor
+  // in between, we will catch its definition elsewhere in this
+  // traversal.
+  if (ancestor->is_abstract ())
+    {
+      return 0;
+    }
+
+  // Else generate code that does the cast to the appropriate type.
+
+  if (ancestor->nmembers () > 0)
+    {
+      // If there are elements in ancestor scope i.e., any operations and
+      // attributes defined by "ancestor", become methods on the derived
+      // class which call the corresponding method of the base class by
+      // doing the proper casting.
+      for (UTL_ScopeActiveIterator si (ancestor, UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
+        {
+          // Get the next AST decl node
+          AST_Decl *d = si.item ();
+          AST_Decl::NodeType nt = d->node_type ();
+
+          if (nt == AST_Decl::NT_op)
+            {
+              be_operation *op =
+                be_operation::narrow_from_decl (d);
+
+              /// These are not generated on the server side.
+              if (op->is_sendc_ami ())
+                {
+                  continue;
+                }
+
+              *os << be_nl_2
+                  << "// TAO_IDL - Generated from" << be_nl
+                  << "// " << __FILE__ << ":" << __LINE__
+                  << be_nl_2;
+
+              if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
+                {
+                  // Generate the static method corresponding to this method.
+                  *os << "static void" << be_nl
+                      << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant);" << be_uidt
+                      << be_uidt;
+                }
+              else
+                { // Generate code in the inline file.
+                  // Generate the static method corresponding to this method.
+                  *os << "ACE_INLINE" << be_nl
+                      << "void" << be_nl
+                      << derived->full_skel_name () << "::"
+                      << d->local_name ()
+                      << "_skel (" << be_idt_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant)"
+                      << be_uidt_nl
+                      << "{" << be_idt_nl;
+
+                   *os << ancestor->full_skel_name ()
+                      << " * const impl =" << be_idt_nl
+                      << "static_cast<"
+                      << derived->full_skel_name ()
+                      << " *> (servant);" << be_uidt_nl;
+
+                  *os << ancestor->full_skel_name ()
+                      << "::" << d->local_name ()
+                      << "_skel (" << be_idt_nl
+                      << "server_request," << be_nl
+                      << "servant_upcall," << be_nl
+                      << "impl);" << be_uidt
+                      << be_uidt_nl
+                      << "}";
+                }
+            }
+          else if (nt == AST_Decl::NT_attr)
+            {
+              AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+
+              if (attr == 0)
+                {
+                  return -1;
+                }
+
+              *os << be_nl_2;
+
+              if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
+                {
+                  // Generate the static method corresponding to this method.
+                  *os << "static void" << be_nl
+                      << "_get_" << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant);" << be_uidt
+                      << be_uidt;
+                }
+              else
+                { // Generate code in the inline file.
+                  // Generate the static method corresponding to this method.
+                  *os << "ACE_INLINE" << be_nl
+                      << "void" << be_nl
+                      << derived->full_skel_name () << "::_get_"
+                      << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "TAO_ServerRequest & server_request," << be_nl
+                      << "void * servant_upcall," << be_nl
+                      << "void * servant)" << be_uidt
+                      << be_uidt_nl
+                      << "{" << be_idt_nl;
+
+                   *os << ancestor->full_skel_name ()
+                      << " * const impl = static_cast<"
+                      << derived->full_skel_name ()
+                      << " *> (servant);" << be_nl;
+
+                  *os << ancestor->full_skel_name ()
+                      << "::_get_" << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "server_request," << be_nl
+                      << "servant_upcall," << be_nl
+                      << "impl);" << be_uidt
+                      << be_uidt << be_uidt_nl
+                      << "}";
+                }
+
+              if (!attr->readonly ())
+                {
+                  *os << be_nl_2;
+
+                  if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
+                    {
+                      // Generate the static method corresponding to
+                      // this method.
+                      *os << "static void" << be_nl
+                          << "_set_" << d->local_name ()
+                          << "_skel (" << be_idt << be_idt_nl
+                          << "TAO_ServerRequest & server_request," << be_nl
+                          << "void * servant_upcall," << be_nl
+                          << "void * servant);" << be_uidt
+                          << be_uidt;
+                    }
+                  else
+                    { // Generate code in the inline file.
+                      // Generate the static method corresponding to
+                      // this method.
+                      *os << "ACE_INLINE" << be_nl
+                          << "void" << be_nl
+                          << derived->full_skel_name ()
+                          << "::_set_" << d->local_name ()
+                          << "_skel (" << be_idt << be_idt_nl
+                          << "TAO_ServerRequest & server_request," << be_nl
+                          << "void * servant_upcall," << be_nl
+                          << "void * servant)" << be_uidt
+                          << be_uidt_nl
+                          << "{" << be_idt_nl;
+
+                      *os << ancestor->full_skel_name ()
+                          << " * const impl = static_cast<"
+                          << derived->full_skel_name ()
+                          << " *> (servant);" << be_nl;
+
+                      *os << ancestor->full_skel_name ()
+                          << "::_set_" << d->local_name ()
+                          << "_skel (" << be_idt << be_idt_nl
+                          << "server_request," << be_nl
+                          << "servant_upcall," << be_nl
+                          << "impl);" << be_uidt
+                          << be_uidt << be_uidt_nl
+                          << "}";
+                    }
+                }
+            }
+        } // End of FOR.
+    }
 
   return 0;
 }

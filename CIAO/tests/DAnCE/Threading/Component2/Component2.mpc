@@ -143,6 +143,7 @@ project(Threading_Component2_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    Component2S.inl
   }
 }
 

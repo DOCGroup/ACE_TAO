@@ -140,6 +140,7 @@ project(AMI_AmiDds_Base_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
+    AmiDds_BaseS.inl
   }
 }
 

@@ -62,6 +62,7 @@ project(CosProperty_Skel) : orbsvcslib, orbsvcs_output, install, property, porta
   }
 
   Inline_Files {
+    CosPropertyS.inl
   }
 
   Template_Files {

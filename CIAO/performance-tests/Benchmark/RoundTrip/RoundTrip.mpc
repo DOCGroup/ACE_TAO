@@ -111,6 +111,7 @@ project(Benchmark_RoundTrip_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    RoundTripS.inl
   }
 }
 

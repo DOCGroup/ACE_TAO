@@ -137,6 +137,7 @@ project(CFT_Exception_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    Exception_Test_ConnectorS.inl
   }
 }
 

@@ -82,6 +82,7 @@ project(Threading_skel) : ciao_executor   {
   }
 
   Inline_Files {
+    ThreadingS.inl
   }
 }
 

@@ -134,6 +134,7 @@ project(CIF_Component_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    CIF_ComponentS.inl
   }
 }
 

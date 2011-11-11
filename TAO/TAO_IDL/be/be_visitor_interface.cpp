@@ -91,6 +91,7 @@
 // AMH
 #include "be_visitor_interface/amh_ch.cpp"
 #include "be_visitor_interface/amh_ss.cpp"
+#include "be_visitor_interface/amh_si.cpp"
 #include "be_visitor_interface/amh_sh.cpp"
 #include "be_visitor_interface/amh_rh_ss.cpp"
 #include "be_visitor_interface/amh_rh_sh.cpp"

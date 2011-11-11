@@ -333,6 +333,7 @@ project('."$unique_prefix"."$com_name"."$svr_suffix".') : '."$svr_base". "$base_
   Header_Files {'."$svr_hdr".'  }
 
   Inline_Files {
+    '."$com_name".'S.inl
   }
 }
 

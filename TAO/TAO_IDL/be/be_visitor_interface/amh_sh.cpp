@@ -118,17 +118,58 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
+  // Add a skeleton for our _is_a method.
+  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *servant_upcall" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
+
+  if (!be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _non_existent method.
+      *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
+          << "TAO_ServerRequest &req," << be_nl
+          << "void *obj," << be_nl
+          << "void *servant_upcall" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
+    }
+
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _interface method.
+      *os << "static void _interface_skel (" << be_idt << be_idt_nl
+          << "TAO_ServerRequest &req," << be_nl
+          << "void *obj," << be_nl
+          << "void *servant_upcall" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
+    }
+
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _component method.
+      *os << "static void _component_skel (" << be_idt << be_idt_nl
+          << "TAO_ServerRequest &req," << be_nl
+          << "void *obj," << be_nl
+          << "void *servant_upcall" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
+    }
+
+  if (!be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _repository_id method.
+      *os << "static void _repository_id_skel (" << be_idt << be_idt_nl
+          << "TAO_ServerRequest &req," << be_nl
+          << "void *obj," << be_nl
+          << "void *servant_upcall" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
+    }
+
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *_servant_upcall" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
-
-  // Add the _is_amh method.
-  *os << "inline virtual ::CORBA::Boolean" << be_nl
-      << "_is_amh (void)" << be_nl
-      << "{" << be_idt_nl << "return true;"
-      << be_uidt_nl << "}" << be_nl_2;
 
   this->this_method (node);
 
@@ -143,6 +184,18 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
                          "(%N:%l) be_visitor_amh_interface_sh::"
                          "visit_interface - "
                          "codegen for scope failed\n"),
+                        -1);
+    }
+
+  // Generate skeletons for operations of our base classes. These
+  // skeletons just cast the pointer to the appropriate type
+  // before invoking the call.
+  if (node->traverse_inheritance_graph (be_interface::gen_skel_helper, os) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_amh_interface_sh::"
+                         "visit_interface - "
+                         "inheritance graph traversal failed\n"),
                         -1);
     }
 

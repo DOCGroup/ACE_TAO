@@ -103,6 +103,7 @@ project(SimpleCommon_SimpleConsumer_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    SimpleConsumerS.inl
   }
 }
 

@@ -105,6 +105,7 @@ project(CFT_ReadGet_Starter_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel
   }
 
   Inline_Files {
+    ReadGet_StarterS.inl
   }
 }
 

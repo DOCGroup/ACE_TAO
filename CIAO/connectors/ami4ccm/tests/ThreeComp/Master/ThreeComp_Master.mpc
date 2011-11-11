@@ -127,6 +127,7 @@ project(AMI_ThreeComp_Base_Master_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
+    ThreeComp_MasterS.inl
   }
 }
 

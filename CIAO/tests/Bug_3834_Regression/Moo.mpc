@@ -62,6 +62,7 @@ project(Moo_skel) : ciao_executor   {
   }
 
   Inline_Files {
+    MooS.inl
   }
 }
 

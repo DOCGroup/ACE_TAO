@@ -136,6 +136,7 @@ project(DDS_Throughput_Sec_Connector_svnt) : ciao_servant, dds4ccm_skel, dds4ccm
   }
 
   Inline_Files {
+    Throughput_Sec_ConnectorS.inl
   }
 }
 

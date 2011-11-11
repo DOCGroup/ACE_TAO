@@ -19,6 +19,7 @@ project(CosNaming_Skel) : orbsvcslib, orbsvcs_output, install, naming, portables
   }
 
   Inline_Files {
+    CosNamingS.inl
   }
 
   Template_Files {

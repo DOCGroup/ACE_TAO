@@ -137,6 +137,7 @@ project(OIT_Receiver_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    OIT_Receiver_ConnectorS.inl
   }
 }
 

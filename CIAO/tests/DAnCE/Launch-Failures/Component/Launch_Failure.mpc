@@ -135,6 +135,7 @@ project(Launch_Failure_svnt) : ciao_servant  {
   }
 
   Inline_Files {
+    Launch_FailureS.inl
   }
 }
 

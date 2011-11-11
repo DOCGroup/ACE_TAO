@@ -1,4 +1,4 @@
-// $Id$
+// // $Id$
 
 #include "ImR_Locator_i.h"
 #include "utils.h"
@@ -761,8 +761,9 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
 }
 
 void
-ImR_Locator_i::add_or_update_server (const char* server,
-                                const ImplementationRepository::StartupOptions &options)
+ImR_Locator_i::add_or_update_server (
+    const char* server,
+    const ImplementationRepository::StartupOptions &options)
 {
   ACE_ASSERT (server != 0);
 
@@ -853,7 +854,7 @@ ImR_Locator_i::remove_server (const char* name)
   if (this->read_only_)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ImR: Can't remove server <%s> due to locked database.\n", name));
+                  "ImR: Can't remove server <%C> due to locked database.\n", name));
       throw CORBA::NO_PERMISSION (
         CORBA::SystemException::_tao_minor_code (
           TAO_IMPLREPO_MINOR_CODE,

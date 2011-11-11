@@ -126,6 +126,7 @@ project(Bar_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    BarS.inl
   }
 }
 

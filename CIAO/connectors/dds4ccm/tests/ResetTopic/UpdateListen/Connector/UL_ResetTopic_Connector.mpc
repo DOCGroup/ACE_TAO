@@ -141,6 +141,7 @@ project (UL_ResetTopicConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    UL_ResetTopic_ConnectorS.inl
   }
 }
 

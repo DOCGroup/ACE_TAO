@@ -63,6 +63,7 @@ project(DsEventLogAdmin_Skel) : orbsvcslib, orbsvcs_output, install, dseventloga
   }
 
   Inline_Files {
+    DsEventLogAdminS.inl
   }
 
   Template_Files {

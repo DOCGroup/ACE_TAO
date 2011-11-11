@@ -126,6 +126,7 @@ project(IhC_Foo_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    IhC_FooS.inl
   }
 }
 

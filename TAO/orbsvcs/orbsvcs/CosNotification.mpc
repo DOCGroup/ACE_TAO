@@ -95,6 +95,12 @@ project(CosNotification_Skel) : orbsvcslib, orbsvcs_output, install, notificatio
   }
 
   Inline_Files {
+    CosNotificationS.inl
+    CosNotifyCommS.inl
+    CosNotifyFilterS.inl
+    CosNotifyChannelAdminS.inl
+    NotifyExtS.inl
+    Event_ForwarderS.inl
   }
 
   Template_Files {

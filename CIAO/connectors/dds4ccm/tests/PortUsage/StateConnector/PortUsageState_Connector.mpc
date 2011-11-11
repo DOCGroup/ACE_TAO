@@ -137,6 +137,7 @@ project(PortUsageState_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    PortUsageState_ConnectorS.inl
   }
 }
 

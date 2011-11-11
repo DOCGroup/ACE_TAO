@@ -122,5 +122,6 @@ project(Base_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    BaseS.inl
   }
 }

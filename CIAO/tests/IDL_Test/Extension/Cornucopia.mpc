@@ -100,6 +100,7 @@ project(Cornucopia_Ext_skel) : ccm_svnt, ccm_extension_stub {
   }
 
   Inline_Files {
+    CornucopiaS.inl
   }
 }
 

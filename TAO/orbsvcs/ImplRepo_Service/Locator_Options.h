@@ -109,10 +109,10 @@ private:
   int load_registry_options();
 private:
 
-  // xml, heap, or registry
+  /// xml, heap, or registry
   RepoMode repo_mode_;
 
-  // do we clear out the repository on load
+  /// Do we clear out the repository on load
   bool erase_repo_;
 
   /// Debug level.

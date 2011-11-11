@@ -61,6 +61,7 @@ project(CosTime_Skel) : orbsvcslib, orbsvcs_output, install, time, portableserve
   }
 
   Inline_Files {
+    TimeServiceS.inl
   }
 
   Template_Files {

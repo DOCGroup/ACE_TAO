@@ -63,5 +63,6 @@ project(Single_Service_Common_skel) : ccm_svnt {
   }
 
   Inline_Files {
+    Single_Service_CommonS.inl
   }
 }

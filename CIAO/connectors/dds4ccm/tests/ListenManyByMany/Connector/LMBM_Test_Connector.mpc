@@ -137,6 +137,7 @@ project(DDS_LMBM_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    LMBM_Test_ConnectorS.inl
   }
 }
 

@@ -262,7 +262,6 @@ TAO/tests/No_Server_MT_Connect_Test/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !
 TAO/tests/Connect_Strategy_Test/run_test.pl:
 # DISABLED TAO/tests/Client_Leaks/run_test.pl: !VxWorks !ST !Tru64
 TAO/tests/Server_Leaks/run_test.pl:
-TAO/tests/Skeleton_Inheritance/run_test.pl:
 TAO/tests/Smart_Proxies/Policy/run_test.pl:
 TAO/tests/Smart_Proxies/run_test.pl:
 TAO/tests/Smart_Proxies/dtor/run_test.pl:

@@ -43,6 +43,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_template_header_ (0),
     server_skeletons_ (0),
     server_template_skeletons_ (0),
+    server_inline_ (0),
     anyop_header_ (0),
     anyop_source_ (0),
     gperf_input_stream_ (0),
@@ -675,6 +676,18 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 
   this->gen_skel_src_includes ();
 
+  // Only when we generate a server inline file generate the include
+  if (be_global->gen_server_inline ())
+    {
+      // Generate the code that includes the inline file if not included in the
+      // header file.
+      *this->server_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)\n";
+      *this->server_skeletons_ << "#include \""
+                               << be_global->be_get_server_inline_fname (1)
+                               << "\"\n";
+      *this->server_skeletons_ << "#endif /* !defined INLINE */";
+    }
+
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
@@ -741,6 +754,39 @@ TAO_OutStream *
 TAO_CodeGen::server_template_skeletons (void)
 {
   return this->server_template_skeletons_;
+}
+
+// Set the server inline stream.
+int
+TAO_CodeGen::start_server_inline (const char *fname)
+{
+  // Clean up between multiple files.
+  delete this->server_inline_;
+
+  ACE_NEW_RETURN (this->server_inline_,
+                  TAO_OutStream,
+                  -1);
+
+  if (this->server_inline_->open (fname, TAO_OutStream::TAO_SVR_INL) == -1)
+    {
+      return -1;
+    }
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_inline_);
+
+  // Begin versioned namespace support after initial headers, if any, have been
+  // included.
+  *this->server_inline_ << be_global->versioning_begin ();
+
+  return 0;
+}
+
+// Get the server inline stream.
+TAO_OutStream *
+TAO_CodeGen::server_inline (void)
+{
+  return this->server_inline_;
 }
 
 int
@@ -1137,8 +1183,8 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
                   -1);
 
   int status =
-    this->ciao_exec_header_->open (fname,
-                                   TAO_OutStream::CIAO_EXEC_HDR);
+   this->ciao_exec_header_->open (fname,
+                                  TAO_OutStream::CIAO_EXEC_HDR);
 
   if (status == -1)
     {
@@ -1194,7 +1240,6 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
   int status =
     this->ciao_exec_source_->open (fname,
                                    TAO_OutStream::CIAO_EXEC_IMPL);
-
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1608,6 +1653,17 @@ TAO_CodeGen::end_server_header (void)
               << be_global->be_get_server_template_hdr_fname (true)
               << "\"\n";
         }
+
+      // Only when we generate a server inline file generate the include
+      if (be_global->gen_server_inline ())
+        {
+          // Insert the code to include the inline file.
+          *os << "\n#if defined (__ACE_INLINE__)\n";
+          *os << "#include \""
+              << be_global->be_get_server_inline_fname (1)
+              << "\"\n";
+          *os << "#endif /* defined INLINE */";
+        }
     }
 
   if (be_global->post_include () != 0)
@@ -1623,6 +1679,18 @@ TAO_CodeGen::end_server_header (void)
       << "\n";
 
   return 0;
+}
+
+void
+TAO_CodeGen::end_server_inline (void)
+{
+  *this->server_inline_ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_inline_ << be_global->versioning_end ();
+
+  *this->server_inline_ << "\n";
 }
 
 int
@@ -1976,7 +2044,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
   ACE_CString file_str;
 
   const char *output_path =
-    be_util::get_output_path (false, for_skel);
+    be_util::get_output_path (false, for_skel, false);
 
   if (output_path != 0)
     {
@@ -3551,6 +3619,7 @@ TAO_CodeGen::destroy (void)
   delete this->server_skeletons_;
   delete this->server_template_skeletons_;
   delete this->client_inline_;
+  delete this->server_inline_;
   delete this->anyop_source_;
   delete this->anyop_header_;
   delete this->ciao_svnt_header_;

@@ -128,6 +128,7 @@ project(AMI_InterReturnT_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
+    InterReturnT_SenderS.inl
   }
 }
 

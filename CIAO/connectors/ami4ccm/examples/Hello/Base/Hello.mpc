@@ -140,6 +140,7 @@ project(AMI_Hello_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
+    HelloS.inl
   }
 }
 

@@ -106,6 +106,7 @@ project(Null_Component_Glfa_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    Null_ComponentS.inl
   }
 }
 

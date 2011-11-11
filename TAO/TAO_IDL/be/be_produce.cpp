@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_extern.h"
 #include "fe_extern.h"
 #include "global_extern.h"
+#include "be_util.h"
 
 // Clean up before exit, whether successful or not.
 TAO_IDL_BE_Export void
@@ -185,6 +186,13 @@ BE_produce (void)
   be_visitor_root_sh root_sh_visitor (&ctx);
   BE_visit_root (root_sh_visitor, "server header");
 
+  if (be_global->gen_server_inline ())
+    {
+      ctx.state (TAO_CodeGen::TAO_ROOT_SI);
+      be_visitor_root_si root_si_visitor (&ctx);
+      BE_visit_root (root_si_visitor, "server inline");
+    }
+
   if (be_global->gen_server_skeleton ())
     {
       ctx.state (TAO_CodeGen::TAO_ROOT_SS);
@@ -232,13 +240,17 @@ BE_produce (void)
 
   if (be_global->gen_ciao_exec_impl ())
     {
-      ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
-      be_visitor_root_exh root_exh_visitor (&ctx);
-      BE_visit_root (root_exh_visitor, "CIAO exec impl header");
+      bool  generate = be_util::overwrite_ciao_exec_files ();
+      if(generate)
+        {
+          ctx.state (TAO_CodeGen::TAO_ROOT_EXH);
+          be_visitor_root_exh root_exh_visitor (&ctx);
+          BE_visit_root (root_exh_visitor, "CIAO exec impl header");
 
-      ctx.state (TAO_CodeGen::TAO_ROOT_EXS);
-      be_visitor_root_exs root_exs_visitor (&ctx);
-      BE_visit_root (root_exs_visitor, "CIAO exec impl source");
+          ctx.state (TAO_CodeGen::TAO_ROOT_EXS);
+          be_visitor_root_exs root_exs_visitor (&ctx);
+          BE_visit_root (root_exs_visitor, "CIAO exec impl source");
+        }
     }
 
   if (be_global->gen_ciao_conn_impl ())

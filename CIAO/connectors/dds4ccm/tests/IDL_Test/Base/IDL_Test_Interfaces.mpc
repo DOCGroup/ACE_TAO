@@ -102,5 +102,6 @@ project(IDL_Test_Interfaces_svnt) : ccm_svnt {
   }
 
   Inline_Files {
+    IDL_Test_InterfacesS.inl
   }
 }

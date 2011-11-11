@@ -61,6 +61,7 @@ project(Glfa_A_skel) : ciao_executor   {
   }
 
   Inline_Files {
+    AS.inl
   }
 }
 

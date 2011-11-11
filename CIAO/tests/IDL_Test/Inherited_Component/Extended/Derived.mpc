@@ -138,6 +138,7 @@ project(Base_Derived_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    DerivedS.inl
   }
 }
 

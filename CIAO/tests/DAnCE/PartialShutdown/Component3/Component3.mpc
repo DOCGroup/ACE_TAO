@@ -142,6 +142,7 @@ project(PartialShutdown_Component3_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    Component3S.inl
   }
 }
 

@@ -28,6 +28,7 @@ project(*progress): taoexe, messaging, ami, portableserver, tao_flresource {
   
   Inline_Files {
     testC.inl
+    testS.inl
   }
   
   IDL_Files {
@@ -53,6 +54,7 @@ project(*peer): taoexe, strategies, messaging, ami, portableserver {
   
   Inline_Files {
     testC.inl
+    testS.inl
   }
   
   IDL_Files {

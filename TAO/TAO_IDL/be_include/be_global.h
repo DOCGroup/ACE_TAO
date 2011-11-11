@@ -99,6 +99,9 @@ public:
   static const char *be_get_server_template_skeleton_fname (
     bool base_name_only = false);
 
+  static const char *be_get_server_inline_fname (
+    bool base_name_only = false);
+
   static const char *be_get_anyop_source_fname (
     bool base_name_only = false);
 
@@ -176,6 +179,10 @@ public:
   static const char *be_get_server_template_skeleton (
       UTL_String *idl_file_name,
       bool base_name_only = false);
+
+  static const char *be_get_server_inline (
+    UTL_String *idl_file_name,
+    bool base_name_only = false);
 
   static const char *be_get_anyop_header (
     UTL_String *idl_file_name,
@@ -474,6 +481,12 @@ public:
   /// Get the server_template_skeleton_ending.
   const char* server_template_skeleton_ending (void) const;
 
+  /// Set the server_inline_ending.
+  void server_inline_ending (const char* s);
+
+  /// Get the server_inline_ending.
+  const char* server_inline_ending (void) const;
+
   /// Set the anyop_header_ending.
   void anyop_header_ending (const char* s);
 
@@ -589,6 +602,20 @@ public:
   /// Get the directory where all the *A.* files are
   /// to be kept. Default is output_dir_.
   const char* anyop_output_dir (void) const;
+
+  /// Set the directory where all the *exec.* files are
+  /// to be kept. Default is output_dir_.
+  void exec_output_dir (const char* s);
+
+  /// Get the directory where all the *exec.* files are
+  /// to be kept. Default is output_dir_.
+  const char* exec_output_dir (void) const;
+
+  ///Get the flag for not overwriting already existing exec files.
+  bool overwrite_not_exec (void) const;
+
+  ///Set the flag for not overwriting already existing exec files.
+  void overwrite_not_exec (bool val);
 
   /// Set any support.
   void any_support (bool);
@@ -784,6 +811,10 @@ public:
   bool gen_client_inline (void) const;
   void gen_client_inline (bool val);
 
+  /// Accessors for the member gen_server_inline_.
+  bool gen_server_inline (void) const;
+  void gen_server_inline (bool val);
+
   /// Accessors for the member gen_client_stub_.
   bool gen_client_stub (void) const;
   void gen_client_stub (bool val);
@@ -950,6 +981,9 @@ private:
   /// "S_T.cpp".
   char* server_template_skeleton_ending_;
 
+  /// Server's inline file name ending. Default is "S.i".
+  char* server_inline_ending_;
+
   /// Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
 
@@ -1024,6 +1058,14 @@ private:
    * value for output_dir_ is used.
    */
   char* anyop_output_dir_;
+
+  /**
+    * Directory where all the *exec.* files are to be
+    * kept. Default value is 0 for this string which means the
+    * value for output_dir_ is used.
+    */
+  char* exec_output_dir_;
+
 
   /// do we support Any operators?
   bool any_support_;
@@ -1140,6 +1182,10 @@ private:
   bool gen_client_inline_;
 
   /// True by default, but a command line option can turn this off so
+  /// that we don't generate a server inline file
+  bool gen_server_inline_;
+
+  /// True by default, but a command line option can turn this off so
   /// that we don't generate a client stub file
   bool gen_client_stub_;
 
@@ -1181,6 +1227,10 @@ private:
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
   bool gen_ciao_exec_reactor_impl_;
+
+  ///Flag to indicate whether generated exec files should
+   ///overwritten already existing exe files
+   bool overwrite_not_exec_;
 
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.

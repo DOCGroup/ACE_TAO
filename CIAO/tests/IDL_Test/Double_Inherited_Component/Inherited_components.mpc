@@ -118,6 +118,7 @@ project(Inherited_Components_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    Inherited_componentsS.inl
   }
 }
 

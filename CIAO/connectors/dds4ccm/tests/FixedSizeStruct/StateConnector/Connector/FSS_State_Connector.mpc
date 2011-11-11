@@ -137,6 +137,7 @@ project(DDS_FSS_State_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    FSS_State_ConnectorS.inl
   }
 }
 

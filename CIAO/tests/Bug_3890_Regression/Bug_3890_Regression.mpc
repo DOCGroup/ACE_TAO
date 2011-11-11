@@ -117,6 +117,7 @@ project(Bug_3890_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    FooS.inl
   }
 }
 

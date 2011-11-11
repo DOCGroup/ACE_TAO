@@ -45,6 +45,7 @@ private:
   void parse_line (char* line, size_t offset);
 
   static void parse_handler_open (Log *this_, char *line, size_t offset);
+  static void parse_SSLIOP_handler_open (Log *this_, char *line, size_t offset);
   static void parse_dump_msg (Log *this_, char *line, size_t offset);
   static void parse_HEXDUMP (Log *this_, char *line, size_t offset);
   static void parse_open_listener (Log *this_, char *line, size_t offset);
@@ -57,6 +58,9 @@ private:
   static void parse_cleanup_queue (Log *this_, char *line, size_t offset);
   static void parse_close_connection (Log *this_, char *line, size_t offset);
   static void parse_begin_connection (Log *this_, char *line, size_t offset);
+  static void parse_SSLIOP_begin_connection (Log *this_, char *line, size_t offset);
+  static void parse_SSLIOP_from_client (Log *this_, char *line, size_t offset);
+  static void parse_SSLIOP_from_server (Log *this_, char *line, size_t offset);
   static void parse_local_addr (Log *this_, char *line, size_t offset);
   static void parse_open_as_server (Log *this_, char *line, size_t offset);
 

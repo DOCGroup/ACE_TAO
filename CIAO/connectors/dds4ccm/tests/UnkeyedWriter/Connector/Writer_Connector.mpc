@@ -141,6 +141,7 @@ project(DDS_UnkeyedWriterConnector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    Writer_ConnectorS.inl
   }
 }
 

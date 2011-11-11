@@ -128,6 +128,7 @@ project(AMI_GetComp_Base_Sender_svnt) : ciao_servant, ami {
   }
 
   Inline_Files {
+    GetComp_SenderS.inl
   }
 }
 

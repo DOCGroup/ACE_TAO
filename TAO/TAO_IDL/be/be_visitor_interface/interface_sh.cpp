@@ -127,6 +127,56 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // _is_a
   *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 
+  // Add a skeleton for our _is_a method.
+  *os << "static void _is_a_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest & req," << be_nl
+      << "void * servant_upcall," << be_nl
+      << "void * servant);" << be_uidt
+      << be_uidt_nl << be_nl;
+
+  if (!be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _non_existent method.
+      *os << "static void _non_existent_skel ("
+          << be_idt << be_idt_nl
+          << "TAO_ServerRequest & req," << be_nl
+          << "void * servant_upcall," << be_nl
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
+    }
+
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _interface method.
+      *os << "static void _interface_skel ("
+          << be_idt << be_idt_nl
+          << "TAO_ServerRequest & req," << be_nl
+          << "void * servant_upcall," << be_nl
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
+    }
+
+  if (!be_global->gen_corba_e () && !be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _component method.
+      *os << "static void _component_skel (" << be_idt << be_idt_nl
+          << "TAO_ServerRequest & req," << be_nl
+          << "void * servant_upcall," << be_nl
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
+    }
+
+  if (!be_global->gen_minimum_corba ())
+    {
+      // Add a skeleton for our _repository_id method.
+      *os << "static void _repository_id_skel ("
+          << be_idt << be_idt_nl
+          << "TAO_ServerRequest & req," << be_nl
+          << "void * servant_upcall," << be_nl
+          << "void * servant);" << be_uidt
+          << be_uidt_nl << be_nl;
+    }
+
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & req," << be_nl
@@ -147,6 +197,24 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          ACE_TEXT ("be_visitor_interface_sh::")
                          ACE_TEXT ("visit_interface - ")
                          ACE_TEXT ("codegen for scope failed\n")),
+                        -1);
+    }
+
+  // Generate skeletons for operations of our base classes. These
+  // skeletons just cast the pointer to the appropriate type
+  // before invoking the call.
+  int const status =
+    node->traverse_inheritance_graph (
+              be_interface::gen_skel_helper,
+              os);
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_interface_sh::")
+                         ACE_TEXT ("visit_interface - ")
+                         ACE_TEXT ("inheritance graph ")
+                         ACE_TEXT ("traversal failed\n")),
                         -1);
     }
 

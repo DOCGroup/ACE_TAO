@@ -141,6 +141,8 @@ project(AMI_OneProcess_skel) : ciao_executor, ami, ami4ccm_servant {
   }
 
   Inline_Files {
+    OneProcessS.inl
+   
   }
 }
 

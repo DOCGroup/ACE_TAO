@@ -124,6 +124,7 @@ project(PIDLInclude_svnt) : ciao_servant   {
   }
 
   Inline_Files {
+    PIDLIncludeS.inl
   }
 }
 

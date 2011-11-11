@@ -75,6 +75,7 @@ project(Reused_Facet_Interface_Basic_skel) : ciao_executor {
   }
 
   Inline_Files {
+    BasicS.inl
   }
 }
 

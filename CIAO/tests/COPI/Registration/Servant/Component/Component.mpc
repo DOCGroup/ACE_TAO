@@ -135,5 +135,6 @@ project(Servant_Component_svnt) : ciao_servant, ccm_extension_stub, ciao_extensi
   }
 
   Inline_Files {
+    ComponentS.inl
   }
 }

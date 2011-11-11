@@ -137,6 +137,7 @@ project(DDS_QCLS_Test_Connector_svnt) : ciao_servant, dds4ccm_impl {
   }
 
   Inline_Files {
+    QCLS_Test_ConnectorS.inl
   }
 }
 

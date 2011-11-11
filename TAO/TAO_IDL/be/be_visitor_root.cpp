@@ -67,6 +67,7 @@
 #include "be_visitor_root/root_ci.cpp"
 #include "be_visitor_root/root_cs.cpp"
 #include "be_visitor_root/root_sh.cpp"
+#include "be_visitor_root/root_si.cpp"
 #include "be_visitor_root/root_ss.cpp"
 #include "be_visitor_root/root_sth.cpp"
 #include "be_visitor_root/root_is.cpp"

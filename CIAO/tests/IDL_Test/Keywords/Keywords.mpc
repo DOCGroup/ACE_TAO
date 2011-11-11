@@ -102,6 +102,7 @@ project(Keyword_Clash_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    Keyword_ClashS.inl
   }
 }
 

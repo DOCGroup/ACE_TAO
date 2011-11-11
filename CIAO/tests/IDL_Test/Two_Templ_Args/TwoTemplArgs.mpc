@@ -101,5 +101,6 @@ project(TwoTemplArgs_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    TwoTemplArgsS.inl
   }
 }

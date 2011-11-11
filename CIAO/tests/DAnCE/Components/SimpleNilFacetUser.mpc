@@ -104,6 +104,7 @@ project(SimpleCommon_SNFU_svnt) : ciao_servant {
   }
 
   Inline_Files {
+    SimpleNilFacetUserS.inl
   }
 }
 
