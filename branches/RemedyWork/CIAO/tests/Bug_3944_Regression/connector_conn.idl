@@ -1,0 +1,24 @@
+// $Id$
+
+#ifndef CONNECTOR_CONN_IDL
+#define CONNECTOR_CONN_IDL
+
+#include <Components.idl>
+#include "base_connector_conn.idl"
+
+#pragma ciao lem "connector_connE.idl"
+#pragma dds4ccm impl "connector_event_t.h"
+
+module Two
+{
+  module Foo <typename T, sequence<T> TSeq>
+  {
+     connector MyConn : One::Foo::MyBaseEvent
+     {
+     };
+  };
+};
+
+#endif
+
+

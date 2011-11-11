@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.mmi.ui.signatures.diagram" version="7.0.0"><feature description="" name="Rational Modeling Platform (com.ibm.xtools.rmp)" url="" version="7.0.0"/></signature>?>
+<?com.ibm.xtools.emf.core.signature <signature id="com.ibm.xtools.uml.msl.model" version="7.0.0"><feature description="" name="com.ibm.xtools.ruml.feature" url="" version="7.0.0"/></signature>?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dds4ccm="http://www.zeligsoft.com/domain/dds4ccm/2010/DDS4CCM/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.2/Umlnotation" xsi:schemaLocation="http://www.zeligsoft.com/domain/dds4ccm/2010/DDS4CCM/1 pathmap://DDS4CCM_PROFILES/dds4ccm.profile.uml#_g0KtJkDZEd-LnsQ685SqSQ">
+  <uml:Model xmi:id="_jkiX8J4JEd6xhoJKj1dweA" name="AMI4CCM">
+    <eAnnotations xmi:id="_jkiX8Z4JEd6xhoJKj1dweA" source="uml2.diagrams"/>
+    <packageImport xmi:id="_Fg29cLNIEd66L-pSY5VQBg">
+      <importedPackage xmi:type="uml:Model" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_DO-O0EDsEd-pwPnT_VsB_g"/>
+    </packageImport>
+    <packageImport xmi:id="_qP7wMKCXEd-JsdVwG9CGtA">
+      <importedPackage xmi:type="uml:Model" href="pathmap://DDS4CCM_AMI_LIBRARIES/CCM_AMI.uml#_jkiX8J4JEd6xhoJKj1dweA"/>
+    </packageImport>
+    <packageImport xmi:id="_spjS8KCXEd-JsdVwG9CGtA">
+      <importedPackage xmi:type="uml:Model" href="pathmap://DDS4CCM_DCPS_CONNECTOR_LIBRARIES/DDS_DCPS.uml#_jkiX8J4JEd6xhoJKj1dweA"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_av6YA6CXEd-JsdVwG9CGtA" name="modelConfiguration">
+      <classifier xmi:type="uml:Class" href="pathmap://ZML_LIBRARIES/ZML_C_Build.library.uml#_oDc5oKULEd2lg4YL0MvrHw"/>
+      <slot xmi:id="_av6YBKCXEd-JsdVwG9CGtA">
+        <definingFeature xmi:type="uml:Property" href="pathmap://ZML_LIBRARIES/ZML_C_Build.library.uml#_qzbt8KULEd2lg4YL0MvrHw"/>
+        <value xmi:type="uml:LiteralString" xmi:id="_av6YBaCXEd-JsdVwG9CGtA" value="Hello">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </value>
+      </slot>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_xlawAKCXEd-JsdVwG9CGtA" name="Hello">
+      <packagedElement xmi:type="uml:Package" xmi:id="_7pF0YKCXEd-JsdVwG9CGtA" name="Hello">
+        <packagedElement xmi:type="uml:Package" xmi:id="_-coTAKCXEd-JsdVwG9CGtA" name="Hello_asm">
+          <packagedElement xmi:type="uml:Package" xmi:id="__4aUgKCXEd-JsdVwG9CGtA" name="Deployment">
+            <packagedElement xmi:type="uml:Package" xmi:id="_lhumYL28Ed-YGujHQXAQXw" name="descriptors"/>
+            <packagedElement xmi:type="uml:Package" xmi:id="_mp2sEL28Ed-YGujHQXAQXw" name="scripts"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_AyFHcKCYEd-JsdVwG9CGtA" name="doc">
+            <packagedElement xmi:type="uml:Component" xmi:id="_xvfvYLC5Ed-2N7mfPK6MYw" name="Hello_asm">
+              <eAnnotations xmi:id="_0VfhQLC5Ed-2N7mfPK6MYw" source="uml2.diagrams">
+                <contents xmi:type="notation:Diagram" xmi:id="_0VfhQbC5Ed-2N7mfPK6MYw" type="Zeligsoft Component" element="_xvfvYLC5Ed-2N7mfPK6MYw" name="Hello_asm_di" measurementUnit="Himetric">
+                  <children xmi:id="_2YLKsLC5Ed-2N7mfPK6MYw">
+                    <children xmi:id="_2YLKs7C5Ed-2N7mfPK6MYw" type="ImageCompartment">
+                      <layoutConstraint xmi:type="notation:Size" xmi:id="_2YLKtLC5Ed-2N7mfPK6MYw" width="1320" height="1320"/>
+                    </children>
+                    <children xmi:id="_2YLKtbC5Ed-2N7mfPK6MYw" type="Stereotype"/>
+                    <children xmi:id="_2YLKtrC5Ed-2N7mfPK6MYw" type="Kind"/>
+                    <children xmi:id="_2YLKt7C5Ed-2N7mfPK6MYw" type="Name"/>
+                    <children xmi:id="_2YLKuLC5Ed-2N7mfPK6MYw" type="Parent"/>
+                    <children xmi:id="_2YLKubC5Ed-2N7mfPK6MYw" type="AttributeCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_2YLKurC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_2YLKu7C5Ed-2N7mfPK6MYw" visible="false" type="OperationCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_2YLKvLC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_2YLKvbC5Ed-2N7mfPK6MYw" visible="false" type="RealizationListCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_2YLKvrC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_2YLKv7C5Ed-2N7mfPK6MYw" visible="false" type="RequiredInterfaceListCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_2YLKwLC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_2YLKwbC5Ed-2N7mfPK6MYw" visible="false" type="ProvidedInterfaceListCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_2YLKwrC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_2YLKw7C5Ed-2N7mfPK6MYw" visible="false" type="StructureCompartment">
+                      <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_2YLKxLC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_2YLKsbC5Ed-2N7mfPK6MYw" showListStereotype="None" showWhiteBox="true"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2YLKsrC5Ed-2N7mfPK6MYw" x="6340" y="2853" width="5103" height="2301"/>
+                  </children>
+                  <children xmi:id="_4KnYsLC5Ed-2N7mfPK6MYw" element="_4KUdwLC5Ed-2N7mfPK6MYw">
+                    <children xmi:id="_4KnYs7C5Ed-2N7mfPK6MYw" type="ImageCompartment">
+                      <layoutConstraint xmi:type="notation:Size" xmi:id="_4KnYtLC5Ed-2N7mfPK6MYw" width="1320" height="1320"/>
+                    </children>
+                    <children xmi:id="_4KnYtbC5Ed-2N7mfPK6MYw" type="Stereotype"/>
+                    <children xmi:id="_4KnYtrC5Ed-2N7mfPK6MYw" type="Kind"/>
+                    <children xmi:id="_4KnYt7C5Ed-2N7mfPK6MYw" type="Name"/>
+                    <children xmi:id="_4KnYuLC5Ed-2N7mfPK6MYw" type="Parent"/>
+                    <children xmi:id="_4KnYubC5Ed-2N7mfPK6MYw" visible="false" type="AttributeCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_4KnYurC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_4KnYu7C5Ed-2N7mfPK6MYw" visible="false" type="OperationCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_4KnYvLC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_4KxJsLC5Ed-2N7mfPK6MYw" visible="false" type="RealizationListCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_4KxJsbC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_4KxJsrC5Ed-2N7mfPK6MYw" visible="false" type="RequiredInterfaceListCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_4KxJs7C5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_4KxJtLC5Ed-2N7mfPK6MYw" visible="false" type="ProvidedInterfaceListCompartment">
+                      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_4KxJtbC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_4KxJtrC5Ed-2N7mfPK6MYw" visible="false" type="StructureCompartment">
+                      <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_4KxJt7C5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <children xmi:id="_4KxJuLC5Ed-2N7mfPK6MYw" visible="false" type="PortOperationsListCompartment">
+                      <styles xmi:type="notation:DrawerStyle" xmi:id="_4KxJubC5Ed-2N7mfPK6MYw"/>
+                      <styles xmi:type="notation:TitleStyle" xmi:id="_4KxJurC5Ed-2N7mfPK6MYw"/>
+                      <styles xmi:type="notation:SortingStyle" xmi:id="_4KxJu7C5Ed-2N7mfPK6MYw"/>
+                      <styles xmi:type="notation:FilteringStyle" xmi:id="_4KxJvLC5Ed-2N7mfPK6MYw"/>
+                    </children>
+                    <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_4KnYsbC5Ed-2N7mfPK6MYw" showListStereotype="None" showWhiteBox="true"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4KnYsrC5Ed-2N7mfPK6MYw" x="6340" y="6340" width="5156" height="1613"/>
+                  </children>
+                  <styles xmi:type="notation:DiagramStyle" xmi:id="_0VfhQrC5Ed-2N7mfPK6MYw"/>
+                  <edges xmi:id="_785-kbC5Ed-2N7mfPK6MYw" element="_785-kLC5Ed-2N7mfPK6MYw" source="_4KnYsLC5Ed-2N7mfPK6MYw" target="_2YLKsLC5Ed-2N7mfPK6MYw">
+                    <children xmi:id="_785-lLC5Ed-2N7mfPK6MYw" type="NameLabel">
+                      <children xmi:id="_785-lrC5Ed-2N7mfPK6MYw" type="Stereotype"/>
+                      <children xmi:id="_785-l7C5Ed-2N7mfPK6MYw" type="Name"/>
+                      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_785-lbC5Ed-2N7mfPK6MYw" y="-186"/>
+                    </children>
+                    <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_785-krC5Ed-2N7mfPK6MYw" showStereotype="Text"/>
+                    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_785-k7C5Ed-2N7mfPK6MYw" points="[-2, -30, -1, 89]$[-5, -77, -4, 42]"/>
+                  </edges>
+                </contents>
+              </eAnnotations>
+              <packagedElement xmi:type="uml:Component" xmi:id="_4KUdwLC5Ed-2N7mfPK6MYw" name="Hello_asm">
+                <eAnnotations xmi:id="_Bxl6ALC6Ed-2N7mfPK6MYw" source="uml2.diagrams">
+                  <contents xmi:type="notation:Diagram" xmi:id="_Bxl6AbC6Ed-2N7mfPK6MYw" type="Structure" element="_4KUdwLC5Ed-2N7mfPK6MYw" name="Hello_asm_sd" measurementUnit="Himetric">
+                    <children xmi:id="_Bxl6ArC6Ed-2N7mfPK6MYw" type="StructureDiagramFrame" element="_4KUdwLC5Ed-2N7mfPK6MYw">
+                      <children xmi:id="_Bxl6A7C6Ed-2N7mfPK6MYw" type="StructureCompartment">
+                        <children xmi:id="_HCzU8LC6Ed-2N7mfPK6MYw" element="_HCgaALC6Ed-2N7mfPK6MYw">
+                          <eAnnotations xmi:id="_HCzU87C6Ed-2N7mfPK6MYw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+                            <details xmi:id="_HCzU9LC6Ed-2N7mfPK6MYw" key="ShowTypeLabelStyle" value="Represents Name Only"/>
+                          </eAnnotations>
+                          <children xmi:id="_HCzU9bC6Ed-2N7mfPK6MYw" type="ImageCompartment">
+                            <layoutConstraint xmi:type="notation:Size" xmi:id="_HCzU9rC6Ed-2N7mfPK6MYw" width="1320" height="1320"/>
+                          </children>
+                          <children xmi:id="_HCzU97C6Ed-2N7mfPK6MYw" type="PartTextCompartment"/>
+                          <children xmi:id="_HCzU-LC6Ed-2N7mfPK6MYw" visible="false" type="PartStructureCompartment">
+                            <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_HCzU-bC6Ed-2N7mfPK6MYw"/>
+                          </children>
+                          <children xmi:id="_HDQA4LC6Ed-2N7mfPK6MYw" element="_RkmVMLC5Ed-2N7mfPK6MYw">
+                            <eAnnotations xmi:id="_HDQA47C6Ed-2N7mfPK6MYw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+                              <details xmi:id="_HDQA5LC6Ed-2N7mfPK6MYw" key="ShowTypeLabelStyle" value="Represents Name Only"/>
+                            </eAnnotations>
+                            <children xmi:id="_HDQA5bC6Ed-2N7mfPK6MYw" type="PortName">
+                              <children xmi:id="_HDQA57C6Ed-2N7mfPK6MYw" type="PartTextCompartment"/>
+                              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HDQA5rC6Ed-2N7mfPK6MYw" x="-1016" y="845"/>
+                            </children>
+                            <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_HDQA4bC6Ed-2N7mfPK6MYw" fontHeight="8" showListStereotype="None" showListVisibility="None" showListSignature="true"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HDQA4rC6Ed-2N7mfPK6MYw" x="-238" y="951"/>
+                          </children>
+                          <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_HCzU8bC6Ed-2N7mfPK6MYw" showListStereotype="None" showListVisibility="None" showListSignature="true"/>
+                          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HCzU8rC6Ed-2N7mfPK6MYw" x="9536" y="923" width="4204" height="2616"/>
+                        </children>
+                        <children xmi:id="_H9zkoLC6Ed-2N7mfPK6MYw" element="_H9qasLC6Ed-2N7mfPK6MYw">
+                          <eAnnotations xmi:id="_H9zko7C6Ed-2N7mfPK6MYw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+                            <details xmi:id="_H9zkpLC6Ed-2N7mfPK6MYw" key="ShowTypeLabelStyle" value="Represents Name Only"/>
+                          </eAnnotations>
+                          <children xmi:id="_H9zkpbC6Ed-2N7mfPK6MYw" type="ImageCompartment">
+                            <layoutConstraint xmi:type="notation:Size" xmi:id="_H9zkprC6Ed-2N7mfPK6MYw" width="1320" height="1320"/>
+                          </children>
+                          <children xmi:id="_H9zkp7C6Ed-2N7mfPK6MYw" type="PartTextCompartment"/>
+                          <children xmi:id="_H9zkqLC6Ed-2N7mfPK6MYw" visible="false" type="PartStructureCompartment">
+                            <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_H9zkqbC6Ed-2N7mfPK6MYw"/>
+                          </children>
+                          <children xmi:id="_H9zkqrC6Ed-2N7mfPK6MYw" element="_kF_MwLC5Ed-2N7mfPK6MYw">
+                            <eAnnotations xmi:id="_H9zkrbC6Ed-2N7mfPK6MYw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+                              <details xmi:id="_H9zkrrC6Ed-2N7mfPK6MYw" key="ShowTypeLabelStyle" value="Represents Name Only"/>
+                            </eAnnotations>
+                            <children xmi:id="_H9zkr7C6Ed-2N7mfPK6MYw" type="PortName">
+                              <children xmi:id="_H9zksbC6Ed-2N7mfPK6MYw" type="PartTextCompartment"/>
+                              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_H9zksLC6Ed-2N7mfPK6MYw" x="1594" y="-423"/>
+                            </children>
+                            <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_H9zkq7C6Ed-2N7mfPK6MYw" fontHeight="8" showListStereotype="None" showListVisibility="None" showListSignature="true"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_H9zkrLC6Ed-2N7mfPK6MYw" x="3862" y="951"/>
+                          </children>
+                          <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_H9zkobC6Ed-2N7mfPK6MYw" showListStereotype="None" showListVisibility="None" showListSignature="true"/>
+                          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_H9zkorC6Ed-2N7mfPK6MYw" x="660" y="923" width="4205" height="2563"/>
+                        </children>
+                        <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_Bxl6BLC6Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_Bxl6BbC6Ed-2N7mfPK6MYw" type="Name"/>
+                      <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_Bxl6BrC6Ed-2N7mfPK6MYw" showListStereotype="None"/>
+                      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Bxl6B7C6Ed-2N7mfPK6MYw" x="793" y="793" width="14523" height="5582"/>
+                    </children>
+                    <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_Bxl6CLC6Ed-2N7mfPK6MYw"/>
+                    <edges xmi:id="_WTkwULC6Ed-2N7mfPK6MYw" element="_WS1JcLC6Ed-2N7mfPK6MYw" source="_H9zkqrC6Ed-2N7mfPK6MYw" target="_HDQA4LC6Ed-2N7mfPK6MYw">
+                      <children xmi:id="_WTkwU7C6Ed-2N7mfPK6MYw" visible="false" type="NameLabel">
+                        <children xmi:id="_WTkwVbC6Ed-2N7mfPK6MYw" type="Stereotype"/>
+                        <children xmi:id="_WTkwVrC6Ed-2N7mfPK6MYw" type="Name"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WTkwVLC6Ed-2N7mfPK6MYw" y="-186"/>
+                      </children>
+                      <children xmi:id="_WT3rQLC6Ed-2N7mfPK6MYw" visible="false" type="ToMultiplicityLabel" element="_WS1JcrC6Ed-2N7mfPK6MYw">
+                        <children xmi:id="_WT3rQrC6Ed-2N7mfPK6MYw" type="ToMultiplicity"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_WT3rQbC6Ed-2N7mfPK6MYw" y="396"/>
+                      </children>
+                      <children xmi:id="_WUBcQLC6Ed-2N7mfPK6MYw" visible="false" type="FromMultiplicityLabel" element="_WS1JcbC6Ed-2N7mfPK6MYw">
+                        <children xmi:id="_WUBcQrC6Ed-2N7mfPK6MYw" type="FromMultiplicity"/>
+                        <layoutConstraint xmi:type="notation:Location" xmi:id="_WUBcQbC6Ed-2N7mfPK6MYw" y="396"/>
+                      </children>
+                      <styles xmi:type="umlnotation:UMLConnectorStyle" xmi:id="_WTkwUbC6Ed-2N7mfPK6MYw" showStereotype="Text"/>
+                      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_WTkwUrC6Ed-2N7mfPK6MYw" points="[4, 1, -91, 1]$[96, -7, 1, -7]"/>
+                      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WUBcQ7C6Ed-2N7mfPK6MYw" id="(0.7920168,0.40546218)"/>
+                      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WUBcRLC6Ed-2N7mfPK6MYw" id="(0.035714287,0.40546218)"/>
+                    </edges>
+                  </contents>
+                </eAnnotations>
+                <generalization xmi:id="_785-kLC5Ed-2N7mfPK6MYw" general="_xvfvYLC5Ed-2N7mfPK6MYw"/>
+                <ownedAttribute xmi:id="_HCgaALC6Ed-2N7mfPK6MYw" name="Receiver_comp" visibility="private" type="_vf9yMLC4Ed-2N7mfPK6MYw" aggregation="composite"/>
+                <ownedAttribute xmi:id="_H9qasLC6Ed-2N7mfPK6MYw" name="Sender_comp" visibility="private" type="_ftZb4LC5Ed-2N7mfPK6MYw" aggregation="composite"/>
+                <ownedConnector xmi:id="_WS1JcLC6Ed-2N7mfPK6MYw" name="CCMConnector" kind="assembly">
+                  <end xmi:id="_WS1JcbC6Ed-2N7mfPK6MYw" partWithPort="_H9qasLC6Ed-2N7mfPK6MYw" role="_kF_MwLC5Ed-2N7mfPK6MYw"/>
+                  <end xmi:id="_WS1JcrC6Ed-2N7mfPK6MYw" partWithPort="_HCgaALC6Ed-2N7mfPK6MYw" role="_RkmVMLC5Ed-2N7mfPK6MYw"/>
+                </ownedConnector>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_BxQFcKCYEd-JsdVwG9CGtA" name="ports">
+            <packagedElement xmi:type="uml:Package" xmi:id="_Jo4JAKCYEd-JsdVwG9CGtA" name="Common_defn">
+              <packagedElement xmi:type="uml:DataType" xmi:id="_NMQwMKCYEd-JsdVwG9CGtA" name="InternalError">
+                <ownedAttribute xmi:id="_5aS2QKTkEd-OipzO3UN3WQ" name="id" visibility="public">
+                  <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_1P6OkExQEd2INdt7Ch5VKg"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_Lz648KTlEd-OipzO3UN3WQ" name="error_string" visibility="public">
+                  <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_-n1nQExQEd2INdt7Ch5VKg"/>
+                </ownedAttribute>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Interface" xmi:id="_kNQbUKTlEd-OipzO3UN3WQ" name="MyFoo_obj">
+              <ownedAttribute xmi:id="_fp6U8LC3Ed-2N7mfPK6MYw" name="rw_attrib" visibility="public">
+                <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_83uJ8ExPEd2INdt7Ch5VKg"/>
+              </ownedAttribute>
+              <ownedAttribute xmi:id="_K8oYILC4Ed-2N7mfPK6MYw" name="ro_attrib" visibility="public" isReadOnly="true">
+                <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_83uJ8ExPEd2INdt7Ch5VKg"/>
+              </ownedAttribute>
+              <ownedOperation xmi:id="_0yV-QKTlEd-OipzO3UN3WQ" name="foo" raisedException="_NMQwMKCYEd-JsdVwG9CGtA">
+                <ownedParameter xmi:id="_QM7EEKTmEd-OipzO3UN3WQ" name="in_str">
+                  <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_-n1nQExQEd2INdt7Ch5VKg"/>
+                </ownedParameter>
+                <ownedParameter xmi:id="_pLfOULC2Ed-2N7mfPK6MYw" name="answer" direction="out">
+                  <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_-n1nQExQEd2INdt7Ch5VKg"/>
+                </ownedParameter>
+                <ownedParameter xmi:id="_5mwt8LC2Ed-2N7mfPK6MYw" name="Parameter1" direction="return">
+                  <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_1P6OkExQEd2INdt7Ch5VKg"/>
+                </ownedParameter>
+              </ownedOperation>
+              <ownedOperation xmi:id="_JvaMgLC3Ed-2N7mfPK6MYw" name="hello" raisedException="_NMQwMKCYEd-JsdVwG9CGtA">
+                <ownedParameter xmi:id="_MvVhULC3Ed-2N7mfPK6MYw" name="answer" direction="out">
+                  <type xmi:type="uml:DataType" href="pathmap://DDS4CCM_LIBRARIES/IDLPrimitives.uml#_1P6OkExQEd2INdt7Ch5VKg"/>
+                </ownedParameter>
+              </ownedOperation>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_DqrsQKCYEd-JsdVwG9CGtA" name="Receiver_comp">
+            <packagedElement xmi:type="uml:Package" xmi:id="_j6MB4LC4Ed-2N7mfPK6MYw" name="src">
+              <packagedElement xmi:type="uml:Component" xmi:id="_vf9yMLC4Ed-2N7mfPK6MYw" name="Receiver_comp">
+                <eAnnotations xmi:id="_AbIS0LC5Ed-2N7mfPK6MYw" source="uml2.diagrams">
+                  <contents xmi:type="notation:Diagram" xmi:id="_AbIS0bC5Ed-2N7mfPK6MYw" type="Zeligsoft Component" element="_vf9yMLC4Ed-2N7mfPK6MYw" name="Receiver_comp_di" measurementUnit="Himetric">
+                    <children xmi:id="_HjZ9ELC5Ed-2N7mfPK6MYw">
+                      <children xmi:id="_HjjHALC5Ed-2N7mfPK6MYw" type="ImageCompartment">
+                        <layoutConstraint xmi:type="notation:Size" xmi:id="_HjjHAbC5Ed-2N7mfPK6MYw" width="1320" height="1320"/>
+                      </children>
+                      <children xmi:id="_HjjHArC5Ed-2N7mfPK6MYw" type="Stereotype"/>
+                      <children xmi:id="_HjjHA7C5Ed-2N7mfPK6MYw" type="Kind"/>
+                      <children xmi:id="_HjjHBLC5Ed-2N7mfPK6MYw" type="Name"/>
+                      <children xmi:id="_HjjHBbC5Ed-2N7mfPK6MYw" type="Parent"/>
+                      <children xmi:id="_HjjHBrC5Ed-2N7mfPK6MYw" type="AttributeCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HjjHB7C5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_HjjHCLC5Ed-2N7mfPK6MYw" visible="false" type="OperationCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HjjHCbC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_HjjHCrC5Ed-2N7mfPK6MYw" visible="false" type="RealizationListCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HjjHC7C5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_HjjHDLC5Ed-2N7mfPK6MYw" visible="false" type="RequiredInterfaceListCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_HjjHDbC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_Hjs4ALC5Ed-2N7mfPK6MYw" visible="false" type="ProvidedInterfaceListCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_Hjs4AbC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_Hjs4ArC5Ed-2N7mfPK6MYw" visible="false" type="StructureCompartment">
+                        <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_Hjs4A7C5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_RkwGMLC5Ed-2N7mfPK6MYw" element="_RkmVMLC5Ed-2N7mfPK6MYw">
+                        <eAnnotations xmi:id="_RkwGM7C5Ed-2N7mfPK6MYw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+                          <details xmi:id="_RlDBILC5Ed-2N7mfPK6MYw" key="ShowTypeLabelStyle" value="Represents Name and Type Name"/>
+                        </eAnnotations>
+                        <children xmi:id="_RlDBIbC5Ed-2N7mfPK6MYw" type="PortName">
+                          <children xmi:id="_RlDBI7C5Ed-2N7mfPK6MYw" type="PartTextCompartment"/>
+                          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RlDBIrC5Ed-2N7mfPK6MYw" y="-133"/>
+                        </children>
+                        <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_RkwGMbC5Ed-2N7mfPK6MYw" fontHeight="8" showListStereotype="None" showListVisibility="None" showListSignature="true"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RkwGMrC5Ed-2N7mfPK6MYw" x="4893" y="1268"/>
+                      </children>
+                      <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_HjZ9EbC5Ed-2N7mfPK6MYw" showListStereotype="None" showWhiteBox="true"/>
+                      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HjZ9ErC5Ed-2N7mfPK6MYw" x="4121" y="3170" width="5236" height="2539"/>
+                    </children>
+                    <styles xmi:type="notation:DiagramStyle" xmi:id="_AbIS0rC5Ed-2N7mfPK6MYw"/>
+                  </contents>
+                </eAnnotations>
+                <ownedAttribute xmi:type="uml:Port" xmi:id="_RkmVMLC5Ed-2N7mfPK6MYw" name="do_my_foo" visibility="public" type="_kNQbUKTlEd-OipzO3UN3WQ" aggregation="composite"/>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Package" xmi:id="_ExBCMKCYEd-JsdVwG9CGtA" name="Sender_comp">
+            <packagedElement xmi:type="uml:Package" xmi:id="_mb3UcLC4Ed-2N7mfPK6MYw" name="src">
+              <packagedElement xmi:type="uml:Component" xmi:id="_ftZb4LC5Ed-2N7mfPK6MYw" name="Sender_comp">
+                <eAnnotations xmi:id="_hYr5ALC5Ed-2N7mfPK6MYw" source="uml2.diagrams">
+                  <contents xmi:type="notation:Diagram" xmi:id="_hYr5AbC5Ed-2N7mfPK6MYw" type="Zeligsoft Component" element="_ftZb4LC5Ed-2N7mfPK6MYw" name="Sender_comp_di" measurementUnit="Himetric">
+                    <children xmi:id="_iuEXkLC5Ed-2N7mfPK6MYw">
+                      <children xmi:id="_iuEXk7C5Ed-2N7mfPK6MYw" type="ImageCompartment">
+                        <layoutConstraint xmi:type="notation:Size" xmi:id="_iuEXlLC5Ed-2N7mfPK6MYw" width="1320" height="1320"/>
+                      </children>
+                      <children xmi:id="_iuEXlbC5Ed-2N7mfPK6MYw" type="Stereotype"/>
+                      <children xmi:id="_iuEXlrC5Ed-2N7mfPK6MYw" type="Kind"/>
+                      <children xmi:id="_iuEXl7C5Ed-2N7mfPK6MYw" type="Name"/>
+                      <children xmi:id="_iuOIkLC5Ed-2N7mfPK6MYw" type="Parent"/>
+                      <children xmi:id="_iuOIkbC5Ed-2N7mfPK6MYw" type="AttributeCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_iuOIkrC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_iuOIk7C5Ed-2N7mfPK6MYw" visible="false" type="OperationCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_iuOIlLC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_iuOIlbC5Ed-2N7mfPK6MYw" visible="false" type="RealizationListCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_iuOIlrC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_iuOIl7C5Ed-2N7mfPK6MYw" visible="false" type="RequiredInterfaceListCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_iuOImLC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_iuOImbC5Ed-2N7mfPK6MYw" visible="false" type="ProvidedInterfaceListCompartment">
+                        <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_iuOImrC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_iuOIm7C5Ed-2N7mfPK6MYw" visible="false" type="StructureCompartment">
+                        <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_iuOInLC5Ed-2N7mfPK6MYw"/>
+                      </children>
+                      <children xmi:id="_kGI9wLC5Ed-2N7mfPK6MYw" element="_kF_MwLC5Ed-2N7mfPK6MYw">
+                        <eAnnotations xmi:id="_kGI9w7C5Ed-2N7mfPK6MYw" source="com.ibm.xtools.uml.ui.diagram.internal.styles">
+                          <details xmi:id="_kGI9xLC5Ed-2N7mfPK6MYw" key="ShowTypeLabelStyle" value="Represents Name and Type Name"/>
+                        </eAnnotations>
+                        <children xmi:id="_kGI9xbC5Ed-2N7mfPK6MYw" type="PortName">
+                          <children xmi:id="_kGI9x7C5Ed-2N7mfPK6MYw" type="PartTextCompartment"/>
+                          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kGI9xrC5Ed-2N7mfPK6MYw" y="-133"/>
+                        </children>
+                        <styles xmi:type="umlnotation:UMLShapeStyle" xmi:id="_kGI9wbC5Ed-2N7mfPK6MYw" fontHeight="8" showListStereotype="None" showListVisibility="None" showListSignature="true"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kGI9wrC5Ed-2N7mfPK6MYw" x="5448" y="1685"/>
+                      </children>
+                      <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_iuEXkbC5Ed-2N7mfPK6MYw" showListStereotype="None" showWhiteBox="true"/>
+                      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_iuEXkrC5Ed-2N7mfPK6MYw" x="6985" y="4021" width="5791" height="3306"/>
+                    </children>
+                    <styles xmi:type="notation:DiagramStyle" xmi:id="_hYr5ArC5Ed-2N7mfPK6MYw"/>
+                  </contents>
+                </eAnnotations>
+                <ownedAttribute xmi:type="uml:Port" xmi:id="_kF_MwLC5Ed-2N7mfPK6MYw" name="run_my_foo" visibility="public" type="_kNQbUKTlEd-OipzO3UN3WQ" aggregation="composite"/>
+              </packagedElement>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:id="_jkiX854JEd6xhoJKj1dweA">
+      <eAnnotations xmi:id="_jkiX9J4JEd6xhoJKj1dweA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML_PROFILES/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+    </profileApplication>
+    <profileApplication xmi:id="_jkiX9Z4JEd6xhoJKj1dweA">
+      <eAnnotations xmi:id="_jkiX9p4JEd6xhoJKj1dweA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML2_MSL_PROFILES/Default.epx#_IN8k8MmBEdqBcN1R6EvWUw?Default/Default?"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML2_MSL_PROFILES/Default.epx#_a_S3wNWLEdiy4IqP8whjFA?Default?"/>
+    </profileApplication>
+    <profileApplication xmi:id="_jkiX954JEd6xhoJKj1dweA">
+      <eAnnotations xmi:id="_jkiX-J4JEd6xhoJKj1dweA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_IrdAUMmBEdqBcN1R6EvWUw?Deployment/Deployment?"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://UML2_MSL_PROFILES/Deployment.epx#_vjbuwOvHEdiDX5bji0iVSA?Deployment?"/>
+    </profileApplication>
+    <profileApplication xmi:id="_1KTJYJ44Ed6CdqU5qRn9Dw">
+      <eAnnotations xmi:id="_1Kc6YJ44Ed6CdqU5qRn9Dw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://DDS4CCM_PROFILES/dds4ccm.profile.uml#_g0KtJkDZEd-LnsQ685SqSQ"/>
+      </eAnnotations>
+      <appliedProfile href="pathmap://DDS4CCM_PROFILES/dds4ccm.profile.uml#_g0KssEDZEd-LnsQ685SqSQ"/>
+    </profileApplication>
+  </uml:Model>
+  <dds4ccm:DDS4CCMModel xmi:id="_avm14KCXEd-JsdVwG9CGtA" base_Model="_jkiX8J4JEd6xhoJKj1dweA"/>
+  <dds4ccm:CORBAModule xmi:id="_7pPlYKCXEd-JsdVwG9CGtA" base_NamedElement="_7pF0YKCXEd-JsdVwG9CGtA" base_Package="_7pF0YKCXEd-JsdVwG9CGtA"/>
+  <dds4ccm:CORBAException xmi:id="_NMQwMaCYEd-JsdVwG9CGtA" base_NamedElement="_NMQwMKCYEd-JsdVwG9CGtA" base_DataType="_NMQwMKCYEd-JsdVwG9CGtA"/>
+  <dds4ccm:CORBAField xmi:id="_sa4IUaCYEd-LU7rF-Ly4Ng"/>
+  <dds4ccm:CORBAField xmi:id="_SN4agaCZEd-qefmjurhCmQ"/>
+  <dds4ccm:CORBAField xmi:id="_5bLnEKTkEd-OipzO3UN3WQ" base_NamedElement="_5aS2QKTkEd-OipzO3UN3WQ" base_Property="_5aS2QKTkEd-OipzO3UN3WQ"/>
+  <dds4ccm:CORBAField xmi:id="_L0Ep8KTlEd-OipzO3UN3WQ" base_NamedElement="_Lz648KTlEd-OipzO3UN3WQ" base_Property="_Lz648KTlEd-OipzO3UN3WQ"/>
+  <dds4ccm:CORBAInterface xmi:id="_kNQbUaTlEd-OipzO3UN3WQ" base_Interface="_kNQbUKTlEd-OipzO3UN3WQ" base_NamedElement="_kNQbUKTlEd-OipzO3UN3WQ"/>
+  <dds4ccm:CORBAOperation xmi:id="_0yV-QaTlEd-OipzO3UN3WQ" base_NamedElement="_0yV-QKTlEd-OipzO3UN3WQ" base_Operation="_0yV-QKTlEd-OipzO3UN3WQ"/>
+  <dds4ccm:CORBAParameter xmi:id="_QM7EEaTmEd-OipzO3UN3WQ" base_NamedElement="_QM7EEKTmEd-OipzO3UN3WQ" base_Parameter="_QM7EEKTmEd-OipzO3UN3WQ"/>
+  <dds4ccm:CORBAParameter xmi:id="_pLoYQLC2Ed-2N7mfPK6MYw" base_NamedElement="_pLfOULC2Ed-2N7mfPK6MYw" base_Parameter="_pLfOULC2Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CORBAOperation xmi:id="_Jvj9gLC3Ed-2N7mfPK6MYw" base_NamedElement="_JvaMgLC3Ed-2N7mfPK6MYw" base_Operation="_JvaMgLC3Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CORBAParameter xmi:id="_MvVhUbC3Ed-2N7mfPK6MYw" base_NamedElement="_MvVhULC3Ed-2N7mfPK6MYw" base_Parameter="_MvVhULC3Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CORBAAttribute xmi:id="_fqzs0LC3Ed-2N7mfPK6MYw" base_NamedElement="_fp6U8LC3Ed-2N7mfPK6MYw" setraises="_NMQwMaCYEd-JsdVwG9CGtA" getraises="_NMQwMaCYEd-JsdVwG9CGtA" base_Property="_fp6U8LC3Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CORBAAttribute xmi:id="_K8oYIbC4Ed-2N7mfPK6MYw" base_NamedElement="_K8oYILC4Ed-2N7mfPK6MYw" getraises="_NMQwMaCYEd-JsdVwG9CGtA" base_Property="_K8oYILC4Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CCMComponent xmi:id="_vf9yMbC4Ed-2N7mfPK6MYw" base_Component="_vf9yMLC4Ed-2N7mfPK6MYw" base_NamedElement="_vf9yMLC4Ed-2N7mfPK6MYw"/>
+  <dds4ccm:InterfacePort xmi:id="_RkmVMbC5Ed-2N7mfPK6MYw" base_Port="_RkmVMLC5Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CCMComponent xmi:id="_ftjM4LC5Ed-2N7mfPK6MYw" base_Component="_ftZb4LC5Ed-2N7mfPK6MYw" base_NamedElement="_ftZb4LC5Ed-2N7mfPK6MYw"/>
+  <dds4ccm:InterfacePort xmi:id="_kF_MwbC5Ed-2N7mfPK6MYw" base_Port="_kF_MwLC5Ed-2N7mfPK6MYw" isConjugated="true" isAsynchronous="true"/>
+  <dds4ccm:CCMComponent xmi:id="_xvo5ULC5Ed-2N7mfPK6MYw" base_Component="_xvfvYLC5Ed-2N7mfPK6MYw" base_NamedElement="_xvfvYLC5Ed-2N7mfPK6MYw"/>
+  <dds4ccm:AssemblyImplementation xmi:id="_4KUdwbC5Ed-2N7mfPK6MYw" base_Component="_4KUdwLC5Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CCMPart xmi:id="_HCgaAbC6Ed-2N7mfPK6MYw" base_Property="_HCgaALC6Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CCMPart xmi:id="_H9qasbC6Ed-2N7mfPK6MYw" base_Property="_H9qasLC6Ed-2N7mfPK6MYw"/>
+  <dds4ccm:CCMConnector xmi:id="_WS-TYLC6Ed-2N7mfPK6MYw" base_Connector="_WS1JcLC6Ed-2N7mfPK6MYw"/>
+</xmi:XMI>

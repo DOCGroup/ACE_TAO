@@ -1,0 +1,66 @@
+// $Id$
+
+/**
+ * @file Domain_Validator.idl
+ * @author William R. Otte <wotte@dre.vanderbilt.edu>
+ *
+ * Abstract interface for a domain validator that checks if a domain is ready
+ * for deployment.
+ */
+
+#include "dance/Deployment/Deployment_TargetData.idl"
+#include "dance/Deployment/Deployment_DeploymentPlan.idl"
+
+module DAnCE
+{
+  enum TimeType
+  {
+    ttSECONDS,
+    ttUSECONDS,
+    ttFRACTIONAL
+  };
+
+  union Time_Value switch (TimeType)
+  {
+    /// Desired delay in seconds
+  case ttSECONDS: long seconds;
+    /// Desired delay in useconds
+  case ttUSECONDS: long long useconds;
+    /// Double represending desired delay, in seconds with remainder as useconds.
+  case ttFRACTIONAL: double time;
+  };
+
+  local interface Domain_Validator
+  {
+    /// Loads a domain from a plan file.
+    boolean load_domain_from_file (in string filename);
+
+    /// Initializes the domain validator with a provided domain object.
+    void load_domain (in ::Deployment::Domain domain);
+
+    /// Validates
+    boolean validate_node (in string node_name);
+
+    /// blocks until a given node is made ready
+    boolean block_for_node (in string node_name,
+                            in Time_Value max_block_time);
+
+    /// Returns a true if the domain is completely ready for deployment.
+    /// Otherwise, returns false and populates @param late_nodes with the names
+    /// of late nodes.
+    boolean validate_domain (out CORBA::StringSeq late_nodes);
+
+    /// Blocks for the specified amount of time waiting for the domain to become ready,
+    /// retruns true if successful, false if timeout reached.  Late nodes are
+    boolean block_for_domain (in Time_Value max_block_time,
+                              out CORBA::StringSeq late_nodes);
+
+    boolean validate_plan (in ::Deployment::DeploymentPlan plan,
+                           out CORBA::StringSeq late_nodes);
+
+    boolean block_for_plan (in ::Deployment::DeploymentPlan plan,
+                            in Time_Value max_block_time,
+                            out CORBA::StringSeq late_nodes);
+
+  };
+};

@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef ONEREPLYH_T_SENDER_IDL
+#define ONEREPLYH_T_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/OneReplyH.idl"
+
+#pragma ciao ami4ccm receptacle "OneReplyH::Sender::run_my_foo"
+
+module OneReplyH
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

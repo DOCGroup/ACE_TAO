@@ -1,0 +1,158 @@
+// $Id$
+
+project (RG_ResetTopicReceiver_idl_gen) : componentidldefaults, dds4ccm {
+  custom_only = 1
+  after += RG_ResetTopicConnector_idl_gen
+  idlflags += -Wb,stub_export_macro=RECEIVER_STUB_Export \
+              -Wb,stub_export_include=Receiver_stub_export.h \
+              -Wb,skel_export_macro=RECEIVER_SVNT_Export \
+              -Wb,skel_export_include=Receiver_svnt_export.h \
+              -Wb,svnt_export_macro=RECEIVER_SVNT_Export \
+              -Wb,svnt_export_include=Receiver_svnt_export.h \
+              -Wb,exec_export_macro=RECEIVER_EXEC_Export \
+              -Wb,exec_export_include=Receiver_exec_export.h \
+              -I..
+  IDL_Files {
+    RG_ResetTopic_Receiver.idl
+  }
+}
+
+project (RG_ResetTopicReceiver_lem_gen) : ciaoidldefaults, dds4ccm {
+  after += RG_ResetTopicReceiver_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=RECEIVER_LEM_STUB_Export \
+              -Wb,stub_export_include=Receiver_lem_stub_export.h \
+              -SS -Gxhst -I..
+
+  IDL_Files {
+    RG_ResetTopic_ReceiverE.idl
+  }
+}
+
+project (RG_ResetTopicReceiver_lem_stub) : ccm_svnt, dds4ccm_base {
+  after +=  RG_ResetTopicReceiver_lem_gen RG_ResetTopicReceiver_stub  RG_ResetTopicConnector_stub \
+            RG_ResetTopicBase_stub reader_starter_rt_stub
+  libs  +=  Receiver_stub RG_ResetTopicConnector_stub RG_ResetTopicBase_stub \
+            reader_starter_rt_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Receiver_lem_stub
+  dynamicflags += RECEIVER_LEM_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_ReceiverEC.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_ReceiverEC.h
+    Receiver_lem_stub_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_ReceiverEC.inl
+  }
+}
+
+project (RG_ResetTopicReceiver_stub) : ccm_stub, dds4ccm_base {
+  after +=  RG_ResetTopicReceiver_idl_gen  RG_ResetTopicConnector_stub \
+            RG_ResetTopicBase_stub RG_ResetTopicConnector_lem_gen \
+            reader_starter_rt_stub reader_starter_rt_lem_stub
+  libs  +=  RG_ResetTopicConnector_stub RG_ResetTopicBase_stub \
+            reader_starter_rt_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  sharedname = Receiver_stub
+  dynamicflags += RECEIVER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_ReceiverC.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_ReceiverC.h
+    Receiver_stub_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_ReceiverC.inl
+  }
+}
+
+project (RG_ResetTopicReceiver_exec) : ciao_executor, dds4ccm_lem_stub {
+  after   += RG_ResetTopicReceiver_lem_stub RG_ResetTopicReceiver_stub \
+             RG_ResetTopicBase_stub RG_ResetTopicConnector_stub \
+             RG_ResetTopicConnector_lem_stub \
+             reader_starter_rt_lem_stub reader_starter_rt_stub
+  sharedname = Receiver_exec
+  libs += Receiver_stub Receiver_lem_stub RG_ResetTopicBase_stub \
+          RG_ResetTopicConnector_stub RG_ResetTopicConnector_lem_stub \
+          reader_starter_rt_lem_stub reader_starter_rt_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RECEIVER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_Receiver_exec.cpp
+    RG_ResetTopic_Receiver_impl.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_Receiver_exec.h
+    RG_ResetTopic_Receiver_impl.h
+    Receiver_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project (RG_ResetTopicReceiver_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+  after      +=   RG_ResetTopicReceiver_lem_stub RG_ResetTopicBase_stub \
+                  RG_ResetTopicConnector_stub RG_ResetTopicConnector_svnt \
+                  RG_ResetTopicReceiver_exec RG_ResetTopicConnector_lem_stub \
+                  reader_starter_rt_stub \
+                  reader_starter_rt_svnt reader_starter_rt_lem_stub
+  sharedname  = Receiver_svnt
+  libs       += Receiver_stub Receiver_lem_stub RG_ResetTopicBase_stub \
+                RG_ResetTopicConnector_stub RG_ResetTopicConnector_svnt \
+                Receiver_exec RG_ResetTopicConnector_lem_stub \
+                reader_starter_rt_stub reader_starter_rt_svnt \
+                reader_starter_rt_lem_stub
+  libpaths += ../lib
+  libout = ../lib
+  includes += ..
+  dynamicflags += RECEIVER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    RG_ResetTopic_ReceiverS.cpp
+    RG_ResetTopic_Receiver_svnt.cpp
+  }
+
+  Header_Files {
+    RG_ResetTopic_ReceiverS.h
+    RG_ResetTopic_Receiver_svnt.h
+    Receiver_svnt_export.h
+  }
+
+  Inline_Files {
+    RG_ResetTopic_ReceiverS.inl
+  }
+}
+
+

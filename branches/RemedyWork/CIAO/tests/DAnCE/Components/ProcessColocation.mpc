@@ -1,0 +1,108 @@
+// $Id$
+// This file is generated with "generate_component_mpc.pl ProcessColocation"
+
+project(ProcessColocation_idl_gen) : componentidldefaults {
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=PROCESSCOLOCATION_STUB_Export \
+              -Wb,stub_export_include=ProcessColocation_stub_export.h \
+              -Wb,skel_export_macro=PROCESSCOLOCATION_SVNT_Export \
+              -Wb,skel_export_include=ProcessColocation_svnt_export.h \
+              -Wb,exec_export_macro=PROCESSCOLOCATION_EXEC_Export \
+              -Wb,exec_export_include=ProcessColocation_exec_export.h
+
+  IDL_Files {
+    ProcessColocation.idl
+  }
+}
+
+project(ProcessColocation_lem_gen) : ciaoidldefaults {
+  custom_only = 1
+  after += ProcessColocation_idl_gen
+  idlflags += -Wb,export_macro=PROCESSCOLOCATION_EXEC_Export \
+              -Wb,export_include=ProcessColocation_exec_export.h \
+              -SS
+
+  IDL_Files {
+    ProcessColocationE.idl
+  }
+}
+
+project(ProcessColocation_stub) : ccm_stub {
+  after += ProcessColocation_idl_gen
+  libs  +=
+
+  sharedname = ProcessColocation_stub
+  dynamicflags += PROCESSCOLOCATION_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ProcessColocationC.cpp
+  }
+
+  Header_Files {
+    ProcessColocationC.h
+    ProcessColocation_stub_export.h
+  }
+
+  Inline_Files {
+    ProcessColocationC.inl
+  }
+}
+
+project(ProcessColocation_exec) : ciao_executor {
+  after   += ProcessColocation_lem_gen ProcessColocation_stub
+  sharedname = ProcessColocation_exec
+  libs += ProcessColocation_stub
+
+  dynamicflags += PROCESSCOLOCATION_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ProcessColocationEC.cpp
+    ProcessColocation_exec.cpp
+  }
+
+  Header_Files {
+    ProcessColocationEC.h
+    ProcessColocation_exec.h
+    ProcessColocation_exec_export.h
+  }
+
+  Inline_Files {
+    ProcessColocationEC.inl
+  }
+}
+
+
+project(ProcessColocation_svnt) : ciao_servant {
+  after      +=  ProcessColocation_exec
+  sharedname  = ProcessColocation_svnt
+  libs       += ProcessColocation_exec \
+                ProcessColocation_stub
+
+  dynamicflags += PROCESSCOLOCATION_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    ProcessColocationS.cpp
+    ProcessColocation_svnt.cpp
+  }
+
+  Header_Files {
+    ProcessColocationS.h
+    ProcessColocation_svnt.h
+    ProcessColocation_svnt_export.h
+  }
+
+  Inline_Files {
+    ProcessColocationS.inl
+  }
+}
+
+
