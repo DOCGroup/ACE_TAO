@@ -1,3 +1,27 @@
+Wed Nov  9 08:24:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Mixed_Sync_ASync_Events/MixedSyncASyncEvents.mpc:
+        * tests/Mixed_Sync_ASync_Events/main.cpp:
+        * tests/Mixed_Sync_ASync_Events/run_test.pl:
+        * tests/Mixed_Sync_ASync_Events/test.idl:
+        * tests/Mixed_Sync_ASync_Events/test_i.cpp:
+        * tests/Mixed_Sync_ASync_Events/test_i.h:
+        
+          Added new regression test mixing Synch requests with
+          Asynch (AMI) and timer and notification events in a
+          (semi) random order. 
+
+        * tests/Mixed_Sync_ASync_Events/exclusive_rw.conf:
+        * tests/Mixed_Sync_ASync_Events/exclusive_rw.conf.xml:
+        * tests/Mixed_Sync_ASync_Events/run_exclusive_rw.pl:
+
+          Config and script to run the new test in full blocking
+          mode (RW, Exclusive TMS, blocking connect and flushing). 
+
+        * bin/tao_orb_tests.lst:
+        
+          Added new regression tests.
+
 Tue Nov  8 11:50:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * client.cpp:
