@@ -1,3 +1,11 @@
+Fri Nov  4 22:0:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/Exclusive_TMS.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+          Fixed to allow use of Exclusive TMS with AMI requests.
+
 Wed Nov  9 13:34:13 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/logWalker/Log.cpp:
@@ -57,8 +65,6 @@ Mon Nov  07 10:10:14 UTC 2011  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * TAO_IDL/be_include/be_util.h:
         Add option -oE: Output directory for the generated CIAO executor files
         and option -oN for not overwrite CIAO executor files.
-
-
 
 Sat Nov 05 18:18:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
