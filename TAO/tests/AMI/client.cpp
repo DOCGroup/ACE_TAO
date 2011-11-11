@@ -22,6 +22,8 @@ const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
+int shutdown_flag = 0;
+int perform_work_flag = 1;
 int number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
@@ -31,7 +33,7 @@ int parameter_corruption = 0;
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:n:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:n:i:xw"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -49,6 +51,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'i':
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
+      case 'x':
+        shutdown_flag = 1;
+        break;
+      case 'w':
+        perform_work_flag = 0;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -57,6 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
+                           "-x"
                            "\n",
                            argv [0]),
                           -1);
@@ -233,35 +242,49 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // <nthreads*niterations> replies.
       number_of_replies = nthreads *niterations;
 
-      if (debug)
+      if (perform_work_flag)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies));
-        }
-
-      // ORB loop.
-
-      while (number_of_replies > 0)
-        {
-          CORBA::Boolean pending = orb->work_pending();
-
-          if (pending)
+          if (debug)
             {
-              orb->perform_work();
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
+                          number_of_replies));
             }
-        }
 
-      if (debug)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+          // ORB loop.
+
+          while (number_of_replies > 0)
+            {
+              CORBA::Boolean pending = orb->work_pending();
+
+              if (pending)
+                {
+                  orb->perform_work();
+                }
+            }
+
+          if (debug)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) : Exited perform_work loop\n"));
+            }
         }
 
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) : Received <%d> replies\n",
+                      (nthreads*niterations) - number_of_replies));
+        }
+
+      if (shutdown_flag)
+        {
+          server->shutdown ();
+        }
 
       root_poa->destroy (1,  // ethernalize objects
                          0);  // wait for completion
