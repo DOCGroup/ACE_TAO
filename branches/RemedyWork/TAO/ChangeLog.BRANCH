@@ -1,3 +1,20 @@
+Fri Nov 11 13:56:31 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be_include/be_interface.h:
+          Invoking amh specific _*_skel methods in
+          case AMH.
+
+        * tao/Messaging/AMH_Skeletons.h:
+        * tao/Messaging/AMH_Skeletons.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+          Created a set of _*_skel methods for amh.
+          Put these in Messaging since we don't want to
+          bother the core with AMH stuff.
+
 Fri Nov 11 09:52:26 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

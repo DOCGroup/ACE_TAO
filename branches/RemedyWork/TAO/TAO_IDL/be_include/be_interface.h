@@ -291,6 +291,9 @@ public:
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);
 
+  bool is_amh_rh (void) const;
+  void is_amh_rh (bool val);
+
   bool is_ami_rh (void) const;
   void is_ami_rh (bool val);
 
@@ -411,6 +414,9 @@ protected:
   /// The original interface from which this one was created,
   /// applies only to implied IDL
   be_interface *original_interface_;
+
+  /// Are we an AMH reply handler?
+  bool is_amh_rh_;
 
   /// Are we an AMI reply handler?
   bool is_ami_rh_;

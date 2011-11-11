@@ -128,8 +128,6 @@ public:
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (void);
 
-  virtual ::CORBA::Boolean _is_amh (void);
-
   /**
    * Dispatches a request to the object: find the operation, cast the
    * type to the most derived type, demarshall all the parameters from

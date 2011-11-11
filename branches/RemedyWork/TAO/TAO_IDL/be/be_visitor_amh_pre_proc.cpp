@@ -132,6 +132,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 
   // Remember from whom we were cloned
   response_handler->original_interface (node);
+  response_handler->is_amh_rh (true);
 
   module->be_add_interface (excep_holder, node);
 
