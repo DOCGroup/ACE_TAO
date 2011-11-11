@@ -1,103 +1,111 @@
-Thu Nov 10 08:04:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+Fri Nov 11 11:22:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-        * TAO/tests/Bug_3531b_Regression/server.cpp:
+        Merged rw_block_strategy branch.
 
-          Fixed compiler error due to core changes.
+        === start changelog ===
 
-Wed Nov  9 08:24:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+        Thu Nov 10 08:04:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-        * tests/Mixed_Sync_ASync_Events/MixedSyncASyncEvents.mpc:
-        * tests/Mixed_Sync_ASync_Events/main.cpp:
-        * tests/Mixed_Sync_ASync_Events/run_test.pl:
-        * tests/Mixed_Sync_ASync_Events/test.idl:
-        * tests/Mixed_Sync_ASync_Events/test_i.cpp:
-        * tests/Mixed_Sync_ASync_Events/test_i.h:
+                * TAO/tests/Bug_3531b_Regression/server.cpp:
 
-          Added new regression test mixing Synch requests with
-          Asynch (AMI) and timer and notification events in a
-          (semi) random order.
+                  Fixed compiler error due to core changes.
 
-        * tests/Mixed_Sync_ASync_Events/exclusive_rw.conf:
-        * tests/Mixed_Sync_ASync_Events/exclusive_rw.conf.xml:
-        * tests/Mixed_Sync_ASync_Events/run_exclusive_rw.pl:
+        Wed Nov  9 08:24:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-          Config and script to run the new test in full blocking
-          mode (RW, Exclusive TMS, blocking connect and flushing).
+                * tests/Mixed_Sync_ASync_Events/MixedSyncASyncEvents.mpc:
+                * tests/Mixed_Sync_ASync_Events/main.cpp:
+                * tests/Mixed_Sync_ASync_Events/run_test.pl:
+                * tests/Mixed_Sync_ASync_Events/test.idl:
+                * tests/Mixed_Sync_ASync_Events/test_i.cpp:
+                * tests/Mixed_Sync_ASync_Events/test_i.h:
 
-        * bin/tao_orb_tests.lst:
+                  Added new regression test mixing Synch requests with
+                  Asynch (AMI) and timer and notification events in a
+                  (semi) random order.
 
-          Added new regression tests.
+                * tests/Mixed_Sync_ASync_Events/exclusive_rw.conf:
+                * tests/Mixed_Sync_ASync_Events/exclusive_rw.conf.xml:
+                * tests/Mixed_Sync_ASync_Events/run_exclusive_rw.pl:
 
-Tue Nov  8 11:50:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+                  Config and script to run the new test in full blocking
+                  mode (RW, Exclusive TMS, blocking connect and flushing).
 
-        * client.cpp:
-        * exclusive_rw.conf:
-        * exclusive_rw.conf.xml:
-        * run_exclusive_rw.pl:
+                * bin/tao_orb_tests.lst:
 
-          Adedd test variant for full blocking configuration
-          (RW + EXCLUSIVE TMS + blocking connect and flushing)
+                  Added new regression tests.
 
-Sun Nov  6 18:08:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+        Tue Nov  8 11:50:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-        * tao/CDR.cpp:
-        * tao/Exclusive_TMS.cpp:
-        * tao/GIOP_Message_Base.cpp:
-        * tao/IIOP_Transport.h:
-        * tao/LocateRequest_Invocation.cpp:
-        * tao/Message_Semantics.h:
-        * tao/Messaging/AMH_Response_Handler.cpp:
-        * tao/Messaging/Asynch_Invocation.cpp:
-        * tao/Strategies/COIOP_Transport.h:
-        * tao/Strategies/DIOP_Transport.h:
-        * tao/Strategies/SCIOP_Transport.h:
-        * tao/Strategies/SHMIOP_Transport.h:
-        * tao/Strategies/UIOP_Transport.h:
-        * tao/Synch_Invocation.cpp:
-        * tao/TAO_Server_Request.cpp:
-        * tao/Transport.cpp:
-        * tao/Transport.h:
-        * tao/Wait_On_Leader_Follower.cpp:
-        * tao/Wait_On_Leader_Follower.h:
-        * tao/Wait_On_Read.cpp:
-        * tao/Wait_On_Read.h:
-        * tao/Wait_Strategy.cpp:
-        * tao/Wait_Strategy.h:
+                * tests/AMI/client.cpp:
+                * tests/AMI/exclusive_rw.conf:
+                * tests/AMI/exclusive_rw.conf.xml:
+                * tests/AMI/run_exclusive_rw.pl:
 
-          Changes to make the RW client wait strategy (in combination with
-          the Exclusive transport muxing strategy) play nice with AMI.
-          The essence of the problem of RW not working with AMI was that
-          AMI requires transports to be registered with the reactor (so
-          reply events can be handled) which is what RW prevented for all
-          client transports.
-          The changes provide a means for RW to recognize transports for
-          Async client requests and register these with the reactor just
-          before sending the request and removing them from the reactor
-          again when the request has finished (reply received, timed out
-          or disconnected).
+                  Adedd test variant for full blocking configuration
+                  (RW + EXCLUSIVE TMS + blocking connect and flushing)
 
-Sun Nov  6 11:54:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+        Sun Nov  6 18:08:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-        * tests/AMI/simple_client.cpp:
+                * tao/CDR.cpp:
+                * tao/Exclusive_TMS.cpp:
+                * tao/GIOP_Message_Base.cpp:
+                * tao/IIOP_Transport.h:
+                * tao/LocateRequest_Invocation.cpp:
+                * tao/Message_Semantics.h:
+                * tao/Messaging/AMH_Response_Handler.cpp:
+                * tao/Messaging/Asynch_Invocation.cpp:
+                * tao/Strategies/COIOP_Transport.h:
+                * tao/Strategies/DIOP_Transport.h:
+                * tao/Strategies/SCIOP_Transport.h:
+                * tao/Strategies/SHMIOP_Transport.h:
+                * tao/Strategies/UIOP_Transport.h:
+                * tao/Synch_Invocation.cpp:
+                * tao/TAO_Server_Request.cpp:
+                * tao/Transport.cpp:
+                * tao/Transport.h:
+                * tao/Wait_On_Leader_Follower.cpp:
+                * tao/Wait_On_Leader_Follower.h:
+                * tao/Wait_On_Read.cpp:
+                * tao/Wait_On_Read.h:
+                * tao/Wait_Strategy.cpp:
+                * tao/Wait_Strategy.h:
 
-          Extended test.
+                  Changes to make the RW client wait strategy (in combination with
+                  the Exclusive transport muxing strategy) play nice with AMI.
+                  The essence of the problem of RW not working with AMI was that
+                  AMI requires transports to be registered with the reactor (so
+                  reply events can be handled) which is what RW prevented for all
+                  client transports.
+                  The changes provide a means for RW to recognize transports for
+                  Async client requests and register these with the reactor just
+                  before sending the request and removing them from the reactor
+                  again when the request has finished (reply received, timed out
+                  or disconnected).
 
-Sun Nov  6 11:42:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+        Sun Nov  6 11:54:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-        * tao/default_client.cpp:
-        * tao/default_resource.cpp:
+                * tests/AMI/simple_client.cpp:
 
-          Add support for additional compiletime selection macros
-          for Client Wait strategy, Client connect strategy,
-          TMS strategy and flushing strategy.
+                  Extended test.
 
-Fri Nov  4 22:0:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+        Sun Nov  6 11:42:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
-        * tao/Exclusive_TMS.cpp:
-        * tao/Messaging/Asynch_Invocation.cpp:
-        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+                * tao/default_client.cpp:
+                * tao/default_resource.cpp:
 
-          Fixed to allow use of Exclusive TMS with AMI requests.
+                  Add support for additional compiletime selection macros
+                  for Client Wait strategy, Client connect strategy,
+                  TMS strategy and flushing strategy.
+
+        Fri Nov  4 22:0:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+                * tao/Exclusive_TMS.cpp:
+                * tao/Messaging/Asynch_Invocation.cpp:
+                * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+                  Fixed to allow use of Exclusive TMS with AMI requests.
+
+        === end changelog ===
 
 Wed Nov  9 13:34:13 UTC 2011  Phil Mesnier  <mesnier_p@ociweb.com>
 
