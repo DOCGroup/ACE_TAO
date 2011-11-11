@@ -30,6 +30,49 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 
 //@@ WAIT_STRATEGY_SPL_COPY_HOOK_START
 
+int
+TAO_Wait_On_Read::sending_request (TAO_ORB_Core *orb_core,
+                                   TAO_Message_Semantics msg_semantics)
+{
+  if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
+      (this->transport_->bidirectional_flag () == -1))
+    {
+      // register the transport for event handling in case of AMI requests because
+      // for these requests explicitly require event handling.
+      if (msg_semantics.type_ == TAO_Message_Semantics::TAO_ONEWAY_REQUEST &&
+          msg_semantics.mode_ == TAO_Message_Semantics::TAO_ASYNCH_CALLBACK)
+        {
+          // Register the handler unless already registered (should never happen).
+          if (!this->is_registered_)
+            {
+              this->transport_->register_handler ();
+            }
+        }
+    }
+
+  // Send the request.
+//@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
+  return this->TAO_Wait_Strategy::sending_request (orb_core, msg_semantics);
+}
+
+void
+TAO_Wait_On_Read::finished_request ()
+{
+  if ((this->transport_->opened_as () == TAO::TAO_CLIENT_ROLE) &&
+      (this->transport_->bidirectional_flag () == -1))
+    {
+      // ORB finished request handling so if the transport was registered for
+      // an AMI call, deregister it now
+      if (this->is_registered_)
+      {
+        this->transport_->remove_handler ();
+      }
+    }
+
+  //@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
+    this->TAO_Wait_Strategy::finished_request ();
+}
+
 // Wait on the read operation.
 int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
