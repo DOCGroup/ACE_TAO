@@ -55,10 +55,15 @@ project(stub_one): taolib {
 
   Header_Files {
     idl_1C.h
+  skeleton_inheritance_stub_1_export.h
+  }
+
+  Inline_Files {
+  idl_1C.inl
   }
 }
 
-project(skel_one): taolib {
+project(skel_one): taolib, portableserver {
   after += idl_one_gen stub_one
   libs += stub_one
 
@@ -71,14 +76,19 @@ project(skel_one): taolib {
 
   Header_Files {
     idl_1S.h
+  skeleton_inheritance_skel_1_export.h
   }
 
+  Inline_Files {
+  idl_1S.inl
+  }
 }
 
 
 project(stub_two): taolib {
   sharedname = stub_two
-  after += idl_two_gen idl_one_gen
+  after += idl_two_gen idl_one_gen stub_one
+  libs += stub_one
 
   dynamicflags += SKELETON_INHERITANCE_STUB_2_BUILD_DLL
 
@@ -88,12 +98,17 @@ project(stub_two): taolib {
 
   Header_Files {
     idl_2C.h
+  skeleton_inheritance_stub_2_export.h
+  }
+
+  Inline_Files {
+  idl_2C.inl
   }
 }
 
-project(skel_two): taolib {
-  after += idl_two_gen stub_two
-  libs += stub_two
+project(skel_two): taolib, portableserver {
+  after += idl_two_gen stub_two skel_one
+  libs += stub_two skel_one
 
   sharedname = skel_two
   dynamicflags += SKELETON_INHERITANCE_SKEL_2_BUILD_DLL
@@ -104,13 +119,20 @@ project(skel_two): taolib {
 
   Header_Files {
     idl_2S.h
+  skeleton_inheritance_skel_2_export.h
+  }
+
+  Inline_Files {
+  idl_2S.inl
   }
 }
 
 
 project(stub_three): taolib {
   sharedname = stub_three
-  after += idl_three_gen idl_two_gen idl_one_gen
+  after += idl_three_gen idl_two_gen idl_one_gen \
+           stub_one stub_two
+  libs += stub_one stub_two
 
   dynamicflags += SKELETON_INHERITANCE_STUB_3_BUILD_DLL
 
@@ -120,12 +142,17 @@ project(stub_three): taolib {
 
   Header_Files {
     idl_3C.h
+  skeleton_inheritance_stub_3_export.h
+  }
+
+  Inline_Files {
+  idl_3C.inl
   }
 }
 
-project(skel_three): taolib {
-  after += idl_three_gen stub_three
-  libs += stub_three
+project(skel_three): taolib, portableserver {
+  after += idl_three_gen stub_three skel_one skel_two
+  libs += stub_three skel_one skel_two
 
   sharedname = skel_three
   dynamicflags += SKELETON_INHERITANCE_SKEL_3_BUILD_DLL
@@ -136,6 +163,11 @@ project(skel_three): taolib {
 
   Header_Files {
     idl_3S.h
+  skeleton_inheritance_skel_3_export.h
+  }
+
+  Inline_Files {
+  idl_3S.inl
   }
 }
 
