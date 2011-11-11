@@ -109,7 +109,7 @@ public:
 
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            TAO_Message_Semantics message_semantics = TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = 0);
 
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);

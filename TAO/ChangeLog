@@ -1,3 +1,41 @@
+Sun Nov  6 18:08:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/CDR.cpp:
+        * tao/Exclusive_TMS.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Message_Semantics.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Strategies/COIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Synch_Invocation.cpp:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_Strategy.cpp:
+        * tao/Wait_Strategy.h:
+
+          Changes to make the RW client wait strategy (in combination with
+          the Exclusive transport muxing strategy) play nice with AMI.
+          The essence of the problem of RW not working with AMI was that
+          AMI requires transports to be registered with the reactor (so
+          reply events can be handled) which is what RW prevented for all
+          client transports.
+          The changes provide a means for RW to recognize transports for
+          Async client requests and register these with the reactor just
+          before sending the request and removing them from the reactor
+          again when the request has finished (reply received, timed out
+          or disconnected).
+
 Sun Nov  6 11:54:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/AMI/simple_client.cpp:

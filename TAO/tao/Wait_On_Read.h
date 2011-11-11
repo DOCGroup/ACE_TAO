@@ -38,6 +38,12 @@ public:
   /// Destructor.
   virtual ~TAO_Wait_On_Read (void);
 
+  /*! @copydoc TAO_Wait_Strategy::sending_request() */
+  virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);
+
+   /*! @copydoc TAO_Wait_Strategy::finished_request() */
+  virtual void finished_request ();
+
   /*! @copydoc TAO_Wait_Strategy::wait() */
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);

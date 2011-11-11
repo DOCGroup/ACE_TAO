@@ -387,6 +387,14 @@ TAO_Transport::register_handler (void)
       return 0;
     }
 
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_handler - ")
+                  ACE_TEXT ("registering event handler with reactor\n"),
+                  this->id ()));
+    }
+
   // Set the flag in the Connection Handler and in the Wait Strategy
   // @@Maybe we should set these flags after registering with the
   // reactor. What if the  registration fails???
@@ -395,6 +403,64 @@ TAO_Transport::register_handler (void)
   // Register the handler with the reactor
   return r->register_handler (this->event_handler_i (),
                               ACE_Event_Handler::READ_MASK);
+}
+
+int
+TAO_Transport::remove_handler (void)
+{
+  if (TAO_debug_level > 4)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::remove_handler\n"),
+                  this->id ()));
+    }
+
+  ACE_Reactor * const r = this->orb_core_->reactor ();
+
+  // @@note: This should be okay since the remove handler call will
+  // not make a nested call into the transport.
+  ACE_GUARD_RETURN (ACE_Lock,
+                    ace_mon,
+                    *this->handler_lock_,
+                    false);
+
+
+  if (this->event_handler_i ()->reactor () == 0)
+    {
+      return 0;
+    }
+
+  if (TAO_debug_level > 6)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - Transport[%d]::remove_handler - ")
+                  ACE_TEXT ("removing event handler from reactor\n"),
+                  this->id ()));
+    }
+
+  // Set the flag in the Wait Strategy
+  this->ws_->is_registered (false);
+
+  // Remove the handler from the reactor
+  if (r->remove_handler (this->event_handler_i (),
+                         ACE_Event_Handler::READ_MASK|
+                         ACE_Event_Handler::DONT_CALL) == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) - Transport[%d]::remove_handler - ")
+                    ACE_TEXT ("reactor->remove_handler failed\n"),
+                    this->id ()));
+      return -1;
+    }
+  else
+    {
+      // reset the reactor property of the event handler or
+      // Transport::register_handler() will not re-register
+      // when called after us again.
+      this->event_handler_i ()->reactor (0);
+      return 0;
+    }
 }
 
 #if TAO_HAS_SENDFILE == 1
@@ -1317,17 +1383,17 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   size_t const message_length = message_block->length ();
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
-  switch (message_semantics)
+  switch (message_semantics.type_)
     {
-      case TAO_TWOWAY_REQUEST:
+      case TAO_Message_Semantics::TAO_TWOWAY_REQUEST:
         ret = this->send_synchronous_message_i (message_block, max_wait_time);
         break;
 
-      case TAO_REPLY:
+      case TAO_Message_Semantics::TAO_REPLY:
         ret = this->send_reply_message_i (message_block, max_wait_time);
         break;
 
-      case TAO_ONEWAY_REQUEST:
+      case TAO_Message_Semantics::TAO_ONEWAY_REQUEST:
         ret = this->send_asynchronous_message_i (stub,
                                                  message_block,
                                                  max_wait_time);

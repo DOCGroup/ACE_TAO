@@ -33,11 +33,16 @@ TAO_Wait_Strategy::defer_upcall (ACE_Event_Handler*)
  */
 //@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_START
 int
-TAO_Wait_Strategy::sending_request (TAO_ORB_Core *, int)
+TAO_Wait_Strategy::sending_request (TAO_ORB_Core *, TAO_Message_Semantics)
 {
   return 0;
 }
 //@@ LF_WAIT_STRATEGY_SPL_COMMENT_HOOK_END
+
+void
+TAO_Wait_Strategy::finished_request ()
+{
+}
 
 /*
  * Hook to specialize the Wait Strategy
