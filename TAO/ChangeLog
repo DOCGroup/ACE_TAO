@@ -1,3 +1,12 @@
+Sun Nov  6 11:42:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+
+          Add support for additional compiletime selection macros
+          for Client Wait strategy, Client connect strategy,
+          TMS strategy and flushing strategy.
+
 Fri Nov  4 22:0:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Exclusive_TMS.cpp:
