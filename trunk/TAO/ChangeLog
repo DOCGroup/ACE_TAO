@@ -1,3 +1,9 @@
+Sun Nov  6 11:54:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/AMI/simple_client.cpp:
+
+          Extended test.
+
 Sun Nov  6 11:42:29 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tao/default_client.cpp:
