@@ -1,0 +1,42 @@
+
+//=============================================================================
+/**
+ *  @file    test.idl
+ *
+ *  $Id $
+ *
+ *  IDL description of the Test interface
+ *
+ *  @author Martin Corino <mcorino@remedy.nl>
+ */
+//=============================================================================
+
+module A
+  {
+    enum RunMode
+    {
+        SLAVE,
+        MASTER
+    };
+  
+    enum RequestMode
+    {
+        SYNCH,
+        ASYNCH
+    };
+  
+    enum FollowUp
+    {
+        TIMER,
+        NOTIFICATION
+    };
+  
+    interface Test
+      {
+        void request (in RequestMode mode, inout unsigned long counter, out FollowUp follow_up);
+        
+        void report (in string msg);
+      
+        oneway void shutdown ();
+      };
+  };
