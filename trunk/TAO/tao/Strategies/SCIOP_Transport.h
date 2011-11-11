@@ -90,7 +90,7 @@ public:
 
   virtual int send_message (TAO_OutputCDR &association,
                             TAO_Stub *stub = 0,
-                            TAO_Message_Semantics message_semantics = TAO_TWOWAY_REQUEST,
+                            TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                             ACE_Time_Value *max_time_wait = 0);
 
   /*virtual int send_reply (TAO_OutputCDR &stream,

@@ -138,7 +138,12 @@ TAO_Exclusive_TMS::idle_after_send (void)
   else
     {
       if (this->transport_ != 0)
-        (void) this->transport_->make_idle ();
+        {
+          // let WS know we're finished
+          this->transport_->wait_strategy ()->finished_request ();
+
+          (void) this->transport_->make_idle ();
+        }
       return true;
     }
 }
@@ -150,7 +155,12 @@ TAO_Exclusive_TMS::idle_after_reply (void)
   // return true. If *this* class is not successful in idling the
   // transport no one can.
   if (this->transport_ != 0)
+  {
+    // let WS know we're finished
+    this->transport_->wait_strategy ()->finished_request ();
+
     (void) this->transport_->make_idle ();
+  }
 
   return true;
 }

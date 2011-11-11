@@ -266,7 +266,7 @@ TAO_ServerRequest::init_reply (void)
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
-                                       TAO_REPLY,
+                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY),
                                        0);
 
   // Construct a REPLY header.
@@ -313,7 +313,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
-                                       TAO_REPLY,
+                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY),
                                        0);
 
   // Construct a REPLY header.
@@ -324,7 +324,7 @@ TAO_ServerRequest::send_no_exception_reply (void)
   // Send the message.
   int const result = this->transport_->send_message (*this->outgoing_,
                                                      0,
-                                                     TAO_REPLY);
+                                                     TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
 
   if (result == -1)
     {
@@ -351,7 +351,7 @@ TAO_ServerRequest::tao_send_reply (void)
 
   int const result = this->transport_->send_message (*this->outgoing_,
                                                      0,
-                                                     TAO_REPLY);
+                                                     TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY));
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -439,7 +439,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
           // Send the message
           if (this->transport_->send_message (*this->outgoing_,
                                               0,
-                                              TAO_REPLY) == -1)
+                                              TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
@@ -520,7 +520,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
 
   this->outgoing_->message_attributes (this->request_id_,
                                        0,
-                                       TAO_REPLY,
+                                       TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY),
                                        0);
 
   // Make the reply message
@@ -550,7 +550,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   // Send the message
   if (this->transport_->send_message (*this->outgoing_,
                                       0,
-                                      TAO_REPLY) == -1)
+                                      TAO_Message_Semantics (TAO_Message_Semantics::TAO_REPLY)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_cached_reply, ")

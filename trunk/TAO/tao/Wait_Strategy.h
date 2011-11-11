@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
+#include /**/ "tao/Message_Semantics.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -55,7 +56,11 @@ public:
    * variables because the reply may arrive *before* the user calls
    * wait.
    */
-  virtual int sending_request (TAO_ORB_Core *orb_core, int two_way);
+  virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);
+
+  // The ORB finished handling the request; either the reply was received
+  // and dispatched, the request timed out or the connection was closed.
+  virtual void finished_request ();
 
   /// Base class virtual method. Wait till the @c reply_received flag is
   /// true or the time expires.
