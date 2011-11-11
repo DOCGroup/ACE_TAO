@@ -267,6 +267,34 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                               l,
                                               "Let's talk SMI.");
 
+      for (ssize_t ni = 0; ni < niterations; ni++)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sending another asynch message: %d\n",
+                      ni));
+
+          ami_test_var->sendc_foo (the_handler_var.in (),
+                                   l,
+                                   "Let's talk AMI.");
+        }
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "<%d> more asynchronous methods issued\n",
+                      niterations));
+        }
+
+      if (debug)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Issuing a synchronous method to collect the AMI replies again\n"));
+        }
+
+      number = ami_test_var->foo (l,
+                                  l,
+                                  "Let's talk SMI.");
+
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
