@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $Id$
+// $Id: default_resource.cpp 93496 2011-03-07 09:37:27Z johnnyw $
 
 #include "tao/default_resource.h"
 
@@ -119,7 +119,13 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , use_local_memory_pool_ (false)
 #endif
   , cached_connection_lock_type_ (TAO_THREAD_LOCK)
+#if defined (TAO_USE_BLOCKING_FLUSHING)
+  , flushing_strategy_type_ (TAO_BLOCKING_FLUSHING)
+#elif defined (TAO_USE_REACTIVE_FLUSHING)
+  , flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
+#else
   , flushing_strategy_type_ (TAO_LEADER_FOLLOWER_FLUSHING)
+#endif
   , char_codeset_parameters_ ()
   , wchar_codeset_parameters_ ()
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)

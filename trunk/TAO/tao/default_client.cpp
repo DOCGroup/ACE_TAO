@@ -1,5 +1,5 @@
 // -*- C++ -*-
-// $Id$
+// $Id: default_client.cpp 93686 2011-03-31 12:12:12Z johnnyw $
 
 #include "tao/default_client.h"
 #include "tao/Wait_On_Read.h"
@@ -34,6 +34,8 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
 #elif defined (TAO_USE_WAIT_ON_LF_NO_UPCALL)
   this->wait_strategy_ = TAO_WAIT_ON_LF_NO_UPCALL;
+#elif defined (TAO_USE_WAIT_RW_STRATEGY)
+  this->wait_strategy_ = TAO_WAIT_ON_READ;
 #else
   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
 #endif /* TAO_USE_ST_CLIENT_CONNECTION_HANDLER */
@@ -44,8 +46,14 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
 
+#if defined (TAO_USE_BLOCKING_CONNECT_STRATEGY)
+  this->connect_strategy_ = TAO_BLOCKED_CONNECT;
+#elif defined (TAO_USE_REACTIVE_CONNECT_STRATEGY)
+  this->connect_strategy_ = TAO_REACTIVE_CONNECT;
+#else
   // @todo: will be changed when other strategies are implemented.
   this->connect_strategy_ = TAO_LEADER_FOLLOWER_CONNECT;
+#endif
 }
 
 TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
