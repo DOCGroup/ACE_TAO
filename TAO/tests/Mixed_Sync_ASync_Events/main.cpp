@@ -63,7 +63,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   if (ior_output_file == 0)
-    ior_output_file = "slave.ior";
+    ior_output_file = ACE_TEXT ("slave.ior");
 
   if (input_ior == 0)
     input_ior = (mode_flag == A::RM_SLAVE ? ACE_TEXT ("file://master.ior") : ACE_TEXT ("file://slave.ior"));
