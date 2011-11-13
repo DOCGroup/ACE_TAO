@@ -44,21 +44,21 @@ Test_i::request (
 
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):Test_i::request: (%C)  %C - %d\n",
-              (reqmode == A::SYNCH ? "SYNCH" : "ASYNCH"),
-              (this->mode_ == A::MASTER ? "master" : "slave"),
+              (reqmode == A::RQM_SYNCH ? "SYNCH" : "ASYNCH"),
+              (this->mode_ == A::RM_MASTER ? "master" : "slave"),
               counter));
 
   const char* follow_up_str;
   switch (ACE_OS::rand_r (static_cast<unsigned int*> (&this->seed_)) % 2)
   {
   case 0:
-    follow_up = (reqmode == A::SYNCH ? A::TIMER : A::NOTIFICATION);
-    follow_up_str = (reqmode == A::SYNCH ? "TIMER" : "NOTIFICATION");
+    follow_up = (reqmode == A::RQM_SYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
+    follow_up_str = (reqmode == A::RQM_SYNCH ? "TIMER" : "NOTIFICATION");
     break;
   case 1:
   default:
-    follow_up = (reqmode == A::ASYNCH ? A::TIMER : A::NOTIFICATION);
-    follow_up_str = (reqmode == A::ASYNCH ? "TIMER" : "NOTIFICATION");
+    follow_up = (reqmode == A::RQM_ASYNCH ? A::FU_TIMER : A::FU_NOTIFICATION);
+    follow_up_str = (reqmode == A::RQM_ASYNCH ? "TIMER" : "NOTIFICATION");
     break;
   }
 
@@ -67,7 +67,7 @@ Test_i::request (
     char buf[1024];
     ACE_OS::snprintf (buf, sizeof(buf), "request #%d followup [%s]", counter, follow_up_str);
 
-    if (reqmode == A::SYNCH)
+    if (reqmode == A::RQM_SYNCH)
     {
       if (!CORBA::is_nil (this->rh_))
         this->opponent_->sendc_report(this->rh_.in (), buf);
@@ -85,14 +85,14 @@ Test_i::report (
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:(%P:%t):Test_i::report: %C - %C\n",
-              (this->mode_ == A::MASTER ? "master" : "slave"),
+              (this->mode_ == A::RM_MASTER ? "master" : "slave"),
               msg));
 }
 
 void
 Test_i::shutdown (void)
 {
-  if (this->mode_ == A::SLAVE && !CORBA::is_nil (this->opponent_))
+  if (this->mode_ == A::RM_SLAVE && !CORBA::is_nil (this->opponent_))
   {
     this->opponent_->shutdown ();
   }
@@ -123,10 +123,10 @@ void Test_Reply_i::request_excep (
 {
   ACE_DEBUG ((LM_ERROR,
               "%N:%l:(%P:%t):Test_Reply_i::request_excep: %C - unexpected exception\n",
-              (this->evh_.mode () == A::MASTER ? "master" : "slave")));
+              (this->evh_.mode () == A::RM_MASTER ? "master" : "slave")));
   if (!CORBA::is_nil (this->evh_.opponent ()))
     this->evh_.opponent ()->shutdown ();
-  if (this->evh_.mode () == A::SLAVE)
+  if (this->evh_.mode () == A::RM_SLAVE)
     this->evh_.orb ()->shutdown (0);
 }
 
@@ -145,10 +145,10 @@ Test_Reply_i::report_excep (
 {
   ACE_DEBUG ((LM_ERROR,
               "%N:%l:(%P:%t):Test_Reply_i::report_excep: %C - unexpected exception\n",
-              (this->evh_.mode () == A::MASTER ? "master" : "slave")));
+              (this->evh_.mode () == A::RM_MASTER ? "master" : "slave")));
   if (!CORBA::is_nil (this->evh_.opponent ()))
     this->evh_.opponent ()->shutdown ();
-  if (this->evh_.mode () == A::SLAVE)
+  if (this->evh_.mode () == A::RM_SLAVE)
     this->evh_.orb ()->shutdown (0);
 }
 
@@ -191,7 +191,7 @@ TestHandler::handle_timeout (const ACE_Time_Value &,
     A::FollowUp followup;
     if (!CORBA::is_nil (this->opponent_))
     {
-      this->opponent_->request(A::SYNCH, this->counter_, followup);
+      this->opponent_->request(A::RQM_SYNCH, this->counter_, followup);
       this->handle_followup (followup, this->counter_);
     }
   }
@@ -199,7 +199,7 @@ TestHandler::handle_timeout (const ACE_Time_Value &,
   {
     if (!CORBA::is_nil (this->opponent_))
     {
-      this->opponent_->sendc_request(this->rh_, A::ASYNCH, this->counter_);
+      this->opponent_->sendc_request(this->rh_, A::RQM_ASYNCH, this->counter_);
     }
   }
   return 0;
@@ -213,7 +213,7 @@ TestHandler::handle_exception (ACE_HANDLE)
     A::FollowUp followup;
     if (!CORBA::is_nil (this->opponent_))
     {
-      this->opponent_->request(A::SYNCH, this->counter_, followup);
+      this->opponent_->request(A::RQM_SYNCH, this->counter_, followup);
       this->handle_followup (followup, this->counter_);
     }
   }
@@ -221,7 +221,7 @@ TestHandler::handle_exception (ACE_HANDLE)
   {
     if (!CORBA::is_nil (this->opponent_))
     {
-      this->opponent_->sendc_request(this->rh_, A::ASYNCH, this->counter_);
+      this->opponent_->sendc_request(this->rh_, A::RQM_ASYNCH, this->counter_);
     }
   }
   return 0;
@@ -237,7 +237,7 @@ TestHandler::handle_followup (A::FollowUp fup, CORBA::ULong counter)
 {
   if (counter > this->max_count_)
   {
-    if (this->mode_ == A::MASTER && !CORBA::is_nil (this->opponent_))
+    if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_))
     {
       this->opponent_->shutdown ();
     }
@@ -251,7 +251,7 @@ TestHandler::handle_followup (A::FollowUp fup, CORBA::ULong counter)
     }
 
     this->set_counter (counter);
-    if (fup == A::TIMER)
+    if (fup == A::FU_TIMER)
     {
       this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0,
                                                            ACE_Time_Value (0, 100),

@@ -27,7 +27,7 @@ public:
   Test_i (CORBA::ORB_ptr orb,
           A::AMI_TestHandler_ptr rh,
           CORBA::ULong max_count = 10,
-          A::RunMode mode = A::SLAVE);
+          A::RunMode mode = A::RM_SLAVE);
 
   void set_opponent (A::Test_ptr opp);
 
