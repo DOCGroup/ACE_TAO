@@ -18,6 +18,7 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior_output_file = 0;
 const ACE_TCHAR *input_ior = 0;
