@@ -244,6 +244,15 @@ TestHandler::handle_followup (A::FollowUp fup, CORBA::ULong counter)
   }
   else
   {
+    if (this->mode_ == A::RM_MASTER && !CORBA::is_nil (this->opponent_))
+    {
+      char buf[1024];
+      ACE_OS::snprintf (buf, sizeof(buf), "request #%d followup [%s]",
+                                          counter,
+                                          (fup == A::FU_TIMER ? "TIMER" : "NOTIFICATION"));
+      this->opponent_->report (buf);
+    }
+
     if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
