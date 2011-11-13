@@ -1,7 +1,18 @@
+Sun Nov 13 21:40:34 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Wait_Never.cpp:
+        
+          Fixed signature for virtual override.
+
+        * tests/Mixed_Sync_ASync_Events/main.cpp:
+        
+          Fixed WChar build error.
+
 Sun Nov 13 12:00:36 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Mixed_Sync_ASync_Events/test_i.cpp:
-        
+
           Extended test.
 
 Sun Nov 13 11:31:21 UTC 2011  Martin Corino  <mcorino@remedy.nl>
