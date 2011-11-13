@@ -1,9 +1,18 @@
+Sun Nov 13 11:03:23 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Mixed_Sync_ASync_Events/main.cpp:
+        * tests/Mixed_Sync_ASync_Events/test.idl:
+        * tests/Mixed_Sync_ASync_Events/test_i.h:
+        * tests/Mixed_Sync_ASync_Events/test_i.cpp:
+        
+          Fixed Win32 compiler errors.
+
 Sat Nov 12 10:41:33 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.h:
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-        
+
           Fixed compile errors because of core changes from branch merge.
 
 Fri Nov 11 11:22:13 UTC 2011  Martin Corino  <mcorino@remedy.nl>

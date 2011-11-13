@@ -21,7 +21,7 @@
 
 const ACE_TCHAR *ior_output_file = 0;
 const ACE_TCHAR *input_ior = 0;
-A::RunMode mode_flag = A::SLAVE;
+A::RunMode mode_flag = A::RM_SLAVE;
 CORBA::ULong max_count = 20;
 
 int
@@ -40,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         input_ior = get_opts.opt_arg ();
         break;
       case 'm':
-        mode_flag = A::MASTER;
+        mode_flag = A::RM_MASTER;
         if (ior_output_file == 0)
           ior_output_file = ACE_TEXT ("master.ior");
         break;
@@ -65,7 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     ior_output_file = "slave.ior";
 
   if (input_ior == 0)
-    input_ior = (mode_flag == A::SLAVE ? ACE_TEXT ("file://master.ior") : ACE_TEXT ("file://slave.ior"));
+    input_ior = (mode_flag == A::RM_SLAVE ? ACE_TEXT ("file://master.ior") : ACE_TEXT ("file://slave.ior"));
 
   // Indicates successful parsing of the command line
   return 0;
@@ -142,13 +142,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       A::Test_var opponent;
       do {
-        if (mode_flag == A::SLAVE)
+        if (mode_flag == A::RM_SLAVE)
           ACE_OS::sleep (ACE_Time_Value (0, 100));
 
         // get object reference for opponent
         object = orb->string_to_object (input_ior);
         opponent =  A::Test::_narrow (object.in ());
-      } while (mode_flag == A::SLAVE && CORBA::is_nil (opponent));
+      } while (mode_flag == A::RM_SLAVE && CORBA::is_nil (opponent));
 
       if (CORBA::is_nil (opponent))
       {
@@ -163,7 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_i_rh_srv.test_handler ().set_opponent (opponent.in ());
 
       // start the show
-      if (mode_flag == A::MASTER)
+      if (mode_flag == A::RM_MASTER)
         test_i_rh_srv.test_handler ().start ();
 
       orb->run ();
