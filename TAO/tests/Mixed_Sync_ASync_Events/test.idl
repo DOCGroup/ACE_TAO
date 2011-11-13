@@ -15,20 +15,20 @@ module A
   {
     enum RunMode
     {
-        SLAVE,
-        MASTER
+        RM_SLAVE,
+        RM_MASTER
     };
   
     enum RequestMode
     {
-        SYNCH,
-        ASYNCH
+        RQM_SYNCH,
+        RQM_ASYNCH
     };
   
     enum FollowUp
     {
-        TIMER,
-        NOTIFICATION
+        FU_TIMER,
+        FU_NOTIFICATION
     };
   
     interface Test
