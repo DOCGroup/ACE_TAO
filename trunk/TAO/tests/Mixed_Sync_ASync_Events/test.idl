@@ -1,9 +1,8 @@
-
 //=============================================================================
 /**
  *  @file    test.idl
  *
- *  $Id $
+ *  $Id$
  *
  *  IDL description of the Test interface
  *
@@ -18,25 +17,25 @@ module A
         RM_SLAVE,
         RM_MASTER
     };
-  
+
     enum RequestMode
     {
         RQM_SYNCH,
         RQM_ASYNCH
     };
-  
+
     enum FollowUp
     {
         FU_TIMER,
         FU_NOTIFICATION
     };
-  
+
     interface Test
       {
         void request (in RequestMode mode, inout unsigned long counter, out FollowUp follow_up);
-        
+
         void report (in string msg);
-      
+
         oneway void shutdown ();
       };
   };
