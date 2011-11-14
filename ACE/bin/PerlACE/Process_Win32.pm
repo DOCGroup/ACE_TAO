@@ -8,8 +8,13 @@ package PerlACE::Process;
 use strict;
 use Win32::Process;
 use File::Basename;
-use File::Which;
 use Cwd;
+
+# Make sure the File::Which module is installed on the machine
+# before trying to use it. If the module is installed on this
+# machine, then it will be included because of the eval () 
+# statement below.
+my $has_which = eval ("use File::Which; 1;") ? 1 : 0;
 
 ###############################################################################
 
@@ -142,7 +147,7 @@ sub Executable
 
         # If there is no directory in the executable name, then we are going
         # to search the PATH for the executable.
-        if ($executable !~ m/\//) {
+        if ($has_which && $executable !~ m/\//) {
             my $which = File::Which::which ($executable);
 
             if ($which ne "") {

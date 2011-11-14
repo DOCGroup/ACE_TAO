@@ -1,3 +1,11 @@
+Mon Nov 14 06:02:05 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
+
+        * bin/PerlACE/Process_Win32.pm:
+
+          Bug fix where the script failed it File::Which is not installed
+          on the target machine. The script will search the PATH if File::Which
+          is installed on the host machine.
+
 Wed Nov  9 23:30:30 UTC 2011  James H. Hill  <hillj at cs dot iupui dot edu>
 
         * bin/ChangeLogEditor/FileLocatorFactory.pm:
