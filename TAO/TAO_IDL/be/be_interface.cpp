@@ -930,13 +930,19 @@ int
 be_interface::gen_operation_table (const char *flat_name,
                                    const char *skeleton_class_name)
 {
-  // TODO: find another way to determine whether this is an AMH class
+  // TODO:
+  // find another way to determine whether this is an AMH class
+  // Create 'is_amh' methods, just like AMI. Problem is finding where
+  // to invoke these methods since an AMH class is generated twice:
+  // once for AMH and once the 'normal' way.
+
   bool amh = false;
   ACE_CString tmp (skeleton_class_name);
   if (tmp.strstr ("AMH_") != ACE_String_Base_Const::npos)
     {
       amh = true;
     }
+
   // Check out the op_lookup_strategy.
   switch (be_global->lookup_strategy ())
   {
