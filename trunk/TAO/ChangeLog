@@ -1,3 +1,11 @@
+Tue Nov 15 15:43:31 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Bug_3531b_Regression/server.cpp:
+          Fixed ST build compile error.
+
+        * tests/Mixed_Sync_ASync_Events/test_i.cpp:
+          Trying to silence strict aliasing warnings.
+
 Tue Nov 15 08:23:08 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * NEWS:
