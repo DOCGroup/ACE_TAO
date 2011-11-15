@@ -27,7 +27,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions,
   CORBA::OctetSeq_out oc)
@@ -94,7 +94,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions)
 {
@@ -167,7 +167,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions)
 {
@@ -229,7 +229,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions
   )
@@ -297,7 +297,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions)
 {
@@ -347,14 +347,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
-
-  bool is_remote_request = !server_request.collocated ();
+  bool const is_remote_request = !server_request.collocated ();
 
   // Notice that the interceptors are processed in the opposite order
   // they were pushed onto the stack since this is an "ending" server
@@ -439,14 +438,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   TAO_ServerRequest &server_request,
   TAO::Argument * const args[],
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions)
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
-
-  bool is_remote_request = !server_request.collocated ();
+  bool const is_remote_request = !server_request.collocated ();
 
   TAO::ServerRequestInfo request_info (server_request,
                                        args,

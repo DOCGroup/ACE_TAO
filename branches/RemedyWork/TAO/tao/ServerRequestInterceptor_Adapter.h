@@ -56,6 +56,11 @@ namespace TAO
   class PICurrent_Impl;
   class Upcall_Command;
 
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  };
+
   /**
    * @class ServerRequestInterceptor_Adapter
    */
@@ -80,7 +85,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions,
         CORBA::OctetSeq_out oc) = 0;
@@ -97,7 +102,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) = 0;
 
@@ -106,7 +111,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) = 0;
 
@@ -116,7 +121,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) = 0;
 
@@ -126,7 +131,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) = 0;
 
@@ -136,7 +141,7 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Argument * const args[],
         size_t nargs,
-        void * servant_upcall,
+        TAO::Portable_Server::Servant_Upcall *servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
         CORBA::ULong nexceptions) = 0;
     //@}
@@ -148,8 +153,7 @@ namespace TAO
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies
-      ) = 0;
+      const CORBA::PolicyList& policies) = 0;
 
     virtual TAO::PICurrent_Impl *allocate_pi_current (void) = 0;
 

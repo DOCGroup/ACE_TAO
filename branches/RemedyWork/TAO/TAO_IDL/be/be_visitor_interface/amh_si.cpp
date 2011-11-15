@@ -136,8 +136,8 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << derived_amh_name << "::"
                   << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
-                  << "TAO_ServerRequest & req," << be_nl
-                  << "void * context," << be_nl
+                  << "TAO_ServerRequest &req," << be_nl
+                  << "TAO::Portable_Server::Servant_Upcall *context," << be_nl
                   << "void * obj)" << be_uidt
                   << be_uidt_nl
                   << "{" << be_idt_nl;
@@ -172,9 +172,9 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                   << derived_amh_name << "::_get_"
                   << d->local_name ()
                   << "_skel (" << be_idt << be_idt_nl
-                  << "TAO_ServerRequest & req," << be_nl
-                  << "void * context," << be_nl
-                  << "void * obj)" << be_uidt
+                  << "TAO_ServerRequest &req," << be_nl
+                  << "TAO::Portable_Server::Servant_Upcall *context," << be_nl
+                  << "void *obj)" << be_uidt
                   << be_uidt_nl
                   << "{" << be_idt_nl;
 
@@ -204,9 +204,9 @@ be_visitor_amh_interface_si::gen_skel_helper (be_interface *derived,
                       << derived_amh_name
                       << "::_set_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & req," << be_nl
-                      << "void * context," << be_nl
-                      << "void * obj)" << be_uidt
+                      << "TAO_ServerRequest &req," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *context," << be_nl
+                      << "void *obj)" << be_uidt
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 

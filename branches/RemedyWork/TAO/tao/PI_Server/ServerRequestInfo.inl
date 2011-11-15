@@ -12,14 +12,13 @@ TAO::ServerRequestInfo::ServerRequestInfo (
   TAO_ServerRequest & server_request,
   TAO::Argument * const * args,
   size_t nargs,
-  void * servant_upcall,
+  TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
   CORBA::ULong nexceptions)
   : server_request_ (server_request)
   , args_ (args)
   , nargs_ (nargs)
-  , servant_upcall_ (
-      static_cast<TAO::Portable_Server::Servant_Upcall *> (servant_upcall))
+  , servant_upcall_ (servant_upcall)
   , exceptions_ (exceptions)
   , nexceptions_ (nexceptions)
 {

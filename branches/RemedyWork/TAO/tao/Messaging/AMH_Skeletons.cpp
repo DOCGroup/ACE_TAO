@@ -44,7 +44,7 @@ _is_a_amh_Upcall_Command::execute (void)
 
 void
 TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
-                                  void * TAO_INTERCEPTOR (servant_upcall),
+                                  TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                   void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -100,7 +100,7 @@ _non_existent_amh_Upcall_Command::execute (void)
 }
 
 void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_request,
-                                                void * TAO_INTERCEPTOR (servant_upcall),
+                                                TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                                 void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -142,7 +142,7 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 TAO_AMH_Skeletons::_interface_amh_skel (TAO_ServerRequest & server_request,
-                                        void * /* servant_upcall */,
+                                        TAO::Portable_Server::Servant_Upcall* /* servant_upcall */,
                                         void * servant)
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -185,7 +185,7 @@ _get_component_amh_Upcall_Command::execute (void)
 
 void
 TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
-                                        void * TAO_INTERCEPTOR (servant_upcall),
+                                        TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                         void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -239,7 +239,7 @@ _repository_id_amh_Upcall_Command::execute (void)
 
 void
 TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
-                                            void * TAO_INTERCEPTOR (servant_upcall),
+                                            TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                             void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1

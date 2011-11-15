@@ -2315,9 +2315,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant);" << be_uidt
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+                      << "void *servant);" << be_uidt
                       << be_uidt;
                 }
               else
@@ -2328,9 +2328,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::"
                       << d->local_name ()
                       << "_skel (" << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant)"
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+                      << "void *servant)"
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2367,8 +2367,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                   *os << "static void" << be_nl
                       << "_get_" << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
                       << "void * servant);" << be_uidt
                       << be_uidt;
                 }
@@ -2380,9 +2380,9 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << derived->full_skel_name () << "::_get_"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
-                      << "TAO_ServerRequest & server_request," << be_nl
-                      << "void * servant_upcall," << be_nl
-                      << "void * servant)" << be_uidt
+                      << "TAO_ServerRequest &server_request," << be_nl
+                      << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
+                      << "void *servant)" << be_uidt
                       << be_uidt_nl
                       << "{" << be_idt_nl;
 
@@ -2412,8 +2412,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                       *os << "static void" << be_nl
                           << "_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
-                          << "TAO_ServerRequest & server_request," << be_nl
-                          << "void * servant_upcall," << be_nl
+                          << "TAO_ServerRequest &server_request," << be_nl
+                          << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
                           << "void * servant);" << be_uidt
                           << be_uidt;
                     }
@@ -2427,7 +2427,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "TAO_ServerRequest & server_request," << be_nl
-                          << "void * servant_upcall," << be_nl
+                          << "TAO::Portable_Server::Servant_Upcall *servant_upcall," << be_nl
                           << "void * servant)" << be_uidt
                           << be_uidt_nl
                           << "{" << be_idt_nl;
