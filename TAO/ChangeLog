@@ -1,3 +1,10 @@
+Tue Nov 15 22:13:12 UTC 2011  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+          Check whether creating a new connection exceeds the
+          ORBMuxedConnectionMax setting.
+
 Tue Nov 15 15:43:31 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Bug_3531b_Regression/server.cpp:
