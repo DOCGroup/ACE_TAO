@@ -68,7 +68,7 @@ public:
 // NOTE: Do *NOT* put the same msg into the msg queue more than once.
 // This will confuse the msg queue and result it in dropping messages
 //////////////////////////////////////////////////////////////////////
-class Worker: public ACE_Task<ACE_MT_SYNCH>
+class Worker: public ACE_Task<ACE_SYNCH>
 {
 public:
   Worker (void)
