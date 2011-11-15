@@ -1550,22 +1550,27 @@ of multiple threads with a single Reactor. </p>
 instead of waiting in the Reactor using the Leader/Followers
 pattern. The <em>RW</em> strategy only works when the application
 does not have to worry about new request showing up when waiting for a
-response. Further, this strategy cannot be used with Asynchronous
-Method Invocation (AMI) calls and when using BiDIR GIOP.
-Therefore, this strategy is appropriate
-only for "pure" synchronous clients. Note that applications that
-require nested upcalls are not "pure" synchronous clients. Also note that this
-strategy will only affect two way calls, since there is no waiting for
-one way calls. This strategy can also be used in an application that
-is both a client and a server if the server side is handled by a
-separate thread and the client threads are "pure" clients. When this strategy
-is set to RW, then also the -ORBFlushingStrategy (which is part of the
-Resource_Factory) has to be set to <code>blocking</code>.</p> <p>
+response. Further, this strategy cannot be used with BiDIR GIOP.
+Note that applications that require nested upcalls are not compatible
+with this strategy. Also note that this strategy will only affect synchronous
+two way calls, since there is no waiting for one way calls or AMI requests
+(at least not in the same sense as for synchronous two way calls).
+This strategy can also be used in an application that
+is both a client and a server where the server side is handled by a
+separate thread and the client threads are "pure" clients.
+Use in single threaded applications with both client and server roles is
+also possible but in these cases special care has to be taken to avoid
+deadlocks because of nested synchronous calls. Mixing in AMI requests and/or
+other asynchronous reactor (timer/notification) events might help solve
+such issues.
+When this strategy is set to RW, then also the -ORBFlushingStrategy
+(which is part of the Resource_Factory) has to be set to <code>blocking</code>.</p>
+<p>
         <CODE>MT_NOUPCALL</CODE> means use a client connection handler that
         participates in the leader-follower model like MT, but, like
         RW, does not allow handling of nested CORBA upcalls within the
         waiting thread. It does allow handling of other non CORBA (ACE reactor events)
-        like timers and ACE notification queue events. Note that with 
+        like timers and ACE notification queue events. Note that with
         this strategy it is possible
         to "run out of threads" in a thread pool, and that TAO doesn't
         grow thread pools.  Unlike RW, this does not require  <a
@@ -1583,7 +1588,7 @@ Resource_Factory) has to be set to <code>blocking</code>.</p> <p>
         handlers setup for sending messages need to  be cleaned up
         when errors occur. This option has an  effect only for
         <em> -ORBClientConnectionHandler RW </em>. Rest of  the
-        options for <em> -ORBCleintConnectionHandler </em> have been
+        options for <em> -ORBClientConnectionHandler </em> have been
         automatically set up for cleaning the connection
         handlers. Setting the option to <em> 1 </em> has a side
         effect of registering and unregistering the connection

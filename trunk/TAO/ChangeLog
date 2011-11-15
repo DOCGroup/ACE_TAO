@@ -1,3 +1,10 @@
+Tue Nov 15 08:23:08 UTC 2011  Martin Corino  <mcorino@remedy.nl>
+
+        * NEWS:
+        * docs/Options.html:
+
+          Updated for RW & EXCLUSIVE changes.
+
 Mon Nov 14 09:22:08 UTC 2011  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Mixed_Sync_ASync_Events/MixedSyncASyncEvents.mpc:
