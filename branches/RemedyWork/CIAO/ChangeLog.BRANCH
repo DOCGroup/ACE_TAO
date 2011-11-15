@@ -1,3 +1,19 @@
+Tue Nov 15 13:33:10 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+
+        * tests/IDL_Test/Inherited_Servants:
+
+        * tests/IDL_Test/Inherited_Servants/Base.idl:
+        * tests/IDL_Test/Inherited_Servants/Base.mpc:
+        * tests/IDL_Test/Inherited_Servants/Derived.idl:
+        * tests/IDL_Test/Inherited_Servants/Derived.mpc:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.h:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.cpp:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.h:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.cpp:
+        * tests/IDL_Test/Inherited_Servants/Tester.cpp:
+          Removed these files; need to merge to trunk first....
+
 Tue Nov 15 13:22:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/IDL_Test/Inherited_Servants:
