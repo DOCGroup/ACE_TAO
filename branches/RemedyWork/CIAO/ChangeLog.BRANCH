@@ -1,3 +1,18 @@
+Tue Nov 15 13:22:08 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Servants:
+
+        * tests/IDL_Test/Inherited_Servants/Base.idl:
+        * tests/IDL_Test/Inherited_Servants/Base.mpc:
+        * tests/IDL_Test/Inherited_Servants/Derived.idl:
+        * tests/IDL_Test/Inherited_Servants/Derived.mpc:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.h:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.cpp:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.h:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.cpp:
+        * tests/IDL_Test/Inherited_Servants/Tester.cpp:
+          First step to create template classes for servants.
+
 Fri Nov 11 09:35:35 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * tests/IDL_Test/Cornucopia/Cornucopia.idl:
