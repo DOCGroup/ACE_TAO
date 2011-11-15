@@ -1064,7 +1064,7 @@ be_interface::gen_operation_table (const char *flat_name,
                 *os << "{\"_repository_id\", &TAO_AMH_Skeletons"
                     << "::_repository_id_amh_skel, 0}" << be_uidt_nl;
               }
-            if (be_global->gen_thru_poa_collocation ())
+            else if (be_global->gen_thru_poa_collocation ())
               {
                 *os << "{\"_repository_id\", &TAO_ServantBase"
                     << "::_repository_id_thru_poa_skel, 0}" << be_uidt_nl;
