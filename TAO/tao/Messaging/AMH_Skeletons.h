@@ -169,25 +169,25 @@ class TAO_Messaging_Export TAO_AMH_Skeletons
 {
 public:
   static void _is_a_amh_skel (TAO_ServerRequest & server_request,
-                              void * servant_upcall,
+                              TAO::Portable_Server::Servant_Upcall* servant_upcall,
                               void * servant);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   static void _non_existent_amh_skel (TAO_ServerRequest & server_request,
-                                      void * servant_upcall,
+                                      TAO::Portable_Server::Servant_Upcall* servant_upcall,
                                       void * servant);
 
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   static void _interface_amh_skel (TAO_ServerRequest & server_request,
-                                  void * /* servant_upcall */,
+                                  TAO::Portable_Server::Servant_Upcall* /* servant_upcall */,
                                   void * servant);
 
   static void _component_amh_skel (TAO_ServerRequest & server_request,
-                                  void * servant_upcall,
+                                  TAO::Portable_Server::Servant_Upcall* servant_upcall,
                                   void * servant);
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
   static void _repository_id_amh_skel (TAO_ServerRequest & server_request,
-                                      void * servant_upcall,
+                                      TAO::Portable_Server::Servant_Upcall* servant_upcall,
                                       void * servant);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 };

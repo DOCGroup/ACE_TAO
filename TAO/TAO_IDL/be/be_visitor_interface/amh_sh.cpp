@@ -122,8 +122,8 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "void *_servant_upcall" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "TAO::Portable_Server::Servant_Upcall *_servant_upcall);" << be_uidt
+      << be_uidt_nl << be_nl;
 
   this->this_method (node);
 

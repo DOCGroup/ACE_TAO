@@ -29,9 +29,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ServerRequest;
 class TAO_Abstract_ServantBase;
 
+namespace TAO
+{
+  namespace Portable_Server
+  {
+    class Servant_Upcall;
+  };
+};
+
 typedef void (*TAO_Skeleton)(
     TAO_ServerRequest &,
-    void *,
+    TAO::Portable_Server::Servant_Upcall *,
     void *);
 
 typedef void (*TAO_Collocated_Skeleton)(

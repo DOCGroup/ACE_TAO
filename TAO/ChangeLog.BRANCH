@@ -1,3 +1,42 @@
+Tue Nov 15 09:36:35 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * tao/Abstract_Servant_Base.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.inl:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Corba_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Corba_Request.inl:
+        * tao/Messaging/AMH_Skeletons.h:
+        * tao/Messaging/AMH_Skeletons.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PortableServer/Local_Servant_Base.h:
+        * tao/PortableServer/Local_Servant_Base.cpp:
+        * tao/PortableServer/Operation_Table.h:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Upcall_Wrapper.h:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/ServerRequestInterceptor_Adapter.h:
+          Changed the second argument of all skel methods from void* to
+          TAO::Portable_Server::Servant_Upcall*. I found  CSD_TP_Corba_Request
+          just passes 0 for this argument, reported bugzilla 3993 for this,
+          when CSD passes always a valid pointer we could even use a reference
+          instead of a pointer
+
 Tue Nov 15 09:13:11 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:

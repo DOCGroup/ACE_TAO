@@ -46,7 +46,9 @@ protected:
   TAO_Stub *_create_stub (void);
 
   /// Throws CORBA::BAD_OPERATION exception.
-  void _dispatch (TAO_ServerRequest &request, void *servant_upcall);
+  void _dispatch (
+    TAO_ServerRequest &request,
+    TAO::Portable_Server::Servant_Upcall* servant_upcall);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

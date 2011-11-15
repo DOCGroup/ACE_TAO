@@ -438,8 +438,10 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
   *os << be_nl_2;
 
   *os << "void " << node->full_skel_name ()
-      << "::_dispatch (TAO_ServerRequest & req, void * servant_upcall)"
-      << be_nl;
+      << "::_dispatch (" << be_idt_nl
+      << "TAO_ServerRequest & req," << be_nl
+      << "TAO::Portable_Server::Servant_Upcall* servant_upcall)"
+      << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "this->synchronous_upcall_dispatch (req, servant_upcall, this);"
       << be_uidt_nl;

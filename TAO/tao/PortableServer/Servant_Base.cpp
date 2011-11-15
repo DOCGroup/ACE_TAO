@@ -95,8 +95,8 @@ TAO_ServantBase::_default_POA (void)
 
 void
 TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
-                            void * servant_upcall,
-                            void * servant)
+                             TAO::Portable_Server::Servant_Upcall* servant_upcall,
+                             void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
   static ::CORBA::TypeCode_ptr const * const exceptions = 0;
@@ -136,7 +136,7 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
 
 void
 TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
-                                      void * TAO_INTERCEPTOR (servant_upcall),
+                                      TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -180,7 +180,7 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
-                                    void * TAO_INTERCEPTOR (servant_upcall),
+                                    TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                     void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -217,7 +217,7 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
 }
 
 void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_request,
-                                                  void * TAO_INTERCEPTOR (servant_upcall),
+                                                  TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                                   void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -258,7 +258,7 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
 TAO_ServantBase::_interface_skel (TAO_ServerRequest & server_request,
-                                  void * /* servant_upcall */,
+                                  TAO::Portable_Server::Servant_Upcall* /* servant_upcall */,
                                   void * servant)
 {
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -289,7 +289,7 @@ TAO_ServantBase::_interface_skel (TAO_ServerRequest & server_request,
 
 void
 TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
-                                  void * TAO_INTERCEPTOR (servant_upcall),
+                                  TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                   void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -328,7 +328,7 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
 
 void
 TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
-                                          void * TAO_INTERCEPTOR (servant_upcall),
+                                          TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                           void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -372,7 +372,7 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 
 void
 TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
-                                      void * TAO_INTERCEPTOR (servant_upcall),
+                                      TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -411,7 +411,7 @@ TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
 
 void
 TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_request,
-                                              void * TAO_INTERCEPTOR (servant_upcall),
+                                              TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                               void * servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -554,9 +554,11 @@ TAO_ServantBase::_create_stub (void)
   return stub;
 }
 
-void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
-                                                   void * servant_upcall,
-                                                   void * derived_this)
+void
+TAO_ServantBase::synchronous_upcall_dispatch (
+  TAO_ServerRequest & req,
+  TAO::Portable_Server::Servant_Upcall* servant_upcall,
+  void * derived_this)
 {
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
@@ -623,13 +625,13 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
             req.tao_send_reply_exception (ex);
         }
     }
-
-  return;
 }
 
-void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
-                                                    void * servant_upcall,
-                                                    void * derived_this)
+void
+TAO_ServantBase::asynchronous_upcall_dispatch (
+  TAO_ServerRequest & req,
+  TAO::Portable_Server::Servant_Upcall* servant_upcall,
+  void * derived_this)
 {
   TAO_Skeleton skel;
   const char *opname = req.operation ();
