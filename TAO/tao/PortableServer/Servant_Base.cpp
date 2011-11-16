@@ -668,7 +668,6 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
       // Return immediately. Do not send a reply; this is an
       // asynchronous upcall. (unless, of course there is a system
       // exception.
-
     }
   catch (const ::CORBA::Exception& ex)
     {
