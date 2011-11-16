@@ -21,7 +21,7 @@ namespace CIAO_FACET_Inherited
   derived_interface_Servant_T<BASE, EXEC>::derived_interface_Servant_T (
       typename EXEC::_ptr_type exec,
       ::Components::CCMContext_ptr ctx)
-    : ::CIAO::Servant_Interface_Base_T<BASE, EXEC>(exec, ctx)
+    : CIAO::Servant_Interface_Base_T<BASE, EXEC>(exec, ctx)
   {
   }
 
@@ -61,7 +61,6 @@ namespace CIAO_FACET_Inherited
     typename EXEC_BASE::_ptr_type exec_base,
     ::Components::CCMContext_ptr ctx)
     : derived_interface_Servant_T<BASE_BASE, EXEC_BASE> (exec_base, ctx)
-    , ::CIAO::Servant_Interface_Base_T<BASE, EXEC>(exec, ctx)
   {
   }
 
