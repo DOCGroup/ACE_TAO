@@ -36,7 +36,7 @@ public:
 private:
   void throw_internal_b (void);
 
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 

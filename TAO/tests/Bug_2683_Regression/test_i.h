@@ -34,7 +34,7 @@ public:
   virtual void shutdown (void);
 
 private:
-  /// Use an ORB reference to conver strings to objects and shutdown
+  /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   ORB_Killer *killer_;
 };
