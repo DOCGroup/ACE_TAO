@@ -26,10 +26,10 @@
 #include "tao/Stub.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/IFR_Client_Adapter.h"
+#include "tao/Basic_Types.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
-#include "../Basic_Types.h"
 
 //@@ TAO_SERVANT_BASE_INCLUDE_ADD_HOOK
 
@@ -39,7 +39,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_TAO_ServantBase_Timeprobe_Description[] =
+static const char *TAO_ServantBase_Timeprobe_Description[] =
 {
   "TAO_ServantBase::_find - start",
   "TAO_ServantBase::_find - end"
@@ -52,7 +52,7 @@ enum
   };
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_TAO_ServantBase_Timeprobe_Description,
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
                                   TAO_SERVANT_BASE_FIND_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
