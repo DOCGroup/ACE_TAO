@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1073
 
-#ifndef CIAO_SESSION_DERIVED_SVNT_7LDT8W_H_
-#define CIAO_SESSION_DERIVED_SVNT_7LDT8W_H_
+#ifndef CIAO_SESSION_DERIVED_SVNT_MF1XKO_H_
+#define CIAO_SESSION_DERIVED_SVNT_MF1XKO_H_
 
 #include /**/ "ace/pre.h"
 
@@ -47,34 +47,6 @@
 #include "DerivedEC.h"
 
 #include "DerivedS.h"
-
-namespace CIAO_FACET_Inherited
-{
-  class derived_interface_Servant
-    : public virtual POA_Inherited::derived_interface
-  {
-  public:
-    derived_interface_Servant (
-      ::Inherited::CCM_derived_interface_ptr executor,
-      ::Components::CCMContext_ptr ctx);
-    
-    virtual ~derived_interface_Servant (void);
-
-    virtual void do_derived (
-      void);
-
-    /// Get component implementation.
-    virtual CORBA::Object_ptr _get_component (void);
-  
-  protected:
-    /// Facet executor.
-    ::Inherited::CCM_derived_interface_var executor_;
-
-    /// Context object.
-    ::Components::CCMContext_var ctx_;
-  };
-  
-}
 
 namespace CIAO_Inherited_Derived_comp_Impl
 {
@@ -196,37 +168,6 @@ namespace CIAO_Inherited_Derived_comp_Impl
     ::Components::EnterpriseComponent_ptr p,
     ::CIAO::Session_Container_ptr c,
     const char * ins_name);
-}
-
-namespace CIAO_FACET_Inherited
-{
-  class derived_2_interface_Servant
-    : public virtual POA_Inherited::derived_2_interface
-  {
-  public:
-    derived_2_interface_Servant (
-      ::Inherited::CCM_derived_2_interface_ptr executor,
-      ::Components::CCMContext_ptr ctx);
-    
-    virtual ~derived_2_interface_Servant (void);
-
-    virtual void do_derived (
-      void);
-
-    virtual void do_derived_2 (
-      void);
-
-    /// Get component implementation.
-    virtual CORBA::Object_ptr _get_component (void);
-  
-  protected:
-    /// Facet executor.
-    ::Inherited::CCM_derived_2_interface_var executor_;
-
-    /// Context object.
-    ::Components::CCMContext_var ctx_;
-  };
-  
 }
 
 namespace CIAO_Inherited_Derived_2_comp_Impl

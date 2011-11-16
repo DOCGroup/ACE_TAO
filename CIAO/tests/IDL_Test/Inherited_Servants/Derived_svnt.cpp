@@ -36,52 +36,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/SString.h"
 
-namespace CIAO_FACET_Inherited
-{
-  derived_interface_Servant::derived_interface_Servant (
-      ::Inherited::CCM_derived_interface_ptr executor,
-      ::Components::CCMContext_ptr ctx)
-    : executor_ ( ::Inherited::CCM_derived_interface::_duplicate (executor)),
-      ctx_ ( ::Components::CCMContext::_duplicate (ctx))
-  {
-  }
-
-  derived_interface_Servant::~derived_interface_Servant (void)
-  {
-  }
-
-  // All facet operations and attributes.
-
-  void
-  derived_interface_Servant::do_derived (
-    void)
-  {
-    ::Inherited::CCM_derived_interface_var executor = 
-      ::Inherited::CCM_derived_interface::_duplicate (this->executor_.in ());
-
-    if ( ::CORBA::is_nil (executor.in ()))
-      {
-        throw ::CORBA::INV_OBJREF ();
-      }
-    
-    executor->do_derived ();
-  }
-
-  ::CORBA::Object_ptr
-  derived_interface_Servant::_get_component (void)
-  {
-    ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (this->ctx_.in ());
-    
-    if (! ::CORBA::is_nil (sc.in ()))
-      {
-        return sc->get_CCM_object ();
-      }
-    
-    throw ::CORBA::INTERNAL ();
-  }
-}
-
 namespace CIAO_Inherited_Derived_comp_Impl
 {
   Derived_comp_Context::Derived_comp_Context (
@@ -352,67 +306,6 @@ namespace CIAO_Inherited_Derived_comp_Impl
       }
     
     return retval;
-  }
-}
-
-namespace CIAO_FACET_Inherited
-{
-  derived_2_interface_Servant::derived_2_interface_Servant (
-      ::Inherited::CCM_derived_2_interface_ptr executor,
-      ::Components::CCMContext_ptr ctx)
-    : executor_ ( ::Inherited::CCM_derived_2_interface::_duplicate (executor)),
-      ctx_ ( ::Components::CCMContext::_duplicate (ctx))
-  {
-  }
-
-  derived_2_interface_Servant::~derived_2_interface_Servant (void)
-  {
-  }
-
-  // All facet operations and attributes.
-
-  void
-  derived_2_interface_Servant::do_derived (
-    void)
-  {
-    ::Inherited::CCM_derived_2_interface_var executor = 
-      ::Inherited::CCM_derived_2_interface::_duplicate (this->executor_.in ());
-
-    if ( ::CORBA::is_nil (executor.in ()))
-      {
-        throw ::CORBA::INV_OBJREF ();
-      }
-    
-    executor->do_derived ();
-  }
-
-  void
-  derived_2_interface_Servant::do_derived_2 (
-    void)
-  {
-    ::Inherited::CCM_derived_2_interface_var executor = 
-      ::Inherited::CCM_derived_2_interface::_duplicate (this->executor_.in ());
-
-    if ( ::CORBA::is_nil (executor.in ()))
-      {
-        throw ::CORBA::INV_OBJREF ();
-      }
-    
-    executor->do_derived_2 ();
-  }
-
-  ::CORBA::Object_ptr
-  derived_2_interface_Servant::_get_component (void)
-  {
-    ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (this->ctx_.in ());
-    
-    if (! ::CORBA::is_nil (sc.in ()))
-      {
-        return sc->get_CCM_object ();
-      }
-    
-    throw ::CORBA::INTERNAL ();
   }
 }
 
