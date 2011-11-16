@@ -19,13 +19,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ciao/Servants/Session/Servant_Interface_Base_T.h"
+#include "ciao/Servants/Facet_Servant_Base_T.h"
 
 namespace CIAO_FACET_Inherited
 {
   template <typename BASE, typename EXEC>
   class derived_interface_Servant_T
-    : public CIAO::Servant_Interface_Base_T<BASE, EXEC>
+    : public CIAO::Facet_Servant_Base_T<BASE, EXEC, ::Components::SessionContext>
   {
   public:
     derived_interface_Servant_T (
@@ -40,14 +40,14 @@ namespace CIAO_FACET_Inherited
 namespace CIAO_FACET_Inherited
 {
   template <typename BASE, typename EXEC>
-  class derived_interface_2_Servant_T
+  class derived_2_interface_Servant_T
     : public derived_interface_Servant_T<BASE, EXEC>
   {
   public:
-    derived_interface_2_Servant_T (
+    derived_2_interface_Servant_T (
       typename EXEC::_ptr_type exec,
       ::Components::CCMContext_ptr ctx);
-    virtual ~derived_interface_2_Servant_T (void);
+    virtual ~derived_2_interface_Servant_T (void);
 
     virtual void do_derived_2 (
       void);

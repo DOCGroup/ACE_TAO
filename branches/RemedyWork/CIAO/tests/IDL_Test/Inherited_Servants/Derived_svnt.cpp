@@ -36,51 +36,51 @@
 #include "tao/ORB_Core.h"
 #include "ace/SString.h"
 
-// namespace CIAO_FACET_Inherited
-// {
-//   derived_interface_Servant::derived_interface_Servant (
-//       ::Inherited::CCM_derived_interface_ptr executor,
-//       ::Components::CCMContext_ptr ctx)
-//     : executor_ ( ::Inherited::CCM_derived_interface::_duplicate (executor)),
-//       ctx_ ( ::Components::CCMContext::_duplicate (ctx))
-//   {
-//   }
-//
-//   derived_interface_Servant::~derived_interface_Servant (void)
-//   {
-//   }
-//
-//   // All facet operations and attributes.
-//
-//   void
-//   derived_interface_Servant::do_derived (
-//     void)
-//   {
-//     ::Inherited::CCM_derived_interface_var executor =
-//       ::Inherited::CCM_derived_interface::_duplicate (this->executor_.in ());
-//
-//     if ( ::CORBA::is_nil (executor.in ()))
-//       {
-//         throw ::CORBA::INV_OBJREF ();
-//       }
-//
-//     executor->do_derived ();
-//   }
-//
-//   ::CORBA::Object_ptr
-//   derived_interface_Servant::_get_component (void)
-//   {
-//     ::Components::SessionContext_var sc =
-//       ::Components::SessionContext::_narrow (this->ctx_.in ());
-//
-//     if (! ::CORBA::is_nil (sc.in ()))
-//       {
-//         return sc->get_CCM_object ();
-//       }
-//
-//     throw ::CORBA::INTERNAL ();
-//   }
-// }
+namespace CIAO_FACET_Inherited
+{
+  derived_interface_Servant::derived_interface_Servant (
+      ::Inherited::CCM_derived_interface_ptr executor,
+      ::Components::CCMContext_ptr ctx)
+    : executor_ ( ::Inherited::CCM_derived_interface::_duplicate (executor)),
+      ctx_ ( ::Components::CCMContext::_duplicate (ctx))
+  {
+  }
+
+  derived_interface_Servant::~derived_interface_Servant (void)
+  {
+  }
+
+  // All facet operations and attributes.
+
+  void
+  derived_interface_Servant::do_derived (
+    void)
+  {
+    ::Inherited::CCM_derived_interface_var executor = 
+      ::Inherited::CCM_derived_interface::_duplicate (this->executor_.in ());
+
+    if ( ::CORBA::is_nil (executor.in ()))
+      {
+        throw ::CORBA::INV_OBJREF ();
+      }
+    
+    executor->do_derived ();
+  }
+
+  ::CORBA::Object_ptr
+  derived_interface_Servant::_get_component (void)
+  {
+    ::Components::SessionContext_var sc =
+      ::Components::SessionContext::_narrow (this->ctx_.in ());
+    
+    if (! ::CORBA::is_nil (sc.in ()))
+      {
+        return sc->get_CCM_object ();
+      }
+    
+    throw ::CORBA::INTERNAL ();
+  }
+}
 
 namespace CIAO_Inherited_Derived_comp_Impl
 {
@@ -115,12 +115,12 @@ namespace CIAO_Inherited_Derived_comp_Impl
       {
         throw ::Components::InvalidConnection ();
       }
-
+    
     if (! ::CORBA::is_nil (this->ciao_uses_uses_derived_.in ()))
       {
         throw ::Components::AlreadyConnected ();
       }
-
+    
     this->ciao_uses_uses_derived_ =
       ::Inherited::derived_interface::_duplicate (c);
   }
@@ -130,12 +130,12 @@ namespace CIAO_Inherited_Derived_comp_Impl
   {
     ::Inherited::derived_interface_var ciao_uses_uses_derived =
       this->ciao_uses_uses_derived_._retn ();
-
+    
     if ( ::CORBA::is_nil (ciao_uses_uses_derived.in ()))
       {
         throw ::Components::NoConnection ();
       }
-
+    
     return ciao_uses_uses_derived._retn ();
   }
 
@@ -151,7 +151,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
         ::Inherited::CCM_Derived_comp,
         Derived_comp_Context> (exe, h, ins_name, hs, c)
   {
-
+    
     this->setup_prov_derived_i ();
   }
 
@@ -173,7 +173,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::Inherited::CCM_Derived_comp_var executor =
+    ::Inherited::CCM_Derived_comp_var executor = 
       ::Inherited::CCM_Derived_comp::_duplicate (this->executor_.in ());
 
     if ( ::CORBA::is_nil (executor.in ()))
@@ -203,7 +203,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
       {
         ::Inherited::derived_interface_var _ciao_conn =
           ::Inherited::derived_interface::_narrow (connection);
-
+        
         /// Simplex connect.
         this->context_->connect_uses_derived (_ciao_conn.in ());
         return 0;
@@ -242,7 +242,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
     ::Components::ReceptacleDescriptions_var safe_retval = retval;
     safe_retval->length (1UL);
 
-    Inherited::derived_interface_var ciao_uses_derived =
+    Inherited::derived_interface_var ciao_uses_derived = 
       this->context_->get_connection_uses_derived ();
     ::CIAO::Servant::describe_simplex_receptacle<
       ::Inherited::derived_interface> (
@@ -270,44 +270,44 @@ namespace CIAO_Inherited_Derived_comp_Impl
 
     ::CIAO::Container_var cnt_safe =
       ::CIAO::Container::_duplicate (this->container_.in ());
-
+    
     if (::CORBA::is_nil (cnt_safe.in ()))
       {
         throw ::CORBA::INV_OBJREF ();
       }
-
+    
     PortableServer::POA_var POA = cnt_safe->the_port_POA ();
     ::CORBA::Object_var tmp =
       this->get_facet_executor ("prov_derived");
-
-    typedef ::CIAO_FACET_Inherited::derived_interface_Servant_T<POA_Inherited::derived_interface,
-                                                              ::Inherited::CCM_derived_interface>
-            derived_interface_Servant_type;
-
-    //TODO: pass tmp to the Servant_type and narrow this in Servant_Interface_Base_T
-    ::Inherited::CCM_derived_interface_var tmp_var =
+    
+    ::Inherited::CCM_derived_interface_var tmp_var = 
       ::Inherited::CCM_derived_interface::_narrow (tmp.in());
-
-    derived_interface_Servant_type * prov_derived_servant_impl = 0;
+    
+    typedef ::CIAO_FACET_Inherited::derived_interface_Servant_T <
+      POA_Inherited::derived_interface,
+      ::Inherited::CCM_derived_interface>
+        derived_interface_type;
+      
+    derived_interface_type *prov_derived_servant_impl = 0;
     ACE_NEW_THROW_EX (
       prov_derived_servant_impl,
-      derived_interface_Servant_type (
-        tmp_var.in(),
+      derived_interface_type (
+        tmp_var.in(), 
         this->context_),
       CORBA::NO_MEMORY ());
-
+    
     PortableServer::ServantBase_var safe_base_servant (prov_derived_servant_impl);
-
+    
     PortableServer::ObjectId_var prov_derived_servant_oid =
       PortableServer::string_to_ObjectId (obj_id.c_str());
-
+    
     POA->activate_object_with_id(prov_derived_servant_oid.in(),prov_derived_servant_impl);
-    ::CORBA::Object_var prov_derived_servant_impl_obj =
-      cnt_safe->generate_reference (
+    ::CORBA::Object_var prov_derived_servant_impl_obj = 
+      cnt_safe->generate_reference ( 
         obj_id.c_str (),
         "IDL:Inherited/derived_interface:1.0",
         ::CIAO::Container_Types::FACET_CONSUMER_t);
-
+      
     this->add_facet ("prov_derived", prov_derived_servant_impl_obj.in ());
   }
 
@@ -338,7 +338,7 @@ namespace CIAO_Inherited_Derived_comp_Impl
   {
     ::Inherited::CCM_Derived_comp_var x =
       ::Inherited::CCM_Derived_comp::_narrow (p);
-
+    
     ::PortableServer::Servant retval = 0;
     if (! ::CORBA::is_nil (x.in ()))
       {
@@ -350,71 +350,71 @@ namespace CIAO_Inherited_Derived_comp_Impl
                             0,
                             c));
       }
-
+    
     return retval;
   }
 }
 
-// namespace CIAO_FACET_Inherited
-// {
-//   derived_2_interface_Servant::derived_2_interface_Servant (
-//       ::Inherited::CCM_derived_2_interface_ptr executor,
-//       ::Components::CCMContext_ptr ctx)
-//     : executor_ ( ::Inherited::CCM_derived_2_interface::_duplicate (executor)),
-//       ctx_ ( ::Components::CCMContext::_duplicate (ctx))
-//   {
-//   }
-//
-//   derived_2_interface_Servant::~derived_2_interface_Servant (void)
-//   {
-//   }
-//
-//   // All facet operations and attributes.
-//
-//   void
-//   derived_2_interface_Servant::do_derived (
-//     void)
-//   {
-//     ::Inherited::CCM_derived_2_interface_var executor =
-//       ::Inherited::CCM_derived_2_interface::_duplicate (this->executor_.in ());
-//
-//     if ( ::CORBA::is_nil (executor.in ()))
-//       {
-//         throw ::CORBA::INV_OBJREF ();
-//       }
-//
-//     executor->do_derived ();
-//   }
-//
-//   void
-//   derived_2_interface_Servant::do_derived_2 (
-//     void)
-//   {
-//     ::Inherited::CCM_derived_2_interface_var executor =
-//       ::Inherited::CCM_derived_2_interface::_duplicate (this->executor_.in ());
-//
-//     if ( ::CORBA::is_nil (executor.in ()))
-//       {
-//         throw ::CORBA::INV_OBJREF ();
-//       }
-//
-//     executor->do_derived_2 ();
-//   }
-//
-//   ::CORBA::Object_ptr
-//   derived_2_interface_Servant::_get_component (void)
-//   {
-//     ::Components::SessionContext_var sc =
-//       ::Components::SessionContext::_narrow (this->ctx_.in ());
-//
-//     if (! ::CORBA::is_nil (sc.in ()))
-//       {
-//         return sc->get_CCM_object ();
-//       }
-//
-//     throw ::CORBA::INTERNAL ();
-//   }
-// }
+namespace CIAO_FACET_Inherited
+{
+  derived_2_interface_Servant::derived_2_interface_Servant (
+      ::Inherited::CCM_derived_2_interface_ptr executor,
+      ::Components::CCMContext_ptr ctx)
+    : executor_ ( ::Inherited::CCM_derived_2_interface::_duplicate (executor)),
+      ctx_ ( ::Components::CCMContext::_duplicate (ctx))
+  {
+  }
+
+  derived_2_interface_Servant::~derived_2_interface_Servant (void)
+  {
+  }
+
+  // All facet operations and attributes.
+
+  void
+  derived_2_interface_Servant::do_derived (
+    void)
+  {
+    ::Inherited::CCM_derived_2_interface_var executor = 
+      ::Inherited::CCM_derived_2_interface::_duplicate (this->executor_.in ());
+
+    if ( ::CORBA::is_nil (executor.in ()))
+      {
+        throw ::CORBA::INV_OBJREF ();
+      }
+    
+    executor->do_derived ();
+  }
+
+  void
+  derived_2_interface_Servant::do_derived_2 (
+    void)
+  {
+    ::Inherited::CCM_derived_2_interface_var executor = 
+      ::Inherited::CCM_derived_2_interface::_duplicate (this->executor_.in ());
+
+    if ( ::CORBA::is_nil (executor.in ()))
+      {
+        throw ::CORBA::INV_OBJREF ();
+      }
+    
+    executor->do_derived_2 ();
+  }
+
+  ::CORBA::Object_ptr
+  derived_2_interface_Servant::_get_component (void)
+  {
+    ::Components::SessionContext_var sc =
+      ::Components::SessionContext::_narrow (this->ctx_.in ());
+    
+    if (! ::CORBA::is_nil (sc.in ()))
+      {
+        return sc->get_CCM_object ();
+      }
+    
+    throw ::CORBA::INTERNAL ();
+  }
+}
 
 namespace CIAO_Inherited_Derived_2_comp_Impl
 {
@@ -449,12 +449,12 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
       {
         throw ::Components::InvalidConnection ();
       }
-
+    
     if (! ::CORBA::is_nil (this->ciao_uses_uses_derived_2_.in ()))
       {
         throw ::Components::AlreadyConnected ();
       }
-
+    
     this->ciao_uses_uses_derived_2_ =
       ::Inherited::derived_2_interface::_duplicate (c);
   }
@@ -464,12 +464,12 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
   {
     ::Inherited::derived_2_interface_var ciao_uses_uses_derived_2 =
       this->ciao_uses_uses_derived_2_._retn ();
-
+    
     if ( ::CORBA::is_nil (ciao_uses_uses_derived_2.in ()))
       {
         throw ::Components::NoConnection ();
       }
-
+    
     return ciao_uses_uses_derived_2._retn ();
   }
 
@@ -488,12 +488,12 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
       {
         throw ::Components::InvalidConnection ();
       }
-
+    
     if (! ::CORBA::is_nil (this->ciao_uses_uses_derived_.in ()))
       {
         throw ::Components::AlreadyConnected ();
       }
-
+    
     this->ciao_uses_uses_derived_ =
       ::Inherited::derived_interface::_duplicate (c);
   }
@@ -503,12 +503,12 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
   {
     ::Inherited::derived_interface_var ciao_uses_uses_derived =
       this->ciao_uses_uses_derived_._retn ();
-
+    
     if ( ::CORBA::is_nil (ciao_uses_uses_derived.in ()))
       {
         throw ::Components::NoConnection ();
       }
-
+    
     return ciao_uses_uses_derived._retn ();
   }
 
@@ -524,7 +524,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
         ::Inherited::CCM_Derived_2_comp,
         Derived_2_comp_Context> (exe, h, ins_name, hs, c)
   {
-
+    
     this->setup_prov_derived_2_i ();
     this->setup_prov_derived_i ();
   }
@@ -547,7 +547,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
         throw ::CORBA::BAD_PARAM ();
       }
 
-    ::Inherited::CCM_Derived_2_comp_var executor =
+    ::Inherited::CCM_Derived_2_comp_var executor = 
       ::Inherited::CCM_Derived_2_comp::_duplicate (this->executor_.in ());
 
     if ( ::CORBA::is_nil (executor.in ()))
@@ -582,7 +582,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
       {
         ::Inherited::derived_2_interface_var _ciao_conn =
           ::Inherited::derived_2_interface::_narrow (connection);
-
+        
         /// Simplex connect.
         this->context_->connect_uses_derived_2 (_ciao_conn.in ());
         return 0;
@@ -592,7 +592,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
       {
         ::Inherited::derived_interface_var _ciao_conn =
           ::Inherited::derived_interface::_narrow (connection);
-
+        
         /// Simplex connect.
         this->context_->connect_uses_derived (_ciao_conn.in ());
         return 0;
@@ -637,7 +637,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
     ::Components::ReceptacleDescriptions_var safe_retval = retval;
     safe_retval->length (2UL);
 
-    Inherited::derived_2_interface_var ciao_uses_derived_2 =
+    Inherited::derived_2_interface_var ciao_uses_derived_2 = 
       this->context_->get_connection_uses_derived_2 ();
     ::CIAO::Servant::describe_simplex_receptacle<
       ::Inherited::derived_2_interface> (
@@ -647,7 +647,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
         safe_retval,
         0UL);
 
-    Inherited::derived_interface_var ciao_uses_derived =
+    Inherited::derived_interface_var ciao_uses_derived = 
       this->context_->get_connection_uses_derived ();
     ::CIAO::Servant::describe_simplex_receptacle<
       ::Inherited::derived_interface> (
@@ -675,43 +675,44 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
 
     ::CIAO::Container_var cnt_safe =
       ::CIAO::Container::_duplicate (this->container_.in ());
-
+    
     if (::CORBA::is_nil (cnt_safe.in ()))
       {
         throw ::CORBA::INV_OBJREF ();
       }
-
+    
     PortableServer::POA_var POA = cnt_safe->the_port_POA ();
-    ::CORBA::Object_var tmp = this->get_facet_executor ("prov_derived_2");
-
-    typedef ::CIAO_FACET_Inherited::derived_interface_2_Servant_T<POA_Inherited::derived_2_interface,
-                                                                ::Inherited::CCM_derived_2_interface>
-            derived_2_interface_Servant_type;
-
-    //TODO: pass tmp to the Servant_type and narrow this in Servant_Interface_Base_T
-    ::Inherited::CCM_derived_2_interface_var tmp_var =
+    ::CORBA::Object_var tmp =
+      this->get_facet_executor ("prov_derived_2");
+    
+    ::Inherited::CCM_derived_2_interface_var tmp_var = 
       ::Inherited::CCM_derived_2_interface::_narrow (tmp.in());
-
-    derived_2_interface_Servant_type * prov_derived_2_servant_impl = 0;
+    
+    typedef ::CIAO_FACET_Inherited::derived_2_interface_Servant_T <
+      POA_Inherited::derived_2_interface,
+      ::Inherited::CCM_derived_2_interface>
+        derived_2_interface_type;
+      
+    derived_2_interface_type *prov_derived_2_servant_impl = 0;
     ACE_NEW_THROW_EX (
       prov_derived_2_servant_impl,
-      derived_2_interface_Servant_type (
-        tmp_var.in(),
+      derived_2_interface_type (
+        tmp_var.in(), 
         this->context_),
       CORBA::NO_MEMORY ());
-
+    
     PortableServer::ServantBase_var safe_base_servant (prov_derived_2_servant_impl);
-
+    
     PortableServer::ObjectId_var prov_derived_2_servant_oid =
       PortableServer::string_to_ObjectId (obj_id.c_str());
-
+    
     POA->activate_object_with_id(prov_derived_2_servant_oid.in(),prov_derived_2_servant_impl);
-    ::CORBA::Object_var prov_derived_2_servant_impl_obj =
-      cnt_safe->generate_reference (
+    ::CORBA::Object_var prov_derived_2_servant_impl_obj = 
+      cnt_safe->generate_reference ( 
         obj_id.c_str (),
         "IDL:Inherited/derived_2_interface:1.0",
         ::CIAO::Container_Types::FACET_CONSUMER_t);
-
+      
     this->add_facet ("prov_derived_2", prov_derived_2_servant_impl_obj.in ());
   }
 
@@ -749,44 +750,44 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
 
     ::CIAO::Container_var cnt_safe =
       ::CIAO::Container::_duplicate (this->container_.in ());
-
+    
     if (::CORBA::is_nil (cnt_safe.in ()))
       {
         throw ::CORBA::INV_OBJREF ();
       }
-
+    
     PortableServer::POA_var POA = cnt_safe->the_port_POA ();
     ::CORBA::Object_var tmp =
       this->get_facet_executor ("prov_derived");
-
-    typedef ::CIAO_FACET_Inherited::derived_interface_Servant_T<POA_Inherited::derived_interface,
-                                                              ::Inherited::CCM_derived_interface>
-            derived_interface_Servant_type;
-
-    //TODO: pass tmp to the Servant_type and narrow this in Servant_Interface_Base_T
-    ::Inherited::CCM_derived_interface_var tmp_var =
+    
+    ::Inherited::CCM_derived_interface_var tmp_var = 
       ::Inherited::CCM_derived_interface::_narrow (tmp.in());
-
-    derived_interface_Servant_type * prov_derived_servant_impl = 0;
+    
+    typedef ::CIAO_FACET_Inherited::derived_interface_Servant_T <
+      POA_Inherited::derived_interface,
+      ::Inherited::CCM_derived_interface>
+        derived_interface_type;
+      
+    derived_interface_type *prov_derived_servant_impl = 0;
     ACE_NEW_THROW_EX (
       prov_derived_servant_impl,
-      derived_interface_Servant_type (
-        tmp_var.in(),
+      derived_interface_type (
+        tmp_var.in(), 
         this->context_),
       CORBA::NO_MEMORY ());
-
+    
     PortableServer::ServantBase_var safe_base_servant (prov_derived_servant_impl);
-
+    
     PortableServer::ObjectId_var prov_derived_servant_oid =
       PortableServer::string_to_ObjectId (obj_id.c_str());
-
+    
     POA->activate_object_with_id(prov_derived_servant_oid.in(),prov_derived_servant_impl);
-    ::CORBA::Object_var prov_derived_servant_impl_obj =
-      cnt_safe->generate_reference (
+    ::CORBA::Object_var prov_derived_servant_impl_obj = 
+      cnt_safe->generate_reference ( 
         obj_id.c_str (),
         "IDL:Inherited/derived_interface:1.0",
         ::CIAO::Container_Types::FACET_CONSUMER_t);
-
+      
     this->add_facet ("prov_derived", prov_derived_servant_impl_obj.in ());
   }
 
@@ -817,7 +818,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
   {
     ::Inherited::CCM_Derived_2_comp_var x =
       ::Inherited::CCM_Derived_2_comp::_narrow (p);
-
+    
     ::PortableServer::Servant retval = 0;
     if (! ::CORBA::is_nil (x.in ()))
       {
@@ -829,7 +830,7 @@ namespace CIAO_Inherited_Derived_2_comp_Impl
                             0,
                             c));
       }
-
+    
     return retval;
   }
 }
