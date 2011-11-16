@@ -3,14 +3,14 @@
 #ifndef CIAO_SERVANT_INTERFACE_BASE_T_C
 #define CIAO_SERVANT_INTERFACE_BASE_T_C
 
-#include "Servant_Interface_Base_T.h"
+#include "Facet_Servant_Base_T.h"
 #include "ccm/CCM_ObjectC.h"
 #include "ciao/Logger/Log_Macros.h"
 
 namespace CIAO
 {
-  template <typename BASE, typename EXEC>
-  Servant_Interface_Base_T<BASE, EXEC>::Servant_Interface_Base_T (
+  template <typename BASE, typename EXEC, typename CONTEXT>
+  Facet_Servant_Base_T<BASE, EXEC, CONTEXT>::Facet_Servant_Base_T (
       typename EXEC::_ptr_type exec,
       ::Components::CCMContext_var ctx)
     : executor_ (EXEC::_duplicate (exec)),
@@ -20,21 +20,20 @@ namespace CIAO
 //   ::Inherited::CCM_derived_interface_var tmp_var =
 //       ::Inherited::CCM_derived_interface::_narrow (tmp.in());
 
-    CIAO_TRACE ("Servant_Interface_Base_T<BASE, EXEC>::Servant_Interface_Base_T");
+    CIAO_TRACE ("Facet_Servant_Base_T<BASE, EXEC, CONTEXT>::Facet_Servant_Base_T");
   }
 
-  template <typename BASE, typename EXEC>
-  Servant_Interface_Base_T<BASE, EXEC>::~Servant_Interface_Base_T (void)
+  template <typename BASE, typename EXEC, typename CONTEXT>
+  Facet_Servant_Base_T<BASE, EXEC, CONTEXT>::~Facet_Servant_Base_T (void)
   {
 
   }
 
-  template <typename BASE, typename EXEC>
+  template <typename BASE, typename EXEC, typename CONTEXT>
   ::CORBA::Object_ptr
-  Servant_Interface_Base_T<BASE, EXEC>::_get_component (void)
+  Facet_Servant_Base_T<BASE, EXEC, CONTEXT>::_get_component (void)
   {
-    ::Components::SessionContext_var sc =
-      ::Components::SessionContext::_narrow (this->ctx_.in ());
+    CONTEXT::_var_type sc = CONTEXT::_narrow (this->ctx_.in ());
 
     if (! ::CORBA::is_nil (sc.in ()))
       {
