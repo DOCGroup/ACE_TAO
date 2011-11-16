@@ -1,3 +1,10 @@
+Wed Nov 16 14:02:17 UTC 2011  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt.cpp:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.h:
+        * tests/IDL_Test/Inherited_Servants/Derived_svnt_T.cpp:
+          Fixed some compile issues.
+
 Wed Nov 16 12:03:07 UTC 2011  Marcel Smit  <msmit@remedy.nl>
 
         * ciao/Servants/Session/Servant_Impl_T.h:

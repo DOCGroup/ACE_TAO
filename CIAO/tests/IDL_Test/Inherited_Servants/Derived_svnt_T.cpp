@@ -52,34 +52,24 @@ namespace CIAO_FACET_Inherited
 namespace CIAO_FACET_Inherited
 {
 
-  template <typename BASE,
-            typename EXEC,
-            typename BASE_BASE,
-            typename EXEC_BASE>
-  derived_interface_2_Servant_T<BASE, EXEC, BASE_BASE, EXEC_BASE>::derived_interface_2_Servant_T (
+  template <typename BASE, typename EXEC>
+  derived_interface_2_Servant_T<BASE, EXEC>::derived_interface_2_Servant_T (
     typename EXEC::_ptr_type exec,
-    typename EXEC_BASE::_ptr_type exec_base,
     ::Components::CCMContext_ptr ctx)
-    : derived_interface_Servant_T<BASE_BASE, EXEC_BASE> (exec_base, ctx)
+    : derived_interface_Servant_T<BASE, EXEC> (exec, ctx)
   {
   }
 
-  template <typename BASE,
-            typename EXEC,
-            typename BASE_BASE,
-            typename EXEC_BASE>
-  derived_interface_2_Servant_T<BASE, EXEC, BASE_BASE, EXEC_BASE>::~derived_interface_2_Servant_T (void)
+  template <typename BASE, typename EXEC>
+  derived_interface_2_Servant_T<BASE, EXEC>::~derived_interface_2_Servant_T (void)
   {
   }
 
   // All facet operations and attributes.
 
-  template <typename BASE,
-            typename EXEC,
-            typename BASE_BASE,
-            typename EXEC_BASE>
+  template <typename BASE, typename EXEC>
   void
-  derived_interface_2_Servant_T<BASE, EXEC, BASE_BASE, EXEC_BASE>::do_derived_2 (
+  derived_interface_2_Servant_T<BASE, EXEC>::do_derived_2 (
     void)
   {
     ::Inherited::CCM_derived_2_interface_var executor =
